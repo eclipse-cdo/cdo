@@ -135,39 +135,6 @@ public class CDODBSchema
       + " FROM " + BRANCHES + " WHERE " + BRANCHES_ID + " BETWEEN ? AND ? ORDER BY " + BRANCHES_ID; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
   /**
-   * DBTable cdo_commit_infos
-   */
-  public static final IDBTable COMMIT_INFOS = INSTANCE.addTable("cdo_commit_infos"); //$NON-NLS-1$
-
-  public static final IDBField COMMIT_INFOS_TIMESTAMP = //
-      COMMIT_INFOS.addField("commit_time", DBType.BIGINT, true); //$NON-NLS-1$
-
-  public static final IDBField COMMIT_INFOS_PREVIOUS_TIMESTAMP = //
-      COMMIT_INFOS.addField("previous_time", DBType.BIGINT); //$NON-NLS-1$
-
-  public static final IDBField COMMIT_INFOS_BRANCH = //
-      COMMIT_INFOS.addField("branch_id", DBType.INTEGER); //$NON-NLS-1$
-
-  public static final IDBField COMMIT_INFOS_USER = //
-      COMMIT_INFOS.addField("user_id", DBType.VARCHAR); //$NON-NLS-1$
-
-  public static final IDBField COMMIT_INFOS_COMMENT = //
-      COMMIT_INFOS.addField("commit_comment", DBType.VARCHAR); //$NON-NLS-1$
-
-  public static final IDBIndex INDEX_COMMIT_INFOS_PK = //
-      COMMIT_INFOS.addIndex(IDBIndex.Type.PRIMARY_KEY, COMMIT_INFOS_TIMESTAMP);
-
-  public static final IDBIndex INDEX_COMMIT_INFOS_BRANCH = //
-      COMMIT_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, COMMIT_INFOS_BRANCH);
-
-  public static final IDBIndex INDEX_COMMIT_INFOS_USER = //
-      COMMIT_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, COMMIT_INFOS_USER);
-
-  public static final String SQL_CREATE_COMMIT_INFO = "INSERT INTO " + COMMIT_INFOS + "(" + COMMIT_INFOS_TIMESTAMP //$NON-NLS-1$ //$NON-NLS-2$
-      + ", " + COMMIT_INFOS_PREVIOUS_TIMESTAMP + ", " + COMMIT_INFOS_BRANCH + ", " + COMMIT_INFOS_USER + ", " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-      + COMMIT_INFOS_COMMENT + ") " + "VALUES (?, ?, ?, ?, ?)"; //$NON-NLS-2$
-
-  /**
    * DBTable cdo_lobs
    */
   public static final IDBTable LOBS = INSTANCE.addTable("cdo_lobs"); //$NON-NLS-1$

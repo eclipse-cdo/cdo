@@ -583,7 +583,7 @@ public class CDOCompareEditorUtil
     configuration.setRightLabel(rightLabel);
     configuration.setRightEditable(rightEditable);
 
-    Input input = new Input(rightView, configuration, comparison, editingDomain, adapterFactory);
+    Input input = new Input(leftView, rightView, configuration, comparison, editingDomain, adapterFactory);
     input.setTitle(title);
 
     workaroundEMFCompareBug(leftView, leftLabel);
@@ -752,6 +752,8 @@ public class CDOCompareEditorUtil
   {
     private static final Image COMPARE_IMAGE = OM.getImage("icons/compare.gif");
 
+    private final CDOView sourceView;
+
     private final CDOView targetView;
 
     private final Comparison comparison;
@@ -762,11 +764,12 @@ public class CDOCompareEditorUtil
 
     private boolean suppressCommit;
 
-    private Input(CDOView targetView, CompareConfiguration configuration, Comparison comparison,
+    private Input(CDOView sourceView, CDOView targetView, CompareConfiguration configuration, Comparison comparison,
         ICompareEditingDomain editingDomain, AdapterFactory adapterFactory)
     {
       super(new org.eclipse.emf.compare.ide.ui.internal.configuration.EMFCompareConfiguration(configuration),
           comparison, editingDomain, adapterFactory);
+      this.sourceView = sourceView;
       this.targetView = targetView;
       this.comparison = comparison;
 
@@ -806,9 +809,9 @@ public class CDOCompareEditorUtil
     @Override
     public void saveChanges(IProgressMonitor monitor) throws CoreException
     {
-      if (targetView instanceof CDOTransaction)
+      if (targetView instanceof InternalCDOTransaction)
       {
-        CDOTransaction transaction = (CDOTransaction)targetView;
+        InternalCDOTransaction transaction = (InternalCDOTransaction)targetView;
         if (transaction.isDirty())
         {
           Collection<CDOObject> values = transaction.getNewObjects().values();
@@ -860,6 +863,10 @@ public class CDOCompareEditorUtil
         {
           if (!suppressCommit)
           {
+            CDOBranchPoint mergeSource = sourceView.isHistorical() ? CDOBranchUtil.copyBranchPoint(sourceView)
+                : sourceView.getBranch().getPoint(sourceView.getLastUpdateTime());
+
+            transaction.setCommitMergeSource(mergeSource);
             transaction.commit(monitor);
             setDirty(false);
           }

@@ -175,6 +175,8 @@ public class Repository extends Container<Object> implements InternalRepository,
 
   private IDGenerationLocation idGenerationLocation;
 
+  private CommitInfoStorage commitInfoStorage;
+
   private long optimisticLockingTimeout = 10000L;
 
   /**
@@ -381,6 +383,11 @@ public class Repository extends Container<Object> implements InternalRepository,
   public IDGenerationLocation getIDGenerationLocation()
   {
     return idGenerationLocation;
+  }
+
+  public CommitInfoStorage getCommitInfoStorage()
+  {
+    return commitInfoStorage;
   }
 
   public long getOptimisticLockingTimeout()
@@ -1952,6 +1959,23 @@ public class Repository extends Container<Object> implements InternalRepository,
       idGenerationLocation = IDGenerationLocation.STORE;
     }
 
+    // COMMIT_INFO_STORAGE
+    String valueCommitInfoStorage = properties.get(Props.COMMIT_INFO_STORAGE);
+    if (valueCommitInfoStorage != null)
+    {
+      commitInfoStorage = CommitInfoStorage.valueOf(valueCommitInfoStorage);
+    }
+
+    if (commitInfoStorage == null)
+    {
+      commitInfoStorage = CommitInfoStorage.WITH_MERGE_SOURCE;
+    }
+
+    if (commitInfoStorage != CommitInfoStorage.NO && !supportingBranches)
+    {
+      commitInfoStorage = CommitInfoStorage.YES;
+    }
+
     // ENSURE_REFERENTIAL_INTEGRITY
     String valueTimeout = properties.get(Props.OPTIMISTIC_LOCKING_TIMEOUT);
     if (valueTimeout != null)
@@ -2188,7 +2212,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     initProperties();
     if (idGenerationLocation == IDGenerationLocation.CLIENT && !(store instanceof CanHandleClientAssignedIDs))
     {
-      throw new IllegalStateException("Store can not handle client assigned IDs: " + store);
+      throw new IllegalStateException("Store can not handle client-assigned IDs: " + store);
     }
 
     store.setRevisionTemporality(
@@ -2220,6 +2244,7 @@ public class Repository extends Container<Object> implements InternalRepository,
 
       long lastCommitTime = Math.max(creationTime, store.getLastCommitTime());
       timeStampAuthority.setLastFinishedTimeStamp(lastCommitTime);
+      commitInfoManager.setLastCommitOfBranch(null, lastCommitTime);
 
       if (store.isFirstStart())
       {

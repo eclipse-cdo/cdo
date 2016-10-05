@@ -166,6 +166,11 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
       return session.getRepository().getIDGenerationLocation();
     }
 
+    public CommitInfoStorage getCommitInfoStorage()
+    {
+      return session.getRepository().getCommitInfoStorage();
+    }
+
     public String getStoreType()
     {
       return session.getRepository().getStoreType();

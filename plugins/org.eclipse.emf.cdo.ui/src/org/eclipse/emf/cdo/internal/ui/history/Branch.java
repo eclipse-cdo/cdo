@@ -25,7 +25,7 @@ import org.eclipse.swt.graphics.Color;
 /**
  * @author Eike Stepper
  */
-public class Branch extends SegmentList
+public final class Branch extends SegmentList
 {
   private final CDOBranch cdoBranch;
 
@@ -74,26 +74,22 @@ public class Branch extends SegmentList
         firstCommitTime = firstCommit.getTimeStamp();
       }
 
-      CDOCommitInfo lastCommit = commitInfoManager.getLastOfBranch(cdoBranch);
-      if (lastCommit != null)
-      {
-        lastCommitTime = lastCommit.getTimeStamp();
-      }
+      lastCommitTime = commitInfoManager.getLastCommitOfBranch(cdoBranch, true);
     }
   }
 
-  public final CDOBranch getCDOBranch()
+  public CDOBranch getCDOBranch()
   {
     return cdoBranch;
   }
 
-  public final Color getColor()
+  public Color getColor()
   {
     return color;
   }
 
   @Deprecated
-  public final Branch getBaseBranch()
+  public Branch getBaseBranch()
   {
     CDOBranchPoint cdoBase = cdoBranch.getBase();
     CDOBranch cdoBaseBranch = cdoBase.getBranch();
@@ -107,34 +103,34 @@ public class Branch extends SegmentList
   }
 
   @Deprecated
-  public final long getBaseTime()
+  public long getBaseTime()
   {
     return cdoBranch.getBase().getTimeStamp();
   }
 
-  public final Branch getBaseCommitBranch()
+  public Branch getBaseCommitBranch()
   {
     determineBaseCommitIfNeeded();
     return baseCommitBranch;
   }
 
-  public final long getBaseCommitTime()
+  public long getBaseCommitTime()
   {
     determineBaseCommitIfNeeded();
     return baseCommitTime;
   }
 
-  public final long getFirstCommitTime()
+  public long getFirstCommitTime()
   {
     return firstCommitTime;
   }
 
-  public final long getLastCommitTime()
+  public long getLastCommitTime()
   {
     return lastCommitTime;
   }
 
-  public final Segment getSegmentFrom(Segment[] segments)
+  public Segment getSegmentFrom(Segment[] segments)
   {
     for (int i = 0; i < segments.length; i++)
     {

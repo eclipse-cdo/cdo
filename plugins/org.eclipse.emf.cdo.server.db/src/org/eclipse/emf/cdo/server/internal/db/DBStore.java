@@ -14,6 +14,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.CommitInfoStorage;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -80,6 +81,10 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
   public static final int SCHEMA_VERSION = 4;
 
+  // public static final int SCHEMA_VERSION = 3; // Bug 404047: Indexed columns must be NOT NULL.
+  // public static final int SCHEMA_VERSION = 2; // Bug 344232: Rename cdo_lobs.size to cdo_lobs.lsize.
+  // public static final int SCHEMA_VERSION = 1; // Bug 351068: Delete detached objects from non-auditing stores.
+
   private static final int FIRST_START = -1;
 
   private static final String PROP_SCHEMA_VERSION = "org.eclipse.emf.cdo.server.db.schemaVersion"; //$NON-NLS-1$
@@ -117,6 +122,8 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   private IMetaDataManager metaDataManager = new MetaDataManager(this);
 
   private DurableLockingManager durableLockingManager = new DurableLockingManager(this);
+
+  private CommitInfoTable commitInfoTable;
 
   private UnitMappingTable unitMappingTable;
 
@@ -245,6 +252,11 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   public DurableLockingManager getDurableLockingManager()
   {
     return durableLockingManager;
+  }
+
+  public CommitInfoTable getCommitInfoTable()
+  {
+    return commitInfoTable;
   }
 
   public UnitMappingTable getUnitMappingTable()
@@ -667,6 +679,12 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     LifecycleUtil.activate(durableLockingManager);
     LifecycleUtil.activate(mappingStrategy);
 
+    if (repository.getCommitInfoStorage() != CommitInfoStorage.NO)
+    {
+      commitInfoTable = new CommitInfoTable(this);
+      commitInfoTable.activate();
+    }
+
     if (repository.isSupportingUnits())
     {
       unitMappingTable = new UnitMappingTable(mappingStrategy);
@@ -693,6 +711,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   protected void doDeactivate() throws Exception
   {
     LifecycleUtil.deactivate(unitMappingTable);
+    LifecycleUtil.deactivate(commitInfoTable);
     LifecycleUtil.deactivate(mappingStrategy);
     LifecycleUtil.deactivate(durableLockingManager);
     LifecycleUtil.deactivate(metaDataManager);
@@ -799,7 +818,8 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
   protected void repairAfterCrash()
   {
-    String name = getRepository().getName();
+    InternalRepository repository = getRepository();
+    String name = repository.getName();
     OM.LOG.warn(MessageFormat.format(Messages.getString("DBStore.9"), name)); //$NON-NLS-1$
 
     Connection connection = getConnection();
@@ -811,7 +831,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
       mappingStrategy.repairAfterCrash(dbAdapter, connection); // Must update the idHandler
 
-      boolean storeIDs = getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE;
+      boolean storeIDs = repository.getIDGenerationLocation() == IDGenerationLocation.STORE;
       CDOID lastObjectID = storeIDs ? idHandler.getLastObjectID() : CDOID.NULL;
       CDOID nextLocalObjectID = storeIDs ? idHandler.getNextLocalObjectID() : CDOID.NULL;
 
@@ -821,12 +841,63 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
       int localBranchID = DBUtil.selectMinimumInt(connection, CDODBSchema.BRANCHES_ID);
       setLastLocalBranchID(localBranchID < 0 ? localBranchID : 0);
 
-      long lastCommitTime = DBUtil.selectMaximumLong(connection, CDODBSchema.COMMIT_INFOS_TIMESTAMP);
-      setLastCommitTime(lastCommitTime);
+      if (commitInfoTable != null)
+      {
+        commitInfoTable.repairAfterCrash(connection);
+      }
+      else
+      {
+        boolean branching = repository.isSupportingBranches();
 
-      long lastNonLocalCommitTime = DBUtil.selectMaximumLong(connection, CDODBSchema.COMMIT_INFOS_TIMESTAMP,
-          CDOBranch.MAIN_BRANCH_ID + "<=" + CDODBSchema.COMMIT_INFOS_BRANCH);
-      setLastNonLocalCommitTime(lastNonLocalCommitTime);
+        long lastCommitTime = CDOBranchPoint.UNSPECIFIED_DATE;
+        long lastNonLocalCommitTime = CDOBranchPoint.UNSPECIFIED_DATE;
+
+        // Unfortunately the package registry is still inactive, so the class mappings can not be used at this point.
+        // Use all tables with a "CDO_CREATED" field instead.
+        for (String tableName : DBUtil.getAllTableNames(connection, repository.getName()))
+        {
+          try
+          {
+            if (CDODBSchema.CDO_OBJECTS.equals(tableName))
+            {
+              continue;
+            }
+
+            IDBTable table = database.getSchema().getTable(tableName);
+            IDBField createdField = table.getField(IMappingConstants.ATTRIBUTES_CREATED);
+            if (createdField == null)
+            {
+              continue;
+            }
+
+            if (branching)
+            {
+              IDBField branchField = table.getField(IMappingConstants.ATTRIBUTES_BRANCH);
+              if (branchField == null)
+              {
+                continue;
+              }
+
+              lastNonLocalCommitTime = Math.max(lastNonLocalCommitTime, DBUtil.selectMaximumLong(connection,
+                  branchField, CDOBranch.MAIN_BRANCH_ID + "<=" + IMappingConstants.ATTRIBUTES_BRANCH));
+            }
+
+            lastCommitTime = Math.max(lastCommitTime, DBUtil.selectMaximumLong(connection, createdField));
+          }
+          catch (Exception ex)
+          {
+            OM.LOG.warn(ex.getMessage());
+          }
+        }
+
+        if (lastNonLocalCommitTime == CDOBranchPoint.UNSPECIFIED_DATE)
+        {
+          lastNonLocalCommitTime = lastCommitTime;
+        }
+
+        setLastCommitTime(lastCommitTime);
+        setLastNonLocalCommitTime(lastNonLocalCommitTime);
+      }
 
       if (storeIDs)
       {
@@ -994,8 +1065,10 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
   };
 
+  private static final SchemaMigrator NULLABLE_COLUMNS_MIGRATION = null;
+
   private static final SchemaMigrator[] SCHEMA_MIGRATORS = { NO_MIGRATION_NEEDED, NON_AUDIT_MIGRATION,
-      LOB_SIZE_MIGRATION, NO_MIGRATION_NEEDED };
+      LOB_SIZE_MIGRATION, NULLABLE_COLUMNS_MIGRATION };
 
   static
   {

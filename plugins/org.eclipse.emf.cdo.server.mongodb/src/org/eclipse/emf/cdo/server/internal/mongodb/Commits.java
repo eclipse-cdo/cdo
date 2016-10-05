@@ -921,7 +921,8 @@ public class Commits extends Coll
         String user = (String)doc.get(COMMITS_USER);
         String comment = (String)doc.get(COMMITS_COMMENT);
 
-        CDOCommitInfo commitInfo = commitManager.createCommitInfo(commitBranch, time, previous, user, comment, null);
+        CDOCommitInfo commitInfo = commitManager.createCommitInfo(commitBranch, time, previous, user, comment, null,
+            null);
         handler.handleCommitInfo(commitInfo);
         return null;
       }

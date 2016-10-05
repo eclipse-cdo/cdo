@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
@@ -72,10 +73,11 @@ public class LoadCommitInfosRequest extends CDOClientRequest<Boolean>
       long timeStamp = in.readLong();
       String userID = in.readString();
       String comment = in.readString();
+      CDOBranchPoint mergeSource = in.readBoolean() ? in.readCDOBranchPoint() : null;
 
       try
       {
-        CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, id, userID, comment, null);
+        CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, id, userID, comment, mergeSource, null);
         handler.handleCommitInfo(commitInfo);
       }
       catch (Exception ex)

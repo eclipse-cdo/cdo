@@ -141,6 +141,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private String commitComment;
 
+  private CDOBranchPoint commitMergeSource;
+
   private boolean usingEcore;
 
   private boolean usingEtypes;
@@ -233,6 +235,11 @@ public class TransactionCommitContext implements InternalCommitContext
   public String getCommitComment()
   {
     return commitComment;
+  }
+
+  public CDOBranchPoint getCommitMergeSource()
+  {
+    return commitMergeSource;
   }
 
   public long getLastUpdateTime()
@@ -556,6 +563,11 @@ public class TransactionCommitContext implements InternalCommitContext
   public void setCommitComment(String commitComment)
   {
     this.commitComment = commitComment;
+  }
+
+  public void setCommitMergeSource(CDOBranchPoint commitMergeSource)
+  {
+    this.commitMergeSource = commitMergeSource;
   }
 
   public ExtendedDataInputStream getLobs()
@@ -897,12 +909,14 @@ public class TransactionCommitContext implements InternalCommitContext
     CDOCommitData commitData = createCommitData();
 
     InternalCDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
-    return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, commitData);
+    return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment,
+        commitMergeSource, commitData);
   }
 
   public CDOCommitInfo createFailureCommitInfo()
   {
-    return new FailureCommitInfo(timeStamp, previousTimeStamp);
+    InternalCDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
+    return new FailureCommitInfo(commitInfoManager, timeStamp, previousTimeStamp);
   }
 
   protected CDOCommitData createCommitData()
@@ -1339,11 +1353,14 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     try
     {
-      monitor.begin(8);
+      monitor.begin(9);
       addNewPackageUnits(monitor.fork());
       addRevisions(newObjects, monitor.fork());
       addRevisions(dirtyObjects, monitor.fork());
       reviseDetachedObjects(monitor.fork());
+
+      InternalCDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
+      commitInfoManager.setLastCommitOfBranch(branch, timeStamp);
 
       releaseImplicitLocks();
       monitor.worked();

@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.internal.ui.history;
 /**
  * @author Eike Stepper
  */
-public class Track extends SegmentList
+public final class Track extends SegmentList
 {
   private final int position;
 
@@ -26,6 +26,28 @@ public class Track extends SegmentList
   public int getPosition()
   {
     return position;
+  }
+
+  public boolean hasSegment(long fromTime, long toTime)
+  {
+    Segment segment = getLastSegment();
+
+    while (segment != null)
+    {
+      if (segment.getLastCommitTime() < fromTime)
+      {
+        return false;
+      }
+
+      if (segment.getFirstVisualTime() < toTime)
+      {
+        return true;
+      }
+
+      segment = segment.getPreviousInTrack();
+    }
+
+    return false;
   }
 
   @Override

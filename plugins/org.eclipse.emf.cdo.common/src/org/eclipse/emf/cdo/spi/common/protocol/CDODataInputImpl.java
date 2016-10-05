@@ -275,6 +275,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
   public CDOCommitInfo readCDOCommitInfo() throws IOException
   {
+    InternalCDOCommitInfoManager commitInfoManager = (InternalCDOCommitInfoManager)getCommitInfoManager();
     long timeStamp = readLong();
     long previousTimeStamp = readLong();
 
@@ -283,13 +284,14 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       CDOBranch branch = readCDOBranch();
       String userID = readString();
       String comment = readString();
+      CDOBranchPoint mergeSource = readBoolean() ? readCDOBranchPoint() : null;
       CDOCommitData commitData = readCDOCommitData();
 
-      InternalCDOCommitInfoManager commitInfoManager = (InternalCDOCommitInfoManager)getCommitInfoManager();
-      return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, commitData);
+      return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource,
+          commitData);
     }
 
-    return new FailureCommitInfo(timeStamp, previousTimeStamp);
+    return new FailureCommitInfo(commitInfoManager, timeStamp, previousTimeStamp);
   }
 
   public CDOLockChangeInfo readCDOLockChangeInfo() throws IOException

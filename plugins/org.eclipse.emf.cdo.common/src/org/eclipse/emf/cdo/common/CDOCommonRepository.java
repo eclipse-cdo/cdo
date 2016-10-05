@@ -83,6 +83,11 @@ public interface CDOCommonRepository extends CDOTimeProvider, IAdaptable
   public IDGenerationLocation getIDGenerationLocation();
 
   /**
+   * @since 4.6
+   */
+  public CommitInfoStorage getCommitInfoStorage();
+
+  /**
    * Returns the ID of the root resource of this repository.
    */
   public CDOID getRootResourceID();
@@ -148,6 +153,18 @@ public interface CDOCommonRepository extends CDOTimeProvider, IAdaptable
   public enum IDGenerationLocation
   {
     STORE, CLIENT
+  }
+
+  /**
+   * Enumerates the possible {@link CDOCommonRepository#getIDGenerationLocation() ID generation locations} of a CDO
+   * repository.
+   *
+   * @author Eike Stepper
+   * @since 4.6
+   */
+  public enum CommitInfoStorage
+  {
+    NO, YES, WITH_MERGE_SOURCE
   }
 
   /**

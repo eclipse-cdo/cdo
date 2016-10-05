@@ -128,6 +128,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     long lastUpdateTime = in.readLong();
     int commitNumber = in.readInt();
     String commitComment = in.readString();
+    CDOBranchPoint commitMergeSource = in.readBoolean() ? in.readCDOBranchPoint() : null;
 
     CDOLockState[] locksOnNewObjects = new CDOLockState[in.readInt()];
     CDOID[] idsToUnlock = new CDOID[in.readInt()];
@@ -298,6 +299,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       commitContext.setDetachedObjectTypes(detachedObjectTypes);
       commitContext.setDetachedObjectVersions(detachedObjectVersions);
       commitContext.setCommitComment(commitComment);
+      commitContext.setCommitMergeSource(commitMergeSource);
       commitContext.setLobs(getIndicationStream());
       commitContext.setLocksOnNewObjects(locksOnNewObjects);
       commitContext.setIDsToUnlock(idsToUnlock);

@@ -243,6 +243,17 @@ public class SessionProperties extends Properties<CDOSession> implements CDOComm
       }
     });
 
+    add(new Property<CDOSession>("commitInfoStorage", Messages.getString("SessionPropertyTester_42"), //
+        Messages.getString("SessionPropertyTester_43"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.getRepositoryInfo().getCommitInfoStorage();
+      }
+    });
+
     add(new Property<CDOSession>("storeType", Messages.getString("SessionPropertyTester_24"), //
         Messages.getString("SessionPropertyTester_25"), //$NON-NLS-1$
         CATEGORY_REPOSITORY)
@@ -333,6 +344,11 @@ public class SessionProperties extends Properties<CDOSession> implements CDOComm
   }
 
   public IDGenerationLocation getIDGenerationLocation()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CommitInfoStorage getCommitInfoStorage()
   {
     throw new UnsupportedOperationException();
   }

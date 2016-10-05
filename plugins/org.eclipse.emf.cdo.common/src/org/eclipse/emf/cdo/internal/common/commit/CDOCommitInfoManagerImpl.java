@@ -22,8 +22,9 @@ import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 
+import org.eclipse.net4j.util.ref.ReferenceValueMap2;
+
 import java.lang.ref.SoftReference;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,7 @@ import java.util.WeakHashMap;
 public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBranch, CDOCommitHistory>
     implements InternalCDOCommitInfoManager
 {
-  private final Map<CDOCommitInfo, WeakReference<CDOCommitInfo>> cache;
+  private final Map<Long, CDOCommitInfo> cache;
 
   private final Object cacheLock = new Object();
 
@@ -47,11 +48,13 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
 
   private List<CDOCommitInfoHandler> handlers = new ArrayList<CDOCommitInfoHandler>();
 
+  private long lastCommit = CDOBranchPoint.UNSPECIFIED_DATE;
+
   public CDOCommitInfoManagerImpl(boolean caching)
   {
     if (caching)
     {
-      cache = new WeakHashMap<CDOCommitInfo, WeakReference<CDOCommitInfo>>();
+      cache = new ReferenceValueMap2.Soft<Long, CDOCommitInfo>();
     }
     else
     {
@@ -129,13 +132,24 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
   public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
       String comment, CDOCommitData commitData)
   {
+    return createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null, commitData);
+  }
+
+  public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
+      String comment, CDOBranchPoint mergeSource, CDOCommitData commitData)
+  {
     checkActive();
     CDOCommitInfo commitInfo = new CDOCommitInfoImpl(this, branch, timeStamp, previousTimeStamp, userID, comment,
-        commitData);
+        mergeSource, commitData);
     return intern(commitInfo);
   }
 
   public CDOCommitInfo getCommitInfo(long timeStamp)
+  {
+    return getCommitInfo(timeStamp, true);
+  }
+
+  public CDOCommitInfo getCommitInfo(long timeStamp, boolean loadOnDemand)
   {
     checkActive();
 
@@ -143,24 +157,26 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     {
       synchronized (cacheLock)
       {
-        for (CDOCommitInfo commitInfo : cache.keySet())
+        CDOCommitInfo commitInfo = cache.get(timeStamp);
+        if (commitInfo != null)
         {
-          if (commitInfo.getTimeStamp() == timeStamp)
-          {
-            return commitInfo;
-          }
+          return commitInfo;
         }
       }
     }
 
     final CDOCommitInfo[] result = { null };
-    getCommitInfos(null, timeStamp, timeStamp, new CDOCommitInfoHandler()
+
+    if (loadOnDemand)
     {
-      public void handleCommitInfo(CDOCommitInfo commitInfo)
+      getCommitInfos(null, timeStamp, timeStamp, new CDOCommitInfoHandler()
       {
-        result[0] = commitInfo;
-      }
-    });
+        public void handleCommitInfo(CDOCommitInfo commitInfo)
+        {
+          result[0] = commitInfo;
+        }
+      });
+    }
 
     return result[0];
   }
@@ -219,7 +235,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
       return null;
     }
 
-    BranchInfoCache infoCache = getBranchInfoCache(branch);
+    BranchInfoCache infoCache = getBranchInfoCache(branch, true);
     CDOCommitInfo base = infoCache.getBase();
     if (base == null)
     {
@@ -232,7 +248,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
 
   public CDOCommitInfo getFirstOfBranch(CDOBranch branch)
   {
-    BranchInfoCache infoCache = getBranchInfoCache(branch);
+    BranchInfoCache infoCache = getBranchInfoCache(branch, true);
     CDOCommitInfo first = infoCache.getFirst();
     if (first == null)
     {
@@ -245,7 +261,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
 
   public CDOCommitInfo getLastOfBranch(CDOBranch branch)
   {
-    BranchInfoCache infoCache = getBranchInfoCache(branch);
+    BranchInfoCache infoCache = getBranchInfoCache(branch, true);
     CDOCommitInfo last = infoCache.getLast();
     if (last == null)
     {
@@ -254,6 +270,54 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     }
 
     return last;
+  }
+
+  public long getLastCommitOfBranch(CDOBranch branch, boolean loadOnDemand)
+  {
+    if (branch == null)
+    {
+      return lastCommit;
+    }
+
+    BranchInfoCache infoCache = getBranchInfoCache(branch, loadOnDemand);
+    if (infoCache != null)
+    {
+      long lastCommit = infoCache.getLastCommit();
+      if (lastCommit == CDOBranchPoint.UNSPECIFIED_DATE && loadOnDemand)
+      {
+        CDOCommitInfo last = loadLastOfBranch(branch);
+        infoCache.setLast(last);
+        lastCommit = last.getTimeStamp();
+      }
+
+      return lastCommit;
+    }
+
+    return CDOBranchPoint.UNSPECIFIED_DATE;
+  }
+
+  public void setLastCommitOfBranch(CDOBranch branch, long lastCommit)
+  {
+    if (branch != null)
+    {
+      BranchInfoCache infoCache = getBranchInfoCache(branch, true);
+      infoCache.setLastCommit(lastCommit);
+    }
+
+    setLastCommit(lastCommit);
+  }
+
+  public long getLastCommit()
+  {
+    return lastCommit;
+  }
+
+  public void setLastCommit(long lastCommit)
+  {
+    if (lastCommit > this.lastCommit)
+    {
+      this.lastCommit = lastCommit;
+    }
   }
 
   @Override
@@ -293,26 +357,27 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
   {
     if (cache != null && commitInfo != null)
     {
+      long timeStamp = commitInfo.getTimeStamp();
+
       synchronized (cacheLock)
       {
-        WeakReference<CDOCommitInfo> ref = cache.get(commitInfo);
-        CDOCommitInfo cachedCommitInfo = ref != null ? ref.get() : null;
+        CDOCommitInfo cachedCommitInfo = cache.get(timeStamp);
         if (cachedCommitInfo != null)
         {
           return cachedCommitInfo;
         }
 
-        cache.put(commitInfo, new WeakReference<CDOCommitInfo>(commitInfo));
+        cache.put(timeStamp, commitInfo);
       }
     }
 
     return commitInfo;
   }
 
-  private BranchInfoCache getBranchInfoCache(CDOBranch branch)
+  private BranchInfoCache getBranchInfoCache(CDOBranch branch, boolean createOnDemand)
   {
     BranchInfoCache infoCache = branches.get(branch);
-    if (infoCache == null)
+    if (infoCache == null && createOnDemand)
     {
       infoCache = new BranchInfoCache();
       branches.put(branch, infoCache);
@@ -367,6 +432,8 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
 
     private SoftReference<CDOCommitInfo> last;
 
+    private long lastCommit = CDOBranchPoint.UNSPECIFIED_DATE;
+
     public BranchInfoCache()
     {
     }
@@ -399,6 +466,34 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     public void setLast(CDOCommitInfo last)
     {
       this.last = new SoftReference<CDOCommitInfo>(last);
+
+      long timeStamp = last.getTimeStamp();
+      if (timeStamp > lastCommit)
+      {
+        lastCommit = timeStamp;
+      }
+    }
+
+    public long getLastCommit()
+    {
+      return lastCommit;
+    }
+
+    public void setLastCommit(long lastCommit)
+    {
+      if (lastCommit > this.lastCommit)
+      {
+        this.lastCommit = lastCommit;
+
+        CDOCommitInfo last = getLast();
+        if (last != null)
+        {
+          if (lastCommit > last.getTimeStamp())
+          {
+            last = null;
+          }
+        }
+      }
     }
   }
 }

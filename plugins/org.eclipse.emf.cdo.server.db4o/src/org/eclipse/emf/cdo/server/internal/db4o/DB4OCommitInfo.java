@@ -55,7 +55,8 @@ public class DB4OCommitInfo
       CDOCommitInfoHandler handler)
   {
     InternalCDOBranch branch = branchManager.getBranch(branchID);
-    CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null);
+    CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null,
+        null);
     handler.handleCommitInfo(commitInfo);
   }
 }

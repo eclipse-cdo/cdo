@@ -22,6 +22,7 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind;
 import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
+import org.eclipse.net4j.db.ddl.delta.IDBFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
@@ -382,18 +383,19 @@ public abstract class DBAdapter implements IDBAdapter
       {
         IDBTable table = delta.getSchemaElement(schema);
         ChangeKind changeKind = delta.getChangeKind();
+
         switch (changeKind)
         {
         case ADD:
           createTable(connection, table, delta);
           break;
 
-        case REMOVE:
-          dropTable(connection, table, delta);
-          break;
-
         case CHANGE:
           alterTable(connection, table, delta);
+          break;
+
+        case REMOVE:
+          dropTable(connection, table, delta);
           break;
 
         default:
@@ -406,6 +408,7 @@ public abstract class DBAdapter implements IDBAdapter
       {
         InternalDBIndex index = (InternalDBIndex)delta.getSchemaElement(schema);
         ChangeKind changeKind = delta.getChangeKind();
+
         switch (changeKind)
         {
         case ADD:
@@ -422,10 +425,6 @@ public abstract class DBAdapter implements IDBAdapter
           }
           break;
 
-        case REMOVE:
-          dropIndex(connection, index, delta);
-          break;
-
         case CHANGE:
           dropIndex(connection, index, delta);
           try
@@ -439,6 +438,10 @@ public abstract class DBAdapter implements IDBAdapter
               throw ex;
             }
           }
+          break;
+
+        case REMOVE:
+          dropIndex(connection, index, delta);
           break;
 
         default:
@@ -481,6 +484,53 @@ public abstract class DBAdapter implements IDBAdapter
    */
   protected void alterTable(Connection connection, IDBTable table, IDBTableDelta delta)
   {
+    for (IDBFieldDelta fieldDelta : delta.getFieldDeltas().values())
+    {
+      ChangeKind changeKind = fieldDelta.getChangeKind();
+      String fieldName = fieldDelta.getName();
+      String tableName = table.getName();
+
+      switch (changeKind)
+      {
+      case ADD:
+        createField(connection, tableName, table.getField(fieldName));
+        break;
+
+      case CHANGE:
+        dropField(connection, tableName, fieldName);
+        createField(connection, tableName, table.getField(fieldName));
+        break;
+
+      case REMOVE:
+        dropField(connection, tableName, fieldName);
+        break;
+
+      default:
+        throw new IllegalStateException("Illegal change kind: " + changeKind);
+      }
+    }
+
+    if (delta.getIndexDeltaCount() != 0)
+    {
+      throw new UnsupportedOperationException("Not yet implemented");
+    }
+  }
+
+  /**
+   * @since 4.6
+   */
+  protected void createField(Connection connection, String tableName, IDBField field)
+  {
+    DBUtil.execute(connection,
+        "ALTER TABLE " + tableName + " ADD COLUMN " + field.getName() + " " + createFieldDefinition(field));
+  }
+
+  /**
+   * @since 4.6
+   */
+  protected void dropField(Connection connection, String tableName, String fieldName)
+  {
+    DBUtil.execute(connection, "ALTER TABLE " + tableName + " DROP COLUMN " + fieldName);
   }
 
   /**

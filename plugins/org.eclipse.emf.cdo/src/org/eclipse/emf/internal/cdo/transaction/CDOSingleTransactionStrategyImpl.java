@@ -12,6 +12,7 @@
 package org.eclipse.emf.internal.cdo.transaction;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -99,17 +100,22 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
     String comment = transaction.getCommitComment();
     transaction.setCommitComment(null);
 
+    CDOBranchPoint mergeSource = transaction.getCommitMergeSource();
+    transaction.setCommitMergeSource(null);
+
     long previousTimeStamp = result.getPreviousTimeStamp();
     CDOBranch branch = transaction.getBranch();
     long timeStamp = result.getTimeStamp();
     String userID = session.getUserID();
 
     InternalCDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
-    return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, commitData);
+    return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource,
+        commitData);
   }
 
   public void rollback(InternalCDOTransaction transaction, InternalCDOUserSavepoint savepoint)
   {
+    transaction.setCommitMergeSource(null);
     transaction.handleRollback((InternalCDOSavepoint)savepoint);
   }
 

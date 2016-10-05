@@ -530,6 +530,27 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getTimeStamp(), infos.get(0).getTimeStamp());
   }
 
+  public void testClientPreviousCommitInfo() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+
+    resource.getContents().add(getModel1Factory().createProduct1());
+    CDOCommitInfo commitInfo1 = transaction.commit();
+
+    resource.getContents().add(getModel1Factory().createProduct1());
+    CDOCommitInfo commitInfo2 = transaction.commit();
+    assertNotSame(commitInfo1, commitInfo2);
+    assertEquals(commitInfo1, commitInfo2.getPreviousCommitInfo());
+
+    resource.getContents().add(getModel1Factory().createProduct1());
+    CDOCommitInfo commitInfo3 = transaction.commit();
+    assertNotSame(commitInfo1, commitInfo3);
+    assertNotSame(commitInfo2, commitInfo3);
+    assertEquals(commitInfo2, commitInfo3.getPreviousCommitInfo());
+  }
+
   @CleanRepositoriesBefore(reason = "Commit info counting")
   @CleanRepositoriesAfter(reason = "Commit info counting")
   public void testClientBranch() throws Exception

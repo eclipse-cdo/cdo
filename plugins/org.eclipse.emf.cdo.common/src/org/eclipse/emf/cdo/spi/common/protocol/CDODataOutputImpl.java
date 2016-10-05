@@ -229,6 +229,18 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
       writeCDOBranch(branch);
       writeString(commitInfo.getUserID());
       writeString(commitInfo.getComment());
+
+      CDOBranchPoint mergeSource = commitInfo.getMergeSource();
+      if (mergeSource != null)
+      {
+        writeBoolean(true);
+        writeCDOBranchPoint(mergeSource);
+      }
+      else
+      {
+        writeBoolean(false);
+      }
+
       writeCDOCommitData(commitInfo);
     }
     else

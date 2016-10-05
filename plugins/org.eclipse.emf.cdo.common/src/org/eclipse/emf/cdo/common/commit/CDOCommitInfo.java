@@ -32,9 +32,24 @@ public interface CDOCommitInfo extends CDOBranchPoint, CDOCommitData
    */
   public long getPreviousTimeStamp();
 
+  /**
+   * @since 4.6
+   */
+  public CDOCommitInfo getPreviousCommitInfo();
+
   public String getUserID();
 
   public String getComment();
+
+  /**
+   * @since 4.6
+   */
+  public CDOBranchPoint getMergeSource();
+
+  /**
+   * @since 4.6
+   */
+  public CDOCommitInfo getMergedCommitInfo();
 
   /**
    * Returns <code>true</code> if this commit info describes the first initializing commit in the {@link CDOCommonRepository repository}, <code>false</code> otherwise.

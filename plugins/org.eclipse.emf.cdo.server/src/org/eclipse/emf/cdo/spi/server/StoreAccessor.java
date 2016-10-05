@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
@@ -62,6 +63,7 @@ public abstract class StoreAccessor extends StoreAccessorBase
     long previousTimeStamp = context.getPreviousTimeStamp();
     String userID = context.getUserID();
     String commitComment = context.getCommitComment();
+    CDOBranchPoint mergeSource = context.getCommitMergeSource();
 
     Store store = getStore();
     boolean deltas = store.getSupportedChangeFormats().contains(IStore.ChangeFormat.DELTA);
@@ -77,7 +79,7 @@ public abstract class StoreAccessor extends StoreAccessorBase
     {
       monitor.begin(1 + newPackageUnits.length + 2 + newObjects.length + detachedObjects.length + dirtyCount + 1);
 
-      writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, monitor.fork());
+      writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, mergeSource, monitor.fork());
       writePackageUnits(newPackageUnits, monitor.fork(newPackageUnits.length));
 
       IDGenerationLocation idGenerationLocation = store.getRepository().getIDGenerationLocation();
@@ -162,9 +164,20 @@ public abstract class StoreAccessor extends StoreAccessorBase
 
   /**
    * @since 4.0
+   * @deprecated As of 4.6 override {@link #writeCommitInfo(CDOBranch, long, long, String, String, CDOBranchPoint, OMMonitor)}.
    */
+  @Deprecated
   protected abstract void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
       String comment, OMMonitor monitor);
+
+  /**
+   * @since 4.6
+   */
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
+      String comment, CDOBranchPoint mergeSource, OMMonitor monitor)
+  {
+    writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, monitor);
+  }
 
   /**
    * @since 4.5

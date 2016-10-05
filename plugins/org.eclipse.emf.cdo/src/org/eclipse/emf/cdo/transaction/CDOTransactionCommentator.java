@@ -10,6 +10,9 @@
  */
 package org.eclipse.emf.cdo.transaction;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+
 import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -24,6 +27,11 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
  */
 public class CDOTransactionCommentator implements Closeable
 {
+  /**
+   * @since 4.6
+   */
+  public static final String MERGE_PREFIX = "Merge from ";
+
   private final IListener transactionListener = new LifecycleEventAdapter()
   {
     @Override
@@ -85,16 +93,56 @@ public class CDOTransactionCommentator implements Closeable
 
   private CDOTransaction transaction;
 
+  private boolean showMerges;
+
   public CDOTransactionCommentator(CDOTransaction transaction)
   {
+    this(transaction, false);
+  }
+
+  /**
+   * @since 4.6
+   */
+  public CDOTransactionCommentator(final CDOTransaction transaction, boolean showMerges)
+  {
     this.transaction = transaction;
-    transaction.addListener(transactionListener);
-    transaction.addTransactionHandler(transactionHandler);
+    this.showMerges = showMerges;
+
+    transaction.syncExec(new Runnable()
+    {
+      public void run()
+      {
+        transaction.addListener(transactionListener);
+        transaction.addTransactionHandler(transactionHandler);
+      }
+    });
   }
 
   public final CDOTransaction getTransaction()
   {
     return transaction;
+  }
+
+  /**
+   * @since 4.6
+   */
+  public final boolean isShowMerges()
+  {
+    return showMerges;
+  }
+
+  /**
+   * @since 4.6
+   */
+  public final void setShowMerges(final boolean showMerges)
+  {
+    transaction.syncExec(new Runnable()
+    {
+      public void run()
+      {
+        CDOTransactionCommentator.this.showMerges = showMerges;
+      }
+    });
   }
 
   public final boolean isClosed()
@@ -104,17 +152,40 @@ public class CDOTransactionCommentator implements Closeable
 
   public void close()
   {
-    transaction.removeTransactionHandler(transactionHandler);
-    transaction.removeListener(transactionListener);
+    transaction.syncExec(new Runnable()
+    {
+      public void run()
+      {
+        transaction.removeTransactionHandler(transactionHandler);
+        transaction.removeListener(transactionListener);
+      }
+    });
+
     transaction = null;
   }
 
   protected String createComment(CDOCommitContext commitContext)
   {
-    StringBuilder builder = new StringBuilder("<");
+    StringBuilder builder = new StringBuilder();
     appendSummary(builder, commitContext);
-    builder.append(">");
     return builder.toString();
+  }
+
+  /**
+   * @since 4.6
+   */
+  public static boolean appendMerge(StringBuilder builder, CDOBranchPoint mergeSource)
+  {
+    if (mergeSource != null)
+    {
+      builder.append(MERGE_PREFIX);
+      builder.append(mergeSource.getBranch().getPathName());
+      builder.append(", ");
+      builder.append(CDOCommonUtil.formatTimeStamp(mergeSource.getTimeStamp()));
+      return true;
+    }
+
+    return false;
   }
 
   /**
@@ -122,10 +193,27 @@ public class CDOTransactionCommentator implements Closeable
    */
   public static void appendSummary(StringBuilder builder, CDOCommitContext commitContext)
   {
+    appendSummary(builder, commitContext, false);
+  }
+
+  /**
+   * @since 4.6
+   */
+  public static boolean appendSummary(StringBuilder builder, CDOCommitContext commitContext, boolean showMerges)
+  {
     boolean needComma = false;
+
+    if (showMerges)
+    {
+      CDOBranchPoint mergeSource = commitContext.getCommitMergeSource();
+      needComma |= appendMerge(builder, mergeSource);
+    }
+
     needComma |= appendSummary(builder, needComma, commitContext.getNewObjects().size(), "addition");
     needComma |= appendSummary(builder, needComma, commitContext.getDirtyObjects().size(), "change");
     needComma |= appendSummary(builder, needComma, commitContext.getDetachedObjects().size(), "removal");
+
+    return needComma;
   }
 
   private static boolean appendSummary(StringBuilder builder, boolean needComma, int count, String label)

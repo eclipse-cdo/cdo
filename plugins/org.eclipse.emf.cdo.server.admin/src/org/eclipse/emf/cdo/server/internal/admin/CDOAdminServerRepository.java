@@ -199,6 +199,11 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     return delegate.getIDGenerationLocation();
   }
 
+  public CommitInfoStorage getCommitInfoStorage()
+  {
+    return delegate.getCommitInfoStorage();
+  }
+
   public long getTimeStamp() throws UnsupportedOperationException
   {
     return delegate.getTimeStamp();
@@ -249,6 +254,7 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     out.writeBoolean(isSerializingCommits());
     out.writeBoolean(isEnsuringReferentialIntegrity());
     out.writeEnum(getIDGenerationLocation());
+    out.writeEnum(getCommitInfoStorage());
   }
 
   public void dispose()

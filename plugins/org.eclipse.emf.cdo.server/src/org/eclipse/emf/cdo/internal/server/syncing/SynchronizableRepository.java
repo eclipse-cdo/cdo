@@ -505,7 +505,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
       String comment = "<replicate raw commits>"; //$NON-NLS-1$
       final CDOCommitInfo commitInfo = manager.createCommitInfo( //
-          branch, toCommitTime, previousCommitTime, SYSTEM_USER_ID, comment, data);
+          branch, toCommitTime, previousCommitTime, SYSTEM_USER_ID, comment, null, data);
 
       CommitNotificationInfo info = new CommitNotificationInfo();
       info.setSender(replicatorSession);
@@ -1088,6 +1088,11 @@ public abstract class SynchronizableRepository extends Repository.Default implem
         public String getCommitComment()
         {
           return WriteThroughCommitContext.this.getCommitComment();
+        }
+
+        public CDOBranchPoint getCommitMergeSource()
+        {
+          return WriteThroughCommitContext.this.getCommitMergeSource();
         }
 
         public CDOBranch getBranch()

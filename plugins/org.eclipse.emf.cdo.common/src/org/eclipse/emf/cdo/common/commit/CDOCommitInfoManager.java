@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 
 /**
- * Loads, provides and possible manages {@link CDOCommitInfo commit info} objects.
+ * Provides access to {@link CDOCommitInfo commit info} objects.
  *
  * @author Andre Dietisheim
  * @since 3.0
@@ -35,6 +35,11 @@ public interface CDOCommitInfoManager
    * @since 4.0
    */
   public CDOCommitInfo getCommitInfo(long timeStamp);
+
+  /**
+   * @since 4.6
+   */
+  public CDOCommitInfo getCommitInfo(long timeStamp, boolean loadOnDemand);
 
   /**
    * @since 4.2
@@ -63,4 +68,14 @@ public interface CDOCommitInfoManager
    * @since 4.2
    */
   public CDOCommitInfo getLastOfBranch(CDOBranch branch);
+
+  /**
+   * @since 4.6
+   */
+  public long getLastCommitOfBranch(CDOBranch branch, boolean loadOnDemand);
+
+  /**
+   * @since 4.6
+   */
+  public long getLastCommit();
 }

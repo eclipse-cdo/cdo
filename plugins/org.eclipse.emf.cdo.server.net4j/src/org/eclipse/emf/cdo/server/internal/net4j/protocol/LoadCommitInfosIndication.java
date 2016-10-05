@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
@@ -68,6 +69,17 @@ public class LoadCommitInfosIndication extends CDOServerReadIndication
             out.writeLong(commitInfo.getTimeStamp());
             out.writeString(commitInfo.getUserID());
             out.writeString(commitInfo.getComment());
+
+            CDOBranchPoint mergeSource = commitInfo.getMergeSource();
+            if (mergeSource != null)
+            {
+              out.writeBoolean(true);
+              out.writeCDOBranchPoint(mergeSource);
+            }
+            else
+            {
+              out.writeBoolean(false);
+            }
           }
           catch (IOException ex)
           {

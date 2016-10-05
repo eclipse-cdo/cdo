@@ -491,7 +491,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       final TeneoAuditCommitInfo teneoCommitInfo = (TeneoAuditCommitInfo)o;
       final CDOCommitInfo cdoCommitInfo = commitInfoManager.createCommitInfo(
           getStore().getRepository().getBranchManager().getMainBranch(), teneoCommitInfo.getCommitTime(),
-          teneoCommitInfo.getCommitTime() - 1, teneoCommitInfo.getUser(), teneoCommitInfo.getComment(), null);
+          teneoCommitInfo.getCommitTime() - 1, teneoCommitInfo.getUser(), teneoCommitInfo.getComment(), null, null);
       handler.handleCommitInfo(cdoCommitInfo);
     }
   }
@@ -680,11 +680,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         final boolean match = exactMatch || revisionName == null || name == null ? ObjectUtil.equals(revisionName, name)
             : revisionName.startsWith(name);
 
-            if (match && !context.addResource(HibernateUtil.getInstance().getCDOID(revision)))
-            {
-              // No more results allowed
-              break;
-            }
+        if (match && !context.addResource(HibernateUtil.getInstance().getCDOID(revision)))
+        {
+          // No more results allowed
+          break;
+        }
       }
     }
   }
@@ -769,11 +769,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       return true;
     }
     else
-      // not mapped
-      if (null != eref.getEAnnotation(TENEO_UNMAPPED_SOURCE))
-      {
-        return false;
-      }
+    // not mapped
+    if (null != eref.getEAnnotation(TENEO_UNMAPPED_SOURCE))
+    {
+      return false;
+    }
 
     // not computed yet
     for (String propName : session.getSessionFactory().getClassMetadata(entityName).getPropertyNames())
@@ -1148,6 +1148,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
       String comment, OMMonitor monitor)

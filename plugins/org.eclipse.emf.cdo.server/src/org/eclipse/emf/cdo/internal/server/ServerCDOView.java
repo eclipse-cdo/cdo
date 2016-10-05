@@ -778,6 +778,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       return repository.getIDGenerationLocation();
     }
 
+    public CommitInfoStorage getCommitInfoStorage()
+    {
+      return repository.getCommitInfoStorage();
+    }
+
     public boolean waitWhileInitial(IProgressMonitor monitor)
     {
       return repository.waitWhileInitial(monitor);

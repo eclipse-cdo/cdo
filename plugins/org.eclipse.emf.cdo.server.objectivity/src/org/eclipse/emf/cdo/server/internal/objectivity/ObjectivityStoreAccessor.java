@@ -291,7 +291,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       if (TRACER_DEBUG.isEnabled())
       {
         TRACER_DEBUG
-        .trace("getObjySession() - context's transaction: " + (cdoTrx == null ? "null" : cdoTrx.toString()));
+            .trace("getObjySession() - context's transaction: " + (cdoTrx == null ? "null" : cdoTrx.toString()));
       }
       if (cdoTrx != null)
       {
@@ -741,7 +741,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     if (TRACER_DEBUG.isEnabled())
     {
       TRACER_DEBUG
-      .trace(" writeRevisions: " + revisions.length + " - time: " + (System.nanoTime() - start) / 1000000.0);
+          .trace(" writeRevisions: " + revisions.length + " - time: " + (System.nanoTime() - start) / 1000000.0);
       // TRACER_DEBUG.trace(" getObjectTime: " + ObjyObjectManager.getObjectTime / 1000000.0);
       // TRACER_DEBUG.trace(" updateObjectTime: " + ObjyObjectManager.updateObjectTime / 1000000.0);
       // TRACER_DEBUG.trace(" resourceCheckAndUpdateTime: " + ObjyObjectManager.resourceCheckAndUpdateTime /
@@ -1612,12 +1612,13 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       }
 
       CDOCommitInfo commitInfo = commitInfoManager.createCommitInfo(infoBranch, timeStamp, previousTimeStamp, userID,
-          comment, null);
+          comment, null, null);
       handler.handleCommitInfo(commitInfo);
     }
 
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
       String comment, OMMonitor monitor)

@@ -29,7 +29,7 @@ import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
-import org.eclipse.emf.cdo.server.IStoreAccessor.Raw;
+import org.eclipse.emf.cdo.server.IStoreAccessor.Raw2;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -63,7 +63,7 @@ import java.util.Set;
 /**
  * @author Simon McDuff
  */
-public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, DurableLocking2, BranchLoader3
+public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, DurableLocking2, BranchLoader3
 {
   private final MEMStore store;
 
@@ -294,11 +294,19 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
     }
   }
 
+  @Deprecated
   @Override
   protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
       String comment, OMMonitor monitor)
   {
-    store.addCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment);
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
+      String comment, CDOBranchPoint mergeSource, OMMonitor monitor)
+  {
+    store.addCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource);
   }
 
   @Override
@@ -449,7 +457,13 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
   public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
       OMMonitor monitor)
   {
-    writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, monitor);
+    writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null, monitor);
+  }
+
+  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
+      CDOBranchPoint mergeSource, OMMonitor monitor)
+  {
+    writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource, monitor);
   }
 
   public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor)

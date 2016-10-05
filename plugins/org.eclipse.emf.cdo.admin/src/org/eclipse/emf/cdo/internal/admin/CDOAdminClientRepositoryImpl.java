@@ -72,6 +72,8 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
 
   private IDGenerationLocation idGenerationLocation;
 
+  private CommitInfoStorage commitInfoStorage;
+
   public CDOAdminClientRepositoryImpl(CDOAdminClientImpl admin, ExtendedDataInputStream in) throws IOException
   {
     this.admin = admin;
@@ -106,6 +108,7 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
     serializingCommits = in.readBoolean();
     ensuringReferentialIntegrity = in.readBoolean();
     idGenerationLocation = in.readEnum(IDGenerationLocation.class);
+    commitInfoStorage = in.readEnum(CommitInfoStorage.class);
   }
 
   public CDOAdminClient getAdmin()
@@ -192,6 +195,11 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
   public IDGenerationLocation getIDGenerationLocation()
   {
     return idGenerationLocation;
+  }
+
+  public CommitInfoStorage getCommitInfoStorage()
+  {
+    return commitInfoStorage;
   }
 
   public boolean waitWhileInitial(IProgressMonitor monitor)

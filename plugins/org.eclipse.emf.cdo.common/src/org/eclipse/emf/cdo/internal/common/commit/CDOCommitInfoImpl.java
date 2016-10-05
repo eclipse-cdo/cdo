@@ -42,20 +42,24 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
 {
   // private static final CDOCommitInfo[] NO_PARENTS = {};
 
-  private InternalCDOCommitInfoManager commitInfoManager;
+  private final InternalCDOCommitInfoManager commitInfoManager;
 
-  private long previousTimeStamp;
+  private final long previousTimeStamp;
 
-  private String userID;
+  private final String userID;
 
-  private String comment;
+  private final String comment;
+
+  private final CDOBranchPoint mergeSource;
+
+  private CDOCommitInfo mergedCommitInfo;
 
   private CDOCommitData commitData;
 
   // private transient CDOCommitInfo[] parents;
 
   public CDOCommitInfoImpl(InternalCDOCommitInfoManager commitInfoManager, CDOBranch branch, long timeStamp,
-      long previousTimeStamp, String userID, String comment, CDOCommitData commitData)
+      long previousTimeStamp, String userID, String comment, CDOBranchPoint mergeSource, CDOCommitData commitData)
   {
     super(branch, timeStamp);
     CheckUtil.checkArg(commitInfoManager, "commitInfoManager"); //$NON-NLS-1$
@@ -63,6 +67,7 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
     this.previousTimeStamp = previousTimeStamp;
     this.userID = userID;
     this.comment = comment;
+    this.mergeSource = mergeSource;
     this.commitData = commitData;
   }
 
@@ -94,6 +99,12 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
     return previousTimeStamp;
   }
 
+  public CDOCommitInfo getPreviousCommitInfo()
+  {
+    return previousTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE ? null
+        : commitInfoManager.getCommitInfo(previousTimeStamp);
+  }
+
   public String getUserID()
   {
     return userID;
@@ -102,6 +113,26 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
   public String getComment()
   {
     return comment;
+  }
+
+  public CDOBranchPoint getMergeSource()
+  {
+    return mergeSource;
+  }
+
+  public CDOCommitInfo getMergedCommitInfo()
+  {
+    if (mergeSource == null)
+    {
+      return null;
+    }
+
+    if (mergedCommitInfo == null)
+    {
+      mergedCommitInfo = commitInfoManager.getCommitInfo(mergeSource.getBranch(), mergeSource.getTimeStamp(), false);
+    }
+
+    return mergedCommitInfo;
   }
 
   public boolean isInitialCommit()

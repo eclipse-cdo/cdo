@@ -400,6 +400,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private IDGenerationLocation idGenerationLocation;
 
+    private CommitInfoStorage commitInfoStorage;
+
     /**
      * @since 4.4
      */
@@ -431,6 +433,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       serializingCommits = in.readBoolean();
       ensuringReferentialIntegrity = in.readBoolean();
       idGenerationLocation = in.readEnum(IDGenerationLocation.class);
+      commitInfoStorage = in.readEnum(CommitInfoStorage.class);
 
       CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);
       for (int i = 0; i < packageUnits.length; i++)
@@ -594,6 +597,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public IDGenerationLocation getIDGenerationLocation()
     {
       return idGenerationLocation;
+    }
+
+    /**
+     * @since 4.6
+     */
+    public CommitInfoStorage getCommitInfoStorage()
+    {
+      return commitInfoStorage;
     }
 
     /**

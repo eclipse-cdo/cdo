@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
@@ -55,8 +54,6 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
-import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
-import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
@@ -166,7 +163,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       public IDBPreparedStatement getPreparedStatement(String sql, ReuseProbability reuseProbability)
       {
         org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability converted = //
-        org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability.values()[reuseProbability.ordinal()];
+            org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability.values()[reuseProbability.ordinal()];
 
         return connection.prepareStatement(sql, converted);
       }
@@ -504,29 +501,23 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
+  @Deprecated
   @Override
   protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
       String comment, OMMonitor monitor)
   {
-    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_CREATE_COMMIT_INFO, ReuseProbability.HIGH);
+    writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null, monitor);
+  }
 
-    try
+  @Override
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
+      String comment, CDOBranchPoint mergeSource, OMMonitor monitor)
+  {
+    CommitInfoTable commitInfoTable = getStore().getCommitInfoTable();
+    if (commitInfoTable != null)
     {
-      stmt.setLong(1, timeStamp);
-      stmt.setLong(2, previousTimeStamp);
-      stmt.setInt(3, branch.getID());
-      stmt.setString(4, userID);
-      stmt.setString(5, comment);
-
-      DBUtil.update(stmt, true);
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(stmt);
+      commitInfoTable.writeCommitInfo(this, branch, timeStamp, previousTimeStamp, userID, comment, mergeSource,
+          monitor);
     }
   }
 
@@ -1089,101 +1080,10 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
-    int count = CDOCommitInfoUtil.decodeCount(endTime);
-
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.COMMIT_INFOS_PREVIOUS_TIMESTAMP);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.COMMIT_INFOS_USER);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(CDODBSchema.COMMIT_INFOS_COMMENT);
-    if (branch == null)
+    CommitInfoTable commitInfoTable = getStore().getCommitInfoTable();
+    if (commitInfoTable != null)
     {
-      builder.append(", "); //$NON-NLS-1$
-      builder.append(CDODBSchema.COMMIT_INFOS_BRANCH);
-    }
-
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(CDODBSchema.COMMIT_INFOS);
-    boolean where = false;
-
-    if (branch != null)
-    {
-      builder.append(where ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
-      builder.append(CDODBSchema.COMMIT_INFOS_BRANCH);
-      builder.append("="); //$NON-NLS-1$
-      builder.append(branch.getID());
-      where = true;
-    }
-
-    if (startTime != CDOBranchPoint.UNSPECIFIED_DATE)
-    {
-      builder.append(where ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
-      builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
-      builder.append(count < 0 ? "<=" : ">="); //$NON-NLS-1$
-      builder.append(startTime);
-      where = true;
-    }
-
-    if (endTime > CDOBranchPoint.UNSPECIFIED_DATE)
-    {
-      builder.append(where ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
-      builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
-      builder.append("<="); //$NON-NLS-1$
-      builder.append(endTime);
-      where = true;
-    }
-
-    builder.append(" ORDER BY "); //$NON-NLS-1$
-    builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
-    builder.append(count < 0 || CDOBranchPoint.UNSPECIFIED_DATE <= endTime && endTime <= startTime ? " DESC" : " ASC"); //$NON-NLS-1$
-    String sql = builder.toString();
-
-    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
-    ResultSet resultSet = null;
-
-    InternalRepository repository = getStore().getRepository();
-    InternalCDOBranchManager branchManager = repository.getBranchManager();
-    InternalCDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
-    count = Math.abs(count);
-
-    try
-    {
-      resultSet = stmt.executeQuery();
-      while (resultSet.next())
-      {
-        long timeStamp = resultSet.getLong(1);
-        long previousTimeStamp = resultSet.getLong(2);
-        String userID = resultSet.getString(3);
-        String comment = resultSet.getString(4);
-        CDOBranch infoBranch = branch;
-        if (infoBranch == null)
-        {
-          int id = resultSet.getInt(5);
-          infoBranch = branchManager.getBranch(id);
-        }
-
-        CDOCommitInfo commitInfo = commitInfoManager.createCommitInfo(infoBranch, timeStamp, previousTimeStamp, userID,
-            comment, null);
-        handler.handleCommitInfo(commitInfo);
-
-        if (--count == 0)
-        {
-          break;
-        }
-      }
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-      DBUtil.close(stmt);
+      commitInfoTable.loadCommitInfos(this, branch, startTime, endTime, handler);
     }
   }
 
@@ -1204,7 +1104,9 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       throws IOException
   {
     DBStore store = getStore();
-    if (store.getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE)
+    InternalRepository repository = store.getRepository();
+
+    if (repository.getIDGenerationLocation() == IDGenerationLocation.STORE)
     {
       out.writeCDOID(store.getIDHandler().getLastObjectID()); // See bug 325097
     }
@@ -1214,8 +1116,16 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     String where = " WHERE " + CDODBSchema.BRANCHES_ID + " BETWEEN " + fromBranchID + " AND " + toBranchID;
     DBUtil.serializeTable(out, connection, CDODBSchema.BRANCHES, null, where);
 
-    where = " WHERE " + CDODBSchema.COMMIT_INFOS_TIMESTAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
-    DBUtil.serializeTable(out, connection, CDODBSchema.COMMIT_INFOS, null, where);
+    CommitInfoTable commitInfoTable = store.getCommitInfoTable();
+    if (commitInfoTable != null)
+    {
+      out.writeBoolean(true);
+      commitInfoTable.rawExport(connection, out, fromCommitTime, toCommitTime);
+    }
+    else
+    {
+      out.writeBoolean(false);
+    }
 
     DurableLockingManager durableLockingManager = store.getDurableLockingManager();
     durableLockingManager.rawExport(connection, out, fromCommitTime, toCommitTime);
@@ -1251,7 +1161,24 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     try
     {
       DBUtil.deserializeTable(in, connection, CDODBSchema.BRANCHES, monitor.fork());
-      DBUtil.deserializeTable(in, connection, CDODBSchema.COMMIT_INFOS, monitor.fork());
+
+      CommitInfoTable commitInfoTable = store.getCommitInfoTable();
+      if (in.readBoolean())
+      {
+        if (commitInfoTable == null)
+        {
+          throw new IllegalStateException("Commit info table is missing");
+        }
+
+        commitInfoTable.rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork());
+      }
+      else
+      {
+        if (commitInfoTable != null)
+        {
+          throw new IllegalStateException("Commit info data is expected but missing");
+        }
+      }
 
       DurableLockingManager durableLockingManager = store.getDurableLockingManager();
       durableLockingManager.rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork());
@@ -1308,7 +1235,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       Connection connection = getConnection();
 
       Collection<InternalCDOPackageUnit> imported = //
-      metaDataManager.rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork());
+          metaDataManager.rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork());
       packageUnits.addAll(imported);
 
       if (!packageUnits.isEmpty())
@@ -1390,7 +1317,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
       OMMonitor monitor)
   {
-    writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, monitor);
+    writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null, monitor);
+  }
+
+  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
+      CDOBranchPoint mergeSource, OMMonitor monitor)
+  {
+    writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource, monitor);
   }
 
   public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor)

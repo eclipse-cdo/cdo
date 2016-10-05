@@ -262,6 +262,8 @@ public abstract class CDOServerExporter<OUT>
   /**
    * XML constants being used by both {@link CDOServerExporter exporters} and {@link CDOServerImporter importers}.
    *
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    * @author Eike Stepper
    */
   public static interface XMLConstants
@@ -369,6 +371,16 @@ public abstract class CDOServerExporter<OUT>
     public static final String COMMIT_USER = "user";
 
     public static final String COMMIT_COMMENT = "comment";
+
+    /**
+     * @since 4.6
+     */
+    public static final String MERGE_SOURCE_BRANCH = "mergeSourceBranch";
+
+    /**
+     * @since 4.6
+     */
+    public static final String MERGE_SOURCE_TIME = "mergeSourceTime";
   }
 
   /**
@@ -377,7 +389,7 @@ public abstract class CDOServerExporter<OUT>
    *
    * @author Eike Stepper
    */
-  public static class XML extends CDOServerExporter<XMLOutput>implements XMLConstants
+  public static class XML extends CDOServerExporter<XMLOutput> implements XMLConstants
   {
     public XML(IRepository repository)
     {
@@ -649,6 +661,13 @@ public abstract class CDOServerExporter<OUT>
 
       out.attribute(COMMIT_USER, commitInfo.getUserID());
       out.attribute(COMMIT_COMMENT, commitInfo.getComment());
+
+      CDOBranchPoint mergeSource = commitInfo.getMergeSource();
+      if (mergeSource != null)
+      {
+        out.attribute(MERGE_SOURCE_BRANCH, mergeSource.getBranch().getID());
+        out.attribute(MERGE_SOURCE_TIME, mergeSource.getTimeStamp());
+      }
     }
 
     protected final String str(CDOID id)

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -19,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,14 +31,22 @@ import java.util.Map;
  */
 public class FailureCommitInfo implements CDOCommitInfo
 {
-  private long timeStamp;
+  private final InternalCDOCommitInfoManager commitInfoManager;
 
-  private long previousTimeStamp;
+  private final long timeStamp;
 
-  public FailureCommitInfo(long timeStamp, long previousTimeStamp)
+  private final long previousTimeStamp;
+
+  public FailureCommitInfo(InternalCDOCommitInfoManager commitInfoManager, long timeStamp, long previousTimeStamp)
   {
+    this.commitInfoManager = commitInfoManager;
     this.timeStamp = timeStamp;
     this.previousTimeStamp = previousTimeStamp;
+  }
+
+  public CDOCommitInfoManager getCommitInfoManager()
+  {
+    return commitInfoManager;
   }
 
   public long getTimeStamp()
@@ -47,6 +57,12 @@ public class FailureCommitInfo implements CDOCommitInfo
   public long getPreviousTimeStamp()
   {
     return previousTimeStamp;
+  }
+
+  public CDOCommitInfo getPreviousCommitInfo()
+  {
+    return previousTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE ? null
+        : commitInfoManager.getCommitInfo(previousTimeStamp);
   }
 
   public CDOBranch getBranch()
@@ -64,7 +80,12 @@ public class FailureCommitInfo implements CDOCommitInfo
     return null;
   }
 
-  public CDOCommitInfoManager getCommitInfoManager()
+  public CDOBranchPoint getMergeSource()
+  {
+    return null;
+  }
+
+  public CDOCommitInfo getMergedCommitInfo()
   {
     return null;
   }

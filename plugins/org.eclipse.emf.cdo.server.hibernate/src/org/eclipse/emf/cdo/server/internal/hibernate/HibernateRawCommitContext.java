@@ -106,6 +106,11 @@ public class HibernateRawCommitContext implements InternalCommitContext
     return null;
   }
 
+  public CDOBranchPoint getCommitMergeSource()
+  {
+    return null;
+  }
+
   public long getLastUpdateTime()
   {
     return 0;
@@ -347,6 +352,10 @@ public class HibernateRawCommitContext implements InternalCommitContext
   }
 
   public void setCommitComment(String comment)
+  {
+  }
+
+  public void setCommitMergeSource(CDOBranchPoint mergeSource)
   {
   }
 

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.ui.widgets;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory.TriggerLoadElement;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -50,8 +51,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -80,6 +79,20 @@ public class CommitHistoryComposite extends Composite
     protected void onAdded(IContainer<CDOCommitInfo> history, CDOCommitInfo commitInfo)
     {
       netRenderer.addCommit(commitInfo);
+    }
+  };
+
+  private CDOCommitInfoHandler revealElementHandler = new CDOCommitInfoHandler()
+  {
+    public void handleCommitInfo(final CDOCommitInfo commitInfo)
+    {
+      getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          tableViewer.reveal(commitInfo);
+        }
+      });
     }
   };
 
@@ -113,14 +126,6 @@ public class CommitHistoryComposite extends Composite
         {
           commitInfoChanged((CDOCommitInfo)selectedElement);
         }
-      }
-    });
-
-    tableViewer.addDoubleClickListener(new IDoubleClickListener()
-    {
-      public void doubleClick(DoubleClickEvent event)
-      {
-        doubleClicked();
       }
     });
 
@@ -198,18 +203,31 @@ public class CommitHistoryComposite extends Composite
 
   public void refreshLayout()
   {
+    refreshLayout(false);
+  }
+
+  /**
+   * @since 4.6
+   */
+  public void refreshLayout(boolean refreshCommits)
+  {
+    Table table = tableViewer.getTable();
+    int topIndex = table.getTopIndex();
+
     netRenderer.setInput(input);
-    CDOCommitInfo[] elements = history.getElements();
-    for (int i = 0; i < elements.length; i++)
+
+    if (refreshCommits)
     {
-      CDOCommitInfo commitInfo = elements[i];
-      netRenderer.addCommit(commitInfo);
+      CDOCommitInfo[] elements = history.getElements();
+      for (int i = 0; i < elements.length; i++)
+      {
+        CDOCommitInfo commitInfo = elements[i];
+        netRenderer.addCommit(commitInfo);
+      }
     }
 
-    Table table = tableViewer.getTable();
-    table.setTopIndex(0);
     tableViewer.setInput(history);
-    table.setTopIndex(0);
+    table.setTopIndex(topIndex);
   }
 
   public final CDOCommitHistory getHistory()
@@ -273,29 +291,12 @@ public class CommitHistoryComposite extends Composite
     {
       if (commitInfo instanceof TriggerLoadElement)
       {
-        history.triggerLoad(new RevealElementHandler());
+        history.triggerLoad(revealElementHandler);
       }
       else
       {
         doubleClicked(commitInfo);
       }
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class RevealElementHandler implements CDOCommitInfoHandler
-  {
-    public void handleCommitInfo(final CDOCommitInfo commitInfo)
-    {
-      getDisplay().asyncExec(new Runnable()
-      {
-        public void run()
-        {
-          tableViewer.reveal(commitInfo);
-        }
-      });
     }
   }
 
@@ -600,6 +601,8 @@ public class CommitHistoryComposite extends Composite
 
     private boolean formatTimeStamps = true;
 
+    private boolean shortenBranchPaths = true;
+
     public LabelProvider()
     {
       addColumn(new Column<CDOCommitInfo>("Time", 160)
@@ -612,12 +615,7 @@ public class CommitHistoryComposite extends Composite
             return StringUtil.EMPTY;
           }
 
-          if (formatTimeStamps)
-          {
-            return CDOCommonUtil.formatTimeStamp(commitInfo.getTimeStamp());
-          }
-
-          return "" + commitInfo.getTimeStamp();
+          return getTimeStampString(commitInfo.getTimeStamp());
         }
 
         @Override
@@ -697,11 +695,11 @@ public class CommitHistoryComposite extends Composite
             {
               if (builder == null)
               {
-                builder = new StringBuilder(commitBranch.getPathName());
+                builder = new StringBuilder(getBranchString(commitBranch));
               }
 
               builder.append(", ");
-              builder.append(childBranch.getPathName());
+              builder.append(getBranchString(childBranch));
             }
           }
 
@@ -710,7 +708,7 @@ public class CommitHistoryComposite extends Composite
             return builder.toString();
           }
 
-          return commitBranch.getPathName();
+          return getBranchString(commitBranch);
         }
 
         @Override
@@ -727,6 +725,26 @@ public class CommitHistoryComposite extends Composite
           }
 
           return (Image)getResource(BRANCH_GRAY);
+        }
+      });
+
+      addColumn(new Column<CDOCommitInfo>("Merge Source", 160)
+      {
+        @Override
+        public String getText(CDOCommitInfo commitInfo)
+        {
+          if (commitInfo instanceof CDOCommitHistory.TriggerLoadElement)
+          {
+            return null;
+          }
+
+          CDOBranchPoint mergeSource = commitInfo.getMergeSource();
+          if (mergeSource != null)
+          {
+            return getBranchString(mergeSource.getBranch()) + ", " + getTimeStampString(mergeSource.getTimeStamp());
+          }
+
+          return null;
         }
       });
     }
@@ -759,6 +777,48 @@ public class CommitHistoryComposite extends Composite
     public void setFormatTimeStamps(boolean formatTimeStamps)
     {
       this.formatTimeStamps = formatTimeStamps;
+    }
+
+    /**
+     * @since 4.6
+     */
+    public boolean isShortenBranchPaths()
+    {
+      return shortenBranchPaths;
+    }
+
+    /**
+     * @since 4.6
+     */
+    public void setShortenBranchPaths(boolean shortenBranchPaths)
+    {
+      this.shortenBranchPaths = shortenBranchPaths;
+    }
+
+    /**
+     * @since 4.6
+     */
+    public String getBranchString(CDOBranch branch)
+    {
+      if (shortenBranchPaths)
+      {
+        return branch.getName();
+      }
+
+      return branch.getPathName();
+    }
+
+    /**
+     * @since 4.6
+     */
+    public String getTimeStampString(long timeStamp)
+    {
+      if (formatTimeStamps)
+      {
+        return CDOCommonUtil.formatTimeStamp(timeStamp);
+      }
+
+      return "" + timeStamp;
     }
   }
 }

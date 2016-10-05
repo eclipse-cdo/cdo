@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.CDOObjectHistory;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -23,8 +23,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitHistoryImpl;
 
-import org.eclipse.net4j.util.event.FinishedEvent;
-import org.eclipse.net4j.util.event.IListener;
+import java.util.List;
 
 /**
  * A cache for the {@link CDOCommitInfo commit infos} of a branch or of an entire repository.
@@ -53,7 +52,7 @@ public class CDOObjectHistoryImpl extends CDOCommitHistoryImpl implements CDOObj
   }
 
   @Override
-  protected boolean filter(CDOCommitInfo commitInfo)
+  protected boolean filterCommitInfo(CDOCommitInfo commitInfo)
   {
     if (commitInfo.isCommitDataLoaded())
     {
@@ -86,14 +85,13 @@ public class CDOObjectHistoryImpl extends CDOCommitHistoryImpl implements CDOObj
       return true;
     }
 
-    return super.filter(commitInfo);
+    return super.filterCommitInfo(commitInfo);
   }
 
   @Override
-  protected void doLoadCommitInfos(CDOCommitInfoHandler handler)
+  protected void loadCommitInfos(int loadCount, List<CDOCommitInfo> addedCommitInfos)
   {
-    int count = getLoadCount();
-    for (int i = 0; i < count; i++)
+    for (int i = 0; i < loadCount; i++)
     {
       if (loadedRevision == null)
       {
@@ -112,7 +110,7 @@ public class CDOObjectHistoryImpl extends CDOCommitHistoryImpl implements CDOObj
           CDOBranchPoint base = loadedRevision.getBranch().getBase();
           if (base.getBranch() == null)
           {
-            // Reached repository creation
+            // Reached repository creation.
             setFull();
             break;
           }
@@ -121,7 +119,7 @@ public class CDOObjectHistoryImpl extends CDOCommitHistoryImpl implements CDOObj
               CDORevision.DEPTH_NONE, true);
           if (revision == null)
           {
-            // Reached branch where the object does not exist
+            // Reached branch where the object does not exist anymore.
             setFull();
             break;
           }
@@ -130,19 +128,12 @@ public class CDOObjectHistoryImpl extends CDOCommitHistoryImpl implements CDOObj
         }
       }
 
-      CDOCommitInfo commitInfo = getManager().getCommitInfo(loadedRevision.getTimeStamp());
-      handleCommitInfo(commitInfo);
-
-      if (handler != null)
+      CDOCommitInfoManager manager = getManager();
+      CDOCommitInfo commitInfo = manager.getCommitInfo(loadedRevision.getTimeStamp());
+      if (addCommitInfo(commitInfo))
       {
-        handler.handleCommitInfo(commitInfo);
+        addedCommitInfos.add(commitInfo);
       }
-    }
-
-    if (handler instanceof IListener)
-    {
-      IListener listener = (IListener)handler;
-      listener.notifyEvent(FinishedEvent.INSTANCE);
     }
   }
 }

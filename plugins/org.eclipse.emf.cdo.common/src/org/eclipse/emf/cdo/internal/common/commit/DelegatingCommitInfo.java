@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
@@ -49,6 +50,11 @@ public abstract class DelegatingCommitInfo implements CDOCommitInfo
     return getDelegate().getPreviousTimeStamp();
   }
 
+  public CDOCommitInfo getPreviousCommitInfo()
+  {
+    return getDelegate().getPreviousCommitInfo();
+  }
+
   public long getTimeStamp()
   {
     return getDelegate().getTimeStamp();
@@ -62,6 +68,16 @@ public abstract class DelegatingCommitInfo implements CDOCommitInfo
   public String getComment()
   {
     return getDelegate().getComment();
+  }
+
+  public CDOBranchPoint getMergeSource()
+  {
+    return getDelegate().getMergeSource();
+  }
+
+  public CDOCommitInfo getMergedCommitInfo()
+  {
+    return getDelegate().getMergedCommitInfo();
   }
 
   public boolean isEmpty()

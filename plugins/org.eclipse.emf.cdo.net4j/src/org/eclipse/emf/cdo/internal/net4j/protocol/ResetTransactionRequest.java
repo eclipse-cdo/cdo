@@ -66,7 +66,7 @@ public class ResetTransactionRequest extends CDOClientRequest<CDOCommitInfo>
       long previousTimeStamp = in.readLong();
 
       InternalCDOCommitInfoManager commitInfoManager = getSession().getCommitInfoManager();
-      return commitInfoManager.createCommitInfo(null, timeStamp, previousTimeStamp, null, null, null);
+      return commitInfoManager.createCommitInfo(null, timeStamp, previousTimeStamp, null, null, null, null);
     }
 
     return null;

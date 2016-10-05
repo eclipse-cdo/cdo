@@ -19,7 +19,9 @@ import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -29,8 +31,8 @@ import java.util.WeakHashMap;
 public class Net
 {
   private static final RGB[] RGBS = new RGB[] { new RGB(133, 166, 214), new RGB(221, 205, 93), new RGB(199, 134, 57),
-    new RGB(131, 150, 98), new RGB(197, 123, 127), new RGB(139, 136, 140), new RGB(48, 135, 144),
-    new RGB(190, 93, 66), new RGB(143, 163, 54), new RGB(180, 148, 74), new RGB(101, 101, 217), new RGB(72, 153, 119),
+      new RGB(131, 150, 98), new RGB(197, 123, 127), new RGB(139, 136, 140), new RGB(48, 135, 144),
+      new RGB(190, 93, 66), new RGB(143, 163, 54), new RGB(180, 148, 74), new RGB(101, 101, 217), new RGB(72, 153, 119),
       new RGB(23, 101, 160), new RGB(132, 164, 118), new RGB(255, 230, 59), new RGB(136, 176, 70), new RGB(255, 138, 1),
       new RGB(123, 187, 95), new RGB(233, 88, 98), new RGB(93, 158, 254), new RGB(175, 215, 0), new RGB(140, 134, 142),
       new RGB(232, 168, 21), new RGB(0, 172, 191), new RGB(251, 58, 4), new RGB(63, 64, 255), new RGB(27, 194, 130),
@@ -48,15 +50,19 @@ public class Net
 
   private Track[] tracks = {};
 
-  private Map<CDOBranch, Branch> branches = new HashMap<CDOBranch, Branch>();
+  private final Map<CDOBranch, Branch> branches = new HashMap<CDOBranch, Branch>();
 
-  private Map<CDOCommitInfo, Commit> commits = new WeakHashMap<CDOCommitInfo, Commit>();
+  private final Map<CDOCommitInfo, Commit> commits = new WeakHashMap<CDOCommitInfo, Commit>();
+
+  private final Map<CDOCommitInfo, List<Commit>> danglingMergeTargets = new WeakHashMap<CDOCommitInfo, List<Commit>>();
 
   private int commitCounter;
 
   private Commit firstCommit;
 
   private Commit lastCommit;
+
+  private boolean hideExceptions;
 
   public Net(CDOSession session, CDOID objectID, ResourceManager resourceManager)
   {
@@ -90,6 +96,55 @@ public class Net
     return lastCommit;
   }
 
+  public final Branch getBranch(CDOBranch cdoBranch)
+  {
+    Branch branch = branches.get(cdoBranch);
+    if (branch == null)
+    {
+      branch = new Branch(this, cdoBranch);
+      branches.put(cdoBranch, branch);
+    }
+
+    return branch;
+  }
+
+  public final Commit getCommit(CDOCommitInfo commitInfo)
+  {
+    return commits.get(commitInfo);
+  }
+
+  /**
+   * @deprecated
+   */
+  @Deprecated
+  public final boolean hasBranchCommitBetween(Branch branch, long fromTime, long toTime)
+  {
+    for (Commit commit : commits.values())
+    {
+      if (commit.getBranch() == branch)
+      {
+        long time = commit.getTime();
+        if (fromTime < time && time < toTime)
+        {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  public final Commit getOrAddCommit(CDOCommitInfo commitInfo)
+  {
+    Commit commit = getCommit(commitInfo);
+    if (commit == null)
+    {
+      commit = addCommit(commitInfo);
+    }
+
+    return commit;
+  }
+
   public Color getColor(int number)
   {
     if (colors == null)
@@ -111,29 +166,6 @@ public class Net
   public String toString()
   {
     return "Net[" + session + ", " + objectID + "]";
-  }
-
-  public final Branch getBranch(CDOBranch cdoBranch)
-  {
-    Branch branch = branches.get(cdoBranch);
-    if (branch == null)
-    {
-      branch = new Branch(this, cdoBranch);
-      branches.put(cdoBranch, branch);
-    }
-
-    return branch;
-  }
-
-  public final Commit getCommit(CDOCommitInfo commitInfo)
-  {
-    Commit commit = commits.get(commitInfo);
-    if (commit == null)
-    {
-      commit = addCommit(commitInfo);
-    }
-
-    return commit;
   }
 
   private final Segment getSegment(CDOCommitInfo commitInfo)
@@ -267,7 +299,7 @@ public class Net
       track = createTrack();
     }
 
-    Segment segment = new Segment(track, branch);
+    Segment segment = new Segment(track, branch, null);
     track.addSegment(segment, afterLast);
     branch.addSegment(segment, afterLast);
 
@@ -338,6 +370,64 @@ public class Net
     return segments;
   }
 
+  Segment createMergeSegment(Commit mergeSource, long toTime)
+  {
+    Branch branch = mergeSource.getBranch();
+    long fromTime = mergeSource.getTime();
+
+    for (int i = 0; i < tracks.length; i++)
+    {
+      Track track = tracks[i];
+
+      Segment segment = track.getFirstSegment();
+      long previousLastTime = 0;
+
+      while (segment != null)
+      {
+        if (previousLastTime < fromTime && toTime < segment.getFirstVisualTime())
+        {
+          Segment mergeSegment = new Segment(track, branch, mergeSource);
+
+          Segment previousInTrack = segment.getPreviousInTrack();
+          if (previousInTrack != null)
+          {
+            mergeSegment.setNextInTrack(segment);
+            segment.setPreviousInTrack(mergeSegment);
+
+            mergeSegment.setPreviousInTrack(previousInTrack);
+            previousInTrack.setNextInTrack(mergeSegment);
+          }
+          else
+          {
+            track.addSegment(mergeSegment, false);
+          }
+
+          return mergeSegment;
+        }
+
+        previousLastTime = segment.getLastCommitTime();
+        if (previousLastTime > fromTime)
+        {
+          break;
+        }
+
+        segment = segment.getNextInTrack();
+      }
+
+      if (previousLastTime < fromTime && toTime < lastCommit.getTime())
+      {
+        Segment mergeSegment = new Segment(track, branch, mergeSource);
+        track.addSegment(mergeSegment, true);
+        return mergeSegment;
+      }
+    }
+
+    Track track = createTrack();
+    Segment mergeSegment = new Segment(track, branch, mergeSource);
+    track.addSegment(mergeSegment, true);
+    return mergeSegment;
+  }
+
   Commit addCommit(CDOCommitInfo commitInfo)
   {
     Segment segment = getSegment(commitInfo);
@@ -368,11 +458,45 @@ public class Net
     }
 
     commits.put(commitInfo, commit);
+
+    List<Commit> mergeTargets = danglingMergeTargets.remove(commitInfo);
+    if (mergeTargets != null)
+    {
+      for (Commit mergeTarget : mergeTargets)
+      {
+        mergeTarget.setMergeSource(commit);
+      }
+
+      commit.addMergeTargets(mergeTargets);
+    }
+
     return commit;
+  }
+
+  void addDanglingMergeTarget(CDOCommitInfo mergedCommitInfo, Commit mergeTarget)
+  {
+    List<Commit> mergeTargets = danglingMergeTargets.get(mergedCommitInfo);
+    if (mergeTargets == null)
+    {
+      mergeTargets = new ArrayList<Commit>(1);
+      danglingMergeTargets.put(mergedCommitInfo, mergeTargets);
+    }
+
+    mergeTargets.add(mergeTarget);
   }
 
   int getCommitCounter()
   {
     return commitCounter;
+  }
+
+  boolean isHideExceptions()
+  {
+    return hideExceptions;
+  }
+
+  void hideExceptions()
+  {
+    hideExceptions = true;
   }
 }

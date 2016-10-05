@@ -619,6 +619,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
     }
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
       String comment, OMMonitor monitor)

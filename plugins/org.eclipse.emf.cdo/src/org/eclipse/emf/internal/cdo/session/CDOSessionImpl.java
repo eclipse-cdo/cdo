@@ -1990,7 +1990,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
         Map<CDORevision, CDOPermission> oldPermissions = null;
         Map<CDOID, InternalCDORevision> oldRevisions = null;
 
-        boolean success = commitInfo.getBranch() != null;
+        CDOBranch branch = commitInfo.getBranch();
+        boolean success = branch != null;
         if (success)
         {
           oldRevisions = reviseRevisions();
@@ -1999,6 +2000,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
           {
             oldPermissions = updatePermissions(views);
           }
+
+          commitInfoManager.setLastCommitOfBranch(branch, timeStamp);
         }
 
         if (options.isPassiveUpdateEnabled()/* || sender != null */)
@@ -2295,6 +2298,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
       return commitInfo.getPreviousTimeStamp();
     }
 
+    public CDOCommitInfo getPreviousCommitInfo()
+    {
+      return commitInfo.getPreviousCommitInfo();
+    }
+
     public String getUserID()
     {
       return commitInfo.getUserID();
@@ -2303,6 +2311,18 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
     public String getComment()
     {
       return commitInfo.getComment();
+    }
+
+    public CDOBranchPoint getMergeSource()
+    {
+      return commitInfo.getMergeSource();
+    }
+
+    public CDOCommitInfo getMergedCommitInfo()
+    {
+      CDOBranchPoint mergeSource = getMergeSource();
+      return mergeSource == null ? null
+          : commitInfoManager.getCommitInfo(mergeSource.getBranch(), mergeSource.getTimeStamp(), false);
     }
 
     public boolean isEmpty()

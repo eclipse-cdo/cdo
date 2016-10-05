@@ -12,10 +12,15 @@ package org.eclipse.emf.cdo.internal.ui.history;
 
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.ListIterator;
+
 /**
  * @author Eike Stepper
  */
-public class Commit
+public final class Commit
 {
   private final CDOCommitInfo commitInfo;
 
@@ -25,30 +30,72 @@ public class Commit
 
   private int commitCounter = -1;
 
+  private Commit mergeSource;
+
+  private List<Commit> mergeTargets;
+
+  private Segment mergeSegment;
+
   public Commit(CDOCommitInfo commitInfo, Segment segment)
   {
     this.segment = segment;
     this.commitInfo = commitInfo;
+
+    CDOCommitInfo mergedCommitInfo = commitInfo.getMergedCommitInfo();
+    if (mergedCommitInfo != null)
+    {
+      Net net = getNet();
+
+      mergeSource = net.getCommit(mergedCommitInfo);
+      if (mergeSource != null)
+      {
+        mergeSource.addMergeTargets(Collections.singletonList(this));
+      }
+      else
+      {
+        net.addDanglingMergeTarget(mergedCommitInfo, this);
+      }
+    }
   }
 
-  public final CDOCommitInfo getCommitInfo()
+  public CDOCommitInfo getCommitInfo()
   {
     return commitInfo;
   }
 
-  public final Net getNet()
+  public Net getNet()
   {
     return segment.getNet();
   }
 
-  public final Branch getBranch()
+  public Track getTrack()
+  {
+    return segment.getTrack();
+  }
+
+  public Branch getBranch()
   {
     return segment.getBranch();
   }
 
-  public final long getTime()
+  public long getTime()
   {
     return commitInfo.getTimeStamp();
+  }
+
+  public Commit getMergeSource()
+  {
+    return mergeSource;
+  }
+
+  public List<Commit> getMergeTargets()
+  {
+    return mergeTargets;
+  }
+
+  public Segment getMergeSegment()
+  {
+    return mergeSegment;
   }
 
   public final Segment getSegment()
@@ -65,6 +112,26 @@ public class Commit
     {
       long time = getTime();
       rowSegments = net.createRowSegments(time);
+
+      // int xxx;
+      // String dump = "row = " + time + " --> ";
+      // for (Segment segment : rowSegments)
+      // {
+      // if (segment == null)
+      // {
+      // dump += " ";
+      // }
+      // else if (segment.isMerge())
+      // {
+      // dump += ":";
+      // }
+      // else
+      // {
+      // dump += "|";
+      // }
+      // }
+      // System.out.println(dump);
+
       commitCounter = netCommitCounter;
     }
 
@@ -87,5 +154,74 @@ public class Commit
   public String toString()
   {
     return "Commit[" + getTime() + " --> " + segment + "]";
+  }
+
+  void setMergeSource(Commit mergeSource)
+  {
+    this.mergeSource = mergeSource;
+  }
+
+  void addMergeTargets(List<Commit> mergeTargets)
+  {
+    for (Commit mergeTarget : mergeTargets)
+    {
+      addMergeTargetToList(mergeTarget);
+    }
+
+    computeMergeSegment();
+  }
+
+  private void addMergeTargetToList(Commit mergeTarget)
+  {
+    if (mergeTargets == null)
+    {
+      mergeTargets = new ArrayList<Commit>(1);
+    }
+    else
+    {
+      for (ListIterator<Commit> it = mergeTargets.listIterator(); it.hasNext();)
+      {
+        Commit commit = it.next();
+        if (commit.getTime() > mergeTarget.getTime())
+        {
+          it.previous();
+          it.add(mergeTarget);
+          return;
+        }
+      }
+    }
+
+    mergeTargets.add(mergeTarget);
+  }
+
+  private void computeMergeSegment()
+  {
+    if (mergeSegment != null)
+    {
+      mergeSegment.getTrack().removeSegment(mergeSegment);
+      mergeSegment = null;
+    }
+
+    Commit lastMergeTarget = mergeTargets.get(mergeTargets.size() - 1);
+    long lastMergeTime = lastMergeTarget.getTime();
+
+    Net net = getNet();
+    Track track = getTrack();
+    Branch branch = getBranch();
+    long commitTime = getTime();
+
+    if (isLastInBranch() && !track.hasSegment(commitTime + 1, lastMergeTime))
+    {
+      mergeSegment = new Segment(track, branch, this);
+      mergeSegment.adjustCommitTimes(commitTime + 1);
+      mergeSegment.adjustCommitTimes(lastMergeTime);
+      track.addSegment(mergeSegment, true);
+    }
+    else // if (net.hasBranchCommitBetween(mergeTarget.getBranch(), commitTime, lastMergeTime))
+    {
+      mergeSegment = net.createMergeSegment(this, lastMergeTime);
+      mergeSegment.adjustCommitTimes(commitTime);
+      mergeSegment.adjustCommitTimes(lastMergeTime);
+    }
   }
 }

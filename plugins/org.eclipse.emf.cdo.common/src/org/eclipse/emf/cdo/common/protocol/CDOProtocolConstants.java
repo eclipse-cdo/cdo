@@ -30,8 +30,9 @@ public interface CDOProtocolConstants
    * @since 4.2
    * @noreference This field is not intended to be referenced by clients.
    */
-  public static final int PROTOCOL_VERSION = 32; // ROLLBACK_REASON_UNIT_INTEGRITY
+  public static final int PROTOCOL_VERSION = 33; // CDOCommitInfo.getMergeSource()
 
+  // public static final int PROTOCOL_VERSION = 32; // ROLLBACK_REASON_UNIT_INTEGRITY
   // public static final int PROTOCOL_VERSION = 31; // CDOCommonRepository.isSupportingUnits()
   // public static final int PROTOCOL_VERSION = 30; // UnitOpcode
   // public static final int PROTOCOL_VERSION = 29; // SIGNAL_UNIT
@@ -45,7 +46,7 @@ public interface CDOProtocolConstants
   // PointerCDORevision
   // public static final int PROTOCOL_VERSION = 21; // Update how CDOChangeSetData's detachedObject is encoded, see
   // https://bugs.eclipse.org/bugs/show_bug.cgi?id=449171
-  // public static final int PROTOCOL_VERSION = 20; // Have OMMOnitor optional in
+  // public static final int PROTOCOL_VERSION = 20; // Have OMMonitor optional in
   // RequestWithMonitoring/IndicationWithMonitoring
   // public static final int PROTOCOL_VERSION = 19; // Branch renaming
   // public static final int PROTOCOL_VERSION = 18; // Password change protocol

@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.server.IStoreAccessor.Raw2;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -144,9 +145,22 @@ public abstract class CDOServerImporter
   }
 
   /**
+   * Persists the data that has been read by a {@link CDOServerImporter importer} into a new {@link IRepository
+   * repository}.
+   *
+   * @author Eike Stepper
+   * @since 4.6
+   */
+  public static interface Handler2 extends Handler
+  {
+    public void handleCommitInfo(long time, long previous, int branch, String user, String comment,
+        int mergeSourceBranchID, long mergeSourceTime);
+  }
+
+  /**
    * @author Eike Stepper
    */
-  private final class FlushHandler implements Handler
+  private final class FlushHandler implements Handler2
   {
     private OMMonitor monitor = new Monitor();
 
@@ -286,8 +300,25 @@ public abstract class CDOServerImporter
 
     public void handleCommitInfo(long time, long previous, int branchID, String user, String comment)
     {
+      handleCommitInfo(time, previous, branchID, user, comment, 0, CDOBranchPoint.UNSPECIFIED_DATE);
+    }
+
+    public void handleCommitInfo(long time, long previous, int branchID, String user, String comment,
+        int mergeSourceBranchID, long mergeSourceTime)
+    {
       CDOBranch branch = repository.getBranchManager().getBranch(branchID);
-      accessor.rawStore(branch, time, previous, user, comment, monitor);
+      if (mergeSourceBranchID != 0 && accessor instanceof Raw2)
+      {
+        CDOBranch mergeSourceBranch = repository.getBranchManager().getBranch(mergeSourceBranchID);
+        CDOBranchPoint mergeSource = mergeSourceBranch.getPoint(mergeSourceTime);
+
+        Raw2 raw2 = (Raw2)accessor;
+        raw2.rawStore(branch, time, previous, user, comment, mergeSource, monitor);
+      }
+      else
+      {
+        accessor.rawStore(branch, time, previous, user, comment, monitor);
+      }
     }
 
     public void flush()
@@ -482,6 +513,21 @@ public abstract class CDOServerImporter
 
           String user = attributes.getValue(COMMIT_USER);
           String comment = attributes.getValue(COMMIT_COMMENT);
+
+          if (handler instanceof Handler2)
+          {
+            Handler2 handler2 = (Handler2)handler;
+
+            value = attributes.getValue(MERGE_SOURCE_BRANCH);
+            if (value != null)
+            {
+              int mergeSourceBranch = Integer.parseInt(value);
+              long mergeSourceTime = Long.parseLong(attributes.getValue(MERGE_SOURCE_TIME));
+
+              handler2.handleCommitInfo(time, previous, branch, user, comment, mergeSourceBranch, mergeSourceTime);
+              return;
+            }
+          }
 
           handler.handleCommitInfo(time, previous, branch, user, comment);
         }

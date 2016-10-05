@@ -184,6 +184,13 @@
                 <message_argument value="26"/>
             </message_arguments>
         </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants"/>
+                <message_argument value="PROTOCOL_VERSION"/>
+                <message_argument value="32"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.java" type="org.eclipse.emf.cdo.spi.common.id.AbstractCDOID">
         <filter id="337682486">

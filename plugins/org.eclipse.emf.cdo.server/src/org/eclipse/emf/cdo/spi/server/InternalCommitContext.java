@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
@@ -161,6 +162,11 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDO
   public void setCommitNumber(int commitNumber);
 
   public void setCommitComment(String comment);
+
+  /**
+   * @since 4.6
+   */
+  public void setCommitMergeSource(CDOBranchPoint mergeSource);
 
   /**
    * @since 4.0

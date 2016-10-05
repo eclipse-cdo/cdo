@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
@@ -68,6 +69,11 @@ public interface CDOCommitContext
    * @since 4.1
    */
   public String getCommitComment();
+
+  /**
+   * @since 4.6
+   */
+  public CDOBranchPoint getCommitMergeSource();
 
   /**
    * Returns a list of the new {@link CDOPackageUnit package units} that are to be committed with this commit context.

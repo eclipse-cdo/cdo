@@ -249,6 +249,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private CommitToken commitToken;
 
+  private CDOBranchPoint commitMergeSource;
+
   // Bug 283985 (Re-attachment)
   private final ThreadLocal<Boolean> providingCDOID = new InheritableThreadLocal<Boolean>()
   {
@@ -602,6 +604,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         CDORevisionAvailabilityInfo targetBaseInfo = mergeData.getTargetBaseInfo();
         CDORevisionAvailabilityInfo targetInfo = mergeData.getTargetInfo();
         ApplyChangeSetResult changeSet = applyChangeSet(result, targetBaseInfo, targetInfo, source, false);
+
+        commitMergeSource = source;
+
         return changeSet.getChangeSetData();
       }
       finally
@@ -3779,6 +3784,40 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
+  public CDOBranchPoint getCommitMergeSource()
+  {
+    synchronized (getViewMonitor())
+    {
+      lockView();
+
+      try
+      {
+        return commitMergeSource;
+      }
+      finally
+      {
+        unlockView();
+      }
+    }
+  }
+
+  public void setCommitMergeSource(CDOBranchPoint mergeSource)
+  {
+    synchronized (getViewMonitor())
+    {
+      lockView();
+
+      try
+      {
+        commitMergeSource = mergeSource;
+      }
+      finally
+      {
+        unlockView();
+      }
+    }
+  }
+
   public void setCommittables(Set<? extends EObject> committables)
   {
     synchronized (getViewMonitor())
@@ -4248,6 +4287,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return transaction.getCommitComment();
     }
 
+    public CDOBranchPoint getCommitMergeSource()
+    {
+      return transaction.getCommitMergeSource();
+    }
+
     public CDOCommitData getCommitData()
     {
       return commitData;
@@ -4386,7 +4430,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
         if (result.getRollbackMessage() != null)
         {
-          CDOCommitInfo commitInfo = new FailureCommitInfo(timeStamp, result.getPreviousTimeStamp());
+          InternalCDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
+          CDOCommitInfo commitInfo = new FailureCommitInfo(commitInfoManager, timeStamp, result.getPreviousTimeStamp());
 
           InvalidationData invalidationData = new InvalidationData();
           invalidationData.setCommitInfo(commitInfo);
@@ -4520,9 +4565,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDOBranch branch = getBranch();
       String userID = session.getUserID();
       String comment = getCommitComment();
+      CDOBranchPoint mergeSource = getCommitMergeSource();
 
       InternalCDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
-      return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, commitData);
+      return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource,
+          commitData);
     }
 
     private CDOLockChangeInfo makeUnlockChangeInfo(CommitTransactionResult result)

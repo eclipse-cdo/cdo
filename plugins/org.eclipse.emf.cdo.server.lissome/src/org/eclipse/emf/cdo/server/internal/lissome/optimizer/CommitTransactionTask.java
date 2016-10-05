@@ -137,7 +137,7 @@ public class CommitTransactionTask implements OptimizerTask
   {
     CDOBranch branch = branchPoint.getBranch();
     long timeStamp = branchPoint.getTimeStamp();
-    return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, null);
+    return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, null, null);
   }
 
   public void execute(Optimizer optimizer) throws IOException

@@ -170,6 +170,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     private IDGenerationLocation idGenerationLocation;
 
+    private CommitInfoStorage commitInfoStorage;
+
     private InternalCDOSession session;
 
     public RepositoryInfo(InternalCDOSession session, OpenSessionResult result)
@@ -191,6 +193,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       serializingCommits = result.isEnsuringReferentialIntegrity();
       ensuringReferentialIntegrity = result.isEnsuringReferentialIntegrity();
       idGenerationLocation = result.getIDGenerationLocation();
+      commitInfoStorage = result.getCommitInfoStorage();
     }
 
     public InternalCDOSession getSession()
@@ -322,6 +325,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     public IDGenerationLocation getIDGenerationLocation()
     {
       return idGenerationLocation;
+    }
+
+    public CommitInfoStorage getCommitInfoStorage()
+    {
+      return commitInfoStorage;
     }
 
     public boolean waitWhileInitial(IProgressMonitor monitor)

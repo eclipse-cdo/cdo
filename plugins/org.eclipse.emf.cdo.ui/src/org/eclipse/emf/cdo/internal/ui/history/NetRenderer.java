@@ -11,11 +11,13 @@
 package org.eclipse.emf.cdo.internal.ui.history;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory.TriggerLoadElement;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.LabelProvider;
 
@@ -37,9 +39,11 @@ import org.eclipse.swt.widgets.TableItem;
 /**
  * @author Eike Stepper
  */
-public class NetRenderer implements Listener
+public final class NetRenderer implements Listener
 {
   private static final int ROUND_EDGE = 3;
+
+  private static final int ARC_SIZE = 8;
 
   private static final int TRACK_OFFSET = 4;
 
@@ -52,6 +56,10 @@ public class NetRenderer implements Listener
   private final Color colorDotFill;
 
   private final Color colorDotOutline;
+
+  private final Color colorBadgeFill;
+
+  private final Color colorBadgeOutline;
 
   private Net net;
 
@@ -86,6 +94,8 @@ public class NetRenderer implements Listener
     ResourceManager resourceManager = labelProvider.getResourceManager();
     colorDotFill = resourceManager.createColor(new RGB(220, 220, 220));
     colorDotOutline = resourceManager.createColor(new RGB(110, 110, 110));
+    colorBadgeFill = resourceManager.createColor(new RGB(188, 220, 188));
+    colorBadgeOutline = resourceManager.createColor(new RGB(0, 128, 0));
 
     Table table = tableViewer.getTable();
     table.addListener(SWT.MeasureItem, this);
@@ -93,7 +103,7 @@ public class NetRenderer implements Listener
     table.addListener(SWT.EraseItem, this);
   }
 
-  public final Net getNet()
+  public Net getNet()
   {
     return net;
   }
@@ -180,7 +190,12 @@ public class NetRenderer implements Listener
     }
     catch (Throwable ex)
     {
-      OM.LOG.error(ex);
+      if (!net.isHideExceptions())
+      {
+        OM.LOG.error(ex);
+        net.hideExceptions();
+      }
+
       return 0;
     }
   }
@@ -213,21 +228,40 @@ public class NetRenderer implements Listener
     }
 
     String text = labelProvider.getColumnText(commitInfo, columnIndex);
-    int width = drawText(text, x, cellHeightHalf, justMeasureWidth);
+
+    if (columnIndex == 1)
+    {
+      CDOBranchPoint mergeSource = commitInfo.getMergeSource();
+      if (mergeSource != null && !text.startsWith(CDOTransactionCommentator.MERGE_PREFIX))
+      {
+        StringBuilder builder = new StringBuilder();
+        CDOTransactionCommentator.appendMerge(builder, mergeSource);
+
+        if (text.length() != 0)
+        {
+          builder.append(", ");
+          builder.append(text);
+        }
+
+        text = builder.toString();
+      }
+    }
+
+    int width = drawText(text, x, cellHeightHalf, false, justMeasureWidth);
     x += width;
 
     if (commitInfo instanceof TriggerLoadElement)
     {
       if (width != 0)
       {
-        width += 2 * TRACK_OFFSET;
+        width += 4 * TRACK_OFFSET;
       }
 
       if (!justMeasureWidth)
       {
         int y = cellHeightHalf + 1;
         int x2 = gc.getClipping().width;
-        drawLine(colorDotOutline, width, y, x2, y);
+        drawLine(width, y, x2, y, colorDotOutline);
       }
     }
 
@@ -236,83 +270,122 @@ public class NetRenderer implements Listener
 
   private int drawCommit(CDOCommitInfo commitInfo, boolean justMeasureWidth)
   {
-    Commit commit = net.getCommit(commitInfo);
+    Commit commit = net.getOrAddCommit(commitInfo);
     Segment[] segments = commit.getRowSegments();
+    Segment commitSegment = commit.getSegment();
+    long commitTime = commit.getTime();
+    boolean commitLastInBranch = commitTime == commitSegment.getLastCommitTime();
 
     if (!justMeasureWidth)
     {
-      Segment commitSegment = commit.getSegment();
-      long commitTime = commit.getTime();
+      Track commitTrack = commitSegment.getTrack();
+      Color commitColor = commitSegment.getBranch().getColor();
+      int commitTrackPosition = commitTrack.getPosition();
+      int commitTrackCenter = getTrackCenter(commitTrackPosition);
 
       for (int i = 0; i < segments.length; i++)
       {
         Segment segment = segments[i];
-        if (segment != null)
+        if (segment != null && segment != commitSegment)
         {
           Branch branch = segment.getBranch();
+          boolean merge = segment.isMerge();
+
           Color color = branch.getColor();
-
+          int lineStyle = merge ? SWT.LINE_DOT : SWT.LINE_SOLID;
           int trackCenter = getTrackCenter(i);
-          if (segment != commitSegment)
+
+          int positionDelta = Math.abs(i - commitTrackPosition);
+
+          int horizontal = (positionDelta - 1) * TRACK_WIDTH + 6 + ROUND_EDGE;
+          if (i < commitTrackPosition)
           {
-            if (commitTime == segment.getFirstVisualTime() && segment.isComplete())
-            {
-              Track commitTrack = commitSegment.getTrack();
-              int commitTrackPosition = commitTrack.getPosition();
-              int commitTrackCenter = getTrackCenter(commitTrackPosition);
-              int positionDelta = Math.abs(i - commitTrackPosition);
+            horizontal = -horizontal;
+          }
 
-              int horizontal = (positionDelta - 1) * TRACK_WIDTH + 6 + ROUND_EDGE;
-              if (i < commitTrackPosition)
-              {
-                horizontal = -horizontal;
-              }
-
-              LinePlotter plotter = new LinePlotter(color, commitTrackCenter, cellHeightHalf);
-              plotter.relative(horizontal, 0);
-              plotter.absolute(getTrackCenter(i), ROUND_EDGE);
-              plotter.relative(0, -ROUND_EDGE);
-            }
-            else
+          if (merge ? commitTime == segment.getLastCommitTime() || commitTime == segment.getFirstCommitTime()
+              : commitTime == segment.getFirstVisualTime() && segment.isComplete())
+          {
+            // Plot horizontal line to left or right and a round edge up or down.
+            boolean down = merge && commitTime == segment.getLastCommitTime();
+            drawHorizontalLineWithRoundEdge(color, lineStyle, commitTrackCenter, trackCenter, horizontal, down);
+          }
+          else
+          {
+            Commit mergeSource = commit.getMergeSource();
+            if (mergeSource != null && mergeSource == segment.getMergeSource())
             {
-              // Full vertical line
-              drawLine(color, trackCenter, 0, trackCenter, cellHeight);
+              drawHorizontalLineWithRoundEdge(color, lineStyle, commitTrackCenter, trackCenter, horizontal, true);
             }
+
+            // Draw full vertical line.
+            drawLine(trackCenter, 0, trackCenter, cellHeight, color, lineStyle);
           }
         }
-
-        Color color = commitSegment.getBranch().getColor();
-        int position = commitSegment.getTrack().getPosition();
-        int trackCenter = getTrackCenter(position);
-
-        if (commitTime < commitSegment.getLastCommitTime())
-        {
-          // Half vertical line to top
-          drawLine(color, trackCenter, 0, trackCenter, cellHeightHalf);
-        }
-
-        if (commitTime > commitSegment.getFirstVisualTime() || !commitSegment.isComplete())
-        {
-          if (!commitInfo.isInitialCommit())
-          {
-            // Half vertical line to bottom
-            drawLine(color, trackCenter, cellHeightHalf, trackCenter, cellHeight);
-          }
-        }
-
-        int dotX = trackCenter - dotSizeHalf - 1;
-        int dotY = cellHeightHalf - dotSizeHalf;
-        drawDot(dotX, dotY, dotSize, dotSize);
       }
+
+      if (!commitLastInBranch)
+      {
+        // Draw half vertical line up (solid).
+        drawLine(commitTrackCenter, 0, commitTrackCenter, cellHeightHalf, commitColor);
+      }
+      else if (commit.getMergeTargets() != null)
+      {
+        Segment mergeSegment = commit.getMergeSegment();
+        if (mergeSegment != null && mergeSegment.getTrack() == commitTrack)
+        {
+          // Draw half vertical line up (dotted).
+          drawLine(commitTrackCenter, 0, commitTrackCenter, cellHeightHalf, commitColor, SWT.LINE_DOT);
+        }
+      }
+
+      if (commitTime > commitSegment.getFirstVisualTime() || !commitSegment.isComplete())
+      {
+        if (!commitInfo.isInitialCommit())
+        {
+          // Draw half vertical line down (solid).
+          drawLine(commitTrackCenter, cellHeightHalf, commitTrackCenter, cellHeight, commitColor);
+        }
+      }
+
+      // Draw center dot.
+      int dotX = commitTrackCenter - dotSizeHalf - 1;
+      int dotY = cellHeightHalf - dotSizeHalf;
+      drawDot(dotX, dotY, dotSize, dotSize);
     }
 
-    return getTrackX(segments.length);
+    int x = getTrackX(segments.length);
+
+    if (commitLastInBranch)
+    {
+      String branchLabel = labelProvider.getBranchString(commit.getBranch().getCDOBranch());
+
+      x += TRACK_OFFSET;
+      x += drawText(branchLabel, x + TRACK_OFFSET, cellHeightHalf, true, justMeasureWidth);
+    }
+
+    return x;
   }
 
-  private void drawLine(Color color, int x1, int y1, int x2, int y2)
+  private void drawHorizontalLineWithRoundEdge(Color color, int lineStyle, int commitTrackCenter, int trackCenter,
+      int horizontal, boolean down)
+  {
+    LinePlotter plotter = new LinePlotter(color, lineStyle, commitTrackCenter, cellHeightHalf);
+    plotter.relative(horizontal, 0);
+    plotter.absolute(trackCenter, down ? cellHeight - ROUND_EDGE : ROUND_EDGE);
+    plotter.relative(0, down ? ROUND_EDGE : -ROUND_EDGE);
+  }
+
+  private void drawLine(int x1, int y1, int x2, int y2, Color color)
+  {
+    drawLine(x1, y1, x2, y2, color, SWT.LINE_SOLID);
+  }
+
+  private void drawLine(int x1, int y1, int x2, int y2, Color color, int lineStyle)
   {
     gc.setForeground(color);
     gc.setLineWidth(LINE_WIDTH);
+    gc.setLineStyle(lineStyle);
     gc.drawLine(cellX + x1, cellY + y1, cellX + x2, cellY + y2);
   }
 
@@ -322,26 +395,52 @@ public class NetRenderer implements Listener
     int dotY = cellY + y + 1;
     int dotW = w - 2;
     int dotH = h - 2;
+
     gc.setBackground(colorDotFill);
     gc.fillOval(dotX, dotY, dotW, dotH);
+
     gc.setForeground(colorDotOutline);
     gc.setLineWidth(2);
+    gc.setLineStyle(SWT.LINE_SOLID);
     gc.drawOval(dotX, dotY, dotW, dotH);
   }
 
-  private int drawText(final String msg, final int x, final int y, boolean justMeasureWidth)
+  private int drawText(String msg, int x, int y, boolean badge, boolean justMeasureWidth)
   {
     Point extent = gc.textExtent(msg);
-    if (!justMeasureWidth)
+    int width = extent.x;
+
+    if (badge)
     {
-      int textY = (y * 2 - extent.y) / 2;
-      gc.setForeground(cellForeground);
-      gc.setBackground(cellBackground);
-      gc.setBackground(cellBackground);
-      gc.drawString(msg, cellX + x, cellY + textY, true);
+      width += 2 * TRACK_OFFSET;
     }
 
-    return extent.x;
+    if (!justMeasureWidth)
+    {
+      x += cellX;
+      y = (y * 2 - extent.y) / 2 + cellY - 1;
+      int height = extent.y + 1;
+
+      if (badge)
+      {
+        gc.setBackground(colorBadgeFill);
+        gc.fillRoundRectangle(x + 2, y + 2, width - 3, height - 3, ARC_SIZE, ARC_SIZE);
+
+        gc.setLineWidth(1);
+        gc.setLineStyle(SWT.LINE_SOLID);
+        gc.setForeground(colorBadgeOutline);
+        gc.drawRoundRectangle(x, y, width, height, ARC_SIZE, ARC_SIZE);
+      }
+      else
+      {
+        gc.setBackground(cellBackground);
+      }
+
+      gc.setForeground(cellForeground);
+      gc.drawString(msg, x + TRACK_OFFSET + 1, y + 1, true);
+    }
+
+    return width;
   }
 
   private int getTrackX(int position)
@@ -361,13 +460,16 @@ public class NetRenderer implements Listener
   {
     private final Color color;
 
+    private final int lineStyle;
+
     private int x;
 
     private int y;
 
-    public LinePlotter(Color color, int x, int y)
+    public LinePlotter(Color color, int lineStyle, int x, int y)
     {
       this.color = color;
+      this.lineStyle = lineStyle;
       this.x = x;
       this.y = y;
     }
@@ -378,12 +480,12 @@ public class NetRenderer implements Listener
       int fromY = y;
       x += width;
       y += height;
-      drawLine(color, fromX, fromY, x, y);
+      drawLine(fromX, fromY, x, y, color, lineStyle);
     }
 
     public void absolute(int x, int y)
     {
-      drawLine(color, this.x, this.y, x, y);
+      drawLine(this.x, this.y, x, y, color, lineStyle);
       this.x = x;
       this.y = y;
     }

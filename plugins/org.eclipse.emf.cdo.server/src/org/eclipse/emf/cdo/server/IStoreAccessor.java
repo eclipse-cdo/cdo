@@ -307,6 +307,11 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public String getCommitComment();
 
     /**
+     * @since 4.6
+     */
+    public CDOBranchPoint getCommitMergeSource();
+
+    /**
      * @since 4.2
      */
     public long getLastUpdateTime();
@@ -773,6 +778,48 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @see #rawStore(CDOBranch, long, long, String, String, OMMonitor)
      */
     public void rawCommit(double commitWork, OMMonitor monitor);
+  }
+
+  /**
+   * An extension interface for {@link IStoreAccessor store accessors} that support <i>raw data access</i> as needed by
+   * {@link IRepositorySynchronizer repository synchronizers} or {@link CDOServerImporter server importers}.
+   *
+   * @author Eike Stepper
+   * @since 4.6
+   * @apiviz.exclude
+   */
+  public interface Raw2 extends Raw
+  {
+    /**
+     * Stores the given {@link CDOCommitInfo commit} in the backend represented by this {@link IStoreAccessor.Raw raw
+     * store accessor} without going through a regular {@link IStoreAccessor#commit(OMMonitor) commit}.
+     * <p>
+     * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
+     * this method are followed by a single final call to the {@link #rawCommit(double, OMMonitor) rawCommit()} method
+     * where the accumulated backend changes can be committed atomically.
+     *
+     * @param branch
+     *          the {@link CDOCommitInfo#getBranch() branch} of the commit info to be stored in the backend represented
+     *          by this {@link IStoreAccessor.Raw raw store accessor}.
+     * @param timeStamp
+     *          the {@link CDOCommitInfo#getTimeStamp() time stamp} of the commit info to be stored in the backend
+     *          represented by this {@link IStoreAccessor.Raw raw store accessor}.
+     * @param previousTimeStamp
+     *          the {@link CDOCommitInfo#getPreviousTimeStamp() previous time stamp} of the commit info to be stored in
+     *          the backend represented by this {@link IStoreAccessor.Raw raw store accessor}.
+     * @param userID
+     *          the {@link CDOCommitInfo#getUserID() user ID} of the commit info to be stored in the backend represented
+     *          by this {@link IStoreAccessor.Raw raw store accessor}.
+     * @param comment
+     *          the {@link CDOCommitInfo#getComment() comment} of the commit info to be stored in the backend
+     *          represented by this {@link IStoreAccessor.Raw raw store accessor}.
+     * @param mergeSource
+     *          the {@link CDOCommitInfo#getMergeSource() merge source} of the commit info to be stored in the backend
+     *          represented by this {@link IStoreAccessor.Raw2 raw store accessor}.
+     * @see #rawCommit(double, OMMonitor)
+     */
+    public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
+        CDOBranchPoint mergeSource, OMMonitor monitor);
   }
 
   /**

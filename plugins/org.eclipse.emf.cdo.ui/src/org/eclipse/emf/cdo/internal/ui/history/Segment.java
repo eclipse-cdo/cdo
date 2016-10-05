@@ -13,11 +13,13 @@ package org.eclipse.emf.cdo.internal.ui.history;
 /**
  * @author Eike Stepper
  */
-public class Segment
+public final class Segment
 {
   private final Track track;
 
   private final Branch branch;
+
+  private final Commit mergeSource;
 
   private boolean complete;
 
@@ -35,73 +37,84 @@ public class Segment
 
   private Segment nextInBranch;
 
-  public Segment(Track track, Branch branch)
+  public Segment(Track track, Branch branch, Commit mergeSource)
   {
     this.track = track;
     this.branch = branch;
+    this.mergeSource = mergeSource;
   }
 
-  public final Net getNet()
+  public Net getNet()
   {
     return track.getNet();
   }
 
-  public final Track getTrack()
+  public Track getTrack()
   {
     return track;
   }
 
-  public final Branch getBranch()
+  public Branch getBranch()
   {
     return branch;
   }
 
-  public final boolean isComplete()
+  public Commit getMergeSource()
+  {
+    return mergeSource;
+  }
+
+  public boolean isMerge()
+  {
+    return mergeSource != null;
+  }
+
+  public boolean isComplete()
   {
     return complete;
   }
 
-  public final long getFirstVisualTime()
+  public long getFirstVisualTime()
   {
     return firstVisualTime;
   }
 
-  public final long getFirstCommitTime()
+  public long getFirstCommitTime()
   {
     return firstCommitTime;
   }
 
-  public final long getLastCommitTime()
+  public long getLastCommitTime()
   {
     return lastCommitTime;
   }
 
-  public final Segment getPreviousInTrack()
+  public Segment getPreviousInTrack()
   {
     return previousInTrack;
   }
 
-  public final Segment getNextInTrack()
+  public Segment getNextInTrack()
   {
     return nextInTrack;
   }
 
-  public final Segment getPreviousInBranch()
+  public Segment getPreviousInBranch()
   {
     return previousInBranch;
   }
 
-  public final Segment getNextInBranch()
+  public Segment getNextInBranch()
   {
     return nextInBranch;
   }
 
-  public final boolean containsCommitTime(long time)
+  public boolean containsCommitTime(long time)
   {
     return time >= firstCommitTime && time <= lastCommitTime;
   }
 
-  public final boolean containsVisualTime(long time)
+  public boolean containsVisualTime(long time)
   {
     return time >= getFirstVisualTime() && time <= lastCommitTime;
   }
@@ -114,9 +127,17 @@ public class Segment
 
   void adjustVisualTime(long time, boolean complete)
   {
-    if (firstVisualTime == 0 || time < firstVisualTime)
+    if (isMerge())
     {
-      firstVisualTime = time;
+      firstVisualTime = firstCommitTime;
+      this.complete = true;
+    }
+    else
+    {
+      if (firstVisualTime == 0 || time < firstVisualTime)
+      {
+        firstVisualTime = time;
+      }
     }
 
     this.complete |= complete;

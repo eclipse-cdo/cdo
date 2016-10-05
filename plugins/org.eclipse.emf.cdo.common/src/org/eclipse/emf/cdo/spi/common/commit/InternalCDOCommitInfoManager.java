@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.spi.common.commit;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
@@ -48,6 +49,17 @@ public interface InternalCDOCommitInfoManager extends CDOCommitInfoManager, ILif
    */
   public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
       String comment, CDOCommitData commitData);
+
+  /**
+   * @since 4.6
+   */
+  public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
+      String comment, CDOBranchPoint mergeSource, CDOCommitData commitData);
+
+  /**
+   * @since 4.6
+   */
+  public void setLastCommitOfBranch(CDOBranch branch, long lastCommit);
 
   /**
    * If the meaning of this type isn't clear, there really should be more of a description here...

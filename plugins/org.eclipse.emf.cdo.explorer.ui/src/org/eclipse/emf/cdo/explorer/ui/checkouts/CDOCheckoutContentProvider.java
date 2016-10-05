@@ -228,7 +228,11 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
                         }
                         else if (currentPage instanceof TabbedPropertySheetPage)
                         {
-                          ((TabbedPropertySheetPage)currentPage).refresh();
+                          TabbedPropertySheetPage page = (TabbedPropertySheetPage)currentPage;
+                          if (page.getCurrentTab() != null)
+                          {
+                            page.refresh();
+                          }
                         }
 
                         return;

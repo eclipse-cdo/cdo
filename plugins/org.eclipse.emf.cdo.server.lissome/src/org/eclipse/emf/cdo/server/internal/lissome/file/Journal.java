@@ -638,7 +638,7 @@ public class Journal extends LissomeFile
       String comment = reader.readString();
 
       InternalCDOCommitInfoManager commitInfoManager = getStore().getRepository().getCommitInfoManager();
-      return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null);
+      return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null, null);
     }
     catch (IOException ex)
     {

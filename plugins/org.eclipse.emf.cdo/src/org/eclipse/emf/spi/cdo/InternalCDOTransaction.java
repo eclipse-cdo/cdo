@@ -54,6 +54,16 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   public CommitToken getCommitToken();
 
   /**
+   * @since 4.6
+   */
+  public CDOBranchPoint getCommitMergeSource();
+
+  /**
+   * @since 4.6
+   */
+  public void setCommitMergeSource(CDOBranchPoint mergeSource);
+
+  /**
    * @since 4.3
    */
   public boolean hasMultipleSavepoints();

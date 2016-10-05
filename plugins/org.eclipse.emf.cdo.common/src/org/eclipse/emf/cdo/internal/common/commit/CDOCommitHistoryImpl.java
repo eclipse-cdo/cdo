@@ -29,6 +29,8 @@ import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.FinishedEvent;
 import org.eclipse.net4j.util.event.IListener;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -37,18 +39,22 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 4.2
  */
-public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDOCommitHistory
+public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CDOCommitHistory
 {
+  private static final CDOCommitInfo[] NO_ELEMENTS = {};
+
   private final TriggerLoadElement triggerLoadElement = new TriggerLoadElementImpl();
 
   private final CDOCommitInfoManager manager;
 
   private final CDOBranch branch;
 
-  private int loadCount = DEFAULT_LOAD_COUNT;
-
-  private GrowingRandomAccessList<CDOCommitInfo> commitInfos = new GrowingRandomAccessList<CDOCommitInfo>(
+  private final GrowingRandomAccessList<CDOCommitInfo> commitInfos = new GrowingRandomAccessList<CDOCommitInfo>(
       CDOCommitInfo.class, DEFAULT_LOAD_COUNT);
+
+  private final Object loadLock = new Object();
+
+  private int loadCount = DEFAULT_LOAD_COUNT;
 
   private CDOCommitInfo[] elements;
 
@@ -56,9 +62,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDO
 
   private boolean full;
 
-  private Thread loaderThread;
-
-  private Object loaderThreadLock = new Object();
+  private boolean loading;
 
   public CDOCommitHistoryImpl(CDOCommitInfoManager manager, CDOBranch branch)
   {
@@ -79,23 +83,32 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDO
 
   public final int getLoadCount()
   {
-    return loadCount;
+    synchronized (loadLock)
+    {
+      return loadCount;
+    }
   }
 
-  public void setLoadCount(int loadCount)
+  public final void setLoadCount(int loadCount)
   {
-    this.loadCount = loadCount;
+    synchronized (loadLock)
+    {
+      this.loadCount = loadCount;
+    }
   }
 
-  public boolean isAppendingTriggerLoadElement()
+  public final boolean isAppendingTriggerLoadElement()
   {
-    return appendingTriggerLoadElement;
+    synchronized (loadLock)
+    {
+      return appendingTriggerLoadElement;
+    }
   }
 
-  public void setAppendingTriggerLoadElement(boolean appendingTriggerLoadElement)
+  public final void setAppendingTriggerLoadElement(boolean appendingTriggerLoadElement)
   {
     int event = 0;
-    synchronized (commitInfos)
+    synchronized (loadLock)
     {
       if (this.appendingTriggerLoadElement != appendingTriggerLoadElement)
       {
@@ -128,11 +141,21 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDO
     }
   }
 
-  public CDOCommitInfo getFirstElement()
+  public final CDOCommitInfo getFirstElement()
   {
     checkActive();
-    synchronized (commitInfos)
+    synchronized (loadLock)
     {
+      if (loading)
+      {
+        if (elements == null)
+        {
+          return null;
+        }
+
+        return elements[0];
+      }
+
       if (commitInfos.isEmpty())
       {
         return null;
@@ -142,11 +165,21 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDO
     }
   }
 
-  public CDOCommitInfo getLastElement()
+  public final CDOCommitInfo getLastElement()
   {
     checkActive();
-    synchronized (commitInfos)
+    synchronized (loadLock)
     {
+      if (loading)
+      {
+        if (elements == null)
+        {
+          return null;
+        }
+
+        return elements[elements.length - 1];
+      }
+
       if (commitInfos.isEmpty())
       {
         return null;
@@ -156,24 +189,45 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDO
     }
   }
 
-  public CDOCommitInfo getElement(int index)
+  public final CDOCommitInfo getElement(int index)
   {
     checkActive();
-    synchronized (commitInfos)
+    synchronized (loadLock)
     {
+      if (loading)
+      {
+        if (elements == null)
+        {
+          return null;
+        }
+
+        return elements[index];
+      }
+
       return commitInfos.get(index);
     }
   }
 
-  public CDOCommitInfo[] getElements()
+  public final CDOCommitInfo[] getElements()
   {
     checkActive();
-    synchronized (commitInfos)
+    synchronized (loadLock)
     {
+      if (loading)
+      {
+        if (elements == null)
+        {
+          return NO_ELEMENTS;
+        }
+
+        return elements;
+      }
+
       if (elements == null)
       {
         int size = commitInfos.size();
-        if (!full && appendingTriggerLoadElement && !isLoading())
+
+        if (!full && appendingTriggerLoadElement)
         {
           elements = commitInfos.toArray(new CDOCommitInfo[size + 1]);
           elements[size] = triggerLoadElement;
@@ -188,11 +242,21 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDO
     }
   }
 
-  public int size()
+  public final int size()
   {
     checkActive();
-    synchronized (commitInfos)
+    synchronized (loadLock)
     {
+      if (loading)
+      {
+        if (elements == null)
+        {
+          return 0;
+        }
+
+        return elements.length;
+      }
+
       int size = commitInfos.size();
       if (!full && appendingTriggerLoadElement)
       {
@@ -204,11 +268,21 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDO
   }
 
   @Override
-  public boolean isEmpty()
+  public final boolean isEmpty()
   {
     checkActive();
-    synchronized (commitInfos)
+    synchronized (loadLock)
     {
+      if (loading)
+      {
+        if (elements == null)
+        {
+          return true;
+        }
+
+        return elements.length == 0;
+      }
+
       if (!full && appendingTriggerLoadElement)
       {
         return false;
@@ -218,26 +292,29 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDO
     }
   }
 
-  public boolean isFull()
+  public final boolean isFull()
   {
-    return full;
-  }
-
-  public boolean isLoading()
-  {
-    synchronized (loaderThreadLock)
+    synchronized (loadLock)
     {
-      return loaderThread != null;
+      return full;
     }
   }
 
-  public void waitWhileLoading(long timeout)
+  public final boolean isLoading()
+  {
+    synchronized (loadLock)
+    {
+      return loading;
+    }
+  }
+
+  public final void waitWhileLoading(long timeout)
   {
     long end = System.currentTimeMillis() + timeout;
 
-    synchronized (commitInfos)
+    synchronized (loadLock)
     {
-      while (isLoading())
+      while (loading)
       {
         try
         {
@@ -247,7 +324,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDO
             return;
           }
 
-          commitInfos.wait(remaining);
+          loadLock.wait(remaining);
         }
         catch (InterruptedException ex)
         {
@@ -257,28 +334,54 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDO
     }
   }
 
-  public boolean triggerLoad()
+  public final void handleCommitInfo(CDOCommitInfo commitInfo)
+  {
+    synchronized (loadLock)
+    {
+      loading = true;
+    }
+
+    List<CDOCommitInfo> addedCommitInfos = Collections.emptyList();
+
+    try
+    {
+      if (addCommitInfo(commitInfo))
+      {
+        addedCommitInfos = Collections.singletonList(commitInfo);
+      }
+    }
+    finally
+    {
+      finishLoading(addedCommitInfos, null);
+    }
+  }
+
+  public final boolean triggerLoad()
   {
     return triggerLoad(null);
   }
 
-  public boolean triggerLoad(final CDOCommitInfoHandler handler)
+  public final boolean triggerLoad(final CDOCommitInfoHandler handler)
   {
-    synchronized (loaderThreadLock)
+    synchronized (loadLock)
     {
-      if (full || loaderThread != null)
+      if (full || loading)
       {
         return false;
       }
 
-      loaderThread = new Thread("CDOCommitHistoryLoader")
+      loading = true;
+
+      new Thread("CDOCommitHistoryLoader")
       {
         @Override
         public void run()
         {
+          final List<CDOCommitInfo> addedCommitInfos = new ArrayList<CDOCommitInfo>();
+
           try
           {
-            doLoadCommitInfos(handler);
+            loadCommitInfos(loadCount, addedCommitInfos);
           }
           catch (Throwable ex)
           {
@@ -286,73 +389,172 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDO
           }
           finally
           {
-            synchronized (loaderThreadLock)
-            {
-              loaderThread = null;
-            }
+            finishLoading(addedCommitInfos, handler);
           }
         }
-      };
+      }.start();
     }
 
-    loaderThread.start();
     return true;
   }
 
-  public void handleCommitInfo(CDOCommitInfo commitInfo)
+  protected void loadCommitInfos(int loadCount, final List<CDOCommitInfo> addedCommitInfos)
   {
-    if (filter(commitInfo))
+    final CDOCommitInfo[] lastCommitInfo = { getLastCommitInfo() };
+    long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
+    int delivered = 0;
+
+    if (lastCommitInfo[0] == null)
     {
-      return;
+      timeStamp = manager.getLastCommitOfBranch(branch, false);
+    }
+    else
+    {
+      timeStamp = lastCommitInfo[0].getPreviousTimeStamp();
     }
 
-    long timeStamp = commitInfo.getTimeStamp();
-    synchronized (commitInfos)
+    // ==============================================
+    // Fill history with already loaded commit infos.
+    // ==============================================
+
+    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
     {
-      if (commitInfos.isEmpty() || timeStamp > commitInfos.getFirst().getTimeStamp())
+      CDOCommitInfo commitInfo;
+      while ((commitInfo = manager.getCommitInfo(timeStamp, false)) != null)
       {
-        commitInfos.addFirst(commitInfo);
+        if (addCommitInfo(commitInfo))
+        {
+          addedCommitInfos.add(commitInfo);
+          lastCommitInfo[0] = commitInfo;
+          ++delivered;
+        }
+
+        if (commitInfo.isInitialCommit())
+        {
+          setFull();
+          break;
+        }
+
+        timeStamp = commitInfo.getPreviousTimeStamp();
+      }
+    }
+
+    // ================================================================
+    // Load commit infos from server if load count is not reached, yet.
+    // ================================================================
+
+    if (delivered < loadCount && !isFull())
+    {
+      final int[] loaded = { 0 }; // Used to detect premature end of loading.
+
+      manager.getCommitInfos(branch, timeStamp, null, null, -loadCount, new CDOCommitInfoHandler()
+      {
+        public void handleCommitInfo(CDOCommitInfo commitInfo)
+        {
+          ++loaded[0];
+
+          if (addCommitInfo(commitInfo))
+          {
+            addedCommitInfos.add(commitInfo);
+            lastCommitInfo[0] = commitInfo;
+          }
+        }
+      });
+
+      if (loaded[0] < loadCount)
+      {
+        setFull();
       }
       else
       {
-        if (timeStamp < commitInfos.getLast().getTimeStamp())
+        // ==================================================
+        // Complete history with already loaded commit infos.
+        // ==================================================
+
+        if (lastCommitInfo[0] != null)
         {
-          commitInfos.addLast(commitInfo);
-        }
-        else
-        {
-          for (ListIterator<CDOCommitInfo> it = commitInfos.listIterator(); it.hasNext();)
+          long previousTimeStamp = lastCommitInfo[0].getPreviousTimeStamp();
+          while ((lastCommitInfo[0] = manager.getCommitInfo(previousTimeStamp, false)) != null)
           {
-            CDOCommitInfo current = it.next();
-            long currentTimeStamp = current.getTimeStamp();
-            if (timeStamp == currentTimeStamp)
+            if (addCommitInfo(lastCommitInfo[0]))
             {
-              // Ignore duplicate commit infos
-              return;
+              addedCommitInfos.add(lastCommitInfo[0]);
             }
 
-            if (timeStamp < currentTimeStamp)
+            if (lastCommitInfo[0].isInitialCommit())
             {
-              it.add(commitInfo);
+              setFull();
               break;
             }
+
+            previousTimeStamp = lastCommitInfo[0].getPreviousTimeStamp();
           }
         }
       }
-
-      elements = null;
-      commitInfos.notifyAll();
     }
 
-    fireElementAddedEvent(commitInfo);
+    if (appendingTriggerLoadElement && !isFull())
+    {
+      addedCommitInfos.add(triggerLoadElement);
+    }
   }
 
-  protected boolean filter(CDOCommitInfo commitInfo)
+  protected boolean filterCommitInfo(CDOCommitInfo commitInfo)
   {
     return branch != null && branch != commitInfo.getBranch();
   }
 
-  protected void setFull()
+  protected final boolean addCommitInfo(CDOCommitInfo commitInfo)
+  {
+    checkLoading();
+
+    if (commitInfo == null || filterCommitInfo(commitInfo))
+    {
+      return false;
+    }
+
+    long timeStamp = commitInfo.getTimeStamp();
+    if (commitInfos.isEmpty() || timeStamp > commitInfos.getFirst().getTimeStamp())
+    {
+      commitInfos.addFirst(commitInfo);
+    }
+    else if (timeStamp < commitInfos.getLast().getTimeStamp())
+    {
+      commitInfos.addLast(commitInfo);
+    }
+    else
+    {
+      for (ListIterator<CDOCommitInfo> it = commitInfos.listIterator(); it.hasNext();)
+      {
+        CDOCommitInfo current = it.next();
+        long currentTimeStamp = current.getTimeStamp();
+        if (timeStamp == currentTimeStamp)
+        {
+          // Ignore duplicate commit infos.
+          return false;
+        }
+
+        if (timeStamp < currentTimeStamp)
+        {
+          it.add(commitInfo);
+          break;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  protected final void deliverFinish(List<CDOCommitInfo> addedCommitInfos, CDOCommitInfoHandler handler)
+  {
+    if (handler instanceof IListener)
+    {
+      IListener listener = (IListener)handler;
+      listener.notifyEvent(new FinishedEvent(addedCommitInfos));
+    }
+  }
+
+  protected final void setFull()
   {
     full = true;
   }
@@ -378,57 +580,48 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDO
     super.doDeactivate();
   }
 
-  protected void doLoadCommitInfos(final CDOCommitInfoHandler handler)
+  private void checkLoading()
   {
-    final long startTime;
-    synchronized (commitInfos)
+    if (!loading)
     {
-      startTime = commitInfos.isEmpty() ? CDOBranchPoint.UNSPECIFIED_DATE : commitInfos.getLast().getTimeStamp();
-    }
-
-    final int[] loaded = { 0 };
-    manager.getCommitInfos(branch, startTime, null, null, -loadCount, new CDOCommitInfoHandler()
-    {
-      private boolean ignore = startTime != CDOBranchPoint.UNSPECIFIED_DATE;
-
-      public void handleCommitInfo(CDOCommitInfo commitInfo)
-      {
-        ++loaded[0];
-
-        if (ignore)
-        {
-          ignore = false;
-          return;
-        }
-
-        CDOCommitHistoryImpl.this.handleCommitInfo(commitInfo);
-        handle(handler, commitInfo);
-      }
-    });
-
-    if (loaded[0] < loadCount)
-    {
-      setFull();
-    }
-    else if (appendingTriggerLoadElement)
-    {
-      fireElementAddedEvent(triggerLoadElement);
-      handle(handler, triggerLoadElement);
-    }
-
-    if (handler instanceof IListener)
-    {
-      IListener listener = (IListener)handler;
-      listener.notifyEvent(FinishedEvent.INSTANCE);
+      throw new IllegalStateException("Not loading");
     }
   }
 
-  private static void handle(final CDOCommitInfoHandler handler, CDOCommitInfo commitInfo)
+  private void finishLoading(final List<CDOCommitInfo> addedCommitInfos, final CDOCommitInfoHandler handler)
   {
-    if (handler != null)
+    synchronized (loadLock)
     {
-      handler.handleCommitInfo(commitInfo);
+      elements = null;
+      loading = false;
+      loadLock.notifyAll();
     }
+
+    if (!addedCommitInfos.isEmpty())
+    {
+      fireElementsAddedEvent(addedCommitInfos.toArray(new CDOCommitInfo[addedCommitInfos.size()]));
+
+      if (handler != null)
+      {
+        for (CDOCommitInfo commitInfo : addedCommitInfos)
+        {
+          handler.handleCommitInfo(commitInfo);
+        }
+
+        deliverFinish(addedCommitInfos, handler);
+      }
+    }
+  }
+
+  private CDOCommitInfo getLastCommitInfo()
+  {
+    checkLoading();
+    if (commitInfos.isEmpty())
+    {
+      return null;
+    }
+
+    return commitInfos.getLast();
   }
 
   /**
@@ -461,6 +654,11 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDO
       return CDOBranchPoint.UNSPECIFIED_DATE;
     }
 
+    public CDOCommitInfo getPreviousCommitInfo()
+    {
+      return null;
+    }
+
     public String getUserID()
     {
       return null;
@@ -469,6 +667,16 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDO
     public String getComment()
     {
       return "Load more history elements";
+    }
+
+    public CDOBranchPoint getMergeSource()
+    {
+      return null;
+    }
+
+    public CDOCommitInfo getMergedCommitInfo()
+    {
+      return null;
     }
 
     public boolean isEmpty()
@@ -529,16 +737,9 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDO
   /**
    * @author Eike Stepper
    */
-  public static final class Empty extends Container<CDOCommitInfo>implements CDOCommitHistory
+  public static final class Empty extends Container<CDOCommitInfo> implements CDOCommitHistory
   {
-    private static final CDOCommitInfo[] NO_ELEMENTS = {};
-
     public CDOCommitInfo[] getElements()
-    {
-      return NO_ELEMENTS;
-    }
-
-    public CDOCommitInfo[] getElements(boolean withTriggerLoadElement)
     {
       return NO_ELEMENTS;
     }

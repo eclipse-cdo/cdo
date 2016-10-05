@@ -11,11 +11,16 @@
 package org.eclipse.emf.cdo.ui.internal.team.history;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.internal.ui.history.Net;
+import org.eclipse.emf.cdo.internal.ui.history.NetRenderer;
+import org.eclipse.emf.cdo.internal.ui.history.Track;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
@@ -24,20 +29,32 @@ import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.LabelProvider;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.StackComposite;
 
+import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
+
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.util.LocalSelectionTransfer;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -54,13 +71,17 @@ public class CDOHistoryPage extends HistoryPage
 {
   private static final String POPUP_ID = "#PopupMenu";
 
+  private static final boolean DEBUG = Boolean
+      .parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.ui.team.history.debug", "false"));
+
+  private static final boolean TEST = Boolean
+      .parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.ui.team.history.test", "false"));
+
   private StackComposite stackComposite;
 
   private Control offlineControl;
 
   private CommitHistoryComposite commitHistoryComposite;
-
-  private boolean commitOnDoubleClick;
 
   private Input input;
 
@@ -117,52 +138,17 @@ public class CDOHistoryPage extends HistoryPage
       @Override
       protected void doubleClicked(CDOCommitInfo commitInfo)
       {
-        if (commitOnDoubleClick)
+        if (TEST)
         {
-          testCommit(commitInfo);
-        }
-      }
-
-      private void testCommit(CDOCommitInfo commitInfo)
-      {
-        CDOTransaction transaction = null;
-
-        try
-        {
-          CDOSession session = input.getSession();
-          CDOBranch branch = commitInfo.getBranch();
-
-          final long[] lastCommitTime = { 0 };
-          CDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
-          commitInfoManager.getCommitInfos(branch, Long.MAX_VALUE, null, null, -1, new CDOCommitInfoHandler()
+          new TransactionalBranchPointOperation()
           {
-            public void handleCommitInfo(CDOCommitInfo commitInfo)
+            @Override
+            protected void run(CDOTransaction transaction)
             {
-              lastCommitTime[0] = commitInfo.getTimeStamp();
+              CDOResourceFolder folder = transaction.getOrCreateResourceFolder("test");
+              folder.addResource("resource-" + folder.getNodes().size());
             }
-          });
-
-          long timeStamp = commitInfo.getTimeStamp();
-          if (timeStamp != lastCommitTime[0])
-          {
-            String name = "branch-" + (timeStamp - session.getRepositoryInfo().getCreationTime()) / 1000;
-            branch = branch.createBranch(name, timeStamp);
-          }
-
-          transaction = session.openTransaction(branch);
-          CDOUtil.configureView(transaction);
-
-          CDOResourceFolder folder = transaction.getOrCreateResourceFolder("test");
-          folder.addResource("resource-" + folder.getNodes().size());
-          transaction.commit();
-        }
-        catch (Exception ex)
-        {
-          ex.printStackTrace();
-        }
-        finally
-        {
-          LifecycleUtil.deactivate(transaction);
+          }.execute(commitInfo);
         }
       }
     };
@@ -170,9 +156,76 @@ public class CDOHistoryPage extends HistoryPage
     stackComposite.setTopControl(commitHistoryComposite);
 
     IPageSite site = getSite();
-    TableViewer tableViewer = commitHistoryComposite.getTableViewer();
+    final TableViewer tableViewer = commitHistoryComposite.getTableViewer();
 
     UIUtil.addDragSupport(tableViewer);
+
+    if (TEST)
+    {
+      tableViewer.addDropSupport(DND.DROP_MOVE, new Transfer[] { LocalSelectionTransfer.getTransfer() },
+          new ViewerDropAdapter(tableViewer)
+          {
+            {
+              // We don't want it to look like you can insert new elements, only drop onto existing elements
+              setFeedbackEnabled(false);
+            }
+
+            @Override
+            public boolean validateDrop(Object target, int operation, TransferData transferType)
+            {
+              if (target instanceof CDOBranchPoint
+                  && LocalSelectionTransfer.getTransfer().isSupportedType(transferType))
+              {
+                CDOBranchPoint objectToDrop = getObjectToDrop(transferType);
+                if (objectToDrop != null)
+                {
+                  if (CDOBranchUtil.isContainedBy(objectToDrop, (CDOBranchPoint)target))
+                  {
+                    return false;
+                  }
+
+                  return true;
+                }
+              }
+
+              return false;
+            }
+
+            @Override
+            public boolean performDrop(Object data)
+            {
+              final CDOBranchPoint objectToDrop = UIUtil.getElement((ISelection)data, CDOBranchPoint.class);
+              final CDOBranchPoint dropTarget = (CDOBranchPoint)getCurrentTarget();
+
+              boolean result = new TransactionalBranchPointOperation()
+              {
+                @Override
+                protected void run(CDOTransaction transaction)
+                {
+                  transaction.merge(objectToDrop, new DefaultCDOMerger.PerFeature.ManyValued());
+                }
+              }.execute(dropTarget);
+
+              if (result)
+              {
+                tableViewer.getControl().setFocus();
+                tableViewer.setSelection(new StructuredSelection(dropTarget));
+              }
+
+              return result;
+            }
+
+            private CDOBranchPoint getObjectToDrop(TransferData transferType)
+            {
+              return UIUtil.getElement(LocalSelectionTransfer.getTransfer().getSelection(), CDOBranchPoint.class);
+            }
+          });
+    }
+
+    if (TEST)
+    {
+      ((LabelProvider)tableViewer.getLabelProvider()).setFormatTimeStamps(false);
+    }
 
     MenuManager menuManager = new MenuManager(POPUP_ID);
     menuManager.add(new Separator("compare"));
@@ -198,7 +251,7 @@ public class CDOHistoryPage extends HistoryPage
 
   public void refresh()
   {
-    commitHistoryComposite.refreshLayout();
+    commitHistoryComposite.refreshLayout(true);
   }
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -265,34 +318,55 @@ public class CDOHistoryPage extends HistoryPage
 
   protected void setupToolBar(IToolBarManager manager)
   {
+    if (DEBUG)
+    {
+      manager.add(new Action("DEBUG", IAction.AS_PUSH_BUTTON)
+      {
+        @SuppressWarnings("unused")
+        @Override
+        public void run()
+        {
+          NetRenderer netRenderer = (NetRenderer)ReflectUtil
+              .getValue(ReflectUtil.getField(CommitHistoryComposite.class, "netRenderer"), commitHistoryComposite);
+
+          Net net = netRenderer.getNet();
+          Track[] tracks = net.getTracks();
+          CDOSession session = net.getSession();
+          System.out.println("Debug " + net); // Set a breakpoint on this line to inspect the net.
+        }
+      });
+    }
   }
 
   protected void setupViewMenu(IMenuManager manager)
   {
-    manager.add(new Action("Format Time Stamps", SWT.CHECK)
+    manager.add(new TableRedrawingAction("Format Time Stamps", SWT.CHECK)
     {
+      @Override
+      protected boolean getInitialCheckState(LabelProvider labelProvider)
       {
-        LabelProvider labelProvider = commitHistoryComposite.getLabelProvider();
-        setChecked(labelProvider.isFormatTimeStamps());
+        return labelProvider.isFormatTimeStamps();
       }
 
       @Override
-      public void run()
+      protected void doRun(LabelProvider labelProvider)
       {
-        LabelProvider labelProvider = commitHistoryComposite.getLabelProvider();
         labelProvider.setFormatTimeStamps(!labelProvider.isFormatTimeStamps());
-
-        TableViewer tableViewer = commitHistoryComposite.getTableViewer();
-        tableViewer.refresh(true);
       }
     });
 
-    manager.add(new Action("Test Commit on Double Click", SWT.CHECK)
+    manager.add(new TableRedrawingAction("Shorten Branch Paths", SWT.CHECK)
     {
       @Override
-      public void run()
+      protected boolean getInitialCheckState(LabelProvider labelProvider)
       {
-        commitOnDoubleClick = !commitOnDoubleClick;
+        return labelProvider.isShortenBranchPaths();
+      }
+
+      @Override
+      protected void doRun(LabelProvider labelProvider)
+      {
+        labelProvider.setShortenBranchPaths(!labelProvider.isShortenBranchPaths());
       }
     });
   }
@@ -313,5 +387,90 @@ public class CDOHistoryPage extends HistoryPage
     {
       return false;
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private abstract class TableRedrawingAction extends Action
+  {
+    private final LabelProvider labelProvider = commitHistoryComposite.getLabelProvider();
+
+    public TableRedrawingAction(String text, int style)
+    {
+      super(text, style);
+      setChecked(getInitialCheckState(labelProvider));
+    }
+
+    @Override
+    public void run()
+    {
+      doRun(labelProvider);
+      commitHistoryComposite.getTableViewer().getTable().redraw();
+    }
+
+    protected abstract void doRun(LabelProvider labelProvider);
+
+    protected abstract boolean getInitialCheckState(LabelProvider labelProvider);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private abstract class TransactionalBranchPointOperation
+  {
+    public boolean execute(CDOBranchPoint branchPoint)
+    {
+      CDOTransaction transaction = null;
+
+      try
+      {
+        CDOSession session = input.getSession();
+        CDOBranch branch = branchPoint.getBranch();
+
+        final long[] lastCommitTime = { 0 };
+        CDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
+        commitInfoManager.getCommitInfos(branch, Long.MAX_VALUE, null, null, -1, new CDOCommitInfoHandler()
+        {
+          public void handleCommitInfo(CDOCommitInfo commitInfo)
+          {
+            lastCommitTime[0] = commitInfo.getTimeStamp();
+          }
+        });
+
+        long timeStamp = branchPoint.getTimeStamp();
+        if (timeStamp != lastCommitTime[0])
+        {
+          String name = "branch" + (timeStamp - session.getRepositoryInfo().getCreationTime()) / 1000;
+          branch = branch.createBranch(name, timeStamp);
+        }
+
+        transaction = session.openTransaction(branch);
+        CDOUtil.configureView(transaction);
+
+        try
+        {
+          run(transaction);
+          transaction.commit();
+          return true;
+        }
+        catch (Throwable ex)
+        {
+          ex.printStackTrace();
+        }
+      }
+      catch (Exception ex)
+      {
+        ex.printStackTrace();
+      }
+      finally
+      {
+        LifecycleUtil.deactivate(transaction);
+      }
+
+      return false;
+    }
+
+    protected abstract void run(CDOTransaction transaction) throws Exception;
   }
 }

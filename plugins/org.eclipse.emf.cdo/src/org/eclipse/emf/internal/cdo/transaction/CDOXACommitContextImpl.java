@@ -12,6 +12,7 @@ package org.eclipse.emf.internal.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
@@ -132,6 +133,11 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
   public String getCommitComment()
   {
     return delegateCommitContext.getCommitComment();
+  }
+
+  public CDOBranchPoint getCommitMergeSource()
+  {
+    return delegateCommitContext.getCommitMergeSource();
   }
 
   public Map<CDOIDTempObjectExternalImpl, InternalCDOTransaction> getRequestedIDs()

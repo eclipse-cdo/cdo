@@ -580,7 +580,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
   }
 
   public synchronized void addCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
-      String comment)
+      String comment, CDOBranchPoint mergeSource)
   {
     int index = commitInfos.size() - 1;
     while (index >= 0)
@@ -594,7 +594,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
       --index;
     }
 
-    CommitInfo commitInfo = new CommitInfo(branch, timeStamp, previousTimeStamp, userID, comment);
+    CommitInfo commitInfo = new CommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource);
     commitInfos.add(index + 1, commitInfo);
   }
 
@@ -1430,13 +1430,17 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
 
     private String comment;
 
-    public CommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment)
+    private CDOBranchPoint mergeSource;
+
+    public CommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
+        CDOBranchPoint mergeSource)
     {
       super(timeStamp);
       this.branch = branch;
       this.previousTimeStamp = previousTimeStamp;
       this.userID = userID;
       this.comment = comment;
+      this.mergeSource = mergeSource;
     }
 
     public CDOBranch getBranch()
@@ -1447,7 +1451,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     public void handle(InternalCDOCommitInfoManager manager, CDOCommitInfoHandler handler)
     {
       CDOCommitInfo commitInfo = manager.createCommitInfo(branch, getTimeStamp(), previousTimeStamp, userID, comment,
-          null);
+          mergeSource, null);
       handler.handleCommitInfo(commitInfo);
     }
 

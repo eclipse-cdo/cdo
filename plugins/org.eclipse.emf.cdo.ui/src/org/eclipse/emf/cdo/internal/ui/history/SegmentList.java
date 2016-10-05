@@ -78,6 +78,30 @@ public abstract class SegmentList
     }
   }
 
+  void removeSegment(Segment segment)
+  {
+    Segment nextSegment = getNextSegment(segment);
+    Segment previousSegment = getPreviousSegment(segment);
+
+    if (nextSegment != null)
+    {
+      setPreviousSegment(nextSegment, previousSegment);
+    }
+    else
+    {
+      lastSegment = previousSegment;
+    }
+
+    if (previousSegment != null)
+    {
+      setNextSegment(previousSegment, nextSegment);
+    }
+    else
+    {
+      firstSegment = nextSegment;
+    }
+  }
+
   protected abstract Segment getNextSegment(Segment segment);
 
   protected abstract void setNextSegment(Segment segment, Segment nextSegment);

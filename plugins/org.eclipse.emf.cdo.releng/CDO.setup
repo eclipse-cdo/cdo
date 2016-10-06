@@ -597,11 +597,9 @@
         userID="${bugzilla.id}"
         password="${eclipse.user.password}">
       <buildPlan
-          name="emf-cdo-integration"/>
-      <buildPlan
-          name="emf-cdo-maintenance"/>
-      <buildPlan
           name="emf-cdo-gerrit"/>
+      <buildPlan
+          name="emf-cdo-integration"/>
     </setupTask>
   </setupTask>
   <stream name="master"

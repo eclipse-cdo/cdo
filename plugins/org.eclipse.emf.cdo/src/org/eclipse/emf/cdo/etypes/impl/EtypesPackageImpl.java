@@ -108,7 +108,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
+   *
    * <p>This method is used to initialize {@link EtypesPackage#eINSTANCE} when that field is accessed.
    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
    * <!-- begin-user-doc -->
@@ -121,7 +121,9 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
   public static EtypesPackage init()
   {
     if (isInited)
+    {
       return (EtypesPackage)EPackage.Registry.INSTANCE.getEPackage(EtypesPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     EtypesPackageImpl theEtypesPackage = (EtypesPackageImpl)(EPackage.Registry.INSTANCE
@@ -290,7 +292,9 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -327,7 +331,9 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -341,16 +347,16 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    annotationEClass.getESuperTypes().add(this.getModelElement());
+    annotationEClass.getESuperTypes().add(getModelElement());
 
     // Initialize classes and features; add operations and parameters
     initEClass(modelElementEClass, ModelElement.class, "ModelElement", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getModelElement_Annotations(), this.getAnnotation(), this.getAnnotation_ModelElement(),
-        "annotations", null, 0, -1, ModelElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+    initEReference(getModelElement_Annotations(), getAnnotation(), getAnnotation_ModelElement(), "annotations", null, 0, //$NON-NLS-1$
+        -1, ModelElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    EOperation op = addEOperation(modelElementEClass, this.getAnnotation(), "getAnnotation", 0, 1, IS_UNIQUE, //$NON-NLS-1$
+    EOperation op = addEOperation(modelElementEClass, getAnnotation(), "getAnnotation", 0, 1, IS_UNIQUE, //$NON-NLS-1$
         IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "source", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
@@ -361,8 +367,8 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
     initEReference(getAnnotation_Details(), ecorePackage.getEStringToStringMapEntry(), null, "details", null, 0, -1, //$NON-NLS-1$
         Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAnnotation_ModelElement(), this.getModelElement(), this.getModelElement_Annotations(),
-        "modelElement", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, //$NON-NLS-1$
+    initEReference(getAnnotation_ModelElement(), getModelElement(), getModelElement_Annotations(), "modelElement", null, //$NON-NLS-1$
+        0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAnnotation_Contents(), ecorePackage.getEObject(), null, "contents", null, 0, -1, Annotation.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
@@ -372,8 +378,8 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
-    initEDataType(blobEDataType, CDOBlob.class, "Blob", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-    initEDataType(clobEDataType, CDOClob.class, "Clob", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEDataType(blobEDataType, CDOBlob.class, "Blob", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEDataType(clobEDataType, CDOClob.class, "Clob", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEDataType(lobEDataType, CDOLob.class, "Lob", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEDataType(inputStreamEDataType, InputStream.class, "InputStream", !IS_SERIALIZABLE, //$NON-NLS-1$
         !IS_GENERATED_INSTANCE_CLASS);

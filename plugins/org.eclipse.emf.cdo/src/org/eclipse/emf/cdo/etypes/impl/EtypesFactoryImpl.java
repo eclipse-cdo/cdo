@@ -10,10 +10,16 @@
  */
 package org.eclipse.emf.cdo.etypes.impl;
 
+import org.eclipse.emf.cdo.common.lob.CDOBlob;
+import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.EtypesFactory;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
+
+import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.net4j.util.io.IORuntimeException;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -22,18 +28,29 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
+
 /**
- * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>.
+ * <!-- begin-user-doc -->
+ * An implementation of the model <b>Factory</b>.
  *
  * @since 4.0
- * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
+ * @noextend This interface is not intended to be extended by clients.
+ * <!-- end-user-doc -->
  * @generated
  */
 public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 {
   /**
    * Creates the default factory implementation.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public static EtypesFactory init()
@@ -55,7 +72,8 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * Creates an instance of the factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EtypesFactoryImpl()
@@ -64,7 +82,8 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -80,7 +99,8 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -88,13 +108,18 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   {
     switch (eDataType.getClassifierID())
     {
+    case EtypesPackage.BLOB:
+      return createBlobFromString(eDataType, initialValue);
+    case EtypesPackage.CLOB:
+      return createClobFromString(eDataType, initialValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -102,13 +127,18 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   {
     switch (eDataType.getClassifierID())
     {
+    case EtypesPackage.BLOB:
+      return convertBlobToString(eDataType, instanceValue);
+    case EtypesPackage.CLOB:
+      return convertClobToString(eDataType, instanceValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public Annotation createAnnotation()
@@ -119,8 +149,112 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
 
   /**
    * <!-- begin-user-doc -->
-   *
-   * @since 4.1 <!-- end-user-doc -->
+   * @since 4.6
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public CDOBlob createBlobFromString(EDataType eDataType, String initialValue)
+  {
+    if (initialValue == null)
+    {
+      return null;
+    }
+
+    try
+    {
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      HexUtil.hexToBytes(new StringReader(initialValue), baos);
+      return new CDOBlob(new ByteArrayInputStream(baos.toByteArray()));
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.6
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public String convertBlobToString(EDataType eDataType, Object instanceValue)
+  {
+    if (instanceValue == null)
+    {
+      return null;
+    }
+
+    CDOBlob blob = (CDOBlob)instanceValue;
+
+    try
+    {
+      InputStream inputStream = blob.getContents();
+      StringWriter writer = new StringWriter();
+      HexUtil.bytesToHex(inputStream, writer);
+      return writer.toString();
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.6
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public CDOClob createClobFromString(EDataType eDataType, String initialValue)
+  {
+    if (initialValue == null)
+    {
+      return null;
+    }
+
+    try
+    {
+      return new CDOClob(new StringReader(initialValue));
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.6
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public String convertClobToString(EDataType eDataType, Object instanceValue)
+  {
+    if (instanceValue == null)
+    {
+      return null;
+    }
+
+    CDOClob clob = (CDOClob)instanceValue;
+
+    try
+    {
+      Reader reader = clob.getContents();
+      StringWriter writer = new StringWriter();
+      IOUtil.copyCharacter(reader, writer);
+      return writer.toString();
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.1
+   * <!-- end-user-doc -->
    * @generated NOT
    */
   public CDOLob<?> createLobFromString(EDataType eDataType, String initialValue)
@@ -129,7 +263,8 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EtypesPackage getEtypesPackage()
@@ -138,7 +273,8 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @deprecated
    * @generated
    */

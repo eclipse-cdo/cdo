@@ -13,6 +13,10 @@ package org.eclipse.net4j.util;
 import org.eclipse.net4j.util.io.IORuntimeException;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
 
 /**
  * Provides static methods that convert to and from hexadecimal string formats.
@@ -83,6 +87,26 @@ public final class HexUtil
     }
   }
 
+  /**
+   * @since 3.7
+   */
+  public static void bytesToHex(InputStream bs, Writer writer)
+  {
+    try
+    {
+      int b;
+      while ((b = bs.read()) != -1)
+      {
+        writer.write(Character.forDigit(b >>> 4 & 0xf, 16));
+        writer.write(Character.forDigit(b & 0xf, 16));
+      }
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
   public static String bytesToHex(byte[] bs)
   {
     if (bs == null)
@@ -141,6 +165,39 @@ public final class HexUtil
       }
 
       out[off + i / 2] = (byte)(b1 << 4 | b2);
+    }
+  }
+
+  /**
+   * @since 3.7
+   */
+  public static void hexToBytes(Reader s, OutputStream outputStream) throws NumberFormatException
+  {
+    try
+    {
+      int c1, c2;
+      byte b1, b2;
+      while ((c1 = s.read()) != -1 && (c2 = s.read()) != -1)
+      {
+        b1 = (byte)Character.digit(c1, 16);
+        if (b1 < 0)
+        {
+          throw new NumberFormatException("Wrong character: " + c1);
+        }
+
+        b2 = (byte)Character.digit(c2, 16);
+        if (b2 < 0)
+        {
+          throw new NumberFormatException("Wrong character: " + c2);
+        }
+
+        int b = b1 << 4 | b2;
+        outputStream.write(b);
+      }
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
     }
   }
 

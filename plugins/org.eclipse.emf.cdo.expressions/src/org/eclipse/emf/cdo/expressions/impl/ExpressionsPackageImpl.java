@@ -243,7 +243,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
+   *
    * <p>This method is used to initialize {@link ExpressionsPackage#eINSTANCE} when that field is accessed.
    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
    * <!-- begin-user-doc -->
@@ -256,7 +256,9 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
   public static ExpressionsPackage init()
   {
     if (isInited)
+    {
       return (ExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(ExpressionsPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     ExpressionsPackageImpl theExpressionsPackage = (ExpressionsPackageImpl)(EPackage.Registry.INSTANCE
@@ -739,7 +741,9 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -828,7 +832,9 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -844,27 +850,27 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    valueEClass.getESuperTypes().add(this.getExpression());
-    booleanValueEClass.getESuperTypes().add(this.getValue());
-    byteValueEClass.getESuperTypes().add(this.getValue());
-    shortValueEClass.getESuperTypes().add(this.getValue());
-    intValueEClass.getESuperTypes().add(this.getValue());
-    longValueEClass.getESuperTypes().add(this.getValue());
-    floatValueEClass.getESuperTypes().add(this.getValue());
-    doubleValueEClass.getESuperTypes().add(this.getValue());
-    charValueEClass.getESuperTypes().add(this.getValue());
-    stringValueEClass.getESuperTypes().add(this.getValue());
-    invocationEClass.getESuperTypes().add(this.getExpression());
-    functionInvocationEClass.getESuperTypes().add(this.getInvocation());
-    memberInvocationEClass.getESuperTypes().add(this.getInvocation());
-    accessEClass.getESuperTypes().add(this.getExpression());
-    staticAccessEClass.getESuperTypes().add(this.getAccess());
-    memberAccessEClass.getESuperTypes().add(this.getAccess());
-    contextAccessEClass.getESuperTypes().add(this.getAccess());
-    containedObjectEClass.getESuperTypes().add(this.getExpression());
-    linkedObjectEClass.getESuperTypes().add(this.getExpression());
-    linkedExpressionEClass.getESuperTypes().add(this.getExpression());
-    listConstructionEClass.getESuperTypes().add(this.getExpression());
+    valueEClass.getESuperTypes().add(getExpression());
+    booleanValueEClass.getESuperTypes().add(getValue());
+    byteValueEClass.getESuperTypes().add(getValue());
+    shortValueEClass.getESuperTypes().add(getValue());
+    intValueEClass.getESuperTypes().add(getValue());
+    longValueEClass.getESuperTypes().add(getValue());
+    floatValueEClass.getESuperTypes().add(getValue());
+    doubleValueEClass.getESuperTypes().add(getValue());
+    charValueEClass.getESuperTypes().add(getValue());
+    stringValueEClass.getESuperTypes().add(getValue());
+    invocationEClass.getESuperTypes().add(getExpression());
+    functionInvocationEClass.getESuperTypes().add(getInvocation());
+    memberInvocationEClass.getESuperTypes().add(getInvocation());
+    accessEClass.getESuperTypes().add(getExpression());
+    staticAccessEClass.getESuperTypes().add(getAccess());
+    memberAccessEClass.getESuperTypes().add(getAccess());
+    contextAccessEClass.getESuperTypes().add(getAccess());
+    containedObjectEClass.getESuperTypes().add(getExpression());
+    linkedObjectEClass.getESuperTypes().add(getExpression());
+    linkedExpressionEClass.getESuperTypes().add(getExpression());
+    listConstructionEClass.getESuperTypes().add(getExpression());
 
     // Initialize classes, features, and operations; add parameters
     initEClass(expressionEClass, Expression.class, "Expression", IS_ABSTRACT, IS_INTERFACE,
@@ -872,7 +878,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
     EOperation op = initEOperation(getExpression__Evaluate__EvaluationContext(), ecorePackage.getEJavaObject(),
         "evaluate", 0, 1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, this.getEvaluationContext(), "context", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, getEvaluationContext(), "context", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(valueEClass, Value.class, "Value", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -921,24 +927,24 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
     initEClass(invocationEClass, Invocation.class, "Invocation", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInvocation_Arguments(), this.getExpression(), null, "arguments", null, 0, -1, Invocation.class,
+    initEReference(getInvocation_Arguments(), getExpression(), null, "arguments", null, 0, -1, Invocation.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getInvocation_Name(), this.getExpression(), null, "name", null, 1, 1, Invocation.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEReference(getInvocation_Name(), getExpression(), null, "name", null, 1, 1, Invocation.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     initEClass(functionInvocationEClass, FunctionInvocation.class, "FunctionInvocation", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(memberInvocationEClass, MemberInvocation.class, "MemberInvocation", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getMemberInvocation_Object(), this.getExpression(), null, "object", null, 1, 1,
-        MemberInvocation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMemberInvocation_Object(), getExpression(), null, "object", null, 1, 1, MemberInvocation.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(accessEClass, Access.class, "Access", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAccess_Name(), this.getExpression(), null, "name", null, 1, 1, Access.class, !IS_TRANSIENT,
+    initEReference(getAccess_Name(), getExpression(), null, "name", null, 1, 1, Access.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
 
@@ -947,7 +953,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
     initEClass(memberAccessEClass, MemberAccess.class, "MemberAccess", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getMemberAccess_Object(), this.getExpression(), null, "object", null, 1, 1, MemberAccess.class,
+    initEReference(getMemberAccess_Object(), getExpression(), null, "object", null, 1, 1, MemberAccess.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
@@ -968,13 +974,13 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
     initEClass(linkedExpressionEClass, LinkedExpression.class, "LinkedExpression", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getLinkedExpression_Expression(), this.getExpression(), null, "expression", null, 1, 1,
+    initEReference(getLinkedExpression_Expression(), getExpression(), null, "expression", null, 1, 1,
         LinkedExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(listConstructionEClass, ListConstruction.class, "ListConstruction", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getListConstruction_Elements(), this.getExpression(), null, "elements", null, 0, -1,
+    initEReference(getListConstruction_Elements(), getExpression(), null, "elements", null, 0, -1,
         ListConstruction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

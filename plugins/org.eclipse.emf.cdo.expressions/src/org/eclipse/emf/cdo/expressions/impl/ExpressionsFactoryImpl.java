@@ -92,41 +92,41 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
     switch (eClass.getClassifierID())
     {
     case ExpressionsPackage.BOOLEAN_VALUE:
-      return (EObject)createBooleanValue();
+      return createBooleanValue();
     case ExpressionsPackage.BYTE_VALUE:
-      return (EObject)createByteValue();
+      return createByteValue();
     case ExpressionsPackage.SHORT_VALUE:
-      return (EObject)createShortValue();
+      return createShortValue();
     case ExpressionsPackage.INT_VALUE:
-      return (EObject)createIntValue();
+      return createIntValue();
     case ExpressionsPackage.LONG_VALUE:
-      return (EObject)createLongValue();
+      return createLongValue();
     case ExpressionsPackage.FLOAT_VALUE:
-      return (EObject)createFloatValue();
+      return createFloatValue();
     case ExpressionsPackage.DOUBLE_VALUE:
-      return (EObject)createDoubleValue();
+      return createDoubleValue();
     case ExpressionsPackage.CHAR_VALUE:
-      return (EObject)createCharValue();
+      return createCharValue();
     case ExpressionsPackage.STRING_VALUE:
-      return (EObject)createStringValue();
+      return createStringValue();
     case ExpressionsPackage.FUNCTION_INVOCATION:
-      return (EObject)createFunctionInvocation();
+      return createFunctionInvocation();
     case ExpressionsPackage.MEMBER_INVOCATION:
-      return (EObject)createMemberInvocation();
+      return createMemberInvocation();
     case ExpressionsPackage.STATIC_ACCESS:
-      return (EObject)createStaticAccess();
+      return createStaticAccess();
     case ExpressionsPackage.MEMBER_ACCESS:
-      return (EObject)createMemberAccess();
+      return createMemberAccess();
     case ExpressionsPackage.CONTEXT_ACCESS:
-      return (EObject)createContextAccess();
+      return createContextAccess();
     case ExpressionsPackage.CONTAINED_OBJECT:
-      return (EObject)createContainedObject();
+      return createContainedObject();
     case ExpressionsPackage.LINKED_OBJECT:
-      return (EObject)createLinkedObject();
+      return createLinkedObject();
     case ExpressionsPackage.LINKED_EXPRESSION:
-      return (EObject)createLinkedExpression();
+      return createLinkedExpression();
     case ExpressionsPackage.LIST_CONSTRUCTION:
-      return (EObject)createListConstruction();
+      return createListConstruction();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

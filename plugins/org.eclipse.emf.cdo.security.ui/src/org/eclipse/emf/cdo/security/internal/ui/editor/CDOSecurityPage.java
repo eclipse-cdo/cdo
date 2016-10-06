@@ -339,7 +339,7 @@ public class CDOSecurityPage extends FormPage
   {
     return new Action(Messages.CDOSecurityPage_0, ExtendedImageRegistry.getInstance()
         .getImageDescriptor(URI.createPlatformPluginURI(OM.BUNDLE_ID + "/icons/full/elcl16/advanced.gif", true))) //$NON-NLS-1$
-        {
+    {
       @Override
       public void run()
       {
@@ -355,6 +355,6 @@ public class CDOSecurityPage extends FormPage
           OM.LOG.error(e);
         }
       }
-        };
+    };
   }
 }

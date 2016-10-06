@@ -68,9 +68,9 @@ public interface XASession extends Session
 {
 
   /** Gets the session associated with this <CODE>XASession</CODE>.
-     *  
+     *
      * @return the  session object
-     *  
+     *
      * @exception JMSException if an internal error occurs.
      *
      * @since 1.1
@@ -86,31 +86,31 @@ public interface XASession extends Session
   XAResource getXAResource();
 
   /** Indicates whether the session is in transacted mode.
-    *  
+    *
     * @return true
-    *  
-    * @exception JMSException if the JMS provider fails to return the 
+    *
+    * @exception JMSException if the JMS provider fails to return the
     *                         transaction mode due to some internal error.
     */
 
   boolean getTransacted() throws JMSException;
 
-  /** Throws a <CODE>TransactionInProgressException</CODE>, since it should 
+  /** Throws a <CODE>TransactionInProgressException</CODE>, since it should
     * not be called for an <CODE>XASession</CODE> object.
     *
-    * @exception TransactionInProgressException if the method is called on 
+    * @exception TransactionInProgressException if the method is called on
     *                         an <CODE>XASession</CODE>.
-    *                                     
+    *
     */
 
   void commit() throws JMSException;
 
-  /** Throws a <CODE>TransactionInProgressException</CODE>, since it should 
+  /** Throws a <CODE>TransactionInProgressException</CODE>, since it should
     * not be called for an <CODE>XASession</CODE> object.
     *
-    * @exception TransactionInProgressException if the method is called on 
+    * @exception TransactionInProgressException if the method is called on
     *                         an <CODE>XASession</CODE>.
-    *                                     
+    *
     */
 
   void rollback() throws JMSException;

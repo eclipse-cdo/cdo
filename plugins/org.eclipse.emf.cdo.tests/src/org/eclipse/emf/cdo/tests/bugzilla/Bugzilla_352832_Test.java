@@ -55,24 +55,24 @@ public class Bugzilla_352832_Test extends AbstractCDOTest
     assertEquals(null,
         cdoRevision.data().get(getModel4Package().getSingleNonContainedElement_Parent(), CDOStore.NO_INDEX));
     singleNonContainedElement.setParent(refSingleNonContained);
-    transaction1.setCommittables(new HashSet<EObject>(Arrays.asList(new EObject[] { singleNonContainedElement,
-        refSingleNonContained })));
+    transaction1.setCommittables(
+        new HashSet<EObject>(Arrays.asList(new EObject[] { singleNonContainedElement, refSingleNonContained })));
     checkPartialCommitIntegrity((InternalCDOTransaction)transaction1);
     transaction1.commit();
 
     // STEP 2 Setting parent feature to point NULL
     CDOSession session2 = openSession();
     InternalCDOTransaction transaction2 = (InternalCDOTransaction)session2.openTransaction();
-    SingleNonContainedElement singleNonContainedElement2 = (SingleNonContainedElement)CDOUtil.getEObject(transaction2
-        .getObject(CDOUtil.getCDOObject(singleNonContainedElement).cdoID()));
+    SingleNonContainedElement singleNonContainedElement2 = (SingleNonContainedElement)CDOUtil
+        .getEObject(transaction2.getObject(CDOUtil.getCDOObject(singleNonContainedElement).cdoID()));
     RefSingleNonContained refSingleNonContained2 = singleNonContainedElement2.getParent();
     singleNonContainedElement2.setParent(null);
     cdoRevision = CDOUtil.getCDOObject(singleNonContainedElement2).cdoRevision();
     // here is real Java NULL after setting
     assertEquals(null,
         cdoRevision.data().get(getModel4Package().getSingleNonContainedElement_Parent(), CDOStore.NO_INDEX));
-    transaction2.setCommittables(new HashSet<EObject>(Arrays.asList(new EObject[] { singleNonContainedElement2,
-        refSingleNonContained2 })));
+    transaction2.setCommittables(
+        new HashSet<EObject>(Arrays.asList(new EObject[] { singleNonContainedElement2, refSingleNonContained2 })));
     checkPartialCommitIntegrity(transaction2);
     transaction2.commit();
     session2.close();
@@ -80,10 +80,10 @@ public class Bugzilla_352832_Test extends AbstractCDOTest
     // STEP 3 Setting parent feature to point REF
     session2 = openSession();
     transaction2 = (InternalCDOTransaction)session2.openTransaction();
-    singleNonContainedElement2 = (SingleNonContainedElement)CDOUtil.getEObject(transaction2.getObject(CDOUtil
-        .getCDOObject(singleNonContainedElement).cdoID()));
-    refSingleNonContained2 = (RefSingleNonContained)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(
-        refSingleNonContained).cdoID()));
+    singleNonContainedElement2 = (SingleNonContainedElement)CDOUtil
+        .getEObject(transaction2.getObject(CDOUtil.getCDOObject(singleNonContainedElement).cdoID()));
+    refSingleNonContained2 = (RefSingleNonContained)CDOUtil
+        .getEObject(transaction2.getObject(CDOUtil.getCDOObject(refSingleNonContained).cdoID()));
 
     cdoRevision = CDOUtil.getCDOObject(singleNonContainedElement2).cdoRevision();
     // from server loaded revision has CDO NULL ID, which has meaning of the same Java NULL. Identical situation when in
@@ -91,8 +91,8 @@ public class Bugzilla_352832_Test extends AbstractCDOTest
     assertEquals(CDOID.NULL,
         cdoRevision.data().get(getModel4Package().getSingleNonContainedElement_Parent(), CDOStore.NO_INDEX));
     singleNonContainedElement2.setParent(refSingleNonContained2);
-    transaction2.setCommittables(new HashSet<EObject>(Arrays.asList(new EObject[] { singleNonContainedElement2,
-        refSingleNonContained2 })));
+    transaction2.setCommittables(
+        new HashSet<EObject>(Arrays.asList(new EObject[] { singleNonContainedElement2, refSingleNonContained2 })));
     checkPartialCommitIntegrity(transaction2);
     transaction2.commit();
 

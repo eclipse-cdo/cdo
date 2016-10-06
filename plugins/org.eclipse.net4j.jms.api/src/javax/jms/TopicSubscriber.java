@@ -97,9 +97,9 @@ public interface TopicSubscriber extends MessageConsumer
 {
 
   /** Gets the <CODE>Topic</CODE> associated with this subscriber.
-    *  
+    *
     * @return this subscriber's <CODE>Topic</CODE>
-    *  
+    *
     * @exception JMSException if the JMS provider fails to get the topic for
     *                         this topic subscriber
     *                         due to some internal error.
@@ -107,11 +107,11 @@ public interface TopicSubscriber extends MessageConsumer
 
   Topic getTopic() throws JMSException;
 
-  /** Gets the <CODE>NoLocal</CODE> attribute for this subscriber. 
+  /** Gets the <CODE>NoLocal</CODE> attribute for this subscriber.
     * The default value for this attribute is false.
-    *  
+    *
     * @return true if locally published messages are being inhibited
-    *  
+    *
     * @exception JMSException if the JMS provider fails to get the
     *                         <CODE>NoLocal</CODE> attribute for
     *                         this topic subscriber

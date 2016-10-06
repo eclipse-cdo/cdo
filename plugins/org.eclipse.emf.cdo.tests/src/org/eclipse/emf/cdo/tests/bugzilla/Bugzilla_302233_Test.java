@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * unset of CDO does not work correctly
  * <p>
  * See bug 302233
- * 
+ *
  * @author Martin Fluegge
  */
 public class Bugzilla_302233_Test extends AbstractCDOTest

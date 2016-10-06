@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -21,14 +21,14 @@ import derived.DerivedPackage;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass derivedClassEClass = null;
@@ -40,7 +40,7 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see derived.DerivedPackage#eNS_URI
    * @see #init()
@@ -53,7 +53,7 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static boolean isInited = false;
@@ -64,7 +64,7 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
    * This method is used to initialize {@link DerivedPackage#eINSTANCE} when that field is accessed. Clients should not
    * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -78,8 +78,9 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
     }
 
     // Obtain or create and register package
-    DerivedPackageImpl theDerivedPackage = (DerivedPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof DerivedPackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI) : new DerivedPackageImpl());
+    DerivedPackageImpl theDerivedPackage = (DerivedPackageImpl)(EPackage.Registry.INSTANCE
+        .get(eNS_URI) instanceof DerivedPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+            : new DerivedPackageImpl());
 
     isInited = true;
 
@@ -102,7 +103,7 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getDerivedClass()
@@ -112,7 +113,7 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public DerivedFactory getDerivedFactory()
@@ -122,7 +123,7 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isCreated = false;
@@ -130,7 +131,7 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
   /**
    * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
    * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void createPackageContents()
@@ -147,7 +148,7 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isInitialized = false;
@@ -155,7 +156,7 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
   /**
    * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
    * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void initializePackageContents()

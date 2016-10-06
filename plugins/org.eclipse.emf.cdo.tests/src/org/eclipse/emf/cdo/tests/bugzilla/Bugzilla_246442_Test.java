@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * ArrayIndexOutOfBoundsException when importing resources.
  * <p>
  * See bug 246442
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_246442_Test extends AbstractCDOTest

@@ -186,7 +186,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
         cachedSources = new ListTargetAdding[initialCapacity];
       }
       else
-        // i.e. unprocessedFeatureDeltas != null
+      // i.e. unprocessedFeatureDeltas != null
       {
         int requiredCapacity = 1 + cachedIndices[0] + unprocessedFeatureDeltas.size();
         if (cachedIndices.length < requiredCapacity)

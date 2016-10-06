@@ -32,7 +32,7 @@ import java.util.Map;
 
 /**
  * CDO not robust when using dynamic packages
- * 
+ *
  * @author Caspar De Groot
  */
 public class Bugzilla_303466_Test extends AbstractCDOTest

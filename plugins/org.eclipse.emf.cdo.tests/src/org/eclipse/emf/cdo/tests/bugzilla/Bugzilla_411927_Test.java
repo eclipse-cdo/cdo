@@ -111,8 +111,8 @@ public class Bugzilla_411927_Test extends AbstractCDOTest
     getTestProperties().put(RepositoryConfig.PROP_TEST_REPOSITORY, repository);
   }
 
-  private void executeTestWith(FailureTime failureTime) throws ConcurrentAccessException, CommitException,
-      InterruptedException
+  private void executeTestWith(FailureTime failureTime)
+      throws ConcurrentAccessException, CommitException, InterruptedException
   {
     disableConsole();
     initRepository(failureTime);

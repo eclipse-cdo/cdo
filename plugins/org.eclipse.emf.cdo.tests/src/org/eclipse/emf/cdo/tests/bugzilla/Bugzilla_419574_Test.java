@@ -22,7 +22,7 @@ import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
 /**
  * Bug 419574 - NPE in CDOMergingConflictResolver.
- * 
+ *
  * @author Eike Stepper
  */
 public class Bugzilla_419574_Test extends AbstractCDOTest

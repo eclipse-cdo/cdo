@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -34,7 +34,7 @@ import java.io.IOException;
 
 /**
  * Bug 365832: Issues when trying to import changes: Cannot modify a frozen exception issue
- * 
+ *
  * @author Alex Lagarde
  */
 public class Bugzilla_365832_Test extends AbstractCDOTest
@@ -114,7 +114,7 @@ public class Bugzilla_365832_Test extends AbstractCDOTest
 
   /**
    * Creates a Push Transaction with the given options.
-   * 
+   *
    * @param fileForStoringChanges
    *          the file that CDOPushTransaction should use to store changes (can be null)
    * @param reconstructSavePoints

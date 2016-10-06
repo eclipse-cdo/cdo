@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
  * CDO wrong feature on notification when multiple super types
  * <p>
  * See bug 260764
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_260764_Test extends AbstractCDOTest
@@ -54,8 +54,8 @@ public class Bugzilla_260764_Test extends AbstractCDOTest
     final CDOSession session2 = openSession();
 
     final CDOTransaction transaction2 = session2.openTransaction();
-    final OrderAddress orderAddress2 = (OrderAddress)CDOUtil.getEObject(transaction2.getObject(
-        CDOUtil.getCDOObject(orderAddress).cdoID(), true));
+    final OrderAddress orderAddress2 = (OrderAddress)CDOUtil
+        .getEObject(transaction2.getObject(CDOUtil.getCDOObject(orderAddress).cdoID(), true));
 
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     orderAddress2.getOrderDetails().add(orderDetail);

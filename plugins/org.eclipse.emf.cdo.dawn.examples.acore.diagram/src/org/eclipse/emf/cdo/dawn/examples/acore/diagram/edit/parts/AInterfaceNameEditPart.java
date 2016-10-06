@@ -370,7 +370,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
     {
       parser = AcoreParserProvider.getParser(AcoreElementTypes.AInterface_2001, getParserElement(),
           AcoreVisualIDRegistry
-          .getType(org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AInterfaceNameEditPart.VISUAL_ID));
+              .getType(org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AInterfaceNameEditPart.VISUAL_ID));
     }
     return parser;
   }

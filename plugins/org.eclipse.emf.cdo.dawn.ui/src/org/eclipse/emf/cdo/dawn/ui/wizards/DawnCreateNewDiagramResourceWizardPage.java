@@ -35,6 +35,6 @@ public class DawnCreateNewDiagramResourceWizardPage extends DawnCreateNewResourc
   {
     // TODO check why the dawn resource must be connected this way
     return URI.createURI("dawn://" + PreferenceConstants.getRepositoryName() + "/" + chooserComposite.getResourcePath()
-    + "/" + chooserComposite.getResourceName());
+        + "/" + chooserComposite.getResourceName());
   }
 }

@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * Bug 302414, bug 316713 - ArrayIndexOutOfBoundsException in CDOListFeatureDeltaImpl
- * 
+ *
  * @author Caspar De Groot
  */
 public class Bugzilla_302414_Test extends AbstractCDOTest

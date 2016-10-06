@@ -127,7 +127,7 @@ public class ObjyConnection
                 true, // boolean appendLogFiles,
                 logDirPath, // String logDirPath,
                 "MainLog.txt"// String mainLogFileName
-                );
+            );
           }
           if (TRACER_DEBUG.isEnabled())
           {

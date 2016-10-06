@@ -26,10 +26,10 @@ public class SensitiveProtoTest extends AbstractOMTest
   public void testSensitiveCacheWithEvictionPolicy() throws Exception
   {
     ConcurrentMap<Integer, KeyedAndValuedWeakReference<Integer, String>> map //
-    = new ConcurrentHashMap<Integer, KeyedAndValuedWeakReference<Integer, String>>();
+        = new ConcurrentHashMap<Integer, KeyedAndValuedWeakReference<Integer, String>>();
 
     ReferenceQueue<String> queue //
-    = new ReferenceQueue<String>();
+        = new ReferenceQueue<String>();
 
     for (int i = 0; i < 20; i++)
     {

@@ -45,21 +45,21 @@ public interface CDOUserTransaction
    * write robust transactions:
    * <pre>
     CDOTransaction transaction = null;
-
+  
     try
     {
       transaction = session.openTransaction();
-
+  
       for (;;)
       {
         transaction.getViewLock().lock();
-  
+
         try
         {
           CDOResource resource = transaction.getResource("/stock/resource1");
-  
+
           // Modify the model here...
-  
+
           transaction.commit();
           break;
         }

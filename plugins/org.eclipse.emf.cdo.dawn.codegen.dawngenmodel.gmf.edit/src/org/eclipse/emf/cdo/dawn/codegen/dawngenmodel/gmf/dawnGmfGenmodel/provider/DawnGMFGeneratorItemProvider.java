@@ -198,8 +198,8 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
             getResourceLocator(), getString("_UI_DawnGMFGenerator_dawnEditPolicyProviderClassName_feature"),
             getString("_UI_PropertyDescriptor_description",
                 "_UI_DawnGMFGenerator_dawnEditPolicyProviderClassName_feature", "_UI_DawnGMFGenerator_type"),
-            DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_EDIT_POLICY_PROVIDER_CLASS_NAME, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+            DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_EDIT_POLICY_PROVIDER_CLASS_NAME, true, false,
+            false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**

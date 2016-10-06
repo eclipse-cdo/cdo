@@ -584,7 +584,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     if (revised != UNSPECIFIED_DATE && revised < Math.max(0, created))
     {
       throw new IllegalArgumentException("revision=" + this + ", created=" + CDOCommonUtil.formatTimeStamp(created)
-      + ", revised=" + CDOCommonUtil.formatTimeStamp(revised));
+          + ", revised=" + CDOCommonUtil.formatTimeStamp(revised));
     }
 
     if (TRACER.isEnabled())

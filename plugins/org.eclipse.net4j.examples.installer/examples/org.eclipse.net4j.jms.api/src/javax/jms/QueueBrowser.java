@@ -56,9 +56,9 @@ public interface QueueBrowser
 {
 
   /** Gets the queue associated with this queue browser.
-    * 
+    *
     * @return the queue
-    *  
+    *
     * @exception JMSException if the JMS provider fails to get the
     *                         queue associated with this browser
     *                         due to some internal error.
@@ -67,10 +67,10 @@ public interface QueueBrowser
   Queue getQueue() throws JMSException;
 
   /** Gets this queue browser's message selector expression.
-    *  
+    *
     * @return this queue browser's message selector, or null if no
-    *         message selector exists for the message consumer (that is, if 
-    *         the message selector was not set or was set to null or the 
+    *         message selector exists for the message consumer (that is, if
+    *         the message selector was not set or was set to null or the
     *         empty string)
     *
     * @exception JMSException if the JMS provider fails to get the
@@ -84,7 +84,7 @@ public interface QueueBrowser
     * order they would be received.
     *
     * @return an enumeration for browsing the messages
-    *  
+    *
     * @exception JMSException if the JMS provider fails to get the
     *                         enumeration for this browser
     *                         due to some internal error.
@@ -94,10 +94,10 @@ public interface QueueBrowser
 
   /** Closes the <CODE>QueueBrowser</CODE>.
     *
-    * <P>Since a provider may allocate some resources on behalf of a 
+    * <P>Since a provider may allocate some resources on behalf of a
     * QueueBrowser outside the Java virtual machine, clients should close them
-    * when they 
-    * are not needed. Relying on garbage collection to eventually reclaim 
+    * when they
+    * are not needed. Relying on garbage collection to eventually reclaim
     * these resources may not be timely enough.
     *
     * @exception JMSException if the JMS provider fails to close this

@@ -85,17 +85,17 @@ public interface BytesMessage extends Message
 {
 
   /** Gets the number of bytes of the message body when the message
-    * is in read-only mode. The value returned can be used to allocate 
+    * is in read-only mode. The value returned can be used to allocate
     * a byte array. The value returned is the entire length of the message
-    *  body, regardless of where the pointer for reading the message 
+    *  body, regardless of where the pointer for reading the message
     * is currently located.
-    * 
-    * @return number of bytes in the message 
-    * @exception JMSException if the JMS provider fails to read the message 
+    *
+    * @return number of bytes in the message
+    * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
     * @exception MessageNotReadableException if the message is in write-only
     *                         mode.
-    * @since 1.1 
+    * @since 1.1
     */
 
   long getBodyLength() throws JMSException;
@@ -104,11 +104,11 @@ public interface BytesMessage extends Message
     *
     * @return the <code>boolean</code> value read
     *
-    * @exception JMSException if the JMS provider fails to read the message 
+    * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
-    * @exception MessageEOFException if unexpected end of bytes stream has 
+    * @exception MessageEOFException if unexpected end of bytes stream has
     *                                been reached.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -119,26 +119,26 @@ public interface BytesMessage extends Message
     * @return the next byte from the bytes message stream as a signed 8-bit
     * <code>byte</code>
     *
-    * @exception JMSException if the JMS provider fails to read the message 
+    * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
-    * @exception MessageEOFException if unexpected end of bytes stream has 
+    * @exception MessageEOFException if unexpected end of bytes stream has
     *                                been reached.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
   byte readByte() throws JMSException;
 
   /** Reads an unsigned 8-bit number from the bytes message stream.
-    *  
+    *
     * @return the next byte from the bytes message stream, interpreted as an
     * unsigned 8-bit number
     *
-    * @exception JMSException if the JMS provider fails to read the message 
+    * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
-    * @exception MessageEOFException if unexpected end of bytes stream has 
+    * @exception MessageEOFException if unexpected end of bytes stream has
     *                                been reached.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -149,26 +149,26 @@ public interface BytesMessage extends Message
     * @return the next two bytes from the bytes message stream, interpreted as
     * a signed 16-bit number
     *
-    * @exception JMSException if the JMS provider fails to read the message 
+    * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
-    * @exception MessageEOFException if unexpected end of bytes stream has 
+    * @exception MessageEOFException if unexpected end of bytes stream has
     *                                been reached.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
   short readShort() throws JMSException;
 
   /** Reads an unsigned 16-bit number from the bytes message stream.
-    *  
+    *
     * @return the next two bytes from the bytes message stream, interpreted as
     * an unsigned 16-bit integer
     *
-    * @exception JMSException if the JMS provider fails to read the message 
+    * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
-    * @exception MessageEOFException if unexpected end of bytes stream has 
+    * @exception MessageEOFException if unexpected end of bytes stream has
     *                                been reached.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -179,11 +179,11 @@ public interface BytesMessage extends Message
     * @return the next two bytes from the bytes message stream as a Unicode
     * character
     *
-    * @exception JMSException if the JMS provider fails to read the message 
+    * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
-    * @exception MessageEOFException if unexpected end of bytes stream has 
+    * @exception MessageEOFException if unexpected end of bytes stream has
     *                                been reached.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -194,11 +194,11 @@ public interface BytesMessage extends Message
     * @return the next four bytes from the bytes message stream, interpreted
     * as an <code>int</code>
     *
-    * @exception JMSException if the JMS provider fails to read the message 
+    * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
-    * @exception MessageEOFException if unexpected end of bytes stream has 
+    * @exception MessageEOFException if unexpected end of bytes stream has
     *                                been reached.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -209,11 +209,11 @@ public interface BytesMessage extends Message
     * @return the next eight bytes from the bytes message stream, interpreted
     * as a <code>long</code>
     *
-    * @exception JMSException if the JMS provider fails to read the message 
+    * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
-    * @exception MessageEOFException if unexpected end of bytes stream has 
+    * @exception MessageEOFException if unexpected end of bytes stream has
     *                                been reached.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -224,11 +224,11 @@ public interface BytesMessage extends Message
     * @return the next four bytes from the bytes message stream, interpreted
     * as a <code>float</code>
     *
-    * @exception JMSException if the JMS provider fails to read the message 
+    * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
-    * @exception MessageEOFException if unexpected end of bytes stream has 
+    * @exception MessageEOFException if unexpected end of bytes stream has
     *                                been reached.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -239,11 +239,11 @@ public interface BytesMessage extends Message
     * @return the next eight bytes from the bytes message stream, interpreted
     * as a <code>double</code>
     *
-    * @exception JMSException if the JMS provider fails to read the message 
+    * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
-    * @exception MessageEOFException if unexpected end of bytes stream has 
+    * @exception MessageEOFException if unexpected end of bytes stream has
     *                                been reached.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -259,11 +259,11 @@ public interface BytesMessage extends Message
     *
     * @return a Unicode string from the bytes message stream
     *
-    * @exception JMSException if the JMS provider fails to read the message 
+    * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
-    * @exception MessageEOFException if unexpected end of bytes stream has 
+    * @exception MessageEOFException if unexpected end of bytes stream has
     *                                been reached.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -271,25 +271,25 @@ public interface BytesMessage extends Message
 
   /** Reads a byte array from the bytes message stream.
     *
-    * <P>If the length of array <code>value</code> is less than the number of 
-    * bytes remaining to be read from the stream, the array should 
+    * <P>If the length of array <code>value</code> is less than the number of
+    * bytes remaining to be read from the stream, the array should
     * be filled. A subsequent call reads the next increment, and so on.
-    * 
-    * <P>If the number of bytes remaining in the stream is less than the 
-    * length of 
-    * array <code>value</code>, the bytes should be read into the array. 
+    *
+    * <P>If the number of bytes remaining in the stream is less than the
+    * length of
+    * array <code>value</code>, the bytes should be read into the array.
     * The return value of the total number of bytes read will be less than
-    * the length of the array, indicating that there are no more bytes left 
+    * the length of the array, indicating that there are no more bytes left
     * to be read from the stream. The next read of the stream returns -1.
     *
     * @param value the buffer into which the data is read
     *
-    * @return the total number of bytes read into the buffer, or -1 if 
+    * @return the total number of bytes read into the buffer, or -1 if
     * there is no more data because the end of the stream has been reached
     *
-    * @exception JMSException if the JMS provider fails to read the message 
+    * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -298,60 +298,60 @@ public interface BytesMessage extends Message
   /** Reads a portion of the bytes message stream.
     *
     * <P>If the length of array <code>value</code> is less than the number of
-    * bytes remaining to be read from the stream, the array should 
+    * bytes remaining to be read from the stream, the array should
     * be filled. A subsequent call reads the next increment, and so on.
-    * 
-    * <P>If the number of bytes remaining in the stream is less than the 
-    * length of 
-    * array <code>value</code>, the bytes should be read into the array. 
+    *
+    * <P>If the number of bytes remaining in the stream is less than the
+    * length of
+    * array <code>value</code>, the bytes should be read into the array.
     * The return value of the total number of bytes read will be less than
-    * the length of the array, indicating that there are no more bytes left 
+    * the length of the array, indicating that there are no more bytes left
     * to be read from the stream. The next read of the stream returns -1.
     *
     * <p> If <code>length</code> is negative, or
     * <code>length</code> is greater than the length of the array
     * <code>value</code>, then an <code>IndexOutOfBoundsException</code> is
     * thrown. No bytes will be read from the stream for this exception case.
-    *  
+    *
     * @param value the buffer into which the data is read
     * @param length the number of bytes to read; must be less than or equal to
     *        <code>value.length</code>
-    * 
+    *
     * @return the total number of bytes read into the buffer, or -1 if
     * there is no more data because the end of the stream has been reached
-    *  
-    * @exception JMSException if the JMS provider fails to read the message 
+    *
+    * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
   int readBytes(byte[] value, int length) throws JMSException;
 
-  /** Writes a <code>boolean</code> to the bytes message stream as a 1-byte 
+  /** Writes a <code>boolean</code> to the bytes message stream as a 1-byte
     * value.
-    * The value <code>true</code> is written as the value 
-    * <code>(byte)1</code>; the value <code>false</code> is written as 
+    * The value <code>true</code> is written as the value
+    * <code>(byte)1</code>; the value <code>false</code> is written as
     * the value <code>(byte)0</code>.
     *
     * @param value the <code>boolean</code> value to be written
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
   void writeBoolean(boolean value) throws JMSException;
 
-  /** Writes a <code>byte</code> to the bytes message stream as a 1-byte 
+  /** Writes a <code>byte</code> to the bytes message stream as a 1-byte
     * value.
     *
     * @param value the <code>byte</code> value to be written
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
@@ -364,7 +364,7 @@ public interface BytesMessage extends Message
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
@@ -377,39 +377,39 @@ public interface BytesMessage extends Message
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
   void writeChar(char value) throws JMSException;
 
-  /** Writes an <code>int</code> to the bytes message stream as four bytes, 
+  /** Writes an <code>int</code> to the bytes message stream as four bytes,
     * high byte first.
     *
     * @param value the <code>int</code> to be written
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
   void writeInt(int value) throws JMSException;
 
-  /** Writes a <code>long</code> to the bytes message stream as eight bytes, 
+  /** Writes a <code>long</code> to the bytes message stream as eight bytes,
     * high byte first.
     *
     * @param value the <code>long</code> to be written
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
   void writeLong(long value) throws JMSException;
 
-  /** Converts the <code>float</code> argument to an <code>int</code> using 
+  /** Converts the <code>float</code> argument to an <code>int</code> using
     * the
     * <code>floatToIntBits</code> method in class <code>Float</code>,
     * and then writes that <code>int</code> value to the bytes message
@@ -419,13 +419,13 @@ public interface BytesMessage extends Message
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
   void writeFloat(float value) throws JMSException;
 
-  /** Converts the <code>double</code> argument to a <code>long</code> using 
+  /** Converts the <code>double</code> argument to a <code>long</code> using
     * the
     * <code>doubleToLongBits</code> method in class <code>Double</code>,
     * and then writes that <code>long</code> value to the bytes message
@@ -435,25 +435,25 @@ public interface BytesMessage extends Message
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
   void writeDouble(double value) throws JMSException;
 
-  /** Writes a string to the bytes message stream using UTF-8 encoding in a 
+  /** Writes a string to the bytes message stream using UTF-8 encoding in a
     * machine-independent manner.
     *
-    * <P>For more information on the UTF-8 format, see "File System Safe 
-    * UCS Transformation Format (FSS_UTF)", X/Open Preliminary Specification,       
-    * X/Open Company Ltd., Document Number: P316. This information also 
-    * appears in ISO/IEC 10646, Annex P. 
+    * <P>For more information on the UTF-8 format, see "File System Safe
+    * UCS Transformation Format (FSS_UTF)", X/Open Preliminary Specification,
+    * X/Open Company Ltd., Document Number: P316. This information also
+    * appears in ISO/IEC 10646, Annex P.
     *
     * @param value the <code>String</code> value to be written
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
@@ -465,21 +465,21 @@ public interface BytesMessage extends Message
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
   void writeBytes(byte[] value) throws JMSException;
 
   /** Writes a portion of a byte array to the bytes message stream.
-    *  
+    *
     * @param value the byte array value to be written
     * @param offset the initial offset within the byte array
     * @param length the number of bytes to use
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
@@ -488,27 +488,27 @@ public interface BytesMessage extends Message
   /** Writes an object to the bytes message stream.
     *
     * <P>This method works only for the objectified primitive
-    * object types (<code>Integer</code>, <code>Double</code>, 
-    * <code>Long</code>&nbsp;...), <code>String</code> objects, and byte 
+    * object types (<code>Integer</code>, <code>Double</code>,
+    * <code>Long</code>&nbsp;...), <code>String</code> objects, and byte
     * arrays.
     *
-    * @param value the object in the Java programming language ("Java 
+    * @param value the object in the Java programming language ("Java
     *              object") to be written; it must not be null
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
     * @exception MessageFormatException if the object is of an invalid type.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
-    * @exception java.lang.NullPointerException if the parameter 
+    * @exception java.lang.NullPointerException if the parameter
     *                                           <code>value</code> is null.
     */
 
   void writeObject(Object value) throws JMSException;
 
-  /** Puts the message body in read-only mode and repositions the stream of 
+  /** Puts the message body in read-only mode and repositions the stream of
     * bytes to the beginning.
-    *  
+    *
     * @exception JMSException if the JMS provider fails to reset the message
     *                         due to some internal error.
     * @exception MessageFormatException if the message has an invalid

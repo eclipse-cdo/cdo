@@ -105,41 +105,41 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
     switch (eClass.getClassifierID())
     {
     case SecurityPackage.REALM:
-      return (EObject)createRealm();
+      return createRealm();
     case SecurityPackage.DIRECTORY:
-      return (EObject)createDirectory();
+      return createDirectory();
     case SecurityPackage.ROLE:
-      return (EObject)createRole();
+      return createRole();
     case SecurityPackage.GROUP:
-      return (EObject)createGroup();
+      return createGroup();
     case SecurityPackage.USER:
-      return (EObject)createUser();
+      return createUser();
     case SecurityPackage.USER_PASSWORD:
-      return (EObject)createUserPassword();
+      return createUserPassword();
     case SecurityPackage.CLASS_PERMISSION:
-      return (EObject)createClassPermission();
+      return createClassPermission();
     case SecurityPackage.PACKAGE_PERMISSION:
-      return (EObject)createPackagePermission();
+      return createPackagePermission();
     case SecurityPackage.RESOURCE_PERMISSION:
-      return (EObject)createResourcePermission();
+      return createResourcePermission();
     case SecurityPackage.FILTER_PERMISSION:
-      return (EObject)createFilterPermission();
+      return createFilterPermission();
     case SecurityPackage.LINKED_FILTER:
-      return (EObject)createLinkedFilter();
+      return createLinkedFilter();
     case SecurityPackage.PACKAGE_FILTER:
-      return (EObject)createPackageFilter();
+      return createPackageFilter();
     case SecurityPackage.CLASS_FILTER:
-      return (EObject)createClassFilter();
+      return createClassFilter();
     case SecurityPackage.RESOURCE_FILTER:
-      return (EObject)createResourceFilter();
+      return createResourceFilter();
     case SecurityPackage.EXPRESSION_FILTER:
-      return (EObject)createExpressionFilter();
+      return createExpressionFilter();
     case SecurityPackage.NOT_FILTER:
-      return (EObject)createNotFilter();
+      return createNotFilter();
     case SecurityPackage.AND_FILTER:
-      return (EObject)createAndFilter();
+      return createAndFilter();
     case SecurityPackage.OR_FILTER:
-      return (EObject)createOrFilter();
+      return createOrFilter();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -577,8 +577,10 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   {
     PatternStyle result = PatternStyle.get(initialValue);
     if (result == null)
+    {
       throw new IllegalArgumentException(
           "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    }
     return result;
   }
 
@@ -612,8 +614,10 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   {
     Access result = Access.get(initialValue);
     if (result == null)
+    {
       throw new IllegalArgumentException(
           "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    }
     return result;
   }
 

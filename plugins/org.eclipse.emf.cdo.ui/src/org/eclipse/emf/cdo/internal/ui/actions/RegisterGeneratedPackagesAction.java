@@ -49,7 +49,7 @@ public class RegisterGeneratedPackagesAction extends RegisterPackagesAction
     Shell shell = page.getWorkbenchWindow().getShell();
     SelectPackageDialog dialog = new SelectPackageDialog(shell, Messages.getString("RegisterGeneratedPackagesAction.2"), //$NON-NLS-1$
         Messages.getString("RegisterGeneratedPackagesAction.3"), session.getPackageRegistry() //$NON-NLS-1$
-        .keySet());
+            .keySet());
 
     if (dialog.open() == SelectPackageDialog.OK)
     {

@@ -204,7 +204,7 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
   /**
    * @author Eike Stepper
    */
-  private static final class CacheSoftReference extends SoftReference<InternalCDORevision>implements CDORevisionKey
+  private static final class CacheSoftReference extends SoftReference<InternalCDORevision> implements CDORevisionKey
   {
     private CDOID id;
 
@@ -245,7 +245,7 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
   /**
    * @author Eike Stepper
    */
-  private static final class CacheStrongReference extends SoftReference<InternalCDORevision>implements CDORevisionKey
+  private static final class CacheStrongReference extends SoftReference<InternalCDORevision> implements CDORevisionKey
   {
     private CDOID id;
 

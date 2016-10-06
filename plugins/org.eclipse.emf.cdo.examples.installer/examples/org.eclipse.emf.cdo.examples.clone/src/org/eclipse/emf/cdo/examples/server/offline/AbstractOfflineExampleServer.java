@@ -181,7 +181,7 @@ public abstract class AbstractOfflineExampleServer
     {
       System.out.println();
       System.out.println(repository.getName() + ": " + repository.getType()
-      + (repository.getType() == Type.BACKUP ? "|" + repository.getState() : ""));
+          + (repository.getType() == Type.BACKUP ? "|" + repository.getState() : ""));
     }
     else if ("0".equals(command))
     {

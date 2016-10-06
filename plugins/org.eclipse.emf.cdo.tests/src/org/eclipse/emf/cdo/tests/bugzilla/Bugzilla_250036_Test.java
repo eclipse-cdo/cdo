@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * See bug 250036
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_250036_Test extends AbstractCDOTest

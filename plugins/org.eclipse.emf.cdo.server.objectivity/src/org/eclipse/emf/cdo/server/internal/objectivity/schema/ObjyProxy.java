@@ -61,7 +61,7 @@ public class ObjyProxy
           ObjyProxy.uriAttributeName, // Attribute name
           1, // # elements in fixed-size array
           "ooUtf8String" // name of embedded class
-          );
+      );
 
       // top_mod.propose_new_class(propClass);
       if (!inProcess)

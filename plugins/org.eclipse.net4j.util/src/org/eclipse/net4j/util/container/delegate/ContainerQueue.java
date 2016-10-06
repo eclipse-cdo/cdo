@@ -18,7 +18,7 @@ import java.util.Queue;
  * @author Eike Stepper
  * @apiviz.exclude
  */
-public class ContainerQueue<E> extends ContainerCollection<E>implements IContainerQueue<E>
+public class ContainerQueue<E> extends ContainerCollection<E> implements IContainerQueue<E>
 {
   public ContainerQueue(Queue<E> delegate)
   {

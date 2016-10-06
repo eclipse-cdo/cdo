@@ -216,7 +216,7 @@ public class OCLQueryHandler implements IQueryHandler
    */
   protected Query<EClassifier, EClass, EObject> createQuery(CDOView view, CDOQueryInfo info,
       ContextParameter contextParameter, OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl)
-          throws ParserException, DiagnosticException
+      throws ParserException, DiagnosticException
   {
     Map<String, Object> parameters = new HashMap<String, Object>(info.getParameters());
     initEnvironment(ocl.getEnvironment(), view.getSession().getPackageRegistry(), parameters);

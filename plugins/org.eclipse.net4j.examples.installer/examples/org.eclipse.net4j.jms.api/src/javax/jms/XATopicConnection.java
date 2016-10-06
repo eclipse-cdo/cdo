@@ -46,11 +46,11 @@ public interface XATopicConnection extends XAConnection, TopicConnection
 {
 
   /** Creates an <CODE>XATopicSession</CODE> object.
-    *  
+    *
     * @return a newly created XA topic session
-    *  
+    *
     * @exception JMSException if the <CODE>XATopicConnection</CODE> object
-    *                         fails to create an XA topic session due to some 
+    *                         fails to create an XA topic session due to some
     *                         internal error.
     */
 
@@ -60,11 +60,11 @@ public interface XATopicConnection extends XAConnection, TopicConnection
     *
     * @param transacted usage undefined
     * @param acknowledgeMode usage undefined
-    *  
+    *
     * @return a newly created XA topic session
-    *  
+    *
     * @exception JMSException if the <CODE>XATopicConnection</CODE> object
-    *                         fails to create an XA topic session due to some 
+    *                         fails to create an XA topic session due to some
     *                         internal error.
     */
 

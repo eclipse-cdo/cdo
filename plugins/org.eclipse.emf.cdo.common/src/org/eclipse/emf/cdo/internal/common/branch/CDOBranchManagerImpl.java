@@ -34,7 +34,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class CDOBranchManagerImpl extends Container<CDOBranch>implements InternalCDOBranchManager
+public class CDOBranchManagerImpl extends Container<CDOBranch> implements InternalCDOBranchManager
 {
   private CDOCommonRepository repository;
 

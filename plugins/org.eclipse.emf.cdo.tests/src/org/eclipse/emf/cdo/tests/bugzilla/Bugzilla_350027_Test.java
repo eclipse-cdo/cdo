@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
  * Fix index for moves from left to right.
  * <p>
  * See bug 350027
- * 
+ *
  * @author Cyril Jaquier
  */
 public class Bugzilla_350027_Test extends AbstractCDOTest

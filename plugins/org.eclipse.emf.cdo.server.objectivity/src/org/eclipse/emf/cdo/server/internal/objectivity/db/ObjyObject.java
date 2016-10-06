@@ -627,7 +627,7 @@ public class ObjyObject
             else if (value instanceof CDOIDExternal)
             {
               TRACER_DEBUG
-              .trace("... CDOIDExternal inserted, at:" + i + ", content:" + ((CDOIDExternal)value).getURI());
+                  .trace("... CDOIDExternal inserted, at:" + i + ", content:" + ((CDOIDExternal)value).getURI());
               // System.out.println("value is a proxy object - it should be handled by the mapper.");
               // create an ObjyProxy object to hold the the value.
               ObjyProxy proxyObject = ObjyProxy.createObject(ooId());
@@ -1147,8 +1147,8 @@ public class ObjyObject
       checkSession();
       // TODO - verify the message.
       TRACER_DEBUG.trace("Get All objects for ID: " + ooId().getStoreString() + " <feature ' " + feature/*
-       * .getName( )
-       */
+                                                                                                         * .getName( )
+                                                                                                         */
           + "':" + feature.getEType() + "> from " + this);
     }
 
@@ -1441,7 +1441,7 @@ public class ObjyObject
         if (TRACER_DEBUG.isEnabled())
         {
           TRACER_DEBUG.trace("-->> No process to delete() feature (" + i + ") -> feature:" + feature.getName()
-          + " - value:" + objects[i] + " ... nothing to do here.");
+              + " - value:" + objects[i] + " ... nothing to do here.");
         }
       }
     }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -22,7 +22,7 @@ import interface_.IInterface;
  * <li>{@link reference.Reference#getRef <em>Ref</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see reference.ReferencePackage#getReference()
  * @model
  * @extends CDOObject
@@ -36,7 +36,7 @@ public interface Reference extends CDOObject
    * If the meaning of the '<em>Ref</em>' reference isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Ref</em>' reference.
    * @see #setRef(IInterface)
    * @see reference.ReferencePackage#getReference_Ref()
@@ -48,7 +48,7 @@ public interface Reference extends CDOObject
   /**
    * Sets the value of the '{@link reference.Reference#getRef <em>Ref</em>}' reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Ref</em>' reference.
    * @see #getRef()

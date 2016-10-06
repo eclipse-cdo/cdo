@@ -29,7 +29,7 @@ import java.util.Map;
 
 /**
  * Test EMap in combination with auditing.
- * 
+ *
  * @author Martin Taal
  */
 @Requires(IRepositoryConfig.CAPABILITY_AUDITING)

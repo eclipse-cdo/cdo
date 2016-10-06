@@ -208,7 +208,7 @@ public class ObjyClassProposed
         {
           TRACER_DEBUG.trace("Attribut Changed for " + eClass.getName() + " name : " + feature.getName());
           TRACER_DEBUG.trace("... attribute change is not supported in this release... for " + eClass.getName()
-          + " name : " + feature.getName());
+              + " name : " + feature.getName());
         }
 
         // TODO - enable the rest of attribute type evolution...

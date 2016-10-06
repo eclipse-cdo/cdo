@@ -31,7 +31,7 @@ import java.util.List;
  * Export resource miss all of the oneToMany references
  * <p>
  * See bug 273758
- * 
+ *
  * @author Victor Roldan Betancort
  */
 public class Bugzilla_273758_Test extends AbstractCDOTest

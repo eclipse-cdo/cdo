@@ -64,21 +64,21 @@ public interface MessageProducer
 {
 
   /** Sets whether message IDs are disabled.
-    *  
+    *
     * <P>Since message IDs take some effort to create and increase a
     * message's size, some JMS providers may be able to optimize message
     * overhead if they are given a hint that the message ID is not used by
-    * an application. By calling the <CODE>setDisableMessageID</CODE>  
-    * method on this message producer, a JMS client enables this potential 
-    * optimization for all messages sent by this message producer. If the JMS 
-    * provider accepts this hint, 
-    * these messages must have the message ID set to null; if the provider 
+    * an application. By calling the <CODE>setDisableMessageID</CODE>
+    * method on this message producer, a JMS client enables this potential
+    * optimization for all messages sent by this message producer. If the JMS
+    * provider accepts this hint,
+    * these messages must have the message ID set to null; if the provider
     * ignores the hint, the message ID must be set to its normal unique value.
     *
     * <P>Message IDs are enabled by default.
     *
     * @param value indicates if message IDs are disabled
-    *  
+    *
     * @exception JMSException if the JMS provider fails to set message ID to
     *                         disabled due to some internal error.
     */
@@ -86,32 +86,32 @@ public interface MessageProducer
   void setDisableMessageID(boolean value) throws JMSException;
 
   /** Gets an indication of whether message IDs are disabled.
-    *  
+    *
     * @return an indication of whether message IDs are disabled
-    *  
-    * @exception JMSException if the JMS provider fails to determine if 
-    *                         message IDs are disabled due to some internal 
+    *
+    * @exception JMSException if the JMS provider fails to determine if
+    *                         message IDs are disabled due to some internal
     *                         error.
     */
 
   boolean getDisableMessageID() throws JMSException;
 
   /** Sets whether message timestamps are disabled.
-    *  
-    * <P>Since timestamps take some effort to create and increase a 
-    * message's size, some JMS providers may be able to optimize message 
-    * overhead if they are given a hint that the timestamp is not used by an 
-    * application. By calling the <CODE>setDisableMessageTimestamp</CODE> 
-    * method on this message producer, a JMS client enables this potential 
-    * optimization for all messages sent by this message producer.  If the 
-    * JMS provider accepts this hint, 
-    * these messages must have the timestamp set to zero; if the provider 
+    *
+    * <P>Since timestamps take some effort to create and increase a
+    * message's size, some JMS providers may be able to optimize message
+    * overhead if they are given a hint that the timestamp is not used by an
+    * application. By calling the <CODE>setDisableMessageTimestamp</CODE>
+    * method on this message producer, a JMS client enables this potential
+    * optimization for all messages sent by this message producer.  If the
+    * JMS provider accepts this hint,
+    * these messages must have the timestamp set to zero; if the provider
     * ignores the hint, the timestamp must be set to its normal value.
-    *  
+    *
     * <P>Message timestamps are enabled by default.
     *
     * @param value indicates if message timestamps are disabled
-    *  
+    *
     * @exception JMSException if the JMS provider fails to set timestamps to
     *                         disabled due to some internal error.
     */
@@ -119,26 +119,26 @@ public interface MessageProducer
   void setDisableMessageTimestamp(boolean value) throws JMSException;
 
   /** Gets an indication of whether message timestamps are disabled.
-    *  
+    *
     * @return an indication of whether message timestamps are disabled
-    *  
-    * @exception JMSException if the JMS provider fails to determine if 
-    *                         timestamps are disabled due to some internal 
+    *
+    * @exception JMSException if the JMS provider fails to determine if
+    *                         timestamps are disabled due to some internal
     *                         error.
     */
 
   boolean getDisableMessageTimestamp() throws JMSException;
 
   /** Sets the producer's default delivery mode.
-    *  
+    *
     * <P>Delivery mode is set to <CODE>PERSISTENT</CODE> by default.
     *
     * @param deliveryMode the message delivery mode for this message
     * producer; legal values are <code>DeliveryMode.NON_PERSISTENT</code>
     * and <code>DeliveryMode.PERSISTENT</code>
-    *  
-    * @exception JMSException if the JMS provider fails to set the delivery 
-    *                         mode due to some internal error.          
+    *
+    * @exception JMSException if the JMS provider fails to set the delivery
+    *                         mode due to some internal error.
     *
     * @see javax.jms.MessageProducer#getDeliveryMode
     * @see javax.jms.DeliveryMode#NON_PERSISTENT
@@ -149,10 +149,10 @@ public interface MessageProducer
   void setDeliveryMode(int deliveryMode) throws JMSException;
 
   /** Gets the producer's default delivery mode.
-    *  
+    *
     * @return the message delivery mode for this message producer
-    *  
-    * @exception JMSException if the JMS provider fails to get the delivery 
+    *
+    * @exception JMSException if the JMS provider fails to get the delivery
     *                         mode due to some internal error.
     *
     * @see javax.jms.MessageProducer#setDeliveryMode
@@ -161,16 +161,16 @@ public interface MessageProducer
   int getDeliveryMode() throws JMSException;
 
   /** Sets the producer's default priority.
-    *  
-    * <P>The JMS API defines ten levels of priority value, with 0 as the 
+    *
+    * <P>The JMS API defines ten levels of priority value, with 0 as the
     * lowest priority and 9 as the highest. Clients should consider priorities
-    * 0-4 as gradations of normal priority and priorities 5-9 as gradations 
+    * 0-4 as gradations of normal priority and priorities 5-9 as gradations
     * of expedited priority. Priority is set to 4 by default.
     *
     * @param defaultPriority the message priority for this message producer;
     *                        must be a value between 0 and 9
-    * 
-    *  
+    *
+    *
     * @exception JMSException if the JMS provider fails to set the priority
     *                         due to some internal error.
     *
@@ -181,9 +181,9 @@ public interface MessageProducer
   void setPriority(int defaultPriority) throws JMSException;
 
   /** Gets the producer's default priority.
-    *  
+    *
     * @return the message priority for this message producer
-    *  
+    *
     * @exception JMSException if the JMS provider fails to get the priority
     *                         due to some internal error.
     *
@@ -200,7 +200,7 @@ public interface MessageProducer
     * @param timeToLive the message time to live in milliseconds; zero is
     * unlimited
     *
-    * @exception JMSException if the JMS provider fails to set the time to 
+    * @exception JMSException if the JMS provider fails to set the time to
     *                         live due to some internal error.
     *
     * @see javax.jms.MessageProducer#getTimeToLive
@@ -214,7 +214,7 @@ public interface MessageProducer
     *
     * @return the message time to live in milliseconds; zero is unlimited
     *
-    * @exception JMSException if the JMS provider fails to get the time to 
+    * @exception JMSException if the JMS provider fails to get the time to
     *                         live due to some internal error.
     *
     * @see javax.jms.MessageProducer#setTimeToLive
@@ -223,13 +223,13 @@ public interface MessageProducer
   long getTimeToLive() throws JMSException;
 
   /** Gets the destination associated with this <CODE>MessageProducer</CODE>.
-    *  
+    *
     * @return this producer's <CODE>Destination/<CODE>
-    *  
+    *
     * @exception JMSException if the JMS provider fails to get the destination for
     *                         this <CODE>MessageProducer</CODE>
     *                         due to some internal error.
-    *@since 1.1 
+    *@since 1.1
     */
 
   Destination getDestination() throws JMSException;
@@ -237,49 +237,23 @@ public interface MessageProducer
   /** Closes the message producer.
     *
     * <P>Since a provider may allocate some resources on behalf of a
-    * <CODE>MessageProducer</CODE> outside the Java virtual machine, clients 
+    * <CODE>MessageProducer</CODE> outside the Java virtual machine, clients
     * should close them when they
     * are not needed. Relying on garbage collection to eventually reclaim
     * these resources may not be timely enough.
-    *  
+    *
     * @exception JMSException if the JMS provider fails to close the producer
     *                         due to some internal error.
     */
 
   void close() throws JMSException;
 
-  /** Sends a message using the <CODE>MessageProducer</CODE>'s 
+  /** Sends a message using the <CODE>MessageProducer</CODE>'s
   * default delivery mode, priority, and time to live.
   *
-  * @param message the message to send 
-  *  
-  * @exception JMSException if the JMS provider fails to send the message 
-  *                         due to some internal error.
-  * @exception MessageFormatException if an invalid message is specified.
-  * @exception InvalidDestinationException if a client uses
-  *                         this method with a <CODE>MessageProducer</CODE> with
-  *                         an invalid destination.
-  * @exception java.lang.UnsupportedOperationException if a client uses this
-  *                         method with a <CODE>MessageProducer</CODE> that did
-  *                         not specify a destination at creation time.
-  * 
-  * @see javax.jms.Session#createProducer 
-  * @see javax.jms.MessageProducer 
-  *
-  * @since 1.1 
-  */
-
-  void send(Message message) throws JMSException;
-
-  /** Sends a message to the destination, specifying delivery mode, priority, and 
-  * time to live.
-  *
   * @param message the message to send
-  * @param deliveryMode the delivery mode to use
-  * @param priority the priority for this message
-  * @param timeToLive the message's lifetime (in milliseconds)
-  *  
-  * @exception JMSException if the JMS provider fails to send the message 
+  *
+  * @exception JMSException if the JMS provider fails to send the message
   *                         due to some internal error.
   * @exception MessageFormatException if an invalid message is specified.
   * @exception InvalidDestinationException if a client uses
@@ -290,7 +264,33 @@ public interface MessageProducer
   *                         not specify a destination at creation time.
   *
   * @see javax.jms.Session#createProducer
-  * @since 1.1 
+  * @see javax.jms.MessageProducer
+  *
+  * @since 1.1
+  */
+
+  void send(Message message) throws JMSException;
+
+  /** Sends a message to the destination, specifying delivery mode, priority, and
+  * time to live.
+  *
+  * @param message the message to send
+  * @param deliveryMode the delivery mode to use
+  * @param priority the priority for this message
+  * @param timeToLive the message's lifetime (in milliseconds)
+  *
+  * @exception JMSException if the JMS provider fails to send the message
+  *                         due to some internal error.
+  * @exception MessageFormatException if an invalid message is specified.
+  * @exception InvalidDestinationException if a client uses
+  *                         this method with a <CODE>MessageProducer</CODE> with
+  *                         an invalid destination.
+  * @exception java.lang.UnsupportedOperationException if a client uses this
+  *                         method with a <CODE>MessageProducer</CODE> that did
+  *                         not specify a destination at creation time.
+  *
+  * @see javax.jms.Session#createProducer
+  * @since 1.1
   */
 
   void send(Message message, int deliveryMode, int priority, long timeToLive) throws JMSException;
@@ -299,52 +299,52 @@ public interface MessageProducer
    * Uses the <CODE>MessageProducer</CODE>'s default delivery mode, priority,
    * and time to live.
    *
-   * <P>Typically, a message producer is assigned a destination at creation 
+   * <P>Typically, a message producer is assigned a destination at creation
    * time; however, the JMS API also supports unidentified message producers,
    * which require that the destination be supplied every time a message is
-   * sent. 
-   *  
+   * sent.
+   *
    * @param destination the destination to send this message to
    * @param message the message to send
-   *  
-   * @exception JMSException if the JMS provider fails to send the message 
+   *
+   * @exception JMSException if the JMS provider fails to send the message
    *                         due to some internal error.
    * @exception MessageFormatException if an invalid message is specified.
    * @exception InvalidDestinationException if a client uses
    *                         this method with an invalid destination.
    * @exception java.lang.UnsupportedOperationException if a client uses this
-   *                         method with a <CODE>MessageProducer</CODE> that 
+   *                         method with a <CODE>MessageProducer</CODE> that
    *                         specified a destination at creation time.
-   * 
+   *
    * @see javax.jms.Session#createProducer
    * @see javax.jms.MessageProducer
-   * @since 1.1 
+   * @since 1.1
    */
 
   void send(Destination destination, Message message) throws JMSException;
 
-  /** Sends a message to a destination for an unidentified message producer, 
+  /** Sends a message to a destination for an unidentified message producer,
     * specifying delivery mode, priority and time to live.
-    *  
-    * <P>Typically, a message producer is assigned a destination at creation 
+    *
+    * <P>Typically, a message producer is assigned a destination at creation
     * time; however, the JMS API also supports unidentified message producers,
     * which require that the destination be supplied every time a message is
-    * sent. 
-    *  
+    * sent.
+    *
     * @param destination the destination to send this message to
     * @param message the message to send
     * @param deliveryMode the delivery mode to use
     * @param priority the priority for this message
     * @param timeToLive the message's lifetime (in milliseconds)
-    *  
-    * @exception JMSException if the JMS provider fails to send the message 
+    *
+    * @exception JMSException if the JMS provider fails to send the message
     *                         due to some internal error.
     * @exception MessageFormatException if an invalid message is specified.
     * @exception InvalidDestinationException if a client uses
     *                         this method with an invalid destination.
     *
     * @see javax.jms.Session#createProducer
-    * @since 1.1 
+    * @since 1.1
     */
 
   void send(Destination destination, Message message, int deliveryMode, int priority, long timeToLive)

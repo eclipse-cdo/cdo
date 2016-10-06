@@ -67,13 +67,13 @@ public interface QueueSession extends Session
     *
     * <P>This facility is provided for the rare cases where clients need to
     * dynamically manipulate queue identity. It allows the creation of a
-    * queue identity with a provider-specific name. Clients that depend 
+    * queue identity with a provider-specific name. Clients that depend
     * on this ability are not portable.
     *
-    * <P>Note that this method is not for creating the physical queue. 
+    * <P>Note that this method is not for creating the physical queue.
     * The physical creation of queues is an administrative task and is not
     * to be initiated by the JMS API. The one exception is the
-    * creation of temporary queues, which is accomplished with the 
+    * creation of temporary queues, which is accomplished with the
     * <CODE>createTemporaryQueue</CODE> method.
     *
     * @param queueName the name of this <CODE>Queue</CODE>
@@ -98,15 +98,15 @@ public interface QueueSession extends Session
 
   QueueReceiver createReceiver(Queue queue) throws JMSException;
 
-  /** Creates a <CODE>QueueReceiver</CODE> object to receive messages from the 
+  /** Creates a <CODE>QueueReceiver</CODE> object to receive messages from the
     * specified queue using a message selector.
-    *  
+    *
     * @param queue the <CODE>Queue</CODE> to access
     * @param messageSelector only messages with properties matching the
     * message selector expression are delivered. A value of null or
-    * an empty string indicates that there is no message selector 
+    * an empty string indicates that there is no message selector
     * for the message consumer.
-    *  
+    *
     * @exception JMSException if the session fails to create a receiver
     *                         due to some internal error.
     * @exception InvalidDestinationException if an invalid queue is specified.
@@ -116,10 +116,10 @@ public interface QueueSession extends Session
 
   QueueReceiver createReceiver(Queue queue, String messageSelector) throws JMSException;
 
-  /** Creates a <CODE>QueueSender</CODE> object to send messages to the 
+  /** Creates a <CODE>QueueSender</CODE> object to send messages to the
     * specified queue.
     *
-    * @param queue the <CODE>Queue</CODE> to access, or null if this is an 
+    * @param queue the <CODE>Queue</CODE> to access, or null if this is an
     * unidentified producer
     *
     * @exception JMSException if the session fails to create a sender
@@ -129,7 +129,7 @@ public interface QueueSession extends Session
 
   QueueSender createSender(Queue queue) throws JMSException;
 
-  /** Creates a <CODE>QueueBrowser</CODE> object to peek at the messages on 
+  /** Creates a <CODE>QueueBrowser</CODE> object to peek at the messages on
     * the specified queue.
     *
     * @param queue the <CODE>Queue</CODE> to access
@@ -141,15 +141,15 @@ public interface QueueSession extends Session
 
   QueueBrowser createBrowser(Queue queue) throws JMSException;
 
-  /** Creates a <CODE>QueueBrowser</CODE> object to peek at the messages on 
+  /** Creates a <CODE>QueueBrowser</CODE> object to peek at the messages on
     * the specified queue using a message selector.
-    *  
+    *
     * @param queue the <CODE>Queue</CODE> to access
     * @param messageSelector only messages with properties matching the
     * message selector expression are delivered. A value of null or
-    * an empty string indicates that there is no message selector 
+    * an empty string indicates that there is no message selector
     * for the message consumer.
-    *  
+    *
     * @exception JMSException if the session fails to create a browser
     *                         due to some internal error.
     * @exception InvalidDestinationException if an invalid queue is specified.
@@ -158,7 +158,7 @@ public interface QueueSession extends Session
 
   QueueBrowser createBrowser(Queue queue, String messageSelector) throws JMSException;
 
-  /** Creates a <CODE>TemporaryQueue</CODE> object. Its lifetime will be that 
+  /** Creates a <CODE>TemporaryQueue</CODE> object. Its lifetime will be that
     * of the <CODE>QueueConnection</CODE> unless it is deleted earlier.
     *
     * @return a temporary queue identity

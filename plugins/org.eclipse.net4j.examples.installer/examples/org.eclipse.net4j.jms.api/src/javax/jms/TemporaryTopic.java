@@ -50,7 +50,7 @@ public interface TemporaryTopic extends Topic
 
   /** Deletes this temporary topic. If there are existing subscribers
     * still using it, a <CODE>JMSException</CODE> will be thrown.
-    *  
+    *
     * @exception JMSException if the JMS provider fails to delete the
     *                         temporary topic due to some internal error.
     */

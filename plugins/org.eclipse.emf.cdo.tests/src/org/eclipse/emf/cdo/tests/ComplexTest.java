@@ -1001,7 +1001,8 @@ public class ComplexTest extends AbstractCDOTest
     IContainedElementNoParentLink element0_ = (IContainedElementNoParentLink)resource2.getContents().get(0);
 
     assertEquals(element0_, container.getElement());
-    assertEquals("CrossResourceIfcimplSingleNonContainedUnidirectional-Element-0", ((INamedElement)element0_).getName());
+    assertEquals("CrossResourceIfcimplSingleNonContainedUnidirectional-Element-0",
+        ((INamedElement)element0_).getName());
     assertEquals(resource1, container.eResource());
     assertEquals(resource2, element0_.eResource());
 

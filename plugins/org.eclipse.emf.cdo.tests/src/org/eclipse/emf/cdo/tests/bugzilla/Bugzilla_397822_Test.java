@@ -69,7 +69,7 @@ public class Bugzilla_397822_Test extends AbstractCDOTest
     EReference reference = getModel6Package().getUnorderedList_Contained();
 
     assertRevisionDeltaContainsListChanges(revisionDelta, reference //
-        // removal of elem4 at index 3
+    // removal of elem4 at index 3
         , new CDORemoveFeatureDeltaImpl(reference, 3)
 
         // removal of elem2 at index 1
@@ -104,7 +104,7 @@ public class Bugzilla_397822_Test extends AbstractCDOTest
     EAttribute attribute = getModel5Package().getGenListOfInt_Elements();
 
     assertRevisionDeltaContainsListChanges(revisionDelta, attribute //
-        // removal of '4' at index 3
+    // removal of '4' at index 3
         , new CDORemoveFeatureDeltaImpl(attribute, 3)
 
         // removal of '2' at index 1
@@ -135,7 +135,7 @@ public class Bugzilla_397822_Test extends AbstractCDOTest
     EAttribute attribute = getModel5Package().getGenListOfInt_Elements();
 
     assertRevisionDeltaContainsListChanges(revisionDelta, attribute //
-        // entire list was cleared
+    // entire list was cleared
         , new CDOClearFeatureDeltaImpl(attribute)
 
     );

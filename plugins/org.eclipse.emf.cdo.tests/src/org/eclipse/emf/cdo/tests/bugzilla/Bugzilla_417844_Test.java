@@ -22,7 +22,7 @@ import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 /**
  * Bug 417844 - InvalidationRunner can die if invalidations come too early.
- * 
+ *
  * @author Eike Stepper
  */
 public class Bugzilla_417844_Test extends AbstractCDOTest

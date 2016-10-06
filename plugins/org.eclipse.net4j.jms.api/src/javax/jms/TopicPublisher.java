@@ -89,7 +89,7 @@ public interface TopicPublisher extends MessageProducer
   /** Gets the topic associated with this <CODE>TopicPublisher</CODE>.
     *
     * @return this publisher's topic
-    *  
+    *
     * @exception JMSException if the JMS provider fails to get the topic for
     *                         this <CODE>TopicPublisher</CODE>
     *                         due to some internal error.
@@ -112,7 +112,7 @@ public interface TopicPublisher extends MessageProducer
     * @exception java.lang.UnsupportedOperationException if a client uses this
     *                         method with a <CODE>TopicPublisher</CODE> that
     *                         did not specify a topic at creation time.
-    * 
+    *
     * @see javax.jms.MessageProducer#getDeliveryMode()
     * @see javax.jms.MessageProducer#getTimeToLive()
     * @see javax.jms.MessageProducer#getPriority()
@@ -141,24 +141,24 @@ public interface TopicPublisher extends MessageProducer
 
   void publish(Message message, int deliveryMode, int priority, long timeToLive) throws JMSException;
 
-  /** Publishes a message to a topic for an unidentified message producer. 
-    * Uses the <CODE>TopicPublisher</CODE>'s default delivery mode, 
+  /** Publishes a message to a topic for an unidentified message producer.
+    * Uses the <CODE>TopicPublisher</CODE>'s default delivery mode,
     * priority, and time to live.
-    *  
-    * <P>Typically, a message producer is assigned a topic at creation 
+    *
+    * <P>Typically, a message producer is assigned a topic at creation
     * time; however, the JMS API also supports unidentified message producers,
     * which require that the topic be supplied every time a message is
     * published.
     *
     * @param topic the topic to publish this message to
     * @param message the message to publish
-    *  
+    *
     * @exception JMSException if the JMS provider fails to publish the message
     *                         due to some internal error.
     * @exception MessageFormatException if an invalid message is specified.
     * @exception InvalidDestinationException if a client uses
     *                         this method with an invalid topic.
-    * 
+    *
     * @see javax.jms.MessageProducer#getDeliveryMode()
     * @see javax.jms.MessageProducer#getTimeToLive()
     * @see javax.jms.MessageProducer#getPriority()
@@ -166,9 +166,9 @@ public interface TopicPublisher extends MessageProducer
 
   void publish(Topic topic, Message message) throws JMSException;
 
-  /** Publishes a message to a topic for an unidentified message 
+  /** Publishes a message to a topic for an unidentified message
     * producer, specifying delivery mode, priority and time to live.
-    *  
+    *
     * <P>Typically, a message producer is assigned a topic at creation
     * time; however, the JMS API also supports unidentified message producers,
     * which require that the topic be supplied every time a message is
@@ -179,7 +179,7 @@ public interface TopicPublisher extends MessageProducer
     * @param deliveryMode the delivery mode to use
     * @param priority the priority for this message
     * @param timeToLive the message's lifetime (in milliseconds)
-    *  
+    *
     * @exception JMSException if the JMS provider fails to publish the message
     *                         due to some internal error.
     * @exception MessageFormatException if an invalid message is specified.

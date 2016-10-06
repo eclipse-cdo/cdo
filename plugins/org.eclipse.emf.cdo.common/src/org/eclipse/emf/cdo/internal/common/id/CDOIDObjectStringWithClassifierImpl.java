@@ -77,7 +77,7 @@ public final class CDOIDObjectStringWithClassifierImpl extends AbstractCDOID
   public String toURIFragment()
   {
     return classifierRef.getPackageURI() + CDOClassifierRef.URI_SEPARATOR + classifierRef.getClassifierName()
-    + CDOClassifierRef.URI_SEPARATOR + value;
+        + CDOClassifierRef.URI_SEPARATOR + value;
   }
 
   public Type getType()

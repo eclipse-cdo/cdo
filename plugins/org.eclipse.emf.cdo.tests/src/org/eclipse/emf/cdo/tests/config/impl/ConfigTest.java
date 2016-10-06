@@ -872,7 +872,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   @Target({ ElementType.TYPE, ElementType.METHOD })
   public @interface Requires
   {
-    String[]value();
+    String[] value();
   }
 
   @Inherited
@@ -880,6 +880,6 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   @Target({ ElementType.TYPE, ElementType.METHOD })
   public @interface Skips
   {
-    String[]value();
+    String[] value();
   }
 }

@@ -243,7 +243,7 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
   {
     IParser parser = AcoreParserProvider.getParser(AcoreElementTypes.AAttribute_3001,
         view.getElement() != null ? view.getElement() : view,
-            AcoreVisualIDRegistry.getType(AAttributeEditPart.VISUAL_ID));
+        AcoreVisualIDRegistry.getType(AAttributeEditPart.VISUAL_ID));
     if (parser != null)
     {
       return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
@@ -263,7 +263,7 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
   {
     IParser parser = AcoreParserProvider.getParser(AcoreElementTypes.AOperation_3004,
         view.getElement() != null ? view.getElement() : view,
-            AcoreVisualIDRegistry.getType(AOperation2EditPart.VISUAL_ID));
+        AcoreVisualIDRegistry.getType(AOperation2EditPart.VISUAL_ID));
     if (parser != null)
     {
       return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
@@ -299,7 +299,7 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
   {
     IParser parser = AcoreParserProvider.getParser(AcoreElementTypes.AInterface_2001,
         view.getElement() != null ? view.getElement() : view,
-            AcoreVisualIDRegistry.getType(AInterfaceNameEditPart.VISUAL_ID));
+        AcoreVisualIDRegistry.getType(AInterfaceNameEditPart.VISUAL_ID));
     if (parser != null)
     {
       return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
@@ -335,7 +335,7 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
   {
     IParser parser = AcoreParserProvider.getParser(AcoreElementTypes.AAttribute_3003,
         view.getElement() != null ? view.getElement() : view,
-            AcoreVisualIDRegistry.getType(AAttribute2EditPart.VISUAL_ID));
+        AcoreVisualIDRegistry.getType(AAttribute2EditPart.VISUAL_ID));
     if (parser != null)
     {
       return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
@@ -355,7 +355,7 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
   {
     IParser parser = AcoreParserProvider.getParser(AcoreElementTypes.AClass_2002,
         view.getElement() != null ? view.getElement() : view,
-            AcoreVisualIDRegistry.getType(AClassNameEditPart.VISUAL_ID));
+        AcoreVisualIDRegistry.getType(AClassNameEditPart.VISUAL_ID));
     if (parser != null)
     {
       return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
@@ -400,7 +400,7 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
   {
     IParser parser = AcoreParserProvider.getParser(AcoreElementTypes.AOperation_3002,
         view.getElement() != null ? view.getElement() : view,
-            AcoreVisualIDRegistry.getType(AOperationEditPart.VISUAL_ID));
+        AcoreVisualIDRegistry.getType(AOperationEditPart.VISUAL_ID));
     if (parser != null)
     {
       return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view.getElement() : view),

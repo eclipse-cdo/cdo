@@ -227,104 +227,104 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testNotUnsettableWithDefaultBoolean() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableBoolean(), true);
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableBoolean(), true);
   }
 
   public void testNotUnsettableWithDefaultBoolean2() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableBoolean(), new Boolean(false));
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableBoolean(), new Boolean(false));
   }
 
   public void testNotUnsettableWithDefaultBoolean_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableBoolean(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableBoolean().getDefaultValue());
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableBoolean(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableBoolean().getDefaultValue());
   }
 
   public void testNotUnsettableWithDefaultByte() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableByte(), (byte)10);
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableByte(), (byte)10);
   }
 
   public void testNotUnsettableWithDefaultByte2() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableByte(), new Byte((byte)25));
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableByte(), new Byte((byte)25));
   }
 
   public void testNotUnsettableWithDefaultByte_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableByte(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableByte().getDefaultValue());
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableByte(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableByte().getDefaultValue());
   }
 
   public void testNotUnsettableWithDefaultChar() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableChar(), 'c');
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableChar(), 'c');
   }
 
   public void testNotUnsettableWithDefaultChart2() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableChar(), new Character('c'));
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableChar(), new Character('c'));
   }
 
   public void testNotUnsettableWithDefaultChar_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableChar(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableChar().getDefaultValue());
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableChar(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableChar().getDefaultValue());
   }
 
   public void testNotUnsettableWithDefaultDate() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableDate(), new Date(0));
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableDate(), new Date(0));
   }
 
   public void testNotUnsettableWithDefaultDate_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableDate(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableDate().getDefaultValue());
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableDate(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableDate().getDefaultValue());
   }
 
   public void testNotUnsettableWithDefaultDouble() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableDouble(), 15.03d);
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableDouble(), 15.03d);
   }
 
   public void testNotUnsettableWithDefaultDouble2() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableDouble(), new Double(15.03d));
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableDouble(), new Double(15.03d));
   }
 
   public void testNotUnsettableWithDefaultDouble_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableDouble(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableDouble().getDefaultValue());
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableDouble(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableDouble().getDefaultValue());
   }
 
   public void testNotUnsettableWithDefaultVAT() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableVAT(), VAT.VAT7);
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableVAT(), VAT.VAT7);
   }
 
   public void testNotUnsettableWithDefaultVAT_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableVAT(), getModel2Package()
-        .getNotUnsettableWithDefault_NotUnsettableVAT().getDefaultValue());
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableVAT(),
+        getModel2Package().getNotUnsettableWithDefault_NotUnsettableVAT().getDefaultValue());
   }
 
   public void testUnsettableBooleanNoDefault() throws Exception
@@ -351,8 +351,8 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableByteNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableByte(), new Byte(
-        (byte)25));
+    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableByte(),
+        new Byte((byte)25));
   }
 
   public void testUnsettableByteNoDefault_SetDefault() throws Exception
@@ -390,8 +390,8 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableDoubleNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableDouble(), new Double(
-        19.79));
+    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableDouble(),
+        new Double(19.79));
   }
 
   public void testUnsettableDoubleNoDefault_SetDefault() throws Exception
@@ -407,8 +407,8 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableFloatNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableFloat(), new Float(
-        19.79f));
+    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableFloat(),
+        new Float(19.79f));
   }
 
   public void testUnsettableFloatNoDefault_SetDefault() throws Exception
@@ -446,8 +446,8 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableShortNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableShort(), new Short(
-        (short)15));
+    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableShort(),
+        new Short((short)15));
   }
 
   public void testUnsettableShortNoDefault_SetDefault() throws Exception
@@ -463,8 +463,8 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableStringNoDefault2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableString(), new String(
-        "Martin"));
+    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableString(),
+        new String("Martin"));
   }
 
   public void testUnsettableVATNoDefault() throws Exception
@@ -480,179 +480,179 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableWithDefaultBoolean() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableBoolean(), true);
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableBoolean(), true);
   }
 
   public void testUnsettableWithDefaultBoolean2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableBoolean(), new Boolean(false));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableBoolean(), new Boolean(false));
   }
 
   public void testUnsettableWithDefaultByte() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableByte(), (byte)10);
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableByte(), (byte)10);
   }
 
   public void testUnsettableWithDefaultByte2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableByte(), new Byte((byte)25));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableByte(), new Byte((byte)25));
   }
 
   public void testUnsettableWithDefaultByte_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableByte(), getModel2Package().getUnsettable2WithDefault_UnsettableByte()
-        .getDefaultValue());
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableByte(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableByte().getDefaultValue());
   }
 
   public void testUnsettableWithDefaultChar() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableChar(), 'c');
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableChar(), 'c');
   }
 
   public void testUnsettableWithDefaultCharNo() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableChar(), new Character('c'));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableChar(), new Character('c'));
   }
 
   public void testUnsettableWithDefaultChar_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableChar(), getModel2Package().getUnsettable2WithDefault_UnsettableChar()
-        .getDefaultValue());
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableChar(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableChar().getDefaultValue());
   }
 
   public void testUnsettableWithDefaultDate() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableDate(), new Date(0));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableDate(), new Date(0));
   }
 
   public void testUnsettableWithDefaultDate_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableDate(), getModel2Package().getUnsettable2WithDefault_UnsettableDate()
-        .getDefaultValue());
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableDate(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableDate().getDefaultValue());
   }
 
   public void testUnsettableWithDefaultDouble() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableDouble(), 15.03d);
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableDouble(), 15.03d);
   }
 
   public void testUnsettableWithDefaultDouble2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableDouble(), new Double(19.79));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableDouble(), new Double(19.79));
   }
 
   public void testUnsettableWithDefaultDouble_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableDouble(), getModel2Package().getUnsettable2WithDefault_UnsettableDouble()
-        .getDefaultValue());
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableDouble(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableDouble().getDefaultValue());
   }
 
   public void testUnsettableWithDefaultFloat() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableFloat(), 15.03f);
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableFloat(), 15.03f);
   }
 
   public void testUnsettableWithDefaultFloat2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableFloat(), new Float(19.79f));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableFloat(), new Float(19.79f));
   }
 
   public void testUnsettableWithDefaultFloat_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableFloat(), getModel2Package().getUnsettable2WithDefault_UnsettableFloat()
-        .getDefaultValue());
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableFloat(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableFloat().getDefaultValue());
   }
 
   public void testUnsettableWithDefaultInt() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableInt(), 15);
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableInt(), 15);
   }
 
   public void testUnsettableWithDefaultInt2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableInt(), new Integer(15));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableInt(), new Integer(15));
   }
 
   public void testUnsettableWithDefaultInt_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableInt(), getModel2Package().getUnsettable2WithDefault_UnsettableInt()
-        .getDefaultValue());
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableInt(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableInt().getDefaultValue());
   }
 
   public void testUnsettableWithDefaultLong() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableLong(), 15L);
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableLong(), 15L);
   }
 
   public void testUnsettableWithDefaultShort() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableShort(), (short)15);
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableShort(), (short)15);
   }
 
   public void testUnsettableWithDefaultShort2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableShort(), new Short((short)15));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableShort(), new Short((short)15));
   }
 
   public void testUnsettableWithDefaultShort_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableShort(), getModel2Package().getUnsettable2WithDefault_UnsettableShort()
-        .getDefaultValue());
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableShort(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableShort().getDefaultValue());
   }
 
   public void testUnsettableWithDefaultString() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableString(), "Martin");
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableString(), "Martin");
   }
 
   public void testUnsettableWithDefaultString2() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableString(), new String("Martin"));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableString(), new String("Martin"));
   }
 
   public void testUnsettableWithDefaultString_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableString(), getModel2Package().getUnsettable2WithDefault_UnsettableString()
-        .getDefaultValue());
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableString(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableString().getDefaultValue());
   }
 
   public void testUnsettableWithDefaultVAT() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableVAT(), VAT.VAT7);
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableVAT(), VAT.VAT7);
   }
 
   public void testUnsettableWithDefaultVAT_SetDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package()
-        .getUnsettable2WithDefault_UnsettableVAT(), getModel2Package().getUnsettable2WithDefault_UnsettableVAT()
-        .getDefaultValue());
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableVAT(),
+        getModel2Package().getUnsettable2WithDefault_UnsettableVAT().getDefaultValue());
   }
 
   private void testIsSet(EObject object, EStructuralFeature feature, Object value) throws Exception

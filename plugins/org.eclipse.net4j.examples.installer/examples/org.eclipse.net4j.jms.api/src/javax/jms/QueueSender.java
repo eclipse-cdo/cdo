@@ -78,9 +78,9 @@ public interface QueueSender extends MessageProducer
 {
 
   /** Gets the queue associated with this <CODE>QueueSender</CODE>.
-    *  
-    * @return this sender's queue 
-    *  
+    *
+    * @return this sender's queue
+    *
     * @exception JMSException if the JMS provider fails to get the queue for
     *                         this <CODE>QueueSender</CODE>
     *                         due to some internal error.
@@ -88,12 +88,12 @@ public interface QueueSender extends MessageProducer
 
   Queue getQueue() throws JMSException;
 
-  /** Sends a message to the queue. Uses the <CODE>QueueSender</CODE>'s 
+  /** Sends a message to the queue. Uses the <CODE>QueueSender</CODE>'s
     * default delivery mode, priority, and time to live.
     *
-    * @param message the message to send 
-    *  
-    * @exception JMSException if the JMS provider fails to send the message 
+    * @param message the message to send
+    *
+    * @exception JMSException if the JMS provider fails to send the message
     *                         due to some internal error.
     * @exception MessageFormatException if an invalid message is specified.
     * @exception InvalidDestinationException if a client uses
@@ -102,7 +102,7 @@ public interface QueueSender extends MessageProducer
     * @exception java.lang.UnsupportedOperationException if a client uses this
     *                         method with a <CODE>QueueSender</CODE> that did
     *                         not specify a queue at creation time.
-    * 
+    *
     * @see javax.jms.MessageProducer#getDeliveryMode()
     * @see javax.jms.MessageProducer#getTimeToLive()
     * @see javax.jms.MessageProducer#getPriority()
@@ -110,15 +110,15 @@ public interface QueueSender extends MessageProducer
 
   void send(Message message) throws JMSException;
 
-  /** Sends a message to the queue, specifying delivery mode, priority, and 
+  /** Sends a message to the queue, specifying delivery mode, priority, and
     * time to live.
     *
     * @param message the message to send
     * @param deliveryMode the delivery mode to use
     * @param priority the priority for this message
     * @param timeToLive the message's lifetime (in milliseconds)
-    *  
-    * @exception JMSException if the JMS provider fails to send the message 
+    *
+    * @exception JMSException if the JMS provider fails to send the message
     *                         due to some internal error.
     * @exception MessageFormatException if an invalid message is specified.
     * @exception InvalidDestinationException if a client uses
@@ -135,20 +135,20 @@ public interface QueueSender extends MessageProducer
     * Uses the <CODE>QueueSender</CODE>'s default delivery mode, priority,
     * and time to live.
     *
-    * <P>Typically, a message producer is assigned a queue at creation 
+    * <P>Typically, a message producer is assigned a queue at creation
     * time; however, the JMS API also supports unidentified message producers,
     * which require that the queue be supplied every time a message is
     * sent.
-    *  
+    *
     * @param queue the queue to send this message to
     * @param message the message to send
-    *  
-    * @exception JMSException if the JMS provider fails to send the message 
+    *
+    * @exception JMSException if the JMS provider fails to send the message
     *                         due to some internal error.
     * @exception MessageFormatException if an invalid message is specified.
     * @exception InvalidDestinationException if a client uses
     *                         this method with an invalid queue.
-    * 
+    *
     * @see javax.jms.MessageProducer#getDeliveryMode()
     * @see javax.jms.MessageProducer#getTimeToLive()
     * @see javax.jms.MessageProducer#getPriority()
@@ -156,21 +156,21 @@ public interface QueueSender extends MessageProducer
 
   void send(Queue queue, Message message) throws JMSException;
 
-  /** Sends a message to a queue for an unidentified message producer, 
+  /** Sends a message to a queue for an unidentified message producer,
     * specifying delivery mode, priority and time to live.
-    *  
-    * <P>Typically, a message producer is assigned a queue at creation 
+    *
+    * <P>Typically, a message producer is assigned a queue at creation
     * time; however, the JMS API also supports unidentified message producers,
     * which require that the queue be supplied every time a message is
     * sent.
-    *  
+    *
     * @param queue the queue to send this message to
     * @param message the message to send
     * @param deliveryMode the delivery mode to use
     * @param priority the priority for this message
     * @param timeToLive the message's lifetime (in milliseconds)
-    *  
-    * @exception JMSException if the JMS provider fails to send the message 
+    *
+    * @exception JMSException if the JMS provider fails to send the message
     *                         due to some internal error.
     * @exception MessageFormatException if an invalid message is specified.
     * @exception InvalidDestinationException if a client uses

@@ -71,9 +71,9 @@ public class XRefsQueryHandler implements IQueryHandler
       CDOBranchPoint branchPoint = context;
       CDOBranch branch = branchPoint.getBranch();
       int maxResults = info.getMaxResults();
-      
-      while (!branch.isMainBranch() && (maxResults == CDOQueryInfo.UNLIMITED_RESULTS
-          || context.getResultCount() < maxResults))
+
+      while (!branch.isMainBranch()
+          && (maxResults == CDOQueryInfo.UNLIMITED_RESULTS || context.getResultCount() < maxResults))
       {
         branchPoint = branch.getBase();
         branch = branchPoint.getBranch();

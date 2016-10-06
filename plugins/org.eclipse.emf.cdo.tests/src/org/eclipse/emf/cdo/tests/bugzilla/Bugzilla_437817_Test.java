@@ -30,7 +30,7 @@ import org.junit.Assert;
 
 /**
  * Bug 437817: "Only one view per repository..." RuntimeException using connection aware URI
- * 
+ *
  * @author Esteban Dugueperoux
  */
 @Requires(ISessionConfig.CAPABILITY_NET4J_TCP)
@@ -48,12 +48,12 @@ public class Bugzilla_437817_Test extends AbstractCDOTest
     {
       ResourceSet resourceSet = new ResourceSetImpl();
 
-      URI sharedResource1URI = URI.createURI(
-          CDONet4jUtil.PROTOCOL_TCP + "://localhost:2036/" + RepositoryConfig.REPOSITORY_NAME
-              + getResourcePath("/sharedResource1")).appendQuery(CDOURIData.TRANSACTIONAL_PARAMETER + "=true");
-      URI sharedResource2URI = URI.createURI(
-          CDONet4jUtil.PROTOCOL_TCP + "://localhost:2036/" + RepositoryConfig.REPOSITORY_NAME
-              + getResourcePath("/sharedResource2")).appendQuery(CDOURIData.TRANSACTIONAL_PARAMETER + "=true");
+      URI sharedResource1URI = URI.createURI(CDONet4jUtil.PROTOCOL_TCP + "://localhost:2036/"
+          + RepositoryConfig.REPOSITORY_NAME + getResourcePath("/sharedResource1"))
+          .appendQuery(CDOURIData.TRANSACTIONAL_PARAMETER + "=true");
+      URI sharedResource2URI = URI.createURI(CDONet4jUtil.PROTOCOL_TCP + "://localhost:2036/"
+          + RepositoryConfig.REPOSITORY_NAME + getResourcePath("/sharedResource2"))
+          .appendQuery(CDOURIData.TRANSACTIONAL_PARAMETER + "=true");
       Resource sharedResource1 = resourceSet.createResource(sharedResource1URI);
       Resource sharedResource2 = resourceSet.createResource(sharedResource2URI);
 

@@ -61,8 +61,7 @@ public class ResourceNodeNameInputValidator implements IInputValidator
       if (child.getName().equals(newText))
       {
         return isFolder ? Messages.getString("NewResourceNodeAction.5") + " " + newText //$NON-NLS-1$ //$NON-NLS-2$
-            : Messages.getString("NewResourceNodeAction.6")
-                + " " + newText;
+            : Messages.getString("NewResourceNodeAction.6") + " " + newText;
       }
     }
 

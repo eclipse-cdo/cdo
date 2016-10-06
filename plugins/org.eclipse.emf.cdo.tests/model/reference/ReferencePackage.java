@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see reference.ReferenceFactory
  * @model kind="package"
  * @generated
@@ -32,28 +32,28 @@ public interface ReferencePackage extends EPackage
 {
   /**
    * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNAME = "reference";
 
   /**
    * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNS_URI = "uuid://reference";
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNS_PREFIX = "reference";
 
   /**
    * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   ReferencePackage eINSTANCE = reference.impl.ReferencePackageImpl.init();
@@ -61,7 +61,7 @@ public interface ReferencePackage extends EPackage
   /**
    * The meta object id for the '{@link reference.impl.ReferenceImpl <em>Reference</em>}' class. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see reference.impl.ReferenceImpl
    * @see reference.impl.ReferencePackageImpl#getReference()
    * @generated
@@ -70,7 +70,7 @@ public interface ReferencePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Ref</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -78,7 +78,7 @@ public interface ReferencePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Reference</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -87,7 +87,7 @@ public interface ReferencePackage extends EPackage
   /**
    * Returns the meta object for class '{@link reference.Reference <em>Reference</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Reference</em>'.
    * @see reference.Reference
    * @generated
@@ -97,7 +97,7 @@ public interface ReferencePackage extends EPackage
   /**
    * Returns the meta object for the reference '{@link reference.Reference#getRef <em>Ref</em>}'. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference '<em>Ref</em>'.
    * @see reference.Reference#getRef()
    * @see #getReference()
@@ -107,7 +107,7 @@ public interface ReferencePackage extends EPackage
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -122,7 +122,7 @@ public interface ReferencePackage extends EPackage
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   interface Literals
@@ -130,7 +130,7 @@ public interface ReferencePackage extends EPackage
     /**
      * The meta object literal for the '{@link reference.impl.ReferenceImpl <em>Reference</em>}' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see reference.impl.ReferenceImpl
      * @see reference.impl.ReferencePackageImpl#getReference()
      * @generated
@@ -140,7 +140,7 @@ public interface ReferencePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Ref</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference REFERENCE__REF = eINSTANCE.getReference_Ref();

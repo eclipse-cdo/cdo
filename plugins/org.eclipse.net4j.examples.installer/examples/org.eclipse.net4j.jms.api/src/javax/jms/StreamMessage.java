@@ -110,9 +110,9 @@ public interface StreamMessage extends Message
     * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
     * @exception MessageEOFException if unexpected end of message stream has
-    *                                been reached.     
+    *                                been reached.
     * @exception MessageFormatException if this type conversion is invalid.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -126,9 +126,9 @@ public interface StreamMessage extends Message
     * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
     * @exception MessageEOFException if unexpected end of message stream has
-    *                                been reached.     
+    *                                been reached.
     * @exception MessageFormatException if this type conversion is invalid.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -141,9 +141,9 @@ public interface StreamMessage extends Message
     * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
     * @exception MessageEOFException if unexpected end of message stream has
-    *                                been reached.     
+    *                                been reached.
     * @exception MessageFormatException if this type conversion is invalid.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -156,9 +156,9 @@ public interface StreamMessage extends Message
     * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
     * @exception MessageEOFException if unexpected end of message stream has
-    *                                been reached.     
-    * @exception MessageFormatException if this type conversion is invalid      
-    * @exception MessageNotReadableException if the message is in write-only 
+    *                                been reached.
+    * @exception MessageFormatException if this type conversion is invalid
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -172,9 +172,9 @@ public interface StreamMessage extends Message
     * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
     * @exception MessageEOFException if unexpected end of message stream has
-    *                                been reached.     
+    *                                been reached.
     * @exception MessageFormatException if this type conversion is invalid.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -188,9 +188,9 @@ public interface StreamMessage extends Message
     * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
     * @exception MessageEOFException if unexpected end of message stream has
-    *                                been reached.     
+    *                                been reached.
     * @exception MessageFormatException if this type conversion is invalid.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -203,9 +203,9 @@ public interface StreamMessage extends Message
     * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
     * @exception MessageEOFException if unexpected end of message stream has
-    *                                been reached.     
+    *                                been reached.
     * @exception MessageFormatException if this type conversion is invalid.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -218,9 +218,9 @@ public interface StreamMessage extends Message
     * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
     * @exception MessageEOFException if unexpected end of message stream has
-    *                                been reached.     
+    *                                been reached.
     * @exception MessageFormatException if this type conversion is invalid.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
@@ -233,56 +233,56 @@ public interface StreamMessage extends Message
     * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
     * @exception MessageEOFException if unexpected end of message stream has
-    *                                been reached.     
+    *                                been reached.
     * @exception MessageFormatException if this type conversion is invalid.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
     */
 
   String readString() throws JMSException;
 
-  /** Reads a byte array field from the stream message into the 
-    * specified <CODE>byte[]</CODE> object (the read buffer). 
-    * 
-    * <P>To read the field value, <CODE>readBytes</CODE> should be 
-    * successively called 
+  /** Reads a byte array field from the stream message into the
+    * specified <CODE>byte[]</CODE> object (the read buffer).
+    *
+    * <P>To read the field value, <CODE>readBytes</CODE> should be
+    * successively called
     * until it returns a value less than the length of the read buffer.
-    * The value of the bytes in the buffer following the last byte 
+    * The value of the bytes in the buffer following the last byte
     * read is undefined.
-    * 
-    * <P>If <CODE>readBytes</CODE> returns a value equal to the length of the 
-    * buffer, a subsequent <CODE>readBytes</CODE> call must be made. If there 
+    *
+    * <P>If <CODE>readBytes</CODE> returns a value equal to the length of the
+    * buffer, a subsequent <CODE>readBytes</CODE> call must be made. If there
     * are no more bytes to be read, this call returns -1.
-    * 
-    * <P>If the byte array field value is null, <CODE>readBytes</CODE> 
+    *
+    * <P>If the byte array field value is null, <CODE>readBytes</CODE>
     * returns -1.
     *
-    * <P>If the byte array field value is empty, <CODE>readBytes</CODE> 
+    * <P>If the byte array field value is empty, <CODE>readBytes</CODE>
     * returns 0.
-    * 
+    *
     * <P>Once the first <CODE>readBytes</CODE> call on a <CODE>byte[]</CODE>
     * field value has been made,
-    * the full value of the field must be read before it is valid to read 
-    * the next field. An attempt to read the next field before that has 
+    * the full value of the field must be read before it is valid to read
+    * the next field. An attempt to read the next field before that has
     * been done will throw a <CODE>MessageFormatException</CODE>.
-    * 
-    * <P>To read the byte field value into a new <CODE>byte[]</CODE> object, 
+    *
+    * <P>To read the byte field value into a new <CODE>byte[]</CODE> object,
     * use the <CODE>readObject</CODE> method.
     *
     * @param value the buffer into which the data is read
     *
-    * @return the total number of bytes read into the buffer, or -1 if 
-    * there is no more data because the end of the byte field has been 
+    * @return the total number of bytes read into the buffer, or -1 if
+    * there is no more data because the end of the byte field has been
     * reached
     *
     * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
     * @exception MessageEOFException if unexpected end of message stream has
-    *                                been reached.     
+    *                                been reached.
     * @exception MessageFormatException if this type conversion is invalid.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
-    * 
+    *
     * @see #readObject()
     */
 
@@ -291,46 +291,46 @@ public interface StreamMessage extends Message
   /** Reads an object from the stream message.
     *
     * <P>This method can be used to return, in objectified format,
-    * an object in the Java programming language ("Java object") that has 
+    * an object in the Java programming language ("Java object") that has
     * been written to the stream with the equivalent
     * <CODE>writeObject</CODE> method call, or its equivalent primitive
     * <CODE>write<I>type</I></CODE> method.
-    *  
-    * <P>Note that byte values are returned as <CODE>byte[]</CODE>, not 
+    *
+    * <P>Note that byte values are returned as <CODE>byte[]</CODE>, not
     * <CODE>Byte[]</CODE>.
     *
-    * <P>An attempt to call <CODE>readObject</CODE> to read a byte field 
+    * <P>An attempt to call <CODE>readObject</CODE> to read a byte field
     * value into a new <CODE>byte[]</CODE> object before the full value of the
-    * byte field has been read will throw a 
+    * byte field has been read will throw a
     * <CODE>MessageFormatException</CODE>.
     *
     * @return a Java object from the stream message, in objectified
-    * format (for example, if the object was written as an <CODE>int</CODE>, 
+    * format (for example, if the object was written as an <CODE>int</CODE>,
     * an <CODE>Integer</CODE> is returned)
     *
     * @exception JMSException if the JMS provider fails to read the message
     *                         due to some internal error.
     * @exception MessageEOFException if unexpected end of message stream has
-    *                                been reached.     
+    *                                been reached.
     * @exception MessageFormatException if this type conversion is invalid.
-    * @exception MessageNotReadableException if the message is in write-only 
+    * @exception MessageNotReadableException if the message is in write-only
     *                                        mode.
-    * 
+    *
     * @see #readBytes(byte[] value)
     */
 
   Object readObject() throws JMSException;
 
   /** Writes a <code>boolean</code> to the stream message.
-    * The value <code>true</code> is written as the value 
-    * <code>(byte)1</code>; the value <code>false</code> is written as 
+    * The value <code>true</code> is written as the value
+    * <code>(byte)1</code>; the value <code>false</code> is written as
     * the value <code>(byte)0</code>.
     *
     * @param value the <code>boolean</code> value to be written
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
@@ -342,7 +342,7 @@ public interface StreamMessage extends Message
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
@@ -354,7 +354,7 @@ public interface StreamMessage extends Message
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
@@ -366,7 +366,7 @@ public interface StreamMessage extends Message
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
@@ -378,7 +378,7 @@ public interface StreamMessage extends Message
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
@@ -390,7 +390,7 @@ public interface StreamMessage extends Message
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
@@ -402,7 +402,7 @@ public interface StreamMessage extends Message
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
@@ -414,7 +414,7 @@ public interface StreamMessage extends Message
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
@@ -426,7 +426,7 @@ public interface StreamMessage extends Message
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
@@ -435,25 +435,25 @@ public interface StreamMessage extends Message
   /** Writes a byte array field to the stream message.
     *
     * <P>The byte array <code>value</code> is written to the message
-    * as a byte array field. Consecutively written byte array fields are 
+    * as a byte array field. Consecutively written byte array fields are
     * treated as two distinct fields when the fields are read.
-    * 
+    *
     * @param value the byte array value to be written
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
   void writeBytes(byte[] value) throws JMSException;
 
-  /** Writes a portion of a byte array as a byte array field to the stream 
+  /** Writes a portion of a byte array as a byte array field to the stream
     * message.
-    *  
+    *
     * <P>The a portion of the byte array <code>value</code> is written to the
-    * message as a byte array field. Consecutively written byte 
-    * array fields are treated as two distinct fields when the fields are 
+    * message as a byte array field. Consecutively written byte
+    * array fields are treated as two distinct fields when the fields are
     * read.
     *
     * @param value the byte array value to be written
@@ -462,7 +462,7 @@ public interface StreamMessage extends Message
     *
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
@@ -471,8 +471,8 @@ public interface StreamMessage extends Message
   /** Writes an object to the stream message.
     *
     * <P>This method works only for the objectified primitive
-    * object types (<code>Integer</code>, <code>Double</code>, 
-    * <code>Long</code>&nbsp;...), <code>String</code> objects, and byte 
+    * object types (<code>Integer</code>, <code>Double</code>,
+    * <code>Long</code>&nbsp;...), <code>String</code> objects, and byte
     * arrays.
     *
     * @param value the Java object to be written
@@ -480,7 +480,7 @@ public interface StreamMessage extends Message
     * @exception JMSException if the JMS provider fails to write the message
     *                         due to some internal error.
     * @exception MessageFormatException if the object is invalid.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
@@ -488,7 +488,7 @@ public interface StreamMessage extends Message
 
   /** Puts the message body in read-only mode and repositions the stream
     * to the beginning.
-    *  
+    *
     * @exception JMSException if the JMS provider fails to reset the message
     *                         due to some internal error.
     * @exception MessageFormatException if the message has an invalid

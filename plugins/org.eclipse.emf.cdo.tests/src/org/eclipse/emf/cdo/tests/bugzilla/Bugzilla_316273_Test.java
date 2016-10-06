@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
  * Problem with CDOStore.contains()
  * <p>
  * See bug 316273
- * 
+ *
  * @author Eike Stepper
  */
 public class Bugzilla_316273_Test extends AbstractCDOTest

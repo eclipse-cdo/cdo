@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -15,21 +15,21 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import interface_.InterfacePackage;
 import reference.Reference;
 import reference.ReferenceFactory;
 import reference.ReferencePackage;
-import interface_.InterfacePackage;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class ReferencePackageImpl extends EPackageImpl implements ReferencePackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass referenceEClass = null;
@@ -41,7 +41,7 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see reference.ReferencePackage#eNS_URI
    * @see #init()
@@ -54,7 +54,7 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static boolean isInited = false;
@@ -65,7 +65,7 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
    * This method is used to initialize {@link ReferencePackage#eINSTANCE} when that field is accessed. Clients should
    * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -79,8 +79,9 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
     }
 
     // Obtain or create and register package
-    ReferencePackageImpl theReferencePackage = (ReferencePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ReferencePackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI) : new ReferencePackageImpl());
+    ReferencePackageImpl theReferencePackage = (ReferencePackageImpl)(EPackage.Registry.INSTANCE
+        .get(eNS_URI) instanceof ReferencePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+            : new ReferencePackageImpl());
 
     isInited = true;
 
@@ -103,7 +104,7 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getReference()
@@ -113,7 +114,7 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getReference_Ref()
@@ -123,7 +124,7 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ReferenceFactory getReferenceFactory()
@@ -133,7 +134,7 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isCreated = false;
@@ -141,7 +142,7 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
   /**
    * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
    * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void createPackageContents()
@@ -159,7 +160,7 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isInitialized = false;
@@ -167,7 +168,7 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
   /**
    * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
    * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void initializePackageContents()

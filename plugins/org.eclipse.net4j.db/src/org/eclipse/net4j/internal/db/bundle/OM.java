@@ -68,7 +68,7 @@ public abstract class OM
         if ("dbAdapter".equals(element.getName())) //$NON-NLS-1$
         {
           DBAdapterDescriptor descriptor = new DBAdapterDescriptor(element.getAttribute("name")) //$NON-NLS-1$
-              {
+          {
             @Override
             public IDBAdapter createDBAdapter()
             {
@@ -82,9 +82,9 @@ public abstract class OM
                 return null;
               }
             }
-              };
+          };
 
-              DBAdapterRegistry.INSTANCE.addDescriptor(descriptor);
+          DBAdapterRegistry.INSTANCE.addDescriptor(descriptor);
         }
       }
     }

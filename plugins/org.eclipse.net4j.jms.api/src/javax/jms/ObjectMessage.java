@@ -59,11 +59,11 @@ public interface ObjectMessage extends Message
   /** Sets the serializable object containing this message's data.
     * It is important to note that an <CODE>ObjectMessage</CODE>
     * contains a snapshot of the object at the time <CODE>setObject()</CODE>
-    * is called; subsequent modifications of the object will have no 
+    * is called; subsequent modifications of the object will have no
     * effect on the <CODE>ObjectMessage</CODE> body.
     *
     * @param object the message's data
-    *  
+    *
     * @exception JMSException if the JMS provider fails to set the object
     *                         due to some internal error.
     * @exception MessageFormatException if object serialization fails.
@@ -73,11 +73,11 @@ public interface ObjectMessage extends Message
 
   void setObject(Serializable object) throws JMSException;
 
-  /** Gets the serializable object containing this message's data. The 
+  /** Gets the serializable object containing this message's data. The
     * default value is null.
     *
     * @return the serializable object containing this message's data
-    *  
+    *
     * @exception JMSException if the JMS provider fails to get the object
     *                         due to some internal error.
     * @exception MessageFormatException if object deserialization fails.

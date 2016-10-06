@@ -17,7 +17,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class KeyedWeakReference<K, T> extends WeakReference<T>implements KeyedReference<K, T>
+public class KeyedWeakReference<K, T> extends WeakReference<T> implements KeyedReference<K, T>
 {
   private K key;
 

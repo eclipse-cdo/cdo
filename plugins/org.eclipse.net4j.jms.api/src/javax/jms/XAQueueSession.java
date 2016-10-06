@@ -47,9 +47,9 @@ public interface XAQueueSession extends XASession
 {
 
   /** Gets the queue session associated with this <CODE>XAQueueSession</CODE>.
-    *  
+    *
     * @return the queue session object
-    *  
+    *
     * @exception JMSException if an internal error occurs.
     */
 

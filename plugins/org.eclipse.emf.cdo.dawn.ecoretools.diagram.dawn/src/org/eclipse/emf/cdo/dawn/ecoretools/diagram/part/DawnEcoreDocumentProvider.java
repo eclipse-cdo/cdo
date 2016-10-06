@@ -215,7 +215,7 @@ public class DawnEcoreDocumentProvider extends EcoreDocumentProvider
           NLS.bind(Messages.EcoreDocumentProvider_IncorrectInputError,
               new Object[] { element, "org.eclipse.ui.part.FileEditorInput", //$NON-NLS-1$
                   "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$
-              null));
+          null));
     }
   }
 

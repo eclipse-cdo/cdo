@@ -59,9 +59,9 @@ public interface QueueReceiver extends MessageConsumer
 {
 
   /** Gets the <CODE>Queue</CODE> associated with this queue receiver.
-    *  
-    * @return this receiver's <CODE>Queue</CODE> 
-    *  
+    *
+    * @return this receiver's <CODE>Queue</CODE>
+    *
     * @exception JMSException if the JMS provider fails to get the queue for
     *                         this queue receiver
     *                         due to some internal error.

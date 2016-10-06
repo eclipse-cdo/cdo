@@ -95,7 +95,8 @@ public class Bugzilla_377173_Test extends AbstractCDOTest
       sleep(2000);
     }
 
-    public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
+    public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext,
+        OMMonitor monitor)
     {
     }
 

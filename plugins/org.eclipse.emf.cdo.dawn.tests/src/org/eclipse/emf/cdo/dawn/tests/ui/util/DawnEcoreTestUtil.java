@@ -100,7 +100,7 @@ public class DawnEcoreTestUtil
         try
         {
           PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite().getPage()
-          .openEditor(editorInput, editorID);
+              .openEditor(editorInput, editorID);
         }
         catch (PartInitException ex)
         {

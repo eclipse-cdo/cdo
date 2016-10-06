@@ -33,7 +33,7 @@ import java.util.Collections;
 
 /**
  * Bug 414949 - ArrayIndexOutOfBoundsException with CDOLegacyWrapper and CDOIDExternal
- * 
+ *
  * @author Esteban Dugueperoux
  */
 @Requires(IModelConfig.CAPABILITY_LEGACY)

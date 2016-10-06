@@ -26,7 +26,7 @@ import java.util.Set;
  * CDOEList::toArray not implemented
  * <p>
  * See bug 260756
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_260756_Test extends AbstractCDOTest

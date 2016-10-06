@@ -46,20 +46,20 @@ public class UTFTest extends AbstractOMTest
   public void testUTF8_ThreeOctets() throws Exception
   {
     final int MAX = UNSIGNED_SHORT_MAX >> 1;
-  StringBuilder builder = new StringBuilder();
-  for (int i = 0; i < MAX; i++)
-  {
-    builder.append("\u6771"); //$NON-NLS-1$
-  }
+    StringBuilder builder = new StringBuilder();
+    for (int i = 0; i < MAX; i++)
+    {
+      builder.append("\u6771"); //$NON-NLS-1$
+    }
 
-  String str = builder.toString();
-  assertEquals(MAX, str.length());
+    String str = builder.toString();
+    assertEquals(MAX, str.length());
 
-  ByteArrayOutputStream baos = new ByteArrayOutputStream();
-  DataOutputStream dos = new DataOutputStream(baos);
-  dos.writeUTF(str);
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    DataOutputStream dos = new DataOutputStream(baos);
+    dos.writeUTF(str);
 
-  String received = baos.toString("UTF-8"); //$NON-NLS-1$
-  assertEquals(str, received);
+    String received = baos.toString("UTF-8"); //$NON-NLS-1$
+    assertEquals(str, received);
   }
 }

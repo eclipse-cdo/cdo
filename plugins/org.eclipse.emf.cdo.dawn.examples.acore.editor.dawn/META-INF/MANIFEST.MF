@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.examples.acore.editor.dawn;singleton:=true
-Bundle-Version: 1.0.400.qualifier
+Bundle-Version: 1.0.500.qualifier
 Bundle-Localization: fragment
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName

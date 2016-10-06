@@ -21,7 +21,7 @@ import java.util.Map;
  * 248052: CDO: UnsupportedOperationException in HibernateStoreAccessor
  * <p>
  * See bug 248052
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_248052_Test extends AbstractCDOTest

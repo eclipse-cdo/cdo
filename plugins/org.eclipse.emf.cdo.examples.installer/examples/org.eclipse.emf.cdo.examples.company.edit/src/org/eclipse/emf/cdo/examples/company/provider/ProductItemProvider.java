@@ -143,11 +143,11 @@ public class ProductItemProvider extends CDOItemProviderAdapter
   protected void addPricePropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-    .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(), getString("_UI_Product_price_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Product_price_feature", "_UI_Product_type"),
-        CompanyPackage.Literals.PRODUCT__PRICE, true, false, false, ItemPropertyDescriptor.REAL_VALUE_IMAGE, null,
-        null));
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_Product_price_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_Product_price_feature", "_UI_Product_type"),
+            CompanyPackage.Literals.PRODUCT__PRICE, true, false, false, ItemPropertyDescriptor.REAL_VALUE_IMAGE, null,
+            null));
   }
 
   /**

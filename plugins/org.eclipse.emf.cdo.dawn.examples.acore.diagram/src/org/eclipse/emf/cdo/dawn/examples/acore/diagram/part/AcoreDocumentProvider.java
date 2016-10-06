@@ -84,7 +84,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           NLS.bind(Messages.AcoreDocumentProvider_IncorrectInputError,
               new Object[] { element, "org.eclipse.ui.part.FileEditorInput", //$NON-NLS-1$
                   "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$
-              null));
+          null));
     }
     IEditorInput editorInput = (IEditorInput)element;
     IDiagramDocument document = (IDiagramDocument)createDocument(editorInput);
@@ -107,7 +107,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           NLS.bind(Messages.AcoreDocumentProvider_IncorrectInputError,
               new Object[] { element, "org.eclipse.ui.part.FileEditorInput", //$NON-NLS-1$
                   "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$
-              null));
+          null));
     }
     IDocument document = createEmptyDocument();
     setDocumentContent(document, (IEditorInput)element);
@@ -298,7 +298,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           NLS.bind(Messages.AcoreDocumentProvider_IncorrectInputError,
               new Object[] { element, "org.eclipse.ui.part.FileEditorInput", //$NON-NLS-1$
                   "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$
-              null));
+          null));
     }
   }
 
@@ -710,16 +710,15 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
             NLS.bind(Messages.AcoreDocumentProvider_IncorrectInputError,
                 new Object[] { element, "org.eclipse.ui.part.FileEditorInput", //$NON-NLS-1$
                     "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$
-                null));
+            null));
       }
       if (false == document instanceof IDiagramDocument)
       {
         fireElementStateChangeFailed(element);
-        throw new CoreException(
-            new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0,
-                "Incorrect document used: " + document //$NON-NLS-1$
-                    + " instead of org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDiagramDocument", //$NON-NLS-1$
-                null));
+        throw new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0,
+            "Incorrect document used: " + document //$NON-NLS-1$
+                + " instead of org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDiagramDocument", //$NON-NLS-1$
+            null));
       }
       IDiagramDocument diagramDocument = (IDiagramDocument)document;
       final Resource newResource = diagramDocument.getEditingDomain().getResourceSet().createResource(newResoruceURI);

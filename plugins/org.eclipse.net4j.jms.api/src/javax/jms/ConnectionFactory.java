@@ -87,7 +87,7 @@ package javax.jms;
 public interface ConnectionFactory
 {
   /** Creates a connection with the default user identity.
-  * The connection is created in stopped mode. No messages 
+  * The connection is created in stopped mode. No messages
   * will be delivered until the <code>Connection.start</code> method
   * is explicitly called.
   *
@@ -95,28 +95,28 @@ public interface ConnectionFactory
   *
   * @exception JMSException if the JMS provider fails to create the
   *                         connection due to some internal error.
-  * @exception JMSSecurityException  if client authentication fails due to 
+  * @exception JMSSecurityException  if client authentication fails due to
   *                         an invalid user name or password.
-  * @since 1.1 
+  * @since 1.1
   */
 
   Connection createConnection() throws JMSException;
 
   /** Creates a connection with the specified user identity.
-    * The connection is created in stopped mode. No messages 
+    * The connection is created in stopped mode. No messages
     * will be delivered until the <code>Connection.start</code> method
     * is explicitly called.
-    *  
+    *
     * @param userName the caller's user name
     * @param password the caller's password
-    *  
+    *
     * @return a newly created  connection
     *
-    * @exception JMSException if the JMS provider fails to create the 
+    * @exception JMSException if the JMS provider fails to create the
     *                         connection due to some internal error.
-    * @exception JMSSecurityException  if client authentication fails due to 
+    * @exception JMSSecurityException  if client authentication fails due to
     *                         an invalid user name or password.
-    * @since 1.1  
+    * @since 1.1
     */
 
   Connection createConnection(String userName, String password) throws JMSException;

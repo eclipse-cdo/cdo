@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
  * [DBStore] NPE when trying to update objects
  * <p>
  * See bug 252909
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_252909_Test extends AbstractCDOTest

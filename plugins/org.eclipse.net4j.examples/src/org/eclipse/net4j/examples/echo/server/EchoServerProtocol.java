@@ -21,7 +21,7 @@ import org.eclipse.spi.net4j.ServerProtocolFactory;
  * @author Eike Stepper
  * @since 2.0
  */
-public class EchoServerProtocol extends SignalProtocol<Object>implements EchoProtocol
+public class EchoServerProtocol extends SignalProtocol<Object> implements EchoProtocol
 {
   public EchoServerProtocol()
   {

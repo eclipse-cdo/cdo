@@ -46,33 +46,33 @@ public interface TopicConnectionFactory extends ConnectionFactory
 {
 
   /** Creates a topic connection with the default user identity.
-    * The connection is created in stopped mode. No messages 
+    * The connection is created in stopped mode. No messages
     * will be delivered until the <code>Connection.start</code> method
     * is explicitly called.
     *
     * @return a newly created topic connection
     *
-    * @exception JMSException if the JMS provider fails to create a topic 
+    * @exception JMSException if the JMS provider fails to create a topic
     *                         connection due to some internal error.
-    * @exception JMSSecurityException if client authentication fails due to 
+    * @exception JMSSecurityException if client authentication fails due to
     *                                 an invalid user name or password.
     */
 
   TopicConnection createTopicConnection() throws JMSException;
 
   /** Creates a topic connection with the specified user identity.
-    * The connection is created in stopped mode. No messages 
+    * The connection is created in stopped mode. No messages
     * will be delivered until the <code>Connection.start</code> method
     * is explicitly called.
-    *  
+    *
     * @param userName the caller's user name
     * @param password the caller's password
-    *  
+    *
     * @return a newly created topic connection
     *
-    * @exception JMSException if the JMS provider fails to create a topic 
+    * @exception JMSException if the JMS provider fails to create a topic
     *                         connection due to some internal error.
-    * @exception JMSSecurityException if client authentication fails due to 
+    * @exception JMSSecurityException if client authentication fails due to
     *                                 an invalid user name or password.
     */
 

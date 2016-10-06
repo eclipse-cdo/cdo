@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
  * While committing, error in CommitIndicationTransaction.indicating doesn't stop the commit process
  * <p>
  * See bug 251752
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_251752_Test extends AbstractCDOTest

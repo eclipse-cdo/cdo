@@ -598,7 +598,7 @@ public class DawnResourceHelper
         updateEObject(leftChild, rightChild); // removes it
       }
       else
-        // child must be created
+      // child must be created
       {
         if (o instanceof View)
         {
@@ -731,7 +731,7 @@ public class DawnResourceHelper
       }
     }
     else
-      // create
+    // create
     {
       if (rightReferenceObject != null)
       {

@@ -28,7 +28,7 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 4.1
  */
-public abstract class AbstractCDOAdmin extends SetContainer<CDOAdminRepository>implements CDOAdmin
+public abstract class AbstractCDOAdmin extends SetContainer<CDOAdminRepository> implements CDOAdmin
 {
   private final long timeout;
 

@@ -650,28 +650,28 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
     {
     case DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_DOCUMENT_PROVIDER_CLASS_NAME:
       return DAWN_DOCUMENT_PROVIDER_CLASS_NAME_EDEFAULT == null ? dawnDocumentProviderClassName != null
-      : !DAWN_DOCUMENT_PROVIDER_CLASS_NAME_EDEFAULT.equals(dawnDocumentProviderClassName);
+          : !DAWN_DOCUMENT_PROVIDER_CLASS_NAME_EDEFAULT.equals(dawnDocumentProviderClassName);
     case DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDITOR_UTIL_CLASS_NAME:
       return DAWN_EDITOR_UTIL_CLASS_NAME_EDEFAULT == null ? dawnEditorUtilClassName != null
-      : !DAWN_EDITOR_UTIL_CLASS_NAME_EDEFAULT.equals(dawnEditorUtilClassName);
+          : !DAWN_EDITOR_UTIL_CLASS_NAME_EDEFAULT.equals(dawnEditorUtilClassName);
     case DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_CREATION_WIZARD_CLASS_NAME:
       return DAWN_CREATION_WIZARD_CLASS_NAME_EDEFAULT == null ? dawnCreationWizardClassName != null
-      : !DAWN_CREATION_WIZARD_CLASS_NAME_EDEFAULT.equals(dawnCreationWizardClassName);
+          : !DAWN_CREATION_WIZARD_CLASS_NAME_EDEFAULT.equals(dawnCreationWizardClassName);
     case DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_CANONICAL_EDITING_POLICY_CLASS_NAME:
       return DAWN_CANONICAL_EDITING_POLICY_CLASS_NAME_EDEFAULT == null ? dawnCanonicalEditingPolicyClassName != null
-      : !DAWN_CANONICAL_EDITING_POLICY_CLASS_NAME_EDEFAULT.equals(dawnCanonicalEditingPolicyClassName);
+          : !DAWN_CANONICAL_EDITING_POLICY_CLASS_NAME_EDEFAULT.equals(dawnCanonicalEditingPolicyClassName);
     case DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_DIAGRAM_EDIT_PART_CLASS_NAME:
       return DAWN_DIAGRAM_EDIT_PART_CLASS_NAME_EDEFAULT == null ? dawnDiagramEditPartClassName != null
-      : !DAWN_DIAGRAM_EDIT_PART_CLASS_NAME_EDEFAULT.equals(dawnDiagramEditPartClassName);
+          : !DAWN_DIAGRAM_EDIT_PART_CLASS_NAME_EDEFAULT.equals(dawnDiagramEditPartClassName);
     case DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDIT_PART_FACTORY_CLASS_NAME:
       return DAWN_EDIT_PART_FACTORY_CLASS_NAME_EDEFAULT == null ? dawnEditPartFactoryClassName != null
-      : !DAWN_EDIT_PART_FACTORY_CLASS_NAME_EDEFAULT.equals(dawnEditPartFactoryClassName);
+          : !DAWN_EDIT_PART_FACTORY_CLASS_NAME_EDEFAULT.equals(dawnEditPartFactoryClassName);
     case DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDIT_PART_PROVIDER_CLASS_NAME:
       return DAWN_EDIT_PART_PROVIDER_CLASS_NAME_EDEFAULT == null ? dawnEditPartProviderClassName != null
-      : !DAWN_EDIT_PART_PROVIDER_CLASS_NAME_EDEFAULT.equals(dawnEditPartProviderClassName);
+          : !DAWN_EDIT_PART_PROVIDER_CLASS_NAME_EDEFAULT.equals(dawnEditPartProviderClassName);
     case DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDIT_POLICY_PROVIDER_CLASS_NAME:
       return DAWN_EDIT_POLICY_PROVIDER_CLASS_NAME_EDEFAULT == null ? dawnEditPolicyProviderClassName != null
-      : !DAWN_EDIT_POLICY_PROVIDER_CLASS_NAME_EDEFAULT.equals(dawnEditPolicyProviderClassName);
+          : !DAWN_EDIT_POLICY_PROVIDER_CLASS_NAME_EDEFAULT.equals(dawnEditPolicyProviderClassName);
     case DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__GMF_GEN_EDITOR_GENERATOR:
       return gmfGenEditorGenerator != null;
     }

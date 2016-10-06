@@ -17,7 +17,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class KeyedPhantomReference<K, T> extends PhantomReference<T>implements KeyedReference<K, T>
+public class KeyedPhantomReference<K, T> extends PhantomReference<T> implements KeyedReference<K, T>
 {
   private K key;
 

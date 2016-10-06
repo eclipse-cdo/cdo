@@ -61,7 +61,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author Eike Stepper
  */
-public class SessionManager extends Container<ISession>implements InternalSessionManager
+public class SessionManager extends Container<ISession> implements InternalSessionManager
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, SessionManager.class);
 

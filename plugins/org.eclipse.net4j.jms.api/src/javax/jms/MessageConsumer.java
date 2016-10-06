@@ -65,12 +65,12 @@ public interface MessageConsumer
 {
 
   /** Gets this message consumer's message selector expression.
-    *  
+    *
     * @return this message consumer's message selector, or null if no
-    *         message selector exists for the message consumer (that is, if 
-    *         the message selector was not set or was set to null or the 
+    *         message selector exists for the message consumer (that is, if
+    *         the message selector was not set or was set to null or the
     *         empty string)
-    *  
+    *
     * @exception JMSException if the JMS provider fails to get the message
     *                         selector due to some internal error.
     */
@@ -78,10 +78,10 @@ public interface MessageConsumer
   String getMessageSelector() throws JMSException;
 
   /** Gets the message consumer's <CODE>MessageListener</CODE>.
-    *  
+    *
     * @return the listener for the message consumer, or null if no listener
     * is set
-    *  
+    *
     * @exception JMSException if the JMS provider fails to get the message
     *                         listener due to some internal error.
     * @see javax.jms.MessageConsumer#setMessageListener
@@ -90,18 +90,18 @@ public interface MessageConsumer
   MessageListener getMessageListener() throws JMSException;
 
   /** Sets the message consumer's <CODE>MessageListener</CODE>.
-    * 
-    * <P>Setting the message listener to null is the equivalent of 
+    *
+    * <P>Setting the message listener to null is the equivalent of
     * unsetting the message listener for the message consumer.
     *
     * <P>The effect of calling <CODE>MessageConsumer.setMessageListener</CODE>
     * while messages are being consumed by an existing listener
     * or the consumer is being used to consume messages synchronously
     * is undefined.
-    *  
-    * @param listener the listener to which the messages are to be 
+    *
+    * @param listener the listener to which the messages are to be
     *                 delivered
-    *  
+    *
     * @exception JMSException if the JMS provider fails to set the message
     *                         listener due to some internal error.
     * @see javax.jms.MessageConsumer#getMessageListener
@@ -110,35 +110,35 @@ public interface MessageConsumer
   void setMessageListener(MessageListener listener) throws JMSException;
 
   /** Receives the next message produced for this message consumer.
-    *  
+    *
     * <P>This call blocks indefinitely until a message is produced
     * or until this message consumer is closed.
     *
-    * <P>If this <CODE>receive</CODE> is done within a transaction, the 
+    * <P>If this <CODE>receive</CODE> is done within a transaction, the
     * consumer retains the message until the transaction commits.
-    *  
-    * @return the next message produced for this message consumer, or 
+    *
+    * @return the next message produced for this message consumer, or
     * null if this message consumer is concurrently closed
-    *  
+    *
     * @exception JMSException if the JMS provider fails to receive the next
     *                         message due to some internal error.
-    * 
+    *
     */
 
   Message receive() throws JMSException;
 
   /** Receives the next message that arrives within the specified
     * timeout interval.
-    *  
+    *
     * <P>This call blocks until a message arrives, the
     * timeout expires, or this message consumer is closed.
-    * A <CODE>timeout</CODE> of zero never expires, and the call blocks 
+    * A <CODE>timeout</CODE> of zero never expires, and the call blocks
     * indefinitely.
     *
     * @param timeout the timeout value (in milliseconds)
     *
-    * @return the next message produced for this message consumer, or 
-    * null if the timeout expires or this message consumer is concurrently 
+    * @return the next message produced for this message consumer, or
+    * null if the timeout expires or this message consumer is concurrently
     * closed
     *
     * @exception JMSException if the JMS provider fails to receive the next
@@ -149,9 +149,9 @@ public interface MessageConsumer
 
   /** Receives the next message if one is immediately available.
     *
-    * @return the next message produced for this message consumer, or 
+    * @return the next message produced for this message consumer, or
     * null if one is not available
-    *  
+    *
     * @exception JMSException if the JMS provider fails to receive the next
     *                         message due to some internal error.
     */
@@ -161,16 +161,16 @@ public interface MessageConsumer
   /** Closes the message consumer.
     *
     * <P>Since a provider may allocate some resources on behalf of a
-    * <CODE>MessageConsumer</CODE> outside the Java virtual machine, clients 
+    * <CODE>MessageConsumer</CODE> outside the Java virtual machine, clients
     * should close them when they
     * are not needed. Relying on garbage collection to eventually reclaim
     * these resources may not be timely enough.
     *
-    * <P>This call blocks until a <CODE>receive</CODE> or message listener in 
-    * progress has completed. A blocked message consumer <CODE>receive</CODE> 
-    * call 
+    * <P>This call blocks until a <CODE>receive</CODE> or message listener in
+    * progress has completed. A blocked message consumer <CODE>receive</CODE>
+    * call
     * returns null when this message consumer is closed.
-    *  
+    *
     * @exception JMSException if the JMS provider fails to close the consumer
     *                         due to some internal error.
     */

@@ -399,7 +399,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
   /**
    * @author Victor Roldan Betancort
    */
-  private final class CDOObjectContainer extends Container<CDOObject>implements IContainer.Modifiable<CDOObject>
+  private final class CDOObjectContainer extends Container<CDOObject> implements IContainer.Modifiable<CDOObject>
   {
     private Set<CDOObject> watchedObjects = new HashSet<CDOObject>();
 

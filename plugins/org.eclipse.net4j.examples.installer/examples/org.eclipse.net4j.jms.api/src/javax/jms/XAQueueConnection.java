@@ -47,10 +47,10 @@ public interface XAQueueConnection extends XAConnection, QueueConnection
 {
 
   /** Creates an <CODE>XAQueueSession</CODE> object.
-    *  
+    *
     * @return a newly created <CODE>XAQueueSession</CODE>
-    *  
-    * @exception JMSException if the <CODE>XAQueueConnection</CODE> object 
+    *
+    * @exception JMSException if the <CODE>XAQueueConnection</CODE> object
     *                         fails to create an XA queue session due to some
     *                         internal error.
     */
@@ -61,10 +61,10 @@ public interface XAQueueConnection extends XAConnection, QueueConnection
     *
     * @param transacted       usage undefined
     * @param acknowledgeMode  usage undefined
-    *  
+    *
     * @return a newly created <CODE>XAQueueSession</CODE>
-    *  
-    * @exception JMSException if the <CODE>XAQueueConnection</CODE> object 
+    *
+    * @exception JMSException if the <CODE>XAQueueConnection</CODE> object
     *                         fails to create an XA queue session due to some
     *                         internal error.
     */

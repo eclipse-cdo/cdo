@@ -24,7 +24,7 @@ import java.util.Collections;
 
 /**
  * @author Esteban Dugueperoux
- * 
+ *
  * Test about remote detachment.
  */
 public class Bugzilla_363355_Test extends AbstractCDOTest

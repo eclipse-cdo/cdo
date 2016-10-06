@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
  * IllegalStateException in CDOStore.getRevision
  * <p>
  * See bug 266982
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_266982_Test extends AbstractCDOTest
@@ -48,8 +48,8 @@ public class Bugzilla_266982_Test extends AbstractCDOTest
         {
           CDOSession session = openSession();
           CDOTransaction transaction = session.openTransaction();
-          Customer customerToLoad = (Customer)CDOUtil.getEObject(transaction.getObject(CDOUtil.getCDOObject(customer)
-              .cdoID()));
+          Customer customerToLoad = (Customer)CDOUtil
+              .getEObject(transaction.getObject(CDOUtil.getCDOObject(customer).cdoID()));
           while (!done[0])
           {
             // Could fail if the attach is not thread safe

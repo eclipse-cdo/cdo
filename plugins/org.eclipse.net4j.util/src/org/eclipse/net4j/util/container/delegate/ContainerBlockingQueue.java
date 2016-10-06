@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  * @author Eike Stepper
  * @apiviz.exclude
  */
-public class ContainerBlockingQueue<E> extends ContainerQueue<E>implements IContainerBlockingQueue<E>
+public class ContainerBlockingQueue<E> extends ContainerQueue<E> implements IContainerBlockingQueue<E>
 {
   public ContainerBlockingQueue(BlockingQueue<E> delegate)
   {

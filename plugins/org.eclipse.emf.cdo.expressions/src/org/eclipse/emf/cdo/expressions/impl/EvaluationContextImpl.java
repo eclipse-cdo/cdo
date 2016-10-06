@@ -22,7 +22,7 @@ import java.util.Map;
  *
  * @author Eike Stepper
  */
-public class EvaluationContextImpl extends HashMap<String, Object>implements EvaluationContext
+public class EvaluationContextImpl extends HashMap<String, Object> implements EvaluationContext
 {
   private static final long serialVersionUID = 1L;
 

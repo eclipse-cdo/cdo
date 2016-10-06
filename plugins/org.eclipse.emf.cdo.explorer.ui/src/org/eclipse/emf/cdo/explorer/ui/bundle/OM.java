@@ -46,13 +46,13 @@ public abstract class OM
   public static final OMPreferences PREFS = BUNDLE.preferences();
 
   public static final OMPreference<Integer> PREF_REPOSITORY_TIMEOUT_MINUTES = //
-  PREFS.init("PREF_REPOSITORY_TIMEOUT_MINUTES", 5); //$NON-NLS-1$
+      PREFS.init("PREF_REPOSITORY_TIMEOUT_MINUTES", 5); //$NON-NLS-1$
 
   public static final OMPreference<Boolean> PREF_REPOSITORY_TIMEOUT_DISABLED = //
-  PREFS.init("PREF_REPOSITORY_TIMEOUT_DISABLED", false); //$NON-NLS-1$
+      PREFS.init("PREF_REPOSITORY_TIMEOUT_DISABLED", false); //$NON-NLS-1$
 
   public static final OMPreference<Integer> PREF_DASHBOARD_HEIGHT = //
-  PREFS.init("PREF_DASHBOARD_HEIGHT", 0); //$NON-NLS-1$
+      PREFS.init("PREF_DASHBOARD_HEIGHT", 0); //$NON-NLS-1$
 
   public static Image getOverlayImage(Object image, Object overlayImage, int x, int y)
   {

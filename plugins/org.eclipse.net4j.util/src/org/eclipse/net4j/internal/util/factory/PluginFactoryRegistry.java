@@ -137,6 +137,6 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
     }
 
     extensionRegistry
-    .removeRegistryChangeListener((org.eclipse.core.runtime.IRegistryChangeListener)extensionRegistryListener);
+        .removeRegistryChangeListener((org.eclipse.core.runtime.IRegistryChangeListener)extensionRegistryListener);
   }
 }

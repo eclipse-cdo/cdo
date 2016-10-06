@@ -357,7 +357,7 @@ public class AOperation2EditPart extends CompartmentEditPart implements ITextAwa
     {
       parser = AcoreParserProvider.getParser(AcoreElementTypes.AOperation_3004, getParserElement(),
           AcoreVisualIDRegistry
-          .getType(org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AOperation2EditPart.VISUAL_ID));
+              .getType(org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AOperation2EditPart.VISUAL_ID));
     }
     return parser;
   }

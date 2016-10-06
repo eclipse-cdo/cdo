@@ -24,7 +24,7 @@ import org.eclipse.emf.common.notify.Notification;
  * CDOObjects should send normal EMF notifications on rollback.
  * <p>
  * See bug 283131.
- * 
+ *
  * @author Pascal Lehmann
  * @since 4.0
  */

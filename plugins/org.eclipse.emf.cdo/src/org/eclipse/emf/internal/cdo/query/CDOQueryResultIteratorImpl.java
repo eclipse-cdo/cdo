@@ -75,9 +75,9 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
       {
         return null;
       }
-  
+
       CDOView view = getView();
-  
+
       try
       {
         CDOObject cdoObject = view.getObject(id, true);
@@ -91,11 +91,11 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
           CDOObject cdoObject = transaction.getLastSavepoint().getDetachedObject(id);
           return (T)CDOUtil.getEObject(cdoObject);
         }
-  
+
         return null;
       }
     }
-  
+
     // Support a query return value of Object[]
     if (object instanceof Object[])
     {
@@ -112,10 +112,10 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
           resolvedObjects[i] = objects[i];
         }
       }
-  
+
       return (T)resolvedObjects;
     }
-  
+
     return (T)object;
   }
 

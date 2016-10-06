@@ -95,7 +95,7 @@ public class NormalRepositoryView extends AbstractView<IRepository>
           try
           {
             PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser()
-            .openURL(new URL("http://localhost:" + port));
+                .openURL(new URL("http://localhost:" + port));
           }
           catch (Exception ex)
           {

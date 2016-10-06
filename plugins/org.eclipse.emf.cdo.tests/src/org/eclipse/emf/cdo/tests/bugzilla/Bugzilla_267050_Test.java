@@ -27,7 +27,7 @@ import java.util.Collection;
  * Add new packages infos in the Notifications process at the client side
  * <p>
  * See bug 267050
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_267050_Test extends AbstractCDOTest
@@ -70,7 +70,7 @@ public class Bugzilla_267050_Test extends AbstractCDOTest
     }.assertNoTimeOut();
 
     assertEquals(1, newPackagesUnits[0].size());
-    assertEquals(getModel1Package().getNsURI(), newPackagesUnits[0].iterator().next().getTopLevelPackageInfo()
-        .getPackageURI());
+    assertEquals(getModel1Package().getNsURI(),
+        newPackagesUnits[0].iterator().next().getTopLevelPackageInfo().getPackageURI());
   }
 }

@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
  * @author Simon McDuff
  * @since 2.0
  */
-public class QueryResult extends AbstractQueryResult<Object>implements InternalQueryResult
+public class QueryResult extends AbstractQueryResult<Object> implements InternalQueryResult
 {
   public QueryResult(InternalView view, CDOQueryInfo queryInfo, int queryID)
   {

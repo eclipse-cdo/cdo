@@ -18,7 +18,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @apiviz.exclude
  */
-public class ContainerSet<E> extends ContainerCollection<E>implements IContainerSet<E>
+public class ContainerSet<E> extends ContainerCollection<E> implements IContainerSet<E>
 {
   public ContainerSet(Set<E> delegate)
   {

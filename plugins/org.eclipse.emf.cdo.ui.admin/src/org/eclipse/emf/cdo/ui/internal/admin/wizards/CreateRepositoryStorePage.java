@@ -155,9 +155,9 @@ public class CreateRepositoryStorePage extends AbstractCreateRepositoryWizardPag
     connectionKeepAlivePeriodText
         .setText(getSetting(pageSettings, PROPERTY_CONNECTION_KEEP_ALIVE_PERIOD, DEFAULT_CONNECTION_KEEP_ALIVE_PERIOD));
     readerPoolCapacityText
-    .setText(getSetting(pageSettings, PROPERTY_READER_POOL_CAPACITY, DEFAULT_READER_POOL_CAPACITY));
+        .setText(getSetting(pageSettings, PROPERTY_READER_POOL_CAPACITY, DEFAULT_READER_POOL_CAPACITY));
     writerPoolCapacityText
-    .setText(getSetting(pageSettings, PROPERTY_WRITER_POOL_CAPACITY, DEFAULT_WRITER_POOL_CAPACITY));
+        .setText(getSetting(pageSettings, PROPERTY_WRITER_POOL_CAPACITY, DEFAULT_WRITER_POOL_CAPACITY));
   }
 
   @Override

@@ -87,7 +87,7 @@ public class ObjyArrayListString
           embeddedAttributeName, // Attribute name
           1, // # elements in fixed-size array
           "ooUtf8String" // Type of numeric data
-          ); // Default value
+      ); // Default value
 
       embeddedClass.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
           embeddedAttributeNull, // Attribute name

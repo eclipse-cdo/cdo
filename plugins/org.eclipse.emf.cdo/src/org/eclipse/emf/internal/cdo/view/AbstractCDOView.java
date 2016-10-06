@@ -2585,7 +2585,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       if (key instanceof CDORevisionDelta)
       {
         delta = (CDORevisionDelta)key;
-        
+
         // Copy the revision delta so that conflict resolvers can modify it.
         if (hasConflictResolvers)
         {

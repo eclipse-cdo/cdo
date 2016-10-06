@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * Bug 258933 - CDORevisionImpl.eIsSet() works incorrectly.
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_258933_Test extends AbstractCDOTest

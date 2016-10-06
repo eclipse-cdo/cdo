@@ -96,7 +96,7 @@ public class DawnEcoreEditor extends EcoreEditor implements IDawnEditor
     selectionViewer.setContentProvider(new DawnSelectionViewerAdapterFactoryContentProvider(adapterFactory,
         ((DawnEditorInput)getEditorInput()).getResource()));
     selectionViewer
-    .setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
+        .setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
     // parentViewer.setLabelProvider(new DawnLabelProvider(adapterFactory,
     // dawnEditorSupport.getView(), selectionViewer));
     // listViewer.setLabelProvider(new DawnLabelProvider(adapterFactory,

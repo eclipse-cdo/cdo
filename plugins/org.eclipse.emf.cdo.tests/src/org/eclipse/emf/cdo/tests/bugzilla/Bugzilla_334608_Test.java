@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Egidijus Vaishnora - initial API and implementation
  *    Caspar De Groot - initial API and implementation
@@ -30,7 +30,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 
 /**
  * Bug 334608 - CommitIntegrityCheck erroneously checks non-persistent features
- * 
+ *
  * @author Egidijus Vaishnora, Caspar De Groot
  */
 public class Bugzilla_334608_Test extends AbstractCDOTest

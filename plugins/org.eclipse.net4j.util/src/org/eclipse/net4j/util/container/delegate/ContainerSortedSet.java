@@ -19,7 +19,7 @@ import java.util.SortedSet;
  * @author Eike Stepper
  * @apiviz.exclude
  */
-public class ContainerSortedSet<E> extends ContainerSet<E>implements IContainerSortedSet<E>
+public class ContainerSortedSet<E> extends ContainerSet<E> implements IContainerSortedSet<E>
 {
   public ContainerSortedSet(SortedSet<E> delegate)
   {

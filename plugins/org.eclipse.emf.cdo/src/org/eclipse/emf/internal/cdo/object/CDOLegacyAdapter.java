@@ -52,7 +52,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
     instance.eAdapters().add(this);
     ((org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EObservableAdapterList)instance.eAdapters())
-    .addListener(new AdapterListListener());
+        .addListener(new AdapterListListener());
   }
 
   public void setTarget(Notifier newTarget)

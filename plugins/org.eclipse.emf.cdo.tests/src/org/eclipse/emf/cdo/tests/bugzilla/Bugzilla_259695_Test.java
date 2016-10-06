@@ -27,7 +27,7 @@ import java.util.List;
  * ClassCastException on BasicEMap.clear
  * <p>
  * See bug 259695
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_259695_Test extends AbstractCDOTest

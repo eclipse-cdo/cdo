@@ -1130,32 +1130,32 @@ public class BranchingTest extends AbstractCDOTest
   public void testAuditViewOnBranch() throws Exception
   {
     String name = getBranchName("subBranch");
-  
+
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
-  
+
     // Commit to main branch
     CDOBranch mainBranch = branchManager.getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
     assertEquals(mainBranch, transaction.getBranch());
     assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
-  
+
     Product1 product = getModel1Factory().createProduct1();
     product.setName("CDO");
-  
+
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     orderDetail.setProduct(product);
     orderDetail.setPrice(5.0f);
-  
+
     CDOResource resource = transaction.createResource(getResourcePath("/res"));
     resource.getContents().add(product);
     resource.getContents().add(orderDetail);
-  
+
     CDOCommitInfo commitInfo = transaction.commit();
     dumpAll(session);
     assertEquals(mainBranch, commitInfo.getBranch());
     long commitTime1 = commitInfo.getTimeStamp();
-  
+
     // Modify main branch (change existing OrderDetail)
     orderDetail.setPrice(10.0f);
     commitInfo = transaction.commit();
@@ -1163,48 +1163,48 @@ public class BranchingTest extends AbstractCDOTest
     assertEquals(mainBranch, commitInfo.getBranch());
     long commitTime2 = commitInfo.getTimeStamp();
     transaction.close();
-  
+
     // Commit to sub branch
     CDOBranch subBranch = mainBranch.createBranch(name);
     transaction = session.openTransaction(subBranch);
     assertEquals(subBranch, transaction.getBranch());
     assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
-  
+
     resource = transaction.getResource(getResourcePath("/res"));
     orderDetail = (OrderDetail)resource.getContents().get(1);
     assertEquals(10.0f, orderDetail.getPrice());
     product = orderDetail.getProduct();
     assertEquals("CDO", product.getName());
-  
+
     // Modify sub branch (add new OrderDetail)
     OrderDetail orderDetail2 = getModel1Factory().createOrderDetail();
     orderDetail2.setProduct(product);
     orderDetail2.setPrice(20.0f);
     resource.getContents().add(0, orderDetail2);
-  
+
     commitInfo = transaction.commit();
     dumpAll(session);
     assertEquals(subBranch, commitInfo.getBranch());
     long commitTime3 = commitInfo.getTimeStamp();
-  
+
     transaction.close();
     closeSession1();
-  
+
     session = openSession2();
     branchManager = session.getBranchManager();
     mainBranch = branchManager.getMainBranch();
     subBranch = mainBranch.getBranch(name);
-  
+
     check(session, mainBranch, commitTime1, 5.0f, "CDO");
     check(session, mainBranch, commitTime2, 10.0f, "CDO");
     check(session, mainBranch, CDOBranchPoint.UNSPECIFIED_DATE, 10.0f, "CDO");
-  
+
     dumpAll(session);
     check(session, subBranch, commitTime1, 5.0f, "CDO"); // !
     check(session, subBranch, commitTime2, 10.0f, "CDO");
     check(session, subBranch, commitTime3, 10.0f, 20.0f, "CDO");
     check(session, subBranch, CDOBranchPoint.UNSPECIFIED_DATE, 10.0f, 20.0f, "CDO");
-  
+
     session.close();
   }
 

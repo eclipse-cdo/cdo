@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
  * InvalidObjectException when switching branch
  * <p>
  * See bug 303807
- * 
+ *
  * @author Victor Roldan Betancort
  */
 @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)

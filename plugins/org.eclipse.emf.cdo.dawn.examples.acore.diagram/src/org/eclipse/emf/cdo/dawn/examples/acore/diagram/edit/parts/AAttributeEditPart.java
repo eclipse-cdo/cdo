@@ -357,7 +357,7 @@ public class AAttributeEditPart extends CompartmentEditPart implements ITextAwar
     {
       parser = AcoreParserProvider.getParser(AcoreElementTypes.AAttribute_3001, getParserElement(),
           AcoreVisualIDRegistry
-          .getType(org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AAttributeEditPart.VISUAL_ID));
+              .getType(org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AAttributeEditPart.VISUAL_ID));
     }
     return parser;
   }

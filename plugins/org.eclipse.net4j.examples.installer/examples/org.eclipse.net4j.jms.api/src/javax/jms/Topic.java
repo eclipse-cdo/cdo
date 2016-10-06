@@ -65,12 +65,12 @@ public interface Topic extends Destination
 {
 
   /** Gets the name of this topic.
-    *  
+    *
     * <P>Clients that depend upon the name are not portable.
-    *  
+    *
     * @return the topic name
-    *  
-    * @exception JMSException if the JMS provider implementation of 
+    *
+    * @exception JMSException if the JMS provider implementation of
     *                         <CODE>Topic</CODE> fails to return the topic
     *                         name due to some internal
     *                         error.

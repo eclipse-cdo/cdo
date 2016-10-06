@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EAttribute;
  * ArrayIndexOutOfBoundsException while unsetting "modified" EAttribute in CDOResource
  * <p>
  * See bug 276696
- * 
+ *
  * @author Victor Roldan Betancort
  */
 public class Bugzilla_276696_Test extends AbstractCDOTest

@@ -24,7 +24,7 @@ import org.eclipse.net4j.util.options.IOptionsEvent;
  * 258850: Make Options extend INotifier
  * <p>
  * See bug 258850
- * 
+ *
  * @author Victor Roldan Betancort
  */
 public class Bugzilla_258850_Test extends AbstractCDOTest

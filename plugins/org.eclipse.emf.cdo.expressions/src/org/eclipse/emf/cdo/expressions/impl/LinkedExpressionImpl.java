@@ -125,7 +125,9 @@ public class LinkedExpressionImpl extends CDOObjectImpl implements LinkedExpress
     {
     case ExpressionsPackage.LINKED_EXPRESSION__EXPRESSION:
       if (resolve)
+      {
         return getExpression();
+      }
       return basicGetExpression();
     }
     return super.eGet(featureID, resolve, coreType);

@@ -38,7 +38,7 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * Bug 418267 - [Security] Cached permissions are not always properly updated after commits.
- * 
+ *
  * @author Eike Stepper
  */
 @CleanRepositoriesBefore(reason = "TEST_SECURITY_MANAGER")

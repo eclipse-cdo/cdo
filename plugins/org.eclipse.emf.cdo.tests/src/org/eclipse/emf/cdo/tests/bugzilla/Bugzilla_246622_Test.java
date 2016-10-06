@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * 246622: CDOStore.set doesn't affect variable correctly - Could cause memory retention
  * <p>
  * See bug 243310
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_246622_Test extends AbstractCDOTest
@@ -65,10 +65,10 @@ public class Bugzilla_246622_Test extends AbstractCDOTest
     assertEquals(CDOUtil.getCDOObject(orderDetail2).cdoID(),
         CDOUtil.getCDOObject(order2).cdoRevision().data().get(order_OrderDetailFeature, 0));
 
-    assertEquals(CDOUtil.getCDOObject(order).cdoID(), CDOUtil.getCDOObject(orderDetail).cdoRevision().data()
-        .getContainerID());
-    assertEquals(CDOUtil.getCDOObject(order2).cdoID(), CDOUtil.getCDOObject(orderDetail2).cdoRevision().data()
-        .getContainerID());
+    assertEquals(CDOUtil.getCDOObject(order).cdoID(),
+        CDOUtil.getCDOObject(orderDetail).cdoRevision().data().getContainerID());
+    assertEquals(CDOUtil.getCDOObject(order2).cdoID(),
+        CDOUtil.getCDOObject(orderDetail2).cdoRevision().data().getContainerID());
 
     Order order3 = getModel1Factory().createPurchaseOrder();
 
@@ -77,7 +77,8 @@ public class Bugzilla_246622_Test extends AbstractCDOTest
 
     assertEquals(CDOUtil.getCDOObject(orderDetail2).cdoID(),
         CDOUtil.getCDOObject(order3).cdoRevision().data().get(order_OrderDetailFeature, 0));
-    assertEquals(CDOUtil.getCDOObject(order3), CDOUtil.getCDOObject(orderDetail2).cdoRevision().data().getContainerID());
+    assertEquals(CDOUtil.getCDOObject(order3),
+        CDOUtil.getCDOObject(orderDetail2).cdoRevision().data().getContainerID());
 
     msg("Committing");
     transaction1.commit();
@@ -119,10 +120,10 @@ public class Bugzilla_246622_Test extends AbstractCDOTest
     msg("Committing");
     transaction1.commit();
 
-    assertEquals(CDOUtil.getCDOObject(supplier2).cdoID(), CDOUtil.getCDOObject(purchaseOrder2).cdoRevision().data()
-        .get(purchaseOrder_Supplier, 0));
-    assertEquals(CDOUtil.getCDOObject(purchaseOrder2).cdoID(), CDOUtil.getCDOObject(supplier2).cdoRevision().data()
-        .get(supplier_PurchaseOrder, 0));
+    assertEquals(CDOUtil.getCDOObject(supplier2).cdoID(),
+        CDOUtil.getCDOObject(purchaseOrder2).cdoRevision().data().get(purchaseOrder_Supplier, 0));
+    assertEquals(CDOUtil.getCDOObject(purchaseOrder2).cdoID(),
+        CDOUtil.getCDOObject(supplier2).cdoRevision().data().get(supplier_PurchaseOrder, 0));
 
     assertEquals(CDOUtil.getCDOObject(supplier).cdoID(),
         CDOUtil.getCDOObject(purchaseOrder).cdoRevision().data().get(purchaseOrder_Supplier, 0));
@@ -134,8 +135,8 @@ public class Bugzilla_246622_Test extends AbstractCDOTest
     purchaseOrder3.setSupplier(supplier2);
     res.getContents().add(purchaseOrder3);
 
-    assertEquals(CDOUtil.getCDOObject(supplier2).cdoID(), CDOUtil.getCDOObject(purchaseOrder3).cdoRevision().data()
-        .get(purchaseOrder_Supplier, 0));
+    assertEquals(CDOUtil.getCDOObject(supplier2).cdoID(),
+        CDOUtil.getCDOObject(purchaseOrder3).cdoRevision().data().get(purchaseOrder_Supplier, 0));
     assertEquals(purchaseOrder3, CDOUtil.getCDOObject(supplier2).cdoRevision().data().get(supplier_PurchaseOrder, 1));
 
     msg("Committing");

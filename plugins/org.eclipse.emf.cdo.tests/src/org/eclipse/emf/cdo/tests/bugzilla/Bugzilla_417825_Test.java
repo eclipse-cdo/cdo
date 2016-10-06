@@ -19,7 +19,7 @@ import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 /**
  * Bug 417825 - Invalidator can die if CDOSession can not be activated within 100ms.
- * 
+ *
  * @author Eike Stepper
  */
 public class Bugzilla_417825_Test extends AbstractCDOTest

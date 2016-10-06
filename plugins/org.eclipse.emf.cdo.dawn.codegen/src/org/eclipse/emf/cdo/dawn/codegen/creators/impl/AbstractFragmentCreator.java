@@ -62,7 +62,7 @@ public abstract class AbstractFragmentCreator implements Creator
 
     ResourceSet resourceSet = new ResourceSetImpl();
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-    .put(GenerateDawnGenModelAction.dawngenmodelFileExtension, new XMIResourceFactoryImpl());
+        .put(GenerateDawnGenModelAction.dawngenmodelFileExtension, new XMIResourceFactoryImpl());
 
     Resource dawnGenModelResource = resourceSet
         .getResource(URI.createURI(dawnGenModelFile.getRawLocationURI().toString()), true);

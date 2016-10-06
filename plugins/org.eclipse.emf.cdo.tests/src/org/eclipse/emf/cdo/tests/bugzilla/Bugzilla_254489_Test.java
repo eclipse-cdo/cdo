@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * CDOTransaction.postCommit not adjusting the Transaction/View reference
  * <p>
  * See bug 254489
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_254489_Test extends AbstractCDOTest

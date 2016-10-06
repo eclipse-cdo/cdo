@@ -387,7 +387,7 @@ public final class ReflectUtil
 
   public static Object instantiate(Map<Object, Object> properties, String namespace, String classKey,
       ClassLoader classLoader) throws ClassNotFoundException, InstantiationException, IllegalAccessException,
-          IllegalArgumentException, InvocationTargetException
+      IllegalArgumentException, InvocationTargetException
   {
     if (namespace != null)
     {

@@ -56,33 +56,33 @@ public interface TopicConnection extends Connection
     * @param transacted indicates whether the session is transacted
     * @param acknowledgeMode indicates whether the consumer or the
     * client will acknowledge any messages it receives; ignored if the session
-    * is transacted. Legal values are <code>Session.AUTO_ACKNOWLEDGE</code>, 
-    * <code>Session.CLIENT_ACKNOWLEDGE</code>, and 
-    * <code>Session.DUPS_OK_ACKNOWLEDGE</code>. 
-    *  
+    * is transacted. Legal values are <code>Session.AUTO_ACKNOWLEDGE</code>,
+    * <code>Session.CLIENT_ACKNOWLEDGE</code>, and
+    * <code>Session.DUPS_OK_ACKNOWLEDGE</code>.
+    *
     * @return a newly created topic session
-    *  
+    *
     * @exception JMSException if the <CODE>TopicConnection</CODE> object fails
     *                         to create a session due to some internal error or
     *                         lack of support for the specific transaction
     *                         and acknowledgement mode.
     *
-    * @see Session#AUTO_ACKNOWLEDGE 
-    * @see Session#CLIENT_ACKNOWLEDGE 
-    * @see Session#DUPS_OK_ACKNOWLEDGE 
+    * @see Session#AUTO_ACKNOWLEDGE
+    * @see Session#CLIENT_ACKNOWLEDGE
+    * @see Session#DUPS_OK_ACKNOWLEDGE
     */
 
   TopicSession createTopicSession(boolean transacted, int acknowledgeMode) throws JMSException;
 
   /** Creates a connection consumer for this connection (optional operation).
     * This is an expert facility not used by regular JMS clients.
-    *  
+    *
     * @param topic the topic to access
     * @param messageSelector only messages with properties matching the
     * message selector expression are delivered.  A value of null or
-    * an empty string indicates that there is no message selector  
+    * an empty string indicates that there is no message selector
     * for the message consumer.
-    * @param sessionPool the server session pool to associate with this 
+    * @param sessionPool the server session pool to associate with this
     * connection consumer
     * @param maxMessages the maximum number of messages that can be
     * assigned to a server session at one time
@@ -91,8 +91,8 @@ public interface TopicConnection extends Connection
     *
     * @exception JMSException if the <CODE>TopicConnection</CODE> object fails
     *                         to create a connection consumer due to some
-    *                         internal error or invalid arguments for 
-    *                         <CODE>sessionPool</CODE> and 
+    *                         internal error or invalid arguments for
+    *                         <CODE>sessionPool</CODE> and
     *                         <CODE>messageSelector</CODE>.
     * @exception InvalidDestinationException if an invalid topic is specified.
     * @exception InvalidSelectorException if the message selector is invalid.
@@ -102,26 +102,26 @@ public interface TopicConnection extends Connection
   ConnectionConsumer createConnectionConsumer(Topic topic, String messageSelector, ServerSessionPool sessionPool,
       int maxMessages) throws JMSException;
 
-  /** Create a durable connection consumer for this connection (optional operation). 
+  /** Create a durable connection consumer for this connection (optional operation).
     * This is an expert facility not used by regular JMS clients.
-    *                
+    *
     * @param topic the topic to access
     * @param subscriptionName durable subscription name
     * @param messageSelector only messages with properties matching the
     * message selector expression are delivered.  A value of null or
-    * an empty string indicates that there is no message selector 
+    * an empty string indicates that there is no message selector
     * for the message consumer.
-    * @param sessionPool the server session pool to associate with this 
+    * @param sessionPool the server session pool to associate with this
     * durable connection consumer
     * @param maxMessages the maximum number of messages that can be
     * assigned to a server session at one time
     *
     * @return the durable connection consumer
-    *  
+    *
     * @exception JMSException if the <CODE>TopicConnection</CODE> object fails
     *                         to create a connection consumer due to some
-    *                         internal error or invalid arguments for 
-    *                         <CODE>sessionPool</CODE> and 
+    *                         internal error or invalid arguments for
+    *                         <CODE>sessionPool</CODE> and
     *                         <CODE>messageSelector</CODE>.
     * @exception InvalidDestinationException if an invalid topic is specified.
     * @exception InvalidSelectorException if the message selector is invalid.

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -33,23 +33,23 @@ public class EMFComplianceTest extends AbstractOMTest
     assertEquals(Resource.RESOURCE__WARNINGS, EresourcePackage.CDO_RESOURCE__WARNINGS);
     assertEquals(Resource.RESOURCE__TIME_STAMP, EresourcePackage.CDO_RESOURCE__TIME_STAMP);
 
-    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_ResourceSet(), EresourcePackage.eINSTANCE.getCDOResource()
-        .getEStructuralFeature(Resource.RESOURCE__RESOURCE_SET));
-    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_URI(), EresourcePackage.eINSTANCE.getCDOResource()
-        .getEStructuralFeature(Resource.RESOURCE__URI));
-    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_Contents(), EresourcePackage.eINSTANCE.getCDOResource()
-        .getEStructuralFeature(Resource.RESOURCE__CONTENTS));
-    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_Modified(), EresourcePackage.eINSTANCE.getCDOResource()
-        .getEStructuralFeature(Resource.RESOURCE__IS_MODIFIED));
-    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_Loaded(), EresourcePackage.eINSTANCE.getCDOResource()
-        .getEStructuralFeature(Resource.RESOURCE__IS_LOADED));
-    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_TrackingModification(), EresourcePackage.eINSTANCE
-        .getCDOResource().getEStructuralFeature(Resource.RESOURCE__IS_TRACKING_MODIFICATION));
-    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_Errors(), EresourcePackage.eINSTANCE.getCDOResource()
-        .getEStructuralFeature(Resource.RESOURCE__ERRORS));
-    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_Warnings(), EresourcePackage.eINSTANCE.getCDOResource()
-        .getEStructuralFeature(Resource.RESOURCE__WARNINGS));
-    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_TimeStamp(), EresourcePackage.eINSTANCE.getCDOResource()
-        .getEStructuralFeature(Resource.RESOURCE__TIME_STAMP));
+    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_ResourceSet(),
+        EresourcePackage.eINSTANCE.getCDOResource().getEStructuralFeature(Resource.RESOURCE__RESOURCE_SET));
+    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_URI(),
+        EresourcePackage.eINSTANCE.getCDOResource().getEStructuralFeature(Resource.RESOURCE__URI));
+    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_Contents(),
+        EresourcePackage.eINSTANCE.getCDOResource().getEStructuralFeature(Resource.RESOURCE__CONTENTS));
+    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_Modified(),
+        EresourcePackage.eINSTANCE.getCDOResource().getEStructuralFeature(Resource.RESOURCE__IS_MODIFIED));
+    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_Loaded(),
+        EresourcePackage.eINSTANCE.getCDOResource().getEStructuralFeature(Resource.RESOURCE__IS_LOADED));
+    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_TrackingModification(),
+        EresourcePackage.eINSTANCE.getCDOResource().getEStructuralFeature(Resource.RESOURCE__IS_TRACKING_MODIFICATION));
+    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_Errors(),
+        EresourcePackage.eINSTANCE.getCDOResource().getEStructuralFeature(Resource.RESOURCE__ERRORS));
+    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_Warnings(),
+        EresourcePackage.eINSTANCE.getCDOResource().getEStructuralFeature(Resource.RESOURCE__WARNINGS));
+    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_TimeStamp(),
+        EresourcePackage.eINSTANCE.getCDOResource().getEStructuralFeature(Resource.RESOURCE__TIME_STAMP));
   }
 }

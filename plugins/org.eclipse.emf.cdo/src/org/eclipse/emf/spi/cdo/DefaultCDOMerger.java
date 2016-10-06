@@ -379,13 +379,17 @@ public class DefaultCDOMerger implements CDOMerger
   {
     NONE,
 
-    @Deprecated SOURCE_OVER_TARGET,
+    @Deprecated
+    SOURCE_OVER_TARGET,
 
-    @Deprecated TARGET_OVER_SOURCE,
+    @Deprecated
+    TARGET_OVER_SOURCE,
 
-    @Deprecated DETACH_OVER_CHANGE,
+    @Deprecated
+    DETACH_OVER_CHANGE,
 
-    @Deprecated CHANGE_OVER_DETACH
+    @Deprecated
+    CHANGE_OVER_DETACH
   }
 
   /**

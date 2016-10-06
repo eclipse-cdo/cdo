@@ -32,7 +32,7 @@ import java.text.MessageFormat;
  * CommitNotifications overtaking each other.
  * <p>
  * See bug 328352
- * 
+ *
  * @author Pascal Lehmann
  * @since 4.0
  */

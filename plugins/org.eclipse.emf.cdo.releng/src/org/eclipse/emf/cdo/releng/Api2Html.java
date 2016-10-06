@@ -379,7 +379,7 @@ public class Api2Html extends DefaultHandler
     {
       // Just for local testing!
       args = new String[] { "/develop", "R20120918-0947", "/develop/git/cdo/plugins",
-      "/develop/ws/cdo/.buckminster/tp/plugins" };
+          "/develop/ws/cdo/.buckminster/tp/plugins" };
     }
 
     new Api2Html(new File(args[0]), args[1], new File(args[2]), new File(args[3]));
@@ -477,7 +477,7 @@ public class Api2Html extends DefaultHandler
     {
       String href = getHref();
       out.print(indent + getIcon() + " " + (href != null ? "<a href='" + href + "' target='_blank'>" : "") + getText()
-      + (href != null ? "</a>" : ""));
+          + (href != null ? "</a>" : ""));
     }
 
     protected String getHref() throws Exception

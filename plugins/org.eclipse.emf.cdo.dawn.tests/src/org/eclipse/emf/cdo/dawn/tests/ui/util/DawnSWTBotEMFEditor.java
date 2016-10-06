@@ -167,7 +167,7 @@ public class DawnSWTBotEMFEditor extends SWTBotEditor
   }
 
   protected void setActivePage(final MultiPageEditorPart editor, final int i) throws SecurityException,
-  NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
+      NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
   {
     editor.getSite().getShell().getDisplay().syncExec(new Runnable()
     {

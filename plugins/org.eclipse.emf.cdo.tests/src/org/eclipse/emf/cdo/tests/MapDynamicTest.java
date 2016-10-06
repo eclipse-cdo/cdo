@@ -37,7 +37,7 @@ import junit.framework.TestSuite;
  * Note! This class should never be attached to our the suites until this notification is removed. Otherwise the test
  * run will fail because this test cases is not yet integrated into our test framework! Only run this test as local
  * JUnit test case.
- * 
+ *
  * @author Martin Fluegge
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })

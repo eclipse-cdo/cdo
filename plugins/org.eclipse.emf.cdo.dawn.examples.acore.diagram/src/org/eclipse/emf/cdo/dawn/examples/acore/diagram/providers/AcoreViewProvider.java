@@ -184,7 +184,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
         case AAttribute2EditPart.VISUAL_ID:
         case AOperation2EditPart.VISUAL_ID:
           if (domainElement == null
-          || visualID != AcoreVisualIDRegistry.getNodeVisualID(op.getContainerView(), domainElement))
+              || visualID != AcoreVisualIDRegistry.getNodeVisualID(op.getContainerView(), domainElement))
           {
             return false; // visual id in semantic hint should match visual id for domain element
           }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
  * NPE during Transaction.getObject(id, false)
  * <p>
  * See bug 243310
- * 
+ *
  * @author Eike Stepper
  */
 public class Bugzilla_243310_Test extends AbstractCDOTest

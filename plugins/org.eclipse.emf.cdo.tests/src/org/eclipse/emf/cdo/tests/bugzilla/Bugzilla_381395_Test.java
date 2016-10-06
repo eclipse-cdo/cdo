@@ -22,7 +22,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 
 /**
  * Bug 412686: NPE when removing/adding an adapter after CDO view closed.
- * 
+ *
  * @author Esteban Dugueperoux
  */
 public class Bugzilla_381395_Test extends AbstractCDOTest

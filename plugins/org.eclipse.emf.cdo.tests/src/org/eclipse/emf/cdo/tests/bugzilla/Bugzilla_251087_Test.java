@@ -28,7 +28,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
  * NPE in ChangeSubscriptionManager.isPending() while subscribing a pending TRANSIENT-by-removal object
  * <p>
  * See bug 251087
- * 
+ *
  * @author Victor Roldan Betancort
  */
 public class Bugzilla_251087_Test extends AbstractCDOTest

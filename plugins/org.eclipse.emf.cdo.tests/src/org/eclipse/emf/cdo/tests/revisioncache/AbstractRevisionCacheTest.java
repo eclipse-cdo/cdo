@@ -226,8 +226,8 @@ public abstract class AbstractRevisionCacheTest extends AbstractOMTest
     InternalCDORevision secondVersion = company.cdoRevision();
     addRevision(secondVersion);
 
-    CDORevision removedRevision = revisionCache.removeRevision(firstVersion.getID(), firstVersion.getBranch()
-        .getVersion(firstVersion.getVersion()));
+    CDORevision removedRevision = revisionCache.removeRevision(firstVersion.getID(),
+        firstVersion.getBranch().getVersion(firstVersion.getVersion()));
     assertNotNull(removedRevision);
     assertEqualRevisions(firstVersion, removedRevision);
   }
@@ -243,9 +243,10 @@ public abstract class AbstractRevisionCacheTest extends AbstractOMTest
     InternalCDORevision secondVersion = company.cdoRevision();
     addRevision(secondVersion);
 
-    revisionCache.removeRevision(secondVersion.getID(), secondVersion.getBranch()
-        .getVersion(secondVersion.getVersion()));
-    assertNull(revisionCache.getRevisionByVersion(secondVersion.getID(), BRANCH.getVersion(secondVersion.getVersion())));
+    revisionCache.removeRevision(secondVersion.getID(),
+        secondVersion.getBranch().getVersion(secondVersion.getVersion()));
+    assertNull(
+        revisionCache.getRevisionByVersion(secondVersion.getID(), BRANCH.getVersion(secondVersion.getVersion())));
   }
 
   public void testRemoveSecondRevisionResultsInNoActiveRevision() throws Exception
@@ -259,8 +260,8 @@ public abstract class AbstractRevisionCacheTest extends AbstractOMTest
     InternalCDORevision secondVersion = company.cdoRevision();
     addRevision(secondVersion);
 
-    revisionCache.removeRevision(secondVersion.getID(), secondVersion.getBranch()
-        .getVersion(secondVersion.getVersion()));
+    revisionCache.removeRevision(secondVersion.getID(),
+        secondVersion.getBranch().getVersion(secondVersion.getVersion()));
     CDORevision fetchedRevision = revisionCache.getRevision(firstVersion.getID(), BRANCH_POINT);
     assertNull(fetchedRevision);
   }
@@ -306,17 +307,17 @@ public abstract class AbstractRevisionCacheTest extends AbstractOMTest
   {
     Runnable[] testCases = new Runnable[] {
 
-    new Runnable()
-    {
-      public void run()
-      {
-        CDOObject company = createCompanyInResource(COMPANY, session.openTransaction());
-        CDORevision revision = company.cdoRevision();
-        addRevision(revision);
-        CDORevision fetchedRevision = revisionCache.getRevision(revision.getID(), BRANCH_POINT);
-        assertNotNull(fetchedRevision != null);
-      }
-    } //
+        new Runnable()
+        {
+          public void run()
+          {
+            CDOObject company = createCompanyInResource(COMPANY, session.openTransaction());
+            CDORevision revision = company.cdoRevision();
+            addRevision(revision);
+            CDORevision fetchedRevision = revisionCache.getRevision(revision.getID(), BRANCH_POINT);
+            assertNotNull(fetchedRevision != null);
+          }
+        } //
 
         , new Runnable()
         {

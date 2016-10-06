@@ -46,33 +46,33 @@ public interface XAQueueConnectionFactory extends XAConnectionFactory, QueueConn
 {
 
   /** Creates an XA queue connection with the default user identity.
-    * The connection is created in stopped mode. No messages 
+    * The connection is created in stopped mode. No messages
     * will be delivered until the <code>Connection.start</code> method
     * is explicitly called.
     *
     * @return a newly created XA queue connection
     *
-    * @exception JMSException if the JMS provider fails to create an XA queue 
+    * @exception JMSException if the JMS provider fails to create an XA queue
     *                         connection due to some internal error.
-    * @exception JMSSecurityException  if client authentication fails due to 
+    * @exception JMSSecurityException  if client authentication fails due to
     *                         an invalid user name or password.
      */
 
   XAQueueConnection createXAQueueConnection() throws JMSException;
 
   /** Creates an XA queue connection with the specified user identity.
-    * The connection is created in stopped mode. No messages 
+    * The connection is created in stopped mode. No messages
     * will be delivered until the <code>Connection.start</code> method
     * is explicitly called.
-    *  
+    *
     * @param userName the caller's user name
     * @param password the caller's password
-    *  
+    *
     * @return a newly created XA queue connection
     *
-    * @exception JMSException if the JMS provider fails to create an XA queue 
+    * @exception JMSException if the JMS provider fails to create an XA queue
     *                         connection due to some internal error.
-    * @exception JMSSecurityException  if client authentication fails due to 
+    * @exception JMSSecurityException  if client authentication fails due to
     *                         an invalid user name or password.
     */
 

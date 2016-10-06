@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
  * Resources fetched using CDOViewImpl.getResource(getResourcePath(CDOID)) not added to ResourceSet
  * <p>
  * See bug 248915
- * 
+ *
  * @author Paul Richardson
  */
 public class Bugzilla_248915_Test extends AbstractCDOTest

@@ -57,21 +57,21 @@ package javax.jms;
 public interface DeliveryMode
 {
 
-  /** This is the lowest-overhead delivery mode because it does not require 
+  /** This is the lowest-overhead delivery mode because it does not require
     * that the message be logged to stable storage. The level of JMS provider
-    * failure that causes a <CODE>NON_PERSISTENT</CODE> message to be lost is 
+    * failure that causes a <CODE>NON_PERSISTENT</CODE> message to be lost is
     * not defined.
     *
-    * <P>A JMS provider must deliver a <CODE>NON_PERSISTENT</CODE> message 
-    * with an 
-    * at-most-once guarantee. This means that it may lose the message, but it 
+    * <P>A JMS provider must deliver a <CODE>NON_PERSISTENT</CODE> message
+    * with an
+    * at-most-once guarantee. This means that it may lose the message, but it
     * must not deliver it twice.
     */
 
   static final int NON_PERSISTENT = 1;
 
-  /** This delivery mode instructs the JMS provider to log the message to stable 
-    * storage as part of the client's send operation. Only a hard media 
+  /** This delivery mode instructs the JMS provider to log the message to stable
+    * storage as part of the client's send operation. Only a hard media
     * failure should cause a <CODE>PERSISTENT</CODE> message to be lost.
     */
 

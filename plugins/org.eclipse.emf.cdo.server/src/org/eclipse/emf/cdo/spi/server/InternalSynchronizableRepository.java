@@ -24,7 +24,7 @@ import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface InternalSynchronizableRepository extends ISynchronizableRepository, InternalRepository,
-CDOReplicationContext, CDORawReplicationContext, CDOLockChangeInfoHandler
+    CDOReplicationContext, CDORawReplicationContext, CDOLockChangeInfoHandler
 {
   public InternalRepositorySynchronizer getSynchronizer();
 

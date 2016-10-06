@@ -134,7 +134,7 @@ public class DawnChangeHelper
     ViewAndElementDescriptor viewAndElementDescriptor = new ViewAndElementDescriptor(createElementRequestAdapter,
         Node.class, ((IHintedType)elementType).getSemanticHint(),
 
-    parentEditpart.getDiagramPreferencesHint());
+        parentEditpart.getDiagramPreferencesHint());
 
     CreateViewAndElementRequest createViewRequest = new CreateViewAndElementRequest(viewAndElementDescriptor);
 

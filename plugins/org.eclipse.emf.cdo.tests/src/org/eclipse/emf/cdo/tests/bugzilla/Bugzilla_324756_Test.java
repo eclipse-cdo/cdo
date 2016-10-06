@@ -26,7 +26,7 @@ import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
  * NPE in TransactionCommitContext with re-attached object on branch.
  * <p>
  * See bug 324756
- * 
+ *
  * @author Pascal Lehmann
  */
 public class Bugzilla_324756_Test extends AbstractCDOTest

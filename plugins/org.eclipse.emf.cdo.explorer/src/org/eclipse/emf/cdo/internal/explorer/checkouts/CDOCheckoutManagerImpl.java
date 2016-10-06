@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Eike Stepper
  */
-public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout>implements CDOCheckoutManager
+public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> implements CDOCheckoutManager
 {
   private static final String PROPERTIES_FILE = "checkout.properties";
 

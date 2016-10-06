@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.util.DanglingReferenceException;
 
 /**
  * Bug 322754 - NullPointerException after deleting a resource
- * 
+ *
  * @author Eike Stepper
  */
 public class Bugzilla_322754_Test extends AbstractCDOTest

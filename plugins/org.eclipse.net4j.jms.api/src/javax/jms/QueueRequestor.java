@@ -57,14 +57,14 @@ public class QueueRequestor
   QueueReceiver receiver;
 
   /** Constructor for the <CODE>QueueRequestor</CODE> class.
-    *  
+    *
     * <P>This implementation assumes the session parameter to be non-transacted,
-    * with a delivery mode of either <CODE>AUTO_ACKNOWLEDGE</CODE> or 
+    * with a delivery mode of either <CODE>AUTO_ACKNOWLEDGE</CODE> or
     * <CODE>DUPS_OK_ACKNOWLEDGE</CODE>.
     *
     * @param session the <CODE>QueueSession</CODE> the queue belongs to
     * @param queue the queue to perform the request/reply call on
-    *  
+    *
     * @exception JMSException if the JMS provider fails to create the
     *                         <CODE>QueueRequestor</CODE> due to some internal
     *                         error.
@@ -81,13 +81,13 @@ public class QueueRequestor
   }
 
   /** Sends a request and waits for a reply. The temporary queue is used for
-    * the <CODE>JMSReplyTo</CODE> destination, and only one reply per request 
+    * the <CODE>JMSReplyTo</CODE> destination, and only one reply per request
     * is expected.
-    *  
+    *
     * @param message the message to send
-    *  
+    *
     * @return the reply message
-    *  
+    *
     * @exception JMSException if the JMS provider fails to complete the
     *                         request due to some internal error.
     */
@@ -101,13 +101,13 @@ public class QueueRequestor
 
   /** Closes the <CODE>QueueRequestor</CODE> and its session.
     *
-    * <P>Since a provider may allocate some resources on behalf of a 
-    * <CODE>QueueRequestor</CODE> outside the Java virtual machine, clients 
-    * should close them when they 
-    * are not needed. Relying on garbage collection to eventually reclaim 
+    * <P>Since a provider may allocate some resources on behalf of a
+    * <CODE>QueueRequestor</CODE> outside the Java virtual machine, clients
+    * should close them when they
+    * are not needed. Relying on garbage collection to eventually reclaim
     * these resources may not be timely enough.
-    *  
-    * <P>Note that this method closes the <CODE>QueueSession</CODE> object 
+    *
+    * <P>Note that this method closes the <CODE>QueueSession</CODE> object
     * passed to the <CODE>QueueRequestor</CODE> constructor.
     *
     * @exception JMSException if the JMS provider fails to close the

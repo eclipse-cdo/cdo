@@ -47,9 +47,9 @@ public interface XATopicSession extends XASession
 {
 
   /** Gets the topic session associated with this <CODE>XATopicSession</CODE>.
-    *   
+    *
     * @return the topic session object
-    *   
+    *
     * @exception JMSException if an internal error occurs.
     */
 

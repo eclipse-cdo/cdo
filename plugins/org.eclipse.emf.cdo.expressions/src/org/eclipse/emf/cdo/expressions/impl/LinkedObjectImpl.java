@@ -123,7 +123,9 @@ public class LinkedObjectImpl extends CDOObjectImpl implements LinkedObject
     {
     case ExpressionsPackage.LINKED_OBJECT__OBJECT:
       if (resolve)
+      {
         return getObject();
+      }
       return basicGetObject();
     }
     return super.eGet(featureID, resolve, coreType);

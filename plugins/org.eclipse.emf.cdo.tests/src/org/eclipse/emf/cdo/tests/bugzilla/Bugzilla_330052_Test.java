@@ -24,7 +24,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 /**
  * Bug 330052 - Breakage related to sticky views
- * 
+ *
  * @author Egidijus Vaisnora, Caspar De Groot
  */
 public class Bugzilla_330052_Test extends AbstractCDOTest

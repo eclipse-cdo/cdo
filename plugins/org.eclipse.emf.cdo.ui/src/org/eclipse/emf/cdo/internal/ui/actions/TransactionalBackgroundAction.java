@@ -17,10 +17,10 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.om.monitor.SubProgressMonitor;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.net4j.util.om.monitor.SubProgressMonitor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 

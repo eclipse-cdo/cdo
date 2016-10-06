@@ -612,7 +612,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
+      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
       {
         return adapter;
       }
@@ -690,7 +690,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
   }
 
   /**
-   * This disposes all of the item providers created by this factory. 
+   * This disposes all of the item providers created by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -698,41 +698,77 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
   public void dispose()
   {
     if (booleanValueItemProvider != null)
+    {
       booleanValueItemProvider.dispose();
+    }
     if (byteValueItemProvider != null)
+    {
       byteValueItemProvider.dispose();
+    }
     if (shortValueItemProvider != null)
+    {
       shortValueItemProvider.dispose();
+    }
     if (intValueItemProvider != null)
+    {
       intValueItemProvider.dispose();
+    }
     if (longValueItemProvider != null)
+    {
       longValueItemProvider.dispose();
+    }
     if (floatValueItemProvider != null)
+    {
       floatValueItemProvider.dispose();
+    }
     if (doubleValueItemProvider != null)
+    {
       doubleValueItemProvider.dispose();
+    }
     if (charValueItemProvider != null)
+    {
       charValueItemProvider.dispose();
+    }
     if (stringValueItemProvider != null)
+    {
       stringValueItemProvider.dispose();
+    }
     if (functionInvocationItemProvider != null)
+    {
       functionInvocationItemProvider.dispose();
+    }
     if (memberInvocationItemProvider != null)
+    {
       memberInvocationItemProvider.dispose();
+    }
     if (staticAccessItemProvider != null)
+    {
       staticAccessItemProvider.dispose();
+    }
     if (memberAccessItemProvider != null)
+    {
       memberAccessItemProvider.dispose();
+    }
     if (contextAccessItemProvider != null)
+    {
       contextAccessItemProvider.dispose();
+    }
     if (containedObjectItemProvider != null)
+    {
       containedObjectItemProvider.dispose();
+    }
     if (linkedObjectItemProvider != null)
+    {
       linkedObjectItemProvider.dispose();
+    }
     if (linkedExpressionItemProvider != null)
+    {
       linkedExpressionItemProvider.dispose();
+    }
     if (listConstructionItemProvider != null)
+    {
       listConstructionItemProvider.dispose();
+    }
   }
 
 }

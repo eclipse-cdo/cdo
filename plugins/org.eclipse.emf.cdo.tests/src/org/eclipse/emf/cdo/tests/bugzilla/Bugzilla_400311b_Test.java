@@ -536,8 +536,8 @@ public class Bugzilla_400311b_Test extends AbstractCDOTest
     CDOObject cdoElement = CDOUtil.getCDOObject(element);
     assertClean(cdoElement, ((CDOResource)cdoElement.eResource()).cdoView());
     assertEquals(expectedVersion, cdoElement.cdoRevision().getVersion());
-    assertEquals("Transaction is not expected to contain revision deltas on the given object", null, transaction
-        .getRevisionDeltas().get(cdoElement.cdoID()));
+    assertEquals("Transaction is not expected to contain revision deltas on the given object", null,
+        transaction.getRevisionDeltas().get(cdoElement.cdoID()));
 
     if (expectedDirtyTransaction)
     {
@@ -584,8 +584,8 @@ public class Bugzilla_400311b_Test extends AbstractCDOTest
       CDOBranchVersion branchVersion = new CDOBranchVersionImpl(transaction.getBranch(), version);
       if (revisionManager.containsRevisionByVersion(targetElement, branchVersion))
       {
-        CDORevision fetched = revisionManager
-            .getRevisionByVersion(targetElement, branchVersion, initialChunkSize, true);
+        CDORevision fetched = revisionManager.getRevisionByVersion(targetElement, branchVersion, initialChunkSize,
+            true);
         if (fetched != null)
         {
           revisions.add(fetched);

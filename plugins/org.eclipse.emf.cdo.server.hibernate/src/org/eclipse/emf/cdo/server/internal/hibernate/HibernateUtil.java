@@ -640,7 +640,7 @@ public class HibernateUtil
     }
 
     throw new IllegalArgumentException("The ID value type " + idValue.getClass() //$NON-NLS-1$
-    + " is not supported by this store. Method called with " + classifierRef); //$NON-NLS-1$
+        + " is not supported by this store. Method called with " + classifierRef); //$NON-NLS-1$
   }
 
   /**

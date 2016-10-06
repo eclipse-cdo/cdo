@@ -2,21 +2,21 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.examples.acore.diagram; singleton:=true
-Bundle-Version: 1.0.400.qualifier
+Bundle-Version: 1.0.500.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreDiagramEditorPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.commands;version="1.0.400",
- org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.helpers;version="1.0.400",
- org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts;version="1.0.400",
- org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies;version="1.0.400",
- org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator;version="1.0.400",
- org.eclipse.emf.cdo.dawn.examples.acore.diagram.parsers;version="1.0.400",
- org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;version="1.0.400",
- org.eclipse.emf.cdo.dawn.examples.acore.diagram.preferences;version="1.0.400",
- org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers;version="1.0.400",
- org.eclipse.emf.cdo.dawn.examples.acore.diagram.sheet;version="1.0.400"
+Export-Package: org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.commands;version="1.0.500",
+ org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.helpers;version="1.0.500",
+ org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts;version="1.0.500",
+ org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies;version="1.0.500",
+ org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator;version="1.0.500",
+ org.eclipse.emf.cdo.dawn.examples.acore.diagram.parsers;version="1.0.500",
+ org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;version="1.0.500",
+ org.eclipse.emf.cdo.dawn.examples.acore.diagram.preferences;version="1.0.500",
+ org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers;version="1.0.500",
+ org.eclipse.emf.cdo.dawn.examples.acore.diagram.sheet;version="1.0.500"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)",

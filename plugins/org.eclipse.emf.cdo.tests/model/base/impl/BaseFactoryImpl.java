@@ -10,7 +10,6 @@
  */
 package base.impl;
 
-import base.*;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -20,6 +19,8 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import base.BaseClass;
 import base.BaseFactory;
 import base.BasePackage;
+import base.Document;
+import base.Element;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
@@ -61,7 +62,7 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @SuppressWarnings("cast")
@@ -71,7 +72,7 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
     switch (eClass.getClassifierID())
     {
     case BasePackage.BASE_CLASS:
-      return (EObject)createBaseClass();
+      return createBaseClass();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

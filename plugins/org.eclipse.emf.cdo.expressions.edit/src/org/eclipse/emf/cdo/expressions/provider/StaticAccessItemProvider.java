@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.expressions.provider;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+
 import java.util.Collection;
 import java.util.List;
 

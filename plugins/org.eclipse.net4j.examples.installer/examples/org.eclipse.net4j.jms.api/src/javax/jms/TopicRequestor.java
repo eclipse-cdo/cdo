@@ -57,9 +57,9 @@ public class TopicRequestor
   TopicSubscriber subscriber;
 
   /** Constructor for the <CODE>TopicRequestor</CODE> class.
-    * 
+    *
     * <P>This implementation assumes the session parameter to be non-transacted,
-    * with a delivery mode of either <CODE>AUTO_ACKNOWLEDGE</CODE> or 
+    * with a delivery mode of either <CODE>AUTO_ACKNOWLEDGE</CODE> or
     * <CODE>DUPS_OK_ACKNOWLEDGE</CODE>.
     *
     * @param session the <CODE>TopicSession</CODE> the topic belongs to
@@ -81,13 +81,13 @@ public class TopicRequestor
   }
 
   /** Sends a request and waits for a reply. The temporary topic is used for
-    * the <CODE>JMSReplyTo</CODE> destination; the first reply is returned, 
+    * the <CODE>JMSReplyTo</CODE> destination; the first reply is returned,
     * and any following replies are discarded.
     *
     * @param message the message to send
-    *  
+    *
     * @return the reply message
-    *  
+    *
     * @exception JMSException if the JMS provider fails to complete the
     *                         request due to some internal error.
     */
@@ -101,15 +101,15 @@ public class TopicRequestor
 
   /** Closes the <CODE>TopicRequestor</CODE> and its session.
     *
-    * <P>Since a provider may allocate some resources on behalf of a 
-    * <CODE>TopicRequestor</CODE> outside the Java virtual machine, clients 
-    * should close them when they 
-    * are not needed. Relying on garbage collection to eventually reclaim 
+    * <P>Since a provider may allocate some resources on behalf of a
+    * <CODE>TopicRequestor</CODE> outside the Java virtual machine, clients
+    * should close them when they
+    * are not needed. Relying on garbage collection to eventually reclaim
     * these resources may not be timely enough.
     *
-    * <P>Note that this method closes the <CODE>TopicSession</CODE> object 
+    * <P>Note that this method closes the <CODE>TopicSession</CODE> object
     * passed to the <CODE>TopicRequestor</CODE> constructor.
-    *  
+    *
     * @exception JMSException if the JMS provider fails to close the
     *                         <CODE>TopicRequestor</CODE> due to some internal
     *                         error.

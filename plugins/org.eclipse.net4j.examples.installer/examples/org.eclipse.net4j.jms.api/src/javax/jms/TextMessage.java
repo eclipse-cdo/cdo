@@ -56,12 +56,12 @@ public interface TextMessage extends Message
 {
 
   /** Sets the string containing this message's data.
-    *  
+    *
     * @param string the <CODE>String</CODE> containing the message's data
-    *  
+    *
     * @exception JMSException if the JMS provider fails to set the text due to
     *                         some internal error.
-    * @exception MessageNotWriteableException if the message is in read-only 
+    * @exception MessageNotWriteableException if the message is in read-only
     *                                         mode.
     */
 
@@ -69,9 +69,9 @@ public interface TextMessage extends Message
 
   /** Gets the string containing this message's data.  The default
     * value is null.
-    *  
+    *
     * @return the <CODE>String</CODE> containing the message's data
-    *  
+    *
     * @exception JMSException if the JMS provider fails to get the text due to
     *                         some internal error.
     */

@@ -102,21 +102,21 @@ public interface Connection
    * @see Session#AUTO_ACKNOWLEDGE
    * @see Session#CLIENT_ACKNOWLEDGE
    * @see Session#DUPS_OK_ACKNOWLEDGE
-
+  
    */
 
   Session createSession(boolean transacted, int acknowledgeMode) throws JMSException;
 
   /** Gets the client identifier for this connection.
-    *  
-    * <P>This value is specific to the JMS provider.  It is either preconfigured 
+    *
+    * <P>This value is specific to the JMS provider.  It is either preconfigured
     * by an administrator in a <CODE>ConnectionFactory</CODE> object
     * or assigned dynamically by the application by calling the
     * <code>setClientID</code> method.
-    * 
-    * 
+    *
+    *
     * @return the unique client identifier
-    *  
+    *
     * @exception JMSException if the JMS provider fails to return
     *                         the client ID for this connection due
     *                         to some internal error.
@@ -125,12 +125,12 @@ public interface Connection
   String getClientID() throws JMSException;
 
   /** Sets the client identifier for this connection.
-    *  
+    *
     * <P>The preferred way to assign a JMS client's client identifier is for
     * it to be configured in a client-specific <CODE>ConnectionFactory</CODE>
     * object and transparently assigned to the <CODE>Connection</CODE> object
     * it creates.
-    * 
+    *
     * <P>Alternatively, a client can set a connection's client identifier
     * using a provider-specific value. The facility to set a connection's
     * client identifier explicitly is not a mechanism for overriding the
@@ -138,14 +138,14 @@ public interface Connection
     * for the case where no administratively specified identifier exists.
     * If one does exist, an attempt to change it by setting it must throw an
     * <CODE>IllegalStateException</CODE>. If a client sets the client identifier
-    * explicitly, it must do so immediately after it creates the connection 
+    * explicitly, it must do so immediately after it creates the connection
     * and before any other
     * action on the connection is taken. After this point, setting the
     * client identifier is a programming error that should throw an
     * <CODE>IllegalStateException</CODE>.
     *
     * <P>The purpose of the client identifier is to associate a connection and
-    * its objects with a state maintained on behalf of the client by a 
+    * its objects with a state maintained on behalf of the client by a
     * provider. The only such state identified by the JMS API is that required
     * to support durable subscriptions.
     *
@@ -154,7 +154,7 @@ public interface Connection
     * an <CODE>InvalidClientIDException</CODE>.
     *
     * @param clientID the unique client identifier
-    * 
+    *
     * @exception JMSException if the JMS provider fails to
     *                         set the client ID for this connection due
     *                         to some internal error.
@@ -169,9 +169,9 @@ public interface Connection
   void setClientID(String clientID) throws JMSException;
 
   /** Gets the metadata for this connection.
-    *  
+    *
     * @return the connection metadata
-    *  
+    *
     * @exception JMSException if the JMS provider fails to
     *                         get the connection metadata for this connection.
     *
@@ -181,17 +181,17 @@ public interface Connection
   ConnectionMetaData getMetaData() throws JMSException;
 
   /**
-   * Gets the <CODE>ExceptionListener</CODE> object for this connection. 
+   * Gets the <CODE>ExceptionListener</CODE> object for this connection.
    * Not every <CODE>Connection</CODE> has an <CODE>ExceptionListener</CODE>
    * associated with it.
    *
-   * @return the <CODE>ExceptionListener</CODE> for this connection, or null. 
+   * @return the <CODE>ExceptionListener</CODE> for this connection, or null.
    *              if no <CODE>ExceptionListener</CODE> is associated
    *              with this connection.
    *
    * @exception JMSException if the JMS provider fails to
-   *                         get the <CODE>ExceptionListener</CODE> for this 
-   *                         connection. 
+   *                         get the <CODE>ExceptionListener</CODE> for this
+   *                         connection.
    * @see javax.jms.Connection#setExceptionListener
    */
 
@@ -207,13 +207,13 @@ public interface Connection
     *
     * <P>An exception listener allows a client to be notified of a problem
     * asynchronously.
-    * Some connections only consume messages, so they would have no other 
+    * Some connections only consume messages, so they would have no other
     * way to learn their connection has failed.
     *
     * <P>A connection serializes execution of its
     * <CODE>ExceptionListener</CODE>.
     *
-    * <P>A JMS provider should attempt to resolve connection problems 
+    * <P>A JMS provider should attempt to resolve connection problems
     * itself before it notifies the client of them.
     *
     * @param listener the exception listener
@@ -228,7 +228,7 @@ public interface Connection
   /** Starts (or restarts) a connection's delivery of incoming messages.
     * A call to <CODE>start</CODE> on a connection that has already been
     * started is ignored.
-    * 
+    *
     * @exception JMSException if the JMS provider fails to start
     *                         message delivery due to some internal error.
     *
@@ -252,20 +252,20 @@ public interface Connection
     * stopped is ignored.
     *
     * <P>A call to <CODE>stop</CODE> must not return until delivery of messages
-    * has paused. This means that a client can rely on the fact that none of 
-    * its message listeners will be called and that all threads of control 
-    * waiting for <CODE>receive</CODE> calls to return will not return with a 
+    * has paused. This means that a client can rely on the fact that none of
+    * its message listeners will be called and that all threads of control
+    * waiting for <CODE>receive</CODE> calls to return will not return with a
     * message until the
     * connection is restarted. The receive timers for a stopped connection
     * continue to advance, so receives may time out while the connection is
     * stopped.
-    * 
-    * <P>If message listeners are running when <CODE>stop</CODE> is invoked, 
+    *
+    * <P>If message listeners are running when <CODE>stop</CODE> is invoked,
     * the <CODE>stop</CODE> call must
     * wait until all of them have returned before it may return. While these
     * message listeners are completing, they must have the full services of the
     * connection available to them.
-    *  
+    *
     * @exception JMSException if the JMS provider fails to stop
     *                         message delivery due to some internal error.
     *
@@ -276,9 +276,9 @@ public interface Connection
 
   /** Closes the connection.
     *
-    * <P>Since a provider typically allocates significant resources outside 
+    * <P>Since a provider typically allocates significant resources outside
     * the JVM on behalf of a connection, clients should close these resources
-    * when they are not needed. Relying on garbage collection to eventually 
+    * when they are not needed. Relying on garbage collection to eventually
     * reclaim these resources may not be timely enough.
     *
     * <P>There is no need to close the sessions, producers, and consumers
@@ -289,34 +289,34 @@ public interface Connection
     *
     * <P>When this method is invoked, it should not return until message
     * processing has been shut down in an orderly fashion. This means that all
-    * message 
-    * listeners that may have been running have returned, and that all pending 
-    * receives have returned. A close terminates all pending message receives 
-    * on the connection's sessions' consumers. The receives may return with a 
-    * message or with null, depending on whether there was a message available 
-    * at the time of the close. If one or more of the connection's sessions' 
-    * message listeners is processing a message at the time when connection 
-    * <CODE>close</CODE> is invoked, all the facilities of the connection and 
-    * its sessions must remain available to those listeners until they return 
-    * control to the JMS provider. 
+    * message
+    * listeners that may have been running have returned, and that all pending
+    * receives have returned. A close terminates all pending message receives
+    * on the connection's sessions' consumers. The receives may return with a
+    * message or with null, depending on whether there was a message available
+    * at the time of the close. If one or more of the connection's sessions'
+    * message listeners is processing a message at the time when connection
+    * <CODE>close</CODE> is invoked, all the facilities of the connection and
+    * its sessions must remain available to those listeners until they return
+    * control to the JMS provider.
     *
     * <P>Closing a connection causes any of its sessions' transactions
     * in progress to be rolled back. In the case where a session's
-    * work is coordinated by an external transaction manager, a session's 
+    * work is coordinated by an external transaction manager, a session's
     * <CODE>commit</CODE> and <CODE>rollback</CODE> methods are
     * not used and the result of a closed session's work is determined
     * later by the transaction manager.
     *
-    * Closing a connection does NOT force an 
-    * acknowledgment of client-acknowledged sessions. 
-    * 
-    * <P>Invoking the <CODE>acknowledge</CODE> method of a received message 
-    * from a closed connection's session must throw an 
-    * <CODE>IllegalStateException</CODE>.  Closing a closed connection must 
+    * Closing a connection does NOT force an
+    * acknowledgment of client-acknowledged sessions.
+    *
+    * <P>Invoking the <CODE>acknowledge</CODE> method of a received message
+    * from a closed connection's session must throw an
+    * <CODE>IllegalStateException</CODE>.  Closing a closed connection must
     * NOT throw an exception.
-    *  
+    *
     * @exception JMSException if the JMS provider fails to close the
-    *                         connection due to some internal error. For 
+    *                         connection due to some internal error. For
     *                         example, a failure to release resources
     *                         or to close a socket connection can cause
     *                         this exception to be thrown.
@@ -327,13 +327,13 @@ public interface Connection
 
   /** Creates a connection consumer for this connection (optional operation).
   * This is an expert facility not used by regular JMS clients.
-  *  
+  *
   * @param destination the destination to access
   * @param messageSelector only messages with properties matching the
   * message selector expression are delivered.  A value of null or
-  * an empty string indicates that there is no message selector  
+  * an empty string indicates that there is no message selector
   * for the message consumer.
-  * @param sessionPool the server session pool to associate with this 
+  * @param sessionPool the server session pool to associate with this
   * connection consumer
   * @param maxMessages the maximum number of messages that can be
   * assigned to a server session at one time
@@ -342,8 +342,8 @@ public interface Connection
   *
   * @exception JMSException if the <CODE>Connection</CODE> object fails
   *                         to create a connection consumer due to some
-  *                         internal error or invalid arguments for 
-  *                         <CODE>sessionPool</CODE> and 
+  *                         internal error or invalid arguments for
+  *                         <CODE>sessionPool</CODE> and
   *                         <CODE>messageSelector</CODE>.
   * @exception InvalidDestinationException if an invalid destination is specified.
   * @exception InvalidSelectorException if the message selector is invalid.
@@ -355,26 +355,26 @@ public interface Connection
   ConnectionConsumer createConnectionConsumer(Destination destination, String messageSelector,
       ServerSessionPool sessionPool, int maxMessages) throws JMSException;
 
-  /** Create a durable connection consumer for this connection (optional operation). 
+  /** Create a durable connection consumer for this connection (optional operation).
     * This is an expert facility not used by regular JMS clients.
-    *                
+    *
     * @param topic topic to access
     * @param subscriptionName durable subscription name
     * @param messageSelector only messages with properties matching the
     * message selector expression are delivered.  A value of null or
-    * an empty string indicates that there is no message selector 
+    * an empty string indicates that there is no message selector
     * for the message consumer.
-    * @param sessionPool the server session pool to associate with this 
+    * @param sessionPool the server session pool to associate with this
     * durable connection consumer
     * @param maxMessages the maximum number of messages that can be
     * assigned to a server session at one time
     *
     * @return the durable connection consumer
-    *  
+    *
     * @exception JMSException if the <CODE>Connection</CODE> object fails
     *                         to create a connection consumer due to some
-    *                         internal error or invalid arguments for 
-    *                         <CODE>sessionPool</CODE> and 
+    *                         internal error or invalid arguments for
+    *                         <CODE>sessionPool</CODE> and
     *                         <CODE>messageSelector</CODE>.
     * @exception InvalidDestinationException if an invalid destination
     *             is specified.

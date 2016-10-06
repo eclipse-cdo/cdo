@@ -111,7 +111,7 @@ public class BufferOutputStream extends OutputStream
     if (tracerEnabled)
     {
       TRACER.trace("--> " + HexUtil.formatByte(b) //$NON-NLS-1$
-      + (b >= 32 ? " " + Character.toString((char)b) : "")); //$NON-NLS-1$ //$NON-NLS-2$
+          + (b >= 32 ? " " + Character.toString((char)b) : "")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     ByteBuffer buffer = currentBuffer.getByteBuffer();

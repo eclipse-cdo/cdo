@@ -629,25 +629,25 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
             CDOView view = CDOUtil.getView(object);
             view.getSession().getRevisionManager().handleRevisions(null, null, false, CDOBranchPoint.UNSPECIFIED_DATE,
                 false, new CDORevisionHandler()
-            {
-              public boolean handleRevision(CDORevision revision)
-              {
-                EClass eClass = revision.getEClass();
-                AtomicInteger counter = getCounter(eClass);
-
-                String id = revision.getID().toString();
-                id = id.substring(0, id.length() - "A".length());
-                id = id.substring(id.lastIndexOf('_') + 1);
-
-                int counterValue = Integer.parseInt(id);
-                if (counterValue > counter.get())
                 {
-                  counter.set(counterValue);
-                }
+                  public boolean handleRevision(CDORevision revision)
+                  {
+                    EClass eClass = revision.getEClass();
+                    AtomicInteger counter = getCounter(eClass);
 
-                return true;
-              }
-            });
+                    String id = revision.getID().toString();
+                    id = id.substring(0, id.length() - "A".length());
+                    id = id.substring(id.lastIndexOf('_') + 1);
+
+                    int counterValue = Integer.parseInt(id);
+                    if (counterValue > counter.get())
+                    {
+                      counter.set(counterValue);
+                    }
+
+                    return true;
+                  }
+                });
           }
 
           EClass eClass = object.eClass();

@@ -55,12 +55,12 @@ public interface Queue extends Destination
 {
 
   /** Gets the name of this queue.
-    *  
+    *
     * <P>Clients that depend upon the name are not portable.
-    *  
+    *
     * @return the queue name
-    *  
-    * @exception JMSException if the JMS provider implementation of 
+    *
+    * @exception JMSException if the JMS provider implementation of
     *                         <CODE>Queue</CODE> fails to return the queue
     *                         name due to some internal
     *                         error.

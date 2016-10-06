@@ -26,7 +26,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @apiviz.exclude
  */
-public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>>implements IContainerMap<K, V>
+public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> implements IContainerMap<K, V>
 {
   private Map<K, V> delegate;
 

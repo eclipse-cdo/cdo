@@ -1682,7 +1682,7 @@ public class AcoreEditor extends MultiPageEditorPart
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null
         ? getActionBars().getStatusLineManager().getProgressMonitor() : new NullProgressMonitor();
-        doSave(progressMonitor);
+    doSave(progressMonitor);
   }
 
   /**

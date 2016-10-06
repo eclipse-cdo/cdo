@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
  * Lazy packageRegistry fail when adding instance with Eclass in a subpackage See bug 256141
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_256141_Test extends AbstractCDOTest

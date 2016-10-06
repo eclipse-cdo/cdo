@@ -85,7 +85,7 @@ import java.util.Properties;
 /**
  * @author Eike Stepper
  */
-public abstract class NodeType extends SetContainer<Node>implements IElement
+public abstract class NodeType extends SetContainer<Node> implements IElement
 {
   public static final String TYPE_PROPERTY = "Type";
 

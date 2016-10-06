@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -55,7 +55,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see base.BasePackage#eNS_URI
    * @see #init()
@@ -74,7 +74,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
+   *
    * <p>This method is used to initialize {@link BasePackage#eINSTANCE} when that field is accessed.
    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
    * <!-- begin-user-doc -->
@@ -87,7 +87,9 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
   public static BasePackage init()
   {
     if (isInited)
+    {
       return (BasePackage)EPackage.Registry.INSTANCE.getEPackage(BasePackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     BasePackageImpl theBasePackage = (BasePackageImpl)(EPackage.Registry.INSTANCE
@@ -201,7 +203,9 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -231,7 +235,9 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -253,17 +259,17 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
     addEOperation(baseClassEClass, null, "increment", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(documentEClass, Document.class, "Document", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDocument_Root(), this.getElement(), null, "root", null, 0, 1, Document.class, !IS_TRANSIENT,
+    initEReference(getDocument_Root(), getElement(), null, "root", null, 0, 1, Document.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
 
     initEClass(elementEClass, Element.class, "Element", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getElement_Subelements(), this.getElement(), this.getElement_Parent(), "subelements", null, 0, -1,
+    initEReference(getElement_Subelements(), getElement(), getElement_Parent(), "subelements", null, 0, -1,
         Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getElement_Parent(), this.getElement(), this.getElement_Subelements(), "parent", null, 0, 1,
-        Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getElement_Parent(), getElement(), getElement_Subelements(), "parent", null, 0, 1, Element.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

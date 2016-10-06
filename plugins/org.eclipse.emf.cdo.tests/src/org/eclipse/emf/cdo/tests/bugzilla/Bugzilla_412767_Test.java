@@ -36,7 +36,7 @@ import java.util.Collections;
 
 /**
  * Bug 412767: "IllegalArgumentException: id is null on" on ResourceSet.getResource() with connection aware URI with prefetch query.
- * 
+ *
  * @author Esteban Dugueperoux
  */
 @Requires(ISessionConfig.CAPABILITY_NET4J_TCP)
@@ -52,8 +52,8 @@ public class Bugzilla_412767_Test extends AbstractCDOTest
     try
     {
       URI sharedResourceURI = createRemoteResource();
-      URI sharedResourceURIWithPrefetch = sharedResourceURI.appendQuery(sharedResourceURI.query() + "&"
-          + CDOResource.PREFETCH_PARAMETER + "=true");
+      URI sharedResourceURIWithPrefetch = sharedResourceURI
+          .appendQuery(sharedResourceURI.query() + "&" + CDOResource.PREFETCH_PARAMETER + "=true");
       ResourceSet resourceSet = new ResourceSetImpl();
       CDOResource sharedResource = (CDOResource)resourceSet.getResource(sharedResourceURIWithPrefetch, true);
       assertEquals(CDOState.PROXY, sharedResource.cdoState());
@@ -89,9 +89,9 @@ public class Bugzilla_412767_Test extends AbstractCDOTest
   {
     ResourceSet resourceSet = new ResourceSetImpl();
 
-    URI sharedResourceURI = URI.createURI(
-        CDONet4jUtil.PROTOCOL_TCP + "://localhost:2036/" + RepositoryConfig.REPOSITORY_NAME
-            + getResourcePath("/sharedResource")).appendQuery(CDOURIData.TRANSACTIONAL_PARAMETER + "=true");
+    URI sharedResourceURI = URI.createURI(CDONet4jUtil.PROTOCOL_TCP + "://localhost:2036/"
+        + RepositoryConfig.REPOSITORY_NAME + getResourcePath("/sharedResource"))
+        .appendQuery(CDOURIData.TRANSACTIONAL_PARAMETER + "=true");
     Resource sharedResource = resourceSet.createResource(sharedResourceURI);
 
     Company sharedCompany = getModel1Factory().createCompany();

@@ -24,7 +24,7 @@ import java.util.ListIterator;
  * @author Eike Stepper
  * @apiviz.exclude
  */
-public class ContainerList<E> extends ContainerCollection<E>implements IContainerList<E>
+public class ContainerList<E> extends ContainerCollection<E> implements IContainerList<E>
 {
   public ContainerList(List<E> delegate)
   {

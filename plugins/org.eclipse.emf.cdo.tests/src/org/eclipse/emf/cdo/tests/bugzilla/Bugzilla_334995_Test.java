@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
@@ -22,7 +22,7 @@ import java.util.Map.Entry;
 
 /**
  * Bug 334995 - CDOTransaction corrupted by persisted + new resource with same URI
- * 
+ *
  * @author Caspar De Groot
  */
 public class Bugzilla_334995_Test extends AbstractCDOTest

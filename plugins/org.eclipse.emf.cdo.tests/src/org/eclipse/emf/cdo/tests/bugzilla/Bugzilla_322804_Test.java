@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
  * Bug 322804 - ClassCastException adding an object to an EList with objects of a custom data type
- * 
+ *
  * @author Eike Stepper
  */
 public class Bugzilla_322804_Test extends AbstractCDOTest

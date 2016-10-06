@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.view.CDOView;
  * CDOView.hasResource() is not aware of deleted resources
  * <p>
  * See bug 248117
- * 
+ *
  * @author Victor Roldan Betancort
  */
 public class Bugzilla_248124_Test extends AbstractCDOTest
@@ -73,8 +73,8 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
 
     try
     {
-      transaction2.getResourceSet()
-          .getResource(CDOURIUtil.createResourceURI(view, getResourcePath(resourcePath)), true);
+      transaction2.getResourceSet().getResource(CDOURIUtil.createResourceURI(view, getResourcePath(resourcePath)),
+          true);
       fail("RuntimeException expected");
     }
     catch (RuntimeException expected)
@@ -112,8 +112,8 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
 
     try
     {
-      transaction1.getResourceSet().getResource(
-          CDOURIUtil.createResourceURI(transaction1, getResourcePath(resourcePath)), true);
+      transaction1.getResourceSet()
+          .getResource(CDOURIUtil.createResourceURI(transaction1, getResourcePath(resourcePath)), true);
       fail("RuntimeException expected");
     }
     catch (RuntimeException expected)

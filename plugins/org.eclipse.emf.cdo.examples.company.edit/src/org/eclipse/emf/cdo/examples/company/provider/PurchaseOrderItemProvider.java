@@ -85,10 +85,10 @@ public class PurchaseOrderItemProvider extends OrderItemProvider
   protected void addSupplierPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-    .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(), getString("_UI_PurchaseOrder_supplier_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_PurchaseOrder_supplier_feature",
-            "_UI_PurchaseOrder_type"),
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_PurchaseOrder_supplier_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_PurchaseOrder_supplier_feature",
+                "_UI_PurchaseOrder_type"),
             CompanyPackage.Literals.PURCHASE_ORDER__SUPPLIER, true, false, true, null, null, null));
   }
 

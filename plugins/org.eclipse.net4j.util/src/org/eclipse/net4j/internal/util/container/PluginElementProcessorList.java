@@ -246,6 +246,6 @@ public class PluginElementProcessorList extends Lifecycle implements List<IEleme
     }
 
     extensionRegistry
-    .removeRegistryChangeListener((org.eclipse.core.runtime.IRegistryChangeListener)extensionRegistryListener);
+        .removeRegistryChangeListener((org.eclipse.core.runtime.IRegistryChangeListener)extensionRegistryListener);
   }
 }

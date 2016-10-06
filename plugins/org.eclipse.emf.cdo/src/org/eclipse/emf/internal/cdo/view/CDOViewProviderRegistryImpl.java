@@ -52,7 +52,7 @@ import java.util.List;
  * @since 2.0
  * @see CDOViewProvider
  */
-public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider>implements CDOViewProviderRegistry
+public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> implements CDOViewProviderRegistry
 {
   public static final CDOViewProviderRegistryImpl INSTANCE = new CDOViewProviderRegistryImpl();
 

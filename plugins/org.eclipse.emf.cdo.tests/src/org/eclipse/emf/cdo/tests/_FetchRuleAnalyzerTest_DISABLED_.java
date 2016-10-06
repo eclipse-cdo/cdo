@@ -32,7 +32,7 @@ import java.util.List;
 
 /**
  * See bug 202063
- * 
+ *
  * @author Simon McDuff
  */
 public class _FetchRuleAnalyzerTest_DISABLED_ extends AbstractCDOTest

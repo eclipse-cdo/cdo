@@ -87,7 +87,7 @@ public class Bugzilla_324635_Test extends AbstractCDOTest
     assertEquals(false, s1Tr1.isDirty());
 
     // check revision versions.
-    assertEquals(CDOUtil.getCDOObject(container).cdoRevision().getVersion(), CDOUtil.getCDOObject(container2)
-        .cdoRevision().getVersion());
+    assertEquals(CDOUtil.getCDOObject(container).cdoRevision().getVersion(),
+        CDOUtil.getCDOObject(container2).cdoRevision().getVersion());
   }
 }

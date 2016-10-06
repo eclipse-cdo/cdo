@@ -46,10 +46,10 @@ public interface XAConnection extends Connection
 {
 
   /** Creates an <CODE>XASession</CODE> object.
-    *  
+    *
     * @return a newly created <CODE>XASession</CODE>
-    *  
-    * @exception JMSException if the <CODE>XAConnection</CODE> object 
+    *
+    * @exception JMSException if the <CODE>XAConnection</CODE> object
     *                         fails to create an <CODE>XASession</CODE> due to
     *                         some internal error.
     *
@@ -62,10 +62,10 @@ public interface XAConnection extends Connection
     *
     * @param transacted       usage undefined
     * @param acknowledgeMode  usage undefined
-    *  
+    *
     * @return a <CODE>Session</CODE> object
-    *  
-    * @exception JMSException if the <CODE>XAConnection</CODE> object 
+    *
+    * @exception JMSException if the <CODE>XAConnection</CODE> object
     *                         fails to create an <CODE>Session</CODE> due to
     *                         some internal error.
     *

@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.util.EContentAdapter;
  * Create a lazy self-attaching adapter for CDOObject
  * <p>
  * See bug 247141
- * 
+ *
  * @author Victor Roldan Betancort
  */
 public class Bugzilla_247141_Test extends AbstractCDOTest

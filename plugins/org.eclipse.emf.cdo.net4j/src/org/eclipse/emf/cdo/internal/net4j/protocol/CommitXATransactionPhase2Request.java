@@ -83,7 +83,7 @@ public class CommitXATransactionPhase2Request extends CommitXATransactionRequest
       {
         throw new IllegalStateException(
             MessageFormat.format(Messages.getString("CommitTransactionPhase2Request.1"), entry //$NON-NLS-1$
-            .getValue()));
+                .getValue()));
       }
 
       CDOID newID = commitContext.getResult().getIDMappings().get(oldCDOID);
@@ -91,7 +91,7 @@ public class CommitXATransactionPhase2Request extends CommitXATransactionRequest
       {
         throw new IllegalStateException(
             MessageFormat.format(Messages.getString("CommitTransactionPhase2Request.2"), oldCDOID //$NON-NLS-1$
-            .toURIFragment()));
+                .toURIFragment()));
       }
 
       CDOID newIDExternal = CDOURIUtil.convertExternalCDOID(oldURIExternal, newID);

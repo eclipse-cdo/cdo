@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 
 /**
  * Bug 414270: Do not access sub branches if repository does not support branching.
- * 
+ *
  * @author Eike Stepper
  */
 @Skips(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -86,19 +86,18 @@ public class Bugzilla_414270_Test extends AbstractCDOTest
     CDOBranchManager branchManager = session.getBranchManager();
 
     final CDOBranch[] result = { null };
-    int count = branchManager.getBranches(CDOBranch.MAIN_BRANCH_ID, CDOBranch.MAIN_BRANCH_ID + 1,
-        new CDOBranchHandler()
+    int count = branchManager.getBranches(CDOBranch.MAIN_BRANCH_ID, CDOBranch.MAIN_BRANCH_ID + 1, new CDOBranchHandler()
+    {
+      public void handleBranch(CDOBranch branch)
+      {
+        if (result[0] != null)
         {
-          public void handleBranch(CDOBranch branch)
-          {
-            if (result[0] != null)
-            {
-              fail("Only one result branch expected: the main branch");
-            }
+          fail("Only one result branch expected: the main branch");
+        }
 
-            result[0] = branch;
-          }
-        });
+        result[0] = branch;
+      }
+    });
 
     assertEquals(1, count);
     assertEquals(branchManager.getMainBranch(), result[0]);

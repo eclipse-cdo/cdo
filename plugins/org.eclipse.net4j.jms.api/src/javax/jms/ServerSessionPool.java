@@ -52,7 +52,7 @@ public interface ServerSessionPool
   /** Return a server session from the pool.
     *
     * @return a server session from the pool
-    *  
+    *
     * @exception JMSException if an application server fails to
     *                         return a <CODE>ServerSession</CODE> out of its
     *                         server session pool.

@@ -73,7 +73,7 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
         if (cleanSize != 0)
         {
           for (Iterator<?> cleanIterator = cleanList.iterator(), currentIterator = currentList.iterator(); //
-          cleanIterator.hasNext();)
+              cleanIterator.hasNext();)
           {
             Object cleanID = cleanIterator.next();
             Object currentID = currentIterator.next();

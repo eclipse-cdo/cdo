@@ -17,7 +17,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class KeyedSoftReference<K, T> extends SoftReference<T>implements KeyedReference<K, T>
+public class KeyedSoftReference<K, T> extends SoftReference<T> implements KeyedReference<K, T>
 {
   private K key;
 

@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CDOBranchImpl extends Container<CDOBranch>implements InternalCDOBranch
+public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBranch
 {
   private static final InternalCDOBranch[] NO_BRANCHES = new InternalCDOBranch[0];
 

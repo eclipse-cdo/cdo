@@ -23,7 +23,7 @@ import java.util.Iterator;
  * @author Eike Stepper
  * @apiviz.exclude
  */
-public class ContainerCollection<E> extends AbstractDelegator<E>implements IContainerCollection<E>
+public class ContainerCollection<E> extends AbstractDelegator<E> implements IContainerCollection<E>
 {
   private Collection<E> delegate;
 

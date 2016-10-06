@@ -73,7 +73,7 @@ public class RemoveResourceActionDelegate implements IObjectActionDelegate
         Messages.getString("RemoveResourceAction_2"), nodes.size()))) //$NON-NLS-1$
     {
       Job job = new Job(Messages.getString("RemoveResourceAction_3")) //$NON-NLS-1$
-          {
+      {
         @Override
         protected IStatus run(IProgressMonitor monitor)
         {
@@ -128,9 +128,9 @@ public class RemoveResourceActionDelegate implements IObjectActionDelegate
           // //$NON-NLS-1$
           return Status.OK_STATUS;
         }
-          };
+      };
 
-          job.schedule();
+      job.schedule();
     }
   }
 }

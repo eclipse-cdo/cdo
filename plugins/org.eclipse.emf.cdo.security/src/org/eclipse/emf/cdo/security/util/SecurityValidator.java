@@ -47,7 +47,6 @@ import org.eclipse.emf.cdo.security.UserPassword;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 
@@ -205,7 +204,7 @@ public class SecurityValidator extends EObjectValidator
   public boolean validateSecurityElement(SecurityElement securityElement, DiagnosticChain diagnostics,
       Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)securityElement, diagnostics, context);
+    return validate_EveryDefaultConstraint(securityElement, diagnostics, context);
   }
 
   /**
@@ -216,7 +215,7 @@ public class SecurityValidator extends EObjectValidator
   public boolean validateSecurityItem(SecurityItem securityItem, DiagnosticChain diagnostics,
       Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)securityItem, diagnostics, context);
+    return validate_EveryDefaultConstraint(securityItem, diagnostics, context);
   }
 
   /**
@@ -226,25 +225,43 @@ public class SecurityValidator extends EObjectValidator
    */
   public boolean validateRealm(Realm realm, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
-    if (!validate_NoCircularContainment((EObject)realm, diagnostics, context))
+    if (!validate_NoCircularContainment(realm, diagnostics, context))
+    {
       return false;
-    boolean result = validate_EveryMultiplicityConforms((EObject)realm, diagnostics, context);
+    }
+    boolean result = validate_EveryMultiplicityConforms(realm, diagnostics, context);
     if (result || diagnostics != null)
-      result &= validate_EveryDataValueConforms((EObject)realm, diagnostics, context);
+    {
+      result &= validate_EveryDataValueConforms(realm, diagnostics, context);
+    }
     if (result || diagnostics != null)
-      result &= validate_EveryReferenceIsContained((EObject)realm, diagnostics, context);
+    {
+      result &= validate_EveryReferenceIsContained(realm, diagnostics, context);
+    }
     if (result || diagnostics != null)
-      result &= validate_EveryBidirectionalReferenceIsPaired((EObject)realm, diagnostics, context);
+    {
+      result &= validate_EveryBidirectionalReferenceIsPaired(realm, diagnostics, context);
+    }
     if (result || diagnostics != null)
-      result &= validate_EveryProxyResolves((EObject)realm, diagnostics, context);
+    {
+      result &= validate_EveryProxyResolves(realm, diagnostics, context);
+    }
     if (result || diagnostics != null)
-      result &= validate_UniqueID((EObject)realm, diagnostics, context);
+    {
+      result &= validate_UniqueID(realm, diagnostics, context);
+    }
     if (result || diagnostics != null)
-      result &= validate_EveryKeyUnique((EObject)realm, diagnostics, context);
+    {
+      result &= validate_EveryKeyUnique(realm, diagnostics, context);
+    }
     if (result || diagnostics != null)
-      result &= validate_EveryMapEntryUnique((EObject)realm, diagnostics, context);
+    {
+      result &= validate_EveryMapEntryUnique(realm, diagnostics, context);
+    }
     if (result || diagnostics != null)
+    {
       result &= validateRealm_HasAdministrator(realm, diagnostics, context);
+    }
     return result;
   }
 
@@ -318,7 +335,7 @@ public class SecurityValidator extends EObjectValidator
    */
   public boolean validateDirectory(Directory directory, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)directory, diagnostics, context);
+    return validate_EveryDefaultConstraint(directory, diagnostics, context);
   }
 
   /**
@@ -328,7 +345,7 @@ public class SecurityValidator extends EObjectValidator
    */
   public boolean validateRole(Role role, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)role, diagnostics, context);
+    return validate_EveryDefaultConstraint(role, diagnostics, context);
   }
 
   /**
@@ -338,7 +355,7 @@ public class SecurityValidator extends EObjectValidator
    */
   public boolean validateAssignee(Assignee assignee, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)assignee, diagnostics, context);
+    return validate_EveryDefaultConstraint(assignee, diagnostics, context);
   }
 
   /**
@@ -348,25 +365,43 @@ public class SecurityValidator extends EObjectValidator
    */
   public boolean validateGroup(Group group, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
-    if (!validate_NoCircularContainment((EObject)group, diagnostics, context))
+    if (!validate_NoCircularContainment(group, diagnostics, context))
+    {
       return false;
-    boolean result = validate_EveryMultiplicityConforms((EObject)group, diagnostics, context);
+    }
+    boolean result = validate_EveryMultiplicityConforms(group, diagnostics, context);
     if (result || diagnostics != null)
-      result &= validate_EveryDataValueConforms((EObject)group, diagnostics, context);
+    {
+      result &= validate_EveryDataValueConforms(group, diagnostics, context);
+    }
     if (result || diagnostics != null)
-      result &= validate_EveryReferenceIsContained((EObject)group, diagnostics, context);
+    {
+      result &= validate_EveryReferenceIsContained(group, diagnostics, context);
+    }
     if (result || diagnostics != null)
-      result &= validate_EveryBidirectionalReferenceIsPaired((EObject)group, diagnostics, context);
+    {
+      result &= validate_EveryBidirectionalReferenceIsPaired(group, diagnostics, context);
+    }
     if (result || diagnostics != null)
-      result &= validate_EveryProxyResolves((EObject)group, diagnostics, context);
+    {
+      result &= validate_EveryProxyResolves(group, diagnostics, context);
+    }
     if (result || diagnostics != null)
-      result &= validate_UniqueID((EObject)group, diagnostics, context);
+    {
+      result &= validate_UniqueID(group, diagnostics, context);
+    }
     if (result || diagnostics != null)
-      result &= validate_EveryKeyUnique((EObject)group, diagnostics, context);
+    {
+      result &= validate_EveryKeyUnique(group, diagnostics, context);
+    }
     if (result || diagnostics != null)
-      result &= validate_EveryMapEntryUnique((EObject)group, diagnostics, context);
+    {
+      result &= validate_EveryMapEntryUnique(group, diagnostics, context);
+    }
     if (result || diagnostics != null)
+    {
       result &= validateGroup_AcyclicInheritance(group, diagnostics, context);
+    }
     return result;
   }
 
@@ -412,7 +447,7 @@ public class SecurityValidator extends EObjectValidator
    */
   public boolean validateUser(User user, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)user, diagnostics, context);
+    return validate_EveryDefaultConstraint(user, diagnostics, context);
   }
 
   /**
@@ -423,7 +458,7 @@ public class SecurityValidator extends EObjectValidator
   public boolean validateUserPasswordGen(UserPassword userPassword, DiagnosticChain diagnostics,
       Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)userPassword, diagnostics, context);
+    return validate_EveryDefaultConstraint(userPassword, diagnostics, context);
   }
 
   /**
@@ -443,7 +478,7 @@ public class SecurityValidator extends EObjectValidator
    */
   public boolean validatePermission(Permission permission, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)permission, diagnostics, context);
+    return validate_EveryDefaultConstraint(permission, diagnostics, context);
   }
 
   /**
@@ -454,7 +489,7 @@ public class SecurityValidator extends EObjectValidator
   public boolean validateClassPermission(ClassPermission classPermission, DiagnosticChain diagnostics,
       Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)classPermission, diagnostics, context);
+    return validate_EveryDefaultConstraint(classPermission, diagnostics, context);
   }
 
   /**
@@ -465,7 +500,7 @@ public class SecurityValidator extends EObjectValidator
   public boolean validatePackagePermission(PackagePermission packagePermission, DiagnosticChain diagnostics,
       Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)packagePermission, diagnostics, context);
+    return validate_EveryDefaultConstraint(packagePermission, diagnostics, context);
   }
 
   /**
@@ -476,7 +511,7 @@ public class SecurityValidator extends EObjectValidator
   public boolean validateResourcePermission(ResourcePermission resourcePermission, DiagnosticChain diagnostics,
       Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)resourcePermission, diagnostics, context);
+    return validate_EveryDefaultConstraint(resourcePermission, diagnostics, context);
   }
 
   /**
@@ -487,7 +522,7 @@ public class SecurityValidator extends EObjectValidator
   public boolean validateObjectPermission(ObjectPermission objectPermission, DiagnosticChain diagnostics,
       Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)objectPermission, diagnostics, context);
+    return validate_EveryDefaultConstraint(objectPermission, diagnostics, context);
   }
 
   /**
@@ -498,7 +533,7 @@ public class SecurityValidator extends EObjectValidator
   public boolean validateFilterPermission(FilterPermission filterPermission, DiagnosticChain diagnostics,
       Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)filterPermission, diagnostics, context);
+    return validate_EveryDefaultConstraint(filterPermission, diagnostics, context);
   }
 
   /**
@@ -509,7 +544,7 @@ public class SecurityValidator extends EObjectValidator
   public boolean validatePermissionFilter(PermissionFilter permissionFilter, DiagnosticChain diagnostics,
       Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)permissionFilter, diagnostics, context);
+    return validate_EveryDefaultConstraint(permissionFilter, diagnostics, context);
   }
 
   /**
@@ -520,7 +555,7 @@ public class SecurityValidator extends EObjectValidator
   public boolean validateLinkedFilter(LinkedFilter linkedFilter, DiagnosticChain diagnostics,
       Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)linkedFilter, diagnostics, context);
+    return validate_EveryDefaultConstraint(linkedFilter, diagnostics, context);
   }
 
   /**
@@ -531,7 +566,7 @@ public class SecurityValidator extends EObjectValidator
   public boolean validatePackageFilter(PackageFilter packageFilter, DiagnosticChain diagnostics,
       Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)packageFilter, diagnostics, context);
+    return validate_EveryDefaultConstraint(packageFilter, diagnostics, context);
   }
 
   /**
@@ -541,7 +576,7 @@ public class SecurityValidator extends EObjectValidator
    */
   public boolean validateClassFilter(ClassFilter classFilter, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)classFilter, diagnostics, context);
+    return validate_EveryDefaultConstraint(classFilter, diagnostics, context);
   }
 
   /**
@@ -552,7 +587,7 @@ public class SecurityValidator extends EObjectValidator
   public boolean validateResourceFilter(ResourceFilter resourceFilter, DiagnosticChain diagnostics,
       Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)resourceFilter, diagnostics, context);
+    return validate_EveryDefaultConstraint(resourceFilter, diagnostics, context);
   }
 
   /**
@@ -563,7 +598,7 @@ public class SecurityValidator extends EObjectValidator
   public boolean validateObjectFilter(ObjectFilter objectFilter, DiagnosticChain diagnostics,
       Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)objectFilter, diagnostics, context);
+    return validate_EveryDefaultConstraint(objectFilter, diagnostics, context);
   }
 
   /**
@@ -574,7 +609,7 @@ public class SecurityValidator extends EObjectValidator
   public boolean validateExpressionFilter(ExpressionFilter expressionFilter, DiagnosticChain diagnostics,
       Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)expressionFilter, diagnostics, context);
+    return validate_EveryDefaultConstraint(expressionFilter, diagnostics, context);
   }
 
   /**
@@ -585,7 +620,7 @@ public class SecurityValidator extends EObjectValidator
   public boolean validateCombinedFilter(CombinedFilter combinedFilter, DiagnosticChain diagnostics,
       Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)combinedFilter, diagnostics, context);
+    return validate_EveryDefaultConstraint(combinedFilter, diagnostics, context);
   }
 
   /**
@@ -595,7 +630,7 @@ public class SecurityValidator extends EObjectValidator
    */
   public boolean validateNotFilter(NotFilter notFilter, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)notFilter, diagnostics, context);
+    return validate_EveryDefaultConstraint(notFilter, diagnostics, context);
   }
 
   /**
@@ -605,7 +640,7 @@ public class SecurityValidator extends EObjectValidator
    */
   public boolean validateAndFilter(AndFilter andFilter, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)andFilter, diagnostics, context);
+    return validate_EveryDefaultConstraint(andFilter, diagnostics, context);
   }
 
   /**
@@ -615,7 +650,7 @@ public class SecurityValidator extends EObjectValidator
    */
   public boolean validateOrFilter(OrFilter orFilter, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
-    return validate_EveryDefaultConstraint((EObject)orFilter, diagnostics, context);
+    return validate_EveryDefaultConstraint(orFilter, diagnostics, context);
   }
 
   /**

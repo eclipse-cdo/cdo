@@ -101,7 +101,7 @@ public class DawnAcoreEditor extends AcoreEditor implements IDawnEditor
     selectionViewer.setContentProvider(new DawnSelectionViewerAdapterFactoryContentProvider(adapterFactory,
         ((DawnEditorInput)getEditorInput()).getResource()));
     selectionViewer
-    .setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
+        .setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
     parentViewer.setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
     listViewer.setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
     treeViewer.setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));

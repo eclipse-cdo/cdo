@@ -986,7 +986,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
             }
 
             break;
-            // no entry for current revision there.
+          // no entry for current revision there.
           case 0:
             Object value = getValue(accessor, id, branchId, index, false);
 

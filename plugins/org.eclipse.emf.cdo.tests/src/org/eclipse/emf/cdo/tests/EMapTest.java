@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 /**
  * Test EMap with an EObject in both the key and value
- * 
+ *
  * @author Martin Taal
  */
 public class EMapTest extends AbstractCDOTest

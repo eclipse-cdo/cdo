@@ -240,7 +240,7 @@ public class HibernateStore extends Store implements IHibernateStore
     if (entityName == null)
     {
       throw new IllegalArgumentException("EClass " + eClass.getName() //$NON-NLS-1$
-      + " does not have an entity name, has it been mapped to Hibernate?"); //$NON-NLS-1$
+          + " does not have an entity name, has it been mapped to Hibernate?"); //$NON-NLS-1$
     }
 
     return entityName;

@@ -21,7 +21,7 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
  * @since 4.3
  */
 public class AuthenticatingSignalProtocol<INFRA_STRUCTURE extends IPasswordCredentialsProvider.Provider>
-    extends SignalProtocol<INFRA_STRUCTURE>implements IPasswordCredentialsProvider.Provider
+    extends SignalProtocol<INFRA_STRUCTURE> implements IPasswordCredentialsProvider.Provider
 {
   public AuthenticatingSignalProtocol(String type)
   {

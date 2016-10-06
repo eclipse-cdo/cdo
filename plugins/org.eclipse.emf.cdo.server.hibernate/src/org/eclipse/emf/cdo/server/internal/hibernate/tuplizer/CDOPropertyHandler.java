@@ -41,7 +41,7 @@ public abstract class CDOPropertyHandler
     {
       getTracer()
           .trace("Created " + this.getClass().getName() + " for eClass/feature: " + tuplizer.getEClass().getName() + "." //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-          + propertyName);
+              + propertyName);
     }
 
     if (feature == null)

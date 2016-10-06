@@ -18,7 +18,7 @@ import java.nio.ByteBuffer;
  * @author Eike Stepper
  */
 public abstract class Negotiator<STATE extends Enum<?>, EVENT extends Enum<?>>
-    extends FiniteStateMachine<STATE, EVENT, INegotiationContext>implements INegotiator, INegotiationContext.Receiver
+    extends FiniteStateMachine<STATE, EVENT, INegotiationContext> implements INegotiator, INegotiationContext.Receiver
 {
   private transient STATE initialState;
 

@@ -296,7 +296,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
+   *
    * <p>This method is used to initialize {@link SecurityPackage#eINSTANCE} when that field is accessed.
    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
    * <!-- begin-user-doc -->
@@ -309,7 +309,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
   public static SecurityPackage init()
   {
     if (isInited)
+    {
       return (SecurityPackage)EPackage.Registry.INSTANCE.getEPackage(SecurityPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     SecurityPackageImpl theSecurityPackage = (SecurityPackageImpl)(EPackage.Registry.INSTANCE
@@ -1275,7 +1277,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -1414,7 +1418,9 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -1434,70 +1440,70 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
 
     // Add supertypes to classes
     securityElementEClass.getESuperTypes().add(theEtypesPackage.getModelElement());
-    securityItemEClass.getESuperTypes().add(this.getSecurityElement());
-    realmEClass.getESuperTypes().add(this.getSecurityElement());
-    directoryEClass.getESuperTypes().add(this.getSecurityItem());
-    roleEClass.getESuperTypes().add(this.getSecurityItem());
-    assigneeEClass.getESuperTypes().add(this.getSecurityItem());
-    groupEClass.getESuperTypes().add(this.getAssignee());
-    userEClass.getESuperTypes().add(this.getAssignee());
-    classPermissionEClass.getESuperTypes().add(this.getPermission());
-    packagePermissionEClass.getESuperTypes().add(this.getPermission());
-    resourcePermissionEClass.getESuperTypes().add(this.getPermission());
-    objectPermissionEClass.getESuperTypes().add(this.getPermission());
-    filterPermissionEClass.getESuperTypes().add(this.getPermission());
-    linkedFilterEClass.getESuperTypes().add(this.getPermissionFilter());
-    packageFilterEClass.getESuperTypes().add(this.getPermissionFilter());
-    classFilterEClass.getESuperTypes().add(this.getPermissionFilter());
-    resourceFilterEClass.getESuperTypes().add(this.getPermissionFilter());
-    objectFilterEClass.getESuperTypes().add(this.getPermissionFilter());
-    expressionFilterEClass.getESuperTypes().add(this.getObjectFilter());
-    combinedFilterEClass.getESuperTypes().add(this.getPermissionFilter());
-    notFilterEClass.getESuperTypes().add(this.getCombinedFilter());
-    andFilterEClass.getESuperTypes().add(this.getCombinedFilter());
-    orFilterEClass.getESuperTypes().add(this.getCombinedFilter());
+    securityItemEClass.getESuperTypes().add(getSecurityElement());
+    realmEClass.getESuperTypes().add(getSecurityElement());
+    directoryEClass.getESuperTypes().add(getSecurityItem());
+    roleEClass.getESuperTypes().add(getSecurityItem());
+    assigneeEClass.getESuperTypes().add(getSecurityItem());
+    groupEClass.getESuperTypes().add(getAssignee());
+    userEClass.getESuperTypes().add(getAssignee());
+    classPermissionEClass.getESuperTypes().add(getPermission());
+    packagePermissionEClass.getESuperTypes().add(getPermission());
+    resourcePermissionEClass.getESuperTypes().add(getPermission());
+    objectPermissionEClass.getESuperTypes().add(getPermission());
+    filterPermissionEClass.getESuperTypes().add(getPermission());
+    linkedFilterEClass.getESuperTypes().add(getPermissionFilter());
+    packageFilterEClass.getESuperTypes().add(getPermissionFilter());
+    classFilterEClass.getESuperTypes().add(getPermissionFilter());
+    resourceFilterEClass.getESuperTypes().add(getPermissionFilter());
+    objectFilterEClass.getESuperTypes().add(getPermissionFilter());
+    expressionFilterEClass.getESuperTypes().add(getObjectFilter());
+    combinedFilterEClass.getESuperTypes().add(getPermissionFilter());
+    notFilterEClass.getESuperTypes().add(getCombinedFilter());
+    andFilterEClass.getESuperTypes().add(getCombinedFilter());
+    orFilterEClass.getESuperTypes().add(getCombinedFilter());
 
     // Initialize classes and features; add operations and parameters
     initEClass(securityElementEClass, SecurityElement.class, "SecurityElement", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
 
-    addEOperation(securityElementEClass, this.getRealm(), "getRealm", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+    addEOperation(securityElementEClass, getRealm(), "getRealm", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
     initEClass(securityItemEClass, SecurityItem.class, "SecurityItem", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(realmEClass, Realm.class, "Realm", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-    initEReference(getRealm_Items(), this.getSecurityItem(), null, "items", null, 0, -1, Realm.class, !IS_TRANSIENT, //$NON-NLS-1$
+    initEReference(getRealm_Items(), getSecurityItem(), null, "items", null, 0, -1, Realm.class, !IS_TRANSIENT, //$NON-NLS-1$
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEReference(getRealm_AllUsers(), this.getUser(), null, "allUsers", null, 0, -1, Realm.class, IS_TRANSIENT, //$NON-NLS-1$
+    initEReference(getRealm_AllUsers(), getUser(), null, "allUsers", null, 0, -1, Realm.class, IS_TRANSIENT, //$NON-NLS-1$
         IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED,
         IS_ORDERED);
-    initEReference(getRealm_AllGroups(), this.getGroup(), null, "allGroups", null, 0, -1, Realm.class, IS_TRANSIENT, //$NON-NLS-1$
+    initEReference(getRealm_AllGroups(), getGroup(), null, "allGroups", null, 0, -1, Realm.class, IS_TRANSIENT, //$NON-NLS-1$
         IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED,
         IS_ORDERED);
-    initEReference(getRealm_AllRoles(), this.getRole(), null, "allRoles", null, 0, -1, Realm.class, IS_TRANSIENT, //$NON-NLS-1$
+    initEReference(getRealm_AllRoles(), getRole(), null, "allRoles", null, 0, -1, Realm.class, IS_TRANSIENT, //$NON-NLS-1$
         IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED,
         IS_ORDERED);
-    initEReference(getRealm_AllPermissions(), this.getPermission(), null, "allPermissions", null, 0, -1, Realm.class, //$NON-NLS-1$
+    initEReference(getRealm_AllPermissions(), getPermission(), null, "allPermissions", null, 0, -1, Realm.class, //$NON-NLS-1$
         IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         IS_DERIVED, IS_ORDERED);
     initEAttribute(getRealm_Name(), theEcorePackage.getEString(), "name", null, 0, 1, Realm.class, !IS_TRANSIENT, //$NON-NLS-1$
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getRealm_DefaultAccess(), this.getAccessObject(), "defaultAccess", null, 0, 1, Realm.class, //$NON-NLS-1$
+    initEAttribute(getRealm_DefaultAccess(), getAccessObject(), "defaultAccess", null, 0, 1, Realm.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRealm_DefaultUserDirectory(), this.getDirectory(), null, "defaultUserDirectory", null, 0, 1, //$NON-NLS-1$
+    initEReference(getRealm_DefaultUserDirectory(), getDirectory(), null, "defaultUserDirectory", null, 0, 1, //$NON-NLS-1$
         Realm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRealm_DefaultGroupDirectory(), this.getDirectory(), null, "defaultGroupDirectory", null, 0, 1, //$NON-NLS-1$
+    initEReference(getRealm_DefaultGroupDirectory(), getDirectory(), null, "defaultGroupDirectory", null, 0, 1, //$NON-NLS-1$
         Realm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRealm_DefaultRoleDirectory(), this.getDirectory(), null, "defaultRoleDirectory", null, 0, 1, //$NON-NLS-1$
+    initEReference(getRealm_DefaultRoleDirectory(), getDirectory(), null, "defaultRoleDirectory", null, 0, 1, //$NON-NLS-1$
         Realm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(directoryEClass, Directory.class, "Directory", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-    initEReference(getDirectory_Items(), this.getSecurityItem(), null, "items", null, 0, -1, Directory.class, //$NON-NLS-1$
+    initEReference(getDirectory_Items(), getSecurityItem(), null, "items", null, 0, -1, Directory.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getDirectory_Name(), theEcorePackage.getEString(), "name", null, 0, 1, Directory.class, //$NON-NLS-1$
@@ -1506,42 +1512,42 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     initEClass(roleEClass, Role.class, "Role", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEAttribute(getRole_Id(), theEcorePackage.getEString(), "id", null, 0, 1, Role.class, !IS_TRANSIENT, //$NON-NLS-1$
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRole_Permissions(), this.getPermission(), this.getPermission_Role(), "permissions", null, 0, -1, //$NON-NLS-1$
+    initEReference(getRole_Permissions(), getPermission(), getPermission_Role(), "permissions", null, 0, -1, //$NON-NLS-1$
         Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRole_Assignees(), this.getAssignee(), this.getAssignee_Roles(), "assignees", null, 0, -1, //$NON-NLS-1$
+    initEReference(getRole_Assignees(), getAssignee(), getAssignee_Roles(), "assignees", null, 0, -1, //$NON-NLS-1$
         Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(assigneeEClass, Assignee.class, "Assignee", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEAttribute(getAssignee_Id(), theEcorePackage.getEString(), "id", null, 0, 1, Assignee.class, !IS_TRANSIENT, //$NON-NLS-1$
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAssignee_Roles(), this.getRole(), this.getRole_Assignees(), "roles", null, 0, -1, Assignee.class, //$NON-NLS-1$
+    initEReference(getAssignee_Roles(), getRole(), getRole_Assignees(), "roles", null, 0, -1, Assignee.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
     initEClass(groupEClass, Group.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-    initEReference(getGroup_Users(), this.getUser(), this.getUser_Groups(), "users", null, 0, -1, Group.class, //$NON-NLS-1$
+    initEReference(getGroup_Users(), getUser(), getUser_Groups(), "users", null, 0, -1, Group.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getGroup_InheritedGroups(), this.getGroup(), this.getGroup_InheritingGroups(), "inheritedGroups", //$NON-NLS-1$
+    initEReference(getGroup_InheritedGroups(), getGroup(), getGroup_InheritingGroups(), "inheritedGroups", //$NON-NLS-1$
         null, 0, -1, Group.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getGroup_InheritingGroups(), this.getGroup(), this.getGroup_InheritedGroups(), "inheritingGroups", //$NON-NLS-1$
+    initEReference(getGroup_InheritingGroups(), getGroup(), getGroup_InheritedGroups(), "inheritingGroups", //$NON-NLS-1$
         null, 0, -1, Group.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getGroup_AllInheritedGroups(), this.getGroup(), null, "allInheritedGroups", null, 0, -1, Group.class, //$NON-NLS-1$
+    initEReference(getGroup_AllInheritedGroups(), getGroup(), null, "allInheritedGroups", null, 0, -1, Group.class, //$NON-NLS-1$
         IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         IS_DERIVED, IS_ORDERED);
-    initEReference(getGroup_AllInheritingGroups(), this.getGroup(), null, "allInheritingGroups", null, 0, -1, //$NON-NLS-1$
+    initEReference(getGroup_AllInheritingGroups(), getGroup(), null, "allInheritingGroups", null, 0, -1, //$NON-NLS-1$
         Group.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEReference(getGroup_AllRoles(), this.getRole(), null, "allRoles", null, 0, -1, Group.class, IS_TRANSIENT, //$NON-NLS-1$
+    initEReference(getGroup_AllRoles(), getRole(), null, "allRoles", null, 0, -1, Group.class, IS_TRANSIENT, //$NON-NLS-1$
         IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED,
         IS_ORDERED);
 
     initEClass(userEClass, User.class, "User", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-    initEReference(getUser_Groups(), this.getGroup(), this.getGroup_Users(), "groups", null, 0, -1, User.class, //$NON-NLS-1$
+    initEReference(getUser_Groups(), getGroup(), getGroup_Users(), "groups", null, 0, -1, User.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getUser_Label(), theEcorePackage.getEString(), "label", null, 0, 1, User.class, IS_TRANSIENT, //$NON-NLS-1$
@@ -1552,26 +1558,26 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getUser_Email(), theEcorePackage.getEString(), "email", null, 0, 1, User.class, !IS_TRANSIENT, //$NON-NLS-1$
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUser_DefaultAccessOverride(), this.getAccessObject(), "defaultAccessOverride", null, 0, 1, //$NON-NLS-1$
+    initEAttribute(getUser_DefaultAccessOverride(), getAccessObject(), "defaultAccessOverride", null, 0, 1, //$NON-NLS-1$
         User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEAttribute(getUser_DefaultAccess(), this.getAccessObject(), "defaultAccess", null, 0, 1, User.class, //$NON-NLS-1$
+    initEAttribute(getUser_DefaultAccess(), getAccessObject(), "defaultAccess", null, 0, 1, User.class, //$NON-NLS-1$
         IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEAttribute(getUser_Locked(), theEcorePackage.getEBoolean(), "locked", null, 0, 1, User.class, !IS_TRANSIENT, //$NON-NLS-1$
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getUser_Password(), this.getUserPassword(), null, "password", null, 0, 1, User.class, !IS_TRANSIENT, //$NON-NLS-1$
+    initEReference(getUser_Password(), getUserPassword(), null, "password", null, 0, 1, User.class, !IS_TRANSIENT, //$NON-NLS-1$
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEReference(getUser_AllGroups(), this.getGroup(), null, "allGroups", null, 0, -1, User.class, IS_TRANSIENT, //$NON-NLS-1$
+    initEReference(getUser_AllGroups(), getGroup(), null, "allGroups", null, 0, -1, User.class, IS_TRANSIENT, //$NON-NLS-1$
         IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED,
         IS_ORDERED);
-    initEReference(getUser_AllRoles(), this.getRole(), null, "allRoles", null, 0, -1, User.class, IS_TRANSIENT, //$NON-NLS-1$
+    initEReference(getUser_AllRoles(), getRole(), null, "allRoles", null, 0, -1, User.class, IS_TRANSIENT, //$NON-NLS-1$
         IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED,
         IS_ORDERED);
-    initEReference(getUser_AllPermissions(), this.getPermission(), null, "allPermissions", null, 0, -1, User.class, //$NON-NLS-1$
+    initEReference(getUser_AllPermissions(), getPermission(), null, "allPermissions", null, 0, -1, User.class, //$NON-NLS-1$
         IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         IS_DERIVED, IS_ORDERED);
-    initEReference(getUser_UnassignedRoles(), this.getRole(), null, "unassignedRoles", null, 0, -1, User.class, //$NON-NLS-1$
+    initEReference(getUser_UnassignedRoles(), getRole(), null, "unassignedRoles", null, 0, -1, User.class, //$NON-NLS-1$
         IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         IS_DERIVED, IS_ORDERED);
 
@@ -1583,10 +1589,10 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
 
     initEClass(permissionEClass, Permission.class, "Permission", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPermission_Role(), this.getRole(), this.getRole_Permissions(), "role", null, 1, 1, //$NON-NLS-1$
+    initEReference(getPermission_Role(), getRole(), getRole_Permissions(), "role", null, 1, 1, //$NON-NLS-1$
         Permission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPermission_Access(), this.getAccess(), "access", "WRITE", 1, 1, Permission.class, !IS_TRANSIENT, //$NON-NLS-1$//$NON-NLS-2$
+    initEAttribute(getPermission_Access(), getAccess(), "access", "WRITE", 1, 1, Permission.class, !IS_TRANSIENT, //$NON-NLS-1$//$NON-NLS-2$
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(classPermissionEClass, ClassPermission.class, "ClassPermission", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
@@ -1612,7 +1618,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
 
     initEClass(filterPermissionEClass, FilterPermission.class, "FilterPermission", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getFilterPermission_Filters(), this.getPermissionFilter(), null, "filters", null, 1, -1, //$NON-NLS-1$
+    initEReference(getFilterPermission_Filters(), getPermissionFilter(), null, "filters", null, 1, -1, //$NON-NLS-1$
         FilterPermission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1621,7 +1627,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
 
     initEClass(linkedFilterEClass, LinkedFilter.class, "LinkedFilter", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getLinkedFilter_Filter(), this.getPermissionFilter(), null, "filter", null, 1, 1, LinkedFilter.class, //$NON-NLS-1$
+    initEReference(getLinkedFilter_Filter(), getPermissionFilter(), null, "filter", null, 1, 1, LinkedFilter.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
@@ -1644,7 +1650,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getResourceFilter_Path(), theEcorePackage.getEString(), "path", null, 0, 1, ResourceFilter.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getResourceFilter_PatternStyle(), this.getPatternStyle(), "patternStyle", "TREE", 0, 1, //$NON-NLS-1$//$NON-NLS-2$
+    initEAttribute(getResourceFilter_PatternStyle(), getPatternStyle(), "patternStyle", "TREE", 0, 1, //$NON-NLS-1$//$NON-NLS-2$
         ResourceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getResourceFilter_Folders(), theEcorePackage.getEBoolean(), "folders", "true", 0, 1, //$NON-NLS-1$//$NON-NLS-2$
@@ -1680,7 +1686,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
 
     initEClass(combinedFilterEClass, CombinedFilter.class, "CombinedFilter", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCombinedFilter_Operands(), this.getPermissionFilter(), null, "operands", null, 1, -1, //$NON-NLS-1$
+    initEReference(getCombinedFilter_Operands(), getPermissionFilter(), null, "operands", null, 1, -1, //$NON-NLS-1$
         CombinedFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1723,7 +1729,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    */
   protected void createEcoreAnnotations()
   {
-    String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$	
+    String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
     addAnnotation(realmEClass, source, new String[] { "constraints", "HasAdministrator" //$NON-NLS-1$ //$NON-NLS-2$
     });
     addAnnotation(groupEClass, source, new String[] { "constraints", "AcyclicInheritance" //$NON-NLS-1$ //$NON-NLS-2$
@@ -1738,7 +1744,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    */
   protected void createExtendedMetaDataAnnotations()
   {
-    String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData"; //$NON-NLS-1$	
+    String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData"; //$NON-NLS-1$
     addAnnotation(accessObjectEDataType, source, new String[] { "name", "Access:Object", //$NON-NLS-1$ //$NON-NLS-2$
         "baseType", "Access" //$NON-NLS-1$ //$NON-NLS-2$
     });

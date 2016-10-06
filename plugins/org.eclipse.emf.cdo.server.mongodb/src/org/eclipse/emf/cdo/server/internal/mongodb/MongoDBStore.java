@@ -66,7 +66,7 @@ import java.util.Set;
  * @author Eike Stepper
  */
 public class MongoDBStore extends Store implements IMongoDBStore, //
-NoExternalReferences, NoQueryXRefs, NoLargeObjects, NoFeatureMaps, NoHandleRevisions, NoRawAccess
+    NoExternalReferences, NoQueryXRefs, NoLargeObjects, NoFeatureMaps, NoHandleRevisions, NoRawAccess
 {
   public static final String TYPE = "mongodb"; //$NON-NLS-1$
 

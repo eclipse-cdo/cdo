@@ -24,7 +24,7 @@ import java.util.Date;
 /**
  * Bug 318844 - CDONotificationBuilder cannot handle mixed OID's/CDOObjects when processing CDOClearFeatureDelta</p>
  * http://bugs.eclipse.org/318844</p>
- * 
+ *
  * @author Caspar De Groot
  * @since 4.0
  */

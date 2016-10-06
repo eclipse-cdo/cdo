@@ -27,7 +27,7 @@ import java.util.Collection;
 /**
  * @author Simon McDuff
  */
-public class CDOListImpl extends BasicEList<Object>implements InternalCDOList.ConfigurableEquality
+public class CDOListImpl extends BasicEList<Object> implements InternalCDOList.ConfigurableEquality
 {
   public static final CDOListFactory FACTORY = new CDOListFactory()
   {

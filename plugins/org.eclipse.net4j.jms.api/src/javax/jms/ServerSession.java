@@ -72,14 +72,14 @@ package javax.jms;
 public interface ServerSession
 {
 
-  /** Return the <CODE>ServerSession</CODE>'s <CODE>Session</CODE>. This must 
-    * be a <CODE>Session</CODE> created by the same <CODE>Connection</CODE> 
+  /** Return the <CODE>ServerSession</CODE>'s <CODE>Session</CODE>. This must
+    * be a <CODE>Session</CODE> created by the same <CODE>Connection</CODE>
     * that will be dispatching messages to it. The provider will assign one or
-    * more messages to the <CODE>Session</CODE> 
+    * more messages to the <CODE>Session</CODE>
     * and then call <CODE>start</CODE> on the <CODE>ServerSession</CODE>.
     *
     * @return the server session's session
-    *  
+    *
     * @exception JMSException if the JMS provider fails to get the associated
     *                         session for this <CODE>ServerSession</CODE> due
     *                         to some internal error.
@@ -87,9 +87,9 @@ public interface ServerSession
 
   Session getSession() throws JMSException;
 
-  /** Cause the <CODE>Session</CODE>'s <CODE>run</CODE> method to be called 
+  /** Cause the <CODE>Session</CODE>'s <CODE>run</CODE> method to be called
     * to process messages that were just assigned to it.
-    *  
+    *
     * @exception JMSException if the JMS provider fails to start the server
     *                         session to process messages due to some internal
     *                         error.

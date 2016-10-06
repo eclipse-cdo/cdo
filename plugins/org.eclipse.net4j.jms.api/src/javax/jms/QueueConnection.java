@@ -59,24 +59,24 @@ public interface QueueConnection extends Connection
 {
 
   /** Creates a <CODE>QueueSession</CODE> object.
-    *  
+    *
     * @param transacted indicates whether the session is transacted
     * @param acknowledgeMode indicates whether the consumer or the
     * client will acknowledge any messages it receives; ignored if the session
-    * is transacted. Legal values are <code>Session.AUTO_ACKNOWLEDGE</code>, 
-    * <code>Session.CLIENT_ACKNOWLEDGE</code>, and 
+    * is transacted. Legal values are <code>Session.AUTO_ACKNOWLEDGE</code>,
+    * <code>Session.CLIENT_ACKNOWLEDGE</code>, and
     * <code>Session.DUPS_OK_ACKNOWLEDGE</code>.
-    *  
+    *
     * @return a newly created queue session
-    *  
+    *
     * @exception JMSException if the <CODE>QueueConnection</CODE> object fails
     *                         to create a session due to some internal error or
     *                         lack of support for the specific transaction
     *                         and acknowledgement mode.
     *
-    * @see Session#AUTO_ACKNOWLEDGE 
-    * @see Session#CLIENT_ACKNOWLEDGE 
-    * @see Session#DUPS_OK_ACKNOWLEDGE 
+    * @see Session#AUTO_ACKNOWLEDGE
+    * @see Session#CLIENT_ACKNOWLEDGE
+    * @see Session#DUPS_OK_ACKNOWLEDGE
     */
 
   QueueSession createQueueSession(boolean transacted, int acknowledgeMode) throws JMSException;
@@ -87,19 +87,19 @@ public interface QueueConnection extends Connection
     * @param queue the queue to access
     * @param messageSelector only messages with properties matching the
     * message selector expression are delivered. A value of null or
-    * an empty string indicates that there is no message selector 
+    * an empty string indicates that there is no message selector
     * for the message consumer.
-    * @param sessionPool the server session pool to associate with this 
+    * @param sessionPool the server session pool to associate with this
     * connection consumer
     * @param maxMessages the maximum number of messages that can be
     * assigned to a server session at one time
     *
     * @return the connection consumer
-    *  
+    *
     * @exception JMSException if the <CODE>QueueConnection</CODE> object fails
     *                         to create a connection consumer due to some
-    *                         internal error or invalid arguments for 
-    *                         <CODE>sessionPool</CODE> and 
+    *                         internal error or invalid arguments for
+    *                         <CODE>sessionPool</CODE> and
     *                         <CODE>messageSelector</CODE>.
     * @exception InvalidDestinationException if an invalid queue is specified.
     * @exception InvalidSelectorException if the message selector is invalid.

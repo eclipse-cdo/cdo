@@ -117,9 +117,7 @@ public class CategoryImpl extends EObjectImpl implements Category
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.CATEGORY__NAME, oldName, name));
-    }
   }
 
   /**
@@ -260,9 +258,7 @@ public class CategoryImpl extends EObjectImpl implements Category
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

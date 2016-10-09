@@ -14,16 +14,18 @@
 <plugin>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated model4interfaces -->
       <package
             uri="http://www.eclipse.org/emf/CDO/tests/model4interfaces/1.0.0"
             class="org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage"/>
    </extension>
 
+   <!--
    <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated model4interfaces.legacy -->
       <package
             uri="http://www.eclipse.org/emf/CDO/tests/model4interfaces/1.0.0"
             class="org.eclipse.emf.cdo.tests.model4interfaces.legacy.model4interfacesPackage"/>
    </extension>
+   -->
 
 </plugin>

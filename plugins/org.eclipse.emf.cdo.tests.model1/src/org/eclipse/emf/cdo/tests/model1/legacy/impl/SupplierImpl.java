@@ -120,10 +120,8 @@ public class SupplierImpl extends AddressImpl implements Supplier
     boolean oldPreferred = preferred;
     preferred = newPreferred;
     if (eNotificationRequired())
-    {
       eNotify(
           new ENotificationImpl(this, Notification.SET, Model1Package.SUPPLIER__PREFERRED, oldPreferred, preferred));
-    }
   }
 
   /**
@@ -239,9 +237,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (preferred: ");

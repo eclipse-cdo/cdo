@@ -974,12 +974,12 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
   EReference getPurchaseOrder_SalesOrders();
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder <em>Sales Order</em>}'.
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>Sales Order</em>'.
-  	 * @see org.eclipse.emf.cdo.tests.model1.SalesOrder
-  	 * @generated
-  	 */
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder <em>Sales Order</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @return the meta object for class '<em>Sales Order</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.SalesOrder
+   * @generated
+   */
   EClass getSalesOrder();
 
   /**
@@ -1014,12 +1014,12 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
   EReference getSalesOrder_PurchaseOrders();
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Category <em>Category</em>}'.
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>Category</em>'.
-  	 * @see org.eclipse.emf.cdo.tests.model1.Category
-  	 * @generated
-  	 */
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Category <em>Category</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @return the meta object for class '<em>Category</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.Category
+   * @generated
+   */
   EClass getCategory();
 
   /**

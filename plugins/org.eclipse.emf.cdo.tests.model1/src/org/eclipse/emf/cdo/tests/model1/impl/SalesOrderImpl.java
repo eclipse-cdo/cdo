@@ -89,10 +89,10 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   public EList<PurchaseOrder> getPurchaseOrders()
   {

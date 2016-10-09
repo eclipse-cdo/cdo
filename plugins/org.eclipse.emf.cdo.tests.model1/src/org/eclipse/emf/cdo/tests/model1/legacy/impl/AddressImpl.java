@@ -128,9 +128,7 @@ public class AddressImpl extends EObjectImpl implements Address
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ADDRESS__NAME, oldName, name));
-    }
   }
 
   /**
@@ -151,9 +149,7 @@ public class AddressImpl extends EObjectImpl implements Address
     String oldStreet = street;
     street = newStreet;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ADDRESS__STREET, oldStreet, street));
-    }
   }
 
   /**
@@ -174,9 +170,7 @@ public class AddressImpl extends EObjectImpl implements Address
     String oldCity = city;
     city = newCity;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ADDRESS__CITY, oldCity, city));
-    }
   }
 
   /**
@@ -269,9 +263,7 @@ public class AddressImpl extends EObjectImpl implements Address
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

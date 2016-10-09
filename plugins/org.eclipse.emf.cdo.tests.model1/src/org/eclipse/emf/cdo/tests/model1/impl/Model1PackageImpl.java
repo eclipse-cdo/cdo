@@ -281,9 +281,9 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
   }
 
   /**
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getOrderDetail()
   {
     return orderDetailEClass;
@@ -598,9 +598,9 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
   }
 
   /**
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public Model1Factory getModel1Factory()
   {
     return (Model1Factory)getEFactoryInstance();

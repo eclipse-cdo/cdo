@@ -13,11 +13,19 @@
 
 <plugin>
 
-  <extension point="org.eclipse.emf.ecore.generated_package">
-    <package 
-       uri = "http://www.eclipse.org/emf/CDO/tests/model1/1.0.0" 
-       class = "org.eclipse.emf.cdo.tests.model1.Model1Package"
-       genModel = "model/model1.genmodel"/> 
-  </extension>
-  
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated model1 -->
+      <package
+            uri="http://www.eclipse.org/emf/CDO/tests/model1/1.0.0"
+            class="org.eclipse.emf.cdo.tests.model1.Model1Package"/>
+   </extension>
+
+   <!-- 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.eclipse.org/emf/CDO/tests/model1/1.0.0"
+            class="org.eclipse.emf.cdo.tests.model1.legacy.Model1Package"/>
+   </extension>
+   -->
+
 </plugin>

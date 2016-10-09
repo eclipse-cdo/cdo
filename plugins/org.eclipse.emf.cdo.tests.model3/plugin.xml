@@ -13,31 +13,32 @@
 
 <plugin>
 
-  <extension point="org.eclipse.emf.ecore.generated_package">
-    <package 
-       uri = "http://www.eclipse.org/emf/CDO/tests/model3/1.0.0" 
-       class = "org.eclipse.emf.cdo.tests.model3.Model3Package"
-       genModel = "model/model3.genmodel" /> 
-  </extension>
-
-  <extension point="org.eclipse.emf.ecore.generated_package">
-    <package 
-       uri = "http://www.eclipse.org/emf/CDO/tests/subpackage/1.0.0" 
-       class = "org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage"
-       genModel = "model/model3.genmodel" /> 
-  </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated model3 -->
+      <package
+            uri="http://www.eclipse.org/emf/CDO/tests/model3/1.0.0"
+            class="org.eclipse.emf.cdo.tests.model3.Model3Package"/>
+   </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated model3.legacy -->
+      <!-- @generated model3 -->
+      <package
+            uri="http://www.eclipse.org/emf/CDO/tests/subpackage/1.0.0"
+            class="org.eclipse.emf.cdo.tests.model3.subpackage.SubpackagePackage"/>
+   </extension>
+   
+   <!--
+   <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://www.eclipse.org/emf/CDO/tests/model3/1.0.0"
             class="org.eclipse.emf.cdo.tests.model3.legacy.Model3Package"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated model3.legacy -->
       <package
             uri="http://www.eclipse.org/emf/CDO/tests/subpackage/1.0.0"
             class="org.eclipse.emf.cdo.tests.model3.subpackage.legacy.SubpackagePackage"/>
    </extension>
+   -->
+
 </plugin>

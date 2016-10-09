@@ -154,13 +154,9 @@ public class CustomerImpl extends AddressImpl implements Customer
       return getSalesOrders();
     case Model1Package.CUSTOMER__ORDER_BY_PRODUCT:
       if (coreType)
-      {
         return getOrderByProduct();
-      }
       else
-      {
         return getOrderByProduct().map();
-      }
     }
     return super.eGet(featureID, resolve, coreType);
   }

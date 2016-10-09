@@ -72,9 +72,9 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   protected EList<SalesOrder> salesOrders;
 
   /**
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected PurchaseOrderImpl()
   {
     super();
@@ -108,9 +108,7 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
     Date oldDate = date;
     date = newDate;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.PURCHASE_ORDER__DATE, oldDate, date));
-    }
   }
 
   /**
@@ -126,10 +124,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
       if (supplier != oldSupplier)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.PURCHASE_ORDER__SUPPLIER, oldSupplier,
               supplier));
-        }
       }
     }
     return supplier;
@@ -157,13 +153,9 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           Model1Package.PURCHASE_ORDER__SUPPLIER, oldSupplier, newSupplier);
       if (msgs == null)
-      {
         msgs = notification;
-      }
       else
-      {
         msgs.add(notification);
-      }
     }
     return msgs;
   }
@@ -178,26 +170,18 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
     {
       NotificationChain msgs = null;
       if (supplier != null)
-      {
         msgs = ((InternalEObject)supplier).eInverseRemove(this, Model1Package.SUPPLIER__PURCHASE_ORDERS, Supplier.class,
             msgs);
-      }
       if (newSupplier != null)
-      {
         msgs = ((InternalEObject)newSupplier).eInverseAdd(this, Model1Package.SUPPLIER__PURCHASE_ORDERS, Supplier.class,
             msgs);
-      }
       msgs = basicSetSupplier(newSupplier, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.PURCHASE_ORDER__SUPPLIER, newSupplier,
           newSupplier));
-    }
   }
 
   /**
@@ -216,9 +200,9 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   }
 
   /**
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
@@ -227,10 +211,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
     {
     case Model1Package.PURCHASE_ORDER__SUPPLIER:
       if (supplier != null)
-      {
         msgs = ((InternalEObject)supplier).eInverseRemove(this, Model1Package.SUPPLIER__PURCHASE_ORDERS, Supplier.class,
             msgs);
-      }
       return basicSetSupplier((Supplier)otherEnd, msgs);
     case Model1Package.PURCHASE_ORDER__SALES_ORDERS:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getSalesOrders()).basicAdd(otherEnd, msgs);
@@ -268,9 +250,7 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
       return getDate();
     case Model1Package.PURCHASE_ORDER__SUPPLIER:
       if (resolve)
-      {
         return getSupplier();
-      }
       return basicGetSupplier();
     case Model1Package.PURCHASE_ORDER__SALES_ORDERS:
       return getSalesOrders();
@@ -351,9 +331,7 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (date: ");

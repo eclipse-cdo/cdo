@@ -159,9 +159,7 @@ public class Product1Impl extends EObjectImpl implements Product1
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.PRODUCT1__NAME, oldName, name));
-    }
   }
 
   /**
@@ -196,9 +194,7 @@ public class Product1Impl extends EObjectImpl implements Product1
     VAT oldVat = vat;
     vat = newVat == null ? VAT_EDEFAULT : newVat;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.PRODUCT1__VAT, oldVat, vat));
-    }
   }
 
   /**
@@ -233,10 +229,8 @@ public class Product1Impl extends EObjectImpl implements Product1
     String oldDescription = description;
     description = newDescription;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.PRODUCT1__DESCRIPTION, oldDescription,
           description));
-    }
   }
 
   /**
@@ -383,9 +377,7 @@ public class Product1Impl extends EObjectImpl implements Product1
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

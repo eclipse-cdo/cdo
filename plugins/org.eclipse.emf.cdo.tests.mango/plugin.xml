@@ -13,18 +13,19 @@
 
 <plugin>
 
-  <extension point="org.eclipse.emf.ecore.generated_package">
-    <package 
-       uri = "http://www.eclipse.org/emf/CDO/tests/mango" 
-       class = "org.eclipse.emf.cdo.tests.mango.MangoPackage"
-       genModel = "model/mango.genmodel" /> 
-  </extension>
-
    <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated mango.legacy -->
+      <!-- @generated mango -->
+      <package
+            uri="http://www.eclipse.org/emf/CDO/tests/mango"
+            class="org.eclipse.emf.cdo.tests.mango.MangoPackage"/>
+   </extension>
+
+   <!--
+   <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://www.eclipse.org/emf/CDO/tests/mango"
             class="org.eclipse.emf.cdo.tests.mango.legacy.MangoPackage"/>
    </extension>
+   -->
 
 </plugin>

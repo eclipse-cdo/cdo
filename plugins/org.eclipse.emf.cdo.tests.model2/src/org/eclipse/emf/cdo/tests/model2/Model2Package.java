@@ -104,11 +104,11 @@ public interface Model2Package extends EPackage
   int SPECIAL_PURCHASE_ORDER__SALES_ORDERS = Model1Package.PURCHASE_ORDER__SALES_ORDERS;
 
   /**
-  	 * The feature id for the '<em><b>Discount Code</b></em>' attribute.
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * The feature id for the '<em><b>Discount Code</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
   int SPECIAL_PURCHASE_ORDER__DISCOUNT_CODE = Model1Package.PURCHASE_ORDER_FEATURE_COUNT + 0;
 
   /**

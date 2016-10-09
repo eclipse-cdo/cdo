@@ -3,9 +3,10 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.tests.model4interfaces/src"
     editDirectory="" editorDirectory="" modelPluginID="org.eclipse.emf.cdo.tests.model4interfaces"
     modelName="Interfaces" updateClasspath="false" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl"
-    reflectiveDelegation="true" codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
+    reflectiveDelegation="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
     featureDelegation="Reflective" complianceLevel="5.0" copyrightFields="false" editPluginID="org.eclipse.emf.cdo.tests.model4interfaces.edit"
-    editorPluginID="org.eclipse.emf.cdo.tests.model4interfaces.edit" runtimeVersion="2.6">
+    editorPluginID="org.eclipse.emf.cdo.tests.model4interfaces.edit" runtimeVersion="2.6"
+    cleanup="true">
   <foreignModel>model4interfaces.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="model4interfaces" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"

@@ -817,12 +817,12 @@ public interface Model1Package extends EPackage
   EReference getPurchaseOrder_SalesOrders();
 
   /**
-  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.OrderDetail <em>Order Detail</em>}'.
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @return the meta object for class '<em>Order Detail</em>'.
-  	 * @see org.eclipse.emf.cdo.tests.model1.OrderDetail
-  	 * @generated
-  	 */
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.OrderDetail <em>Order Detail</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @return the meta object for class '<em>Order Detail</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.OrderDetail
+   * @generated
+   */
   EClass getOrderDetail();
 
   /**
@@ -1179,11 +1179,11 @@ public interface Model1Package extends EPackage
   EReference getSalesOrder_PurchaseOrders();
 
   /**
-  	 * Returns the factory that creates the instances of the model.
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @return the factory that creates the instances of the model.
-  	 * @generated
-  	 */
+   * Returns the factory that creates the instances of the model.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @return the factory that creates the instances of the model.
+   * @generated
+   */
   Model1Factory getModel1Factory();
 
 } // Model1Package

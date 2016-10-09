@@ -406,13 +406,22 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
   int PURCHASE_ORDER__SUPPLIER = ORDER_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Sales Orders</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PURCHASE_ORDER__SALES_ORDERS = ORDER_FEATURE_COUNT + 2;
+
+  /**
    * The number of structural features of the '<em>Purchase Order</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
    *
    * @generated
    * @ordered
    */
-  int PURCHASE_ORDER_FEATURE_COUNT = ORDER_FEATURE_COUNT + 2;
+  int PURCHASE_ORDER_FEATURE_COUNT = ORDER_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.SalesOrderImpl <em>Sales Order</em>}' class.
@@ -449,13 +458,22 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
   int SALES_ORDER__CUSTOMER = ORDER_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Purchase Orders</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SALES_ORDER__PURCHASE_ORDERS = ORDER_FEATURE_COUNT + 2;
+
+  /**
    * The number of structural features of the '<em>Sales Order</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
    *
    * @generated
    * @ordered
    */
-  int SALES_ORDER_FEATURE_COUNT = ORDER_FEATURE_COUNT + 2;
+  int SALES_ORDER_FEATURE_COUNT = ORDER_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.CategoryImpl <em>Category</em>}' class.
@@ -945,12 +963,23 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
   EReference getPurchaseOrder_Supplier();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder <em>Sales Order</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @return the meta object for class '<em>Sales Order</em>'.
-   * @see org.eclipse.emf.cdo.tests.model1.SalesOrder
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getSalesOrders <em>Sales Orders</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Sales Orders</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getSalesOrders()
+   * @see #getPurchaseOrder()
    * @generated
    */
+  EReference getPurchaseOrder_SalesOrders();
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder <em>Sales Order</em>}'.
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>Sales Order</em>'.
+  	 * @see org.eclipse.emf.cdo.tests.model1.SalesOrder
+  	 * @generated
+  	 */
   EClass getSalesOrder();
 
   /**
@@ -974,12 +1003,23 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
   EReference getSalesOrder_Customer();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Category <em>Category</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @return the meta object for class '<em>Category</em>'.
-   * @see org.eclipse.emf.cdo.tests.model1.Category
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getPurchaseOrders <em>Purchase Orders</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Purchase Orders</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.SalesOrder#getPurchaseOrders()
+   * @see #getSalesOrder()
    * @generated
    */
+  EReference getSalesOrder_PurchaseOrders();
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Category <em>Category</em>}'.
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>Category</em>'.
+  	 * @see org.eclipse.emf.cdo.tests.model1.Category
+  	 * @generated
+  	 */
   EClass getCategory();
 
   /**

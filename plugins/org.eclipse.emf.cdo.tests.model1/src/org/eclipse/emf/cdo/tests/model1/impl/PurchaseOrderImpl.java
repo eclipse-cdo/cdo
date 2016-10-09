@@ -12,8 +12,10 @@ package org.eclipse.emf.cdo.tests.model1.impl;
 
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import java.util.Date;
@@ -26,6 +28,7 @@ import java.util.Date;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.PurchaseOrderImpl#getDate <em>Date</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.PurchaseOrderImpl#getSupplier <em>Supplier</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.PurchaseOrderImpl#getSalesOrders <em>Sales Orders</em>}</li>
  * </ul>
  *
  * @generated
@@ -85,6 +88,17 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   public void setSupplier(Supplier newSupplier)
   {
     eSet(Model1Package.eINSTANCE.getPurchaseOrder_Supplier(), newSupplier);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @SuppressWarnings("unchecked")
+  public EList<SalesOrder> getSalesOrders()
+  {
+    return (EList<SalesOrder>)eGet(Model1Package.eINSTANCE.getPurchaseOrder_SalesOrders(), true);
   }
 
 } // PurchaseOrderImpl

@@ -525,29 +525,29 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
   int WITH_CUSTOM_TYPE = 16;
 
   /**
-  	 * The feature id for the '<em><b>Value</b></em>' attribute.
-  	 * <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int WITH_CUSTOM_TYPE__VALUE = 0;
 
   /**
-  	 * The number of structural features of the '<em>With Custom Type</em>' class.
-  	 * <!-- begin-user-doc -->
+   * The number of structural features of the '<em>With Custom Type</em>' class.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 * @ordered
-  	 */
+   * @generated
+   * @ordered
+   */
   int WITH_CUSTOM_TYPE_FEATURE_COUNT = 1;
 
   /**
-  	 * The meta object id for the '<em>Int Array</em>' data type.
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getIntArray()
-  	 * @generated
-  	 */
+   * The meta object id for the '<em>Int Array</em>' data type.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getIntArray()
+   * @generated
+   */
   int INT_ARRAY = 17;
 
   /**
@@ -942,23 +942,23 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
   EClass getWithCustomType();
 
   /**
-  	 * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model5.WithCustomType#getValue <em>Value</em>}'.
-  	 * <!-- begin-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model5.WithCustomType#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @return the meta object for the attribute '<em>Value</em>'.
-  	 * @see org.eclipse.emf.cdo.tests.model5.WithCustomType#getValue()
-  	 * @see #getWithCustomType()
-  	 * @generated
-  	 */
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see org.eclipse.emf.cdo.tests.model5.WithCustomType#getValue()
+   * @see #getWithCustomType()
+   * @generated
+   */
   EAttribute getWithCustomType_Value();
 
   /**
-  	 * Returns the meta object for data type '<em>Int Array</em>'.
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @return the meta object for data type '<em>Int Array</em>'.
-  	 * @model instanceClass="int[]"
-  	 * @generated
-  	 */
+   * Returns the meta object for data type '<em>Int Array</em>'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @return the meta object for data type '<em>Int Array</em>'.
+   * @model instanceClass="int[]"
+   * @generated
+   */
   EDataType getIntArray();
 
   /**

@@ -564,16 +564,16 @@ public class Model5Switch<T>
   }
 
   /**
-  	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
-  	 * <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
+   * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch, but this is the last case anyway.
    * <!-- end-user-doc -->
-  	 * @param object the target of the switch.
-  	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
-  	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
-  	 * @generated
-  	 */
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject)
+   * @generated
+   */
   public T defaultCase(EObject object)
   {
     return null;

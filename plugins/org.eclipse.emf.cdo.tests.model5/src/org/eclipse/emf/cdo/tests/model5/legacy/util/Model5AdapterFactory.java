@@ -476,13 +476,13 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-  	 * Creates a new adapter for the default case.
-  	 * <!-- begin-user-doc -->
+   * Creates a new adapter for the default case.
+   * <!-- begin-user-doc -->
    * This default implementation returns null.
    * <!-- end-user-doc -->
-  	 * @return the new adapter.
-  	 * @generated
-  	 */
+   * @return the new adapter.
+   * @generated
+   */
   public Adapter createEObjectAdapter()
   {
     return null;

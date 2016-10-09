@@ -150,9 +150,9 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   private EClass withCustomTypeEClass = null;
 
   /**
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   private EDataType intArrayEDataType = null;
 
   /**
@@ -568,19 +568,19 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
   	 * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   public EAttribute getWithCustomType_Value()
   {
     return (EAttribute)withCustomTypeEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public EDataType getIntArray()
   {
     return intArrayEDataType;

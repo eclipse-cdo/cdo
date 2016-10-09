@@ -435,14 +435,14 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-  	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfString <em>Gen List Of String</em>}'.
-  	 * <!-- begin-user-doc --> This default implementation returns null so that we can
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfString <em>Gen List Of String</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-  	 * @return the new adapter.
-  	 * @see org.eclipse.emf.cdo.tests.model5.GenListOfString
-  	 * @generated
-  	 */
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model5.GenListOfString
+   * @generated
+   */
   public Adapter createGenListOfStringAdapter()
   {
     return null;

@@ -409,9 +409,19 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getPurchaseOrder_SalesOrders()
+  {
+    return (EReference)purchaseOrderEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getSalesOrder()
   {
     return salesOrderEClass;
@@ -436,9 +446,19 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getSalesOrder_PurchaseOrders()
+  {
+    return (EReference)salesOrderEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EClass getCategory()
   {
     return categoryEClass;
@@ -641,10 +661,12 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     purchaseOrderEClass = createEClass(PURCHASE_ORDER);
     createEAttribute(purchaseOrderEClass, PURCHASE_ORDER__DATE);
     createEReference(purchaseOrderEClass, PURCHASE_ORDER__SUPPLIER);
+    createEReference(purchaseOrderEClass, PURCHASE_ORDER__SALES_ORDERS);
 
     salesOrderEClass = createEClass(SALES_ORDER);
     createEAttribute(salesOrderEClass, SALES_ORDER__ID);
     createEReference(salesOrderEClass, SALES_ORDER__CUSTOMER);
+    createEReference(salesOrderEClass, SALES_ORDER__PURCHASE_ORDERS);
 
     categoryEClass = createEClass(CATEGORY);
     createEAttribute(categoryEClass, CATEGORY__NAME);
@@ -772,6 +794,9 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     initEReference(getPurchaseOrder_Supplier(), getSupplier(), getSupplier_PurchaseOrders(), "supplier", null, 1, 1,
         PurchaseOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPurchaseOrder_SalesOrders(), getSalesOrder(), getSalesOrder_PurchaseOrders(), "salesOrders", null,
+        0, -1, PurchaseOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(salesOrderEClass, SalesOrder.class, "SalesOrder", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -780,6 +805,9 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     initEReference(getSalesOrder_Customer(), getCustomer(), getCustomer_SalesOrders(), "customer", null, 1, 1,
         SalesOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSalesOrder_PurchaseOrders(), getPurchaseOrder(), getPurchaseOrder_SalesOrders(), "purchaseOrders",
+        null, 0, -1, SalesOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(categoryEClass, Category.class, "Category", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCategory_Name(), ecorePackage.getEString(), "name", null, 0, 1, Category.class, !IS_TRANSIENT,

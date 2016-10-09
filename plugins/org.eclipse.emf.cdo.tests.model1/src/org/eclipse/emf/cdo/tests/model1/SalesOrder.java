@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.tests.model1;
 
+import org.eclipse.emf.common.util.EList;
+
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Sales Order</b></em>'. <!-- end-user-doc -->
  *
@@ -19,6 +21,7 @@ package org.eclipse.emf.cdo.tests.model1;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getCustomer <em>Customer</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getPurchaseOrders <em>Purchase Orders</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getSalesOrder()
@@ -79,5 +82,23 @@ public interface SalesOrder extends Order
    * @generated
    */
   void setCustomer(Customer value);
+
+  /**
+   * Returns the value of the '<em><b>Purchase Orders</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder}.
+   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getSalesOrders <em>Sales Orders</em>}'.
+   * <!-- begin-user-doc -->
+  	 * <p>
+  	 * If the meaning of the '<em>Purchase Orders</em>' reference list isn't clear,
+  	 * there really should be more of a description here...
+  	 * </p>
+  	 * <!-- end-user-doc -->
+   * @return the value of the '<em>Purchase Orders</em>' reference list.
+   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getSalesOrder_PurchaseOrders()
+   * @see org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getSalesOrders
+   * @model opposite="salesOrders"
+   * @generated
+   */
+  EList<PurchaseOrder> getPurchaseOrders();
 
 } // SalesOrder

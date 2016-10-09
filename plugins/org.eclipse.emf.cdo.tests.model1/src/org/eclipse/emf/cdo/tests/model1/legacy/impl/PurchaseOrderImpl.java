@@ -11,15 +11,20 @@
 package org.eclipse.emf.cdo.tests.model1.legacy.impl;
 
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model1.legacy.Model1Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -57,9 +62,19 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   protected Supplier supplier;
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getSalesOrders() <em>Sales Orders</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSalesOrders()
    * @generated
+   * @ordered
    */
+  protected EList<SalesOrder> salesOrders;
+
+  /**
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected PurchaseOrderImpl()
   {
     super();
@@ -186,9 +201,25 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EList<SalesOrder> getSalesOrders()
+  {
+    if (salesOrders == null)
+    {
+      salesOrders = new EObjectWithInverseResolvingEList.ManyInverse<SalesOrder>(SalesOrder.class, this,
+          Model1Package.PURCHASE_ORDER__SALES_ORDERS, Model1Package.SALES_ORDER__PURCHASE_ORDERS);
+    }
+    return salesOrders;
+  }
+
+  /**
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -201,6 +232,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
             msgs);
       }
       return basicSetSupplier((Supplier)otherEnd, msgs);
+    case Model1Package.PURCHASE_ORDER__SALES_ORDERS:
+      return ((InternalEList<InternalEObject>)(InternalEList<?>)getSalesOrders()).basicAdd(otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -216,6 +249,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
     {
     case Model1Package.PURCHASE_ORDER__SUPPLIER:
       return basicSetSupplier(null, msgs);
+    case Model1Package.PURCHASE_ORDER__SALES_ORDERS:
+      return ((InternalEList<?>)getSalesOrders()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -237,6 +272,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
         return getSupplier();
       }
       return basicGetSupplier();
+    case Model1Package.PURCHASE_ORDER__SALES_ORDERS:
+      return getSalesOrders();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -245,6 +282,7 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -255,6 +293,10 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
       return;
     case Model1Package.PURCHASE_ORDER__SUPPLIER:
       setSupplier((Supplier)newValue);
+      return;
+    case Model1Package.PURCHASE_ORDER__SALES_ORDERS:
+      getSalesOrders().clear();
+      getSalesOrders().addAll((Collection<? extends SalesOrder>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -275,6 +317,9 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
     case Model1Package.PURCHASE_ORDER__SUPPLIER:
       setSupplier((Supplier)null);
       return;
+    case Model1Package.PURCHASE_ORDER__SALES_ORDERS:
+      getSalesOrders().clear();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -292,6 +337,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
       return DATE_EDEFAULT == null ? date != null : !DATE_EDEFAULT.equals(date);
     case Model1Package.PURCHASE_ORDER__SUPPLIER:
       return supplier != null;
+    case Model1Package.PURCHASE_ORDER__SALES_ORDERS:
+      return salesOrders != null && !salesOrders.isEmpty();
     }
     return super.eIsSet(featureID);
   }

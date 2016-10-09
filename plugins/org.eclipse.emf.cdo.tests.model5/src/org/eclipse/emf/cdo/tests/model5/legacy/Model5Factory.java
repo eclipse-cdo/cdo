@@ -187,11 +187,11 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
   WithCustomType createWithCustomType();
 
   /**
-  	 * Returns the package supported by this factory.
-  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-  	 * @return the package supported by this factory.
-  	 * @generated
-  	 */
+   * Returns the package supported by this factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @return the package supported by this factory.
+   * @generated
+   */
   Model5Package getModel5Package();
 
 } // Model5Factory

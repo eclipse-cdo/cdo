@@ -11,14 +11,20 @@
 package org.eclipse.emf.cdo.tests.model1.legacy.impl;
 
 import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.legacy.Model1Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+
+import java.util.Collection;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Sales Order</b></em>'. <!-- end-user-doc -->
@@ -28,6 +34,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.SalesOrderImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.SalesOrderImpl#getCustomer <em>Customer</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.SalesOrderImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
  * </ul>
  *
  * @generated
@@ -63,9 +70,19 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   protected Customer customer;
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getPurchaseOrders() <em>Purchase Orders</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPurchaseOrders()
    * @generated
+   * @ordered
    */
+  protected EList<PurchaseOrder> purchaseOrders;
+
+  /**
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected SalesOrderImpl()
   {
     super();
@@ -192,9 +209,25 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EList<PurchaseOrder> getPurchaseOrders()
+  {
+    if (purchaseOrders == null)
+    {
+      purchaseOrders = new EObjectWithInverseResolvingEList.ManyInverse<PurchaseOrder>(PurchaseOrder.class, this,
+          Model1Package.SALES_ORDER__PURCHASE_ORDERS, Model1Package.PURCHASE_ORDER__SALES_ORDERS);
+    }
+    return purchaseOrders;
+  }
+
+  /**
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -207,6 +240,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
             msgs);
       }
       return basicSetCustomer((Customer)otherEnd, msgs);
+    case Model1Package.SALES_ORDER__PURCHASE_ORDERS:
+      return ((InternalEList<InternalEObject>)(InternalEList<?>)getPurchaseOrders()).basicAdd(otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -222,6 +257,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
     {
     case Model1Package.SALES_ORDER__CUSTOMER:
       return basicSetCustomer(null, msgs);
+    case Model1Package.SALES_ORDER__PURCHASE_ORDERS:
+      return ((InternalEList<?>)getPurchaseOrders()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -243,6 +280,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
         return getCustomer();
       }
       return basicGetCustomer();
+    case Model1Package.SALES_ORDER__PURCHASE_ORDERS:
+      return getPurchaseOrders();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -251,6 +290,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -261,6 +301,10 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
       return;
     case Model1Package.SALES_ORDER__CUSTOMER:
       setCustomer((Customer)newValue);
+      return;
+    case Model1Package.SALES_ORDER__PURCHASE_ORDERS:
+      getPurchaseOrders().clear();
+      getPurchaseOrders().addAll((Collection<? extends PurchaseOrder>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -281,6 +325,9 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
     case Model1Package.SALES_ORDER__CUSTOMER:
       setCustomer((Customer)null);
       return;
+    case Model1Package.SALES_ORDER__PURCHASE_ORDERS:
+      getPurchaseOrders().clear();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -298,6 +345,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
       return id != ID_EDEFAULT;
     case Model1Package.SALES_ORDER__CUSTOMER:
       return customer != null;
+    case Model1Package.SALES_ORDER__PURCHASE_ORDERS:
+      return purchaseOrders != null && !purchaseOrders.isEmpty();
     }
     return super.eIsSet(featureID);
   }

@@ -48,10 +48,12 @@
     <genClasses ecoreClass="model1.ecore#//PurchaseOrder">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model1.ecore#//PurchaseOrder/date"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model1.ecore#//PurchaseOrder/supplier"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model1.ecore#//PurchaseOrder/salesOrders"/>
     </genClasses>
     <genClasses ecoreClass="model1.ecore#//SalesOrder">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model1.ecore#//SalesOrder/id"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model1.ecore#//SalesOrder/customer"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model1.ecore#//SalesOrder/purchaseOrders"/>
     </genClasses>
     <genClasses ecoreClass="model1.ecore#//Category">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model1.ecore#//Category/name"/>

@@ -12,8 +12,10 @@ package org.eclipse.emf.cdo.tests.model1.impl;
 
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
+import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 /**
@@ -24,6 +26,7 @@ import org.eclipse.emf.ecore.EClass;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.SalesOrderImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.SalesOrderImpl#getCustomer <em>Customer</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.SalesOrderImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
  * </ul>
  *
  * @generated
@@ -83,6 +86,17 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   public void setCustomer(Customer newCustomer)
   {
     eSet(Model1Package.eINSTANCE.getSalesOrder_Customer(), newCustomer);
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @SuppressWarnings("unchecked")
+  public EList<PurchaseOrder> getPurchaseOrders()
+  {
+    return (EList<PurchaseOrder>)eGet(Model1Package.eINSTANCE.getSalesOrder_PurchaseOrders(), true);
   }
 
 } // SalesOrderImpl

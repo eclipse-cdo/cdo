@@ -457,13 +457,22 @@ public interface Model1Package extends EPackage
   int PURCHASE_ORDER__SUPPLIER = ORDER_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Sales Orders</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PURCHASE_ORDER__SALES_ORDERS = ORDER_FEATURE_COUNT + 2;
+
+  /**
    * The number of structural features of the '<em>Purchase Order</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
    *
    * @generated
    * @ordered
    */
-  int PURCHASE_ORDER_FEATURE_COUNT = ORDER_FEATURE_COUNT + 2;
+  int PURCHASE_ORDER_FEATURE_COUNT = ORDER_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.impl.SalesOrderImpl <em>Sales Order</em>}' class.
@@ -500,13 +509,22 @@ public interface Model1Package extends EPackage
   int SALES_ORDER__CUSTOMER = ORDER_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Purchase Orders</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SALES_ORDER__PURCHASE_ORDERS = ORDER_FEATURE_COUNT + 2;
+
+  /**
    * The number of structural features of the '<em>Sales Order</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
    *
    * @generated
    * @ordered
    */
-  int SALES_ORDER_FEATURE_COUNT = ORDER_FEATURE_COUNT + 2;
+  int SALES_ORDER_FEATURE_COUNT = ORDER_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -788,12 +806,23 @@ public interface Model1Package extends EPackage
   EReference getPurchaseOrder_Supplier();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.OrderDetail <em>Order Detail</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @return the meta object for class '<em>Order Detail</em>'.
-   * @see org.eclipse.emf.cdo.tests.model1.OrderDetail
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getSalesOrders <em>Sales Orders</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Sales Orders</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getSalesOrders()
+   * @see #getPurchaseOrder()
    * @generated
    */
+  EReference getPurchaseOrder_SalesOrders();
+
+  /**
+  	 * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.OrderDetail <em>Order Detail</em>}'.
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @return the meta object for class '<em>Order Detail</em>'.
+  	 * @see org.eclipse.emf.cdo.tests.model1.OrderDetail
+  	 * @generated
+  	 */
   EClass getOrderDetail();
 
   /**
@@ -1139,11 +1168,22 @@ public interface Model1Package extends EPackage
   EReference getSalesOrder_Customer();
 
   /**
-   * Returns the factory that creates the instances of the model.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @return the factory that creates the instances of the model.
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getPurchaseOrders <em>Purchase Orders</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Purchase Orders</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.SalesOrder#getPurchaseOrders()
+   * @see #getSalesOrder()
    * @generated
    */
+  EReference getSalesOrder_PurchaseOrders();
+
+  /**
+  	 * Returns the factory that creates the instances of the model.
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @return the factory that creates the instances of the model.
+  	 * @generated
+  	 */
   Model1Factory getModel1Factory();
 
 } // Model1Package

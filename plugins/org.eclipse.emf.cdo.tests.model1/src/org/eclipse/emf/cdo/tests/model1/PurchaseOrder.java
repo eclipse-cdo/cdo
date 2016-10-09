@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.tests.model1;
 
+import org.eclipse.emf.common.util.EList;
+
 import java.util.Date;
 
 /**
@@ -21,6 +23,7 @@ import java.util.Date;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getDate <em>Date</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getSupplier <em>Supplier</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getSalesOrders <em>Sales Orders</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getPurchaseOrder()
@@ -80,5 +83,23 @@ public interface PurchaseOrder extends Order
    * @generated
    */
   void setSupplier(Supplier value);
+
+  /**
+   * Returns the value of the '<em><b>Sales Orders</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.tests.model1.SalesOrder}.
+   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getPurchaseOrders <em>Purchase Orders</em>}'.
+   * <!-- begin-user-doc -->
+  	 * <p>
+  	 * If the meaning of the '<em>Sales Orders</em>' reference list isn't clear,
+  	 * there really should be more of a description here...
+  	 * </p>
+  	 * <!-- end-user-doc -->
+   * @return the value of the '<em>Sales Orders</em>' reference list.
+   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getPurchaseOrder_SalesOrders()
+   * @see org.eclipse.emf.cdo.tests.model1.SalesOrder#getPurchaseOrders
+   * @model opposite="purchaseOrders"
+   * @generated
+   */
+  EList<SalesOrder> getSalesOrders();
 
 } // PurchaseOrder

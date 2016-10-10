@@ -217,7 +217,7 @@ public class Net
         Segment lastSegment = track.getLastSegment();
         if (lastSegment != null)
         {
-          if (lastSegment.getBranch() == branch)
+          if (lastSegment.getBranch() == branch && !lastSegment.isMerge())
           {
             // If the last segment of this track has the same branch, then just extend it
             return lastSegment;
@@ -260,7 +260,7 @@ public class Net
         if (firstSegment != null)
         {
           Branch firstBranch = firstSegment.getBranch();
-          if (firstBranch == branch)
+          if (firstBranch == branch && !firstSegment.isMerge())
           {
             // If the first segment of this track has the same branch, then just extend it
             return firstSegment;

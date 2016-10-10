@@ -271,15 +271,16 @@ public final class NetRenderer implements Listener
   private int drawCommit(CDOCommitInfo commitInfo, boolean justMeasureWidth)
   {
     Commit commit = net.getOrAddCommit(commitInfo);
+    Branch commitBranch = commit.getBranch();
     Segment[] segments = commit.getRowSegments();
     Segment commitSegment = commit.getSegment();
     long commitTime = commit.getTime();
-    boolean commitLastInBranch = commitTime == commitSegment.getLastCommitTime();
+    boolean commitLastInBranch = commitTime == commitBranch.getLastCommitTime();
 
     if (!justMeasureWidth)
     {
       Track commitTrack = commitSegment.getTrack();
-      Color commitColor = commitSegment.getBranch().getColor();
+      Color commitColor = commitBranch.getColor();
       int commitTrackPosition = commitTrack.getPosition();
       int commitTrackCenter = getTrackCenter(commitTrackPosition);
 

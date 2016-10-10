@@ -125,22 +125,45 @@ public final class Segment
     return "Segment[" + branch + " --> " + track + "]";
   }
 
-  void adjustVisualTime(long time, boolean complete)
+  void adjustVisualTime(long time, boolean adjustComplete)
   {
     if (isMerge())
     {
       firstVisualTime = firstCommitTime;
-      this.complete = true;
-    }
-    else
-    {
-      if (firstVisualTime == 0 || time < firstVisualTime)
-      {
-        firstVisualTime = time;
-      }
+      complete = true;
+      return;
     }
 
-    this.complete |= complete;
+    if (time < firstVisualTime)
+    {
+      firstVisualTime = time;
+    }
+    else if (firstVisualTime == 0)
+    {
+      Segment previousInBranch = getPreviousInBranch();
+      if (previousInBranch != null)
+      {
+        firstVisualTime = previousInBranch.getLastCommitTime();
+        complete = true;
+        return;
+      }
+
+      Commit firstCommit = getNet().getFirstCommit();
+      if (firstCommit != null)
+      {
+        long baseCommitTime = branch.getBaseCommitTime();
+        if (baseCommitTime >= firstCommit.getTime())
+        {
+          firstVisualTime = baseCommitTime;
+          complete = true;
+          return;
+        }
+      }
+
+      firstVisualTime = time;
+    }
+
+    complete |= adjustComplete;
   }
 
   void adjustCommitTimes(long time)

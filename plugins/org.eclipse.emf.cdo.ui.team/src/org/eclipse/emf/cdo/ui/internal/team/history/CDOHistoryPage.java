@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.internal.ui.history.NetRenderer;
 import org.eclipse.emf.cdo.internal.ui.history.Track;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
@@ -61,7 +62,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.team.ui.history.HistoryPage;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.IPageSite;
 
 /**
@@ -96,7 +99,10 @@ public class CDOHistoryPage extends HistoryPage
         {
           public void run()
           {
-            CDOHistoryPage.this.setInput(null);
+            if (!commitHistoryComposite.isDisposed())
+            {
+              CDOHistoryPage.this.setInput(null);
+            }
           }
         });
       }
@@ -166,7 +172,7 @@ public class CDOHistoryPage extends HistoryPage
           new ViewerDropAdapter(tableViewer)
           {
             {
-              // We don't want it to look like you can insert new elements, only drop onto existing elements
+              // We don't want it to look like you can insert new elements, only drop onto existing elements.
               setFeedbackEnabled(false);
             }
 
@@ -202,7 +208,8 @@ public class CDOHistoryPage extends HistoryPage
                 @Override
                 protected void run(CDOTransaction transaction)
                 {
-                  transaction.merge(objectToDrop, new DefaultCDOMerger.PerFeature.ManyValued());
+                  CDOMerger merger = new DefaultCDOMerger.PerFeature.ManyValued();
+                  transaction.merge(objectToDrop, merger);
                 }
               }.execute(dropTarget);
 
@@ -320,7 +327,7 @@ public class CDOHistoryPage extends HistoryPage
   {
     if (DEBUG)
     {
-      manager.add(new Action("DEBUG", IAction.AS_PUSH_BUTTON)
+      Action action = new Action("DEBUG", IAction.AS_PUSH_BUTTON)
       {
         @SuppressWarnings("unused")
         @Override
@@ -334,7 +341,11 @@ public class CDOHistoryPage extends HistoryPage
           CDOSession session = net.getSession();
           System.out.println("Debug " + net); // Set a breakpoint on this line to inspect the net.
         }
-      });
+      };
+
+      ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
+      action.setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+      manager.add(action);
     }
   }
 

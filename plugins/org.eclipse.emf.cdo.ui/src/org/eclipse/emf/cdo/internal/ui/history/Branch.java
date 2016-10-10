@@ -177,6 +177,7 @@ public final class Branch extends SegmentList
 
     CDOCommitInfoManager commitInfoManager = getNet().getSession().getCommitInfoManager();
     CDOCommitInfo commitInfo = commitInfoManager.getBaseOfBranch(cdoBranch);
+    baseCommitBranch = getNet().getBranch(commitInfo.getBranch());
     baseCommitTime = commitInfo.getTimeStamp();
   }
 

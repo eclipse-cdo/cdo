@@ -728,7 +728,7 @@ public class CommitHistoryComposite extends Composite
         }
       });
 
-      addColumn(new Column<CDOCommitInfo>("Merge Source", 160)
+      addColumn(new Column<CDOCommitInfo>("Merge", 160)
       {
         @Override
         public String getText(CDOCommitInfo commitInfo)

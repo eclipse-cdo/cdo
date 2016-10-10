@@ -63,8 +63,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
     return new Model1FactoryImpl();
   }
 
-  private int productCounter = 0;
-
   /**
    * Creates an instance of the factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -239,12 +237,11 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated NOT
+   * @generated
    */
   public Product1 createProduct1()
   {
     Product1Impl product1 = new Product1Impl();
-    product1.setName(productCounter++ + "");
     return product1;
   }
 

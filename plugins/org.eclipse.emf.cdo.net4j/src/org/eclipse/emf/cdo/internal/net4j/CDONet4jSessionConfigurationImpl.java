@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.net4j;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.internal.net4j.testrecorder.TestRecorderSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDOSession;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
@@ -23,6 +24,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.io.IStreamWrapper;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult;
@@ -40,6 +42,9 @@ import java.util.Set;
 public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImpl
     implements org.eclipse.emf.cdo.net4j.CDOSessionConfiguration
 {
+  private static final boolean TEST_RECORDER = Boolean
+      .parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.test.recorder.enabled", "false"));
+
   private String repositoryName;
 
   private IConnector connector;
@@ -115,6 +120,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     if (isActivateOnOpen())
     {
       CheckUtil.checkState(connector, "connector"); //$NON-NLS-1$
+    }
+
+    if (TEST_RECORDER)
+    {
+      return new TestRecorderSession();
     }
 
     return new CDONet4jSessionImpl();

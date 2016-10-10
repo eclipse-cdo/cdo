@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.eresource.EresourceFactory;
  */
 public class NewTextResourceWizard extends NewWizard
 {
+  public static final String ID = "org.eclipse.emf.cdo.explorer.ui.new.resource.text";
+
   public NewTextResourceWizard()
   {
     super("text", "New Text File");

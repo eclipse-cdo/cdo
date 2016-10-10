@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.eresource.EresourceFactory;
  */
 public class NewResourceWizard extends NewWizard
 {
+  public static final String ID = "org.eclipse.emf.cdo.explorer.ui.new.resource";
+
   public NewResourceWizard()
   {
     super("model", "New Model Resource");

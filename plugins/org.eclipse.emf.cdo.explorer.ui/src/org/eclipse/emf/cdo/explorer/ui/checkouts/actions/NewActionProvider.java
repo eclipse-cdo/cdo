@@ -17,6 +17,10 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.NewBinaryResourceWizard;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.NewFolderWizard;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.NewResourceWizard;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.NewTextResourceWizard;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.NewWizard;
 import org.eclipse.emf.cdo.internal.ui.actions.TransactionalBackgroundAction;
 import org.eclipse.emf.cdo.internal.ui.dialogs.SelectClassDialog;
@@ -55,6 +59,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.ui.IPluginContribution;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWizard;
@@ -181,27 +186,7 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
 
     IMenuManager submenu = new MenuManager("&New", NEW_MENU_NAME);
 
-    // Fill the menu from the commonWizard contributions.
-    newWizardActionGroup.setContext(getContext());
-    newWizardActionGroup.fillContextMenu(submenu);
-
-    // Filter out the dubious "Ecore Diagram" action that appears everywhere.
-    for (IContributionItem item : submenu.getItems())
-    {
-      if (item instanceof ActionContributionItem)
-      {
-        ActionContributionItem actionItem = (ActionContributionItem)item;
-        IAction action = actionItem.getAction();
-        if (action != null)
-        {
-          if ("Ecore Diagram".equals(action.getText()))
-          {
-            submenu.remove(item);
-            break;
-          }
-        }
-      }
-    }
+    fillNewWizardActions(submenu);
 
     if (selectedObject instanceof CDOResource)
     {
@@ -228,6 +213,95 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
 
     // Append the submenu after the GROUP_NEW group.
     menu.insertAfter(ICommonMenuConstants.GROUP_NEW, submenu);
+  }
+
+  private void fillNewWizardActions(IMenuManager menu)
+  {
+    // Fill the menu from the commonWizard contributions.
+    newWizardActionGroup.setContext(getContext());
+    newWizardActionGroup.fillContextMenu(menu);
+
+    IContributionItem newResourceFolderItem = null;
+    IContributionItem newModelResourceItem = null;
+    IContributionItem newBinaryFileItem = null;
+    IContributionItem newTextFileItem = null;
+
+    String firstID = null;
+    IContributionItem[] newWizardItems = menu.getItems();
+    for (IContributionItem newWizardItem : newWizardItems)
+    {
+      if (newWizardItem instanceof ActionContributionItem)
+      {
+        IAction action = ((ActionContributionItem)newWizardItem).getAction();
+        if (action instanceof IPluginContribution)
+        {
+          IPluginContribution pluginContribution = (IPluginContribution)action;
+          String id = pluginContribution.getLocalId();
+          if (NewFolderWizard.ID.equals(id))
+          {
+            newResourceFolderItem = menu.remove(newWizardItem);
+            continue;
+          }
+
+          if (NewResourceWizard.ID.equals(id))
+          {
+            newModelResourceItem = menu.remove(newWizardItem);
+            continue;
+          }
+
+          if (NewBinaryResourceWizard.ID.equals(id))
+          {
+            newBinaryFileItem = menu.remove(newWizardItem);
+            continue;
+          }
+
+          if (NewTextResourceWizard.ID.equals(id))
+          {
+            newTextFileItem = menu.remove(newWizardItem);
+            continue;
+          }
+        }
+
+        // Filter out the dubious "Ecore Diagram" action that appears everywhere.
+        if ("Ecore Diagram".equals(action.getText()))
+        {
+          menu.remove(newWizardItem);
+          continue;
+        }
+      }
+
+      if (firstID == null)
+      {
+        firstID = newWizardItem.getId();
+      }
+    }
+
+    if (firstID == null)
+    {
+      Separator group = new Separator("cdo-new-wizards");
+      menu.add(group);
+      firstID = group.getId();
+    }
+
+    if (newResourceFolderItem != null)
+    {
+      menu.insertBefore(firstID, newResourceFolderItem);
+    }
+
+    if (newModelResourceItem != null)
+    {
+      menu.insertBefore(firstID, newModelResourceItem);
+    }
+
+    if (newBinaryFileItem != null)
+    {
+      menu.insertBefore(firstID, newBinaryFileItem);
+    }
+
+    if (newTextFileItem != null)
+    {
+      menu.insertBefore(firstID, newTextFileItem);
+    }
   }
 
   private void fillNewRootActions(IMenuManager menu, final CDOCheckout checkout, final CDOResource resource)

@@ -98,13 +98,20 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
             @Override
             public Object getPropertyValue(Object id)
             {
-              Object value = emfProperties.get(id);
-              if (value != null)
+              try
               {
-                return value;
-              }
+                Object value = emfProperties.get(id);
+                if (value != null)
+                {
+                  return value;
+                }
 
-              return super.getPropertyValue(id);
+                return super.getPropertyValue(id);
+              }
+              catch (Throwable ex)
+              {
+                return null;
+              }
             }
           };
 

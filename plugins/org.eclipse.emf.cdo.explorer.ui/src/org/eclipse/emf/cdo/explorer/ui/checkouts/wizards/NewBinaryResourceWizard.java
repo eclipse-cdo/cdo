@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.eresource.EresourceFactory;
  */
 public class NewBinaryResourceWizard extends NewWizard
 {
+  public static final String ID = "org.eclipse.emf.cdo.explorer.ui.new.resource.binary";
+
   public NewBinaryResourceWizard()
   {
     super("binary", "New Binary File");

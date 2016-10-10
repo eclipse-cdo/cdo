@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.eresource.EresourceFactory;
  */
 public class NewFolderWizard extends NewWizard
 {
+  public static final String ID = "org.eclipse.emf.cdo.explorer.ui.new.folder";
+
   public NewFolderWizard()
   {
     super("folder", "New Folder");

@@ -10,7 +10,10 @@
  */
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.CommitInfoStorage;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
@@ -1307,6 +1310,12 @@ public class CDOServerBrowser extends Worker
       out.print("<td valign=\"top\">Branch</td>\r\n");
       out.print("<td valign=\"top\">User</td>\r\n");
       out.print("<td valign=\"top\">Comment</td>\r\n");
+
+      if (repository.getCommitInfoStorage() == CommitInfoStorage.WITH_MERGE_SOURCE)
+      {
+        out.print("<td valign=\"top\">Merge</td>\r\n");
+      }
+
       out.print("</tr>\r\n");
 
       final CDOCommitInfo[] details = { null };
@@ -1386,6 +1395,26 @@ public class CDOServerBrowser extends Worker
       out.print("<td valign=\"top\">\r\n");
       out.print(StringUtil.isEmpty(comment) ? "&nbsp;" : browser.escape(comment));
       out.print("</td>\r\n");
+
+      CDOCommonRepository repository = commitInfo.getCommitInfoManager().getRepository();
+      if (repository.getCommitInfoStorage() == CommitInfoStorage.WITH_MERGE_SOURCE)
+      {
+        out.print("<td valign=\"top\">\r\n");
+
+        CDOBranchPoint mergeSource = commitInfo.getMergeSource();
+        if (mergeSource == null)
+        {
+          out.print("&nbsp;");
+        }
+        else
+        {
+          String mergeSourceLabel = browser.escape(mergeSource.getBranch().getPathName()) + "&nbsp;-&nbsp;"
+              + formatTimeStamp(mergeSource.getTimeStamp());
+          out.print(browser.href(mergeSourceLabel, getName(), "time", String.valueOf(mergeSource.getTimeStamp())));
+        }
+
+        out.print("</td>\r\n");
+      }
 
       out.print("</tr>\r\n");
       return selected;

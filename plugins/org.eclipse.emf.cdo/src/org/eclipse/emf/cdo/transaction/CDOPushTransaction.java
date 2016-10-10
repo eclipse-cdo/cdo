@@ -830,6 +830,14 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     delegate.removeTransactionHandler(handler);
   }
 
+  /**
+   * @since 4.6
+   */
+  public CDOChangeSetData merge(CDOBranch source, CDOMerger merger)
+  {
+    return delegate.merge(source, merger);
+  }
+
   public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)
   {
     return delegate.merge(source, merger);

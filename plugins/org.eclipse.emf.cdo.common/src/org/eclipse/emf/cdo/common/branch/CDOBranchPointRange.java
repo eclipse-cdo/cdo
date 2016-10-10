@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 
 /**
  * A range between the {@link CDOBranch#getBase() base} of the {@link CDOBranchManager#getMainBranch() main branch} and
- * the {@link CDOBranch#getHead() head} of any branch that is demarkated by a {@link #getStartPoint() start point} and
+ * the {@link CDOBranch#getHead() head} of any branch that is demarcated by a {@link #getStartPoint() start point} and
  * an {@link #getEndPoint() end point}.
  * <p>
  * The start point and the end point of a branch point range may have different branches or not.

@@ -42,6 +42,14 @@ public final class CDORevisionAvailabilityInfo implements CDORevisionProvider
     return branchPoint;
   }
 
+  /**
+   * @since 4.6
+   */
+  public void setBranchPoint(CDOBranchPoint branchPoint)
+  {
+    this.branchPoint = branchPoint;
+  }
+
   public Map<CDOID, CDORevisionKey> getAvailableRevisions()
   {
     return availableRevisions;

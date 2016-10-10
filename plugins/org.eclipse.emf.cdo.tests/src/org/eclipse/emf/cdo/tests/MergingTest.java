@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOMerger.ConflictException;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -797,6 +798,63 @@ public class MergingTest extends AbstractCDOTest
         new DefaultCDOMerger.PerFeature.ManyValued());
     assertEquals(true, check.isEmpty());
     assertEquals(false, transaction.isDirty());
+  }
+
+  public void testAutoMerge() throws Exception
+  {
+    CDOMerger merger = new DefaultCDOMerger.PerFeature.ManyValued();
+    CDOSession session = openSession();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
+    EList<EObject> contents = resource.getContents();
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    addCompany(contents);
+    long time = transaction.commit().getTimeStamp();
+    CDOBranch source = mainBranch.createBranch("source", time);
+
+    CDOTransaction tx1 = session.openTransaction(source);
+    CDOResource res1 = tx1.getResource(getResourcePath("/res"));
+    EList<EObject> contents1 = res1.getContents();
+
+    sleep(10);
+    ((Company)contents1.get(0)).setName("Company0");
+    ((Company)contents1.get(1)).setName("Company1");
+    ((Company)contents1.get(2)).setName("Company2");
+    commitAndSync(tx1, transaction);
+
+    CDOChangeSetData merge1 = transaction.merge(source, merger);
+    assertEquals(false, merge1.isEmpty());
+    assertEquals(0, merge1.getNewObjects().size());
+    assertEquals(0, merge1.getDetachedObjects().size());
+    assertEquals(3, merge1.getChangedObjects().size());
+    assertEquals(true, transaction.isDirty());
+    assertEquals("Company0", ((Company)contents.get(0)).getName());
+    assertEquals("Company1", ((Company)contents.get(1)).getName());
+    assertEquals("Company2", ((Company)contents.get(2)).getName());
+    transaction.commit();
+
+    sleep(10);
+    ((Company)contents1.get(3)).setName("Company3");
+    ((Company)contents1.get(4)).setName("Company4");
+    ((Company)contents1.get(5)).setName("Company5");
+    commitAndSync(tx1, transaction);
+
+    CDOChangeSetData merge2 = transaction.merge(source, merger);
+    assertEquals(false, merge2.isEmpty());
+    assertEquals(0, merge2.getNewObjects().size());
+    assertEquals(0, merge2.getDetachedObjects().size());
+    assertEquals(3, merge2.getChangedObjects().size());
+    assertEquals(true, transaction.isDirty());
+    assertEquals("Company3", ((Company)contents.get(3)).getName());
+    assertEquals("Company4", ((Company)contents.get(4)).getName());
+    assertEquals("Company5", ((Company)contents.get(5)).getName());
+    transaction.commit();
   }
 
   private Company addCompany(EList<EObject> contents)

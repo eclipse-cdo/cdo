@@ -29,7 +29,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
  * @noimplement This interface is not intended to be implemented by clients.
  * @apiviz.has {@link CDOBranch}
  */
-public interface CDOBranchPoint extends CDOTimeProvider
+public interface CDOBranchPoint extends CDOBranchProvider, CDOTimeProvider
 {
   /**
    * The fixed special time stamp <i>unspecified</i>.

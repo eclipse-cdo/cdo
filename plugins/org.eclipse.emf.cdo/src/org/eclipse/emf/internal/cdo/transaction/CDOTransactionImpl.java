@@ -543,9 +543,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
+  public CDOChangeSetData merge(CDOBranch source, CDOMerger merger)
+  {
+    return merge(source.getHead(), merger);
+  }
+
   public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)
   {
-    return merge(source, null, merger);
+    return merge(source, CDOBranchUtil.AUTO_BRANCH_POINT, merger);
   }
 
   public CDOChangeSetData merge(CDOBranchPoint source, CDOBranchPoint sourceBase, CDOMerger merger)
@@ -580,14 +585,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           throw new IllegalArgumentException("Source is already contained in " + target);
         }
 
-        if (sourceBase != null && !CDOBranchUtil.isContainedBy(sourceBase, source))
+        if (sourceBase != CDOBranchUtil.AUTO_BRANCH_POINT)
         {
-          throw new IllegalArgumentException("Source base is not contained in " + source);
-        }
+          if (sourceBase != null && !CDOBranchUtil.isContainedBy(sourceBase, source))
+          {
+            throw new IllegalArgumentException("Source base is not contained in " + source);
+          }
 
-        if (targetBase != null && !CDOBranchUtil.isContainedBy(targetBase, target))
-        {
-          throw new IllegalArgumentException("Target base is not contained in " + target);
+          if (targetBase != null && !CDOBranchUtil.isContainedBy(targetBase, target))
+          {
+            throw new IllegalArgumentException("Target base is not contained in " + target);
+          }
         }
 
         InternalCDOSession session = getSession();
@@ -614,6 +622,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         unlockView();
       }
     }
+  }
+
+  public CDOChangeSetData remerge(CDOBranchPoint source, CDOMerger merger)
+  {
+    return merge(source, CDOBranchUtil.AUTO_BRANCH_POINT, merger);
   }
 
   @Deprecated

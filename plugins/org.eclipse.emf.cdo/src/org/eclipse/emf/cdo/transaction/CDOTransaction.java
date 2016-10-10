@@ -18,6 +18,7 @@ package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonTransaction;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetDataProvider;
@@ -28,6 +29,7 @@ import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -65,19 +67,53 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
    */
   public boolean hasConflict();
 
+  /**
+   * Returns the set of objects that are conflicting with remote modifications or an empty set if {@link #hasConflict()} returns <code>false</code>.
+   */
   public Set<CDOObject> getConflicts();
 
   /**
+   * Merges the changes from the given source branch into this transaction and possibly considers previous merges
+   * from that branch by inspecting the {@link CDOCommitInfo#getMergeSource() merge source}
+   * information of the {@link CDOSession#getCommitInfoManager() commit history}.
+   *
+   * @see CDOTransaction#merge(CDOBranchPoint, CDOMerger)
+   * @since 4.6
+   */
+  public CDOChangeSetData merge(CDOBranch source, CDOMerger merger);
+
+  /**
+   * Merges the changes from the given source point into this transaction and possibly considers previous merges
+   * from that {@link CDOBranchPoint#getBranch() branch} by inspecting the {@link CDOCommitInfo#getMergeSource() merge source}
+   * information of the {@link CDOSession#getCommitInfoManager() commit history}.
+   *
    * @since 3.0
    */
   public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger);
 
   /**
+   * Merges the changes between the given source base point and the given source point into this transaction.
+   * <p>
+   * <b>Warning:</b> If the branch of this transaction already contains merges from the given source point range
+   * (i.e., if this merge is a "remerge") this method will likely fail. One of the following methods should be used instead:
+   * <p>
+   * <ul>
+   * <li> {@link #merge(CDOBranchPoint, CDOBranchPoint, CDOBranchPoint, CDOMerger)}
+   * <li> {@link #merge(CDOBranchPoint, CDOMerger)}
+   * <li> {@link #merge(CDOBranch, CDOMerger)}
+   * </ul>
+   *
    * @since 4.0
    */
   public CDOChangeSetData merge(CDOBranchPoint source, CDOBranchPoint sourceBase, CDOMerger merger);
 
   /**
+   * Merges the changes between the given source base point and the given source point into this transaction.
+   * <p>
+   * When specifying an adequate target base point this method is able to perform a proper "remerge".
+   *
+   * @see #merge(CDOBranchPoint, CDOMerger)
+   * @see #merge(CDOBranch, CDOMerger)
    * @since 4.6
    */
   public CDOChangeSetData merge(CDOBranchPoint source, CDOBranchPoint sourceBase, CDOBranchPoint targetBase,

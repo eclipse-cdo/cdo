@@ -112,6 +112,20 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     }
   }
 
+  public void changeCredentials()
+  {
+    // Send a request to the server to initiate (from the server) the password change protocol
+    CDOSessionProtocol sessionProtocol = getSessionProtocol();
+    sessionProtocol.requestChangeCredentials();
+  }
+
+  public void resetCredentials(String userID)
+  {
+    // Send a request to the server to initiate (from the server) the password reset protocol
+    CDOSessionProtocol sessionProtocol = getSessionProtocol();
+    sessionProtocol.requestResetCredentials(userID);
+  }
+
   @Override
   public OptionsImpl options()
   {
@@ -122,6 +136,51 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   protected OptionsImpl createOptions()
   {
     return new OptionsImpl();
+  }
+
+  protected InternalCDOBranchManager createBranchManager()
+  {
+    return CDOBranchUtil.createBranchManager();
+  }
+
+  protected OpenSessionResult openSession()
+  {
+    CDOClientProtocol protocol = createProtocol();
+    setSessionProtocol(protocol);
+    hookSessionProtocol();
+  
+    try
+    {
+      String userID = getUserID();
+      boolean passiveUpdateEnabled = options().isPassiveUpdateEnabled();
+      PassiveUpdateMode passiveUpdateMode = options().getPassiveUpdateMode();
+      LockNotificationMode lockNotificationMode = options().getLockNotificationMode();
+  
+      // TODO (CD) The next call is on the CDOClientProtocol; shouldn't it be on the DelegatingSessionProtocol instead?
+      OpenSessionResult result = protocol.openSession(repositoryName, userID, passiveUpdateEnabled, passiveUpdateMode,
+          lockNotificationMode);
+  
+      if (result == null)
+      {
+        // Skip to response because the user has canceled the authentication
+        return null;
+      }
+  
+      setSessionID(result.getSessionID());
+      setUserID(result.getUserID());
+      setLastUpdateTime(result.getLastUpdateTime());
+      setRepositoryInfo(new RepositoryInfo(this, result));
+      return result;
+    }
+    catch (RemoteException ex)
+    {
+      if (ex.getCause() instanceof SecurityException)
+      {
+        throw (SecurityException)ex.getCause();
+      }
+  
+      throw ex;
+    }
   }
 
   @Override
@@ -168,7 +227,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     InternalCDOBranchManager branchManager = getBranchManager();
     if (branchManager == null)
     {
-      branchManager = CDOBranchUtil.createBranchManager();
+      branchManager = createBranchManager();
       setBranchManager(branchManager);
     }
 
@@ -204,79 +263,6 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     sessionProtocol.openedSession();
   }
 
-  private CDOClientProtocol createProtocol()
-  {
-    CDOClientProtocol protocol = new CDOClientProtocol();
-    protocol.setInfraStructure(this);
-    if (streamWrapper != null)
-    {
-      protocol.setStreamWrapper(streamWrapper);
-    }
-
-    protocol.open(connector);
-    protocol.setTimeout(signalTimeout);
-    return protocol;
-  }
-
-  /**
-   * Gets the CDOClientProtocol instance, which may be wrapped inside a DelegatingSessionProtocol
-   */
-  private CDOClientProtocol getClientProtocol()
-  {
-    CDOSessionProtocol sessionProtocol = getSessionProtocol();
-    CDOClientProtocol clientProtocol;
-    if (sessionProtocol instanceof DelegatingSessionProtocol)
-    {
-      clientProtocol = (CDOClientProtocol)((DelegatingSessionProtocol)sessionProtocol).getDelegate();
-    }
-    else
-    {
-      clientProtocol = (CDOClientProtocol)sessionProtocol;
-    }
-
-    return clientProtocol;
-  }
-
-  protected OpenSessionResult openSession()
-  {
-    CDOClientProtocol protocol = createProtocol();
-    setSessionProtocol(protocol);
-    hookSessionProtocol();
-
-    try
-    {
-      String userID = getUserID();
-      boolean passiveUpdateEnabled = options().isPassiveUpdateEnabled();
-      PassiveUpdateMode passiveUpdateMode = options().getPassiveUpdateMode();
-      LockNotificationMode lockNotificationMode = options().getLockNotificationMode();
-
-      // TODO (CD) The next call is on the CDOClientProtocol; shouldn't it be on the DelegatingSessionProtocol instead?
-      OpenSessionResult result = protocol.openSession(repositoryName, userID, passiveUpdateEnabled, passiveUpdateMode,
-          lockNotificationMode);
-
-      if (result == null)
-      {
-        // Skip to response because the user has canceled the authentication
-        return null;
-      }
-
-      setSessionID(result.getSessionID());
-      setUserID(result.getUserID());
-      setLastUpdateTime(result.getLastUpdateTime());
-      setRepositoryInfo(new RepositoryInfo(this, result));
-      return result;
-    }
-    catch (RemoteException ex)
-    {
-      if (ex.getCause() instanceof SecurityException)
-      {
-        throw (SecurityException)ex.getCause();
-      }
-
-      throw ex;
-    }
-  }
-
   @Override
   protected void doDeactivate() throws Exception
   {
@@ -304,18 +290,37 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     getPackageRegistry().deactivate();
   }
 
-  public void changeCredentials()
+  private CDOClientProtocol createProtocol()
   {
-    // Send a request to the server to initiate (from the server) the password change protocol
-    CDOSessionProtocol sessionProtocol = getSessionProtocol();
-    sessionProtocol.requestChangeCredentials();
+    CDOClientProtocol protocol = new CDOClientProtocol();
+    protocol.setInfraStructure(this);
+    if (streamWrapper != null)
+    {
+      protocol.setStreamWrapper(streamWrapper);
+    }
+  
+    protocol.open(connector);
+    protocol.setTimeout(signalTimeout);
+    return protocol;
   }
 
-  public void resetCredentials(String userID)
+  /**
+   * Gets the CDOClientProtocol instance, which may be wrapped inside a DelegatingSessionProtocol
+   */
+  private CDOClientProtocol getClientProtocol()
   {
-    // Send a request to the server to initiate (from the server) the password reset protocol
     CDOSessionProtocol sessionProtocol = getSessionProtocol();
-    sessionProtocol.requestResetCredentials(userID);
+    CDOClientProtocol clientProtocol;
+    if (sessionProtocol instanceof DelegatingSessionProtocol)
+    {
+      clientProtocol = (CDOClientProtocol)((DelegatingSessionProtocol)sessionProtocol).getDelegate();
+    }
+    else
+    {
+      clientProtocol = (CDOClientProtocol)sessionProtocol;
+    }
+  
+    return clientProtocol;
   }
 
   /**

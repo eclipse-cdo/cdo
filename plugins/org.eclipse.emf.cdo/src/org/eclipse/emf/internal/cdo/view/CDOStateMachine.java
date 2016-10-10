@@ -33,6 +33,8 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionHandler1;
+import org.eclipse.emf.cdo.transaction.CDOTransactionHandler1.WithUndo;
 import org.eclipse.emf.cdo.transaction.CDOUndoDetector;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
@@ -1244,6 +1246,17 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
             if (revisionDeltas.isEmpty())
             {
               transaction.setDirty(false);
+            }
+
+            CDOTransactionHandler1[] handlers = transaction.getTransactionHandlers1();
+            for (int i = 0; i < handlers.length; i++)
+            {
+              CDOTransactionHandler1 handler = handlers[i];
+              if (handler instanceof WithUndo)
+              {
+                WithUndo withUndo = (WithUndo)handler;
+                withUndo.undoingObject(transaction, object, featureDelta);
+              }
             }
 
             return result;

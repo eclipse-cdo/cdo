@@ -1575,13 +1575,54 @@ public class Repository extends Container<Object> implements InternalRepository,
       }
       else
       {
-        CDORevisionAvailabilityInfo sourceBaseInfoToUse = sourceBaseInfo == null ? targetBaseInfo : sourceBaseInfo;
+        CDOChangeSetSegment[] targetSegments;
+        CDOChangeSetSegment[] sourceSegments;
 
-        ids.addAll(accessor.readChangeSet(monitor.fork(),
-            CDOChangeSetSegment.createFrom(targetBaseInfo.getBranchPoint(), target)));
+        if (targetBaseInfo.getBranchPoint() == CDOBranchUtil.AUTO_BRANCH_POINT)
+        {
+          CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(target, source);
+          targetSegments = CDOChangeSetSegment.createFrom(ancestor, target);
+          sourceSegments = CDOChangeSetSegment.createFrom(ancestor, source);
 
-        ids.addAll(accessor.readChangeSet(monitor.fork(),
-            CDOChangeSetSegment.createFrom(sourceBaseInfoToUse.getBranchPoint(), source)));
+          for (int i = targetSegments.length - 1; i >= 0; --i)
+          {
+            CDOChangeSetSegment targetSegment = targetSegments[i];
+            CDOBranch branch = targetSegment.getBranch();
+            long startTime = targetSegment.getTimeStamp();
+            long endTime = targetSegment.getEndTime();
+
+            while (endTime > startTime || endTime == CDOBranchPoint.UNSPECIFIED_DATE)
+            {
+              CDOCommitInfo commitInfo = commitInfoManager.getCommitInfo(branch, endTime, false);
+              if (commitInfo == null)
+              {
+                break;
+              }
+
+              CDOBranchPoint mergeSource = commitInfo.getMergeSource();
+              if (mergeSource != null && CDOChangeSetSegment.contains(sourceSegments, mergeSource))
+              {
+                targetSegments = CDOChangeSetSegment.createFrom(commitInfo, target);
+                sourceSegments = CDOChangeSetSegment.createFrom(mergeSource, source);
+                break;
+              }
+
+              endTime = commitInfo.getTimeStamp() - 1;
+            }
+          }
+
+          targetBaseInfo.setBranchPoint(CDOBranchUtil.copyBranchPoint(targetSegments[0]));
+          sourceBaseInfo.setBranchPoint(CDOBranchUtil.copyBranchPoint(sourceSegments[0]));
+        }
+        else
+        {
+          CDORevisionAvailabilityInfo sourceBaseInfoToUse = sourceBaseInfo == null ? targetBaseInfo : sourceBaseInfo;
+          targetSegments = CDOChangeSetSegment.createFrom(targetBaseInfo.getBranchPoint(), target);
+          sourceSegments = CDOChangeSetSegment.createFrom(sourceBaseInfoToUse.getBranchPoint(), source);
+        }
+
+        ids.addAll(accessor.readChangeSet(monitor.fork(), targetSegments));
+        ids.addAll(accessor.readChangeSet(monitor.fork(), sourceSegments));
       }
 
       loadMergeData(ids, targetInfo, monitor.fork());
@@ -1592,7 +1633,7 @@ public class Repository extends Container<Object> implements InternalRepository,
         loadMergeData(ids, targetBaseInfo, monitor.fork());
       }
 
-      if (sourceBaseInfo != null)
+      if (sourceBaseInfo != null && !targetBaseInfo.getBranchPoint().equals(sourceBaseInfo.getBranchPoint()))
       {
         loadMergeData(ids, sourceBaseInfo, monitor.fork());
       }

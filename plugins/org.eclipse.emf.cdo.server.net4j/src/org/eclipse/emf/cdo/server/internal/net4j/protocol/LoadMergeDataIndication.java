@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
@@ -34,8 +35,6 @@ import java.util.Set;
  */
 public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitoring
 {
-  private int infos;
-
   private CDORevisionAvailabilityInfo targetInfo;
 
   private CDORevisionAvailabilityInfo sourceInfo;
@@ -43,6 +42,10 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
   private CDORevisionAvailabilityInfo targetBaseInfo;
 
   private CDORevisionAvailabilityInfo sourceBaseInfo;
+
+  private int infos;
+
+  private boolean auto;
 
   public LoadMergeDataIndication(CDOServerProtocol protocol)
   {
@@ -85,27 +88,33 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
   private CDORevisionAvailabilityInfo readRevisionAvailabilityInfo(CDODataInput in, OMMonitor monitor)
       throws IOException
   {
-    CDOBranchPoint branchPoint = in.readCDOBranchPoint();
-    CDORevisionAvailabilityInfo info = new CDORevisionAvailabilityInfo(branchPoint);
-
-    int size = in.readInt();
-    monitor.begin(size);
-
-    try
+    if (in.readBoolean())
     {
-      for (int i = 0; i < size; i++)
+      CDOBranchPoint branchPoint = in.readCDOBranchPoint();
+      CDORevisionAvailabilityInfo info = new CDORevisionAvailabilityInfo(branchPoint);
+
+      int size = in.readInt();
+      monitor.begin(size);
+
+      try
       {
-        CDOID id = in.readCDOID();
-        info.getAvailableRevisions().put(id, null);
-        monitor.worked();
-      }
+        for (int i = 0; i < size; i++)
+        {
+          CDOID id = in.readCDOID();
+          info.getAvailableRevisions().put(id, null);
+          monitor.worked();
+        }
 
-      return info;
+        return info;
+      }
+      finally
+      {
+        monitor.done();
+      }
     }
-    finally
-    {
-      monitor.done();
-    }
+
+    auto = true;
+    return new CDORevisionAvailabilityInfo(CDOBranchUtil.AUTO_BRANCH_POINT);
   }
 
   @Override
@@ -115,6 +124,11 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
 
     try
     {
+      // if (auto)
+      // {
+      // sourceBaseInfo = new CDORevisionAvailabilityInfo(CDOBranchUtil.AUTO_BRANCH_POINT);
+      // }
+
       InternalRepository repository = getRepository();
       Set<CDOID> ids = repository.getMergeData(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo, monitor.fork());
 
@@ -125,6 +139,21 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
       }
 
       monitor.worked();
+
+      if (auto)
+      {
+        out.writeCDOBranchPoint(targetBaseInfo.getBranchPoint());
+        if (targetBaseInfo.getBranchPoint().equals(sourceBaseInfo.getBranchPoint()))
+        {
+          out.writeBoolean(false);
+          infos = 3;
+        }
+        else
+        {
+          out.writeBoolean(true);
+          out.writeCDOBranchPoint(sourceBaseInfo.getBranchPoint());
+        }
+      }
 
       Set<CDORevisionKey> writtenRevisions = new HashSet<CDORevisionKey>();
       writeRevisionAvailabilityInfo(out, targetInfo, writtenRevisions, monitor.fork());

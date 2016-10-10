@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
  * @author Eike Stepper
  * @since 4.0
  */
-public class CDODefaultTransactionHandler1 implements CDOTransactionHandler1
+public class CDODefaultTransactionHandler1 implements CDOTransactionHandler1.WithUndo
 {
   protected CDODefaultTransactionHandler1()
   {
@@ -45,6 +45,15 @@ public class CDODefaultTransactionHandler1 implements CDOTransactionHandler1
    * This implementation does nothing. Clients may override to provide specialized behavior.
    */
   public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureChange)
+  {
+    handleDefault(transaction);
+  }
+
+  /**
+   * This implementation does nothing. Clients may override to provide specialized behavior.
+   * @since 4.6
+   */
+  public void undoingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
   {
     handleDefault(transaction);
   }

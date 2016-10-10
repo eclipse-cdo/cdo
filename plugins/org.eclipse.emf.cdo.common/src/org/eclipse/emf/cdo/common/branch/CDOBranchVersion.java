@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.branch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.util.CDOVersionProvider;
 
 /**
  * A pair of a {@link #getBranch() branch} and an integer {@link #getVersion() version} number.
@@ -28,7 +29,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
  * @noimplement This interface is not intended to be implemented by clients.
  * @apiviz.has {@link CDOBranch}
  */
-public interface CDOBranchVersion
+public interface CDOBranchVersion extends CDOBranchProvider, CDOVersionProvider
 {
   /**
    * The fixed special version number <i>unspecified</i>.

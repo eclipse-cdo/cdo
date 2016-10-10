@@ -228,19 +228,24 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
 
     Pair<Integer, Long> result = branchLoader.createBranch(branchID,
         new BranchInfo(name, baseBranch.getID(), baseTimeStamp));
-    branchID = result.getElement1();
-    baseTimeStamp = result.getElement2();
+    int actualBranchID = result.getElement1();
+    long actualBaseTimeStamp = result.getElement2();
 
-    CDOBranchPoint base = baseBranch.getPoint(baseTimeStamp);
-    InternalCDOBranch branch = new CDOBranchImpl(this, branchID, name, base);
+    CDOBranchPoint base = baseBranch.getPoint(actualBaseTimeStamp);
+    InternalCDOBranch branch = createBranch(actualBranchID, name, base, baseTimeStamp);
 
     synchronized (branches)
     {
       putBranch(branch);
     }
 
-    handleBranchCreated(branch);
+    handleBranchChanged(branch, ChangeKind.CREATED);
     return branch;
+  }
+
+  protected InternalCDOBranch createBranch(int branchID, String name, CDOBranchPoint base, long originalBaseTimeStamp)
+  {
+    return new CDOBranchImpl(this, branchID, name, base);
   }
 
   @Deprecated

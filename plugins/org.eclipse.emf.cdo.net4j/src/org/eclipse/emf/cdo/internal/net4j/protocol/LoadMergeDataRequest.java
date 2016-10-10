@@ -10,12 +10,14 @@
  */
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -40,6 +42,8 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<Set<CDO
   private CDORevisionAvailabilityInfo sourceBaseInfo;
 
   private int infos;
+
+  private boolean auto;
 
   public LoadMergeDataRequest(CDOClientProtocol protocol, CDORevisionAvailabilityInfo targetInfo,
       CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
@@ -83,25 +87,36 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<Set<CDO
   private void writeRevisionAvailabilityInfo(CDODataOutput out, CDORevisionAvailabilityInfo info, OMMonitor monitor)
       throws IOException
   {
-    Set<CDOID> availableRevisions = info.getAvailableRevisions().keySet();
-    int size = availableRevisions.size();
-
-    out.writeCDOBranchPoint(info.getBranchPoint());
-    out.writeInt(size);
-
-    monitor.begin(size);
-
-    try
+    CDOBranchPoint branchPoint = info.getBranchPoint();
+    if (branchPoint != CDOBranchUtil.AUTO_BRANCH_POINT)
     {
-      for (CDOID id : availableRevisions)
+      out.writeBoolean(true);
+
+      Set<CDOID> availableRevisions = info.getAvailableRevisions().keySet();
+      int size = availableRevisions.size();
+
+      out.writeCDOBranchPoint(branchPoint);
+      out.writeInt(size);
+
+      monitor.begin(size);
+
+      try
       {
-        out.writeCDOID(id);
-        monitor.worked();
+        for (CDOID id : availableRevisions)
+        {
+          out.writeCDOID(id);
+          monitor.worked();
+        }
+      }
+      finally
+      {
+        monitor.done();
       }
     }
-    finally
+    else
     {
-      monitor.done();
+      out.writeBoolean(false);
+      auto = true;
     }
   }
 
@@ -120,6 +135,20 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<Set<CDO
         CDOID id = in.readCDOID();
         result.add(id);
         monitor.worked();
+      }
+
+      if (auto)
+      {
+        targetBaseInfo.setBranchPoint(in.readCDOBranchPoint());
+        if (in.readBoolean())
+        {
+          sourceBaseInfo.setBranchPoint(in.readCDOBranchPoint());
+        }
+        else
+        {
+          sourceBaseInfo.setBranchPoint(targetBaseInfo.getBranchPoint());
+          infos = 3;
+        }
       }
 
       readRevisionAvailabilityInfo(in, targetInfo, result, monitor.fork());

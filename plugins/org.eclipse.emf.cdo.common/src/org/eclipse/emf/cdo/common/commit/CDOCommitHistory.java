@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchProvider;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitHistoryImpl;
 
 import org.eclipse.net4j.util.container.IContainer;
@@ -18,10 +19,12 @@ import org.eclipse.net4j.util.container.IContainer;
 /**
  * A cache for the {@link CDOCommitInfo commit infos} of a branch or of an entire repository.
  *
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  * @author Eike Stepper
  * @since 4.2
  */
-public interface CDOCommitHistory extends IContainer<CDOCommitInfo>, CDOCommitInfoHandler
+public interface CDOCommitHistory extends IContainer<CDOCommitInfo>, CDOBranchProvider, CDOCommitInfoHandler
 {
   public static final CDOCommitHistory EMPTY = new CDOCommitHistoryImpl.Empty();
 

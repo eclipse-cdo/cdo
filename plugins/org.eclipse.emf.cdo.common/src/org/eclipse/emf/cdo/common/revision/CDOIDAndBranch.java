@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchProvider;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIdentifiable;
 
@@ -23,7 +24,7 @@ import org.eclipse.emf.cdo.common.id.CDOIdentifiable;
  * @noimplement This interface is not intended to be implemented by clients.
  * @apiviz.exclude
  */
-public interface CDOIDAndBranch extends CDOIdentifiable
+public interface CDOIDAndBranch extends CDOIdentifiable, CDOBranchProvider
 {
   public CDOBranch getBranch();
 }

@@ -22,9 +22,8 @@ import java.util.LinkedList;
  *
  * @author Eike Stepper
  * @since 3.0
- * @noextend This interface is not intended to be extended by clients.
  */
-public class CDOChangeSetSegment implements CDOBranchPoint
+public final class CDOChangeSetSegment implements CDOBranchPoint
 {
   private CDOBranchPoint branchPoint;
 
@@ -61,6 +60,31 @@ public class CDOChangeSetSegment implements CDOBranchPoint
     return endTime == CDOBranchPoint.UNSPECIFIED_DATE;
   }
 
+  /**
+   * @since 4.6
+   */
+  public boolean contains(CDOBranchPoint branchPoint)
+  {
+    CDOBranch branch = branchPoint.getBranch();
+    if (branch != getBranch())
+    {
+      return false;
+    }
+
+    long timeStamp = branchPoint.getTimeStamp();
+    if (timeStamp < getTimeStamp())
+    {
+      return false;
+    }
+
+    if (!isOpenEnded() && timeStamp > endTime)
+    {
+      return false;
+    }
+
+    return true;
+  }
+
   @Override
   public String toString()
   {
@@ -83,5 +107,21 @@ public class CDOChangeSetSegment implements CDOBranchPoint
 
     result.addFirst(new CDOChangeSetSegment(startBranch, startPoint.getTimeStamp(), endPoint.getTimeStamp()));
     return result.toArray(new CDOChangeSetSegment[result.size()]);
+  }
+
+  /**
+   * @since 4.6
+   */
+  public static boolean contains(CDOChangeSetSegment[] segments, CDOBranchPoint branchPoint)
+  {
+    for (CDOChangeSetSegment segment : segments)
+    {
+      if (segment.contains(branchPoint))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

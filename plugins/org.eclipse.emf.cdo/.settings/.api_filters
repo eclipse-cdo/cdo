@@ -52,6 +52,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/CDOObjectHistory.java" type="org.eclipse.emf.cdo.CDOObjectHistory">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOCommitHistory"/>
+                <message_argument value="CDOObjectHistory"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/CDOObjectReference.java" type="org.eclipse.emf.cdo.CDOObjectReference">
         <filter id="574619656">
             <message_arguments>

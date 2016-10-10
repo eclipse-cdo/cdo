@@ -234,8 +234,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
   {
     // Ensure that these 3 packages are registered with the global package registry in stand-alone
     EcorePackage.eINSTANCE.getClass();
-    EresourcePackage.eINSTANCE.getClass();
     EtypesPackage.eINSTANCE.getClass();
+    EresourcePackage.eINSTANCE.getClass();
   }
 
   public CDOSessionImpl()
@@ -1198,22 +1198,32 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
   public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint targetBase,
       CDOBranchPoint sourceBase, boolean computeChangeSets)
   {
-    CDOBranchPoint ancestor = null;
-
-    if (sourceBase == null)
+    boolean auto;
+    if (sourceBase == CDOBranchUtil.AUTO_BRANCH_POINT)
     {
-      ancestor = CDOBranchUtil.getAncestor(target, source);
-      sourceBase = ancestor;
+      auto = true;
+      targetBase = CDOBranchUtil.AUTO_BRANCH_POINT;
     }
-
-    if (targetBase == null)
+    else
     {
-      if (ancestor == null)
+      auto = false;
+      CDOBranchPoint ancestor = null;
+
+      if (sourceBase == null)
       {
         ancestor = CDOBranchUtil.getAncestor(target, source);
+        sourceBase = ancestor;
       }
 
-      targetBase = ancestor;
+      if (targetBase == null)
+      {
+        if (ancestor == null)
+        {
+          ancestor = CDOBranchUtil.getAncestor(target, source);
+        }
+
+        targetBase = ancestor;
+      }
     }
 
     boolean sameBase = sourceBase.equals(targetBase);
@@ -1221,9 +1231,16 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
     CDORevisionAvailabilityInfo targetInfo = createRevisionAvailabilityInfo2(target);
     CDORevisionAvailabilityInfo sourceInfo = createRevisionAvailabilityInfo2(source);
     CDORevisionAvailabilityInfo targetBaseInfo = createRevisionAvailabilityInfo2(targetBase);
-    CDORevisionAvailabilityInfo sourceBaseInfo = sameBase ? null : createRevisionAvailabilityInfo2(sourceBase);
+    CDORevisionAvailabilityInfo sourceBaseInfo = sameBase && !auto ? null : createRevisionAvailabilityInfo2(sourceBase);
 
     Set<CDOID> ids = sessionProtocol.loadMergeData(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo);
+
+    if (auto)
+    {
+      sourceBase = sourceBaseInfo.getBranchPoint();
+      targetBase = targetBaseInfo.getBranchPoint();
+      sameBase = sourceBase.equals(targetBase);
+    }
 
     cacheRevisions2(targetInfo);
     cacheRevisions2(sourceInfo);
@@ -1260,30 +1277,33 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
   {
     CDORevisionAvailabilityInfo info = new CDORevisionAvailabilityInfo(branchPoint);
 
-    InternalCDORevisionManager revisionManager = getRevisionManager();
-    InternalCDORevisionCache cache = revisionManager.getCache();
-
-    List<CDORevision> revisions = cache.getRevisions(branchPoint);
-    for (CDORevision revision : revisions)
+    if (branchPoint != CDOBranchUtil.AUTO_BRANCH_POINT)
     {
-      if (revision instanceof PointerCDORevision)
-      {
-        PointerCDORevision pointer = (PointerCDORevision)revision;
-        CDOBranchVersion target = pointer.getTarget();
-        if (target != null)
-        {
-          revision = cache.getRevisionByVersion(pointer.getID(), target);
-        }
-      }
-      else if (revision instanceof DetachedCDORevision)
-      {
-        revision = null;
-      }
+      InternalCDORevisionManager revisionManager = getRevisionManager();
+      InternalCDORevisionCache cache = revisionManager.getCache();
 
-      if (revision != null)
+      List<CDORevision> revisions = cache.getRevisions(branchPoint);
+      for (CDORevision revision : revisions)
       {
-        resolveAllElementProxies(revision);
-        info.addRevision(revision);
+        if (revision instanceof PointerCDORevision)
+        {
+          PointerCDORevision pointer = (PointerCDORevision)revision;
+          CDOBranchVersion target = pointer.getTarget();
+          if (target != null)
+          {
+            revision = cache.getRevisionByVersion(pointer.getID(), target);
+          }
+        }
+        else if (revision instanceof DetachedCDORevision)
+        {
+          revision = null;
+        }
+
+        if (revision != null)
+        {
+          resolveAllElementProxies(revision);
+          info.addRevision(revision);
+        }
       }
     }
 

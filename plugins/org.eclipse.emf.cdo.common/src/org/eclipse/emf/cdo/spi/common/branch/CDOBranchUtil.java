@@ -30,6 +30,28 @@ import java.util.List;
  */
 public final class CDOBranchUtil
 {
+  /**
+   * @since 4.6
+   */
+  public static final CDOBranchPoint AUTO_BRANCH_POINT = new CDOBranchPoint()
+  {
+    public long getTimeStamp()
+    {
+      return Long.MIN_VALUE;
+    }
+
+    public CDOBranch getBranch()
+    {
+      return null;
+    }
+
+    @Override
+    public String toString()
+    {
+      return "BranchPoint[AUTO]";
+    }
+  };
+
   private CDOBranchUtil()
   {
   }

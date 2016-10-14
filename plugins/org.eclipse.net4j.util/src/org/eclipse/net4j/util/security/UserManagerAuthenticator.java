@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2012, 2016 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -41,6 +41,14 @@ public class UserManagerAuthenticator extends Lifecycle implements IAuthenticato
 
   public UserManagerAuthenticator()
   {
+  }
+
+  /**
+   * @since 3.7
+   */
+  public UserManagerAuthenticator(IUserManager userManager)
+  {
+    setUserManager(userManager);
   }
 
   public String getEncryptionAlgorithmName()

@@ -50,7 +50,7 @@ public class SSLUtil
   /**
    * The variable for SSL Engine
    */
-  private static final String PROTOCOL = "TLS";
+  private static final String PROTOCOL = "TLSv1.2";
 
   /**
    * The X.509 certificate type.

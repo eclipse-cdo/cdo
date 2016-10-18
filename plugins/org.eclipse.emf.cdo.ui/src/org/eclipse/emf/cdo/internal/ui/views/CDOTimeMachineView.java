@@ -36,7 +36,7 @@ import java.util.Iterator;
  */
 public class CDOTimeMachineView extends ViewPart implements ISelectionListener
 {
-  public final static String ID = "org.eclipse.emf.cdo.ui.CDOTimeMachineView"; //$NON-NLS-1$
+  public static final String ID = "org.eclipse.emf.cdo.ui.CDOTimeMachineView"; //$NON-NLS-1$
 
   private TimeSlider timeSlider;
 

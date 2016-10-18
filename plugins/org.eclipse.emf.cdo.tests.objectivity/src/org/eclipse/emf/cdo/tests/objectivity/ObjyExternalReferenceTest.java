@@ -40,7 +40,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
  */
 public class ObjyExternalReferenceTest extends AbstractCDOTest
 {
-  final static public String REPOSITORY2_NAME = "repo2";
+  static final public String REPOSITORY2_NAME = "repo2";
 
   public void testExternalWithDynamicEObject() throws Exception
   {

@@ -41,7 +41,7 @@ import java.io.ByteArrayOutputStream;
  */
 public class HibernateExternalAnnotationTest extends AbstractCDOTest
 {
-  private final static String REPOSITORY2_NAME = "repo2";
+  private static final String REPOSITORY2_NAME = "repo2";
 
   @Override
   protected void doSetUp() throws Exception

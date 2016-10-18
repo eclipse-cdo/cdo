@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.tests.objectivity;singleton:=true
-Bundle-Version: 4.0.400.qualifier
+Bundle-Version: 4.0.500.qualifier
 Require-Bundle: org.eclipse.emf.cdo.server.objectivity;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.tests;bundle-version="[4.0.0,5.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
@@ -18,4 +18,4 @@ Import-Package: com.objy.as;version="[4.0.0,5.0.0)",
  com.objy.pm.asapp;version="[4.0.0,5.0.0)",
  com.objy.pm.asexcep;version="[4.0.0,5.0.0)",
  com.objy.pm.tmi;version="[4.0.0,5.0.0)"
-Export-Package: org.eclipse.emf.cdo.tests.objectivity;version="4.0.400";x-internal:=true
+Export-Package: org.eclipse.emf.cdo.tests.objectivity;version="4.0.500";x-internal:=true

@@ -30,9 +30,9 @@ public enum DBAnnotation
   COLUMN_LENGTH("columnLength"), //
   TYPE_MAPPING("typeMapping");
 
-  public final static String SOURCE_URI = "http://www.eclipse.org/CDO/DBStore";
+  public static final String SOURCE_URI = "http://www.eclipse.org/CDO/DBStore";
 
-  public final static String TABLE_MAPPING_NONE = "NONE";
+  public static final String TABLE_MAPPING_NONE = "NONE";
 
   private String keyword;
 

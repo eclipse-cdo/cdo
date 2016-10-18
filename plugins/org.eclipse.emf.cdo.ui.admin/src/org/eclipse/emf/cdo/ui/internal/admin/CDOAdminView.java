@@ -55,7 +55,7 @@ import java.text.MessageFormat;
  */
 public class CDOAdminView extends ContainerView
 {
-  public final static String ID = "org.eclipse.emf.cdo.ui.admin.CDOAdminView"; //$NON-NLS-1$
+  public static final String ID = "org.eclipse.emf.cdo.ui.admin.CDOAdminView"; //$NON-NLS-1$
 
   private final CDOAdminClientManager adminManager = OM.getAdminManager();
 

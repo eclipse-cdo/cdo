@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class Bugzilla_347964_Test extends AbstractCDOTest
 {
-  private final static String RESOURCE_NAME = "res347964";
+  private static final String RESOURCE_NAME = "res347964";
 
   @Requires(IRepositoryConfig.CAPABILITY_RESTARTABLE)
   public void testIndexDeletion() throws Exception

@@ -36,9 +36,9 @@ public class PluginContainerViewProvider extends ManagedContainerViewProvider
 {
   public static final CDOViewProvider INSTANCE = new PluginContainerViewProvider();
 
-  private final static String REGEX = "cdo:.*"; //$NON-NLS-1$
+  private static final String REGEX = "cdo:.*"; //$NON-NLS-1$
 
-  private final static int PRIORITY = DEFAULT_PRIORITY - 200;
+  private static final int PRIORITY = DEFAULT_PRIORITY - 200;
 
   public PluginContainerViewProvider()
   {

@@ -31,7 +31,7 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class AcceptorsView extends ContainerView
 {
-  public final static String ID = "org.eclipse.net4j.AcceptorsView"; //$NON-NLS-1$
+  public static final String ID = "org.eclipse.net4j.AcceptorsView"; //$NON-NLS-1$
 
   private IAction newAcceptorAction;
 

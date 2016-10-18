@@ -27,11 +27,11 @@ import org.eclipse.emf.cdo.util.CommitException;
  */
 public class Bugzilla_315026_Test extends AbstractCDOTest
 {
-  private final static String ORIGINAL_NAME = "AAA";
+  private static final String ORIGINAL_NAME = "AAA";
 
-  private final static String DIRTY_NAME = "BBB";
+  private static final String DIRTY_NAME = "BBB";
 
-  private final static String OTHER_NAME = "CCC";
+  private static final String OTHER_NAME = "CCC";
 
   public void test() throws Exception
   {

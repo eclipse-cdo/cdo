@@ -51,7 +51,7 @@ import java.util.Map;
  */
 public class CDOSessionsView extends ContainerView
 {
-  public final static String ID = "org.eclipse.emf.cdo.ui.CDOSessionsView"; //$NON-NLS-1$
+  public static final String ID = "org.eclipse.emf.cdo.ui.CDOSessionsView"; //$NON-NLS-1$
 
   private static Map<String, ResourceOpener> resourceOpeners = Collections
       .synchronizedMap(new HashMap<String, ResourceOpener>());

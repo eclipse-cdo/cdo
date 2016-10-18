@@ -21,9 +21,9 @@ import com.objy.db.app.ooId;
  */
 public abstract class ObjyArrayList<T>
 {
-  final static String sizeName = "elementCount";
+  static final String sizeName = "elementCount";
 
-  final static String arrayName = "curr";
+  static final String arrayName = "curr";
 
   protected Class_Object classObject;
 

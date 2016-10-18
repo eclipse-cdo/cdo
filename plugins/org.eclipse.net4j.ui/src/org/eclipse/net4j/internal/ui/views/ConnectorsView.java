@@ -31,7 +31,7 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class ConnectorsView extends ContainerView
 {
-  public final static String ID = "org.eclipse.net4j.ConnectorsView"; //$NON-NLS-1$
+  public static final String ID = "org.eclipse.net4j.ConnectorsView"; //$NON-NLS-1$
 
   private IAction newConnectorAction;
 

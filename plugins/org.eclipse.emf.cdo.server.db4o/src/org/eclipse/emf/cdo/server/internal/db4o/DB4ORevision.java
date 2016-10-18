@@ -43,9 +43,9 @@ import java.util.List;
  */
 public class DB4ORevision
 {
-  public final static String ATTRIBUTE_CLASS_NAME = "className";
+  public static final String ATTRIBUTE_CLASS_NAME = "className";
 
-  public final static String ATTRIBUTE_PACKAGE_NS_URI = "packageNsURI";
+  public static final String ATTRIBUTE_PACKAGE_NS_URI = "packageNsURI";
 
   private String packageNsURI;
 

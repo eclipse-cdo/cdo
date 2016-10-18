@@ -38,7 +38,7 @@ import java.util.Date;
  */
 public class XATransactionTest extends AbstractCDOTest
 {
-  final static public String REPOSITORY2_NAME = "repo2";
+  static final public String REPOSITORY2_NAME = "repo2";
 
   public void testRollback() throws Exception
   {

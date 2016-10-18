@@ -36,7 +36,7 @@ import java.sql.Types;
  */
 public class XMLUserType implements UserType
 {
-  private final static java.lang.String XML_TYPE_PACKAGE_NSURI = "http://www.eclipse.org/emf/2003/XMLType"; //$NON-NLS-1$
+  private static final java.lang.String XML_TYPE_PACKAGE_NSURI = "http://www.eclipse.org/emf/2003/XMLType"; //$NON-NLS-1$
 
   private EDataType eDataType = null;
 

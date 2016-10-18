@@ -30,7 +30,7 @@ public class OfflineExampleUtil
 
   public static final int MASTER_PORT = 2036;
 
-  public final static String CLONE_NAME = "clone";
+  public static final String CLONE_NAME = "clone";
 
   public static final int CLONE_PORT = 2037;
 

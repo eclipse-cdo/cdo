@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":38,"i5":6,"i6":6,"i7":38};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":38,"i7":6,"i8":6,"i9":38};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -140,32 +140,40 @@ extends <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOSavepoint.htm
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#clear--">clear</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSavepoint</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#getFirstSavePoint--">getFirstSavePoint</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#getDetachedObject-org.eclipse.emf.cdo.common.id.CDOID-">getDetachedObject</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSavepoint</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#getNextSavepoint--">getNextSavepoint</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#getDirtyObject-org.eclipse.emf.cdo.common.id.CDOID-">getDirtyObject</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSavepoint</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#getPreviousSavepoint--">getPreviousSavepoint</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#getFirstSavePoint--">getFirstSavePoint</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSavepoint</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#getNextSavepoint--">getNextSavepoint</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSavepoint</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#getPreviousSavepoint--">getPreviousSavepoint</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#getSharedDetachedObjects--">getSharedDetachedObjects</a></span>()</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#getTransaction--">getTransaction</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#isNewObject-org.eclipse.emf.cdo.common.id.CDOID-">isNewObject</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#recalculateSharedDetachedObjects--">recalculateSharedDetachedObjects</a></span>()</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
@@ -312,13 +320,39 @@ void&nbsp;recalculateSharedDetachedObjects()</pre>
 <a name="isNewObject-org.eclipse.emf.cdo.common.id.CDOID-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>isNewObject</h4>
 <pre>boolean&nbsp;isNewObject(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
+</dl>
+</li>
+</ul>
+<a name="getDirtyObject-org.eclipse.emf.cdo.common.id.CDOID-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDirtyObject</h4>
+<pre><a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;getDirtyObject(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a name="getDetachedObject-org.eclipse.emf.cdo.common.id.CDOID-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getDetachedObject</h4>
+<pre><a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;getDetachedObject(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
 </dl>
 </li>
 </ul>

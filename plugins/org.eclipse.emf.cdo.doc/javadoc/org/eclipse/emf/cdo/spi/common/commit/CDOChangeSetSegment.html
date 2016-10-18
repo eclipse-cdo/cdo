@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var methods = {"i0":10,"i1":9,"i2":9,"i3":9,"i4":10,"i5":10,"i6":10,"i7":10,"i8":9,"i9":9,"i10":9,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -49,7 +49,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetDataRevisionProvider.html" title="class in org.eclipse.emf.cdo.spi.common.commit"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOCommitInfoUtil.html" title="class in org.eclipse.emf.cdo.spi.common.commit"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.Handler.html" title="interface in org.eclipse.emf.cdo.spi.common.commit"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" target="_top">Frames</a></li>
@@ -73,7 +73,7 @@ var activeTableTab = "activeTableTab";
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -108,7 +108,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></dd>
+<dd><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></dd>
 </dl>
 <hr>
 <br>
@@ -122,7 +122,7 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBr
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
 <dt><span class="simpleTagLabel">No Extend</span></dt>
-<dd>This interface is not intended to be extended by clients.</dd>
+<dd>This class is not intended to be subclassed by clients.</dd>
 </dl>
 </li>
 </ul>
@@ -130,6 +130,25 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBr
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Class and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.Handler.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment.Handler</a></span></code>&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- =========== FIELD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="field.summary">
@@ -177,37 +196,68 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBr
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html#contains-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">contains</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>static boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html#contains-org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment:A-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">contains</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;segments,
+        <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html#createFrom-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">createFrom</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;startPoint,
           <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint)</code>&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html#createFrom-long-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">createFrom</a></span>(long&nbsp;startTime,
+          <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint)</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html#getBranch--">getBranch</a></span>()</code>
 <div class="block">Returns the branch of this branch point, or <code>null</code> if this branch point is the
  <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase--"><code>base</code></a> of the <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getMainBranch--"><code>main branch</code></a>.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html#getEndPoint--">getEndPoint</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html#getEndTime--">getEndTime</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html#getTimeStamp--">getTimeStamp</a></span>()</code>
 <div class="block">Returns the time stamp of this branch point, or the fixed special time stamp <i>
  <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>unspecified</code></a></i> if this branch point marks the <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getHead--"><code>head</code></a> of a branch.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html#handleSegments-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment.Handler-">handleSegments</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;startPoint,
+              <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint,
+              <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.Handler.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment.Handler</a>&nbsp;handler)</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html#handleSegments-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment.Handler-">handleSegments</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint,
+              <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.Handler.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment.Handler</a>&nbsp;handler)</code>&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html#handleSegments-long-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment.Handler-">handleSegments</a></span>(long&nbsp;startTime,
+              <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint,
+              <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.Handler.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment.Handler</a>&nbsp;handler)</code>&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html#isOpenEnded--">isOpenEnded</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
@@ -265,6 +315,8 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBr
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--">getBranch</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchProvider.html#getBranch--">getBranch</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -313,6 +365,19 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBr
 <pre>public&nbsp;boolean&nbsp;isOpenEnded()</pre>
 </li>
 </ul>
+<a name="contains-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>contains</h4>
+<pre>public&nbsp;boolean&nbsp;contains(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
 <a name="toString--">
 <!--   -->
 </a>
@@ -326,14 +391,86 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBr
 </dl>
 </li>
 </ul>
+<a name="handleSegments-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment.Handler-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>handleSegments</h4>
+<pre>public static&nbsp;void&nbsp;handleSegments(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint,
+                                  <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.Handler.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment.Handler</a>&nbsp;handler)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a name="handleSegments-long-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment.Handler-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>handleSegments</h4>
+<pre>public static&nbsp;void&nbsp;handleSegments(long&nbsp;startTime,
+                                  <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint,
+                                  <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.Handler.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment.Handler</a>&nbsp;handler)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a name="handleSegments-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment.Handler-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>handleSegments</h4>
+<pre>public static&nbsp;void&nbsp;handleSegments(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;startPoint,
+                                  <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint,
+                                  <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.Handler.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment.Handler</a>&nbsp;handler)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a name="createFrom-long-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createFrom</h4>
+<pre>public static&nbsp;<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;createFrom(long&nbsp;startTime,
+                                               <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
 <a name="createFrom-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>createFrom</h4>
 <pre>public static&nbsp;<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;createFrom(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;startPoint,
                                                <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint)</pre>
+</li>
+</ul>
+<a name="contains-org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment:A-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>contains</h4>
+<pre>public static&nbsp;boolean&nbsp;contains(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;segments,
+                               <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -364,7 +501,7 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBr
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetDataRevisionProvider.html" title="class in org.eclipse.emf.cdo.spi.common.commit"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOCommitInfoUtil.html" title="class in org.eclipse.emf.cdo.spi.common.commit"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.Handler.html" title="interface in org.eclipse.emf.cdo.spi.common.commit"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../../index.html?org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" target="_top">Frames</a></li>
@@ -388,7 +525,7 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBr
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

@@ -595,6 +595,36 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#merge-org.eclipse.emf.cdo.common.branch.CDOBranch-org.eclipse.emf.cdo.transaction.CDOMerger-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;source,
+     <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#merge-org.eclipse.emf.cdo.common.branch.CDOBranch-org.eclipse.emf.cdo.transaction.CDOMerger-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;source,
+     <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>
+<div class="block">Merges the changes from the given source branch into this transaction and possibly considers previous merges
+ from that branch by inspecting the <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#getMergeSource--"><code>merge source</code></a>
+ information of the <a href="../../../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getCommitInfoManager--"><code>commit history</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#merge-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.transaction.CDOMerger-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
+     <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
+     <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;targetBase,
+     <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#merge-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.transaction.CDOMerger-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
+     <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
+     <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;targetBase,
+     <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>
+<div class="block">Merges the changes between the given source base point and the given source point into this transaction.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
 <td class="colLast"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#merge-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.transaction.CDOMerger-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
      <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
      <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>&nbsp;</td>
@@ -603,7 +633,9 @@
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
 <td class="colLast"><span class="typeNameLabel">CDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#merge-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.transaction.CDOMerger-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
      <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
-     <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>&nbsp;</td>
+     <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>
+<div class="block">Merges the changes between the given source base point and the given source point into this transaction.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
@@ -613,7 +645,11 @@
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
 <td class="colLast"><span class="typeNameLabel">CDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#merge-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.transaction.CDOMerger-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
-     <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>&nbsp;</td>
+     <a href="../../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>
+<div class="block">Merges the changes from the given source point into this transaction and possibly considers previous merges
+ from that <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--"><code>branch</code></a> by inspecting the <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#getMergeSource--"><code>merge source</code></a>
+ information of the <a href="../../../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getCommitInfoManager--"><code>commit history</code></a>.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
@@ -770,7 +806,7 @@
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>,<a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&gt;&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">InternalCDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSetData-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">applyChangeSetData</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData,
-                  <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;ancestorProvider,
+                  <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetBaseProvider,
                   <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetProvider,
                   <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
@@ -791,7 +827,7 @@
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.ApplyChangeSetResult.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOTransaction.ApplyChangeSetResult</a></code></td>
 <td class="colLast"><span class="typeNameLabel">InternalCDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSet-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-boolean-">applyChangeSet</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData,
-              <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;ancestorProvider,
+              <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetBaseProvider,
               <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetProvider,
               <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
               boolean&nbsp;keepVersions)</code>&nbsp;</td>
@@ -799,7 +835,7 @@
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>,<a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&gt;&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">InternalCDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSetData-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">applyChangeSetData</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData,
-                  <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;ancestorProvider,
+                  <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetBaseProvider,
                   <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetProvider,
                   <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;

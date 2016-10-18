@@ -101,7 +101,7 @@
 <tr class="altColor">
 <td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a></td>
 <td class="colLast">
-<div class="block">Encapsulates all the transferrable information that fully specifies a query from a <a href="../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><code>view</code></a> to a
+<div class="block">Encapsulates all the transferable information that fully specifies a query from a <a href="../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><code>view</code></a> to a
  <a href="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><code>repository</code></a>.</div>
 </td>
 </tr>
@@ -113,6 +113,12 @@
 <td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></td>
 <td class="colLast">
 <div class="block">Provides the consumer with a long-valued time stamp.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOVersionProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOVersionProvider</a></td>
+<td class="colLast">
+<div class="block">Provides the consumer with an int-valued version.</div>
 </td>
 </tr>
 </tbody>
@@ -149,6 +155,14 @@
 <td class="colLast">
 <div class="block">The <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util"><code>queue</code></a> that represents the result of a CDOQuery.</div>
 </td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/util/CountedTimeProvider.html" title="class in org.eclipse.emf.cdo.common.util">CountedTimeProvider</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/util/CurrentTimeProvider.html" title="class in org.eclipse.emf.cdo.common.util">CurrentTimeProvider</a></td>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/util/RepositoryStateChangedEvent.html" title="class in org.eclipse.emf.cdo.common.util">RepositoryStateChangedEvent</a></td>
@@ -194,19 +208,23 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOResourceNodeNotFoundException.html" title="class in org.eclipse.emf.cdo.common.util">CDOResourceNodeNotFoundException</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/util/NotAuthenticatedException.html" title="class in org.eclipse.emf.cdo.common.util">NotAuthenticatedException</a></td>
 <td class="colLast">Deprecated
 <div class="block"><span class="deprecationComment">As of 4.3 use <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/NotAuthenticatedException.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security"><code>NotAuthenticatedException</code></a>, instead.</span></div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/util/PartialCollectionLoadingNotSupportedException.html" title="class in org.eclipse.emf.cdo.common.util">PartialCollectionLoadingNotSupportedException</a></td>
 <td class="colLast">
 <div class="block">An unchecked exception that indicates that <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOElementProxy.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>list element proxies</code></a> have been encountered but
  cannot be handled.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../../../org/eclipse/emf/cdo/common/util/TransportException.html" title="class in org.eclipse.emf.cdo.common.util">TransportException</a></td>
 <td class="colLast">
 <div class="block">An unchecked exception that indicates transport-level problems.</div>

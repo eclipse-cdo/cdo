@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -212,18 +212,27 @@ var activeTableTab = "activeTableTab";
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#isOSGiRunning--">isOSGiRunning</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#removeLogFilter-org.eclipse.net4j.util.om.log.OMLogFilter-">removeLogFilter</a></span>(<a href="../../../../../org/eclipse/net4j/util/om/log/OMLogFilter.html" title="interface in org.eclipse.net4j.util.om.log">OMLogFilter</a>&nbsp;logFilter)</code>&nbsp;</td>
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#isProperty-java.lang.String-">isProperty</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key)</code>&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#removeLogHandler-org.eclipse.net4j.util.om.log.OMLogHandler-">removeLogHandler</a></span>(<a href="../../../../../org/eclipse/net4j/util/om/log/OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log">OMLogHandler</a>&nbsp;logHandler)</code>&nbsp;</td>
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#isProperty-java.lang.String-boolean-">isProperty</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key,
+          boolean&nbsp;defaultValue)</code>&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#removeTraceHandler-org.eclipse.net4j.util.om.trace.OMTraceHandler-">removeTraceHandler</a></span>(<a href="../../../../../org/eclipse/net4j/util/om/trace/OMTraceHandler.html" title="interface in org.eclipse.net4j.util.om.trace">OMTraceHandler</a>&nbsp;traceHandler)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#removeLogFilter-org.eclipse.net4j.util.om.log.OMLogFilter-">removeLogFilter</a></span>(<a href="../../../../../org/eclipse/net4j/util/om/log/OMLogFilter.html" title="interface in org.eclipse.net4j.util.om.log">OMLogFilter</a>&nbsp;logFilter)</code>&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#removeLogHandler-org.eclipse.net4j.util.om.log.OMLogHandler-">removeLogHandler</a></span>(<a href="../../../../../org/eclipse/net4j/util/om/log/OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log">OMLogHandler</a>&nbsp;logHandler)</code>&nbsp;</td>
+</tr>
+<tr id="i18" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#removeTraceHandler-org.eclipse.net4j.util.om.trace.OMTraceHandler-">removeTraceHandler</a></span>(<a href="../../../../../org/eclipse/net4j/util/om/trace/OMTraceHandler.html" title="interface in org.eclipse.net4j.util.om.trace">OMTraceHandler</a>&nbsp;traceHandler)</code>&nbsp;</td>
+</tr>
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#setDebugging-boolean-">setDebugging</a></span>(boolean&nbsp;debugging)</code>&nbsp;</td>
 </tr>
@@ -431,6 +440,33 @@ var activeTableTab = "activeTableTab";
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
+</dl>
+</li>
+</ul>
+<a name="isProperty-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isProperty</h4>
+<pre>boolean&nbsp;isProperty(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.7</dd>
+</dl>
+</li>
+</ul>
+<a name="isProperty-java.lang.String-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isProperty</h4>
+<pre>boolean&nbsp;isProperty(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key,
+                   boolean&nbsp;defaultValue)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.7</dd>
 </dl>
 </li>
 </ul>

@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -199,28 +199,44 @@ extends <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.LabelProvider.html#getBranchString-org.eclipse.emf.cdo.common.branch.CDOBranch-">getBranchString</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.LabelProvider.html#getInputBranch--">getInputBranch</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.LabelProvider.html#getLocalUserID--">getLocalUserID</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.LabelProvider.html#getTimeStampString-long-">getTimeStampString</a></span>(long&nbsp;timeStamp)</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.LabelProvider.html#isFormatTimeStamps--">isFormatTimeStamps</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.LabelProvider.html#isShortenBranchPaths--">isShortenBranchPaths</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.LabelProvider.html#setFormatTimeStamps-boolean-">setFormatTimeStamps</a></span>(boolean&nbsp;formatTimeStamps)</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.LabelProvider.html#setInputBranch-org.eclipse.emf.cdo.common.branch.CDOBranch-">setInputBranch</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;inputBranch)</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.LabelProvider.html#setLocalUserID-java.lang.String-">setLocalUserID</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;localUserID)</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.LabelProvider.html#setShortenBranchPaths-boolean-">setShortenBranchPaths</a></span>(boolean&nbsp;shortenBranchPaths)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -351,10 +367,62 @@ extends <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/
 <a name="setFormatTimeStamps-boolean-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setFormatTimeStamps</h4>
 <pre>public&nbsp;void&nbsp;setFormatTimeStamps(boolean&nbsp;formatTimeStamps)</pre>
+</li>
+</ul>
+<a name="isShortenBranchPaths--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isShortenBranchPaths</h4>
+<pre>public&nbsp;boolean&nbsp;isShortenBranchPaths()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a name="setShortenBranchPaths-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setShortenBranchPaths</h4>
+<pre>public&nbsp;void&nbsp;setShortenBranchPaths(boolean&nbsp;shortenBranchPaths)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a name="getBranchString-org.eclipse.emf.cdo.common.branch.CDOBranch-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBranchString</h4>
+<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getBranchString(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a name="getTimeStampString-long-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getTimeStampString</h4>
+<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getTimeStampString(long&nbsp;timeStamp)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
 </li>
 </ul>
 </li>

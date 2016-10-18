@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -205,15 +205,19 @@ extends <a href="../../../../../org/eclipse/net4j/signal/IndicationWithMonitorin
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/signal/confirmation/ConfirmationIndication.html#getConfirmationProvider--">getConfirmationProvider</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>protected int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/signal/confirmation/ConfirmationIndication.html#getIndicatingWorkPercent--">getIndicatingWorkPercent</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../../org/eclipse/net4j/signal/confirmation/ConfirmationPrompt.html" title="class in org.eclipse.net4j.signal.confirmation">ConfirmationPrompt</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/signal/confirmation/ConfirmationIndication.html#getPrompt--">getPrompt</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/signal/confirmation/ConfirmationIndication.html#indicating-org.eclipse.net4j.util.io.ExtendedDataInputStream-org.eclipse.net4j.util.om.monitor.OMMonitor-">indicating</a></span>(<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/ExtendedDataInputStream.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">ExtendedDataInputStream</a>&nbsp;in,
           <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/signal/confirmation/ConfirmationIndication.html#responding-org.eclipse.net4j.util.io.ExtendedDataOutputStream-org.eclipse.net4j.util.om.monitor.OMMonitor-">responding</a></span>(<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/ExtendedDataOutputStream.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">ExtendedDataOutputStream</a>&nbsp;out,
           <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
@@ -224,7 +228,7 @@ extends <a href="../../../../../org/eclipse/net4j/signal/IndicationWithMonitorin
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.net4j.signal.<a href="../../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html" title="class in org.eclipse.net4j.signal">IndicationWithMonitoring</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#execute-org.eclipse.net4j.buffer.BufferInputStream-org.eclipse.net4j.buffer.BufferOutputStream-">execute</a>, <a href="../../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#getIndicatingWorkPercent--">getIndicatingWorkPercent</a>, <a href="../../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#getMonitoringExecutorService--">getMonitoringExecutorService</a>, <a href="../../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#indicating-org.eclipse.net4j.util.io.ExtendedDataInputStream-">indicating</a>, <a href="../../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#responding-org.eclipse.net4j.util.io.ExtendedDataOutputStream-">responding</a></code></li>
+<code><a href="../../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#execute-org.eclipse.net4j.buffer.BufferInputStream-org.eclipse.net4j.buffer.BufferOutputStream-">execute</a>, <a href="../../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#getMonitoringExecutorService--">getMonitoringExecutorService</a>, <a href="../../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#indicating-org.eclipse.net4j.util.io.ExtendedDataInputStream-">indicating</a>, <a href="../../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#responding-org.eclipse.net4j.util.io.ExtendedDataOutputStream-">responding</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.signal.IndicationWithResponse">
@@ -300,6 +304,19 @@ extends <a href="../../../../../org/eclipse/net4j/signal/IndicationWithMonitorin
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="getIndicatingWorkPercent--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIndicatingWorkPercent</h4>
+<pre>protected&nbsp;int&nbsp;getIndicatingWorkPercent()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#getIndicatingWorkPercent--">getIndicatingWorkPercent</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html" title="class in org.eclipse.net4j.signal">IndicationWithMonitoring</a></code></dd>
+</dl>
+</li>
+</ul>
 <a name="indicating-org.eclipse.net4j.util.io.ExtendedDataInputStream-org.eclipse.net4j.util.om.monitor.OMMonitor-">
 <!--   -->
 </a>

@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -74,13 +74,13 @@ var activeTableTab = "activeTableTab";
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -123,6 +123,25 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Field and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/CDOBranchUtil.html#AUTO_BRANCH_POINT">AUTO_BRANCH_POINT</a></span></code>&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method.summary">
@@ -180,6 +199,33 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/CDOBranchUtil.html#normalizeBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">normalizeBranchPoint</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code>&nbsp;</td>
 </tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/CDOBranchUtil.html#readBranchPointOrNull-org.eclipse.emf.cdo.common.protocol.CDODataInput-">readBranchPointOrNull</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in)</code>&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPointRange</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/CDOBranchUtil.html#readRange-org.eclipse.emf.cdo.common.protocol.CDODataInput-">readRange</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in)</code>&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPointRange</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/CDOBranchUtil.html#readRangeOrNull-org.eclipse.emf.cdo.common.protocol.CDODataInput-">readRangeOrNull</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in)</code>&nbsp;</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/CDOBranchUtil.html#writeBranchPointOrNull-org.eclipse.emf.cdo.common.protocol.CDODataOutput-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">writeBranchPointOrNull</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+                      <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;point)</code>&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/CDOBranchUtil.html#writeRange-org.eclipse.emf.cdo.common.protocol.CDODataOutput-org.eclipse.emf.cdo.common.branch.CDOBranchPointRange-">writeRange</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+          <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPointRange</a>&nbsp;range)</code>&nbsp;</td>
+</tr>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/CDOBranchUtil.html#writeRangeOrNull-org.eclipse.emf.cdo.common.protocol.CDODataOutput-org.eclipse.emf.cdo.common.branch.CDOBranchPointRange-">writeRangeOrNull</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+                <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPointRange</a>&nbsp;range)</code>&nbsp;</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -196,6 +242,27 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field.detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a name="AUTO_BRANCH_POINT">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>AUTO_BRANCH_POINT</h4>
+<pre>public static final&nbsp;<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a> AUTO_BRANCH_POINT</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
 <!-- ============ METHOD DETAIL ========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method.detail">
@@ -219,6 +286,105 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <h4>createRange</h4>
 <pre>public static&nbsp;<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPointRange</a>&nbsp;createRange(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;startPoint,
                                               <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint)</pre>
+</li>
+</ul>
+<a name="writeRange-org.eclipse.emf.cdo.common.protocol.CDODataOutput-org.eclipse.emf.cdo.common.branch.CDOBranchPointRange-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>writeRange</h4>
+<pre>public static&nbsp;void&nbsp;writeRange(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+                              <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPointRange</a>&nbsp;range)
+                       throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a name="readRange-org.eclipse.emf.cdo.common.protocol.CDODataInput-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>readRange</h4>
+<pre>public static&nbsp;<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPointRange</a>&nbsp;readRange(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in)
+                                     throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a name="writeRangeOrNull-org.eclipse.emf.cdo.common.protocol.CDODataOutput-org.eclipse.emf.cdo.common.branch.CDOBranchPointRange-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>writeRangeOrNull</h4>
+<pre>public static&nbsp;void&nbsp;writeRangeOrNull(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+                                    <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPointRange</a>&nbsp;range)
+                             throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a name="readRangeOrNull-org.eclipse.emf.cdo.common.protocol.CDODataInput-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>readRangeOrNull</h4>
+<pre>public static&nbsp;<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPointRange</a>&nbsp;readRangeOrNull(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in)
+                                           throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a name="writeBranchPointOrNull-org.eclipse.emf.cdo.common.protocol.CDODataOutput-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>writeBranchPointOrNull</h4>
+<pre>public static&nbsp;void&nbsp;writeBranchPointOrNull(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+                                          <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;point)
+                                   throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a name="readBranchPointOrNull-org.eclipse.emf.cdo.common.protocol.CDODataInput-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>readBranchPointOrNull</h4>
+<pre>public static&nbsp;<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;readBranchPointOrNull(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in)
+                                            throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
 </li>
 </ul>
 <a name="copyBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">
@@ -362,13 +528,13 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

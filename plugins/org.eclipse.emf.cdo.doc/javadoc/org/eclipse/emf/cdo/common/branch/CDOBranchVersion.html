@@ -99,6 +99,10 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <dl>
+<dt>All Superinterfaces:</dt>
+<dd><a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOVersionProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOVersionProvider</a></dd>
+</dl>
+<dl>
 <dt>All Known Subinterfaces:</dt>
 <dd><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisable</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.EvictionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache.EvictionEvent</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>, <a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>, <a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></dd>
 </dl>
@@ -108,7 +112,8 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="typeNameLabel">CDOBranchVersion</span></pre>
+<pre>public interface <span class="typeNameLabel">CDOBranchVersion</span>
+extends <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOVersionProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOVersionProvider</a></pre>
 <div class="block">A pair of a <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getBranch--"><code>branch</code></a> and an integer <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getVersion--"><code>version</code></a> number.
  <p>
  It is often used in the context of
@@ -245,6 +250,10 @@ var activeTableTab = "activeTableTab";
 <h4>getBranch</h4>
 <pre><a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;getBranch()</pre>
 <div class="block">Returns the branch of this branch version.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchProvider.html#getBranch--">getBranch</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a></code></dd>
+</dl>
 </li>
 </ul>
 <a name="getVersion--">
@@ -255,6 +264,10 @@ var activeTableTab = "activeTableTab";
 <h4>getVersion</h4>
 <pre>int&nbsp;getVersion()</pre>
 <div class="block">Returns the version number of this branch version.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOVersionProvider.html#getVersion--">getVersion</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOVersionProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOVersionProvider</a></code></dd>
+</dl>
 </li>
 </ul>
 </li>

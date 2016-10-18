@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -110,7 +110,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public interface <span class="typeNameLabel">CDOCommitInfoManager</span>
 extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoProvider</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,<a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory</a>&gt;</pre>
-<div class="block">Loads, provides and possible manages <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info</code></a> objects.</div>
+<div class="block">Provides access to <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info</code></a> objects.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
@@ -157,13 +157,18 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitIn
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getCommitInfo-long-">getCommitInfo</a></span>(long&nbsp;timeStamp)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getCommitInfo-long-boolean-">getCommitInfo</a></span>(long&nbsp;timeStamp,
+             boolean&nbsp;loadOnDemand)</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getCommitInfos-org.eclipse.emf.cdo.common.branch.CDOBranch-long-long-org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler-">getCommitInfos</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
               long&nbsp;startTime,
               long&nbsp;endTime,
               <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</a>&nbsp;handler)</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getCommitInfos-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.lang.String-java.lang.String-int-org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler-">getCommitInfos</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
               long&nbsp;startTime,
@@ -172,15 +177,24 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitIn
               int&nbsp;count,
               <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</a>&nbsp;handler)</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getFirstOfBranch-org.eclipse.emf.cdo.common.branch.CDOBranch-">getFirstOfBranch</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getLastCommit--">getLastCommit</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getLastCommitOfBranch-org.eclipse.emf.cdo.common.branch.CDOBranch-boolean-">getLastCommitOfBranch</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+                     boolean&nbsp;loadOnDemand)</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getLastOfBranch-org.eclipse.emf.cdo.common.branch.CDOBranch-">getLastOfBranch</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getRepository--">getRepository</a></span>()</code>&nbsp;</td>
 </tr>
@@ -236,6 +250,20 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitIn
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
+</dl>
+</li>
+</ul>
+<a name="getCommitInfo-long-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCommitInfo</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;getCommitInfo(long&nbsp;timeStamp,
+                            boolean&nbsp;loadOnDemand)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
 </dl>
 </li>
 </ul>
@@ -313,13 +341,40 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitIn
 <a name="getLastOfBranch-org.eclipse.emf.cdo.common.branch.CDOBranch-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getLastOfBranch</h4>
 <pre><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;getLastOfBranch(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
+</dl>
+</li>
+</ul>
+<a name="getLastCommitOfBranch-org.eclipse.emf.cdo.common.branch.CDOBranch-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLastCommitOfBranch</h4>
+<pre>long&nbsp;getLastCommitOfBranch(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+                           boolean&nbsp;loadOnDemand)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a name="getLastCommit--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getLastCommit</h4>
+<pre>long&nbsp;getLastCommit()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
 </dl>
 </li>
 </ul>

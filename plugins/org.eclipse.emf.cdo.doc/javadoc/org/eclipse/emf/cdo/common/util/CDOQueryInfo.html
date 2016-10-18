@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":38};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":38};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -105,7 +105,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">CDOQueryInfo</span></pre>
-<div class="block">Encapsulates all the transferrable information that fully specifies a query from a <a href="../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><code>view</code></a> to a
+<div class="block">Encapsulates all the transferable information that fully specifies a query from a <a href="../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><code>view</code></a> to a
  <a href="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><code>repository</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -180,24 +180,30 @@ var activeTableTab = "activeTableTab";
 </td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getParameter-java.lang.String-">getParameter</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
+<div class="block">Returns the value of the named parameter.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getParameters--">getParameters</a></span>()</code>
 <div class="block">Returns the parameters of this query as a map.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getQueryLanguage--">getQueryLanguage</a></span>()</code>
 <div class="block">Returns the language identifier of this query, never <code>null</code>.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getQueryString--">getQueryString</a></span>()</code>
 <div class="block">Returns the query string of this query or <code>null</code> if no query string has been set.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#isLegacyModeEnabled--">isLegacyModeEnabled</a></span>()</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
@@ -285,6 +291,20 @@ var activeTableTab = "activeTableTab";
 <h4>getParameters</h4>
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;getParameters()</pre>
 <div class="block">Returns the parameters of this query as a map.</div>
+</li>
+</ul>
+<a name="getParameter-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getParameter</h4>
+<pre>&lt;T&gt;&nbsp;T&nbsp;getParameter(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<div class="block">Returns the value of the named parameter.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
 </li>
 </ul>
 <a name="getContext--">

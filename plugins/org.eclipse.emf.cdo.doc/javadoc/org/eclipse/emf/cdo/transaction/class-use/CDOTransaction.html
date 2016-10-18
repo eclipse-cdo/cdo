@@ -700,6 +700,22 @@
 <div class="block">Sets the <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> this conflict resolver is to be associated with.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDODefaultTransactionHandler1.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#undoingObject-org.eclipse.emf.cdo.transaction.CDOTransaction-org.eclipse.emf.cdo.CDOObject-org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta-">undoingObject</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+             <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+             <a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code>
+<div class="block">This implementation does nothing.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOTransactionHandler1.WithUndo.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.WithUndo.html#undoingObject-org.eclipse.emf.cdo.transaction.CDOTransaction-org.eclipse.emf.cdo.CDOObject-org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta-">undoingObject</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+             <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+             <a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code>
+<div class="block">Called by a <code>CDOTransaction</code> <b>before</b> an object is modified.</div>
+</td>
+</tr>
 </tbody>
 </table>
 <table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing constructors, and an explanation">
@@ -725,6 +741,10 @@
 </tr>
 <tr class="altColor">
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionCommentator.html#CDOTransactionCommentator-org.eclipse.emf.cdo.transaction.CDOTransaction-">CDOTransactionCommentator</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionCommentator.html#CDOTransactionCommentator-org.eclipse.emf.cdo.transaction.CDOTransaction-boolean-">CDOTransactionCommentator</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+                         boolean&nbsp;showMerges)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>

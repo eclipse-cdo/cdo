@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -100,7 +100,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeKindProvider</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></dd>
+<dd><a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeKindProvider</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
@@ -165,18 +165,30 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPo
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#getCommitInfoManager--">getCommitInfoManager</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#getMergedCommitInfo--">getMergedCommitInfo</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#getMergeSource--">getMergeSource</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#getPreviousCommitInfo--">getPreviousCommitInfo</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#getPreviousTimeStamp--">getPreviousTimeStamp</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#getUserID--">getUserID</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#isCommitDataLoaded--">isCommitDataLoaded</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#isInitialCommit--">isInitialCommit</a></span>()</code>
 <div class="block">Returns <code>true</code> if this commit info describes the first initializing commit in the <a href="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><code>repository</code></a>, <code>false</code> otherwise.</div>
@@ -247,6 +259,19 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPo
 </dl>
 </li>
 </ul>
+<a name="getPreviousCommitInfo--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPreviousCommitInfo</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;getPreviousCommitInfo()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
 <a name="getUserID--">
 <!--   -->
 </a>
@@ -263,6 +288,32 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPo
 <li class="blockList">
 <h4>getComment</h4>
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getComment()</pre>
+</li>
+</ul>
+<a name="getMergeSource--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMergeSource</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;getMergeSource()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
+<a name="getMergedCommitInfo--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMergedCommitInfo</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;getMergedCommitInfo()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
 </li>
 </ul>
 <a name="isInitialCommit--">

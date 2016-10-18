@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -142,6 +142,10 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDO
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html#CDORevisionAvailabilityInfo-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">CDORevisionAvailabilityInfo</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code>&nbsp;</td>
 </tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html#CDORevisionAvailabilityInfo-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.revision.CDORevisionManager-">CDORevisionAvailabilityInfo</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                           <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>&nbsp;revisionManager)</code>&nbsp;</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -182,6 +186,10 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDO
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html#removeRevision-org.eclipse.emf.cdo.common.id.CDOID-">removeRevision</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html#setBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">setBranchPoint</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
@@ -207,6 +215,20 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDO
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
+<a name="CDORevisionAvailabilityInfo-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.revision.CDORevisionManager-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CDORevisionAvailabilityInfo</h4>
+<pre>public&nbsp;CDORevisionAvailabilityInfo(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                                   <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>&nbsp;revisionManager)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
 <a name="CDORevisionAvailabilityInfo-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">
 <!--   -->
 </a>
@@ -231,6 +253,19 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDO
 <li class="blockList">
 <h4>getBranchPoint</h4>
 <pre>public&nbsp;<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;getBranchPoint()</pre>
+</li>
+</ul>
+<a name="setBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setBranchPoint</h4>
+<pre>public&nbsp;void&nbsp;setBranchPoint(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
 </li>
 </ul>
 <a name="getAvailableRevisions--">

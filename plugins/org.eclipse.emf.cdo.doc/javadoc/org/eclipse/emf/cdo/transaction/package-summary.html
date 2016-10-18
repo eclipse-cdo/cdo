@@ -236,64 +236,68 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.WithUndo.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler1.WithUndo</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler2</a></td>
 <td class="colLast">
 <div class="block">A call-back interface that is called by a <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transcation</code></a> before it is committed and after it has
  been committed or rolled back.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler3.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler3</a></td>
 <td class="colLast">
 <div class="block">A call-back interface that is called by a <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transcation</code></a> before it is committed and after it has
  been committed (with result info) or rolled back.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandlerBase.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandlerBase</a></td>
 <td class="colLast">
 <div class="block">A marker interface for use with <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#addTransactionHandler-org.eclipse.emf.cdo.transaction.CDOTransactionHandlerBase-"><code>CDOTransaction.addTransactionHandler()</code></a> and
  <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#removeTransactionHandler-org.eclipse.emf.cdo.transaction.CDOTransactionHandlerBase-"><code>CDOTransaction.removeTransactionHandler()</code></a>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionOpener.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionOpener</a></td>
 <td class="colLast">
 <div class="block">Can open new <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transactions</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionStartedEvent.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionStartedEvent</a></td>
 <td class="colLast">
 <div class="block">A <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>view event</code></a> fired from a <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> when it first becomes
  <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#isDirty--"><code>dirty</code></a>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a></td>
 <td class="colLast">
 <div class="block">A strategy used to detect whether the feature of an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>object</code></a> has the original (clean) value after a number of modifications.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a></td>
 <td class="colLast">
 <div class="block">Creates a save point in a <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOUserTransaction</code></a> that can be used to roll back a part of the transaction.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</a></td>
 <td class="colLast">
 <div class="block">Provides functionality that is common to both <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>single</code></a> transactions and <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOXATransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>distributed</code></a> (XA) transactions.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOXASavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOXASavepoint</a></td>
 <td class="colLast">
 <div class="block">Creates a save point in a <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOXATransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOXATransaction</code></a> that can be used to roll back a part of the transaction.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOXATransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOXATransaction</a></td>
 <td class="colLast">
 <div class="block">A distributed (XA) transaction that can atomically commit the changes to multiple <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource sets</code></a>,

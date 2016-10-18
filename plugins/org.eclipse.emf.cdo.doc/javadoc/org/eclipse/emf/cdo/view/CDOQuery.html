@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -199,7 +199,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view">CDOQuery</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#setContext-java.lang.Object-">setContext</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</code>
-<div class="block">Binds an object as teh context for this query.</div>
+<div class="block">Binds an object as the context for this query.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
@@ -215,13 +215,19 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 <div class="block">Binds an argument value to a named parameter.</div>
 </td>
 </tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view">CDOQuery</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#unsetParameter-java.lang.String-">unsetParameter</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
+<div class="block">Removes the value of a named parameter.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.util.CDOQueryInfo">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.util.<a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getChangeSetData--">getChangeSetData</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getContext--">getContext</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getMaxResults--">getMaxResults</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getParameters--">getParameters</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getQueryLanguage--">getQueryLanguage</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getQueryString--">getQueryString</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#isLegacyModeEnabled--">isLegacyModeEnabled</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getChangeSetData--">getChangeSetData</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getContext--">getContext</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getMaxResults--">getMaxResults</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getParameter-java.lang.String-">getParameter</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getParameters--">getParameters</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getQueryLanguage--">getQueryLanguage</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#getQueryString--">getQueryString</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html#isLegacyModeEnabled--">isLegacyModeEnabled</a></code></li>
 </ul>
 </li>
 </ul>
@@ -370,6 +376,24 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 </dl>
 </li>
 </ul>
+<a name="unsetParameter-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>unsetParameter</h4>
+<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view">CDOQuery</a>&nbsp;unsetParameter(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<div class="block">Removes the value of a named parameter.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - the parameter name</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the same query instance</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
 <a name="setContext-java.lang.Object-">
 <!--   -->
 </a>
@@ -377,7 +401,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 <li class="blockList">
 <h4>setContext</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view">CDOQuery</a>&nbsp;setContext(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</pre>
-<div class="block">Binds an object as teh context for this query.</div>
+<div class="block">Binds an object as the context for this query.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>

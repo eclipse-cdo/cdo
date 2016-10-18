@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6,"i20":6,"i21":6,"i22":6,"i23":6,"i24":6,"i25":38,"i26":6,"i27":6,"i28":6,"i29":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6,"i20":6,"i21":6,"i22":6,"i23":6,"i24":6,"i25":6,"i26":38,"i27":6,"i28":6,"i29":6,"i30":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -162,124 +162,128 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionP
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getCommitComment--">getCommitComment</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getCommitMergeSource--">getCommitMergeSource</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getData-java.lang.Object-">getData</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDetachedObjects--">getDetachedObjects</a></span>()</code>
 <div class="block">Returns an array of the removed object that are part of the commit operation represented by this
  <code>CommitContext</code>.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDetachedObjectTypes--">getDetachedObjectTypes</a></span>()</code>
 <div class="block">Returns a map with an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EClass</code></a> value per <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> type.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDetachedObjectVersions--">getDetachedObjectVersions</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDirtyObjectDeltas--">getDirtyObjectDeltas</a></span>()</code>
 <div class="block">Returns an array of the dirty object deltas that are part of the commit operation represented by this
  <code>CommitContext</code>.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDirtyObjects--">getDirtyObjects</a></span>()</code>
 <div class="block">Returns an array of the dirty objects that are part of the commit operation represented by this
  <code>CommitContext</code>.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getIDMappings--">getIDMappings</a></span>()</code>
 <div class="block">Returns an unmodifiable map from all temporary IDs to their persistent counter parts.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getIDsToUnlock--">getIDsToUnlock</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getLastUpdateTime--">getLastUpdateTime</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/ExtendedDataInputStream.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">ExtendedDataInputStream</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getLobs--">getLobs</a></span>()</code>
 <div class="block">Returns a stream that all <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLob.html" title="class in org.eclipse.emf.cdo.common.lob"><code>lobs</code></a> can be read from.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getLocksOnNewObjects--">getLocksOnNewObjects</a></span>()</code>
 <div class="block">Returns an array of the locks on the new objects that are part of the commit operation represented by this
  <code>CommitContext</code>.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getNewObjects--">getNewObjects</a></span>()</code>
 <div class="block">Returns an array of the new objects that are part of the commit operation represented by this
  <code>CommitContext</code>.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getNewPackageUnits--">getNewPackageUnits</a></span>()</code>
 <div class="block">Returns an array of the new package units that are part of the commit operation represented by this
  <code>CommitContext</code>.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getPackageRegistry--">getPackageRegistry</a></span>()</code>
 <div class="block">Returns the temporary, transactional package manager associated with the commit operation represented by this
  <code>CommitContext</code>.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getPostCommmitLockStates--">getPostCommmitLockStates</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getPreviousTimeStamp--">getPreviousTimeStamp</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getRollbackMessage--">getRollbackMessage</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>byte</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getRollbackReason--">getRollbackReason</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>byte</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getSecurityImpact--">getSecurityImpact</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getTransaction--">getTransaction</a></span>()</code>
 <div class="block">Returns the transactional view (<code>ITransaction</code>) which is the scope of the commit operation represented
  by this <code>CommitContext</code>.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getUserID--">getUserID</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDReference.html" title="class in org.eclipse.emf.cdo.common.id">CDOIDReference</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getXRefs--">getXRefs</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#isAutoReleaseLocksEnabled--">isAutoReleaseLocksEnabled</a></span>()</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
@@ -287,19 +291,19 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionP
 </div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#isClearResourcePathCache--">isClearResourcePathCache</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#isUsingEcore--">isUsingEcore</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#isUsingEtypes--">isUsingEtypes</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#setData-java.lang.Object-T-">setData</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
        T&nbsp;data)</code>&nbsp;</td>
@@ -391,6 +395,19 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionP
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
+</dl>
+</li>
+</ul>
+<a name="getCommitMergeSource--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCommitMergeSource</h4>
+<pre><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;getCommitMergeSource()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
 </dl>
 </li>
 </ul>

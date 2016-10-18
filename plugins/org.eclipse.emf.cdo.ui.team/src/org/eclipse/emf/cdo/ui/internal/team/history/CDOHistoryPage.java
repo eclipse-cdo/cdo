@@ -74,9 +74,9 @@ public class CDOHistoryPage extends HistoryPage
 {
   private static final String POPUP_ID = "#PopupMenu";
 
-  private static final boolean DEBUG = Boolean.parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.ui.team.history.debug", "false"));
+  private static final boolean DEBUG = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.ui.team.history.debug");
 
-  private static final boolean TEST = Boolean.parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.ui.team.history.test", "false"));
+  private static final boolean TEST = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.ui.team.history.test");
 
   private StackComposite stackComposite;
 

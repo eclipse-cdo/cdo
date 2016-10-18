@@ -29,8 +29,7 @@ public abstract class TrackableTimerTask extends TimerTask
   /**
    * The boolean value of the system property <code>org.eclipse.net4j.util.concurrent.TrackTimerTasks</code>.
    */
-  public static final boolean TRACK_TIMER_TASKS = Boolean
-      .parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.util.concurrent.TrackTimerTasks", "false"));
+  public static final boolean TRACK_TIMER_TASKS = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.util.concurrent.TrackTimerTasks");
 
   private static final Map<TrackableTimerTask, ConstructionInfo> CONSTRUCTION_INFOS = TRACK_TIMER_TASKS
       ? new WeakHashMap<TrackableTimerTask, ConstructionInfo>() : null;

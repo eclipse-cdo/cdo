@@ -41,7 +41,7 @@ import java.util.Set;
 @SuppressWarnings("deprecation")
 public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImpl implements org.eclipse.emf.cdo.net4j.CDOSessionConfiguration
 {
-  private static final boolean TEST_RECORDER = Boolean.parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.test.recorder.enabled", "false"));
+  private static final boolean TEST_RECORDER = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.test.recorder.enabled");
 
   private String repositoryName;
 

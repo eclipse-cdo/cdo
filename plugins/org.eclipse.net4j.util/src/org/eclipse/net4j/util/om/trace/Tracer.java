@@ -34,7 +34,7 @@ public class Tracer implements OMTracer
    */
   public static final String PROP_DISABLE_TRACING_OPTIONS = "org.eclipse.net4j.util.om.trace.disable.options";
 
-  private static final boolean isGloballyDisabled = Boolean.valueOf(OMPlatform.INSTANCE.getProperty(PROP_DISABLE_TRACING, Boolean.FALSE.toString()));
+  private static final boolean IS_GLOBALLY_DISABLED = OMPlatform.INSTANCE.isProperty(PROP_DISABLE_TRACING);
 
   private OMBundle bundle;
 
@@ -81,7 +81,7 @@ public class Tracer implements OMTracer
 
   public boolean isEnabled()
   {
-    if (isGloballyDisabled)
+    if (IS_GLOBALLY_DISABLED)
     {
       return false;
     }

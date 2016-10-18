@@ -71,7 +71,7 @@ public final class DBUtil
    */
   public static final String PROP_ENABLE_NOISY_CLOSE = "org.eclipse.net4j.db.close.noisy";
 
-  private static final boolean isNoisyCloseEnabled = Boolean.valueOf(OMPlatform.INSTANCE.getProperty(PROP_ENABLE_NOISY_CLOSE, Boolean.FALSE.toString()));
+  private static final boolean IS_NOISY_CLOSE_ENABLED = OMPlatform.INSTANCE.isProperty(PROP_ENABLE_NOISY_CLOSE);
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SQL, DBUtil.class);
 
@@ -402,7 +402,7 @@ public final class DBUtil
       }
       catch (Exception ex)
       {
-        if (isNoisyCloseEnabled)
+        if (IS_NOISY_CLOSE_ENABLED)
         {
           throw new DBException(ex);
         }
@@ -425,7 +425,7 @@ public final class DBUtil
       }
       catch (Exception ex)
       {
-        if (isNoisyCloseEnabled)
+        if (IS_NOISY_CLOSE_ENABLED)
         {
           throw new DBException(ex);
         }
@@ -455,7 +455,7 @@ public final class DBUtil
       }
       catch (Exception ex)
       {
-        if (isNoisyCloseEnabled)
+        if (IS_NOISY_CLOSE_ENABLED)
         {
           throw new DBException(ex);
         }

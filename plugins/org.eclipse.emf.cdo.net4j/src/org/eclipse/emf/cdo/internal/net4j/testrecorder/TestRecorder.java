@@ -77,7 +77,7 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
 
   private static final String DESCRIPTION = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.test.recorder.description");
 
-  private static final boolean RECORD_VIEWS = Boolean.parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.test.recorder.recordViews", "false"));
+  private static final boolean RECORD_VIEWS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.test.recorder.recordViews");
 
   private static final Map<Object, String> TYPES = new HashMap<Object, String>();
   static

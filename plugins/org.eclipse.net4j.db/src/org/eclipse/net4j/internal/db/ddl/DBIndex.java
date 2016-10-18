@@ -43,8 +43,7 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
 
   public static final ThreadLocal<Set<IDBField>> NULLABLE_INDEX_FIELDS = new InheritableThreadLocal<Set<IDBField>>();
 
-  private static final boolean DISABLE_NULLABLE_CHECK = Boolean
-      .parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.db.DisableNullableCheck", "true"));
+  private static final boolean DISABLE_NULLABLE_CHECK = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.db.DisableNullableCheck", true);
 
   private static final long serialVersionUID = 1L;
 

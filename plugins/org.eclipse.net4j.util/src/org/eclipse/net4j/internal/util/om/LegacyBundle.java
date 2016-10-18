@@ -39,8 +39,7 @@ import java.util.jar.JarFile;
  */
 public class LegacyBundle extends AbstractBundle
 {
-  private static final boolean isOptionsDisabled = Boolean
-      .valueOf(OMPlatform.INSTANCE.getProperty(Tracer.PROP_DISABLE_TRACING_OPTIONS, Boolean.FALSE.toString()));
+  private static final boolean IS_OPTIONS_DISABLED = OMPlatform.INSTANCE.isProperty(Tracer.PROP_DISABLE_TRACING_OPTIONS);
 
   private URL baseURL;
 
@@ -56,7 +55,7 @@ public class LegacyBundle extends AbstractBundle
         throw new IllegalStateException("No base URL");
       }
 
-      if (!isOptionsDisabled)
+      if (!IS_OPTIONS_DISABLED)
       {
         loadOptions();
       }

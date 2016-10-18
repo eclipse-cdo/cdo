@@ -290,11 +290,13 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
   {
     InternalCDOCommitInfoManager manager = getRepository().getCommitInfoManager();
 
-    if (startTime == endTime && endTime > CDOBranchPoint.UNSPECIFIED_DATE)
+    // Optimize the getCommitInfo(timeStamp) case.
+    if (startTime == endTime && startTime > CDOBranchPoint.UNSPECIFIED_DATE)
     {
       int index = Collections.binarySearch(commitInfos, new CommitInfoKey(startTime));
       if (index >= 0)
       {
+        // Found.
         CommitInfo commitInfo = commitInfos.get(index);
         commitInfo.handle(manager, handler);
       }
@@ -302,7 +304,10 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
       return;
     }
 
+    boolean counting = endTime < CDOBranchPoint.UNSPECIFIED_DATE;
     int count = CDOCommitInfoUtil.decodeCount(endTime);
+    boolean forward = counting ? count > 0 : endTime > startTime;
+
     int startIndex;
     if (startTime == CDOBranchPoint.UNSPECIFIED_DATE)
     {
@@ -311,35 +316,19 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     else
     {
       startIndex = Collections.binarySearch(commitInfos, new CommitInfoKey(startTime));
-    }
-
-    boolean match = true;
-    if (startIndex < 0)
-    {
-      startIndex = -(startIndex + 1);
-      match = false;
-    }
-
-    boolean counting = false;
-    boolean backward = false;
-    if (endTime < CDOBranchPoint.UNSPECIFIED_DATE)
-    {
-      counting = true;
-      if (count < 0)
+      if (startIndex >= 0)
       {
-        backward = true;
-        if (!match)
+        // Found.
+        if (!forward)
         {
-          --startIndex;
+          ++startIndex;
         }
       }
-    }
-    else
-    {
-      if (endTime <= startTime)
+      else
       {
-        backward = true;
-        if (!match)
+        // Not found.
+        startIndex = -(startIndex + 1); // Insertion point.
+        if (forward)
         {
           --startIndex;
         }
@@ -347,17 +336,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     }
 
     ListIterator<CommitInfo> listIterator = commitInfos.listIterator(startIndex);
-    Iterator<CommitInfo> iterator = new BidirectionalIterator<CommitInfo>(listIterator, backward);
-
-    if (counting)
-    {
-      iterator = new LimitedIterator<CommitInfo>(iterator, Math.abs(count));
-    }
-    else if (startTime != CDOBranchPoint.UNSPECIFIED_DATE || endTime != CDOBranchPoint.UNSPECIFIED_DATE)
-    {
-      Predicate<CDOTimeProvider> predicate = backward ? new DownTo(endTime) : new UpTo(endTime);
-      iterator = new PredicateIterator<CommitInfo>(iterator, predicate);
-    }
+    Iterator<CommitInfo> iterator = new BidirectionalIterator<CommitInfo>(listIterator, !forward);
 
     if (branch != null)
     {
@@ -369,6 +348,16 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
           return element.getBranch() == branch;
         }
       };
+    }
+
+    if (counting)
+    {
+      iterator = new LimitedIterator<CommitInfo>(iterator, Math.abs(count));
+    }
+    else if (startTime != CDOBranchPoint.UNSPECIFIED_DATE || endTime != CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      Predicate<CDOTimeProvider> predicate = forward ? new UpTo(endTime) : new DownTo(endTime);
+      iterator = new PredicateIterator<CommitInfo>(iterator, predicate);
     }
 
     while (iterator.hasNext())
@@ -1458,8 +1447,8 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     @Override
     public String toString()
     {
-      return MessageFormat.format("CommitInfo[{0}, {1}, {2}, {3}, {4}]", branch, getTimeStamp(), previousTimeStamp,
-          userID, comment);
+      return MessageFormat.format("CommitInfo[{0}, {1}, {2}, {3}, {4}, {5}]", branch, getTimeStamp(), previousTimeStamp,
+          userID, comment, mergeSource);
     }
   }
 }

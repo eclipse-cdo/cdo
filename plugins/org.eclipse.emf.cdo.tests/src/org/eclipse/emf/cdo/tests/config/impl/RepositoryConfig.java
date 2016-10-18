@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.util.CountedTimeProvider;
 import org.eclipse.emf.cdo.internal.common.revision.NOOPRevisionCache;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionImpl;
@@ -104,6 +105,8 @@ import java.util.concurrent.ExecutorService;
 public abstract class RepositoryConfig extends Config implements IRepositoryConfig
 {
   public static final String PROP_TEST_REPOSITORY = "test.repository";
+
+  public static final String PROP_TEST_TIME_PROVIDER = "test.repository.TimeProvider";
 
   public static final String PROP_TEST_REVISION_MANAGER = "test.repository.RevisionManager";
 
@@ -465,7 +468,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       }
     });
 
-    if (enableServerBrowser || Boolean.TRUE.equals(getTestProperty(PROP_TEST_ENABLE_SERVER_BROWSER)))
+    if (enableServerBrowser || Boolean.TRUE.equals(getTestProperty(PROP_TEST_ENABLE_SERVER_BROWSER))
+        || getCurrentTest().hasDefaultScenario())
     {
       serverBrowser = new CDOServerBrowser(repositories);
       serverBrowser.activate();
@@ -601,6 +605,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     Map<String, String> repoProps = getRepositoryProperties();
     InternalRepository repository = (InternalRepository)CDOServerUtil.createRepository(name, store, repoProps);
+
+    if (hasAnnotation(CountedTime.class))
+    {
+      repository.setTimeProvider(new CountedTimeProvider());
+    }
 
     InternalCDORevisionManager revisionManager = getTestRevisionManager();
     if (revisionManager == null)

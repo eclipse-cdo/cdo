@@ -15,10 +15,13 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchManagerImpl;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchPointRangeImpl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,24 +36,7 @@ public final class CDOBranchUtil
   /**
    * @since 4.6
    */
-  public static final CDOBranchPoint AUTO_BRANCH_POINT = new CDOBranchPoint()
-  {
-    public long getTimeStamp()
-    {
-      return Long.MIN_VALUE;
-    }
-
-    public CDOBranch getBranch()
-    {
-      return null;
-    }
-
-    @Override
-    public String toString()
-    {
-      return "BranchPoint[AUTO]";
-    }
-  };
+  public static final CDOBranchPoint AUTO_BRANCH_POINT = new AutoBranchPoint();
 
   private CDOBranchUtil()
   {
@@ -64,6 +50,83 @@ public final class CDOBranchUtil
   public static CDOBranchPointRange createRange(CDOBranchPoint startPoint, CDOBranchPoint endPoint)
   {
     return new CDOBranchPointRangeImpl(startPoint, endPoint);
+  }
+
+  /**
+   * @since 4.6
+   */
+  public static void writeRange(CDODataOutput out, CDOBranchPointRange range) throws IOException
+  {
+    out.writeCDOBranchPoint(range.getStartPoint());
+    out.writeCDOBranchPoint(range.getEndPoint());
+  }
+
+  /**
+   * @since 4.6
+   */
+  public static CDOBranchPointRange readRange(CDODataInput in) throws IOException
+  {
+    CDOBranchPoint startPoint = in.readCDOBranchPoint();
+    CDOBranchPoint endPoint = in.readCDOBranchPoint();
+    return createRange(startPoint, endPoint);
+  }
+
+  /**
+   * @since 4.6
+   */
+  public static void writeRangeOrNull(CDODataOutput out, CDOBranchPointRange range) throws IOException
+  {
+    if (range != null)
+    {
+      out.writeBoolean(true);
+      writeRange(out, range);
+    }
+    else
+    {
+      out.writeBoolean(false);
+    }
+  }
+
+  /**
+   * @since 4.6
+   */
+  public static CDOBranchPointRange readRangeOrNull(CDODataInput in) throws IOException
+  {
+    if (in.readBoolean())
+    {
+      return readRange(in);
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 4.6
+   */
+  public static void writeBranchPointOrNull(CDODataOutput out, CDOBranchPoint point) throws IOException
+  {
+    if (point != null)
+    {
+      out.writeBoolean(true);
+      out.writeCDOBranchPoint(point);
+    }
+    else
+    {
+      out.writeBoolean(false);
+    }
+  }
+
+  /**
+   * @since 4.6
+   */
+  public static CDOBranchPoint readBranchPointOrNull(CDODataInput in) throws IOException
+  {
+    if (in.readBoolean())
+    {
+      return in.readCDOBranchPoint();
+    }
+
+    return null;
   }
 
   public static CDOBranchPoint copyBranchPoint(CDOBranchPoint source)
@@ -206,6 +269,28 @@ public final class CDOBranchUtil
     {
       result.add(point);
       getPath(branch.getBase(), result);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class AutoBranchPoint implements CDOBranchPoint
+  {
+    public long getTimeStamp()
+    {
+      return Long.MIN_VALUE;
+    }
+
+    public CDOBranch getBranch()
+    {
+      return null;
+    }
+
+    @Override
+    public String toString()
+    {
+      return "BranchPoint[AUTO]";
     }
   }
 }

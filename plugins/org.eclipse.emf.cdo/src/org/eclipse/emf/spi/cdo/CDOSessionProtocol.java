@@ -295,8 +295,16 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   /**
    * @since 4.0
+   * @deprecated As of 4.6 use {@link #loadMergeData2(CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo)}.
    */
+  @Deprecated
   public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
+      CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo);
+
+  /**
+   * @since 4.6
+   */
+  public MergeDataResult loadMergeData2(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
       CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo);
 
   /**
@@ -358,7 +366,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * @since 3.0
    * @noinstantiate This class is not intended to be instantiated by clients.
    */
-  public final class OpenSessionResult extends PlatformObject implements CDOCommonRepository
+  public static final class OpenSessionResult extends PlatformObject implements CDOCommonRepository
   {
     private int sessionID;
 
@@ -855,7 +863,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    *
    * @author Eike Stepper
    */
-  public final class RepositoryTimeResult
+  public static final class RepositoryTimeResult
   {
     private long requested;
 
@@ -932,12 +940,49 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   }
 
   /**
+   * @author Eike Stepper
+   * @since 4.6
+   */
+  public static final class MergeDataResult
+  {
+    private final Set<CDOID> targetIDs = new HashSet<CDOID>();
+
+    private final Set<CDOID> sourceIDs = new HashSet<CDOID>();
+
+    private CDOBranchPoint resultBase;
+
+    public MergeDataResult()
+    {
+    }
+
+    public Set<CDOID> getTargetIDs()
+    {
+      return targetIDs;
+    }
+
+    public Set<CDOID> getSourceIDs()
+    {
+      return sourceIDs;
+    }
+
+    public CDOBranchPoint getResultBase()
+    {
+      return resultBase;
+    }
+
+    public void setResultBase(CDOBranchPoint resultBase)
+    {
+      this.resultBase = resultBase;
+    }
+  }
+
+  /**
    * If the meaning of this type isn't clear, there really should be more of a description here...
    *
    * @author Eike Stepper
    * @since 3.0
    */
-  public final class CommitTransactionResult implements CDOBranchPoint
+  public static final class CommitTransactionResult implements CDOBranchPoint
   {
     private CDOIDProvider idProvider;
 

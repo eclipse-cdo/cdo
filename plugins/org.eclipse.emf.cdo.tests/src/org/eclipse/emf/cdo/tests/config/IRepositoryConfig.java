@@ -72,4 +72,11 @@ public interface IRepositoryConfig extends IConfig, IRepositoryProvider
   public @interface CallAddRepository
   {
   }
+
+  @Inherited
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target({ ElementType.TYPE, ElementType.METHOD })
+  public @interface CountedTime
+  {
+  }
 }

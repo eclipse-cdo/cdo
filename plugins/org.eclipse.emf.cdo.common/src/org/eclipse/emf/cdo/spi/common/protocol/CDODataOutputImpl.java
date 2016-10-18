@@ -47,6 +47,7 @@ import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
@@ -229,18 +230,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
       writeCDOBranch(branch);
       writeString(commitInfo.getUserID());
       writeString(commitInfo.getComment());
-
-      CDOBranchPoint mergeSource = commitInfo.getMergeSource();
-      if (mergeSource != null)
-      {
-        writeBoolean(true);
-        writeCDOBranchPoint(mergeSource);
-      }
-      else
-      {
-        writeBoolean(false);
-      }
-
+      CDOBranchUtil.writeBranchPointOrNull(this, commitInfo.getMergeSource());
       writeCDOCommitData(commitInfo);
     }
     else

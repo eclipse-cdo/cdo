@@ -46,6 +46,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
+import org.eclipse.emf.cdo.common.util.CurrentTimeProvider;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
@@ -121,6 +123,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.MergeDataResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -178,6 +181,8 @@ public class Repository extends Container<Object> implements InternalRepository,
   private CommitInfoStorage commitInfoStorage;
 
   private long optimisticLockingTimeout = 10000L;
+
+  private CDOTimeProvider timeProvider;
 
   /**
    * Must not be thread-bound to support XA commits.
@@ -938,6 +943,17 @@ public class Repository extends Container<Object> implements InternalRepository,
     return accessor;
   }
 
+  public CDOTimeProvider getTimeProvider()
+  {
+    return timeProvider;
+  }
+
+  public void setTimeProvider(CDOTimeProvider timeProvider)
+  {
+    checkInactive();
+    this.timeProvider = timeProvider;
+  }
+
   public InternalCDOPackageRegistry getPackageRegistry(boolean considerCommitContext)
   {
     if (considerCommitContext)
@@ -1336,7 +1352,7 @@ public class Repository extends Container<Object> implements InternalRepository,
 
   public long getTimeStamp()
   {
-    return System.currentTimeMillis();
+    return timeProvider.getTimeStamp();
   }
 
   public Set<Handler> getHandlers()
@@ -1543,7 +1559,17 @@ public class Repository extends Container<Object> implements InternalRepository,
     return CDORevisionUtil.createChangeSetData(ids, startPoint, endPoint, revisionManager);
   }
 
+  @Deprecated
   public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
+      CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor)
+  {
+    MergeDataResult result = getMergeData2(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo, monitor);
+    Set<CDOID> ids = result.getTargetIDs();
+    ids.addAll(result.getSourceIDs());
+    return ids;
+  }
+
+  public MergeDataResult getMergeData2(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
       CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor)
   {
     CDOBranchPoint target = targetInfo.getBranchPoint();
@@ -1554,23 +1580,28 @@ public class Repository extends Container<Object> implements InternalRepository,
     try
     {
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-      Set<CDOID> ids = new HashSet<CDOID>();
+
+      MergeDataResult result = new MergeDataResult();
+      Set<CDOID> targetIDs = result.getTargetIDs();
+      Set<CDOID> sourceIDs = result.getSourceIDs();
 
       if (targetBaseInfo == null && sourceBaseInfo == null)
       {
         if (CDOBranchUtil.isContainedBy(source, target))
         {
-          ids.addAll(accessor.readChangeSet(monitor.fork(), CDOChangeSetSegment.createFrom(source, target)));
+          // This is a "compare" case, see CDOSessionImpl.compareRevisions().
+          targetIDs.addAll(accessor.readChangeSet(monitor.fork(), CDOChangeSetSegment.createFrom(source, target)));
         }
         else if (CDOBranchUtil.isContainedBy(target, source))
         {
-          ids.addAll(accessor.readChangeSet(monitor.fork(), CDOChangeSetSegment.createFrom(target, source)));
+          // This is a "compare" case, see CDOSessionImpl.compareRevisions().
+          targetIDs.addAll(accessor.readChangeSet(monitor.fork(), CDOChangeSetSegment.createFrom(target, source)));
         }
         else
         {
           CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(target, source);
-          ids.addAll(accessor.readChangeSet(monitor.fork(), CDOChangeSetSegment.createFrom(ancestor, target)));
-          ids.addAll(accessor.readChangeSet(monitor.fork(), CDOChangeSetSegment.createFrom(ancestor, source)));
+          targetIDs.addAll(accessor.readChangeSet(monitor.fork(), CDOChangeSetSegment.createFrom(ancestor, target)));
+          sourceIDs.addAll(accessor.readChangeSet(monitor.fork(), CDOChangeSetSegment.createFrom(ancestor, source)));
         }
       }
       else
@@ -1584,35 +1615,41 @@ public class Repository extends Container<Object> implements InternalRepository,
           targetSegments = CDOChangeSetSegment.createFrom(ancestor, target);
           sourceSegments = CDOChangeSetSegment.createFrom(ancestor, source);
 
-          for (int i = targetSegments.length - 1; i >= 0; --i)
+          CDOBranchPoint targetBase = ancestor;
+          CDOBranchPoint sourceBase = ancestor;
+          long ancestorTime = ancestor.getTimeStamp();
+
+          CDOBranchPointRange latestTargetMerge = getLatestMerge(targetSegments, sourceSegments, ancestorTime);
+          if (latestTargetMerge != null)
           {
-            CDOChangeSetSegment targetSegment = targetSegments[i];
-            CDOBranch branch = targetSegment.getBranch();
-            long startTime = targetSegment.getTimeStamp();
-            long endTime = targetSegment.getEndTime();
+            targetBase = latestTargetMerge.getEndPoint();
+            sourceBase = latestTargetMerge.getStartPoint();
 
-            while (endTime > startTime || endTime == CDOBranchPoint.UNSPECIFIED_DATE)
+            if (!sourceBase.equals(ancestor))
             {
-              CDOCommitInfo commitInfo = commitInfoManager.getCommitInfo(branch, endTime, false);
-              if (commitInfo == null)
-              {
-                break;
-              }
-
-              CDOBranchPoint mergeSource = commitInfo.getMergeSource();
-              if (mergeSource != null && CDOChangeSetSegment.contains(sourceSegments, mergeSource))
-              {
-                targetSegments = CDOChangeSetSegment.createFrom(commitInfo, target);
-                sourceSegments = CDOChangeSetSegment.createFrom(mergeSource, source);
-                break;
-              }
-
-              endTime = commitInfo.getTimeStamp() - 1;
+              sourceSegments = CDOChangeSetSegment.createFrom(sourceBase, source);
             }
           }
 
-          targetBaseInfo.setBranchPoint(CDOBranchUtil.copyBranchPoint(targetSegments[0]));
-          sourceBaseInfo.setBranchPoint(CDOBranchUtil.copyBranchPoint(sourceSegments[0]));
+          CDOBranchPointRange latestSourceMerge = getLatestMerge(sourceSegments, targetSegments, ancestorTime);
+          if (latestSourceMerge != null)
+          {
+            CDOBranchPoint mergeSource = latestSourceMerge.getStartPoint();
+            if (targetBase.getTimeStamp() < mergeSource.getTimeStamp())
+            {
+              targetBase = mergeSource;
+            }
+
+            result.setResultBase(sourceBase);
+          }
+
+          if (!targetBase.equals(ancestor))
+          {
+            targetSegments = CDOChangeSetSegment.createFrom(targetBase, target);
+          }
+
+          targetBaseInfo.setBranchPoint(targetBase);
+          sourceBaseInfo.setBranchPoint(sourceBase);
         }
         else
         {
@@ -1621,29 +1658,89 @@ public class Repository extends Container<Object> implements InternalRepository,
           sourceSegments = CDOChangeSetSegment.createFrom(sourceBaseInfoToUse.getBranchPoint(), source);
         }
 
-        ids.addAll(accessor.readChangeSet(monitor.fork(), targetSegments));
-        ids.addAll(accessor.readChangeSet(monitor.fork(), sourceSegments));
+        targetIDs.addAll(accessor.readChangeSet(monitor.fork(), targetSegments));
+        sourceIDs.addAll(accessor.readChangeSet(monitor.fork(), sourceSegments));
       }
 
-      loadMergeData(ids, targetInfo, monitor.fork());
-      loadMergeData(ids, sourceInfo, monitor.fork());
+      loadMergeData(targetIDs, targetInfo, monitor.fork());
+      loadMergeData(sourceIDs, sourceInfo, monitor.fork());
 
       if (targetBaseInfo != null)
       {
-        loadMergeData(ids, targetBaseInfo, monitor.fork());
+        loadMergeData(targetIDs, targetBaseInfo, monitor.fork());
       }
 
       if (sourceBaseInfo != null && !targetBaseInfo.getBranchPoint().equals(sourceBaseInfo.getBranchPoint()))
       {
-        loadMergeData(ids, sourceBaseInfo, monitor.fork());
+        loadMergeData(sourceIDs, sourceBaseInfo, monitor.fork());
       }
 
-      return ids;
+      return result;
     }
     finally
     {
       monitor.done();
     }
+  }
+
+  private CDOBranchPointRange getLatestMerge(CDOChangeSetSegment[] targetSegments, CDOChangeSetSegment[] sourceSegments,
+      long ancestorTime)
+  {
+    for (int i = targetSegments.length - 1; i >= 0; --i)
+    {
+      CDOChangeSetSegment targetSegment = targetSegments[i];
+      CDOBranch targetBranch = targetSegment.getBranch();
+      long startTime = targetSegment.getTimeStamp();
+      long endTime = targetSegment.getEndTime();
+
+      while (endTime > startTime || endTime == CDOBranchPoint.UNSPECIFIED_DATE)
+      {
+        CDOCommitInfo commitInfo = commitInfoManager.getCommitInfo(targetBranch, endTime, false);
+        if (commitInfo == null)
+        {
+          break;
+        }
+
+        long timeStamp = commitInfo.getTimeStamp();
+        if (timeStamp <= startTime)
+        {
+          break;
+        }
+
+        CDOBranchPoint mergeSource = getMergeSource(commitInfo, sourceSegments, ancestorTime);
+        if (mergeSource != null)
+        {
+          CDOBranchPoint endPoint = CDOBranchUtil.copyBranchPoint(commitInfo);
+          return CDOBranchUtil.createRange(mergeSource, endPoint);
+        }
+
+        endTime = timeStamp - 1;
+      }
+    }
+
+    return null;
+  }
+
+  private CDOBranchPoint getMergeSource(CDOCommitInfo commitInfo, CDOChangeSetSegment[] sourceSegments,
+      long ancestorTime)
+  {
+    CDOBranchPoint mergeSource = commitInfo.getMergeSource();
+    if (mergeSource != null)
+    {
+      if (CDOChangeSetSegment.contains(sourceSegments, mergeSource))
+      {
+        return mergeSource;
+      }
+
+      CDOChangeSetSegment[] targetSegments = CDOChangeSetSegment.createFrom(ancestorTime, mergeSource);
+      CDOBranchPointRange latestMerge = getLatestMerge(targetSegments, sourceSegments, ancestorTime);
+      if (latestMerge != null)
+      {
+        return latestMerge.getStartPoint();
+      }
+    }
+
+    return null;
   }
 
   private void loadMergeData(Set<CDOID> ids, CDORevisionAvailabilityInfo info, OMMonitor monitor)
@@ -2334,6 +2431,11 @@ public class Repository extends Container<Object> implements InternalRepository,
     @Override
     protected void doBeforeActivate() throws Exception
     {
+      if (getTimeProvider() == null)
+      {
+        setTimeProvider(createTimeProvider());
+      }
+
       if (getPackageRegistry(false) == null)
       {
         setPackageRegistry(createPackageRegistry());
@@ -2380,6 +2482,11 @@ public class Repository extends Container<Object> implements InternalRepository,
       }
 
       super.doBeforeActivate();
+    }
+
+    protected CDOTimeProvider createTimeProvider()
+    {
+      return CurrentTimeProvider.INSTANCE;
     }
 
     protected InternalCDOPackageRegistry createPackageRegistry()

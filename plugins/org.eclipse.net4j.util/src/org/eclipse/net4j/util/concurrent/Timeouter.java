@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.concurrent;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.CheckUtil;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,8 +33,8 @@ public abstract class Timeouter
   public Timeouter(Timer timer, long timeout)
   {
     this.timer = timer;
-    this.timeout = timeout;
 
+    setTimeout(timeout);
     touch();
     scheduleTimeout();
   }
@@ -45,7 +46,7 @@ public abstract class Timeouter
 
   public void setTimeout(long timeout)
   {
-    this.timeout = timeout;
+    this.timeout = CheckUtil.sanitizeTimeout(timeout);
   }
 
   public void touch()

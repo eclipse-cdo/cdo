@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 
 import org.eclipse.emf.internal.cdo.object.CDOObjectReferenceImpl;
 import org.eclipse.emf.internal.cdo.view.AbstractCDOView;
@@ -160,16 +161,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     out.writeLong(getLastUpdateTime());
     out.writeInt(commitNumber);
     out.writeString(commitComment);
-
-    if (commitMergeSource != null)
-    {
-      out.writeBoolean(true);
-      out.writeCDOBranchPoint(commitMergeSource);
-    }
-    else
-    {
-      out.writeBoolean(false);
-    }
+    CDOBranchUtil.writeBranchPointOrNull(out, commitMergeSource);
 
     out.writeInt(locksOnNewObjects.size());
     out.writeInt(idsToUnlock.size());

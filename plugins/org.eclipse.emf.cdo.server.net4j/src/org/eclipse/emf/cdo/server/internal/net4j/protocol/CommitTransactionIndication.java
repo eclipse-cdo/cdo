@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -128,7 +129,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     long lastUpdateTime = in.readLong();
     int commitNumber = in.readInt();
     String commitComment = in.readString();
-    CDOBranchPoint commitMergeSource = in.readBoolean() ? in.readCDOBranchPoint() : null;
+    CDOBranchPoint commitMergeSource = CDOBranchUtil.readBranchPointOrNull(in);
 
     CDOLockState[] locksOnNewObjects = new CDOLockState[in.readInt()];
     CDOID[] idsToUnlock = new CDOID[in.readInt()];

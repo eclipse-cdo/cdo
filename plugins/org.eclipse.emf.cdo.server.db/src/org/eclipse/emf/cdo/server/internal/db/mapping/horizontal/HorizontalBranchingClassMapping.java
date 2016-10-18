@@ -934,8 +934,10 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       builder.append("=0)"); //$NON-NLS-1$
     }
 
+    String sql = builder.toString();
+
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.LOW);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
     ResultSet resultSet = null;
     Set<CDOID> result = new HashSet<CDOID>();
 

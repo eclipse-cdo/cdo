@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 
 import java.io.IOException;
@@ -73,7 +74,7 @@ public class LoadCommitInfosRequest extends CDOClientRequest<Boolean>
       long timeStamp = in.readLong();
       String userID = in.readString();
       String comment = in.readString();
-      CDOBranchPoint mergeSource = in.readBoolean() ? in.readCDOBranchPoint() : null;
+      CDOBranchPoint mergeSource = CDOBranchUtil.readBranchPointOrNull(in);
 
       try
       {

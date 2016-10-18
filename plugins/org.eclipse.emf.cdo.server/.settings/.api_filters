@@ -386,12 +386,6 @@
     <resource path="src/org/eclipse/emf/cdo/spi/server/InternalRepository.java" type="org.eclipse.emf.cdo.spi.server.InternalRepository">
         <filter id="571473929">
             <message_arguments>
-                <message_argument value="RevisionLoader"/>
-                <message_argument value="InternalRepository"/>
-            </message_arguments>
-        </filter>
-        <filter id="571473929">
-            <message_arguments>
                 <message_argument value="RevisionLoader2"/>
                 <message_argument value="InternalRepository"/>
             </message_arguments>

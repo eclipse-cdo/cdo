@@ -994,7 +994,14 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Deprecated
   public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
+      CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public MergeDataResult loadMergeData2(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
       CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo)
   {
     int attempt = 0;
@@ -1002,7 +1009,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     {
       try
       {
-        return delegate.loadMergeData(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo);
+        return delegate.loadMergeData2(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo);
       }
       catch (Exception ex)
       {

@@ -152,7 +152,6 @@ public class ConflictResolverTest extends AbstractCDOTest
     commitAndSync(transaction2, transaction1);
   }
 
-  // @Skips(IConfig.EFFORT_MERGING)
   public void testMergeLocalChangesPerFeature_Bug2() throws Exception
   {
     CDOSession session = openSession();

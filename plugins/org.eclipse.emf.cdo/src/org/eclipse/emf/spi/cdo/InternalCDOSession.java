@@ -43,6 +43,7 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -479,42 +480,65 @@ public interface InternalCDOSession
   {
     private final CDOBranchPoint target;
 
-    private final CDOBranchPoint source;
-
-    private final CDOBranchPoint sourceBase;
+    private final CDORevisionAvailabilityInfo targetInfo;
 
     private final CDOBranchPoint targetBase;
 
-    private final CDORevisionAvailabilityInfo targetInfo;
-
-    private final CDORevisionAvailabilityInfo sourceInfo;
-
-    private final CDORevisionAvailabilityInfo sourceBaseInfo;
-
     private final CDORevisionAvailabilityInfo targetBaseInfo;
 
-    private final Set<CDOID> ids;
+    private final Set<CDOID> targetIDs;
 
     private final CDOChangeSet targetChanges;
 
+    private final CDOBranchPoint source;
+
+    private final CDORevisionAvailabilityInfo sourceInfo;
+
+    private final CDOBranchPoint sourceBase;
+
+    private final CDORevisionAvailabilityInfo sourceBaseInfo;
+
+    private final Set<CDOID> sourceIDs;
+
     private final CDOChangeSet sourceChanges;
 
+    private final CDOBranchPoint resultBase;
+
+    /**
+     * @deprecated As of 4.6 use {@link #MergeData(CDOBranchPoint, CDORevisionAvailabilityInfo, CDOBranchPoint, CDORevisionAvailabilityInfo, Set, CDOChangeSet, CDOBranchPoint, CDORevisionAvailabilityInfo, CDOBranchPoint, CDORevisionAvailabilityInfo, Set, CDOChangeSet, CDOBranchPoint)}.
+     */
+    @Deprecated
     public MergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase, CDOBranchPoint targetBase,
         CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
         CDORevisionAvailabilityInfo sourceBaseInfo, CDORevisionAvailabilityInfo targetBaseInfo, Set<CDOID> ids,
         CDOChangeSet targetChanges, CDOChangeSet sourceChanges)
     {
+      this(target, targetInfo, targetBase, targetBaseInfo, ids, targetChanges, source, sourceInfo, sourceBase,
+          sourceBaseInfo, ids, sourceChanges, null);
+    }
+
+    /**
+     * @since 4.6
+     */
+    public MergeData(CDOBranchPoint target, CDORevisionAvailabilityInfo targetInfo, CDOBranchPoint targetBase,
+        CDORevisionAvailabilityInfo targetBaseInfo, Set<CDOID> targetIDs, CDOChangeSet targetChanges,
+        CDOBranchPoint source, CDORevisionAvailabilityInfo sourceInfo, CDOBranchPoint sourceBase,
+        CDORevisionAvailabilityInfo sourceBaseInfo, Set<CDOID> sourceIDs, CDOChangeSet sourceChanges,
+        CDOBranchPoint resultBase)
+    {
       this.target = target;
-      this.source = source;
-      this.sourceBase = sourceBase;
-      this.targetBase = targetBase;
       this.targetInfo = targetInfo;
-      this.sourceInfo = sourceInfo;
-      this.sourceBaseInfo = sourceBaseInfo;
+      this.targetBase = targetBase;
       this.targetBaseInfo = targetBaseInfo;
-      this.ids = ids;
+      this.targetIDs = targetIDs;
       this.targetChanges = targetChanges;
+      this.source = source;
+      this.sourceInfo = sourceInfo;
+      this.sourceBase = sourceBase;
+      this.sourceBaseInfo = sourceBaseInfo;
+      this.sourceIDs = sourceIDs;
       this.sourceChanges = sourceChanges;
+      this.resultBase = resultBase;
     }
 
     public CDOBranchPoint getTarget()
@@ -522,14 +546,9 @@ public interface InternalCDOSession
       return target;
     }
 
-    public CDOBranchPoint getSource()
+    public CDORevisionAvailabilityInfo getTargetInfo()
     {
-      return source;
-    }
-
-    public CDOBranchPoint getSourceBase()
-    {
-      return sourceBase;
+      return targetInfo;
     }
 
     /**
@@ -540,14 +559,40 @@ public interface InternalCDOSession
       return targetBase;
     }
 
-    public CDORevisionAvailabilityInfo getTargetInfo()
+    /**
+     * @since 4.6
+     */
+    public CDORevisionAvailabilityInfo getTargetBaseInfo()
     {
-      return targetInfo;
+      return targetBaseInfo;
+    }
+
+    /**
+     * @since 4.6
+     */
+    public Set<CDOID> getTargetIDs()
+    {
+      return targetIDs;
+    }
+
+    public CDOChangeSet getTargetChanges()
+    {
+      return targetChanges;
+    }
+
+    public CDOBranchPoint getSource()
+    {
+      return source;
     }
 
     public CDORevisionAvailabilityInfo getSourceInfo()
     {
       return sourceInfo;
+    }
+
+    public CDOBranchPoint getSourceBase()
+    {
+      return sourceBase;
     }
 
     /**
@@ -561,24 +606,35 @@ public interface InternalCDOSession
     /**
      * @since 4.6
      */
-    public CDORevisionAvailabilityInfo getTargetBaseInfo()
+    public Set<CDOID> getSourceIDs()
     {
-      return targetBaseInfo;
-    }
-
-    public Set<CDOID> getIDs()
-    {
-      return ids;
-    }
-
-    public CDOChangeSet getTargetChanges()
-    {
-      return targetChanges;
+      return sourceIDs;
     }
 
     public CDOChangeSet getSourceChanges()
     {
       return sourceChanges;
+    }
+
+    /**
+     * @since 4.6
+     */
+    public CDOBranchPoint getResultBase()
+    {
+      return resultBase;
+    }
+
+    public Set<CDOID> getIDs()
+    {
+      if (targetIDs == sourceIDs)
+      {
+        return targetIDs;
+      }
+
+      Set<CDOID> ids = new HashSet<CDOID>();
+      ids.addAll(targetIDs);
+      ids.addAll(sourceIDs);
+      return ids;
     }
 
     /**

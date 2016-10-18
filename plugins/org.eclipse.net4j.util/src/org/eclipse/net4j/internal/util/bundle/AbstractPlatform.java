@@ -81,7 +81,7 @@ public abstract class AbstractPlatform implements OMPlatform
 
   protected AbstractPlatform()
   {
-    debugging = Boolean.parseBoolean(getProperty("debug", "false")); //$NON-NLS-1$ //$NON-NLS-2$
+    debugging = isProperty("debug"); //$NON-NLS-1$
   }
 
   public synchronized OMBundle bundle(String bundleID, Class<?> accessor)
@@ -338,6 +338,22 @@ public abstract class AbstractPlatform implements OMPlatform
   public String getProperty(String key, String defaultValue)
   {
     return System.getProperty(key, defaultValue);
+  }
+
+  public boolean isProperty(String key)
+  {
+    return isProperty(key, false);
+  }
+
+  public boolean isProperty(String key, boolean defaultValue)
+  {
+    String property = getProperty(key);
+    if (property == null)
+    {
+      return defaultValue;
+    }
+
+    return Boolean.parseBoolean(property);
   }
 
   protected abstract OMBundle createBundle(String bundleID, Class<?> accessor);

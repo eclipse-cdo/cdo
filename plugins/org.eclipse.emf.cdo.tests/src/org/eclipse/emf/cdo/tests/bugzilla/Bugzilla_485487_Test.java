@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -79,6 +80,7 @@ public class Bugzilla_485487_Test extends AbstractCDOTest
     map.put(RepositoryConfig.PROP_TEST_ENABLE_SERVER_BROWSER, true);
   }
 
+  @Skips(IConfig.CAPABILITY_SANITIZE_TIMEOUT)
   @CleanRepositoriesBefore(reason = "Isolated repository needed")
   @CleanRepositoriesAfter(reason = "Isolated repository needed")
   public void testTimeoutDuringCommit() throws Exception

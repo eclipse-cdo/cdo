@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.MergeDataResult;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
@@ -124,20 +126,44 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
 
     try
     {
-      // if (auto)
-      // {
-      // sourceBaseInfo = new CDORevisionAvailabilityInfo(CDOBranchUtil.AUTO_BRANCH_POINT);
-      // }
-
       InternalRepository repository = getRepository();
-      Set<CDOID> ids = repository.getMergeData(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo, monitor.fork());
+      MergeDataResult result = repository.getMergeData2(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo,
+          monitor.fork());
 
-      out.writeInt(ids.size());
-      for (CDOID id : ids)
+      Set<CDOID> targetIDs = result.getTargetIDs();
+      Set<CDOID> targetAndSourceIDs = new HashSet<CDOID>();
+      Set<CDOID> sourceIDs = result.getSourceIDs();
+
+      // Write IDs of objects that are changed only in target.
+      for (CDOID id : targetIDs)
+      {
+        if (sourceIDs.remove(id))
+        {
+          targetAndSourceIDs.add(id);
+        }
+        else
+        {
+          out.writeCDOID(id);
+        }
+      }
+
+      out.writeCDOID(null);
+
+      // Write IDs of objects that are changed in both target and source.
+      for (CDOID id : targetAndSourceIDs)
       {
         out.writeCDOID(id);
       }
 
+      out.writeCDOID(null);
+
+      // Write IDs of objects that are changed only in source.
+      for (CDOID id : sourceIDs)
+      {
+        out.writeCDOID(id);
+      }
+
+      out.writeCDOID(null);
       monitor.worked();
 
       if (auto)
@@ -168,6 +194,8 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
       {
         writeRevisionAvailabilityInfo(out, sourceBaseInfo, writtenRevisions, monitor.fork());
       }
+
+      CDOBranchUtil.writeBranchPointOrNull(out, result.getResultBase());
     }
     finally
     {

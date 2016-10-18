@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -60,15 +61,6 @@ public class LoadObjectLifetimeIndication extends CDOServerReadIndication
   {
     InternalCDORevisionManager revisionManager = getRepository().getRevisionManager();
     CDOBranchPointRange range = revisionManager.getObjectLifetime(id, branchPoint);
-    if (range != null)
-    {
-      out.writeBoolean(true);
-      out.writeCDOBranchPoint(range.getStartPoint());
-      out.writeCDOBranchPoint(range.getEndPoint());
-    }
-    else
-    {
-      out.writeBoolean(false);
-    }
+    CDOBranchUtil.writeRangeOrNull(out, range);
   }
 }

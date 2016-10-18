@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 
 import java.text.MessageFormat;
@@ -28,13 +29,24 @@ import java.util.Map;
  */
 public final class CDORevisionAvailabilityInfo implements CDORevisionProvider
 {
+  private final Map<CDOID, CDORevisionKey> availableRevisions = CDOIDUtil.createMap();
+
   private CDOBranchPoint branchPoint;
 
-  private Map<CDOID, CDORevisionKey> availableRevisions = CDOIDUtil.createMap();
+  private CDORevisionManager revisionManager;
+
+  /**
+   * @since 4.6
+   */
+  public CDORevisionAvailabilityInfo(CDOBranchPoint branchPoint, CDORevisionManager revisionManager)
+  {
+    this.branchPoint = branchPoint;
+    this.revisionManager = revisionManager;
+  }
 
   public CDORevisionAvailabilityInfo(CDOBranchPoint branchPoint)
   {
-    this.branchPoint = branchPoint;
+    this(branchPoint, null);
   }
 
   public CDOBranchPoint getBranchPoint()
@@ -72,7 +84,13 @@ public final class CDORevisionAvailabilityInfo implements CDORevisionProvider
 
   public CDORevision getRevision(CDOID id)
   {
-    return (CDORevision)availableRevisions.get(id);
+    CDORevision revision = (CDORevision)availableRevisions.get(id);
+    if (revision == null && revisionManager != null)
+    {
+      return revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+    }
+
+    return revision;
   }
 
   @Override

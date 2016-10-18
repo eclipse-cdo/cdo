@@ -42,14 +42,14 @@ public class TestRecorderTransaction extends CDOTransactionImpl
   @Override
   public CDOChangeSetData merge(CDOBranch source, CDOMerger merger)
   {
-    TestRecorder.INSTANCE.remergeTransaction(this, source, merger);
+    TestRecorder.INSTANCE.mergeTransaction(this, source, merger);
     return super.merge(source, merger);
   }
 
   @Override
   public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)
   {
-    TestRecorder.INSTANCE.remergeTransaction(this, source, merger);
+    TestRecorder.INSTANCE.mergeTransaction(this, source, merger);
     return super.merge(source, merger);
   }
 

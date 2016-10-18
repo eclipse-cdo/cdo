@@ -208,7 +208,7 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
       out.println("import org.eclipse.emf.cdo.session.CDOSession;");
       out.println("import org.eclipse.emf.cdo.tests.AbstractCDOTest;");
       out.println("import org.eclipse.emf.cdo.transaction.CDOTransaction;");
-      out.println("org.eclipse.emf.spi.cdo.DefaultCDOMerger;");
+      out.println("import org.eclipse.emf.spi.cdo.DefaultCDOMerger;");
       out.println();
 
       if (!StringUtil.isEmpty(DESCRIPTION))
@@ -462,16 +462,16 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
     modifyingObject(transaction, object, featureDelta);
   }
 
-  public synchronized void remergeTransaction(TestRecorderTransaction transaction, CDOBranch source, CDOMerger merger)
+  public synchronized void mergeTransaction(TestRecorderTransaction transaction, CDOBranch source, CDOMerger merger)
   {
-    println(variables.get(transaction) + ".remerge(" + formatBranch(source, false) + ", new " + simpleClassName(merger)
+    println(variables.get(transaction) + ".merge(" + formatBranch(source, false) + ", new " + simpleClassName(merger)
         + "());");
   }
 
-  public synchronized void remergeTransaction(TestRecorderTransaction transaction, CDOBranchPoint source,
+  public synchronized void mergeTransaction(TestRecorderTransaction transaction, CDOBranchPoint source,
       CDOMerger merger)
   {
-    println(variables.get(transaction) + ".remerge(" + formatBranchPoint(source, false) + ", new "
+    println(variables.get(transaction) + ".merge(" + formatBranchPoint(source, false) + ", new "
         + simpleClassName(merger) + "());");
   }
 

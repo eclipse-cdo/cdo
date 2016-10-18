@@ -20,10 +20,11 @@ import java.util.LinkedList;
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
  *
+ * @noextend This class is not intended to be subclassed by clients.
  * @author Eike Stepper
  * @since 3.0
  */
-public final class CDOChangeSetSegment implements CDOBranchPoint
+public class CDOChangeSetSegment implements CDOBranchPoint
 {
   private CDOBranchPoint branchPoint;
 
@@ -91,21 +92,99 @@ public final class CDOChangeSetSegment implements CDOBranchPoint
     return MessageFormat.format("Segment[{0}, {1}, {2}]", getBranch(), getTimeStamp(), endTime); //$NON-NLS-1$
   }
 
-  public static CDOChangeSetSegment[] createFrom(CDOBranchPoint startPoint, CDOBranchPoint endPoint)
+  /**
+   * @since 4.6
+   */
+  public static void handleSegments(CDOBranchPoint endPoint, Handler handler)
   {
-    LinkedList<CDOChangeSetSegment> result = new LinkedList<CDOChangeSetSegment>();
+    long creationTime = endPoint.getBranch().getBranchManager().getMainBranch().getBase().getTimeStamp();
+    handleSegments(creationTime, endPoint, handler);
+  }
+
+  /**
+   * @since 4.6
+   */
+  public static void handleSegments(long startTime, CDOBranchPoint endPoint, Handler handler)
+  {
+    CDOBranch endBranch = endPoint.getBranch();
+
+    for (;;)
+    {
+      CDOBranchPoint base = endBranch.getBase();
+      long timeStamp = base.getTimeStamp();
+      long endTime = endPoint.getTimeStamp();
+
+      if (timeStamp <= startTime)
+      {
+        handler.handleSegment(new CDOChangeSetSegment(endBranch, startTime, endTime));
+        return;
+      }
+
+      if (!handler.handleSegment(new CDOChangeSetSegment(endBranch, timeStamp, endTime)))
+      {
+        return;
+      }
+
+      endPoint = base;
+      endBranch = base.getBranch();
+    }
+  }
+
+  /**
+   * @since 4.6
+   */
+  public static void handleSegments(CDOBranchPoint startPoint, CDOBranchPoint endPoint, Handler handler)
+  {
     CDOBranch startBranch = startPoint.getBranch();
     CDOBranch endBranch = endPoint.getBranch();
 
     while (startBranch != endBranch)
     {
       CDOBranchPoint base = endBranch.getBase();
-      result.addFirst(new CDOChangeSetSegment(endBranch, base.getTimeStamp(), endPoint.getTimeStamp()));
+      if (!handler.handleSegment(new CDOChangeSetSegment(endBranch, base.getTimeStamp(), endPoint.getTimeStamp())))
+      {
+        return;
+      }
+
       endPoint = base;
       endBranch = base.getBranch();
     }
 
-    result.addFirst(new CDOChangeSetSegment(startBranch, startPoint.getTimeStamp(), endPoint.getTimeStamp()));
+    handler.handleSegment(new CDOChangeSetSegment(startBranch, startPoint.getTimeStamp(), endPoint.getTimeStamp()));
+  }
+
+  /**
+   * @since 4.6
+   */
+  public static CDOChangeSetSegment[] createFrom(long startTime, CDOBranchPoint endPoint)
+  {
+    final LinkedList<CDOChangeSetSegment> result = new LinkedList<CDOChangeSetSegment>();
+
+    handleSegments(startTime, endPoint, new Handler()
+    {
+      public boolean handleSegment(CDOChangeSetSegment segment)
+      {
+        result.addFirst(segment);
+        return true;
+      }
+    });
+
+    return result.toArray(new CDOChangeSetSegment[result.size()]);
+  }
+
+  public static CDOChangeSetSegment[] createFrom(CDOBranchPoint startPoint, CDOBranchPoint endPoint)
+  {
+    final LinkedList<CDOChangeSetSegment> result = new LinkedList<CDOChangeSetSegment>();
+
+    handleSegments(startPoint, endPoint, new Handler()
+    {
+      public boolean handleSegment(CDOChangeSetSegment segment)
+      {
+        result.addFirst(segment);
+        return true;
+      }
+    });
+
     return result.toArray(new CDOChangeSetSegment[result.size()]);
   }
 
@@ -123,5 +202,14 @@ public final class CDOChangeSetSegment implements CDOBranchPoint
     }
 
     return false;
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.6
+   */
+  public interface Handler
+  {
+    public boolean handleSegment(CDOChangeSetSegment segment);
   }
 }

@@ -254,6 +254,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
             currentCDOSavePoint.getDirtyObjects().remove(id);
             currentCDOSavePoint = currentCDOSavePoint.getPreviousSavepoint();
           }
+
           object.cdoInternalSetState(CDOState.CLEAN);
         }
         else
@@ -266,10 +267,9 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
             currentCDOSavePoint.getDirtyObjects().put(id, object);
             currentCDOSavePoint = currentCDOSavePoint.getPreviousSavepoint();
           }
+
           object.cdoInternalSetState(CDOState.DIRTY);
-
           cleanRevisions.put(object, newCleanRevision);
-
           updateObjects(newCleanRevision, newLocalDelta, detachedObjectsUpdater);
         }
         object.cdoInternalPostLoad();

@@ -86,6 +86,16 @@ public interface OMPlatform
   public String getProperty(String key, String defaultValue);
 
   /**
+   * @since 3.7
+   */
+  public boolean isProperty(String key);
+
+  /**
+   * @since 3.7
+   */
+  public boolean isProperty(String key, boolean defaultValue);
+
+  /**
    * @since 3.2
    */
   public String[] getCommandLineArgs() throws IllegalStateException;

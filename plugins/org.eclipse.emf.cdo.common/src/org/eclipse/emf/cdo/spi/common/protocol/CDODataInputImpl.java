@@ -70,6 +70,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDORemoveFeatureDeltaI
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaImpl;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
@@ -284,7 +285,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       CDOBranch branch = readCDOBranch();
       String userID = readString();
       String comment = readString();
-      CDOBranchPoint mergeSource = readBoolean() ? readCDOBranchPoint() : null;
+      CDOBranchPoint mergeSource = CDOBranchUtil.readBranchPointOrNull(this);
       CDOCommitData commitData = readCDOCommitData();
 
       return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource,

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CaseInsensitiveStringSet;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -135,6 +136,11 @@ public class Scenario implements IScenario
   {
     Set<String> capabilities = new CaseInsensitiveStringSet();
     capabilities.add(IConfig.CAPABILITY_ALL);
+
+    if (CheckUtil.SANITIZE_TIMEOUT)
+    {
+      capabilities.add(IConfig.CAPABILITY_SANITIZE_TIMEOUT);
+    }
 
     repositoryConfig.initCapabilities(capabilities);
     sessionConfig.initCapabilities(capabilities);

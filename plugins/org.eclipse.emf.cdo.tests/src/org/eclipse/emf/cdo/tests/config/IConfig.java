@@ -23,7 +23,7 @@ public interface IConfig extends ITestLifecycle, Serializable
 
   public static final String CAPABILITY_UNAVAILABLE = "___UNAVAILABLE___";
 
-  public static final String EFFORT_MERGING = "___MERGING___";
+  public static final String CAPABILITY_SANITIZE_TIMEOUT = "___SANITIZE_TIMEOUT___";
 
   public String getName();
 

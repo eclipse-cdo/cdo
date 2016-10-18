@@ -62,14 +62,7 @@ public class LoadObjectLifetimeRequest extends CDOClientRequest<CDOBranchPointRa
   @Override
   protected CDOBranchPointRange confirming(CDODataInput in) throws IOException
   {
-    if (in.readBoolean())
-    {
-      CDOBranchPoint point1 = in.readCDOBranchPoint();
-      CDOBranchPoint point2 = in.readCDOBranchPoint();
-      return CDOBranchUtil.createRange(point1, point2);
-    }
-
-    return null;
+    return CDOBranchUtil.readRangeOrNull(in);
   }
 
   @Override

@@ -802,11 +802,17 @@ public class DefaultCDOMerger implements CDOMerger
           {
             CDOAddFeatureDelta addChange = (CDOAddFeatureDelta)change;
 
+            int index = addChange.getIndex();
+            if (index > list.size())
+            {
+              index = list.size();
+            }
+
             Element element = new Element(-1);
             element.set(side, addChange);
             allElements.put(addChange, element);
 
-            list.add(addChange.getIndex(), element);
+            list.add(index, element);
             rememberAddition(addChange.getValue(), element, additions);
             break;
           }

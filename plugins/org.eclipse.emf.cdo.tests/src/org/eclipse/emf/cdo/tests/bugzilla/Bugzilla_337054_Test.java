@@ -26,9 +26,9 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
  */
 public class Bugzilla_337054_Test extends AbstractCDOTest
 {
-  private final static String RESOURCE_NAME = "/337054";
+  private static final String RESOURCE_NAME = "/337054";
 
-  private int testedListSize = 3;
+  private static final int LIST_SIZE = 3;
 
   @Requires({ IRepositoryConfig.CAPABILITY_BRANCHING, IRepositoryConfig.CAPABILITY_RESTARTABLE })
   public void testCDOElementProxies() throws Exception
@@ -39,51 +39,39 @@ public class Bugzilla_337054_Test extends AbstractCDOTest
     CDOTransaction mainTransaction = session.openTransaction();
     CDOResource resource = mainTransaction.createResource(getResourcePath(RESOURCE_NAME));
 
-    // fill up resource contents if empty
-    int actualSize = resource.getContents().size();
-    if (actualSize < testedListSize)
+    msg("Filling up list...");
+    for (int i = 0; i < LIST_SIZE; i++)
     {
-      msg("Filling up list...");
-
-      for (int i = actualSize; i < testedListSize; i++)
-      {
-        Company company = getModel1Factory().createCompany();
-        company.setName("TestCompany_" + i);
-        resource.getContents().add(company);
-
-        resource.getContents().add(company);
-
-        actualSize++;
-      }
-
-      msg("Committing data...");
-      mainTransaction.commit();
+      Company company = getModel1Factory().createCompany();
+      company.setName("TestCompany_" + i);
+      resource.getContents().add(company);
     }
 
+    msg("Committing data...");
+    mainTransaction.commit();
     mainTransaction.close();
 
-    msg("Creating a branch with a new element: ");
-
+    msg("Creating a branch with a new element...");
     String branchName = String.valueOf(System.currentTimeMillis());
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch(branchName);
 
     Company branchCompany = getModel1Factory().createCompany();
-    branchCompany.setName("TestCompany_" + actualSize);
+    branchCompany.setName("TestCompany_" + LIST_SIZE);
 
     CDOTransaction branchTransaction = session.openTransaction(branch);
-    CDOResource branchRootResource = branchTransaction.getOrCreateResource(getResourcePath(RESOURCE_NAME));
-    branchRootResource.getContents().add(branchCompany);
+    CDOResource branchResource = branchTransaction.getResource(getResourcePath(RESOURCE_NAME));
+    branchResource.getContents().add(branchCompany);
 
     branchTransaction.commit();
     branchTransaction.close();
 
-    // restart repository
+    // Restart repository.
     restartRepository();
 
     session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(0, 300));
 
-    // merge
+    // Merge.
     mainTransaction = session.openTransaction(session.getBranchManager().getMainBranch());
     branch = session.getBranchManager().getMainBranch().getBranch(branchName);
 

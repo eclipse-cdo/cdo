@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 
 import java.io.IOException;
 
@@ -37,8 +38,7 @@ public class LoadChangeSetsRequest extends CDOClientRequest<CDOChangeSetData[]>
     out.writeInt(ranges.length);
     for (CDOBranchPointRange range : ranges)
     {
-      out.writeCDOBranchPoint(range.getStartPoint());
-      out.writeCDOBranchPoint(range.getEndPoint());
+      CDOBranchUtil.writeRange(out, range);
     }
   }
 

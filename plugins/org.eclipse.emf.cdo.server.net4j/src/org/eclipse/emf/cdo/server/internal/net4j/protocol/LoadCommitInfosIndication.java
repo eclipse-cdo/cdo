@@ -11,12 +11,12 @@
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 
 import org.eclipse.net4j.util.WrappedException;
@@ -69,17 +69,7 @@ public class LoadCommitInfosIndication extends CDOServerReadIndication
             out.writeLong(commitInfo.getTimeStamp());
             out.writeString(commitInfo.getUserID());
             out.writeString(commitInfo.getComment());
-
-            CDOBranchPoint mergeSource = commitInfo.getMergeSource();
-            if (mergeSource != null)
-            {
-              out.writeBoolean(true);
-              out.writeCDOBranchPoint(mergeSource);
-            }
-            else
-            {
-              out.writeBoolean(false);
-            }
+            CDOBranchUtil.writeBranchPointOrNull(out, commitInfo.getMergeSource());
           }
           catch (IOException ex)
           {

@@ -127,6 +127,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.MergeDataResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
@@ -1181,7 +1182,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
     CDORevisionAvailabilityInfo targetInfo = createRevisionAvailabilityInfo2(target);
     CDORevisionAvailabilityInfo sourceInfo = createRevisionAvailabilityInfo2(source);
 
-    Set<CDOID> ids = sessionProtocol.loadMergeData(targetInfo, sourceInfo, null, null);
+    MergeDataResult result = sessionProtocol.loadMergeData2(targetInfo, sourceInfo, null, null);
+    Set<CDOID> ids = result.getTargetIDs();
 
     cacheRevisions2(targetInfo);
     cacheRevisions2(sourceInfo);
@@ -1233,7 +1235,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
     CDORevisionAvailabilityInfo targetBaseInfo = createRevisionAvailabilityInfo2(targetBase);
     CDORevisionAvailabilityInfo sourceBaseInfo = sameBase && !auto ? null : createRevisionAvailabilityInfo2(sourceBase);
 
-    Set<CDOID> ids = sessionProtocol.loadMergeData(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo);
+    MergeDataResult result = sessionProtocol.loadMergeData2(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo);
 
     if (auto)
     {
@@ -1259,12 +1261,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
     CDOChangeSet sourceChanges = null;
     if (computeChangeSets)
     {
-      targetChanges = createChangeSet(ids, targetBaseInfo, targetInfo);
-      sourceChanges = createChangeSet(ids, sourceBaseInfo, sourceInfo);
+      targetChanges = createChangeSet(result.getTargetIDs(), targetBaseInfo, targetInfo);
+      sourceChanges = createChangeSet(result.getSourceIDs(), sourceBaseInfo, sourceInfo);
     }
 
-    return new MergeData(target, source, sourceBase, targetBase, targetInfo, sourceInfo, sourceBaseInfo, targetBaseInfo,
-        ids, targetChanges, sourceChanges);
+    return new MergeData(target, targetInfo, targetBase, targetBaseInfo, result.getTargetIDs(), targetChanges, source,
+        sourceInfo, sourceBase, sourceBaseInfo, result.getSourceIDs(), sourceChanges, result.getResultBase());
   }
 
   @Deprecated
@@ -1275,11 +1277,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
 
   private CDORevisionAvailabilityInfo createRevisionAvailabilityInfo2(CDOBranchPoint branchPoint)
   {
-    CDORevisionAvailabilityInfo info = new CDORevisionAvailabilityInfo(branchPoint);
+    InternalCDORevisionManager revisionManager = getRevisionManager();
+    CDORevisionAvailabilityInfo info = new CDORevisionAvailabilityInfo(branchPoint, revisionManager);
 
     if (branchPoint != CDOBranchUtil.AUTO_BRANCH_POINT)
     {
-      InternalCDORevisionManager revisionManager = getRevisionManager();
       InternalCDORevisionCache cache = revisionManager.getCache();
 
       List<CDORevision> revisions = cache.getRevisions(branchPoint);

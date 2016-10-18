@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -22,8 +23,9 @@ import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.MergeDataResult;
+
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -31,7 +33,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<Set<CDOID>>
+public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<MergeDataResult>
 {
   private CDORevisionAvailabilityInfo targetInfo;
 
@@ -121,21 +123,52 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<Set<CDO
   }
 
   @Override
-  protected Set<CDOID> confirming(CDODataInput in, OMMonitor monitor) throws IOException
+  protected MergeDataResult confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
-    Set<CDOID> result = new HashSet<CDOID>();
+    MergeDataResult result = new MergeDataResult();
 
-    int size = in.readInt();
-    monitor.begin(size + infos);
+    monitor.begin(1 + infos);
 
     try
     {
-      for (int i = 0; i < size; i++)
+      // Read IDs of objects that are changed only in target.
+      for (;;)
       {
         CDOID id = in.readCDOID();
-        result.add(id);
-        monitor.worked();
+        if (CDOIDUtil.isNull(id))
+        {
+          break;
+        }
+
+        result.getTargetIDs().add(id);
       }
+
+      // Read IDs of objects that are changed in both target and source.
+      for (;;)
+      {
+        CDOID id = in.readCDOID();
+        if (CDOIDUtil.isNull(id))
+        {
+          break;
+        }
+
+        result.getTargetIDs().add(id);
+        result.getSourceIDs().add(id);
+      }
+
+      // Read IDs of objects that are changed only in source.
+      for (;;)
+      {
+        CDOID id = in.readCDOID();
+        if (CDOIDUtil.isNull(id))
+        {
+          break;
+        }
+
+        result.getSourceIDs().add(id);
+      }
+
+      monitor.worked();
 
       if (auto)
       {
@@ -151,19 +184,20 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<Set<CDO
         }
       }
 
-      readRevisionAvailabilityInfo(in, targetInfo, result, monitor.fork());
-      readRevisionAvailabilityInfo(in, sourceInfo, result, monitor.fork());
+      readRevisionAvailabilityInfo(in, targetInfo, result.getTargetIDs(), monitor.fork());
+      readRevisionAvailabilityInfo(in, sourceInfo, result.getSourceIDs(), monitor.fork());
 
       if (infos > 2)
       {
-        readRevisionAvailabilityInfo(in, targetBaseInfo, result, monitor.fork());
+        readRevisionAvailabilityInfo(in, targetBaseInfo, result.getTargetIDs(), monitor.fork());
       }
 
       if (infos > 3)
       {
-        readRevisionAvailabilityInfo(in, sourceBaseInfo, result, monitor.fork());
+        readRevisionAvailabilityInfo(in, sourceBaseInfo, result.getSourceIDs(), monitor.fork());
       }
 
+      result.setResultBase(CDOBranchUtil.readBranchPointOrNull(in));
       return result;
     }
     finally

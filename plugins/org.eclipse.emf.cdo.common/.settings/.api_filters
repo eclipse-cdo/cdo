@@ -192,13 +192,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.java" type="org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment">
-        <filter id="337768515">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.java" type="org.eclipse.emf.cdo.spi.common.id.AbstractCDOID">
         <filter id="337682486">
             <message_arguments>

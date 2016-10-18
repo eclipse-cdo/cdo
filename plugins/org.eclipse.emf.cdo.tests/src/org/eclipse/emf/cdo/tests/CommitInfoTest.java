@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.PasswordCredentials;
@@ -943,7 +944,9 @@ public class CommitInfoTest extends AbstractCDOTest
     {
       resource.getContents().add(getModel1Factory().createProduct1());
       transaction.setCommitComment("Commit " + i);
-      expected.add(transaction.commit());
+      CDOCommitInfo commit = transaction.commit();
+      expected.add(commit);
+      IOUtil.OUT().println(expected.get(i).getTimeStamp());
     }
 
     final int LOAD = 10;
@@ -952,6 +955,11 @@ public class CommitInfoTest extends AbstractCDOTest
     session.getCommitInfoManager().getCommitInfos(null, expected.get(0).getTimeStamp(), null, null, LOAD, handler);
 
     List<CDOCommitInfo> infos = handler.getInfos();
+
+    for (int i = 0; i < LOAD; i++)
+    {
+      IOUtil.OUT().println(expected.get(i).getTimeStamp() + " -> " + infos.get(i).getTimeStamp());
+    }
 
     assertEquals(LOAD, infos.size()); // Initial root resource commit + COMMITS
     for (int i = 0; i < LOAD; i++)

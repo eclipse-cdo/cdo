@@ -40,9 +40,7 @@ public class LoadChangeSetsIndication extends CDOServerReadIndication
     ranges = new CDOBranchPointRange[size];
     for (int i = 0; i < ranges.length; i++)
     {
-      CDOBranchPoint startPoint = in.readCDOBranchPoint();
-      CDOBranchPoint endPoint = in.readCDOBranchPoint();
-      ranges[i] = CDOBranchUtil.createRange(startPoint, endPoint);
+      ranges[i] = CDOBranchUtil.readRange(in);
     }
   }
 

@@ -54,6 +54,7 @@ import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -77,7 +78,6 @@ import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
-import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
@@ -89,6 +89,7 @@ import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
@@ -609,12 +610,22 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           return null;
         }
 
-        CDORevisionAvailabilityInfo targetBaseInfo = mergeData.getTargetBaseInfo();
-        CDORevisionAvailabilityInfo targetInfo = mergeData.getTargetInfo();
-        ApplyChangeSetResult changeSet = applyChangeSet(result, targetBaseInfo, targetInfo, source, false);
+        CDORevisionProvider targetProvider = mergeData.getTargetInfo();
+        CDORevisionProvider resultBaseProvider;
 
+        CDORevisionManager revisionManager = session.getRevisionManager();
+        CDOBranchPoint resultBase = mergeData.getResultBase();
+        if (resultBase != null)
+        {
+          resultBaseProvider = new ManagedRevisionProvider(revisionManager, resultBase);
+        }
+        else
+        {
+          resultBaseProvider = mergeData.getTargetBaseInfo();
+        }
+
+        ApplyChangeSetResult changeSet = applyChangeSet(result, resultBaseProvider, targetProvider, source, false);
         commitMergeSource = source;
-
         return changeSet.getChangeSetData();
       }
       finally
@@ -636,7 +647,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     throw new UnsupportedOperationException();
   }
 
-  public ApplyChangeSetResult applyChangeSet(CDOChangeSetData changeSetData, CDORevisionProvider targetBaseProvider,
+  public ApplyChangeSetResult applyChangeSet(CDOChangeSetData changeSetData, CDORevisionProvider resultBaseProvider,
       CDORevisionProvider targetProvider, CDOBranchPoint source, boolean keepVersions) throws ChangeSetOutdatedException
   {
     synchronized (getViewMonitor())
@@ -665,7 +676,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
         // Changed objects
         Map<CDOID, InternalCDORevision> oldRevisions = applyChangedObjects(changeSetData.getChangedObjects(),
-            targetBaseProvider, targetProvider, keepVersions, resultData.getChangedObjects());
+            resultBaseProvider, targetProvider, keepVersions, resultData.getChangedObjects());
 
         // Delta notifications
         Collection<CDORevisionDelta> notificationDeltas = lastSavepoint.getRevisionDeltas2().values();
@@ -782,7 +793,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   private Map<CDOID, InternalCDORevision> applyChangedObjects(List<CDORevisionKey> changedObjects,
-      CDORevisionProvider targetBaseProvider, CDORevisionProvider targetProvider, boolean keepVersions,
+      CDORevisionProvider resultBaseProvider, CDORevisionProvider targetProvider, boolean keepVersions,
       List<CDORevisionKey> result) throws ChangeSetOutdatedException
   {
     Map<CDOID, InternalCDORevision> oldRevisions = CDOIDUtil.createMap();
@@ -793,10 +804,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     for (CDORevisionKey key : changedObjects)
     {
-      InternalCDORevisionDelta targetBaseGoalDelta = (InternalCDORevisionDelta)key;
-      targetBaseGoalDelta.setTarget(null);
-      CDOID id = targetBaseGoalDelta.getID();
-      InternalCDORevision targetBaseRevision = (InternalCDORevision)targetBaseProvider.getRevision(id);
+      InternalCDORevisionDelta resultBaseGoalDelta = (InternalCDORevisionDelta)key;
+      resultBaseGoalDelta.setTarget(null);
+      CDOID id = resultBaseGoalDelta.getID();
+      InternalCDORevision resultBaseRevision = (InternalCDORevision)resultBaseProvider.getRevision(id);
 
       InternalCDOObject object = getObject(id);
       boolean revisionChanged = false;
@@ -811,7 +822,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       oldRevisions.put(id, targetRevision);
 
-      InternalCDORevision goalRevision = targetBaseRevision.copy();
+      InternalCDORevision goalRevision = resultBaseRevision.copy();
       goalRevision.setBranchPoint(this);
       if (!keepVersions)
       {
@@ -819,14 +830,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       goalRevision.setRevised(UNSPECIFIED_DATE);
-      targetBaseGoalDelta.applyTo(goalRevision);
+      resultBaseGoalDelta.applyTo(goalRevision);
 
       InternalCDORevisionDelta targetGoalDelta = goalRevision.compare(targetRevision);
       targetGoalDelta.setTarget(null);
 
       if (!targetGoalDelta.isEmpty())
       {
-        if (keepVersions && targetGoalDelta.getVersion() != targetBaseRevision.getVersion())
+        if (keepVersions && targetGoalDelta.getVersion() != resultBaseRevision.getVersion())
         {
           throw new ChangeSetOutdatedException();
         }

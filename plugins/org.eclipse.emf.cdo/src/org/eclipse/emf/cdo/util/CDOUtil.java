@@ -616,6 +616,14 @@ public final class CDOUtil
   }
 
   /**
+   * @since 4.6
+   */
+  public static CDOBranch createBranch(CDOBranchPoint base, String name)
+  {
+    return base.getBranch().createBranch(name, base.getTimeStamp());
+  }
+
+  /**
    * @since 4.3
    */
   public static <T extends EObject> EList<T> filterReadables(Collection<T> collection)

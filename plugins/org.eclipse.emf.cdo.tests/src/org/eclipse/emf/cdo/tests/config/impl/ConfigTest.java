@@ -93,6 +93,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
 
   private IScenario scenario;
 
+  private boolean defaultScenario;
+
   private Properties homeProperties;
 
   private Map<String, Object> testProperties;
@@ -106,10 +108,16 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     return Config.getExecutorService();
   }
 
+  public boolean hasDefaultScenario()
+  {
+    return defaultScenario;
+  }
+
   public synchronized IScenario getScenario()
   {
     if (scenario == null)
     {
+      defaultScenario = true;
       setScenario(getDefaultScenario());
     }
 
@@ -587,6 +595,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   @Override
   public TestResult run()
   {
+    defaultScenario = false;
+
     try
     {
       return super.run();
@@ -604,6 +614,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   @Override
   public void runBare() throws Throwable
   {
+    defaultScenario = false;
+
     try
     {
       super.runBare();

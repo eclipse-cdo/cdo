@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -47,6 +48,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.MergeDataResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
 
 import java.io.IOException;
@@ -82,6 +84,16 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
   public InternalCDOBranchManager getBranchManager();
 
   public void setBranchManager(InternalCDOBranchManager branchManager);
+
+  /**
+   * @since 4.6
+   */
+  public CDOTimeProvider getTimeProvider();
+
+  /**
+   * @since 4.6
+   */
+  public void setTimeProvider(CDOTimeProvider timeProvider);
 
   /**
    * @since 4.1
@@ -236,8 +248,16 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
 
   /**
    * @since 4.0
+   * @deprecated as of 4.6 use {@link #getMergeData2(CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, OMMonitor)}.
    */
+  @Deprecated
   public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
+      CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor);
+
+  /**
+   * @since 4.6
+   */
+  public MergeDataResult getMergeData2(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
       CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor);
 
   /**

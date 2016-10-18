@@ -271,8 +271,8 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
     long t = commitInfo.getTimeStamp();
     String timeStamp = CDOCommonUtil.formatTimeStamp(t) + " (" + t + ")";
 
-    return MessageFormat.format("CommitInfo[{0}, {1}, {2}, {3}, {4}]", timeStamp, commitInfo.getBranch(), //$NON-NLS-1$
-        commitInfo.getUserID(), commitInfo.getComment(), data);
+    return MessageFormat.format("CommitInfo[{0}, {1}, {2}, {3}, {4}, {5}]", timeStamp, commitInfo.getBranch(), //$NON-NLS-1$
+        commitInfo.getUserID(), commitInfo.getComment(), commitInfo.getMergeSource(), data);
   }
 
   public synchronized boolean isCommitDataLoaded()

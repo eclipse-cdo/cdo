@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2016 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2008-2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,8 +13,8 @@ package org.eclipse.net4j.util.security;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,8 +23,6 @@ import java.util.Map;
  */
 public class UserManager extends Lifecycle implements IUserManager, IAuthenticator
 {
-  private UserManagerAuthenticator userManagerAuthenticator = new UserManagerAuthenticator(this);
-
   @ExcludeFromDump
   protected transient Map<String, char[]> users = new HashMap<String, char[]>();
 
@@ -59,8 +57,21 @@ public class UserManager extends Lifecycle implements IUserManager, IAuthenticat
    */
   public void authenticate(String userID, char[] password)
   {
-    // delegate to UserManagerAuthenticator
-    userManagerAuthenticator.authenticate(userID, password);
+    char[] userPassword;
+    synchronized (this)
+    {
+      userPassword = users.get(userID);
+    }
+
+    if (userPassword == null)
+    {
+      throw new SecurityException("No such user: " + userID); //$NON-NLS-1$
+    }
+
+    if (!Arrays.equals(userPassword, password))
+    {
+      throw new SecurityException("Wrong password for user: " + userID); //$NON-NLS-1$
+    }
   }
 
   /**
@@ -97,7 +108,6 @@ public class UserManager extends Lifecycle implements IUserManager, IAuthenticat
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    LifecycleUtil.activate(userManagerAuthenticator);
     load(users);
   }
 

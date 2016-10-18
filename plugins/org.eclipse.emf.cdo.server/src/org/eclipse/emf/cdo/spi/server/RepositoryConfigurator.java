@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, 2016 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011-2013, 2015 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -272,12 +272,7 @@ public class RepositoryConfigurator
           repository.setSessionManager(sessionManager);
         }
 
-        // Set the userManager as authenticator so that 
-        // the authenticate implementation can be overridden 
-        if (userManager instanceof IAuthenticator)
-        {
-          sessionManager.setAuthenticator((IAuthenticator)userManager);
-        }
+        sessionManager.setUserManager(userManager);
       }
     }
   }

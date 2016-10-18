@@ -94,11 +94,4 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/net4j/util/security/UserManagerAuthenticator.java" type="org.eclipse.net4j.util.security.UserManagerAuthenticator">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="UserManagerAuthenticator(IUserManager)"/>
-            </message_arguments>
-        </filter>
-    </resource>
 </component>

@@ -51,12 +51,10 @@ public class DB4OCommitInfo
     return timeStamp;
   }
 
-  public void handle(InternalCDOBranchManager branchManager, InternalCDOCommitInfoManager manager,
-      CDOCommitInfoHandler handler)
+  public void handle(InternalCDOBranchManager branchManager, InternalCDOCommitInfoManager manager, CDOCommitInfoHandler handler)
   {
     InternalCDOBranch branch = branchManager.getBranch(branchID);
-    CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null,
-        null);
+    CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null, null);
     handler.handleCommitInfo(commitInfo);
   }
 }

@@ -146,8 +146,7 @@ public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> imp
 
     private final boolean connected;
 
-    public RepositoryConnectionEventImpl(CDORepositoryManager repositoryManager, CDORepository repository,
-        boolean connected)
+    public RepositoryConnectionEventImpl(CDORepositoryManager repositoryManager, CDORepository repository, boolean connected)
     {
       super(repositoryManager);
       this.repository = repository;

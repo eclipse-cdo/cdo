@@ -63,14 +63,13 @@ public abstract class AcoreBasicAddElementFeature extends AbstractAddShapeFeatur
 
     addToResourceIfNeeded(addedClass);
 
-    ContainerShape containerShape = createContainerShape(context, addedClass, targetDiagram, peCreateService, width,
-        height, gaService);
+    ContainerShape containerShape = createContainerShape(context, addedClass, targetDiagram, peCreateService, width, height, gaService);
 
     return containerShape;
   }
 
-  private ContainerShape createContainerShape(IAddContext context, ABasicClass addedClass, Diagram targetDiagram,
-      IPeCreateService peCreateService, int width, int height, IGaService gaService)
+  private ContainerShape createContainerShape(IAddContext context, ABasicClass addedClass, Diagram targetDiagram, IPeCreateService peCreateService, int width,
+      int height, IGaService gaService)
   {
     ContainerShape containerShape = peCreateService.createContainerShape(targetDiagram, true);
     // create and set graphics algorithm

@@ -343,8 +343,7 @@ public interface IMappingStrategy
    *
    * @since 4.0
    */
-  public void handleRevisions(IDBStoreAccessor accessor, EClass eClass, CDOBranch branch, long timeStamp,
-      boolean exactTime, CDORevisionHandler handler);
+  public void handleRevisions(IDBStoreAccessor accessor, EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler);
 
   /**
    * Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.
@@ -358,14 +357,13 @@ public interface IMappingStrategy
   /**
    * @since 3.0
    */
-  public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, int lastReplicatedBranchID, int lastBranchID,
-      long lastReplicatedCommitTime, long lastCommitTime) throws IOException;
+  public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, int lastReplicatedBranchID, int lastBranchID, long lastReplicatedCommitTime,
+      long lastCommitTime) throws IOException;
 
   /**
    * @since 4.0
    */
-  public void rawImport(IDBStoreAccessor accessor, CDODataInput in, long fromCommitTime, long toCommitTime,
-      OMMonitor monitor) throws IOException;
+  public void rawImport(IDBStoreAccessor accessor, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException;
 
   /**
    * @since 4.0

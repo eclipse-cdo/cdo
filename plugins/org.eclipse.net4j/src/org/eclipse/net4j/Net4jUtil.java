@@ -179,8 +179,7 @@ public final class Net4jUtil
    */
   public static ITransportConfig copyTransportConfig(ILifecycle lifecycle, ITransportConfig source)
   {
-    return new TransportConfig(lifecycle, source.getReceiveExecutor(), source.getBufferProvider(),
-        source.getProtocolProvider(), source.getNegotiator());
+    return new TransportConfig(lifecycle, source.getReceiveExecutor(), source.getBufferProvider(), source.getProtocolProvider(), source.getNegotiator());
   }
 
   /**

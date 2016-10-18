@@ -71,8 +71,7 @@ public abstract class CDOUserSavepointImpl implements InternalCDOUserSavepoint
   public boolean isValid()
   {
     InternalCDOUserSavepoint lastSavepoint = getTransaction().getLastSavepoint();
-    for (InternalCDOUserSavepoint savepoint = lastSavepoint; savepoint != null; savepoint = savepoint
-        .getPreviousSavepoint())
+    for (InternalCDOUserSavepoint savepoint = lastSavepoint; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
     {
       if (savepoint == this)
       {

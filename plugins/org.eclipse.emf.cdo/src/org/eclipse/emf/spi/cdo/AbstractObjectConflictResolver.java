@@ -88,8 +88,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
   /**
    * @since 4.0
    */
-  public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
-      List<CDORevisionDelta> allRemoteDeltas)
+  public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts, List<CDORevisionDelta> allRemoteDeltas)
   {
     Map<CDOID, CDORevisionDelta> localDeltas = getTransaction().getRevisionDeltas();
     for (Entry<CDOObject, Pair<CDORevision, CDORevisionDelta>> entry : conflicts.entrySet())
@@ -117,8 +116,8 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
    *
    * @since 4.0
    */
-  protected void resolveConflict(CDOObject conflict, CDORevision oldRemoteRevision, CDORevisionDelta localDelta,
-      CDORevisionDelta remoteDelta, List<CDORevisionDelta> allRemoteDeltas)
+  protected void resolveConflict(CDOObject conflict, CDORevision oldRemoteRevision, CDORevisionDelta localDelta, CDORevisionDelta remoteDelta,
+      List<CDORevisionDelta> allRemoteDeltas)
   {
     throw new UnsupportedOperationException("Must be overridden");
   }
@@ -169,8 +168,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
     }
 
     @Override
-    public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
-        List<CDORevisionDelta> allRemoteDeltas)
+    public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts, List<CDORevisionDelta> allRemoteDeltas)
     {
       CDOChangeSetData remoteChangeSet = createChangeSet(allRemoteDeltas);
 
@@ -193,8 +191,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
         changedObjects.add(delta);
       }
 
-      CDOChangeSetData remoteChangeSet = CDORevisionUtil.createChangeSetData(newObjects, changedObjects,
-          detachedObjects);
+      CDOChangeSetData remoteChangeSet = CDORevisionUtil.createChangeSetData(newObjects, changedObjects, detachedObjects);
       return remoteChangeSet;
     }
   }
@@ -277,14 +274,13 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
     }
 
     @Override
-    protected void resolveConflict(CDOObject conflict, CDORevision oldRemoteRevision, CDORevisionDelta localDelta,
-        CDORevisionDelta remoteDelta, List<CDORevisionDelta> allRemoteDeltas)
+    protected void resolveConflict(CDOObject conflict, CDORevision oldRemoteRevision, CDORevisionDelta localDelta, CDORevisionDelta remoteDelta,
+        List<CDORevisionDelta> allRemoteDeltas)
     {
       resolveConflict(conflict, localDelta, collector.getDeltas(conflict));
     }
 
-    protected abstract void resolveConflict(CDOObject conflict, CDORevisionDelta localDelta,
-        List<CDORevisionDelta> remoteDeltas);
+    protected abstract void resolveConflict(CDOObject conflict, CDORevisionDelta localDelta, List<CDORevisionDelta> remoteDeltas);
 
     /**
      * If the meaning of this type isn't clear, there really should be more of a description here...

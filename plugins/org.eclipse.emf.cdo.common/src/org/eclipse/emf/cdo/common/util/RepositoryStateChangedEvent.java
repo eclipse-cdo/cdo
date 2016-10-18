@@ -32,8 +32,7 @@ public class RepositoryStateChangedEvent extends Event implements CDOCommonRepos
 
   private CDOCommonRepository.State newState;
 
-  public RepositoryStateChangedEvent(INotifier source, CDOCommonRepository.State oldState,
-      CDOCommonRepository.State newState)
+  public RepositoryStateChangedEvent(INotifier source, CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
   {
     super(source);
     this.oldState = oldState;

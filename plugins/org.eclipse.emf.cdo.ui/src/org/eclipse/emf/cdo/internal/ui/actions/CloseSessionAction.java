@@ -40,8 +40,7 @@ public final class CloseSessionAction extends SessionAction
     if (CDOUtil.isSessionDirty(getSession()))
     {
       MessageDialog dialog = new MessageDialog(getShell(), TITLE, null, Messages.getString("CloseSessionAction.2"), //$NON-NLS-1$
-          MessageDialog.QUESTION,
-          new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL, IDialogConstants.CANCEL_LABEL }, 0);
+          MessageDialog.QUESTION, new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL, IDialogConstants.CANCEL_LABEL }, 0);
       if (dialog.open() != MessageDialog.OK)
       {
         cancel();

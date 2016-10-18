@@ -92,8 +92,7 @@ public class DawnEcoreDiagramEditor extends EcoreDiagramEditor implements IDawnE
     {
       if (e.getMessage().contains("conflict"))
       {
-        MessageDialog.openError(Display.getDefault().getActiveShell(), "conflict",
-            "Your Resource is in conflict and cannot be committed");
+        MessageDialog.openError(Display.getDefault().getActiveShell(), "conflict", "Your Resource is in conflict and cannot be committed");
       }
       else
       {

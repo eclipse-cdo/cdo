@@ -472,8 +472,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
           int[] indices = ((CDOListFeatureDeltaImpl)featureDelta).reconstructAddedIndices().getElement2();
           for (int i = 1; i <= indices[0]; i++)
           {
-            ReconstructedIndex expectedIndex = new ReconstructedIndex(revisionDelta.getID(), featureDelta.getFeature(),
-                indices[i]);
+            ReconstructedIndex expectedIndex = new ReconstructedIndex(revisionDelta.getID(), featureDelta.getFeature(), indices[i]);
             if (!expectedIndices.remove(expectedIndex))
             {
               System.out.println("Reconstructed but not expected ids: " + expectedIndex);
@@ -535,8 +534,7 @@ public class IndexReconstructionTest extends AbstractCDOTest
     @Override
     public String toString()
     {
-      return MessageFormat.format("{0}: {1}.{2}={3}", id, feature.getEContainingClass().getName(), feature.getName(),
-          index);
+      return MessageFormat.format("{0}: {1}.{2}={3}", id, feature.getEContainingClass().getName(), feature.getName(), index);
     }
   }
 }

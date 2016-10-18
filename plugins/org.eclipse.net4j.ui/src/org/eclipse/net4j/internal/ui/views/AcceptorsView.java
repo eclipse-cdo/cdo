@@ -71,8 +71,8 @@ public class AcceptorsView extends ContainerView
 
   public static ElementWizardAction createNewAcceptorAction(Shell shell, IManagedContainer container)
   {
-    return new ElementWizardAction(shell, "New Acceptor", "Open a new acceptor",
-        SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD_ACCEPTOR), AcceptorFactory.PRODUCT_GROUP, container, "tcp")
+    return new ElementWizardAction(shell, "New Acceptor", "Open a new acceptor", SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD_ACCEPTOR),
+        AcceptorFactory.PRODUCT_GROUP, container, "tcp")
     {
       @Override
       public String getDefaultDescription(String factoryType)

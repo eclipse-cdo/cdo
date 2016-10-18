@@ -444,8 +444,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
   private static SubMonitor createProbingSubMonitor(IProgressMonitor monitor, int availableToChildren, boolean full)
   {
     ProbingSubMonitor parent = monitor instanceof ProbingSubMonitor ? (ProbingSubMonitor)monitor : null;
-    return new ProbingSubMonitor(parent, new RootInfo(monitor), MINIMUM_RESOLUTION, availableToChildren, SUPPRESS_NONE,
-        full);
+    return new ProbingSubMonitor(parent, new RootInfo(monitor), MINIMUM_RESOLUTION, availableToChildren, SUPPRESS_NONE, full);
   }
 
   public final SubMonitor detectCancelation()

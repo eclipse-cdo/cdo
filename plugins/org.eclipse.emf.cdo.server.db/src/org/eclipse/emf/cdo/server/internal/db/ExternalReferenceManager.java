@@ -165,15 +165,13 @@ public class ExternalReferenceManager extends Lifecycle
     }
   }
 
-  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
-      throws IOException
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
     String where = " WHERE " + EXTERNAL_REFS_COMMITTIME + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, table, null, where);
   }
 
-  public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime,
-      OMMonitor monitor) throws IOException
+  public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
     DBUtil.deserializeTable(in, connection, table, monitor);
   }
@@ -234,8 +232,7 @@ public class ExternalReferenceManager extends Lifecycle
       }
     }
 
-    sqlInsert = "INSERT INTO " + table + "(" + EXTERNAL_REFS_ID + "," + EXTERNAL_REFS_URI + ","
-        + EXTERNAL_REFS_COMMITTIME + ") VALUES (?, ?, ?)";
+    sqlInsert = "INSERT INTO " + table + "(" + EXTERNAL_REFS_ID + "," + EXTERNAL_REFS_URI + "," + EXTERNAL_REFS_COMMITTIME + ") VALUES (?, ?, ?)";
     sqlSelectByURI = "SELECT " + EXTERNAL_REFS_ID + " FROM " + table + " WHERE " + EXTERNAL_REFS_URI + "=?";
     sqlSelectByLongID = "SELECT " + EXTERNAL_REFS_URI + " FROM " + table + " WHERE " + EXTERNAL_REFS_ID + "=?";
   }

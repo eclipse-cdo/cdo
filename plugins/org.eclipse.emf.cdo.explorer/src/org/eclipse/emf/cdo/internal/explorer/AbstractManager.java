@@ -39,8 +39,7 @@ import java.util.regex.Pattern;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractManager<T extends CDOExplorerElement> extends SetContainer<T>
-    implements CDOExplorerManager<T>
+public abstract class AbstractManager<T extends CDOExplorerElement> extends SetContainer<T> implements CDOExplorerManager<T>
 {
   private static final Pattern LABEL_PATTERN = Pattern.compile("(.+?) *\\([0-9]+\\)");
 

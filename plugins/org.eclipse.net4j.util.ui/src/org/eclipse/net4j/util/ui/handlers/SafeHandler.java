@@ -68,8 +68,7 @@ public abstract class SafeHandler extends AbstractHandler
     catch (Exception ex)
     {
       OM.LOG.error(ex);
-      MessageDialog.openError(null, getText(),
-          ex.getLocalizedMessage() + "\n" + Messages.getString("SafeActionDelegate_0")); //$NON-NLS-1$ //$NON-NLS-2$
+      MessageDialog.openError(null, getText(), ex.getLocalizedMessage() + "\n" + Messages.getString("SafeActionDelegate_0")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     return result;

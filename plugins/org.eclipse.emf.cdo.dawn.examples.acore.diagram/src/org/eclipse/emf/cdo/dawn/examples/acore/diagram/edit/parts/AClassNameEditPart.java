@@ -368,8 +368,8 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
   {
     if (parser == null)
     {
-      parser = AcoreParserProvider.getParser(AcoreElementTypes.AClass_2002, getParserElement(), AcoreVisualIDRegistry
-          .getType(org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassNameEditPart.VISUAL_ID));
+      parser = AcoreParserProvider.getParser(AcoreElementTypes.AClass_2002, getParserElement(),
+          AcoreVisualIDRegistry.getType(org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassNameEditPart.VISUAL_ID));
     }
     return parser;
   }
@@ -381,8 +381,7 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
   {
     if (manager == null)
     {
-      setManager(new TextDirectEditManager(this, TextDirectEditManager.getTextCellEditorClass(this),
-          AcoreEditPartFactory.getTextCellEditorLocator(this)));
+      setManager(new TextDirectEditManager(this, TextDirectEditManager.getTextCellEditorClass(this), AcoreEditPartFactory.getTextCellEditorLocator(this)));
     }
     return manager;
   }
@@ -445,11 +444,9 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
         {
           if (isActive() && isEditable())
           {
-            if (theRequest.getExtendedData()
-                .get(RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR) instanceof Character)
+            if (theRequest.getExtendedData().get(RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR) instanceof Character)
             {
-              Character initialChar = (Character)theRequest.getExtendedData()
-                  .get(RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR);
+              Character initialChar = (Character)theRequest.getExtendedData().get(RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR);
               performDirectEdit(initialChar.charValue());
             }
             else if (theRequest instanceof DirectEditRequest && getEditText().equals(getLabelText()))
@@ -661,10 +658,8 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
     {
       refreshStrikeThrough();
     }
-    else if (NotationPackage.eINSTANCE.getFontStyle_FontHeight().equals(feature)
-        || NotationPackage.eINSTANCE.getFontStyle_FontName().equals(feature)
-        || NotationPackage.eINSTANCE.getFontStyle_Bold().equals(feature)
-        || NotationPackage.eINSTANCE.getFontStyle_Italic().equals(feature))
+    else if (NotationPackage.eINSTANCE.getFontStyle_FontHeight().equals(feature) || NotationPackage.eINSTANCE.getFontStyle_FontName().equals(feature)
+        || NotationPackage.eINSTANCE.getFontStyle_Bold().equals(feature) || NotationPackage.eINSTANCE.getFontStyle_Italic().equals(feature))
     {
       refreshFont();
     }

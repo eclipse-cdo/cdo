@@ -270,8 +270,8 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     }
 
     // Obtain or create and register package
-    Model6PackageImpl theModel6Package = (Model6PackageImpl)(EPackage.Registry.INSTANCE
-        .get(eNS_URI) instanceof Model6PackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new Model6PackageImpl());
+    Model6PackageImpl theModel6Package = (Model6PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model6PackageImpl
+        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new Model6PackageImpl());
 
     isInited = true;
 
@@ -1346,130 +1346,91 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
     // Initialize classes and features; add operations and parameters
     initEClass(rootEClass, Root.class, "Root", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRoot_ListA(), getBaseObject(), null, "listA", null, 0, -1, Root.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEReference(getRoot_ListB(), getBaseObject(), null, "listB", null, 0, -1, Root.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEReference(getRoot_ListC(), getBaseObject(), null, "listC", null, 0, -1, Root.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEReference(getRoot_ListD(), getBaseObject(), null, "listD", null, 0, -1, Root.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-
-    initEClass(baseObjectEClass, BaseObject.class, "BaseObject", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getBaseObject_AttributeOptional(), ecorePackage.getEString(), "attributeOptional", null, 0, 1,
-        BaseObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEAttribute(getBaseObject_AttributeRequired(), ecorePackage.getEString(), "attributeRequired", null, 1, 1,
-        BaseObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEAttribute(getBaseObject_AttributeList(), ecorePackage.getEString(), "attributeList", null, 0, -1,
-        BaseObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-
-    initEClass(referenceObjectEClass, ReferenceObject.class, "ReferenceObject", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getReferenceObject_ReferenceOptional(), getBaseObject(), null, "referenceOptional", null, 0, 1,
-        ReferenceObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getReferenceObject_ReferenceList(), getBaseObject(), null, "referenceList", null, 0, -1,
-        ReferenceObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(containmentObjectEClass, ContainmentObject.class, "ContainmentObject", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getContainmentObject_ContainmentOptional(), getBaseObject(), null, "containmentOptional", null, 0, 1,
-        ContainmentObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getContainmentObject_ContainmentList(), getBaseObject(), null, "containmentList", null, 0, -1,
-        ContainmentObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(unorderedListEClass, UnorderedList.class, "UnorderedList", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getUnorderedList_Contained(), getUnorderedList(), null, "contained", null, 0, -1,
-        UnorderedList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-    initEReference(getUnorderedList_Referenced(), getUnorderedList(), null, "referenced", null, 0, -1,
-        UnorderedList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
-    initEClass(propertiesMapEClass, PropertiesMap.class, "PropertiesMap", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPropertiesMap_Label(), ecorePackage.getEString(), "label", null, 0, 1, PropertiesMap.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPropertiesMap_PersistentMap(), getPropertiesMapEntry(), null, "persistentMap", null, 0, -1,
-        PropertiesMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPropertiesMap_TransientMap(), getPropertiesMapEntry(), null, "transientMap", null, 0, -1,
-        PropertiesMap.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(propertiesMapEntryEClass, Map.Entry.class, "PropertiesMapEntry", !IS_ABSTRACT, !IS_INTERFACE,
-        !IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPropertiesMapEntry_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPropertiesMapEntry_Value(), getPropertiesMapEntryValue(), null, "value", null, 0, 1,
-        Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(propertiesMapEntryValueEClass, PropertiesMapEntryValue.class, "PropertiesMapEntryValue", !IS_ABSTRACT,
-        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPropertiesMapEntryValue_Label(), ecorePackage.getEString(), "label", null, 0, 1,
-        PropertiesMapEntryValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-
-    initEClass(aEClass, org.eclipse.emf.cdo.tests.model6.A.class, "A", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getA_OwnedDs(), getD(), null, "ownedDs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.A.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEReference(getA_OwnedBs(), getB(), null, "ownedBs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.A.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-
-    initEClass(bEClass, org.eclipse.emf.cdo.tests.model6.B.class, "B", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getB_OwnedC(), getC(), null, "ownedC", null, 0, 1, org.eclipse.emf.cdo.tests.model6.B.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-
-    initEClass(cEClass, org.eclipse.emf.cdo.tests.model6.C.class, "C", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(dEClass, org.eclipse.emf.cdo.tests.model6.D.class, "D", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getD_Data(), ecorePackage.getEObject(), null, "data", null, 0, 1,
-        org.eclipse.emf.cdo.tests.model6.D.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(eEClass, org.eclipse.emf.cdo.tests.model6.E.class, "E", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getE_OwnedAs(), getA(), null, "ownedAs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.E.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-
-    initEClass(fEClass, org.eclipse.emf.cdo.tests.model6.F.class, "F", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getF_OwnedEs(), getE(), null, "ownedEs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.F.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-
-    initEClass(gEClass, org.eclipse.emf.cdo.tests.model6.G.class, "G", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getG_Dummy(), ecorePackage.getEString(), "dummy", null, 1, 1,
-        org.eclipse.emf.cdo.tests.model6.G.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getG_Reference(), getBaseObject(), null, "reference", null, 1, 1,
-        org.eclipse.emf.cdo.tests.model6.G.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+    initEReference(getRoot_ListA(), getBaseObject(), null, "listA", null, 0, -1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getG_List(), getBaseObject(), null, "list", null, 0, -1, org.eclipse.emf.cdo.tests.model6.G.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEReference(getRoot_ListB(), getBaseObject(), null, "listB", null, 0, -1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRoot_ListC(), getBaseObject(), null, "listC", null, 0, -1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRoot_ListD(), getBaseObject(), null, "listD", null, 0, -1, Root.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(baseObjectEClass, BaseObject.class, "BaseObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBaseObject_AttributeOptional(), ecorePackage.getEString(), "attributeOptional", null, 0, 1, BaseObject.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBaseObject_AttributeRequired(), ecorePackage.getEString(), "attributeRequired", null, 1, 1, BaseObject.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBaseObject_AttributeList(), ecorePackage.getEString(), "attributeList", null, 0, -1, BaseObject.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(referenceObjectEClass, ReferenceObject.class, "ReferenceObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getReferenceObject_ReferenceOptional(), getBaseObject(), null, "referenceOptional", null, 0, 1, ReferenceObject.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getReferenceObject_ReferenceList(), getBaseObject(), null, "referenceList", null, 0, -1, ReferenceObject.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(containmentObjectEClass, ContainmentObject.class, "ContainmentObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getContainmentObject_ContainmentOptional(), getBaseObject(), null, "containmentOptional", null, 0, 1, ContainmentObject.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getContainmentObject_ContainmentList(), getBaseObject(), null, "containmentList", null, 0, -1, ContainmentObject.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(unorderedListEClass, UnorderedList.class, "UnorderedList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getUnorderedList_Contained(), getUnorderedList(), null, "contained", null, 0, -1, UnorderedList.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+    initEReference(getUnorderedList_Referenced(), getUnorderedList(), null, "referenced", null, 0, -1, UnorderedList.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+    initEClass(propertiesMapEClass, PropertiesMap.class, "PropertiesMap", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPropertiesMap_Label(), ecorePackage.getEString(), "label", null, 0, 1, PropertiesMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPropertiesMap_PersistentMap(), getPropertiesMapEntry(), null, "persistentMap", null, 0, -1, PropertiesMap.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPropertiesMap_TransientMap(), getPropertiesMapEntry(), null, "transientMap", null, 0, -1, PropertiesMap.class, IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(propertiesMapEntryEClass, Map.Entry.class, "PropertiesMapEntry", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPropertiesMapEntry_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPropertiesMapEntry_Value(), getPropertiesMapEntryValue(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(propertiesMapEntryValueEClass, PropertiesMapEntryValue.class, "PropertiesMapEntryValue", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPropertiesMapEntryValue_Label(), ecorePackage.getEString(), "label", null, 0, 1, PropertiesMapEntryValue.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(aEClass, org.eclipse.emf.cdo.tests.model6.A.class, "A", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getA_OwnedDs(), getD(), null, "ownedDs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.A.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getA_OwnedBs(), getB(), null, "ownedBs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.A.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(bEClass, org.eclipse.emf.cdo.tests.model6.B.class, "B", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getB_OwnedC(), getC(), null, "ownedC", null, 0, 1, org.eclipse.emf.cdo.tests.model6.B.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(cEClass, org.eclipse.emf.cdo.tests.model6.C.class, "C", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(dEClass, org.eclipse.emf.cdo.tests.model6.D.class, "D", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getD_Data(), ecorePackage.getEObject(), null, "data", null, 0, 1, org.eclipse.emf.cdo.tests.model6.D.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(eEClass, org.eclipse.emf.cdo.tests.model6.E.class, "E", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getE_OwnedAs(), getA(), null, "ownedAs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.E.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(fEClass, org.eclipse.emf.cdo.tests.model6.F.class, "F", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getF_OwnedEs(), getE(), null, "ownedEs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.F.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(gEClass, org.eclipse.emf.cdo.tests.model6.G.class, "G", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getG_Dummy(), ecorePackage.getEString(), "dummy", null, 1, 1, org.eclipse.emf.cdo.tests.model6.G.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getG_Reference(), getBaseObject(), null, "reference", null, 1, 1, org.eclipse.emf.cdo.tests.model6.G.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getG_List(), getBaseObject(), null, "list", null, 0, -1, org.eclipse.emf.cdo.tests.model6.G.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     addEOperation(gEClass, ecorePackage.getEBoolean(), "isAttributeModified", 1, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -1477,135 +1438,99 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
     addEOperation(gEClass, ecorePackage.getEBoolean(), "isListModified", 1, 1, IS_UNIQUE, IS_ORDERED);
 
-    initEClass(myEnumListEClass, MyEnumList.class, "MyEnumList", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getMyEnumList_MyEnum(), getMyEnum(), "myEnum", null, 0, -1, MyEnumList.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(myEnumListEClass, MyEnumList.class, "MyEnumList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMyEnumList_MyEnum(), getMyEnum(), "myEnum", null, 0, -1, MyEnumList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(myEnumListUnsettableEClass, MyEnumListUnsettable.class, "MyEnumListUnsettable", !IS_ABSTRACT,
-        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getMyEnumListUnsettable_MyEnum(), getMyEnum(), "myEnum", null, 0, -1, MyEnumListUnsettable.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(myEnumListUnsettableEClass, MyEnumListUnsettable.class, "MyEnumListUnsettable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMyEnumListUnsettable_MyEnum(), getMyEnum(), "myEnum", null, 0, -1, MyEnumListUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(holderEClass, Holder.class, "Holder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getHolder_Held(), getHoldable(), null, "held", null, 0, -1, Holder.class, IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEReference(getHolder_Owned(), getHoldable(), null, "owned", null, 0, -1, Holder.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+    initEReference(getHolder_Held(), getHoldable(), null, "held", null, 0, -1, Holder.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEReference(getHolder_Owned(), getHoldable(), null, "owned", null, 0, -1, Holder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(thingEClass, Thing.class, "Thing", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(holdableEClass, Holdable.class, "Holdable", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getHoldable_Name(), ecorePackage.getEString(), "name", null, 1, 1, Holdable.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getHoldable_Name(), ecorePackage.getEString(), "name", null, 1, 1, Holdable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(hasNillableAttributeEClass, HasNillableAttribute.class, "HasNillableAttribute", !IS_ABSTRACT,
-        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getHasNillableAttribute_Nillable(), getMyString(), "nillable", null, 0, 1,
-        HasNillableAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEClass(hasNillableAttributeEClass, HasNillableAttribute.class, "HasNillableAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getHasNillableAttribute_Nillable(), getMyString(), "nillable", null, 0, 1, HasNillableAttribute.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(emptyStringDefaultEClass, EmptyStringDefault.class, "EmptyStringDefault", !IS_ABSTRACT, !IS_INTERFACE,
+    initEClass(emptyStringDefaultEClass, EmptyStringDefault.class, "EmptyStringDefault", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEmptyStringDefault_Attribute(), ecorePackage.getEString(), "attribute", "", 0, 1, EmptyStringDefault.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(emptyStringDefaultUnsettableEClass, EmptyStringDefaultUnsettable.class, "EmptyStringDefaultUnsettable", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getEmptyStringDefault_Attribute(), ecorePackage.getEString(), "attribute", "", 0, 1,
-        EmptyStringDefault.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEmptyStringDefaultUnsettable_Attribute(), ecorePackage.getEString(), "attribute", "", 0, 1, EmptyStringDefaultUnsettable.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(emptyStringDefaultUnsettableEClass, EmptyStringDefaultUnsettable.class, "EmptyStringDefaultUnsettable",
-        !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getEmptyStringDefaultUnsettable_Attribute(), ecorePackage.getEString(), "attribute", "", 0, 1,
-        EmptyStringDefaultUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(unsettableAttributesEClass, UnsettableAttributes.class, "UnsettableAttributes", !IS_ABSTRACT,
-        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getUnsettableAttributes_AttrBigDecimal(), ecorePackage.getEBigDecimal(), "attrBigDecimal", null, 0,
-        1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrBigInteger(), ecorePackage.getEBigInteger(), "attrBigInteger", null, 0,
-        1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrBoolean(), ecorePackage.getEBoolean(), "attrBoolean", null, 0, 1,
-        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrBooleanObject(), ecorePackage.getEBooleanObject(), "attrBooleanObject",
-        null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrByte(), ecorePackage.getEByte(), "attrByte", null, 0, 1,
-        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrByteArray(), ecorePackage.getEByteArray(), "attrByteArray", null, 0, 1,
-        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrByteObject(), ecorePackage.getEByteObject(), "attrByteObject", null, 0,
-        1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrChar(), ecorePackage.getEChar(), "attrChar", null, 0, 1,
-        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrCharacterObject(), ecorePackage.getECharacterObject(),
-        "attrCharacterObject", null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrDate(), ecorePackage.getEDate(), "attrDate", null, 0, 1,
-        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrDouble(), ecorePackage.getEDouble(), "attrDouble", null, 0, 1,
-        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrDoubleObject(), ecorePackage.getEDoubleObject(), "attrDoubleObject",
-        null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrFloat(), ecorePackage.getEFloat(), "attrFloat", null, 0, 1,
-        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrFloatObject(), ecorePackage.getEFloatObject(), "attrFloatObject", null,
-        0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrInt(), ecorePackage.getEInt(), "attrInt", null, 0, 1,
-        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrIntegerObject(), ecorePackage.getEIntegerObject(), "attrIntegerObject",
-        null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(unsettableAttributesEClass, UnsettableAttributes.class, "UnsettableAttributes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getUnsettableAttributes_AttrBigDecimal(), ecorePackage.getEBigDecimal(), "attrBigDecimal", null, 0, 1, UnsettableAttributes.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrBigInteger(), ecorePackage.getEBigInteger(), "attrBigInteger", null, 0, 1, UnsettableAttributes.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrBoolean(), ecorePackage.getEBoolean(), "attrBoolean", null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrBooleanObject(), ecorePackage.getEBooleanObject(), "attrBooleanObject", null, 0, 1, UnsettableAttributes.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrByte(), ecorePackage.getEByte(), "attrByte", null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrByteArray(), ecorePackage.getEByteArray(), "attrByteArray", null, 0, 1, UnsettableAttributes.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrByteObject(), ecorePackage.getEByteObject(), "attrByteObject", null, 0, 1, UnsettableAttributes.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrChar(), ecorePackage.getEChar(), "attrChar", null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrCharacterObject(), ecorePackage.getECharacterObject(), "attrCharacterObject", null, 0, 1,
+        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrDate(), ecorePackage.getEDate(), "attrDate", null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrDouble(), ecorePackage.getEDouble(), "attrDouble", null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrDoubleObject(), ecorePackage.getEDoubleObject(), "attrDoubleObject", null, 0, 1, UnsettableAttributes.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrFloat(), ecorePackage.getEFloat(), "attrFloat", null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrFloatObject(), ecorePackage.getEFloatObject(), "attrFloatObject", null, 0, 1, UnsettableAttributes.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrInt(), ecorePackage.getEInt(), "attrInt", null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrIntegerObject(), ecorePackage.getEIntegerObject(), "attrIntegerObject", null, 0, 1, UnsettableAttributes.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     EGenericType g1 = createEGenericType(ecorePackage.getEJavaClass());
     EGenericType g2 = createEGenericType();
     g1.getETypeArguments().add(g2);
-    initEAttribute(getUnsettableAttributes_AttrJavaClass(), g1, "attrJavaClass", null, 0, 1, UnsettableAttributes.class,
+    initEAttribute(getUnsettableAttributes_AttrJavaClass(), g1, "attrJavaClass", null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrJavaObject(), ecorePackage.getEJavaObject(), "attrJavaObject", null, 0, 1, UnsettableAttributes.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrJavaObject(), ecorePackage.getEJavaObject(), "attrJavaObject", null, 0,
-        1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrLong(), ecorePackage.getELong(), "attrLong", null, 0, 1,
-        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrLongObject(), ecorePackage.getELongObject(), "attrLongObject", null, 0,
-        1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrShort(), ecorePackage.getEShort(), "attrShort", null, 0, 1,
-        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrShortObject(), ecorePackage.getEShortObject(), "attrShortObject", null,
-        0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUnsettableAttributes_AttrString(), ecorePackage.getEString(), "attrString", null, 0, 1,
-        UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrLong(), ecorePackage.getELong(), "attrLong", null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrLongObject(), ecorePackage.getELongObject(), "attrLongObject", null, 0, 1, UnsettableAttributes.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrShort(), ecorePackage.getEShort(), "attrShort", null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrShortObject(), ecorePackage.getEShortObject(), "attrShortObject", null, 0, 1, UnsettableAttributes.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUnsettableAttributes_AttrString(), ecorePackage.getEString(), "attrString", null, 0, 1, UnsettableAttributes.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(canReferenceLegacyEClass, CanReferenceLegacy.class, "CanReferenceLegacy", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCanReferenceLegacy_SingleContainment(), ecorePackage.getEObject(), null, "singleContainment",
-        null, 0, 1, CanReferenceLegacy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getCanReferenceLegacy_MultipleContainment(), ecorePackage.getEObject(), null, "multipleContainment",
-        null, 0, -1, CanReferenceLegacy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getCanReferenceLegacy_SingleReference(), ecorePackage.getEObject(), null, "singleReference", null, 0,
-        1, CanReferenceLegacy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getCanReferenceLegacy_MultipleReference(), ecorePackage.getEObject(), null, "multipleReference",
-        null, 0, -1, CanReferenceLegacy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(canReferenceLegacyEClass, CanReferenceLegacy.class, "CanReferenceLegacy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCanReferenceLegacy_SingleContainment(), ecorePackage.getEObject(), null, "singleContainment", null, 0, 1, CanReferenceLegacy.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCanReferenceLegacy_MultipleContainment(), ecorePackage.getEObject(), null, "multipleContainment", null, 0, -1, CanReferenceLegacy.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCanReferenceLegacy_SingleReference(), ecorePackage.getEObject(), null, "singleReference", null, 0, 1, CanReferenceLegacy.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCanReferenceLegacy_MultipleReference(), ecorePackage.getEObject(), null, "multipleReference", null, 0, -1, CanReferenceLegacy.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(myEnumEEnum, MyEnum.class, "MyEnum");

@@ -35,8 +35,7 @@ public class InteractiveConfirmationProvider implements IConfirmationProvider
     return true;
   }
 
-  public Confirmation confirm(final String subject, final String message, final Set<Confirmation> acceptable,
-      final Confirmation suggestion)
+  public Confirmation confirm(final String subject, final String message, final Set<Confirmation> acceptable, final Confirmation suggestion)
   {
     final Confirmation[] confirmation = new Confirmation[1];
     final Display display = UIUtil.getDisplay();

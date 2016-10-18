@@ -85,8 +85,7 @@ public class Bugzilla_363355_Test extends AbstractCDOTest
     commitAndSync(transactionOfUser2, transactionOfUser1);
 
     // User 1 checks that its transaction is not dirty
-    Assert.assertFalse("Receiving remote changes shouldn't set local CDOTransaction dirty",
-        transactionOfUser1.isDirty());
+    Assert.assertFalse("Receiving remote changes shouldn't set local CDOTransaction dirty", transactionOfUser1.isDirty());
 
     commitAndSync(transactionOfUser1, transactionOfUser2);
 
@@ -139,8 +138,7 @@ public class Bugzilla_363355_Test extends AbstractCDOTest
     Assert.assertNotSame(co2, co3.eContainer());
     Assert.assertSame(co1.getContainmentOptional(), co3.eContainer());
     Assert.assertNull(co2.eContainer());
-    Assert.assertFalse("Receiving remote changes shouldn't set local CDOTransaction dirty",
-        transactionOfUser2.isDirty());
+    Assert.assertFalse("Receiving remote changes shouldn't set local CDOTransaction dirty", transactionOfUser2.isDirty());
 
     transactionOfUser2.close();
     sessionOfUser2.close();

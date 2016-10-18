@@ -45,8 +45,7 @@ public abstract class CDOSessionFactory extends Factory
       String query = uri.getQuery();
       if (StringUtil.isEmpty(query))
       {
-        throw new IllegalArgumentException(
-            MessageFormat.format(Messages.getString("CDOSessionFactory.1"), description)); //$NON-NLS-1$
+        throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOSessionFactory.1"), description)); //$NON-NLS-1$
       }
 
       Map<String, String> parameters = CDOURIUtil.getParameters(query);

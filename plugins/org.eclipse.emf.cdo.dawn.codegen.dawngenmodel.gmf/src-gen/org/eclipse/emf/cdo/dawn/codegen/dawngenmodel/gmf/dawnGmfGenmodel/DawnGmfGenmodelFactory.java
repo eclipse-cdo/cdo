@@ -27,8 +27,7 @@ public interface DawnGmfGenmodelFactory extends EFactory
    *
    * @generated
    */
-  DawnGmfGenmodelFactory eINSTANCE = org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.impl.DawnGmfGenmodelFactoryImpl
-      .init();
+  DawnGmfGenmodelFactory eINSTANCE = org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodel.impl.DawnGmfGenmodelFactoryImpl.init();
 
   /**
    * Returns a new object of class '<em>Dawn GMF Generator</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->

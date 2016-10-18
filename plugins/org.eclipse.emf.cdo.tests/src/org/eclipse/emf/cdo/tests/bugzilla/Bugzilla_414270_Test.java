@@ -108,14 +108,13 @@ public class Bugzilla_414270_Test extends AbstractCDOTest
     CDOSession session = openSession();
     CDOBranchManager branchManager = session.getBranchManager();
 
-    int count = branchManager.getBranches(CDOBranch.MAIN_BRANCH_ID + 1, CDOBranch.MAIN_BRANCH_ID + 2,
-        new CDOBranchHandler()
-        {
-          public void handleBranch(CDOBranch branch)
-          {
-            fail("No result branch expected");
-          }
-        });
+    int count = branchManager.getBranches(CDOBranch.MAIN_BRANCH_ID + 1, CDOBranch.MAIN_BRANCH_ID + 2, new CDOBranchHandler()
+    {
+      public void handleBranch(CDOBranch branch)
+      {
+        fail("No result branch expected");
+      }
+    });
 
     assertEquals(0, count);
   }

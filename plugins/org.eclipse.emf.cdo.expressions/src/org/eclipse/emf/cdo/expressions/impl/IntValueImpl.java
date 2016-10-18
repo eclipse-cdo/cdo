@@ -69,8 +69,7 @@ public class IntValueImpl extends ValueImpl implements IntValue
   @Override
   public Integer getLiteral()
   {
-    return (Integer)eDynamicGet(ExpressionsPackage.INT_VALUE__LITERAL, ExpressionsPackage.Literals.INT_VALUE__LITERAL,
-        true, true);
+    return (Integer)eDynamicGet(ExpressionsPackage.INT_VALUE__LITERAL, ExpressionsPackage.Literals.INT_VALUE__LITERAL, true, true);
   }
 
   /**

@@ -84,8 +84,7 @@ public class ResourcePermissionImpl extends PermissionImpl implements ResourcePe
     eSet(SecurityPackage.Literals.RESOURCE_PERMISSION__PATTERN, newPattern);
   }
 
-  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider,
-      CDOBranchPoint securityContext)
+  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
     if (pattern == null)
     {

@@ -42,8 +42,7 @@ public class TestFrameworkTest extends AbstractDawnTest
     CDOResource semanticResource = transaction.getResource("/simple.acore");
 
     assertInstanceOf(CDOResource.class, semanticResource);
-    CDOResource notationalResource = (CDOResource)resourceSet
-        .getResource(URI.createURI("dawn://repo1/simple.acore_diagram"), true);// container.getNotationalResource();
+    CDOResource notationalResource = (CDOResource)resourceSet.getResource(URI.createURI("dawn://repo1/simple.acore_diagram"), true);// container.getNotationalResource();
     assertInstanceOf(CDOResource.class, notationalResource);
     ACoreRoot acoreRoot = (ACoreRoot)semanticResource.getContents().get(0);
 

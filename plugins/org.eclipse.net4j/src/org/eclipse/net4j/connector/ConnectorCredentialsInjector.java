@@ -49,8 +49,7 @@ public class ConnectorCredentialsInjector extends ResponseNegotiatorInjector
    *          The description of the IConnector that the negotiator shall be injected into, or <code>null</code> to
    *          bypass the description check.
    */
-  public ConnectorCredentialsInjector(String connectorDescription, IPasswordCredentialsProvider credentialsProvider,
-      String algorithmName)
+  public ConnectorCredentialsInjector(String connectorDescription, IPasswordCredentialsProvider credentialsProvider, String algorithmName)
   {
     super(createNegotiator(credentialsProvider, algorithmName));
     this.connectorDescription = connectorDescription;
@@ -67,8 +66,7 @@ public class ConnectorCredentialsInjector extends ResponseNegotiatorInjector
   }
 
   @Override
-  protected boolean filterElement(String productGroup, String factoryType, String description,
-      INegotiatorAware negotiatorAware)
+  protected boolean filterElement(String productGroup, String factoryType, String description, INegotiatorAware negotiatorAware)
   {
     if (negotiatorAware instanceof IConnector)
     {
@@ -92,8 +90,7 @@ public class ConnectorCredentialsInjector extends ResponseNegotiatorInjector
     return connectorDescription.equals(description);
   }
 
-  private static ResponseNegotiator createNegotiator(IPasswordCredentialsProvider credentialsProvider,
-      String algorithmName)
+  private static ResponseNegotiator createNegotiator(IPasswordCredentialsProvider credentialsProvider, String algorithmName)
   {
     ResponseNegotiator negotiator = new ResponseNegotiator();
     negotiator.setCredentialsProvider(credentialsProvider);

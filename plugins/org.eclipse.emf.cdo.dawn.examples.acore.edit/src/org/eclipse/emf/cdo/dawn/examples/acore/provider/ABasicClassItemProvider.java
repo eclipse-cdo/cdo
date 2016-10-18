@@ -39,8 +39,8 @@ import java.util.List;
  *
  * @generated
  */
-public class ABasicClassItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class ABasicClassItemProvider extends ItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -76,12 +76,9 @@ public class ABasicClassItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_ABasicClass_name_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_ABasicClass_name_feature", "_UI_ABasicClass_type"),
-            AcorePackage.Literals.ABASIC_CLASS__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-            null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ABasicClass_name_feature"), getString("_UI_PropertyDescriptor_description", "_UI_ABasicClass_name_feature", "_UI_ABasicClass_type"),
+        AcorePackage.Literals.ABASIC_CLASS__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -138,8 +135,7 @@ public class ABasicClassItemProvider extends ItemProviderAdapter implements IEdi
   public String getText(Object object)
   {
     String label = ((ABasicClass)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_ABasicClass_type")
-        : getString("_UI_ABasicClass_type") + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_ABasicClass_type") : getString("_UI_ABasicClass_type") + " " + label;
   }
 
   /**
@@ -177,11 +173,9 @@ public class ABasicClassItemProvider extends ItemProviderAdapter implements IEdi
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(AcorePackage.Literals.ABASIC_CLASS__OPERATIONS,
-        AcoreFactory.eINSTANCE.createAOperation()));
+    newChildDescriptors.add(createChildParameter(AcorePackage.Literals.ABASIC_CLASS__OPERATIONS, AcoreFactory.eINSTANCE.createAOperation()));
 
-    newChildDescriptors.add(createChildParameter(AcorePackage.Literals.ABASIC_CLASS__ATTRIBUTES,
-        AcoreFactory.eINSTANCE.createAAttribute()));
+    newChildDescriptors.add(createChildParameter(AcorePackage.Literals.ABASIC_CLASS__ATTRIBUTES, AcoreFactory.eINSTANCE.createAAttribute()));
   }
 
   /**

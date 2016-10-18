@@ -355,8 +355,7 @@ public class Journal extends LissomeFile
     }
   }
 
-  protected void writePackageUnits(LissomeFileHandle writer, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
-      throws IOException
+  protected void writePackageUnits(LissomeFileHandle writer, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor) throws IOException
   {
     writer.writeInt(packageUnits.length);
     for (InternalCDOPackageUnit packageUnit : packageUnits)
@@ -475,8 +474,7 @@ public class Journal extends LissomeFile
 
             if (detachedRevisions != null)
             {
-              int version = branchVersion.getBranch() == transactionBranch ? branchVersion.getVersion() + 1
-                  : CDOBranchVersion.FIRST_VERSION;
+              int version = branchVersion.getBranch() == transactionBranch ? branchVersion.getVersion() + 1 : CDOBranchVersion.FIRST_VERSION;
 
               detachedRevisions[i] = new DetachedCDORevision(eClass, id, transactionBranch, version, timeStamp);
             }

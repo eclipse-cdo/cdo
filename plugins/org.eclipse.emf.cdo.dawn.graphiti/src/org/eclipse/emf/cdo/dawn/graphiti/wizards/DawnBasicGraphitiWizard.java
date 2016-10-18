@@ -64,8 +64,7 @@ public class DawnBasicGraphitiWizard extends Wizard implements INewWizard
   public DawnBasicGraphitiWizard()
   {
     super();
-    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
-        PreferenceConstants.getServerName());
+    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(), PreferenceConstants.getServerName());
     CDOSession session = CDOConnectionUtil.instance.openSession();
     view = CDOConnectionUtil.instance.openView(session);
   }
@@ -123,8 +122,7 @@ public class DawnBasicGraphitiWizard extends Wizard implements INewWizard
     URI diagramResourceURI = dawnDiagramModelFilePage.getURI();
     URI domainModelResourceURI = dawnDomainModelFilePage.getURI();
 
-    Diagram diagram = Graphiti.getPeCreateService().createDiagram(diagramTypeId, diagramResourceURI.lastSegment(),
-        true);
+    Diagram diagram = Graphiti.getPeCreateService().createDiagram(diagramTypeId, diagramResourceURI.lastSegment(), true);
 
     String editorID = DawnGraphitiDiagramEditor.ID;
 
@@ -135,8 +133,7 @@ public class DawnBasicGraphitiWizard extends Wizard implements INewWizard
     Resource diagramResource = createDiagramResource(diagramResourceURI, diagram, editingDomain);
 
     String providerId = GraphitiUi.getExtensionManager().getDiagramTypeProviderId(diagram.getDiagramTypeId());
-    DiagramEditorInput editorInput = new DawnGraphitiEditorInput(EcoreUtil.getURI(diagram), providerId,
-        diagramResource);
+    DiagramEditorInput editorInput = new DawnGraphitiEditorInput(EcoreUtil.getURI(diagram), providerId, diagramResource);
 
     try
     {
@@ -186,8 +183,7 @@ public class DawnBasicGraphitiWizard extends Wizard implements INewWizard
     return editingDomain;
   }
 
-  private Resource createDiagramResource(URI diagramResourceURI, final Diagram diagram,
-      final TransactionalEditingDomain editingDomain)
+  private Resource createDiagramResource(URI diagramResourceURI, final Diagram diagram, final TransactionalEditingDomain editingDomain)
   {
     final ResourceSet resourceSet = editingDomain.getResourceSet();
     final Resource resource = createModelResource(diagramResourceURI, resourceSet);

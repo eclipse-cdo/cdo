@@ -95,8 +95,7 @@ public class ClassWithJavaObjectAttributeImpl extends EObjectImpl implements Cla
     javaObject = newJavaObject;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.CLASS_WITH_JAVA_OBJECT_ATTRIBUTE__JAVA_OBJECT,
-          oldJavaObject, javaObject));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.CLASS_WITH_JAVA_OBJECT_ATTRIBUTE__JAVA_OBJECT, oldJavaObject, javaObject));
     }
   }
 

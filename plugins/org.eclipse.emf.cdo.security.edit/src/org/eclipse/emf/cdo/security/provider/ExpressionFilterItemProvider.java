@@ -162,59 +162,45 @@ public class ExpressionFilterItemProvider extends ObjectFilterItemProvider
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createBooleanValue()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createBooleanValue()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createByteValue()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createByteValue()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createShortValue()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createShortValue()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createIntValue()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createIntValue()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createLongValue()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createLongValue()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createFloatValue()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createFloatValue()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createDoubleValue()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createDoubleValue()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createCharValue()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createCharValue()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createStringValue()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createStringValue()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createFunctionInvocation()));
+    newChildDescriptors
+        .add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createFunctionInvocation()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createMemberInvocation()));
+    newChildDescriptors
+        .add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createMemberInvocation()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createStaticAccess()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createStaticAccess()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createMemberAccess()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createMemberAccess()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createContextAccess()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createContextAccess()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createContainedObject()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createContainedObject()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createLinkedObject()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createLinkedObject()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createLinkedExpression()));
+    newChildDescriptors
+        .add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createLinkedExpression()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION,
-        ExpressionsFactory.eINSTANCE.createListConstruction()));
+    newChildDescriptors
+        .add(createChildParameter(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, ExpressionsFactory.eINSTANCE.createListConstruction()));
   }
 
 }

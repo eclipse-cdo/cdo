@@ -31,8 +31,8 @@ import java.util.List;
  *
  * @generated
  */
-public class AAttributeItemProvider extends AClassChildItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class AAttributeItemProvider extends AClassChildItemProvider
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -80,8 +80,7 @@ public class AAttributeItemProvider extends AClassChildItemProvider implements I
   public String getText(Object object)
   {
     String label = ((AAttribute)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_AAttribute_type")
-        : getString("_UI_AAttribute_type") + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_AAttribute_type") : getString("_UI_AAttribute_type") + " " + label;
   }
 
   /**

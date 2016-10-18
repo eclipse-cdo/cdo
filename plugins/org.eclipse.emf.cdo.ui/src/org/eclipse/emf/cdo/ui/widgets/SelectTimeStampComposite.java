@@ -124,8 +124,7 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
 
     timeText = new Text(pointGroup, SWT.BORDER);
     timeText.setLayoutData(createTimeGridData());
-    timeText.setText(CDOCommonUtil
-        .formatTimeStamp(timeStamp > CDOBranchPoint.UNSPECIFIED_DATE ? timeStamp : System.currentTimeMillis()));
+    timeText.setText(CDOCommonUtil.formatTimeStamp(timeStamp > CDOBranchPoint.UNSPECIFIED_DATE ? timeStamp : System.currentTimeMillis()));
     timeText.addModifyListener(new ModifyListener()
     {
       public void modifyText(ModifyEvent e)

@@ -103,8 +103,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
     name = newName;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.MULTI_NON_CONTAINED_ELEMENT__NAME, oldName,
-          name));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.MULTI_NON_CONTAINED_ELEMENT__NAME, oldName, name));
     }
   }
 
@@ -122,8 +121,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, model4Package.MULTI_NON_CONTAINED_ELEMENT__PARENT,
-              oldParent, parent));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, model4Package.MULTI_NON_CONTAINED_ELEMENT__PARENT, oldParent, parent));
         }
       }
     }
@@ -149,8 +147,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
     parent = newParent;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          model4Package.MULTI_NON_CONTAINED_ELEMENT__PARENT, oldParent, newParent);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, model4Package.MULTI_NON_CONTAINED_ELEMENT__PARENT, oldParent, newParent);
       if (msgs == null)
       {
         msgs = notification;
@@ -174,13 +171,11 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
       NotificationChain msgs = null;
       if (parent != null)
       {
-        msgs = ((InternalEObject)parent).eInverseRemove(this, model4Package.REF_MULTI_NON_CONTAINED__ELEMENTS,
-            RefMultiNonContained.class, msgs);
+        msgs = ((InternalEObject)parent).eInverseRemove(this, model4Package.REF_MULTI_NON_CONTAINED__ELEMENTS, RefMultiNonContained.class, msgs);
       }
       if (newParent != null)
       {
-        msgs = ((InternalEObject)newParent).eInverseAdd(this, model4Package.REF_MULTI_NON_CONTAINED__ELEMENTS,
-            RefMultiNonContained.class, msgs);
+        msgs = ((InternalEObject)newParent).eInverseAdd(this, model4Package.REF_MULTI_NON_CONTAINED__ELEMENTS, RefMultiNonContained.class, msgs);
       }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
@@ -190,8 +185,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.MULTI_NON_CONTAINED_ELEMENT__PARENT,
-          newParent, newParent));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.MULTI_NON_CONTAINED_ELEMENT__PARENT, newParent, newParent));
     }
   }
 
@@ -207,8 +201,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
     case model4Package.MULTI_NON_CONTAINED_ELEMENT__PARENT:
       if (parent != null)
       {
-        msgs = ((InternalEObject)parent).eInverseRemove(this, model4Package.REF_MULTI_NON_CONTAINED__ELEMENTS,
-            RefMultiNonContained.class, msgs);
+        msgs = ((InternalEObject)parent).eInverseRemove(this, model4Package.REF_MULTI_NON_CONTAINED__ELEMENTS, RefMultiNonContained.class, msgs);
       }
       return basicSetParent((RefMultiNonContained)otherEnd, msgs);
     }

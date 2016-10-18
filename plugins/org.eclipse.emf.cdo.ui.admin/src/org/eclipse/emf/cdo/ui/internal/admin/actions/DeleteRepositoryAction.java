@@ -29,8 +29,7 @@ public class DeleteRepositoryAction extends AdminAction<CDOAdminClientRepository
 {
   public DeleteRepositoryAction(CDOAdminClientRepository repository)
   {
-    super(Messages.DeleteRepositoryAction_1, Messages.DeleteRepositoryAction_2,
-        SharedIcons.getDescriptor(SharedIcons.ETOOL_DELETE), repository);
+    super(Messages.DeleteRepositoryAction_1, Messages.DeleteRepositoryAction_2, SharedIcons.getDescriptor(SharedIcons.ETOOL_DELETE), repository);
   }
 
   @Override

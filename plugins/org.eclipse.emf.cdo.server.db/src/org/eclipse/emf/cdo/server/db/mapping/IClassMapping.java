@@ -108,8 +108,7 @@ public interface IClassMapping
    *          the monitor to indicate progress.
    * @since 4.0
    */
-  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean mapType, boolean revise,
-      OMMonitor monitor);
+  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean mapType, boolean revise, OMMonitor monitor);
 
   /**
    * Detaches (deletes) a CDO object leaving a "ghost" revision behind.
@@ -126,8 +125,7 @@ public interface IClassMapping
    *          the monitor to indicate progress.
    * @since 3.0
    */
-  public void detachObject(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp,
-      OMMonitor monitor);
+  public void detachObject(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp, OMMonitor monitor);
 
   /**
    * Create a prepared statement which returns all IDs of instances of the corresponding class.
@@ -160,8 +158,7 @@ public interface IClassMapping
    *           if called on a mapping which does not map an <code>EClass instanceof CDOResourceNode</code>.
    * @since 3.0
    */
-  public PreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,
-      boolean exactMatch, CDOBranchPoint branchPoint);
+  public PreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name, boolean exactMatch, CDOBranchPoint branchPoint);
 
   /**
    * Passes all revisions of the store to the {@link CDORevisionHandler handler} if <b>all</b> of the following
@@ -176,8 +173,7 @@ public interface IClassMapping
    *      CDORevisionHandler)
    * @since 4.0
    */
-  public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler);
+  public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler);
 
   /**
    * Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.

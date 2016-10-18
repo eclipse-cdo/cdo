@@ -94,8 +94,7 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
 
     progressMonitor.beginTask(Messages.EcoreDiagramEditorUtil_CreateDiagramProgressTask, 3);
 
-    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
-        PreferenceConstants.getServerName());
+    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(), PreferenceConstants.getServerName());
     CDOConnectionUtil.instance.openSession();
     ResourceSet resourceSet = editingDomain.getResourceSet();
 
@@ -109,8 +108,8 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
     EcoreDiagramEditorPlugin.getInstance().logInfo("Diagram URI: " + diagramURI);
     EcoreDiagramEditorPlugin.getInstance().logInfo("Diagram Resource: " + diagramResource);
 
-    CreateSemanticResourceRecordingCommand createSemanticResourceCommand = new CreateSemanticResourceRecordingCommand(
-        editingDomain, transaction, modelURI.path());
+    CreateSemanticResourceRecordingCommand createSemanticResourceCommand = new CreateSemanticResourceRecordingCommand(editingDomain, transaction,
+        modelURI.path());
 
     editingDomain.getCommandStack().execute(createSemanticResourceCommand);
     final Resource modelResource = createSemanticResourceCommand.getResource();
@@ -118,8 +117,8 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
     EcoreDiagramEditorPlugin.getInstance().logInfo("Model Resource: " + modelResource);
 
     final String diagramName = diagramURI.lastSegment();
-    AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain,
-        Messages.EcoreDiagramEditorUtil_CreateDiagramCommandLabel, Collections.EMPTY_LIST)
+    AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain, Messages.EcoreDiagramEditorUtil_CreateDiagramCommandLabel,
+        Collections.EMPTY_LIST)
     {
       @Override
       protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info) throws ExecutionException
@@ -135,8 +134,7 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
           attachModelToResource(model, modelResource);
         }
 
-        Diagram diagram = ViewService.createDiagram(model, DawnECoreRootEditPart.MODEL_ID,
-            EcoreDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
+        Diagram diagram = ViewService.createDiagram(model, DawnECoreRootEditPart.MODEL_ID, EcoreDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
         if (diagram != null)
         {
           diagramResource.getContents().add(diagram);
@@ -160,8 +158,7 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
 
     try
     {
-      OperationHistoryFactory.getOperationHistory().execute(command,
-          new org.eclipse.core.runtime.SubProgressMonitor(progressMonitor, 1), null);
+      OperationHistoryFactory.getOperationHistory().execute(command, new org.eclipse.core.runtime.SubProgressMonitor(progressMonitor, 1), null);
     }
     catch (ExecutionException e)
     {
@@ -194,8 +191,8 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
   }
 
   @SuppressWarnings("deprecation")
-  public static Resource createDiagramOnly(URI diagramURI, URI modelURI, EObject domainElement,
-      final boolean initializeDiagram, IProgressMonitor progressMonitor)
+  public static Resource createDiagramOnly(URI diagramURI, URI modelURI, EObject domainElement, final boolean initializeDiagram,
+      IProgressMonitor progressMonitor)
   {
     final TransactionalEditingDomain editingDomain = WorkspaceEditingDomainFactory.INSTANCE.createEditingDomain();
     progressMonitor.beginTask("", 3); //$NON-NLS-1$
@@ -208,8 +205,7 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
       @Override
       protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info) throws ExecutionException
       {
-        Diagram diagram = ViewService.createDiagram(model, EPackageEditPart.MODEL_ID,
-            EcoreDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
+        Diagram diagram = ViewService.createDiagram(model, EPackageEditPart.MODEL_ID, EcoreDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
         if (diagram != null)
         {
           diagramResource.getContents().add(diagram);
@@ -224,10 +220,9 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
           // Initialize and Layout Diagram
           if (initializeDiagram && diagramResource.getContents().get(0) instanceof Diagram)
           {
-            InitializeAndLayoutDiagramCommand initializeAndLayoutDiagram = new InitializeAndLayoutDiagramCommand(
-                editingDomain, (Diagram)diagramResource.getContents().get(0), false);
-            OperationHistoryFactory.getOperationHistory().execute(initializeAndLayoutDiagram, new NullProgressMonitor(),
-                null);
+            InitializeAndLayoutDiagramCommand initializeAndLayoutDiagram = new InitializeAndLayoutDiagramCommand(editingDomain,
+                (Diagram)diagramResource.getContents().get(0), false);
+            OperationHistoryFactory.getOperationHistory().execute(initializeAndLayoutDiagram, new NullProgressMonitor(), null);
             diagramResource.save(EcoreDiagramEditorUtil.getSaveOptions());
           }
 
@@ -243,8 +238,7 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
 
     try
     {
-      OperationHistoryFactory.getOperationHistory().execute(command,
-          new org.eclipse.core.runtime.SubProgressMonitor(progressMonitor, 1), null);
+      OperationHistoryFactory.getOperationHistory().execute(command, new org.eclipse.core.runtime.SubProgressMonitor(progressMonitor, 1), null);
     }
     catch (ExecutionException e)
     {

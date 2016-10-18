@@ -35,8 +35,8 @@ import java.util.List;
  *
  * @generated
  */
-public class AOperationItemProvider extends AClassChildItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class AOperationItemProvider extends AClassChildItemProvider
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -117,8 +117,7 @@ public class AOperationItemProvider extends AClassChildItemProvider implements I
   public String getText(Object object)
   {
     String label = ((AOperation)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_AOperation_type")
-        : getString("_UI_AOperation_type") + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_AOperation_type") : getString("_UI_AOperation_type") + " " + label;
   }
 
   /**
@@ -152,8 +151,7 @@ public class AOperationItemProvider extends AClassChildItemProvider implements I
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(
-        createChildParameter(AcorePackage.Literals.AOPERATION__PARAMETERS, AcoreFactory.eINSTANCE.createAParameter()));
+    newChildDescriptors.add(createChildParameter(AcorePackage.Literals.AOPERATION__PARAMETERS, AcoreFactory.eINSTANCE.createAParameter()));
   }
 
 }

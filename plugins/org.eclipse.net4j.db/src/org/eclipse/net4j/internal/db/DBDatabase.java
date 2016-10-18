@@ -47,8 +47,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
   private final LinkedList<SchemaAccess> schemaAccessQueue = new LinkedList<SchemaAccess>();
 
-  public DBDatabase(final DBAdapter adapter, IDBConnectionProvider connectionProvider, final String schemaName,
-      final boolean fixNullableIndexColumns)
+  public DBDatabase(final DBAdapter adapter, IDBConnectionProvider connectionProvider, final String schemaName, final boolean fixNullableIndexColumns)
   {
     super(IDBConnection.class);
     this.adapter = adapter;

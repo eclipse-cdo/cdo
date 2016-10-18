@@ -156,17 +156,13 @@ public class CDOResourceFolderItemProvider extends CDOResourceNodeItemProvider
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES,
-        EresourceFactory.eINSTANCE.createCDOResourceFolder()));
+    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES, EresourceFactory.eINSTANCE.createCDOResourceFolder()));
 
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES,
-        EresourceFactory.eINSTANCE.createCDOResource()));
+    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES, EresourceFactory.eINSTANCE.createCDOResource()));
 
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES,
-        EresourceFactory.eINSTANCE.createCDOBinaryResource()));
+    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES, EresourceFactory.eINSTANCE.createCDOBinaryResource()));
 
-    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES,
-        EresourceFactory.eINSTANCE.createCDOTextResource()));
+    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES, EresourceFactory.eINSTANCE.createCDOTextResource()));
   }
 
 }

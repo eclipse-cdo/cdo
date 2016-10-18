@@ -75,8 +75,7 @@ public class Bugzilla_352204_Test extends AbstractCDOTest
     pushTransaction.getSession().close();
   }
 
-  private CDOPushTransaction createPushTransaction(File fileForStoringChanges, boolean reconstructSavePoints)
-      throws IOException
+  private CDOPushTransaction createPushTransaction(File fileForStoringChanges, boolean reconstructSavePoints) throws IOException
   {
     CDOSession session = openSession();
     CDOTransaction delegate = session.openTransaction();

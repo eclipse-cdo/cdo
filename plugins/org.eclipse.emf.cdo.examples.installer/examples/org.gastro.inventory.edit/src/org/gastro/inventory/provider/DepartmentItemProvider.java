@@ -37,8 +37,8 @@ import java.util.List;
  *
  * @generated
  */
-public class DepartmentItemProvider extends StationItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class DepartmentItemProvider extends StationItemProvider
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -168,14 +168,11 @@ public class DepartmentItemProvider extends StationItemProvider implements IEdit
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(
-        createChildParameter(InventoryPackage.Literals.DEPARTMENT__RECIPES, InventoryFactory.eINSTANCE.createRecipe()));
+    newChildDescriptors.add(createChildParameter(InventoryPackage.Literals.DEPARTMENT__RECIPES, InventoryFactory.eINSTANCE.createRecipe()));
 
-    newChildDescriptors.add(createChildParameter(InventoryPackage.Literals.DEPARTMENT__EMPLOYEES,
-        InventoryFactory.eINSTANCE.createEmployee()));
+    newChildDescriptors.add(createChildParameter(InventoryPackage.Literals.DEPARTMENT__EMPLOYEES, InventoryFactory.eINSTANCE.createEmployee()));
 
-    newChildDescriptors.add(
-        createChildParameter(InventoryPackage.Literals.DEPARTMENT__STOCKS, InventoryFactory.eINSTANCE.createStock()));
+    newChildDescriptors.add(createChildParameter(InventoryPackage.Literals.DEPARTMENT__STOCKS, InventoryFactory.eINSTANCE.createStock()));
   }
 
 }

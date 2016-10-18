@@ -104,8 +104,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
     discountCode = newDiscountCode;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.SPECIAL_PURCHASE_ORDER__DISCOUNT_CODE,
-          oldDiscountCode, discountCode));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.SPECIAL_PURCHASE_ORDER__DISCOUNT_CODE, oldDiscountCode, discountCode));
     }
   }
 
@@ -128,8 +127,8 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
     shippingAddress = newShippingAddress;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          Model2Package.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS, oldShippingAddress, newShippingAddress);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model2Package.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS, oldShippingAddress,
+          newShippingAddress);
       if (msgs == null)
       {
         msgs = notification;
@@ -153,13 +152,13 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
       NotificationChain msgs = null;
       if (shippingAddress != null)
       {
-        msgs = ((InternalEObject)shippingAddress).eInverseRemove(this,
-            EOPPOSITE_FEATURE_BASE - Model2Package.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS, null, msgs);
+        msgs = ((InternalEObject)shippingAddress).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model2Package.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS, null,
+            msgs);
       }
       if (newShippingAddress != null)
       {
-        msgs = ((InternalEObject)newShippingAddress).eInverseAdd(this,
-            EOPPOSITE_FEATURE_BASE - Model2Package.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS, null, msgs);
+        msgs = ((InternalEObject)newShippingAddress).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model2Package.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS, null,
+            msgs);
       }
       msgs = basicSetShippingAddress(newShippingAddress, msgs);
       if (msgs != null)
@@ -169,8 +168,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS,
-          newShippingAddress, newShippingAddress));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS, newShippingAddress, newShippingAddress));
     }
   }
 

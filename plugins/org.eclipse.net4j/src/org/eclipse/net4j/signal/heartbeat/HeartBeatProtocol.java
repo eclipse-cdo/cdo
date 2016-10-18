@@ -345,8 +345,7 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
       {
       }
 
-      public Object process(IManagedContainer container, String productGroup, String factoryType, String description,
-          Object element)
+      public Object process(IManagedContainer container, String productGroup, String factoryType, String description, Object element)
       {
         if (element instanceof Server)
         {

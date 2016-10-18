@@ -429,8 +429,7 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
      */
     public void run(IAction action)
     {
-      LoadResourceAction.LoadResourceDialog loadResourceDialog = new LoadResourceAction.LoadResourceDialog(
-          getWindow().getShell());
+      LoadResourceAction.LoadResourceDialog loadResourceDialog = new LoadResourceAction.LoadResourceDialog(getWindow().getShell());
       if (Window.OK == loadResourceDialog.open())
       {
         for (URI uri : loadResourceDialog.getURIs())
@@ -448,8 +447,7 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
    */
   public static String[] openFilePathDialog(Shell shell, int style, String[] fileExtensionFilters)
   {
-    return openFilePathDialog(shell, style, fileExtensionFilters, (style & SWT.OPEN) != 0, (style & SWT.OPEN) != 0,
-        (style & SWT.SAVE) != 0);
+    return openFilePathDialog(shell, style, fileExtensionFilters, (style & SWT.OPEN) != 0, (style & SWT.OPEN) != 0, (style & SWT.SAVE) != 0);
   }
 
   /**
@@ -457,8 +455,8 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
    * <!-- end-user-doc -->
    * @generated
    */
-  public static String[] openFilePathDialog(Shell shell, int style, String[] fileExtensionFilters,
-      boolean includeGroupFilter, boolean includeAllFilter, boolean addExtension)
+  public static String[] openFilePathDialog(Shell shell, int style, String[] fileExtensionFilters, boolean includeGroupFilter, boolean includeAllFilter,
+      boolean addExtension)
   {
     FileDialog fileDialog = new FileDialog(shell, style);
     if (fileExtensionFilters == null)
@@ -561,8 +559,7 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
     IEditorDescriptor editorDescriptor = EditUIUtil.getDefaultEditor(uri, null);
     if (editorDescriptor == null)
     {
-      MessageDialog.openError(workbenchWindow.getShell(), getString("_UI_Error_title"),
-          getString("_WARN_No_Editor", uri.lastSegment()));
+      MessageDialog.openError(workbenchWindow.getShell(), getString("_UI_Error_title"), getString("_WARN_No_Editor", uri.lastSegment()));
       return false;
     }
 
@@ -572,8 +569,7 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
     }
     catch (PartInitException exception)
     {
-      MessageDialog.openError(workbenchWindow.getShell(), getString("_UI_OpenEditorError_label"),
-          exception.getMessage());
+      MessageDialog.openError(workbenchWindow.getShell(), getString("_UI_OpenEditorError_label"), exception.getMessage());
       return false;
     }
 

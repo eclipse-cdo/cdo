@@ -95,8 +95,8 @@ public class ConnectionImpl extends Container<Session> implements Connection
 
   private boolean stopped = true;
 
-  public ConnectionImpl(IManagedContainer transportContainer, String connectorType, String connectorDescription,
-      String userName, String password) throws JMSException
+  public ConnectionImpl(IManagedContainer transportContainer, String connectorType, String connectorDescription, String userName, String password)
+      throws JMSException
   {
     this.transportContainer = transportContainer == null ? JMSUtil.getTransportContainer() : transportContainer;
     if (transportContainer == null)
@@ -131,14 +131,13 @@ public class ConnectionImpl extends Container<Session> implements Connection
     }
   }
 
-  public ConnectionConsumer createConnectionConsumer(Destination destination, String messageSelector,
-      ServerSessionPool sessionPool, int maxMessages)
+  public ConnectionConsumer createConnectionConsumer(Destination destination, String messageSelector, ServerSessionPool sessionPool, int maxMessages)
   {
     throw new UnsupportedOperationException();
   }
 
-  public ConnectionConsumer createDurableConnectionConsumer(Topic topic, String subscriptionName,
-      String messageSelector, ServerSessionPool sessionPool, int maxMessages)
+  public ConnectionConsumer createDurableConnectionConsumer(Topic topic, String subscriptionName, String messageSelector, ServerSessionPool sessionPool,
+      int maxMessages)
   {
     throw new UnsupportedOperationException();
   }

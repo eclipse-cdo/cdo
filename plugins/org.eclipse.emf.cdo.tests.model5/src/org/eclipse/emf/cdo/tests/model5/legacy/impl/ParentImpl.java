@@ -114,8 +114,7 @@ public class ParentImpl extends EObjectImpl implements Parent
   {
     if (children == null)
     {
-      children = new EObjectContainmentWithInverseEList<Child>(Child.class, this, Model5Package.PARENT__CHILDREN,
-          Model5Package.CHILD__PARENT);
+      children = new EObjectContainmentWithInverseEList<Child>(Child.class, this, Model5Package.PARENT__CHILDREN, Model5Package.CHILD__PARENT);
     }
     return children;
   }
@@ -135,8 +134,7 @@ public class ParentImpl extends EObjectImpl implements Parent
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model5Package.PARENT__FAVOURITE, oldFavourite,
-              favourite));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model5Package.PARENT__FAVOURITE, oldFavourite, favourite));
         }
       }
     }
@@ -164,8 +162,7 @@ public class ParentImpl extends EObjectImpl implements Parent
     favourite = newFavourite;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model5Package.PARENT__FAVOURITE,
-          oldFavourite, newFavourite);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model5Package.PARENT__FAVOURITE, oldFavourite, newFavourite);
       if (msgs == null)
       {
         msgs = notification;
@@ -204,8 +201,7 @@ public class ParentImpl extends EObjectImpl implements Parent
     }
     else if (eNotificationRequired())
     {
-      eNotify(
-          new ENotificationImpl(this, Notification.SET, Model5Package.PARENT__FAVOURITE, newFavourite, newFavourite));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model5Package.PARENT__FAVOURITE, newFavourite, newFavourite));
     }
   }
 

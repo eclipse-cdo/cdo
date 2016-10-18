@@ -226,8 +226,7 @@ public class CommitIntegrityCheck
     // else: Transient object -- ignore
   }
 
-  private void checkFeatureDelta(CDOFeatureDelta featureDelta, boolean hasPersistentOpposite, CDOObject dirtyObject)
-      throws CommitIntegrityException
+  private void checkFeatureDelta(CDOFeatureDelta featureDelta, boolean hasPersistentOpposite, CDOObject dirtyObject) throws CommitIntegrityException
   {
     EReference ref = (EReference)featureDelta.getFeature();
     boolean containmentOrWithOpposite = ref.isContainment() || hasPersistentOpposite;
@@ -398,8 +397,7 @@ public class CommitIntegrityCheck
           boolean hasPersistentOpposite = classInfo.hasPersistentOpposite(reference);
           for (Object refTarget : list)
           {
-            checkBidiRefTargetOrNewNonBidiTargetIncluded(referencer, reference, refTarget, hasPersistentOpposite,
-                msgFrag);
+            checkBidiRefTargetOrNewNonBidiTargetIncluded(referencer, reference, refTarget, hasPersistentOpposite, msgFrag);
           }
         }
       }
@@ -409,15 +407,14 @@ public class CommitIntegrityCheck
         if (refTarget != null)
         {
           boolean hasPersistentOpposite = classInfo.hasPersistentOpposite(reference);
-          checkBidiRefTargetOrNewNonBidiTargetIncluded(referencer, reference, refTarget, hasPersistentOpposite,
-              msgFrag);
+          checkBidiRefTargetOrNewNonBidiTargetIncluded(referencer, reference, refTarget, hasPersistentOpposite, msgFrag);
         }
       }
     }
   }
 
-  private void checkBidiRefTargetOrNewNonBidiTargetIncluded(CDOObject referencer, EReference eRef, Object refTarget,
-      boolean hasPersistentOpposite, String msgFrag) throws CommitIntegrityException
+  private void checkBidiRefTargetOrNewNonBidiTargetIncluded(CDOObject referencer, EReference eRef, Object refTarget, boolean hasPersistentOpposite,
+      String msgFrag) throws CommitIntegrityException
   {
     if (hasPersistentOpposite)
     {
@@ -468,8 +465,7 @@ public class CommitIntegrityCheck
     }
   }
 
-  private void checkBidiRefTargetIncluded(Object refTarget, CDOObject referencer, String refName, String msgFrag)
-      throws CommitIntegrityException
+  private void checkBidiRefTargetIncluded(Object refTarget, CDOObject referencer, String refName, String msgFrag) throws CommitIntegrityException
   {
     CheckUtil.checkArg(refTarget, "refTarget");
     CDOID refTargetID = null;

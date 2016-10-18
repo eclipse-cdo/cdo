@@ -97,8 +97,7 @@ public class EObjectToEObjectBothContainedMapImpl extends EObjectImpl implements
     key = newKey;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY, oldKey, newKey);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY, oldKey, newKey);
       if (msgs == null)
       {
         msgs = notification;
@@ -122,13 +121,11 @@ public class EObjectToEObjectBothContainedMapImpl extends EObjectImpl implements
       NotificationChain msgs = null;
       if (key != null)
       {
-        msgs = ((InternalEObject)key).eInverseRemove(this,
-            EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY, null, msgs);
+        msgs = ((InternalEObject)key).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY, null, msgs);
       }
       if (newKey != null)
       {
-        msgs = ((InternalEObject)newKey).eInverseAdd(this,
-            EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY, null, msgs);
+        msgs = ((InternalEObject)newKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY, null, msgs);
       }
       msgs = basicSetTypedKey(newKey, msgs);
       if (msgs != null)
@@ -138,8 +135,7 @@ public class EObjectToEObjectBothContainedMapImpl extends EObjectImpl implements
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY,
-          newKey, newKey));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY, newKey, newKey));
     }
   }
 
@@ -162,8 +158,8 @@ public class EObjectToEObjectBothContainedMapImpl extends EObjectImpl implements
     value = newValue;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE, oldValue, newValue);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE, oldValue,
+          newValue);
       if (msgs == null)
       {
         msgs = notification;
@@ -187,13 +183,11 @@ public class EObjectToEObjectBothContainedMapImpl extends EObjectImpl implements
       NotificationChain msgs = null;
       if (value != null)
       {
-        msgs = ((InternalEObject)value).eInverseRemove(this,
-            EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE, null, msgs);
+        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE, null, msgs);
       }
       if (newValue != null)
       {
-        msgs = ((InternalEObject)newValue).eInverseAdd(this,
-            EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE, null, msgs);
+        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE, null, msgs);
       }
       msgs = basicSetTypedValue(newValue, msgs);
       if (msgs != null)
@@ -203,8 +197,7 @@ public class EObjectToEObjectBothContainedMapImpl extends EObjectImpl implements
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE,
-          newValue, newValue));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE, newValue, newValue));
     }
   }
 

@@ -62,8 +62,7 @@ public abstract class ObjectPermissionImpl extends PermissionImpl implements Obj
   /**
    * @ADDED
    */
-  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider,
-      CDOBranchPoint securityContext)
+  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
     CDOView view = getView(revisionProvider);
     CDOID id = revision.getID();

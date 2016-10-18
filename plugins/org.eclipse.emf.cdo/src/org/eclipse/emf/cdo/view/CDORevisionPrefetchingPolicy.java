@@ -35,8 +35,8 @@ public interface CDORevisionPrefetchingPolicy
 {
   public static final CDORevisionPrefetchingPolicy NO_PREFETCHING = new CDORevisionPrefetchingPolicy()
   {
-    public List<CDOID> loadAhead(CDORevisionManager revisionManager, CDOBranchPoint branchPoint, EObject targetObject,
-        EStructuralFeature feature, CDOList list, int accessIndex, CDOID accessID)
+    public List<CDOID> loadAhead(CDORevisionManager revisionManager, CDOBranchPoint branchPoint, EObject targetObject, EStructuralFeature feature, CDOList list,
+        int accessIndex, CDOID accessID)
     {
       return Collections.emptyList();
     }
@@ -51,6 +51,6 @@ public interface CDORevisionPrefetchingPolicy
    * @return Should return a list of id's to be fetch.
    * @since 3.0
    */
-  public List<CDOID> loadAhead(CDORevisionManager revisionManager, CDOBranchPoint branchPoint, EObject targetObject,
-      EStructuralFeature feature, CDOList list, int accessIndex, CDOID accessID);
+  public List<CDOID> loadAhead(CDORevisionManager revisionManager, CDOBranchPoint branchPoint, EObject targetObject, EStructuralFeature feature, CDOList list,
+      int accessIndex, CDOID accessID);
 }

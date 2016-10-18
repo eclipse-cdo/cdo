@@ -117,8 +117,8 @@ public final class CDOLockUtil
     return new CDOLockOwnerImpl(DURABLE_SESSION_ID, DURABLE_VIEW_ID, durableLockingID, true);
   }
 
-  public static CDOLockChangeInfo createLockChangeInfo(long timestamp, CDOLockOwner lockOwner, CDOBranch branch,
-      Operation op, LockType lockType, CDOLockState[] cdoLockStates)
+  public static CDOLockChangeInfo createLockChangeInfo(long timestamp, CDOLockOwner lockOwner, CDOBranch branch, Operation op, LockType lockType,
+      CDOLockState[] cdoLockStates)
   {
     return new CDOLockChangeInfoImpl(branch.getPoint(timestamp), lockOwner, cdoLockStates, op, lockType);
   }
@@ -128,15 +128,14 @@ public final class CDOLockUtil
     return new CDOLockChangeInfoImpl();
   }
 
-  public static CDOLockChangeInfo createLockChangeInfo(long timestamp, CDOCommonView view, CDOBranch viewedBranch,
-      Operation op, LockType lockType, CDOLockState[] cdoLockStates)
+  public static CDOLockChangeInfo createLockChangeInfo(long timestamp, CDOCommonView view, CDOBranch viewedBranch, Operation op, LockType lockType,
+      CDOLockState[] cdoLockStates)
   {
     CDOLockOwner lockOwner = createLockOwner(view);
     return createLockChangeInfo(timestamp, lockOwner, viewedBranch, op, lockType, cdoLockStates);
   }
 
-  public static LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint,
-      boolean readOnly, Map<CDOID, LockGrade> locks)
+  public static LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     return new CDOLockAreaImpl(durableLockingID, userID, branchPoint, readOnly, locks);
   }

@@ -78,8 +78,8 @@ public class CommitInfoTable extends Lifecycle
     this.store = store;
   }
 
-  public void writeCommitInfo(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, long previousTimeStamp,
-      String userID, String comment, CDOBranchPoint mergeSource, OMMonitor monitor)
+  public void writeCommitInfo(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
+      CDOBranchPoint mergeSource, OMMonitor monitor)
   {
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsert, ReuseProbability.HIGH);
 
@@ -117,8 +117,7 @@ public class CommitInfoTable extends Lifecycle
     }
   }
 
-  public void loadCommitInfos(IDBStoreAccessor accessor, CDOBranch branch, long startTime, long endTime,
-      CDOCommitInfoHandler handler)
+  public void loadCommitInfos(IDBStoreAccessor accessor, CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
     int count = CDOCommitInfoUtil.decodeCount(endTime);
 
@@ -222,8 +221,7 @@ public class CommitInfoTable extends Lifecycle
           }
         }
 
-        CDOCommitInfo commitInfo = commitInfoManager.createCommitInfo(infoBranch, timeStamp, previousTimeStamp, userID,
-            comment, mergeSource, null);
+        CDOCommitInfo commitInfo = commitInfoManager.createCommitInfo(infoBranch, timeStamp, previousTimeStamp, userID, comment, mergeSource, null);
         handler.handleCommitInfo(commitInfo);
       }
     }
@@ -238,8 +236,7 @@ public class CommitInfoTable extends Lifecycle
     }
   }
 
-  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
-      throws IOException
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
     out.writeBoolean(withMergeSource);
 
@@ -247,14 +244,13 @@ public class CommitInfoTable extends Lifecycle
     DBUtil.serializeTable(out, connection, table, null, where);
   }
 
-  public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime,
-      OMMonitor monitor) throws IOException
+  public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
     boolean actualWithMergeSource = in.readBoolean();
     if (actualWithMergeSource != withMergeSource)
     {
-      throw new IllegalStateException("Commit info data mismatch. Expected: " + (withMergeSource ? "with" : "without")
-          + " merge source. Actual: " + (actualWithMergeSource ? "with" : "without") + " merge source.");
+      throw new IllegalStateException("Commit info data mismatch. Expected: " + (withMergeSource ? "with" : "without") + " merge source. Actual: "
+          + (actualWithMergeSource ? "with" : "without") + " merge source.");
     }
 
     DBUtil.deserializeTable(in, connection, table, monitor.fork());
@@ -265,8 +261,7 @@ public class CommitInfoTable extends Lifecycle
     IDBField timeStampField = table.getField(TIMESTAMP);
 
     long lastCommitTime = DBUtil.selectMaximumLong(connection, timeStampField);
-    long lastNonLocalCommitTime = DBUtil.selectMaximumLong(connection, timeStampField,
-        CDOBranch.MAIN_BRANCH_ID + "<=" + BRANCH);
+    long lastNonLocalCommitTime = DBUtil.selectMaximumLong(connection, timeStampField, CDOBranch.MAIN_BRANCH_ID + "<=" + BRANCH);
 
     if (lastNonLocalCommitTime == CDOBranchPoint.UNSPECIFIED_DATE)
     {

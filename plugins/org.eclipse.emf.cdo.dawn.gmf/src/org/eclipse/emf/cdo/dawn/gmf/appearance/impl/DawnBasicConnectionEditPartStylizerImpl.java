@@ -69,8 +69,7 @@ public class DawnBasicConnectionEditPartStylizerImpl extends DawnEditPartStylize
         PackageUtil.getID(NotationPackage.eINSTANCE.getLineStyle_LineColor()), FigureUtilities.colorToInteger(color));
     final Command command = editPart.getCommand(request);
 
-    AbstractEMFOperation operation = new AbstractEMFOperation(((IGraphicalEditPart)editPart).getEditingDomain(),
-        StringStatics.BLANK, null)
+    AbstractEMFOperation operation = new AbstractEMFOperation(((IGraphicalEditPart)editPart).getEditingDomain(), StringStatics.BLANK, null)
     {
       @Override
       protected IStatus doExecute(IProgressMonitor monitor, IAdaptable info) throws ExecutionException

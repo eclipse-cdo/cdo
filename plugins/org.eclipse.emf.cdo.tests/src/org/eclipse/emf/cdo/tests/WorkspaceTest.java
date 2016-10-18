@@ -1357,8 +1357,7 @@ public class WorkspaceTest extends AbstractCDOTest
         throw new UnsupportedOperationException();
       }
 
-      public void merge(CDOTransaction localTransaction, CDOView remoteView, Set<CDOID> affectedIDs)
-          throws ConflictException
+      public void merge(CDOTransaction localTransaction, CDOView remoteView, Set<CDOID> affectedIDs) throws ConflictException
       {
         CDOComparisonScope scope = new CDOComparisonScope.Minimal(remoteView, localTransaction, null, affectedIDs);
         Comparison comparison = CDOCompareUtil.compare(scope);

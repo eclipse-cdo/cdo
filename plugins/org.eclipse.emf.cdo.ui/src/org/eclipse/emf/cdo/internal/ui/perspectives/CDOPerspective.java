@@ -84,7 +84,6 @@ public class CDOPerspective implements IPerspectiveFactory
 
   static public boolean isCurrent()
   {
-    return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective().getId()
-        .equals(CDOPerspective.ID);
+    return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective().getId().equals(CDOPerspective.ID);
   }
 }

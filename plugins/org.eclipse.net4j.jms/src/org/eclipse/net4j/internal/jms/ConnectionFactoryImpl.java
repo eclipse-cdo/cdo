@@ -62,7 +62,6 @@ public class ConnectionFactoryImpl implements ConnectionFactory, Remote, Seriali
 
   public Connection createConnection(String userName, String password) throws JMSException
   {
-    return new ConnectionImpl((IManagedContainer)transportContainer, connectorType, connectorDescription, userName,
-        password);
+    return new ConnectionImpl((IManagedContainer)transportContainer, connectorType, connectorDescription, userName, password);
   }
 }

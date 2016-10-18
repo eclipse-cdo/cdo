@@ -115,8 +115,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
 
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
   {
-    DB4OPackageUnit db4OPackageUnit = getPrimitivePackageUnitMap()
-        .get(packageUnit.getTopLevelPackageInfo().getPackageURI());
+    DB4OPackageUnit db4OPackageUnit = getPrimitivePackageUnitMap().get(packageUnit.getTopLevelPackageInfo().getPackageURI());
     return EMFUtil.getAllPackages(db4OPackageUnit.getEPackage());
   }
 
@@ -178,8 +177,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
     return map;
   }
 
-  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
-      CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk, CDORevisionCacheAdder cache)
   {
     DB4ORevision lastRevision = DB4OStore.getRevision(getObjectContainer(), id);
     if (lastRevision == null)
@@ -198,8 +196,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
     final boolean exactMatch = context.exactMatch();
     // RootResource may not be initialized, as there may be queries during IStore activation
     CDOID rootResourceID = getStore().getRepository().getRootResourceID();
-    final Object rootResourceLongID = rootResourceID != null
-        ? DB4ORevision.getDB4OID(getStore().getRepository().getRootResourceID()) : null;
+    final Object rootResourceLongID = rootResourceID != null ? DB4ORevision.getDB4OID(getStore().getRepository().getRootResourceID()) : null;
 
     ObjectSet<DB4ORevision> revisionObjectSet = getObjectContainer().query(new Predicate<DB4ORevision>()
     {
@@ -302,8 +299,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
     getObjectContainer().rollback();
   }
 
-  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
-      CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk, CDORevisionCacheAdder cache)
   {
     DB4ORevision revision = DB4OStore.getRevision(getObjectContainer(), id);
     if (revision == null || revision.getVersion() != branchVersion.getVersion())
@@ -314,8 +310,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
     return DB4ORevision.getCDORevision(getStore(), revision);
   }
 
-  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     Query query = getObjectContainer().query();
     query.constrain(DB4ORevision.class);
@@ -538,8 +533,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
     throw new UnsupportedOperationException();
   }
 
-  public void loadCommitInfos(final CDOBranch branch, final long startTime, final long endTime,
-      CDOCommitInfoHandler handler)
+  public void loadCommitInfos(final CDOBranch branch, final long startTime, final long endTime, CDOCommitInfoHandler handler)
   {
     if (endTime < CDOBranchPoint.UNSPECIFIED_DATE)
     {
@@ -621,8 +615,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
 
   @SuppressWarnings("deprecation")
   @Override
-  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
-      String comment, OMMonitor monitor)
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor)
   {
     DB4OCommitInfo commitInfo = new DB4OCommitInfo(branch.getID(), timeStamp, previousTimeStamp, userID, comment);
     writeObject(commitInfo, monitor);
@@ -709,8 +702,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
   }
 
   @Override
-  protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created,
-      OMMonitor monitor)
+  protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created, OMMonitor monitor)
   {
     for (InternalCDORevisionDelta revisionDelta : revisionDeltas)
     {
@@ -721,8 +713,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
   protected void writeRevisionDelta(InternalCDORevisionDelta revisionDelta, CDOBranch branch, long created)
   {
     CDOID id = revisionDelta.getID();
-    InternalCDORevision revision = DB4ORevision.getCDORevision(getStore(),
-        DB4OStore.getRevision(getObjectContainer(), id));
+    InternalCDORevision revision = DB4ORevision.getCDORevision(getStore(), DB4OStore.getRevision(getObjectContainer(), id));
     InternalCDORevision newRevision = revision.copy();
     newRevision.adjustForCommit(branch, created);
 
@@ -784,15 +775,13 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
     }
   }
 
-  public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
-      throws IOException
+  public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime) throws IOException
   {
     // TODO: Implement DB4OStoreAccessor.rawExport(CDODataOutput, int, int, long, long)
     throw new UnsupportedOperationException();
   }
 
-  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
-      OMMonitor monitor) throws IOException
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
     // TODO: Implement DB4OStoreAccessor.rawImport(CDODataInput, int, int, long, long, OMMonitor)
     throw new UnsupportedOperationException();
@@ -820,8 +809,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
     throw new UnsupportedOperationException();
   }
 
-  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
-      OMMonitor monitor)
+  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor)
   {
     writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, monitor);
   }
@@ -836,8 +824,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
     doCommit(monitor);
   }
 
-  public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,
-      Map<CDOID, LockGrade> locks)
+  public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     DB4ODurableLockingManager manager = getStore().getDurableLockingManager();
     return manager.createLockArea(this, userID, branchPoint, readOnly, locks);

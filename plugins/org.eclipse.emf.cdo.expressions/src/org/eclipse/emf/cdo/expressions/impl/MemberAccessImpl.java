@@ -69,8 +69,7 @@ public class MemberAccessImpl extends AccessImpl implements MemberAccess
    */
   public Expression getObject()
   {
-    return (Expression)eDynamicGet(ExpressionsPackage.MEMBER_ACCESS__OBJECT,
-        ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, true, true);
+    return (Expression)eDynamicGet(ExpressionsPackage.MEMBER_ACCESS__OBJECT, ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, true, true);
   }
 
   /**

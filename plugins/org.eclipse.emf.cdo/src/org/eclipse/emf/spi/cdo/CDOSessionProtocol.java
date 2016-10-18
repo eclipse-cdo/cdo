@@ -112,8 +112,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   /**
    * @since 3.0
    */
-  public RefreshSessionResult refresh(long lastUpdateTime,
-      Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
+  public RefreshSessionResult refresh(long lastUpdateTime, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
       boolean enablePassiveUpdates);
 
   /**
@@ -126,8 +125,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * @param toIndex
    *          Load objects at the client to toIndex (inclusive)
    */
-  public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
-      int fromIndex, int toIndex);
+  public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex, int fromIndex, int toIndex);
 
   /**
    * @since 4.0
@@ -142,8 +140,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   /**
    * @since 4.0
    */
-  public void switchTarget(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects,
-      List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects, OMMonitor monitor);
+  public void switchTarget(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects, List<CDORevisionKey> allChangedObjects,
+      List<CDOIDAndVersion> allDetachedObjects, OMMonitor monitor);
 
   public void closeView(int viewID);
 
@@ -161,20 +159,20 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * @deprecated Not called anymore. Use {@link #lockObjects2(List, int, CDOBranch, LockType, boolean, long)} instead.
    */
   @Deprecated
-  public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
-      LockType lockType, long timeout) throws InterruptedException;
+  public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch, LockType lockType, long timeout)
+      throws InterruptedException;
 
   /**
    * @since 4.1
    */
-  public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch,
-      LockType lockType, boolean recursive, long timeout) throws InterruptedException;
+  public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch, LockType lockType, boolean recursive,
+      long timeout) throws InterruptedException;
 
   /**
    * @since 4.1
    */
-  public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys,
-      CDOBranch viewedBranch, LockType lockType, boolean recursive, long timeout) throws InterruptedException;
+  public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys, CDOBranch viewedBranch, LockType lockType,
+      boolean recursive, long timeout) throws InterruptedException;
 
   /**
    * @since 3.0
@@ -186,14 +184,12 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   /**
    * @since 4.1
    */
-  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType,
-      boolean recursive);
+  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType, boolean recursive);
 
   /**
    * @since 4.1
    */
-  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType,
-      boolean recursive);
+  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType, boolean recursive);
 
   /**
    * @since 3.0
@@ -220,8 +216,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * @deprecated Not called anymore. Use {@link #commitTransaction(InternalCDOCommitContext, OMMonitor)} instead.
    */
   @Deprecated
-  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
-      CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs, OMMonitor monitor);
+  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData,
+      Collection<CDOLob<?>> lobs, OMMonitor monitor);
 
   /**
    * @since 4.1
@@ -233,8 +229,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * @deprecated Not called anymore. Use {@link #commitDelegation(InternalCDOCommitContext, OMMonitor)} instead.
    */
   @Deprecated
-  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
-      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor);
+  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment, CDOCommitData commitData,
+      Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor);
 
   /**
    * @since 4.1
@@ -298,8 +294,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * @deprecated As of 4.6 use {@link #loadMergeData2(CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo)}.
    */
   @Deprecated
-  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
-      CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo);
+  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
+      CDORevisionAvailabilityInfo sourceBaseInfo);
 
   /**
    * @since 4.6
@@ -356,8 +352,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   /**
    * @since 4.5
    */
-  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler,
-      OMMonitor monitor);
+  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler, OMMonitor monitor);
 
   /**
    * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -455,10 +450,9 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
      * @deprecated as of 4.4 use {@link #OpenSessionResult(CDODataInput, int)}.
      */
     @Deprecated
-    public OpenSessionResult(int sessionID, String userID, String repositoryUUID,
-        CDOCommonRepository.Type repositoryType, CDOCommonRepository.State repositoryState, String storeType,
-        Set<CDOID.ObjectType> objectIDTypes, long repositoryCreationTime, long lastUpdateTime, CDOID rootResourceID,
-        boolean repositorySupportingAudits, boolean repositorySupportingBranches, boolean repositorySerializingCommits,
+    public OpenSessionResult(int sessionID, String userID, String repositoryUUID, CDOCommonRepository.Type repositoryType,
+        CDOCommonRepository.State repositoryState, String storeType, Set<CDOID.ObjectType> objectIDTypes, long repositoryCreationTime, long lastUpdateTime,
+        CDOID rootResourceID, boolean repositorySupportingAudits, boolean repositorySupportingBranches, boolean repositorySerializingCommits,
         boolean repositoryEnsuringReferentialIntegrity, IDGenerationLocation repositoryIDGenerationLocation)
     {
       throw new UnsupportedOperationException();
@@ -934,8 +928,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public String toString()
     {
       return MessageFormat.format("RepositoryTime[requested={0}, indicated={1}, responded={2}, confirmed={3}]", //$NON-NLS-1$
-          CDOCommonUtil.formatTimeStamp(requested), CDOCommonUtil.formatTimeStamp(indicated),
-          CDOCommonUtil.formatTimeStamp(responded), CDOCommonUtil.formatTimeStamp(confirmed));
+          CDOCommonUtil.formatTimeStamp(requested), CDOCommonUtil.formatTimeStamp(indicated), CDOCommonUtil.formatTimeStamp(responded),
+          CDOCommonUtil.formatTimeStamp(confirmed));
     }
   }
 
@@ -1020,8 +1014,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
      * @deprecated As of 4.2
      */
     @Deprecated
-    public CommitTransactionResult(CDOIDProvider idProvider, String rollbackMessage, CDOBranchPoint branchPoint,
-        long previousTimeStamp, List<CDOObjectReference> xRefs)
+    public CommitTransactionResult(CDOIDProvider idProvider, String rollbackMessage, CDOBranchPoint branchPoint, long previousTimeStamp,
+        List<CDOObjectReference> xRefs)
     {
       throw new UnsupportedOperationException();
     }
@@ -1031,9 +1025,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
      * @deprecated As of 4.3
      */
     @Deprecated
-    public CommitTransactionResult(CDOIDProvider idProvider, byte rollbackReason, String rollbackMessage,
-        CDOBranchPoint branchPoint, long previousTimeStamp, List<CDOObjectReference> xRefs,
-        boolean clearResourcePathCache)
+    public CommitTransactionResult(CDOIDProvider idProvider, byte rollbackReason, String rollbackMessage, CDOBranchPoint branchPoint, long previousTimeStamp,
+        List<CDOObjectReference> xRefs, boolean clearResourcePathCache)
     {
       throw new UnsupportedOperationException();
     }
@@ -1053,8 +1046,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
      * @deprecated As of 4.3
      */
     @Deprecated
-    public CommitTransactionResult(CDOIDProvider idProvider, CDOBranchPoint branchPoint, long previousTimeStamp,
-        boolean clearResourcePathCache)
+    public CommitTransactionResult(CDOIDProvider idProvider, CDOBranchPoint branchPoint, long previousTimeStamp, boolean clearResourcePathCache)
     {
       throw new UnsupportedOperationException();
     }
@@ -1325,8 +1317,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     private CDOLockState[] newLockStates;
 
     @Deprecated
-    public LockObjectsResult(boolean successful, boolean timedOut, boolean waitForUpdate, long requiredTimestamp,
-        CDORevisionKey[] staleRevisions)
+    public LockObjectsResult(boolean successful, boolean timedOut, boolean waitForUpdate, long requiredTimestamp, CDORevisionKey[] staleRevisions)
     {
       throw new AssertionError("Deprecated");
     }
@@ -1334,8 +1325,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.1
      */
-    public LockObjectsResult(boolean successful, boolean timedOut, boolean waitForUpdate, long requiredTimestamp,
-        CDORevisionKey[] staleRevisions, CDOLockState[] newLockStates, long timestamp)
+    public LockObjectsResult(boolean successful, boolean timedOut, boolean waitForUpdate, long requiredTimestamp, CDORevisionKey[] staleRevisions,
+        CDOLockState[] newLockStates, long timestamp)
     {
       this.successful = successful;
       this.timedOut = timedOut;

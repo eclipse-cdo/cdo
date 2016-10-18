@@ -66,8 +66,7 @@ public class GenerateExampleBuilders
     }
   }
 
-  private static void processProjectDescriptor(File exampleProject, File installerPoject, String targetFolder)
-      throws Exception
+  private static void processProjectDescriptor(File exampleProject, File installerPoject, String targetFolder) throws Exception
   {
     String exampleProjectName = exampleProject.getName();
     String targetPath = installerPoject.getName() + "/" + targetFolder;
@@ -99,8 +98,7 @@ public class GenerateExampleBuilders
     updateProjectDescription(exampleProject, substitutes);
   }
 
-  private static void copy(File targetProject, Map<String, String> substitutes, String template, String targetPath)
-      throws IOException
+  private static void copy(File targetProject, Map<String, String> substitutes, String template, String targetPath) throws IOException
   {
     File source = getTemplate(targetProject.getParentFile(), template);
     String content = substitute(readFile(source), substitutes);
@@ -127,10 +125,8 @@ public class GenerateExampleBuilders
 
     String newDescription = description;
 
-    Pattern pattern = Pattern.compile(
-        "(\\s*<buildCommand>.*?</buildCommand>)*(\\s*<buildCommand>.*?<value>&lt;project&gt;/\\.externalToolBuilders/"
-            + targetProject.getName().replace(".", "\\.") + "\\.launch</value>.*?</buildCommand>)",
-        Pattern.DOTALL);
+    Pattern pattern = Pattern.compile("(\\s*<buildCommand>.*?</buildCommand>)*(\\s*<buildCommand>.*?<value>&lt;project&gt;/\\.externalToolBuilders/"
+        + targetProject.getName().replace(".", "\\.") + "\\.launch</value>.*?</buildCommand>)", Pattern.DOTALL);
     Matcher matcher = pattern.matcher(description);
     if (matcher.find())
     {
@@ -197,8 +193,7 @@ public class GenerateExampleBuilders
 
   private static String getItemPath(String resource, int type)
   {
-    return "&lt;item path=&quot;/" + resource.replace('\\', '/') + "&quot; type=&quot;" + type
-        + "&quot;/&gt;&#13;&#10;";
+    return "&lt;item path=&quot;/" + resource.replace('\\', '/') + "&quot; type=&quot;" + type + "&quot;/&gt;&#13;&#10;";
   }
 
   private static File getTemplate(File root, String template)

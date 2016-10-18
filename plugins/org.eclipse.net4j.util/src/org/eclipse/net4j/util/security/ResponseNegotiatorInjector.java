@@ -31,8 +31,7 @@ public abstract class ResponseNegotiatorInjector implements IElementProcessor
     return negotiator;
   }
 
-  public Object process(IManagedContainer container, String productGroup, String factoryType, String description,
-      Object element)
+  public Object process(IManagedContainer container, String productGroup, String factoryType, String description, Object element)
   {
     if (element instanceof INegotiatorAware)
     {
@@ -52,6 +51,5 @@ public abstract class ResponseNegotiatorInjector implements IElementProcessor
     return element;
   }
 
-  protected abstract boolean filterElement(String productGroup, String factoryType, String description,
-      INegotiatorAware negotiatorAware);
+  protected abstract boolean filterElement(String productGroup, String factoryType, String description, INegotiatorAware negotiatorAware);
 }

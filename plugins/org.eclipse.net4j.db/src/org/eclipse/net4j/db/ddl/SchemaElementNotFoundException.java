@@ -29,8 +29,7 @@ public class SchemaElementNotFoundException extends DBException
 
   public SchemaElementNotFoundException(IDBSchemaElement parent, IDBSchemaElement.SchemaElementType type, String name)
   {
-    super(type.toString() + " " + DBSchemaElement.name(name) + " not found in " + parent.getSchemaElementType() + " "
-        + parent);
+    super(type.toString() + " " + DBSchemaElement.name(name) + " not found in " + parent.getSchemaElementType() + " " + parent);
     this.parent = parent;
     this.type = type;
     this.name = DBSchemaElement.name(name);

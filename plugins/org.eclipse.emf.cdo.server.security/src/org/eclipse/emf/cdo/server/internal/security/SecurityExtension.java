@@ -104,8 +104,7 @@ public class SecurityExtension implements IAppExtension2
     NodeList securityManagers = repositoryConfig.getElementsByTagName("securityManager"); //$NON-NLS-1$
     if (securityManagers.getLength() > 1)
     {
-      throw new IllegalStateException(
-          "A maximum of one security manager can be configured for repository " + repository); //$NON-NLS-1$
+      throw new IllegalStateException("A maximum of one security manager can be configured for repository " + repository); //$NON-NLS-1$
     }
 
     if (securityManagers.getLength() == 1)

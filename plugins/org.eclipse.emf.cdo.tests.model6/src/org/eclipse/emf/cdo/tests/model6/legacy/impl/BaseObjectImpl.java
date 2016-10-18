@@ -125,8 +125,7 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
     attributeOptional = newAttributeOptional;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.BASE_OBJECT__ATTRIBUTE_OPTIONAL,
-          oldAttributeOptional, attributeOptional));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.BASE_OBJECT__ATTRIBUTE_OPTIONAL, oldAttributeOptional, attributeOptional));
     }
   }
 
@@ -149,8 +148,7 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
     attributeRequired = newAttributeRequired;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.BASE_OBJECT__ATTRIBUTE_REQUIRED,
-          oldAttributeRequired, attributeRequired));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.BASE_OBJECT__ATTRIBUTE_REQUIRED, oldAttributeRequired, attributeRequired));
     }
   }
 
@@ -242,11 +240,9 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
     switch (featureID)
     {
     case Model6Package.BASE_OBJECT__ATTRIBUTE_OPTIONAL:
-      return ATTRIBUTE_OPTIONAL_EDEFAULT == null ? attributeOptional != null
-          : !ATTRIBUTE_OPTIONAL_EDEFAULT.equals(attributeOptional);
+      return ATTRIBUTE_OPTIONAL_EDEFAULT == null ? attributeOptional != null : !ATTRIBUTE_OPTIONAL_EDEFAULT.equals(attributeOptional);
     case Model6Package.BASE_OBJECT__ATTRIBUTE_REQUIRED:
-      return ATTRIBUTE_REQUIRED_EDEFAULT == null ? attributeRequired != null
-          : !ATTRIBUTE_REQUIRED_EDEFAULT.equals(attributeRequired);
+      return ATTRIBUTE_REQUIRED_EDEFAULT == null ? attributeRequired != null : !ATTRIBUTE_REQUIRED_EDEFAULT.equals(attributeRequired);
     case Model6Package.BASE_OBJECT__ATTRIBUTE_LIST:
       return attributeList != null && !attributeList.isEmpty();
     }

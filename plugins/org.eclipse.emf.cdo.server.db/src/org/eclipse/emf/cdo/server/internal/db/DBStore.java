@@ -390,10 +390,8 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   public void setPersistentProperties(Map<String, String> properties)
   {
     IDBConnection connection = database.getConnection();
-    IDBPreparedStatement deleteStmt = connection.prepareStatement(CDODBSchema.SQL_DELETE_PROPERTIES,
-        ReuseProbability.MEDIUM);
-    IDBPreparedStatement insertStmt = connection.prepareStatement(CDODBSchema.SQL_INSERT_PROPERTIES,
-        ReuseProbability.MEDIUM);
+    IDBPreparedStatement deleteStmt = connection.prepareStatement(CDODBSchema.SQL_DELETE_PROPERTIES, ReuseProbability.MEDIUM);
+    IDBPreparedStatement insertStmt = connection.prepareStatement(CDODBSchema.SQL_INSERT_PROPERTIES, ReuseProbability.MEDIUM);
     String sql = null;
 
     try
@@ -658,8 +656,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
 
     String schemaName = repository.getName();
-    boolean fixNullableIndexColumns = schemaVersion != FIRST_START
-        && schemaVersion < FIRST_VERSION_WITH_NULLABLE_CHECKS;
+    boolean fixNullableIndexColumns = schemaVersion != FIRST_START && schemaVersion < FIRST_VERSION_WITH_NULLABLE_CHECKS;
 
     database = DBUtil.openDatabase(dbAdapter, dbConnectionProvider, schemaName, fixNullableIndexColumns);
     IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
@@ -692,8 +689,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
 
     setRevisionTemporality(mappingStrategy.hasAuditSupport() ? RevisionTemporality.AUDITING : RevisionTemporality.NONE);
-    setRevisionParallelism(
-        mappingStrategy.hasBranchingSupport() ? RevisionParallelism.BRANCHING : RevisionParallelism.NONE);
+    setRevisionParallelism(mappingStrategy.hasBranchingSupport() ? RevisionParallelism.BRANCHING : RevisionParallelism.NONE);
 
     if (schemaVersion == FIRST_START)
     {
@@ -878,8 +874,8 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
                 continue;
               }
 
-              lastNonLocalCommitTime = Math.max(lastNonLocalCommitTime, DBUtil.selectMaximumLong(connection,
-                  branchField, CDOBranch.MAIN_BRANCH_ID + "<=" + IMappingConstants.ATTRIBUTES_BRANCH));
+              lastNonLocalCommitTime = Math.max(lastNonLocalCommitTime,
+                  DBUtil.selectMaximumLong(connection, branchField, CDOBranch.MAIN_BRANCH_ID + "<=" + IMappingConstants.ATTRIBUTES_BRANCH));
             }
 
             lastCommitTime = Math.max(lastCommitTime, DBUtil.selectMaximumLong(connection, createdField));
@@ -942,8 +938,8 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     try
     {
       statement = connection.createStatement();
-      resultSet = statement.executeQuery("SELECT " + CDODBSchema.PROPERTIES_VALUE + " FROM " + CDODBSchema.PROPERTIES
-          + " WHERE " + CDODBSchema.PROPERTIES_NAME + "='" + PROP_SCHEMA_VERSION + "'");
+      resultSet = statement.executeQuery("SELECT " + CDODBSchema.PROPERTIES_VALUE + " FROM " + CDODBSchema.PROPERTIES + " WHERE " + CDODBSchema.PROPERTIES_NAME
+          + "='" + PROP_SCHEMA_VERSION + "'");
 
       if (resultSet.next())
       {
@@ -1028,8 +1024,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
               String from = " FROM " + name + " WHERE " + ATTRIBUTES_VERSION + "<" + CDOBranchVersion.FIRST_VERSION;
 
-              statement.executeUpdate("DELETE FROM " + CDODBSchema.CDO_OBJECTS + " WHERE " + ATTRIBUTES_ID
-                  + " IN (SELECT " + ATTRIBUTES_ID + from + ")");
+              statement.executeUpdate("DELETE FROM " + CDODBSchema.CDO_OBJECTS + " WHERE " + ATTRIBUTES_ID + " IN (SELECT " + ATTRIBUTES_ID + from + ")");
 
               statement.executeUpdate("DELETE" + from);
             }
@@ -1067,8 +1062,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
   private static final SchemaMigrator NULLABLE_COLUMNS_MIGRATION = null;
 
-  private static final SchemaMigrator[] SCHEMA_MIGRATORS = { NO_MIGRATION_NEEDED, NON_AUDIT_MIGRATION,
-      LOB_SIZE_MIGRATION, NULLABLE_COLUMNS_MIGRATION };
+  private static final SchemaMigrator[] SCHEMA_MIGRATORS = { NO_MIGRATION_NEEDED, NON_AUDIT_MIGRATION, LOB_SIZE_MIGRATION, NULLABLE_COLUMNS_MIGRATION };
 
   static
   {

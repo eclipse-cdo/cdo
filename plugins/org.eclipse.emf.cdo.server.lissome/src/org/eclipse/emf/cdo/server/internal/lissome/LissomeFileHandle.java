@@ -70,8 +70,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LissomeFileHandle extends DataInputOutputFile
-    implements CDODataInput, CDODataOutput, LissomeFile.RevisionProvider
+public class LissomeFileHandle extends DataInputOutputFile implements CDODataInput, CDODataOutput, LissomeFile.RevisionProvider
 {
   private LissomeFile file;
 
@@ -442,8 +441,7 @@ public class LissomeFileHandle extends DataInputOutputFile
     return new CDODataOutputImpl(extendedDataOutput)
     {
       @Override
-      public void writeCDORevision(CDORevision revision, int referenceChunk, CDOBranchPoint securityContext)
-          throws IOException
+      public void writeCDORevision(CDORevision revision, int referenceChunk, CDOBranchPoint securityContext) throws IOException
       {
         boolean detached = revision instanceof DetachedCDORevision;
         writeBoolean(detached);
@@ -603,8 +601,7 @@ public class LissomeFileHandle extends DataInputOutputFile
     out().writeCDORevision(revision, referenceChunk);
   }
 
-  public void writeCDORevision(CDORevision revision, int referenceChunk, CDOBranchPoint securityContext)
-      throws IOException
+  public void writeCDORevision(CDORevision revision, int referenceChunk, CDOBranchPoint securityContext) throws IOException
   {
     out().writeCDORevision(revision, referenceChunk, securityContext);
   }
@@ -614,8 +611,7 @@ public class LissomeFileHandle extends DataInputOutputFile
     out().writeCDORevisable(revisable);
   }
 
-  public void writeCDOList(EClass owner, EStructuralFeature feature, CDOList list, int referenceChunk)
-      throws IOException
+  public void writeCDOList(EClass owner, EStructuralFeature feature, CDOList list, int referenceChunk) throws IOException
   {
     out().writeCDOList(owner, feature, list, referenceChunk);
   }

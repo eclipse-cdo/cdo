@@ -197,8 +197,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
     }
   }
 
-  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
-      throws IOException
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
     String where = " WHERE " + ATTRIBUTES_CREATED + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, table, null, where);
@@ -242,8 +241,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
     }
 
     sqlSelect = "SELECT " + ATTRIBUTES_CLASS + " FROM " + table + " WHERE " + ATTRIBUTES_ID + "=?";
-    sqlInsert = "INSERT INTO " + table + "(" + ATTRIBUTES_ID + "," + ATTRIBUTES_CLASS + "," + ATTRIBUTES_CREATED
-        + ") VALUES (?, ?, ?)";
+    sqlInsert = "INSERT INTO " + table + "(" + ATTRIBUTES_ID + "," + ATTRIBUTES_CLASS + "," + ATTRIBUTES_CREATED + ") VALUES (?, ?, ?)";
     sqlDelete = "DELETE FROM " + table + " WHERE " + ATTRIBUTES_ID + "=?";
   }
 

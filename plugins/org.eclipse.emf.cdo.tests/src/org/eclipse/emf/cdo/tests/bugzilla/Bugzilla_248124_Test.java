@@ -73,8 +73,7 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
 
     try
     {
-      transaction2.getResourceSet().getResource(CDOURIUtil.createResourceURI(view, getResourcePath(resourcePath)),
-          true);
+      transaction2.getResourceSet().getResource(CDOURIUtil.createResourceURI(view, getResourcePath(resourcePath)), true);
       fail("RuntimeException expected");
     }
     catch (RuntimeException expected)
@@ -112,8 +111,7 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
 
     try
     {
-      transaction1.getResourceSet()
-          .getResource(CDOURIUtil.createResourceURI(transaction1, getResourcePath(resourcePath)), true);
+      transaction1.getResourceSet().getResource(CDOURIUtil.createResourceURI(transaction1, getResourcePath(resourcePath)), true);
       fail("RuntimeException expected");
     }
     catch (RuntimeException expected)

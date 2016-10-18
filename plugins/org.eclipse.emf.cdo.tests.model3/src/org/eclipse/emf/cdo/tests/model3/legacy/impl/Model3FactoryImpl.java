@@ -55,8 +55,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
   {
     try
     {
-      Model3Factory theModel3Factory = (Model3Factory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/tests/legacy/model3/1.0.0");
+      Model3Factory theModel3Factory = (Model3Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/emf/CDO/tests/legacy/model3/1.0.0");
       if (theModel3Factory != null)
       {
         return theModel3Factory;

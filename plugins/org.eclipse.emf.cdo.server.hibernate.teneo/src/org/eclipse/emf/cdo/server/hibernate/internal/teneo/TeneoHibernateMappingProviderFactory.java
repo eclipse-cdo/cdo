@@ -72,8 +72,7 @@ public class TeneoHibernateMappingProviderFactory implements IHibernateMappingPr
       final String valueAttrValue = extensionElement.getAttribute(VALUE_ATTR);
       if (nameAttrValue == null || valueAttrValue == null)
       {
-        throw new IllegalArgumentException(
-            "Extension element has incorrect format, both the name and value attribute should be present"); //$NON-NLS-1$
+        throw new IllegalArgumentException("Extension element has incorrect format, both the name and value attribute should be present"); //$NON-NLS-1$
       }
 
       mappingProvider.putExtension(nameAttrValue, valueAttrValue);

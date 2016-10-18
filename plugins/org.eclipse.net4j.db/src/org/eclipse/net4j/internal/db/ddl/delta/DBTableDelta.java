@@ -160,8 +160,8 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
   @Override
   public String toString()
   {
-    return MessageFormat.format("DBTableDelta[name={0}, kind={1}, fieldDeltas={2}, indexDeltas={3}]", getName(),
-        getChangeKind(), fieldDeltas.values(), indexDeltas.values());
+    return MessageFormat.format("DBTableDelta[name={0}, kind={1}, fieldDeltas={2}, indexDeltas={3}]", getName(), getChangeKind(), fieldDeltas.values(),
+        indexDeltas.values());
   }
 
   public void addFieldDelta(IDBFieldDelta fieldDelta)

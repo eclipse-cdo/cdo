@@ -171,8 +171,8 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       }
     });
 
-    add(new Property<CDOCheckout>("repositoryConnected", "Connected",
-        "Whether the repository of this checkout is connected", CDORepositoryProperties.CATEGORY_REPOSITORY)
+    add(new Property<CDOCheckout>("repositoryConnected", "Connected", "Whether the repository of this checkout is connected",
+        CDORepositoryProperties.CATEGORY_REPOSITORY)
     {
       @Override
       protected Object eval(CDOCheckout checkout)
@@ -187,8 +187,7 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       }
     });
 
-    add(new Property<CDOCheckout>("repositoryType", "Type", "The type of the repository of this checkout",
-        CDORepositoryProperties.CATEGORY_REPOSITORY)
+    add(new Property<CDOCheckout>("repositoryType", "Type", "The type of the repository of this checkout", CDORepositoryProperties.CATEGORY_REPOSITORY)
     {
       @Override
       protected Object eval(CDOCheckout checkout)
@@ -203,8 +202,7 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       }
     });
 
-    add(new Property<CDOCheckout>("repositoryID", "ID", "The ID of the repository of this checkout",
-        CDORepositoryProperties.CATEGORY_REPOSITORY)
+    add(new Property<CDOCheckout>("repositoryID", "ID", "The ID of the repository of this checkout", CDORepositoryProperties.CATEGORY_REPOSITORY)
     {
       @Override
       protected Object eval(CDOCheckout checkout)
@@ -219,8 +217,7 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       }
     });
 
-    add(new Property<CDOCheckout>("repositoryLabel", "Label", "The label of the repository of this checkout",
-        CDORepositoryProperties.CATEGORY_REPOSITORY)
+    add(new Property<CDOCheckout>("repositoryLabel", "Label", "The label of the repository of this checkout", CDORepositoryProperties.CATEGORY_REPOSITORY)
     {
       @Override
       protected Object eval(CDOCheckout checkout)
@@ -235,8 +232,7 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       }
     });
 
-    add(new Property<CDOCheckout>("repositoryFolder", "Folder", "The folder of the repository of this checkout",
-        CDORepositoryProperties.CATEGORY_REPOSITORY)
+    add(new Property<CDOCheckout>("repositoryFolder", "Folder", "The folder of the repository of this checkout", CDORepositoryProperties.CATEGORY_REPOSITORY)
     {
       @Override
       protected Object eval(CDOCheckout checkout)
@@ -251,8 +247,7 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       }
     });
 
-    add(new Property<CDOCheckout>("repositoryURI", "URI", "The URI of the repository of this checkout",
-        CDORepositoryProperties.CATEGORY_REPOSITORY)
+    add(new Property<CDOCheckout>("repositoryURI", "URI", "The URI of the repository of this checkout", CDORepositoryProperties.CATEGORY_REPOSITORY)
     {
       @Override
       protected Object eval(CDOCheckout checkout)

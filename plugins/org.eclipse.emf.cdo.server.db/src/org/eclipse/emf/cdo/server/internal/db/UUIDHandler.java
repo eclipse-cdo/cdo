@@ -187,14 +187,12 @@ public class UUIDHandler extends Lifecycle implements IIDHandler
     return CDOIDUtil.getString(id);
   }
 
-  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
-      throws IOException
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
     // Do nothing
   }
 
-  public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime,
-      OMMonitor monitor) throws IOException
+  public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
     // Do nothing
   }

@@ -35,8 +35,7 @@ public class EMFComplianceTest extends AbstractOMTest
 
     assertEquals(EresourcePackage.eINSTANCE.getCDOResource_ResourceSet(),
         EresourcePackage.eINSTANCE.getCDOResource().getEStructuralFeature(Resource.RESOURCE__RESOURCE_SET));
-    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_URI(),
-        EresourcePackage.eINSTANCE.getCDOResource().getEStructuralFeature(Resource.RESOURCE__URI));
+    assertEquals(EresourcePackage.eINSTANCE.getCDOResource_URI(), EresourcePackage.eINSTANCE.getCDOResource().getEStructuralFeature(Resource.RESOURCE__URI));
     assertEquals(EresourcePackage.eINSTANCE.getCDOResource_Contents(),
         EresourcePackage.eINSTANCE.getCDOResource().getEStructuralFeature(Resource.RESOURCE__CONTENTS));
     assertEquals(EresourcePackage.eINSTANCE.getCDOResource_Modified(),

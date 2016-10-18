@@ -31,8 +31,7 @@ import java.util.List;
  * @author Eike Stepper
  * @since 3.3
  */
-public class TableLabelProvider<T> extends ManagedLabelProvider
-    implements ITableLabelProvider, ITableColorProvider, ITableFontProvider
+public class TableLabelProvider<T> extends ManagedLabelProvider implements ITableLabelProvider, ITableColorProvider, ITableFontProvider
 {
   private final List<Column<T>> columns = new ArrayList<Column<T>>();
 

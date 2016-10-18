@@ -137,16 +137,14 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
     }
 
     CDOContainerFeatureDelta that = (CDOContainerFeatureDelta)obj;
-    return ObjectUtil.equals(newResourceID, that.getResourceID())
-        && ObjectUtil.equals(newContainerID, that.getContainerID())
+    return ObjectUtil.equals(newResourceID, that.getResourceID()) && ObjectUtil.equals(newContainerID, that.getContainerID())
         && newContainerFeatureID == that.getContainerFeatureID();
   }
 
   @Override
   protected String toStringAdditional()
   {
-    return MessageFormat.format("resource={0}, container={1}, feature={2}", newResourceID, newContainerID,
-        newContainerFeatureID);
+    return MessageFormat.format("resource={0}, container={1}, feature={2}", newResourceID, newContainerID, newContainerFeatureID);
   }
 
   /**

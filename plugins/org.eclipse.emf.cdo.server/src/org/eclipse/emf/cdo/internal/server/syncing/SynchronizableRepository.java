@@ -545,8 +545,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   }
 
   @Override
-  public void notifyWriteAccessHandlers(ITransaction transaction, CommitContext commitContext, boolean beforeCommit,
-      OMMonitor monitor)
+  public void notifyWriteAccessHandlers(ITransaction transaction, CommitContext commitContext, boolean beforeCommit, OMMonitor monitor)
   {
     if (beforeCommit && commitContext.getNewPackageUnits().length != 0)
     {
@@ -695,8 +694,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   }
 
   @Override
-  public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revisionKeys,
-      boolean recursive, long timeout)
+  public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revisionKeys, boolean recursive, long timeout)
   {
     if (view.getBranch().isLocal())
     {
@@ -711,8 +709,8 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     return lockThrough(view, lockType, revisionKeys, false, timeout);
   }
 
-  private LockObjectsResult lockOnMaster(InternalView view, LockType type, List<CDORevisionKey> revKeys,
-      boolean recursive, long timeout) throws InterruptedException
+  private LockObjectsResult lockOnMaster(InternalView view, LockType type, List<CDORevisionKey> revKeys, boolean recursive, long timeout)
+      throws InterruptedException
   {
     // Delegate locking to the master
     InternalCDOSession remoteSession = getSynchronizer().getRemoteSession();
@@ -724,15 +722,13 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       throw new IllegalStateException("Durable locking is not enabled for view " + view);
     }
 
-    LockObjectsResult masterLockingResult = sessionProtocol.delegateLockObjects(areaID, revKeys, view.getBranch(), type,
-        recursive, timeout);
+    LockObjectsResult masterLockingResult = sessionProtocol.delegateLockObjects(areaID, revKeys, view.getBranch(), type, recursive, timeout);
 
     if (masterLockingResult.isSuccessful() && masterLockingResult.isWaitForUpdate())
     {
       if (!getSynchronizer().getRemoteSession().options().isPassiveUpdateEnabled())
       {
-        throw new AssertionError(
-            "Master lock result requires clone to wait, but clone does not have passiveUpdates enabled.");
+        throw new AssertionError("Master lock result requires clone to wait, but clone does not have passiveUpdates enabled.");
       }
 
       long requiredTimestamp = masterLockingResult.getRequiredTimestamp();
@@ -745,8 +741,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     return masterLockingResult;
   }
 
-  private LockObjectsResult lockThrough(InternalView view, LockType type, List<CDORevisionKey> keys, boolean recursive,
-      long timeout)
+  private LockObjectsResult lockThrough(InternalView view, LockType type, List<CDORevisionKey> keys, boolean recursive, long timeout)
   {
     try
     {
@@ -795,8 +790,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     sessionProtocol.delegateUnlockObjects(lockAreaID, objectIDs, lockType, recursive);
   }
 
-  private UnlockObjectsResult unlockThrough(InternalView view, LockType lockType, List<CDOID> objectIDs,
-      boolean recursive)
+  private UnlockObjectsResult unlockThrough(InternalView view, LockType lockType, List<CDOID> objectIDs, boolean recursive)
   {
     unlockOnMaster(view, lockType, objectIDs, recursive);
     return super.unlock(view, lockType, objectIDs, recursive);

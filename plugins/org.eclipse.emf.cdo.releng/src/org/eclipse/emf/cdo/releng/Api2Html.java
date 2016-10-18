@@ -54,8 +54,8 @@ public class Api2Html extends DefaultHandler
 
   private static final String NO_DOCS = "";
 
-  private static final Pattern VERSION_CHANGED = Pattern.compile(
-      "The ([^ ]+) version has been changed for the api component ([^ ]+) \\(from version ([^ ]+) to ([^ ]+)\\)");
+  private static final Pattern VERSION_CHANGED = Pattern
+      .compile("The ([^ ]+) version has been changed for the api component ([^ ]+) \\(from version ([^ ]+) to ([^ ]+)\\)");
 
   private int lastNodeID;
 
@@ -143,8 +143,7 @@ public class Api2Html extends DefaultHandler
           Matcher matcher = VERSION_CHANGED.matcher(message);
           if (matcher.matches())
           {
-            componentChange = "The " + matcher.group(1) + " version has been changed from " + matcher.group(3) + " to "
-                + matcher.group(4);
+            componentChange = "The " + matcher.group(1) + " version has been changed from " + matcher.group(3) + " to " + matcher.group(4);
           }
         }
 
@@ -334,8 +333,8 @@ public class Api2Html extends DefaultHandler
       out.println("</script>");
       out.println("</head>");
       out.println("<body>");
-      out.println("<h1>API Evolution Report for CDO <a href='http://www.eclipse.org/cdo/downloads/#"
-          + buildQualifier.replace('-', '_') + "'>" + buildQualifier + "</a></h1>");
+      out.println("<h1>API Evolution Report for CDO <a href='http://www.eclipse.org/cdo/downloads/#" + buildQualifier.replace('-', '_') + "'>" + buildQualifier
+          + "</a></h1>");
 
       breaking.generate(out, "");
       out.println("<p/>");
@@ -378,8 +377,7 @@ public class Api2Html extends DefaultHandler
     if (args.length == 0)
     {
       // Just for local testing!
-      args = new String[] { "/develop", "R20120918-0947", "/develop/git/cdo/plugins",
-          "/develop/ws/cdo/.buckminster/tp/plugins" };
+      args = new String[] { "/develop", "R20120918-0947", "/develop/git/cdo/plugins", "/develop/ws/cdo/.buckminster/tp/plugins" };
     }
 
     new Api2Html(new File(args[0]), args[1], new File(args[2]), new File(args[3]));
@@ -476,8 +474,7 @@ public class Api2Html extends DefaultHandler
     public void generate(PrintStream out, String indent) throws Exception
     {
       String href = getHref();
-      out.print(indent + getIcon() + " " + (href != null ? "<a href='" + href + "' target='_blank'>" : "") + getText()
-          + (href != null ? "</a>" : ""));
+      out.print(indent + getIcon() + " " + (href != null ? "<a href='" + href + "' target='_blank'>" : "") + getText() + (href != null ? "</a>" : ""));
     }
 
     protected String getHref() throws Exception
@@ -502,14 +499,12 @@ public class Api2Html extends DefaultHandler
     @Override
     public void generate(PrintStream out, String indent) throws Exception
     {
-      out.print(
-          indent + "<div class='" + getClass().getSimpleName().toLowerCase() + "'><a href=\"javascript:toggle('node"
-              + id + "')\"><img src='" + (isCollapsed() ? PLUS : MINUS) + "' id='img_node" + id + "'></a>");
+      out.print(indent + "<div class='" + getClass().getSimpleName().toLowerCase() + "'><a href=\"javascript:toggle('node" + id + "')\"><img src='"
+          + (isCollapsed() ? PLUS : MINUS) + "' id='img_node" + id + "'></a>");
       super.generate(out, "");
       out.println("</div>");
 
-      out.println(indent + "<div id=\"node" + id + "\" style='" + (isCollapsed() ? "display:none; " : "")
-          + "margin-left:20px;'>");
+      out.println(indent + "<div id=\"node" + id + "\" style='" + (isCollapsed() ? "display:none; " : "") + "margin-left:20px;'>");
 
       generateChildren(out, indent + "  ");
 
@@ -648,8 +643,8 @@ public class Api2Html extends DefaultHandler
         return null;
       }
 
-      return "http://download.eclipse.org/modeling/emf/cdo/drops/" + buildQualifier + "/help/" + docProject
-          + "/javadoc/" + componentID.replace('.', '/') + "/package-summary.html";
+      return "http://download.eclipse.org/modeling/emf/cdo/drops/" + buildQualifier + "/help/" + docProject + "/javadoc/" + componentID.replace('.', '/')
+          + "/package-summary.html";
     }
   }
 
@@ -750,8 +745,8 @@ public class Api2Html extends DefaultHandler
         return null;
       }
 
-      return "http://download.eclipse.org/modeling/emf/cdo/drops/" + buildQualifier + "/help/" + docProject
-          + "/javadoc/" + getTypeName().replace('.', '/').replace('$', '.') + ".html";
+      return "http://download.eclipse.org/modeling/emf/cdo/drops/" + buildQualifier + "/help/" + docProject + "/javadoc/"
+          + getTypeName().replace('.', '/').replace('$', '.') + ".html";
     }
 
     private String determineElementType(String typeName) throws MalformedURLException

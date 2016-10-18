@@ -51,8 +51,7 @@ public class MembershipKey implements IMembershipKey
     if (obj instanceof IMembershipKey)
     {
       IMembershipKey key = (IMembershipKey)obj;
-      return ObjectUtil.equals(getBuddy(), key.getBuddy())
-          && ObjectUtil.equals(getCollaboration(), key.getCollaboration());
+      return ObjectUtil.equals(getBuddy(), key.getBuddy()) && ObjectUtil.equals(getCollaboration(), key.getCollaboration());
     }
 
     return false;

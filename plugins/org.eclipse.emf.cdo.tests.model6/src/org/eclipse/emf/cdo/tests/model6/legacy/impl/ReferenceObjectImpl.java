@@ -95,8 +95,8 @@ public class ReferenceObjectImpl extends BaseObjectImpl implements ReferenceObje
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model6Package.REFERENCE_OBJECT__REFERENCE_OPTIONAL,
-              oldReferenceOptional, referenceOptional));
+          eNotify(
+              new ENotificationImpl(this, Notification.RESOLVE, Model6Package.REFERENCE_OBJECT__REFERENCE_OPTIONAL, oldReferenceOptional, referenceOptional));
         }
       }
     }
@@ -122,8 +122,7 @@ public class ReferenceObjectImpl extends BaseObjectImpl implements ReferenceObje
     referenceOptional = newReferenceOptional;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.REFERENCE_OBJECT__REFERENCE_OPTIONAL,
-          oldReferenceOptional, referenceOptional));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.REFERENCE_OBJECT__REFERENCE_OPTIONAL, oldReferenceOptional, referenceOptional));
     }
   }
 
@@ -135,8 +134,7 @@ public class ReferenceObjectImpl extends BaseObjectImpl implements ReferenceObje
   {
     if (referenceList == null)
     {
-      referenceList = new EObjectResolvingEList<BaseObject>(BaseObject.class, this,
-          Model6Package.REFERENCE_OBJECT__REFERENCE_LIST);
+      referenceList = new EObjectResolvingEList<BaseObject>(BaseObject.class, this, Model6Package.REFERENCE_OBJECT__REFERENCE_LIST);
     }
     return referenceList;
   }

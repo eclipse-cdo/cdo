@@ -166,8 +166,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   public Pair<ListTargetAdding[], int[]> reconstructAddedIndices()
   {
     reconstructAddedIndicesWithNoCopy();
-    return Pair.create(copyOf(cachedSources, cachedSources.length, cachedSources.getClass()),
-        copyOf(cachedIndices, cachedIndices.length));
+    return Pair.create(copyOf(cachedSources, cachedSources.length, cachedSources.getClass()), copyOf(cachedIndices, cachedIndices.length));
   }
 
   private void reconstructAddedIndicesWithNoCopy()
@@ -203,8 +202,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
         }
       }
 
-      List<CDOFeatureDelta> featureDeltasToBeProcessed = unprocessedFeatureDeltas == null ? listChanges
-          : unprocessedFeatureDeltas;
+      List<CDOFeatureDelta> featureDeltasToBeProcessed = unprocessedFeatureDeltas == null ? listChanges : unprocessedFeatureDeltas;
       for (CDOFeatureDelta featureDelta : featureDeltasToBeProcessed)
       {
         if (featureDelta instanceof ListIndexAffecting)
@@ -606,8 +604,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   private static <T, U> T[] copyOf(U[] original, int newLength, Class<? extends T[]> newType)
   {
     @SuppressWarnings("unchecked")
-    T[] copy = (Object)newType == (Object)Object[].class ? (T[])new Object[newLength]
-        : (T[])Array.newInstance(newType.getComponentType(), newLength);
+    T[] copy = (Object)newType == (Object)Object[].class ? (T[])new Object[newLength] : (T[])Array.newInstance(newType.getComponentType(), newLength);
     System.arraycopy(original, 0, copy, 0, Math.min(original.length, newLength));
     return copy;
   }

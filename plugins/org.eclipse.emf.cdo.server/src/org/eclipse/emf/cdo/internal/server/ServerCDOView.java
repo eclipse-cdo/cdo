@@ -102,8 +102,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 {
   private static final CDOAdapterPolicy[] ADAPTER_POLICIES = new CDOAdapterPolicy[0];
 
-  private static final CDORevisionPrefetchingPolicy REVISION_PREFETCHING = CDOUtil
-      .createRevisionPrefetchingPolicy(NO_REVISION_PREFETCHING);
+  private static final CDORevisionPrefetchingPolicy REVISION_PREFETCHING = CDOUtil.createRevisionPrefetchingPolicy(NO_REVISION_PREFETCHING);
 
   private InternalCDOSession session;
 
@@ -170,14 +169,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     throw new UnsupportedOperationException();
   }
 
-  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout)
-      throws InterruptedException
+  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout) throws InterruptedException
   {
     throw new UnsupportedOperationException();
   }
 
-  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout, boolean recursive)
-      throws InterruptedException
+  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout, boolean recursive) throws InterruptedException
   {
     throw new UnsupportedOperationException();
   }
@@ -267,16 +264,15 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   }
 
   @Deprecated
-  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions, boolean async)
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
+      Map<CDOID, InternalCDORevision> oldRevisions, boolean async)
   {
     throw new UnsupportedOperationException();
   }
 
   @Deprecated
-  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions, boolean async,
-      boolean clearResourcePathCache)
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
+      Map<CDOID, InternalCDORevision> oldRevisions, boolean async, boolean clearResourcePathCache)
   {
     throw new UnsupportedOperationException();
   }
@@ -485,8 +481,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   /**
    * @author Eike Stepper
    */
-  private final class ServerCDOSession extends PlatformObject
-      implements InternalCDOSession, CDORepositoryInfo, org.eclipse.emf.cdo.session.CDOSession.Options
+  private final class ServerCDOSession extends PlatformObject implements InternalCDOSession, CDORepositoryInfo, org.eclipse.emf.cdo.session.CDOSession.Options
   {
     private final IRegistry<String, Object> properties = new HashMapRegistry<String, Object>()
     {
@@ -1011,8 +1006,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
-    public Object resolveElementProxy(CDORevision revision, EStructuralFeature feature, int accessIndex,
-        int serverIndex)
+    public Object resolveElementProxy(CDORevision revision, EStructuralFeature feature, int accessIndex, int serverIndex)
     {
       throw new UnsupportedOperationException();
     }
@@ -1027,8 +1021,8 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
-    public void processRefreshSessionResult(RefreshSessionResult result, CDOBranch branch,
-        List<InternalCDOView> branchViews, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
+    public void processRefreshSessionResult(RefreshSessionResult result, CDOBranch branch, List<InternalCDOView> branchViews,
+        Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
     {
       throw new UnsupportedOperationException();
     }
@@ -1056,8 +1050,8 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     @Deprecated
-    public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache,
-        byte securityImpact, Map<CDOID, CDOPermission> newPermissions)
+    public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache, byte securityImpact,
+        Map<CDOID, CDOPermission> newPermissions)
     {
       throw new UnsupportedOperationException();
     }
@@ -1179,14 +1173,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
-    public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase,
-        boolean computeChangeSets)
+    public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase, boolean computeChangeSets)
     {
       throw new UnsupportedOperationException();
     }
 
-    public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint targetBase,
-        CDOBranchPoint sourceBase, boolean computeChangeSets)
+    public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint targetBase, CDOBranchPoint sourceBase, boolean computeChangeSets)
     {
       throw new UnsupportedOperationException();
     }

@@ -779,8 +779,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
       @Override
       public Iterator<EObject> getChildren(Object object)
       {
-        return object == CDOResourceImpl.this ? CDOResourceImpl.this.getContents().iterator()
-            : ((EObject)object).eContents().iterator();
+        return object == CDOResourceImpl.this ? CDOResourceImpl.this.getContents().iterator() : ((EObject)object).eContents().iterator();
       }
     };
   }
@@ -1005,8 +1004,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
       @Override
       public Iterator<EObject> getChildren(Object object)
       {
-        return object == this.object ? ((List<EObject>)object).iterator()
-            : new ProperContentIterator<EObject>((EObject)object);
+        return object == this.object ? ((List<EObject>)object).iterator() : new ProperContentIterator<EObject>((EObject)object);
       }
     };
   }
@@ -1333,8 +1331,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   public void save(Map<?, ?> options) throws IOException
   {
     CDOTransaction transaction = getTransaction(options);
-    IProgressMonitor progressMonitor = options != null
-        ? (IProgressMonitor)options.get(CDOResource.OPTION_SAVE_PROGRESS_MONITOR) : null;
+    IProgressMonitor progressMonitor = options != null ? (IProgressMonitor)options.get(CDOResource.OPTION_SAVE_PROGRESS_MONITOR) : null;
 
     try
     {
@@ -1353,9 +1350,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
    */
   private CDOTransaction getTransaction(Map<?, ?> options)
   {
-    CDOTransaction transaction = options != null
-        ? (CDOTransaction)options.get(CDOResource.OPTION_SAVE_OVERRIDE_TRANSACTION) : null;
-
+    CDOTransaction transaction = options != null ? (CDOTransaction)options.get(CDOResource.OPTION_SAVE_OVERRIDE_TRANSACTION) : null;
     if (transaction == null)
     {
       CDOView view = cdoView();

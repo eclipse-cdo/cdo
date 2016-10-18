@@ -605,8 +605,8 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         TRACER.format("State of Object (" + this + "/" + instance + ") is : " + viewAndState.state); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       }
 
-      if (viewAndState.state == CDOState.CLEAN || viewAndState.state == CDOState.PROXY
-          || viewAndState.state == CDOState.NEW || viewAndState.state == CDOState.DIRTY)
+      if (viewAndState.state == CDOState.CLEAN || viewAndState.state == CDOState.PROXY || viewAndState.state == CDOState.NEW
+          || viewAndState.state == CDOState.DIRTY)
       {
         InternalCDORevision revision = cdoRevision();
         int size = revision.size(feature);
@@ -865,8 +865,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    *          that will be used later to resolve the proxy. <code>null</code> indicates that proxy creation will be
    *          avoided!
    */
-  protected InternalEObject getEObjectFromPotentialID(InternalCDOView view, EStructuralFeature feature,
-      Object potentialID)
+  protected InternalEObject getEObjectFromPotentialID(InternalCDOView view, EStructuralFeature feature, Object potentialID)
   {
     CDOLegacyWrapper wrapper;
     if (potentialID instanceof CDOID && (wrapper = getRegisteredWrapper((CDOID)potentialID)) != null)
@@ -1178,8 +1177,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   }
 
-  private void adjustPersistentOppositeReference(InternalCDOObject cdoObject, EObject oppositeObject,
-      EReference oppositeReference)
+  private void adjustPersistentOppositeReference(InternalCDOObject cdoObject, EObject oppositeObject, EReference oppositeReference)
   {
     InternalCDOObject oppositeCDOObject = (InternalCDOObject)CDOUtil.getCDOObject(oppositeObject);
     if (oppositeCDOObject != null)
@@ -1212,8 +1210,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
-  private void adjustTransientOppositeReference(InternalEObject instance, InternalEObject object,
-      EReference oppositeReference)
+  private void adjustTransientOppositeReference(InternalEObject instance, InternalEObject object, EReference oppositeReference)
   {
     boolean wasDeliver = object.eDeliver(); // Disable notifications
     if (wasDeliver)

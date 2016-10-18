@@ -108,8 +108,7 @@ public class StringToAddressContainmentMapImpl extends EObjectImpl implements Ba
     key = newKey;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__KEY,
-          oldKey, key));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__KEY, oldKey, key));
     }
   }
 
@@ -132,8 +131,8 @@ public class StringToAddressContainmentMapImpl extends EObjectImpl implements Ba
     value = newValue;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, oldValue, newValue);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, oldValue,
+          newValue);
       if (msgs == null)
       {
         msgs = notification;
@@ -157,13 +156,11 @@ public class StringToAddressContainmentMapImpl extends EObjectImpl implements Ba
       NotificationChain msgs = null;
       if (value != null)
       {
-        msgs = ((InternalEObject)value).eInverseRemove(this,
-            EOPPOSITE_FEATURE_BASE - Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, null, msgs);
+        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, null, msgs);
       }
       if (newValue != null)
       {
-        msgs = ((InternalEObject)newValue).eInverseAdd(this,
-            EOPPOSITE_FEATURE_BASE - Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, null, msgs);
+        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, null, msgs);
       }
       msgs = basicSetTypedValue(newValue, msgs);
       if (msgs != null)
@@ -173,8 +170,7 @@ public class StringToAddressContainmentMapImpl extends EObjectImpl implements Ba
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE,
-          newValue, newValue));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, newValue, newValue));
     }
   }
 

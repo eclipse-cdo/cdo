@@ -84,8 +84,7 @@ public class ConcurrentRunner
    * @throws Throwable
    *           the throwable
    */
-  private static void throwOnFailure(Future<Throwable>[] futures, ExecutorService threadPool)
-      throws InterruptedException, ExecutionException, Throwable
+  private static void throwOnFailure(Future<Throwable>[] futures, ExecutorService threadPool) throws InterruptedException, ExecutionException, Throwable
   {
     for (Future<Throwable> future : futures)
     {

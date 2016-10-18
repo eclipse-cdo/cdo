@@ -67,12 +67,11 @@ public class PackageFilterItemProvider extends PermissionFilterItemProvider
    */
   protected void addApplicablePackagePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_PackageFilter_applicablePackage_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_PackageFilter_applicablePackage_feature", //$NON-NLS-1$//$NON-NLS-2$
-                "_UI_PackageFilter_type"), //$NON-NLS-1$
-            SecurityPackage.Literals.PACKAGE_FILTER__APPLICABLE_PACKAGE, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_PackageFilter_applicablePackage_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_PackageFilter_applicablePackage_feature", //$NON-NLS-1$//$NON-NLS-2$
+            "_UI_PackageFilter_type"), //$NON-NLS-1$
+        SecurityPackage.Literals.PACKAGE_FILTER__APPLICABLE_PACKAGE, true, false, true, null, null, null));
   }
 
   /**

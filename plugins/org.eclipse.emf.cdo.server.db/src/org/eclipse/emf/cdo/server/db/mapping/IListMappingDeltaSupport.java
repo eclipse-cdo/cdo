@@ -42,6 +42,5 @@ public interface IListMappingDeltaSupport
    *          the {@link CDOListFeatureDelta} which contains the list deltas.
    * @since 4.0
    */
-  public void processDelta(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion,
-      long created, CDOListFeatureDelta delta);
+  public void processDelta(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, long created, CDOListFeatureDelta delta);
 }

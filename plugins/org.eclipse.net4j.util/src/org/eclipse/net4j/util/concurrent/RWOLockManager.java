@@ -55,14 +55,13 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
    */
   private final Map<CONTEXT, Set<LockState<OBJECT, CONTEXT>>> contextToLockStates = createContextToLocksMap();
 
-  public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout)
-      throws InterruptedException
+  public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout) throws InterruptedException
   {
     lock2(type, context, objectsToLock, timeout);
   }
 
-  public List<LockState<OBJECT, CONTEXT>> lock2(LockType type, CONTEXT context,
-      Collection<? extends OBJECT> objectsToLock, long timeout) throws InterruptedException
+  public List<LockState<OBJECT, CONTEXT>> lock2(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout)
+      throws InterruptedException
   {
     if (objectsToLock.isEmpty())
     {
@@ -113,20 +112,17 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     unlock2(type, context, objectsToUnlock);
   }
 
-  public synchronized List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context,
-      Collection<? extends OBJECT> objectsToUnlock)
+  public synchronized List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
   {
     return unlock2(LockType.values(), context, objectsToUnlock);
   }
 
-  public synchronized List<LockState<OBJECT, CONTEXT>> unlock2(LockType type, CONTEXT context,
-      Collection<? extends OBJECT> objectsToUnlock)
+  public synchronized List<LockState<OBJECT, CONTEXT>> unlock2(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
   {
     return unlock2(new LockType[] { type }, context, objectsToUnlock);
   }
 
-  private List<LockState<OBJECT, CONTEXT>> unlock2(LockType[] types, CONTEXT context,
-      Collection<? extends OBJECT> objectsToUnlock)
+  private List<LockState<OBJECT, CONTEXT>> unlock2(LockType[] types, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
   {
     if (objectsToUnlock.isEmpty())
     {
@@ -350,8 +346,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     return lockState;
   }
 
-  private ArrayList<LockState<OBJECT, CONTEXT>> getLockStatesForContext(LockType type, CONTEXT context,
-      Collection<? extends OBJECT> objectsToLock)
+  private ArrayList<LockState<OBJECT, CONTEXT>> getLockStatesForContext(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock)
   {
     ArrayList<LockState<OBJECT, CONTEXT>> lockStates = new ArrayList<LockState<OBJECT, CONTEXT>>(objectsToLock.size());
     Iterator<? extends OBJECT> it = objectsToLock.iterator();

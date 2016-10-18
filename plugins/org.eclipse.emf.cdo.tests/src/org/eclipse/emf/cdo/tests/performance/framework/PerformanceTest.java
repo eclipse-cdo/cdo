@@ -64,8 +64,7 @@ public abstract class PerformanceTest extends AbstractCDOTest
     runBareBasic();
 
     int runsPerTestCase = suite.getRunsPerTestCase();
-    PerformanceRecord performanceRecord = suite.createPerformanceRecord(getScenario(), getClass().getName(), getName(),
-        runsPerTestCase);
+    PerformanceRecord performanceRecord = suite.createPerformanceRecord(getScenario(), getClass().getName(), getName(), runsPerTestCase);
 
     for (int i = 0; i < runsPerTestCase; i++)
     {

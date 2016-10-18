@@ -272,8 +272,7 @@ public class SessionTest extends AbstractCDOTest
   {
     IRepository repository = getRepository("authrepo1");
 
-    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
-        new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD1)));
+    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER, new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD1)));
 
     CDOSession session = openSession("authrepo1");
     assertEquals(null, session.getUserID());
@@ -291,8 +290,7 @@ public class SessionTest extends AbstractCDOTest
     getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     IRepository repository = getRepository("authrepo2");
 
-    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
-        new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD1)));
+    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER, new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD1)));
 
     CDOSession session = openSession("authrepo2");
     assertEquals(USER_ID, session.getUserID());
@@ -356,8 +354,7 @@ public class SessionTest extends AbstractCDOTest
     getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     getRepository("authrepo5");
 
-    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
-        new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD2)));
+    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER, new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD2)));
 
     try
     {
@@ -380,8 +377,7 @@ public class SessionTest extends AbstractCDOTest
     getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     getRepository("authrepo6");
 
-    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
-        new PasswordCredentialsProvider(new PasswordCredentials(null, PASSWORD2)));
+    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER, new PasswordCredentialsProvider(new PasswordCredentials(null, PASSWORD2)));
 
     try
     {
@@ -404,8 +400,7 @@ public class SessionTest extends AbstractCDOTest
     getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
     getRepository("authrepo7");
 
-    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
-        new PasswordCredentialsProvider(new PasswordCredentials(USER_ID)));
+    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER, new PasswordCredentialsProvider(new PasswordCredentials(USER_ID)));
 
     try
     {

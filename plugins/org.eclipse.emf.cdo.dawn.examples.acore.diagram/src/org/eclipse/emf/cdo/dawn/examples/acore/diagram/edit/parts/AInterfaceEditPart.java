@@ -374,18 +374,15 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
   {
     if (request instanceof CreateViewAndElementRequest)
     {
-      CreateElementRequestAdapter adapter = ((CreateViewAndElementRequest)request).getViewAndElementDescriptor()
-          .getCreateElementRequestAdapter();
+      CreateElementRequestAdapter adapter = ((CreateViewAndElementRequest)request).getViewAndElementDescriptor().getCreateElementRequestAdapter();
       IElementType type = (IElementType)adapter.getAdapter(IElementType.class);
       if (type == AcoreElementTypes.AAttribute_3001)
       {
-        return getChildBySemanticHint(
-            AcoreVisualIDRegistry.getType(AInterfaceAAttributeInterfaceCompartmentEditPart.VISUAL_ID));
+        return getChildBySemanticHint(AcoreVisualIDRegistry.getType(AInterfaceAAttributeInterfaceCompartmentEditPart.VISUAL_ID));
       }
       if (type == AcoreElementTypes.AOperation_3002)
       {
-        return getChildBySemanticHint(
-            AcoreVisualIDRegistry.getType(AInterfaceAOperationInterfaceCompartmentEditPart.VISUAL_ID));
+        return getChildBySemanticHint(AcoreVisualIDRegistry.getType(AInterfaceAOperationInterfaceCompartmentEditPart.VISUAL_ID));
       }
     }
     return super.getTargetEditPart(request);

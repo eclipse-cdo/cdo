@@ -277,8 +277,7 @@ public class IndexReader implements IDBConnectionProvider
     }
   }
 
-  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
-      RevisionInfo.Handler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, RevisionInfo.Handler handler)
   {
     if (TRACER.isEnabled())
     {
@@ -294,8 +293,7 @@ public class IndexReader implements IDBConnectionProvider
       boolean withTime = timeStamp != CDOBranchPoint.INVALID_DATE;
       boolean historical = timeStamp != CDOBranchPoint.UNSPECIFIED_DATE;
 
-      int stmtIndex = (withClass ? 0 : 1) + (withBranch ? 0 : 2) + (withTime ? 0 : 4) + (exactTime ? 0 : 8)
-          + (historical ? 0 : 16);
+      int stmtIndex = (withClass ? 0 : 1) + (withBranch ? 0 : 2) + (withTime ? 0 : 4) + (exactTime ? 0 : 8) + (historical ? 0 : 16);
 
       PreparedStatement stmt = handleRevisionsStatements[stmtIndex];
       if (stmt == null)

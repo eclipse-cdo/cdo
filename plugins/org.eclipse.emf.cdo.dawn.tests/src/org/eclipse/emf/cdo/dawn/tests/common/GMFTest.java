@@ -245,8 +245,7 @@ public class GMFTest extends AbstractCDOTest
     {
       ResourceSet resourceSet = new ResourceSetImpl();
       AcorePackage.eINSTANCE.eClass();
-      resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("acore_diagram",
-          new XMIResourceFactoryImpl());
+      resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("acore_diagram", new XMIResourceFactoryImpl());
 
       resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("acore", new XMIResourceFactoryImpl());
 
@@ -259,8 +258,7 @@ public class GMFTest extends AbstractCDOTest
       System.out.println(resourcePath);
 
       // Resource emfResource = resourceSet.getResource(URI.createURI(resourcePath + "/testdata/simple.acore"), true);
-      Resource gmfResource = resourceSet.getResource(URI.createURI(resourcePath + "/testdata/simple.acore_diagram"),
-          true);
+      Resource gmfResource = resourceSet.getResource(URI.createURI(resourcePath + "/testdata/simple.acore_diagram"), true);
 
       Diagram diagram = (Diagram)gmfResource.getContents().get(0);
       ACoreRoot classDiagram = (ACoreRoot)diagram.getElement();

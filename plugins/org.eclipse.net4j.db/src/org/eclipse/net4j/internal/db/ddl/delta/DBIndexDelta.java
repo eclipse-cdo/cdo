@@ -51,16 +51,14 @@ public final class DBIndexDelta extends DBDeltaWithProperties implements IDBInde
     IDBIndex.Type oldType = oldIndex == null ? null : oldIndex.getType();
     if (!ObjectUtil.equals(type, oldType))
     {
-      addPropertyDelta(
-          new DBPropertyDelta<IDBIndex.Type>(this, TYPE_PROPERTY, IDBPropertyDelta.Type.STRING, type, oldType));
+      addPropertyDelta(new DBPropertyDelta<IDBIndex.Type>(this, TYPE_PROPERTY, IDBPropertyDelta.Type.STRING, type, oldType));
     }
 
     Boolean optional = index == null ? null : ((InternalDBIndex)index).isOptional();
     Boolean oldOptional = oldIndex == null ? null : ((InternalDBIndex)oldIndex).isOptional();
     if (!ObjectUtil.equals(optional, oldOptional))
     {
-      addPropertyDelta(
-          new DBPropertyDelta<Boolean>(this, OPTIONAL_PROPERTY, IDBPropertyDelta.Type.BOOLEAN, optional, oldOptional));
+      addPropertyDelta(new DBPropertyDelta<Boolean>(this, OPTIONAL_PROPERTY, IDBPropertyDelta.Type.BOOLEAN, optional, oldOptional));
     }
 
     IDBIndexField[] indexFields = index == null ? InternalDBIndex.NO_INDEX_FIELDS : index.getIndexFields();
@@ -145,8 +143,8 @@ public final class DBIndexDelta extends DBDeltaWithProperties implements IDBInde
   @Override
   public String toString()
   {
-    return MessageFormat.format("DBIndexDelta[name={0}, kind={1}, propertyDeltas={2}, indexFieldDeltas={3}]", getName(),
-        getChangeKind(), getPropertyDeltas().values(), indexFieldDeltas.values());
+    return MessageFormat.format("DBIndexDelta[name={0}, kind={1}, propertyDeltas={2}, indexFieldDeltas={3}]", getName(), getChangeKind(),
+        getPropertyDeltas().values(), indexFieldDeltas.values());
   }
 
   public void addIndexFieldDelta(DBIndexFieldDelta indexFieldDelta)

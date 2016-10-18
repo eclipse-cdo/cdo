@@ -130,8 +130,7 @@ public class Bugzilla_416555_Test extends AbstractCDOTest
   private void assertResultAsync(CDOView view, int orders, int purchaseOrders, int salesOrders)
   {
     assertResultAsync(orders, view.queryInstancesAsync(getModel1Package().getOrder()), Order.class);
-    assertResultAsync(purchaseOrders, view.queryInstancesAsync(getModel1Package().getPurchaseOrder()),
-        PurchaseOrder.class);
+    assertResultAsync(purchaseOrders, view.queryInstancesAsync(getModel1Package().getPurchaseOrder()), PurchaseOrder.class);
     assertResultAsync(salesOrders, view.queryInstancesAsync(getModel1Package().getSalesOrder()), SalesOrder.class);
   }
 

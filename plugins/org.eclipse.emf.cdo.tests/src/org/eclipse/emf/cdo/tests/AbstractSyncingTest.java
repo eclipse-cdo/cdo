@@ -104,8 +104,8 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
     return false;
   }
 
-  protected static void checkEvent(final TestListener listener, final int newPackageUnits, final int newObjects,
-      final int changedObjects, final int detachedObjects) throws InterruptedException
+  protected static void checkEvent(final TestListener listener, final int newPackageUnits, final int newObjects, final int changedObjects,
+      final int detachedObjects) throws InterruptedException
   {
     try
     {
@@ -129,8 +129,7 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
             }
           }
 
-          return counts[0] >= newPackageUnits && counts[1] >= newObjects && counts[2] >= changedObjects
-              && counts[3] >= detachedObjects;
+          return counts[0] >= newPackageUnits && counts[1] >= newObjects && counts[2] >= changedObjects && counts[3] >= detachedObjects;
         }
       }.assertNoTimeOut();
 
@@ -161,14 +160,12 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
     }
   }
 
-  protected static void checkRevision(CDORevision revision, CDOBranch branch,
-      Map<CDOBranch, List<CDORevision>> allRevisions, String location)
+  protected static void checkRevision(CDORevision revision, CDOBranch branch, Map<CDOBranch, List<CDORevision>> allRevisions, String location)
   {
     List<CDORevision> revisions = allRevisions.get(branch);
     for (CDORevision rev : revisions)
     {
-      if (rev.getID() == revision.getID() && rev.getBranch().getID() == revision.getBranch().getID()
-          && rev.getVersion() == revision.getVersion())
+      if (rev.getID() == revision.getID() && rev.getBranch().getID() == revision.getBranch().getID() && rev.getVersion() == revision.getVersion())
       {
         return;
       }
@@ -177,8 +174,7 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
     fail("Revision missing from " + location + ": " + revision);
   }
 
-  protected static void checkRevisions(InternalRepository repository, long timeStamp, int expectedRevisions)
-      throws InterruptedException
+  protected static void checkRevisions(InternalRepository repository, long timeStamp, int expectedRevisions) throws InterruptedException
   {
     long lastCommitTimeStamp = repository.getLastCommitTimeStamp();
     while (lastCommitTimeStamp < timeStamp)

@@ -89,8 +89,7 @@ public class DawnAcoreTestUtil
     return openNewAcoreGMFEditor(diagramResourceName, diagramResourceName.replace("_diagram", ""), bot);
   }
 
-  public static SWTBotGefEditor openNewAcoreGMFEditor(String diagramResourceName, String semanticResource,
-      SWTGefBot bot)
+  public static SWTBotGefEditor openNewAcoreGMFEditor(String diagramResourceName, String semanticResource, SWTGefBot bot)
   {
     bot.menu("File").menu("New").menu("Other...").click();
 
@@ -132,8 +131,7 @@ public class DawnAcoreTestUtil
       {
         try
         {
-          PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite().getPage()
-              .openEditor(editorInput, editorID);
+          PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite().getPage().openEditor(editorInput, editorID);
         }
         catch (PartInitException ex)
         {
@@ -227,36 +225,31 @@ public class DawnAcoreTestUtil
   public static Edge createNewAssociationRemote(Node source, Node target, List<RelativeBendpoint> bendpoints)
   {
     String type = AcoreVisualIDRegistry.getType(AClassAssociationsEditPart.VISUAL_ID);
-    return DawnSWTBotUtil.createEdgeRemote(source, target, type, AcoreElementTypes.AClassAssociations_4003, bendpoints,
-        viewProvider);
+    return DawnSWTBotUtil.createEdgeRemote(source, target, type, AcoreElementTypes.AClassAssociations_4003, bendpoints, viewProvider);
   }
 
   public static Edge createNewImplementsRelationRemote(Node source, Node target, List<RelativeBendpoint> bendpoints)
   {
     String type = AcoreVisualIDRegistry.getType(AClassImplementedInterfacesEditPart.VISUAL_ID);
-    return DawnSWTBotUtil.createEdgeRemote(source, target, type, AcoreElementTypes.AClassImplementedInterfaces_4002,
-        bendpoints, viewProvider);
+    return DawnSWTBotUtil.createEdgeRemote(source, target, type, AcoreElementTypes.AClassImplementedInterfaces_4002, bendpoints, viewProvider);
   }
 
   public static Edge createNewInheritanceRelationRemote(Node source, Node target, List<RelativeBendpoint> bendpoints)
   {
     String type = AcoreVisualIDRegistry.getType(AClassSubClassesEditPart.VISUAL_ID);
-    return DawnSWTBotUtil.createEdgeRemote(source, target, type, AcoreElementTypes.AClassSubClasses_4001, bendpoints,
-        viewProvider);
+    return DawnSWTBotUtil.createEdgeRemote(source, target, type, AcoreElementTypes.AClassSubClasses_4001, bendpoints, viewProvider);
   }
 
   public static Edge createNewCompositionRemote(Node source, Node target, List<RelativeBendpoint> bendpoints)
   {
     String type = AcoreVisualIDRegistry.getType(AClassCompositionsEditPart.VISUAL_ID);
-    return DawnSWTBotUtil.createEdgeRemote(source, target, type, AcoreElementTypes.AClassCompositions_4005, bendpoints,
-        viewProvider);
+    return DawnSWTBotUtil.createEdgeRemote(source, target, type, AcoreElementTypes.AClassCompositions_4005, bendpoints, viewProvider);
   }
 
   public static Edge createNewAggregationRemote(Node source, Node target, List<RelativeBendpoint> bendpoints)
   {
     String type = AcoreVisualIDRegistry.getType(AClassAggregationsEditPart.VISUAL_ID);
-    return DawnSWTBotUtil.createEdgeRemote(source, target, type, AcoreElementTypes.AClassAggregations_4004, bendpoints,
-        viewProvider);
+    return DawnSWTBotUtil.createEdgeRemote(source, target, type, AcoreElementTypes.AClassAggregations_4004, bendpoints, viewProvider);
   }
 
   public static void sleep(int seconds)
@@ -303,8 +296,7 @@ public class DawnAcoreTestUtil
 
       IFigure figure = e.getFigure();
       Color color = ((LineBorder)figure.getBorder()).getColor();
-      return !(color.equals(DawnColorConstants.COLOR_LOCKED_REMOTELY)
-          && color.equals(DawnColorConstants.COLOR_LOCKED_LOCALLY));
+      return !(color.equals(DawnColorConstants.COLOR_LOCKED_REMOTELY) && color.equals(DawnColorConstants.COLOR_LOCKED_LOCALLY));
     }
     return false;
   }

@@ -303,8 +303,7 @@ public class ProjectCreationHelper
    * @throws CoreException
    * @throws JavaModelException
    */
-  private void createOutputFolder(String path, IProject project, IJavaProject javaProject)
-      throws CoreException, JavaModelException
+  private void createOutputFolder(String path, IProject project, IJavaProject javaProject) throws CoreException, JavaModelException
   {
     try
     {
@@ -398,8 +397,7 @@ public class ProjectCreationHelper
   {
   }
 
-  public static void refreshProject(IResource resource, IProgressMonitor monitor)
-      throws InvocationTargetException, InterruptedException
+  public static void refreshProject(IResource resource, IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
   {
     IRunnableWithProgress op = new WorkspaceModifyOperation(null)
     {

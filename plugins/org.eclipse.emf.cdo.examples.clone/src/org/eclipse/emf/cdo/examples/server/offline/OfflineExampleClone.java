@@ -48,8 +48,7 @@ public class OfflineExampleClone extends AbstractOfflineExampleServer
   @Override
   protected IRepository createRepository(IStore store, Map<String, String> props)
   {
-    IRepositorySynchronizer synchronizer = createRepositorySynchronizer("localhost:" + OfflineExampleUtil.MASTER_PORT,
-        OfflineExampleUtil.MASTER_NAME);
+    IRepositorySynchronizer synchronizer = createRepositorySynchronizer("localhost:" + OfflineExampleUtil.MASTER_PORT, OfflineExampleUtil.MASTER_NAME);
     return CDOServerUtil.createOfflineClone(name, store, props, synchronizer);
   }
 
@@ -71,8 +70,7 @@ public class OfflineExampleClone extends AbstractOfflineExampleServer
    * creates a CDOSessionConfigurationFactory for the offline clone. It instantiates a connection to the master
    * repository.
    */
-  protected CDOSessionConfigurationFactory createSessionConfigurationFactory(final String connectorDescription,
-      final String repositoryName)
+  protected CDOSessionConfigurationFactory createSessionConfigurationFactory(final String connectorDescription, final String repositoryName)
   {
     return new CDOSessionConfigurationFactory()
     {

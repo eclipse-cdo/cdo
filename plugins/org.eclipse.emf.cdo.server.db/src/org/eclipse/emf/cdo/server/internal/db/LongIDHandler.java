@@ -183,8 +183,12 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
       if (commitTime == CDOBranchPoint.INVALID_DATE)
       {
         CommitContext commitContext = StoreThreadLocal.getCommitContext();
-        commitTime = commitContext != null ? commitContext.getBranchPoint().getTimeStamp()
-            : CDOBranchPoint.UNSPECIFIED_DATE; // Happens on rawStore for workspace checkouts
+        commitTime = commitContext != null ? commitContext.getBranchPoint().getTimeStamp() : CDOBranchPoint.UNSPECIFIED_DATE; // Happens
+                                                                                                                              // on
+                                                                                                                              // rawStore
+                                                                                                                              // for
+                                                                                                                              // workspace
+                                                                                                                              // checkouts
       }
 
       value = externalReferenceManager.mapExternalReference((CDOIDExternal)id, commitTime);
@@ -244,14 +248,12 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
     return externalReferenceManager.unmapURI(accessor, value(id));
   }
 
-  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
-      throws IOException
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
     externalReferenceManager.rawExport(connection, out, fromCommitTime, toCommitTime);
   }
 
-  public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime,
-      OMMonitor monitor) throws IOException
+  public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
     externalReferenceManager.rawImport(connection, in, fromCommitTime, toCommitTime, monitor);
   }

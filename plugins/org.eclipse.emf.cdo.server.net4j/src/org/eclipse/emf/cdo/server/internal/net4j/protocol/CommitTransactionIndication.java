@@ -137,8 +137,8 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     InternalCDORevision[] newObjects = new InternalCDORevision[in.readInt()];
     InternalCDORevisionDelta[] dirtyObjectDeltas = new InternalCDORevisionDelta[in.readInt()];
     CDOID[] detachedObjects = new CDOID[in.readInt()];
-    monitor.begin(locksOnNewObjects.length + idsToUnlock.length + newPackageUnits.length + newObjects.length
-        + dirtyObjectDeltas.length + detachedObjects.length);
+    monitor
+        .begin(locksOnNewObjects.length + idsToUnlock.length + newPackageUnits.length + newObjects.length + dirtyObjectDeltas.length + detachedObjects.length);
 
     try
     {
@@ -352,8 +352,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     }
   }
 
-  protected boolean respondingException(CDODataOutput out, byte rollbackReason, String rollbackMessage,
-      List<CDOIDReference> xRefs) throws Exception
+  protected boolean respondingException(CDODataOutput out, byte rollbackReason, String rollbackMessage, List<CDOIDReference> xRefs) throws Exception
   {
     boolean success = rollbackMessage == null;
     out.writeBoolean(success);
@@ -444,8 +443,8 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     out.writeBoolean(false);
   }
 
-  protected void respondingNewPermissions(CDODataOutput out, IPermissionManager permissionManager,
-      InternalSession session, InternalCDORevision[] revisions) throws Exception
+  protected void respondingNewPermissions(CDODataOutput out, IPermissionManager permissionManager, InternalSession session, InternalCDORevision[] revisions)
+      throws Exception
   {
     int size = revisions.length;
     if (size != 0)

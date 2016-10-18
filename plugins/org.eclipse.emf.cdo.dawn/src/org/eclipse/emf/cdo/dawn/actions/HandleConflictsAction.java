@@ -51,8 +51,8 @@ public class HandleConflictsAction implements IObjectActionDelegate
     if (activeEditor instanceof IDawnEditor)
     {
       MessageDialog dialog = new MessageDialog(DawnEditorHelper.getActiveShell(), "Conflict", null,
-          "There are conflicts in your diagram. Would you like to rollback your current transaction?",
-          MessageDialog.QUESTION, new String[] { "yes", "no", "Cancel" }, 1);
+          "There are conflicts in your diagram. Would you like to rollback your current transaction?", MessageDialog.QUESTION,
+          new String[] { "yes", "no", "Cancel" }, 1);
 
       switch (dialog.open())
       {

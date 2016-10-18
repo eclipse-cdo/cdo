@@ -146,8 +146,7 @@ public final class CDOWorkspaceUtil
    * @deprecated Use {@link #createWorkspaceConfiguration()} and {@link CDOWorkspaceConfiguration#checkout()}
    */
   @Deprecated
-  public static CDOWorkspace checkout(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote,
-      String branchPath)
+  public static CDOWorkspace checkout(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote, String branchPath)
   {
     return checkout(local, base, remote, branchPath, CDOBranchPoint.UNSPECIFIED_DATE);
   }
@@ -156,8 +155,7 @@ public final class CDOWorkspaceUtil
    * @deprecated Use {@link #createWorkspaceConfiguration()} and {@link CDOWorkspaceConfiguration#checkout()}
    */
   @Deprecated
-  public static CDOWorkspace checkout(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote,
-      long timeStamp)
+  public static CDOWorkspace checkout(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote, long timeStamp)
   {
     return checkout(local, base, remote, null, timeStamp);
   }
@@ -166,8 +164,7 @@ public final class CDOWorkspaceUtil
    * @deprecated Use {@link #createWorkspaceConfiguration()} and {@link CDOWorkspaceConfiguration#checkout()}
    */
   @Deprecated
-  public static CDOWorkspace checkout(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote,
-      String branchPath, long timeStamp)
+  public static CDOWorkspace checkout(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote, String branchPath, long timeStamp)
   {
     CDOWorkspaceConfiguration config = createWorkspaceConfiguration();
     config.setStore(local);

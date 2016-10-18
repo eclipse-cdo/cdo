@@ -69,8 +69,7 @@ public abstract class PermissionFilterImpl extends CDOObjectImpl implements Perm
     return 0;
   }
 
-  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider,
-      CDOBranchPoint securityContext, int level) throws Exception
+  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext, int level) throws Exception
   {
     String msg = StringUtil.NL;
     boolean tracing = TRACER.isEnabled();
@@ -104,8 +103,7 @@ public abstract class PermissionFilterImpl extends CDOObjectImpl implements Perm
     return result;
   }
 
-  protected abstract boolean filter(CDORevision revision, CDORevisionProvider revisionProvider,
-      CDOBranchPoint securityContext, int level) throws Exception;
+  protected abstract boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext, int level) throws Exception;
 
   /**
    * @since 4.3

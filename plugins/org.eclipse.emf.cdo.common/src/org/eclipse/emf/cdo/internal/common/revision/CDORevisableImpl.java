@@ -74,8 +74,7 @@ public class CDORevisableImpl extends CDOBranchVersionImpl implements CDORevisab
     if (obj instanceof CDORevisable)
     {
       CDORevisable that = (CDORevisable)obj;
-      return timeStamp == that.getTimeStamp() && revised == that.getRevised() && getBranch().equals(that.getBranch())
-          && getVersion() == that.getVersion();
+      return timeStamp == that.getTimeStamp() && revised == that.getRevised() && getBranch().equals(that.getBranch()) && getVersion() == that.getVersion();
     }
 
     return false;
@@ -84,7 +83,7 @@ public class CDORevisableImpl extends CDOBranchVersionImpl implements CDORevisab
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}v{1}[{2}-{3}]", getBranch().getID(), getVersion(),
-        CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(revised));
+    return MessageFormat.format("{0}v{1}[{2}-{3}]", getBranch().getID(), getVersion(), CDOCommonUtil.formatTimeStamp(timeStamp),
+        CDOCommonUtil.formatTimeStamp(revised));
   }
 }

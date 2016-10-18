@@ -78,8 +78,7 @@ public class CDOCollectionLoadingPolicyImpl implements CDOCollectionLoadingPolic
     return doResolveProxy(rev, feature, accessIndex, serverIndex, chunkSize);
   }
 
-  private Object doResolveProxy(CDORevision rev, EStructuralFeature feature, int accessIndex, int serverIndex,
-      int chunkSize)
+  private Object doResolveProxy(CDORevision rev, EStructuralFeature feature, int accessIndex, int serverIndex, int chunkSize)
   {
     // Get proxy values
     InternalCDORevision revision = (InternalCDORevision)rev;

@@ -105,20 +105,18 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
   @Override
   protected void rawImportReviseOldRevisions(IDBConnection connection, IDBTable table, OMMonitor monitor)
   {
-    String sqlUpdate = "UPDATE " + table + " SET " + ATTRIBUTES_REVISED + "=? WHERE " + ATTRIBUTES_ID + "=? AND "
-        + ATTRIBUTES_BRANCH + "=? AND " + ATTRIBUTES_VERSION + "=?";
+    String sqlUpdate = "UPDATE " + table + " SET " + ATTRIBUTES_REVISED + "=? WHERE " + ATTRIBUTES_ID + "=? AND " + ATTRIBUTES_BRANCH + "=? AND "
+        + ATTRIBUTES_VERSION + "=?";
 
-    String sqlQuery = "SELECT cdo1." + ATTRIBUTES_ID + ", cdo1." + ATTRIBUTES_BRANCH + ", cdo1." + ATTRIBUTES_VERSION
-        + ", cdo2." + ATTRIBUTES_CREATED + " FROM " + table + " cdo1, " + table + " cdo2 WHERE cdo1." + ATTRIBUTES_ID
-        + "=cdo2." + ATTRIBUTES_ID + " AND cdo1." + ATTRIBUTES_BRANCH + "=cdo2." + ATTRIBUTES_BRANCH + " AND (cdo1."
-        + ATTRIBUTES_VERSION + "=cdo2." + ATTRIBUTES_VERSION + "-1 OR (cdo1." + ATTRIBUTES_VERSION + "+cdo2."
-        + ATTRIBUTES_VERSION + "=-1 AND cdo1." + ATTRIBUTES_VERSION + ">cdo2." + ATTRIBUTES_VERSION + ")) AND cdo1."
-        + ATTRIBUTES_REVISED + "=0";
+    String sqlQuery = "SELECT cdo1." + ATTRIBUTES_ID + ", cdo1." + ATTRIBUTES_BRANCH + ", cdo1." + ATTRIBUTES_VERSION + ", cdo2." + ATTRIBUTES_CREATED
+        + " FROM " + table + " cdo1, " + table + " cdo2 WHERE cdo1." + ATTRIBUTES_ID + "=cdo2." + ATTRIBUTES_ID + " AND cdo1." + ATTRIBUTES_BRANCH + "=cdo2."
+        + ATTRIBUTES_BRANCH + " AND (cdo1." + ATTRIBUTES_VERSION + "=cdo2." + ATTRIBUTES_VERSION + "-1 OR (cdo1." + ATTRIBUTES_VERSION + "+cdo2."
+        + ATTRIBUTES_VERSION + "=-1 AND cdo1." + ATTRIBUTES_VERSION + ">cdo2." + ATTRIBUTES_VERSION + ")) AND cdo1." + ATTRIBUTES_REVISED + "=0";
 
     IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate, ReuseProbability.MEDIUM);
-    IDBPreparedStatement stmtQuery = connection.prepareStatement(sqlQuery, ResultSet.TYPE_SCROLL_INSENSITIVE,
-        ResultSet.CONCUR_READ_ONLY, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmtQuery = connection.prepareStatement(sqlQuery, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY,
+        ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
@@ -171,12 +169,10 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
   }
 
   @Override
-  protected void rawImportUnreviseNewRevisions(IDBConnection connection, IDBTable table, long fromCommitTime,
-      long toCommitTime, OMMonitor monitor)
+  protected void rawImportUnreviseNewRevisions(IDBConnection connection, IDBTable table, long fromCommitTime, long toCommitTime, OMMonitor monitor)
   {
-    String sql = "UPDATE " + table + " SET " + ATTRIBUTES_REVISED + "=0 WHERE " + ATTRIBUTES_BRANCH + ">=0 AND "
-        + ATTRIBUTES_CREATED + "<=" + toCommitTime + " AND " + ATTRIBUTES_REVISED + ">" + toCommitTime + " AND "
-        + ATTRIBUTES_VERSION + ">0";
+    String sql = "UPDATE " + table + " SET " + ATTRIBUTES_REVISED + "=0 WHERE " + ATTRIBUTES_BRANCH + ">=0 AND " + ATTRIBUTES_CREATED + "<=" + toCommitTime
+        + " AND " + ATTRIBUTES_REVISED + ">" + toCommitTime + " AND " + ATTRIBUTES_VERSION + ">0";
 
     IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
 

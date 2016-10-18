@@ -68,8 +68,7 @@ public class ImplSingleRefContainerNPLImpl extends CDOObjectImpl implements Impl
    */
   public IContainedElementNoParentLink getElement()
   {
-    return (IContainedElementNoParentLink)eGet(model4interfacesPackage.eINSTANCE.getISingleRefContainerNPL_Element(),
-        true);
+    return (IContainedElementNoParentLink)eGet(model4interfacesPackage.eINSTANCE.getISingleRefContainerNPL_Element(), true);
   }
 
   /**

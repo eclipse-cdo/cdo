@@ -115,18 +115,15 @@ public class HibernateAuditHandler
     final InternalCDORevision revision;
     if (teneoAuditEntry.getTeneo_audit_kind() == TeneoAuditKind.DELETE)
     {
-      revision = new DetachedCDORevision(domainEClass, cdoID,
-          hibernateStore.getRepository().getBranchManager().getMainBranch(),
-          new Long(teneoAuditEntry.getTeneo_object_version()).intValue(), teneoAuditEntry.getTeneo_start(),
-          CDOBranchPoint.UNSPECIFIED_DATE);
+      revision = new DetachedCDORevision(domainEClass, cdoID, hibernateStore.getRepository().getBranchManager().getMainBranch(),
+          new Long(teneoAuditEntry.getTeneo_object_version()).intValue(), teneoAuditEntry.getTeneo_start(), CDOBranchPoint.UNSPECIFIED_DATE);
       revision.setRevised(CDOBranchPoint.UNSPECIFIED_DATE);
     }
     else
     {
       revision = hibernateStore.createRevision(domainEClass, cdoID);
       revision.setVersion(new Long(teneoAuditEntry.getTeneo_object_version()).intValue());
-      revision.setBranchPoint(
-          storeAccessor.getStore().getMainBranchHead().getBranch().getPoint(teneoAuditEntry.getTeneo_start()));
+      revision.setBranchPoint(storeAccessor.getStore().getMainBranchHead().getBranch().getPoint(teneoAuditEntry.getTeneo_start()));
       if (teneoAuditEntry.getTeneo_end() > 0)
       {
         revision.setRevised(teneoAuditEntry.getTeneo_end());
@@ -201,8 +198,7 @@ public class HibernateAuditHandler
     }
     if (targetEFeature instanceof EReference)
     {
-      final CDOID cdoID = value instanceof CDOID ? (CDOID)value
-          : HibernateUtil.getInstance().convertStringToCDOID((String)value);
+      final CDOID cdoID = value instanceof CDOID ? (CDOID)value : HibernateUtil.getInstance().convertStringToCDOID((String)value);
       return cdoID;
     }
     if (value instanceof Enumerator)
@@ -237,8 +233,7 @@ public class HibernateAuditHandler
       idStr = auditHandler.idToString(EresourcePackage.eINSTANCE.getCDOResourceFolder(), CDOIDUtil.getLong(folderId));
     }
 
-    final String qryStr = "select e from " + entityName + " e where e.folder"
-        + (idStr == null ? " is null " : "=:folder")
+    final String qryStr = "select e from " + entityName + " e where e.folder" + (idStr == null ? " is null " : "=:folder")
         + " and (e.teneo_end=-1 or e.teneo_end>:end) and e.teneo_start<=:start";
     final Query qry = session.createQuery(qryStr);
     if (idStr != null)

@@ -42,8 +42,7 @@ public class AInterfaceAOperationInterfaceCompartmentCanonicalEditPolicy extends
   {
     View viewObject = (View)getHost().getModel();
     LinkedList<EObject> result = new LinkedList<EObject>();
-    List<AcoreNodeDescriptor> childDescriptors = AcoreDiagramUpdater
-        .getAInterfaceAOperationInterfaceCompartment_7002SemanticChildren(viewObject);
+    List<AcoreNodeDescriptor> childDescriptors = AcoreDiagramUpdater.getAInterfaceAOperationInterfaceCompartment_7002SemanticChildren(viewObject);
     for (Iterator<AcoreNodeDescriptor> it = childDescriptors.iterator(); it.hasNext();)
     {
       AcoreNodeDescriptor d = it.next();

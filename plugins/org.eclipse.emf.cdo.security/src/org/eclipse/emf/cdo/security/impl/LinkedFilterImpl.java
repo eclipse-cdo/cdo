@@ -78,8 +78,7 @@ public class LinkedFilterImpl extends PermissionFilterImpl implements LinkedFilt
   }
 
   @Override
-  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
-      int level) throws Exception
+  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext, int level) throws Exception
   {
     PermissionFilter filter = getFilter();
     return filter.isApplicable(revision, revisionProvider, securityContext, level + 1);

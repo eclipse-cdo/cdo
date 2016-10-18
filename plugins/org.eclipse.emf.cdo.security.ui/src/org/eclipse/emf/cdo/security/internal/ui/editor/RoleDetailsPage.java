@@ -83,11 +83,9 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
 
     space(parent, toolkit);
 
-    oneToMany(parent, toolkit, Messages.RoleDetailsPage_2, SecurityPackage.Literals.ROLE__ASSIGNEES,
-        SecurityPackage.Literals.GROUP);
+    oneToMany(parent, toolkit, Messages.RoleDetailsPage_2, SecurityPackage.Literals.ROLE__ASSIGNEES, SecurityPackage.Literals.GROUP);
 
-    oneToMany(parent, toolkit, Messages.RoleDetailsPage_3, SecurityPackage.Literals.ROLE__ASSIGNEES,
-        SecurityPackage.Literals.USER);
+    oneToMany(parent, toolkit, Messages.RoleDetailsPage_3, SecurityPackage.Literals.ROLE__ASSIGNEES, SecurityPackage.Literals.USER);
   }
 
   protected INewObjectConfigurator createNewPermissionConfigurator()
@@ -99,10 +97,8 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
       {
         ResourceFilter filter = SecurityFactory.eINSTANCE.createResourceFilter("/home/${user}", PatternStyle.TREE); //$NON-NLS-1$
         Command result = CreateChildCommand.create(getEditingDomain(), newObject,
-            new CommandParameter(newObject, SecurityPackage.Literals.FILTER_PERMISSION__FILTERS, filter),
-            Collections.singleton(newObject));
-        result = result.chain(SetCommand.create(getEditingDomain(), newObject,
-            SecurityPackage.Literals.PERMISSION__ACCESS, Access.WRITE));
+            new CommandParameter(newObject, SecurityPackage.Literals.FILTER_PERMISSION__FILTERS, filter), Collections.singleton(newObject));
+        result = result.chain(SetCommand.create(getEditingDomain(), newObject, SecurityPackage.Literals.PERMISSION__ACCESS, Access.WRITE));
         return result;
       }
     };
@@ -110,8 +106,7 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
 
   protected OneToManyTableBlock.ITableConfiguration createTableConfiguration()
   {
-    return new OneToManyTableBlock.TableConfiguration(getManagedForm(), SecurityPackage.Literals.ROLE__PERMISSIONS,
-        SecurityPackage.Literals.FILTER_PERMISSION)
+    return new OneToManyTableBlock.TableConfiguration(getManagedForm(), SecurityPackage.Literals.ROLE__PERMISSIONS, SecurityPackage.Literals.FILTER_PERMISSION)
     {
       private static final int COL_ACCESS = 0;
 
@@ -119,8 +114,7 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
 
       private static final int COL_PATH = 2;
 
-      private final String[] columnTitles = { Messages.RoleDetailsPage_5, Messages.RoleDetailsPage_6,
-          Messages.RoleDetailsPage_7 };
+      private final String[] columnTitles = { Messages.RoleDetailsPage_5, Messages.RoleDetailsPage_6, Messages.RoleDetailsPage_7 };
 
       private final CellEditor[] cellEditors = new CellEditor[3];
 
@@ -238,16 +232,14 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
         case COL_PATTERN_STYLE:
           if (filter.getPatternStyle() != value)
           {
-            execute(SetCommand.create(getEditingDomain(), filter,
-                SecurityPackage.Literals.RESOURCE_FILTER__PATTERN_STYLE, value));
+            execute(SetCommand.create(getEditingDomain(), filter, SecurityPackage.Literals.RESOURCE_FILTER__PATTERN_STYLE, value));
             viewer.refresh(element);
           }
           break;
         case COL_PATH:
           if (!ObjectUtil.equals(filter.getPath(), value))
           {
-            execute(
-                SetCommand.create(getEditingDomain(), filter, SecurityPackage.Literals.RESOURCE_FILTER__PATH, value));
+            execute(SetCommand.create(getEditingDomain(), filter, SecurityPackage.Literals.RESOURCE_FILTER__PATH, value));
             viewer.refresh(element);
           }
           break;
@@ -348,8 +340,7 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
                 }
               };
 
-              FilterTreeSelectionDialog dlg = new FilterTreeSelectionDialog(cellEditorWindow.getShell(), provider,
-                  provider);
+              FilterTreeSelectionDialog dlg = new FilterTreeSelectionDialog(cellEditorWindow.getShell(), provider, provider);
 
               dlg.setAllowMultiple(false);
               dlg.setMessage(Messages.RoleDetailsPage_4);

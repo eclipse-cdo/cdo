@@ -171,8 +171,8 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
   }
 
-  public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, int fromBranchID, int toBranchID,
-      long fromCommitTime, long toCommitTime) throws IOException
+  public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
+      throws IOException
   {
     StringBuilder builder = new StringBuilder();
     builder.append(" WHERE a_t."); //$NON-NLS-1$
@@ -205,8 +205,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     objectTypeMapper.rawExport(connection, out, fromCommitTime, toCommitTime);
   }
 
-  protected void rawExportList(CDODataOutput out, IDBConnection connection, IListMapping listMapping,
-      IDBTable attrTable, String attrSuffix) throws IOException
+  protected void rawExportList(CDODataOutput out, IDBConnection connection, IListMapping listMapping, IDBTable attrTable, String attrSuffix) throws IOException
   {
     for (IDBTable table : listMapping.getDBTables())
     {
@@ -226,8 +225,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     return getListJoin(attrTable, listTable);
   }
 
-  public void rawImport(IDBStoreAccessor accessor, CDODataInput in, long fromCommitTime, long toCommitTime,
-      OMMonitor monitor) throws IOException
+  public void rawImport(IDBStoreAccessor accessor, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
     int size = in.readInt();
     if (size == 0)
@@ -310,8 +308,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
   }
 
-  protected void rawImportUnreviseNewRevisions(IDBConnection connection, IDBTable table, long fromCommitTime,
-      long toCommitTime, OMMonitor monitor)
+  protected void rawImportUnreviseNewRevisions(IDBConnection connection, IDBTable table, long fromCommitTime, long toCommitTime, OMMonitor monitor)
   {
     throw new UnsupportedOperationException("Must be overridden");
   }
@@ -321,8 +318,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     throw new UnsupportedOperationException("Must be overridden");
   }
 
-  protected void rawImportList(CDODataInput in, IDBConnection connection, IListMapping listMapping, OMMonitor monitor)
-      throws IOException
+  protected void rawImportList(CDODataInput in, IDBConnection connection, IListMapping listMapping, OMMonitor monitor) throws IOException
   {
     Collection<IDBTable> tables = listMapping.getDBTables();
     int size = tables.size();
@@ -487,8 +483,8 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
     final String prefix = "SELECT MIN(t." + ATTRIBUTES_ID + ") FROM " + CDODBSchema.CDO_OBJECTS + " o, ";
 
-    final String suffix = " t WHERE t." + ATTRIBUTES_BRANCH + "<0 AND t." + ATTRIBUTES_ID + "=o." + ATTRIBUTES_ID
-        + " AND t." + ATTRIBUTES_CREATED + "=o." + ATTRIBUTES_CREATED;
+    final String suffix = " t WHERE t." + ATTRIBUTES_BRANCH + "<0 AND t." + ATTRIBUTES_ID + "=o." + ATTRIBUTES_ID + " AND t." + ATTRIBUTES_CREATED + "=o."
+        + ATTRIBUTES_CREATED;
 
     getStore().visitAllTables(connection, new IDBStore.TableVisitor()
     {

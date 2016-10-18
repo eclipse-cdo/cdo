@@ -99,8 +99,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              model4Package.IMPL_MULTI_REF_NON_CONTAINED_ELEMENT__PARENT, oldParent, parent));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, model4Package.IMPL_MULTI_REF_NON_CONTAINED_ELEMENT__PARENT, oldParent, parent));
         }
       }
     }
@@ -126,8 +125,8 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
     parent = newParent;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          model4Package.IMPL_MULTI_REF_NON_CONTAINED_ELEMENT__PARENT, oldParent, newParent);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, model4Package.IMPL_MULTI_REF_NON_CONTAINED_ELEMENT__PARENT, oldParent,
+          newParent);
       if (msgs == null)
       {
         msgs = notification;
@@ -151,13 +150,11 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
       NotificationChain msgs = null;
       if (parent != null)
       {
-        msgs = ((InternalEObject)parent).eInverseRemove(this,
-            model4interfacesPackage.IMULTI_REF_NON_CONTAINER__ELEMENTS, IMultiRefNonContainer.class, msgs);
+        msgs = ((InternalEObject)parent).eInverseRemove(this, model4interfacesPackage.IMULTI_REF_NON_CONTAINER__ELEMENTS, IMultiRefNonContainer.class, msgs);
       }
       if (newParent != null)
       {
-        msgs = ((InternalEObject)newParent).eInverseAdd(this,
-            model4interfacesPackage.IMULTI_REF_NON_CONTAINER__ELEMENTS, IMultiRefNonContainer.class, msgs);
+        msgs = ((InternalEObject)newParent).eInverseAdd(this, model4interfacesPackage.IMULTI_REF_NON_CONTAINER__ELEMENTS, IMultiRefNonContainer.class, msgs);
       }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
@@ -167,8 +164,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_MULTI_REF_NON_CONTAINED_ELEMENT__PARENT,
-          newParent, newParent));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_MULTI_REF_NON_CONTAINED_ELEMENT__PARENT, newParent, newParent));
     }
   }
 
@@ -191,8 +187,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
     name = newName;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_MULTI_REF_NON_CONTAINED_ELEMENT__NAME,
-          oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_MULTI_REF_NON_CONTAINED_ELEMENT__NAME, oldName, name));
     }
   }
 
@@ -208,8 +203,7 @@ public class ImplMultiRefNonContainedElementImpl extends EObjectImpl implements 
     case model4Package.IMPL_MULTI_REF_NON_CONTAINED_ELEMENT__PARENT:
       if (parent != null)
       {
-        msgs = ((InternalEObject)parent).eInverseRemove(this,
-            model4interfacesPackage.IMULTI_REF_NON_CONTAINER__ELEMENTS, IMultiRefNonContainer.class, msgs);
+        msgs = ((InternalEObject)parent).eInverseRemove(this, model4interfacesPackage.IMULTI_REF_NON_CONTAINER__ELEMENTS, IMultiRefNonContainer.class, msgs);
       }
       return basicSetParent((IMultiRefNonContainer)otherEnd, msgs);
     }

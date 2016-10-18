@@ -102,8 +102,7 @@ public class DawnDiagramUpdater
       protected void doExecute()
       {
         // ((ExamplediagramDocumentProvider)getDocumentProvider()).changed(getEditorInput());
-        ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService()
-            .getSelection();
+        ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService().getSelection();
         if (selection instanceof IStructuredSelection)
         {
           IStructuredSelection structuredSelection = (IStructuredSelection)selection;
@@ -111,8 +110,7 @@ public class DawnDiagramUpdater
           {
             return;
           }
-          if (structuredSelection.getFirstElement() instanceof EditPart
-              && ((EditPart)structuredSelection.getFirstElement()).getModel() instanceof View)
+          if (structuredSelection.getFirstElement() instanceof EditPart && ((EditPart)structuredSelection.getFirstElement()).getModel() instanceof View)
           {
             EObject modelElement = ((View)((EditPart)structuredSelection.getFirstElement()).getModel()).getElement();
             List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(modelElement);
@@ -389,8 +387,7 @@ public class DawnDiagramUpdater
     ECrossReferenceAdapter crossreferenceAdapter = ECrossReferenceAdapter.getCrossReferenceAdapter(element);
     if (crossreferenceAdapter != null)
     {
-      Collection<EStructuralFeature.Setting> iinverseReferences = crossreferenceAdapter
-          .getNonNavigableInverseReferences(element);
+      Collection<EStructuralFeature.Setting> iinverseReferences = crossreferenceAdapter.getNonNavigableInverseReferences(element);
 
       for (EStructuralFeature.Setting f : iinverseReferences)
       {

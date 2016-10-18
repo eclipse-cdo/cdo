@@ -101,8 +101,7 @@ public class MongoDBInitialTest extends AbstractCDOTest
     msg("Getting resource");
     resource = transaction.getResource(getResourcePath("/test1"), true);
     assertNotNull(resource);
-    assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + getResourcePath("/test1")),
-        resource.getURI());
+    assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + getResourcePath("/test1")), resource.getURI());
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
     assertEquals(1, transaction.getResourceSet().getResources().size());
     assertEquals(CDOState.CLEAN, resource.cdoState());

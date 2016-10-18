@@ -64,8 +64,8 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class LissomeStore extends Store implements ILissomeStore, CDOAllRevisionsProvider, IDBConnectionProvider,
-    NoRawAccess, NoLargeObjects, NoQueryXRefs, NoChangeSets, NoDurableLocking
+public class LissomeStore extends Store
+    implements ILissomeStore, CDOAllRevisionsProvider, IDBConnectionProvider, NoRawAccess, NoLargeObjects, NoQueryXRefs, NoChangeSets, NoDurableLocking
 {
   public static final String TYPE = "lissome"; //$NON-NLS-1$
 
@@ -293,23 +293,22 @@ public class LissomeStore extends Store implements ILissomeStore, CDOAllRevision
 
     try
     {
-      accessor.handleRevisions(null, null, CDOBranchPoint.UNSPECIFIED_DATE, true,
-          new CDORevisionHandler.Filtered.Undetached(new CDORevisionHandler()
+      accessor.handleRevisions(null, null, CDOBranchPoint.UNSPECIFIED_DATE, true, new CDORevisionHandler.Filtered.Undetached(new CDORevisionHandler()
+      {
+        public boolean handleRevision(CDORevision revision)
+        {
+          CDOBranch branch = revision.getBranch();
+          List<CDORevision> list = result.get(branch);
+          if (list == null)
           {
-            public boolean handleRevision(CDORevision revision)
-            {
-              CDOBranch branch = revision.getBranch();
-              List<CDORevision> list = result.get(branch);
-              if (list == null)
-              {
-                list = new ArrayList<CDORevision>();
-                result.put(branch, list);
-              }
+            list = new ArrayList<CDORevision>();
+            result.put(branch, list);
+          }
 
-              list.add(revision);
-              return true;
-            }
-          }));
+          list.add(revision);
+          return true;
+        }
+      }));
     }
     finally
     {

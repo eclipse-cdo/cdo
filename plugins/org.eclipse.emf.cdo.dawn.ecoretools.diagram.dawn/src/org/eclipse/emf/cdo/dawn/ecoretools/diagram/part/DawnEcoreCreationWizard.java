@@ -50,8 +50,7 @@ public class DawnEcoreCreationWizard extends EcoreCreationWizard
   public DawnEcoreCreationWizard()
   {
     super();
-    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
-        PreferenceConstants.getServerName());
+    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(), PreferenceConstants.getServerName());
     CDOSession session = CDOConnectionUtil.instance.openSession();
     view = session.openTransaction();
   }
@@ -66,13 +65,12 @@ public class DawnEcoreCreationWizard extends EcoreCreationWizard
       {
         if (diagPage.isNewModel())
         {
-          diagram = EcoreDiagramEditorUtil.createDiagram(diagPage.getDiagramModelURI(), diagPage.getDomainModelURI(),
-              monitor);
+          diagram = EcoreDiagramEditorUtil.createDiagram(diagPage.getDiagramModelURI(), diagPage.getDomainModelURI(), monitor);
         }
         else
         {
-          diagram = DawnEcoreDiagramEditorUtil.createDiagramOnly(diagPage.getDiagramModelURI(),
-              diagPage.getDomainModelURI(), diagPage.getDiagramEObject(), diagPage.isInitialized(), monitor);
+          diagram = DawnEcoreDiagramEditorUtil.createDiagramOnly(diagPage.getDiagramModelURI(), diagPage.getDomainModelURI(), diagPage.getDiagramEObject(),
+              diagPage.isInitialized(), monitor);
         }
         if (diagram != null)
         {
@@ -82,8 +80,7 @@ public class DawnEcoreCreationWizard extends EcoreCreationWizard
           }
           catch (PartInitException e)
           {
-            ErrorDialog.openError(getContainer().getShell(), Messages.EcoreCreationWizardOpenEditorError, null,
-                e.getStatus());
+            ErrorDialog.openError(getContainer().getShell(), Messages.EcoreCreationWizardOpenEditorError, null, e.getStatus());
           }
         }
       }
@@ -100,8 +97,7 @@ public class DawnEcoreCreationWizard extends EcoreCreationWizard
     {
       if (e.getTargetException() instanceof CoreException)
       {
-        ErrorDialog.openError(getContainer().getShell(), Messages.EcoreCreationWizardCreationError, null,
-            ((CoreException)e.getTargetException()).getStatus());
+        ErrorDialog.openError(getContainer().getShell(), Messages.EcoreCreationWizardCreationError, null, ((CoreException)e.getTargetException()).getStatus());
       }
       else
       {

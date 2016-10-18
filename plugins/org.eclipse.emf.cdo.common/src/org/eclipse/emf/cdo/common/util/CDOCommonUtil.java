@@ -65,8 +65,7 @@ public final class CDOCommonUtil
   /**
    * @since 4.4
    */
-  public static final Pattern DATE_PATTERN = Pattern
-      .compile("(\\d+)[ -/](\\d+)[ -/](\\d+)( +(\\d+):?(\\d*):?(\\d*)\\.?(\\d*))?");
+  public static final Pattern DATE_PATTERN = Pattern.compile("(\\d+)[ -/](\\d+)[ -/](\\d+)( +(\\d+):?(\\d*):?(\\d*)\\.?(\\d*))?");
 
   /**
    * @since 4.2
@@ -104,9 +103,8 @@ public final class CDOCommonUtil
   /**
    * @since 4.0
    */
-  public static CDODataInput createCDODataInput(ExtendedDataInputStream inputStream,
-      final CDOPackageRegistry packageRegistry, final CDOBranchManager branchManager,
-      final CDOCommitInfoManager commitManager, final CDORevisionFactory revisionFactory,
+  public static CDODataInput createCDODataInput(ExtendedDataInputStream inputStream, final CDOPackageRegistry packageRegistry,
+      final CDOBranchManager branchManager, final CDOCommitInfoManager commitManager, final CDORevisionFactory revisionFactory,
       final CDOListFactory listFactory, final CDOLobStore lobStore) throws IOException
   {
     return new CDODataInputImpl(inputStream)
@@ -153,8 +151,8 @@ public final class CDOCommonUtil
    * @deprecated As of 4.3 use {@link #createCDODataOutput(ExtendedDataOutput, CDOPackageRegistry, CDOIDProvider, CDORevisionUnchunker)}.
    */
   @Deprecated
-  public static CDODataOutput createCDODataOutput(ExtendedDataOutput extendedDataOutputStream,
-      final CDOPackageRegistry packageRegistry, final CDOIDProvider idProvider)
+  public static CDODataOutput createCDODataOutput(ExtendedDataOutput extendedDataOutputStream, final CDOPackageRegistry packageRegistry,
+      final CDOIDProvider idProvider)
   {
     return createCDODataOutput(extendedDataOutputStream, packageRegistry, idProvider, null);
   }
@@ -162,8 +160,8 @@ public final class CDOCommonUtil
   /**
    * @since 4.3
    */
-  public static CDODataOutput createCDODataOutput(ExtendedDataOutput extendedDataOutputStream,
-      final CDOPackageRegistry packageRegistry, final CDOIDProvider idProvider, final CDORevisionUnchunker unchunker)
+  public static CDODataOutput createCDODataOutput(ExtendedDataOutput extendedDataOutputStream, final CDOPackageRegistry packageRegistry,
+      final CDOIDProvider idProvider, final CDORevisionUnchunker unchunker)
   {
     return new CDODataOutputImpl(extendedDataOutputStream)
     {
@@ -258,8 +256,8 @@ public final class CDOCommonUtil
       throw new ParseException("Not a valid date: " + trimmed + " --> pattern = " + DATE_PATTERN, 0);
     }
 
-    timeStamp = matcher.group(1) + "-" + matcher.group(2) + "-" + matcher.group(3) + " " + safe(matcher.group(5)) + ":"
-        + safe(matcher.group(6)) + ":" + safe(matcher.group(7)) + "." + safe(matcher.group(8));
+    timeStamp = matcher.group(1) + "-" + matcher.group(2) + "-" + matcher.group(3) + " " + safe(matcher.group(5)) + ":" + safe(matcher.group(6)) + ":"
+        + safe(matcher.group(7)) + "." + safe(matcher.group(8));
 
     Date date = DATE_FORMAT.parse(timeStamp);
     return date.getTime();

@@ -78,8 +78,7 @@ public final class SelectorUtil
         if (TRACER.isEnabled())
         {
           TRACER.trace("Setting interest " //$NON-NLS-1$
-              + formatInterestOps(newOps)
-              + (oldOps == 0 ? "" : " (was " + formatInterestOps(oldOps).toLowerCase() + ")")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+              + formatInterestOps(newOps) + (oldOps == 0 ? "" : " (was " + formatInterestOps(oldOps).toLowerCase() + ")")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
 
         selectionKey.interestOps(newOps);

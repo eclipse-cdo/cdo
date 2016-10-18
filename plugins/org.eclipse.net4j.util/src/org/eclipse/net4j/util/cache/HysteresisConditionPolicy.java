@@ -21,8 +21,7 @@ public class HysteresisConditionPolicy extends ThresholdConditionPolicy
 
   private long thresholdGreenYellow;
 
-  public HysteresisConditionPolicy(long thresholdYellowRed, long thresholdRedYellow, long thresholdGreenYellow,
-      long thresholdYellowGreen)
+  public HysteresisConditionPolicy(long thresholdYellowRed, long thresholdRedYellow, long thresholdGreenYellow, long thresholdYellowGreen)
   {
     super(thresholdRedYellow, thresholdYellowGreen);
     if (thresholdYellowRed > thresholdRedYellow)

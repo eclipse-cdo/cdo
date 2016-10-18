@@ -106,8 +106,7 @@ public class HasNillableAttributeImpl extends EObjectImpl implements HasNillable
     nillableESet = true;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.HAS_NILLABLE_ATTRIBUTE__NILLABLE, oldNillable,
-          nillable, !oldNillableESet));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.HAS_NILLABLE_ATTRIBUTE__NILLABLE, oldNillable, nillable, !oldNillableESet));
     }
   }
 
@@ -124,8 +123,7 @@ public class HasNillableAttributeImpl extends EObjectImpl implements HasNillable
     nillableESet = false;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.HAS_NILLABLE_ATTRIBUTE__NILLABLE,
-          oldNillable, NILLABLE_EDEFAULT, oldNillableESet));
+      eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.HAS_NILLABLE_ATTRIBUTE__NILLABLE, oldNillable, NILLABLE_EDEFAULT, oldNillableESet));
     }
   }
 

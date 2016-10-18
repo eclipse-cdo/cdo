@@ -63,8 +63,7 @@ import org.eclipse.ui.forms.widgets.TableWrapData;
  */
 public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSectionPart<T> implements IDetailsPage
 {
-  public AbstractDetailsPage(Class<T> elementType, EClass elementEClass, EditingDomain domain,
-      AdapterFactory adapterFactory)
+  public AbstractDetailsPage(Class<T> elementType, EClass elementEClass, EditingDomain domain, AdapterFactory adapterFactory)
   {
     super(elementType, elementEClass, domain, adapterFactory);
   }
@@ -72,8 +71,7 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
   @Override
   protected String getTitle()
   {
-    return NLS.bind(Messages.AbstractDetailsPage_0,
-        SecurityEditPlugin.INSTANCE.getString(String.format("_UI_%s_type", getInputEClass().getName()))); //$NON-NLS-1$
+    return NLS.bind(Messages.AbstractDetailsPage_0, SecurityEditPlugin.INSTANCE.getString(String.format("_UI_%s_type", getInputEClass().getName()))); //$NON-NLS-1$
   }
 
   @Override
@@ -104,12 +102,9 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
   protected Text text(Composite parent, FormToolkit toolkit, String label, EAttribute attribute)
   {
     toolkit.createLabel(parent, label);
-    Text result = toolkit.createText(createDecorationComposite(parent, toolkit, layoutData(parent, SWT.FILL, false, 1)),
-        ""); //$NON-NLS-1$
-    getContext().bindValue(observeText(result),
-        EMFEditObservables.observeDetailValue(getRealm(), getEditingDomain(), getValue(), attribute));
-    getContext().bindValue(WidgetProperties.enabled().observe(result), getValue(), null,
-        ObjectWritableConverter.createUpdateValueStrategy(attribute));
+    Text result = toolkit.createText(createDecorationComposite(parent, toolkit, layoutData(parent, SWT.FILL, false, 1)), ""); //$NON-NLS-1$
+    getContext().bindValue(observeText(result), EMFEditObservables.observeDetailValue(getRealm(), getEditingDomain(), getValue(), attribute));
+    getContext().bindValue(WidgetProperties.enabled().observe(result), getValue(), null, ObjectWritableConverter.createUpdateValueStrategy(attribute));
 
     addRevertDecoration(result, attribute);
     return result;
@@ -191,8 +186,7 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
     return horzAlign(new TableWrapData(), horzAlign, horzGrab, horzSpan);
   }
 
-  protected static Object layoutData(Composite parent, int horzAlign, boolean horzGrab, int horzSpan, int vertAlign,
-      boolean vertGrab, int vertSpan)
+  protected static Object layoutData(Composite parent, int horzAlign, boolean horzGrab, int horzSpan, int vertAlign, boolean vertGrab, int vertSpan)
   {
     if (parent.getLayout() instanceof GridLayout)
     {
@@ -228,14 +222,12 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
     return oneToMany(parent, toolkit, label, reference, reference.getEReferenceType());
   }
 
-  protected OneToManyBlock oneToMany(Composite parent, FormToolkit toolkit, String label, EReference reference,
-      EClass itemType)
+  protected OneToManyBlock oneToMany(Composite parent, FormToolkit toolkit, String label, EReference reference, EClass itemType)
   {
     return oneToMany(parent, toolkit, label, reference, itemType, null);
   }
 
-  protected OneToManyBlock oneToMany(Composite parent, FormToolkit toolkit, String label, EReference reference,
-      EClass itemType, IFilter itemFilter)
+  protected OneToManyBlock oneToMany(Composite parent, FormToolkit toolkit, String label, EReference reference, EClass itemType, IFilter itemFilter)
   {
     toolkit.createLabel(parent, label).setLayoutData(layoutData(parent, SWT.LEFT, false, 2));
     Composite blockParent = toolkit.createComposite(parent);
@@ -250,8 +242,7 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
     return result;
   }
 
-  protected OneToManyTableBlock table(Composite parent, FormToolkit toolkit, String label,
-      OneToManyTableBlock.ITableConfiguration config)
+  protected OneToManyTableBlock table(Composite parent, FormToolkit toolkit, String label, OneToManyTableBlock.ITableConfiguration config)
   {
     toolkit.createLabel(parent, label).setLayoutData(layoutData(parent, SWT.LEFT, false, 2));
     Composite blockParent = toolkit.createComposite(parent);
@@ -267,12 +258,10 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
 
   protected Button checkbox(Composite parent, FormToolkit toolkit, String label, EAttribute attribute)
   {
-    Button result = toolkit.createButton(
-        createDecorationComposite(parent, toolkit, layoutData(parent, SWT.LEFT, false, 2)), label, SWT.CHECK);
+    Button result = toolkit.createButton(createDecorationComposite(parent, toolkit, layoutData(parent, SWT.LEFT, false, 2)), label, SWT.CHECK);
     getContext().bindValue(WidgetProperties.enabled().observe(result),
         EMFEditObservables.observeDetailValue(getRealm(), getEditingDomain(), getValue(), attribute));
-    getContext().bindValue(WidgetProperties.enabled().observe(result), getValue(), null,
-        ObjectWritableConverter.createUpdateValueStrategy(attribute));
+    getContext().bindValue(WidgetProperties.enabled().observe(result), getValue(), null, ObjectWritableConverter.createUpdateValueStrategy(attribute));
 
     addRevertDecoration(result, attribute);
     return result;
@@ -283,8 +272,7 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
     Button result = toolkit.createButton(parent, label, SWT.PUSH);
     result.setLayoutData(layoutData(parent, SWT.LEFT, false, 2));
 
-    getContext().bindValue(WidgetProperties.enabled().observe(result), getValue(), null,
-        ObjectWritableConverter.createUpdateValueStrategy());
+    getContext().bindValue(WidgetProperties.enabled().observe(result), getValue(), null, ObjectWritableConverter.createUpdateValueStrategy());
 
     result.addSelectionListener(selectionListener);
     return result;
@@ -293,9 +281,7 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
   protected ComboViewer combo(Composite parent, FormToolkit toolkit, String label, EAttribute attribute)
   {
     toolkit.createLabel(parent, label);
-    ComboViewer result = new ComboViewer(
-        createDecorationComposite(parent, toolkit, layoutData(parent, SWT.LEFT, false, 1)),
-        SWT.READ_ONLY | SWT.DROP_DOWN);
+    ComboViewer result = new ComboViewer(createDecorationComposite(parent, toolkit, layoutData(parent, SWT.LEFT, false, 1)), SWT.READ_ONLY | SWT.DROP_DOWN);
     result.setLabelProvider(new AdapterFactoryLabelProvider(getAdapterFactory()));
     result.setContentProvider(new ArrayContentProvider());
     result.setInput(attribute.getEAttributeType().getInstanceClass().getEnumConstants());
@@ -328,8 +314,7 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
     final ControlDecoration decoration = new ControlDecoration(control, SWT.RIGHT | SWT.CENTER);
     decoration.hide();
     decoration.setDescriptionText(Messages.AbstractDetailsPage_3);
-    decoration.setImage(ExtendedImageRegistry.getInstance()
-        .getImage(URI.createPlatformPluginURI(OM.BUNDLE_ID + "/icons/full/elcl16/revert.gif", true))); //$NON-NLS-1$
+    decoration.setImage(ExtendedImageRegistry.getInstance().getImage(URI.createPlatformPluginURI(OM.BUNDLE_ID + "/icons/full/elcl16/revert.gif", true))); //$NON-NLS-1$
     decoration.setMarginWidth(2);
 
     decoration.addSelectionListener(new SelectionAdapter()

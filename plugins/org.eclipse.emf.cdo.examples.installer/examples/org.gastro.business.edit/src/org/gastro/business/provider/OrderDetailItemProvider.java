@@ -39,8 +39,8 @@ import java.util.List;
  * end-user-doc -->
  * @generated
  */
-public class OrderDetailItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class OrderDetailItemProvider extends ItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -79,11 +79,10 @@ public class OrderDetailItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addOfferingPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_OrderDetail_offering_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_offering_feature", "_UI_OrderDetail_type"),
-            BusinessPackage.Literals.ORDER_DETAIL__OFFERING, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_OrderDetail_offering_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_offering_feature", "_UI_OrderDetail_type"),
+        BusinessPackage.Literals.ORDER_DETAIL__OFFERING, true, false, true, null, null, null));
   }
 
   /**
@@ -93,14 +92,10 @@ public class OrderDetailItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addQuantityPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(
-            createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                getResourceLocator(), getString("_UI_OrderDetail_quantity_feature"),
-                getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_quantity_feature",
-                    "_UI_OrderDetail_type"),
-                BusinessPackage.Literals.ORDER_DETAIL__QUANTITY, true, false, false,
-                ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_OrderDetail_quantity_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_quantity_feature", "_UI_OrderDetail_type"),
+        BusinessPackage.Literals.ORDER_DETAIL__QUANTITY, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -110,14 +105,9 @@ public class OrderDetailItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addStatePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(
-            createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                getResourceLocator(), getString("_UI_OrderDetail_state_feature"),
-                getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_state_feature",
-                    "_UI_OrderDetail_type"),
-                BusinessPackage.Literals.ORDER_DETAIL__STATE, true, false, false,
-                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_OrderDetail_state_feature"), getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_state_feature", "_UI_OrderDetail_type"),
+        BusinessPackage.Literals.ORDER_DETAIL__STATE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -127,14 +117,9 @@ public class OrderDetailItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addPricePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(
-            createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                getResourceLocator(), getString("_UI_OrderDetail_price_feature"),
-                getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_price_feature",
-                    "_UI_OrderDetail_type"),
-                BusinessPackage.Literals.ORDER_DETAIL__PRICE, false, false, false,
-                ItemPropertyDescriptor.REAL_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_OrderDetail_price_feature"), getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_price_feature", "_UI_OrderDetail_type"),
+        BusinessPackage.Literals.ORDER_DETAIL__PRICE, false, false, false, ItemPropertyDescriptor.REAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -177,8 +162,7 @@ public class OrderDetailItemProvider extends ItemProviderAdapter implements IEdi
   public String getText(Object object)
   {
     OrderDetail orderDetail = (OrderDetail)object;
-    return orderDetail.getOffering() == null ? getString("_UI_OrderDetail_type")
-        : orderDetail.getOffering().getName() + " " + orderDetail.getQuantity();
+    return orderDetail.getOffering() == null ? getString("_UI_OrderDetail_type") : orderDetail.getOffering().getName() + " " + orderDetail.getQuantity();
   }
 
   /**

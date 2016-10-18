@@ -56,8 +56,7 @@ public abstract class ChannelTest extends AbstractProtocolTest
     assertActive(protocol);
 
     byte[] data = HugeData.getBytes();
-    assertEquals(true,
-        data.length > 2 * ((ITransportConfigAware)getConnector()).getConfig().getBufferProvider().getBufferCapacity());
+    assertEquals(true, data.length > 2 * ((ITransportConfigAware)getConnector()).getConfig().getBufferProvider().getBufferCapacity());
 
     for (int i = 1; i < data.length; i++)
     {

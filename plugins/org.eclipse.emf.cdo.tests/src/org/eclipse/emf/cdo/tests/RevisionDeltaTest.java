@@ -134,8 +134,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     transaction.close();
 
     CDOTransaction transaction2 = session.openTransaction();
-    SalesOrder salesOrder2 = (SalesOrder)CDOUtil
-        .getEObject(transaction2.getObject(CDOUtil.getCDOObject(salesOrder).cdoID(), true));
+    SalesOrder salesOrder2 = (SalesOrder)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(salesOrder).cdoID(), true));
     CDORevision salesRevision = CDOUtil.getCDOObject(salesOrder2).cdoRevision();
     EStructuralFeature customerFeature = getModel1Package().getSalesOrder_Customer();
 
@@ -163,8 +162,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     salesOrder.setId(4711);
     assertNotSame(CDOUtil.getCDOObject(salesOrder).cdoRevision(),
         ((InternalCDOTransaction)transaction).getRevision(CDOUtil.getCDOObject(salesOrder).cdoID(), true));
-    assertEquals(CDOUtil.getCDOObject(salesOrder).cdoRevision(),
-        transaction.getDirtyObjects().get(CDOUtil.getCDOObject(salesOrder).cdoID()).cdoRevision());
+    assertEquals(CDOUtil.getCDOObject(salesOrder).cdoRevision(), transaction.getDirtyObjects().get(CDOUtil.getCDOObject(salesOrder).cdoID()).cdoRevision());
     transaction.close();
     session.close();
   }

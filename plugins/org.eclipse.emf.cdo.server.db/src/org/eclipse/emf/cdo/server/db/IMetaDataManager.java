@@ -102,13 +102,12 @@ public interface IMetaDataManager
   /**
    * @since 3.0
    */
-  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
-      throws IOException;
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException;
 
   /**
    * @since 4.0
    */
-  public Collection<InternalCDOPackageUnit> rawImport(Connection connection, CDODataInput in, long fromCommitTime,
-      long toCommitTime, OMMonitor monitor) throws IOException;
+  public Collection<InternalCDOPackageUnit> rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor)
+      throws IOException;
 
 }

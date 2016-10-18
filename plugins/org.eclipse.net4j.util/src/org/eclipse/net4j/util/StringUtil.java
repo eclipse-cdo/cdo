@@ -332,8 +332,7 @@ public final class StringUtil
     return globRecurse(pattern, 0, string, 0, subStrings, 0);
   }
 
-  private static boolean globRecurse(String pattern, int patternIndex, String string, int stringIndex,
-      String[] subStrings, int subStringsIndex)
+  private static boolean globRecurse(String pattern, int patternIndex, String string, int stringIndex, String[] subStrings, int subStringsIndex)
   {
     int patternLength = pattern.length();
     int stringLength = string.length();

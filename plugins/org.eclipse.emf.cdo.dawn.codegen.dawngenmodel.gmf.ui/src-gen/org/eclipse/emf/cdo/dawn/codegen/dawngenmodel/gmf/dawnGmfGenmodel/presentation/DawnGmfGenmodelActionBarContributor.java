@@ -50,8 +50,7 @@ import java.util.Collection;
  * @generated
  * @author Martin Fluegge
  */
-public class DawnGmfGenmodelActionBarContributor extends EditingDomainActionBarContributor
-    implements ISelectionChangedListener
+public class DawnGmfGenmodelActionBarContributor extends EditingDomainActionBarContributor implements ISelectionChangedListener
 {
   /**
    * This keeps track of the active editor. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -72,8 +71,7 @@ public class DawnGmfGenmodelActionBarContributor extends EditingDomainActionBarC
    *
    * @generated
    */
-  protected IAction showPropertiesViewAction = new Action(
-      DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_ShowPropertiesView_menu_item"))
+  protected IAction showPropertiesViewAction = new Action(DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_ShowPropertiesView_menu_item"))
   {
     @Override
     public void run()
@@ -95,8 +93,7 @@ public class DawnGmfGenmodelActionBarContributor extends EditingDomainActionBarC
    *
    * @generated
    */
-  protected IAction refreshViewerAction = new Action(
-      DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_RefreshViewer_menu_item"))
+  protected IAction refreshViewerAction = new Action(DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_RefreshViewer_menu_item"))
   {
     @Override
     public boolean isEnabled()
@@ -186,8 +183,7 @@ public class DawnGmfGenmodelActionBarContributor extends EditingDomainActionBarC
   {
     super.contributeToMenu(menuManager);
 
-    IMenuManager submenuManager = new MenuManager(
-        DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_DawnGmfGenmodelEditor_menu"),
+    IMenuManager submenuManager = new MenuManager(DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_DawnGmfGenmodelEditor_menu"),
         "org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmodelMenuID");
     menuManager.insertAfter("additions", submenuManager);
     submenuManager.add(new Separator("settings"));
@@ -202,8 +198,7 @@ public class DawnGmfGenmodelActionBarContributor extends EditingDomainActionBarC
 
     // Prepare for CreateSibling item addition or removal.
     //
-    createSiblingMenuManager = new MenuManager(
-        DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item"));
+    createSiblingMenuManager = new MenuManager(DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item"));
     submenuManager.insertBefore("additions", createSiblingMenuManager);
 
     // Force an update because Eclipse hides empty menus now.
@@ -356,8 +351,7 @@ public class DawnGmfGenmodelActionBarContributor extends EditingDomainActionBarC
    *
    * @generated
    */
-  protected void populateManager(IContributionManager manager, Collection<? extends IAction> actions,
-      String contributionID)
+  protected void populateManager(IContributionManager manager, Collection<? extends IAction> actions, String contributionID)
   {
     if (actions != null)
     {

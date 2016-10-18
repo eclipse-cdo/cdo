@@ -94,8 +94,7 @@ public class Bugzilla_362270c_Test extends AbstractCDOTest
     localResource = resourceSet.getResource(localResourceURI, true);
 
     // 3. Add a reference from the CDOResource to the local resource
-    Command addPurchaseOrderCmd = AddCommand.create(domain, martinSupplier,
-        getModel1Package().getSupplier_PurchaseOrders(), purchaseOrder);
+    Command addPurchaseOrderCmd = AddCommand.create(domain, martinSupplier, getModel1Package().getSupplier_PurchaseOrders(), purchaseOrder);
     domain.getCommandStack().execute(addPurchaseOrderCmd);
 
     resource.save(Collections.emptyMap());
@@ -107,8 +106,7 @@ public class Bugzilla_362270c_Test extends AbstractCDOTest
     domain.addResourceSetListener(rollbacker);
 
     // 5. Detach a CDOObject
-    Command removeMartinSupplierCmd = RemoveCommand.create(domain, obeoCompany,
-        getModel1Package().getCompany_Suppliers(), martinSupplier);
+    Command removeMartinSupplierCmd = RemoveCommand.create(domain, obeoCompany, getModel1Package().getCompany_Suppliers(), martinSupplier);
     domain.getCommandStack().execute(removeMartinSupplierCmd);
 
     // 6. Rollback the previous operation

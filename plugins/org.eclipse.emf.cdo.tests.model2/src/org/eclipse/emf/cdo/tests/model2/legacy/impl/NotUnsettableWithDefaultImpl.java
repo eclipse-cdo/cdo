@@ -117,8 +117,8 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * @generated
    * @ordered
    */
-  protected static final Date NOT_UNSETTABLE_DATE_EDEFAULT = (Date)EcoreFactory.eINSTANCE
-      .createFromString(EcorePackage.eINSTANCE.getEDate(), "1979-03-15T07:12:59");
+  protected static final Date NOT_UNSETTABLE_DATE_EDEFAULT = (Date)EcoreFactory.eINSTANCE.createFromString(EcorePackage.eINSTANCE.getEDate(),
+      "1979-03-15T07:12:59");
 
   /**
    * The cached value of the '{@link #getNotUnsettableDate() <em>Not Unsettable Date</em>}' attribute. <!--
@@ -308,8 +308,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     notUnsettableBoolean = newNotUnsettableBoolean;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_BOOLEAN, oldNotUnsettableBoolean,
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_BOOLEAN, oldNotUnsettableBoolean,
           notUnsettableBoolean));
     }
   }
@@ -333,8 +332,8 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     notUnsettableByte = newNotUnsettableByte;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_BYTE, oldNotUnsettableByte, notUnsettableByte));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_BYTE, oldNotUnsettableByte,
+          notUnsettableByte));
     }
   }
 
@@ -357,8 +356,8 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     notUnsettableChar = newNotUnsettableChar;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_CHAR, oldNotUnsettableChar, notUnsettableChar));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_CHAR, oldNotUnsettableChar,
+          notUnsettableChar));
     }
   }
 
@@ -381,8 +380,8 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     notUnsettableDate = newNotUnsettableDate;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DATE, oldNotUnsettableDate, notUnsettableDate));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DATE, oldNotUnsettableDate,
+          notUnsettableDate));
     }
   }
 
@@ -405,8 +404,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     notUnsettableDouble = newNotUnsettableDouble;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DOUBLE, oldNotUnsettableDouble,
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DOUBLE, oldNotUnsettableDouble,
           notUnsettableDouble));
     }
   }
@@ -430,8 +428,8 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     notUnsettableFloat = newNotUnsettableFloat;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_FLOAT, oldNotUnsettableFloat, notUnsettableFloat));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_FLOAT, oldNotUnsettableFloat,
+          notUnsettableFloat));
     }
   }
 
@@ -454,8 +452,8 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     notUnsettableInt = newNotUnsettableInt;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_INT, oldNotUnsettableInt, notUnsettableInt));
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_INT, oldNotUnsettableInt, notUnsettableInt));
     }
   }
 
@@ -478,8 +476,8 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     notUnsettableLong = newNotUnsettableLong;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_LONG, oldNotUnsettableLong, notUnsettableLong));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_LONG, oldNotUnsettableLong,
+          notUnsettableLong));
     }
   }
 
@@ -502,8 +500,8 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     notUnsettableShort = newNotUnsettableShort;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_SHORT, oldNotUnsettableShort, notUnsettableShort));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_SHORT, oldNotUnsettableShort,
+          notUnsettableShort));
     }
   }
 
@@ -526,8 +524,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     notUnsettableString = newNotUnsettableString;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_STRING, oldNotUnsettableString,
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_STRING, oldNotUnsettableString,
           notUnsettableString));
     }
   }
@@ -551,8 +548,8 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     notUnsettableVAT = newNotUnsettableVAT == null ? NOT_UNSETTABLE_VAT_EDEFAULT : newNotUnsettableVAT;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_VAT, oldNotUnsettableVAT, notUnsettableVAT));
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_VAT, oldNotUnsettableVAT, notUnsettableVAT));
     }
   }
 
@@ -699,8 +696,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_CHAR:
       return notUnsettableChar != NOT_UNSETTABLE_CHAR_EDEFAULT;
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DATE:
-      return NOT_UNSETTABLE_DATE_EDEFAULT == null ? notUnsettableDate != null
-          : !NOT_UNSETTABLE_DATE_EDEFAULT.equals(notUnsettableDate);
+      return NOT_UNSETTABLE_DATE_EDEFAULT == null ? notUnsettableDate != null : !NOT_UNSETTABLE_DATE_EDEFAULT.equals(notUnsettableDate);
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DOUBLE:
       return notUnsettableDouble != NOT_UNSETTABLE_DOUBLE_EDEFAULT;
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_FLOAT:
@@ -712,8 +708,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_SHORT:
       return notUnsettableShort != NOT_UNSETTABLE_SHORT_EDEFAULT;
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_STRING:
-      return NOT_UNSETTABLE_STRING_EDEFAULT == null ? notUnsettableString != null
-          : !NOT_UNSETTABLE_STRING_EDEFAULT.equals(notUnsettableString);
+      return NOT_UNSETTABLE_STRING_EDEFAULT == null ? notUnsettableString != null : !NOT_UNSETTABLE_STRING_EDEFAULT.equals(notUnsettableString);
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_VAT:
       return notUnsettableVAT != NOT_UNSETTABLE_VAT_EDEFAULT;
     }

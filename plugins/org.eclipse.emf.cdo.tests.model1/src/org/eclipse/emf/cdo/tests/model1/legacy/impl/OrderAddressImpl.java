@@ -132,8 +132,8 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   {
     if (orderDetails == null)
     {
-      orderDetails = new EObjectContainmentWithInverseEList.Resolving<OrderDetail>(OrderDetail.class, this,
-          Model1Package.ORDER_ADDRESS__ORDER_DETAILS, Model1Package.ORDER_DETAIL__ORDER);
+      orderDetails = new EObjectContainmentWithInverseEList.Resolving<OrderDetail>(OrderDetail.class, this, Model1Package.ORDER_ADDRESS__ORDER_DETAILS,
+          Model1Package.ORDER_DETAIL__ORDER);
     }
     return orderDetails;
   }
@@ -177,8 +177,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
    */
   public void setOrder(Order newOrder)
   {
-    if (newOrder != eInternalContainer()
-        || (eContainerFeatureID() != Model1Package.ORDER_ADDRESS__ORDER && newOrder != null))
+    if (newOrder != eInternalContainer() || (eContainerFeatureID() != Model1Package.ORDER_ADDRESS__ORDER && newOrder != null))
     {
       if (EcoreUtil.isAncestor(this, newOrder))
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
@@ -208,8 +207,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
       if (product != oldProduct)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.ORDER_ADDRESS__PRODUCT, oldProduct,
-              product));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.ORDER_ADDRESS__PRODUCT, oldProduct, product));
       }
     }
     return product;
@@ -234,8 +232,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     product = newProduct;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          Model1Package.ORDER_ADDRESS__PRODUCT, oldProduct, newProduct);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__PRODUCT, oldProduct, newProduct);
       if (msgs == null)
         msgs = notification;
       else
@@ -254,18 +251,15 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     {
       NotificationChain msgs = null;
       if (product != null)
-        msgs = ((InternalEObject)product).eInverseRemove(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class,
-            msgs);
+        msgs = ((InternalEObject)product).eInverseRemove(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class, msgs);
       if (newProduct != null)
-        msgs = ((InternalEObject)newProduct).eInverseAdd(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class,
-            msgs);
+        msgs = ((InternalEObject)newProduct).eInverseAdd(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class, msgs);
       msgs = basicSetProduct(newProduct, msgs);
       if (msgs != null)
         msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(
-          new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__PRODUCT, newProduct, newProduct));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__PRODUCT, newProduct, newProduct));
   }
 
   /**
@@ -307,8 +301,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     boolean oldTestAttribute = testAttribute;
     testAttribute = newTestAttribute;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__TEST_ATTRIBUTE,
-          oldTestAttribute, testAttribute));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__TEST_ATTRIBUTE, oldTestAttribute, testAttribute));
   }
 
   /**
@@ -329,8 +322,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
       return basicSetOrder((Order)otherEnd, msgs);
     case Model1Package.ORDER_ADDRESS__PRODUCT:
       if (product != null)
-        msgs = ((InternalEObject)product).eInverseRemove(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class,
-            msgs);
+        msgs = ((InternalEObject)product).eInverseRemove(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class, msgs);
       return basicSetProduct((Product1)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);

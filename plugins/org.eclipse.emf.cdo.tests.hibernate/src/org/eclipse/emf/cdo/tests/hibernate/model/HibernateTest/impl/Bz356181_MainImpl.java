@@ -141,8 +141,7 @@ public class Bz356181_MainImpl extends EObjectImpl implements Bz356181_Main
     transient_ = newTransient;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ356181_MAIN__TRANSIENT, oldTransient,
-          transient_));
+      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ356181_MAIN__TRANSIENT, oldTransient, transient_));
     }
   }
 
@@ -167,8 +166,7 @@ public class Bz356181_MainImpl extends EObjectImpl implements Bz356181_Main
     nonTransient = newNonTransient;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ356181_MAIN__NON_TRANSIENT,
-          oldNonTransient, nonTransient));
+      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ356181_MAIN__NON_TRANSIENT, oldNonTransient, nonTransient));
     }
   }
 
@@ -187,8 +185,7 @@ public class Bz356181_MainImpl extends EObjectImpl implements Bz356181_Main
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, HibernateTestPackage.BZ356181_MAIN__TRANSIENT_REF,
-              oldTransientRef, transientRef));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, HibernateTestPackage.BZ356181_MAIN__TRANSIENT_REF, oldTransientRef, transientRef));
         }
       }
     }
@@ -216,8 +213,7 @@ public class Bz356181_MainImpl extends EObjectImpl implements Bz356181_Main
     transientRef = newTransientRef;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ356181_MAIN__TRANSIENT_REF,
-          oldTransientRef, transientRef));
+      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ356181_MAIN__TRANSIENT_REF, oldTransientRef, transientRef));
     }
   }
 
@@ -236,8 +232,8 @@ public class Bz356181_MainImpl extends EObjectImpl implements Bz356181_Main
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              HibernateTestPackage.BZ356181_MAIN__TRANSIENT_OTHER_REF, oldTransientOtherRef, transientOtherRef));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, HibernateTestPackage.BZ356181_MAIN__TRANSIENT_OTHER_REF, oldTransientOtherRef,
+              transientOtherRef));
         }
       }
     }
@@ -265,8 +261,7 @@ public class Bz356181_MainImpl extends EObjectImpl implements Bz356181_Main
     transientOtherRef = newTransientOtherRef;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ356181_MAIN__TRANSIENT_OTHER_REF,
-          oldTransientOtherRef, transientOtherRef));
+      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ356181_MAIN__TRANSIENT_OTHER_REF, oldTransientOtherRef, transientOtherRef));
     }
   }
 

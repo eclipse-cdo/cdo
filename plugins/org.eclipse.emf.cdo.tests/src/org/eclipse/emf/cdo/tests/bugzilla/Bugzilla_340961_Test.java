@@ -69,8 +69,7 @@ public class Bugzilla_340961_Test extends AbstractCDOTest
     if (internalCDORevisionManager == null)
     {
       internalCDORevisionManager = new TestRevisionManager();
-      getRepositoryConfig().getTestProperties().put(RepositoryConfig.PROP_TEST_REVISION_MANAGER,
-          internalCDORevisionManager);
+      getRepositoryConfig().getTestProperties().put(RepositoryConfig.PROP_TEST_REVISION_MANAGER, internalCDORevisionManager);
     }
     internalCDORevisionManager.setFactory(revisionFactory);
     super.doSetUp();
@@ -234,8 +233,7 @@ public class Bugzilla_340961_Test extends AbstractCDOTest
       ids = protectedIds;
     }
 
-    public void handleRevisionsBeforeSending(ISession session, CDORevision[] revisions,
-        List<CDORevision> additionalRevisions) throws RuntimeException
+    public void handleRevisionsBeforeSending(ISession session, CDORevision[] revisions, List<CDORevision> additionalRevisions) throws RuntimeException
     {
       for (int i = 0; i < revisions.length; i++)
       {

@@ -127,8 +127,8 @@ public class Bz380987_PlaceImpl extends EObjectImpl implements Bz380987_Place
   {
     if (people == null)
     {
-      people = new EObjectWithInverseResolvingEList.ManyInverse<Bz380987_Person>(Bz380987_Person.class, this,
-          HibernateTestPackage.BZ380987_PLACE__PEOPLE, HibernateTestPackage.BZ380987_PERSON__PLACES);
+      people = new EObjectWithInverseResolvingEList.ManyInverse<Bz380987_Person>(Bz380987_Person.class, this, HibernateTestPackage.BZ380987_PLACE__PEOPLE,
+          HibernateTestPackage.BZ380987_PERSON__PLACES);
     }
     return people;
   }

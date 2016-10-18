@@ -79,8 +79,7 @@ abstract class CDOAdditionalOperation extends AdapterImpl
   /**
    * Resolves the possibly generic return type of an operation according to its relation to the source ({@code owner}) type and argument types.
    */
-  protected EClassifier getResultType(EClassifier owner, EOperation operation,
-      List<? extends TypedElement<EClassifier>> args)
+  protected EClassifier getResultType(EClassifier owner, EOperation operation, List<? extends TypedElement<EClassifier>> args)
   {
     EClassifier result = operation.getEType();
     return result != null ? result : env.getOCLStandardLibrary().getOclVoid();
@@ -227,12 +226,10 @@ abstract class CDOAdditionalOperation extends AdapterImpl
     }
 
     @Override
-    protected EClassifier getResultType(EClassifier owner, EOperation operation,
-        List<? extends TypedElement<EClassifier>> args)
+    protected EClassifier getResultType(EClassifier owner, EOperation operation, List<? extends TypedElement<EClassifier>> args)
     {
       // The result type of the type-filtered variant is a collection of the filter type
-      EClassifier elementType = args.isEmpty() ? getEnv().getOCLStandardLibrary().getOclAny()
-          : ((TypeType)args.get(0).getType()).getReferredType();
+      EClassifier elementType = args.isEmpty() ? getEnv().getOCLStandardLibrary().getOclAny() : ((TypeType)args.get(0).getType()).getReferredType();
       return collectionType(CollectionKind.COLLECTION_LITERAL, elementType);
     }
   }
@@ -263,8 +260,7 @@ abstract class CDOAdditionalOperation extends AdapterImpl
     {
       CDOEnvironment env = getEnv();
       EClassifier oclAny = env.getOCLStandardLibrary().getOclAny();
-      env.addHelperOperation(oclAny,
-          createEOperation(env.getOCLStandardLibrary().getBoolean(), "regex", env.getOCLStandardLibrary().getString())); //$NON-NLS-1$
+      env.addHelperOperation(oclAny, createEOperation(env.getOCLStandardLibrary().getBoolean(), "regex", env.getOCLStandardLibrary().getString())); //$NON-NLS-1$
     }
 
     @Override

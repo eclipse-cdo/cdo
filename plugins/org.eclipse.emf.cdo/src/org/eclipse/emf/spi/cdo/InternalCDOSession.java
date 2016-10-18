@@ -56,8 +56,7 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalCDOSession
-    extends CDOSession, PackageProcessor, PackageLoader, RevisionLocker, CDORevisionUnchunker, ILifecycle
+public interface InternalCDOSession extends CDOSession, PackageProcessor, PackageLoader, RevisionLocker, CDORevisionUnchunker, ILifecycle
 {
   public CDOSessionProtocol getSessionProtocol();
 
@@ -260,8 +259,8 @@ public interface InternalCDOSession
    * @deprecated As of 4.6 use {@link #invalidate(InvalidationData)}.
    */
   @Deprecated
-  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache,
-      byte securityImpact, Map<CDOID, CDOPermission> newPermissions);
+  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache, byte securityImpact,
+      Map<CDOID, CDOPermission> newPermissions);
 
   /**
    * @since 4.6
@@ -271,8 +270,8 @@ public interface InternalCDOSession
   /**
    * @since 3.0
    */
-  public void processRefreshSessionResult(RefreshSessionResult result, CDOBranch branch,
-      List<InternalCDOView> branchViews, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions);
+  public void processRefreshSessionResult(RefreshSessionResult result, CDOBranch branch, List<InternalCDOView> branchViews,
+      Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions);
 
   /**
    * @since 4.0
@@ -316,14 +315,12 @@ public interface InternalCDOSession
   /**
    * @since 4.2
    */
-  public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase,
-      boolean computeChangeSets);
+  public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase, boolean computeChangeSets);
 
   /**
    * @since 4.6
    */
-  public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint targetBase,
-      CDOBranchPoint sourceBase, boolean computeChangeSets);
+  public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint targetBase, CDOBranchPoint sourceBase, boolean computeChangeSets);
 
   /**
    * @author Eike Stepper
@@ -508,23 +505,19 @@ public interface InternalCDOSession
      * @deprecated As of 4.6 use {@link #MergeData(CDOBranchPoint, CDORevisionAvailabilityInfo, CDOBranchPoint, CDORevisionAvailabilityInfo, Set, CDOChangeSet, CDOBranchPoint, CDORevisionAvailabilityInfo, CDOBranchPoint, CDORevisionAvailabilityInfo, Set, CDOChangeSet, CDOBranchPoint)}.
      */
     @Deprecated
-    public MergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase, CDOBranchPoint targetBase,
-        CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
-        CDORevisionAvailabilityInfo sourceBaseInfo, CDORevisionAvailabilityInfo targetBaseInfo, Set<CDOID> ids,
+    public MergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase, CDOBranchPoint targetBase, CDORevisionAvailabilityInfo targetInfo,
+        CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo sourceBaseInfo, CDORevisionAvailabilityInfo targetBaseInfo, Set<CDOID> ids,
         CDOChangeSet targetChanges, CDOChangeSet sourceChanges)
     {
-      this(target, targetInfo, targetBase, targetBaseInfo, ids, targetChanges, source, sourceInfo, sourceBase,
-          sourceBaseInfo, ids, sourceChanges, null);
+      this(target, targetInfo, targetBase, targetBaseInfo, ids, targetChanges, source, sourceInfo, sourceBase, sourceBaseInfo, ids, sourceChanges, null);
     }
 
     /**
      * @since 4.6
      */
-    public MergeData(CDOBranchPoint target, CDORevisionAvailabilityInfo targetInfo, CDOBranchPoint targetBase,
-        CDORevisionAvailabilityInfo targetBaseInfo, Set<CDOID> targetIDs, CDOChangeSet targetChanges,
-        CDOBranchPoint source, CDORevisionAvailabilityInfo sourceInfo, CDOBranchPoint sourceBase,
-        CDORevisionAvailabilityInfo sourceBaseInfo, Set<CDOID> sourceIDs, CDOChangeSet sourceChanges,
-        CDOBranchPoint resultBase)
+    public MergeData(CDOBranchPoint target, CDORevisionAvailabilityInfo targetInfo, CDOBranchPoint targetBase, CDORevisionAvailabilityInfo targetBaseInfo,
+        Set<CDOID> targetIDs, CDOChangeSet targetChanges, CDOBranchPoint source, CDORevisionAvailabilityInfo sourceInfo, CDOBranchPoint sourceBase,
+        CDORevisionAvailabilityInfo sourceBaseInfo, Set<CDOID> sourceIDs, CDOChangeSet sourceChanges, CDOBranchPoint resultBase)
     {
       this.target = target;
       this.targetInfo = targetInfo;

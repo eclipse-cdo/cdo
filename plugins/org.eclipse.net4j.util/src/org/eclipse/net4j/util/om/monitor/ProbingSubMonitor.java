@@ -133,8 +133,7 @@ public final class ProbingSubMonitor extends org.eclipse.net4j.util.om.monitor.S
 
   private int forkTicks;
 
-  ProbingSubMonitor(ProbingSubMonitor parent, RootInfo rootInfo, int totalWork, int availableToChildren, int flags,
-      boolean full)
+  ProbingSubMonitor(ProbingSubMonitor parent, RootInfo rootInfo, int totalWork, int availableToChildren, int flags, boolean full)
   {
     super(rootInfo, totalWork, availableToChildren, flags | (full ? FULL_MODE : 0));
     this.parent = parent;
@@ -501,8 +500,7 @@ public final class ProbingSubMonitor extends org.eclipse.net4j.util.om.monitor.S
 
     private static final int DEFAULT_COLUMNS = 3;
 
-    private static final boolean SMOOTH_BORDERS = "smooth"
-        .equalsIgnoreCase(OMPlatform.INSTANCE.getProperty("submonitor.probing.borders"));
+    private static final boolean SMOOTH_BORDERS = "smooth".equalsIgnoreCase(OMPlatform.INSTANCE.getProperty("submonitor.probing.borders"));
 
     private static final Dumper DUMPER = SMOOTH_BORDERS ? Dumper.UTF8 : Dumper.ASCII;
 
@@ -655,8 +653,7 @@ public final class ProbingSubMonitor extends org.eclipse.net4j.util.om.monitor.S
           }
           else
           {
-            if (forkTargets.length != 1 || probe.forkTargets.length != 1
-                || !forkTargets[0].equals(probe.forkTargets[0]))
+            if (forkTargets.length != 1 || probe.forkTargets.length != 1 || !forkTargets[0].equals(probe.forkTargets[0]))
             {
               Set<StackTraceElement> set = new HashSet<StackTraceElement>();
               set.addAll(Arrays.asList(forkTargets));

@@ -36,8 +36,7 @@ public class LoadCommitInfosRequest extends CDOClientRequest<Boolean>
 
   private CDOCommitInfoHandler handler;
 
-  public LoadCommitInfosRequest(CDOClientProtocol protocol, CDOBranch branch, long startTime, long endTime,
-      CDOCommitInfoHandler handler)
+  public LoadCommitInfosRequest(CDOClientProtocol protocol, CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_LOAD_COMMIT_INFOS);
     this.branch = branch;

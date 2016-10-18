@@ -73,8 +73,7 @@ public interface IConfirmationProvider
           return false;
         }
 
-        public Confirmation confirm(String subject, String message, Set<Confirmation> acceptable,
-            Confirmation suggestion)
+        public Confirmation confirm(String subject, String message, Set<Confirmation> acceptable, Confirmation suggestion)
         {
           // Just return the suggestion, or else the greatest of the acceptable set
           return suggestion != null ? suggestion : max(acceptable);

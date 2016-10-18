@@ -43,8 +43,7 @@ public class ElementWizardDialog extends TitleAreaDialog implements ValidationCo
 
   private ElementWizardComposite wizardComposite;
 
-  public ElementWizardDialog(Shell parentShell, String title, String toolTip, String productGroup,
-      String defaultFactoryType)
+  public ElementWizardDialog(Shell parentShell, String title, String toolTip, String productGroup, String defaultFactoryType)
   {
     super(parentShell);
     this.title = title;
@@ -106,8 +105,7 @@ public class ElementWizardDialog extends TitleAreaDialog implements ValidationCo
     composite.setLayoutData(new GridData(GridData.FILL_BOTH));
     composite.setLayout(new GridLayout(1, false));
 
-    wizardComposite = new ElementWizardComposite.WithRadios(composite, SWT.NONE, productGroup, "Type:", this,
-        defaultFactoryType)
+    wizardComposite = new ElementWizardComposite.WithRadios(composite, SWT.NONE, productGroup, "Type:", this, defaultFactoryType)
     {
       @Override
       public String getDefaultDescription(String factoryType)

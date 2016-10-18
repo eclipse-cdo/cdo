@@ -35,8 +35,7 @@ public class UnitRequest extends CDOClientRequestWithMonitoring<Boolean>
 
   private CDORevisionHandler revisionHandler;
 
-  public UnitRequest(CDOClientProtocol protocol, int viewID, CDOID rootID, UnitOpcode opcode,
-      CDORevisionHandler revisionHandler)
+  public UnitRequest(CDOClientProtocol protocol, int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_UNIT);
     this.viewID = viewID;

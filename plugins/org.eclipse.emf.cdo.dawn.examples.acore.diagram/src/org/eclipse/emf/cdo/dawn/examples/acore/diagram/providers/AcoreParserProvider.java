@@ -91,8 +91,8 @@ public class AcoreParserProvider extends AbstractProvider implements IParserProv
   {
     if (aAttribute_3001Parser == null)
     {
-      EAttribute[] features = new EAttribute[] { AcorePackage.eINSTANCE.getAClassChild_Accessright(),
-          AcorePackage.eINSTANCE.getAClassChild_DataType(), AcorePackage.eINSTANCE.getAClassChild_Name() };
+      EAttribute[] features = new EAttribute[] { AcorePackage.eINSTANCE.getAClassChild_Accessright(), AcorePackage.eINSTANCE.getAClassChild_DataType(),
+          AcorePackage.eINSTANCE.getAClassChild_Name() };
       MessageFormatParser parser = new MessageFormatParser(features);
       parser.setViewPattern("{0} {2}:{1}"); //$NON-NLS-1$
       parser.setEditorPattern("{0} {2}:{1}"); //$NON-NLS-1$
@@ -114,8 +114,8 @@ public class AcoreParserProvider extends AbstractProvider implements IParserProv
   {
     if (aOperation_3002Parser == null)
     {
-      EAttribute[] features = new EAttribute[] { AcorePackage.eINSTANCE.getAClassChild_Accessright(),
-          AcorePackage.eINSTANCE.getAClassChild_DataType(), AcorePackage.eINSTANCE.getAClassChild_Name() };
+      EAttribute[] features = new EAttribute[] { AcorePackage.eINSTANCE.getAClassChild_Accessright(), AcorePackage.eINSTANCE.getAClassChild_DataType(),
+          AcorePackage.eINSTANCE.getAClassChild_Name() };
       MessageFormatParser parser = new MessageFormatParser(features);
       parser.setViewPattern("{0} {2}():{1}"); //$NON-NLS-1$
       parser.setEditorPattern("{0} {2}():{1}"); //$NON-NLS-1$
@@ -137,8 +137,8 @@ public class AcoreParserProvider extends AbstractProvider implements IParserProv
   {
     if (aAttribute_3003Parser == null)
     {
-      EAttribute[] features = new EAttribute[] { AcorePackage.eINSTANCE.getAClassChild_Accessright(),
-          AcorePackage.eINSTANCE.getAClassChild_DataType(), AcorePackage.eINSTANCE.getAClassChild_Name() };
+      EAttribute[] features = new EAttribute[] { AcorePackage.eINSTANCE.getAClassChild_Accessright(), AcorePackage.eINSTANCE.getAClassChild_DataType(),
+          AcorePackage.eINSTANCE.getAClassChild_Name() };
       MessageFormatParser parser = new MessageFormatParser(features);
       parser.setViewPattern("{0} {2}:{1}"); //$NON-NLS-1$
       parser.setEditorPattern("{0} {2}:{1}"); //$NON-NLS-1$
@@ -160,8 +160,8 @@ public class AcoreParserProvider extends AbstractProvider implements IParserProv
   {
     if (aOperation_3004Parser == null)
     {
-      EAttribute[] features = new EAttribute[] { AcorePackage.eINSTANCE.getAClassChild_Accessright(),
-          AcorePackage.eINSTANCE.getAClassChild_DataType(), AcorePackage.eINSTANCE.getAClassChild_Name() };
+      EAttribute[] features = new EAttribute[] { AcorePackage.eINSTANCE.getAClassChild_Accessright(), AcorePackage.eINSTANCE.getAClassChild_DataType(),
+          AcorePackage.eINSTANCE.getAClassChild_Name() };
       MessageFormatParser parser = new MessageFormatParser(features);
       parser.setViewPattern("{0} {2}():{1}"); //$NON-NLS-1$
       parser.setEditorPattern("{0} {2}():{1}"); //$NON-NLS-1$

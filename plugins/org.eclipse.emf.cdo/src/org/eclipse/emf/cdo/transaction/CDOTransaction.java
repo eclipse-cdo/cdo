@@ -116,8 +116,7 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
    * @see #merge(CDOBranch, CDOMerger)
    * @since 4.6
    */
-  public CDOChangeSetData merge(CDOBranchPoint source, CDOBranchPoint sourceBase, CDOBranchPoint targetBase,
-      CDOMerger merger);
+  public CDOChangeSetData merge(CDOBranchPoint source, CDOBranchPoint sourceBase, CDOBranchPoint targetBase, CDOMerger merger);
 
   /**
    * @since 4.0

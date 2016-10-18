@@ -78,14 +78,13 @@ public class CheckoutTypePage extends CheckoutWizardPage
   @Override
   protected void createUI(Composite parent)
   {
-    transactionalButton = addChoice(parent, "Online Transactional", "icons/transactional.gif",
-        "Creates a remote connection for online editing.", CDOCheckout.TYPE_ONLINE_TRANSACTIONAL);
+    transactionalButton = addChoice(parent, "Online Transactional", "icons/transactional.gif", "Creates a remote connection for online editing.",
+        CDOCheckout.TYPE_ONLINE_TRANSACTIONAL);
 
-    historicalButton = addChoice(parent, "Online Historical", "icons/historical.gif",
-        "Creates a remote connection for online auditing.", CDOCheckout.TYPE_ONLINE_HISTORICAL);
+    historicalButton = addChoice(parent, "Online Historical", "icons/historical.gif", "Creates a remote connection for online auditing.",
+        CDOCheckout.TYPE_ONLINE_HISTORICAL);
 
-    offlineButton = addChoice(parent, "Offline", "icons/disconnect.gif",
-        "Creates a local checkout for offline editing.", CDOCheckout.TYPE_OFFLINE);
+    offlineButton = addChoice(parent, "Offline", "icons/disconnect.gif", "Creates a local checkout for offline editing.", CDOCheckout.TYPE_OFFLINE);
   }
 
   private Button addChoice(Composite composite, String text, String imagePath, String description, final String type)
@@ -219,7 +218,6 @@ public class CheckoutTypePage extends CheckoutWizardPage
   protected void fillProperties(Properties properties)
   {
     properties.setProperty(CDOCheckoutImpl.PROP_TYPE, type);
-    properties.setProperty(CDOCheckoutImpl.PROP_READ_ONLY,
-        Boolean.toString(CDOCheckout.TYPE_ONLINE_HISTORICAL.equals(type)));
+    properties.setProperty(CDOCheckoutImpl.PROP_READ_ONLY, Boolean.toString(CDOCheckout.TYPE_ONLINE_HISTORICAL.equals(type)));
   }
 }

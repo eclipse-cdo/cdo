@@ -38,8 +38,7 @@ public class AcoreNavigatorItem extends AcoreAbstractNavigatorItem
         if (adaptableObject instanceof org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreNavigatorItem
             && (adapterType == View.class || adapterType == EObject.class))
         {
-          return ((org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreNavigatorItem)adaptableObject)
-              .getView();
+          return ((org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreNavigatorItem)adaptableObject).getView();
         }
         return null;
       }
@@ -95,8 +94,8 @@ public class AcoreNavigatorItem extends AcoreAbstractNavigatorItem
   {
     if (obj instanceof org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreNavigatorItem)
     {
-      return EcoreUtil.getURI(getView()).equals(EcoreUtil
-          .getURI(((org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreNavigatorItem)obj).getView()));
+      return EcoreUtil.getURI(getView())
+          .equals(EcoreUtil.getURI(((org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreNavigatorItem)obj).getView()));
     }
     return super.equals(obj);
   }

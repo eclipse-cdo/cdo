@@ -23,8 +23,7 @@ import java.util.TimerTask;
  */
 public abstract class AbstractMonitor implements OMMonitor
 {
-  private static final boolean CHECK_BEGIN = Boolean
-      .parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.util.om.monitor.CheckBegin", "false"));
+  private static final boolean CHECK_BEGIN = Boolean.parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.util.om.monitor.CheckBegin", "false"));
 
   private static final long NOT_BEGUN = -1;
 

@@ -118,8 +118,7 @@ public interface CDORevisionManager extends INotifier
    * @see #getRevisions(List, CDOBranchPoint, int, int, boolean)
    * @see #getRevisionByVersion(CDOID, CDOBranchVersion, int, boolean)
    */
-  public CDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
-      boolean loadOnDemand);
+  public CDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand);
 
   /**
    * Returns the {@link CDORevision revisions} with the given {@link CDOID IDs} at the given {@link CDOBranchPoint
@@ -141,8 +140,7 @@ public interface CDORevisionManager extends INotifier
    *          the list that is returned.
    * @see #getRevision(CDOID, CDOBranchPoint, int, int, boolean)
    */
-  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk,
-      int prefetchDepth, boolean loadOnDemand);
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand);
 
   /**
    * Returns <code>true</code> if the {@link CDORevisionCache revision cache} contains a {@link CDORevision revision}
@@ -169,8 +167,7 @@ public interface CDORevisionManager extends INotifier
    *          whether the revision is loaded from the server or <code>null</code> is returned.
    * @see #getRevision(CDOID, CDOBranchPoint, int, int, boolean)
    */
-  public CDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk,
-      boolean loadOnDemand);
+  public CDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk, boolean loadOnDemand);
 
   /**
    * @since 4.4
@@ -180,6 +177,5 @@ public interface CDORevisionManager extends INotifier
   /**
    * @since 4.3
    */
-  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler);
+  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, CDORevisionHandler handler);
 }

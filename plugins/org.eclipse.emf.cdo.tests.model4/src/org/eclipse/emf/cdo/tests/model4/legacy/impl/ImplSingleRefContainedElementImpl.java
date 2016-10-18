@@ -95,8 +95,7 @@ public class ImplSingleRefContainedElementImpl extends EObjectImpl implements Im
    */
   public NotificationChain basicSetParent(ISingleRefContainer newParent, NotificationChain msgs)
   {
-    msgs = eBasicSetContainer((InternalEObject)newParent, model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT__PARENT,
-        msgs);
+    msgs = eBasicSetContainer((InternalEObject)newParent, model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT__PARENT, msgs);
     return msgs;
   }
 
@@ -106,8 +105,7 @@ public class ImplSingleRefContainedElementImpl extends EObjectImpl implements Im
    */
   public void setParent(ISingleRefContainer newParent)
   {
-    if (newParent != eInternalContainer()
-        || eContainerFeatureID() != model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT__PARENT && newParent != null)
+    if (newParent != eInternalContainer() || eContainerFeatureID() != model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT__PARENT && newParent != null)
     {
       if (EcoreUtil.isAncestor(this, newParent))
       {
@@ -120,8 +118,7 @@ public class ImplSingleRefContainedElementImpl extends EObjectImpl implements Im
       }
       if (newParent != null)
       {
-        msgs = ((InternalEObject)newParent).eInverseAdd(this, model4interfacesPackage.ISINGLE_REF_CONTAINER__ELEMENT,
-            ISingleRefContainer.class, msgs);
+        msgs = ((InternalEObject)newParent).eInverseAdd(this, model4interfacesPackage.ISINGLE_REF_CONTAINER__ELEMENT, ISingleRefContainer.class, msgs);
       }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
@@ -131,8 +128,7 @@ public class ImplSingleRefContainedElementImpl extends EObjectImpl implements Im
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT__PARENT,
-          newParent, newParent));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT__PARENT, newParent, newParent));
     }
   }
 
@@ -155,8 +151,7 @@ public class ImplSingleRefContainedElementImpl extends EObjectImpl implements Im
     name = newName;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT__NAME,
-          oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT__NAME, oldName, name));
     }
   }
 
@@ -204,8 +199,7 @@ public class ImplSingleRefContainedElementImpl extends EObjectImpl implements Im
     switch (eContainerFeatureID())
     {
     case model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT__PARENT:
-      return eInternalContainer().eInverseRemove(this, model4interfacesPackage.ISINGLE_REF_CONTAINER__ELEMENT,
-          ISingleRefContainer.class, msgs);
+      return eInternalContainer().eInverseRemove(this, model4interfacesPackage.ISINGLE_REF_CONTAINER__ELEMENT, ISingleRefContainer.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
   }

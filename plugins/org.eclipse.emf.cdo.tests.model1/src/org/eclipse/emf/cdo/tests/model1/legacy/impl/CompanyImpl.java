@@ -121,8 +121,7 @@ public class CompanyImpl extends AddressImpl implements Company
   {
     if (categories == null)
     {
-      categories = new EObjectContainmentEList.Resolving<Category>(Category.class, this,
-          Model1Package.COMPANY__CATEGORIES);
+      categories = new EObjectContainmentEList.Resolving<Category>(Category.class, this, Model1Package.COMPANY__CATEGORIES);
     }
     return categories;
   }
@@ -135,8 +134,7 @@ public class CompanyImpl extends AddressImpl implements Company
   {
     if (suppliers == null)
     {
-      suppliers = new EObjectContainmentEList.Resolving<Supplier>(Supplier.class, this,
-          Model1Package.COMPANY__SUPPLIERS);
+      suppliers = new EObjectContainmentEList.Resolving<Supplier>(Supplier.class, this, Model1Package.COMPANY__SUPPLIERS);
     }
     return suppliers;
   }
@@ -149,8 +147,7 @@ public class CompanyImpl extends AddressImpl implements Company
   {
     if (customers == null)
     {
-      customers = new EObjectContainmentEList.Resolving<Customer>(Customer.class, this,
-          Model1Package.COMPANY__CUSTOMERS);
+      customers = new EObjectContainmentEList.Resolving<Customer>(Customer.class, this, Model1Package.COMPANY__CUSTOMERS);
     }
     return customers;
   }
@@ -163,8 +160,7 @@ public class CompanyImpl extends AddressImpl implements Company
   {
     if (purchaseOrders == null)
     {
-      purchaseOrders = new EObjectContainmentEList.Resolving<PurchaseOrder>(PurchaseOrder.class, this,
-          Model1Package.COMPANY__PURCHASE_ORDERS);
+      purchaseOrders = new EObjectContainmentEList.Resolving<PurchaseOrder>(PurchaseOrder.class, this, Model1Package.COMPANY__PURCHASE_ORDERS);
     }
     return purchaseOrders;
   }
@@ -177,8 +173,7 @@ public class CompanyImpl extends AddressImpl implements Company
   {
     if (salesOrders == null)
     {
-      salesOrders = new EObjectContainmentEList.Resolving<SalesOrder>(SalesOrder.class, this,
-          Model1Package.COMPANY__SALES_ORDERS);
+      salesOrders = new EObjectContainmentEList.Resolving<SalesOrder>(SalesOrder.class, this, Model1Package.COMPANY__SALES_ORDERS);
     }
     return salesOrders;
   }

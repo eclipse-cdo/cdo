@@ -120,12 +120,11 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
       if (singleContainment != oldSingleContainment)
       {
         InternalEObject newSingleContainment = (InternalEObject)singleContainment;
-        NotificationChain msgs = oldSingleContainment.eInverseRemove(this,
-            EOPPOSITE_FEATURE_BASE - Model6Package.CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT, null, null);
+        NotificationChain msgs = oldSingleContainment.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model6Package.CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT,
+            null, null);
         if (newSingleContainment.eInternalContainer() == null)
         {
-          msgs = newSingleContainment.eInverseAdd(this,
-              EOPPOSITE_FEATURE_BASE - Model6Package.CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT, null, msgs);
+          msgs = newSingleContainment.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT, null, msgs);
         }
         if (msgs != null)
         {
@@ -133,8 +132,8 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
         }
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              Model6Package.CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT, oldSingleContainment, singleContainment));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model6Package.CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT, oldSingleContainment,
+              singleContainment));
         }
       }
     }
@@ -162,8 +161,8 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
     singleContainment = newSingleContainment;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          Model6Package.CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT, oldSingleContainment, newSingleContainment);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model6Package.CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT,
+          oldSingleContainment, newSingleContainment);
       if (msgs == null)
       {
         msgs = notification;
@@ -188,13 +187,13 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
       NotificationChain msgs = null;
       if (singleContainment != null)
       {
-        msgs = ((InternalEObject)singleContainment).eInverseRemove(this,
-            EOPPOSITE_FEATURE_BASE - Model6Package.CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT, null, msgs);
+        msgs = ((InternalEObject)singleContainment).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model6Package.CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT, null,
+            msgs);
       }
       if (newSingleContainment != null)
       {
-        msgs = ((InternalEObject)newSingleContainment).eInverseAdd(this,
-            EOPPOSITE_FEATURE_BASE - Model6Package.CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT, null, msgs);
+        msgs = ((InternalEObject)newSingleContainment).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT, null,
+            msgs);
       }
       msgs = basicSetSingleContainment(newSingleContainment, msgs);
       if (msgs != null)
@@ -204,8 +203,8 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT,
-          newSingleContainment, newSingleContainment));
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, Model6Package.CAN_REFERENCE_LEGACY__SINGLE_CONTAINMENT, newSingleContainment, newSingleContainment));
     }
   }
 
@@ -218,8 +217,7 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
   {
     if (multipleContainment == null)
     {
-      multipleContainment = new EObjectContainmentEList.Resolving<EObject>(EObject.class, this,
-          Model6Package.CAN_REFERENCE_LEGACY__MULTIPLE_CONTAINMENT);
+      multipleContainment = new EObjectContainmentEList.Resolving<EObject>(EObject.class, this, Model6Package.CAN_REFERENCE_LEGACY__MULTIPLE_CONTAINMENT);
     }
     return multipleContainment;
   }
@@ -239,8 +237,7 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              Model6Package.CAN_REFERENCE_LEGACY__SINGLE_REFERENCE, oldSingleReference, singleReference));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model6Package.CAN_REFERENCE_LEGACY__SINGLE_REFERENCE, oldSingleReference, singleReference));
         }
       }
     }
@@ -268,8 +265,7 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
     singleReference = newSingleReference;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.CAN_REFERENCE_LEGACY__SINGLE_REFERENCE,
-          oldSingleReference, singleReference));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.CAN_REFERENCE_LEGACY__SINGLE_REFERENCE, oldSingleReference, singleReference));
     }
   }
 
@@ -282,8 +278,7 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
   {
     if (multipleReference == null)
     {
-      multipleReference = new EObjectResolvingEList<EObject>(EObject.class, this,
-          Model6Package.CAN_REFERENCE_LEGACY__MULTIPLE_REFERENCE);
+      multipleReference = new EObjectResolvingEList<EObject>(EObject.class, this, Model6Package.CAN_REFERENCE_LEGACY__MULTIPLE_REFERENCE);
     }
     return multipleReference;
   }

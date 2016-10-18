@@ -127,8 +127,8 @@ public class Bz397682PImpl extends EObjectImpl implements Bz397682P
   {
     if (listOfC == null)
     {
-      listOfC = new EObjectContainmentWithInverseEList<Bz397682C>(Bz397682C.class, this,
-          HibernateTestPackage.BZ397682_P__LIST_OF_C, HibernateTestPackage.BZ397682_C__REF_TO_P);
+      listOfC = new EObjectContainmentWithInverseEList<Bz397682C>(Bz397682C.class, this, HibernateTestPackage.BZ397682_P__LIST_OF_C,
+          HibernateTestPackage.BZ397682_C__REF_TO_P);
     }
     return listOfC;
   }

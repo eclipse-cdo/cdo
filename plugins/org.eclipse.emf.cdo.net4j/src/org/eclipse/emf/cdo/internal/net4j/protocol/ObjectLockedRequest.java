@@ -37,8 +37,7 @@ public class ObjectLockedRequest extends CDOClientRequest<Boolean>
 
   private boolean byOthers;
 
-  public ObjectLockedRequest(CDOClientProtocol protocol, CDOView view, CDOObject object, LockType lockType,
-      boolean byOthers)
+  public ObjectLockedRequest(CDOClientProtocol protocol, CDOView view, CDOObject object, LockType lockType, boolean byOthers)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_OBJECT_LOCKED);
     this.view = view;

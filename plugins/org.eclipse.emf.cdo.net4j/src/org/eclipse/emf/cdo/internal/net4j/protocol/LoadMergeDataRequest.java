@@ -47,9 +47,8 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<MergeDa
 
   private boolean auto;
 
-  public LoadMergeDataRequest(CDOClientProtocol protocol, CDORevisionAvailabilityInfo targetInfo,
-      CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
-      CDORevisionAvailabilityInfo sourceBaseInfo)
+  public LoadMergeDataRequest(CDOClientProtocol protocol, CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
+      CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_LOAD_MERGE_DATA);
     this.targetInfo = targetInfo;
@@ -86,8 +85,7 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<MergeDa
     }
   }
 
-  private void writeRevisionAvailabilityInfo(CDODataOutput out, CDORevisionAvailabilityInfo info, OMMonitor monitor)
-      throws IOException
+  private void writeRevisionAvailabilityInfo(CDODataOutput out, CDORevisionAvailabilityInfo info, OMMonitor monitor) throws IOException
   {
     CDOBranchPoint branchPoint = info.getBranchPoint();
     if (branchPoint != CDOBranchUtil.AUTO_BRANCH_POINT)
@@ -206,8 +204,7 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<MergeDa
     }
   }
 
-  private void readRevisionAvailabilityInfo(CDODataInput in, CDORevisionAvailabilityInfo info, Set<CDOID> result,
-      OMMonitor monitor) throws IOException
+  private void readRevisionAvailabilityInfo(CDODataInput in, CDORevisionAvailabilityInfo info, Set<CDOID> result, OMMonitor monitor) throws IOException
   {
     int size = in.readInt();
     monitor.begin(size + 1);

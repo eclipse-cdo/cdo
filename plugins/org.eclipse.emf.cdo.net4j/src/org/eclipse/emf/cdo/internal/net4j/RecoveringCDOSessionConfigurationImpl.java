@@ -19,8 +19,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 /**
  * @author Caspar De Groot
  */
-public abstract class RecoveringCDOSessionConfigurationImpl extends CDONet4jSessionConfigurationImpl
-    implements RecoveringCDOSessionConfiguration
+public abstract class RecoveringCDOSessionConfigurationImpl extends CDONet4jSessionConfigurationImpl implements RecoveringCDOSessionConfiguration
 {
   private IManagedContainer container;
 

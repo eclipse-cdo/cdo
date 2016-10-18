@@ -1031,14 +1031,12 @@ public abstract class CDOTypeImpl implements CDOType
     out.writeByte(typeID);
   }
 
-  final public Object adjustReferences(CDOReferenceAdjuster adjuster, Object value, EStructuralFeature feature,
-      int index)
+  final public Object adjustReferences(CDOReferenceAdjuster adjuster, Object value, EStructuralFeature feature, int index)
   {
     return value == null ? null : doAdjustReferences(adjuster, value, feature, index);
   }
 
-  protected Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value, EStructuralFeature feature,
-      int indexs)
+  protected Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value, EStructuralFeature feature, int indexs)
   {
     return value;
   }

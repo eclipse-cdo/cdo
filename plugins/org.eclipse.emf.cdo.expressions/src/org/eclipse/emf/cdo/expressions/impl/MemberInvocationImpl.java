@@ -72,8 +72,7 @@ public class MemberInvocationImpl extends InvocationImpl implements MemberInvoca
    */
   public Expression getObject()
   {
-    return (Expression)eDynamicGet(ExpressionsPackage.MEMBER_INVOCATION__OBJECT,
-        ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT, true, true);
+    return (Expression)eDynamicGet(ExpressionsPackage.MEMBER_INVOCATION__OBJECT, ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT, true, true);
   }
 
   /**
@@ -94,8 +93,7 @@ public class MemberInvocationImpl extends InvocationImpl implements MemberInvoca
    */
   public void setObject(Expression newObject)
   {
-    eDynamicSet(ExpressionsPackage.MEMBER_INVOCATION__OBJECT, ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT,
-        newObject);
+    eDynamicSet(ExpressionsPackage.MEMBER_INVOCATION__OBJECT, ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT, newObject);
   }
 
   /**

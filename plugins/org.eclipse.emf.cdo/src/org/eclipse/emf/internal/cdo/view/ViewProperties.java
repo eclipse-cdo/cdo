@@ -97,8 +97,7 @@ public class ViewProperties extends Properties<CDOView>
     });
 
     add(new Property<CDOView>("rootResourcePermission", //$NON-NLS-1$
-        "Root Resource Permission", "The permission the current user has for the root resource of this view.",
-        CATEGORY_VIEW)
+        "Root Resource Permission", "The permission the current user has for the root resource of this view.", CATEGORY_VIEW)
     {
       @Override
       protected Object eval(CDOView view)

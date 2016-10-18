@@ -76,12 +76,10 @@ public class CDOImporter extends ModelImporter
 
       for (Resource resource : ecoreResourceSet.getResources())
       {
-        getEPackages()
-            .addAll(EcoreUtil.<EPackage> getObjectsByType(resource.getContents(), EcorePackage.Literals.EPACKAGE));
+        getEPackages().addAll(EcoreUtil.<EPackage> getObjectsByType(resource.getContents(), EcorePackage.Literals.EPACKAGE));
       }
 
-      BasicDiagnostic diagnosticChain = new BasicDiagnostic(ConverterPlugin.ID, ConverterUtil.ACTION_MESSAGE_NONE,
-          Messages.getString("CDOImporter_5"), null); //$NON-NLS-1$
+      BasicDiagnostic diagnosticChain = new BasicDiagnostic(ConverterPlugin.ID, ConverterUtil.ACTION_MESSAGE_NONE, Messages.getString("CDOImporter_5"), null); //$NON-NLS-1$
       for (EPackage ePackage : getEPackages())
       {
         Diagnostician.INSTANCE.validate(ePackage, diagnosticChain);

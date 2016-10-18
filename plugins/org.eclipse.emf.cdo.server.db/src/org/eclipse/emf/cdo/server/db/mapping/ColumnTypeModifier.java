@@ -41,8 +41,7 @@ public abstract class ColumnTypeModifier
   /**
    * Can modify the column type of a {@link ITypeMapping type mapping} that is created by the {@link ITypeMapping.Registry type mapping registry}.
    */
-  public abstract DBType modify(ITypeMapping.Provider provider, IMappingStrategy mappingStrategy,
-      EStructuralFeature feature, DBType dbType);
+  public abstract DBType modify(ITypeMapping.Provider provider, IMappingStrategy mappingStrategy, EStructuralFeature feature, DBType dbType);
 
   /**
    * Creates {@link ColumnTypeModifier} instances.

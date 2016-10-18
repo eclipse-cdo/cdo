@@ -109,8 +109,7 @@ public final class CDOCheckoutViewerRefresh extends ViewerRefresh
       }
       else
       {
-        RunnableViewerNotification newResult = new RunnableViewerNotification(result.getElement(),
-            result.isContentRefresh(), result.isLabelUpdate());
+        RunnableViewerNotification newResult = new RunnableViewerNotification(result.getElement(), result.isContentRefresh(), result.isLabelUpdate());
         newResult.getRunnables().addAll(runnables);
         result = newResult;
       }

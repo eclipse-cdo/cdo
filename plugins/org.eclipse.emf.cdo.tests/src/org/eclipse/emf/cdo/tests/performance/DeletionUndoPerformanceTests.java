@@ -96,11 +96,9 @@ public class DeletionUndoPerformanceTests extends AbstractCDOTest
   {
     NodeA rootNodeA = (NodeA)resource.getContents().get(0);
 
-    TransactionalEditingDomain domain = TransactionalEditingDomain.Factory.INSTANCE
-        .createEditingDomain(resource.getResourceSet());
+    TransactionalEditingDomain domain = TransactionalEditingDomain.Factory.INSTANCE.createEditingDomain(resource.getResourceSet());
 
-    ((ComposedAdapterFactory)((AdapterFactoryEditingDomain)domain).getAdapterFactory())
-        .addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+    ((ComposedAdapterFactory)((AdapterFactoryEditingDomain)domain).getAdapterFactory()).addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
     CommandStack commandStack = domain.getCommandStack();
 

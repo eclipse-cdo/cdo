@@ -91,13 +91,11 @@ public class IsLoadingTestFixture
 
   public void assertReportedLoading(Resource resource, EObject object)
   {
-    Assert.assertEquals("Object did not report loading: " + object, true,
-        getObjectsReportedLoading(resource).contains(object));
+    Assert.assertEquals("Object did not report loading: " + object, true, getObjectsReportedLoading(resource).contains(object));
   }
 
   public void assertNotReportedLoading(Resource resource, EObject object)
   {
-    Assert.assertEquals("Object reported loading: " + object, false,
-        getObjectsReportedLoading(resource).contains(object));
+    Assert.assertEquals("Object reported loading: " + object, false, getObjectsReportedLoading(resource).contains(object));
   }
 }

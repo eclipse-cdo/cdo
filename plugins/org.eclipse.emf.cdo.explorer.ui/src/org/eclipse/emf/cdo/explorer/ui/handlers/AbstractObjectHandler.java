@@ -138,6 +138,5 @@ public abstract class AbstractObjectHandler extends AbstractBaseHandler<EObject>
     }
   }
 
-  protected abstract boolean doExecute(ExecutionEvent event, List<EObject> transactionalElements,
-      IProgressMonitor monitor);
+  protected abstract boolean doExecute(ExecutionEvent event, List<EObject> transactionalElements, IProgressMonitor monitor);
 }

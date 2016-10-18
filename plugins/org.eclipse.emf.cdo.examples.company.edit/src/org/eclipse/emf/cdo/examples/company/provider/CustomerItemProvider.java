@@ -63,11 +63,9 @@ public class CustomerItemProvider extends AddressableItemProvider
    */
   protected void addSalesOrdersPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Customer_salesOrders_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_Customer_salesOrders_feature", "_UI_Customer_type"),
-            CompanyPackage.Literals.CUSTOMER__SALES_ORDERS, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Customer_salesOrders_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Customer_salesOrders_feature", "_UI_Customer_type"),
+        CompanyPackage.Literals.CUSTOMER__SALES_ORDERS, true, false, true, null, null, null));
   }
 
   /**
@@ -100,8 +98,7 @@ public class CustomerItemProvider extends AddressableItemProvider
   public String getText(Object object)
   {
     String label = ((Customer)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_Customer_type")
-        : getString("_UI_Customer_type") + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_Customer_type") : getString("_UI_Customer_type") + " " + label;
   }
 
   /**

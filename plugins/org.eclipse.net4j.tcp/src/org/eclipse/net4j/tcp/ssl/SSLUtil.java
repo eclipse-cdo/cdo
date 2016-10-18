@@ -82,8 +82,7 @@ public class SSLUtil
     passPhraseVar = passPhrase;
   }
 
-  public static synchronized void setDefaultSSLConfiguration(String keyPath, String trustPath, String passPhrase,
-      int handShakeTimeOut, int handShakeWaitTime)
+  public static synchronized void setDefaultSSLConfiguration(String keyPath, String trustPath, String passPhrase, int handShakeTimeOut, int handShakeWaitTime)
   {
     setDefaultSSLConfiguration(keyPath, trustPath, passPhrase);
 
@@ -112,8 +111,7 @@ public class SSLUtil
 
   public static synchronized ITCPConnector getConnector(IManagedContainer container, String description)
   {
-    return (ITCPConnector)container.getElement(TCPConnectorFactory.PRODUCT_GROUP, SSLConnectorFactory.TYPE,
-        description);
+    return (ITCPConnector)container.getElement(TCPConnectorFactory.PRODUCT_GROUP, SSLConnectorFactory.TYPE, description);
   }
 
   public static synchronized SSLEngine createSSLEngine(boolean client, String host, int port) throws Exception
@@ -177,12 +175,12 @@ public class SSLUtil
     {
       if (client)
       {
-        throw new KeyStoreException("Trust Store[" + (trustPath != null) + "] or Pass Phrase[" + (passPhrase != null)
-            + "] is not provided. [false] means it does not exist.");
+        throw new KeyStoreException(
+            "Trust Store[" + (trustPath != null) + "] or Pass Phrase[" + (passPhrase != null) + "] is not provided. [false] means it does not exist.");
       }
 
-      throw new KeyStoreException("Key Store[" + (keyPath != null) + "] or Pass Phrase[" + (passPhrase != null)
-          + "] is not provided. [false] means it does not exist.");
+      throw new KeyStoreException(
+          "Key Store[" + (keyPath != null) + "] or Pass Phrase[" + (passPhrase != null) + "] is not provided. [false] means it does not exist.");
     }
 
     char[] pass = passPhrase.toCharArray();

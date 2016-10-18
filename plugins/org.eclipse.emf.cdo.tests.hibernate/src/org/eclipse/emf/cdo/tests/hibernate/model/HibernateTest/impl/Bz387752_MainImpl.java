@@ -179,8 +179,8 @@ public class Bz387752_MainImpl extends EObjectImpl implements Bz387752_Main
     strUnsettableESet = true;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ387752_MAIN__STR_UNSETTABLE,
-          oldStrUnsettable, strUnsettable, !oldStrUnsettableESet));
+      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ387752_MAIN__STR_UNSETTABLE, oldStrUnsettable, strUnsettable,
+          !oldStrUnsettableESet));
     }
   }
 
@@ -197,8 +197,8 @@ public class Bz387752_MainImpl extends EObjectImpl implements Bz387752_Main
     strUnsettableESet = false;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.UNSET, HibernateTestPackage.BZ387752_MAIN__STR_UNSETTABLE,
-          oldStrUnsettable, STR_UNSETTABLE_EDEFAULT, oldStrUnsettableESet));
+      eNotify(new ENotificationImpl(this, Notification.UNSET, HibernateTestPackage.BZ387752_MAIN__STR_UNSETTABLE, oldStrUnsettable, STR_UNSETTABLE_EDEFAULT,
+          oldStrUnsettableESet));
     }
   }
 
@@ -233,8 +233,7 @@ public class Bz387752_MainImpl extends EObjectImpl implements Bz387752_Main
     strSettable = newStrSettable;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ387752_MAIN__STR_SETTABLE,
-          oldStrSettable, strSettable));
+      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ387752_MAIN__STR_SETTABLE, oldStrSettable, strSettable));
     }
   }
 
@@ -259,8 +258,7 @@ public class Bz387752_MainImpl extends EObjectImpl implements Bz387752_Main
     enumSettable = newEnumSettable == null ? ENUM_SETTABLE_EDEFAULT : newEnumSettable;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ387752_MAIN__ENUM_SETTABLE,
-          oldEnumSettable, enumSettable));
+      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ387752_MAIN__ENUM_SETTABLE, oldEnumSettable, enumSettable));
     }
   }
 
@@ -287,8 +285,8 @@ public class Bz387752_MainImpl extends EObjectImpl implements Bz387752_Main
     enumUnsettableESet = true;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ387752_MAIN__ENUM_UNSETTABLE,
-          oldEnumUnsettable, enumUnsettable, !oldEnumUnsettableESet));
+      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ387752_MAIN__ENUM_UNSETTABLE, oldEnumUnsettable, enumUnsettable,
+          !oldEnumUnsettableESet));
     }
   }
 
@@ -305,8 +303,8 @@ public class Bz387752_MainImpl extends EObjectImpl implements Bz387752_Main
     enumUnsettableESet = false;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.UNSET, HibernateTestPackage.BZ387752_MAIN__ENUM_UNSETTABLE,
-          oldEnumUnsettable, ENUM_UNSETTABLE_EDEFAULT, oldEnumUnsettableESet));
+      eNotify(new ENotificationImpl(this, Notification.UNSET, HibernateTestPackage.BZ387752_MAIN__ENUM_UNSETTABLE, oldEnumUnsettable, ENUM_UNSETTABLE_EDEFAULT,
+          oldEnumUnsettableESet));
     }
   }
 

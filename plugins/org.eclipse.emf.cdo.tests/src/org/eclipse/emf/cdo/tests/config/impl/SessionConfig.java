@@ -351,8 +351,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     {
       IRepository repository = getCurrentTest().getRepository(repositoryName);
 
-      org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration configuration = CDOServerUtil
-          .createSessionConfiguration();
+      org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration configuration = CDOServerUtil.createSessionConfiguration();
       configuration.setRepository(repository);
       return configuration;
     }

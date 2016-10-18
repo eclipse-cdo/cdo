@@ -78,8 +78,7 @@ public class ContainedObjectImpl extends CDOObjectImpl implements ContainedObjec
    */
   public EObject getObject()
   {
-    return (EObject)eDynamicGet(ExpressionsPackage.CONTAINED_OBJECT__OBJECT,
-        ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, true, true);
+    return (EObject)eDynamicGet(ExpressionsPackage.CONTAINED_OBJECT__OBJECT, ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, true, true);
   }
 
   /**
@@ -100,8 +99,7 @@ public class ContainedObjectImpl extends CDOObjectImpl implements ContainedObjec
   	 */
   public void setObject(EObject newObject)
   {
-    eDynamicSet(ExpressionsPackage.CONTAINED_OBJECT__OBJECT, ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT,
-        newObject);
+    eDynamicSet(ExpressionsPackage.CONTAINED_OBJECT__OBJECT, ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, newObject);
   }
 
   /**

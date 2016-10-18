@@ -123,8 +123,7 @@ public class Bugzilla_328352_Test extends AbstractSyncingTest
     catA.setName(catA.getName() + " empty");
     masterTransaction.commit();
 
-    System.out.println(MessageFormat.format("## Committing changes on {0} products took: {1}", NUM_PRODUCTS,
-        System.currentTimeMillis() - start));
+    System.out.println(MessageFormat.format("## Committing changes on {0} products took: {1}", NUM_PRODUCTS, System.currentTimeMillis() - start));
 
     // session.waitForUpdate(masterTransaction.getLastCommitTime(), 5000);
     for (CDOView view : cloneViews)

@@ -37,8 +37,7 @@ public class CredentialsChallengeRequest extends RequestWithMonitoring<Response>
 
   private CredentialsUpdateOperation operation;
 
-  public CredentialsChallengeRequest(CDOServerProtocol protocol, Challenge challenge, String userID,
-      CredentialsUpdateOperation operation)
+  public CredentialsChallengeRequest(CDOServerProtocol protocol, Challenge challenge, String userID, CredentialsUpdateOperation operation)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_CREDENTIALS_CHALLENGE);
     this.challenge = challenge;

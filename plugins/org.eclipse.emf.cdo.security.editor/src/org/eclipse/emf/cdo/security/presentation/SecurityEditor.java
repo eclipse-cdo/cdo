@@ -126,8 +126,7 @@ import java.util.Map;
  * <!-- end-user-doc -->
  * @generated
  */
-public class SecurityEditor extends MultiPageEditorPart
-    implements IEditingDomainProvider, ISelectionProvider, IMenuListener, IViewerProvider, IGotoMarker
+public class SecurityEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider, IMenuListener, IViewerProvider, IGotoMarker
 {
   /**
    * This keeps track of the editing domain that is used to track all changes to the model.
@@ -420,11 +419,9 @@ public class SecurityEditor extends MultiPageEditorPart
           {
             if (delta.getResource().getType() == IResource.FILE)
             {
-              if (delta.getKind() == IResourceDelta.REMOVED
-                  || delta.getKind() == IResourceDelta.CHANGED && delta.getFlags() != IResourceDelta.MARKERS)
+              if (delta.getKind() == IResourceDelta.REMOVED || delta.getKind() == IResourceDelta.CHANGED && delta.getFlags() != IResourceDelta.MARKERS)
               {
-                Resource resource = resourceSet
-                    .getResource(URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
+                Resource resource = resourceSet.getResource(URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
                 if (resource != null)
                 {
                   if (delta.getKind() == IResourceDelta.REMOVED)
@@ -981,8 +978,7 @@ public class SecurityEditor extends MultiPageEditorPart
     boolean hasErrors = !resource.getErrors().isEmpty();
     if (hasErrors || !resource.getWarnings().isEmpty())
     {
-      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(hasErrors ? Diagnostic.ERROR : Diagnostic.WARNING,
-          "org.eclipse.emf.cdo.security.editor", //$NON-NLS-1$
+      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(hasErrors ? Diagnostic.ERROR : Diagnostic.WARNING, "org.eclipse.emf.cdo.security.editor", //$NON-NLS-1$
           0, getString("_UI_CreateModelError_message", resource.getURI()), //$NON-NLS-1$
           new Object[] { exception == null ? (Object)resource : exception });
       basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
@@ -1024,8 +1020,7 @@ public class SecurityEditor extends MultiPageEditorPart
       setCurrentViewer(selectionViewer);
 
       selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-      selectionViewer
-          .setLabelProvider(new AdapterFactoryLabelProvider.FontAndColorProvider(adapterFactory, selectionViewer));
+      selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider.FontAndColorProvider(adapterFactory, selectionViewer));
       selectionViewer.setInput(editingDomain.getResourceSet());
       selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
 
@@ -1183,8 +1178,7 @@ public class SecurityEditor extends MultiPageEditorPart
           // Set up the tree viewer.
           //
           contentOutlineViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-          contentOutlineViewer.setLabelProvider(
-              new AdapterFactoryLabelProvider.FontAndColorProvider(adapterFactory, contentOutlineViewer));
+          contentOutlineViewer.setLabelProvider(new AdapterFactoryLabelProvider.FontAndColorProvider(adapterFactory, contentOutlineViewer));
           contentOutlineViewer.setInput(editingDomain.getResourceSet());
 
           // Make sure our popups work.
@@ -1195,14 +1189,12 @@ public class SecurityEditor extends MultiPageEditorPart
           {
             // Select the root object in the view.
             //
-            contentOutlineViewer
-                .setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
+            contentOutlineViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
           }
         }
 
         @Override
-        public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager,
-            IStatusLineManager statusLineManager)
+        public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager, IStatusLineManager statusLineManager)
         {
           super.makeContributions(menuManager, toolBarManager, statusLineManager);
           contentOutlineStatusLineManager = statusLineManager;
@@ -1335,8 +1327,7 @@ public class SecurityEditor extends MultiPageEditorPart
         boolean first = true;
         for (Resource resource : editingDomain.getResourceSet().getResources())
         {
-          if ((first || !resource.getContents().isEmpty() || isPersisted(resource))
-              && !editingDomain.isReadOnly(resource))
+          if ((first || !resource.getContents().isEmpty() || isPersisted(resource)) && !editingDomain.isReadOnly(resource))
           {
             try
             {
@@ -1449,8 +1440,8 @@ public class SecurityEditor extends MultiPageEditorPart
     editingDomain.getResourceSet().getResources().get(0).setURI(uri);
     setInputWithNotify(editorInput);
     setPartName(editorInput.getName());
-    IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null
-        ? getActionBars().getStatusLineManager().getProgressMonitor() : new NullProgressMonitor();
+    IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars().getStatusLineManager().getProgressMonitor()
+        : new NullProgressMonitor();
     doSave(progressMonitor);
   }
 
@@ -1554,8 +1545,8 @@ public class SecurityEditor extends MultiPageEditorPart
    */
   public void setStatusLineManager(ISelection selection)
   {
-    IStatusLineManager statusLineManager = currentViewer != null && currentViewer == contentOutlineViewer
-        ? contentOutlineStatusLineManager : getActionBars().getStatusLineManager();
+    IStatusLineManager statusLineManager = currentViewer != null && currentViewer == contentOutlineViewer ? contentOutlineStatusLineManager
+        : getActionBars().getStatusLineManager();
 
     if (statusLineManager != null)
     {

@@ -58,8 +58,8 @@ public final class CDOCommitInfoUtil
   /**
    * @since 4.2
    */
-  public static CDOCommitData createCommitData(List<CDOPackageUnit> newPackageUnits, List<CDOIDAndVersion> newObjects,
-      List<CDORevisionKey> changedObjects, List<CDOIDAndVersion> detachedObjects)
+  public static CDOCommitData createCommitData(List<CDOPackageUnit> newPackageUnits, List<CDOIDAndVersion> newObjects, List<CDORevisionKey> changedObjects,
+      List<CDOIDAndVersion> detachedObjects)
   {
     return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);
   }

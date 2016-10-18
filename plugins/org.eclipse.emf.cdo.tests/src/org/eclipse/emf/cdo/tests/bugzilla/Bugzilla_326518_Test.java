@@ -96,8 +96,7 @@ public class Bugzilla_326518_Test extends AbstractCDOTest
 
     // merge the other branch to main.
     sleep(1000L);
-    CDOChangeSetData changes = transaction1.merge(transaction2.getBranch().getHead(),
-        new DefaultCDOMerger.PerFeature.ManyValued());
+    CDOChangeSetData changes = transaction1.merge(transaction2.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
 
     printChangeSetData(changes);
 

@@ -68,8 +68,7 @@ public class TransportConfigurator
     return container;
   }
 
-  public IAcceptor[] configure(File configFile)
-      throws ParserConfigurationException, SAXException, IOException, CoreException
+  public IAcceptor[] configure(File configFile) throws ParserConfigurationException, SAXException, IOException, CoreException
   {
     if (TRACER.isEnabled())
     {
@@ -153,8 +152,7 @@ public class TransportConfigurator
     String description = streamWrapperConfig.getAttribute("description"); //$NON-NLS-1$
     String protocolName = streamWrapperConfig.getAttribute("protocol");//$NON-NLS-1$
 
-    IStreamWrapper streamWrapper = (IStreamWrapper)container.getElement(IStreamWrapper.Factory.PRODUCT_GROUP, type,
-        description);
+    IStreamWrapper streamWrapper = (IStreamWrapper)container.getElement(IStreamWrapper.Factory.PRODUCT_GROUP, type, description);
     if (streamWrapper != null)
     {
       IElementProcessor injector = new AcceptorStreamWrapperInjector(protocolName, acceptor, streamWrapper);
@@ -232,8 +230,7 @@ public class TransportConfigurator
     }
 
     @Override
-    protected boolean shouldInject(IManagedContainer container, String productGroup, String factoryType,
-        String description, SignalProtocol<?> signalProtocol)
+    protected boolean shouldInject(IManagedContainer container, String productGroup, String factoryType, String description, SignalProtocol<?> signalProtocol)
     {
       if (super.shouldInject(container, productGroup, factoryType, description, signalProtocol))
       {

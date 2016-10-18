@@ -204,8 +204,7 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
     delegate.repairAfterCrash(dbAdapter, connection);
   }
 
-  public void handleRevisions(IDBStoreAccessor accessor, EClass eClass, CDOBranch branch, long timeStamp,
-      boolean exactTime, CDORevisionHandler handler)
+  public void handleRevisions(IDBStoreAccessor accessor, EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     delegate.handleRevisions(accessor, eClass, branch, timeStamp, exactTime, handler);
   }
@@ -215,14 +214,13 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
     return delegate.readChangeSet(accessor, monitor, segments);
   }
 
-  public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, int lastReplicatedBranchID, int lastBranchID,
-      long lastReplicatedCommitTime, long lastCommitTime) throws IOException
+  public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, int lastReplicatedBranchID, int lastBranchID, long lastReplicatedCommitTime,
+      long lastCommitTime) throws IOException
   {
     delegate.rawExport(accessor, out, lastReplicatedBranchID, lastBranchID, lastReplicatedCommitTime, lastCommitTime);
   }
 
-  public void rawImport(IDBStoreAccessor accessor, CDODataInput in, long fromCommitTime, long toCommitTime,
-      OMMonitor monitor) throws IOException
+  public void rawImport(IDBStoreAccessor accessor, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
     delegate.rawImport(accessor, in, fromCommitTime, toCommitTime, monitor);
   }

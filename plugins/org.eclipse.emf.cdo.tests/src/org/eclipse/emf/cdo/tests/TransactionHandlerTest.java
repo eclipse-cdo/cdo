@@ -373,8 +373,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return handler.listOfAddingObject.size() == 1 && handler.listOfDetachingObject.size() == 1
-            && handler.listOfModifyinObject.size() == 2;
+        return handler.listOfAddingObject.size() == 1 && handler.listOfDetachingObject.size() == 1 && handler.listOfModifyinObject.size() == 2;
       }
     }.assertNoTimeOut();
 

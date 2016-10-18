@@ -102,8 +102,7 @@ public class DawnChangeHelper
    */
   public static EditPart createNode(final Node node, IElementType elementType, DiagramEditPart diagramEP)
   {
-    CreateViewRequest createViewRequest = CreateViewRequestFactory.getCreateShapeRequest(elementType,
-        diagramEP.getDiagramPreferencesHint());
+    CreateViewRequest createViewRequest = CreateViewRequestFactory.getCreateShapeRequest(elementType, diagramEP.getDiagramPreferencesHint());
 
     Bounds bounds = (Bounds)node.getLayoutConstraint();
 
@@ -131,8 +130,8 @@ public class DawnChangeHelper
     CreateElementRequest request = new CreateElementRequest(elementType);
     CreateElementRequestAdapter createElementRequestAdapter = new CreateElementRequestAdapter(request);
 
-    ViewAndElementDescriptor viewAndElementDescriptor = new ViewAndElementDescriptor(createElementRequestAdapter,
-        Node.class, ((IHintedType)elementType).getSemanticHint(),
+    ViewAndElementDescriptor viewAndElementDescriptor = new ViewAndElementDescriptor(createElementRequestAdapter, Node.class,
+        ((IHintedType)elementType).getSemanticHint(),
 
         parentEditpart.getDiagramPreferencesHint());
 
@@ -162,8 +161,7 @@ public class DawnChangeHelper
   {
     DiagramEditPart diagramEP = diagramEditor.getDiagramEditPart();
 
-    CreateViewRequest createViewRequest = CreateViewRequestFactory.getCreateShapeRequest(elementType,
-        diagramEP.getDiagramPreferencesHint());
+    CreateViewRequest createViewRequest = CreateViewRequestFactory.getCreateShapeRequest(elementType, diagramEP.getDiagramPreferencesHint());
 
     createViewRequest.setLocation(p);
     diagramEP.performRequest(createViewRequest);
@@ -181,11 +179,9 @@ public class DawnChangeHelper
    * @param object
    * @param dawnDiagramEditor
    ********************************************************************************************************************/
-  public static void setProperty(EditPart editPart, String name, String packageUtilPropertyID, Object object,
-      DiagramDocumentEditor dawnDiagramEditor)
+  public static void setProperty(EditPart editPart, String name, String packageUtilPropertyID, Object object, DiagramDocumentEditor dawnDiagramEditor)
   {
-    SetPropertyCommand setPropertyCommand = new SetPropertyCommand(dawnDiagramEditor.getEditingDomain(), editPart,
-        packageUtilPropertyID, name, object);
+    SetPropertyCommand setPropertyCommand = new SetPropertyCommand(dawnDiagramEditor.getEditingDomain(), editPart, packageUtilPropertyID, name, object);
 
     DiagramEditPart diagramEP = dawnDiagramEditor.getDiagramEditPart();
 
@@ -202,8 +198,7 @@ public class DawnChangeHelper
    ********************************************************************************************************************/
   public static void resizeEditPart(EditPart editpart, Dimension d)
   {
-    boolean editModeEnabled = ((org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart)editpart)
-        .isEditModeEnabled();
+    boolean editModeEnabled = ((org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart)editpart).isEditModeEnabled();
     if (!editModeEnabled)
     {
       ((org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart)editpart).enableEditMode();
@@ -354,8 +349,7 @@ public class DawnChangeHelper
     EObject referenceObject = ViewUtil.resolveSemanticElement(edge.getTarget());
     EObject container = ViewUtil.resolveSemanticElement(edge.getSource());
     EditPart parentEditpart = DawnDiagramUpdater.findEditPart(edge, editor.getDiagramEditPart().getViewer());
-    DestroyReferenceRequest destroyReferenceRequest = new DestroyReferenceRequest(editor.getEditingDomain(), container,
-        null, referenceObject, false);
+    DestroyReferenceRequest destroyReferenceRequest = new DestroyReferenceRequest(editor.getEditingDomain(), container, null, referenceObject, false);
     Request req = new EditCommandRequestWrapper(destroyReferenceRequest);
 
     Command command = parentEditpart.getCommand(req);
@@ -372,27 +366,24 @@ public class DawnChangeHelper
    * @param root
    * @return the newly created EditPart
    ********************************************************************************************************************/
-  public static EditPart createEdge(Edge oldEdge, EditPart sourceEditPart, EditPart targetEditPart,
-      IElementType elementType, final DiagramEditPart root)
+  public static EditPart createEdge(Edge oldEdge, EditPart sourceEditPart, EditPart targetEditPart, IElementType elementType, final DiagramEditPart root)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Creaeting Edge from old edge {0} ", oldEdge); //$NON-NLS-1$
     }
 
-    CreateConnectionViewAndElementRequest req = new CreateConnectionViewAndElementRequest(elementType,
-        ((IHintedType)elementType).getSemanticHint(), root.getDiagramPreferencesHint());
+    CreateConnectionViewAndElementRequest req = new CreateConnectionViewAndElementRequest(elementType, ((IHintedType)elementType).getSemanticHint(),
+        root.getDiagramPreferencesHint());
 
-    ICommand createConnectionCmd = new DeferredCreateConnectionViewAndElementCommand(req,
-        new EObjectAdapter((EObject)sourceEditPart.getModel()), new EObjectAdapter((EObject)targetEditPart.getModel()),
-        root.getViewer());
+    ICommand createConnectionCmd = new DeferredCreateConnectionViewAndElementCommand(req, new EObjectAdapter((EObject)sourceEditPart.getModel()),
+        new EObjectAdapter((EObject)targetEditPart.getModel()), root.getViewer());
 
     root.getDiagramEditDomain().getDiagramCommandStack().execute(new ICommandProxy(createConnectionCmd));
 
     final EditPartViewer viewer = root.getViewer();
 
-    final EditPart ret = (EditPart)viewer.getEditPartRegistry()
-        .get(((ConnectionViewAndElementDescriptor)req.getNewObject()).getAdapter(View.class));
+    final EditPart ret = (EditPart)viewer.getEditPartRegistry().get(((ConnectionViewAndElementDescriptor)req.getNewObject()).getAdapter(View.class));
 
     if (ret != null)
     {
@@ -408,8 +399,7 @@ public class DawnChangeHelper
    * @param oldEdge
    * @param root
    ********************************************************************************************************************/
-  public static void setAnchorsAndBendPoints(final EditPart edgeEditpart, final Edge oldEdge,
-      final DiagramEditPart root)
+  public static void setAnchorsAndBendPoints(final EditPart edgeEditpart, final Edge oldEdge, final DiagramEditPart root)
   {
     TransactionalEditingDomain domain = root.getEditingDomain();// getEditingDomain();
     domain.getCommandStack().execute(new RecordingCommand(domain)
@@ -575,11 +565,9 @@ public class DawnChangeHelper
    * @param object
    * @param dawnDiagramEditor
    ********************************************************************************************************************/
-  public static void setProperty(EditPart editPart, String name, EAttribute attribute, Object object,
-      DiagramDocumentEditor dawnDiagramEditor)
+  public static void setProperty(EditPart editPart, String name, EAttribute attribute, Object object, DiagramDocumentEditor dawnDiagramEditor)
   {
-    SetPropertyCommand setPropertyCommand = new SetPropertyCommand(dawnDiagramEditor.getEditingDomain(), editPart,
-        PackageUtil.getID(attribute), name, object);
+    SetPropertyCommand setPropertyCommand = new SetPropertyCommand(dawnDiagramEditor.getEditingDomain(), editPart, PackageUtil.getID(attribute), name, object);
     DiagramEditPart diagramEP = dawnDiagramEditor.getDiagramEditPart();
 
     diagramEP.getDiagramEditDomain().getDiagramCommandStack().execute(new ICommandProxy(setPropertyCommand));

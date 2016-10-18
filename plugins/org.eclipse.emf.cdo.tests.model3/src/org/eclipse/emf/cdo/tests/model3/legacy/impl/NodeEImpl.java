@@ -117,8 +117,7 @@ public class NodeEImpl extends EObjectImpl implements NodeE
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model3Package.NODE_E__MAIN_NODE, oldMainNode,
-              mainNode));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model3Package.NODE_E__MAIN_NODE, oldMainNode, mainNode));
         }
       }
     }

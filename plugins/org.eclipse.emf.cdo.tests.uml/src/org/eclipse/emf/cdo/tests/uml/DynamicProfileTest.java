@@ -40,8 +40,7 @@ import org.eclipse.uml2.uml.resource.UMLResource;
 @Requires(ModelConfig.CAPABILITY_LEGACY)
 public class DynamicProfileTest extends AbstractCDOTest
 {
-  private final EPackage stuffPackage = EPackage.Registry.INSTANCE
-      .getEPackage("http://www.eclipse.org/cdo/tests/schema/stuff/1.0");
+  private final EPackage stuffPackage = EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/cdo/tests/schema/stuff/1.0");
 
   private final EFactory originalStuffFactory = stuffPackage.getEFactoryInstance();
 
@@ -94,8 +93,7 @@ public class DynamicProfileTest extends AbstractCDOTest
 
     // verify that using the UML API to access the applied stereotype works as usual
     assertEquals("Stereotype doesn't appear to be applied.", true, aClass.isStereotypeApplied(conceptStereotype));
-    assertEquals("Wrong stereotype EClass.",
-        transaction.getResourceSet().getPackageRegistry().getEPackage(MY_PROFILE_URI).getEClassifier(S_CONCEPT),
+    assertEquals("Wrong stereotype EClass.", transaction.getResourceSet().getPackageRegistry().getEPackage(MY_PROFILE_URI).getEClassifier(S_CONCEPT),
         aClass.getStereotypeApplication(conceptStereotype).eClass());
   }
 
@@ -154,8 +152,7 @@ public class DynamicProfileTest extends AbstractCDOTest
 
     // don't have the version of UML2 API that fixes problems in name-based look-up of stereotypes.
     // The main point is that commit didn't fail on unresolved proxies in the Ecore definition
-    assertSame("Wrong base element reference.", aClass,
-        stereotypeApplication.eGet(stereotypeApplication.eClass().getEStructuralFeature("base_Classifier")));
+    assertSame("Wrong base element reference.", aClass, stereotypeApplication.eGet(stereotypeApplication.eClass().getEStructuralFeature("base_Classifier")));
   }
 
   //

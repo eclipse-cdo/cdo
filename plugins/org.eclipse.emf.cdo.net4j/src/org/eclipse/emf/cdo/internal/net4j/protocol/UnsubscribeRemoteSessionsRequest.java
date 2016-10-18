@@ -24,8 +24,7 @@ import java.io.IOException;
  */
 public class UnsubscribeRemoteSessionsRequest extends CDOClientRequest<Boolean>
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      UnsubscribeRemoteSessionsRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, UnsubscribeRemoteSessionsRequest.class);
 
   public UnsubscribeRemoteSessionsRequest(CDOClientProtocol protocol)
   {

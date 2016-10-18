@@ -346,8 +346,7 @@ public class SSLEngineManager
   public void checkRehandShake(SocketChannel socket) throws Exception
   {
     handshakeStatus = engineResult.getHandshakeStatus();
-    needRehandShake = handshakeStatus == SSLEngineResult.HandshakeStatus.NEED_TASK
-        || handshakeStatus == SSLEngineResult.HandshakeStatus.NEED_UNWRAP
+    needRehandShake = handshakeStatus == SSLEngineResult.HandshakeStatus.NEED_TASK || handshakeStatus == SSLEngineResult.HandshakeStatus.NEED_UNWRAP
         || handshakeStatus == SSLEngineResult.HandshakeStatus.NEED_WRAP;
 
     if (needRehandShake)

@@ -294,8 +294,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     int customerCounter = 0;
     for (Notification notification : testAdapter.getNotifications())
     {
-      if (notification.getFeature().equals(getModel1Package().getCompany_Customers())
-          && notification.getEventType() == Notification.ADD)
+      if (notification.getFeature().equals(getModel1Package().getCompany_Customers()) && notification.getEventType() == Notification.ADD)
       {
         customerCounter++;
       }

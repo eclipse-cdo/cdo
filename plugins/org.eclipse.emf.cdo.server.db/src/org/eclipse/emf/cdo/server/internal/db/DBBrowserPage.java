@@ -89,10 +89,9 @@ public class DBBrowserPage extends AbstractPage
     boolean schema = browser.isParam("schema");
 
     pout.print("<table border=\"0\">\r\n");
-    pout.print("<tr><td><b>Empty tables:</b></td><td><b>"
-        + browser.href(used ? "Hidden" : "Shown", getName(), "used", String.valueOf(!used)) + "</b></td></tr>\r\n");
-    pout.print("<tr><td><b>Row data:</b></td><td><b>"
-        + browser.href(schema ? "Hidden" : "Shown", getName(), "schema", String.valueOf(!schema))
+    pout.print(
+        "<tr><td><b>Empty tables:</b></td><td><b>" + browser.href(used ? "Hidden" : "Shown", getName(), "used", String.valueOf(!used)) + "</b></td></tr>\r\n");
+    pout.print("<tr><td><b>Row data:</b></td><td><b>" + browser.href(schema ? "Hidden" : "Shown", getName(), "schema", String.valueOf(!schema))
         + "</b></td></tr>\r\n");
     pout.print("</table><br>\r\n");
 
@@ -170,8 +169,7 @@ public class DBBrowserPage extends AbstractPage
     }
   }
 
-  protected void executeQuery(CDOServerBrowser browser, PrintStream pout, Connection connection, String table,
-      String sql)
+  protected void executeQuery(CDOServerBrowser browser, PrintStream pout, Connection connection, String table, String sql)
   {
     String order = browser.getParam("order");
     String direction = browser.getParam("direction");

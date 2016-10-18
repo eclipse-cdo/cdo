@@ -94,8 +94,7 @@ public class ExportResourceActionDelegate extends TransactionalBackgroundActionD
   {
     // Target Resource
     ResourceSet resourceSet = new ResourceSetImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION,
-        new XMIResourceFactoryImpl());
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
     Resource resource = resourceSet.createResource(targetURI);
 
     Collection<EObject> copiedRoots = EcoreUtil.copyAll(sourceContents);

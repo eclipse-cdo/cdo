@@ -51,8 +51,7 @@ public class OrFilterImpl extends CombinedFilterImpl implements OrFilter
   }
 
   @Override
-  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
-      int level) throws Exception
+  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext, int level) throws Exception
   {
     ++level;
     for (PermissionFilter operand : getOperands())

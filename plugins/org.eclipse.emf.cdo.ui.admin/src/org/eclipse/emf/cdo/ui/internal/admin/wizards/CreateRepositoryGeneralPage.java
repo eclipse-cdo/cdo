@@ -85,8 +85,7 @@ public class CreateRepositoryGeneralPage extends AbstractCreateRepositoryWizardP
     referentialIntegrityCheckbox = checkbox(properties, Messages.CreateRepositoryGeneralPage_10);
     allowInterruptQueriesCheckbox = checkbox(properties, Messages.CreateRepositoryGeneralPage_11);
     overrideUUIDText = text(properties, Messages.CreateRepositoryGeneralPage_12);
-    idGenerationLocationCombo = combo(properties, Messages.CreateRepositoryGeneralPage_13,
-        IDGenerationLocation.values());
+    idGenerationLocationCombo = combo(properties, Messages.CreateRepositoryGeneralPage_13, IDGenerationLocation.values());
 
     Group security = group(composite, Messages.CreateRepositoryGeneralPage_14);
     securityCheckbox = checkbox(security, Messages.CreateRepositoryGeneralPage_2);

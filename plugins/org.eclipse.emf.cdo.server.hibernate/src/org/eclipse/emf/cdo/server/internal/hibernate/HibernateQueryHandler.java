@@ -82,8 +82,7 @@ public class HibernateQueryHandler implements IQueryHandler
           }
           catch (ClassCastException e)
           {
-            throw new IllegalArgumentException(
-                "Parameter " + IHibernateStore.CACHE_RESULTS + " must be a boolean. errorMessage " + e.getMessage()); //$NON-NLS-1$
+            throw new IllegalArgumentException("Parameter " + IHibernateStore.CACHE_RESULTS + " must be a boolean. errorMessage " + e.getMessage()); //$NON-NLS-1$
           }
         }
         else if (key.compareToIgnoreCase(IHibernateStore.FIRST_RESULT) == 0)
@@ -217,8 +216,7 @@ public class HibernateQueryHandler implements IQueryHandler
           final CDORevision previousVersion = getPreviousRevision(internalCDORevision);
           if (previousVersion != null)
           {
-            internalCDORevision.setBranchPoint(hibernateStoreAccessor.getStore().getMainBranchHead().getBranch()
-                .getPoint(1 + previousVersion.getRevised()));
+            internalCDORevision.setBranchPoint(hibernateStoreAccessor.getStore().getMainBranchHead().getBranch().getPoint(1 + previousVersion.getRevised()));
           }
         }
       }
@@ -230,17 +228,15 @@ public class HibernateQueryHandler implements IQueryHandler
 
   private CDORevision getPreviousRevision(InternalCDORevision internalCDORevision)
   {
-    final InternalCDORevisionManager cdoRevisionManager = hibernateStoreAccessor.getStore().getRepository()
-        .getRevisionManager();
+    final InternalCDORevisionManager cdoRevisionManager = hibernateStoreAccessor.getStore().getRepository().getRevisionManager();
 
-    final CDOBranchVersion cdoBranchVersion = new CDOBranchVersionImpl(
-        hibernateStoreAccessor.getStore().getMainBranchHead().getBranch(), internalCDORevision.getVersion() - 1);
+    final CDOBranchVersion cdoBranchVersion = new CDOBranchVersionImpl(hibernateStoreAccessor.getStore().getMainBranchHead().getBranch(),
+        internalCDORevision.getVersion() - 1);
     if (cdoRevisionManager.containsRevisionByVersion(internalCDORevision.getID(), cdoBranchVersion))
     {
       return cdoRevisionManager.getRevisionByVersion(internalCDORevision.getID(), cdoBranchVersion, -1, true);
     }
-    return hibernateStoreAccessor.readRevisionByVersion(internalCDORevision.getID(), cdoBranchVersion, -1,
-        cdoRevisionManager);
+    return hibernateStoreAccessor.readRevisionByVersion(internalCDORevision.getID(), cdoBranchVersion, -1, cdoRevisionManager);
   }
 
   private void addToRevisionCache(CDORevision revision)

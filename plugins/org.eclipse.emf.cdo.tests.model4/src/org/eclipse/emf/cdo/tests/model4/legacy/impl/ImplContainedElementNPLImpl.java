@@ -91,8 +91,7 @@ public class ImplContainedElementNPLImpl extends EObjectImpl implements ImplCont
     name = newName;
     if (eNotificationRequired())
     {
-      eNotify(
-          new ENotificationImpl(this, Notification.SET, model4Package.IMPL_CONTAINED_ELEMENT_NPL__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_CONTAINED_ELEMENT_NPL__NAME, oldName, name));
     }
   }
 

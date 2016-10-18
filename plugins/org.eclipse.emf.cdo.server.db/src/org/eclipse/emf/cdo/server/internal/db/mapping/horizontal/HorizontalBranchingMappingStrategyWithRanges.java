@@ -84,8 +84,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
   }
 
   @Override
-  protected void rawExportList(CDODataOutput out, IDBConnection connection, IListMapping listMapping,
-      IDBTable attrTable, String attrSuffix) throws IOException
+  protected void rawExportList(CDODataOutput out, IDBConnection connection, IListMapping listMapping, IDBTable attrTable, String attrSuffix) throws IOException
   {
     super.rawExportList(out, connection, listMapping, attrTable, attrSuffix);
 
@@ -95,8 +94,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     }
   }
 
-  private void rawExportListPostProcess(CDODataOutput out, IDBConnection connection, IDBTable attrTable,
-      String attrSuffix, IDBTable table) throws IOException
+  private void rawExportListPostProcess(CDODataOutput out, IDBConnection connection, IDBTable attrTable, String attrSuffix, IDBTable table) throws IOException
   {
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT l_t.");
@@ -122,8 +120,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     String sql = DBUtil.trace(builder.toString());
 
     IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
-        ResultSet.CONCUR_READ_ONLY, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
@@ -165,8 +162,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
   }
 
   @Override
-  protected void rawImportList(CDODataInput in, IDBConnection connection, IListMapping listMapping, OMMonitor monitor)
-      throws IOException
+  protected void rawImportList(CDODataInput in, IDBConnection connection, IListMapping listMapping, OMMonitor monitor) throws IOException
   {
     Collection<IDBTable> tables = listMapping.getDBTables();
     int size = tables.size();
@@ -192,8 +188,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     }
   }
 
-  private void rawImportListPostProcess(CDODataInput in, IDBConnection connection, IDBTable table, OMMonitor monitor)
-      throws IOException
+  private void rawImportListPostProcess(CDODataInput in, IDBConnection connection, IDBTable table, OMMonitor monitor) throws IOException
   {
     int size = in.readInt();
     if (size == 0)
@@ -278,8 +273,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     return modifyListJoin2(attrTable, listTable, join, forRawExport, false);
   }
 
-  private String modifyListJoin2(String attrTable, String listTable, String join, boolean forRawExport,
-      boolean forPostProcess)
+  private String modifyListJoin2(String attrTable, String listTable, String join, boolean forRawExport, boolean forPostProcess)
   {
     join += " AND " + listTable + ".";
 
@@ -343,8 +337,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
 
     private IDBPreparedStatement stmt;
 
-    public void handleRow(ExtendedDataInput in, Connection connection, IDBField[] fields, Object[] values)
-        throws SQLException, IOException
+    public void handleRow(ExtendedDataInput in, Connection connection, IDBField[] fields, Object[] values) throws SQLException, IOException
     {
       int versionAdded = DBUtil.asInt(values[2]);
       if (versionAdded == CDOBranchVersion.FIRST_VERSION)

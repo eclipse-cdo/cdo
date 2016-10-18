@@ -75,8 +75,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
-      SecurityEditPlugin.INSTANCE, SecurityPackage.eNS_URI);
+  protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(SecurityEditPlugin.INSTANCE, SecurityPackage.eNS_URI);
 
   /**
    * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.

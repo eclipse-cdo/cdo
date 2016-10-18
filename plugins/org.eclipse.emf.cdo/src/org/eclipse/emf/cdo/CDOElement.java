@@ -128,8 +128,7 @@ public class CDOElement extends AdapterImpl implements IAdaptable
     }
 
     CDOObject cdoObject = CDOUtil.getCDOObject(eObject, false);
-    if (cdoObject != null
-        && (FSMUtil.isInvalid(cdoObject) || cdoObject.cdoView() == null || cdoObject.cdoView().isClosed()))
+    if (cdoObject != null && (FSMUtil.isInvalid(cdoObject) || cdoObject.cdoView() == null || cdoObject.cdoView().isClosed()))
     {
       return null;
     }

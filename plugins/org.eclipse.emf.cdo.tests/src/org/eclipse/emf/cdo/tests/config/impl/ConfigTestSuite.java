@@ -55,8 +55,7 @@ public abstract class ConfigTestSuite implements IConstants
     return suite;
   }
 
-  public void addScenario(TestSuite parent, RepositoryConfig repositoryConfig, SessionConfig sessionConfig,
-      ModelConfig modelConfig)
+  public void addScenario(TestSuite parent, RepositoryConfig repositoryConfig, SessionConfig sessionConfig, ModelConfig modelConfig)
   {
     IScenario scenario = new Scenario();
     scenario.setRepositoryConfig(repositoryConfig);
@@ -168,8 +167,7 @@ public abstract class ConfigTestSuite implements IConstants
   {
     private IScenario scenario;
 
-    public TestClassWrapper(Class<? extends ConfigTest> testClass, IScenario scenario, ConfigTestSuite suite)
-        throws ConstraintsViolatedException
+    public TestClassWrapper(Class<? extends ConfigTest> testClass, IScenario scenario, ConfigTestSuite suite) throws ConstraintsViolatedException
     {
       // super(testClass, testClass.getName()); // Important for the UI to set the *qualified* class name!
       this.scenario = scenario;
@@ -197,8 +195,7 @@ public abstract class ConfigTestSuite implements IConstants
       }
     }
 
-    private void addTestsFromTestCase(final Class<?> theClass, ConfigTestSuite suite)
-        throws ConstraintsViolatedException
+    private void addTestsFromTestCase(final Class<?> theClass, ConfigTestSuite suite) throws ConstraintsViolatedException
     {
       setName(theClass.getName());
 
@@ -208,8 +205,7 @@ public abstract class ConfigTestSuite implements IConstants
       }
       catch (NoSuchMethodException e)
       {
-        addTest(
-            warning("Class " + theClass.getName() + " has no public constructor TestCase(String name) or TestCase()"));
+        addTest(warning("Class " + theClass.getName() + " has no public constructor TestCase(String name) or TestCase()"));
         return;
       }
 

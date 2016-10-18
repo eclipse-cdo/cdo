@@ -97,8 +97,7 @@ public class EObjectToEObjectKeyContainedMapImpl extends EObjectImpl implements 
     key = newKey;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY, oldKey, newKey);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY, oldKey, newKey);
       if (msgs == null)
       {
         msgs = notification;
@@ -122,13 +121,11 @@ public class EObjectToEObjectKeyContainedMapImpl extends EObjectImpl implements 
       NotificationChain msgs = null;
       if (key != null)
       {
-        msgs = ((InternalEObject)key).eInverseRemove(this,
-            EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY, null, msgs);
+        msgs = ((InternalEObject)key).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY, null, msgs);
       }
       if (newKey != null)
       {
-        msgs = ((InternalEObject)newKey).eInverseAdd(this,
-            EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY, null, msgs);
+        msgs = ((InternalEObject)newKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY, null, msgs);
       }
       msgs = basicSetTypedKey(newKey, msgs);
       if (msgs != null)
@@ -138,8 +135,7 @@ public class EObjectToEObjectKeyContainedMapImpl extends EObjectImpl implements 
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY,
-          newKey, newKey));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY, newKey, newKey));
     }
   }
 
@@ -157,8 +153,7 @@ public class EObjectToEObjectKeyContainedMapImpl extends EObjectImpl implements 
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__VALUE, oldValue, value));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__VALUE, oldValue, value));
         }
       }
     }
@@ -184,8 +179,7 @@ public class EObjectToEObjectKeyContainedMapImpl extends EObjectImpl implements 
     value = newValue;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__VALUE,
-          oldValue, value));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__VALUE, oldValue, value));
     }
   }
 

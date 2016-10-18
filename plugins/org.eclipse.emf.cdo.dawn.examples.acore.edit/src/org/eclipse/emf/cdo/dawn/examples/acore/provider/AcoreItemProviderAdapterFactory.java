@@ -39,8 +39,7 @@ import java.util.Collection;
  *
  * @generated
  */
-public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory
-    implements ComposeableAdapterFactory, IChangeNotifier, IDisposable
+public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable
 {
   /**
    * This keeps track of the root adapter factory that delegates to this adapter factory. <!-- begin-user-doc --> <!--

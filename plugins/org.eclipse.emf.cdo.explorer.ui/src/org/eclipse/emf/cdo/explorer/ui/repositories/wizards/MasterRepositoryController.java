@@ -76,8 +76,7 @@ public class MasterRepositoryController
 
   private static final Image OK_IMAGE = OM.getImage("icons/ok.gif");
 
-  private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages()
-      .getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
+  private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
 
   private static final int VALIDATING_WIDTH = 120;
 

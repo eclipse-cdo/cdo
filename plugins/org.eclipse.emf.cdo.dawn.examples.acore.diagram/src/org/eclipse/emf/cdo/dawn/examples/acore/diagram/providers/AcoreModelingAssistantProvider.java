@@ -219,8 +219,7 @@ public class AcoreModelingAssistantProvider extends ModelingAssistantProvider
   protected EObject selectElement(EObject[] elements)
   {
     Shell shell = Display.getCurrent().getActiveShell();
-    ILabelProvider labelProvider = new AdapterFactoryLabelProvider(
-        AcoreDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
+    ILabelProvider labelProvider = new AdapterFactoryLabelProvider(AcoreDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
     ElementListSelectionDialog dialog = new ElementListSelectionDialog(shell, labelProvider);
     dialog.setMessage(Messages.AcoreModelingAssistantProviderMessage);
     dialog.setTitle(Messages.AcoreModelingAssistantProviderTitle);

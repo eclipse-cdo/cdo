@@ -71,10 +71,9 @@ public class ObjyLockAreaManager extends ooObj
   private LockArea makeLockArea(InternalCDOBranchManager branchManager, ObjyLockArea objyLockArea)
   {
     ObjyBranch objyBranch = objyLockArea.getBranch();
-    CDOBranchPoint branchPoint = branchManager.getBranch(objyBranch.getBranchId())
-        .getPoint(objyLockArea.getTimeStamp());
-    return CDOLockUtil.createLockArea(objyLockArea.getDurableLockingID(), objyLockArea.getUserID(), branchPoint,
-        objyLockArea.isReadOnly(), objyLockArea.getLocks());
+    CDOBranchPoint branchPoint = branchManager.getBranch(objyBranch.getBranchId()).getPoint(objyLockArea.getTimeStamp());
+    return CDOLockUtil.createLockArea(objyLockArea.getDurableLockingID(), objyLockArea.getUserID(), branchPoint, objyLockArea.isReadOnly(),
+        objyLockArea.getLocks());
   }
 
 }

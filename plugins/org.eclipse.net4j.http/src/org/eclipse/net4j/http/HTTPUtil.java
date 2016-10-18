@@ -35,7 +35,6 @@ public final class HTTPUtil
    */
   public static IHTTPConnector getConnector(IManagedContainer container, String description)
   {
-    return (IHTTPConnector)container.getElement(HTTPConnectorFactory.PRODUCT_GROUP, HTTPConnectorFactory.TYPE,
-        description);
+    return (IHTTPConnector)container.getElement(HTTPConnectorFactory.PRODUCT_GROUP, HTTPConnectorFactory.TYPE, description);
   }
 }

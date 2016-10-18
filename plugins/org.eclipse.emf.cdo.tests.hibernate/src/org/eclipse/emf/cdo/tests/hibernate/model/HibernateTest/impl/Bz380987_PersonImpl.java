@@ -139,8 +139,8 @@ public class Bz380987_PersonImpl extends EObjectImpl implements Bz380987_Person
   {
     if (group == null)
     {
-      group = new EObjectWithInverseResolvingEList.ManyInverse<Bz380987_Group>(Bz380987_Group.class, this,
-          HibernateTestPackage.BZ380987_PERSON__GROUP, HibernateTestPackage.BZ380987_GROUP__PEOPLE);
+      group = new EObjectWithInverseResolvingEList.ManyInverse<Bz380987_Group>(Bz380987_Group.class, this, HibernateTestPackage.BZ380987_PERSON__GROUP,
+          HibernateTestPackage.BZ380987_GROUP__PEOPLE);
     }
     return group;
   }
@@ -154,8 +154,8 @@ public class Bz380987_PersonImpl extends EObjectImpl implements Bz380987_Person
   {
     if (places == null)
     {
-      places = new EObjectWithInverseResolvingEList.ManyInverse<Bz380987_Place>(Bz380987_Place.class, this,
-          HibernateTestPackage.BZ380987_PERSON__PLACES, HibernateTestPackage.BZ380987_PLACE__PEOPLE);
+      places = new EObjectWithInverseResolvingEList.ManyInverse<Bz380987_Place>(Bz380987_Place.class, this, HibernateTestPackage.BZ380987_PERSON__PLACES,
+          HibernateTestPackage.BZ380987_PLACE__PEOPLE);
     }
     return places;
   }

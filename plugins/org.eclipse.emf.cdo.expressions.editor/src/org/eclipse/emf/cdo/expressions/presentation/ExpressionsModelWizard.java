@@ -82,8 +82,8 @@ public class ExpressionsModelWizard extends Wizard implements INewWizard
    * <!-- end-user-doc -->
    * @generated
    */
-  public static final List<String> FILE_EXTENSIONS = Collections.unmodifiableList(Arrays.asList(
-      ExpressionsEditorPlugin.INSTANCE.getString("_UI_ExpressionsEditorFilenameExtensions").split("\\s*,\\s*")));
+  public static final List<String> FILE_EXTENSIONS = Collections
+      .unmodifiableList(Arrays.asList(ExpressionsEditorPlugin.INSTANCE.getString("_UI_ExpressionsEditorFilenameExtensions").split("\\s*,\\s*")));
 
   /**
    * A formatted list of supported file extensions, suitable for display.
@@ -91,8 +91,8 @@ public class ExpressionsModelWizard extends Wizard implements INewWizard
    * <!-- end-user-doc -->
    * @generated
    */
-  public static final String FORMATTED_FILE_EXTENSIONS = ExpressionsEditorPlugin.INSTANCE
-      .getString("_UI_ExpressionsEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", ");
+  public static final String FORMATTED_FILE_EXTENSIONS = ExpressionsEditorPlugin.INSTANCE.getString("_UI_ExpressionsEditorFilenameExtensions")
+      .replaceAll("\\s*,\\s*", ", ");
 
   /**
    * This caches an instance of the model package.
@@ -161,8 +161,7 @@ public class ExpressionsModelWizard extends Wizard implements INewWizard
     this.workbench = workbench;
     this.selection = selection;
     setWindowTitle(ExpressionsEditorPlugin.INSTANCE.getString("_UI_Wizard_label"));
-    setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE
-        .getImageDescriptor(ExpressionsEditorPlugin.INSTANCE.getImage("full/wizban/NewExpressions")));
+    setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(ExpressionsEditorPlugin.INSTANCE.getImage("full/wizban/NewExpressions")));
   }
 
   /**
@@ -289,13 +288,11 @@ public class ExpressionsModelWizard extends Wizard implements INewWizard
       //
       try
       {
-        page.openEditor(new FileEditorInput(modelFile),
-            workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
+        page.openEditor(new FileEditorInput(modelFile), workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
       }
       catch (PartInitException exception)
       {
-        MessageDialog.openError(workbenchWindow.getShell(),
-            ExpressionsEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
+        MessageDialog.openError(workbenchWindow.getShell(), ExpressionsEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
         return false;
       }
 
@@ -583,8 +580,8 @@ public class ExpressionsModelWizard extends Wizard implements INewWizard
       if (encodings == null)
       {
         encodings = new ArrayList<String>();
-        for (StringTokenizer stringTokenizer = new StringTokenizer(
-            ExpressionsEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens();)
+        for (StringTokenizer stringTokenizer = new StringTokenizer(ExpressionsEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer
+            .hasMoreTokens();)
         {
           encodings.add(stringTokenizer.nextToken());
         }
@@ -606,11 +603,8 @@ public class ExpressionsModelWizard extends Wizard implements INewWizard
     //
     newFileCreationPage = new ExpressionsModelWizardNewFileCreationPage("Whatever", selection);
     newFileCreationPage.setTitle(ExpressionsEditorPlugin.INSTANCE.getString("_UI_ExpressionsModelWizard_label"));
-    newFileCreationPage
-        .setDescription(ExpressionsEditorPlugin.INSTANCE.getString("_UI_ExpressionsModelWizard_description"));
-    newFileCreationPage
-        .setFileName(ExpressionsEditorPlugin.INSTANCE.getString("_UI_ExpressionsEditorFilenameDefaultBase") + "."
-            + FILE_EXTENSIONS.get(0));
+    newFileCreationPage.setDescription(ExpressionsEditorPlugin.INSTANCE.getString("_UI_ExpressionsModelWizard_description"));
+    newFileCreationPage.setFileName(ExpressionsEditorPlugin.INSTANCE.getString("_UI_ExpressionsEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0));
     addPage(newFileCreationPage);
 
     // Try and get the resource selection to determine a current directory for the file dialog.
@@ -640,8 +634,7 @@ public class ExpressionsModelWizard extends Wizard implements INewWizard
 
           // Make up a unique new name here.
           //
-          String defaultModelBaseFilename = ExpressionsEditorPlugin.INSTANCE
-              .getString("_UI_ExpressionsEditorFilenameDefaultBase");
+          String defaultModelBaseFilename = ExpressionsEditorPlugin.INSTANCE.getString("_UI_ExpressionsEditorFilenameDefaultBase");
           String defaultModelFilenameExtension = FILE_EXTENSIONS.get(0);
           String modelFilename = defaultModelBaseFilename + "." + defaultModelFilenameExtension;
           for (int i = 1; ((IContainer)selectedResource).findMember(modelFilename) != null; ++i)
@@ -654,8 +647,7 @@ public class ExpressionsModelWizard extends Wizard implements INewWizard
     }
     initialObjectCreationPage = new ExpressionsModelWizardInitialObjectCreationPage("Whatever2");
     initialObjectCreationPage.setTitle(ExpressionsEditorPlugin.INSTANCE.getString("_UI_ExpressionsModelWizard_label"));
-    initialObjectCreationPage
-        .setDescription(ExpressionsEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
+    initialObjectCreationPage.setDescription(ExpressionsEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
     addPage(initialObjectCreationPage);
   }
 

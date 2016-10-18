@@ -271,8 +271,7 @@ public class OpenWithActionProvider extends CommonActionProvider
   // }.schedule();
   // }
 
-  public static void openEditor(IWorkbenchPage page, ComposedAdapterFactory adapterFactory, EObject object,
-      String editorOpenerID)
+  public static void openEditor(IWorkbenchPage page, ComposedAdapterFactory adapterFactory, EObject object, String editorOpenerID)
   {
     if (page == null)
     {

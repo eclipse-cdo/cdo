@@ -27,8 +27,7 @@ public class RepositoryStateChangedRequest extends Request
 
   private State newState;
 
-  public RepositoryStateChangedRequest(CDOAdminServerProtocol serverProtocol, String name, State oldState,
-      State newState)
+  public RepositoryStateChangedRequest(CDOAdminServerProtocol serverProtocol, String name, State oldState, State newState)
   {
     super(serverProtocol, CDOAdminProtocolConstants.SIGNAL_REPOSITORY_STATE_CHANGED);
     this.name = name;

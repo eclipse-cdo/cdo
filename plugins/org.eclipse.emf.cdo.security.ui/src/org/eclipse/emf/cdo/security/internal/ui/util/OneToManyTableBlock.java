@@ -36,8 +36,7 @@ import org.eclipse.ui.forms.IManagedForm;
  */
 public class OneToManyTableBlock extends OneToManyBlock
 {
-  public OneToManyTableBlock(DataBindingContext context, EditingDomain domain, AdapterFactory adapterFactory,
-      ITableConfiguration tableConfig)
+  public OneToManyTableBlock(DataBindingContext context, EditingDomain domain, AdapterFactory adapterFactory, ITableConfiguration tableConfig)
   {
     super(context, domain, adapterFactory, tableConfig);
   }
@@ -70,8 +69,8 @@ public class OneToManyTableBlock extends OneToManyBlock
     {
       TableViewerColumn column = new TableViewerColumn(viewer, SWT.LEFT);
       column.getColumn().setText(columnTitles[i]);
-      layout.setColumnData(column.getColumn(), new ColumnWeightData(tableConfig.getColumnWeight(i),
-          tableConfig.getColumnMinimumSize(i), tableConfig.isColumnResizable(i)));
+      layout.setColumnData(column.getColumn(),
+          new ColumnWeightData(tableConfig.getColumnWeight(i), tableConfig.getColumnMinimumSize(i), tableConfig.isColumnResizable(i)));
 
       final int columnIndex = i;
 

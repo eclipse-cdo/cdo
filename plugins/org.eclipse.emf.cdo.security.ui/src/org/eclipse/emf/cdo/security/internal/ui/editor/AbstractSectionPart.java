@@ -62,8 +62,7 @@ public abstract class AbstractSectionPart<T extends EObject> extends AbstractFor
 
   private IActionBars editorActionBars;
 
-  public AbstractSectionPart(Class<T> inputType, EClass inputEClass, EditingDomain domain,
-      AdapterFactory adapterFactory)
+  public AbstractSectionPart(Class<T> inputType, EClass inputEClass, EditingDomain domain, AdapterFactory adapterFactory)
   {
     this.inputType = inputType;
     this.inputEClass = inputEClass;

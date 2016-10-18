@@ -29,8 +29,7 @@ import org.eclipse.emf.ecore.EReference;
  * @model kind="package"
  * @generated
  */
-public interface model4interfacesPackage
-    extends EPackage, org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage
+public interface model4interfacesPackage extends EPackage, org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage
 {
   /**
    * The package name.
@@ -58,8 +57,7 @@ public interface model4interfacesPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  model4interfacesPackage eINSTANCE = org.eclipse.emf.cdo.tests.model4interfaces.legacy.impl.model4interfacesPackageImpl
-      .init();
+  model4interfacesPackage eINSTANCE = org.eclipse.emf.cdo.tests.model4interfaces.legacy.impl.model4interfacesPackageImpl.init();
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainer <em>ISingle Ref Container</em>}' class.

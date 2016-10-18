@@ -64,8 +64,7 @@ public class CDOAsyncTransactionHandler implements CDOTransactionHandler
    * Asynchronously executes the delegate handler's {@link #modifyingObject(CDOTransaction, CDOObject, CDOFeatureDelta)
    * modifyingObject()} method.
    */
-  public final void modifyingObject(final CDOTransaction transaction, final CDOObject object,
-      final CDOFeatureDelta featureChange)
+  public final void modifyingObject(final CDOTransaction transaction, final CDOObject object, final CDOFeatureDelta featureChange)
   {
     runAsync(new Runnable()
     {

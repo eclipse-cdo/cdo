@@ -81,8 +81,7 @@ public abstract class OM
     {
       try
       {
-        historySupportAvailable = CommonPlugin.loadClass("org.eclipse.emf.cdo.ui.team",
-            "org.eclipse.emf.cdo.ui.internal.team.history.CDOHistoryPage") != null;
+        historySupportAvailable = CommonPlugin.loadClass("org.eclipse.emf.cdo.ui.team", "org.eclipse.emf.cdo.ui.internal.team.history.CDOHistoryPage") != null;
       }
       catch (Throwable ex)
       {
@@ -99,8 +98,7 @@ public abstract class OM
     {
       try
       {
-        compareSupportAvailable = CommonPlugin.loadClass("org.eclipse.emf.cdo.ui.compare",
-            "org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil") != null;
+        compareSupportAvailable = CommonPlugin.loadClass("org.eclipse.emf.cdo.ui.compare", "org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil") != null;
       }
       catch (Throwable ex)
       {

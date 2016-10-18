@@ -42,66 +42,65 @@ public class ExecutorServiceFactory extends Factory
   {
     final ExecutorService executorService = ThreadPool.create(description);
 
-    return LifecycleUtil.delegateLifecycle(getClass().getClassLoader(), executorService, ExecutorService.class,
-        new ILifecycle()
+    return LifecycleUtil.delegateLifecycle(getClass().getClassLoader(), executorService, ExecutorService.class, new ILifecycle()
+    {
+      private boolean active;
+
+      public void activate() throws LifecycleException
+      {
+        active = true;
+      }
+
+      public Exception deactivate()
+      {
+        try
         {
-          private boolean active;
+          executorService.shutdown();
+          active = false;
+          return null;
+        }
+        catch (Exception ex)
+        {
+          return ex;
+        }
+      }
 
-          public void activate() throws LifecycleException
-          {
-            active = true;
-          }
+      public LifecycleState getLifecycleState()
+      {
+        return active ? LifecycleState.ACTIVE : LifecycleState.INACTIVE;
+      }
 
-          public Exception deactivate()
-          {
-            try
-            {
-              executorService.shutdown();
-              active = false;
-              return null;
-            }
-            catch (Exception ex)
-            {
-              return ex;
-            }
-          }
+      public boolean isActive()
+      {
+        return active;
+      }
 
-          public LifecycleState getLifecycleState()
-          {
-            return active ? LifecycleState.ACTIVE : LifecycleState.INACTIVE;
-          }
+      public void addListener(IListener listener)
+      {
+        // Do nothing
+      }
 
-          public boolean isActive()
-          {
-            return active;
-          }
+      public void removeListener(IListener listener)
+      {
+        // Do nothing
+      }
 
-          public void addListener(IListener listener)
-          {
-            // Do nothing
-          }
+      public IListener[] getListeners()
+      {
+        return EventUtil.NO_LISTENERS;
+      }
 
-          public void removeListener(IListener listener)
-          {
-            // Do nothing
-          }
+      public boolean hasListeners()
+      {
+        return false;
+      }
 
-          public IListener[] getListeners()
-          {
-            return EventUtil.NO_LISTENERS;
-          }
-
-          public boolean hasListeners()
-          {
-            return false;
-          }
-
-          @Override
-          public String toString()
-          {
-            return "CachedThreadPool";
-          }
-        });
+      @Override
+      public String toString()
+      {
+        return "CachedThreadPool";
+      }
+    });
   }
 
   public static ExecutorService get(IManagedContainer container)

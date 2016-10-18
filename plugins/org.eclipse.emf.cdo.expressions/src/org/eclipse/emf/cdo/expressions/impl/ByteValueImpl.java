@@ -69,8 +69,7 @@ public class ByteValueImpl extends ValueImpl implements ByteValue
   @Override
   public Byte getLiteral()
   {
-    return (Byte)eDynamicGet(ExpressionsPackage.BYTE_VALUE__LITERAL, ExpressionsPackage.Literals.BYTE_VALUE__LITERAL,
-        true, true);
+    return (Byte)eDynamicGet(ExpressionsPackage.BYTE_VALUE__LITERAL, ExpressionsPackage.Literals.BYTE_VALUE__LITERAL, true, true);
   }
 
   /**

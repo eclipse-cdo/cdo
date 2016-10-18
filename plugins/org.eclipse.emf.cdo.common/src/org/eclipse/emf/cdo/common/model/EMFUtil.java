@@ -93,14 +93,12 @@ public final class EMFUtil
   /**
    * @since 4.2
    */
-  public static final EAttribute ECLASSIFIER_INSTANCE_CLASS_NAME = EcorePackage.eINSTANCE
-      .getEClassifier_InstanceClassName();
+  public static final EAttribute ECLASSIFIER_INSTANCE_CLASS_NAME = EcorePackage.eINSTANCE.getEClassifier_InstanceClassName();
 
   /**
    * @since 4.2
    */
-  public static final EReference EOPERATION_EGENERIC_EXCEPTIONS = EcorePackage.eINSTANCE
-      .getEOperation_EGenericExceptions();
+  public static final EReference EOPERATION_EGENERIC_EXCEPTIONS = EcorePackage.eINSTANCE.getEOperation_EGenericExceptions();
 
   /**
    * @since 4.2
@@ -115,8 +113,7 @@ public final class EMFUtil
   /**
    * @since 4.2
    */
-  public static final EAttribute ECLASSIFIER_INSTANCE_TYPE_NAME = EcorePackage.eINSTANCE
-      .getEClassifier_InstanceTypeName();
+  public static final EAttribute ECLASSIFIER_INSTANCE_TYPE_NAME = EcorePackage.eINSTANCE.getEClassifier_InstanceTypeName();
 
   /**
    * @since 4.2
@@ -202,12 +199,10 @@ public final class EMFUtil
   {
     List<String> uriFragmentPath = new ArrayList<String>();
     Resource resource;
-    for (InternalEObject container = internalEObject
-        .eInternalContainer(); (resource = internalEObject.eDirectResource()) == null
-            && container != null; container = internalEObject.eInternalContainer())
+    for (InternalEObject container = internalEObject.eInternalContainer(); (resource = internalEObject.eDirectResource()) == null
+        && container != null; container = internalEObject.eInternalContainer())
     {
-      String segment = getPositionalURIFragmentSegment(container, internalEObject.eContainingFeature(),
-          internalEObject);
+      String segment = getPositionalURIFragmentSegment(container, internalEObject.eContainingFeature(), internalEObject);
       uriFragmentPath.add(segment);
       internalEObject = container;
     }
@@ -226,8 +221,7 @@ public final class EMFUtil
   /**
    * @since 4.2
    */
-  private static String getPositionalURIFragmentSegment(EObject container, EStructuralFeature eStructuralFeature,
-      InternalEObject eObject)
+  private static String getPositionalURIFragmentSegment(EObject container, EStructuralFeature eStructuralFeature, InternalEObject eObject)
   {
     StringBuilder builder = new StringBuilder();
     builder.append('@');
@@ -337,8 +331,7 @@ public final class EMFUtil
   /**
    * @since 2.0
    */
-  public static EReference createEReference(EClass eClass, String name, EClassifier type, boolean isRequired,
-      boolean isMany)
+  public static EReference createEReference(EClass eClass, String name, EClassifier type, boolean isRequired, boolean isMany)
   {
     EReference eReference = EcoreFactory.eINSTANCE.createEReference();
     eReference.setName(name);
@@ -418,8 +411,7 @@ public final class EMFUtil
    */
   public static boolean isPersistent(EStructuralFeature feature)
   {
-    if (feature == ECLASS_ESUPER_TYPES || feature == ETYPED_ELEMENT_ETYPE || feature == EOPERATION_EEXCEPTIONS
-        || feature == ECLASSIFIER_INSTANCE_CLASS_NAME)
+    if (feature == ECLASS_ESUPER_TYPES || feature == ETYPED_ELEMENT_ETYPE || feature == EOPERATION_EEXCEPTIONS || feature == ECLASSIFIER_INSTANCE_CLASS_NAME)
     {
       // http://www.eclipse.org/newsportal/article.php?id=26780&group=eclipse.tools.emf#26780
       return false;
@@ -506,8 +498,7 @@ public final class EMFUtil
   /**
    * @since 3.0
    */
-  public static EPackage createEPackage(String uri, byte[] bytes, boolean zipped, ResourceSet resourceSet,
-      boolean lookForResource)
+  public static EPackage createEPackage(String uri, byte[] bytes, boolean zipped, ResourceSet resourceSet, boolean lookForResource)
   {
     try
     {
@@ -684,8 +675,7 @@ public final class EMFUtil
    * @see ExtResourceSet
    * @since 4.0
    */
-  public static ExtResourceSet createExtResourceSet(InternalCDOPackageRegistry packageRegistry, boolean delegating,
-      boolean demandLoading)
+  public static ExtResourceSet createExtResourceSet(InternalCDOPackageRegistry packageRegistry, boolean delegating, boolean demandLoading)
   {
     Resource.Factory resourceFactory = new EcoreResourceFactoryImpl();
 

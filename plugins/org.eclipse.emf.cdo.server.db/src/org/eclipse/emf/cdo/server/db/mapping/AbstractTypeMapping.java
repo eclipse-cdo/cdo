@@ -100,8 +100,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
     return dbType;
   }
 
-  public final void setValueFromRevision(PreparedStatement stmt, int index, InternalCDORevision revision)
-      throws SQLException
+  public final void setValueFromRevision(PreparedStatement stmt, int index, InternalCDORevision revision) throws SQLException
   {
     setValue(stmt, index, getRevisionValue(revision));
   }

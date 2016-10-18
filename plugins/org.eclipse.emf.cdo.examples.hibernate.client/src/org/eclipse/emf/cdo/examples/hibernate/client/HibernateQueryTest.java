@@ -196,8 +196,7 @@ public class HibernateQueryTest extends BaseTest
           orderQuery.setParameter("customer", customer); //$NON-NLS-1$
           orderQuery.setParameter("product", product); //$NON-NLS-1$
 
-          final boolean hasOrders = productCounter <= productIndex
-              && productIndex < productCounter + NUM_OF_PRODUCTS_CUSTOMER;
+          final boolean hasOrders = productCounter <= productIndex && productIndex < productCounter + NUM_OF_PRODUCTS_CUSTOMER;
           if (hasOrders)
           {
             final List<SalesOrder> sos = orderQuery.getResult(SalesOrder.class);
@@ -391,8 +390,7 @@ public class HibernateQueryTest extends BaseTest
       customer.setStreet("Street " + i); //$NON-NLS-1$
       resource.getContents().add(customer);
 
-      final List<Product> customerProducts = products.subList(productCounter,
-          productCounter + NUM_OF_PRODUCTS_CUSTOMER);
+      final List<Product> customerProducts = products.subList(productCounter, productCounter + NUM_OF_PRODUCTS_CUSTOMER);
       for (int k = 0; k < NUM_OF_SALES_ORDERS; k++)
       {
         resource.getContents().add(createSalesOrder(i * 10 + k, customer, customerProducts));

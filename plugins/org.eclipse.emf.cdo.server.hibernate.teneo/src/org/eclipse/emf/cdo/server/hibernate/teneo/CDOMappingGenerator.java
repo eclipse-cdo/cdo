@@ -75,8 +75,7 @@ public class CDOMappingGenerator
     }
   }
 
-  protected void addDefaultExtension(Class<?> extensionClass, Class<?> extendingClass,
-      ExtensionManager extensionManager)
+  protected void addDefaultExtension(Class<?> extensionClass, Class<?> extendingClass, ExtensionManager extensionManager)
   {
     if (extensions.containsKey(extensionClass.getName()))
     {

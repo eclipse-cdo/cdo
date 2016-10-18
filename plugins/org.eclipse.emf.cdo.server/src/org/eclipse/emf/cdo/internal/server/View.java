@@ -151,19 +151,16 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   public InternalCDORevision getRevision(CDOID id)
   {
     CDORevisionManager revisionManager = repository.getRevisionManager();
-    return (InternalCDORevision)revisionManager.getRevision(id, normalizedBranchPoint, CDORevision.UNCHUNKED,
-        CDORevision.DEPTH_NONE, true);
+    return (InternalCDORevision)revisionManager.getRevision(id, normalizedBranchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
   }
 
   private List<CDORevision> getRevisions(List<CDOID> ids)
   {
     InternalCDORevisionManager revisionManager = repository.getRevisionManager();
-    return revisionManager.getRevisions(ids, normalizedBranchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE,
-        true);
+    return revisionManager.getRevisions(ids, normalizedBranchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
   }
 
-  public void changeTarget(CDOBranchPoint branchPoint, List<CDOID> invalidObjects,
-      List<CDORevisionDelta> allChangedObjects, List<CDOID> allDetachedObjects)
+  public void changeTarget(CDOBranchPoint branchPoint, List<CDOID> invalidObjects, List<CDORevisionDelta> allChangedObjects, List<CDOID> allDetachedObjects)
   {
     List<CDORevision> oldRevisions = getRevisions(invalidObjects);
     setBranchPoint(branchPoint);

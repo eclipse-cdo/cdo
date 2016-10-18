@@ -138,8 +138,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
     return createConsumer(destination, null, false);
   }
 
-  public MessageConsumer createConsumer(Destination destination, String messageSelector, boolean noLocal)
-      throws JMSException
+  public MessageConsumer createConsumer(Destination destination, String messageSelector, boolean noLocal) throws JMSException
   {
     DestinationImpl dest = DestinationUtil.convert(destination);
     long consumerID = registerConsumer(dest, messageSelector, noLocal, false);
@@ -183,8 +182,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
     return createDurableSubscriber(topic, name, null, false);
   }
 
-  public TopicSubscriber createDurableSubscriber(Topic topic, String name, String messageSelector, boolean noLocal)
-      throws JMSException
+  public TopicSubscriber createDurableSubscriber(Topic topic, String name, String messageSelector, boolean noLocal) throws JMSException
   {
     TopicImpl dest = (TopicImpl)DestinationUtil.convert(topic);
     long consumerID = registerConsumer(dest, messageSelector, noLocal, true);
@@ -328,13 +326,11 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
     throw new UnsupportedOperationException();
   }
 
-  public long registerConsumer(DestinationImpl destination, String messageSelector, boolean noLocal, boolean durable)
-      throws JMSException
+  public long registerConsumer(DestinationImpl destination, String messageSelector, boolean noLocal, boolean durable) throws JMSException
   {
     try
     {
-      return new JMSRegisterConsumerRequest(connection.getProtocol(), id, destination, messageSelector, noLocal,
-          durable).send();
+      return new JMSRegisterConsumerRequest(connection.getProtocol(), id, destination, messageSelector, noLocal, durable).send();
     }
     catch (Exception ex)
     {

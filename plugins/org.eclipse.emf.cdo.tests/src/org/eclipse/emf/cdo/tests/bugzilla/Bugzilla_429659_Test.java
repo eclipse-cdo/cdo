@@ -45,8 +45,7 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
     List<EObject> objectsToAdd = new ArrayList<EObject>();
     objectsToAdd.add(getModel3SubpackageFactory().createClass2());
     objectsToAdd.add(getModel3SubpackageFactory().createClass2());
-    performUnsetOnMultiValuedFeature(getXMIResource(), getModel3Factory().createClass1(),
-        getModel3Package().getClass1_Class2(), true, objectsToAdd);
+    performUnsetOnMultiValuedFeature(getXMIResource(), getModel3Factory().createClass1(), getModel3Package().getClass1_Class2(), true, objectsToAdd);
   }
 
   public void testUnsetOnUnsettableMultiValuedFeatureCDOResource() throws Exception
@@ -54,8 +53,7 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
     List<EObject> objectsToAdd = new ArrayList<EObject>();
     objectsToAdd.add(getModel3SubpackageFactory().createClass2());
     objectsToAdd.add(getModel3SubpackageFactory().createClass2());
-    performUnsetOnMultiValuedFeature(getCDOResource(), getModel3Factory().createClass1(),
-        getModel3Package().getClass1_Class2(), true, objectsToAdd);
+    performUnsetOnMultiValuedFeature(getCDOResource(), getModel3Factory().createClass1(), getModel3Package().getClass1_Class2(), true, objectsToAdd);
   }
 
   public void testUnsetOnNonUnsettableMultiValuedFeatureXMIResource() throws Exception
@@ -63,8 +61,8 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
     List<EObject> objectsToAdd = new ArrayList<EObject>();
     objectsToAdd.add(getModel6Factory().createBaseObject());
     objectsToAdd.add(getModel6Factory().createBaseObject());
-    performUnsetOnMultiValuedFeature(getXMIResource(), getModel6Factory().createReferenceObject(),
-        getModel6Package().getReferenceObject_ReferenceList(), false, objectsToAdd);
+    performUnsetOnMultiValuedFeature(getXMIResource(), getModel6Factory().createReferenceObject(), getModel6Package().getReferenceObject_ReferenceList(), false,
+        objectsToAdd);
   }
 
   public void testUnsetOnNonUnsettableMultiValuedFeatureCDOResource() throws Exception
@@ -72,8 +70,8 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
     List<EObject> objectsToAdd = new ArrayList<EObject>();
     objectsToAdd.add(getModel6Factory().createBaseObject());
     objectsToAdd.add(getModel6Factory().createBaseObject());
-    performUnsetOnMultiValuedFeature(getCDOResource(), getModel6Factory().createReferenceObject(),
-        getModel6Package().getReferenceObject_ReferenceList(), false, objectsToAdd);
+    performUnsetOnMultiValuedFeature(getCDOResource(), getModel6Factory().createReferenceObject(), getModel6Package().getReferenceObject_ReferenceList(), false,
+        objectsToAdd);
   }
 
   public void testUnsetOnUnsettableSingleValuedAttributeCDOResource() throws Exception
@@ -90,14 +88,14 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
 
   public void testUnsetOnNonUnsettableSingleValuedAttributeCDOResource() throws Exception
   {
-    performUnsetOnSingleValuedFeature(getCDOResource(), getModel6Factory().createEmptyStringDefault(),
-        getModel6Package().getEmptyStringDefault_Attribute(), false, "test");
+    performUnsetOnSingleValuedFeature(getCDOResource(), getModel6Factory().createEmptyStringDefault(), getModel6Package().getEmptyStringDefault_Attribute(),
+        false, "test");
   }
 
   public void testUnsetOnNonUnsettableSingleValuedAttributeXMIResource() throws Exception
   {
-    performUnsetOnSingleValuedFeature(getXMIResource(), getModel6Factory().createEmptyStringDefault(),
-        getModel6Package().getEmptyStringDefault_Attribute(), false, "test");
+    performUnsetOnSingleValuedFeature(getXMIResource(), getModel6Factory().createEmptyStringDefault(), getModel6Package().getEmptyStringDefault_Attribute(),
+        false, "test");
   }
 
   private Resource getCDOResource()
@@ -119,8 +117,8 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
     return localResource;
   }
 
-  private void performUnsetOnSingleValuedFeature(Resource resource, EObject root, EStructuralFeature feature,
-      boolean unsettable, Object addedObject) throws Exception
+  private void performUnsetOnSingleValuedFeature(Resource resource, EObject root, EStructuralFeature feature, boolean unsettable, Object addedObject)
+      throws Exception
   {
     // To have CDOLegacyAdapter even in local
     CDOUtil.getCDOObject(root);
@@ -144,13 +142,12 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
 
     // check
     assertEquals("Incorrect number of expected notifications: ", 1, notifications.size());
-    assertEquals("Incorrect notification: ", unsettable ? Notification.UNSET : Notification.SET,
-        notifications.get(0).getEventType());
+    assertEquals("Incorrect notification: ", unsettable ? Notification.UNSET : Notification.SET, notifications.get(0).getEventType());
   }
 
   @SuppressWarnings("unchecked")
-  private void performUnsetOnMultiValuedFeature(Resource resource, EObject root, EStructuralFeature feature,
-      boolean unsettable, List<EObject> objectstoAdd) throws Exception
+  private void performUnsetOnMultiValuedFeature(Resource resource, EObject root, EStructuralFeature feature, boolean unsettable, List<EObject> objectstoAdd)
+      throws Exception
   {
     // To have CDOLegacyAdapter even in local
     CDOUtil.getCDOObject(root);

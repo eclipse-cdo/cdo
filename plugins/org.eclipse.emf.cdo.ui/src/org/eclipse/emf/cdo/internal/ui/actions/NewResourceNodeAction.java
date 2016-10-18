@@ -57,8 +57,8 @@ public abstract class NewResourceNodeAction extends TransactionalBackgroundActio
     CDOResourceNode object = (CDOResourceNode)getObject();
 
     String initialValue = (type == Type.FOLDER ? "folder" : "resource") + (AbstractViewAction.lastResourceNumber + 1);
-    InputDialog dialog = new InputDialog(getShell(), getText(), Messages.getString("NewResourceNodeAction.8"),
-        initialValue, new ResourceNodeNameInputValidator(object));
+    InputDialog dialog = new InputDialog(getShell(), getText(), Messages.getString("NewResourceNodeAction.8"), initialValue,
+        new ResourceNodeNameInputValidator(object));
     if (dialog.open() == Dialog.OK)
     {
       ++AbstractViewAction.lastResourceNumber;
@@ -71,8 +71,7 @@ public abstract class NewResourceNodeAction extends TransactionalBackgroundActio
   }
 
   @Override
-  protected final void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor)
-      throws Exception
+  protected final void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor) throws Exception
   {
     CDOResourceNode newResourceNode = createNewResourceNode();
     newResourceNode.setName(name);

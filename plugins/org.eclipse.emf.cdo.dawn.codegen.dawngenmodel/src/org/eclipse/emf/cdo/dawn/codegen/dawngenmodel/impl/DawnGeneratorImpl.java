@@ -139,8 +139,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
     conflictColor = newConflictColor;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, DawngenmodelPackage.DAWN_GENERATOR__CONFLICT_COLOR,
-          oldConflictColor, conflictColor));
+      eNotify(new ENotificationImpl(this, Notification.SET, DawngenmodelPackage.DAWN_GENERATOR__CONFLICT_COLOR, oldConflictColor, conflictColor));
     }
   }
 
@@ -165,8 +164,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
     localLockColor = newLocalLockColor;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, DawngenmodelPackage.DAWN_GENERATOR__LOCAL_LOCK_COLOR,
-          oldLocalLockColor, localLockColor));
+      eNotify(new ENotificationImpl(this, Notification.SET, DawngenmodelPackage.DAWN_GENERATOR__LOCAL_LOCK_COLOR, oldLocalLockColor, localLockColor));
     }
   }
 
@@ -191,8 +189,7 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
     remoteLockColor = newRemoteLockColor;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, DawngenmodelPackage.DAWN_GENERATOR__REMOTE_LOCK_COLOR,
-          oldRemoteLockColor, remoteLockColor));
+      eNotify(new ENotificationImpl(this, Notification.SET, DawngenmodelPackage.DAWN_GENERATOR__REMOTE_LOCK_COLOR, oldRemoteLockColor, remoteLockColor));
     }
   }
 
@@ -275,11 +272,9 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
     case DawngenmodelPackage.DAWN_GENERATOR__CONFLICT_COLOR:
       return CONFLICT_COLOR_EDEFAULT == null ? conflictColor != null : !CONFLICT_COLOR_EDEFAULT.equals(conflictColor);
     case DawngenmodelPackage.DAWN_GENERATOR__LOCAL_LOCK_COLOR:
-      return LOCAL_LOCK_COLOR_EDEFAULT == null ? localLockColor != null
-          : !LOCAL_LOCK_COLOR_EDEFAULT.equals(localLockColor);
+      return LOCAL_LOCK_COLOR_EDEFAULT == null ? localLockColor != null : !LOCAL_LOCK_COLOR_EDEFAULT.equals(localLockColor);
     case DawngenmodelPackage.DAWN_GENERATOR__REMOTE_LOCK_COLOR:
-      return REMOTE_LOCK_COLOR_EDEFAULT == null ? remoteLockColor != null
-          : !REMOTE_LOCK_COLOR_EDEFAULT.equals(remoteLockColor);
+      return REMOTE_LOCK_COLOR_EDEFAULT == null ? remoteLockColor != null : !REMOTE_LOCK_COLOR_EDEFAULT.equals(remoteLockColor);
     }
     return super.eIsSet(featureID);
   }

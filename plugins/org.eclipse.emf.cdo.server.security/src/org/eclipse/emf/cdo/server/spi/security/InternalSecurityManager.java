@@ -113,8 +113,7 @@ public interface InternalSecurityManager extends ISecurityManager
         handleCommitted(securityManager, commitContext, user);
       }
 
-      protected abstract void handleCommitted(InternalSecurityManager securityManager, CommitContext commitContext,
-          User user);
+      protected abstract void handleCommitted(InternalSecurityManager securityManager, CommitContext commitContext, User user);
     }
   }
 }

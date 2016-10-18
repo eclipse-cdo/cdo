@@ -122,8 +122,7 @@ public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBa
     CDORevisionFactory revisionFactory = CDORevisionFactory.DEFAULT;
     CDOListFactory listFactory = CDOListFactory.DEFAULT;
 
-    return CDOCommonUtil.createCDODataInput(edis, packageRegistry, branchManager, null, revisionFactory, listFactory,
-        null);
+    return CDOCommonUtil.createCDODataInput(edis, packageRegistry, branchManager, null, revisionFactory, listFactory, null);
   }
 
   protected CDODataOutput createCDODataOutput(ExtendedDataOutputStream edos)

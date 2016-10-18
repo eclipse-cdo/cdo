@@ -137,7 +137,7 @@ public class PrintTraceHandler implements OMTraceHandler
     final int threadPriority = thread.getPriority();
     final Thread.State threadState = thread.getState();
 
-    return MessageFormat.format(pattern, tracerName, tracerShort, contextName, contextShort, timeStamp, message,
-        threadName, threadID, threadPriority, threadState);
+    return MessageFormat.format(pattern, tracerName, tracerShort, contextName, contextShort, timeStamp, message, threadName, threadID, threadPriority,
+        threadState);
   }
 }

@@ -35,8 +35,7 @@ public class StreamWrapperTest extends AbstractOMTest
     printStream.println("Hello world!");
     printStream.println("Hello world!");
 
-    XORInputStream xorInputStream = new XORInputStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()),
-        key);
+    XORInputStream xorInputStream = new XORInputStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()), key);
 
     InputStreamReader inputStreamReader = new InputStreamReader(xorInputStream);
     BufferedReader bufferedReader = new BufferedReader(inputStreamReader);

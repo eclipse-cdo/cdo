@@ -40,8 +40,7 @@ public class Bugzilla_443281_Test extends AbstractCDOTest
   public void setUp() throws Exception
   {
     super.setUp();
-    oldResourceFactory = Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*",
-        new XMIResourceFactoryImpl());
+    oldResourceFactory = Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
     resourceSet = new ResourceSetImpl();
   }
 

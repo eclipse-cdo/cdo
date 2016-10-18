@@ -67,11 +67,10 @@ public class LinkedFilterItemProvider extends PermissionFilterItemProvider
    */
   protected void addFilterPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_LinkedFilter_filter_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_LinkedFilter_filter_feature", "_UI_LinkedFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.LINKED_FILTER__FILTER, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_LinkedFilter_filter_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_LinkedFilter_filter_feature", "_UI_LinkedFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.LINKED_FILTER__FILTER, true, false, true, null, null, null));
   }
 
   /**

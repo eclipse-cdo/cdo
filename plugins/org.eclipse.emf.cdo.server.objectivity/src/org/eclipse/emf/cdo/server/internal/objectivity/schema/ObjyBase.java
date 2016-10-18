@@ -59,8 +59,7 @@ public class ObjyBase
   public static void buildSchema()
   {
     d_Module top_mod = ObjySchema.getTopModule();
-    if (top_mod.resolve_class(ObjyBase.CLASS_NAME) == null
-        && top_mod.resolve_proposed_class(ObjyBase.CLASS_NAME) == null)
+    if (top_mod.resolve_class(ObjyBase.CLASS_NAME) == null && top_mod.resolve_proposed_class(ObjyBase.CLASS_NAME) == null)
     {
       if (TRACER_DEBUG.isEnabled())
       {
@@ -73,21 +72,18 @@ public class ObjyBase
 
       propClass.add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC, "ooObj");
 
-      propClass.add_bidirectional_relationship(d_Module.LAST, d_Access_Kind.d_PUBLIC, ObjyBase.ATT_REVISIONS,
-          ObjyBase.CLASS_NAME, false, false, true, Rel_Copy.DELETE, Rel_Versioning.COPY,
-          Rel_Propagation.LOCK_YES_DELETE_YES, ObjyBase.ATT_BASE, false);
+      propClass.add_bidirectional_relationship(d_Module.LAST, d_Access_Kind.d_PUBLIC, ObjyBase.ATT_REVISIONS, ObjyBase.CLASS_NAME, false, false, true,
+          Rel_Copy.DELETE, Rel_Versioning.COPY, Rel_Propagation.LOCK_YES_DELETE_YES, ObjyBase.ATT_BASE, false);
 
       // propClass.add_bidirectional_relationship(position, visibility,
       // name, destinationClassName, isInline, isShort, isToMany,
       // copyMode, versioning, propagation, inverseName, inverseIsToMany)
 
-      propClass.add_bidirectional_relationship(d_Module.LAST, d_Access_Kind.d_PUBLIC, ObjyBase.ATT_BASE,
-          ObjyBase.CLASS_NAME, false, false, false, Rel_Copy.DELETE, Rel_Versioning.COPY,
-          Rel_Propagation.LOCK_YES_DELETE_YES, ObjyBase.ATT_REVISIONS, true);
+      propClass.add_bidirectional_relationship(d_Module.LAST, d_Access_Kind.d_PUBLIC, ObjyBase.ATT_BASE, ObjyBase.CLASS_NAME, false, false, false,
+          Rel_Copy.DELETE, Rel_Versioning.COPY, Rel_Propagation.LOCK_YES_DELETE_YES, ObjyBase.ATT_REVISIONS, true);
 
-      propClass.add_unidirectional_relationship(d_Module.LAST, d_Access_Kind.d_PUBLIC, ObjyBase.ATT_LAST_REVISION,
-          ObjyBase.CLASS_NAME, true, false, false, Rel_Copy.DELETE, Rel_Versioning.COPY,
-          Rel_Propagation.LOCK_YES_DELETE_YES);
+      propClass.add_unidirectional_relationship(d_Module.LAST, d_Access_Kind.d_PUBLIC, ObjyBase.ATT_LAST_REVISION, ObjyBase.CLASS_NAME, true, false, false,
+          Rel_Copy.DELETE, Rel_Versioning.COPY, Rel_Propagation.LOCK_YES_DELETE_YES);
 
       propClass.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
           ObjyBase.ATT_CONTAINER_FEATUERID, // Attribute name

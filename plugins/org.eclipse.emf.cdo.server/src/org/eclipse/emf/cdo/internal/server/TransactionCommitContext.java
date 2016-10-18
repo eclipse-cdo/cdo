@@ -636,8 +636,7 @@ public class TransactionCommitContext implements InternalCommitContext
     return old;
   }
 
-  protected InternalCDOPackageUnit[] lockPackageRegistry(InternalCDOPackageUnit[] packageUnits)
-      throws InterruptedException
+  protected InternalCDOPackageUnit[] lockPackageRegistry(InternalCDOPackageUnit[] packageUnits) throws InterruptedException
   {
     if (!packageRegistryLocked)
     {
@@ -909,8 +908,7 @@ public class TransactionCommitContext implements InternalCommitContext
     CDOCommitData commitData = createCommitData();
 
     InternalCDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
-    return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment,
-        commitMergeSource, commitData);
+    return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, commitMergeSource, commitData);
   }
 
   public CDOCommitInfo createFailureCommitInfo()
@@ -968,8 +966,7 @@ public class TransactionCommitContext implements InternalCommitContext
       }
     };
 
-    return CDOCommitInfoUtil.createCommitData(newPackageUnitsCollection, newObjectsCollection, changedObjectsCollection,
-        detachedObjectsCollection);
+    return CDOCommitInfoUtil.createCommitData(newPackageUnitsCollection, newObjectsCollection, changedObjectsCollection, detachedObjectsCollection);
   }
 
   protected void adjustForCommit()
@@ -1251,8 +1248,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  protected boolean isTheRootReachable(InternalCDORevision revision, Set<CDOID> objectsThatReachTheRoot,
-      Set<CDOID> visited)
+  protected boolean isTheRootReachable(InternalCDORevision revision, Set<CDOID> objectsThatReachTheRoot, Set<CDOID> visited)
   {
     CDOID id = revision.getID();
     if (!visited.add(id))
@@ -1422,8 +1418,7 @@ public class TransactionCommitContext implements InternalCommitContext
       {
         if (lockState.isLocked(type, owner, false))
         {
-          List<LockState<Object, IView>> lockStates = lockManager.lock2(type, transaction,
-              Collections.singleton(target), 0);
+          List<LockState<Object, IView>> lockStates = lockManager.lock2(type, transaction, Collections.singleton(target), 0);
           postCommitLockState = lockStates.get(0);
         }
       }
@@ -1461,8 +1456,7 @@ public class TransactionCommitContext implements InternalCommitContext
     {
       RWOLockManager.setUnlockAll(true);
 
-      List<LockState<Object, IView>> lockStates = lockManager.unlock2(true, LockType.WRITE, transaction, targets,
-          false);
+      List<LockState<Object, IView>> lockStates = lockManager.unlock2(true, LockType.WRITE, transaction, targets, false);
       if (lockStates != null)
       {
         postCommitLockStates.addAll(lockStates);

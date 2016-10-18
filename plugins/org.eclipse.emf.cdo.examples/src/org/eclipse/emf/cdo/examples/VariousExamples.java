@@ -48,8 +48,7 @@ public class VariousExamples
 
   public static void registerSessionWithPluginContainer() throws CommitException
   {
-    CDONet4jSession session = (CDONet4jSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions",
-        "cdo", "tcp://repos.foo.org:2036/MyRepo");
+    CDONet4jSession session = (CDONet4jSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo", "tcp://repos.foo.org:2036/MyRepo");
     CDOTransaction transaction = session.openTransaction();
     // ...
     transaction.commit();

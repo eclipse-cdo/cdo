@@ -27,14 +27,13 @@ public interface IRWOLockManager<OBJECT, CONTEXT> extends IRWLockManager<OBJECT,
   /**
    * Adds locks of the given type, owned by the given context on the given objects.
    */
-  public List<LockState<OBJECT, CONTEXT>> lock2(LockType type, CONTEXT context,
-      Collection<? extends OBJECT> objectsToLock, long timeout) throws InterruptedException;
+  public List<LockState<OBJECT, CONTEXT>> lock2(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout)
+      throws InterruptedException;
 
   /**
    * Removes all locks of the given type, owned by the given context on the given objects.
    */
-  public List<LockState<OBJECT, CONTEXT>> unlock2(LockType type, CONTEXT context,
-      Collection<? extends OBJECT> objectsToUnlock);
+  public List<LockState<OBJECT, CONTEXT>> unlock2(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock);
 
   /**
    * Removes all locks owned by the given context on any objects.

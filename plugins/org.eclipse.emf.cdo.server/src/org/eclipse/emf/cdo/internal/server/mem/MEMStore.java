@@ -133,8 +133,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
    */
   public MEMStore(int listLimit)
   {
-    super(TYPE, set(ChangeFormat.REVISION, ChangeFormat.DELTA),
-        set(RevisionTemporality.NONE, RevisionTemporality.AUDITING),
+    super(TYPE, set(ChangeFormat.REVISION, ChangeFormat.DELTA), set(RevisionTemporality.NONE, RevisionTemporality.AUDITING),
         set(RevisionParallelism.NONE, RevisionParallelism.BRANCHING));
     setRevisionTemporality(RevisionTemporality.AUDITING);
     setRevisionParallelism(RevisionParallelism.BRANCHING);
@@ -285,8 +284,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     }
   }
 
-  public synchronized void loadCommitInfos(final CDOBranch branch, long startTime, final long endTime,
-      CDOCommitInfoHandler handler)
+  public synchronized void loadCommitInfos(final CDOBranch branch, long startTime, final long endTime, CDOCommitInfoHandler handler)
   {
     InternalCDOCommitInfoManager manager = getRepository().getCommitInfoManager();
 
@@ -411,8 +409,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     }
   }
 
-  public synchronized void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler)
+  public synchronized void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     for (List<InternalCDORevision> list : revisions.values())
     {
@@ -426,8 +423,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     }
   }
 
-  private boolean handleRevision(InternalCDORevision revision, EClass eClass, CDOBranch branch, long timeStamp,
-      boolean exactTime, CDORevisionHandler handler)
+  private boolean handleRevision(InternalCDORevision revision, EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     if (eClass != null && revision.getEClass() != eClass)
     {
@@ -568,8 +564,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     }
   }
 
-  public synchronized void addCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
-      String comment, CDOBranchPoint mergeSource)
+  public synchronized void addCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOBranchPoint mergeSource)
   {
     int index = commitInfos.size() - 1;
     while (index >= 0)
@@ -774,8 +769,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     }
   }
 
-  private boolean queryXRefs(QueryXRefsContext context, Set<CDOID> targetIDs, CDOID targetID, CDOID sourceID,
-      EReference sourceReference, int index)
+  private boolean queryXRefs(QueryXRefsContext context, Set<CDOID> targetIDs, CDOID targetID, CDOID sourceID, EReference sourceReference, int index)
   {
     for (CDOID id : targetIDs)
     {
@@ -792,15 +786,13 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     return true;
   }
 
-  public synchronized void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime,
-      long toCommitTime)
+  public synchronized void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
   {
     // TODO: implement MEMStore.rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime)
     throw new UnsupportedOperationException();
   }
 
-  public synchronized void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime,
-      long toCommitTime, OMMonitor monitor)
+  public synchronized void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime, OMMonitor monitor)
   {
     // TODO: implement MEMStore.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime, monitor)
     throw new UnsupportedOperationException();
@@ -824,14 +816,12 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     }
   }
 
-  public synchronized LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,
-      Map<CDOID, LockGrade> locks)
+  public synchronized LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     return createLockArea(null, userID, branchPoint, readOnly, locks);
   }
 
-  public synchronized LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint,
-      boolean readOnly, Map<CDOID, LockGrade> locks)
+  public synchronized LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     if (durableLockingID != null)
     {
@@ -1421,8 +1411,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
 
     private CDOBranchPoint mergeSource;
 
-    public CommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
-        CDOBranchPoint mergeSource)
+    public CommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOBranchPoint mergeSource)
     {
       super(timeStamp);
       this.branch = branch;
@@ -1439,16 +1428,14 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
 
     public void handle(InternalCDOCommitInfoManager manager, CDOCommitInfoHandler handler)
     {
-      CDOCommitInfo commitInfo = manager.createCommitInfo(branch, getTimeStamp(), previousTimeStamp, userID, comment,
-          mergeSource, null);
+      CDOCommitInfo commitInfo = manager.createCommitInfo(branch, getTimeStamp(), previousTimeStamp, userID, comment, mergeSource, null);
       handler.handleCommitInfo(commitInfo);
     }
 
     @Override
     public String toString()
     {
-      return MessageFormat.format("CommitInfo[{0}, {1}, {2}, {3}, {4}, {5}]", branch, getTimeStamp(), previousTimeStamp,
-          userID, comment, mergeSource);
+      return MessageFormat.format("CommitInfo[{0}, {1}, {2}, {3}, {4}, {5}]", branch, getTimeStamp(), previousTimeStamp, userID, comment, mergeSource);
     }
   }
 }

@@ -475,8 +475,7 @@ public class AcoreDiagramUpdater
   /**
    * @generated
    */
-  private static Collection<AcoreLinkDescriptor> getIncomingFeatureModelFacetLinks_AClass_SubClasses_4001(AClass target,
-      Map crossReferences)
+  private static Collection<AcoreLinkDescriptor> getIncomingFeatureModelFacetLinks_AClass_SubClasses_4001(AClass target, Map crossReferences)
   {
     LinkedList<AcoreLinkDescriptor> result = new LinkedList<AcoreLinkDescriptor>();
     Collection settings = (Collection)crossReferences.get(target);
@@ -485,8 +484,7 @@ public class AcoreDiagramUpdater
       EStructuralFeature.Setting setting = (EStructuralFeature.Setting)it.next();
       if (setting.getEStructuralFeature() == AcorePackage.eINSTANCE.getAClass_SubClasses())
       {
-        result.add(new AcoreLinkDescriptor(setting.getEObject(), target, AcoreElementTypes.AClassSubClasses_4001,
-            AClassSubClassesEditPart.VISUAL_ID));
+        result.add(new AcoreLinkDescriptor(setting.getEObject(), target, AcoreElementTypes.AClassSubClasses_4001, AClassSubClassesEditPart.VISUAL_ID));
       }
     }
     return result;
@@ -495,8 +493,7 @@ public class AcoreDiagramUpdater
   /**
    * @generated
    */
-  private static Collection<AcoreLinkDescriptor> getIncomingFeatureModelFacetLinks_AClass_ImplementedInterfaces_4002(
-      AInterface target, Map crossReferences)
+  private static Collection<AcoreLinkDescriptor> getIncomingFeatureModelFacetLinks_AClass_ImplementedInterfaces_4002(AInterface target, Map crossReferences)
   {
     LinkedList<AcoreLinkDescriptor> result = new LinkedList<AcoreLinkDescriptor>();
     Collection settings = (Collection)crossReferences.get(target);
@@ -505,8 +502,8 @@ public class AcoreDiagramUpdater
       EStructuralFeature.Setting setting = (EStructuralFeature.Setting)it.next();
       if (setting.getEStructuralFeature() == AcorePackage.eINSTANCE.getAClass_ImplementedInterfaces())
       {
-        result.add(new AcoreLinkDescriptor(setting.getEObject(), target,
-            AcoreElementTypes.AClassImplementedInterfaces_4002, AClassImplementedInterfacesEditPart.VISUAL_ID));
+        result.add(new AcoreLinkDescriptor(setting.getEObject(), target, AcoreElementTypes.AClassImplementedInterfaces_4002,
+            AClassImplementedInterfacesEditPart.VISUAL_ID));
       }
     }
     return result;
@@ -515,8 +512,7 @@ public class AcoreDiagramUpdater
   /**
    * @generated
    */
-  private static Collection<AcoreLinkDescriptor> getIncomingFeatureModelFacetLinks_AClass_Associations_4003(
-      AClass target, Map crossReferences)
+  private static Collection<AcoreLinkDescriptor> getIncomingFeatureModelFacetLinks_AClass_Associations_4003(AClass target, Map crossReferences)
   {
     LinkedList<AcoreLinkDescriptor> result = new LinkedList<AcoreLinkDescriptor>();
     Collection settings = (Collection)crossReferences.get(target);
@@ -525,8 +521,7 @@ public class AcoreDiagramUpdater
       EStructuralFeature.Setting setting = (EStructuralFeature.Setting)it.next();
       if (setting.getEStructuralFeature() == AcorePackage.eINSTANCE.getAClass_Associations())
       {
-        result.add(new AcoreLinkDescriptor(setting.getEObject(), target, AcoreElementTypes.AClassAssociations_4003,
-            AClassAssociationsEditPart.VISUAL_ID));
+        result.add(new AcoreLinkDescriptor(setting.getEObject(), target, AcoreElementTypes.AClassAssociations_4003, AClassAssociationsEditPart.VISUAL_ID));
       }
     }
     return result;
@@ -535,8 +530,7 @@ public class AcoreDiagramUpdater
   /**
    * @generated
    */
-  private static Collection<AcoreLinkDescriptor> getIncomingFeatureModelFacetLinks_AClass_Aggregations_4004(
-      AClass target, Map crossReferences)
+  private static Collection<AcoreLinkDescriptor> getIncomingFeatureModelFacetLinks_AClass_Aggregations_4004(AClass target, Map crossReferences)
   {
     LinkedList<AcoreLinkDescriptor> result = new LinkedList<AcoreLinkDescriptor>();
     Collection settings = (Collection)crossReferences.get(target);
@@ -545,8 +539,7 @@ public class AcoreDiagramUpdater
       EStructuralFeature.Setting setting = (EStructuralFeature.Setting)it.next();
       if (setting.getEStructuralFeature() == AcorePackage.eINSTANCE.getAClass_Aggregations())
       {
-        result.add(new AcoreLinkDescriptor(setting.getEObject(), target, AcoreElementTypes.AClassAggregations_4004,
-            AClassAggregationsEditPart.VISUAL_ID));
+        result.add(new AcoreLinkDescriptor(setting.getEObject(), target, AcoreElementTypes.AClassAggregations_4004, AClassAggregationsEditPart.VISUAL_ID));
       }
     }
     return result;
@@ -555,8 +548,7 @@ public class AcoreDiagramUpdater
   /**
    * @generated
    */
-  private static Collection<AcoreLinkDescriptor> getIncomingFeatureModelFacetLinks_AClass_Compositions_4005(
-      AClass target, Map crossReferences)
+  private static Collection<AcoreLinkDescriptor> getIncomingFeatureModelFacetLinks_AClass_Compositions_4005(AClass target, Map crossReferences)
   {
     LinkedList<AcoreLinkDescriptor> result = new LinkedList<AcoreLinkDescriptor>();
     Collection settings = (Collection)crossReferences.get(target);
@@ -565,8 +557,7 @@ public class AcoreDiagramUpdater
       EStructuralFeature.Setting setting = (EStructuralFeature.Setting)it.next();
       if (setting.getEStructuralFeature() == AcorePackage.eINSTANCE.getAClass_Compositions())
       {
-        result.add(new AcoreLinkDescriptor(setting.getEObject(), target, AcoreElementTypes.AClassCompositions_4005,
-            AClassCompositionsEditPart.VISUAL_ID));
+        result.add(new AcoreLinkDescriptor(setting.getEObject(), target, AcoreElementTypes.AClassCompositions_4005, AClassCompositionsEditPart.VISUAL_ID));
       }
     }
     return result;
@@ -581,8 +572,7 @@ public class AcoreDiagramUpdater
     for (Iterator destinations = source.getSubClasses().iterator(); destinations.hasNext();)
     {
       AClass destination = (AClass)destinations.next();
-      result.add(new AcoreLinkDescriptor(source, destination, AcoreElementTypes.AClassSubClasses_4001,
-          AClassSubClassesEditPart.VISUAL_ID));
+      result.add(new AcoreLinkDescriptor(source, destination, AcoreElementTypes.AClassSubClasses_4001, AClassSubClassesEditPart.VISUAL_ID));
     }
     return result;
   }
@@ -590,15 +580,14 @@ public class AcoreDiagramUpdater
   /**
    * @generated
    */
-  private static Collection<AcoreLinkDescriptor> getOutgoingFeatureModelFacetLinks_AClass_ImplementedInterfaces_4002(
-      AClass source)
+  private static Collection<AcoreLinkDescriptor> getOutgoingFeatureModelFacetLinks_AClass_ImplementedInterfaces_4002(AClass source)
   {
     LinkedList<AcoreLinkDescriptor> result = new LinkedList<AcoreLinkDescriptor>();
     for (Iterator destinations = source.getImplementedInterfaces().iterator(); destinations.hasNext();)
     {
       AInterface destination = (AInterface)destinations.next();
-      result.add(new AcoreLinkDescriptor(source, destination, AcoreElementTypes.AClassImplementedInterfaces_4002,
-          AClassImplementedInterfacesEditPart.VISUAL_ID));
+      result
+          .add(new AcoreLinkDescriptor(source, destination, AcoreElementTypes.AClassImplementedInterfaces_4002, AClassImplementedInterfacesEditPart.VISUAL_ID));
     }
     return result;
   }
@@ -606,15 +595,13 @@ public class AcoreDiagramUpdater
   /**
    * @generated
    */
-  private static Collection<AcoreLinkDescriptor> getOutgoingFeatureModelFacetLinks_AClass_Associations_4003(
-      AClass source)
+  private static Collection<AcoreLinkDescriptor> getOutgoingFeatureModelFacetLinks_AClass_Associations_4003(AClass source)
   {
     LinkedList<AcoreLinkDescriptor> result = new LinkedList<AcoreLinkDescriptor>();
     for (Iterator destinations = source.getAssociations().iterator(); destinations.hasNext();)
     {
       AClass destination = (AClass)destinations.next();
-      result.add(new AcoreLinkDescriptor(source, destination, AcoreElementTypes.AClassAssociations_4003,
-          AClassAssociationsEditPart.VISUAL_ID));
+      result.add(new AcoreLinkDescriptor(source, destination, AcoreElementTypes.AClassAssociations_4003, AClassAssociationsEditPart.VISUAL_ID));
     }
     return result;
   }
@@ -622,15 +609,13 @@ public class AcoreDiagramUpdater
   /**
    * @generated
    */
-  private static Collection<AcoreLinkDescriptor> getOutgoingFeatureModelFacetLinks_AClass_Aggregations_4004(
-      AClass source)
+  private static Collection<AcoreLinkDescriptor> getOutgoingFeatureModelFacetLinks_AClass_Aggregations_4004(AClass source)
   {
     LinkedList<AcoreLinkDescriptor> result = new LinkedList<AcoreLinkDescriptor>();
     for (Iterator destinations = source.getAggregations().iterator(); destinations.hasNext();)
     {
       AClass destination = (AClass)destinations.next();
-      result.add(new AcoreLinkDescriptor(source, destination, AcoreElementTypes.AClassAggregations_4004,
-          AClassAggregationsEditPart.VISUAL_ID));
+      result.add(new AcoreLinkDescriptor(source, destination, AcoreElementTypes.AClassAggregations_4004, AClassAggregationsEditPart.VISUAL_ID));
     }
     return result;
   }
@@ -638,15 +623,13 @@ public class AcoreDiagramUpdater
   /**
    * @generated
    */
-  private static Collection<AcoreLinkDescriptor> getOutgoingFeatureModelFacetLinks_AClass_Compositions_4005(
-      AClass source)
+  private static Collection<AcoreLinkDescriptor> getOutgoingFeatureModelFacetLinks_AClass_Compositions_4005(AClass source)
   {
     LinkedList<AcoreLinkDescriptor> result = new LinkedList<AcoreLinkDescriptor>();
     for (Iterator destinations = source.getCompositions().iterator(); destinations.hasNext();)
     {
       AClass destination = (AClass)destinations.next();
-      result.add(new AcoreLinkDescriptor(source, destination, AcoreElementTypes.AClassCompositions_4005,
-          AClassCompositionsEditPart.VISUAL_ID));
+      result.add(new AcoreLinkDescriptor(source, destination, AcoreElementTypes.AClassCompositions_4005, AClassCompositionsEditPart.VISUAL_ID));
     }
     return result;
   }

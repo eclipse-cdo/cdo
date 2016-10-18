@@ -35,8 +35,7 @@ public class RemoteMessageRequest extends CDOClientRequest<Set<Integer>>
 
   private List<CDORemoteSession> recipients;
 
-  public RemoteMessageRequest(CDOClientProtocol protocol, CDORemoteSessionMessage message,
-      List<CDORemoteSession> recipients)
+  public RemoteMessageRequest(CDOClientProtocol protocol, CDORemoteSessionMessage message, List<CDORemoteSession> recipients)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE);
     this.message = message;

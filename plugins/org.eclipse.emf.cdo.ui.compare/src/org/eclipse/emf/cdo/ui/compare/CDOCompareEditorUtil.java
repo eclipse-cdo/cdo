@@ -211,8 +211,7 @@ public class CDOCompareEditorUtil
   /**
    * @since 4.3
    */
-  public static boolean openEditor(CDOViewOpener viewOpener, CDOBranchPoint leftPoint, CDOBranchPoint rightPoint,
-      CDOView[] originView, boolean activate)
+  public static boolean openEditor(CDOViewOpener viewOpener, CDOBranchPoint leftPoint, CDOBranchPoint rightPoint, CDOView[] originView, boolean activate)
   {
     return openEditor(viewOpener, null, leftPoint, rightPoint, originView, activate);
   }
@@ -220,8 +219,8 @@ public class CDOCompareEditorUtil
   /**
    * @since 4.3
    */
-  public static boolean openEditor(CDOViewOpener viewOpener, CDOTransactionOpener transactionOpener,
-      CDOBranchPoint leftPoint, CDOBranchPoint rightPoint, CDOView[] originView, boolean activate)
+  public static boolean openEditor(CDOViewOpener viewOpener, CDOTransactionOpener transactionOpener, CDOBranchPoint leftPoint, CDOBranchPoint rightPoint,
+      CDOView[] originView, boolean activate)
   {
     ACTIVATE_EDITOR.set(activate);
 
@@ -314,8 +313,7 @@ public class CDOCompareEditorUtil
   /**
    * @since 4.3
    */
-  public static boolean openDialog(CDOViewOpener viewOpener, CDOBranchPoint leftPoint, CDOBranchPoint rightPoint,
-      CDOView[] originView)
+  public static boolean openDialog(CDOViewOpener viewOpener, CDOBranchPoint leftPoint, CDOBranchPoint rightPoint, CDOView[] originView)
   {
     return openDialog(viewOpener, null, leftPoint, rightPoint, originView);
   }
@@ -323,8 +321,8 @@ public class CDOCompareEditorUtil
   /**
    * @since 4.3
    */
-  public static boolean openDialog(CDOViewOpener viewOpener, CDOTransactionOpener transactionOpener,
-      CDOBranchPoint leftPoint, CDOBranchPoint rightPoint, CDOView[] originView)
+  public static boolean openDialog(CDOViewOpener viewOpener, CDOTransactionOpener transactionOpener, CDOBranchPoint leftPoint, CDOBranchPoint rightPoint,
+      CDOView[] originView)
   {
     final Boolean activateEditor = ACTIVATE_EDITOR.get();
     final CDOView[] leftAndRightView = { null, null };
@@ -474,8 +472,7 @@ public class CDOCompareEditorUtil
   /**
    * @since 4.3
    */
-  public static Input createComparisonInput(CDOView leftView, CDOView rightView, CDOView[] originView,
-      CDOViewOpener viewOpener)
+  public static Input createComparisonInput(CDOView leftView, CDOView rightView, CDOView[] originView, CDOViewOpener viewOpener)
   {
     Comparison comparison = CDOCompareUtil.compare(leftView, rightView, originView, viewOpener);
     return createComparisonInput(leftView, rightView, comparison);
@@ -502,8 +499,7 @@ public class CDOCompareEditorUtil
     }
 
     IComparisonScope scope = CDOCompare.getScope(comparison);
-    ICompareEditingDomain editingDomain = EMFCompareEditingDomain.create(scope.getLeft(), scope.getRight(),
-        scope.getOrigin());
+    ICompareEditingDomain editingDomain = EMFCompareEditingDomain.create(scope.getLeft(), scope.getRight(), scope.getOrigin());
 
     ComposedAdapterFactory.Descriptor.Registry registry = EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry();
     ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(registry);
@@ -599,8 +595,7 @@ public class CDOCompareEditorUtil
   {
     try
     {
-      Class<?> c = CommonPlugin.loadClass("org.eclipse.emf.compare.ide",
-          "org.eclipse.emf.compare.ide.internal.utils.StoragePathAdapter");
+      Class<?> c = CommonPlugin.loadClass("org.eclipse.emf.compare.ide", "org.eclipse.emf.compare.ide.internal.utils.StoragePathAdapter");
       Constructor<?> constructor = c.getConstructor(String.class, boolean.class);
       Adapter adapter = (Adapter)constructor.newInstance(label, false);
 
@@ -764,11 +759,10 @@ public class CDOCompareEditorUtil
 
     private boolean suppressCommit;
 
-    private Input(CDOView sourceView, CDOView targetView, CompareConfiguration configuration, Comparison comparison,
-        ICompareEditingDomain editingDomain, AdapterFactory adapterFactory)
+    private Input(CDOView sourceView, CDOView targetView, CompareConfiguration configuration, Comparison comparison, ICompareEditingDomain editingDomain,
+        AdapterFactory adapterFactory)
     {
-      super(new org.eclipse.emf.compare.ide.ui.internal.configuration.EMFCompareConfiguration(configuration),
-          comparison, editingDomain, adapterFactory);
+      super(new org.eclipse.emf.compare.ide.ui.internal.configuration.EMFCompareConfiguration(configuration), comparison, editingDomain, adapterFactory);
       this.sourceView = sourceView;
       this.targetView = targetView;
       this.comparison = comparison;

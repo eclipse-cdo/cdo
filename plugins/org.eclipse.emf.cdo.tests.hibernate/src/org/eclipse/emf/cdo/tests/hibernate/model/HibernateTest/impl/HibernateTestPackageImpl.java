@@ -187,9 +187,8 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
     }
 
     // Obtain or create and register package
-    HibernateTestPackageImpl theHibernateTestPackage = (HibernateTestPackageImpl)(EPackage.Registry.INSTANCE
-        .get(eNS_URI) instanceof HibernateTestPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-            : new HibernateTestPackageImpl());
+    HibernateTestPackageImpl theHibernateTestPackage = (HibernateTestPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof HibernateTestPackageImpl
+        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new HibernateTestPackageImpl());
 
     isInited = true;
 
@@ -732,109 +731,83 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
     bz398057B1EClass.getESuperTypes().add(getBz398057B());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(bz356181_MainEClass, Bz356181_Main.class, "Bz356181_Main", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getBz356181_Main_Transient(), ecorePackage.getEString(), "transient", null, 0, 1,
-        Bz356181_Main.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEAttribute(getBz356181_Main_NonTransient(), ecorePackage.getEString(), "nonTransient", null, 0, 1,
-        Bz356181_Main.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEReference(getBz356181_Main_TransientRef(), getBz356181_Transient(), null, "transientRef", null, 0, 1,
-        Bz356181_Main.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getBz356181_Main_TransientOtherRef(), getBz356181_NonTransient(), null, "transientOtherRef", null, 0,
-        1, Bz356181_Main.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(bz356181_MainEClass, Bz356181_Main.class, "Bz356181_Main", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBz356181_Main_Transient(), ecorePackage.getEString(), "transient", null, 0, 1, Bz356181_Main.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBz356181_Main_NonTransient(), ecorePackage.getEString(), "nonTransient", null, 0, 1, Bz356181_Main.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBz356181_Main_TransientRef(), getBz356181_Transient(), null, "transientRef", null, 0, 1, Bz356181_Main.class, IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBz356181_Main_TransientOtherRef(), getBz356181_NonTransient(), null, "transientOtherRef", null, 0, 1, Bz356181_Main.class, IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(bz356181_TransientEClass, Bz356181_Transient.class, "Bz356181_Transient", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
+    initEClass(bz356181_TransientEClass, Bz356181_Transient.class, "Bz356181_Transient", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(bz356181_NonTransientEClass, Bz356181_NonTransient.class, "Bz356181_NonTransient", !IS_ABSTRACT,
-        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getBz356181_NonTransient_Main(), getBz356181_Main(), null, "main", null, 0, 1,
-        Bz356181_NonTransient.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(bz356181_NonTransientEClass, Bz356181_NonTransient.class, "Bz356181_NonTransient", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getBz356181_NonTransient_Main(), getBz356181_Main(), null, "main", null, 0, 1, Bz356181_NonTransient.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(bz387752_MainEClass, Bz387752_Main.class, "Bz387752_Main", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getBz387752_Main_StrUnsettable(), ecorePackage.getEString(), "strUnsettable", "def_value", 0, 1,
-        Bz387752_Main.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEAttribute(getBz387752_Main_StrSettable(), ecorePackage.getEString(), "strSettable", "value", 0, 1,
-        Bz387752_Main.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEAttribute(getBz387752_Main_EnumSettable(), getBz387752_Enum(), "enumSettable", null, 0, 1, Bz387752_Main.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getBz387752_Main_EnumUnsettable(), getBz387752_Enum(), "enumUnsettable", "VAL1", 0, 1,
-        Bz387752_Main.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+    initEClass(bz387752_MainEClass, Bz387752_Main.class, "Bz387752_Main", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBz387752_Main_StrUnsettable(), ecorePackage.getEString(), "strUnsettable", "def_value", 0, 1, Bz387752_Main.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBz387752_Main_StrSettable(), ecorePackage.getEString(), "strSettable", "value", 0, 1, Bz387752_Main.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBz387752_Main_EnumSettable(), getBz387752_Enum(), "enumSettable", null, 0, 1, Bz387752_Main.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBz387752_Main_EnumUnsettable(), getBz387752_Enum(), "enumUnsettable", "VAL1", 0, 1, Bz387752_Main.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(bz380987_GroupEClass, Bz380987_Group.class, "Bz380987_Group", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getBz380987_Group_People(), getBz380987_Person(), getBz380987_Person_Group(), "people", null, 0, -1,
-        Bz380987_Group.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(bz380987_GroupEClass, Bz380987_Group.class, "Bz380987_Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getBz380987_Group_People(), getBz380987_Person(), getBz380987_Person_Group(), "people", null, 0, -1, Bz380987_Group.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(bz380987_PlaceEClass, Bz380987_Place.class, "Bz380987_Place", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getBz380987_Place_Name(), ecorePackage.getEString(), "name", null, 0, 1, Bz380987_Place.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getBz380987_Place_People(), getBz380987_Person(), getBz380987_Person_Places(), "people", null, 0, -1,
-        Bz380987_Place.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(bz380987_PlaceEClass, Bz380987_Place.class, "Bz380987_Place", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBz380987_Place_Name(), ecorePackage.getEString(), "name", null, 0, 1, Bz380987_Place.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBz380987_Place_People(), getBz380987_Person(), getBz380987_Person_Places(), "people", null, 0, -1, Bz380987_Place.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(bz380987_PersonEClass, Bz380987_Person.class, "Bz380987_Person", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getBz380987_Person_Name(), ecorePackage.getEString(), "name", null, 0, 1, Bz380987_Person.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getBz380987_Person_Group(), getBz380987_Group(), getBz380987_Group_People(), "group", null, 0, -1,
-        Bz380987_Person.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getBz380987_Person_Places(), getBz380987_Place(), getBz380987_Place_People(), "places", null, 0, -1,
-        Bz380987_Person.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(bz380987_PersonEClass, Bz380987_Person.class, "Bz380987_Person", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBz380987_Person_Name(), ecorePackage.getEString(), "name", null, 0, 1, Bz380987_Person.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBz380987_Person_Group(), getBz380987_Group(), getBz380987_Group_People(), "group", null, 0, -1, Bz380987_Person.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBz380987_Person_Places(), getBz380987_Place(), getBz380987_Place_People(), "places", null, 0, -1, Bz380987_Person.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(bz398057AEClass, Bz398057A.class, "Bz398057A", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getBz398057A_ListOfB(), getBz398057B(), getBz398057B_RefToClassA(), "listOfB", null, 0, -1,
-        Bz398057A.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getBz398057A_DbId(), ecorePackage.getEString(), "dbId", null, 1, 1, Bz398057A.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBz398057A_ListOfB(), getBz398057B(), getBz398057B_RefToClassA(), "listOfB", null, 0, -1, Bz398057A.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBz398057A_DbId(), ecorePackage.getEString(), "dbId", null, 1, 1, Bz398057A.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(bz398057A1EClass, Bz398057A1.class, "Bz398057A1", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
+    initEClass(bz398057A1EClass, Bz398057A1.class, "Bz398057A1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(bz398057BEClass, Bz398057B.class, "Bz398057B", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getBz398057B_RefToClassA(), getBz398057A(), getBz398057A_ListOfB(), "refToClassA", null, 0, 1,
-        Bz398057B.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getBz398057B_Value(), ecorePackage.getEDouble(), "value", null, 0, 1, Bz398057B.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getBz398057B_DbId(), ecorePackage.getEString(), "dbId", null, 1, 1, Bz398057B.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBz398057B_RefToClassA(), getBz398057A(), getBz398057A_ListOfB(), "refToClassA", null, 0, 1, Bz398057B.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBz398057B_Value(), ecorePackage.getEDouble(), "value", null, 0, 1, Bz398057B.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBz398057B_DbId(), ecorePackage.getEString(), "dbId", null, 1, 1, Bz398057B.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(bz398057B1EClass, Bz398057B1.class, "Bz398057B1", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getBz398057B1_ValueStr(), ecorePackage.getEString(), "valueStr", null, 0, 1, Bz398057B1.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(bz398057B1EClass, Bz398057B1.class, "Bz398057B1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBz398057B1_ValueStr(), ecorePackage.getEString(), "valueStr", null, 0, 1, Bz398057B1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(bz397682PEClass, Bz397682P.class, "Bz397682P", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getBz397682P_DbId(), ecorePackage.getEString(), "dbId", null, 1, 1, Bz397682P.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getBz397682P_ListOfC(), getBz397682C(), getBz397682C_RefToP(), "listOfC", null, 0, -1,
-        Bz397682P.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBz397682P_DbId(), ecorePackage.getEString(), "dbId", null, 1, 1, Bz397682P.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBz397682P_ListOfC(), getBz397682C(), getBz397682C_RefToP(), "listOfC", null, 0, -1, Bz397682P.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(bz397682CEClass, Bz397682C.class, "Bz397682C", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getBz397682C_RefToP(), getBz397682P(), getBz397682P_ListOfC(), "refToP", null, 0, 1, Bz397682C.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEReference(getBz397682C_RefToC(), getBz397682C(), null, "refToC", null, 0, 1, Bz397682C.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEAttribute(getBz397682C_DbId(), ecorePackage.getEString(), "dbId", null, 1, 1, Bz397682C.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBz397682C_RefToP(), getBz397682P(), getBz397682P_ListOfC(), "refToP", null, 0, 1, Bz397682C.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBz397682C_RefToC(), getBz397682C(), null, "refToC", null, 0, 1, Bz397682C.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBz397682C_DbId(), ecorePackage.getEString(), "dbId", null, 1, 1, Bz397682C.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(bz387752_EnumEEnum, Bz387752_Enum.class, "Bz387752_Enum");
@@ -860,14 +833,11 @@ public class HibernateTestPackageImpl extends EPackageImpl implements HibernateT
     String source = "teneo.jpa";
     addAnnotation(getBz356181_Main_Transient(), source, new String[] { "value", "@Transient" });
     addAnnotation(bz356181_TransientEClass, source, new String[] { "value", "@Transient" });
-    addAnnotation(bz398057AEClass, source,
-        new String[] { "value", "@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)" });
+    addAnnotation(bz398057AEClass, source, new String[] { "value", "@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)" });
     addAnnotation(getBz398057A_DbId(), source, new String[] { "value", "@Id" });
-    addAnnotation(bz398057BEClass, source,
-        new String[] { "value", "@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)" });
+    addAnnotation(bz398057BEClass, source, new String[] { "value", "@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)" });
     addAnnotation(getBz398057B_DbId(), source, new String[] { "value", "@Id" });
-    addAnnotation(bz397682PEClass, source,
-        new String[] { "value", "@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)" });
+    addAnnotation(bz397682PEClass, source, new String[] { "value", "@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)" });
     addAnnotation(getBz397682P_DbId(), source, new String[] { "value", "@Id" });
     addAnnotation(getBz397682C_DbId(), source, new String[] { "value", "@Id" });
   }

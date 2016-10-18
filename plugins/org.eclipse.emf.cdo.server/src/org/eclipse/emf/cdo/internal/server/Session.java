@@ -209,8 +209,7 @@ public class Session extends Container<IView> implements InternalSession
     if (this.subscribed != subscribed)
     {
       this.subscribed = subscribed;
-      byte opcode = subscribed ? CDOProtocolConstants.REMOTE_SESSION_SUBSCRIBED
-          : CDOProtocolConstants.REMOTE_SESSION_UNSUBSCRIBED;
+      byte opcode = subscribed ? CDOProtocolConstants.REMOTE_SESSION_SUBSCRIBED : CDOProtocolConstants.REMOTE_SESSION_UNSUBSCRIBED;
       manager.sendRemoteSessionNotification(this, opcode);
     }
   }
@@ -399,8 +398,8 @@ public class Session extends Container<IView> implements InternalSession
    *
    * @since 2.0
    */
-  public void collectContainedRevisions(InternalCDORevision revision, CDOBranchPoint branchPoint, int referenceChunk,
-      Set<CDOID> revisions, List<CDORevision> additionalRevisions)
+  public void collectContainedRevisions(InternalCDORevision revision, CDOBranchPoint branchPoint, int referenceChunk, Set<CDOID> revisions,
+      List<CDORevision> additionalRevisions)
   {
     InternalCDORevisionManager revisionManager = manager.getRepository().getRevisionManager();
     for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
@@ -414,8 +413,7 @@ public class Session extends Container<IView> implements InternalSession
           CDOID id = (CDOID)value;
           if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
           {
-            InternalCDORevision containedRevision = revisionManager.getRevision(id, branchPoint, referenceChunk,
-                CDORevision.DEPTH_NONE, true);
+            InternalCDORevision containedRevision = revisionManager.getRevision(id, branchPoint, referenceChunk, CDORevision.DEPTH_NONE, true);
             revisions.add(id);
             additionalRevisions.add(containedRevision);
 
@@ -443,8 +441,7 @@ public class Session extends Container<IView> implements InternalSession
     return CDORevision.PERMISSION_PROVIDER.getPermission(revision, securityContext);
   }
 
-  public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
-      throws Exception
+  public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType) throws Exception
   {
     if (protocol != null)
     {
@@ -453,14 +450,12 @@ public class Session extends Container<IView> implements InternalSession
   }
 
   @Deprecated
-  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
-      throws Exception
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState) throws Exception
   {
     sendRepositoryStateNotification(oldState, newState, null);
   }
 
-  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState,
-      CDOID rootResourceID) throws Exception
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState, CDOID rootResourceID) throws Exception
   {
     if (protocol != null)
     {

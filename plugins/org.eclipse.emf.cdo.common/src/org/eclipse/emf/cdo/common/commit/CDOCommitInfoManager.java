@@ -23,8 +23,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
  * @apiviz.landmark
  * @apiviz.uses {@link CDOCommitInfo} - - manages
  */
-public interface CDOCommitInfoManager
-    extends CDOCommitInfoProvider, CDOCommitHistory.Provider<CDOBranch, CDOCommitHistory>
+public interface CDOCommitInfoManager extends CDOCommitInfoProvider, CDOCommitHistory.Provider<CDOBranch, CDOCommitHistory>
 {
   /**
    * @since 4.2
@@ -51,8 +50,7 @@ public interface CDOCommitInfoManager
   /**
    * @since 4.0
    */
-  public void getCommitInfos(CDOBranch branch, long startTime, String reserved1, String reserved2, int count,
-      CDOCommitInfoHandler handler);
+  public void getCommitInfos(CDOBranch branch, long startTime, String reserved1, String reserved2, int count, CDOCommitInfoHandler handler);
 
   /**
    * @since 4.2

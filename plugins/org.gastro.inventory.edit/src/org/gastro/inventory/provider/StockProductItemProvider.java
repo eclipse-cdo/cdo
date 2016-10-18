@@ -37,8 +37,8 @@ import java.util.List;
  *
  * @generated
  */
-public class StockProductItemProvider extends ProductItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class StockProductItemProvider extends ProductItemProvider
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -76,14 +76,9 @@ public class StockProductItemProvider extends ProductItemProvider implements IEd
    */
   protected void addCostPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(
-            createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                getResourceLocator(), getString("_UI_StockProduct_cost_feature"),
-                getString("_UI_PropertyDescriptor_description", "_UI_StockProduct_cost_feature",
-                    "_UI_StockProduct_type"),
-                InventoryPackage.Literals.STOCK_PRODUCT__COST, true, false, false,
-                ItemPropertyDescriptor.REAL_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_StockProduct_cost_feature"), getString("_UI_PropertyDescriptor_description", "_UI_StockProduct_cost_feature", "_UI_StockProduct_type"),
+        InventoryPackage.Literals.STOCK_PRODUCT__COST, true, false, false, ItemPropertyDescriptor.REAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -93,13 +88,10 @@ public class StockProductItemProvider extends ProductItemProvider implements IEd
    */
   protected void addAvailablePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_StockProduct_available_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_StockProduct_available_feature",
-                "_UI_StockProduct_type"),
-            InventoryPackage.Literals.STOCK_PRODUCT__AVAILABLE, true, false, false,
-            ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_StockProduct_available_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_StockProduct_available_feature", "_UI_StockProduct_type"),
+        InventoryPackage.Literals.STOCK_PRODUCT__AVAILABLE, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -109,13 +101,10 @@ public class StockProductItemProvider extends ProductItemProvider implements IEd
    */
   protected void addOrderLimitPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_StockProduct_orderLimit_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_StockProduct_orderLimit_feature",
-                "_UI_StockProduct_type"),
-            InventoryPackage.Literals.STOCK_PRODUCT__ORDER_LIMIT, true, false, false,
-            ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_StockProduct_orderLimit_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_StockProduct_orderLimit_feature", "_UI_StockProduct_type"),
+        InventoryPackage.Literals.STOCK_PRODUCT__ORDER_LIMIT, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**

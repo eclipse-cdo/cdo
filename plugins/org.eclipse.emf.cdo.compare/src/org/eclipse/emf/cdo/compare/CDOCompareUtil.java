@@ -143,8 +143,7 @@ public final class CDOCompareUtil
   /**
    * @since 4.3
    */
-  public static Comparison compare(CDOView leftView, CDOView rightView, CDOView[] originView, Set<CDOID> ids,
-      CDOViewOpener viewOpener)
+  public static Comparison compare(CDOView leftView, CDOView rightView, CDOView[] originView, Set<CDOID> ids, CDOViewOpener viewOpener)
   {
     if (viewOpener == DEFAULT_VIEW_OPENER)
     {

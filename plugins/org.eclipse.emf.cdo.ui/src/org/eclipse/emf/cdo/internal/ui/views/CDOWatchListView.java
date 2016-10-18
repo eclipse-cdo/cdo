@@ -182,15 +182,13 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     resetNotificationAction = new ResetNotificationAction();
     resetNotificationAction.setText(Messages.getString("CDOWatchListView.8")); //$NON-NLS-1$
     resetNotificationAction.setImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
-    resetNotificationAction
-        .setDisabledImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO_DISABLED));
+    resetNotificationAction.setDisabledImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO_DISABLED));
     resetNotificationAction.setToolTipText(Messages.getString("CDOWatchListView.9")); //$NON-NLS-1$
 
     resetAllNotificationAction = new ResetAllNotificationAction();
     resetAllNotificationAction.setText(Messages.getString("CDOWatchListView.10")); //$NON-NLS-1$
     resetAllNotificationAction.setImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
-    resetAllNotificationAction
-        .setDisabledImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO_DISABLED));
+    resetAllNotificationAction.setDisabledImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO_DISABLED));
     resetAllNotificationAction.setToolTipText(Messages.getString("CDOWatchListView.11")); //$NON-NLS-1$
   }
 
@@ -763,8 +761,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
   /**
    * @author Victor Roldan Betancort
    */
-  private final class CDOSubscriptionViewLabelProvider extends LabelProvider
-      implements ITableLabelProvider, IColorProvider
+  private final class CDOSubscriptionViewLabelProvider extends LabelProvider implements ITableLabelProvider, IColorProvider
   {
     private final Color YELLOW = UIUtil.getDisplay().getSystemColor(SWT.COLOR_YELLOW);
 

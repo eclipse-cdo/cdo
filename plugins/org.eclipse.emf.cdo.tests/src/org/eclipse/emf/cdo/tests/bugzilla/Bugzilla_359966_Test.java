@@ -115,8 +115,7 @@ public class Bugzilla_359966_Test extends AbstractCDOTest
    * @param reconstructSavePoints
    *          if CDOSavePoints should be reconstructed when creating the PushTransaction
    */
-  private CDOPushTransaction createPushTransaction(File fileForStoringChanges, boolean reconstructSavePoints)
-      throws IOException
+  private CDOPushTransaction createPushTransaction(File fileForStoringChanges, boolean reconstructSavePoints) throws IOException
   {
     CDOSession session = openSession();
     CDOTransaction delegate = session.openTransaction();

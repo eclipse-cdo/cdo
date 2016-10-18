@@ -32,11 +32,9 @@ import org.eclipse.ui.views.properties.IPropertySource;
  */
 public class ExplorerPropertiesAdapterFactory extends AbstractPropertyAdapterFactory
 {
-  private static final IActionFilter REPOSITORY_ACTION_FILTER = new DefaultActionFilter<CDORepository>(
-      CDORepositoryProperties.INSTANCE);
+  private static final IActionFilter REPOSITORY_ACTION_FILTER = new DefaultActionFilter<CDORepository>(CDORepositoryProperties.INSTANCE);
 
-  private static final IActionFilter CHECKOUT_ACTION_FILTER = new DefaultActionFilter<CDOCheckout>(
-      CDOCheckoutProperties.INSTANCE);
+  private static final IActionFilter CHECKOUT_ACTION_FILTER = new DefaultActionFilter<CDOCheckout>(CDOCheckoutProperties.INSTANCE);
 
   public ExplorerPropertiesAdapterFactory()
   {
@@ -50,8 +48,7 @@ public class ExplorerPropertiesAdapterFactory extends AbstractPropertyAdapterFac
       CDORepository repository = (CDORepository)object;
       CDOSession session = repository.getSession();
 
-      return new DefaultPropertySource.Augmented<CDORepository, CDOSession>(repository,
-          CDORepositoryProperties.INSTANCE, session)
+      return new DefaultPropertySource.Augmented<CDORepository, CDOSession>(repository, CDORepositoryProperties.INSTANCE, session)
       {
         @Override
         protected IPropertySource createAugmentingPropertySource(CDOSession session)

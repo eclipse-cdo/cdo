@@ -22,8 +22,7 @@ public class ProbeCollector
 {
   private final List<PerformanceRecord> performanceRecords = new ArrayList<PerformanceRecord>();
 
-  protected PerformanceRecord createPerformanceRecord(IScenario scenario, String testName, String testCaseName,
-      int runs)
+  protected PerformanceRecord createPerformanceRecord(IScenario scenario, String testName, String testCaseName, int runs)
   {
     PerformanceRecord performanceRecord = new PerformanceRecord(scenario, testName, testCaseName, runs);
     performanceRecords.add(performanceRecord);

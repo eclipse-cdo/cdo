@@ -46,8 +46,7 @@ public final class EnableViewDurabilityAction extends AbstractViewAction
       public void run()
       {
         UIUtil.copyToClipboard(display, durableLockingID);
-        MessageDialog.openInformation(getShell(), TITLE,
-            "The following area ID has been copied to the clipboard:\n" + durableLockingID);
+        MessageDialog.openInformation(getShell(), TITLE, "The following area ID has been copied to the clipboard:\n" + durableLockingID);
       }
     });
   }

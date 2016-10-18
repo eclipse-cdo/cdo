@@ -62,8 +62,7 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
   }
 
   @Deprecated
-  public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken)
-      throws Exception
+  public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken) throws Exception
   {
     return clientSessionProtocol.handleAuthenticationChallenge(randomToken);
   }
@@ -73,8 +72,7 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
     throw new UnsupportedOperationException();
   }
 
-  public Response sendCredentialsChallenge(Challenge challenge, String userID, CredentialsUpdateOperation operation)
-      throws Exception
+  public Response sendCredentialsChallenge(Challenge challenge, String userID, CredentialsUpdateOperation operation) throws Exception
   {
     throw new UnsupportedOperationException();
   }
@@ -91,8 +89,7 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
     sendRepositoryStateNotification(oldState, newState, null);
   }
 
-  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState,
-      CDOID rootResourceID)
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState, CDOID rootResourceID)
   {
     EmbeddedClientSession clientSession = clientSessionProtocol.getSession();
     clientSession.handleRepositoryStateChanged(oldState, newState);

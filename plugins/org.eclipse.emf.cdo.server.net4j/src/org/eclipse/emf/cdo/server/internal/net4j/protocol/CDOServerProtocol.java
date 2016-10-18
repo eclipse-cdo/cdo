@@ -93,26 +93,22 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   }
 
   @Deprecated
-  public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken)
-      throws Exception
+  public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken) throws Exception
   {
     throw new UnsupportedOperationException();
   }
 
   public Response sendAuthenticationChallenge(Challenge challenge) throws Exception
   {
-    return new AuthenticationRequest(this, CDOProtocolConstants.SIGNAL_AUTHENTICATION, challenge)
-        .send(negotiationTimeout, new Monitor());
+    return new AuthenticationRequest(this, CDOProtocolConstants.SIGNAL_AUTHENTICATION, challenge).send(negotiationTimeout, new Monitor());
   }
 
-  public Response sendCredentialsChallenge(Challenge challenge, String userID, CredentialsUpdateOperation operation)
-      throws Exception
+  public Response sendCredentialsChallenge(Challenge challenge, String userID, CredentialsUpdateOperation operation) throws Exception
   {
     return new CredentialsChallengeRequest(this, challenge, userID, operation).send(negotiationTimeout, new Monitor());
   }
 
-  public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
-      throws Exception
+  public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType) throws Exception
   {
     if (LifecycleUtil.isActive(getChannel()))
     {
@@ -125,14 +121,12 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   }
 
   @Deprecated
-  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
-      throws Exception
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState) throws Exception
   {
     sendRepositoryStateNotification(oldState, newState, null);
   }
 
-  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState,
-      CDOID rootResourceID) throws Exception
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState, CDOID rootResourceID) throws Exception
   {
     if (LifecycleUtil.isActive(getChannel()))
     {

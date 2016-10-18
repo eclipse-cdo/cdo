@@ -82,8 +82,7 @@ public class Bugzilla_319552_Test extends AbstractSyncingTest
       protected boolean successful()
       {
         // check revision versions.
-        return CDOUtil.getCDOObject(masterCompany).cdoRevision().getVersion() == CDOUtil.getCDOObject(company)
-            .cdoRevision().getVersion();
+        return CDOUtil.getCDOObject(masterCompany).cdoRevision().getVersion() == CDOUtil.getCDOObject(company).cdoRevision().getVersion();
       }
     }.assertNoTimeOut();
   }

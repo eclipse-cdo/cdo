@@ -75,8 +75,7 @@ public final class XMLUtil
     return handleElements(childNodes, handler);
   }
 
-  public static int handleElementsByTagName(Element rootElement, String tagName, ElementHandler handler)
-      throws Exception
+  public static int handleElementsByTagName(Element rootElement, String tagName, ElementHandler handler) throws Exception
   {
     int count = 0;
 

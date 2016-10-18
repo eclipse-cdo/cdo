@@ -96,15 +96,13 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
 
   private void doActivateOSGi()
   {
-    org.eclipse.core.runtime.IExtensionRegistry extensionRegistry = org.eclipse.core.runtime.Platform
-        .getExtensionRegistry();
+    org.eclipse.core.runtime.IExtensionRegistry extensionRegistry = org.eclipse.core.runtime.Platform.getExtensionRegistry();
     if (extensionRegistry == null)
     {
       return;
     }
 
-    org.eclipse.core.runtime.IConfigurationElement[] elements = extensionRegistry.getConfigurationElementsFor(NAMESPACE,
-        EXT_POINT);
+    org.eclipse.core.runtime.IConfigurationElement[] elements = extensionRegistry.getConfigurationElementsFor(NAMESPACE, EXT_POINT);
     for (org.eclipse.core.runtime.IConfigurationElement element : elements)
     {
       registerFactory(new FactoryDescriptor(element));
@@ -129,14 +127,12 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
 
   private void doDeactivateOSGi()
   {
-    org.eclipse.core.runtime.IExtensionRegistry extensionRegistry = org.eclipse.core.runtime.Platform
-        .getExtensionRegistry();
+    org.eclipse.core.runtime.IExtensionRegistry extensionRegistry = org.eclipse.core.runtime.Platform.getExtensionRegistry();
     if (extensionRegistry == null)
     {
       return;
     }
 
-    extensionRegistry
-        .removeRegistryChangeListener((org.eclipse.core.runtime.IRegistryChangeListener)extensionRegistryListener);
+    extensionRegistry.removeRegistryChangeListener((org.eclipse.core.runtime.IRegistryChangeListener)extensionRegistryListener);
   }
 }

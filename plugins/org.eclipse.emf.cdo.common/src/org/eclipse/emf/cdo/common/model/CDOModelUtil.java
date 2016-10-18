@@ -264,8 +264,7 @@ public final class CDOModelUtil implements CDOModelConstants
   {
     if (CDOPackageRegistryImpl.SYSTEM_ELEMENTS[6] != null && CDOPackageRegistryImpl.SYSTEM_ELEMENTS[7] != null)
     {
-      return CDOPackageRegistryImpl.SYSTEM_ELEMENTS[6] == eClassifier
-          || CDOPackageRegistryImpl.SYSTEM_ELEMENTS[7] == eClassifier;
+      return CDOPackageRegistryImpl.SYSTEM_ELEMENTS[6] == eClassifier || CDOPackageRegistryImpl.SYSTEM_ELEMENTS[7] == eClassifier;
     }
 
     if (isTypesPackage(eClassifier.getEPackage()))
@@ -612,8 +611,7 @@ public final class CDOModelUtil implements CDOModelConstants
   /**
    * @since 3.0
    */
-  public static EPackage readPackage(ExtendedDataInput in, ResourceSet resourceSet, boolean lookForResource)
-      throws IOException
+  public static EPackage readPackage(ExtendedDataInput in, ResourceSet resourceSet, boolean lookForResource) throws IOException
   {
     String uri = in.readString();
     boolean zipped = in.readBoolean();
@@ -624,8 +622,7 @@ public final class CDOModelUtil implements CDOModelConstants
   /**
    * @since 2.0
    */
-  public static void writePackage(ExtendedDataOutput out, EPackage ePackage, boolean zipped,
-      EPackage.Registry packageRegistry) throws IOException
+  public static void writePackage(ExtendedDataOutput out, EPackage ePackage, boolean zipped, EPackage.Registry packageRegistry) throws IOException
   {
     checkCrossResourceURIs(ePackage);
 

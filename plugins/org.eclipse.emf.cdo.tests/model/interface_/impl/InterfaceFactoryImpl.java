@@ -35,8 +35,7 @@ public class InterfaceFactoryImpl extends EFactoryImpl implements InterfaceFacto
   {
     try
     {
-      InterfaceFactory theInterfaceFactory = (InterfaceFactory)EPackage.Registry.INSTANCE
-          .getEFactory("uuid://interface");
+      InterfaceFactory theInterfaceFactory = (InterfaceFactory)EPackage.Registry.INSTANCE.getEFactory("uuid://interface");
       if (theInterfaceFactory != null)
       {
         return theInterfaceFactory;

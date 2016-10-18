@@ -25,8 +25,7 @@ public class CDOMergeEventListener extends DefaultMergeEventListener
 
   @SuppressWarnings("rawtypes")
   @Override
-  protected void copyValues(final EntityPersister persister, final Object entity, final Object target,
-      final SessionImplementor source, final Map copyCache)
+  protected void copyValues(final EntityPersister persister, final Object entity, final Object target, final SessionImplementor source, final Map copyCache)
   {
     if (entity != target)
     {

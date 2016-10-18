@@ -115,8 +115,7 @@ public class CDOObjectHistoryImpl extends CDOCommitHistoryImpl implements CDOObj
             break;
           }
 
-          CDORevision revision = revisionManager.getRevision(object.cdoID(), base, CDORevision.UNCHUNKED,
-              CDORevision.DEPTH_NONE, true);
+          CDORevision revision = revisionManager.getRevision(object.cdoID(), base, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
           if (revision == null)
           {
             // Reached branch where the object does not exist anymore.

@@ -52,8 +52,7 @@ public class DawnBasicGraphicalEditPartStylizerImpl extends DawnEditPartStylizer
   @Override
   public void setLocked(EditPart editPart, int type)
   {
-    setBorder(editPart, getBackgroundColor(editPart, DawnState.LOCKED_REMOTELY),
-        DawnAppearancer.DEFAULT_BORDER_THICKNESS);
+    setBorder(editPart, getBackgroundColor(editPart, DawnState.LOCKED_REMOTELY), DawnAppearancer.DEFAULT_BORDER_THICKNESS);
   }
 
   /**

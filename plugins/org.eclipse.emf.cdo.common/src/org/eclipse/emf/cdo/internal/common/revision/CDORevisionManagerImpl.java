@@ -235,11 +235,9 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     }
   }
 
-  public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk,
-      boolean loadOnDemand)
+  public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk, boolean loadOnDemand)
   {
-    checkArg(branchVersion.getVersion() >= CDOBranchVersion.FIRST_VERSION,
-        "Invalid version: " + branchVersion.getVersion());
+    checkArg(branchVersion.getVersion() >= CDOBranchVersion.FIRST_VERSION, "Invalid version: " + branchVersion.getVersion());
     acquireAtomicRequestLock(loadAndAddLock);
 
     try
@@ -278,28 +276,26 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return null;
   }
 
-  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
-      boolean loadOnDemand)
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
   {
     return getRevision(id, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, null);
   }
 
-  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
-      boolean loadOnDemand, SyntheticCDORevision[] synthetics)
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      SyntheticCDORevision[] synthetics)
   {
     List<CDOID> ids = Collections.singletonList(id);
     CDORevision result = getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, synthetics).get(0);
     return (InternalCDORevision)result;
   }
 
-  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk,
-      int prefetchDepth, boolean loadOnDemand)
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
   {
     return getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, null);
   }
 
-  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk,
-      int prefetchDepth, boolean loadOnDemand, SyntheticCDORevision[] synthetics)
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      SyntheticCDORevision[] synthetics)
   {
     RevisionInfo[] infos = new RevisionInfo[ids.size()];
     List<RevisionInfo> infosToLoad = createRevisionInfos(ids, branchPoint, prefetchDepth, loadOnDemand, infos);
@@ -311,8 +307,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
       List<? extends CDORevision> primaryLoadedRevisions //
           = getResultsAndSynthetics(infosToLoad.toArray(new RevisionInfo[0]), null);
 
-      if (primaryLoadedRevisions != null && !primaryLoadedRevisions.isEmpty()
-          || additionalLoadedRevisions != null && !additionalLoadedRevisions.isEmpty())
+      if (primaryLoadedRevisions != null && !primaryLoadedRevisions.isEmpty() || additionalLoadedRevisions != null && !additionalLoadedRevisions.isEmpty())
       {
         if (primaryLoadedRevisions == null)
         {
@@ -331,8 +326,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return getResultsAndSynthetics(infos, synthetics);
   }
 
-  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     revisionLoader.handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime, handler);
   }
@@ -343,8 +337,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return "RevisionManager";
   }
 
-  private List<RevisionInfo> createRevisionInfos(List<CDOID> ids, CDOBranchPoint branchPoint, int prefetchDepth,
-      boolean loadOnDemand, RevisionInfo[] infos)
+  private List<RevisionInfo> createRevisionInfos(List<CDOID> ids, CDOBranchPoint branchPoint, int prefetchDepth, boolean loadOnDemand, RevisionInfo[] infos)
   {
     List<RevisionInfo> infosToLoad = null;
     Iterator<CDOID> idIterator = ids.iterator();
@@ -388,8 +381,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return createRevisionInfoMissing(id, branchPoint);
   }
 
-  private RevisionInfo.Available createRevisionInfoAvailable(InternalCDORevision revision,
-      CDOBranchPoint requestedBranchPoint)
+  private RevisionInfo.Available createRevisionInfoAvailable(InternalCDORevision revision, CDOBranchPoint requestedBranchPoint)
   {
     if (revision instanceof PointerCDORevision)
     {
@@ -418,8 +410,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return new RevisionInfo.Missing(id, requestedBranchPoint);
   }
 
-  protected List<InternalCDORevision> loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint,
-      int referenceChunk, int prefetchDepth)
+  protected List<InternalCDORevision> loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
   {
     acquireAtomicRequestLock(loadAndAddLock);
 
@@ -474,8 +465,8 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
           CDOBranchVersion target = pointer.getTarget();
           if (target instanceof InternalCDORevision)
           {
-            revision = new PointerCDORevision(pointer.getEClass(), pointer.getID(), pointer.getBranch(),
-                pointer.getRevised(), CDOBranchUtil.copyBranchVersion(target));
+            revision = new PointerCDORevision(pointer.getEClass(), pointer.getID(), pointer.getBranch(), pointer.getRevised(),
+                CDOBranchUtil.copyBranchVersion(target));
           }
         }
 

@@ -83,8 +83,7 @@ public class GenRefSingleContainedImpl extends EObjectImpl implements GenRefSing
     element = newElement;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          model4Package.GEN_REF_SINGLE_CONTAINED__ELEMENT, oldElement, newElement);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, model4Package.GEN_REF_SINGLE_CONTAINED__ELEMENT, oldElement, newElement);
       if (msgs == null)
       {
         msgs = notification;
@@ -108,13 +107,11 @@ public class GenRefSingleContainedImpl extends EObjectImpl implements GenRefSing
       NotificationChain msgs = null;
       if (element != null)
       {
-        msgs = ((InternalEObject)element).eInverseRemove(this,
-            EOPPOSITE_FEATURE_BASE - model4Package.GEN_REF_SINGLE_CONTAINED__ELEMENT, null, msgs);
+        msgs = ((InternalEObject)element).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - model4Package.GEN_REF_SINGLE_CONTAINED__ELEMENT, null, msgs);
       }
       if (newElement != null)
       {
-        msgs = ((InternalEObject)newElement).eInverseAdd(this,
-            EOPPOSITE_FEATURE_BASE - model4Package.GEN_REF_SINGLE_CONTAINED__ELEMENT, null, msgs);
+        msgs = ((InternalEObject)newElement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - model4Package.GEN_REF_SINGLE_CONTAINED__ELEMENT, null, msgs);
       }
       msgs = basicSetElement(newElement, msgs);
       if (msgs != null)
@@ -124,8 +121,7 @@ public class GenRefSingleContainedImpl extends EObjectImpl implements GenRefSing
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.GEN_REF_SINGLE_CONTAINED__ELEMENT, newElement,
-          newElement));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.GEN_REF_SINGLE_CONTAINED__ELEMENT, newElement, newElement));
     }
   }
 

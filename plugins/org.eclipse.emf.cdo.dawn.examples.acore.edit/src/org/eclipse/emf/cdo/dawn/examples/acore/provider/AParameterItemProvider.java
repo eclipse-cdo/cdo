@@ -37,8 +37,8 @@ import java.util.List;
  *
  * @generated
  */
-public class AParameterItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class AParameterItemProvider extends ItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -75,12 +75,9 @@ public class AParameterItemProvider extends ItemProviderAdapter implements IEdit
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_AParameter_name_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_AParameter_name_feature", "_UI_AParameter_type"),
-            AcorePackage.Literals.APARAMETER__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-            null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_AParameter_name_feature"), getString("_UI_PropertyDescriptor_description", "_UI_AParameter_name_feature", "_UI_AParameter_type"),
+        AcorePackage.Literals.APARAMETER__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -90,12 +87,9 @@ public class AParameterItemProvider extends ItemProviderAdapter implements IEdit
    */
   protected void addTypePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_AParameter_type_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_AParameter_type_feature", "_UI_AParameter_type"),
-            AcorePackage.Literals.APARAMETER__TYPE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-            null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_AParameter_type_feature"), getString("_UI_PropertyDescriptor_description", "_UI_AParameter_type_feature", "_UI_AParameter_type"),
+        AcorePackage.Literals.APARAMETER__TYPE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -118,8 +112,7 @@ public class AParameterItemProvider extends ItemProviderAdapter implements IEdit
   public String getText(Object object)
   {
     String label = ((AParameter)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_AParameter_type")
-        : getString("_UI_AParameter_type") + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_AParameter_type") : getString("_UI_AParameter_type") + " " + label;
   }
 
   /**

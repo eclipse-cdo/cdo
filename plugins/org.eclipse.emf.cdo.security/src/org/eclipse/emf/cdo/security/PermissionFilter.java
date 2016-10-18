@@ -30,8 +30,7 @@ import org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext;
  */
 public interface PermissionFilter extends CDOObject
 {
-  boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
-      int level) throws Exception;
+  boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext, int level) throws Exception;
 
   boolean isImpacted(CommitImpactContext context);
 

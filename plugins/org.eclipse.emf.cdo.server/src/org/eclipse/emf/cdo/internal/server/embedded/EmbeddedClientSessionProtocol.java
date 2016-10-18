@@ -207,8 +207,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
-      int fromIndex, int toIndex)
+  public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex, int fromIndex, int toIndex)
   {
     throw new UnsupportedOperationException();
   }
@@ -242,8 +241,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk,
-      int prefetchDepth)
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
   {
     try
     {
@@ -269,8 +267,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     }
   }
 
-  public RefreshSessionResult refresh(long lastUpdateTime,
-      Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
+  public RefreshSessionResult refresh(long lastUpdateTime, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
       boolean enablePassiveUpdates)
   {
     throw new UnsupportedOperationException();
@@ -294,8 +291,8 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public void switchTarget(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects,
-      List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects, OMMonitor monitor)
+  public void switchTarget(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects, List<CDORevisionKey> allChangedObjects,
+      List<CDOIDAndVersion> allDetachedObjects, OMMonitor monitor)
   {
     // TODO: implement EmbeddedClientSessionProtocol.changeView(viewID, branchPoint, invalidObjects, allChangedObjects,
     // allDetachedObjects, monitor)
@@ -388,8 +385,8 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
   }
 
   @Deprecated
-  public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
-      LockType lockType, long timeout) throws InterruptedException
+  public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch, LockType lockType, long timeout)
+      throws InterruptedException
   {
     throw new UnsupportedOperationException();
   }
@@ -397,8 +394,8 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
   /**
    * @since 4.1
    */
-  public LockObjectsResult lockObjects2(List<CDORevisionKey> keys, int viewID, CDOBranch viewedBranch, LockType type,
-      boolean recursive, long timeout) throws InterruptedException
+  public LockObjectsResult lockObjects2(List<CDORevisionKey> keys, int viewID, CDOBranch viewedBranch, LockType type, boolean recursive, long timeout)
+      throws InterruptedException
   {
     throw new UnsupportedOperationException();
   }
@@ -414,14 +411,13 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> keys, CDOBranch viewedBranch,
-      LockType type, boolean recursive, long timeout) throws InterruptedException
+  public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> keys, CDOBranch viewedBranch, LockType type, boolean recursive,
+      long timeout) throws InterruptedException
   {
     throw new UnsupportedOperationException();
   }
 
-  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> ids, LockType type,
-      boolean recursive)
+  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> ids, LockType type, boolean recursive)
   {
     throw new UnsupportedOperationException();
   }
@@ -443,8 +439,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     // TODO: implement EmbeddedClientSessionProtocol.handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime,
     // handler)
@@ -452,8 +447,8 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
   }
 
   @Deprecated
-  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
-      CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs, OMMonitor monitor)
+  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData,
+      Collection<CDOLob<?>> lobs, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }
@@ -471,8 +466,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
       CDOCommitData commitData = context.getCommitData();
 
       int transactionID = transaction.getViewID();
-      InternalTransaction serverTransaction = (InternalTransaction)serverSessionProtocol.getSession()
-          .getView(transactionID);
+      InternalTransaction serverTransaction = (InternalTransaction)serverSessionProtocol.getSession().getView(transactionID);
       serverCommitContext = serverTransaction.createCommitContext();
       serverCommitContext.preWrite();
       serverCommitContext.setAutoReleaseLocksEnabled(transaction.options().isAutoReleaseLocksEnabled());
@@ -529,8 +523,8 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
   }
 
   @Deprecated
-  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
-      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
+  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment, CDOCommitData commitData,
+      Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }
@@ -595,8 +589,8 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
-      CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo)
+  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
+      CDORevisionAvailabilityInfo sourceBaseInfo)
   {
     throw new UnsupportedOperationException();
   }
@@ -659,8 +653,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler,
-      OMMonitor monitor)
+  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }

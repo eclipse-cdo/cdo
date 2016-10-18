@@ -47,14 +47,13 @@ public class ElementWizardAction extends LongRunningAction
     this(shell, title, toolTip, image, productGroup, IPluginContainer.INSTANCE);
   }
 
-  public ElementWizardAction(Shell shell, String title, String toolTip, ImageDescriptor image, String productGroup,
-      IManagedContainer container)
+  public ElementWizardAction(Shell shell, String title, String toolTip, ImageDescriptor image, String productGroup, IManagedContainer container)
   {
     this(shell, title, toolTip, image, productGroup, container, null);
   }
 
-  public ElementWizardAction(Shell shell, String title, String toolTip, ImageDescriptor image, String productGroup,
-      IManagedContainer container, String defaultFactoryType)
+  public ElementWizardAction(Shell shell, String title, String toolTip, ImageDescriptor image, String productGroup, IManagedContainer container,
+      String defaultFactoryType)
   {
     super(title, toolTip, image);
     this.shell = shell;
@@ -121,8 +120,7 @@ public class ElementWizardAction extends LongRunningAction
       {
         public void run()
         {
-          MessageDialog.openError(shell, title, "An error occured: " + ex.getMessage()
-              + "\n\nThe error log may contain more information about the problem.");
+          MessageDialog.openError(shell, title, "An error occured: " + ex.getMessage() + "\n\nThe error log may contain more information about the problem.");
         }
       });
     }

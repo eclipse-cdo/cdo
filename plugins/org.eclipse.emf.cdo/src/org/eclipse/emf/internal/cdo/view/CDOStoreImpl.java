@@ -514,8 +514,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category WRITE
    */
-  public void setContainer(InternalEObject eObject, CDOResource newResource, InternalEObject newEContainer,
-      int newContainerFeatureID)
+  public void setContainer(InternalEObject eObject, CDOResource newResource, InternalEObject newEContainer, int newContainerFeatureID)
   {
     synchronized (view.getViewMonitor())
     {
@@ -822,8 +821,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @since 2.0
    */
-  public Object convertToEMF(EObject eObject, InternalCDORevision revision, EStructuralFeature feature, int index,
-      Object value)
+  public Object convertToEMF(EObject eObject, InternalCDORevision revision, EStructuralFeature feature, int index, Object value)
   {
     if (value != null)
     {
@@ -890,8 +888,7 @@ public final class CDOStoreImpl implements CDOStore
     return value;
   }
 
-  private Object convertIDToObject(InternalCDOView view, EObject eObject, EStructuralFeature feature, int index,
-      Object value)
+  private Object convertIDToObject(InternalCDOView view, EObject eObject, EStructuralFeature feature, int index, Object value)
   {
     try
     {
@@ -933,8 +930,7 @@ public final class CDOStoreImpl implements CDOStore
     return object;
   }
 
-  private Object getOldListValue(InternalEObject eObject, InternalCDOObject cdoObject, EStructuralFeature feature,
-      int index)
+  private Object getOldListValue(InternalEObject eObject, InternalCDOObject cdoObject, EStructuralFeature feature, int index)
   {
     if (!feature.isMany())
     {

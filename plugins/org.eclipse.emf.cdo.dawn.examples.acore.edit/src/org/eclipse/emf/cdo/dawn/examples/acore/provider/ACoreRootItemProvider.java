@@ -39,8 +39,8 @@ import java.util.List;
  *
  * @generated
  */
-public class ACoreRootItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class ACoreRootItemProvider extends ItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -76,12 +76,9 @@ public class ACoreRootItemProvider extends ItemProviderAdapter implements IEditi
    */
   protected void addTitlePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_ACoreRoot_title_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_ACoreRoot_title_feature", "_UI_ACoreRoot_type"),
-            AcorePackage.Literals.ACORE_ROOT__TITLE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-            null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ACoreRoot_title_feature"), getString("_UI_PropertyDescriptor_description", "_UI_ACoreRoot_title_feature", "_UI_ACoreRoot_type"),
+        AcorePackage.Literals.ACORE_ROOT__TITLE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -138,8 +135,7 @@ public class ACoreRootItemProvider extends ItemProviderAdapter implements IEditi
   public String getText(Object object)
   {
     String label = ((ACoreRoot)object).getTitle();
-    return label == null || label.length() == 0 ? getString("_UI_ACoreRoot_type")
-        : getString("_UI_ACoreRoot_type") + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_ACoreRoot_type") : getString("_UI_ACoreRoot_type") + " " + label;
   }
 
   /**
@@ -177,11 +173,9 @@ public class ACoreRootItemProvider extends ItemProviderAdapter implements IEditi
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors
-        .add(createChildParameter(AcorePackage.Literals.ACORE_ROOT__CLASSES, AcoreFactory.eINSTANCE.createAClass()));
+    newChildDescriptors.add(createChildParameter(AcorePackage.Literals.ACORE_ROOT__CLASSES, AcoreFactory.eINSTANCE.createAClass()));
 
-    newChildDescriptors.add(
-        createChildParameter(AcorePackage.Literals.ACORE_ROOT__INTERFACES, AcoreFactory.eINSTANCE.createAInterface()));
+    newChildDescriptors.add(createChildParameter(AcorePackage.Literals.ACORE_ROOT__INTERFACES, AcoreFactory.eINSTANCE.createAInterface()));
   }
 
   /**

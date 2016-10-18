@@ -457,8 +457,7 @@ public class Bugzilla_400311b_Test extends AbstractCDOTest
     containmentList.add(childObject);
     assertVersion(containmentObjectInitialVersion, containmentObject);
     assertVersion(childObjectInitialVersion, childObject);
-    assertEquals("Element should not be detached", false,
-        transaction.getDetachedObjects().containsKey(elementToDeleteID));
+    assertEquals("Element should not be detached", false, transaction.getDetachedObjects().containsKey(elementToDeleteID));
 
     // Step 3: commit
     transaction.commit();
@@ -536,22 +535,18 @@ public class Bugzilla_400311b_Test extends AbstractCDOTest
     CDOObject cdoElement = CDOUtil.getCDOObject(element);
     assertClean(cdoElement, ((CDOResource)cdoElement.eResource()).cdoView());
     assertEquals(expectedVersion, cdoElement.cdoRevision().getVersion());
-    assertEquals("Transaction is not expected to contain revision deltas on the given object", null,
-        transaction.getRevisionDeltas().get(cdoElement.cdoID()));
+    assertEquals("Transaction is not expected to contain revision deltas on the given object", null, transaction.getRevisionDeltas().get(cdoElement.cdoID()));
 
     if (expectedDirtyTransaction)
     {
-      assertNotSame("Transaction is expected to contain revision deltas", CDOIDUtil.createMap(),
-          transaction.getRevisionDeltas());
+      assertNotSame("Transaction is expected to contain revision deltas", CDOIDUtil.createMap(), transaction.getRevisionDeltas());
     }
     else
     {
-      assertEquals("Transaction is not expected to contain revision deltas", CDOIDUtil.createMap(),
-          transaction.getRevisionDeltas());
+      assertEquals("Transaction is not expected to contain revision deltas", CDOIDUtil.createMap(), transaction.getRevisionDeltas());
     }
 
-    assertEquals("Transaction is expected to be " + (expectedDirtyTransaction ? "dirty" : "clean"),
-        expectedDirtyTransaction, transaction.isDirty());
+    assertEquals("Transaction is expected to be " + (expectedDirtyTransaction ? "dirty" : "clean"), expectedDirtyTransaction, transaction.isDirty());
   }
 
   /**
@@ -568,8 +563,7 @@ public class Bugzilla_400311b_Test extends AbstractCDOTest
   /**
    * Ensures that the CDOServer does not contain 2 identical Adjacent revisions.
    */
-  private static void assertServerDoesNotContainIdenticalAdjacentRevision(CDOID targetElement,
-      CDOTransaction transaction)
+  private static void assertServerDoesNotContainIdenticalAdjacentRevision(CDOID targetElement, CDOTransaction transaction)
   {
     // Step 1: get all revisions for the given ID through the revision manager
     CDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
@@ -584,8 +578,7 @@ public class Bugzilla_400311b_Test extends AbstractCDOTest
       CDOBranchVersion branchVersion = new CDOBranchVersionImpl(transaction.getBranch(), version);
       if (revisionManager.containsRevisionByVersion(targetElement, branchVersion))
       {
-        CDORevision fetched = revisionManager.getRevisionByVersion(targetElement, branchVersion, initialChunkSize,
-            true);
+        CDORevision fetched = revisionManager.getRevisionByVersion(targetElement, branchVersion, initialChunkSize, true);
         if (fetched != null)
         {
           revisions.add(fetched);

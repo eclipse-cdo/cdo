@@ -115,8 +115,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
     return null;
   }
 
-  private InternalCDOView provideView(URI uri, ResourceSet resourceSet, CDOViewSet viewSet,
-      CDOViewProvider viewProvider)
+  private InternalCDOView provideView(URI uri, ResourceSet resourceSet, CDOViewSet viewSet, CDOViewProvider viewProvider)
   {
     if (viewSet != null && viewProvider instanceof CDOViewProvider2)
     {
@@ -312,8 +311,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
 
       if (StringUtil.isEmpty(element.getAttribute("class"))) //$NON-NLS-1$
       {
-        throw new IllegalArgumentException(
-            MessageFormat.format(Messages.getString("CDOViewProviderRegistryImpl.4"), element)); //$NON-NLS-1$
+        throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOViewProviderRegistryImpl.4"), element)); //$NON-NLS-1$
       }
     }
 
@@ -369,8 +367,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
       String value = element.getAttribute("regex");
       if (StringUtil.isEmpty(value))
       {
-        throw new IllegalArgumentException(
-            MessageFormat.format(Messages.getString("CDOViewProviderRegistryImpl.6"), element)); //$NON-NLS-1$
+        throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOViewProviderRegistryImpl.6"), element)); //$NON-NLS-1$
       }
 
       return value;

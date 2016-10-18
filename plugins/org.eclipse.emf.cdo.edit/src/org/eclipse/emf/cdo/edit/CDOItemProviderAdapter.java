@@ -364,8 +364,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
       return null;
     }
 
-    public boolean isCompatibleWith(Object object, Object anotherObject,
-        IItemPropertyDescriptor anotherPropertyDescriptor)
+    public boolean isCompatibleWith(Object object, Object anotherObject, IItemPropertyDescriptor anotherPropertyDescriptor)
     {
       return false;
     }

@@ -39,8 +39,7 @@ public abstract class RegisterPackagesAction extends SessionAction
 
   private int errors;
 
-  public RegisterPackagesAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
-      CDOSession session)
+  public RegisterPackagesAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image, CDOSession session)
   {
     super(page, text, toolTipText, image, session);
   }

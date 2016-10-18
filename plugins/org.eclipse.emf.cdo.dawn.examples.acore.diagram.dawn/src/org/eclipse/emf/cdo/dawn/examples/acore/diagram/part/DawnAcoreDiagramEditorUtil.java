@@ -89,8 +89,7 @@ public class DawnAcoreDiagramEditorUtil extends AcoreDiagramEditorUtil
 
     progressMonitor.beginTask(Messages.AcoreDiagramEditorUtil_CreateDiagramProgressTask, 3);
 
-    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
-        PreferenceConstants.getServerName());
+    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(), PreferenceConstants.getServerName());
     CDOConnectionUtil.instance.openSession();
     ResourceSet resourceSet = editingDomain.getResourceSet();
 
@@ -104,8 +103,8 @@ public class DawnAcoreDiagramEditorUtil extends AcoreDiagramEditorUtil
     AcoreDiagramEditorPlugin.getInstance().logInfo("Diagram URI: " + diagramURI);
     AcoreDiagramEditorPlugin.getInstance().logInfo("Diagram Resource: " + diagramResource);
 
-    CreateSemanticResourceRecordingCommand createSemanticResourceCommand = new CreateSemanticResourceRecordingCommand(
-        editingDomain, transaction, modelURI.path());
+    CreateSemanticResourceRecordingCommand createSemanticResourceCommand = new CreateSemanticResourceRecordingCommand(editingDomain, transaction,
+        modelURI.path());
 
     editingDomain.getCommandStack().execute(createSemanticResourceCommand);
     final Resource modelResource = createSemanticResourceCommand.getResource();
@@ -113,8 +112,8 @@ public class DawnAcoreDiagramEditorUtil extends AcoreDiagramEditorUtil
     AcoreDiagramEditorPlugin.getInstance().logInfo("Model Resource: " + modelResource);
 
     final String diagramName = diagramURI.lastSegment();
-    AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain,
-        Messages.AcoreDiagramEditorUtil_CreateDiagramCommandLabel, Collections.EMPTY_LIST)
+    AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain, Messages.AcoreDiagramEditorUtil_CreateDiagramCommandLabel,
+        Collections.EMPTY_LIST)
     {
       @Override
       protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info) throws ExecutionException
@@ -130,8 +129,7 @@ public class DawnAcoreDiagramEditorUtil extends AcoreDiagramEditorUtil
           attachModelToResource(model, modelResource);
         }
 
-        Diagram diagram = ViewService.createDiagram(model, DawnACoreRootEditPart.MODEL_ID,
-            AcoreDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
+        Diagram diagram = ViewService.createDiagram(model, DawnACoreRootEditPart.MODEL_ID, AcoreDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
         if (diagram != null)
         {
           diagramResource.getContents().add(diagram);
@@ -155,8 +153,7 @@ public class DawnAcoreDiagramEditorUtil extends AcoreDiagramEditorUtil
 
     try
     {
-      OperationHistoryFactory.getOperationHistory().execute(command,
-          new org.eclipse.core.runtime.SubProgressMonitor(progressMonitor, 1), null);
+      OperationHistoryFactory.getOperationHistory().execute(command, new org.eclipse.core.runtime.SubProgressMonitor(progressMonitor, 1), null);
     }
     catch (ExecutionException e)
     {

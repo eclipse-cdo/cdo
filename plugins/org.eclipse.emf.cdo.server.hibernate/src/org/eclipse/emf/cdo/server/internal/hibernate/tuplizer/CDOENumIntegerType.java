@@ -40,8 +40,7 @@ public class CDOENumIntegerType extends CDOENumStringType
    * @see org.hibernate.usertype.UserType#nullSafeGet(java.sql.ResultSet, java.lang.String[], java.lang.Object)
    */
   @Override
-  public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor sessionImplementor, Object owner)
-      throws HibernateException, SQLException
+  public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor sessionImplementor, Object owner) throws HibernateException, SQLException
   {
     final int value = rs.getInt(names[0]);
     if (rs.wasNull())
@@ -66,8 +65,7 @@ public class CDOENumIntegerType extends CDOENumStringType
    * @see org.hibernate.usertype.UserType#nullSafeSet(java.sql.PreparedStatement, java.lang.Object, int)
    */
   @Override
-  public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor sessionImplementor)
-      throws HibernateException, SQLException
+  public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor sessionImplementor) throws HibernateException, SQLException
   {
     if (value == null)
     {

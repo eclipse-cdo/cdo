@@ -34,8 +34,7 @@ import java.text.MessageFormat;
  * @author Victor Roldan Betancort
  */
 @Deprecated
-public abstract class TransactionalBackgroundActionDelegate extends LongRunningActionDelegate
-    implements IObjectActionDelegate
+public abstract class TransactionalBackgroundActionDelegate extends LongRunningActionDelegate implements IObjectActionDelegate
 {
   private IWorkbenchPart targetPart;
 
@@ -83,8 +82,7 @@ public abstract class TransactionalBackgroundActionDelegate extends LongRunningA
         CDOView view = transactionalObject.cdoView();
         if (view.isReadOnly())
         {
-          throw new IllegalStateException(
-              MessageFormat.format(Messages.getString("TransactionalBackgroundAction_0"), transactionalObject)); //$NON-NLS-1$
+          throw new IllegalStateException(MessageFormat.format(Messages.getString("TransactionalBackgroundAction_0"), transactionalObject)); //$NON-NLS-1$
         }
 
         // Bypass cancel()
@@ -133,6 +131,5 @@ public abstract class TransactionalBackgroundActionDelegate extends LongRunningA
     }
   }
 
-  protected abstract void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor)
-      throws Exception;
+  protected abstract void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor) throws Exception;
 }

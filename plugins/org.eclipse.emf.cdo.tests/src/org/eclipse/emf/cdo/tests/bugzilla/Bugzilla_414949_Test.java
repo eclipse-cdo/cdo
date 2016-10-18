@@ -68,8 +68,7 @@ public class Bugzilla_414949_Test extends AbstractCDOTest
     dDiagram.getOtherNodes().add(filterDescription1);
 
     ResourceSet resourceSet = new ResourceSetImpl();
-    oldResourceFactory = Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*",
-        new XMIResourceFactoryImpl());
+    oldResourceFactory = Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
     String path = new File("./" + LOCAL_RESOURCE_NAME).getCanonicalPath();
     URI localResourceURI = URI.createFileURI(path);
     localResource = resourceSet.createResource(localResourceURI);

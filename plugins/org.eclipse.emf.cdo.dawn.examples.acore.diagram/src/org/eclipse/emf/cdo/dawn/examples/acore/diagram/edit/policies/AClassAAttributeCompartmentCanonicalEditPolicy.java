@@ -42,8 +42,7 @@ public class AClassAAttributeCompartmentCanonicalEditPolicy extends CanonicalEdi
   {
     View viewObject = (View)getHost().getModel();
     LinkedList<EObject> result = new LinkedList<EObject>();
-    List<AcoreNodeDescriptor> childDescriptors = AcoreDiagramUpdater
-        .getAClassAAttributeCompartment_7003SemanticChildren(viewObject);
+    List<AcoreNodeDescriptor> childDescriptors = AcoreDiagramUpdater.getAClassAAttributeCompartment_7003SemanticChildren(viewObject);
     for (Iterator<AcoreNodeDescriptor> it = childDescriptors.iterator(); it.hasNext();)
     {
       AcoreNodeDescriptor d = it.next();

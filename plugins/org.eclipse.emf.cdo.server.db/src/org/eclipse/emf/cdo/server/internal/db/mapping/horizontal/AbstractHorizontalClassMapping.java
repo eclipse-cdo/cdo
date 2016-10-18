@@ -289,8 +289,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
    * @return <code>true</code> if the revision has been read successfully.<br>
    *         <code>false</code> if the revision does not exist in the DB.
    */
-  protected final boolean readValuesFromStatement(PreparedStatement stmt, InternalCDORevision revision,
-      IDBStoreAccessor accessor)
+  protected final boolean readValuesFromStatement(PreparedStatement stmt, InternalCDORevision revision, IDBStoreAccessor accessor)
   {
     ResultSet resultSet = null;
 
@@ -333,8 +332,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
    * @return <code>true</code> if the revision has been read successfully.<br>
    *         <code>false</code> if the revision does not exist in the DB.
    */
-  protected final boolean readValuesFromResultSet(ResultSet resultSet, IIDHandler idHandler,
-      InternalCDORevision revision, boolean forUnit)
+  protected final boolean readValuesFromResultSet(ResultSet resultSet, IIDHandler idHandler, InternalCDORevision revision, boolean forUnit)
   {
     try
     {
@@ -514,14 +512,12 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
   }
 
-  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean mapType, boolean revise,
-      OMMonitor monitor)
+  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean mapType, boolean revise, OMMonitor monitor)
   {
     // If the repository's root resource ID is not yet set, then this must be the initial initRootResource()
     // commit. The duplicate check is certainly not needed in this case, and it appears that Mysql has problems
     // with it (Table definition has changed, please retry transaction), see bug 482886.
-    boolean duplicateResourcesCheckNeeded = revision.isResourceNode()
-        && mappingStrategy.getStore().getRepository().getRootResourceID() != null;
+    boolean duplicateResourcesCheckNeeded = revision.isResourceNode() && mappingStrategy.getStore().getRepository().getRootResourceID() != null;
 
     monitor.begin(duplicateResourcesCheckNeeded ? 10 : 9);
     Async async = null;
@@ -612,8 +608,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
   }
 
-  public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler)
+  public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     // branch parameter is ignored, because either it is null or main branch.
     // this does not make any difference for non-branching store.
@@ -683,8 +678,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
         if (version >= CDOBranchVersion.FIRST_VERSION)
         {
-          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id,
-              branchManager.getMainBranch().getVersion(version), CDORevision.UNCHUNKED, true);
+          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchManager.getMainBranch().getVersion(version),
+              CDORevision.UNCHUNKED, true);
 
           if (!handler.handleRevision(revision))
           {
@@ -773,8 +768,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
   }
 
-  public void detachObject(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp,
-      OMMonitor monitor)
+  public void detachObject(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp, OMMonitor monitor)
   {
     Async async = null;
     monitor.begin(1 + listMappings.size());
@@ -852,8 +846,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
   }
 
-  protected abstract void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version,
-      OMMonitor fork);
+  protected abstract void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version, OMMonitor fork);
 
   public final boolean queryXRefs(IDBStoreAccessor accessor, QueryXRefsContext context, String idString)
   {
@@ -892,8 +885,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     return true;
   }
 
-  protected final boolean queryScalarXRefs(IDBStoreAccessor accessor, List<EReference> scalarRefs,
-      QueryXRefsContext context, String idString)
+  protected final boolean queryScalarXRefs(IDBStoreAccessor accessor, List<EReference> scalarRefs, QueryXRefsContext context, String idString)
   {
     String tableName = table.getName();
     String where = getListXRefsWhere(context);
@@ -969,8 +961,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
   protected abstract String getListXRefsWhere(QueryXRefsContext context);
 
-  protected abstract void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch,
-      long timeStamp, OMMonitor fork);
+  protected abstract void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp, OMMonitor fork);
 
   protected abstract void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long timeStamp);
 

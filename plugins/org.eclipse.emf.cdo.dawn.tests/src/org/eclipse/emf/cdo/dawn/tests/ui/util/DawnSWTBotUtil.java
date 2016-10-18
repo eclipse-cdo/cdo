@@ -94,8 +94,7 @@ public class DawnSWTBotUtil
     }
   }
 
-  public static void setConnectorType(SWTWorkbenchBot bot, String serverName, String serverPort, String repository,
-      String protocol)
+  public static void setConnectorType(SWTWorkbenchBot bot, String serverName, String serverPort, String repository, String protocol)
   {
     bot.menu(LABEL_WINDOW).menu("Preferences").click();
     SWTBotShell shell = bot.shell("Preferences");
@@ -138,8 +137,7 @@ public class DawnSWTBotUtil
     return getConnectionEditParts(editor, clazz, editParts);
   }
 
-  public static List<SWTBotGefEditPart> getConnectionEditParts(SWTBotGefEditor editor, Class<? extends EditPart> clazz,
-      List<SWTBotGefEditPart> editParts)
+  public static List<SWTBotGefEditPart> getConnectionEditParts(SWTBotGefEditor editor, Class<? extends EditPart> clazz, List<SWTBotGefEditPart> editParts)
   {
 
     List<SWTBotGefEditPart> ret = new ArrayList<SWTBotGefEditPart>();
@@ -193,11 +191,10 @@ public class DawnSWTBotUtil
     return newNode;
   }
 
-  public static Edge createEdgeRemote(Node source, Node target, String type, IElementType elementType,
-      List<RelativeBendpoint> bendpoints, IViewProvider viewProvider)
+  public static Edge createEdgeRemote(Node source, Node target, String type, IElementType elementType, List<RelativeBendpoint> bendpoints,
+      IViewProvider viewProvider)
   {
-    Edge edge = viewProvider.createEdge(elementType, source.getDiagram(), type, ViewUtil.APPEND, true,
-        PreferencesHint.USE_DEFAULTS);
+    Edge edge = viewProvider.createEdge(elementType, source.getDiagram(), type, ViewUtil.APPEND, true, PreferencesHint.USE_DEFAULTS);
 
     edge.setTarget(target);
     edge.setSource(source);

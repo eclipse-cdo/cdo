@@ -99,8 +99,7 @@ public class DawnEditPartStylizerRegistry
   {
     try
     {
-      IConfigurationElement[] config = Platform.getExtensionRegistry()
-          .getConfigurationElementsFor(DAWN_STYLIZER_EXTENSION_POINT_ID);
+      IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(DAWN_STYLIZER_EXTENSION_POINT_ID);
       for (IConfigurationElement e : config)
       {
         if (editPart.getClass().getCanonicalName().equals(e.getAttribute("editpart")))

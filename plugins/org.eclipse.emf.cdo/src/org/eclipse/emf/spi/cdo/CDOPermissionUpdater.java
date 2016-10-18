@@ -28,8 +28,7 @@ public interface CDOPermissionUpdater
 {
   public static final CDOPermissionUpdater SERVER = new CDOPermissionUpdater()
   {
-    public Map<CDORevision, CDOPermission> updatePermissions(InternalCDOSession session,
-        Set<InternalCDORevision> revisions)
+    public Map<CDORevision, CDOPermission> updatePermissions(InternalCDOSession session, Set<InternalCDORevision> revisions)
     {
       InternalCDORevision[] revisionArray = revisions.toArray(new InternalCDORevision[revisions.size()]);
       CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
@@ -37,6 +36,5 @@ public interface CDOPermissionUpdater
     }
   };
 
-  public Map<CDORevision, CDOPermission> updatePermissions(InternalCDOSession session,
-      Set<InternalCDORevision> revisions);
+  public Map<CDORevision, CDOPermission> updatePermissions(InternalCDOSession session, Set<InternalCDORevision> revisions);
 }

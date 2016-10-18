@@ -133,16 +133,14 @@ public interface CDODataOutput extends ExtendedDataOutput
   /**
    * @since 4.1
    */
-  public void writeCDORevision(CDORevision revision, int referenceChunk, CDOBranchPoint securityContext)
-      throws IOException;
+  public void writeCDORevision(CDORevision revision, int referenceChunk, CDOBranchPoint securityContext) throws IOException;
 
   /**
    * @since 4.0
    */
   public void writeCDORevisable(CDORevisable revisable) throws IOException;
 
-  public void writeCDOList(EClass owner, EStructuralFeature feature, CDOList list, int referenceChunk)
-      throws IOException;
+  public void writeCDOList(EClass owner, EStructuralFeature feature, CDOList list, int referenceChunk) throws IOException;
 
   public void writeCDOFeatureValue(EStructuralFeature feature, Object value) throws IOException;
 

@@ -347,7 +347,6 @@ public interface MessageProducer
     * @since 1.1
     */
 
-  void send(Destination destination, Message message, int deliveryMode, int priority, long timeToLive)
-      throws JMSException;
+  void send(Destination destination, Message message, int deliveryMode, int priority, long timeToLive) throws JMSException;
 
 }

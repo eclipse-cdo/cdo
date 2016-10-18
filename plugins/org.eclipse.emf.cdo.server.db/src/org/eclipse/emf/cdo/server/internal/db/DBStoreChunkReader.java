@@ -74,8 +74,7 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
 
     if (referenceMapping instanceof IListMapping2)
     {
-      ((IListMapping2)referenceMapping).addRangedChunkWhere(getAccessor(), getRevision().getID(), builder, fromIndex,
-          toIndex);
+      ((IListMapping2)referenceMapping).addRangedChunkWhere(getAccessor(), getRevision().getID(), builder, fromIndex, toIndex);
     }
     else
     {

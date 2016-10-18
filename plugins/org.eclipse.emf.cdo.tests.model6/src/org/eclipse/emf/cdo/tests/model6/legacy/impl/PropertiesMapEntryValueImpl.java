@@ -95,8 +95,7 @@ public class PropertiesMapEntryValueImpl extends EObjectImpl implements Properti
     label = newLabel;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.PROPERTIES_MAP_ENTRY_VALUE__LABEL, oldLabel,
-          label));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.PROPERTIES_MAP_ENTRY_VALUE__LABEL, oldLabel, label));
     }
   }
 

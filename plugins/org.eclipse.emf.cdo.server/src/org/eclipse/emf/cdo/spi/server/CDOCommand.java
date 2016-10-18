@@ -303,8 +303,7 @@ public abstract class CDOCommand extends org.eclipse.net4j.util.factory.Factory
       }
     }
 
-    public abstract void execute(InternalRepository repository, IStoreAccessor accessor, String[] args)
-        throws Exception;
+    public abstract void execute(InternalRepository repository, IStoreAccessor accessor, String[] args) throws Exception;
   }
 
   /**

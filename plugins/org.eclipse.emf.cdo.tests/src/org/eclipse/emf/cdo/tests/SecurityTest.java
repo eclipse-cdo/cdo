@@ -342,8 +342,7 @@ public class SecurityTest extends AbstractCDOTest
     }
 
     @Override
-    protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
-        int level) throws Exception
+    protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext, int level) throws Exception
     {
       return value;
     }

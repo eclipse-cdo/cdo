@@ -45,8 +45,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   {
     try
     {
-      MangoFactory theMangoFactory = (MangoFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/tests/legacy/mango");
+      MangoFactory theMangoFactory = (MangoFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/emf/CDO/tests/legacy/mango");
       if (theMangoFactory instanceof MangoFactoryImpl)
       {
         return theMangoFactory;
@@ -164,8 +163,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
     ParameterPassing result = ParameterPassing.get(initialValue);
     if (result == null)
     {
-      throw new IllegalArgumentException(
-          "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
     }
     return result;
   }

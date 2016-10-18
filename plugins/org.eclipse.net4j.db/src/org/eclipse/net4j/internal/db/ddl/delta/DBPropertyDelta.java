@@ -77,8 +77,8 @@ public final class DBPropertyDelta<T> extends DBDelta implements IDBPropertyDelt
   @Override
   public String toString()
   {
-    return MessageFormat.format("DBPropertyDelta[name={0}, kind={1}, type={2}, value={3}, oldValue={4}]", getName(),
-        getChangeKind(), getType(), getValue(), getOldValue());
+    return MessageFormat.format("DBPropertyDelta[name={0}, kind={1}, type={2}, value={3}, oldValue={4}]", getName(), getChangeKind(), getType(), getValue(),
+        getOldValue());
   }
 
   @Override

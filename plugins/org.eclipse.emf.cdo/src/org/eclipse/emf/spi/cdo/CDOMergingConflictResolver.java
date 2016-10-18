@@ -91,8 +91,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
    * @param ensureRemoteNotifications boolean to disable the use of {@link CDOAdapterPolicy} to ensure remote changes reception for conflict resolution, true by default. Can be disabled to limit network traffic when {@link PassiveUpdateMode} is enabled and in {@link PassiveUpdateMode#CHANGES} or {@link PassiveUpdateMode#ADDITIONS}
    * @since 4.4
    */
-  public CDOMergingConflictResolver(DefaultCDOMerger.ResolutionPreference resolutionPreference,
-      boolean ensureRemoteNotifications)
+  public CDOMergingConflictResolver(DefaultCDOMerger.ResolutionPreference resolutionPreference, boolean ensureRemoteNotifications)
   {
     this(new DefaultCDOMerger.PerFeature.ManyValued(resolutionPreference), ensureRemoteNotifications);
   }
@@ -212,8 +211,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     conflict = false;
   }
 
-  private void updateTransactionWithResult(Set<CDOObject> conflicts, CDOChangeSet remoteChangeSet,
-      CDOChangeSetData result)
+  private void updateTransactionWithResult(Set<CDOObject> conflicts, CDOChangeSet remoteChangeSet, CDOChangeSetData result)
   {
     InternalCDOTransaction transaction = (InternalCDOTransaction)getTransaction();
     InternalCDOSavepoint savepoint = transaction.getLastSavepoint();
@@ -240,8 +238,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
         // Adjust local object
         object.cdoInternalSetRevision(newLocalRevision);
 
-        final InternalCDORevision newCleanRevision = computeNewCleanRevision(remoteDeltas, id, newVersion,
-            cleanRevision);
+        final InternalCDORevision newCleanRevision = computeNewCleanRevision(remoteDeltas, id, newVersion, cleanRevision);
 
         // Compute new local delta
         InternalCDORevisionDelta newLocalDelta = newLocalRevision.compare(newCleanRevision);
@@ -284,8 +281,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     return newVersion;
   }
 
-  private InternalCDORevision computeNewLocalRevision(InternalCDORevisionDelta resultDelta, int newVersion,
-      InternalCDORevision cleanRevision)
+  private InternalCDORevision computeNewLocalRevision(InternalCDORevisionDelta resultDelta, int newVersion, InternalCDORevision cleanRevision)
   {
     InternalCDORevision newLocalRevision = cleanRevision.copy();
     newLocalRevision.setVersion(newVersion);
@@ -293,8 +289,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     return newLocalRevision;
   }
 
-  private InternalCDORevision computeNewCleanRevision(Map<CDOID, CDORevisionDelta> remoteDeltas, CDOID id,
-      int newVersion, InternalCDORevision cleanRevision)
+  private InternalCDORevision computeNewCleanRevision(Map<CDOID, CDORevisionDelta> remoteDeltas, CDOID id, int newVersion, InternalCDORevision cleanRevision)
   {
     CDORevisionDelta remoteDelta = remoteDeltas.get(id);
     if (remoteDelta != null)
@@ -308,8 +303,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     return cleanRevision;
   }
 
-  private void updateObjects(final InternalCDORevision newCleanRevision, InternalCDORevisionDelta newLocalDelta,
-      final ObjectsMapUpdater detachedObjectsUpdater)
+  private void updateObjects(final InternalCDORevision newCleanRevision, InternalCDORevisionDelta newLocalDelta, final ObjectsMapUpdater detachedObjectsUpdater)
   {
     newLocalDelta.accept(new CDOFeatureDeltaVisitorImpl()
     {

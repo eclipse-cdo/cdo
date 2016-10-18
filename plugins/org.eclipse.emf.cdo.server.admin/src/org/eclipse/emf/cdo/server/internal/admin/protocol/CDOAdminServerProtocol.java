@@ -110,21 +110,19 @@ public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> imple
 
   public Response sendAuthenticationChallenge(Challenge challenge) throws Exception
   {
-    return new AuthenticationRequest(this, CDOAdminProtocolConstants.SIGNAL_AUTHENTICATION, challenge)
-        .send(negotiationTimeout, new Monitor());
+    return new AuthenticationRequest(this, CDOAdminProtocolConstants.SIGNAL_AUTHENTICATION, challenge).send(negotiationTimeout, new Monitor());
   }
 
-  public Response sendCredentialsChallenge(Challenge challenge, String userID, CredentialsUpdateOperation operation)
-      throws Exception
+  public Response sendCredentialsChallenge(Challenge challenge, String userID, CredentialsUpdateOperation operation) throws Exception
   {
     throw new UnsupportedOperationException("sendCredentialsChallenge"); //$NON-NLS-1$
   }
 
-  public Confirmation sendConfirmationRequest(String subject, String message, Confirmation suggestion,
-      Confirmation acceptable, Confirmation... more) throws Exception
+  public Confirmation sendConfirmationRequest(String subject, String message, Confirmation suggestion, Confirmation acceptable, Confirmation... more)
+      throws Exception
   {
-    return new ConfirmationRequest(this, CDOAdminProtocolConstants.SIGNAL_CONFIRMATION,
-        new ConfirmationPrompt(subject, message, suggestion, acceptable, more)).send(negotiationTimeout);
+    return new ConfirmationRequest(this, CDOAdminProtocolConstants.SIGNAL_CONFIRMATION, new ConfirmationPrompt(subject, message, suggestion, acceptable, more))
+        .send(negotiationTimeout);
   }
 
   @Override

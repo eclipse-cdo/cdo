@@ -94,8 +94,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
     name = newName;
     if (eNotificationRequired())
     {
-      eNotify(
-          new ENotificationImpl(this, Notification.SET, model4Package.MULTI_CONTAINED_ELEMENT__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.MULTI_CONTAINED_ELEMENT__NAME, oldName, name));
     }
   }
 
@@ -128,8 +127,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
    */
   public void setParent(RefMultiContained newParent)
   {
-    if (newParent != eInternalContainer()
-        || eContainerFeatureID() != model4Package.MULTI_CONTAINED_ELEMENT__PARENT && newParent != null)
+    if (newParent != eInternalContainer() || eContainerFeatureID() != model4Package.MULTI_CONTAINED_ELEMENT__PARENT && newParent != null)
     {
       if (EcoreUtil.isAncestor(this, newParent))
       {
@@ -142,8 +140,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
       }
       if (newParent != null)
       {
-        msgs = ((InternalEObject)newParent).eInverseAdd(this, model4Package.REF_MULTI_CONTAINED__ELEMENTS,
-            RefMultiContained.class, msgs);
+        msgs = ((InternalEObject)newParent).eInverseAdd(this, model4Package.REF_MULTI_CONTAINED__ELEMENTS, RefMultiContained.class, msgs);
       }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
@@ -153,8 +150,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.MULTI_CONTAINED_ELEMENT__PARENT, newParent,
-          newParent));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.MULTI_CONTAINED_ELEMENT__PARENT, newParent, newParent));
     }
   }
 
@@ -202,8 +198,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
     switch (eContainerFeatureID())
     {
     case model4Package.MULTI_CONTAINED_ELEMENT__PARENT:
-      return eInternalContainer().eInverseRemove(this, model4Package.REF_MULTI_CONTAINED__ELEMENTS,
-          RefMultiContained.class, msgs);
+      return eInternalContainer().eInverseRemove(this, model4Package.REF_MULTI_CONTAINED__ELEMENTS, RefMultiContained.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
   }

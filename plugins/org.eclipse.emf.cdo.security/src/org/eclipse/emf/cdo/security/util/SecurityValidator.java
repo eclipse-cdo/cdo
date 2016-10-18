@@ -201,8 +201,7 @@ public class SecurityValidator extends EObjectValidator
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean validateSecurityElement(SecurityElement securityElement, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validateSecurityElement(SecurityElement securityElement, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(securityElement, diagnostics, context);
   }
@@ -212,8 +211,7 @@ public class SecurityValidator extends EObjectValidator
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean validateSecurityItem(SecurityItem securityItem, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validateSecurityItem(SecurityItem securityItem, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(securityItem, diagnostics, context);
   }
@@ -287,8 +285,7 @@ public class SecurityValidator extends EObjectValidator
 
       for (Permission permission : user.getAllPermissions())
       {
-        if (permission.getAccess() == Access.WRITE
-            && permission.isApplicable(realmRevision, revisionProvider, securityContext))
+        if (permission.getAccess() == Access.WRITE && permission.isApplicable(realmRevision, revisionProvider, securityContext))
         {
           // Constraint is satisfied: this user can write the realm
           return true;
@@ -428,9 +425,8 @@ public class SecurityValidator extends EObjectValidator
         // Detected a cycle
         if (diagnostics != null)
         {
-          diagnostics
-              .add(createDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, "_UI_Group_acyclicInheritance_diagnostic", //$NON-NLS-1$
-                  new Object[] { group.getId() }, new Object[] { group }, context));
+          diagnostics.add(createDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, "_UI_Group_acyclicInheritance_diagnostic", //$NON-NLS-1$
+              new Object[] { group.getId() }, new Object[] { group }, context));
         }
 
         return false;
@@ -455,8 +451,7 @@ public class SecurityValidator extends EObjectValidator
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean validateUserPasswordGen(UserPassword userPassword, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validateUserPasswordGen(UserPassword userPassword, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(userPassword, diagnostics, context);
   }
@@ -465,8 +460,7 @@ public class SecurityValidator extends EObjectValidator
    * No user, not even the Administrator, is permitted to read the properties of a
    * {@link UserPassword}, so this validation is a no-op.
    */
-  public boolean validateUserPassword(UserPassword userPassword, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validateUserPassword(UserPassword userPassword, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return true;
   }
@@ -486,8 +480,7 @@ public class SecurityValidator extends EObjectValidator
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean validateClassPermission(ClassPermission classPermission, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validateClassPermission(ClassPermission classPermission, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(classPermission, diagnostics, context);
   }
@@ -497,8 +490,7 @@ public class SecurityValidator extends EObjectValidator
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean validatePackagePermission(PackagePermission packagePermission, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validatePackagePermission(PackagePermission packagePermission, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(packagePermission, diagnostics, context);
   }
@@ -508,8 +500,7 @@ public class SecurityValidator extends EObjectValidator
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean validateResourcePermission(ResourcePermission resourcePermission, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validateResourcePermission(ResourcePermission resourcePermission, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(resourcePermission, diagnostics, context);
   }
@@ -519,8 +510,7 @@ public class SecurityValidator extends EObjectValidator
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean validateObjectPermission(ObjectPermission objectPermission, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validateObjectPermission(ObjectPermission objectPermission, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(objectPermission, diagnostics, context);
   }
@@ -530,8 +520,7 @@ public class SecurityValidator extends EObjectValidator
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean validateFilterPermission(FilterPermission filterPermission, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validateFilterPermission(FilterPermission filterPermission, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(filterPermission, diagnostics, context);
   }
@@ -541,8 +530,7 @@ public class SecurityValidator extends EObjectValidator
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean validatePermissionFilter(PermissionFilter permissionFilter, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validatePermissionFilter(PermissionFilter permissionFilter, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(permissionFilter, diagnostics, context);
   }
@@ -552,8 +540,7 @@ public class SecurityValidator extends EObjectValidator
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean validateLinkedFilter(LinkedFilter linkedFilter, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validateLinkedFilter(LinkedFilter linkedFilter, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(linkedFilter, diagnostics, context);
   }
@@ -563,8 +550,7 @@ public class SecurityValidator extends EObjectValidator
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean validatePackageFilter(PackageFilter packageFilter, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validatePackageFilter(PackageFilter packageFilter, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(packageFilter, diagnostics, context);
   }
@@ -584,8 +570,7 @@ public class SecurityValidator extends EObjectValidator
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean validateResourceFilter(ResourceFilter resourceFilter, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validateResourceFilter(ResourceFilter resourceFilter, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(resourceFilter, diagnostics, context);
   }
@@ -595,8 +580,7 @@ public class SecurityValidator extends EObjectValidator
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean validateObjectFilter(ObjectFilter objectFilter, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validateObjectFilter(ObjectFilter objectFilter, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(objectFilter, diagnostics, context);
   }
@@ -606,8 +590,7 @@ public class SecurityValidator extends EObjectValidator
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean validateExpressionFilter(ExpressionFilter expressionFilter, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validateExpressionFilter(ExpressionFilter expressionFilter, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(expressionFilter, diagnostics, context);
   }
@@ -617,8 +600,7 @@ public class SecurityValidator extends EObjectValidator
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean validateCombinedFilter(CombinedFilter combinedFilter, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validateCombinedFilter(CombinedFilter combinedFilter, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return validate_EveryDefaultConstraint(combinedFilter, diagnostics, context);
   }
@@ -658,8 +640,7 @@ public class SecurityValidator extends EObjectValidator
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean validatePatternStyle(PatternStyle patternStyle, DiagnosticChain diagnostics,
-      Map<Object, Object> context)
+  public boolean validatePatternStyle(PatternStyle patternStyle, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
     return true;
   }

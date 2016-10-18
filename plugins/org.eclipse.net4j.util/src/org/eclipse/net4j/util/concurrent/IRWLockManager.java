@@ -26,8 +26,7 @@ public interface IRWLockManager<OBJECT, CONTEXT>
 
   public static final int NO_WAIT = 1;
 
-  public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout)
-      throws InterruptedException;
+  public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout) throws InterruptedException;
 
   public void lock(LockType type, CONTEXT context, OBJECT objectToLock, long timeout) throws InterruptedException;
 

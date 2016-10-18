@@ -97,8 +97,7 @@ public class RepositoryConfigurator
     return storeFactories;
   }
 
-  public IRepository[] configure(File configFile)
-      throws ParserConfigurationException, SAXException, IOException, CoreException
+  public IRepository[] configure(File configFile) throws ParserConfigurationException, SAXException, IOException, CoreException
   {
     if (TRACER.isEnabled())
     {
@@ -111,8 +110,7 @@ public class RepositoryConfigurator
   /**
    * @since 4.3
    */
-  public IRepository[] configure(Reader configReader)
-      throws ParserConfigurationException, SAXException, IOException, CoreException
+  public IRepository[] configure(Reader configReader) throws ParserConfigurationException, SAXException, IOException, CoreException
   {
     if (TRACER.isEnabled())
     {
@@ -125,8 +123,7 @@ public class RepositoryConfigurator
   /**
    * @since 4.3
    */
-  protected IRepository[] configure(Document document)
-      throws ParserConfigurationException, SAXException, IOException, CoreException
+  protected IRepository[] configure(Document document) throws ParserConfigurationException, SAXException, IOException, CoreException
   {
     List<IRepository> repositories = new ArrayList<IRepository>();
     NodeList elements = document.getElementsByTagName("repository"); //$NON-NLS-1$
@@ -310,8 +307,7 @@ public class RepositoryConfigurator
    */
   protected IAuthenticator getAuthenticator(String type, String description) throws CoreException
   {
-    IAuthenticator authenticator = (IAuthenticator)container.getElement(AuthenticatorFactory.PRODUCT_GROUP, type,
-        description);
+    IAuthenticator authenticator = (IAuthenticator)container.getElement(AuthenticatorFactory.PRODUCT_GROUP, type, description);
     if (authenticator == null)
     {
       throw new IllegalStateException("Authenticator factory not found: " + type); //$NON-NLS-1$
@@ -397,8 +393,7 @@ public class RepositoryConfigurator
     return factory;
   }
 
-  protected IStore createStore(String repositoryName, Map<String, String> repositoryProperties, Element storeConfig)
-      throws CoreException
+  protected IStore createStore(String repositoryName, Map<String, String> repositoryProperties, Element storeConfig) throws CoreException
   {
     String type = storeConfig.getAttribute("type"); //$NON-NLS-1$
     IStoreFactory storeFactory = getStoreFactory(type);
@@ -436,8 +431,7 @@ public class RepositoryConfigurator
     }
   }
 
-  private static <T> T createExecutableExtension(String extPointName, String elementName, String attributeName,
-      String type) throws CoreException
+  private static <T> T createExecutableExtension(String extPointName, String elementName, String attributeName, String type) throws CoreException
   {
     if (OMPlatform.INSTANCE.isExtensionRegistryAvailable())
     {

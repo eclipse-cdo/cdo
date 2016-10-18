@@ -282,8 +282,7 @@ public class ObjyArrayListString
       for (int i = 0; i < newChunks; i++)
       {
         // create a new chunk.
-        Class_Object newChunk = Class_Object.new_persistent_object(chunkClass.getASClass(), classObject.objectID(),
-            false);
+        Class_Object newChunk = Class_Object.new_persistent_object(chunkClass.getASClass(), classObject.objectID(), false);
         getVArray().set_ooId(arraySize + i, newChunk.objectID());
       }
       cacheSize = -1;

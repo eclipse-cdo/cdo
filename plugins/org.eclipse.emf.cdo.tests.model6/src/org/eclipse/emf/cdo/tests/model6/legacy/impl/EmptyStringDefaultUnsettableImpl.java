@@ -106,8 +106,8 @@ public class EmptyStringDefaultUnsettableImpl extends EObjectImpl implements Emp
     attributeESet = true;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.EMPTY_STRING_DEFAULT_UNSETTABLE__ATTRIBUTE,
-          oldAttribute, attribute, !oldAttributeESet));
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, Model6Package.EMPTY_STRING_DEFAULT_UNSETTABLE__ATTRIBUTE, oldAttribute, attribute, !oldAttributeESet));
     }
   }
 
@@ -124,8 +124,8 @@ public class EmptyStringDefaultUnsettableImpl extends EObjectImpl implements Emp
     attributeESet = false;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.EMPTY_STRING_DEFAULT_UNSETTABLE__ATTRIBUTE,
-          oldAttribute, ATTRIBUTE_EDEFAULT, oldAttributeESet));
+      eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.EMPTY_STRING_DEFAULT_UNSETTABLE__ATTRIBUTE, oldAttribute, ATTRIBUTE_EDEFAULT,
+          oldAttributeESet));
     }
   }
 

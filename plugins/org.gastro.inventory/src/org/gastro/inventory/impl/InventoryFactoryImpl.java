@@ -49,8 +49,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
   {
     try
     {
-      InventoryFactory theInventoryFactory = (InventoryFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.gastro.org/inventory/1.0");
+      InventoryFactory theInventoryFactory = (InventoryFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.gastro.org/inventory/1.0");
       if (theInventoryFactory != null)
       {
         return theInventoryFactory;

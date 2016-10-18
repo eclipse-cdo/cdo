@@ -41,8 +41,8 @@ public class ObjectivityStoreChunkReader extends StoreChunkReader implements IOb
     CDOID id = getRevision().getID();
     getAccessor().ensureActiveSession();
     ObjyObject objyObject = getAccessor().getObject(id);
-    ObjyObject objyRevision = objyObject.getRevisionByVersion(getRevision().getVersion(),
-        getRevision().getBranch().getID(), getAccessor().getObjySession().getObjectManager());
+    ObjyObject objyRevision = objyObject.getRevisionByVersion(getRevision().getVersion(), getRevision().getBranch().getID(),
+        getAccessor().getObjySession().getObjectManager());
 
     List<Chunk> chunks = getChunks();
 

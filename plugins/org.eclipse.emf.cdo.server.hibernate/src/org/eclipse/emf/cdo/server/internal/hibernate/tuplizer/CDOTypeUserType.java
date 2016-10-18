@@ -70,8 +70,7 @@ public class CDOTypeUserType implements UserType
     return x.equals(y);
   }
 
-  public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor sessionImplementor, Object owner)
-      throws SQLException
+  public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor sessionImplementor, Object owner) throws SQLException
   {
     Integer value = StandardBasicTypes.INTEGER.nullSafeGet(rs, names[0], sessionImplementor);
     if (rs.wasNull())
@@ -87,8 +86,7 @@ public class CDOTypeUserType implements UserType
     return CDOModelUtil.getType((byte)(int)value);
   }
 
-  public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor sessionImplementor)
-      throws SQLException
+  public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor sessionImplementor) throws SQLException
   {
     if (value != null)
     {

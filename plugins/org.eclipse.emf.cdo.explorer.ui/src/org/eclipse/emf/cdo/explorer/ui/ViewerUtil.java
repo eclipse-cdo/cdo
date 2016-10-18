@@ -89,8 +89,7 @@ public final class ViewerUtil
     refresh(viewer, element, async, false);
   }
 
-  public static void refresh(final StructuredViewer viewer, final Object element, boolean async,
-      final boolean setSelectionBack)
+  public static void refresh(final StructuredViewer viewer, final Object element, boolean async, final boolean setSelectionBack)
   {
     if (viewer != null)
     {

@@ -108,8 +108,7 @@ public class CompletePackageClosure extends PackageClosure
     }
   }
 
-  protected void handleEStructuralFeatures(List<EStructuralFeature> structuralFeatures, Set<EPackage> visitedPackages,
-      Set<Object> visited)
+  protected void handleEStructuralFeatures(List<EStructuralFeature> structuralFeatures, Set<EPackage> visitedPackages, Set<Object> visited)
   {
     if (structuralFeatures != null)
     {
@@ -146,8 +145,7 @@ public class CompletePackageClosure extends PackageClosure
     }
   }
 
-  protected void handleEGenericTypes(EList<EGenericType> genericTypes, Set<EPackage> visitedPackages,
-      Set<Object> visited)
+  protected void handleEGenericTypes(EList<EGenericType> genericTypes, Set<EPackage> visitedPackages, Set<Object> visited)
   {
     if (genericTypes != null)
     {
@@ -171,8 +169,7 @@ public class CompletePackageClosure extends PackageClosure
     }
   }
 
-  protected void handleETypeParameters(EList<ETypeParameter> typeParameters, Set<EPackage> visitedPackages,
-      Set<Object> visited)
+  protected void handleETypeParameters(EList<ETypeParameter> typeParameters, Set<EPackage> visitedPackages, Set<Object> visited)
   {
     if (typeParameters != null)
     {

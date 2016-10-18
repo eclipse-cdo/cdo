@@ -37,8 +37,8 @@ import java.util.List;
  *
  * @generated
  */
-public class TableItemProvider extends StationItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class TableItemProvider extends StationItemProvider
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -74,12 +74,9 @@ public class TableItemProvider extends StationItemProvider implements IEditingDo
    */
   protected void addSeatsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Table_seats_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_Table_seats_feature", "_UI_Table_type"),
-            InventoryPackage.Literals.TABLE__SEATS, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-            null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Table_seats_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Table_seats_feature", "_UI_Table_type"),
+        InventoryPackage.Literals.TABLE__SEATS, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**

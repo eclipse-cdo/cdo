@@ -37,8 +37,7 @@ public final class CDOHibernateUtil
   /**
    * @since 4.1
    */
-  public static void setMappingProviderFactoryInstance(
-      IHibernateMappingProvider.Factory theMappingProviderFactoryInstance)
+  public static void setMappingProviderFactoryInstance(IHibernateMappingProvider.Factory theMappingProviderFactoryInstance)
   {
     HibernateUtil.setMappingProviderFactoryInstance(theMappingProviderFactoryInstance);
   }

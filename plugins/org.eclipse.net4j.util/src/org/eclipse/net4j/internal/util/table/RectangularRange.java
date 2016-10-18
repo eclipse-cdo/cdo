@@ -102,8 +102,8 @@ public class RectangularRange extends AbstractRange
     if (range instanceof RectangularRange)
     {
       RectangularRange rect = (RectangularRange)range;
-      return topLeft.col <= rect.topLeft.col && rect.bottomRight.col <= bottomRight.col
-          && topLeft.row <= rect.topLeft.row && rect.bottomRight.row <= bottomRight.row;
+      return topLeft.col <= rect.topLeft.col && rect.bottomRight.col <= bottomRight.col && topLeft.row <= rect.topLeft.row
+          && rect.bottomRight.row <= bottomRight.row;
     }
 
     return super.contains(range);

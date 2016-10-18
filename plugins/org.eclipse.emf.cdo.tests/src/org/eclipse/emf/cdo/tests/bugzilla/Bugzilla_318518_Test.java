@@ -61,8 +61,8 @@ public class Bugzilla_318518_Test extends AbstractCDOTest
     tr2.options().addConflictResolver(new org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver()
     {
       @Override
-      protected void resolveConflict(CDOObject conflict, CDORevision oldRevision, CDORevisionDelta localDelta,
-          CDORevisionDelta remoteDelta, List<CDORevisionDelta> deltas)
+      protected void resolveConflict(CDOObject conflict, CDORevision oldRevision, CDORevisionDelta localDelta, CDORevisionDelta remoteDelta,
+          List<CDORevisionDelta> deltas)
       {
         CDOListFeatureDelta list = (CDOListFeatureDelta)localDelta.getFeatureDeltas().get(0);
 

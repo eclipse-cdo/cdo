@@ -115,8 +115,7 @@ public class Bugzilla_415415_Test extends AbstractCDOTest
     CDOCommitInfo commit = remoteUser.commit();
     transaction.waitForUpdate(commit.getTimeStamp(), DEFAULT_TIMEOUT);
 
-    assertEquals("As child1 is remotelly detached, the stale reference child2.otherNodes:child1 should be removed", 0,
-        child2.getOtherNodes().size());
+    assertEquals("As child1 is remotelly detached, the stale reference child2.otherNodes:child1 should be removed", 0, child2.getOtherNodes().size());
 
     String assertMessage = "As the stale reference child2.otherNodes:child1 has been removed the transaction should be clean";
     assertEquals(assertMessage, false, transaction.isDirty());
@@ -135,8 +134,7 @@ public class Bugzilla_415415_Test extends AbstractCDOTest
 
     assertEquals(1, transaction.getDetachedObjects().size());
     assertEquals(child1CDO, transaction.getDetachedObjects().get(child1ID));
-    assertEquals("As child1 is locally detached, the stale reference child2.otherNodes:child1 should be removed", 0,
-        child2.getOtherNodes().size());
+    assertEquals("As child1 is locally detached, the stale reference child2.otherNodes:child1 should be removed", 0, child2.getOtherNodes().size());
 
     String assertMessage = "As the stale reference child2.otherNodes:child1 has been removed, child2 and nodeARoot should be the only dirty objects";
     assertEquals(assertMessage, 2, transaction.getDirtyObjects().size());

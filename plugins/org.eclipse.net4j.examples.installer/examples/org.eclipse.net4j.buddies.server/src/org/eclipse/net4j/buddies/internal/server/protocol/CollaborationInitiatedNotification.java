@@ -32,8 +32,7 @@ public class CollaborationInitiatedNotification extends Request
   /**
    * @since 2.0
    */
-  public CollaborationInitiatedNotification(BuddiesServerProtocol protocol, long collaborationID,
-      Collection<IBuddy> buddies, String[] facilityTypes)
+  public CollaborationInitiatedNotification(BuddiesServerProtocol protocol, long collaborationID, Collection<IBuddy> buddies, String[] facilityTypes)
   {
     super(protocol, ProtocolConstants.SIGNAL_COLLABORATION_INITIATED);
     this.collaborationID = collaborationID;

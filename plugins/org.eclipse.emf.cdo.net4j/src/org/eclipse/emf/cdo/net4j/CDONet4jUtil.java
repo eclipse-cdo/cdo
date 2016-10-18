@@ -125,8 +125,7 @@ public final class CDONet4jUtil
   /**
    * @since 4.0
    */
-  public static ReconnectingCDOSessionConfiguration createReconnectingSessionConfiguration(String hostAndPort,
-      String repoName, IManagedContainer container)
+  public static ReconnectingCDOSessionConfiguration createReconnectingSessionConfiguration(String hostAndPort, String repoName, IManagedContainer container)
   {
     return new ReconnectingCDOSessionConfigurationImpl(hostAndPort, repoName, container);
   }
@@ -134,8 +133,7 @@ public final class CDONet4jUtil
   /**
    * @since 4.0
    */
-  public static FailoverCDOSessionConfiguration createFailoverSessionConfiguration(String monitorConnectorDescription,
-      String repositoryGroup)
+  public static FailoverCDOSessionConfiguration createFailoverSessionConfiguration(String monitorConnectorDescription, String repositoryGroup)
   {
     return createFailoverSessionConfiguration(monitorConnectorDescription, repositoryGroup, IPluginContainer.INSTANCE);
   }
@@ -143,8 +141,8 @@ public final class CDONet4jUtil
   /**
    * @since 4.0
    */
-  public static FailoverCDOSessionConfiguration createFailoverSessionConfiguration(String monitorConnectorDescription,
-      String repositoryGroup, IManagedContainer container)
+  public static FailoverCDOSessionConfiguration createFailoverSessionConfiguration(String monitorConnectorDescription, String repositoryGroup,
+      IManagedContainer container)
   {
     return new FailoverCDOSessionConfigurationImpl(monitorConnectorDescription, repositoryGroup, container);
   }
@@ -161,8 +159,7 @@ public final class CDONet4jUtil
    */
   public static CDONet4jSession getNet4jSession(IManagedContainer container, String description)
   {
-    return (CDONet4jSession)container.getElement(CDOSessionFactory.PRODUCT_GROUP, Net4jSessionFactory.TYPE,
-        description);
+    return (CDONet4jSession)container.getElement(CDOSessionFactory.PRODUCT_GROUP, Net4jSessionFactory.TYPE, description);
   }
 
   /**

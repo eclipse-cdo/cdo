@@ -160,8 +160,8 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   {
     if (integerToStringMap == null)
     {
-      integerToStringMap = new EcoreEMap<Integer, String>(Model2Package.eINSTANCE.getIntegerToStringMap(),
-          IntegerToStringMapImpl.class, this, Model2Package.MAP_HOLDER__INTEGER_TO_STRING_MAP);
+      integerToStringMap = new EcoreEMap<Integer, String>(Model2Package.eINSTANCE.getIntegerToStringMap(), IntegerToStringMapImpl.class, this,
+          Model2Package.MAP_HOLDER__INTEGER_TO_STRING_MAP);
     }
     return integerToStringMap;
   }
@@ -174,8 +174,8 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   {
     if (stringToStringMap == null)
     {
-      stringToStringMap = new EcoreEMap<String, String>(Model2Package.eINSTANCE.getStringToStringMap(),
-          StringToStringMapImpl.class, this, Model2Package.MAP_HOLDER__STRING_TO_STRING_MAP);
+      stringToStringMap = new EcoreEMap<String, String>(Model2Package.eINSTANCE.getStringToStringMap(), StringToStringMapImpl.class, this,
+          Model2Package.MAP_HOLDER__STRING_TO_STRING_MAP);
     }
     return stringToStringMap;
   }
@@ -188,8 +188,8 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   {
     if (stringToVATMap == null)
     {
-      stringToVATMap = new EcoreEMap<String, VAT>(Model2Package.eINSTANCE.getStringToVATMap(), StringToVATMapImpl.class,
-          this, Model2Package.MAP_HOLDER__STRING_TO_VAT_MAP);
+      stringToVATMap = new EcoreEMap<String, VAT>(Model2Package.eINSTANCE.getStringToVATMap(), StringToVATMapImpl.class, this,
+          Model2Package.MAP_HOLDER__STRING_TO_VAT_MAP);
     }
     return stringToVATMap;
   }
@@ -202,9 +202,8 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   {
     if (stringToAddressContainmentMap == null)
     {
-      stringToAddressContainmentMap = new EcoreEMap<String, Address>(
-          Model2Package.eINSTANCE.getStringToAddressContainmentMap(), StringToAddressContainmentMapImpl.class, this,
-          Model2Package.MAP_HOLDER__STRING_TO_ADDRESS_CONTAINMENT_MAP);
+      stringToAddressContainmentMap = new EcoreEMap<String, Address>(Model2Package.eINSTANCE.getStringToAddressContainmentMap(),
+          StringToAddressContainmentMapImpl.class, this, Model2Package.MAP_HOLDER__STRING_TO_ADDRESS_CONTAINMENT_MAP);
     }
     return stringToAddressContainmentMap;
   }
@@ -217,9 +216,8 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   {
     if (stringToAddressReferenceMap == null)
     {
-      stringToAddressReferenceMap = new EcoreEMap<String, Address>(
-          Model2Package.eINSTANCE.getStringToAddressReferenceMap(), StringToAddressReferenceMapImpl.class, this,
-          Model2Package.MAP_HOLDER__STRING_TO_ADDRESS_REFERENCE_MAP);
+      stringToAddressReferenceMap = new EcoreEMap<String, Address>(Model2Package.eINSTANCE.getStringToAddressReferenceMap(),
+          StringToAddressReferenceMapImpl.class, this, Model2Package.MAP_HOLDER__STRING_TO_ADDRESS_REFERENCE_MAP);
     }
     return stringToAddressReferenceMap;
   }
@@ -232,8 +230,8 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   {
     if (eObjectToEObjectMap == null)
     {
-      eObjectToEObjectMap = new EcoreEMap<EObject, EObject>(Model2Package.eINSTANCE.getEObjectToEObjectMap(),
-          EObjectToEObjectMapImpl.class, this, Model2Package.MAP_HOLDER__EOBJECT_TO_EOBJECT_MAP);
+      eObjectToEObjectMap = new EcoreEMap<EObject, EObject>(Model2Package.eINSTANCE.getEObjectToEObjectMap(), EObjectToEObjectMapImpl.class, this,
+          Model2Package.MAP_HOLDER__EOBJECT_TO_EOBJECT_MAP);
     }
     return eObjectToEObjectMap;
   }
@@ -246,9 +244,8 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   {
     if (eObjectToEObjectKeyContainedMap == null)
     {
-      eObjectToEObjectKeyContainedMap = new EcoreEMap<EObject, EObject>(
-          Model2Package.eINSTANCE.getEObjectToEObjectKeyContainedMap(), EObjectToEObjectKeyContainedMapImpl.class, this,
-          Model2Package.MAP_HOLDER__EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP);
+      eObjectToEObjectKeyContainedMap = new EcoreEMap<EObject, EObject>(Model2Package.eINSTANCE.getEObjectToEObjectKeyContainedMap(),
+          EObjectToEObjectKeyContainedMapImpl.class, this, Model2Package.MAP_HOLDER__EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP);
     }
     return eObjectToEObjectKeyContainedMap;
   }
@@ -261,9 +258,8 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   {
     if (eObjectToEObjectBothContainedMap == null)
     {
-      eObjectToEObjectBothContainedMap = new EcoreEMap<EObject, EObject>(
-          Model2Package.eINSTANCE.getEObjectToEObjectBothContainedMap(), EObjectToEObjectBothContainedMapImpl.class,
-          this, Model2Package.MAP_HOLDER__EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP);
+      eObjectToEObjectBothContainedMap = new EcoreEMap<EObject, EObject>(Model2Package.eINSTANCE.getEObjectToEObjectBothContainedMap(),
+          EObjectToEObjectBothContainedMapImpl.class, this, Model2Package.MAP_HOLDER__EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP);
     }
     return eObjectToEObjectBothContainedMap;
   }
@@ -276,9 +272,8 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   {
     if (eObjectToEObjectValueContainedMap == null)
     {
-      eObjectToEObjectValueContainedMap = new EcoreEMap<EObject, EObject>(
-          Model2Package.eINSTANCE.getEObjectToEObjectValueContainedMap(), EObjectToEObjectValueContainedMapImpl.class,
-          this, Model2Package.MAP_HOLDER__EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP);
+      eObjectToEObjectValueContainedMap = new EcoreEMap<EObject, EObject>(Model2Package.eINSTANCE.getEObjectToEObjectValueContainedMap(),
+          EObjectToEObjectValueContainedMapImpl.class, this, Model2Package.MAP_HOLDER__EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP);
     }
     return eObjectToEObjectValueContainedMap;
   }

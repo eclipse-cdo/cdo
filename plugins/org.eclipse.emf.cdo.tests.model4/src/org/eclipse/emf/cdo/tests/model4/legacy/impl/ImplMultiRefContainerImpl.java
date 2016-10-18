@@ -76,9 +76,8 @@ public class ImplMultiRefContainerImpl extends EObjectImpl implements ImplMultiR
   {
     if (elements == null)
     {
-      elements = new EObjectContainmentWithInverseEList<IMultiRefContainedElement>(IMultiRefContainedElement.class,
-          this, model4Package.IMPL_MULTI_REF_CONTAINER__ELEMENTS,
-          model4interfacesPackage.IMULTI_REF_CONTAINED_ELEMENT__PARENT);
+      elements = new EObjectContainmentWithInverseEList<IMultiRefContainedElement>(IMultiRefContainedElement.class, this,
+          model4Package.IMPL_MULTI_REF_CONTAINER__ELEMENTS, model4interfacesPackage.IMULTI_REF_CONTAINED_ELEMENT__PARENT);
     }
     return elements;
   }

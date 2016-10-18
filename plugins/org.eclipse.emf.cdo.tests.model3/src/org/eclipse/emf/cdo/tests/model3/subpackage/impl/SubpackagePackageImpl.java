@@ -79,9 +79,8 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
     }
 
     // Obtain or create and register package
-    SubpackagePackageImpl theSubpackagePackage = (SubpackagePackageImpl)(EPackage.Registry.INSTANCE
-        .get(eNS_URI) instanceof SubpackagePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-            : new SubpackagePackageImpl());
+    SubpackagePackageImpl theSubpackagePackage = (SubpackagePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof SubpackagePackageImpl
+        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new SubpackagePackageImpl());
 
     isInited = true;
 
@@ -90,9 +89,8 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
     EtypesPackage.eINSTANCE.eClass();
 
     // Obtain or create and register interdependencies
-    Model3PackageImpl theModel3Package = (Model3PackageImpl)(EPackage.Registry.INSTANCE
-        .getEPackage(Model3Package.eNS_URI) instanceof Model3PackageImpl
-            ? EPackage.Registry.INSTANCE.getEPackage(Model3Package.eNS_URI) : Model3Package.eINSTANCE);
+    Model3PackageImpl theModel3Package = (Model3PackageImpl)(EPackage.Registry.INSTANCE.getEPackage(Model3Package.eNS_URI) instanceof Model3PackageImpl
+        ? EPackage.Registry.INSTANCE.getEPackage(Model3Package.eNS_URI) : Model3Package.eINSTANCE);
 
     // Create package meta-data objects
     theSubpackagePackage.createPackageContents();
@@ -198,9 +196,8 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
 
     // Initialize classes and features; add operations and parameters
     initEClass(class2EClass, Class2.class, "Class2", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getClass2_Class1(), theModel3Package.getClass1(), theModel3Package.getClass1_Class2(), "class1",
-        null, 0, -1, Class2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClass2_Class1(), theModel3Package.getClass1(), theModel3Package.getClass1_Class2(), "class1", null, 0, -1, Class2.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
   }
 
 } // SubpackagePackageImpl

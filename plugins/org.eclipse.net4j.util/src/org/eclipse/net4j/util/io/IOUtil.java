@@ -573,8 +573,7 @@ public final class IOUtil
       int bytesRead = inputStream.read(buffer, 0, bytesToCopy);
       if (bytesRead < 1)
       {
-        throw new EOFException("Read only " + (size - remaining) + "+" + bytesRead + "="
-            + (size - remaining + bytesRead) + "  but expected to read " + size);
+        throw new EOFException("Read only " + (size - remaining) + "+" + bytesRead + "=" + (size - remaining + bytesRead) + "  but expected to read " + size);
       }
 
       outputStream.write(buffer, 0, bytesRead);
@@ -626,8 +625,7 @@ public final class IOUtil
       int charsRead = reader.read(buffer, 0, charsToCopy);
       if (charsRead < 1)
       {
-        throw new EOFException("Read only " + (size - remaining) + "+" + charsRead + "="
-            + (size - remaining + charsRead) + "  but expected to read " + size);
+        throw new EOFException("Read only " + (size - remaining) + "+" + charsRead + "=" + (size - remaining + charsRead) + "  but expected to read " + size);
       }
 
       writer.write(buffer, 0, charsRead);

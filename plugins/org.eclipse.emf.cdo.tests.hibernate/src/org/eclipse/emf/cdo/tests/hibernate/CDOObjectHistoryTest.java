@@ -221,8 +221,7 @@ public class CDOObjectHistoryTest extends AbstractCDOTest
       CDORevisionDelta revisionDelta = revision3.compare(revision2);
       for (CDOFeatureDelta featureDelta : revisionDelta.getFeatureDeltas())
       {
-        System.err
-            .println(featureDelta.getFeature().getName() + " changed through changeType " + featureDelta.getType());
+        System.err.println(featureDelta.getFeature().getName() + " changed through changeType " + featureDelta.getType());
       }
 
       assertEquals("ESC", revision1.getValue(revision1.getEClass().getEStructuralFeature("name")));
@@ -280,8 +279,7 @@ public class CDOObjectHistoryTest extends AbstractCDOTest
     for (Object o : changedObjects)
     {
       final CDORevisionDelta cdoRevisionDelta = (CDORevisionDelta)o;
-      final CDOFeatureDelta cdoFeatureDelta = cdoRevisionDelta
-          .getFeatureDelta(EresourcePackage.eINSTANCE.getCDOResource_Contents());
+      final CDOFeatureDelta cdoFeatureDelta = cdoRevisionDelta.getFeatureDelta(EresourcePackage.eINSTANCE.getCDOResource_Contents());
       assertNotNull(cdoFeatureDelta);
       assertEquals(CDOFeatureDelta.Type.LIST, cdoFeatureDelta.getType());
     }
@@ -369,8 +367,7 @@ public class CDOObjectHistoryTest extends AbstractCDOTest
       {
         continue;
       }
-      final CDOFeatureDelta cdoFeatureDelta = cdoRevisionDelta
-          .getFeatureDelta(EresourcePackage.eINSTANCE.getCDOResource_Contents());
+      final CDOFeatureDelta cdoFeatureDelta = cdoRevisionDelta.getFeatureDelta(EresourcePackage.eINSTANCE.getCDOResource_Contents());
       assertNotNull(cdoFeatureDelta);
       assertEquals(CDOFeatureDelta.Type.LIST, cdoFeatureDelta.getType());
     }

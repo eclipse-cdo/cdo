@@ -26,8 +26,7 @@ public class RepositoryReplicationPogressedRequest extends Request
 
   private double work;
 
-  public RepositoryReplicationPogressedRequest(CDOAdminServerProtocol serverProtocol, String name, double totalWork,
-      double work)
+  public RepositoryReplicationPogressedRequest(CDOAdminServerProtocol serverProtocol, String name, double totalWork, double work)
   {
     super(serverProtocol, CDOAdminProtocolConstants.SIGNAL_REPOSITORY_REPLICATION_PROGRESSED);
     this.name = name;

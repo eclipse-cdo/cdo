@@ -70,8 +70,7 @@ public class ObjyFeatureMapEntry
     this.tagId = tagId;
     object = oid;
 
-    classObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(MapEntryClassName).getASClass(), near,
-        false);
+    classObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(MapEntryClassName).getASClass(), near, false);
 
     classObject.nset_ooId(EntryObject, object);
     classObject.nset_numeric(EntryName, new Numeric_Value(tagId));

@@ -92,8 +92,8 @@ public class DawnBasicEMFUITest extends AbstractCDOTest
 
     // TODO Test case fails because the ConnectionUtil is not initialized. Fake it here or use the DawnExplorer to open
     // the editor.
-    IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite()
-        .getPage().openEditor(editorInput, editorID);
+    IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite().getPage().openEditor(editorInput,
+        editorID);
 
     sleep(5000);
     assertInstanceOf(DawnAcoreEditor.class, editor);

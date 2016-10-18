@@ -105,8 +105,7 @@ public class DiagramImpl extends EObjectImpl implements Diagram
   {
     if (edgeTargets == null)
     {
-      edgeTargets = new EObjectContainmentEList<EdgeTarget>(EdgeTarget.class, this,
-          Model3Package.DIAGRAM__EDGE_TARGETS);
+      edgeTargets = new EObjectContainmentEList<EdgeTarget>(EdgeTarget.class, this, Model3Package.DIAGRAM__EDGE_TARGETS);
     }
     return edgeTargets;
   }

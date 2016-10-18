@@ -208,8 +208,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   // -- object id related methods ----------------------------------------
 
-  public void handleRevisions(IDBStoreAccessor accessor, EClass eClass, CDOBranch branch, long timeStamp,
-      boolean exactTime, CDORevisionHandler handler)
+  public void handleRevisions(IDBStoreAccessor accessor, EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     if (eClass == null)
     {
@@ -437,8 +436,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       return CDO_SET_PREFIX + name;
     }
 
-    return getName(CDO_SET_PREFIX + feature.getName(), TYPE_PREFIX_FEATURE + getUniqueID(feature),
-        getMaxFieldNameLength());
+    return getName(CDO_SET_PREFIX + feature.getName(), TYPE_PREFIX_FEATURE + getUniqueID(feature), getMaxFieldNameLength());
   }
 
   private String getName(String name, String suffix, int maxLength)

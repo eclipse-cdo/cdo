@@ -197,8 +197,7 @@ public class GImpl extends EObjectImpl implements G
       {
         if (eNotificationRequired())
         {
-          eNotify(
-              new ENotificationImpl(this, Notification.RESOLVE, Model6Package.G__REFERENCE, oldReference, reference));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model6Package.G__REFERENCE, oldReference, reference));
         }
       }
     }

@@ -544,8 +544,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
        * @throws SQLException
        *           the SQL exception
        */
-      private void setResourceNodeValues(InternalCDORevision revision, PreparedStatement preparedStatement)
-          throws SQLException
+      private void setResourceNodeValues(InternalCDORevision revision, PreparedStatement preparedStatement) throws SQLException
       {
         if (revision.isResourceNode())
         {

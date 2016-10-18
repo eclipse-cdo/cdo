@@ -45,8 +45,7 @@ public class StreamWrapperInjector implements IElementProcessor
     return streamWrapper;
   }
 
-  public Object process(IManagedContainer container, String productGroup, String factoryType, String description,
-      Object element)
+  public Object process(IManagedContainer container, String productGroup, String factoryType, String description, Object element)
   {
     if (element instanceof SignalProtocol<?>)
     {
@@ -60,8 +59,7 @@ public class StreamWrapperInjector implements IElementProcessor
     return element;
   }
 
-  protected boolean shouldInject(IManagedContainer container, String productGroup, String factoryType,
-      String description, SignalProtocol<?> signalProtocol)
+  protected boolean shouldInject(IManagedContainer container, String productGroup, String factoryType, String description, SignalProtocol<?> signalProtocol)
   {
     if (signalProtocol.getStreamWrapper() == streamWrapper)
     {
@@ -71,8 +69,7 @@ public class StreamWrapperInjector implements IElementProcessor
     return StringUtil.isEmpty(protocolID) || ObjectUtil.equals(signalProtocol.getType(), protocolID);
   }
 
-  protected Object inject(IManagedContainer container, String productGroup, String factoryType, String description,
-      SignalProtocol<?> signalProtocol)
+  protected Object inject(IManagedContainer container, String productGroup, String factoryType, String description, SignalProtocol<?> signalProtocol)
   {
     signalProtocol.addStreamWrapper(streamWrapper);
     return signalProtocol;

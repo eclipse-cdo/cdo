@@ -326,8 +326,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
 
   protected abstract INegotiationContext createNegotiationContext();
 
-  protected abstract void registerChannelWithPeer(short channelID, long timeout, IProtocol<?> protocol)
-      throws ChannelException;
+  protected abstract void registerChannelWithPeer(short channelID, long timeout, IProtocol<?> protocol) throws ChannelException;
 
   protected abstract void deregisterChannelFromPeer(InternalChannel channel) throws ChannelException;
 

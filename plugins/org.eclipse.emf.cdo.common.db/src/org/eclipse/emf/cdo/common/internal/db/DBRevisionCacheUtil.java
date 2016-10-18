@@ -39,8 +39,7 @@ public class DBRevisionCacheUtil
   public static String getResourceNodeName(CDORevision revision)
   {
     CheckUtil.checkArg(revision.isResourceNode(), "The revision is not a resource node!");
-    EStructuralFeature feature = revision.getEClass()
-        .getEStructuralFeature(CDOModelConstants.RESOURCE_NODE_NAME_ATTRIBUTE);
+    EStructuralFeature feature = revision.getEClass().getEStructuralFeature(CDOModelConstants.RESOURCE_NODE_NAME_ATTRIBUTE);
     return (String)((InternalCDORevision)revision).getValue(feature);
   }
 }

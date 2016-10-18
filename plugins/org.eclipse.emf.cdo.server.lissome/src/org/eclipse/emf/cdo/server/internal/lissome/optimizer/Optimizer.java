@@ -195,8 +195,7 @@ public class Optimizer extends Lifecycle
     return cache.readRevision(id, branchPoint);
   }
 
-  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     // TODO: implement Optimizer.handleRevisions(eClass, branch, timeStamp, exactTime, handler)
   }

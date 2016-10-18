@@ -75,9 +75,8 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
   {
     if (elements == null)
     {
-      elements = new EObjectWithInverseResolvingEList.Unsettable<MultiNonContainedUnsettableElement>(
-          MultiNonContainedUnsettableElement.class, this, model4Package.REF_MULTI_NON_CONTAINED_UNSETTABLE__ELEMENTS,
-          model4Package.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__PARENT);
+      elements = new EObjectWithInverseResolvingEList.Unsettable<MultiNonContainedUnsettableElement>(MultiNonContainedUnsettableElement.class, this,
+          model4Package.REF_MULTI_NON_CONTAINED_UNSETTABLE__ELEMENTS, model4Package.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__PARENT);
     }
     return elements;
   }

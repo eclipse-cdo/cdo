@@ -155,8 +155,7 @@ public class ObjyBranchManager extends ooObj
 
   public void createMainBranch()
   {
-    ObjyBranch newObjyBranch = ObjyBranch.create(this, CDOBranch.MAIN_BRANCH_ID, CDOBranch.MAIN_BRANCH_ID,
-        CDOBranch.MAIN_BRANCH_NAME, 0);
+    ObjyBranch newObjyBranch = ObjyBranch.create(this, CDOBranch.MAIN_BRANCH_ID, CDOBranch.MAIN_BRANCH_ID, CDOBranch.MAIN_BRANCH_NAME, 0);
     branchSet.add(newObjyBranch); // implicit clustering.
   }
 

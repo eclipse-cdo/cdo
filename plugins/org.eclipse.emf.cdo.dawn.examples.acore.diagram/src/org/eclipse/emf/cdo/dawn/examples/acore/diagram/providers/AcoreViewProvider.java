@@ -163,8 +163,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
         {
           return false; // if semantic hint is specified it should be the same as in element type
         }
-        if (domainElement != null
-            && visualID != AcoreVisualIDRegistry.getNodeVisualID(op.getContainerView(), domainElement))
+        if (domainElement != null && visualID != AcoreVisualIDRegistry.getNodeVisualID(op.getContainerView(), domainElement))
         {
           return false; // visual id for node EClass should match visual id from element type
         }
@@ -183,8 +182,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
         case AOperationEditPart.VISUAL_ID:
         case AAttribute2EditPart.VISUAL_ID:
         case AOperation2EditPart.VISUAL_ID:
-          if (domainElement == null
-              || visualID != AcoreVisualIDRegistry.getNodeVisualID(op.getContainerView(), domainElement))
+          if (domainElement == null || visualID != AcoreVisualIDRegistry.getNodeVisualID(op.getContainerView(), domainElement))
           {
             return false; // visual id in semantic hint should match visual id for domain element
           }
@@ -194,9 +192,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
         }
       }
     }
-    return AInterfaceEditPart.VISUAL_ID == visualID || AClassEditPart.VISUAL_ID == visualID
-        || AAttributeEditPart.VISUAL_ID == visualID || AOperationEditPart.VISUAL_ID == visualID
-        || AAttribute2EditPart.VISUAL_ID == visualID || AOperation2EditPart.VISUAL_ID == visualID;
+    return AInterfaceEditPart.VISUAL_ID == visualID || AClassEditPart.VISUAL_ID == visualID || AAttributeEditPart.VISUAL_ID == visualID
+        || AOperationEditPart.VISUAL_ID == visualID || AAttribute2EditPart.VISUAL_ID == visualID || AOperation2EditPart.VISUAL_ID == visualID;
   }
 
   /**
@@ -239,8 +236,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
   /**
    * @generated
    */
-  public Node createNode(IAdaptable semanticAdapter, View containerView, String semanticHint, int index,
-      boolean persisted, PreferencesHint preferencesHint)
+  public Node createNode(IAdaptable semanticAdapter, View containerView, String semanticHint, int index, boolean persisted, PreferencesHint preferencesHint)
   {
     final EObject domainElement = getSemanticElement(semanticAdapter);
     final int visualID;
@@ -274,8 +270,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
   /**
    * @generated
    */
-  public Edge createEdge(IAdaptable semanticAdapter, View containerView, String semanticHint, int index,
-      boolean persisted, PreferencesHint preferencesHint)
+  public Edge createEdge(IAdaptable semanticAdapter, View containerView, String semanticHint, int index, boolean persisted, PreferencesHint preferencesHint)
   {
     IElementType elementType = getSemanticElementType(semanticAdapter);
     String elementTypeHint = ((IHintedType)elementType).getSemanticHint();
@@ -299,8 +294,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
   /**
    * @generated
    */
-  public Node createAInterface_2001(EObject domainElement, View containerView, int index, boolean persisted,
-      PreferencesHint preferencesHint)
+  public Node createAInterface_2001(EObject domainElement, View containerView, int index, boolean persisted, PreferencesHint preferencesHint)
   {
     Node node = NotationFactory.eINSTANCE.createNode();
     node.getStyles().add(NotationFactory.eINSTANCE.createDescriptionStyle());
@@ -314,10 +308,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     // initializeFromPreferences
     final IPreferenceStore prefStore = (IPreferenceStore)preferencesHint.getPreferenceStore();
 
-    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore,
-        IPreferenceConstants.PREF_LINE_COLOR);
-    ViewUtil.setStructuralFeatureValue(node, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-        FigureUtilities.RGBToInteger(lineRGB));
+    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+    ViewUtil.setStructuralFeatureValue(node, NotationPackage.eINSTANCE.getLineStyle_LineColor(), FigureUtilities.RGBToInteger(lineRGB));
     FontStyle nodeFontStyle = (FontStyle)node.getStyle(NotationPackage.Literals.FONT_STYLE);
     if (nodeFontStyle != null)
     {
@@ -326,23 +318,19 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
       nodeFontStyle.setFontHeight(fontData.getHeight());
       nodeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
       nodeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
-      org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter.getColor(prefStore,
-          IPreferenceConstants.PREF_FONT_COLOR);
+      org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter.getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
       nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB).intValue());
     }
     Node label5001 = createLabel(node, AcoreVisualIDRegistry.getType(AInterfaceNameEditPart.VISUAL_ID));
-    createCompartment(node, AcoreVisualIDRegistry.getType(AInterfaceAAttributeInterfaceCompartmentEditPart.VISUAL_ID),
-        false, false, true, true);
-    createCompartment(node, AcoreVisualIDRegistry.getType(AInterfaceAOperationInterfaceCompartmentEditPart.VISUAL_ID),
-        false, false, true, true);
+    createCompartment(node, AcoreVisualIDRegistry.getType(AInterfaceAAttributeInterfaceCompartmentEditPart.VISUAL_ID), false, false, true, true);
+    createCompartment(node, AcoreVisualIDRegistry.getType(AInterfaceAOperationInterfaceCompartmentEditPart.VISUAL_ID), false, false, true, true);
     return node;
   }
 
   /**
    * @generated
    */
-  public Node createAClass_2002(EObject domainElement, View containerView, int index, boolean persisted,
-      PreferencesHint preferencesHint)
+  public Node createAClass_2002(EObject domainElement, View containerView, int index, boolean persisted, PreferencesHint preferencesHint)
   {
     Node node = NotationFactory.eINSTANCE.createNode();
     node.getStyles().add(NotationFactory.eINSTANCE.createDescriptionStyle());
@@ -356,10 +344,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     // initializeFromPreferences
     final IPreferenceStore prefStore = (IPreferenceStore)preferencesHint.getPreferenceStore();
 
-    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore,
-        IPreferenceConstants.PREF_LINE_COLOR);
-    ViewUtil.setStructuralFeatureValue(node, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-        FigureUtilities.RGBToInteger(lineRGB));
+    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+    ViewUtil.setStructuralFeatureValue(node, NotationPackage.eINSTANCE.getLineStyle_LineColor(), FigureUtilities.RGBToInteger(lineRGB));
     FontStyle nodeFontStyle = (FontStyle)node.getStyle(NotationPackage.Literals.FONT_STYLE);
     if (nodeFontStyle != null)
     {
@@ -368,23 +354,19 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
       nodeFontStyle.setFontHeight(fontData.getHeight());
       nodeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
       nodeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
-      org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter.getColor(prefStore,
-          IPreferenceConstants.PREF_FONT_COLOR);
+      org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter.getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
       nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB).intValue());
     }
     Node label5002 = createLabel(node, AcoreVisualIDRegistry.getType(AClassNameEditPart.VISUAL_ID));
-    createCompartment(node, AcoreVisualIDRegistry.getType(AClassAAttributeCompartmentEditPart.VISUAL_ID), false, false,
-        true, true);
-    createCompartment(node, AcoreVisualIDRegistry.getType(AClassAOperationClassCompartmentEditPart.VISUAL_ID), false,
-        false, true, true);
+    createCompartment(node, AcoreVisualIDRegistry.getType(AClassAAttributeCompartmentEditPart.VISUAL_ID), false, false, true, true);
+    createCompartment(node, AcoreVisualIDRegistry.getType(AClassAOperationClassCompartmentEditPart.VISUAL_ID), false, false, true, true);
     return node;
   }
 
   /**
    * @generated
    */
-  public Node createAAttribute_3001(EObject domainElement, View containerView, int index, boolean persisted,
-      PreferencesHint preferencesHint)
+  public Node createAAttribute_3001(EObject domainElement, View containerView, int index, boolean persisted, PreferencesHint preferencesHint)
   {
     Node node = NotationFactory.eINSTANCE.createNode();
     node.setLayoutConstraint(NotationFactory.eINSTANCE.createLocation());
@@ -397,8 +379,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
   /**
    * @generated
    */
-  public Node createAOperation_3002(EObject domainElement, View containerView, int index, boolean persisted,
-      PreferencesHint preferencesHint)
+  public Node createAOperation_3002(EObject domainElement, View containerView, int index, boolean persisted, PreferencesHint preferencesHint)
   {
     Node node = NotationFactory.eINSTANCE.createNode();
     node.setLayoutConstraint(NotationFactory.eINSTANCE.createLocation());
@@ -411,8 +392,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
   /**
    * @generated
    */
-  public Node createAAttribute_3003(EObject domainElement, View containerView, int index, boolean persisted,
-      PreferencesHint preferencesHint)
+  public Node createAAttribute_3003(EObject domainElement, View containerView, int index, boolean persisted, PreferencesHint preferencesHint)
   {
     Node node = NotationFactory.eINSTANCE.createNode();
     node.setLayoutConstraint(NotationFactory.eINSTANCE.createLocation());
@@ -425,8 +405,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
   /**
    * @generated
    */
-  public Node createAOperation_3004(EObject domainElement, View containerView, int index, boolean persisted,
-      PreferencesHint preferencesHint)
+  public Node createAOperation_3004(EObject domainElement, View containerView, int index, boolean persisted, PreferencesHint preferencesHint)
   {
     Node node = NotationFactory.eINSTANCE.createNode();
     node.setLayoutConstraint(NotationFactory.eINSTANCE.createLocation());
@@ -439,8 +418,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
   /**
    * @generated
    */
-  public Edge createAClassSubClasses_4001(View containerView, int index, boolean persisted,
-      PreferencesHint preferencesHint)
+  public Edge createAClassSubClasses_4001(View containerView, int index, boolean persisted, PreferencesHint preferencesHint)
   {
     Connector edge = NotationFactory.eINSTANCE.createConnector();
     edge.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
@@ -456,10 +434,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     // initializePreferences
     final IPreferenceStore prefStore = (IPreferenceStore)preferencesHint.getPreferenceStore();
 
-    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore,
-        IPreferenceConstants.PREF_LINE_COLOR);
-    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-        FigureUtilities.RGBToInteger(lineRGB));
+    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(), FigureUtilities.RGBToInteger(lineRGB));
     FontStyle edgeFontStyle = (FontStyle)edge.getStyle(NotationPackage.Literals.FONT_STYLE);
     if (edgeFontStyle != null)
     {
@@ -468,8 +444,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
       edgeFontStyle.setFontHeight(fontData.getHeight());
       edgeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
       edgeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
-      org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter.getColor(prefStore,
-          IPreferenceConstants.PREF_FONT_COLOR);
+      org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter.getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
       edgeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB).intValue());
     }
     Routing routing = Routing.get(prefStore.getInt(IPreferenceConstants.PREF_LINE_STYLE));
@@ -483,8 +458,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
   /**
    * @generated
    */
-  public Edge createAClassImplementedInterfaces_4002(View containerView, int index, boolean persisted,
-      PreferencesHint preferencesHint)
+  public Edge createAClassImplementedInterfaces_4002(View containerView, int index, boolean persisted, PreferencesHint preferencesHint)
   {
     Connector edge = NotationFactory.eINSTANCE.createConnector();
     edge.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
@@ -500,10 +474,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     // initializePreferences
     final IPreferenceStore prefStore = (IPreferenceStore)preferencesHint.getPreferenceStore();
 
-    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore,
-        IPreferenceConstants.PREF_LINE_COLOR);
-    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-        FigureUtilities.RGBToInteger(lineRGB));
+    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(), FigureUtilities.RGBToInteger(lineRGB));
     FontStyle edgeFontStyle = (FontStyle)edge.getStyle(NotationPackage.Literals.FONT_STYLE);
     if (edgeFontStyle != null)
     {
@@ -512,8 +484,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
       edgeFontStyle.setFontHeight(fontData.getHeight());
       edgeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
       edgeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
-      org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter.getColor(prefStore,
-          IPreferenceConstants.PREF_FONT_COLOR);
+      org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter.getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
       edgeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB).intValue());
     }
     Routing routing = Routing.get(prefStore.getInt(IPreferenceConstants.PREF_LINE_STYLE));
@@ -527,8 +498,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
   /**
    * @generated
    */
-  public Edge createAClassAssociations_4003(View containerView, int index, boolean persisted,
-      PreferencesHint preferencesHint)
+  public Edge createAClassAssociations_4003(View containerView, int index, boolean persisted, PreferencesHint preferencesHint)
   {
     Connector edge = NotationFactory.eINSTANCE.createConnector();
     edge.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
@@ -544,10 +514,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     // initializePreferences
     final IPreferenceStore prefStore = (IPreferenceStore)preferencesHint.getPreferenceStore();
 
-    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore,
-        IPreferenceConstants.PREF_LINE_COLOR);
-    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-        FigureUtilities.RGBToInteger(lineRGB));
+    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(), FigureUtilities.RGBToInteger(lineRGB));
     FontStyle edgeFontStyle = (FontStyle)edge.getStyle(NotationPackage.Literals.FONT_STYLE);
     if (edgeFontStyle != null)
     {
@@ -556,8 +524,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
       edgeFontStyle.setFontHeight(fontData.getHeight());
       edgeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
       edgeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
-      org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter.getColor(prefStore,
-          IPreferenceConstants.PREF_FONT_COLOR);
+      org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter.getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
       edgeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB).intValue());
     }
     Routing routing = Routing.get(prefStore.getInt(IPreferenceConstants.PREF_LINE_STYLE));
@@ -571,8 +538,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
   /**
    * @generated
    */
-  public Edge createAClassAggregations_4004(View containerView, int index, boolean persisted,
-      PreferencesHint preferencesHint)
+  public Edge createAClassAggregations_4004(View containerView, int index, boolean persisted, PreferencesHint preferencesHint)
   {
     Connector edge = NotationFactory.eINSTANCE.createConnector();
     edge.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
@@ -588,10 +554,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     // initializePreferences
     final IPreferenceStore prefStore = (IPreferenceStore)preferencesHint.getPreferenceStore();
 
-    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore,
-        IPreferenceConstants.PREF_LINE_COLOR);
-    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-        FigureUtilities.RGBToInteger(lineRGB));
+    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(), FigureUtilities.RGBToInteger(lineRGB));
     FontStyle edgeFontStyle = (FontStyle)edge.getStyle(NotationPackage.Literals.FONT_STYLE);
     if (edgeFontStyle != null)
     {
@@ -600,8 +564,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
       edgeFontStyle.setFontHeight(fontData.getHeight());
       edgeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
       edgeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
-      org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter.getColor(prefStore,
-          IPreferenceConstants.PREF_FONT_COLOR);
+      org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter.getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
       edgeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB).intValue());
     }
     Routing routing = Routing.get(prefStore.getInt(IPreferenceConstants.PREF_LINE_STYLE));
@@ -615,8 +578,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
   /**
    * @generated
    */
-  public Edge createAClassCompositions_4005(View containerView, int index, boolean persisted,
-      PreferencesHint preferencesHint)
+  public Edge createAClassCompositions_4005(View containerView, int index, boolean persisted, PreferencesHint preferencesHint)
   {
     Connector edge = NotationFactory.eINSTANCE.createConnector();
     edge.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
@@ -632,10 +594,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     // initializePreferences
     final IPreferenceStore prefStore = (IPreferenceStore)preferencesHint.getPreferenceStore();
 
-    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore,
-        IPreferenceConstants.PREF_LINE_COLOR);
-    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-        FigureUtilities.RGBToInteger(lineRGB));
+    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+    ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(), FigureUtilities.RGBToInteger(lineRGB));
     FontStyle edgeFontStyle = (FontStyle)edge.getStyle(NotationPackage.Literals.FONT_STYLE);
     if (edgeFontStyle != null)
     {
@@ -644,8 +604,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
       edgeFontStyle.setFontHeight(fontData.getHeight());
       edgeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
       edgeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
-      org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter.getColor(prefStore,
-          IPreferenceConstants.PREF_FONT_COLOR);
+      org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter.getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
       edgeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB).intValue());
     }
     Routing routing = Routing.get(prefStore.getInt(IPreferenceConstants.PREF_LINE_STYLE));
@@ -684,8 +643,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
   /**
    * @generated
    */
-  private Node createCompartment(View owner, String hint, boolean canCollapse, boolean hasTitle, boolean canSort,
-      boolean canFilter)
+  private Node createCompartment(View owner, String hint, boolean canCollapse, boolean hasTitle, boolean canSort, boolean canFilter)
   {
     // SemanticListCompartment rv = NotationFactory.eINSTANCE.createSemanticListCompartment();
     // rv.setShowTitle(showTitle);

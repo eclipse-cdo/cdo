@@ -82,8 +82,7 @@ public class ListConstructionImpl extends CDOObjectImpl implements ListConstruct
   @SuppressWarnings("unchecked")
   public EList<Expression> getElements()
   {
-    return (EList<Expression>)eDynamicGet(ExpressionsPackage.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, true, true);
+    return (EList<Expression>)eDynamicGet(ExpressionsPackage.LIST_CONSTRUCTION__ELEMENTS, ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, true, true);
   }
 
   /**

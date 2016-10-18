@@ -201,8 +201,7 @@ public class SessionComposite extends Composite
   public boolean isDescriptionValid()
   {
     URI uri = URI.createURI(getSessionDescription());
-    return uri.hasAuthority() && uri.host() != null && !StringUtil.isEmpty(uri.host())
-        && !StringUtil.isEmpty(repositoryName);
+    return uri.hasAuthority() && uri.host() != null && !StringUtil.isEmpty(uri.host()) && !StringUtil.isEmpty(repositoryName);
   }
 
   public void rememberSettings()

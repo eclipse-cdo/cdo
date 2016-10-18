@@ -43,8 +43,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
   {
     try
     {
-      EresourceFactory theEresourceFactory = (EresourceFactory)EPackage.Registry.INSTANCE
-          .getEFactory(EresourcePackage.eNS_URI);
+      EresourceFactory theEresourceFactory = (EresourceFactory)EPackage.Registry.INSTANCE.getEFactory(EresourcePackage.eNS_URI);
       if (theEresourceFactory != null)
       {
         return theEresourceFactory;

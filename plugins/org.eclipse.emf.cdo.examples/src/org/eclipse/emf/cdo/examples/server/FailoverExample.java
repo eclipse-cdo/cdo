@@ -191,8 +191,7 @@ public abstract class FailoverExample
     else if ("3".equals(command))
     {
       System.out.println();
-      System.out.println(repository.getName() + ": " + repository.getType()
-          + (repository.getType() == Type.BACKUP ? "|" + repository.getState() : ""));
+      System.out.println(repository.getName() + ": " + repository.getType() + (repository.getType() == Type.BACKUP ? "|" + repository.getState() : ""));
     }
     else if ("0".equals(command))
     {
@@ -256,8 +255,7 @@ public abstract class FailoverExample
 
   protected IRepositorySynchronizer createRepositorySynchronizer(String peerHost, int peerPort, String repositoryName)
   {
-    CDOSessionConfigurationFactory factory = createSessionConfigurationFactory(peerHost + ":" + peerPort,
-        repositoryName);
+    CDOSessionConfigurationFactory factory = createSessionConfigurationFactory(peerHost + ":" + peerPort, repositoryName);
 
     IRepositorySynchronizer synchronizer = CDOServerUtil.createRepositorySynchronizer(factory);
     synchronizer.setRetryInterval(2);
@@ -266,8 +264,7 @@ public abstract class FailoverExample
     return synchronizer;
   }
 
-  protected CDOSessionConfigurationFactory createSessionConfigurationFactory(final String connectorDescription,
-      final String repositoryName)
+  protected CDOSessionConfigurationFactory createSessionConfigurationFactory(final String connectorDescription, final String repositoryName)
   {
     return new CDOSessionConfigurationFactory()
     {
@@ -316,8 +313,7 @@ public abstract class FailoverExample
     protected IRepository createRepository(IStore store, Map<String, String> props)
     {
       IRepositorySynchronizer synchronizer = createRepositorySynchronizer(peerHost, peerPort, peerRepository);
-      ISynchronizableRepository repository = CDOServerUtil.createFailoverParticipant(name, store, props, synchronizer,
-          master);
+      ISynchronizableRepository repository = CDOServerUtil.createFailoverParticipant(name, store, props, synchronizer, master);
       repository.setInitialPackages(CompanyPackage.eINSTANCE);
       return repository;
     }
@@ -438,8 +434,7 @@ public abstract class FailoverExample
       FailoverAgent agent = new FailoverAgent()
       {
         @Override
-        protected org.eclipse.emf.cdo.session.CDOSessionConfiguration createSessionConfiguration(
-            String connectorDescription, String repositoryName)
+        protected org.eclipse.emf.cdo.session.CDOSessionConfiguration createSessionConfiguration(String connectorDescription, String repositoryName)
         {
           return Monitored.this.createSessionConfiguration(connectorDescription, repositoryName);
         }
@@ -470,8 +465,7 @@ public abstract class FailoverExample
       public static void main(String[] args) throws Exception
       {
         IManagedContainer container = createContainer();
-        FailoverMonitor monitor = (FailoverMonitor)container.getElement(FailoverMonitor.PRODUCT_GROUP, "net4j",
-            REPOSITORY_GROUP);
+        FailoverMonitor monitor = (FailoverMonitor)container.getElement(FailoverMonitor.PRODUCT_GROUP, "net4j", REPOSITORY_GROUP);
 
         monitor.addListener(new ContainerEventAdapter<AgentProtocol>()
         {
@@ -554,8 +548,8 @@ public abstract class FailoverExample
       public static void main(String[] args) throws Exception
       {
         IManagedContainer container = createContainer();
-        CDONet4jSessionConfiguration configuration = CDONet4jUtil.createFailoverSessionConfiguration(
-            REPOSITORY_MONITOR_HOST + ":" + REPOSITORY_MONITOR_PORT, REPOSITORY_GROUP, container);
+        CDONet4jSessionConfiguration configuration = CDONet4jUtil.createFailoverSessionConfiguration(REPOSITORY_MONITOR_HOST + ":" + REPOSITORY_MONITOR_PORT,
+            REPOSITORY_GROUP, container);
 
         final CDONet4jSession session = configuration.openNet4jSession();
         System.out.println("Connected");

@@ -129,12 +129,10 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
 
     CDOID dirtyResourceID = dirtyData.getResourceID();
     int dirtyContainingFeatureID = dirtyData.getContainingFeatureID();
-    if (!compareValue(originData.getContainerID(), dirtyContainerID)
-        || !compareValue(originData.getContainingFeatureID(), dirtyContainingFeatureID)
+    if (!compareValue(originData.getContainerID(), dirtyContainerID) || !compareValue(originData.getContainingFeatureID(), dirtyContainingFeatureID)
         || !compareValue(originData.getResourceID(), dirtyResourceID))
     {
-      CDOFeatureDelta delta = new CDOContainerFeatureDeltaImpl(dirtyResourceID, dirtyContainerID,
-          dirtyContainingFeatureID);
+      CDOFeatureDelta delta = new CDOContainerFeatureDeltaImpl(dirtyResourceID, dirtyContainerID, dirtyContainingFeatureID);
       addFeatureDelta(delta, null);
     }
   }
@@ -397,8 +395,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
             }
 
             @Override
-            protected void createAddListChange(EList<Object> oldList, EList<ListChange> listChanges, Object value,
-                int index)
+            protected void createAddListChange(EList<Object> oldList, EList<ListChange> listChanges, Object value, int index)
             {
               CDOFeatureDelta delta = new CDOAddFeatureDeltaImpl(feature, index, value);
               changes.add(delta);
@@ -406,8 +403,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
             }
 
             @Override
-            protected void createRemoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object value,
-                int index)
+            protected void createRemoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object value, int index)
             {
               CDORemoveFeatureDeltaImpl delta = new CDORemoveFeatureDeltaImpl(feature, index);
               // fix until ListDifferenceAnalyzer delivers the correct value (bug #308618).
@@ -417,8 +413,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
             }
 
             @Override
-            protected void createMoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object value,
-                int index, int toIndex)
+            protected void createMoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object value, int index, int toIndex)
             {
               CDOMoveFeatureDeltaImpl delta = new CDOMoveFeatureDeltaImpl(feature, toIndex, index);
               // fix until ListDifferenceAnalyzer delivers the correct value (same problem as bug #308618).
@@ -521,8 +516,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDORevisionDelta[{0}@{1}:{2}v{3} --> {4}]", eClass.getName(), id, branch.getID(),
-        version, featureDeltas.values());
+    return MessageFormat.format("CDORevisionDelta[{0}@{1}:{2}v{3} --> {4}]", eClass.getName(), id, branch.getID(), version, featureDeltas.values());
   }
 
   /**

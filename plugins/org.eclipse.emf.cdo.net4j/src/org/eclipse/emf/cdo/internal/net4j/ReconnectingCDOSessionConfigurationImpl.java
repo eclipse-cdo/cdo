@@ -20,8 +20,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 /**
  * @author Caspar De Groot
  */
-public class ReconnectingCDOSessionConfigurationImpl extends RecoveringCDOSessionConfigurationImpl
-    implements ReconnectingCDOSessionConfiguration
+public class ReconnectingCDOSessionConfigurationImpl extends RecoveringCDOSessionConfigurationImpl implements ReconnectingCDOSessionConfiguration
 {
   private String hostAndPort;
 

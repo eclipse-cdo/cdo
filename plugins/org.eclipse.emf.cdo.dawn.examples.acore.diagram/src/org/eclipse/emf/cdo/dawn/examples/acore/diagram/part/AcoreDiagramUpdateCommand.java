@@ -60,8 +60,7 @@ public class AcoreDiagramUpdateCommand implements IHandler
       {
         return null;
       }
-      if (structuredSelection.getFirstElement() instanceof EditPart
-          && ((EditPart)structuredSelection.getFirstElement()).getModel() instanceof View)
+      if (structuredSelection.getFirstElement() instanceof EditPart && ((EditPart)structuredSelection.getFirstElement()).getModel() instanceof View)
       {
         EObject modelElement = ((View)((EditPart)structuredSelection.getFirstElement()).getModel()).getElement();
         List editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(modelElement);

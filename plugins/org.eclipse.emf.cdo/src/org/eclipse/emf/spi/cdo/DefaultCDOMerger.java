@@ -358,8 +358,7 @@ public class DefaultCDOMerger implements CDOMerger
     }
     else if (data != null)
     {
-      throw new IllegalArgumentException(
-          "Must be a CDORevision, a CDORevisionDelta, a CDOID, a Conflict or null: " + data);
+      throw new IllegalArgumentException("Must be a CDORevision, a CDORevisionDelta, a CDOID, a Conflict or null: " + data);
     }
     else
     {
@@ -574,8 +573,7 @@ public class DefaultCDOMerger implements CDOMerger
                 throw new UnsupportedOperationException();
 
               case NONE:
-                conflict = new ChangedInSourceAndTargetConflict(new CDORevisionDeltaImpl(targetDelta, false),
-                    new CDORevisionDeltaImpl(sourceDelta, false));
+                conflict = new ChangedInSourceAndTargetConflict(new CDORevisionDeltaImpl(targetDelta, false), new CDORevisionDeltaImpl(sourceDelta, false));
                 break;
 
               default:
@@ -636,8 +634,7 @@ public class DefaultCDOMerger implements CDOMerger
     /**
      * @return the result feature delta, or <code>null</code> to indicate an unresolved conflict.
      */
-    protected CDOFeatureDelta changedInSourceAndTarget(CDOFeatureDelta targetFeatureDelta,
-        CDOFeatureDelta sourceFeatureDelta)
+    protected CDOFeatureDelta changedInSourceAndTarget(CDOFeatureDelta targetFeatureDelta, CDOFeatureDelta sourceFeatureDelta)
     {
       EStructuralFeature feature = targetFeatureDelta.getFeature();
       if (feature.isMany())
@@ -651,8 +648,8 @@ public class DefaultCDOMerger implements CDOMerger
     /**
      * @return the result feature delta, or <code>null</code> to indicate an unresolved conflict.
      */
-    protected CDOFeatureDelta changedInSourceAndTargetManyValued(EStructuralFeature feature,
-        CDOFeatureDelta targetFeatureDelta, CDOFeatureDelta sourceFeatureDelta)
+    protected CDOFeatureDelta changedInSourceAndTargetManyValued(EStructuralFeature feature, CDOFeatureDelta targetFeatureDelta,
+        CDOFeatureDelta sourceFeatureDelta)
     {
       return null;
     }
@@ -660,8 +657,8 @@ public class DefaultCDOMerger implements CDOMerger
     /**
      * @return the result feature delta, or <code>null</code> to indicate an unresolved conflict.
      */
-    protected CDOFeatureDelta changedInSourceAndTargetSingleValued(EStructuralFeature feature,
-        CDOFeatureDelta targetFeatureDelta, CDOFeatureDelta sourceFeatureDelta)
+    protected CDOFeatureDelta changedInSourceAndTargetSingleValued(EStructuralFeature feature, CDOFeatureDelta targetFeatureDelta,
+        CDOFeatureDelta sourceFeatureDelta)
     {
       if (targetFeatureDelta.isStructurallyEqual(sourceFeatureDelta))
       {
@@ -699,8 +696,8 @@ public class DefaultCDOMerger implements CDOMerger
       }
 
       @Override
-      protected CDOFeatureDelta changedInSourceAndTargetManyValued(EStructuralFeature feature,
-          CDOFeatureDelta targetFeatureDelta, CDOFeatureDelta sourceFeatureDelta)
+      protected CDOFeatureDelta changedInSourceAndTargetManyValued(EStructuralFeature feature, CDOFeatureDelta targetFeatureDelta,
+          CDOFeatureDelta sourceFeatureDelta)
       {
         if (targetFeatureDelta instanceof CDOListFeatureDelta && sourceFeatureDelta instanceof CDOListFeatureDelta)
         {
@@ -712,8 +709,8 @@ public class DefaultCDOMerger implements CDOMerger
           initWorkLists(originSize, ancestorList, listPerSide);
 
           // Apply list changes to source and target work lists
-          PerSide<List<CDOFeatureDelta>> changesPerSide = new PerSide<List<CDOFeatureDelta>>(
-              copyListChanges(sourceFeatureDelta), copyListChanges(targetFeatureDelta));
+          PerSide<List<CDOFeatureDelta>> changesPerSide = new PerSide<List<CDOFeatureDelta>>(copyListChanges(sourceFeatureDelta),
+              copyListChanges(targetFeatureDelta));
           Map<Object, List<Element>> additions = new HashMap<Object, List<Element>>();
           Map<CDOFeatureDelta, Element> allElements = new HashMap<CDOFeatureDelta, Element>();
 
@@ -724,10 +721,8 @@ public class DefaultCDOMerger implements CDOMerger
           CDOListFeatureDelta result = new CDOListFeatureDeltaImpl(feature, originSize);
           List<CDOFeatureDelta> resultChanges = result.getListChanges();
 
-          pickChangesIntoResult(Side.SOURCE, feature, ancestorList, changesPerSide, allElements, additions,
-              resultChanges);
-          pickChangesIntoResult(Side.TARGET, feature, ancestorList, changesPerSide, allElements, additions,
-              resultChanges);
+          pickChangesIntoResult(Side.SOURCE, feature, ancestorList, changesPerSide, allElements, additions, resultChanges);
+          pickChangesIntoResult(Side.TARGET, feature, ancestorList, changesPerSide, allElements, additions, resultChanges);
 
           return result;
         }
@@ -735,8 +730,7 @@ public class DefaultCDOMerger implements CDOMerger
         return super.changedInSourceAndTargetManyValued(feature, targetFeatureDelta, sourceFeatureDelta);
       }
 
-      private void initWorkLists(int originSize, BasicEList<Element> ancestorList,
-          PerSide<BasicEList<Element>> listPerSide)
+      private void initWorkLists(int originSize, BasicEList<Element> ancestorList, PerSide<BasicEList<Element>> listPerSide)
       {
         BasicEList<Element> sourceList = new BasicEList<Element>(originSize);
         BasicEList<Element> targetList = new BasicEList<Element>(originSize);
@@ -787,9 +781,8 @@ public class DefaultCDOMerger implements CDOMerger
         return expandedDeltas;
       }
 
-      private void applyChangesToWorkList(Side side, PerSide<BasicEList<Element>> listPerSide,
-          PerSide<List<CDOFeatureDelta>> changesPerSide, Map<CDOFeatureDelta, Element> allElements,
-          Map<Object, List<Element>> additions)
+      private void applyChangesToWorkList(Side side, PerSide<BasicEList<Element>> listPerSide, PerSide<List<CDOFeatureDelta>> changesPerSide,
+          Map<CDOFeatureDelta, Element> allElements, Map<Object, List<Element>> additions)
       {
         BasicEList<Element> list = listPerSide.get(side);
         List<CDOFeatureDelta> changes = changesPerSide.get(side);
@@ -874,9 +867,8 @@ public class DefaultCDOMerger implements CDOMerger
         additionsList.add(element);
       }
 
-      private void pickChangesIntoResult(Side side, EStructuralFeature feature, BasicEList<Element> ancestorList,
-          PerSide<List<CDOFeatureDelta>> changesPerSide, Map<CDOFeatureDelta, Element> allElements,
-          Map<Object, List<Element>> additions, List<CDOFeatureDelta> result)
+      private void pickChangesIntoResult(Side side, EStructuralFeature feature, BasicEList<Element> ancestorList, PerSide<List<CDOFeatureDelta>> changesPerSide,
+          Map<CDOFeatureDelta, Element> allElements, Map<Object, List<Element>> additions, List<CDOFeatureDelta> result)
       {
         List<CDOFeatureDelta> changes = changesPerSide.get(side);
         for (CDOFeatureDelta change : changes)
@@ -1096,8 +1088,7 @@ public class DefaultCDOMerger implements CDOMerger
         }
       }
 
-      private static void adjustAfterMove(List<CDOFeatureDelta> list, int oldPosition, int newPosition,
-          CDOFeatureDelta deltaToRemove)
+      private static void adjustAfterMove(List<CDOFeatureDelta> list, int oldPosition, int newPosition, CDOFeatureDelta deltaToRemove)
       {
         for (Iterator<CDOFeatureDelta> it = list.iterator(); it.hasNext();)
         {
@@ -1226,29 +1217,25 @@ public class DefaultCDOMerger implements CDOMerger
       }
 
       @Deprecated
-      protected void handleListDelta(List<CDOFeatureDelta> resultList, List<CDOFeatureDelta> listToHandle,
-          List<CDOFeatureDelta> listToAdjust)
+      protected void handleListDelta(List<CDOFeatureDelta> resultList, List<CDOFeatureDelta> listToHandle, List<CDOFeatureDelta> listToAdjust)
       {
         throw new UnsupportedOperationException();
       }
 
       @Deprecated
-      protected boolean handleListDeltaAdd(List<CDOFeatureDelta> resultList, CDOAddFeatureDelta addDelta,
-          List<CDOFeatureDelta> listToAdjust)
+      protected boolean handleListDeltaAdd(List<CDOFeatureDelta> resultList, CDOAddFeatureDelta addDelta, List<CDOFeatureDelta> listToAdjust)
       {
         throw new UnsupportedOperationException();
       }
 
       @Deprecated
-      protected boolean handleListDeltaRemove(List<CDOFeatureDelta> resultList, CDORemoveFeatureDelta removeDelta,
-          List<CDOFeatureDelta> listToAdjust)
+      protected boolean handleListDeltaRemove(List<CDOFeatureDelta> resultList, CDORemoveFeatureDelta removeDelta, List<CDOFeatureDelta> listToAdjust)
       {
         throw new UnsupportedOperationException();
       }
 
       @Deprecated
-      protected boolean handleListDeltaMove(List<CDOFeatureDelta> resultList, CDOMoveFeatureDelta moveDelta,
-          List<CDOFeatureDelta> listToAdjust)
+      protected boolean handleListDeltaMove(List<CDOFeatureDelta> resultList, CDOMoveFeatureDelta moveDelta, List<CDOFeatureDelta> listToAdjust)
       {
         throw new UnsupportedOperationException();
       }

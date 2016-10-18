@@ -41,8 +41,7 @@ import java.util.Collection;
  *
  * @generated
  */
-public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
-    implements ComposeableAdapterFactory, IChangeNotifier, IDisposable
+public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable
 {
   /**
    * This keeps track of the root adapter factory that delegates to this adapter factory. <!-- begin-user-doc --> <!--

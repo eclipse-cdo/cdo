@@ -41,8 +41,8 @@ import java.util.List;
  * end-user-doc -->
  * @generated
  */
-public class OrderItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class OrderItemProvider extends ItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -79,11 +79,9 @@ public class OrderItemProvider extends ItemProviderAdapter implements IEditingDo
    */
   protected void addTablePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Order_table_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_Order_table_feature", "_UI_Order_type"),
-            BusinessPackage.Literals.ORDER__TABLE, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Order_table_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Order_table_feature", "_UI_Order_type"),
+        BusinessPackage.Literals.ORDER__TABLE, true, false, true, null, null, null));
   }
 
   /**
@@ -93,12 +91,9 @@ public class OrderItemProvider extends ItemProviderAdapter implements IEditingDo
    */
   protected void addNumberPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Order_number_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_Order_number_feature", "_UI_Order_type"),
-            BusinessPackage.Literals.ORDER__NUMBER, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-            null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Order_number_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Order_number_feature", "_UI_Order_type"),
+        BusinessPackage.Literals.ORDER__NUMBER, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -210,8 +205,7 @@ public class OrderItemProvider extends ItemProviderAdapter implements IEditingDo
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(BusinessPackage.Literals.ORDER__ORDER_DETAILS,
-        BusinessFactory.eINSTANCE.createOrderDetail()));
+    newChildDescriptors.add(createChildParameter(BusinessPackage.Literals.ORDER__ORDER_DETAILS, BusinessFactory.eINSTANCE.createOrderDetail()));
   }
 
   /**

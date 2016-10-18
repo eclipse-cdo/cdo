@@ -20,6 +20,5 @@ public interface IPasswordCredentialsUpdateProvider
 {
   public IPasswordCredentialsUpdate getCredentialsUpdate(String userID, CredentialsUpdateOperation operation);
 
-  public IPasswordCredentialsUpdate getCredentialsUpdate(String realm, String userID,
-      CredentialsUpdateOperation operation);
+  public IPasswordCredentialsUpdate getCredentialsUpdate(String realm, String userID, CredentialsUpdateOperation operation);
 }

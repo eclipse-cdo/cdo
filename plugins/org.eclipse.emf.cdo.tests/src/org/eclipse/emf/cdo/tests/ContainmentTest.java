@@ -392,8 +392,7 @@ public class ContainmentTest extends AbstractCDOTest
     assertEquals(resource1.getContents().get(0), order.eContainer());
     resource2.getContents().remove(order);
 
-    Order order2 = (Order)CDOUtil
-        .getEObject((EObject)container.eGet(container.eClass().getEStructuralFeature("proxyElement")));
+    Order order2 = (Order)CDOUtil.getEObject((EObject)container.eGet(container.eClass().getEStructuralFeature("proxyElement")));
     assertSame(order, order2);
   }
 

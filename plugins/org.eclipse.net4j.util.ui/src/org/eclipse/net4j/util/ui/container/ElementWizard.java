@@ -77,8 +77,8 @@ public abstract class ElementWizard extends Notifier implements IElementWizard, 
     return container.getElement(productGroup, factoryType, resultDescription);
   }
 
-  public void create(Composite parent, IManagedContainer container, String productGroup, String factoryType,
-      String defaultDescription, ValidationContext context)
+  public void create(Composite parent, IManagedContainer container, String productGroup, String factoryType, String defaultDescription,
+      ValidationContext context)
   {
     this.container = container;
     this.productGroup = productGroup;

@@ -92,8 +92,8 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
     }
 
     // Obtain or create and register package
-    BasePackageImpl theBasePackage = (BasePackageImpl)(EPackage.Registry.INSTANCE
-        .get(eNS_URI) instanceof BasePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new BasePackageImpl());
+    BasePackageImpl theBasePackage = (BasePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof BasePackageImpl
+        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new BasePackageImpl());
 
     isInited = true;
 
@@ -253,23 +253,20 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
 
     // Initialize classes and features; add operations and parameters
     initEClass(baseClassEClass, BaseClass.class, "BaseClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getBaseClass_Couter(), ecorePackage.getEInt(), "couter", null, 0, 1, BaseClass.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBaseClass_Couter(), ecorePackage.getEInt(), "couter", null, 0, 1, BaseClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     addEOperation(baseClassEClass, null, "increment", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(documentEClass, Document.class, "Document", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDocument_Root(), getElement(), null, "root", null, 0, 1, Document.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+    initEReference(getDocument_Root(), getElement(), null, "root", null, 0, 1, Document.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(elementEClass, Element.class, "Element", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getElement_Subelements(), getElement(), getElement_Parent(), "subelements", null, 0, -1,
-        Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getElement_Parent(), getElement(), getElement_Subelements(), "parent", null, 0, 1, Element.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEReference(getElement_Subelements(), getElement(), getElement_Parent(), "subelements", null, 0, -1, Element.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getElement_Parent(), getElement(), getElement_Subelements(), "parent", null, 0, 1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

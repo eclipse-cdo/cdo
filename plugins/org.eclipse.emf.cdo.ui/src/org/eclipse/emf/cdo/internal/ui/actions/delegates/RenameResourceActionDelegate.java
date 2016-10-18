@@ -37,8 +37,7 @@ public class RenameResourceActionDelegate extends TransactionalBackgroundActionD
   @Override
   protected CDOObject preRun(CDOObject object)
   {
-    InputDialog dialog = new InputDialog(getTargetPart().getSite().getShell(), getText(),
-        Messages.getString("NewResourceNodeAction_0"), null, //$NON-NLS-1$
+    InputDialog dialog = new InputDialog(getTargetPart().getSite().getShell(), getText(), Messages.getString("NewResourceNodeAction_0"), null, //$NON-NLS-1$
         new ResourceNodeNameInputValidator((CDOResourceNode)object));
     if (dialog.open() == Dialog.OK)
     {
@@ -62,8 +61,7 @@ public class RenameResourceActionDelegate extends TransactionalBackgroundActionD
   }
 
   @Override
-  protected final void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor)
-      throws Exception
+  protected final void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor) throws Exception
   {
     if (object instanceof CDOResourceNode)
     {

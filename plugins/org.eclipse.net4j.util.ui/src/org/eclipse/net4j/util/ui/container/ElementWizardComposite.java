@@ -82,8 +82,7 @@ public abstract class ElementWizardComposite extends Composite implements IListe
   /**
    * @since 3.2
    */
-  public ElementWizardComposite(Composite parent, int style, String productGroup, String label,
-      ValidationContext validationContext)
+  public ElementWizardComposite(Composite parent, int style, String productGroup, String label, ValidationContext validationContext)
   {
     this(parent, style, productGroup, label, validationContext, null);
   }
@@ -91,8 +90,7 @@ public abstract class ElementWizardComposite extends Composite implements IListe
   /**
    * @since 3.2
    */
-  public ElementWizardComposite(Composite parent, int style, String productGroup, String label,
-      ValidationContext validationContext, String defaultFactoryType)
+  public ElementWizardComposite(Composite parent, int style, String productGroup, String label, ValidationContext validationContext, String defaultFactoryType)
   {
     super(parent, style);
     this.productGroup = productGroup;
@@ -158,8 +156,7 @@ public abstract class ElementWizardComposite extends Composite implements IListe
 
       try
       {
-        IElementWizard wizard = (IElementWizard)container.getElement(ElementWizardFactory.PRODUCT_GROUP,
-            getProductGroup() + ":" + factoryType, null);
+        IElementWizard wizard = (IElementWizard)container.getElement(ElementWizardFactory.PRODUCT_GROUP, getProductGroup() + ":" + factoryType, null);
 
         wizards.add(wizard);
         wizardControls.put(wizard, new ArrayList<Control>());
@@ -331,8 +328,7 @@ public abstract class ElementWizardComposite extends Composite implements IListe
     /**
      * @since 3.2
      */
-    public WithCombo(Composite parent, int style, String productGroup, String label,
-        ValidationContext validationContext)
+    public WithCombo(Composite parent, int style, String productGroup, String label, ValidationContext validationContext)
     {
       super(parent, style, productGroup, label, validationContext);
     }
@@ -340,8 +336,7 @@ public abstract class ElementWizardComposite extends Composite implements IListe
     /**
      * @since 3.2
      */
-    public WithCombo(Composite parent, int style, String productGroup, String label,
-        ValidationContext validationContext, String defaultFactoryType)
+    public WithCombo(Composite parent, int style, String productGroup, String label, ValidationContext validationContext, String defaultFactoryType)
     {
       super(parent, style, productGroup, label, validationContext, defaultFactoryType);
     }
@@ -406,8 +401,7 @@ public abstract class ElementWizardComposite extends Composite implements IListe
     /**
      * @since 3.2
      */
-    public WithRadios(Composite parent, int style, String productGroup, String label,
-        ValidationContext validationContext)
+    public WithRadios(Composite parent, int style, String productGroup, String label, ValidationContext validationContext)
     {
       super(parent, style, productGroup, label, validationContext);
     }
@@ -415,8 +409,7 @@ public abstract class ElementWizardComposite extends Composite implements IListe
     /**
      * @since 3.2
      */
-    public WithRadios(Composite parent, int style, String productGroup, String label,
-        ValidationContext validationContext, String defaultFactoryType)
+    public WithRadios(Composite parent, int style, String productGroup, String label, ValidationContext validationContext, String defaultFactoryType)
     {
       super(parent, style, productGroup, label, validationContext, defaultFactoryType);
     }

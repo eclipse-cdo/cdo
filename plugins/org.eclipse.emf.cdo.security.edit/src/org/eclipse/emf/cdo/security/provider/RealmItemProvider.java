@@ -75,11 +75,10 @@ public class RealmItemProvider extends SecurityElementItemProvider
    */
   protected void addAllPermissionsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Realm_allPermissions_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_Realm_allPermissions_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.REALM__ALL_PERMISSIONS, false, false, false, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Realm_allPermissions_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Realm_allPermissions_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.REALM__ALL_PERMISSIONS, false, false, false, null, null, null));
   }
 
   /**
@@ -90,12 +89,10 @@ public class RealmItemProvider extends SecurityElementItemProvider
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Realm_name_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_Realm_name_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.REALM__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
-            null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Realm_name_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Realm_name_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.REALM__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -106,12 +103,10 @@ public class RealmItemProvider extends SecurityElementItemProvider
    */
   protected void addDefaultAccessPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Realm_defaultAccess_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_Realm_defaultAccess_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.REALM__DEFAULT_ACCESS, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Realm_defaultAccess_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Realm_defaultAccess_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.REALM__DEFAULT_ACCESS, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -123,11 +118,10 @@ public class RealmItemProvider extends SecurityElementItemProvider
    */
   protected void addDefaultUserDirectoryPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Realm_defaultUserDirectory_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_Realm_defaultUserDirectory_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.REALM__DEFAULT_USER_DIRECTORY, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Realm_defaultUserDirectory_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Realm_defaultUserDirectory_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.REALM__DEFAULT_USER_DIRECTORY, true, false, true, null, null, null));
   }
 
   /**
@@ -139,12 +133,11 @@ public class RealmItemProvider extends SecurityElementItemProvider
    */
   protected void addDefaultGroupDirectoryPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Realm_defaultGroupDirectory_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_Realm_defaultGroupDirectory_feature", //$NON-NLS-1$//$NON-NLS-2$
-                "_UI_Realm_type"), //$NON-NLS-1$
-            SecurityPackage.Literals.REALM__DEFAULT_GROUP_DIRECTORY, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Realm_defaultGroupDirectory_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Realm_defaultGroupDirectory_feature", //$NON-NLS-1$//$NON-NLS-2$
+            "_UI_Realm_type"), //$NON-NLS-1$
+        SecurityPackage.Literals.REALM__DEFAULT_GROUP_DIRECTORY, true, false, true, null, null, null));
   }
 
   /**
@@ -156,11 +149,10 @@ public class RealmItemProvider extends SecurityElementItemProvider
    */
   protected void addDefaultRoleDirectoryPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Realm_defaultRoleDirectory_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_Realm_defaultRoleDirectory_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.REALM__DEFAULT_ROLE_DIRECTORY, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Realm_defaultRoleDirectory_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Realm_defaultRoleDirectory_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.REALM__DEFAULT_ROLE_DIRECTORY, true, false, true, null, null, null));
   }
 
   /**
@@ -270,17 +262,13 @@ public class RealmItemProvider extends SecurityElementItemProvider
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors
-        .add(createChildParameter(SecurityPackage.Literals.REALM__ITEMS, SecurityFactory.eINSTANCE.createDirectory()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.REALM__ITEMS, SecurityFactory.eINSTANCE.createDirectory()));
 
-    newChildDescriptors
-        .add(createChildParameter(SecurityPackage.Literals.REALM__ITEMS, SecurityFactory.eINSTANCE.createRole()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.REALM__ITEMS, SecurityFactory.eINSTANCE.createRole()));
 
-    newChildDescriptors
-        .add(createChildParameter(SecurityPackage.Literals.REALM__ITEMS, SecurityFactory.eINSTANCE.createGroup()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.REALM__ITEMS, SecurityFactory.eINSTANCE.createGroup()));
 
-    newChildDescriptors
-        .add(createChildParameter(SecurityPackage.Literals.REALM__ITEMS, SecurityFactory.eINSTANCE.createUser()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.REALM__ITEMS, SecurityFactory.eINSTANCE.createUser()));
   }
 
 }

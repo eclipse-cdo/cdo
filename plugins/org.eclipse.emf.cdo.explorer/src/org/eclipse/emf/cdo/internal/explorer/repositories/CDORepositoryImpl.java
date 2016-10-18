@@ -627,27 +627,26 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
           {
             counters = new HashMap<EClass, AtomicInteger>();
             CDOView view = CDOUtil.getView(object);
-            view.getSession().getRevisionManager().handleRevisions(null, null, false, CDOBranchPoint.UNSPECIFIED_DATE,
-                false, new CDORevisionHandler()
+            view.getSession().getRevisionManager().handleRevisions(null, null, false, CDOBranchPoint.UNSPECIFIED_DATE, false, new CDORevisionHandler()
+            {
+              public boolean handleRevision(CDORevision revision)
+              {
+                EClass eClass = revision.getEClass();
+                AtomicInteger counter = getCounter(eClass);
+
+                String id = revision.getID().toString();
+                id = id.substring(0, id.length() - "A".length());
+                id = id.substring(id.lastIndexOf('_') + 1);
+
+                int counterValue = Integer.parseInt(id);
+                if (counterValue > counter.get())
                 {
-                  public boolean handleRevision(CDORevision revision)
-                  {
-                    EClass eClass = revision.getEClass();
-                    AtomicInteger counter = getCounter(eClass);
+                  counter.set(counterValue);
+                }
 
-                    String id = revision.getID().toString();
-                    id = id.substring(0, id.length() - "A".length());
-                    id = id.substring(id.lastIndexOf('_') + 1);
-
-                    int counterValue = Integer.parseInt(id);
-                    if (counterValue > counter.get())
-                    {
-                      counter.set(counterValue);
-                    }
-
-                    return true;
-                  }
-                });
+                return true;
+              }
+            });
           }
 
           EClass eClass = object.eClass();
@@ -665,8 +664,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
           AtomicInteger counter = getCounter(eClass);
 
           String str = "_" + counter.incrementAndGet();
-          String id = type + "____________________________________".substring(0, 22 - type.length() - str.length())
-              + str + "A";
+          String id = type + "____________________________________".substring(0, 22 - type.length() - str.length()) + str + "A";
 
           if ("_CDOResource_________5A".equals(id))
           {

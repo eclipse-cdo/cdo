@@ -357,8 +357,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
   public String toString()
   {
     String fmt = "CDOPackageUnit[id={0}, state={1}, type={2}, originalType={3}, timeStamp={4}]"; //$NON-NLS-1$
-    return MessageFormat.format(fmt, getID(), getState(), getType(), getOriginalType(),
-        CDOCommonUtil.formatTimeStamp(getTimeStamp()));
+    return MessageFormat.format(fmt, getID(), getState(), getType(), getOriginalType(), CDOCommonUtil.formatTimeStamp(getTimeStamp()));
   }
 
   private void initPackageInfos(EPackage ePackage, List<InternalCDOPackageInfo> result)

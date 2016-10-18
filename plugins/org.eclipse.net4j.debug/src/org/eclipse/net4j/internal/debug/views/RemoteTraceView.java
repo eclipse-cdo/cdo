@@ -175,8 +175,7 @@ public class RemoteTraceView extends ViewPart
 
     clearAction.setText(Messages.getString("RemoteTraceView.9")); //$NON-NLS-1$
     clearAction.setToolTipText(Messages.getString("RemoteTraceView.10")); //$NON-NLS-1$
-    clearAction.setImageDescriptor(
-        PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
+    clearAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
 
     doubleClickAction = new Action()
     {

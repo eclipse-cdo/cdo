@@ -819,8 +819,7 @@ public interface IDBDeltaVisitor
     {
       DBDeltaWithProperties parentCopy = getParentCopy(delta);
       @SuppressWarnings({ "rawtypes", "unchecked" })
-      DBPropertyDelta<?> copy = new DBPropertyDelta(parentCopy, delta.getName(), delta.getType(), delta.getValue(),
-          delta.getOldValue());
+      DBPropertyDelta<?> copy = new DBPropertyDelta(parentCopy, delta.getName(), delta.getType(), delta.getValue(), delta.getOldValue());
       parentCopy.addPropertyDelta(copy);
     }
 
@@ -849,8 +848,8 @@ public interface IDBDeltaVisitor
         return (T)result.getTableDelta(parent.getParent().getName()).getIndexDelta(parent.getName());
 
       case INDEX_FIELD:
-        return (T)result.getTableDelta(parent.getParent().getParent().getName())
-            .getIndexDelta(parent.getParent().getName()).getIndexFieldDelta(parent.getName());
+        return (T)result.getTableDelta(parent.getParent().getParent().getName()).getIndexDelta(parent.getParent().getName())
+            .getIndexFieldDelta(parent.getName());
 
       default:
         throw new IllegalStateException("Illegal delta type: " + deltaType);

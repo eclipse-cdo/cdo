@@ -62,8 +62,8 @@ public class RepositoryDeleteHandler extends AbstractRepositoryHandler
       String plural = size == 1 ? "" : "s";
       String message = size == 1 ? "is 1" : "are " + size;
 
-      if (MessageDialog.openQuestion(shell, "Existing Checkouts", "There " + message + " existing checkout" + plural
-          + ".\n\n" + "Are you sure you want to delete the checkout" + plural + ", too?"))
+      if (MessageDialog.openQuestion(shell, "Existing Checkouts",
+          "There " + message + " existing checkout" + plural + ".\n\n" + "Are you sure you want to delete the checkout" + plural + ", too?"))
       {
         DeleteElementsDialog dialog = new DeleteElementsDialog(shell, checkouts.toArray(new AbstractElement[size]));
         if (dialog.open() == DeleteElementsDialog.OK)

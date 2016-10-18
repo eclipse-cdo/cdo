@@ -37,8 +37,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 @Requires(ModelConfig.CAPABILITY_LEGACY)
 public class LegacyDynamicPackageTest extends AbstractCDOTest
 {
-  private final EPackage stuffPackage = EPackage.Registry.INSTANCE
-      .getEPackage("http://www.eclipse.org/cdo/tests/schema/stuff/1.0");
+  private final EPackage stuffPackage = EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/cdo/tests/schema/stuff/1.0");
 
   private final EFactory originalStuffFactory = stuffPackage.getEFactoryInstance();
 

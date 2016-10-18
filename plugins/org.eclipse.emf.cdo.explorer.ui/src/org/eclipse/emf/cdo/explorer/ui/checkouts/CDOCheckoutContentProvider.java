@@ -115,8 +115,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
 
   private static final Set<Object> LOADING_OBJECTS = new HashSet<Object>();
 
-  private static final Method GET_CHILDREN_FEATURES_METHOD = getMethod(ItemProviderAdapter.class, "getChildrenFeatures",
-      Object.class);
+  private static final Method GET_CHILDREN_FEATURES_METHOD = getMethod(ItemProviderAdapter.class, "getChildrenFeatures", Object.class);
 
   private static final Method FIND_ITEM_METHOD = getMethod(StructuredViewer.class, "findItem", Object.class);
 
@@ -419,8 +418,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
           {
             try
             {
-              ITreeItemContentProvider provider = (ITreeItemContentProvider)stateManager.adapt(object,
-                  ITreeItemContentProvider.class);
+              ITreeItemContentProvider provider = (ITreeItemContentProvider)stateManager.adapt(object, ITreeItemContentProvider.class);
               if (provider instanceof ItemProviderAdapter)
               {
                 return hasChildren(cdoObject, revision, (ItemProviderAdapter)provider);
@@ -560,8 +558,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
                 CDOView view = cdoObject.cdoView();
                 CDORevisionManager revisionManager = view.getSession().getRevisionManager();
 
-                List<CDORevision> revisions = revisionManager.getRevisions(missingIDs, view, CDORevision.UNCHUNKED,
-                    CDORevision.DEPTH_NONE, true);
+                List<CDORevision> revisions = revisionManager.getRevisions(missingIDs, view, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
                 loadedRevisions.addAll(revisions);
               }
 
@@ -717,8 +714,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
         {
           try
           {
-            ITreeItemContentProvider provider = (ITreeItemContentProvider)stateManager.adapt(object,
-                ITreeItemContentProvider.class);
+            ITreeItemContentProvider provider = (ITreeItemContentProvider)stateManager.adapt(object, ITreeItemContentProvider.class);
             if (provider instanceof ItemProviderAdapter)
             {
               determineChildRevisions(cdoObject, revision, (ItemProviderAdapter)provider, loadedRevisions, missingIDs);
@@ -946,8 +942,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     return (InternalCDOObject)CDOUtil.getCDOObject(eObject, false);
   }
 
-  private static boolean hasChildren(InternalCDOObject cdoObject, InternalCDORevision revision,
-      ItemProviderAdapter provider) throws Exception
+  private static boolean hasChildren(InternalCDOObject cdoObject, InternalCDORevision revision, ItemProviderAdapter provider) throws Exception
   {
     for (EStructuralFeature feature : getChildrenFeatures(cdoObject, provider))
     {
@@ -967,8 +962,8 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     return false;
   }
 
-  private static void determineChildRevisions(InternalCDOObject cdoObject, InternalCDORevision revision,
-      ItemProviderAdapter provider, List<CDORevision> loadedRevisions, List<CDOID> missingIDs) throws Exception
+  private static void determineChildRevisions(InternalCDOObject cdoObject, InternalCDORevision revision, ItemProviderAdapter provider,
+      List<CDORevision> loadedRevisions, List<CDOID> missingIDs) throws Exception
   {
     InternalCDOView view = cdoObject.cdoView();
     InternalCDORevisionCache revisionCache = view.getSession().getRevisionManager().getCache();
@@ -991,8 +986,8 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     }
   }
 
-  private static void determineChildRevision(List<CDORevision> loadedRevisions, List<CDOID> missingIDs,
-      InternalCDOView view, InternalCDORevisionCache cache, Object object)
+  private static void determineChildRevision(List<CDORevision> loadedRevisions, List<CDOID> missingIDs, InternalCDOView view, InternalCDORevisionCache cache,
+      Object object)
   {
     if (object instanceof CDOID)
     {
@@ -1010,8 +1005,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
   }
 
   @SuppressWarnings("unchecked")
-  private static Collection<? extends EStructuralFeature> getChildrenFeatures(InternalCDOObject cdoObject,
-      ItemProviderAdapter provider) throws Exception
+  private static Collection<? extends EStructuralFeature> getChildrenFeatures(InternalCDOObject cdoObject, ItemProviderAdapter provider) throws Exception
   {
     return (Collection<? extends EStructuralFeature>)GET_CHILDREN_FEATURES_METHOD.invoke(provider, cdoObject);
   }

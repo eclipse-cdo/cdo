@@ -42,8 +42,8 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ListConstructionItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+public class ListConstructionItemProvider extends ItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
     ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
@@ -186,59 +186,46 @@ public class ListConstructionItemProvider extends ItemProviderAdapter implements
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createBooleanValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createBooleanValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createByteValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createByteValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createShortValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createShortValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createIntValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createIntValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createLongValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createLongValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createFloatValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createFloatValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createDoubleValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createDoubleValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createCharValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createCharValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createStringValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createStringValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createFunctionInvocation()));
+    newChildDescriptors
+        .add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createFunctionInvocation()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createMemberInvocation()));
+    newChildDescriptors
+        .add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createMemberInvocation()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createStaticAccess()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createStaticAccess()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createMemberAccess()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createMemberAccess()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createContextAccess()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createContextAccess()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createContainedObject()));
+    newChildDescriptors
+        .add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createContainedObject()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createLinkedObject()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createLinkedObject()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createLinkedExpression()));
+    newChildDescriptors
+        .add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createLinkedExpression()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS,
-        ExpressionsFactory.eINSTANCE.createListConstruction()));
+    newChildDescriptors
+        .add(createChildParameter(ExpressionsPackage.Literals.LIST_CONSTRUCTION__ELEMENTS, ExpressionsFactory.eINSTANCE.createListConstruction()));
   }
 
   /**

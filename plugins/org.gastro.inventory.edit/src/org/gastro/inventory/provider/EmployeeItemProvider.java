@@ -39,8 +39,8 @@ import java.util.List;
  *
  * @generated
  */
-public class EmployeeItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class EmployeeItemProvider extends ItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -76,12 +76,9 @@ public class EmployeeItemProvider extends ItemProviderAdapter implements IEditin
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Employee_name_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_Employee_name_feature", "_UI_Employee_type"),
-            InventoryPackage.Literals.EMPLOYEE__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-            null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Employee_name_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Employee_name_feature", "_UI_Employee_type"),
+        InventoryPackage.Literals.EMPLOYEE__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**

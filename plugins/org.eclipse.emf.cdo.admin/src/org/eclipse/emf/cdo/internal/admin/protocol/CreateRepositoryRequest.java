@@ -29,8 +29,7 @@ public class CreateRepositoryRequest extends RequestWithConfirmation<Boolean>
 
   private Map<String, Object> properties;
 
-  public CreateRepositoryRequest(CDOAdminClientProtocol protocol, String name, String type,
-      Map<String, Object> properties)
+  public CreateRepositoryRequest(CDOAdminClientProtocol protocol, String name, String type, Map<String, Object> properties)
   {
     super(protocol, CDOAdminProtocolConstants.SIGNAL_CREATE_REPOSITORY);
     this.name = name;

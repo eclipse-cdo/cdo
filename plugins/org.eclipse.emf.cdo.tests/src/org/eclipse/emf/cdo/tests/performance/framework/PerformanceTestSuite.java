@@ -43,8 +43,7 @@ public abstract class PerformanceTestSuite extends ConfigTestSuite
     return runsPerTestCase;
   }
 
-  protected PerformanceRecord createPerformanceRecord(IScenario scenario, String testName, String testCaseName,
-      int runs)
+  protected PerformanceRecord createPerformanceRecord(IScenario scenario, String testName, String testCaseName, int runs)
   {
     PerformanceRecord performanceRecord = new PerformanceRecord(scenario, testName, testCaseName, runs);
     performanceRecords.add(performanceRecord);

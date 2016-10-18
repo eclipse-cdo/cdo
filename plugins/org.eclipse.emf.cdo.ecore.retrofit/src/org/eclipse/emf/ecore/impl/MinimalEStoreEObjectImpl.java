@@ -24,304 +24,260 @@ import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
-
 /**
- * A minimal abstract implementation of '<em><b>EObject</b></em>' that delegates to a {@link org.eclipse.emf.ecore.InternalEObject.EStore store}.
- * It's extends {@link MinimalEObjectImpl} and does <b>not</b> introduce any additional fields.
- * Clients extending this class must specialize {@link #eStore()}.
+ * A minimal abstract implementation of '<em><b>EObject</b></em>' that delegates
+ * to a {@link org.eclipse.emf.ecore.InternalEObject.EStore store}. It's extends
+ * {@link MinimalEObjectImpl} and does <b>not</b> introduce any additional
+ * fields. Clients extending this class must specialize {@link #eStore()}.
+ * 
  * @since 2.9
  */
 @SuppressWarnings("javadoc")
-public abstract class MinimalEStoreEObjectImpl extends MinimalEObjectImpl
-{
-  private static final EObservableAdapterList.Listener ADAPTERS_LISTENER = new EObservableAdapterList.Listener()
-  {
-    public void added(Notifier notifier, Adapter adapter)
-    {
-      MinimalEStoreEObjectImpl object = (MinimalEStoreEObjectImpl) notifier;
-      object.eAdapterAdded(adapter);
-    }
+public abstract class MinimalEStoreEObjectImpl extends MinimalEObjectImpl {
+	private static final EObservableAdapterList.Listener ADAPTERS_LISTENER = new EObservableAdapterList.Listener() {
+		public void added(Notifier notifier, Adapter adapter) {
+			MinimalEStoreEObjectImpl object = (MinimalEStoreEObjectImpl) notifier;
+			object.eAdapterAdded(adapter);
+		}
 
-    public void removed(Notifier notifier, Adapter adapter)
-    {
-      MinimalEStoreEObjectImpl object = (MinimalEStoreEObjectImpl) notifier;
-      object.eAdapterRemoved(adapter);
-    }
-  };
+		public void removed(Notifier notifier, Adapter adapter) {
+			MinimalEStoreEObjectImpl object = (MinimalEStoreEObjectImpl) notifier;
+			object.eAdapterRemoved(adapter);
+		}
+	};
 
-  /**
-   * Creates a store-based EObject.
-   */
-  public MinimalEStoreEObjectImpl()
-  {
-    super();
-  }
+	/**
+	 * Creates a store-based EObject.
+	 */
+	public MinimalEStoreEObjectImpl() {
+		super();
+	}
 
-  /**
-   * Creates a store-based EObject.
-   */
-  public MinimalEStoreEObjectImpl(EClass eClass)
-  {
-    super();
-    eSetClass(eClass);
-  }
+	/**
+	 * Creates a store-based EObject.
+	 */
+	public MinimalEStoreEObjectImpl(EClass eClass) {
+		super();
+		eSetClass(eClass);
+	}
 
-  @Override
-  public abstract InternalEObject.EStore eStore();
+	@Override
+	public abstract InternalEObject.EStore eStore();
 
-  protected boolean eIsCaching()
-  {
-    return true;
-  }
+	protected boolean eIsCaching() {
+		return true;
+	}
 
-  @Override
-Object[] eDynamicSettings()
-  {
-    Object[] settings = eBasicSettings();
-    if (settings == null)
-    {
-      eSettings();
-      settings = eBasicSettings();
-    }
-    return settings;
-  }
+	@Override
+	Object[] eDynamicSettings() {
+		Object[] settings = eBasicSettings();
+		if (settings == null) {
+			eSettings();
+			settings = eBasicSettings();
+		}
+		return settings;
+	}
 
-  @Override
-  public Object dynamicGet(int dynamicFeatureID)
-  {
-    Object[] eSettings = eDynamicSettings();
-    Object result = eSettings[dynamicFeatureID];
-    if (result == null)
-    {
-      EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-      if (!eStructuralFeature.isTransient())
-      {
-        if (FeatureMapUtil.isFeatureMap(eStructuralFeature))
-        {
-          eSettings[dynamicFeatureID] = result = createFeatureMap(eStructuralFeature);
-        }
-        else if (eStructuralFeature.isMany())
-        {
-          eSettings[dynamicFeatureID] = result = createList(eStructuralFeature);
-        }
-        else
-        {
-          result = eStore().get(this, eStructuralFeature, InternalEObject.EStore.NO_INDEX);
-          if (eIsCaching())
-          {
-            eSettings[dynamicFeatureID] = result;
-          }
-        }
-      }
-    }
-    return result;
-  }
+	@Override
+	public Object dynamicGet(int dynamicFeatureID) {
+		Object[] eSettings = eDynamicSettings();
+		Object result = eSettings[dynamicFeatureID];
+		if (result == null) {
+			EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
+			if (!eStructuralFeature.isTransient()) {
+				if (FeatureMapUtil.isFeatureMap(eStructuralFeature)) {
+					eSettings[dynamicFeatureID] = result = createFeatureMap(eStructuralFeature);
+				} else if (eStructuralFeature.isMany()) {
+					eSettings[dynamicFeatureID] = result = createList(eStructuralFeature);
+				} else {
+					result = eStore().get(this, eStructuralFeature, InternalEObject.EStore.NO_INDEX);
+					if (eIsCaching()) {
+						eSettings[dynamicFeatureID] = result;
+					}
+				}
+			}
+		}
+		return result;
+	}
 
-  @Override
-  public void dynamicSet(int dynamicFeatureID, Object value)
-  {
-    Object[] eSettings = eDynamicSettings();
-    EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-    if (eStructuralFeature.isTransient())
-    {
-      eSettings[dynamicFeatureID] = value;
-    }
-    else
-    {
-      eStore().set(this, eStructuralFeature, InternalEObject.EStore.NO_INDEX, value);
-      if (eIsCaching())
-      {
-        eSettings[dynamicFeatureID] = value;
-      }
-    }
-  }
+	@Override
+	public void dynamicSet(int dynamicFeatureID, Object value) {
+		Object[] eSettings = eDynamicSettings();
+		EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
+		if (eStructuralFeature.isTransient()) {
+			eSettings[dynamicFeatureID] = value;
+		} else {
+			eStore().set(this, eStructuralFeature, InternalEObject.EStore.NO_INDEX, value);
+			if (eIsCaching()) {
+				eSettings[dynamicFeatureID] = value;
+			}
+		}
+	}
 
-  @Override
-  public void dynamicUnset(int dynamicFeatureID)
-  {
-    Object[] eSettings = eDynamicSettings();
-    EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-    if (eStructuralFeature.isTransient())
-    {
-      eSettings[dynamicFeatureID] = null;
-    }
-    else
-    {
-      eStore().unset(this, eStructuralFeature);
-      eSettings[dynamicFeatureID] = null;
-    }
-  }
+	@Override
+	public void dynamicUnset(int dynamicFeatureID) {
+		Object[] eSettings = eDynamicSettings();
+		EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
+		if (eStructuralFeature.isTransient()) {
+			eSettings[dynamicFeatureID] = null;
+		} else {
+			eStore().unset(this, eStructuralFeature);
+			eSettings[dynamicFeatureID] = null;
+		}
+	}
 
-  @Override
-  protected boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature)
-  {
-    return dynamicFeatureID < 0 ? eOpenIsSet(eFeature) : eFeature.isTransient() ? eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(), dynamicFeatureID)
-        : eStore().isSet(this, eFeature);
-  }
+	@Override
+	protected boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature) {
+		return dynamicFeatureID < 0 ? eOpenIsSet(eFeature)
+				: eFeature.isTransient() ? eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(), dynamicFeatureID)
+						: eStore().isSet(this, eFeature);
+	}
 
-  @SuppressWarnings("nls")
-  protected EList<?> createList(final EStructuralFeature eStructuralFeature)
-  {
-    final EClassifier eType = eStructuralFeature.getEType();
-    if (eType.getInstanceClassName() == "java.util.Map$Entry")
-    {
-      class EStoreEcoreEMap extends EcoreEMap<Object, Object>
-      {
-        private static final long serialVersionUID = 1L;
+	@SuppressWarnings("nls")
+	protected EList<?> createList(final EStructuralFeature eStructuralFeature) {
+		final EClassifier eType = eStructuralFeature.getEType();
+		if (eType.getInstanceClassName() == "java.util.Map$Entry") {
+			class EStoreEcoreEMap extends EcoreEMap<Object, Object> {
+				private static final long serialVersionUID = 1L;
 
-        public EStoreEcoreEMap()
-        {
-          super((EClass) eType, BasicEMap.Entry.class, null);
-          delegateEList = new EStoreEObjectImpl.BasicEStoreEList<BasicEMap.Entry<Object, Object>>(MinimalEStoreEObjectImpl.this, eStructuralFeature)
-          {
-            private static final long serialVersionUID = 1L;
+				public EStoreEcoreEMap() {
+					super((EClass) eType, BasicEMap.Entry.class, null);
+					delegateEList = new EStoreEObjectImpl.BasicEStoreEList<BasicEMap.Entry<Object, Object>>(
+							MinimalEStoreEObjectImpl.this, eStructuralFeature) {
+						private static final long serialVersionUID = 1L;
 
-            @Override
-            protected void didAdd(int index, BasicEMap.Entry<Object, Object> newObject)
-            {
-              EStoreEcoreEMap.this.doPut(newObject);
-            }
+						@Override
+						protected void didAdd(int index, BasicEMap.Entry<Object, Object> newObject) {
+							EStoreEcoreEMap.this.doPut(newObject);
+						}
 
-            @Override
-            protected void didSet(int index, BasicEMap.Entry<Object, Object> newObject, BasicEMap.Entry<Object, Object> oldObject)
-            {
-              didRemove(index, oldObject);
-              didAdd(index, newObject);
-            }
+						@Override
+						protected void didSet(int index, BasicEMap.Entry<Object, Object> newObject,
+								BasicEMap.Entry<Object, Object> oldObject) {
+							didRemove(index, oldObject);
+							didAdd(index, newObject);
+						}
 
-            @Override
-            protected void didRemove(int index, BasicEMap.Entry<Object, Object> oldObject)
-            {
-              EStoreEcoreEMap.this.doRemove(oldObject);
-            }
+						@Override
+						protected void didRemove(int index, BasicEMap.Entry<Object, Object> oldObject) {
+							EStoreEcoreEMap.this.doRemove(oldObject);
+						}
 
-            @Override
-            protected void didClear(int size, Object[] oldObjects)
-            {
-              EStoreEcoreEMap.this.doClear();
-            }
+						@Override
+						protected void didClear(int size, Object[] oldObjects) {
+							EStoreEcoreEMap.this.doClear();
+						}
 
-            @Override
-            protected void didMove(int index, BasicEMap.Entry<Object, Object> movedObject, int oldIndex)
-            {
-              EStoreEcoreEMap.this.doMove(movedObject);
-            }
-          };
-          size = delegateEList.size();
-        }
-      }
-      return new EStoreEcoreEMap();
-    }
-    return new EStoreEObjectImpl.BasicEStoreEList<Object>(this, eStructuralFeature);
-  }
+						@Override
+						protected void didMove(int index, BasicEMap.Entry<Object, Object> movedObject, int oldIndex) {
+							EStoreEcoreEMap.this.doMove(movedObject);
+						}
+					};
+					size = delegateEList.size();
+				}
+			}
+			return new EStoreEcoreEMap();
+		}
+		return new EStoreEObjectImpl.BasicEStoreEList<Object>(this, eStructuralFeature);
+	}
 
-  protected FeatureMap createFeatureMap(EStructuralFeature eStructuralFeature)
-  {
-    return new EStoreEObjectImpl.EStoreFeatureMap(this, eStructuralFeature, eStore());
-  }
+	protected FeatureMap createFeatureMap(EStructuralFeature eStructuralFeature) {
+		return new EStoreEObjectImpl.EStoreFeatureMap(this, eStructuralFeature, eStore());
+	}
 
-  /**
-   * Returns the container as cached by {@link MinimalEObjectImpl#eInternalContainer()}.
-   */
-  protected InternalEObject eBasicInternalContainer()
-  {
-    return super.eInternalContainer();
-  }
+	/**
+	 * Returns the container as cached by
+	 * {@link MinimalEObjectImpl#eInternalContainer()}.
+	 */
+	protected InternalEObject eBasicInternalContainer() {
+		return super.eInternalContainer();
+	}
 
-  /**
-   * Returns the container as {@link InternalEObject.EStore#getContainer(InternalEObject) provided} by the store.
-   */
-  @Override
-  public InternalEObject eInternalContainer()
-  {
-    return eStore().getContainer(this);
-  }
+	/**
+	 * Returns the container as
+	 * {@link InternalEObject.EStore#getContainer(InternalEObject) provided} by
+	 * the store.
+	 */
+	@Override
+	public InternalEObject eInternalContainer() {
+		return eStore().getContainer(this);
+	}
 
-  /**
-   * Returns the container feature ID as cached by {@link MinimalEObjectImpl#eContainerFeatureID()}.
-   */
-  protected int eBasicContainerFeatureID()
-  {
-    return super.eContainerFeatureID();
-  }
+	/**
+	 * Returns the container feature ID as cached by
+	 * {@link MinimalEObjectImpl#eContainerFeatureID()}.
+	 */
+	protected int eBasicContainerFeatureID() {
+		return super.eContainerFeatureID();
+	}
 
-  /**
-   * Returns the container feature ID as computed from the container feature {@link InternalEObject.EStore#getContainingFeature(InternalEObject) provided} by the store.
-   */
-  @Override
-  public int eContainerFeatureID()
-  {
-    EObject eContainer = eInternalContainer();
-    if (eContainer != null)
-    {
-      EStructuralFeature eContainingFeature = eStore().getContainingFeature(this);
-      if (eContainingFeature instanceof EReference)
-      {
-        EReference eContainingReference = (EReference) eContainingFeature;
-        EReference eOpposite = eContainingReference.getEOpposite();
-        if (eOpposite != null)
-        {
-          return eClass().getFeatureID(eOpposite);
-        }
-      }
+	/**
+	 * Returns the container feature ID as computed from the container feature
+	 * {@link InternalEObject.EStore#getContainingFeature(InternalEObject)
+	 * provided} by the store.
+	 */
+	@Override
+	public int eContainerFeatureID() {
+		EObject eContainer = eInternalContainer();
+		if (eContainer != null) {
+			EStructuralFeature eContainingFeature = eStore().getContainingFeature(this);
+			if (eContainingFeature instanceof EReference) {
+				EReference eContainingReference = (EReference) eContainingFeature;
+				EReference eOpposite = eContainingReference.getEOpposite();
+				if (eOpposite != null) {
+					return eClass().getFeatureID(eOpposite);
+				}
+			}
 
-      return EOPPOSITE_FEATURE_BASE - eContainer.eClass().getFeatureID(eContainingFeature);
-    }
+			return EOPPOSITE_FEATURE_BASE - eContainer.eClass().getFeatureID(eContainingFeature);
+		}
 
-    return 0;
-  }
+		return 0;
+	}
 
-  @Override
-  protected int eStaticFeatureCount()
-  {
-    return 0;
-  }
+	@Override
+	protected int eStaticFeatureCount() {
+		return 0;
+	}
 
-  @Override
-  public int eDerivedStructuralFeatureID(EStructuralFeature eStructuralFeature)
-  {
-    return eClass().getFeatureID(eStructuralFeature);
-  }
+	@Override
+	public int eDerivedStructuralFeatureID(EStructuralFeature eStructuralFeature) {
+		return eClass().getFeatureID(eStructuralFeature);
+	}
 
-  @Override
-  protected void eBasicSetAdapterArray(Adapter[] adapters)
-  {
-    Adapter[] oldAdapters = eBasicAdapterArray();
-    if (adapters == null || adapters.length == 0)
-    {
-      adapters = null;// Optimize possibly empty array
-      if (oldAdapters != null) // Can't be empty array because of the optimization above
-      {
-        ((EObservableAdapterList) eAdapters()).removeListener(ADAPTERS_LISTENER);
-      }
-    }
-    else
-    {
-      if (oldAdapters == null) // Can't be empty array because of the optimization above
-      {
-        ((EObservableAdapterList) eAdapters()).addListener(ADAPTERS_LISTENER);
-      }
-    }
-    super.eBasicSetAdapterArray(adapters);
-  }
+	@Override
+	protected void eBasicSetAdapterArray(Adapter[] adapters) {
+		Adapter[] oldAdapters = eBasicAdapterArray();
+		if (adapters == null || adapters.length == 0) {
+			adapters = null;// Optimize possibly empty array
+			if (oldAdapters != null) // Can't be empty array because of the
+										// optimization above
+			{
+				((EObservableAdapterList) eAdapters()).removeListener(ADAPTERS_LISTENER);
+			}
+		} else {
+			if (oldAdapters == null) // Can't be empty array because of the
+										// optimization above
+			{
+				((EObservableAdapterList) eAdapters()).addListener(ADAPTERS_LISTENER);
+			}
+		}
+		super.eBasicSetAdapterArray(adapters);
+	}
 
-  @Override
-protected EObservableAdapterList.Listener[] eBasicAdapterListeners()
-  {
-    throw new UnsupportedOperationException();
-  }
+	@Override
+	protected EObservableAdapterList.Listener[] eBasicAdapterListeners() {
+		throw new UnsupportedOperationException();
+	}
 
-  @Override
-protected void eBasicSetAdapterListeners(EObservableAdapterList.Listener[] eAdapterListeners)
-  {
-    throw new UnsupportedOperationException();
-  }
+	@Override
+	protected void eBasicSetAdapterListeners(EObservableAdapterList.Listener[] eAdapterListeners) {
+		throw new UnsupportedOperationException();
+	}
 
-  protected void eAdapterAdded(Adapter adapter)
-  {
-  }
+	protected void eAdapterAdded(Adapter adapter) {
+	}
 
-  protected void eAdapterRemoved(Adapter adapter)
-  {
-  }
+	protected void eAdapterRemoved(Adapter adapter) {
+	}
 }

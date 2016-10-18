@@ -42,8 +42,7 @@ public final class AuthenticationUtil
    * Wrap an {@code operation} to make an authentication protocol {@linkplain #getAuthenticationProtocol() available}
    * to the thread that invokes it, for the duration of the {@code operation}'s execution.
    */
-  public static <V> Callable<V> authenticatingOperation(IAuthenticationProtocol authenticationProtocol,
-      final Callable<V> operation)
+  public static <V> Callable<V> authenticatingOperation(IAuthenticationProtocol authenticationProtocol, final Callable<V> operation)
   {
     return new AuthenticatingOperation<V>(authenticationProtocol)
     {

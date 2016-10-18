@@ -25,8 +25,7 @@ import java.io.IOException;
  */
 public class UnsubscribeRemoteSessionsIndication extends CDOServerReadIndication
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      UnsubscribeRemoteSessionsIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, UnsubscribeRemoteSessionsIndication.class);
 
   public UnsubscribeRemoteSessionsIndication(CDOServerProtocol protocol)
   {

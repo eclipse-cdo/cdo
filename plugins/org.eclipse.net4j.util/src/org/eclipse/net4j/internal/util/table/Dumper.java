@@ -21,8 +21,8 @@ public class Dumper
 {
   public static final Dumper ASCII = new Dumper();
 
-  public static final Dumper UTF8 = new Dumper('\u2500', '\u2534', '\u252c', '\u253c', '\u2518', '\u2510', '\u2524',
-      '\u2502', '\u251c', '\u2514', '\u250c', "\n", " ");
+  public static final Dumper UTF8 = new Dumper('\u2500', '\u2534', '\u252c', '\u253c', '\u2518', '\u2510', '\u2524', '\u2502', '\u251c', '\u2514', '\u250c',
+      "\n", " ");
 
   public final char borderLeftRight;
 
@@ -52,9 +52,8 @@ public class Dumper
 
   public final String paddingBorder;
 
-  public Dumper(char borderLeftRight, char borderLeftRightUp, char borderLeftRightDown, char borderLeftRightUpDown,
-      char borderLeftUp, char borderLeftDown, char borderLeftUpDown, char borderUpDown, char borderUpDownRight,
-      char borderUpRight, char borderDownRight, String newLine, String padding)
+  public Dumper(char borderLeftRight, char borderLeftRightUp, char borderLeftRightDown, char borderLeftRightUpDown, char borderLeftUp, char borderLeftDown,
+      char borderLeftUpDown, char borderUpDown, char borderUpDownRight, char borderUpRight, char borderDownRight, String newLine, String padding)
   {
     this.borderLeftRight = borderLeftRight;
     this.borderLeftRightUp = borderLeftRightUp;

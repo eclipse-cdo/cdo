@@ -89,14 +89,12 @@ public class Bugzilla_377173_Test extends AbstractCDOTest
   private static class CommitWaiter implements IRepository.WriteAccessHandler
   {
 
-    public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
-        OMMonitor monitor) throws RuntimeException
+    public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
     {
       sleep(2000);
     }
 
-    public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext,
-        OMMonitor monitor)
+    public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
     {
     }
 

@@ -30,11 +30,9 @@ import java.util.Set;
  */
 public class ConfirmationDialog extends MessageDialog
 {
-  public ConfirmationDialog(Shell shell, String title, String message, Set<Confirmation> acceptableResponses,
-      Confirmation suggestedResponse)
+  public ConfirmationDialog(Shell shell, String title, String message, Set<Confirmation> acceptableResponses, Confirmation suggestedResponse)
   {
-    this(shell, title, message, getButtonLabels(inOrder(acceptableResponses)),
-        inOrder(acceptableResponses).indexOf(suggestedResponse));
+    this(shell, title, message, getButtonLabels(inOrder(acceptableResponses)), inOrder(acceptableResponses).indexOf(suggestedResponse));
   }
 
   private ConfirmationDialog(Shell shell, String title, String message, String[] buttonLabels, int defaultIndex)
@@ -42,8 +40,7 @@ public class ConfirmationDialog extends MessageDialog
     super(shell, title, null, message, MessageDialog.CONFIRM, buttonLabels, defaultIndex);
   }
 
-  public static Confirmation openConfirm(Shell shell, String title, String message,
-      Set<Confirmation> acceptableResponses, Confirmation suggestedResponse)
+  public static Confirmation openConfirm(Shell shell, String title, String message, Set<Confirmation> acceptableResponses, Confirmation suggestedResponse)
   {
     List<Confirmation> inOrder = inOrder(acceptableResponses);
     String[] buttonLabels = getButtonLabels(inOrder);

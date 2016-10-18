@@ -70,8 +70,8 @@ public class DawnBasicGMFUITest extends AbstractCDOTest
   public void testOpenEditor() throws PartInitException
   {
     final CDOSession session = openSession();
-    DawnAcoreDiagramEditorUtil.createDiagram(URI.createURI("dawn://repo1//test.acore_diagram"),
-        URI.createURI("cdo://repo1/test.acore"), new NullProgressMonitor());
+    DawnAcoreDiagramEditorUtil.createDiagram(URI.createURI("dawn://repo1//test.acore_diagram"), URI.createURI("cdo://repo1/test.acore"),
+        new NullProgressMonitor());
 
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test.acore_diagram");
@@ -81,8 +81,8 @@ public class DawnBasicGMFUITest extends AbstractCDOTest
 
     DawnEditorInput editorInput = new DawnEditorInput(resource.getURI());
 
-    IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite()
-        .getPage().openEditor(editorInput, editorID);
+    IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite().getPage().openEditor(editorInput,
+        editorID);
 
     assertInstanceOf(DawnAcoreDiagramEditor.class, editor);
   }

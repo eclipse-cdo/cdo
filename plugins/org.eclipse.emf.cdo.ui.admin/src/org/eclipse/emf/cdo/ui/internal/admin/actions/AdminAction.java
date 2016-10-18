@@ -76,8 +76,7 @@ public abstract class AdminAction<T> extends LongRunningAction
     {
       public void run()
       {
-        MessageDialog.openError(getShell(), getText(),
-            MessageFormat.format(getErrorPattern(), ex.getLocalizedMessage()));
+        MessageDialog.openError(getShell(), getText(), MessageFormat.format(getErrorPattern(), ex.getLocalizedMessage()));
       }
     });
   }

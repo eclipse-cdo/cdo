@@ -86,8 +86,7 @@ public class CDOInteractiveExceptionHandler implements CDOSession.ExceptionHandl
     }
   }
 
-  public Object process(IManagedContainer container, String productGroup, String factoryType, String description,
-      Object element)
+  public Object process(IManagedContainer container, String productGroup, String factoryType, String description, Object element)
   {
     if (element instanceof InternalCDOSession)
     {
@@ -101,8 +100,7 @@ public class CDOInteractiveExceptionHandler implements CDOSession.ExceptionHandl
     return element;
   }
 
-  protected Object processSession(IManagedContainer container, String productGroup, String factoryType,
-      String description, InternalCDOSession session)
+  protected Object processSession(IManagedContainer container, String productGroup, String factoryType, String description, InternalCDOSession session)
   {
     if (session.getExceptionHandler() == null)
     {
@@ -154,8 +152,7 @@ public class CDOInteractiveExceptionHandler implements CDOSession.ExceptionHandl
 
       String attemptsStr = attempt == 1 ? Messages.getString("CDOInteractiveExceptionHandler.1") //$NON-NLS-1$
           : Messages.getString("CDOInteractiveExceptionHandler.2"); //$NON-NLS-1$
-      setTitle(
-          MessageFormat.format(Messages.getString("CDOInteractiveExceptionHandler.3"), session, attempt, attemptsStr));//$NON-NLS-1$
+      setTitle(MessageFormat.format(Messages.getString("CDOInteractiveExceptionHandler.3"), session, attempt, attemptsStr));//$NON-NLS-1$
       setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PROTOCOL_PROBLEM));
 
       GridLayout layout = UIUtil.createGridLayout(1);

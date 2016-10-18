@@ -53,8 +53,7 @@ public class RepositoryTypePage extends WizardPage
     NewRepositoryWizard wizard = getWizard();
 
     RepositoryRemotePage remotePage = wizard.getRemotePage();
-    addChoice(composite, "Connect to an existing remote repository.", "icons/wiz/new_repo_remote.gif", remotePage,
-        true);
+    addChoice(composite, "Connect to an existing remote repository.", "icons/wiz/new_repo_remote.gif", remotePage, true);
 
     RepositoryClonePage clonePage = wizard.getClonePage();
     addChoice(composite, "Clone an existing remote repository.", "icons/wiz/new_repo_clone.gif", clonePage, false);
@@ -66,8 +65,7 @@ public class RepositoryTypePage extends WizardPage
     setPageComplete(true);
   }
 
-  private Button addChoice(Composite composite, String text, String imagePath, final AbstractRepositoryPage nextPage,
-      boolean enabled)
+  private Button addChoice(Composite composite, String text, String imagePath, final AbstractRepositoryPage nextPage, boolean enabled)
   {
     this.nextPage = nextPage;
 

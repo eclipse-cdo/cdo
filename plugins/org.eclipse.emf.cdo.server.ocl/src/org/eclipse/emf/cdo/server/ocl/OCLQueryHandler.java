@@ -93,8 +93,8 @@ public class OCLQueryHandler implements IQueryHandler
    */
   public static final String IMPLICIT_ROOT_CLASS_PARAMETER = "cdoImplicitRootClass";
 
-  private static final Set<String> SERVER_QUERY_PARAMETERS = Collections.unmodifiableSet(
-      new java.util.HashSet<String>(Arrays.asList(LAZY_EXTENTS_PARAMETER, IMPLICIT_ROOT_CLASS_PARAMETER)));
+  private static final Set<String> SERVER_QUERY_PARAMETERS = Collections
+      .unmodifiableSet(new java.util.HashSet<String>(Arrays.asList(LAZY_EXTENTS_PARAMETER, IMPLICIT_ROOT_CLASS_PARAMETER)));
 
   private static final EcoreFactory FACTORY = EcoreFactory.eINSTANCE;
 
@@ -131,8 +131,7 @@ public class OCLQueryHandler implements IQueryHandler
       Object result = evaluate(query, contextParameter.getObject());
       if (result == ocl.getEnvironment().getOCLStandardLibrary().getInvalid())
       {
-        throw new Exception(
-            "OCL query evaluated to 'invalid'. Run with '-Dorg.eclipse.ocl.debug=true' and visit the log for failure details.");
+        throw new Exception("OCL query evaluated to 'invalid'. Run with '-Dorg.eclipse.ocl.debug=true' and visit the log for failure details.");
       }
 
       if (result instanceof Collection<?>)
@@ -200,8 +199,7 @@ public class OCLQueryHandler implements IQueryHandler
   /**
    * @since 4.2
    */
-  protected OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> createOCL(CDOView view,
-      CDOExtentMap extentMap)
+  protected OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> createOCL(CDOView view, CDOExtentMap extentMap)
   {
     EcoreEnvironmentFactory envFactory = new CDOEnvironmentFactory(view.getSession().getPackageRegistry());
 
@@ -214,9 +212,8 @@ public class OCLQueryHandler implements IQueryHandler
   /**
    * @since 4.2
    */
-  protected Query<EClassifier, EClass, EObject> createQuery(CDOView view, CDOQueryInfo info,
-      ContextParameter contextParameter, OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl)
-      throws ParserException, DiagnosticException
+  protected Query<EClassifier, EClass, EObject> createQuery(CDOView view, CDOQueryInfo info, ContextParameter contextParameter,
+      OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl) throws ParserException, DiagnosticException
   {
     Map<String, Object> parameters = new HashMap<String, Object>(info.getParameters());
     initEnvironment(ocl.getEnvironment(), view.getSession().getPackageRegistry(), parameters);
@@ -249,9 +246,8 @@ public class OCLQueryHandler implements IQueryHandler
     return ContextParameter.getArbitraryContextClassifier(packageRegistry);
   }
 
-  protected void initEnvironment(
-      Environment<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> environment,
-      CDOPackageRegistry packageRegistry, Map<String, Object> parameters)
+  protected void initEnvironment(Environment<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> environment, CDOPackageRegistry packageRegistry,
+      Map<String, Object> parameters)
   {
 
     // initialize parsing options
@@ -290,8 +286,7 @@ public class OCLQueryHandler implements IQueryHandler
     return implicitRootClass;
   }
 
-  protected OCLExpression<EClassifier> createInitExpression(OCLStandardLibrary<EClassifier> stdLib,
-      CDOPackageRegistry packageRegistry, Object value)
+  protected OCLExpression<EClassifier> createInitExpression(OCLStandardLibrary<EClassifier> stdLib, CDOPackageRegistry packageRegistry, Object value)
   {
     if (value instanceof String)
     {
@@ -350,8 +345,7 @@ public class OCLQueryHandler implements IQueryHandler
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes" })
-  protected void addEnvironmentVariable(
-      Environment<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> environment,
+  protected void addEnvironmentVariable(Environment<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> environment,
       Variable<EClassifier, ?> variable)
   {
     environment.addElement(variable.getName(), (Variable)variable, true);
@@ -398,8 +392,8 @@ public class OCLQueryHandler implements IQueryHandler
       }
       catch (ClassCastException ex)
       {
-        throw new IllegalArgumentException("Parameter " + name + " must be a " + type.getSimpleName() + " but it is a "
-            + o + " class " + o.getClass().getName(), ex);
+        throw new IllegalArgumentException(
+            "Parameter " + name + " must be a " + type.getSimpleName() + " but it is a " + o + " class " + o.getClass().getName(), ex);
       }
     }
 

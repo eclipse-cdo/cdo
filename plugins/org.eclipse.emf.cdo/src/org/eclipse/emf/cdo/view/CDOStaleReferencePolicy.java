@@ -94,8 +94,7 @@ public interface CDOStaleReferencePolicy
   {
     private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOStaleReferencePolicy.class);
 
-    public Object processStaleReference(final EObject source, final EStructuralFeature feature, int index,
-        final CDOID target)
+    public Object processStaleReference(final EObject source, final EStructuralFeature feature, int index, final CDOID target)
     {
       final EClassifier type = getType(source, feature, index, target);
       InvocationHandler handler = new InvocationHandler()

@@ -39,8 +39,8 @@ public class CDORevisionPrefetchingPolicyImpl implements CDORevisionPrefetchingP
     this.chunkSize = chunkSize;
   }
 
-  public List<CDOID> loadAhead(CDORevisionManager revisionManager, CDOBranchPoint branchPoint, EObject eObject,
-      EStructuralFeature feature, CDOList list, int accessIndex, CDOID accessID)
+  public List<CDOID> loadAhead(CDORevisionManager revisionManager, CDOBranchPoint branchPoint, EObject eObject, EStructuralFeature feature, CDOList list,
+      int accessIndex, CDOID accessID)
   {
     if (chunkSize > 1 && !revisionManager.containsRevision(accessID, branchPoint))
     {

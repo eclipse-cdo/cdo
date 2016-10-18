@@ -74,11 +74,9 @@ public class CDOHistoryPage extends HistoryPage
 {
   private static final String POPUP_ID = "#PopupMenu";
 
-  private static final boolean DEBUG = Boolean
-      .parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.ui.team.history.debug", "false"));
+  private static final boolean DEBUG = Boolean.parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.ui.team.history.debug", "false"));
 
-  private static final boolean TEST = Boolean
-      .parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.ui.team.history.test", "false"));
+  private static final boolean TEST = Boolean.parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.ui.team.history.test", "false"));
 
   private StackComposite stackComposite;
 
@@ -168,65 +166,63 @@ public class CDOHistoryPage extends HistoryPage
 
     if (TEST)
     {
-      tableViewer.addDropSupport(DND.DROP_MOVE, new Transfer[] { LocalSelectionTransfer.getTransfer() },
-          new ViewerDropAdapter(tableViewer)
+      tableViewer.addDropSupport(DND.DROP_MOVE, new Transfer[] { LocalSelectionTransfer.getTransfer() }, new ViewerDropAdapter(tableViewer)
+      {
+        {
+          // We don't want it to look like you can insert new elements, only drop onto existing elements.
+          setFeedbackEnabled(false);
+        }
+
+        @Override
+        public boolean validateDrop(Object target, int operation, TransferData transferType)
+        {
+          if (target instanceof CDOBranchPoint && LocalSelectionTransfer.getTransfer().isSupportedType(transferType))
           {
+            CDOBranchPoint objectToDrop = getObjectToDrop(transferType);
+            if (objectToDrop != null)
             {
-              // We don't want it to look like you can insert new elements, only drop onto existing elements.
-              setFeedbackEnabled(false);
-            }
-
-            @Override
-            public boolean validateDrop(Object target, int operation, TransferData transferType)
-            {
-              if (target instanceof CDOBranchPoint
-                  && LocalSelectionTransfer.getTransfer().isSupportedType(transferType))
+              if (CDOBranchUtil.isContainedBy(objectToDrop, (CDOBranchPoint)target))
               {
-                CDOBranchPoint objectToDrop = getObjectToDrop(transferType);
-                if (objectToDrop != null)
-                {
-                  if (CDOBranchUtil.isContainedBy(objectToDrop, (CDOBranchPoint)target))
-                  {
-                    return false;
-                  }
-
-                  return true;
-                }
+                return false;
               }
 
-              return false;
+              return true;
             }
+          }
 
+          return false;
+        }
+
+        @Override
+        public boolean performDrop(Object data)
+        {
+          final CDOBranchPoint objectToDrop = UIUtil.getElement((ISelection)data, CDOBranchPoint.class);
+          final CDOBranchPoint dropTarget = (CDOBranchPoint)getCurrentTarget();
+
+          boolean result = new TransactionalBranchPointOperation()
+          {
             @Override
-            public boolean performDrop(Object data)
+            protected void run(CDOTransaction transaction)
             {
-              final CDOBranchPoint objectToDrop = UIUtil.getElement((ISelection)data, CDOBranchPoint.class);
-              final CDOBranchPoint dropTarget = (CDOBranchPoint)getCurrentTarget();
-
-              boolean result = new TransactionalBranchPointOperation()
-              {
-                @Override
-                protected void run(CDOTransaction transaction)
-                {
-                  CDOMerger merger = new DefaultCDOMerger.PerFeature.ManyValued();
-                  transaction.merge(objectToDrop, merger);
-                }
-              }.execute(dropTarget);
-
-              if (result)
-              {
-                tableViewer.getControl().setFocus();
-                tableViewer.setSelection(new StructuredSelection(dropTarget));
-              }
-
-              return result;
+              CDOMerger merger = new DefaultCDOMerger.PerFeature.ManyValued();
+              transaction.merge(objectToDrop, merger);
             }
+          }.execute(dropTarget);
 
-            private CDOBranchPoint getObjectToDrop(TransferData transferType)
-            {
-              return UIUtil.getElement(LocalSelectionTransfer.getTransfer().getSelection(), CDOBranchPoint.class);
-            }
-          });
+          if (result)
+          {
+            tableViewer.getControl().setFocus();
+            tableViewer.setSelection(new StructuredSelection(dropTarget));
+          }
+
+          return result;
+        }
+
+        private CDOBranchPoint getObjectToDrop(TransferData transferType)
+        {
+          return UIUtil.getElement(LocalSelectionTransfer.getTransfer().getSelection(), CDOBranchPoint.class);
+        }
+      });
     }
 
     if (TEST)
@@ -333,8 +329,8 @@ public class CDOHistoryPage extends HistoryPage
         @Override
         public void run()
         {
-          NetRenderer netRenderer = (NetRenderer)ReflectUtil
-              .getValue(ReflectUtil.getField(CommitHistoryComposite.class, "netRenderer"), commitHistoryComposite);
+          NetRenderer netRenderer = (NetRenderer)ReflectUtil.getValue(ReflectUtil.getField(CommitHistoryComposite.class, "netRenderer"),
+              commitHistoryComposite);
 
           Net net = netRenderer.getNet();
           Track[] tracks = net.getTracks();

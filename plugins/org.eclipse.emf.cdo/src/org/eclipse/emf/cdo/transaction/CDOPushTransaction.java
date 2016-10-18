@@ -151,8 +151,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
       throw new IllegalArgumentException("Not a file: " + file.getAbsolutePath());
     }
 
-    OM.LOG.info("Using " + file.getAbsolutePath() + " for push transaction "
-        + delegate.getSession().getRepositoryInfo().getName() + ":" + //
+    OM.LOG.info("Using " + file.getAbsolutePath() + " for push transaction " + delegate.getSession().getRepositoryInfo().getName() + ":" + //
         delegate.getSession().getSessionID() + ":" + //
         delegate.getViewID());
 
@@ -740,14 +739,12 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.getLockStatesOfObjects(objects);
   }
 
-  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout)
-      throws InterruptedException
+  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout) throws InterruptedException
   {
     delegate.lockObjects(objects, lockType, timeout);
   }
 
-  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout, boolean recursive)
-      throws InterruptedException
+  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout, boolean recursive) throws InterruptedException
   {
     delegate.lockObjects(objects, lockType, timeout, recursive);
   }
@@ -762,8 +759,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.queryResources(folder, name, exactMatch);
   }
 
-  public CloseableIterator<CDOResourceNode> queryResourcesAsync(CDOResourceFolder folder, String name,
-      boolean exactMatch)
+  public CloseableIterator<CDOResourceNode> queryResourcesAsync(CDOResourceFolder folder, String name, boolean exactMatch)
   {
     return delegate.queryResourcesAsync(folder, name, exactMatch);
   }
@@ -805,8 +801,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.queryXRefs(targetObjects, sourceReferences);
   }
 
-  public CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects,
-      EReference... sourceReferences)
+  public CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects, EReference... sourceReferences)
   {
     return delegate.queryXRefsAsync(targetObjects, sourceReferences);
   }
@@ -854,8 +849,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   /**
    * @since 4.6
    */
-  public CDOChangeSetData merge(CDOBranchPoint source, CDOBranchPoint sourceBase, CDOBranchPoint targetBase,
-      CDOMerger merger)
+  public CDOChangeSetData merge(CDOBranchPoint source, CDOBranchPoint sourceBase, CDOBranchPoint targetBase, CDOMerger merger)
   {
     return delegate.merge(sourceBase, sourceBase, targetBase, merger);
   }

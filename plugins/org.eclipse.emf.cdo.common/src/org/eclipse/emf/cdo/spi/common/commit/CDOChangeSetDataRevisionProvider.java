@@ -60,8 +60,8 @@ public class CDOChangeSetDataRevisionProvider implements CDORevisionProvider, CD
 
   private Map<CDOID, CDOIDAndVersion> cachedRevisions;
 
-  public CDOChangeSetDataRevisionProvider(CDORevisionProvider delegate, CDOChangeSetData changeSetData,
-      CDORevisionProvider revisionCallback, CDORevisionDeltaProvider revisionDeltaCallback)
+  public CDOChangeSetDataRevisionProvider(CDORevisionProvider delegate, CDOChangeSetData changeSetData, CDORevisionProvider revisionCallback,
+      CDORevisionDeltaProvider revisionDeltaCallback)
   {
     this.delegate = delegate;
     this.changeSetData = changeSetData;

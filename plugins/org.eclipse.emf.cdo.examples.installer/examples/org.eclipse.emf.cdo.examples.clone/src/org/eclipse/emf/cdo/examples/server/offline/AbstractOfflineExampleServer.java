@@ -180,8 +180,7 @@ public abstract class AbstractOfflineExampleServer
     else if ("3".equals(command))
     {
       System.out.println();
-      System.out.println(repository.getName() + ": " + repository.getType()
-          + (repository.getType() == Type.BACKUP ? "|" + repository.getState() : ""));
+      System.out.println(repository.getName() + ": " + repository.getType() + (repository.getType() == Type.BACKUP ? "|" + repository.getState() : ""));
     }
     else if ("0".equals(command))
     {
@@ -205,8 +204,7 @@ public abstract class AbstractOfflineExampleServer
 
   protected IAcceptor createAcceptor()
   {
-    return (IAcceptor)container.getElement("org.eclipse.net4j.acceptors", AbstractOfflineExampleServer.TRANSPORT_TYPE,
-        "0.0.0.0:" + port);
+    return (IAcceptor)container.getElement("org.eclipse.net4j.acceptors", AbstractOfflineExampleServer.TRANSPORT_TYPE, "0.0.0.0:" + port);
   }
 
   protected void disconnect()

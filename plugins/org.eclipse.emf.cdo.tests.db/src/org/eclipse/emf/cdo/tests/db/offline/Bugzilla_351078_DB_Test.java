@@ -61,8 +61,7 @@ public class Bugzilla_351078_DB_Test extends Bugzilla_351078_Test
       connection = store.getConnection();
 
       ByteArrayOutputStream out = new ByteArrayOutputStream();
-      DBUtil.serializeTable(new ExtendedDataOutputStream(out), connection, table, null,
-          " ORDER BY CDO_SOURCE, CDO_BRANCH, CDO_VERSION_ADDED, CDO_IDX");
+      DBUtil.serializeTable(new ExtendedDataOutputStream(out), connection, table, null, " ORDER BY CDO_SOURCE, CDO_BRANCH, CDO_VERSION_ADDED, CDO_IDX");
 
       return out.toByteArray();
     }

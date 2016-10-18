@@ -115,8 +115,7 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
     d_Type type = ooAttribute.type_of();
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.trace(getAttributeName(feature) + " " + ((Basic_Type)type).base_type() + " basic type "
-          + type.is_basic_type() + " - " + getObjyBaseType());
+      TRACER_DEBUG.trace(getAttributeName(feature) + " " + ((Basic_Type)type).base_type() + " basic type " + type.is_basic_type() + " - " + getObjyBaseType());
     }
     return type.is_basic_type() && ((Basic_Type)type).base_type() == getObjyBaseType();
   }

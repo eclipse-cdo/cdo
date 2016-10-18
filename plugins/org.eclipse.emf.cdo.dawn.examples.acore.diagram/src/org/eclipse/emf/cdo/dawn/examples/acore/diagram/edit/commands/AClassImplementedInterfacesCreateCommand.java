@@ -73,8 +73,7 @@ public class AClassImplementedInterfacesCreateCommand extends EditElementCommand
       return true; // link creation is in progress; source is not defined yet
     }
     // target may be null here but it's possible to check constraint
-    return AcoreBaseItemSemanticEditPolicy.LinkConstraints.canCreateAClassImplementedInterfaces_4002(getSource(),
-        getTarget());
+    return AcoreBaseItemSemanticEditPolicy.LinkConstraints.canCreateAClassImplementedInterfaces_4002(getSource(), getTarget());
   }
 
   /**

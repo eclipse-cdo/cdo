@@ -127,8 +127,7 @@ public class ResourceGroup extends CDOElement
                   }
 
                   CDOCheckoutManagerImpl checkoutManager = (CDOCheckoutManagerImpl)CDOExplorerUtil.getCheckoutManager();
-                  checkoutManager.fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.PARENT,
-                      ResourceGroup.this);
+                  checkoutManager.fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.PARENT, ResourceGroup.this);
                 }
 
                 return Status.OK_STATUS;

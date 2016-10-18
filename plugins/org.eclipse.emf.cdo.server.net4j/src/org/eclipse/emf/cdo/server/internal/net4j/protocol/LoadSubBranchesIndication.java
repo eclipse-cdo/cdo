@@ -46,8 +46,7 @@ public class LoadSubBranchesIndication extends CDOServerReadIndication
     out.writeInt(branches.length);
     for (InternalCDOBranch subBranch : branches)
     {
-      SubBranchInfo info = new SubBranchInfo(subBranch.getID(), subBranch.getName(),
-          subBranch.getBase().getTimeStamp());
+      SubBranchInfo info = new SubBranchInfo(subBranch.getID(), subBranch.getName(), subBranch.getBase().getTimeStamp());
       info.write(out);
     }
   }

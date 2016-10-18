@@ -53,8 +53,7 @@ public class HibernateStoreFactory implements IStoreFactory
     for (int i = 0; i < propertyNodes.getLength(); i++)
     {
       final Element propertyElement = (Element)propertyNodes.item(i);
-      properties.setProperty(propertyElement.getAttribute(NAME_ATTRIBUTE),
-          propertyElement.getAttribute(VALUE_ATTRIBUTE));
+      properties.setProperty(propertyElement.getAttribute(NAME_ATTRIBUTE), propertyElement.getAttribute(VALUE_ATTRIBUTE));
     }
 
     return HibernateUtil.getInstance().createStore(mappingProvider, properties);
@@ -70,8 +69,7 @@ public class HibernateStoreFactory implements IStoreFactory
 
     Element mappingProviderConfig = (Element)mappingProviderConfigs.item(0);
     String mappingProviderType = mappingProviderConfig.getAttribute(TYPE_ATTRIBUTE);
-    IHibernateMappingProvider.Factory factory = HibernateUtil.getInstance()
-        .createMappingProviderFactory(mappingProviderType);
+    IHibernateMappingProvider.Factory factory = HibernateUtil.getInstance().createMappingProviderFactory(mappingProviderType);
     if (factory == null)
     {
       throw new IllegalArgumentException("Unknown mapping provider type: " + mappingProviderType); //$NON-NLS-1$

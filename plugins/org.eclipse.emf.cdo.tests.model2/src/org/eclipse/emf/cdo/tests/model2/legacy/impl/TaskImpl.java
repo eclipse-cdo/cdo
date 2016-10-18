@@ -123,8 +123,7 @@ public class TaskImpl extends EObjectImpl implements Task
    */
   public void setTaskContainer(TaskContainer newTaskContainer)
   {
-    if (newTaskContainer != eInternalContainer()
-        || eContainerFeatureID() != Model2Package.TASK__TASK_CONTAINER && newTaskContainer != null)
+    if (newTaskContainer != eInternalContainer() || eContainerFeatureID() != Model2Package.TASK__TASK_CONTAINER && newTaskContainer != null)
     {
       if (EcoreUtil.isAncestor(this, newTaskContainer))
       {
@@ -137,8 +136,7 @@ public class TaskImpl extends EObjectImpl implements Task
       }
       if (newTaskContainer != null)
       {
-        msgs = ((InternalEObject)newTaskContainer).eInverseAdd(this, Model2Package.TASK_CONTAINER__TASKS,
-            TaskContainer.class, msgs);
+        msgs = ((InternalEObject)newTaskContainer).eInverseAdd(this, Model2Package.TASK_CONTAINER__TASKS, TaskContainer.class, msgs);
       }
       msgs = basicSetTaskContainer(newTaskContainer, msgs);
       if (msgs != null)
@@ -148,8 +146,7 @@ public class TaskImpl extends EObjectImpl implements Task
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.TASK__TASK_CONTAINER, newTaskContainer,
-          newTaskContainer));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.TASK__TASK_CONTAINER, newTaskContainer, newTaskContainer));
     }
   }
 
@@ -172,8 +169,7 @@ public class TaskImpl extends EObjectImpl implements Task
     description = newDescription;
     if (eNotificationRequired())
     {
-      eNotify(
-          new ENotificationImpl(this, Notification.SET, Model2Package.TASK__DESCRIPTION, oldDescription, description));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.TASK__DESCRIPTION, oldDescription, description));
     }
   }
 

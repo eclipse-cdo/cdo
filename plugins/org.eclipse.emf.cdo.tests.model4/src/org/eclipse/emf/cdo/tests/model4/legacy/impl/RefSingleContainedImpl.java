@@ -83,8 +83,7 @@ public class RefSingleContainedImpl extends EObjectImpl implements RefSingleCont
     element = newElement;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          model4Package.REF_SINGLE_CONTAINED__ELEMENT, oldElement, newElement);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, model4Package.REF_SINGLE_CONTAINED__ELEMENT, oldElement, newElement);
       if (msgs == null)
       {
         msgs = notification;
@@ -108,13 +107,11 @@ public class RefSingleContainedImpl extends EObjectImpl implements RefSingleCont
       NotificationChain msgs = null;
       if (element != null)
       {
-        msgs = ((InternalEObject)element).eInverseRemove(this, model4Package.SINGLE_CONTAINED_ELEMENT__PARENT,
-            SingleContainedElement.class, msgs);
+        msgs = ((InternalEObject)element).eInverseRemove(this, model4Package.SINGLE_CONTAINED_ELEMENT__PARENT, SingleContainedElement.class, msgs);
       }
       if (newElement != null)
       {
-        msgs = ((InternalEObject)newElement).eInverseAdd(this, model4Package.SINGLE_CONTAINED_ELEMENT__PARENT,
-            SingleContainedElement.class, msgs);
+        msgs = ((InternalEObject)newElement).eInverseAdd(this, model4Package.SINGLE_CONTAINED_ELEMENT__PARENT, SingleContainedElement.class, msgs);
       }
       msgs = basicSetElement(newElement, msgs);
       if (msgs != null)
@@ -124,8 +121,7 @@ public class RefSingleContainedImpl extends EObjectImpl implements RefSingleCont
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.REF_SINGLE_CONTAINED__ELEMENT, newElement,
-          newElement));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.REF_SINGLE_CONTAINED__ELEMENT, newElement, newElement));
     }
   }
 
@@ -141,8 +137,7 @@ public class RefSingleContainedImpl extends EObjectImpl implements RefSingleCont
     case model4Package.REF_SINGLE_CONTAINED__ELEMENT:
       if (element != null)
       {
-        msgs = ((InternalEObject)element).eInverseRemove(this,
-            EOPPOSITE_FEATURE_BASE - model4Package.REF_SINGLE_CONTAINED__ELEMENT, null, msgs);
+        msgs = ((InternalEObject)element).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - model4Package.REF_SINGLE_CONTAINED__ELEMENT, null, msgs);
       }
       return basicSetElement((SingleContainedElement)otherEnd, msgs);
     }

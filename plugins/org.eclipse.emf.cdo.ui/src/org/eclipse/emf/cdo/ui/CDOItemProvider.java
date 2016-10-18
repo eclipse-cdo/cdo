@@ -665,14 +665,10 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       CDOResource rootResource = view.getRootResource();
       if (rootResource.cdoPermission() == CDOPermission.WRITE)
       {
-        manager.add(new NewTopLevelResourceNodeAction(this, page, view, rootResource,
-            NewTopLevelResourceNodeAction.Type.FOLDER));
-        manager.add(new NewTopLevelResourceNodeAction(this, page, view, rootResource,
-            NewTopLevelResourceNodeAction.Type.MODEL));
-        manager.add(
-            new NewTopLevelResourceNodeAction(this, page, view, rootResource, NewTopLevelResourceNodeAction.Type.TEXT));
-        manager.add(new NewTopLevelResourceNodeAction(this, page, view, rootResource,
-            NewTopLevelResourceNodeAction.Type.BINARY));
+        manager.add(new NewTopLevelResourceNodeAction(this, page, view, rootResource, NewTopLevelResourceNodeAction.Type.FOLDER));
+        manager.add(new NewTopLevelResourceNodeAction(this, page, view, rootResource, NewTopLevelResourceNodeAction.Type.MODEL));
+        manager.add(new NewTopLevelResourceNodeAction(this, page, view, rootResource, NewTopLevelResourceNodeAction.Type.TEXT));
+        manager.add(new NewTopLevelResourceNodeAction(this, page, view, rootResource, NewTopLevelResourceNodeAction.Type.BINARY));
       }
     }
 

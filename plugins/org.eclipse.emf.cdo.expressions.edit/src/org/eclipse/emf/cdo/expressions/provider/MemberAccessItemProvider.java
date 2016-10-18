@@ -160,59 +160,41 @@ public class MemberAccessItemProvider extends AccessItemProvider
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createBooleanValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createBooleanValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createByteValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createByteValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createShortValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createShortValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createIntValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createIntValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createLongValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createLongValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createFloatValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createFloatValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createDoubleValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createDoubleValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createCharValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createCharValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createStringValue()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createStringValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createFunctionInvocation()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createFunctionInvocation()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createMemberInvocation()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createMemberInvocation()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createStaticAccess()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createStaticAccess()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createMemberAccess()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createMemberAccess()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createContextAccess()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createContextAccess()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createContainedObject()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createContainedObject()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createLinkedObject()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createLinkedObject()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createLinkedExpression()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createLinkedExpression()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT,
-        ExpressionsFactory.eINSTANCE.createListConstruction()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, ExpressionsFactory.eINSTANCE.createListConstruction()));
   }
 
   /**
@@ -227,13 +209,11 @@ public class MemberAccessItemProvider extends AccessItemProvider
     Object childFeature = feature;
     Object childObject = child;
 
-    boolean qualify = childFeature == ExpressionsPackage.Literals.ACCESS__NAME
-        || childFeature == ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT;
+    boolean qualify = childFeature == ExpressionsPackage.Literals.ACCESS__NAME || childFeature == ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT;
 
     if (qualify)
     {
-      return getString("_UI_CreateChild_text2",
-          new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+      return getString("_UI_CreateChild_text2", new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
     }
     return super.getCreateChildText(owner, feature, child, selection);
   }

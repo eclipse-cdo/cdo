@@ -99,8 +99,7 @@ public class AcoreInitDiagramFileAction implements IObjectActionDelegate
     }
     if (diagramRoot == null)
     {
-      MessageDialog.openError(getShell(), Messages.InitDiagramFile_ResourceErrorDialogTitle,
-          Messages.InitDiagramFile_ResourceErrorDialogMessage);
+      MessageDialog.openError(getShell(), Messages.InitDiagramFile_ResourceErrorDialogTitle, Messages.InitDiagramFile_ResourceErrorDialogMessage);
       return;
     }
     Wizard wizard = new AcoreNewDiagramFileWizard(domainModelURI, diagramRoot, editingDomain);

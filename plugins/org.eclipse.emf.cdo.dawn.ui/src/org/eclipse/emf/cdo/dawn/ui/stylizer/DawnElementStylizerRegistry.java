@@ -103,15 +103,13 @@ public class DawnElementStylizerRegistry
   {
     try
     {
-      IConfigurationElement[] config = Platform.getExtensionRegistry()
-          .getConfigurationElementsFor(DAWN_STYLIZER_FACTORY_EXTENSION_POINT_ID);
+      IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(DAWN_STYLIZER_FACTORY_EXTENSION_POINT_ID);
       for (IConfigurationElement e : config)
       {
         String factoryClassName = e.getAttribute(ATTRIIBUTE_FACTORY);
         if (!stylizerFactories.containsKey(factoryClassName))
         {
-          IDawnElementStylizerFactory stylizer = (IDawnElementStylizerFactory)e
-              .createExecutableExtension(ATTRIIBUTE_FACTORY);
+          IDawnElementStylizerFactory stylizer = (IDawnElementStylizerFactory)e.createExecutableExtension(ATTRIIBUTE_FACTORY);
 
           int priority = Integer.parseInt(e.getAttribute(ATTRIBUTE_PRIORITY).substring(0, 1));
 

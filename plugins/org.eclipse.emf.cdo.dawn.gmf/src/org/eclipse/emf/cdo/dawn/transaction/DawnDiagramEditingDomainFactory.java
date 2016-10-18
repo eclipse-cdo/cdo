@@ -40,8 +40,7 @@ public class DawnDiagramEditingDomainFactory extends DiagramEditingDomainFactory
       super(adapterFactory, resourceSet);
     }
 
-    public DawnDiagramEditingDomain(AdapterFactory adapterFactory, TransactionalCommandStack stack,
-        ResourceSet resourceSet)
+    public DawnDiagramEditingDomain(AdapterFactory adapterFactory, TransactionalCommandStack stack, ResourceSet resourceSet)
     {
       super(adapterFactory, stack, resourceSet);
     }
@@ -75,8 +74,7 @@ public class DawnDiagramEditingDomainFactory extends DiagramEditingDomainFactory
     }
     WorkspaceCommandStackImpl stack = new WorkspaceCommandStackImpl(history);
 
-    TransactionalEditingDomain result = new DawnDiagramEditingDomain(
-        new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE), stack);
+    TransactionalEditingDomain result = new DawnDiagramEditingDomain(new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE), stack);
 
     mapResourceSet(result);
 
@@ -89,8 +87,8 @@ public class DawnDiagramEditingDomainFactory extends DiagramEditingDomainFactory
   {
     WorkspaceCommandStackImpl stack = new WorkspaceCommandStackImpl(history);
 
-    TransactionalEditingDomain result = new DawnDiagramEditingDomain(
-        new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE), stack, rset);
+    TransactionalEditingDomain result = new DawnDiagramEditingDomain(new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE), stack,
+        rset);
 
     mapResourceSet(result);
     configure(result);

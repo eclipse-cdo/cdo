@@ -25,8 +25,7 @@ public class PrefIntegerAndDisable extends TextAndDisable implements OMPreferenc
 
   private final OMPreference<Boolean> disabledPreference;
 
-  public PrefIntegerAndDisable(Composite parent, int textStyle, OMPreference<Integer> integerPreference,
-      OMPreference<Boolean> disabledPreference)
+  public PrefIntegerAndDisable(Composite parent, int textStyle, OMPreference<Integer> integerPreference, OMPreference<Boolean> disabledPreference)
   {
     super(parent, textStyle, null);
     this.integerPreference = integerPreference;

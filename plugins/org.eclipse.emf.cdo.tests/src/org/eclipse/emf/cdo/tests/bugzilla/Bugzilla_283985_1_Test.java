@@ -214,8 +214,8 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
 
     // Ask closure to pick items to be moved
     //
-    Collection<OrderDetail> details = closure.pickDetails(new OrderDetail[] { detail1, detail2, detail3, detail4,
-        detail5, detail6, detail7, detail8, detail9, detail10, detail11, detail12, });
+    Collection<OrderDetail> details = closure
+        .pickDetails(new OrderDetail[] { detail1, detail2, detail3, detail4, detail5, detail6, detail7, detail8, detail9, detail10, detail11, detail12, });
 
     // Keep references to the current CDOIDs and versions, to be used in the test
     CDOID[] idsBefore = new CDOID[details.size()];

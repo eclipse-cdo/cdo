@@ -75,8 +75,7 @@ public class ObjyObjectManager
     }
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.trace("Create new object of type " + eClass.getName() + " near object "
-          + (nearObject != null ? nearObject.getStoreString() : null));
+      TRACER_DEBUG.trace("Create new object of type " + eClass.getName() + " near object " + (nearObject != null ? nearObject.getStoreString() : null));
     }
 
     Class_Object newClassObject = newClassObject(eClass, nearObject);

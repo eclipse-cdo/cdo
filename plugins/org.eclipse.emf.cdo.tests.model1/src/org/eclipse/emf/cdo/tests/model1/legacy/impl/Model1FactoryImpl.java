@@ -50,8 +50,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   {
     try
     {
-      Model1Factory theModel1Factory = (Model1Factory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/tests/legacy/model1/1.0.0");
+      Model1Factory theModel1Factory = (Model1Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/emf/CDO/tests/legacy/model1/1.0.0");
       if (theModel1Factory != null)
       {
         return theModel1Factory;
@@ -260,8 +259,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   {
     VAT result = VAT.get(initialValue);
     if (result == null)
-      throw new IllegalArgumentException(
-          "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
     return result;
   }
 

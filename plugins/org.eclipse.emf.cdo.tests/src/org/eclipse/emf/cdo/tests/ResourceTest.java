@@ -435,8 +435,7 @@ public class ResourceTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = (CDOResource)transaction.getResourceSet()
-          .getResource(CDOURIUtil.createResourceURI(transaction, getResourcePath("/test1")), true);
+      CDOResource resource = (CDOResource)transaction.getResourceSet().getResource(CDOURIUtil.createResourceURI(transaction, getResourcePath("/test1")), true);
       assertNotNull(resource);
       assertEquals(transaction.getResourceSet(), resource.getResourceSet());
       assertEquals(1, transaction.getResourceSet().getResources().size());

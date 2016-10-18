@@ -226,8 +226,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
   {
     checkActive();
 
-    Pair<Integer, Long> result = branchLoader.createBranch(branchID,
-        new BranchInfo(name, baseBranch.getID(), baseTimeStamp));
+    Pair<Integer, Long> result = branchLoader.createBranch(branchID, new BranchInfo(name, baseBranch.getID(), baseTimeStamp));
     int actualBranchID = result.getElement1();
     long actualBaseTimeStamp = result.getElement2();
 
@@ -327,8 +326,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
    * @author Eike Stepper
    */
   @Deprecated
-  private static final class BranchCreatedEvent extends BranchChangedEvent
-      implements org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent
+  private static final class BranchCreatedEvent extends BranchChangedEvent implements org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent
   {
     private static final long serialVersionUID = 1L;
 

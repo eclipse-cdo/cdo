@@ -93,8 +93,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected IAction showPropertiesViewAction = new Action(
-      PluginDelegator.INSTANCE.getString("_UI_ShowPropertiesView_menu_item"))
+  protected IAction showPropertiesViewAction = new Action(PluginDelegator.INSTANCE.getString("_UI_ShowPropertiesView_menu_item"))
   {
     @Override
     public void run()
@@ -211,8 +210,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   {
     super.contributeToMenu(menuManager);
 
-    IMenuManager submenuManager = new MenuManager(PluginDelegator.INSTANCE.getString("_UI_CDOEditor_menu"),
-        "org.eclipse.emf.cdo.internal.ui.editorMenuID");
+    IMenuManager submenuManager = new MenuManager(PluginDelegator.INSTANCE.getString("_UI_CDOEditor_menu"), "org.eclipse.emf.cdo.internal.ui.editorMenuID");
     menuManager.insertAfter("additions", submenuManager);
     submenuManager.add(new Separator("settings"));
     submenuManager.add(new Separator("actions"));
@@ -444,8 +442,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected void populateManager(IContributionManager manager, Collection<? extends IAction> actions,
-      String contributionID)
+  protected void populateManager(IContributionManager manager, Collection<? extends IAction> actions, String contributionID)
   {
     if (actions != null)
     {

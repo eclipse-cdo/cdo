@@ -138,8 +138,7 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
     value = newValue;
     if (eNotificationRequired())
     {
-      eNotify(
-          new ENotificationImpl(this, Notification.SET, Model2Package.INTEGER_TO_STRING_MAP__VALUE, oldValue, value));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.INTEGER_TO_STRING_MAP__VALUE, oldValue, value));
     }
   }
 

@@ -46,8 +46,7 @@ public interface InternalView extends IView, ILifecycle
   /**
    * @since 4.0
    */
-  public void changeTarget(CDOBranchPoint branchPoint, List<CDOID> invalidObjects,
-      List<CDORevisionDelta> allChangedObjects, List<CDOID> allDetachedObjects);
+  public void changeTarget(CDOBranchPoint branchPoint, List<CDOID> invalidObjects, List<CDORevisionDelta> allChangedObjects, List<CDOID> allDetachedObjects);
 
   public void subscribe(CDOID id);
 

@@ -86,8 +86,7 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
     this.resolveProxies = resolveProxies;
   }
 
-  private static CDOView openOriginView(CDOView leftView, CDOView rightView, CDOView[] originView,
-      CDOViewOpener viewOpener)
+  private static CDOView openOriginView(CDOView leftView, CDOView rightView, CDOView[] originView, CDOViewOpener viewOpener)
   {
     if (leftView.getSession() != rightView.getSession())
     {
@@ -315,8 +314,7 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
     /**
      * @since 4.3
      */
-    public static IComparisonScope create(CDOView leftView, CDOView rightView, CDOView[] originView,
-        CDOViewOpener viewOpener)
+    public static IComparisonScope create(CDOView leftView, CDOView rightView, CDOView[] originView, CDOViewOpener viewOpener)
     {
       CDOView view = openOriginView(leftView, rightView, originView, viewOpener);
 
@@ -335,8 +333,7 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
     /**
      * @since 4.3
      */
-    public static IComparisonScope create(CDOView leftView, CDOView rightView, CDOView[] originView, Set<CDOID> ids,
-        CDOViewOpener viewOpener)
+    public static IComparisonScope create(CDOView leftView, CDOView rightView, CDOView[] originView, Set<CDOID> ids, CDOViewOpener viewOpener)
     {
       CDOView view = openOriginView(leftView, rightView, originView, viewOpener);
       return new CDOComparisonScope.Minimal(leftView, rightView, view, ids);

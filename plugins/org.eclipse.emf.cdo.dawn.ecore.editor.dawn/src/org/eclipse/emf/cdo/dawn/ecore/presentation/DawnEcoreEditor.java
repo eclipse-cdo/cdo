@@ -93,10 +93,8 @@ public class DawnEcoreEditor extends EcoreEditor implements IDawnEditor
       return;
     }
 
-    selectionViewer.setContentProvider(new DawnSelectionViewerAdapterFactoryContentProvider(adapterFactory,
-        ((DawnEditorInput)getEditorInput()).getResource()));
-    selectionViewer
-        .setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
+    selectionViewer.setContentProvider(new DawnSelectionViewerAdapterFactoryContentProvider(adapterFactory, ((DawnEditorInput)getEditorInput()).getResource()));
+    selectionViewer.setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
     // parentViewer.setLabelProvider(new DawnLabelProvider(adapterFactory,
     // dawnEditorSupport.getView(), selectionViewer));
     // listViewer.setLabelProvider(new DawnLabelProvider(adapterFactory,
@@ -126,8 +124,7 @@ public class DawnEcoreEditor extends EcoreEditor implements IDawnEditor
     {
       if (view.hasConflict())
       {
-        MessageDialog.openError(Display.getDefault().getActiveShell(), "conflict",
-            "Your Resource is in conflict and cannot be committed");
+        MessageDialog.openError(Display.getDefault().getActiveShell(), "conflict", "Your Resource is in conflict and cannot be committed");
       }
       else
       {

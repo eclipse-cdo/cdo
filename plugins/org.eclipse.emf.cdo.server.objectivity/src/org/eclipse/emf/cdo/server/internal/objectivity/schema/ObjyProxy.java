@@ -36,8 +36,7 @@ public class ObjyProxy
   public static void buildSchema()
   {
     d_Module top_mod = ObjySchema.getTopModule();
-    if (top_mod.resolve_class(ObjyProxy.className) == null
-        && top_mod.resolve_proposed_class(ObjyProxy.className) == null)
+    if (top_mod.resolve_class(ObjyProxy.className) == null && top_mod.resolve_proposed_class(ObjyProxy.className) == null)
     {
 
       if (TRACER_DEBUG.isEnabled())
@@ -80,8 +79,7 @@ public class ObjyProxy
   // factory.
   public static ObjyProxy createObject(ooId nearObject)
   {
-    Class_Object newClassObject = Class_Object
-        .new_persistent_object(ObjySchema.getObjyClass(ObjyProxy.className).getASClass(), nearObject, false);
+    Class_Object newClassObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(ObjyProxy.className).getASClass(), nearObject, false);
     ObjyProxy proxyObject = new ObjyProxy(newClassObject);
     return proxyObject;
   }

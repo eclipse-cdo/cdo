@@ -31,8 +31,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
 
   private EStructuralFeature feature;
 
-  public AbstractBasicListTableMapping(IMappingStrategy mappingStrategy, EClass containingClass,
-      EStructuralFeature feature)
+  public AbstractBasicListTableMapping(IMappingStrategy mappingStrategy, EClass containingClass, EStructuralFeature feature)
   {
     this.mappingStrategy = mappingStrategy;
     this.containingClass = containingClass;
@@ -61,8 +60,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
     builder.append(index);
   }
 
-  public void addRangedChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int fromIndex,
-      int toIndex)
+  public void addRangedChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int fromIndex, int toIndex)
   {
     builder.append(LIST_IDX);
     builder.append(" BETWEEN "); //$NON-NLS-1$

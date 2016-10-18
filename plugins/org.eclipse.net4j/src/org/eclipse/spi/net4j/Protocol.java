@@ -30,8 +30,7 @@ import java.util.concurrent.ExecutorService;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle
-    implements IProtocol2<INFRA_STRUCTURE>, IExecutorServiceProvider
+public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IProtocol2<INFRA_STRUCTURE>, IExecutorServiceProvider
 {
   private String type;
 

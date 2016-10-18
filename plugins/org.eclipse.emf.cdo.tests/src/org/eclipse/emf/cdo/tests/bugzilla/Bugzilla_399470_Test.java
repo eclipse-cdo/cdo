@@ -70,8 +70,7 @@ public class Bugzilla_399470_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource sharedMetamodelResource = transaction
-        .createResource(getResourcePath(metamodelResourceURI.lastSegment()));
+    CDOResource sharedMetamodelResource = transaction.createResource(getResourcePath(metamodelResourceURI.lastSegment()));
     for (EObject content : metamodelResource.getContents())
     {
       EObject copy = copier.get(content);

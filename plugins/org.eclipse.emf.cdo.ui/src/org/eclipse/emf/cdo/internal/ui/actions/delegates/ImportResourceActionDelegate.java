@@ -47,8 +47,7 @@ public class ImportResourceActionDelegate extends NewResourceActionDelegate
   @Override
   protected final CDOObject preRun(CDOObject object)
   {
-    ImportResourceDialog dialog = new ImportResourceDialog(getShell(),
-        Messages.getString("ImportResourceToFolderAction_0"), SWT.OPEN); //$NON-NLS-1$
+    ImportResourceDialog dialog = new ImportResourceDialog(getShell(), Messages.getString("ImportResourceToFolderAction_0"), SWT.OPEN); //$NON-NLS-1$
     if (dialog.open() == ImportResourceDialog.OK)
     {
       List<URI> uris = dialog.getURIs();

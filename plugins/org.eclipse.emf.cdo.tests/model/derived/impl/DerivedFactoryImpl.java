@@ -36,8 +36,7 @@ public class DerivedFactoryImpl extends EFactoryImpl implements DerivedFactory
   {
     try
     {
-      DerivedFactory theDerivedFactory = (DerivedFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.fernuni-hagen.de/ST/dummy/derived.ecore");
+      DerivedFactory theDerivedFactory = (DerivedFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.fernuni-hagen.de/ST/dummy/derived.ecore");
       if (theDerivedFactory != null)
       {
         return theDerivedFactory;

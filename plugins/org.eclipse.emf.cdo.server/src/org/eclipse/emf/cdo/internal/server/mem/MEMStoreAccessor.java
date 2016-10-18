@@ -258,20 +258,17 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
     return store.readChangeSet(segments);
   }
 
-  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
-      CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk, CDORevisionCacheAdder cache)
   {
     return store.getRevision(id, branchPoint);
   }
 
-  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
-      CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk, CDORevisionCacheAdder cache)
   {
     return store.getRevisionByVersion(id, branchVersion);
   }
 
-  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     store.handleRevisions(eClass, branch, timeStamp, exactTime, handler);
   }
@@ -296,15 +293,14 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
 
   @Deprecated
   @Override
-  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
-      String comment, OMMonitor monitor)
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
-      String comment, CDOBranchPoint mergeSource, OMMonitor monitor)
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOBranchPoint mergeSource,
+      OMMonitor monitor)
   {
     store.addCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource);
   }
@@ -353,8 +349,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
    * @since 2.0
    */
   @Override
-  protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created,
-      OMMonitor monitor)
+  protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created, OMMonitor monitor)
   {
     for (InternalCDORevisionDelta revisionDelta : revisionDeltas)
     {
@@ -422,14 +417,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
     return null;
   }
 
-  public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
-      throws IOException
+  public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime) throws IOException
   {
     store.rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
   }
 
-  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
-      OMMonitor monitor) throws IOException
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
     store.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime, monitor);
   }
@@ -454,14 +447,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
     writeClob(id, size, reader);
   }
 
-  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
-      OMMonitor monitor)
+  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor)
   {
     writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null, monitor);
   }
 
-  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
-      CDOBranchPoint mergeSource, OMMonitor monitor)
+  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOBranchPoint mergeSource, OMMonitor monitor)
   {
     writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource, monitor);
   }
@@ -476,14 +467,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
     // Do nothing
   }
 
-  public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,
-      Map<CDOID, LockGrade> locks)
+  public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     return store.createLockArea(userID, branchPoint, readOnly, locks);
   }
 
-  public LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly,
-      Map<CDOID, LockGrade> locks)
+  public LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     return store.createLockArea(durableLockingID, userID, branchPoint, readOnly, locks);
   }

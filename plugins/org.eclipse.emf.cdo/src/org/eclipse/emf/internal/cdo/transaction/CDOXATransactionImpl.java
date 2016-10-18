@@ -206,8 +206,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     return activeContexts.get(transaction);
   }
 
-  private void send(Collection<InternalCDOXACommitContext> xaContexts, final IProgressMonitor progressMonitor)
-      throws InterruptedException, ExecutionException
+  private void send(Collection<InternalCDOXACommitContext> xaContexts, final IProgressMonitor progressMonitor) throws InterruptedException, ExecutionException
   {
     int xaContextSize = xaContexts.size();
     if (progressMonitor != null)
@@ -233,8 +232,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
       do
       {
-        for (Iterator<Entry<Future<Object>, InternalCDOXACommitContext>> it = futures.entrySet().iterator(); it
-            .hasNext();)
+        for (Iterator<Entry<Future<Object>, InternalCDOXACommitContext>> it = futures.entrySet().iterator(); it.hasNext();)
         {
           Entry<Future<Object>, InternalCDOXACommitContext> entry = it.next();
           Future<Object> future = entry.getKey();
@@ -359,8 +357,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
       try
       {
-        send(activeContexts.values(),
-            progressMonitor != null ? new SubProgressMonitor(progressMonitor, 2 - phase) : null);
+        send(activeContexts.values(), progressMonitor != null ? new SubProgressMonitor(progressMonitor, 2 - phase) : null);
       }
       catch (InterruptedException ex1)
       {
@@ -602,8 +599,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       }
     }
 
-    public CDOCommitInfo commit(InternalCDOTransaction transactionCommit, IProgressMonitor progressMonitor)
-        throws Exception
+    public CDOCommitInfo commit(InternalCDOTransaction transactionCommit, IProgressMonitor progressMonitor) throws Exception
     {
       checkAccess();
       return xaTransaction.commit(progressMonitor);
@@ -669,8 +665,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       if (xaContext.getTransaction().isDirty())
       {
         CDOSessionProtocol sessionProtocol = xaContext.getTransaction().getSession().getSessionProtocol();
-        CommitTransactionResult result = sessionProtocol.commitXATransactionPhase2(xaContext,
-            EclipseMonitor.convert(progressMonitor));
+        CommitTransactionResult result = sessionProtocol.commitXATransactionPhase2(xaContext, EclipseMonitor.convert(progressMonitor));
         check_result(result);
       }
 
@@ -701,8 +696,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       if (xaContext.getTransaction().isDirty())
       {
         CDOSessionProtocol sessionProtocol = xaContext.getTransaction().getSession().getSessionProtocol();
-        CommitTransactionResult result = sessionProtocol.commitXATransactionPhase3(xaContext,
-            EclipseMonitor.convert(progressMonitor));
+        CommitTransactionResult result = sessionProtocol.commitXATransactionPhase3(xaContext, EclipseMonitor.convert(progressMonitor));
         check_result(result);
       }
 
@@ -732,8 +726,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     public void handle(InternalCDOXACommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
     {
       CDOSessionProtocol sessionProtocol = xaContext.getTransaction().getSession().getSessionProtocol();
-      CommitTransactionResult result = sessionProtocol.commitXATransactionCancel(xaContext,
-          EclipseMonitor.convert(progressMonitor));
+      CommitTransactionResult result = sessionProtocol.commitXATransactionCancel(xaContext, EclipseMonitor.convert(progressMonitor));
       check_result(result);
     }
 

@@ -130,8 +130,7 @@ public class ProductToOrderImpl extends EObjectImpl implements BasicEMap.Entry<P
       if (value != oldValue)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.PRODUCT_TO_ORDER__VALUE, oldValue,
-              value));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.PRODUCT_TO_ORDER__VALUE, oldValue, value));
       }
     }
     return value;

@@ -79,9 +79,8 @@ public class AcoreFeatureProvider extends DefaultFeatureProvider
   @Override
   public ICreateConnectionFeature[] getCreateConnectionFeatures()
   {
-    return new ICreateConnectionFeature[] { new AcoreCreateSubclassFeature(this),
-        new AcoreCreateImplementationFeature(this), new AcoreCreateAssociationFeature(this),
-        new AcoreCreateAggregationFeature(this), new AcoreCreateCompositionsFeature(this) };
+    return new ICreateConnectionFeature[] { new AcoreCreateSubclassFeature(this), new AcoreCreateImplementationFeature(this),
+        new AcoreCreateAssociationFeature(this), new AcoreCreateAggregationFeature(this), new AcoreCreateCompositionsFeature(this) };
   }
 
   @Override

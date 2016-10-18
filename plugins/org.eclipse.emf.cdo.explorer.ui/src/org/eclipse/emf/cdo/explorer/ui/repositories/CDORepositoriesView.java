@@ -161,8 +161,7 @@ public class CDORepositoriesView extends ContainerView
 
           try
           {
-            EPackage ePackage = EPackage.Registry.INSTANCE
-                .getEPackage("http://www.eclipse.org/emf/CDO/examples/company/1.0.0");
+            EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/emf/CDO/examples/company/1.0.0");
             EClass eClass = (EClass)ePackage.getEClassifier("Company");
 
             EObject company = EcoreUtil.create(eClass);

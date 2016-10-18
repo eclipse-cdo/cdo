@@ -41,8 +41,8 @@ import java.util.List;
  *
  * @generated
  */
-public class RestaurantItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class RestaurantItemProvider extends ItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -79,12 +79,9 @@ public class RestaurantItemProvider extends ItemProviderAdapter implements IEdit
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Restaurant_name_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_Restaurant_name_feature", "_UI_Restaurant_type"),
-            InventoryPackage.Literals.RESTAURANT__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-            null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Restaurant_name_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Restaurant_name_feature", "_UI_Restaurant_type"),
+        InventoryPackage.Literals.RESTAURANT__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -94,11 +91,9 @@ public class RestaurantItemProvider extends ItemProviderAdapter implements IEdit
    */
   protected void addStationsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Restaurant_stations_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_Restaurant_stations_feature", "_UI_Restaurant_type"),
-            InventoryPackage.Literals.RESTAURANT__STATIONS, false, false, false, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Restaurant_stations_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Restaurant_stations_feature", "_UI_Restaurant_type"),
+        InventoryPackage.Literals.RESTAURANT__STATIONS, false, false, false, null, null, null));
   }
 
   /**
@@ -217,14 +212,11 @@ public class RestaurantItemProvider extends ItemProviderAdapter implements IEdit
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(InventoryPackage.Literals.RESTAURANT__DEPARTMENTS,
-        InventoryFactory.eINSTANCE.createDepartment()));
+    newChildDescriptors.add(createChildParameter(InventoryPackage.Literals.RESTAURANT__DEPARTMENTS, InventoryFactory.eINSTANCE.createDepartment()));
 
-    newChildDescriptors.add(createChildParameter(InventoryPackage.Literals.RESTAURANT__MENU_CARDS,
-        InventoryFactory.eINSTANCE.createMenuCard()));
+    newChildDescriptors.add(createChildParameter(InventoryPackage.Literals.RESTAURANT__MENU_CARDS, InventoryFactory.eINSTANCE.createMenuCard()));
 
-    newChildDescriptors.add(
-        createChildParameter(InventoryPackage.Literals.RESTAURANT__TABLES, InventoryFactory.eINSTANCE.createTable()));
+    newChildDescriptors.add(createChildParameter(InventoryPackage.Literals.RESTAURANT__TABLES, InventoryFactory.eINSTANCE.createTable()));
   }
 
   /**

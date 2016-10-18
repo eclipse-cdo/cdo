@@ -320,8 +320,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
 
       if (rev.getTimeStamp() != timeStamp)
       {
-        throw new IllegalArgumentException(
-            "Invalid revision time stamp: " + CDOCommonUtil.formatTimeStamp(rev.getTimeStamp()));
+        throw new IllegalArgumentException("Invalid revision time stamp: " + CDOCommonUtil.formatTimeStamp(rev.getTimeStamp()));
       }
 
       InternalCDORevision revision = (InternalCDORevision)rev;
@@ -331,8 +330,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
       if (version > CDOBranchVersion.FIRST_VERSION)
       {
         CDOBranchVersion oldVersion = branch.getVersion(version - 1);
-        InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, oldVersion, CDORevision.UNCHUNKED,
-            true);
+        InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, oldVersion, CDORevision.UNCHUNKED, true);
         InternalCDORevisionDelta delta = revision.compare(oldRevision);
         changedObjects.add(delta);
       }
@@ -363,8 +361,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
       }
 
       CDOBranchPoint base = branch.getBase();
-      InternalCDORevision revision = revisionManager.getRevision(id, base, CDORevision.UNCHUNKED,
-          CDORevision.DEPTH_NONE, true);
+      InternalCDORevision revision = revisionManager.getRevision(id, base, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
       if (revision == null)
       {
         revision = getRevisionFromBase(id, base.getBranch());

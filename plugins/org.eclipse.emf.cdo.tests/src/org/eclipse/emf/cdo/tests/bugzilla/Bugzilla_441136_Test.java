@@ -63,8 +63,7 @@ public class Bugzilla_441136_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     getRepository().getCommitInfoManager().addCommitInfoHandler(new CommitTransactionIndicationWaiting());
-    ((CDONet4jSession)session).options()
-        .setCommitTimeout(1000 * CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS);
+    ((CDONet4jSession)session).options().setCommitTimeout(1000 * CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS);
     ((CDONet4jSessionImpl)session).setSignalTimeout(10000 * SignalProtocol.DEFAULT_TIMEOUT);
     CDOTransaction transaction = session.openTransaction();
     ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol();

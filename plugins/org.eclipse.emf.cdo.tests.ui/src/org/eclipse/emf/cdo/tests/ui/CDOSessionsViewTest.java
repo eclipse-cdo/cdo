@@ -57,8 +57,7 @@ public class CDOSessionsViewTest extends AbstractCDOUITest<SWTWorkbenchBot>
     assertInstanceOf(CDOSessionsView.class, view);
 
     // activeView.toolbarButton(OpenSessionDialog.TITLE).click();
-    activeView.toolbarButton(org.eclipse.emf.cdo.internal.ui.messages.Messages.getString("OpenSessionAction.0"))
-        .click();
+    activeView.toolbarButton(org.eclipse.emf.cdo.internal.ui.messages.Messages.getString("OpenSessionAction.0")).click();
 
     SWTBotShell openSessionDialog = getBot().shell("Open Session");
     openSessionDialog.activate();

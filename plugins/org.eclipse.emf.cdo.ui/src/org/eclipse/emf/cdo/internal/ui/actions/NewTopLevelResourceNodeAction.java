@@ -40,8 +40,7 @@ public class NewTopLevelResourceNodeAction extends AbstractViewAction
 
   private String resourceNodeName;
 
-  public NewTopLevelResourceNodeAction(CDOItemProvider itemProvider, IWorkbenchPage page, CDOView view,
-      CDOResourceNode node, Type type)
+  public NewTopLevelResourceNodeAction(CDOItemProvider itemProvider, IWorkbenchPage page, CDOView view, CDOResourceNode node, Type type)
   {
     super(page, type.getTitle() + INTERACTIVE, type.getTooltip(), type.getImageDescriptor(), view);
     selectedNode = node;
@@ -53,8 +52,8 @@ public class NewTopLevelResourceNodeAction extends AbstractViewAction
   protected void preRun() throws Exception
   {
     String initialValue = (type == Type.FOLDER ? "folder" : "resource") + (AbstractViewAction.lastResourceNumber + 1);
-    InputDialog dialog = new InputDialog(getShell(), getText(), Messages.getString("NewResourceNodeAction.8"),
-        initialValue, new ResourceNodeNameInputValidator(selectedNode));
+    InputDialog dialog = new InputDialog(getShell(), getText(), Messages.getString("NewResourceNodeAction.8"), initialValue,
+        new ResourceNodeNameInputValidator(selectedNode));
 
     if (dialog.open() == InputDialog.OK)
     {
@@ -143,17 +142,13 @@ public class NewTopLevelResourceNodeAction extends AbstractViewAction
    */
   public static enum Type
   {
-    FOLDER(Messages.getString("Title.Folder"), Messages.getString("Tooltip.Folder"),
-        SharedIcons.getDescriptor(SharedIcons.ETOOL_NEW_RESOURCE_FOLDER)),
+    FOLDER(Messages.getString("Title.Folder"), Messages.getString("Tooltip.Folder"), SharedIcons.getDescriptor(SharedIcons.ETOOL_NEW_RESOURCE_FOLDER)),
 
-    MODEL(Messages.getString("Title.Model"), Messages.getString("Tooltip.Model"),
-        SharedIcons.getDescriptor(SharedIcons.ETOOL_NEW_RESOURCE)),
+    MODEL(Messages.getString("Title.Model"), Messages.getString("Tooltip.Model"), SharedIcons.getDescriptor(SharedIcons.ETOOL_NEW_RESOURCE)),
 
-    TEXT(Messages.getString("Title.Text"), Messages.getString("Tooltip.Text"),
-        SharedIcons.getDescriptor(SharedIcons.ETOOL_NEW_TEXT_RESOURCE)),
+    TEXT(Messages.getString("Title.Text"), Messages.getString("Tooltip.Text"), SharedIcons.getDescriptor(SharedIcons.ETOOL_NEW_TEXT_RESOURCE)),
 
-    BINARY(Messages.getString("Title.Binary"), Messages.getString("Tooltip.Binary"),
-        SharedIcons.getDescriptor(SharedIcons.ETOOL_NEW_BINARY_RESOURCE));
+    BINARY(Messages.getString("Title.Binary"), Messages.getString("Tooltip.Binary"), SharedIcons.getDescriptor(SharedIcons.ETOOL_NEW_BINARY_RESOURCE));
 
     private String title;
 

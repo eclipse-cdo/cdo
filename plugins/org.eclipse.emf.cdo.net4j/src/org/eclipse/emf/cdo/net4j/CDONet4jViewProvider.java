@@ -55,8 +55,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     CDOURIData data = new CDOURIData(uri);
 
     IConnector connector = getConnector(data.getAuthority());
-    CDONet4jSession session = getNet4jSession(connector, data.getUserName(), data.getPassWord(),
-        data.getRepositoryName());
+    CDONet4jSession session = getNet4jSession(connector, data.getUserName(), data.getPassWord(), data.getRepositoryName());
 
     String viewID = data.getViewID();
     if (viewID != null)
@@ -181,19 +180,16 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   /**
    * @since 4.1
    */
-  protected CDONet4jSession getNet4jSession(IConnector connector, String userName, String passWord,
-      String repositoryName)
+  protected CDONet4jSession getNet4jSession(IConnector connector, String userName, String passWord, String repositoryName)
   {
-    CDONet4jSessionConfiguration configuration = getNet4jSessionConfiguration(connector, userName, passWord,
-        repositoryName);
+    CDONet4jSessionConfiguration configuration = getNet4jSessionConfiguration(connector, userName, passWord, repositoryName);
     return configuration.openNet4jSession();
   }
 
   /**
    * @since 4.1
    */
-  protected CDONet4jSessionConfiguration getNet4jSessionConfiguration(IConnector connector, String userName,
-      String passWord, String repositoryName)
+  protected CDONet4jSessionConfiguration getNet4jSessionConfiguration(IConnector connector, String userName, String passWord, String repositoryName)
   {
     CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setConnector(connector);
@@ -212,8 +208,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
 
       try
       {
-        credentialsProvider = (IPasswordCredentialsProvider)getContainer()
-            .getElement("org.eclipse.net4j.util.credentialsProviders", "password", resource);
+        credentialsProvider = (IPasswordCredentialsProvider)getContainer().getElement("org.eclipse.net4j.util.credentialsProviders", "password", resource);
       }
       catch (FactoryNotFoundException ex)
       {
@@ -239,8 +234,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
    *             getNet4jSessionConfiguration()}.
    */
   @Deprecated
-  protected CDOSessionConfiguration getSessionConfiguration(IConnector connector, String userName, String passWord,
-      String repositoryName)
+  protected CDOSessionConfiguration getSessionConfiguration(IConnector connector, String userName, String passWord, String repositoryName)
   {
     return (CDOSessionConfiguration)getNet4jSessionConfiguration(connector, userName, passWord, repositoryName);
   }

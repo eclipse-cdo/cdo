@@ -74,50 +74,42 @@ public class AcoreElementTypes extends ElementInitializers
   /**
    * @generated
    */
-  public static final IElementType ACoreRoot_1000 = getElementType(
-      "org.eclipse.emf.cdo.dawn.examples.acore.diagram.ACoreRoot_1000"); //$NON-NLS-1$
+  public static final IElementType ACoreRoot_1000 = getElementType("org.eclipse.emf.cdo.dawn.examples.acore.diagram.ACoreRoot_1000"); //$NON-NLS-1$
 
   /**
    * @generated
    */
-  public static final IElementType AInterface_2001 = getElementType(
-      "org.eclipse.emf.cdo.dawn.examples.acore.diagram.AInterface_2001"); //$NON-NLS-1$
+  public static final IElementType AInterface_2001 = getElementType("org.eclipse.emf.cdo.dawn.examples.acore.diagram.AInterface_2001"); //$NON-NLS-1$
 
   /**
    * @generated
    */
-  public static final IElementType AClass_2002 = getElementType(
-      "org.eclipse.emf.cdo.dawn.examples.acore.diagram.AClass_2002"); //$NON-NLS-1$
+  public static final IElementType AClass_2002 = getElementType("org.eclipse.emf.cdo.dawn.examples.acore.diagram.AClass_2002"); //$NON-NLS-1$
 
   /**
    * @generated
    */
-  public static final IElementType AAttribute_3001 = getElementType(
-      "org.eclipse.emf.cdo.dawn.examples.acore.diagram.AAttribute_3001"); //$NON-NLS-1$
+  public static final IElementType AAttribute_3001 = getElementType("org.eclipse.emf.cdo.dawn.examples.acore.diagram.AAttribute_3001"); //$NON-NLS-1$
 
   /**
    * @generated
    */
-  public static final IElementType AOperation_3002 = getElementType(
-      "org.eclipse.emf.cdo.dawn.examples.acore.diagram.AOperation_3002"); //$NON-NLS-1$
+  public static final IElementType AOperation_3002 = getElementType("org.eclipse.emf.cdo.dawn.examples.acore.diagram.AOperation_3002"); //$NON-NLS-1$
 
   /**
    * @generated
    */
-  public static final IElementType AAttribute_3003 = getElementType(
-      "org.eclipse.emf.cdo.dawn.examples.acore.diagram.AAttribute_3003"); //$NON-NLS-1$
+  public static final IElementType AAttribute_3003 = getElementType("org.eclipse.emf.cdo.dawn.examples.acore.diagram.AAttribute_3003"); //$NON-NLS-1$
 
   /**
    * @generated
    */
-  public static final IElementType AOperation_3004 = getElementType(
-      "org.eclipse.emf.cdo.dawn.examples.acore.diagram.AOperation_3004"); //$NON-NLS-1$
+  public static final IElementType AOperation_3004 = getElementType("org.eclipse.emf.cdo.dawn.examples.acore.diagram.AOperation_3004"); //$NON-NLS-1$
 
   /**
    * @generated
    */
-  public static final IElementType AClassSubClasses_4001 = getElementType(
-      "org.eclipse.emf.cdo.dawn.examples.acore.diagram.AClassSubClasses_4001"); //$NON-NLS-1$
+  public static final IElementType AClassSubClasses_4001 = getElementType("org.eclipse.emf.cdo.dawn.examples.acore.diagram.AClassSubClasses_4001"); //$NON-NLS-1$
 
   /**
    * @generated
@@ -128,20 +120,17 @@ public class AcoreElementTypes extends ElementInitializers
   /**
    * @generated
    */
-  public static final IElementType AClassAssociations_4003 = getElementType(
-      "org.eclipse.emf.cdo.dawn.examples.acore.diagram.AClassAssociations_4003"); //$NON-NLS-1$
+  public static final IElementType AClassAssociations_4003 = getElementType("org.eclipse.emf.cdo.dawn.examples.acore.diagram.AClassAssociations_4003"); //$NON-NLS-1$
 
   /**
    * @generated
    */
-  public static final IElementType AClassAggregations_4004 = getElementType(
-      "org.eclipse.emf.cdo.dawn.examples.acore.diagram.AClassAggregations_4004"); //$NON-NLS-1$
+  public static final IElementType AClassAggregations_4004 = getElementType("org.eclipse.emf.cdo.dawn.examples.acore.diagram.AClassAggregations_4004"); //$NON-NLS-1$
 
   /**
    * @generated
    */
-  public static final IElementType AClassCompositions_4005 = getElementType(
-      "org.eclipse.emf.cdo.dawn.examples.acore.diagram.AClassCompositions_4005"); //$NON-NLS-1$
+  public static final IElementType AClassCompositions_4005 = getElementType("org.eclipse.emf.cdo.dawn.examples.acore.diagram.AClassCompositions_4005"); //$NON-NLS-1$
 
   /**
    * @generated
@@ -187,8 +176,7 @@ public class AcoreElementTypes extends ElementInitializers
       EClass eClass = (EClass)element;
       if (!eClass.isAbstract())
       {
-        return AcoreDiagramEditorPlugin.getInstance()
-            .getItemImageDescriptor(eClass.getEPackage().getEFactoryInstance().create(eClass));
+        return AcoreDiagramEditorPlugin.getInstance().getItemImageDescriptor(eClass.getEPackage().getEFactoryInstance().create(eClass));
       }
     }
     // TODO : support structural features

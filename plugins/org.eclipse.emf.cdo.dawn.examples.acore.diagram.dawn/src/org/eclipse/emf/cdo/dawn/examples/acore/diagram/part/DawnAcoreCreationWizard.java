@@ -44,8 +44,7 @@ public class DawnAcoreCreationWizard extends AcoreCreationWizard
   {
     super();
     // CDOConnectionUtil.instance.init("repo1", "tcp", "localhost");
-    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
-        PreferenceConstants.getServerName());
+    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(), PreferenceConstants.getServerName());
     CDOSession session = CDOConnectionUtil.instance.openSession();
     view = CDOConnectionUtil.instance.openView(session);
   }
@@ -71,8 +70,7 @@ public class DawnAcoreCreationWizard extends AcoreCreationWizard
           }
           catch (PartInitException e)
           {
-            ErrorDialog.openError(getContainer().getShell(), Messages.AcoreCreationWizardOpenEditorError, null,
-                e.getStatus());
+            ErrorDialog.openError(getContainer().getShell(), Messages.AcoreCreationWizardOpenEditorError, null, e.getStatus());
           }
         }
       }
@@ -89,8 +87,7 @@ public class DawnAcoreCreationWizard extends AcoreCreationWizard
     {
       if (e.getTargetException() instanceof CoreException)
       {
-        ErrorDialog.openError(getContainer().getShell(), Messages.AcoreCreationWizardCreationError, null,
-            ((CoreException)e.getTargetException()).getStatus());
+        ErrorDialog.openError(getContainer().getShell(), Messages.AcoreCreationWizardCreationError, null, ((CoreException)e.getTargetException()).getStatus());
       }
       else
       {

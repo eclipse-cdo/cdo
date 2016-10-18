@@ -129,12 +129,10 @@ public abstract class Store extends Lifecycle implements InternalStore
     checkArg(supportedChangeFormats != null && !supportedChangeFormats.isEmpty(), "Empty supportedChangeFormats"); //$NON-NLS-1$
     this.supportedChangeFormats = supportedChangeFormats;
 
-    checkArg(supportedRevisionTemporalities != null && !supportedRevisionTemporalities.isEmpty(),
-        "Empty supportedRevisionTemporalities"); //$NON-NLS-1$
+    checkArg(supportedRevisionTemporalities != null && !supportedRevisionTemporalities.isEmpty(), "Empty supportedRevisionTemporalities"); //$NON-NLS-1$
     this.supportedRevisionTemporalities = supportedRevisionTemporalities;
 
-    checkArg(supportedRevisionParallelisms != null && !supportedRevisionParallelisms.isEmpty(),
-        "Empty supportedRevisionParallelisms"); //$NON-NLS-1$
+    checkArg(supportedRevisionParallelisms != null && !supportedRevisionParallelisms.isEmpty(), "Empty supportedRevisionParallelisms"); //$NON-NLS-1$
     this.supportedRevisionParallelisms = supportedRevisionParallelisms;
   }
 
@@ -512,8 +510,8 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 3.0
    */
-  public static IStoreAccessor.QueryResourcesContext.ExactMatch createExactMatchContext(final CDOID folderID,
-      final String name, final CDOBranchPoint branchPoint)
+  public static IStoreAccessor.QueryResourcesContext.ExactMatch createExactMatchContext(final CDOID folderID, final String name,
+      final CDOBranchPoint branchPoint)
   {
     return new IStoreAccessor.QueryResourcesContext.ExactMatch()
     {

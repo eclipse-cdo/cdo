@@ -89,8 +89,7 @@ public abstract class InvocationImpl extends CDOObjectImpl implements Invocation
   @SuppressWarnings("unchecked")
   public EList<Expression> getArguments()
   {
-    return (EList<Expression>)eDynamicGet(ExpressionsPackage.INVOCATION__ARGUMENTS,
-        ExpressionsPackage.Literals.INVOCATION__ARGUMENTS, true, true);
+    return (EList<Expression>)eDynamicGet(ExpressionsPackage.INVOCATION__ARGUMENTS, ExpressionsPackage.Literals.INVOCATION__ARGUMENTS, true, true);
   }
 
   /**
@@ -100,8 +99,7 @@ public abstract class InvocationImpl extends CDOObjectImpl implements Invocation
    */
   public Expression getName()
   {
-    return (Expression)eDynamicGet(ExpressionsPackage.INVOCATION__NAME, ExpressionsPackage.Literals.INVOCATION__NAME,
-        true, true);
+    return (Expression)eDynamicGet(ExpressionsPackage.INVOCATION__NAME, ExpressionsPackage.Literals.INVOCATION__NAME, true, true);
   }
 
   /**

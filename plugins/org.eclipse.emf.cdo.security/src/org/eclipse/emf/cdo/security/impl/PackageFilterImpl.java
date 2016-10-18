@@ -78,8 +78,7 @@ public class PackageFilterImpl extends PermissionFilterImpl implements PackageFi
   }
 
   @Override
-  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
-      int level) throws Exception
+  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext, int level) throws Exception
   {
     EPackage actualPackage = revision.getEClass().getEPackage();
     EPackage applicablePackage = getApplicablePackage();

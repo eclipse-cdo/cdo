@@ -154,8 +154,7 @@ public class HibernateQueryTest extends AbstractCDOTest
       // result with arrays are tested below
       // CDOQuery cdoQuery = transaction.createQuery("hql",
       // "select so.id, sum(od.price) from SalesOrder so, OrderDetail od where od.order=so group by so.id");
-      CDOQuery cdoQuery = transaction.createQuery("hql",
-          "select sum(od.price) from SalesOrder so, OrderDetail od where od.order=so group by so.id");
+      CDOQuery cdoQuery = transaction.createQuery("hql", "select sum(od.price) from SalesOrder so, OrderDetail od where od.order=so group by so.id");
       addCacheParameter(cdoQuery);
       final List<Double> results = cdoQuery.getResult(Double.class);
       assertEquals(NUM_OF_SALES_ORDERS * NUM_OF_CUSTOMERS, results.size());
@@ -208,8 +207,7 @@ public class HibernateQueryTest extends AbstractCDOTest
           orderQuery.setParameter("product", product);
           addCacheParameter(orderQuery);
 
-          final boolean hasOrders = productCounter <= productIndex
-              && productIndex < productCounter + NUM_OF_PRODUCTS_CUSTOMER;
+          final boolean hasOrders = productCounter <= productIndex && productIndex < productCounter + NUM_OF_PRODUCTS_CUSTOMER;
           if (hasOrders)
           {
             final List<SalesOrder> sos = orderQuery.getResult(SalesOrder.class);
@@ -258,8 +256,7 @@ public class HibernateQueryTest extends AbstractCDOTest
       final List<OrderDetail> orderDetails = odQuery.getResult(OrderDetail.class);
       for (OrderDetail orderDetail : orderDetails)
       {
-        final CDOQuery orderQuery = transaction.createQuery("hql",
-            "select so from SalesOrder so where :od in elements(so.orderDetails)");
+        final CDOQuery orderQuery = transaction.createQuery("hql", "select so from SalesOrder so where :od in elements(so.orderDetails)");
         orderQuery.setParameter("od", orderDetail);
         final List<SalesOrder> sos = orderQuery.getResult(SalesOrder.class);
         assertEquals(1, sos.size());
@@ -291,8 +288,7 @@ public class HibernateQueryTest extends AbstractCDOTest
       final List<Customer> customers = odQuery.getResult(Customer.class);
       for (Customer customer : customers)
       {
-        final CDOQuery orderQuery = transaction.createQuery("hql",
-            "select so from SalesOrder so where so.customer.id=:customerId");
+        final CDOQuery orderQuery = transaction.createQuery("hql", "select so from SalesOrder so where so.customer.id=:customerId");
         final CDOObject cdoObject = CDOUtil.getCDOObject(customer);
         final CDOID id = cdoObject.cdoID();
         orderQuery.setParameter("customerId", HibernateUtil.getInstance().getIdValue(id));
@@ -321,8 +317,7 @@ public class HibernateQueryTest extends AbstractCDOTest
 
     {
       msg("Query for order details");
-      CDOQuery query = transaction.createQuery("hql",
-          "select od, od.order, od.product.vat, od.price from OrderDetail as od where od.product.vat=:vat");
+      CDOQuery query = transaction.createQuery("hql", "select od, od.order, od.product.vat, od.price from OrderDetail as od where od.product.vat=:vat");
       query.setParameter("vat", VAT.VAT15);
       addCacheParameter(query);
       for (Object[] values : query.getResult(Object[].class))
@@ -457,8 +452,7 @@ public class HibernateQueryTest extends AbstractCDOTest
       customer.setStreet("Street " + i);
       resource.getContents().add(customer);
 
-      final List<Product1> customerProducts = products.subList(productCounter,
-          productCounter + NUM_OF_PRODUCTS_CUSTOMER);
+      final List<Product1> customerProducts = products.subList(productCounter, productCounter + NUM_OF_PRODUCTS_CUSTOMER);
       for (int k = 0; k < NUM_OF_SALES_ORDERS; k++)
       {
         resource.getContents().add(createSalesOrder(i * 10 + k, customer, customerProducts));

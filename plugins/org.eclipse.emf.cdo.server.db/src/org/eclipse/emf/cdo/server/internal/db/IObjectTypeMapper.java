@@ -46,8 +46,7 @@ public interface IObjectTypeMapper
    */
   public CDOID getMaxID(Connection connection, IIDHandler idHandler);
 
-  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
-      throws IOException;
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException;
 
   public void rawImport(Connection connection, CDODataInput in, OMMonitor monitor) throws IOException;
 }

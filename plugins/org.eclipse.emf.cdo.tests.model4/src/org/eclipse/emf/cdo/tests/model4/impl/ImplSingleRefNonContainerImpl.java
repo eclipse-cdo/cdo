@@ -68,8 +68,7 @@ public class ImplSingleRefNonContainerImpl extends CDOObjectImpl implements Impl
    */
   public ISingleRefNonContainedElement getElement()
   {
-    return (ISingleRefNonContainedElement)eGet(model4interfacesPackage.eINSTANCE.getISingleRefNonContainer_Element(),
-        true);
+    return (ISingleRefNonContainedElement)eGet(model4interfacesPackage.eINSTANCE.getISingleRefNonContainer_Element(), true);
   }
 
   /**

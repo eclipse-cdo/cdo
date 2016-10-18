@@ -89,8 +89,7 @@ public class ContainedElementNoOppositeImpl extends EObjectImpl implements Conta
     name = newName;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.CONTAINED_ELEMENT_NO_OPPOSITE__NAME, oldName,
-          name));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.CONTAINED_ELEMENT_NO_OPPOSITE__NAME, oldName, name));
     }
   }
 

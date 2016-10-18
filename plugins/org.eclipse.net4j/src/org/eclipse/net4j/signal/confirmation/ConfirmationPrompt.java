@@ -34,14 +34,12 @@ public class ConfirmationPrompt
 
   private final Confirmation suggestedResponse;
 
-  public ConfirmationPrompt(String subject, String message, Confirmation suggestedResponse,
-      Confirmation acceptableResponse, Confirmation... more)
+  public ConfirmationPrompt(String subject, String message, Confirmation suggestedResponse, Confirmation acceptableResponse, Confirmation... more)
   {
     this(subject, message, suggestedResponse, EnumSet.of(acceptableResponse, more));
   }
 
-  public ConfirmationPrompt(String subject, String message, Confirmation suggestedResponse,
-      Collection<Confirmation> acceptableResponses)
+  public ConfirmationPrompt(String subject, String message, Confirmation suggestedResponse, Collection<Confirmation> acceptableResponses)
   {
     this.subject = subject;
     this.message = message;

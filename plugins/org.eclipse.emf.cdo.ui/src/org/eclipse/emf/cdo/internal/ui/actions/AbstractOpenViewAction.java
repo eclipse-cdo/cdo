@@ -21,8 +21,7 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public abstract class AbstractOpenViewAction extends SessionAction
 {
-  public AbstractOpenViewAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
-      CDOSession session)
+  public AbstractOpenViewAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image, CDOSession session)
   {
     super(page, text, toolTipText, image, session);
   }

@@ -94,8 +94,7 @@ public class ChallengeNegotiator extends ChallengeResponseNegotiator
   {
     try
     {
-      return userManager.encrypt(userID, token, getEncryptionAlgorithmName(), getEncryptionSaltBytes(),
-          getEncryptionIterationCount());
+      return userManager.encrypt(userID, token, getEncryptionAlgorithmName(), getEncryptionSaltBytes(), getEncryptionIterationCount());
     }
     catch (Exception ex)
     {

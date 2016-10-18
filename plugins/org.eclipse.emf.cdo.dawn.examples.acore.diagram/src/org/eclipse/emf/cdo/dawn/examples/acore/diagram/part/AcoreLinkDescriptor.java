@@ -71,8 +71,7 @@ public class AcoreLinkDescriptor extends AcoreNodeDescriptor
   /**
    * @generated
    */
-  public AcoreLinkDescriptor(EObject source, EObject destination, EObject linkElement, IElementType elementType,
-      int linkVID)
+  public AcoreLinkDescriptor(EObject source, EObject destination, EObject linkElement, IElementType elementType, int linkVID)
   {
     this(source, destination, linkElement, linkVID);
     final IElementType elementTypeCopy = elementType;

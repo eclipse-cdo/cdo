@@ -116,8 +116,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
     return fillMenu(page, viewer, subMenu, selectedElement);
   }
 
-  public static boolean fillMenu(IWorkbenchPage page, StructuredViewer viewer, IMenuManager menu,
-      Object selectedElement)
+  public static boolean fillMenu(IWorkbenchPage page, StructuredViewer viewer, IMenuManager menu, Object selectedElement)
   {
     boolean filled = false;
 
@@ -510,8 +509,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
     @Override
     protected void run(IViewPart viewPart) throws Exception
     {
-      CDOCheckoutContentProvider checkoutContentProvider = CDOCheckoutContentProvider
-          .getInstance(CDOCheckoutContentProvider.PROJECT_EXPLORER_ID);
+      CDOCheckoutContentProvider checkoutContentProvider = CDOCheckoutContentProvider.getInstance(CDOCheckoutContentProvider.PROJECT_EXPLORER_ID);
       if (checkoutContentProvider != null)
       {
         checkoutContentProvider.selectObjects((Object[])checkouts);
@@ -609,12 +607,11 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
 
       String description = repository.getURI();
       int lastSlash = description.lastIndexOf('/');
-      description = description.substring(0, lastSlash) + "?repositoryName=" + repository.getName()
-          + "&automaticPackageRegistry=true&repositoryID=" + repository.getID();
+      description = description.substring(0, lastSlash) + "?repositoryName=" + repository.getName() + "&automaticPackageRegistry=true&repositoryID="
+          + repository.getID();
 
-      return (CDOSession)IPluginContainer.INSTANCE.getElement(CDOSessionFactory.PRODUCT_GROUP, "cdo",
-          repository.getConnectorType() + "://" + repository.getConnectorDescription() + "?repositoryName="
-              + repository.getName() + "&repositoryID=" + repository.getID());
+      return (CDOSession)IPluginContainer.INSTANCE.getElement(CDOSessionFactory.PRODUCT_GROUP, "cdo", repository.getConnectorType() + "://"
+          + repository.getConnectorDescription() + "?repositoryName=" + repository.getName() + "&repositoryID=" + repository.getID());
     }
   }
 

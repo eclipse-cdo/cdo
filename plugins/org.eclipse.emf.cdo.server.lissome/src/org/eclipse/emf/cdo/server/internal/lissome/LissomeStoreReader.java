@@ -140,8 +140,7 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
     return journal.loadPackageUnit(packageUnit);
   }
 
-  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
-      CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk, CDORevisionCacheAdder cache)
   {
     Optimizer optimizer = getStore().getOptimizer();
     InternalCDORevision revision = optimizer.readRevision(id, branchPoint);
@@ -164,8 +163,7 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
     return readRevision(info);
   }
 
-  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
-      CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk, CDORevisionCacheAdder cache)
   {
     RevisionInfo info = indexReader.readRevisionByVersion(id, branchVersion);
     return readRevision(info);
@@ -217,8 +215,7 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
     }
   }
 
-  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
-      final CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, final CDORevisionHandler handler)
   {
     indexReader.handleRevisions(eClass, branch, timeStamp, exactTime, new RevisionInfo.Handler()
     {
@@ -424,15 +421,13 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
     return Pair.create(branchID, branchInfo.getBaseTimeStamp());
   }
 
-  public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,
-      Map<CDOID, LockGrade> locks) throws LockAreaAlreadyExistsException
+  public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks) throws LockAreaAlreadyExistsException
   {
     // Implemented in LissomeStoreWriter
     throw new UnsupportedOperationException();
   }
 
-  public LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly,
-      Map<CDOID, LockGrade> locks)
+  public LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     // Implemented in LissomeStoreWriter
     throw new UnsupportedOperationException();

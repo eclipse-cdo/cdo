@@ -85,8 +85,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
 
     // Obtain or create and register package
     DawnGmfGenmodelPackageImpl theDawnGmfGenmodelPackage = (DawnGmfGenmodelPackageImpl)(EPackage.Registry.INSTANCE
-        .get(eNS_URI) instanceof DawnGmfGenmodelPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-            : new DawnGmfGenmodelPackageImpl());
+        .get(eNS_URI) instanceof DawnGmfGenmodelPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new DawnGmfGenmodelPackageImpl());
 
     isInited = true;
 
@@ -279,8 +278,7 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
     setNsURI(eNS_URI);
 
     // Obtain other dependent packages
-    DawngenmodelPackage theDawngenmodelPackage = (DawngenmodelPackage)EPackage.Registry.INSTANCE
-        .getEPackage(DawngenmodelPackage.eNS_URI);
+    DawngenmodelPackage theDawngenmodelPackage = (DawngenmodelPackage)EPackage.Registry.INSTANCE.getEPackage(DawngenmodelPackage.eNS_URI);
     EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
     GMFGenPackage theGMFGenPackage = (GMFGenPackage)EPackage.Registry.INSTANCE.getEPackage(GMFGenPackage.eNS_URI);
 
@@ -292,35 +290,26 @@ public class DawnGmfGenmodelPackageImpl extends EPackageImpl implements DawnGmfG
     dawnGMFGeneratorEClass.getESuperTypes().add(theDawngenmodelPackage.getDawnFragmentGenerator());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(dawnGMFGeneratorEClass, DawnGMFGenerator.class, "DawnGMFGenerator", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getDawnGMFGenerator_DawnDocumentProviderClassName(), theEcorePackage.getEString(),
-        "dawnDocumentProviderClassName", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getDawnGMFGenerator_DawnEditorUtilClassName(), theEcorePackage.getEString(),
-        "dawnEditorUtilClassName", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getDawnGMFGenerator_DawnCreationWizardClassName(), theEcorePackage.getEString(),
-        "dawnCreationWizardClassName", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getDawnGMFGenerator_DawnCanonicalEditingPolicyClassName(), theEcorePackage.getEString(),
-        "dawnCanonicalEditingPolicyClassName", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getDawnGMFGenerator_DawnDiagramEditPartClassName(), theEcorePackage.getEString(),
-        "dawnDiagramEditPartClassName", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getDawnGMFGenerator_DawnEditPartFactoryClassName(), theEcorePackage.getEString(),
-        "dawnEditPartFactoryClassName", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getDawnGMFGenerator_DawnEditPartProviderClassName(), theEcorePackage.getEString(),
-        "dawnEditPartProviderClassName", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getDawnGMFGenerator_DawnEditPolicyProviderClassName(), theEcorePackage.getEString(),
-        "dawnEditPolicyProviderClassName", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDawnGMFGenerator_GMFGenEditorGenerator(), theGMFGenPackage.getGenEditorGenerator(), null,
-        "GMFGenEditorGenerator", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(dawnGMFGeneratorEClass, DawnGMFGenerator.class, "DawnGMFGenerator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getDawnGMFGenerator_DawnDocumentProviderClassName(), theEcorePackage.getEString(), "dawnDocumentProviderClassName", null, 0, 1,
+        DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDawnGMFGenerator_DawnEditorUtilClassName(), theEcorePackage.getEString(), "dawnEditorUtilClassName", null, 0, 1, DawnGMFGenerator.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDawnGMFGenerator_DawnCreationWizardClassName(), theEcorePackage.getEString(), "dawnCreationWizardClassName", null, 0, 1,
+        DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDawnGMFGenerator_DawnCanonicalEditingPolicyClassName(), theEcorePackage.getEString(), "dawnCanonicalEditingPolicyClassName", null, 0, 1,
+        DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDawnGMFGenerator_DawnDiagramEditPartClassName(), theEcorePackage.getEString(), "dawnDiagramEditPartClassName", null, 0, 1,
+        DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDawnGMFGenerator_DawnEditPartFactoryClassName(), theEcorePackage.getEString(), "dawnEditPartFactoryClassName", null, 0, 1,
+        DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDawnGMFGenerator_DawnEditPartProviderClassName(), theEcorePackage.getEString(), "dawnEditPartProviderClassName", null, 0, 1,
+        DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDawnGMFGenerator_DawnEditPolicyProviderClassName(), theEcorePackage.getEString(), "dawnEditPolicyProviderClassName", null, 0, 1,
+        DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDawnGMFGenerator_GMFGenEditorGenerator(), theGMFGenPackage.getGenEditorGenerator(), null, "GMFGenEditorGenerator", null, 0, 1,
+        DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

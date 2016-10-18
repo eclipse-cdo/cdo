@@ -85,8 +85,7 @@ import java.util.Map;
  * @author Lothar Werzinger
  * @since 3.0
  */
-public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTableMapping
-    implements IListMappingDeltaSupport
+public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTableMapping implements IListMappingDeltaSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AuditFeatureMapTableMappingWithRanges.class);
 
@@ -136,8 +135,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
 
   private String sqlDeleteList;
 
-  public AuditFeatureMapTableMappingWithRanges(IMappingStrategy mappingStrategy, EClass eClass,
-      EStructuralFeature feature)
+  public AuditFeatureMapTableMappingWithRanges(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
     super(mappingStrategy, eClass, feature);
     initDBTypes();
@@ -646,8 +644,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
   public void clearList(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmtDeleteTemp = accessor.getDBConnection().prepareStatement(sqlDeleteList,
-        ReuseProbability.HIGH);
+    IDBPreparedStatement stmtDeleteTemp = accessor.getDBConnection().prepareStatement(sqlDeleteList, ReuseProbability.HIGH);
     IDBPreparedStatement stmtClear = accessor.getDBConnection().prepareStatement(sqlClearList, ReuseProbability.HIGH);
 
     try
@@ -693,8 +690,8 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     CDOBranch main = getMappingStrategy().getStore().getRepository().getBranchManager().getMainBranch();
 
     // get revision from cache to find out version number
-    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id,
-        main.getHead(), /* chunksize = */0, CDORevision.DEPTH_NONE, true);
+    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id, main.getHead(),
+        /* chunksize = */0, CDORevision.DEPTH_NONE, true);
 
     // set cdo_revision_removed for all list items (so we have no NULL values)
     clearList(accessor, id, revision.getVersion(), FINAL_VERSION);
@@ -706,12 +703,12 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     throw new UnsupportedOperationException("Raw deletion does not work in range-based mappings");
   }
 
-  public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion,
-      final int newVersion, long created, CDOListFeatureDelta delta)
+  public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion, final int newVersion, long created,
+      CDOListFeatureDelta delta)
   {
     IRepository repo = accessor.getStore().getRepository();
-    InternalCDORevision originalRevision = (InternalCDORevision)repo.getRevisionManager().getRevision(id,
-        repo.getBranchManager().getMainBranch().getHead(), /* chunksize = */0, CDORevision.DEPTH_NONE, true);
+    InternalCDORevision originalRevision = (InternalCDORevision)repo.getRevisionManager().getRevision(id, repo.getBranchManager().getMainBranch().getHead(),
+        /* chunksize = */0, CDORevision.DEPTH_NONE, true);
 
     int oldListSize = originalRevision.getList(getFeature()).size();
 
@@ -751,8 +748,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
 
     private long timestamp;
 
-    public ListDeltaVisitor(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int oldVersion,
-        int newVersion, long timestamp)
+    public ListDeltaVisitor(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int oldVersion, int newVersion, long timestamp)
     {
       this.accessor = accessor;
       this.originalRevision = originalRevision;
@@ -886,8 +882,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
       throw new ImplementationError("Should not be called"); //$NON-NLS-1$
     }
 
-    private void moveOneUp(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex,
-        int endIndex)
+    private void moveOneUp(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex, int endIndex)
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
       IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
@@ -954,8 +949,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
       }
     }
 
-    private void moveOneDown(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex,
-        int endIndex)
+    private void moveOneDown(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex, int endIndex)
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
       IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
@@ -1190,8 +1184,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     }
   }
 
-  public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere,
-      QueryXRefsContext context, String idString)
+  public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere, QueryXRefsContext context, String idString)
   {
     // must never be called (a feature map is not associated with an EReference feature, so XRefs are nor supported
     // here)

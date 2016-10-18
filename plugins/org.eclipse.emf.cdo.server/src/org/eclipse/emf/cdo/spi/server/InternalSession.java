@@ -80,11 +80,10 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionP
 
   public void setSubscribed(boolean subscribed);
 
-  public void collectContainedRevisions(InternalCDORevision revision, CDOBranchPoint branchPoint, int referenceChunk,
-      Set<CDOID> revisions, List<CDORevision> additionalRevisions);
+  public void collectContainedRevisions(InternalCDORevision revision, CDOBranchPoint branchPoint, int referenceChunk, Set<CDOID> revisions,
+      List<CDORevision> additionalRevisions);
 
-  public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
-      throws Exception;
+  public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType) throws Exception;
 
   /**
    * @deprecated use
@@ -92,14 +91,12 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionP
    *             instead
    */
   @Deprecated
-  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
-      throws Exception;
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState) throws Exception;
 
   /**
    * @since 4.1
    */
-  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState,
-      CDOID rootResourceID) throws Exception;
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState, CDOID rootResourceID) throws Exception;
 
   /**
    * @deprecated As of 4.3 use {@link #sendBranchNotification(InternalCDOBranch, ChangeKind)}.

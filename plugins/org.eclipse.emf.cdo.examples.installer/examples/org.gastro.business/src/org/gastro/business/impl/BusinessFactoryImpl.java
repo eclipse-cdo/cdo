@@ -43,8 +43,7 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
   {
     try
     {
-      BusinessFactory theBusinessFactory = (BusinessFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.gastro.org/business/1.0");
+      BusinessFactory theBusinessFactory = (BusinessFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.gastro.org/business/1.0");
       if (theBusinessFactory != null)
       {
         return theBusinessFactory;
@@ -170,8 +169,7 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
     OrderState result = OrderState.get(initialValue);
     if (result == null)
     {
-      throw new IllegalArgumentException(
-          "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
     }
     return result;
   }

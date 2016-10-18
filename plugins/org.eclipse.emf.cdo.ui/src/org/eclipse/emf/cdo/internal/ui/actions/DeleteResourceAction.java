@@ -49,8 +49,7 @@ public class DeleteResourceAction extends SafeAction
 
   public DeleteResourceAction(Shell shell, List<CDOResourceNode> nodes)
   {
-    super(Messages.getString("DeleteResourceAction_1"), Messages.getString("DeleteResourceAction_5"),
-        SharedIcons.getDescriptor(SharedIcons.ETOOL_DELETE));
+    super(Messages.getString("DeleteResourceAction_1"), Messages.getString("DeleteResourceAction_5"), SharedIcons.getDescriptor(SharedIcons.ETOOL_DELETE));
     this.shell = shell;
     this.nodes = new HashSet<CDOResourceNode>(nodes);
   }

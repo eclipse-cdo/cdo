@@ -67,8 +67,7 @@ public class UserDetailsPage extends AbstractDetailsPage<User>
 
     space(parent, toolkit);
 
-    Control accessOverrideControl = combo(parent, toolkit, Messages.UserDetailsPage_6,
-        SecurityPackage.Literals.USER__DEFAULT_ACCESS_OVERRIDE).getControl();
+    Control accessOverrideControl = combo(parent, toolkit, Messages.UserDetailsPage_6, SecurityPackage.Literals.USER__DEFAULT_ACCESS_OVERRIDE).getControl();
     accessOverrideControl.setToolTipText(Messages.UserDetailsPage_10);
 
     space(parent, toolkit);

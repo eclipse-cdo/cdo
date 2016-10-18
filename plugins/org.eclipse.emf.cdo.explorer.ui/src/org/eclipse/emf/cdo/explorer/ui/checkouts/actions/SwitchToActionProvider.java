@@ -44,8 +44,7 @@ public class SwitchToActionProvider extends AbstractBranchPointActionProvider
   }
 
   @Override
-  protected void fillHistorizedAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout,
-      CDOBranchPoint branchPoint)
+  protected void fillHistorizedAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout, CDOBranchPoint branchPoint)
   {
     if (checkout.isReadOnly() || branchPoint.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
     {
@@ -81,8 +80,7 @@ public class SwitchToActionProvider extends AbstractBranchPointActionProvider
   }
 
   @Override
-  protected void fillOtherCheckoutAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout,
-      CDOCheckout otherCheckout)
+  protected void fillOtherCheckoutAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout, CDOCheckout otherCheckout)
   {
     if (checkout.isReadOnly() == otherCheckout.isReadOnly())
     {

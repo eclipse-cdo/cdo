@@ -120,8 +120,7 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
   @Override
   public String toString()
   {
-    return MessageFormat.format("DBSchemaDelta[name={0}, kind={1}, tableDeltas={2}]", getName(), getChangeKind(),
-        tableDeltas.values());
+    return MessageFormat.format("DBSchemaDelta[name={0}, kind={1}, tableDeltas={2}]", getName(), getChangeKind(), tableDeltas.values());
   }
 
   @Override

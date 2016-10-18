@@ -34,8 +34,7 @@ public final class SecurityUtil
   /**
    * @since 2.0
    */
-  public static final byte[] DEFAULT_SALT = { (byte)0xc7, (byte)0x73, (byte)0x21, (byte)0x8c, (byte)0x7e, (byte)0xc8,
-      (byte)0xee, (byte)0x99 };
+  public static final byte[] DEFAULT_SALT = { (byte)0xc7, (byte)0x73, (byte)0x21, (byte)0x8c, (byte)0x7e, (byte)0xc8, (byte)0xee, (byte)0x99 };
 
   /**
    * @since 2.0
@@ -49,9 +48,8 @@ public final class SecurityUtil
   /**
    * @since 2.0
    */
-  public static byte[] encrypt(byte[] data, char[] password, String algorithmName, byte[] salt, int count)
-      throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException,
-      InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException
+  public static byte[] encrypt(byte[] data, char[] password, String algorithmName, byte[] salt, int count) throws NoSuchAlgorithmException,
+      InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException
   {
     // Create PBE parameter set
     PBEParameterSpec pbeParamSpec = new PBEParameterSpec(salt, count);

@@ -37,8 +37,7 @@ public class LoadRevisionByVersionRequest extends CDOClientRequest<InternalCDORe
 
   private int referenceChunk;
 
-  public LoadRevisionByVersionRequest(CDOClientProtocol protocol, CDOID id, CDOBranchVersion branchVersion,
-      int referenceChunk)
+  public LoadRevisionByVersionRequest(CDOClientProtocol protocol, CDOID id, CDOBranchVersion branchVersion, int referenceChunk)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_VERSION);
     this.id = id;
@@ -78,7 +77,6 @@ public class LoadRevisionByVersionRequest extends CDOClientRequest<InternalCDORe
   @Override
   public String toString()
   {
-    return MessageFormat.format("LoadRevisionByVersionRequest(id={0}, branchVersion={1}, referenceChunk={2})", id,
-        branchVersion, referenceChunk);
+    return MessageFormat.format("LoadRevisionByVersionRequest(id={0}, branchVersion={1}, referenceChunk={2})", id, branchVersion, referenceChunk);
   }
 }

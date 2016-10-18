@@ -81,8 +81,7 @@ public class Bz356181_NonTransientImpl extends EObjectImpl implements Bz356181_N
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, HibernateTestPackage.BZ356181_NON_TRANSIENT__MAIN,
-              oldMain, main));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, HibernateTestPackage.BZ356181_NON_TRANSIENT__MAIN, oldMain, main));
         }
       }
     }
@@ -110,8 +109,7 @@ public class Bz356181_NonTransientImpl extends EObjectImpl implements Bz356181_N
     main = newMain;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ356181_NON_TRANSIENT__MAIN, oldMain,
-          main));
+      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ356181_NON_TRANSIENT__MAIN, oldMain, main));
     }
   }
 

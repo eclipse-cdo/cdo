@@ -197,8 +197,8 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public void switchTarget(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects,
-      List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects, OMMonitor monitor)
+  public void switchTarget(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects, List<CDORevisionKey> allChangedObjects,
+      List<CDOIDAndVersion> allDetachedObjects, OMMonitor monitor)
   {
     int attempt = 0;
     for (;;)
@@ -269,8 +269,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     int attempt = 0;
     for (;;)
@@ -288,8 +287,8 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Deprecated
-  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
-      CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs, OMMonitor monitor)
+  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData,
+      Collection<CDOLob<?>> lobs, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }
@@ -311,8 +310,8 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Deprecated
-  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
-      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
+  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment, CDOCommitData commitData,
+      Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }
@@ -659,8 +658,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
-      int fromIndex, int toIndex)
+  public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex, int fromIndex, int toIndex)
   {
     int attempt = 0;
     for (;;)
@@ -676,8 +674,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk,
-      int prefetchDepth)
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
   {
     int attempt = 0;
     for (;;)
@@ -726,8 +723,8 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Deprecated
-  public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
-      LockType lockType, long timeout) throws InterruptedException
+  public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch, LockType lockType, long timeout)
+      throws InterruptedException
   {
     throw new UnsupportedOperationException();
   }
@@ -735,8 +732,8 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   /**
    * @since 4.1
    */
-  public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch,
-      LockType lockType, boolean recursive, long timeout) throws InterruptedException
+  public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch, LockType lockType, boolean recursive,
+      long timeout) throws InterruptedException
 
   {
     int attempt = 0;
@@ -753,8 +750,8 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys,
-      CDOBranch viewedBranch, LockType lockType, boolean recursive, long timeout) throws InterruptedException
+  public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys, CDOBranch viewedBranch, LockType lockType,
+      boolean recursive, long timeout) throws InterruptedException
   {
     int attempt = 0;
     for (;;)
@@ -770,8 +767,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType,
-      boolean recursive)
+  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType, boolean recursive)
   {
     int attempt = 0;
     for (;;)
@@ -855,8 +851,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public RefreshSessionResult refresh(long lastUpdateTime,
-      Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
+  public RefreshSessionResult refresh(long lastUpdateTime, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
       boolean enablePassiveUpdates)
   {
     int attempt = 0;
@@ -879,8 +874,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     throw new UnsupportedOperationException();
   }
 
-  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType,
-      boolean recursive)
+  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType, boolean recursive)
   {
     int attempt = 0;
     for (;;)
@@ -995,8 +989,8 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Deprecated
-  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
-      CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo)
+  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
+      CDORevisionAvailabilityInfo sourceBaseInfo)
   {
     throw new UnsupportedOperationException();
   }
@@ -1068,8 +1062,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler,
-      OMMonitor monitor)
+  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
     int attempt = 0;
     for (;;)

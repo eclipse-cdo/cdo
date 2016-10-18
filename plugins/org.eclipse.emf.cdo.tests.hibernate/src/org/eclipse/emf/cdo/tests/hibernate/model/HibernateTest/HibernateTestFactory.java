@@ -28,8 +28,7 @@ public interface HibernateTestFactory extends EFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  HibernateTestFactory eINSTANCE = org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestFactoryImpl
-      .init();
+  HibernateTestFactory eINSTANCE = org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestFactoryImpl.init();
 
   /**
    * Returns a new object of class '<em>Bz356181 Main</em>'.

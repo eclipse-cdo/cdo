@@ -76,8 +76,7 @@ public class LinkedExpressionImpl extends CDOObjectImpl implements LinkedExpress
    */
   public Expression getExpression()
   {
-    return (Expression)eDynamicGet(ExpressionsPackage.LINKED_EXPRESSION__EXPRESSION,
-        ExpressionsPackage.Literals.LINKED_EXPRESSION__EXPRESSION, true, true);
+    return (Expression)eDynamicGet(ExpressionsPackage.LINKED_EXPRESSION__EXPRESSION, ExpressionsPackage.Literals.LINKED_EXPRESSION__EXPRESSION, true, true);
   }
 
   /**
@@ -87,8 +86,7 @@ public class LinkedExpressionImpl extends CDOObjectImpl implements LinkedExpress
    */
   public Expression basicGetExpression()
   {
-    return (Expression)eDynamicGet(ExpressionsPackage.LINKED_EXPRESSION__EXPRESSION,
-        ExpressionsPackage.Literals.LINKED_EXPRESSION__EXPRESSION, false, true);
+    return (Expression)eDynamicGet(ExpressionsPackage.LINKED_EXPRESSION__EXPRESSION, ExpressionsPackage.Literals.LINKED_EXPRESSION__EXPRESSION, false, true);
   }
 
   /**
@@ -98,8 +96,7 @@ public class LinkedExpressionImpl extends CDOObjectImpl implements LinkedExpress
    */
   public void setExpression(Expression newExpression)
   {
-    eDynamicSet(ExpressionsPackage.LINKED_EXPRESSION__EXPRESSION,
-        ExpressionsPackage.Literals.LINKED_EXPRESSION__EXPRESSION, newExpression);
+    eDynamicSet(ExpressionsPackage.LINKED_EXPRESSION__EXPRESSION, ExpressionsPackage.Literals.LINKED_EXPRESSION__EXPRESSION, newExpression);
   }
 
   /**

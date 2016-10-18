@@ -77,8 +77,7 @@ public class DawnCodeGenerationTest extends AbstractDawnUITest<SWTWorkbenchBot>
 
     sleep(10000);
 
-    IProject fragment = ResourcesPlugin.getWorkspace().getRoot()
-        .getProject("org.eclipse.emf.cdo.dawn.examples.acore.diagram.dawn");
+    IProject fragment = ResourcesPlugin.getWorkspace().getRoot().getProject("org.eclipse.emf.cdo.dawn.examples.acore.diagram.dawn");
 
     assertNotNull(fragment);
     String diagramFolder = "src/org/eclipse/emf/cdo/dawn/examples/acore/diagram";
@@ -86,26 +85,17 @@ public class DawnCodeGenerationTest extends AbstractDawnUITest<SWTWorkbenchBot>
     assertEquals(true, DawnCodeGenerationTestUtil.exists(fragment, "/fragment.xml"));
     assertEquals(true, DawnCodeGenerationTestUtil.exists(fragment, "/build.properties"));
 
-    assertEquals(true,
-        DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/edit/parts/DawnAcoreEditPartFactory.java"));
-    assertEquals(true,
-        DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/edit/parts/DawnACoreRootEditPart.java"));
-    assertEquals(true, DawnCodeGenerationTestUtil.exists(fragment,
-        diagramFolder + "/edit/policies/DawnACoreRootCanonicalEditPolicy.java"));
+    assertEquals(true, DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/edit/parts/DawnAcoreEditPartFactory.java"));
+    assertEquals(true, DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/edit/parts/DawnACoreRootEditPart.java"));
+    assertEquals(true, DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/edit/policies/DawnACoreRootCanonicalEditPolicy.java"));
 
-    assertEquals(true,
-        DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/part/DawnAcoreCreationWizard.java"));
-    assertEquals(true,
-        DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/part/DawnAcoreDiagramEditor.java"));
-    assertEquals(true,
-        DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/part/DawnAcoreDiagramEditorUtil.java"));
-    assertEquals(true,
-        DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/part/DawnAcoreDocumentProvider.java"));
+    assertEquals(true, DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/part/DawnAcoreCreationWizard.java"));
+    assertEquals(true, DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/part/DawnAcoreDiagramEditor.java"));
+    assertEquals(true, DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/part/DawnAcoreDiagramEditorUtil.java"));
+    assertEquals(true, DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/part/DawnAcoreDocumentProvider.java"));
 
-    assertEquals(true,
-        DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/providers/DawnAcoreEditPartProvider.java"));
-    assertEquals(true,
-        DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/providers/DawnAcoreEditPolicyProvider.java"));
+    assertEquals(true, DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/providers/DawnAcoreEditPartProvider.java"));
+    assertEquals(true, DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/providers/DawnAcoreEditPolicyProvider.java"));
     deleteProject("org.eclipse.emf.cdo.dawn.examples.acore.diagram.dawn");
     sleep(2000);
   }
@@ -121,8 +111,7 @@ public class DawnCodeGenerationTest extends AbstractDawnUITest<SWTWorkbenchBot>
     SWTBotTreeItem gmfgen = modelFolder.expandNode("acore.genmodel");
     gmfgen.contextMenu("Generate Dawn GenModel").click();
 
-    IProject rootProject = ResourcesPlugin.getWorkspace().getRoot()
-        .getProject("org.eclipse.emf.cdo.dawn.examples.acore");
+    IProject rootProject = ResourcesPlugin.getWorkspace().getRoot().getProject("org.eclipse.emf.cdo.dawn.examples.acore");
 
     waitUntilExists(rootProject, "model/acore.dawngenmodel", 10000);
 
@@ -140,8 +129,7 @@ public class DawnCodeGenerationTest extends AbstractDawnUITest<SWTWorkbenchBot>
     assertNotNull(modelFolder.getNode("acore.dawngenmodel"));
     assertNotNull(modelFolder.getNode("acore.dawngenmodel_emf"));
 
-    IProject fragment = ResourcesPlugin.getWorkspace().getRoot()
-        .getProject("org.eclipse.emf.cdo.dawn.examples.acore.editor.dawn");
+    IProject fragment = ResourcesPlugin.getWorkspace().getRoot().getProject("org.eclipse.emf.cdo.dawn.examples.acore.editor.dawn");
 
     assertNotNull(fragment);
 

@@ -80,8 +80,7 @@ public class WorkspaceUpdateHandler extends AbstractBaseHandler<OfflineCDOChecko
         CDOTransaction transaction = workspace.update(new CompareCDOMerger()
         {
           @Override
-          public void merge(CDOTransaction localTransaction, CDOView remoteView, Set<CDOID> affectedIDs)
-              throws ConflictException
+          public void merge(CDOTransaction localTransaction, CDOView remoteView, Set<CDOID> affectedIDs) throws ConflictException
           {
             IRegistry<String, Object> remoteProperties = remoteView.properties();
             remoteProperties.put(CDOCompareEditorUtil.PROP_COMPARISON_IMAGE, OM.getImage("icons/repository.gif"));
@@ -107,8 +106,7 @@ public class WorkspaceUpdateHandler extends AbstractBaseHandler<OfflineCDOChecko
     });
   }
 
-  private void mergeDefault(OfflineCDOCheckout checkout, CDOWorkspace workspace, IProgressMonitor monitor)
-      throws ConcurrentAccessException, CommitException
+  private void mergeDefault(OfflineCDOCheckout checkout, CDOWorkspace workspace, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException
   {
     CDOTransaction transaction = workspace.update(new DefaultCDOMerger.PerFeature.ManyValued());
     transaction.commit(monitor);

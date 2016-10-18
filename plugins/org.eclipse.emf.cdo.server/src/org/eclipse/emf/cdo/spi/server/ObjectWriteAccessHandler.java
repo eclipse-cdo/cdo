@@ -120,8 +120,8 @@ public class ObjectWriteAccessHandler implements WriteAccessHandler
     return dirtyObjects;
   }
 
-  public final void handleTransactionBeforeCommitting(ITransaction transaction,
-      IStoreAccessor.CommitContext commitContext, OMMonitor monitor) throws RuntimeException
+  public final void handleTransactionBeforeCommitting(ITransaction transaction, IStoreAccessor.CommitContext commitContext, OMMonitor monitor)
+      throws RuntimeException
   {
     try
     {
@@ -138,8 +138,7 @@ public class ObjectWriteAccessHandler implements WriteAccessHandler
     }
   }
 
-  public final void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext,
-      OMMonitor monitor)
+  public final void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
   {
     try
     {

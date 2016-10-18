@@ -35,8 +35,7 @@ public class Bugzilla_458279_Test extends AbstractCDOTest
   /**
    * Test {@link CDOMergingConflictResolver} without {@link ChangeSubscriptionRequest} sent to the server and using {@link PassiveUpdateMode#ADDITIONS}.
    */
-  public void testCDOMergingConflictResolverWithoutChangeSubscriptionRequestWithAdditionsPassiveUpdateMode()
-      throws Exception
+  public void testCDOMergingConflictResolverWithoutChangeSubscriptionRequestWithAdditionsPassiveUpdateMode() throws Exception
   {
     testCDOMergingConflictResolverWithoutChangeSubscriptionRequest(PassiveUpdateMode.ADDITIONS);
   }
@@ -44,8 +43,7 @@ public class Bugzilla_458279_Test extends AbstractCDOTest
   /**
    * Test {@link CDOMergingConflictResolver} without {@link ChangeSubscriptionRequest} sent to the server and using {@link PassiveUpdateMode#ADDITIONS}.
    */
-  public void testCDOMergingConflictResolverWithoutChangeSubscriptionRequestWithChangesPassiveUpdateMode()
-      throws Exception
+  public void testCDOMergingConflictResolverWithoutChangeSubscriptionRequestWithChangesPassiveUpdateMode() throws Exception
   {
     testCDOMergingConflictResolverWithoutChangeSubscriptionRequest(PassiveUpdateMode.CHANGES);
   }
@@ -53,8 +51,7 @@ public class Bugzilla_458279_Test extends AbstractCDOTest
   /**
    * Test {@link CDOMergingConflictResolver} without {@link ChangeSubscriptionRequest} sent to the server and using {@link PassiveUpdateMode#INVALIDATIONS}.
    */
-  public void testCDOMergingConflictResolverWithoutChangeSubscriptionRequestWithInvalidationsPassiveUpdateMode()
-      throws Exception
+  public void testCDOMergingConflictResolverWithoutChangeSubscriptionRequestWithInvalidationsPassiveUpdateMode() throws Exception
   {
     testCDOMergingConflictResolverWithoutChangeSubscriptionRequest(PassiveUpdateMode.INVALIDATIONS);
   }

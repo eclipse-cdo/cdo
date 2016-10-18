@@ -39,8 +39,7 @@ public final class CDOLockChangeInfoImpl implements CDOLockChangeInfo, CDOBranch
 
   private final boolean isInvalidateAll;
 
-  public CDOLockChangeInfoImpl(CDOBranchPoint branchPoint, CDOLockOwner lockOwner, CDOLockState[] lockStates,
-      Operation operation, LockType lockType)
+  public CDOLockChangeInfoImpl(CDOBranchPoint branchPoint, CDOLockOwner lockOwner, CDOLockState[] lockStates, Operation operation, LockType lockType)
   {
     this.branchPoint = branchPoint;
     this.lockOwner = lockOwner;

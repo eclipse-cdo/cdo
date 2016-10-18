@@ -68,13 +68,10 @@ public class BooleanValueItemProvider extends ValueItemProvider
    */
   protected void addLiteralPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_BooleanValue_literal_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_BooleanValue_literal_feature",
-                "_UI_BooleanValue_type"),
-            ExpressionsPackage.Literals.BOOLEAN_VALUE__LITERAL, true, false, false,
-            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_BooleanValue_literal_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_BooleanValue_literal_feature", "_UI_BooleanValue_type"),
+        ExpressionsPackage.Literals.BOOLEAN_VALUE__LITERAL, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**

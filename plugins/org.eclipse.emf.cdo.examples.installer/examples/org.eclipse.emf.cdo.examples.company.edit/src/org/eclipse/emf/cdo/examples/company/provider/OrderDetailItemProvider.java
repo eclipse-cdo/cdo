@@ -39,9 +39,8 @@ import java.util.List;
  *
  * @generated
  */
-public class OrderDetailItemProvider extends CDOItemProviderAdapter
-    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
-    IItemPropertySource, IItemColorProvider, IItemFontProvider
+public class OrderDetailItemProvider extends CDOItemProviderAdapter implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+    ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -78,11 +77,10 @@ public class OrderDetailItemProvider extends CDOItemProviderAdapter
    */
   protected void addProductPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_OrderDetail_product_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_product_feature", "_UI_OrderDetail_type"),
-            CompanyPackage.Literals.ORDER_DETAIL__PRODUCT, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_OrderDetail_product_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_product_feature", "_UI_OrderDetail_type"),
+        CompanyPackage.Literals.ORDER_DETAIL__PRODUCT, true, false, true, null, null, null));
   }
 
   /**
@@ -92,14 +90,9 @@ public class OrderDetailItemProvider extends CDOItemProviderAdapter
    */
   protected void addPricePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(
-            createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                getResourceLocator(), getString("_UI_OrderDetail_price_feature"),
-                getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_price_feature",
-                    "_UI_OrderDetail_type"),
-                CompanyPackage.Literals.ORDER_DETAIL__PRICE, true, false, false,
-                ItemPropertyDescriptor.REAL_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_OrderDetail_price_feature"), getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_price_feature", "_UI_OrderDetail_type"),
+        CompanyPackage.Literals.ORDER_DETAIL__PRICE, true, false, false, ItemPropertyDescriptor.REAL_VALUE_IMAGE, null, null));
   }
 
   /**

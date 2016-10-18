@@ -229,8 +229,7 @@ public class Buffer implements InternalBuffer
           int capacity = byteBuffer.capacity();
           if (payloadSize > capacity)
           {
-            throw new IllegalArgumentException(
-                "New limit " + payloadSize + " is > " + capacity + (isEOS() ? " (EOS)" : ""), ex);
+            throw new IllegalArgumentException("New limit " + payloadSize + " is > " + capacity + (isEOS() ? " (EOS)" : ""), ex);
           }
 
           throw ex;

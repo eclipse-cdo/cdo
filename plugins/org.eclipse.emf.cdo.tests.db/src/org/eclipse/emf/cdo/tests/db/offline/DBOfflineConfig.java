@@ -39,8 +39,7 @@ public abstract class DBOfflineConfig extends OfflineConfig
 
   private boolean copyOnBranch;
 
-  public DBOfflineConfig(String name, boolean withRanges, boolean copyOnBranch,
-      IDGenerationLocation idGenerationLocation)
+  public DBOfflineConfig(String name, boolean withRanges, boolean copyOnBranch, IDGenerationLocation idGenerationLocation)
   {
     super(name, idGenerationLocation);
     this.withRanges = withRanges;

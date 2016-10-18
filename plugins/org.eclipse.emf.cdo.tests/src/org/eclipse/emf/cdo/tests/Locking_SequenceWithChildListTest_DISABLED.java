@@ -283,8 +283,7 @@ public class Locking_SequenceWithChildListTest_DISABLED extends AbstractLockingT
         if (now - start > timeout)
         {
           System.out.println();
-          System.out.println(
-              getName() + " is taking more time than required : " + (now - start) + " ms > " + timeout + " ms.");
+          System.out.println(getName() + " is taking more time than required : " + (now - start) + " ms > " + timeout + " ms.");
         }
 
         try

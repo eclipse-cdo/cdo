@@ -215,8 +215,7 @@ public class CDOTransfer implements INotifier
     mapping.getChildren();
   }
 
-  protected CDOTransferMapping createMapping(CDOTransferElement source, CDOTransferMapping parent,
-      IProgressMonitor monitor)
+  protected CDOTransferMapping createMapping(CDOTransferElement source, CDOTransferMapping parent, IProgressMonitor monitor)
   {
     return new CDOTransferMappingImpl(this, source, parent, monitor);
   }

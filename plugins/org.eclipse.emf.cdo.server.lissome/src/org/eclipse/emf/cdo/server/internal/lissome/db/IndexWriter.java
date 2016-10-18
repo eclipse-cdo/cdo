@@ -267,8 +267,7 @@ public class IndexWriter extends IndexReader
     }
   }
 
-  public void detachObjects(CDOBranchPoint branchPoint, CDOID[] ids, InternalCDORevision[] detachedRevisions,
-      long[] detachedObjectPointers)
+  public void detachObjects(CDOBranchPoint branchPoint, CDOID[] ids, InternalCDORevision[] detachedRevisions, long[] detachedObjectPointers)
   {
     if (TRACER.isEnabled())
     {

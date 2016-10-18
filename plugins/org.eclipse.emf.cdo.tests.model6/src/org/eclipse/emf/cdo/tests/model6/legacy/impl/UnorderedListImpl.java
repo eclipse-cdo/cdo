@@ -85,8 +85,7 @@ public class UnorderedListImpl extends EObjectImpl implements UnorderedList
   {
     if (contained == null)
     {
-      contained = new EObjectContainmentEList.Resolving<UnorderedList>(UnorderedList.class, this,
-          Model6Package.UNORDERED_LIST__CONTAINED);
+      contained = new EObjectContainmentEList.Resolving<UnorderedList>(UnorderedList.class, this, Model6Package.UNORDERED_LIST__CONTAINED);
     }
     return contained;
   }
@@ -99,8 +98,7 @@ public class UnorderedListImpl extends EObjectImpl implements UnorderedList
   {
     if (referenced == null)
     {
-      referenced = new EObjectResolvingEList<UnorderedList>(UnorderedList.class, this,
-          Model6Package.UNORDERED_LIST__REFERENCED);
+      referenced = new EObjectResolvingEList<UnorderedList>(UnorderedList.class, this, Model6Package.UNORDERED_LIST__REFERENCED);
     }
     return referenced;
   }

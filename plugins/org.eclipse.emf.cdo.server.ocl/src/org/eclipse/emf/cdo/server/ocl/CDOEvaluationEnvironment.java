@@ -33,15 +33,13 @@ class CDOEvaluationEnvironment extends EcoreEvaluationEnvironment
     super(factory);
   }
 
-  public CDOEvaluationEnvironment(
-      EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> parent)
+  public CDOEvaluationEnvironment(EvaluationEnvironment<EClassifier, EOperation, EStructuralFeature, EClass, EObject> parent)
   {
     super(parent);
   }
 
   @Override
-  public Object callOperation(EOperation operation, int opcode, Object source, Object[] args)
-      throws IllegalArgumentException
+  public Object callOperation(EOperation operation, int opcode, Object source, Object[] args) throws IllegalArgumentException
   {
     CDOAdditionalOperation cdoOperation = CDOAdditionalOperation.getInstance(operation);
     if (cdoOperation != null)

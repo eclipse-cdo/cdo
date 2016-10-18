@@ -100,8 +100,7 @@ public class EMFCompareTest extends AbstractCDOTest
     company.setName("Eclipse");
     transaction.commit();
 
-    Comparison comparison = CDOCompareUtil.compare(CDOUtil.getCDOObject(transaction.getRootResource()),
-        session.openView(commit2), null);
+    Comparison comparison = CDOCompareUtil.compare(CDOUtil.getCDOObject(transaction.getRootResource()), session.openView(commit2), null);
     dump(comparison);
   }
 

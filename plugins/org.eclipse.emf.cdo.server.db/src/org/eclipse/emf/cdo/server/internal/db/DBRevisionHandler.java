@@ -31,8 +31,8 @@ public class DBRevisionHandler implements CDORevisionHandler
   {
     if (revision.getVersion() < CDOBranchVersion.FIRST_VERSION - 1)
     {
-      revision = new DetachedCDORevision(revision.getEClass(), revision.getID(), revision.getBranch(),
-          -revision.getVersion(), revision.getTimeStamp(), revision.getRevised());
+      revision = new DetachedCDORevision(revision.getEClass(), revision.getID(), revision.getBranch(), -revision.getVersion(), revision.getTimeStamp(),
+          revision.getRevised());
     }
 
     return delegate.handleRevision(revision);

@@ -57,8 +57,7 @@ public class CDOHandlingConflictResolver extends CDOMergingConflictResolver impl
     super(merger);
   }
 
-  public CDOHandlingConflictResolver(ResolutionPreference resolutionPreference, boolean ensureRemoteNotifications,
-      ConflictHandler conflictHandler)
+  public CDOHandlingConflictResolver(ResolutionPreference resolutionPreference, boolean ensureRemoteNotifications, ConflictHandler conflictHandler)
   {
     super(resolutionPreference, ensureRemoteNotifications);
   }

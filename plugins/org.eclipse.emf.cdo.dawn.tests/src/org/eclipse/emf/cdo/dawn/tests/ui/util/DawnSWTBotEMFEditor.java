@@ -166,8 +166,8 @@ public class DawnSWTBotEMFEditor extends SWTBotEditor
     return (IEditorPart)runnable.getResult();
   }
 
-  protected void setActivePage(final MultiPageEditorPart editor, final int i) throws SecurityException,
-      NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
+  protected void setActivePage(final MultiPageEditorPart editor, final int i)
+      throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
   {
     editor.getSite().getShell().getDisplay().syncExec(new Runnable()
     {
@@ -225,8 +225,7 @@ public class DawnSWTBotEMFEditor extends SWTBotEditor
     }
   }
 
-  private Method getMethod(final MultiPageEditorPart editor, String methodName, Class<?>[] parameterTypes)
-      throws NoSuchMethodException
+  private Method getMethod(final MultiPageEditorPart editor, String methodName, Class<?>[] parameterTypes) throws NoSuchMethodException
   {
     Method method = null;
     Class<?> clazz = editor.getClass();

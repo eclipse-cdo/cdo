@@ -141,13 +141,12 @@ public class CDOWorkspaceConfigurationImpl implements CDOWorkspaceConfiguration
 
   public CDOWorkspace open()
   {
-    return new CDOWorkspaceImpl(localRepositoryName, store, idGenerationLocation, idGenerator,
-        (InternalCDOWorkspaceBase)base, remote);
+    return new CDOWorkspaceImpl(localRepositoryName, store, idGenerationLocation, idGenerator, (InternalCDOWorkspaceBase)base, remote);
   }
 
   public CDOWorkspace checkout()
   {
-    return new CDOWorkspaceImpl(localRepositoryName, store, idGenerationLocation, idGenerator,
-        (InternalCDOWorkspaceBase)base, remote, branchID, branchPath, timeStamp);
+    return new CDOWorkspaceImpl(localRepositoryName, store, idGenerationLocation, idGenerator, (InternalCDOWorkspaceBase)base, remote, branchID, branchPath,
+        timeStamp);
   }
 }

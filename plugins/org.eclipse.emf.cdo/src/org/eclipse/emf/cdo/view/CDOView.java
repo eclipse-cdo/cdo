@@ -95,8 +95,7 @@ import java.util.concurrent.locks.Lock;
  * @apiviz.uses {@link CDOViewLocksChangedEvent} - - fires
  * @apiviz.uses {@link CDOViewTargetChangedEvent} - - fires
  */
-public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.Provider<CDOObject, CDOObjectHistory>,
-    IContainer<CDOResourceNode>
+public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.Provider<CDOObject, CDOObjectHistory>, IContainer<CDOResourceNode>
 {
   /**
    * @since 4.5
@@ -357,8 +356,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
    *          <code>true</code> if the complete name of the resource must match, <code>false</code> if only a common
    *          prefix of the name must match.
    */
-  public CloseableIterator<CDOResourceNode> queryResourcesAsync(CDOResourceFolder folder, String name,
-      boolean exactMatch);
+  public CloseableIterator<CDOResourceNode> queryResourcesAsync(CDOResourceFolder folder, String name, boolean exactMatch);
 
   /**
    * Returns a list of the instances of the given type.
@@ -431,8 +429,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
    * @see CDOView#queryXRefs(Set, EReference...)
    * @see CDOUtil#wrapExternalObject(EObject, CDOView)
    */
-  public CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects,
-      EReference... sourceReferences);
+  public CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects, EReference... sourceReferences);
 
   /**
    * Returns the object for the given CDOID.
@@ -502,11 +499,9 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
    *
    * @since 3.0
    */
-  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout)
-      throws InterruptedException;
+  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout) throws InterruptedException;
 
-  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout, boolean recursive)
-      throws InterruptedException;
+  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout, boolean recursive) throws InterruptedException;
 
   /**
    * Unlocks the given locked objects of this view.

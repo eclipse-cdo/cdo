@@ -88,8 +88,7 @@ public class HibernateUtil
     return mappingProviderFactoryInstance;
   }
 
-  public static void setMappingProviderFactoryInstance(
-      IHibernateMappingProvider.Factory theMappingProviderFactoryInstance)
+  public static void setMappingProviderFactoryInstance(IHibernateMappingProvider.Factory theMappingProviderFactoryInstance)
   {
     mappingProviderFactoryInstance = theMappingProviderFactoryInstance;
   }

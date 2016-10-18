@@ -139,10 +139,8 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
       if (!DISABLE_NULLABLE_CHECK && FIX_NULLABLE_INDEX_COLUMNS.get() != Boolean.TRUE)
       {
         Exception constructionStackTrace = ((InternalDBField)field).getConstructionStackTrace();
-        throw new DBException(
-            "Index field is nullable: " + field //$NON-NLS-1$
-                + " (to disable this check run with '-Dorg.eclipse.net4j.db.DisableNullableCheck=true')",
-            constructionStackTrace);
+        throw new DBException("Index field is nullable: " + field //$NON-NLS-1$
+            + " (to disable this check run with '-Dorg.eclipse.net4j.db.DisableNullableCheck=true')", constructionStackTrace);
       }
 
       Set<IDBField> nullableIndexFields = NULLABLE_INDEX_FIELDS.get();

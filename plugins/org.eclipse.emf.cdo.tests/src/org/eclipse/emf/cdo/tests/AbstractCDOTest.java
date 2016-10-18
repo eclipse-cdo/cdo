@@ -379,14 +379,12 @@ public abstract class AbstractCDOTest extends ConfigTest
     }
   }
 
-  protected static CDOCommitInfo commitAndSync(CDOTransaction transaction, CDOUpdatable... updatables)
-      throws CommitException
+  protected static CDOCommitInfo commitAndSync(CDOTransaction transaction, CDOUpdatable... updatables) throws CommitException
   {
     return commitAndSync(transaction, null, updatables);
   }
 
-  protected static CDOCommitInfo commitAndSync(CDOTransaction transaction, String comment, CDOUpdatable... updatables)
-      throws CommitException
+  protected static CDOCommitInfo commitAndSync(CDOTransaction transaction, String comment, CDOUpdatable... updatables) throws CommitException
   {
     final RuntimeException[] exception = { null };
     IListener listener = new IListener()
@@ -426,8 +424,7 @@ public abstract class AbstractCDOTest extends ConfigTest
           {
             if (exception[0] == null)
             {
-              exception[0] = new TimeoutRuntimeException(
-                  updatable.toString() + " did not receive an update of " + info);
+              exception[0] = new TimeoutRuntimeException(updatable.toString() + " did not receive an update of " + info);
             }
 
             break;

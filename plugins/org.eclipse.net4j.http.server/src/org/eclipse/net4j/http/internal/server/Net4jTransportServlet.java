@@ -176,8 +176,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     }
   }
 
-  protected void doConnect(ExtendedDataInputStream in, ExtendedDataOutputStream out)
-      throws ServletException, IOException
+  protected void doConnect(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException, IOException
   {
     try
     {
@@ -198,8 +197,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     }
   }
 
-  protected void doDisconnect(ExtendedDataInputStream in, ExtendedDataOutputStream out)
-      throws ServletException, IOException
+  protected void doDisconnect(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException, IOException
   {
     try
     {
@@ -217,8 +215,7 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     }
   }
 
-  protected void doOperations(ExtendedDataInputStream in, ExtendedDataOutputStream out)
-      throws ServletException, IOException
+  protected void doOperations(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException, IOException
   {
     String connectorID = in.readString();
     if (TRACER.isEnabled())

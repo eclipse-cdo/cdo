@@ -327,8 +327,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
   }
 
   @Override
-  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
-      int level) throws Exception
+  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext, int level) throws Exception
   {
     if (!preChecks(revision, revisionProvider))
     {

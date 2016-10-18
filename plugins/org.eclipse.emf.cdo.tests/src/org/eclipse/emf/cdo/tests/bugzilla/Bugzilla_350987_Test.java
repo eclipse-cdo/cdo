@@ -76,8 +76,7 @@ public class Bugzilla_350987_Test extends AbstractCDOTest
     CDOObject cdoOrderDetail = CDOUtil.getCDOObject(orderDetail);
     CDORevision revision = cdoOrderDetail.cdoRevision();
 
-    Map<InternalCDOObject, InternalCDORevision> cleanRevisions = ((InternalCDOTransaction)transaction)
-        .getCleanRevisions();
+    Map<InternalCDOObject, InternalCDORevision> cleanRevisions = ((InternalCDOTransaction)transaction).getCleanRevisions();
     InternalCDORevision originRevision = cleanRevisions.get(cdoOrderDetail);
 
     if (originRevision != null)

@@ -142,8 +142,7 @@ public class HibernateStore extends Store implements IHibernateStore
 
   public HibernateStore(IHibernateMappingProvider mappingProvider, Properties properties)
   {
-    super(TYPE, OBJECT_ID_TYPES, set(ChangeFormat.REVISION),
-        set(RevisionTemporality.NONE, RevisionTemporality.AUDITING), set(RevisionParallelism.NONE));
+    super(TYPE, OBJECT_ID_TYPES, set(ChangeFormat.REVISION), set(RevisionTemporality.NONE, RevisionTemporality.AUDITING), set(RevisionParallelism.NONE));
     this.mappingProvider = mappingProvider;
     packageHandler = new HibernatePackageHandler(this);
     this.properties = properties;
@@ -226,8 +225,7 @@ public class HibernateStore extends Store implements IHibernateStore
 
   private boolean isAuditEPackage(EPackage ePackage)
   {
-    return TeneoauditingPackage.eNS_URI.equals(ePackage.getNsURI())
-        || ePackage.getEAnnotation(Constants.ANNOTATION_SOURCE_AUDITING) != null;
+    return TeneoauditingPackage.eNS_URI.equals(ePackage.getNsURI()) || ePackage.getEAnnotation(Constants.ANNOTATION_SOURCE_AUDITING) != null;
   }
 
   public String getEntityName(EClass eClass)
@@ -611,12 +609,9 @@ public class HibernateStore extends Store implements IHibernateStore
       cdoDataStore.setResetConfigurationOnInitialization(false);
       cdoDataStore.setName("cdo");
       cdoDataStore.setPackageRegistry(getRepository().getPackageRegistry());
-      cdoDataStore.getExtensionManager().registerExtension(EMFInterceptor.class.getName(),
-          CDOInterceptor.class.getName());
-      cdoDataStore.getExtensionManager().registerExtension(AuditHandler.class.getName(),
-          CDOAuditHandler.class.getName());
-      cdoDataStore.getExtensionManager().registerExtension(AuditProcessHandler.class.getName(),
-          CDOAuditProcessHandler.class.getName());
+      cdoDataStore.getExtensionManager().registerExtension(EMFInterceptor.class.getName(), CDOInterceptor.class.getName());
+      cdoDataStore.getExtensionManager().registerExtension(AuditHandler.class.getName(), CDOAuditHandler.class.getName());
+      cdoDataStore.getExtensionManager().registerExtension(AuditProcessHandler.class.getName(), CDOAuditProcessHandler.class.getName());
 
       // don't do any persistence xml mapping in this datastore
       // make a local copy as it is adapted in the next if-statement
@@ -740,12 +735,10 @@ public class HibernateStore extends Store implements IHibernateStore
     {
       if (!CDOModelUtil.isSystemPackage(ePackage) && !isAuditEPackage(ePackage))
       {
-        epacks.add(dataStore.getAuditHandler().createAuditingEPackage(dataStore, ePackage,
-            getRepository().getPackageRegistry(), po));
+        epacks.add(dataStore.getAuditHandler().createAuditingEPackage(dataStore, ePackage, getRepository().getPackageRegistry(), po));
       }
     }
-    epacks.add(dataStore.getAuditHandler().createAuditingEPackage(dataStore,
-        getRepository().getPackageRegistry().getEPackage(EresourcePackage.eNS_URI),
+    epacks.add(dataStore.getAuditHandler().createAuditingEPackage(dataStore, getRepository().getPackageRegistry().getEPackage(EresourcePackage.eNS_URI),
         getRepository().getPackageRegistry(), po));
 
     epacks.add(TeneoauditingPackage.eINSTANCE);
@@ -770,10 +763,9 @@ public class HibernateStore extends Store implements IHibernateStore
     {
       props.setProperty(PersistenceOptions.PERSISTENCE_XML, PersistenceOptions.AUDITING_PERSISTENCE_XML);
     }
-    final PersistenceOptions po = dataStore.getExtensionManager().getExtension(PersistenceOptions.class,
-        new Object[] { props });
-    PAnnotatedModel paModel = dataStore.getExtensionManager().getExtension(PersistenceMappingBuilder.class)
-        .buildMapping(auditEPackages, po, dataStore.getExtensionManager(), dataStore.getPackageRegistry());
+    final PersistenceOptions po = dataStore.getExtensionManager().getExtension(PersistenceOptions.class, new Object[] { props });
+    PAnnotatedModel paModel = dataStore.getExtensionManager().getExtension(PersistenceMappingBuilder.class).buildMapping(auditEPackages, po,
+        dataStore.getExtensionManager(), dataStore.getPackageRegistry());
     final HibernateMappingGenerator hmg = dataStore.getExtensionManager().getExtension(HibernateMappingGenerator.class);
     hmg.setPersistenceOptions(po);
     final String hbm = hmg.generateToString(paModel);
@@ -848,10 +840,8 @@ public class HibernateStore extends Store implements IHibernateStore
 
         if (HibernateThreadContext.isCommitContextSet())
         {
-          AuditProcessHandler
-              .setCurrentUserName(HibernateThreadContext.getCommitContext().getCommitContext().getUserID());
-          AuditProcessHandler
-              .setCurrentComment(HibernateThreadContext.getCommitContext().getCommitContext().getCommitComment());
+          AuditProcessHandler.setCurrentUserName(HibernateThreadContext.getCommitContext().getCommitContext().getUserID());
+          AuditProcessHandler.setCurrentComment(HibernateThreadContext.getCommitContext().getCommitContext().getCommitComment());
         }
         super.doAuditWorkInSession(session, auditWorks);
       }

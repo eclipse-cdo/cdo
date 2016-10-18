@@ -588,8 +588,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}.{1} [{2}, {3}, {4}]", getClass().getSimpleName(), getName(), getRepositoryConfig(),
-        getSessionConfig(), getModelConfig());
+    return MessageFormat.format("{0}.{1} [{2}, {3}, {4}]", getClass().getSimpleName(), getName(), getRepositoryConfig(), getSessionConfig(), getModelConfig());
   }
 
   @Override

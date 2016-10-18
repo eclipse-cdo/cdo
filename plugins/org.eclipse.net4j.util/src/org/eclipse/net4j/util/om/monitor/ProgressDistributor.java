@@ -31,8 +31,7 @@ public abstract class ProgressDistributor
   {
   }
 
-  public final <CONTEXT> void run(ProgressDistributable<CONTEXT>[] distributables, CONTEXT context, OMMonitor monitor)
-      throws RuntimeException, WrappedException
+  public final <CONTEXT> void run(ProgressDistributable<CONTEXT>[] distributables, CONTEXT context, OMMonitor monitor) throws RuntimeException, WrappedException
   {
     double[] distributionCopy;
     synchronized (this)

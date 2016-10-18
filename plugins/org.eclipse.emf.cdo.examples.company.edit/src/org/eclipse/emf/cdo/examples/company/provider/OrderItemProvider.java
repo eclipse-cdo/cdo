@@ -39,9 +39,8 @@ import java.util.List;
  *
  * @generated
  */
-public class OrderItemProvider extends CDOItemProviderAdapter
-    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
-    IItemPropertySource, IItemColorProvider, IItemFontProvider
+public class OrderItemProvider extends CDOItemProviderAdapter implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+    IItemLabelProvider, IItemPropertySource, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -174,8 +173,7 @@ public class OrderItemProvider extends CDOItemProviderAdapter
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.ORDER__ORDER_DETAILS,
-        CompanyFactory.eINSTANCE.createOrderDetail()));
+    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.ORDER__ORDER_DETAILS, CompanyFactory.eINSTANCE.createOrderDetail()));
   }
 
   /**

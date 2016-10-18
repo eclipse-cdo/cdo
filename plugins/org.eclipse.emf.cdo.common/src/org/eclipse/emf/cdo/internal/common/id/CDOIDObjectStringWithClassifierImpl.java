@@ -29,8 +29,7 @@ import java.io.ObjectStreamException;
  * @author Martin Taal
  * @since 3.0
  */
-public final class CDOIDObjectStringWithClassifierImpl extends AbstractCDOID
-    implements InternalCDOIDObject, CDOIDString, CDOClassifierRef.Provider
+public final class CDOIDObjectStringWithClassifierImpl extends AbstractCDOID implements InternalCDOIDObject, CDOIDString, CDOClassifierRef.Provider
 {
   private static final long serialVersionUID = 1L;
 
@@ -76,8 +75,7 @@ public final class CDOIDObjectStringWithClassifierImpl extends AbstractCDOID
 
   public String toURIFragment()
   {
-    return classifierRef.getPackageURI() + CDOClassifierRef.URI_SEPARATOR + classifierRef.getClassifierName()
-        + CDOClassifierRef.URI_SEPARATOR + value;
+    return classifierRef.getPackageURI() + CDOClassifierRef.URI_SEPARATOR + classifierRef.getClassifierName() + CDOClassifierRef.URI_SEPARATOR + value;
   }
 
   public Type getType()
@@ -170,8 +168,7 @@ public final class CDOIDObjectStringWithClassifierImpl extends AbstractCDOID
     public synchronized CDOIDObjectStringWithClassifierImpl intern(String value, CDOClassifierRef classifierRef)
     {
       int hashCode = getHashCode(value, classifierRef);
-      for (Entry<CDOIDObjectStringWithClassifierImpl> entry = getEntry(hashCode); entry != null; entry = entry
-          .getNextEntry())
+      for (Entry<CDOIDObjectStringWithClassifierImpl> entry = getEntry(hashCode); entry != null; entry = entry.getNextEntry())
       {
         CDOIDObjectStringWithClassifierImpl id = entry.get();
         if (id != null && id.value.equals(value) && id.classifierRef.equals(classifierRef))

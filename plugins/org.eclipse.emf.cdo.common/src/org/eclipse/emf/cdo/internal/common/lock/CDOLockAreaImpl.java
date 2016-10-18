@@ -41,8 +41,7 @@ public class CDOLockAreaImpl implements LockArea
 
   private final boolean missing;
 
-  public CDOLockAreaImpl(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly,
-      Map<CDOID, LockGrade> locks)
+  public CDOLockAreaImpl(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     this.durableLockingID = durableLockingID;
     this.userID = userID;
@@ -95,8 +94,8 @@ public class CDOLockAreaImpl implements LockArea
   @Override
   public String toString()
   {
-    return MessageFormat.format("DurableLockArea\nid={0}\nuser={1}\nbranchPoint={2}\nreadOnly={3}\nlocks={4}",
-        durableLockingID, userID, branchPoint, readOnly, locks);
+    return MessageFormat.format("DurableLockArea\nid={0}\nuser={1}\nbranchPoint={2}\nreadOnly={3}\nlocks={4}", durableLockingID, userID, branchPoint, readOnly,
+        locks);
   }
 
   public boolean isMissing()

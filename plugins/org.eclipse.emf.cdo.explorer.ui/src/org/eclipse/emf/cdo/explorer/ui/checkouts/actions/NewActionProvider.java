@@ -117,8 +117,7 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
       CDOCheckoutContentProvider contentProvider = getContentProvider();
       IWizardRegistry wrapperRegistry = new WizardRegistryWrapper(contentProvider);
 
-      newWizardActionGroup = new WizardActionGroup(window, wrapperRegistry, WizardActionGroup.TYPE_NEW,
-          extensionSite.getContentService());
+      newWizardActionGroup = new WizardActionGroup(window, wrapperRegistry, WizardActionGroup.TYPE_NEW, extensionSite.getContentService());
 
       viewer = (TreeViewer)extensionSite.getStructuredViewer();
       viewer.addSelectionChangedListener(this);
@@ -342,8 +341,7 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
       String toolTipText = delegate.getToolTipText();
       ImageDescriptor imageDescriptor = delegate.getImageDescriptor();
 
-      NewChildAction action = new NewChildAction(text, toolTipText, imageDescriptor, checkout, cdoObject,
-          childDescriptor);
+      NewChildAction action = new NewChildAction(text, toolTipText, imageDescriptor, checkout, cdoObject, childDescriptor);
       menu.add(action);
     }
   }
@@ -503,8 +501,7 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
 
     private EObject newObject;
 
-    public AbstractNewAction(String text, String toolTipText, ImageDescriptor image, CDOCheckout checkout,
-        CDOObject parent)
+    public AbstractNewAction(String text, String toolTipText, ImageDescriptor image, CDOCheckout checkout, CDOObject parent)
     {
       super(page, text, toolTipText, image, parent);
       this.checkout = checkout;
@@ -585,8 +582,7 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
     @Override
     protected void preRun() throws Exception
     {
-      SelectClassDialog dialog = new SelectClassDialog(page, "New Root Object",
-          "Select a package and a class for the new root object.");
+      SelectClassDialog dialog = new SelectClassDialog(page, "New Root Object", "Select a package and a class for the new root object.");
 
       if (dialog.open() == SelectClassDialog.OK)
       {
@@ -615,8 +611,7 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
   {
     private final Object childDescriptor;
 
-    public NewChildAction(String text, String toolTipText, ImageDescriptor image, CDOCheckout checkout,
-        CDOObject parent, Object childDescriptor)
+    public NewChildAction(String text, String toolTipText, ImageDescriptor image, CDOCheckout checkout, CDOObject parent, Object childDescriptor)
     {
       super(text, toolTipText, image, checkout, parent);
       this.childDescriptor = childDescriptor;

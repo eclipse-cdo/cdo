@@ -38,24 +38,20 @@ public interface ISessionProtocol extends CDOProtocol, IAuthenticationProtocol
    * @deprecated As of 4.2 {@link #sendAuthenticationChallenge(Challenge)} is called.
    */
   @Deprecated
-  public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken)
-      throws Exception;
+  public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken) throws Exception;
 
-  public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
-      throws Exception;
+  public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType) throws Exception;
 
   /**
    * @deprecated
    */
   @Deprecated
-  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
-      throws Exception;
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState) throws Exception;
 
   /**
    * @since 4.1
    */
-  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState,
-      CDOID rootResourceID) throws Exception;
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState, CDOID rootResourceID) throws Exception;
 
   /**
    * @deprecated As of 4.3 use {@link #sendBranchNotification(InternalCDOBranch, ChangeKind)}.

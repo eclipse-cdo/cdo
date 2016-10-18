@@ -112,8 +112,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   /**
    * @since 3.0
    */
-  public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout)
-      throws InterruptedException
+  public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout) throws InterruptedException
   {
     LockStrategy<OBJECT, CONTEXT> lockingStrategy = getLockingStrategy(type);
     lock(lockingStrategy, context, objectsToLock, timeout);
@@ -271,8 +270,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
    * @throws IllegalMonitorStateException
    *           Unlocking object not locked.
    */
-  private void unlock(LockStrategy<OBJECT, CONTEXT> lockingStrategy, CONTEXT context,
-      Collection<? extends OBJECT> objectsToLock)
+  private void unlock(LockStrategy<OBJECT, CONTEXT> lockingStrategy, CONTEXT context, Collection<? extends OBJECT> objectsToLock)
   {
     synchronized (lockChanged)
     {
@@ -319,8 +317,8 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     return entry != null && lockingStrategy.isLocked(entry, context);
   }
 
-  private void lock(LockStrategy<OBJECT, CONTEXT> lockStrategy, CONTEXT context,
-      Collection<? extends OBJECT> objectsToLocks, long timeout) throws InterruptedException
+  private void lock(LockStrategy<OBJECT, CONTEXT> lockStrategy, CONTEXT context, Collection<? extends OBJECT> objectsToLocks, long timeout)
+      throws InterruptedException
   {
     long startTime = System.currentTimeMillis();
     while (true)
@@ -352,8 +350,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     }
   }
 
-  private OBJECT obtainLock(LockStrategy<OBJECT, CONTEXT> lockingStrategy, CONTEXT context,
-      Collection<? extends OBJECT> objectsToLock)
+  private OBJECT obtainLock(LockStrategy<OBJECT, CONTEXT> lockingStrategy, CONTEXT context, Collection<? extends OBJECT> objectsToLock)
   {
     List<LockEntry<OBJECT, CONTEXT>> lockEntrys = new ArrayList<LockEntry<OBJECT, CONTEXT>>();
     for (OBJECT objectToLock : objectsToLock)

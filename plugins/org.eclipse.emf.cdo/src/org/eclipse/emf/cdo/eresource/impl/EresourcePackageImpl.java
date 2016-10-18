@@ -145,9 +145,8 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
     }
 
     // Obtain or create and register package
-    EresourcePackageImpl theEresourcePackage = (EresourcePackageImpl)(EPackage.Registry.INSTANCE
-        .get(eNS_URI) instanceof EresourcePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-            : new EresourcePackageImpl());
+    EresourcePackageImpl theEresourcePackage = (EresourcePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof EresourcePackageImpl
+        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new EresourcePackageImpl());
 
     isInited = true;
 
@@ -545,8 +544,8 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
     initEClass(cdoResourceNodeEClass, CDOResourceNode.class, "CDOResourceNode", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
     initEReference(getCDOResourceNode_Folder(), getCDOResourceFolder(), getCDOResourceFolder_Nodes(), "folder", null, 0, //$NON-NLS-1$
-        1, CDOResourceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        1, CDOResourceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
     initEAttribute(getCDOResourceNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, CDOResourceNode.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOResourceNode_Path(), ecorePackage.getEString(), "path", null, 0, 1, CDOResourceNode.class, //$NON-NLS-1$
@@ -555,8 +554,8 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
     initEClass(cdoResourceFolderEClass, CDOResourceFolder.class, "CDOResourceFolder", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
     initEReference(getCDOResourceFolder_Nodes(), getCDOResourceNode(), getCDOResourceNode_Folder(), "nodes", //$NON-NLS-1$
-        null, 0, -1, CDOResourceFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        null, 0, -1, CDOResourceFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     EOperation op = addEOperation(cdoResourceFolderEClass, getCDOResourceFolder(), "addResourceFolder", 0, 1, //$NON-NLS-1$
         IS_UNIQUE, IS_ORDERED);
@@ -580,15 +579,13 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
     initEAttribute(getCDOResource_URI(), getURI(), "uRI", null, 0, 1, CDOResource.class, IS_TRANSIENT, IS_VOLATILE, //$NON-NLS-1$
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEReference(getCDOResource_Contents(), ecorePackage.getEObject(), null, "contents", null, 0, -1, //$NON-NLS-1$
-        CDOResource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        CDOResource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOResource_Modified(), ecorePackage.getEBoolean(), "modified", null, 0, 1, CDOResource.class, //$NON-NLS-1$
         IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOResource_Loaded(), ecorePackage.getEBoolean(), "loaded", "true", 0, 1, CDOResource.class, //$NON-NLS-1$//$NON-NLS-2$
         IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOResource_TrackingModification(), ecorePackage.getEBoolean(), "trackingModification", null, 0, //$NON-NLS-1$
-        1, CDOResource.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+        1, CDOResource.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOResource_Errors(), getDiagnostic(), "errors", null, 0, -1, CDOResource.class, //$NON-NLS-1$
         IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOResource_Warnings(), getDiagnostic(), "warnings", null, 0, -1, CDOResource.class, //$NON-NLS-1$
@@ -611,17 +608,14 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
     initEClass(cdoBinaryResourceEClass, CDOBinaryResource.class, "CDOBinaryResource", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCDOBinaryResource_Contents(), theEtypesPackage.getBlob(), "contents", null, 1, 1, //$NON-NLS-1$
-        CDOBinaryResource.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+        CDOBinaryResource.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(cdoTextResourceEClass, CDOTextResource.class, "CDOTextResource", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCDOTextResource_Contents(), theEtypesPackage.getClob(), "contents", null, 1, 1, //$NON-NLS-1$
-        CDOTextResource.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+        CDOTextResource.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOTextResource_Encoding(), ecorePackage.getEString(), "encoding", null, 0, 1, //$NON-NLS-1$
-        CDOTextResource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+        CDOTextResource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(resourceSetEDataType, ResourceSet.class, "ResourceSet", !IS_SERIALIZABLE, //$NON-NLS-1$

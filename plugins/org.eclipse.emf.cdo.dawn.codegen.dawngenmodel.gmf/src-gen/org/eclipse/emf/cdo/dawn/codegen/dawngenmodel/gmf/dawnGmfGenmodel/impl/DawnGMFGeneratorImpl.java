@@ -274,8 +274,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
     dawnDocumentProviderClassName = newDawnDocumentProviderClassName;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_DOCUMENT_PROVIDER_CLASS_NAME,
+      eNotify(new ENotificationImpl(this, Notification.SET, DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_DOCUMENT_PROVIDER_CLASS_NAME,
           oldDawnDocumentProviderClassName, dawnDocumentProviderClassName));
     }
   }
@@ -301,8 +300,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
     dawnEditorUtilClassName = newDawnEditorUtilClassName;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDITOR_UTIL_CLASS_NAME, oldDawnEditorUtilClassName,
+      eNotify(new ENotificationImpl(this, Notification.SET, DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDITOR_UTIL_CLASS_NAME, oldDawnEditorUtilClassName,
           dawnEditorUtilClassName));
     }
   }
@@ -328,9 +326,8 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
     dawnCreationWizardClassName = newDawnCreationWizardClassName;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_CREATION_WIZARD_CLASS_NAME, oldDawnCreationWizardClassName,
-          dawnCreationWizardClassName));
+      eNotify(new ENotificationImpl(this, Notification.SET, DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_CREATION_WIZARD_CLASS_NAME,
+          oldDawnCreationWizardClassName, dawnCreationWizardClassName));
     }
   }
 
@@ -355,8 +352,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
     dawnCanonicalEditingPolicyClassName = newDawnCanonicalEditingPolicyClassName;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_CANONICAL_EDITING_POLICY_CLASS_NAME,
+      eNotify(new ENotificationImpl(this, Notification.SET, DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_CANONICAL_EDITING_POLICY_CLASS_NAME,
           oldDawnCanonicalEditingPolicyClassName, dawnCanonicalEditingPolicyClassName));
     }
   }
@@ -382,9 +378,8 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
     dawnDiagramEditPartClassName = newDawnDiagramEditPartClassName;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_DIAGRAM_EDIT_PART_CLASS_NAME, oldDawnDiagramEditPartClassName,
-          dawnDiagramEditPartClassName));
+      eNotify(new ENotificationImpl(this, Notification.SET, DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_DIAGRAM_EDIT_PART_CLASS_NAME,
+          oldDawnDiagramEditPartClassName, dawnDiagramEditPartClassName));
     }
   }
 
@@ -409,9 +404,8 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
     dawnEditPartFactoryClassName = newDawnEditPartFactoryClassName;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDIT_PART_FACTORY_CLASS_NAME, oldDawnEditPartFactoryClassName,
-          dawnEditPartFactoryClassName));
+      eNotify(new ENotificationImpl(this, Notification.SET, DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDIT_PART_FACTORY_CLASS_NAME,
+          oldDawnEditPartFactoryClassName, dawnEditPartFactoryClassName));
     }
   }
 
@@ -436,8 +430,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
     dawnEditPartProviderClassName = newDawnEditPartProviderClassName;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDIT_PART_PROVIDER_CLASS_NAME,
+      eNotify(new ENotificationImpl(this, Notification.SET, DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDIT_PART_PROVIDER_CLASS_NAME,
           oldDawnEditPartProviderClassName, dawnEditPartProviderClassName));
     }
   }
@@ -463,8 +456,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
     dawnEditPolicyProviderClassName = newDawnEditPolicyProviderClassName;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDIT_POLICY_PROVIDER_CLASS_NAME,
+      eNotify(new ENotificationImpl(this, Notification.SET, DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__DAWN_EDIT_POLICY_PROVIDER_CLASS_NAME,
           oldDawnEditPolicyProviderClassName, dawnEditPolicyProviderClassName));
     }
   }
@@ -484,9 +476,8 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__GMF_GEN_EDITOR_GENERATOR, oldGMFGenEditorGenerator,
-              gmfGenEditorGenerator));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__GMF_GEN_EDITOR_GENERATOR,
+              oldGMFGenEditorGenerator, gmfGenEditorGenerator));
         }
       }
     }
@@ -514,8 +505,7 @@ public class DawnGMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
     gmfGenEditorGenerator = newGMFGenEditorGenerator;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__GMF_GEN_EDITOR_GENERATOR, oldGMFGenEditorGenerator,
+      eNotify(new ENotificationImpl(this, Notification.SET, DawnGmfGenmodelPackage.DAWN_GMF_GENERATOR__GMF_GEN_EDITOR_GENERATOR, oldGMFGenEditorGenerator,
           gmfGenEditorGenerator));
     }
   }

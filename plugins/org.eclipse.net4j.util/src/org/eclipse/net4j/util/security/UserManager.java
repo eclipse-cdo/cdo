@@ -77,8 +77,7 @@ public class UserManager extends Lifecycle implements IUserManager, IAuthenticat
   /**
    * @since 2.0
    */
-  public byte[] encrypt(String userID, byte[] data, String algorithmName, byte[] salt, int count)
-      throws SecurityException
+  public byte[] encrypt(String userID, byte[] data, String algorithmName, byte[] salt, int count) throws SecurityException
   {
     char[] password;
     synchronized (this)

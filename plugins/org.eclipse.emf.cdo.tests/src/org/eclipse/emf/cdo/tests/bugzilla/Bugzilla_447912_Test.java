@@ -51,12 +51,10 @@ public class Bugzilla_447912_Test extends AbstractCDOTest
     NewBranchNotificationListener listener = new NewBranchNotificationListener(session2);
     mainBranchFromView1.createBranch(branchB2Name);
 
-    assertEquals("Timeout - No CDOBranchChangedEvent received.", true,
-        listener.getLatch().await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
+    assertEquals("Timeout - No CDOBranchChangedEvent received.", true, listener.getLatch().await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
 
     assertEquals(mainBranchFromView1.getBranches().length, mainBranchFromView2.getBranches().length);
-    assertEquals(session1.getBranchManager().getMainBranch().getBranches().length,
-        session2.getBranchManager().getMainBranch().getBranches().length);
+    assertEquals(session1.getBranchManager().getMainBranch().getBranches().length, session2.getBranchManager().getMainBranch().getBranches().length);
     assertEquals(2, mainBranchFromView1.getBranches().length);
     assertEquals(mainBranchFromView1.getBranches()[0].getID(), mainBranchFromView2.getBranches()[0].getID());
     assertEquals(mainBranchFromView1.getBranches()[1].getID(), mainBranchFromView2.getBranches()[1].getID());

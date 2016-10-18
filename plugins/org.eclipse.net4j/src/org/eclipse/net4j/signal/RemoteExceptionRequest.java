@@ -31,8 +31,7 @@ class RemoteExceptionRequest extends Request
 
   private Throwable t;
 
-  public RemoteExceptionRequest(SignalProtocol<?> protocol, int correlationID, boolean responding, String message,
-      Throwable t)
+  public RemoteExceptionRequest(SignalProtocol<?> protocol, int correlationID, boolean responding, String message, Throwable t)
   {
     super(protocol, SignalProtocol.SIGNAL_REMOTE_EXCEPTION);
     this.correlationID = correlationID;

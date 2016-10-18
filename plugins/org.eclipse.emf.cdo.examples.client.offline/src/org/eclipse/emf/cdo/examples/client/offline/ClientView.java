@@ -167,8 +167,8 @@ public class ClientView extends AbstractView<CDOSession>
   {
     CDOTransaction transaction = Application.NODE.getObject(CDOTransaction.class);
     commitAction.setEnabled(transaction != null && transaction.isDirty());
-    mergeAction.setEnabled(transaction != null && transaction.getBranch().isLocal()
-        && Application.NODE.getObject(IRepository.class).getState() == State.ONLINE);
+    mergeAction
+        .setEnabled(transaction != null && transaction.getBranch().isLocal() && Application.NODE.getObject(IRepository.class).getState() == State.ONLINE);
   }
 
   protected void hookContextMenu()

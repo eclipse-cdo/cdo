@@ -54,8 +54,7 @@ import java.util.Map;
  */
 public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
 {
-  private static final IActionFilter SESSION_ACTION_FILTER = new DefaultActionFilter<CDOSession>(
-      SessionProperties.INSTANCE);
+  private static final IActionFilter SESSION_ACTION_FILTER = new DefaultActionFilter<CDOSession>(SessionProperties.INSTANCE);
 
   private static final IActionFilter VIEW_ACTION_FILTER = new DefaultActionFilter<CDOView>(ViewProperties.INSTANCE);
 
@@ -92,8 +91,7 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
         if (cdoObject != null)
         {
           final Map<String, Object> emfProperties = new HashMap<String, Object>();
-          DefaultPropertySource<EObject> result = new DefaultPropertySource<EObject>(cdoObject,
-              ObjectProperties.INSTANCE)
+          DefaultPropertySource<EObject> result = new DefaultPropertySource<EObject>(cdoObject, ObjectProperties.INSTANCE)
           {
             @Override
             public Object getPropertyValue(Object id)
@@ -125,8 +123,7 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
 
             try
             {
-              propertySource = (IItemPropertySource)adapterFactory.adapt(cdoObject.cdoInternalInstance(),
-                  IItemPropertySource.class);
+              propertySource = (IItemPropertySource)adapterFactory.adapt(cdoObject.cdoInternalInstance(), IItemPropertySource.class);
             }
             catch (Exception ex)
             {

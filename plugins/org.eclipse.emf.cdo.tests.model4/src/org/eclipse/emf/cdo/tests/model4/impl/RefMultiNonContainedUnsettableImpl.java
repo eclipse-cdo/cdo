@@ -69,8 +69,7 @@ public class RefMultiNonContainedUnsettableImpl extends CDOObjectImpl implements
   @SuppressWarnings("unchecked")
   public EList<MultiNonContainedUnsettableElement> getElements()
   {
-    return (EList<MultiNonContainedUnsettableElement>)eGet(
-        model4Package.eINSTANCE.getRefMultiNonContainedUnsettable_Elements(), true);
+    return (EList<MultiNonContainedUnsettableElement>)eGet(model4Package.eINSTANCE.getRefMultiNonContainedUnsettable_Elements(), true);
   }
 
   /**

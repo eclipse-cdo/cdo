@@ -107,8 +107,7 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
     key = newKey;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__KEY, oldKey,
-          key));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__KEY, oldKey, key));
     }
   }
 
@@ -126,8 +125,7 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE, oldValue, value));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE, oldValue, value));
         }
       }
     }
@@ -153,8 +151,7 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
     value = newValue;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE,
-          oldValue, value));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE, oldValue, value));
     }
   }
 

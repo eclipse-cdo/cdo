@@ -18,8 +18,7 @@ public class TopicSubscriberImpl extends MessageConsumerImpl implements TopicSub
 
   private boolean noLocal;
 
-  public TopicSubscriberImpl(SessionImpl session, long id, TopicImpl topic, String name, String messageSelector,
-      boolean noLocal)
+  public TopicSubscriberImpl(SessionImpl session, long id, TopicImpl topic, String name, String messageSelector, boolean noLocal)
   {
     super(session, id, topic, messageSelector);
     this.name = name;

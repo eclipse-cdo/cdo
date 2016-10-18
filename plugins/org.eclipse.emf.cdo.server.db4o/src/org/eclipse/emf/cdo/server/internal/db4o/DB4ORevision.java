@@ -73,8 +73,8 @@ public class DB4ORevision
 
   private boolean isResourceFolder;
 
-  public DB4ORevision(String packageURI, String className, long id, int version, long resourceID, Object containerID,
-      int containingFeatureID, List<Object> values, long timestamp, boolean isResource, boolean isResourceFolder)
+  public DB4ORevision(String packageURI, String className, long id, int version, long resourceID, Object containerID, int containingFeatureID,
+      List<Object> values, long timestamp, boolean isResource, boolean isResourceFolder)
   {
     setPackageURI(packageURI);
     setClassName(className);
@@ -258,8 +258,7 @@ public class DB4ORevision
           {
             if (!(listElement instanceof CDOID))
             {
-              throw new IllegalStateException("CDOList should contain only CDOID instances but received "
-                  + listElement.getClass().getName() + " instead");
+              throw new IllegalStateException("CDOList should contain only CDOID instances but received " + listElement.getClass().getName() + " instead");
             }
 
             list.add(getDB4OID((CDOID)listElement));
@@ -284,8 +283,7 @@ public class DB4ORevision
       }
     }
 
-    return new DB4ORevision(packageURI, className, id, version, resourceID, containerID, containingFeatureID, values,
-        timeStamp, isResource, isResourceFolder);
+    return new DB4ORevision(packageURI, className, id, version, resourceID, containerID, containingFeatureID, values, timeStamp, isResource, isResourceFolder);
   }
 
   public static InternalCDORevision getCDORevision(IStore store, DB4ORevision primitiveRevision)

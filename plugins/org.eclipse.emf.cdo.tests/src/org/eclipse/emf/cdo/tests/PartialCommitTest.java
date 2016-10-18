@@ -509,8 +509,7 @@ public class PartialCommitTest extends AbstractCDOTest
     // Include the old and new containers as well as the object that was moved
     // (The point here is that company2 does NOT have to be included.)
     tx.setCommittables(createSet(purchaseOrder, company1, company3));
-    System.out.printf("---> purchaseOrder=%s company1=%s company2=%s company3=%s\n", purchaseOrder, company1, company2,
-        company3);
+    System.out.printf("---> purchaseOrder=%s company1=%s company2=%s company3=%s\n", purchaseOrder, company1, company2, company3);
     goodAll();
   }
 

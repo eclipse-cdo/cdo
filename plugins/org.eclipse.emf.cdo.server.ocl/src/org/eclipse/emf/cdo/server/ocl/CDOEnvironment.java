@@ -78,8 +78,7 @@ class CDOEnvironment extends EcoreEnvironment
      * Overrides the superclass implementation to resolve generic result types of our
      * CDO-specific operations according to their individual semantics.
      */
-    public EClassifier getResultType(Object problemObject, EClassifier owner, EOperation operation,
-        List<? extends TypedElement<EClassifier>> args)
+    public EClassifier getResultType(Object problemObject, EClassifier owner, EOperation operation, List<? extends TypedElement<EClassifier>> args)
     {
       CDOAdditionalOperation cdoOperation = CDOAdditionalOperation.getInstance(operation);
       if (cdoOperation != null)
@@ -139,20 +138,17 @@ class CDOEnvironment extends EcoreEnvironment
       return delegate.resolveGenericSignature(owner, oper);
     }
 
-    public EClassifier findSignalMatching(EClassifier receiver, List<EClassifier> signals, String name,
-        List<? extends TypedElement<EClassifier>> args)
+    public EClassifier findSignalMatching(EClassifier receiver, List<EClassifier> signals, String name, List<? extends TypedElement<EClassifier>> args)
     {
       return delegate.findSignalMatching(receiver, signals, name, args);
     }
 
-    public EOperation findOperationMatching(EClassifier owner, String name,
-        List<? extends TypedElement<EClassifier>> args)
+    public EOperation findOperationMatching(EClassifier owner, String name, List<? extends TypedElement<EClassifier>> args)
     {
       return delegate.findOperationMatching(owner, name, args);
     }
 
-    public boolean matchArgs(EClassifier owner, List<?> paramsOrProperties,
-        List<? extends TypedElement<EClassifier>> args)
+    public boolean matchArgs(EClassifier owner, List<?> paramsOrProperties, List<? extends TypedElement<EClassifier>> args)
     {
       return delegate.matchArgs(owner, paramsOrProperties, args);
     }
@@ -171,8 +167,7 @@ class CDOEnvironment extends EcoreEnvironment
   /**
    * @author Christian W. Damus
    */
-  private static class DelegatingCachedTypeChecker extends DelegatingTypeChecker
-      implements TypeChecker.Cached<EClassifier, EOperation, EStructuralFeature>
+  private static class DelegatingCachedTypeChecker extends DelegatingTypeChecker implements TypeChecker.Cached<EClassifier, EOperation, EStructuralFeature>
   {
     private final TypeChecker.Cached<EClassifier, EOperation, EStructuralFeature> delegate;
 

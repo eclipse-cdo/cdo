@@ -75,8 +75,7 @@ public class EtypesItemProviderAdapterFactory extends EtypesAdapterFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
-      CDOEditPlugin.INSTANCE, EtypesPackage.eNS_URI);
+  protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(CDOEditPlugin.INSTANCE, EtypesPackage.eNS_URI);
 
   /**
    * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}. <!--

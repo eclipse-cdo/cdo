@@ -60,8 +60,7 @@ public class Bugzilla_500864_Test extends AbstractCDOTest
     assertTrue("Customer CDOID should be in detached objects list.", detachedIdsFromTransaction.contains(customer1Id));
 
     CDOSession session2 = openSession();
-    CDOCommitInfo commitInfoFromManager = session2.getCommitInfoManager()
-        .getCommitInfo(commitInfoFromTransaction.getTimeStamp());
+    CDOCommitInfo commitInfoFromManager = session2.getCommitInfoManager().getCommitInfo(commitInfoFromTransaction.getTimeStamp());
     Set<CDOID> detachedIdsFromManager = toSet(commitInfoFromManager.getDetachedObjects());
 
     assertEquals(2, detachedIdsFromManager.size());

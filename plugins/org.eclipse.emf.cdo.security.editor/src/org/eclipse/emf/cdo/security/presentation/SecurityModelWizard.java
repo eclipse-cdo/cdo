@@ -82,8 +82,8 @@ public class SecurityModelWizard extends Wizard implements INewWizard
    * <!-- end-user-doc -->
    * @generated
    */
-  public static final List<String> FILE_EXTENSIONS = Collections.unmodifiableList(Arrays
-      .asList(SecurityEditorPlugin.INSTANCE.getString("_UI_SecurityEditorFilenameExtensions").split("\\s*,\\s*"))); //$NON-NLS-1$ //$NON-NLS-2$
+  public static final List<String> FILE_EXTENSIONS = Collections
+      .unmodifiableList(Arrays.asList(SecurityEditorPlugin.INSTANCE.getString("_UI_SecurityEditorFilenameExtensions").split("\\s*,\\s*"))); //$NON-NLS-1$ //$NON-NLS-2$
 
   /**
    * A formatted list of supported file extensions, suitable for display.
@@ -91,8 +91,8 @@ public class SecurityModelWizard extends Wizard implements INewWizard
    * <!-- end-user-doc -->
    * @generated
    */
-  public static final String FORMATTED_FILE_EXTENSIONS = SecurityEditorPlugin.INSTANCE
-      .getString("_UI_SecurityEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  public static final String FORMATTED_FILE_EXTENSIONS = SecurityEditorPlugin.INSTANCE.getString("_UI_SecurityEditorFilenameExtensions").replaceAll("\\s*,\\s*", //$NON-NLS-1$ //$NON-NLS-2$
+      ", "); //$NON-NLS-1$
 
   /**
    * This caches an instance of the model package.
@@ -161,8 +161,7 @@ public class SecurityModelWizard extends Wizard implements INewWizard
     this.workbench = workbench;
     this.selection = selection;
     setWindowTitle(SecurityEditorPlugin.INSTANCE.getString("_UI_Wizard_label")); //$NON-NLS-1$
-    setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE
-        .getImageDescriptor(SecurityEditorPlugin.INSTANCE.getImage("full/wizban/NewSecurity"))); //$NON-NLS-1$
+    setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(SecurityEditorPlugin.INSTANCE.getImage("full/wizban/NewSecurity"))); //$NON-NLS-1$
   }
 
   /**
@@ -289,13 +288,11 @@ public class SecurityModelWizard extends Wizard implements INewWizard
       //
       try
       {
-        page.openEditor(new FileEditorInput(modelFile),
-            workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
+        page.openEditor(new FileEditorInput(modelFile), workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
       }
       catch (PartInitException exception)
       {
-        MessageDialog.openError(workbenchWindow.getShell(),
-            SecurityEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage()); //$NON-NLS-1$
+        MessageDialog.openError(workbenchWindow.getShell(), SecurityEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage()); //$NON-NLS-1$
         return false;
       }
 
@@ -583,8 +580,8 @@ public class SecurityModelWizard extends Wizard implements INewWizard
       if (encodings == null)
       {
         encodings = new ArrayList<String>();
-        for (StringTokenizer stringTokenizer = new StringTokenizer(
-            SecurityEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens();) //$NON-NLS-1$
+        for (StringTokenizer stringTokenizer = new StringTokenizer(SecurityEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer //$NON-NLS-1$
+            .hasMoreTokens();)
         {
           encodings.add(stringTokenizer.nextToken());
         }
@@ -638,8 +635,7 @@ public class SecurityModelWizard extends Wizard implements INewWizard
 
           // Make up a unique new name here.
           //
-          String defaultModelBaseFilename = SecurityEditorPlugin.INSTANCE
-              .getString("_UI_SecurityEditorFilenameDefaultBase"); //$NON-NLS-1$
+          String defaultModelBaseFilename = SecurityEditorPlugin.INSTANCE.getString("_UI_SecurityEditorFilenameDefaultBase"); //$NON-NLS-1$
           String defaultModelFilenameExtension = FILE_EXTENSIONS.get(0);
           String modelFilename = defaultModelBaseFilename + "." + defaultModelFilenameExtension; //$NON-NLS-1$
           for (int i = 1; ((IContainer)selectedResource).findMember(modelFilename) != null; ++i)
@@ -652,8 +648,7 @@ public class SecurityModelWizard extends Wizard implements INewWizard
     }
     initialObjectCreationPage = new SecurityModelWizardInitialObjectCreationPage("Whatever2"); //$NON-NLS-1$
     initialObjectCreationPage.setTitle(SecurityEditorPlugin.INSTANCE.getString("_UI_SecurityModelWizard_label")); //$NON-NLS-1$
-    initialObjectCreationPage
-        .setDescription(SecurityEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description")); //$NON-NLS-1$
+    initialObjectCreationPage.setDescription(SecurityEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description")); //$NON-NLS-1$
     addPage(initialObjectCreationPage);
   }
 

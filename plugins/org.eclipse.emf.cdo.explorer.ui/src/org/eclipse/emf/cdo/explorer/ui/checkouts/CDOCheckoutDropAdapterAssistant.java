@@ -184,8 +184,7 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
     return Status.CANCEL_STATUS;
   }
 
-  private static Pair<CDOBranchPoint, CDOCheckout> getSelectedBranchPoint(Object target, int dropOperation,
-      TransferData transferType)
+  private static Pair<CDOBranchPoint, CDOCheckout> getSelectedBranchPoint(Object target, int dropOperation, TransferData transferType)
   {
     // Drag within Eclipse?
     if (LocalSelectionTransfer.getTransfer().isSupportedType(transferType))
@@ -395,8 +394,7 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
 
     public final void drop(final boolean copy)
     {
-      final String title = (copy ? "Copy " : "Move ")
-          + (ObjectType.valueFor(objects[0]) == ObjectType.Object ? "objects" : "resource nodes");
+      final String title = (copy ? "Copy " : "Move ") + (ObjectType.valueFor(objects[0]) == ObjectType.Object ? "objects" : "resource nodes");
 
       new Job(title)
       {
@@ -538,8 +536,7 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
       return null;
     }
 
-    private static void setUniqueName(CDOResourceNode resourceNode, EList<? extends EObject> targetContents,
-        boolean copy)
+    private static void setUniqueName(CDOResourceNode resourceNode, EList<? extends EObject> targetContents, boolean copy)
     {
       boolean nameConflict = false;
       String resourceName = resourceNode.getName();
@@ -754,8 +751,7 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
       }
 
       @Override
-      protected void insert(List<? extends EObject> objects, CDOResourceFolder target, boolean copy,
-          IProgressMonitor monitor)
+      protected void insert(List<? extends EObject> objects, CDOResourceFolder target, boolean copy, IProgressMonitor monitor)
       {
         EList<CDOResourceNode> nodes = target.getNodes();
         for (EObject object : objects)

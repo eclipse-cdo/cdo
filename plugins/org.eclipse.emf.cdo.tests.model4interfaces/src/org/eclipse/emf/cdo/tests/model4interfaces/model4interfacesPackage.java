@@ -56,8 +56,7 @@ public interface model4interfacesPackage extends EPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  model4interfacesPackage eINSTANCE = org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl
-      .init();
+  model4interfacesPackage eINSTANCE = org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesPackageImpl.init();
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainer <em>ISingle Ref Container</em>}' class.

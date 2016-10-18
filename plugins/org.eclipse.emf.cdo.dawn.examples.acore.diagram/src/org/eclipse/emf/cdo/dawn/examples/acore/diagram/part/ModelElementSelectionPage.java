@@ -106,10 +106,8 @@ public class ModelElementSelectionPage extends WizardPage
     layoutData.heightHint = 300;
     layoutData.widthHint = 300;
     modelViewer.getTree().setLayoutData(layoutData);
-    modelViewer.setContentProvider(
-        new AdapterFactoryContentProvider(AcoreDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory()));
-    modelViewer.setLabelProvider(
-        new AdapterFactoryLabelProvider(AcoreDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory()));
+    modelViewer.setContentProvider(new AdapterFactoryContentProvider(AcoreDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory()));
+    modelViewer.setLabelProvider(new AdapterFactoryLabelProvider(AcoreDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory()));
     if (selectedModelElement != null)
     {
       modelViewer.setInput(selectedModelElement.eResource());

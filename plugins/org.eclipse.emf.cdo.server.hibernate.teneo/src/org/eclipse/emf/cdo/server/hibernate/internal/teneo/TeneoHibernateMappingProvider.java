@@ -104,8 +104,7 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     properties.putAll(storeProperties);
     properties.putAll(mappingProviderProperties);
 
-    PackageRegistryProvider.getInstance()
-        .setThreadPackageRegistry(getHibernateStore().getRepository().getPackageRegistry());
+    PackageRegistryProvider.getInstance().setThreadPackageRegistry(getHibernateStore().getRepository().getPackageRegistry());
 
     // translate the list of EPackages to an array
     boolean hasXMLTypePackage = false;
@@ -192,8 +191,7 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
 
         final EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
         eAnnotation.setSource(Constants.ANNOTATION_SOURCE_TENEO_JPA);
-        final String typeAnnotation = "@Type(type=\"org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.XMLUserType$"
-            + eDataType.getName() + "\")";
+        final String typeAnnotation = "@Type(type=\"org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.XMLUserType$" + eDataType.getName() + "\")";
         eAnnotation.getDetails().put("value", typeAnnotation);
         eDataType.getEAnnotations().add(eAnnotation);
       }

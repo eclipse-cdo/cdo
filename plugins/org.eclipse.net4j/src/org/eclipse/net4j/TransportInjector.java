@@ -37,8 +37,7 @@ public class TransportInjector implements IElementProcessor
   {
   }
 
-  public Object process(IManagedContainer container, String productGroup, String factoryType, String description,
-      Object element)
+  public Object process(IManagedContainer container, String productGroup, String factoryType, String description, Object element)
   {
     if (element instanceof InternalAcceptor)
     {
@@ -54,8 +53,7 @@ public class TransportInjector implements IElementProcessor
     return element;
   }
 
-  protected void processAcceptor(IManagedContainer container, String factoryType, String description,
-      InternalAcceptor acceptor)
+  protected void processAcceptor(IManagedContainer container, String factoryType, String description, InternalAcceptor acceptor)
   {
     ITransportConfig config = acceptor.getConfig();
     if (config.getBufferProvider() == null)
@@ -74,8 +72,7 @@ public class TransportInjector implements IElementProcessor
     }
   }
 
-  protected void processConnector(IManagedContainer container, String factoryType, String description,
-      InternalConnector connector)
+  protected void processConnector(IManagedContainer container, String factoryType, String description, InternalConnector connector)
   {
     ITransportConfig config = connector.getConfig();
     if (config.getBufferProvider() == null)
@@ -104,7 +101,6 @@ public class TransportInjector implements IElementProcessor
 
   protected ExecutorService getExecutorService(IManagedContainer container)
   {
-    return (ExecutorService)container.getElement(ExecutorServiceFactory.PRODUCT_GROUP, ExecutorServiceFactory.TYPE,
-        null);
+    return (ExecutorService)container.getElement(ExecutorServiceFactory.PRODUCT_GROUP, ExecutorServiceFactory.TYPE, null);
   }
 }

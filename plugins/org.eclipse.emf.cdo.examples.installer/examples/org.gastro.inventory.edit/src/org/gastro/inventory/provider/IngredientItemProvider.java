@@ -39,8 +39,8 @@ import java.util.List;
  *
  * @generated
  */
-public class IngredientItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class IngredientItemProvider extends ItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -77,11 +77,9 @@ public class IngredientItemProvider extends ItemProviderAdapter implements IEdit
    */
   protected void addProductPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Ingredient_product_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_Ingredient_product_feature", "_UI_Ingredient_type"),
-            InventoryPackage.Literals.INGREDIENT__PRODUCT, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Ingredient_product_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Ingredient_product_feature", "_UI_Ingredient_type"),
+        InventoryPackage.Literals.INGREDIENT__PRODUCT, true, false, true, null, null, null));
   }
 
   /**
@@ -91,14 +89,9 @@ public class IngredientItemProvider extends ItemProviderAdapter implements IEdit
    */
   protected void addQuantityPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(
-            createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                getResourceLocator(), getString("_UI_Ingredient_quantity_feature"),
-                getString("_UI_PropertyDescriptor_description", "_UI_Ingredient_quantity_feature",
-                    "_UI_Ingredient_type"),
-                InventoryPackage.Literals.INGREDIENT__QUANTITY, true, false, false,
-                ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Ingredient_quantity_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Ingredient_quantity_feature", "_UI_Ingredient_type"),
+        InventoryPackage.Literals.INGREDIENT__QUANTITY, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -143,8 +136,7 @@ public class IngredientItemProvider extends ItemProviderAdapter implements IEdit
   public String getText(Object object)
   {
     Ingredient ingredient = (Ingredient)object;
-    return ingredient.getProduct() == null ? getString("_UI_Ingredient_type")
-        : ingredient.getProduct().getName() + " " + ingredient.getQuantity();
+    return ingredient.getProduct() == null ? getString("_UI_Ingredient_type") : ingredient.getProduct().getName() + " " + ingredient.getQuantity();
   }
 
   /**

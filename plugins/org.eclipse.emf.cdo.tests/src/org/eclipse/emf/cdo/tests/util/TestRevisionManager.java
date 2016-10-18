@@ -49,8 +49,8 @@ public class TestRevisionManager extends CDORevisionManagerImpl
   }
 
   @Override
-  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk,
-      int prefetchDepth, boolean loadOnDemand, SyntheticCDORevision[] synthetics)
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      SyntheticCDORevision[] synthetics)
   {
     if (getRevisionsDelay > 0)
     {
@@ -110,8 +110,7 @@ public class TestRevisionManager extends CDORevisionManagerImpl
   }
 
   @Override
-  protected List<InternalCDORevision> loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint,
-      int referenceChunk, int prefetchDepth)
+  protected List<InternalCDORevision> loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
   {
     List<InternalCDORevision> result = super.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
 

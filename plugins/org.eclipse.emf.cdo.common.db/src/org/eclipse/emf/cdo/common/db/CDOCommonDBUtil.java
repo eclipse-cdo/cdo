@@ -36,8 +36,8 @@ public final class CDOCommonDBUtil
    * <p>
    * TODO Add all config parameters!
    */
-  public static CDORevisionCache createDBCache(IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider,
-      CDOListFactory listFactory, CDOPackageRegistry packageRegistry, CDORevisionFactory revisionFactory)
+  public static CDORevisionCache createDBCache(IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider, CDOListFactory listFactory,
+      CDOPackageRegistry packageRegistry, CDORevisionFactory revisionFactory)
   {
     DBRevisionCache cache = new DBRevisionCache();
     cache.setDBAdapter(dbAdapter);

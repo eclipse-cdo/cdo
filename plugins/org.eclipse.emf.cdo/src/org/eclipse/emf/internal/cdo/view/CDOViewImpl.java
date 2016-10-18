@@ -273,8 +273,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         }
 
         CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-        sessionProtocol.switchTarget(viewID, branchPoint, invalidObjects, allChangedObjects, allDetachedObjects,
-            EclipseMonitor.convert(progressMonitor));
+        sessionProtocol.switchTarget(viewID, branchPoint, invalidObjects, allChangedObjects, allDetachedObjects, EclipseMonitor.convert(progressMonitor));
 
         basicSetBranchPoint(branchPoint);
 
@@ -340,14 +339,12 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
-  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout)
-      throws InterruptedException
+  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout) throws InterruptedException
   {
     lockObjects(objects, lockType, timeout, false);
   }
 
-  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout, boolean recursive)
-      throws InterruptedException
+  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout, boolean recursive) throws InterruptedException
   {
     checkActive();
     checkState(getTimeStamp() == UNSPECIFIED_DATE, "Locking not supported for historial views");
@@ -417,15 +414,14 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
           {
             if (!session.options().isPassiveUpdateEnabled())
             {
-              throw new AssertionError(
-                  "Lock result requires client to wait, but client does not have passiveUpdates enabled");
+              throw new AssertionError("Lock result requires client to wait, but client does not have passiveUpdates enabled");
             }
 
             long requiredTimestamp = result.getRequiredTimestamp();
             if (!waitForUpdate(requiredTimestamp, 10000L))
             {
-              throw new AssertionError("Lock result requires client to wait for commit " + requiredTimestamp
-                  + ", but client did not receive invalidations after " + lastUpdateTime);
+              throw new AssertionError(
+                  "Lock result requires client to wait for commit " + requiredTimestamp + ", but client did not receive invalidations after " + lastUpdateTime);
             }
 
             InternalCDOSession session = this.session;
@@ -439,8 +435,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
               CDORevision revision = object.cdoRevision(true);
               if (!requiredKey.equals(revision))
               {
-                InternalCDORevision requiredRevision = revisionManager.getRevisionByVersion(id, requiredKey,
-                    CDORevision.UNCHUNKED, true);
+                InternalCDORevision requiredRevision = revisionManager.getRevisionByVersion(id, requiredKey, CDORevision.UNCHUNKED, true);
                 InternalCDORevisionDelta revisionDelta = requiredRevision.compare(revision);
                 CDOStateMachine.INSTANCE.invalidate(object, revisionDelta);
               }
@@ -533,8 +528,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * Notifies other views of lock changes performed in this view
    */
-  protected void notifyOtherViewsAboutLockChanges(Operation op, LockType type, long timestamp,
-      CDOLockState[] lockStates)
+  protected void notifyOtherViewsAboutLockChanges(Operation op, LockType type, long timestamp, CDOLockState[] lockStates)
   {
     if (lockStates.length > 0)
     {
@@ -548,8 +542,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
   }
 
-  protected final CDOLockChangeInfo makeLockChangeInfo(Operation op, LockType type, long timestamp,
-      CDOLockState[] newLockStates)
+  protected final CDOLockChangeInfo makeLockChangeInfo(Operation op, LockType type, long timestamp, CDOLockState[] newLockStates)
   {
     return CDOLockUtil.createLockChangeInfo(timestamp, this, getBranch(), op, type, newLockStates);
   }
@@ -1148,16 +1141,15 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   }
 
   @Deprecated
-  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions, boolean async)
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
+      Map<CDOID, InternalCDORevision> oldRevisions, boolean async)
   {
     throw new UnsupportedOperationException();
   }
 
   @Deprecated
-  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions, boolean async,
-      boolean clearResourcePathCache)
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
+      Map<CDOID, InternalCDORevision> oldRevisions, boolean async, boolean clearResourcePathCache)
   {
     throw new UnsupportedOperationException();
   }
@@ -1235,8 +1227,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         handleConflicts(lastUpdateTime, conflicts, deltas);
 
         sendInvalidationNotifications(revisionDeltas.keySet(), detachedObjects);
-        fireInvalidationEvent(lastUpdateTime, Collections.unmodifiableMap(revisionDeltas),
-            Collections.unmodifiableSet(detachedObjects));
+        fireInvalidationEvent(lastUpdateTime, Collections.unmodifiableMap(revisionDeltas), Collections.unmodifiableSet(detachedObjects));
 
         // Then send the notifications. The deltas could have been modified by the conflict resolvers.
         if (!deltas.isEmpty() || !detachedObjects.isEmpty())
@@ -1319,8 +1310,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
-  private void fireInvalidationEvent(long timeStamp, Map<CDOObject, CDORevisionDelta> revisionDeltas,
-      Set<CDOObject> detachedObjects)
+  private void fireInvalidationEvent(long timeStamp, Map<CDOObject, CDORevisionDelta> revisionDeltas, Set<CDOObject> detachedObjects)
   {
     if (!revisionDeltas.isEmpty() || !detachedObjects.isEmpty())
     {
@@ -1335,8 +1325,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
-  public void sendDeltaNotifications(Collection<CDORevisionDelta> deltas, Set<CDOObject> detachedObjects,
-      Map<CDOID, InternalCDORevision> oldRevisions)
+  public void sendDeltaNotifications(Collection<CDORevisionDelta> deltas, Set<CDOObject> detachedObjects, Map<CDOID, InternalCDORevision> oldRevisions)
   {
     synchronized (getViewMonitor())
     {
@@ -2147,16 +2136,14 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
             CDOUnit containingUnit = getOpenUnit(root);
             if (containingUnit != null)
             {
-              throw new CDOException(
-                  "Attempt to nest the new unit " + root + " in the existing unit " + containingUnit);
+              throw new CDOException("Attempt to nest the new unit " + root + " in the existing unit " + containingUnit);
             }
 
             for (CDOUnit existingUnit : unitPerRoot.values())
             {
               if (EcoreUtil.isAncestor(root, existingUnit.getRoot()))
               {
-                throw new CDOException(
-                    "Attempt to nest the existing unit " + existingUnit + " in the new unit " + root);
+                throw new CDOException("Attempt to nest the existing unit " + existingUnit + " in the new unit " + root);
               }
             }
           }
@@ -2192,8 +2179,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
           }
 
           CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-          boolean success = sessionProtocol.requestUnit(viewID, rootID, opcode, revisionHandler,
-              EclipseMonitor.safe(monitor));
+          boolean success = sessionProtocol.requestUnit(viewID, rootID, opcode, revisionHandler, EclipseMonitor.safe(monitor));
 
           if (success)
           {
@@ -2822,8 +2808,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
     private Set<CDOObject> detachedObjects;
 
-    public InvalidationEvent(long timeStamp, Map<CDOObject, CDORevisionDelta> revisionDeltas,
-        Set<CDOObject> detachedObjects)
+    public InvalidationEvent(long timeStamp, Map<CDOObject, CDORevisionDelta> revisionDeltas, Set<CDOObject> detachedObjects)
     {
       this.timeStamp = timeStamp;
       this.revisionDeltas = revisionDeltas;
@@ -2859,8 +2844,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     @Override
     protected String formatAdditionalParameters()
     {
-      return "timeStamp=" + timeStamp + ", revisionDeltas=" + revisionDeltas + ", detachedObjects=" + detachedObjects
-          + "]";
+      return "timeStamp=" + timeStamp + ", revisionDeltas=" + revisionDeltas + ", detachedObjects=" + detachedObjects + "]";
     }
   }
 
@@ -2987,8 +2971,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
     private LockStatePrefetcher lockStatePrefetcher;
 
-    private CDORevisionPrefetchingPolicy revisionPrefetchingPolicy = CDOUtil
-        .createRevisionPrefetchingPolicy(NO_REVISION_PREFETCHING);
+    private CDORevisionPrefetchingPolicy revisionPrefetchingPolicy = CDOUtil.createRevisionPrefetchingPolicy(NO_REVISION_PREFETCHING);
 
     private CDOFeatureAnalyzer featureAnalyzer = CDOFeatureAnalyzer.NOOP;
 
@@ -3665,8 +3648,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     /**
      * @author Eike Stepper
      */
-    private final class ChangeSubscriptionPoliciesEventImpl extends OptionsEvent
-        implements ChangeSubscriptionPoliciesEvent
+    private final class ChangeSubscriptionPoliciesEventImpl extends OptionsEvent implements ChangeSubscriptionPoliciesEvent
     {
       private static final long serialVersionUID = 1L;
 
@@ -3771,8 +3753,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     /**
      * @author Eike Stepper
      */
-    private final class RevisionPrefetchingPolicyEventImpl extends OptionsEvent
-        implements RevisionPrefetchingPolicyEvent
+    private final class RevisionPrefetchingPolicyEventImpl extends OptionsEvent implements RevisionPrefetchingPolicyEvent
     {
       private static final long serialVersionUID = 1L;
 

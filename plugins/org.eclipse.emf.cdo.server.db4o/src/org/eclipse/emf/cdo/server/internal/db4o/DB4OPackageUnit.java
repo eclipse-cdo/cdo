@@ -42,8 +42,7 @@ public class DB4OPackageUnit
 
   private List<Pair<String, String>> packageInfos;
 
-  public DB4OPackageUnit(String id, Integer ordinalType, Long timeStamp, List<Byte> ePackageBytes,
-      List<Pair<String, String>> packageInfos)
+  public DB4OPackageUnit(String id, Integer ordinalType, Long timeStamp, List<Byte> ePackageBytes, List<Pair<String, String>> packageInfos)
   {
     setId(id);
     setOrdinalType(ordinalType);
@@ -94,9 +93,8 @@ public class DB4OPackageUnit
 
   public static DB4OPackageUnit getPrimitivePackageUnit(IStore store, InternalCDOPackageUnit packageUnit)
   {
-    return new DB4OPackageUnit(new String(packageUnit.getID()), new Integer(packageUnit.getOriginalType().ordinal()),
-        new Long(packageUnit.getTimeStamp()), getEPackageBytes(store, packageUnit),
-        getPackageInfosAsPair(packageUnit.getPackageInfos()));
+    return new DB4OPackageUnit(new String(packageUnit.getID()), new Integer(packageUnit.getOriginalType().ordinal()), new Long(packageUnit.getTimeStamp()),
+        getEPackageBytes(store, packageUnit), getPackageInfosAsPair(packageUnit.getPackageInfos()));
   }
 
   public static InternalCDOPackageUnit getPackageUnit(DB4OPackageUnit packageUnit)

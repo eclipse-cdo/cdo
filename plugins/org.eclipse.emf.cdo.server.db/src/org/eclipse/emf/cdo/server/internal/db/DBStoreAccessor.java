@@ -233,8 +233,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     return null;
   }
 
-  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
-      CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk, CDORevisionCacheAdder cache)
   {
     if (TRACER.isEnabled())
     {
@@ -255,8 +254,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
         int version = revision.getVersion();
         if (version < CDOBranchVersion.UNSPECIFIED_VERSION)
         {
-          return new DetachedCDORevision(eClass, id, revision.getBranch(), -version, revision.getTimeStamp(),
-              revision.getRevised());
+          return new DetachedCDORevision(eClass, id, revision.getBranch(), -version, revision.getTimeStamp(), revision.getRevised());
         }
 
         return revision;
@@ -267,8 +265,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     return null;
   }
 
-  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
-      CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk, CDORevisionCacheAdder cache)
   {
     DBStore store = getStore();
     EClass eClass = getObjectType(id);
@@ -294,8 +291,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       if (success && revision.getVersion() < CDOBranchVersion.FIRST_VERSION - 1)
       {
         // it is detached revision
-        revision = new DetachedCDORevision(eClass, id, revision.getBranch(), -revision.getVersion(),
-            revision.getTimeStamp(), revision.getRevised());
+        revision = new DetachedCDORevision(eClass, id, revision.getBranch(), -revision.getVersion(), revision.getTimeStamp(), revision.getRevised());
 
       }
     }
@@ -486,8 +482,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     IIDHandler idHandler = store.getIDHandler();
 
     // Remember maxID because it may have to be adjusted if the repository is BACKUP or CLONE. See bug 325097.
-    boolean adjustMaxID = !context.getBranchPoint().getBranch().isLocal()
-        && store.getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE;
+    boolean adjustMaxID = !context.getBranchPoint().getBranch().isLocal() && store.getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE;
 
     // Remember CDOIDs of new objects. They are cleared after writeRevisions()
     for (InternalCDORevision revision : context.getNewObjects())
@@ -503,27 +498,24 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
   @Deprecated
   @Override
-  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
-      String comment, OMMonitor monitor)
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor)
   {
     writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null, monitor);
   }
 
   @Override
-  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
-      String comment, CDOBranchPoint mergeSource, OMMonitor monitor)
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOBranchPoint mergeSource,
+      OMMonitor monitor)
   {
     CommitInfoTable commitInfoTable = getStore().getCommitInfoTable();
     if (commitInfoTable != null)
     {
-      commitInfoTable.writeCommitInfo(this, branch, timeStamp, previousTimeStamp, userID, comment, mergeSource,
-          monitor);
+      commitInfoTable.writeCommitInfo(this, branch, timeStamp, previousTimeStamp, userID, comment, mergeSource, monitor);
     }
   }
 
   @Override
-  protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created,
-      OMMonitor monitor)
+  protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created, OMMonitor monitor)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
 
@@ -550,27 +542,23 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   {
     CDOID id = delta.getID();
     EClass eClass = getObjectType(id);
-    IClassMappingDeltaSupport mapping = (IClassMappingDeltaSupport)getStore().getMappingStrategy()
-        .getClassMapping(eClass);
+    IClassMappingDeltaSupport mapping = (IClassMappingDeltaSupport)getStore().getMappingStrategy().getClassMapping(eClass);
     mapping.writeRevisionDelta(this, delta, created, monitor);
   }
 
   @Override
-  protected void writeNewObjectRevisions(InternalCommitContext context, InternalCDORevision[] newObjects,
-      CDOBranch branch, OMMonitor monitor)
+  protected void writeNewObjectRevisions(InternalCommitContext context, InternalCDORevision[] newObjects, CDOBranch branch, OMMonitor monitor)
   {
     writeRevisions(context, true, newObjects, branch, monitor);
   }
 
   @Override
-  protected void writeDirtyObjectRevisions(InternalCommitContext context, InternalCDORevision[] dirtyObjects,
-      CDOBranch branch, OMMonitor monitor)
+  protected void writeDirtyObjectRevisions(InternalCommitContext context, InternalCDORevision[] dirtyObjects, CDOBranch branch, OMMonitor monitor)
   {
     writeRevisions(context, false, dirtyObjects, branch, monitor);
   }
 
-  protected void writeRevisions(InternalCommitContext context, boolean attachNewObjects,
-      InternalCDORevision[] revisions, CDOBranch branch, OMMonitor monitor)
+  protected void writeRevisions(InternalCommitContext context, boolean attachNewObjects, InternalCDORevision[] revisions, CDOBranch branch, OMMonitor monitor)
   {
     try
     {
@@ -635,10 +623,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
         // but for now:
 
-        InternalCDORevision revision = revisionManager.getRevision(id, branch.getHead(), CDORevision.UNCHUNKED,
-            CDORevision.DEPTH_NONE, true);
-        int version = ObjectUtil.equals(branch, revision.getBranch()) ? revision.getVersion() + 1
-            : CDOBranchVersion.FIRST_VERSION;
+        InternalCDORevision revision = revisionManager.getRevision(id, branch.getHead(), CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+        int version = ObjectUtil.equals(branch, revision.getBranch()) ? revision.getVersion() + 1 : CDOBranchVersion.FIRST_VERSION;
 
         if (TRACER.isEnabled())
         {
@@ -1093,15 +1079,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     return mappingStrategy.readChangeSet(this, monitor, segments);
   }
 
-  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     mappingStrategy.handleRevisions(this, eClass, branch, timeStamp, exactTime, new DBRevisionHandler(handler));
   }
 
-  public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
-      throws IOException
+  public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime) throws IOException
   {
     DBStore store = getStore();
     InternalRepository repository = store.getRepository();
@@ -1140,8 +1124,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     mappingStrategy.rawExport(this, out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
   }
 
-  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
-      OMMonitor monitor) throws IOException
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
     DBStore store = getStore();
     IIDHandler idHandler = store.getIDHandler();
@@ -1219,12 +1202,11 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       OM.LOG.error(ex);
     }
 
-    getStore().getMappingStrategy().removeMapping(getConnection(),
-        packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]));
+    getStore().getMappingStrategy().removeMapping(getConnection(), packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]));
   }
 
-  protected void rawImportPackageUnits(CDODataInput in, long fromCommitTime, long toCommitTime,
-      Collection<InternalCDOPackageUnit> packageUnits, OMMonitor monitor) throws IOException
+  protected void rawImportPackageUnits(CDODataInput in, long fromCommitTime, long toCommitTime, Collection<InternalCDOPackageUnit> packageUnits,
+      OMMonitor monitor) throws IOException
   {
     monitor.begin(2);
 
@@ -1258,8 +1240,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
         {
           connection2 = store.getConnection();
 
-          mappingStrategy.createMapping(connection2,
-              packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]), monitor.fork());
+          mappingStrategy.createMapping(connection2, packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]), monitor.fork());
         }
         finally
         {
@@ -1314,14 +1295,12 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     writeClob(id, size, reader);
   }
 
-  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
-      OMMonitor monitor)
+  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor)
   {
     writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null, monitor);
   }
 
-  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
-      CDOBranchPoint mergeSource, OMMonitor monitor)
+  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOBranchPoint mergeSource, OMMonitor monitor)
   {
     writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource, monitor);
   }
@@ -1367,14 +1346,12 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
-  public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,
-      Map<CDOID, LockGrade> locks)
+  public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     return createLockArea(null, userID, branchPoint, readOnly, locks);
   }
 
-  public LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly,
-      Map<CDOID, LockGrade> locks)
+  public LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     DurableLockingManager manager = getStore().getDurableLockingManager();
     return manager.createLockArea(this, durableLockingID, userID, branchPoint, readOnly, locks);
@@ -1434,15 +1411,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     unitMappingTable.readUnitRevisions(this, view, rootID, revisionHandler, monitor);
   }
 
-  public Object initUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, Set<CDOID> initializedIDs,
-      long timeStamp, OMMonitor monitor)
+  public Object initUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, Set<CDOID> initializedIDs, long timeStamp, OMMonitor monitor)
   {
     UnitMappingTable unitMappingTable = getStore().getUnitMappingTable();
     return unitMappingTable.initUnit(this, timeStamp, view, rootID, revisionHandler, initializedIDs, monitor);
   }
 
-  public void finishUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, long timeStamp,
-      Object initResult, List<CDOID> ids)
+  public void finishUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, long timeStamp, Object initResult, List<CDOID> ids)
   {
     UnitMappingTable unitMappingTable = getStore().getUnitMappingTable();
     unitMappingTable.finishUnit((BatchedStatement)initResult, rootID, ids, timeStamp);

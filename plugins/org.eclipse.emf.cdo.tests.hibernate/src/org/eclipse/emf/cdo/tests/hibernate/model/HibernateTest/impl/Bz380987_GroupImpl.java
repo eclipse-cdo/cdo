@@ -79,8 +79,8 @@ public class Bz380987_GroupImpl extends EObjectImpl implements Bz380987_Group
   {
     if (people == null)
     {
-      people = new EObjectWithInverseResolvingEList.ManyInverse<Bz380987_Person>(Bz380987_Person.class, this,
-          HibernateTestPackage.BZ380987_GROUP__PEOPLE, HibernateTestPackage.BZ380987_PERSON__GROUP);
+      people = new EObjectWithInverseResolvingEList.ManyInverse<Bz380987_Person>(Bz380987_Person.class, this, HibernateTestPackage.BZ380987_GROUP__PEOPLE,
+          HibernateTestPackage.BZ380987_PERSON__GROUP);
     }
     return people;
   }

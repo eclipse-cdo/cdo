@@ -79,9 +79,8 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
     }
 
     // Obtain or create and register package
-    ReferencePackageImpl theReferencePackage = (ReferencePackageImpl)(EPackage.Registry.INSTANCE
-        .get(eNS_URI) instanceof ReferencePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-            : new ReferencePackageImpl());
+    ReferencePackageImpl theReferencePackage = (ReferencePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ReferencePackageImpl
+        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ReferencePackageImpl());
 
     isInited = true;
 
@@ -185,8 +184,7 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
     setNsURI(eNS_URI);
 
     // Obtain other dependent packages
-    InterfacePackage theInterfacePackage = (InterfacePackage)EPackage.Registry.INSTANCE
-        .getEPackage(InterfacePackage.eNS_URI);
+    InterfacePackage theInterfacePackage = (InterfacePackage)EPackage.Registry.INSTANCE.getEPackage(InterfacePackage.eNS_URI);
 
     // Create type parameters
 
@@ -196,9 +194,8 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
 
     // Initialize classes and features; add operations and parameters
     initEClass(referenceEClass, Reference.class, "Reference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getReference_Ref(), theInterfacePackage.getIInterface(), null, "ref", null, 0, 1, Reference.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEReference(getReference_Ref(), theInterfacePackage.getIInterface(), null, "ref", null, 0, 1, Reference.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

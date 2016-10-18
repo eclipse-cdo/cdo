@@ -131,8 +131,7 @@ public class FeatureMapEntryFeatureURIPropertyHandler implements PropertyAccesso
     }
     if (ePackage == null)
     {
-      throw new IllegalArgumentException(
-          "EPackage not found using " + eFeatureURI + " and EPackageURI: " + ePackageURI); //$NON-NLS-1$ //$NON-NLS-2$
+      throw new IllegalArgumentException("EPackage not found using " + eFeatureURI + " and EPackageURI: " + ePackageURI); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     final EClass eClass = (EClass)ePackage.getEClassifier(eClassName);
@@ -158,7 +157,6 @@ public class FeatureMapEntryFeatureURIPropertyHandler implements PropertyAccesso
   {
     final EStructuralFeature eFeature = fmEntry.getEStructuralFeature();
     final EClass eClass = eFeature.getEContainingClass();
-    return eClass.getEPackage().getNsURI() + EFEATURE_SEPARATOR + eClass.getName() + EFEATURE_SEPARATOR
-        + eFeature.getName();
+    return eClass.getEPackage().getNsURI() + EFEATURE_SEPARATOR + eClass.getName() + EFEATURE_SEPARATOR + eFeature.getName();
   }
 }

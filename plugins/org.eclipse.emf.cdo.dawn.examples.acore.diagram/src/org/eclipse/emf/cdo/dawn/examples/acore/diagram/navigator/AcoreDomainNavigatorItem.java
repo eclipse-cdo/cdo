@@ -118,8 +118,8 @@ public class AcoreDomainNavigatorItem extends PlatformObject
   {
     if (obj instanceof org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreDomainNavigatorItem)
     {
-      return EcoreUtil.getURI(getEObject()).equals(EcoreUtil.getURI(
-          ((org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreDomainNavigatorItem)obj).getEObject()));
+      return EcoreUtil.getURI(getEObject())
+          .equals(EcoreUtil.getURI(((org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreDomainNavigatorItem)obj).getEObject()));
     }
     return super.equals(obj);
   }

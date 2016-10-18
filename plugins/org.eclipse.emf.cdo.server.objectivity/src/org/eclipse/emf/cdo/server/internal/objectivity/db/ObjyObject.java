@@ -541,8 +541,7 @@ public class ObjyObject
       if (TRACER_DEBUG.isEnabled())
       {
         checkSession();
-        TRACER_DEBUG
-            .trace("ObjyObject.update() - oid:" + ooId().getStoreString() + " - version:" + revision.getVersion());
+        TRACER_DEBUG.trace("ObjyObject.update() - oid:" + ooId().getStoreString() + " - version:" + revision.getVersion());
       }
 
       // this is done in the updateDate()
@@ -597,8 +596,7 @@ public class ObjyObject
         {
           if (TRACER_DEBUG.isEnabled())
           {
-            TRACER_DEBUG
-                .trace("In " + ooId().getStoreString() + " - Can't find mapper for feature " + feature.getName());
+            TRACER_DEBUG.trace("In " + ooId().getStoreString() + " - Can't find mapper for feature " + feature.getName());
           }
           continue;
         }
@@ -626,8 +624,7 @@ public class ObjyObject
             }
             else if (value instanceof CDOIDExternal)
             {
-              TRACER_DEBUG
-                  .trace("... CDOIDExternal inserted, at:" + i + ", content:" + ((CDOIDExternal)value).getURI());
+              TRACER_DEBUG.trace("... CDOIDExternal inserted, at:" + i + ", content:" + ((CDOIDExternal)value).getURI());
               // System.out.println("value is a proxy object - it should be handled by the mapper.");
               // create an ObjyProxy object to hold the the value.
               ObjyProxy proxyObject = ObjyProxy.createObject(ooId());
@@ -648,8 +645,7 @@ public class ObjyObject
               ooId oid = null;
               if (entryValue instanceof CDOIDExternal)
               {
-                TRACER_DEBUG
-                    .trace("... CDOIDExternal inserted, at:" + i + ", content:" + ((CDOIDExternal)entryValue).getURI());
+                TRACER_DEBUG.trace("... CDOIDExternal inserted, at:" + i + ", content:" + ((CDOIDExternal)entryValue).getURI());
                 // System.out.println("value is a proxy object - it should be handled by the mapper.");
                 // create an ObjyProxy object to hold the the value.
                 ObjyProxy proxyObject = ObjyProxy.createObject(ooId());
@@ -675,8 +671,8 @@ public class ObjyObject
             }
             else if (value.equals(InternalCDOList.UNINITIALIZED))
             {
-              TRACER_DEBUG.format("...GOT UNINITIALIZED at {0}, listSize:{1}, feature:{2}, oid:{3}", i, values.length,
-                  feature.getName(), objectId.getStoreString());
+              TRACER_DEBUG.format("...GOT UNINITIALIZED at {0}, listSize:{1}, feature:{2}, oid:{3}", i, values.length, feature.getName(),
+                  objectId.getStoreString());
               continue;
             }
             else
@@ -937,8 +933,7 @@ public class ObjyObject
    * Fetch data for a specific feature from the store, and return a list of objects. Used by
    * ObjectivityStoreChunkAccessor
    */
-  public List<Object> fetchList(ObjectivityStoreAccessor storeAccessor, EStructuralFeature feature, int startIndex,
-      int chunkSize)
+  public List<Object> fetchList(ObjectivityStoreAccessor storeAccessor, EStructuralFeature feature, int startIndex, int chunkSize)
   {
     fetchCount++;
 
@@ -954,8 +949,7 @@ public class ObjyObject
     {
       if (TRACER_DEBUG.isEnabled())
       {
-        TRACER_DEBUG.trace("ObjyObject.fetch() - feature:" + feature.getName() + "from Object: "
-            + ooId().getStoreString() + " version:" + getVersion());
+        TRACER_DEBUG.trace("ObjyObject.fetch() - feature:" + feature.getName() + "from Object: " + ooId().getStoreString() + " version:" + getVersion());
       }
       int featureSize = size(feature);
       chunkSize = Math.min(featureSize - startIndex, chunkSize);
@@ -1065,8 +1059,7 @@ public class ObjyObject
       if (TRACER_DEBUG.isEnabled())
       {
         // TODO - verify the message.
-        TRACER_DEBUG
-            .trace("Size of object " + ooId().getStoreString() + " - is: " + size + " - feature: " + feature.getName());
+        TRACER_DEBUG.trace("Size of object " + ooId().getStoreString() + " - is: " + size + " - feature: " + feature.getName());
       }
     }
     catch (RuntimeException ex)
@@ -1105,8 +1098,7 @@ public class ObjyObject
     if (TRACER_DEBUG.isEnabled())
     {
       // TODO - verify the message.
-      TRACER_DEBUG.trace("Getting object " + objectId.getStoreString() + " <feature ' " + feature.getName() + "':"
-          + feature.getEType() + "> from " + this);
+      TRACER_DEBUG.trace("Getting object " + objectId.getStoreString() + " <feature ' " + feature.getName() + "':" + feature.getEType() + "> from " + this);
     }
 
     // Class_Position position =
@@ -1440,8 +1432,8 @@ public class ObjyObject
         // different feature then.
         if (TRACER_DEBUG.isEnabled())
         {
-          TRACER_DEBUG.trace("-->> No process to delete() feature (" + i + ") -> feature:" + feature.getName()
-              + " - value:" + objects[i] + " ... nothing to do here.");
+          TRACER_DEBUG
+              .trace("-->> No process to delete() feature (" + i + ") -> feature:" + feature.getName() + " - value:" + objects[i] + " ... nothing to do here.");
         }
       }
     }

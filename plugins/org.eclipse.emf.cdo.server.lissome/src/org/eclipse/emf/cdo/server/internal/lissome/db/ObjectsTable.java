@@ -174,8 +174,7 @@ public class ObjectsTable extends Table
     return builder.toString();
   }
 
-  protected String sqlHandleRevisions(boolean withClass, boolean withBranch, boolean withTime, boolean exactTime,
-      boolean historical)
+  protected String sqlHandleRevisions(boolean withClass, boolean withBranch, boolean withTime, boolean exactTime, boolean historical)
   {
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT ");

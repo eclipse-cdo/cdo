@@ -32,8 +32,8 @@ public class CDORevisionProxyFactory implements ProxyFactory
   }
 
   @SuppressWarnings("rawtypes")
-  public void postInstantiate(String entityName, Class persistentClass, Set interfaces, Method getIdentifierMethod,
-      Method setIdentifierMethod, CompositeType componentIdType) throws HibernateException
+  public void postInstantiate(String entityName, Class persistentClass, Set interfaces, Method getIdentifierMethod, Method setIdentifierMethod,
+      CompositeType componentIdType) throws HibernateException
   {
     this.entityName = entityName;
   }

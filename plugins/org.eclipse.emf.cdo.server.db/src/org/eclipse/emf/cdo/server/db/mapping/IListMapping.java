@@ -108,6 +108,5 @@ public interface IListMapping
    * @see IStoreAccessor#queryXRefs(IStoreAccessor.QueryXRefsContext)
    * @since 4.0
    */
-  public boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere,
-      QueryXRefsContext context, String idString);
+  public boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere, QueryXRefsContext context, String idString);
 }

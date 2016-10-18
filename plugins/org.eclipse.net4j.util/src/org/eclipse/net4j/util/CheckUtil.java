@@ -32,8 +32,7 @@ public final class CheckUtil
   /**
    * @since 3.7
    */
-  public static final boolean SANITIZE_TIMEOUT = OMPlatform.INSTANCE
-      .isProperty("org.eclipse.net4j.util.CheckUtil.sanitizeTimeout", HAS_DEBUGGER_ATTACHED);
+  public static final boolean SANITIZE_TIMEOUT = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.util.CheckUtil.sanitizeTimeout", HAS_DEBUGGER_ATTACHED);
 
   private static final long ONE_DAY = 1000 * 60 * 60 * 24;
 

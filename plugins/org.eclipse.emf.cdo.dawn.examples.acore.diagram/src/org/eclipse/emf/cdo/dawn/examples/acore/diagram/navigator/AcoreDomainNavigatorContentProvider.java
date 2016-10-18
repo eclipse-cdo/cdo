@@ -74,8 +74,7 @@ public class AcoreDomainNavigatorContentProvider implements ICommonContentProvid
    */
   public AcoreDomainNavigatorContentProvider()
   {
-    myAdapterFctoryContentProvier = new AdapterFactoryContentProvider(
-        AcoreDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
+    myAdapterFctoryContentProvier = new AdapterFactoryContentProvider(AcoreDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
     TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE.createEditingDomain();
     myEditingDomain = (AdapterFactoryEditingDomain)editingDomain;
     myEditingDomain.setResourceToReadOnlyMap(new HashMap()
@@ -221,9 +220,7 @@ public class AcoreDomainNavigatorContentProvider implements ICommonContentProvid
 
     if (parentElement instanceof AcoreDomainNavigatorItem)
     {
-      return wrapEObjects(
-          myAdapterFctoryContentProvier.getChildren(((AcoreDomainNavigatorItem)parentElement).getEObject()),
-          parentElement);
+      return wrapEObjects(myAdapterFctoryContentProvier.getChildren(((AcoreDomainNavigatorItem)parentElement).getEObject()), parentElement);
     }
     return EMPTY_ARRAY;
   }

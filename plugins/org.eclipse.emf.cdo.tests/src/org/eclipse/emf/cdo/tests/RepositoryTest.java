@@ -157,8 +157,7 @@ public class RepositoryTest extends AbstractCDOTest
 
     getRepository().addHandler(new IRepository.WriteAccessHandler()
     {
-      public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
-          OMMonitor monitor) throws RuntimeException
+      public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
       {
         // Use the package registry of the commit context to catch new packages!
         EPackage model1Package = commitContext.getPackageRegistry().getEPackage(getModel1Package().getNsURI());
@@ -178,8 +177,7 @@ public class RepositoryTest extends AbstractCDOTest
         }
       }
 
-      public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext,
-          OMMonitor monitor)
+      public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
       {
       }
     });
@@ -216,8 +214,7 @@ public class RepositoryTest extends AbstractCDOTest
 
     getRepository().addHandler(new IRepository.WriteAccessHandler()
     {
-      public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
-          OMMonitor monitor) throws RuntimeException
+      public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
       {
         CDOView view = CDOServerUtil.openView(commitContext);
         for (CDORevision revision : commitContext.getNewObjects())
@@ -238,8 +235,7 @@ public class RepositoryTest extends AbstractCDOTest
         view.close();
       }
 
-      public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext,
-          OMMonitor monitor)
+      public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
       {
       }
     });
@@ -344,8 +340,7 @@ public class RepositoryTest extends AbstractCDOTest
       {
         EClass eClass = revision.getEClass();
         EPackage ePackage = eClass.getEPackage();
-        assertNotSame("Revision has dynamic package: " + ePackage.getName(), EPackageImpl.class.getName(),
-            ePackage.getClass().getName());
+        assertNotSame("Revision has dynamic package: " + ePackage.getName(), EPackageImpl.class.getName(), ePackage.getClass().getName());
 
         if (eClass == customerClass)
         {

@@ -110,17 +110,16 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
    * @deprecated As of 4.2. use {@link #invalidate(CDOBranch, long, List, List, Map, boolean, boolean)}
    */
   @Deprecated
-  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions, boolean async);
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
+      Map<CDOID, InternalCDORevision> oldRevisions, boolean async);
 
   /**
    * @since 4.2
    * @deprecated As of 4.6. use {@link #invalidate(ViewInvalidationData)}
    */
   @Deprecated
-  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions, boolean async,
-      boolean clearResourcePathCache);
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
+      Map<CDOID, InternalCDORevision> oldRevisions, boolean async, boolean clearResourcePathCache);
 
   /**
    * @since 4.6

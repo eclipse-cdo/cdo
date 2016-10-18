@@ -581,9 +581,8 @@ public class DawnResourceHelper
 
     if (!leftObject.eClass().equals(rightObject.eClass()))
     {
-      throw new EClassIncompatibleException(
-          leftObject.eClass().getName() + "(" + DawnResourceHelper.getXmiId(leftObject) + ")" + "/"
-              + rightObject.eClass().getName() + "(" + DawnResourceHelper.getXmiId(leftObject) + ")");
+      throw new EClassIncompatibleException(leftObject.eClass().getName() + "(" + DawnResourceHelper.getXmiId(leftObject) + ")" + "/"
+          + rightObject.eClass().getName() + "(" + DawnResourceHelper.getXmiId(leftObject) + ")");
     }
 
     updateEAttributes(leftObject, rightObject);
@@ -607,8 +606,7 @@ public class DawnResourceHelper
           View childViewCopy = (View)createCopyAndInsert(rightChild, leftObject);
           if (childViewElement != null)
           {
-            EObject childElementCopy = getSameEObjectFromOtherResource(childViewElement,
-                (XMLResource)leftObject.eResource());
+            EObject childElementCopy = getSameEObjectFromOtherResource(childViewElement, (XMLResource)leftObject.eResource());
 
             updateEObject(childElementCopy, childViewElement);// not shure whether this is needed here
             childViewCopy.setElement(childElementCopy);
@@ -684,8 +682,7 @@ public class DawnResourceHelper
   }
 
   @SuppressWarnings("unchecked")
-  public static void updateReference(EObject leftParent, EObject rightParent, EReference reference)
-      throws EClassIncompatibleException
+  public static void updateReference(EObject leftParent, EObject rightParent, EReference reference) throws EClassIncompatibleException
   {
 
     if (reference.getName().equals("element"))
@@ -705,8 +702,7 @@ public class DawnResourceHelper
         for (Object o : rightCollection)
         {
           EObject rightCollectionChild = (EObject)o;
-          EObject leftCollectionChild = getSameEObjectFromOtherResource(rightCollectionChild,
-              (XMLResource)leftParent.eResource());
+          EObject leftCollectionChild = getSameEObjectFromOtherResource(rightCollectionChild, (XMLResource)leftParent.eResource());
 
           if (leftCollectionChild == null) // create
           {
@@ -876,8 +872,7 @@ public class DawnResourceHelper
 
     for (EAttribute attribute : o.eClass().getEAllAttributes())
     {
-      print(tabs(level + 1) + "o.eClass.getEAllAttributes.attribute: '" + attribute.getName() + "': "
-          + o.eGet(attribute));
+      print(tabs(level + 1) + "o.eClass.getEAllAttributes.attribute: '" + attribute.getName() + "': " + o.eGet(attribute));
     }
     for (EAnnotation annotation : o.eClass().getEAnnotations())
     {

@@ -258,8 +258,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
     session.close();
   }
 
-  private void withExplicitRelease(CDOSession session1, CDOView controlView, boolean mustReceiveNotifications)
-      throws CommitException
+  private void withExplicitRelease(CDOSession session1, CDOView controlView, boolean mustReceiveNotifications) throws CommitException
   {
     TestListener2 controlViewListener = new TestListener2(CDOViewLocksChangedEvent.class);
     controlView.addListener(controlViewListener);
@@ -392,8 +391,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
     }
   }
 
-  private void withAutoRelease(CDOSession session, CDOView controlView, boolean mustReceiveNotifications)
-      throws CommitException
+  private void withAutoRelease(CDOSession session, CDOView controlView, boolean mustReceiveNotifications) throws CommitException
   {
     TestListener2 controlViewListener = new TestListener2(CDOViewLocksChangedEvent.class);
     controlView.addListener(controlViewListener);
@@ -413,8 +411,8 @@ public class LockingNotificationsTest extends AbstractLockingTest
     implicitRelease(company, LockType.OPTION, transaction, controlViewListener, mustReceiveNotifications);
   }
 
-  private void implicitRelease(Company company, LockType type, CDOTransaction transaction,
-      TestListener2 controlViewListener, boolean mustReceiveNotifications) throws CommitException
+  private void implicitRelease(Company company, LockType type, CDOTransaction transaction, TestListener2 controlViewListener, boolean mustReceiveNotifications)
+      throws CommitException
   {
     CDOViewLocksChangedEvent event;
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);

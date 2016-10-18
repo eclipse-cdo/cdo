@@ -27,15 +27,13 @@ import java.io.IOException;
  */
 public class RemoteMessageNotificationRequest extends CDOServerRequest
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      RemoteMessageNotificationRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, RemoteMessageNotificationRequest.class);
 
   private int senderID;
 
   private CDORemoteSessionMessage message;
 
-  public RemoteMessageNotificationRequest(CDOServerProtocol serverProtocol, InternalSession sender,
-      CDORemoteSessionMessage message)
+  public RemoteMessageNotificationRequest(CDOServerProtocol serverProtocol, InternalSession sender, CDORemoteSessionMessage message)
   {
     super(serverProtocol, CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE_NOTIFICATION);
     senderID = sender.getSessionID();

@@ -49,8 +49,7 @@ import java.util.Map;
  *
  * @author Eike Stepper
  */
-public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
-    implements ISignalProtocol<INFRA_STRUCTURE>
+public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> implements ISignalProtocol<INFRA_STRUCTURE>
 {
   /**
    * @since 2.0
@@ -607,8 +606,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
     @Override
     public String toString()
     {
-      return "TimeoutChangedEvent [oldTimeout=" + oldTimeout + ", newTimeout=" + newTimeout + ", source=" + source
-          + "]";
+      return "TimeoutChangedEvent [oldTimeout=" + oldTimeout + ", newTimeout=" + newTimeout + ", source=" + source + "]";
     }
 
   }

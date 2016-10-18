@@ -86,8 +86,7 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
       CDOBranchManager actualBranchManager = branch.getBranchManager();
       if (actualBranchManager != branchManager)
       {
-        throw new IllegalArgumentException(
-            "Wrong branch manager: " + actualBranchManager + "; expected: " + branchManager);
+        throw new IllegalArgumentException("Wrong branch manager: " + actualBranchManager + "; expected: " + branchManager);
       }
     }
   }

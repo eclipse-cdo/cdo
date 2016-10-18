@@ -95,8 +95,7 @@ public class EmptyStringDefaultImpl extends EObjectImpl implements EmptyStringDe
     attribute = newAttribute;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.EMPTY_STRING_DEFAULT__ATTRIBUTE, oldAttribute,
-          attribute));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.EMPTY_STRING_DEFAULT__ATTRIBUTE, oldAttribute, attribute));
     }
   }
 

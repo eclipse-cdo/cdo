@@ -55,8 +55,7 @@ public class CDOAuditHandler extends AuditHandler
     final InternalCDORevision cdoRevision = (InternalCDORevision)object;
 
     teneoAuditEntry.setTeneo_container_feature_id(cdoRevision.getContainingFeatureID());
-    teneoAuditEntry
-        .setTeneo_container_id(HibernateUtil.getInstance().convertCDOIDToString((CDOID)cdoRevision.getContainerID()));
+    teneoAuditEntry.setTeneo_container_id(HibernateUtil.getInstance().convertCDOIDToString((CDOID)cdoRevision.getContainerID()));
   }
 
   @Override
@@ -114,8 +113,7 @@ public class CDOAuditHandler extends AuditHandler
 
   @SuppressWarnings("unchecked")
   @Override
-  public void copyContentToAuditEntry(Session session, Object object, TeneoAuditEntry auditEntry,
-      boolean copyCollections)
+  public void copyContentToAuditEntry(Session session, Object object, TeneoAuditEntry auditEntry, boolean copyCollections)
   {
     final InternalCDORevision source = (InternalCDORevision)object;
     final EClass sourceEClass = source.getEClass();
@@ -135,11 +133,9 @@ public class CDOAuditHandler extends AuditHandler
 
       // initialize with new arrays always to prevent hibernate from complaining if the
       // same array is re-used accross entities
-      if (targetEFeature.getEType().getInstanceClass() != null
-          && targetEFeature.getEType().getInstanceClass().isArray())
+      if (targetEFeature.getEType().getInstanceClass() != null && targetEFeature.getEType().getInstanceClass().isArray())
       {
-        auditEntry.eSet(targetEFeature,
-            Array.newInstance(targetEFeature.getEType().getInstanceClass().getComponentType(), 0));
+        auditEntry.eSet(targetEFeature, Array.newInstance(targetEFeature.getEType().getInstanceClass().getComponentType(), 0));
       }
 
       final EStructuralFeature sourceEFeature = sourceEClass.getEStructuralFeature(targetEFeature.getName());
@@ -173,8 +169,7 @@ public class CDOAuditHandler extends AuditHandler
             {
               for (Object value : (Collection<?>)source.getList(sourceEFeature))
               {
-                ((Collection<Object>)auditEntry.eGet(targetEFeature))
-                    .add(convertValue(sourceEFeature, targetEFeature, value));
+                ((Collection<Object>)auditEntry.eGet(targetEFeature)).add(convertValue(sourceEFeature, targetEFeature, value));
               }
             }
           }
@@ -187,8 +182,7 @@ public class CDOAuditHandler extends AuditHandler
             }
             else
             {
-              auditEntry.eSet(targetEFeature,
-                  convertValue(sourceEFeature, targetEFeature, source.getValue(sourceEFeature)));
+              auditEntry.eSet(targetEFeature, convertValue(sourceEFeature, targetEFeature, source.getValue(sourceEFeature)));
             }
           }
         }
@@ -202,14 +196,13 @@ public class CDOAuditHandler extends AuditHandler
     return createEReferenceAttribute((EReference)sourceEFeature);
   }
 
-  protected void convertEMap(Session session, InternalCDORevision source, EReference sourceEReference,
-      TeneoAuditEntry auditEntry, EReference targetEReference)
+  protected void convertEMap(Session session, InternalCDORevision source, EReference sourceEReference, TeneoAuditEntry auditEntry, EReference targetEReference)
   {
     throw new IllegalStateException("Error case: The system should not use this method when doing auditing in CDO");
   }
 
-  protected void convertFeatureMap(Session session, InternalCDORevision source, EStructuralFeature sourceEFeature,
-      TeneoAuditEntry auditEntry, EStructuralFeature targetEFeature)
+  protected void convertFeatureMap(Session session, InternalCDORevision source, EStructuralFeature sourceEFeature, TeneoAuditEntry auditEntry,
+      EStructuralFeature targetEFeature)
   {
     super.convertFeatureMap(session, source.getList(sourceEFeature), sourceEFeature, auditEntry, targetEFeature);
   }
@@ -249,8 +242,7 @@ public class CDOAuditHandler extends AuditHandler
         cnt++;
         if (cnt > 1000)
         {
-          throw new IllegalStateException(
-              "Cycle detected in id mappings " + newID + " maps to " + commitContext.getIDMappings().get(newID));
+          throw new IllegalStateException("Cycle detected in id mappings " + newID + " maps to " + commitContext.getIDMappings().get(newID));
         }
       }
       cdoID = newID;
@@ -340,8 +332,7 @@ public class CDOAuditHandler extends AuditHandler
 
   private boolean isTeneoAnnotated(EAttribute eAttribute)
   {
-    return eAttribute.getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA) != null
-        || eAttribute.getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA) != null
+    return eAttribute.getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA) != null || eAttribute.getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA) != null
         || eAttribute.getEAttributeType().getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA_AUDITING) != null
         || eAttribute.getEAttributeType().getEAnnotation(Constants.ANNOTATION_SOURCE_TENEO_JPA) != null;
   }

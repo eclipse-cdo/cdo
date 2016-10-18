@@ -92,8 +92,8 @@ public class AcorePaletteFactory
    */
   private ToolEntry createAInterface2CreationTool()
   {
-    NodeToolEntry entry = new NodeToolEntry(Messages.AInterface2CreationTool_title,
-        Messages.AInterface2CreationTool_desc, Collections.singletonList(AcoreElementTypes.AInterface_2001));
+    NodeToolEntry entry = new NodeToolEntry(Messages.AInterface2CreationTool_title, Messages.AInterface2CreationTool_desc,
+        Collections.singletonList(AcoreElementTypes.AInterface_2001));
     entry.setId("createAInterface2CreationTool"); //$NON-NLS-1$
     entry.setSmallIcon(AcoreElementTypes.getImageDescriptor(AcoreElementTypes.AInterface_2001));
     entry.setLargeIcon(entry.getSmallIcon());
@@ -108,8 +108,7 @@ public class AcorePaletteFactory
     ArrayList<IElementType> types = new ArrayList<IElementType>(2);
     types.add(AcoreElementTypes.AAttribute_3001);
     types.add(AcoreElementTypes.AAttribute_3003);
-    NodeToolEntry entry = new NodeToolEntry(Messages.AAttribute3CreationTool_title,
-        Messages.AAttribute3CreationTool_desc, types);
+    NodeToolEntry entry = new NodeToolEntry(Messages.AAttribute3CreationTool_title, Messages.AAttribute3CreationTool_desc, types);
     entry.setId("createAAttribute3CreationTool"); //$NON-NLS-1$
     entry.setSmallIcon(AcoreElementTypes.getImageDescriptor(AcoreElementTypes.AAttribute_3001));
     entry.setLargeIcon(entry.getSmallIcon());
@@ -124,8 +123,7 @@ public class AcorePaletteFactory
     ArrayList<IElementType> types = new ArrayList<IElementType>(2);
     types.add(AcoreElementTypes.AOperation_3002);
     types.add(AcoreElementTypes.AOperation_3004);
-    NodeToolEntry entry = new NodeToolEntry(Messages.AOperation4CreationTool_title,
-        Messages.AOperation4CreationTool_desc, types);
+    NodeToolEntry entry = new NodeToolEntry(Messages.AOperation4CreationTool_title, Messages.AOperation4CreationTool_desc, types);
     entry.setId("createAOperation4CreationTool"); //$NON-NLS-1$
     entry.setSmallIcon(AcoreElementTypes.getImageDescriptor(AcoreElementTypes.AOperation_3002));
     entry.setLargeIcon(entry.getSmallIcon());
@@ -140,10 +138,8 @@ public class AcorePaletteFactory
     LinkToolEntry entry = new LinkToolEntry(Messages.Inherits1CreationTool_title, Messages.Inherits1CreationTool_desc,
         Collections.singletonList(AcoreElementTypes.AClassSubClasses_4001));
     entry.setId("createInherits1CreationTool"); //$NON-NLS-1$
-    entry.setSmallIcon(AcoreDiagramEditorPlugin
-        .findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/inherits.png")); //$NON-NLS-1$
-    entry.setLargeIcon(AcoreDiagramEditorPlugin
-        .findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/inherits.png")); //$NON-NLS-1$
+    entry.setSmallIcon(AcoreDiagramEditorPlugin.findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/inherits.png")); //$NON-NLS-1$
+    entry.setLargeIcon(AcoreDiagramEditorPlugin.findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/inherits.png")); //$NON-NLS-1$
     return entry;
   }
 
@@ -152,14 +148,11 @@ public class AcorePaletteFactory
    */
   private ToolEntry createImplements2CreationTool()
   {
-    LinkToolEntry entry = new LinkToolEntry(Messages.Implements2CreationTool_title,
-        Messages.Implements2CreationTool_desc,
+    LinkToolEntry entry = new LinkToolEntry(Messages.Implements2CreationTool_title, Messages.Implements2CreationTool_desc,
         Collections.singletonList(AcoreElementTypes.AClassImplementedInterfaces_4002));
     entry.setId("createImplements2CreationTool"); //$NON-NLS-1$
-    entry.setSmallIcon(AcoreDiagramEditorPlugin
-        .findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/implements.png")); //$NON-NLS-1$
-    entry.setLargeIcon(AcoreDiagramEditorPlugin
-        .findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/implements.png")); //$NON-NLS-1$
+    entry.setSmallIcon(AcoreDiagramEditorPlugin.findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/implements.png")); //$NON-NLS-1$
+    entry.setLargeIcon(AcoreDiagramEditorPlugin.findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/implements.png")); //$NON-NLS-1$
     return entry;
   }
 
@@ -168,13 +161,11 @@ public class AcorePaletteFactory
    */
   private ToolEntry createAssociation3CreationTool()
   {
-    LinkToolEntry entry = new LinkToolEntry(Messages.Association3CreationTool_title,
-        Messages.Association3CreationTool_desc, Collections.singletonList(AcoreElementTypes.AClassAssociations_4003));
+    LinkToolEntry entry = new LinkToolEntry(Messages.Association3CreationTool_title, Messages.Association3CreationTool_desc,
+        Collections.singletonList(AcoreElementTypes.AClassAssociations_4003));
     entry.setId("createAssociation3CreationTool"); //$NON-NLS-1$
-    entry.setSmallIcon(AcoreDiagramEditorPlugin
-        .findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/association.png")); //$NON-NLS-1$
-    entry.setLargeIcon(AcoreDiagramEditorPlugin
-        .findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/association.png")); //$NON-NLS-1$
+    entry.setSmallIcon(AcoreDiagramEditorPlugin.findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/association.png")); //$NON-NLS-1$
+    entry.setLargeIcon(AcoreDiagramEditorPlugin.findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/association.png")); //$NON-NLS-1$
     return entry;
   }
 
@@ -183,13 +174,11 @@ public class AcorePaletteFactory
    */
   private ToolEntry createAggregation4CreationTool()
   {
-    LinkToolEntry entry = new LinkToolEntry(Messages.Aggregation4CreationTool_title,
-        Messages.Aggregation4CreationTool_desc, Collections.singletonList(AcoreElementTypes.AClassAggregations_4004));
+    LinkToolEntry entry = new LinkToolEntry(Messages.Aggregation4CreationTool_title, Messages.Aggregation4CreationTool_desc,
+        Collections.singletonList(AcoreElementTypes.AClassAggregations_4004));
     entry.setId("createAggregation4CreationTool"); //$NON-NLS-1$
-    entry.setSmallIcon(AcoreDiagramEditorPlugin
-        .findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/aggregation.png")); //$NON-NLS-1$
-    entry.setLargeIcon(AcoreDiagramEditorPlugin
-        .findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/aggregation.png")); //$NON-NLS-1$
+    entry.setSmallIcon(AcoreDiagramEditorPlugin.findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/aggregation.png")); //$NON-NLS-1$
+    entry.setLargeIcon(AcoreDiagramEditorPlugin.findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/aggregation.png")); //$NON-NLS-1$
     return entry;
   }
 
@@ -198,13 +187,11 @@ public class AcorePaletteFactory
    */
   private ToolEntry createComposition5CreationTool()
   {
-    LinkToolEntry entry = new LinkToolEntry(Messages.Composition5CreationTool_title,
-        Messages.Composition5CreationTool_desc, Collections.singletonList(AcoreElementTypes.AClassCompositions_4005));
+    LinkToolEntry entry = new LinkToolEntry(Messages.Composition5CreationTool_title, Messages.Composition5CreationTool_desc,
+        Collections.singletonList(AcoreElementTypes.AClassCompositions_4005));
     entry.setId("createComposition5CreationTool"); //$NON-NLS-1$
-    entry.setSmallIcon(AcoreDiagramEditorPlugin
-        .findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/composition.png")); //$NON-NLS-1$
-    entry.setLargeIcon(AcoreDiagramEditorPlugin
-        .findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/composition.png")); //$NON-NLS-1$
+    entry.setSmallIcon(AcoreDiagramEditorPlugin.findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/composition.png")); //$NON-NLS-1$
+    entry.setLargeIcon(AcoreDiagramEditorPlugin.findImageDescriptor("/org.eclipse.emf.cdo.dawn.examples.acore.edit/icons/full/obj16/composition.png")); //$NON-NLS-1$
     return entry;
   }
 

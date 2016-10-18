@@ -48,8 +48,7 @@ public class CreateBranchIndication extends CDOServerWriteIndication
   {
     InternalCDOBranchManager branchManager = getRepository().getBranchManager();
     InternalCDOBranch baseBranch = branchManager.getBranch(branchInfo.getBaseBranchID());
-    InternalCDOBranch branch = branchManager.createBranch(branchID, branchInfo.getName(), baseBranch,
-        branchInfo.getBaseTimeStamp());
+    InternalCDOBranch branch = branchManager.createBranch(branchID, branchInfo.getName(), baseBranch, branchInfo.getBaseTimeStamp());
 
     InternalSession session = getSession();
     InternalSessionManager sessionManager = getRepository().getSessionManager();

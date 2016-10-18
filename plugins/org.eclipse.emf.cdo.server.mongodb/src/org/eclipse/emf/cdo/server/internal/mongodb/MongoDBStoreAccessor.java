@@ -87,20 +87,17 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
     return commits.loadPackageUnit(packageUnit);
   }
 
-  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
-      CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk, CDORevisionCacheAdder cache)
   {
     return commits.readRevision(id, branchPoint, listChunk, cache);
   }
 
-  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
-      CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk, CDORevisionCacheAdder cache)
   {
     return commits.readRevisionByVersion(id, branchVersion, listChunk, cache);
   }
 
-  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }

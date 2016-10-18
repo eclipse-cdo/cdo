@@ -47,14 +47,13 @@ public interface InternalCDOCommitInfoManager extends CDOCommitInfoManager, ILif
   /**
    * @since 4.0
    */
-  public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
-      String comment, CDOCommitData commitData);
+  public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOCommitData commitData);
 
   /**
    * @since 4.6
    */
-  public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
-      String comment, CDOBranchPoint mergeSource, CDOCommitData commitData);
+  public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOBranchPoint mergeSource,
+      CDOCommitData commitData);
 
   /**
    * @since 4.6

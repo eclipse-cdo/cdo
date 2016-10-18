@@ -49,8 +49,7 @@ import java.util.Collection;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ExpressionsActionBarContributor extends EditingDomainActionBarContributor
-    implements ISelectionChangedListener
+public class ExpressionsActionBarContributor extends EditingDomainActionBarContributor implements ISelectionChangedListener
 {
   /**
    * This keeps track of the active editor.
@@ -74,8 +73,7 @@ public class ExpressionsActionBarContributor extends EditingDomainActionBarContr
    * <!-- end-user-doc -->
    * @generated
    */
-  protected IAction showPropertiesViewAction = new Action(
-      ExpressionsEditorPlugin.INSTANCE.getString("_UI_ShowPropertiesView_menu_item"))
+  protected IAction showPropertiesViewAction = new Action(ExpressionsEditorPlugin.INSTANCE.getString("_UI_ShowPropertiesView_menu_item"))
   {
     @Override
     public void run()
@@ -98,8 +96,7 @@ public class ExpressionsActionBarContributor extends EditingDomainActionBarContr
    * <!-- end-user-doc -->
    * @generated
    */
-  protected IAction refreshViewerAction = new Action(
-      ExpressionsEditorPlugin.INSTANCE.getString("_UI_RefreshViewer_menu_item"))
+  protected IAction refreshViewerAction = new Action(ExpressionsEditorPlugin.INSTANCE.getString("_UI_RefreshViewer_menu_item"))
   {
     @Override
     public boolean isEnabled()
@@ -194,8 +191,7 @@ public class ExpressionsActionBarContributor extends EditingDomainActionBarContr
   {
     super.contributeToMenu(menuManager);
 
-    IMenuManager submenuManager = new MenuManager(
-        ExpressionsEditorPlugin.INSTANCE.getString("_UI_ExpressionsEditor_menu"),
+    IMenuManager submenuManager = new MenuManager(ExpressionsEditorPlugin.INSTANCE.getString("_UI_ExpressionsEditor_menu"),
         "org.eclipse.emf.cdo.expressionsMenuID");
     menuManager.insertAfter("additions", submenuManager);
     submenuManager.add(new Separator("settings"));
@@ -210,8 +206,7 @@ public class ExpressionsActionBarContributor extends EditingDomainActionBarContr
 
     // Prepare for CreateSibling item addition or removal.
     //
-    createSiblingMenuManager = new MenuManager(
-        ExpressionsEditorPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item"));
+    createSiblingMenuManager = new MenuManager(ExpressionsEditorPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item"));
     submenuManager.insertBefore("additions", createSiblingMenuManager);
 
     // Force an update because Eclipse hides empty menus now.
@@ -366,8 +361,7 @@ public class ExpressionsActionBarContributor extends EditingDomainActionBarContr
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void populateManager(IContributionManager manager, Collection<? extends IAction> actions,
-      String contributionID)
+  protected void populateManager(IContributionManager manager, Collection<? extends IAction> actions, String contributionID)
   {
     if (actions != null)
     {

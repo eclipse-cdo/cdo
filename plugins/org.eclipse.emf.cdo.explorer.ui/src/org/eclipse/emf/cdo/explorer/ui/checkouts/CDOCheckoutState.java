@@ -70,8 +70,7 @@ public final class CDOCheckoutState
 
   private static final Image FOLDER_IMAGE = OM.getImage("icons/CDOResourceFolder.gif");
 
-  private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages()
-      .getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
+  private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
 
   private static final IEditorRegistry EDITOR_REGISTRY = PlatformUI.getWorkbench().getEditorRegistry();
 
@@ -337,8 +336,7 @@ public final class CDOCheckoutState
   /**
    * @author Eike Stepper
    */
-  public static final class LabelProvider extends AdapterFactoryLabelProvider
-      implements IColorProvider, IStyledLabelProvider
+  public static final class LabelProvider extends AdapterFactoryLabelProvider implements IColorProvider, IStyledLabelProvider
   {
     private final CDOCheckoutState checkoutState;
 

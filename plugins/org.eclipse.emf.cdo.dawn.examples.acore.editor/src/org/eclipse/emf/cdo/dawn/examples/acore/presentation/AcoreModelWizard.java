@@ -81,16 +81,16 @@ public class AcoreModelWizard extends Wizard implements INewWizard
    *
    * @generated
    */
-  public static final List<String> FILE_EXTENSIONS = Collections.unmodifiableList(
-      Arrays.asList(AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreEditorFilenameExtensions").split("\\s*,\\s*")));
+  public static final List<String> FILE_EXTENSIONS = Collections
+      .unmodifiableList(Arrays.asList(AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreEditorFilenameExtensions").split("\\s*,\\s*")));
 
   /**
    * A formatted list of supported file extensions, suitable for display. <!-- begin-user-doc --> <!-- end-user-doc -->
    *
    * @generated
    */
-  public static final String FORMATTED_FILE_EXTENSIONS = AcoreEditorPlugin.INSTANCE
-      .getString("_UI_AcoreEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", ");
+  public static final String FORMATTED_FILE_EXTENSIONS = AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreEditorFilenameExtensions").replaceAll("\\s*,\\s*",
+      ", ");
 
   /**
    * This caches an instance of the model package. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -152,8 +152,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
     this.workbench = workbench;
     this.selection = selection;
     setWindowTitle(AcoreEditorPlugin.INSTANCE.getString("_UI_Wizard_label"));
-    setDefaultPageImageDescriptor(
-        ExtendedImageRegistry.INSTANCE.getImageDescriptor(AcoreEditorPlugin.INSTANCE.getImage("full/wizban/NewAcore")));
+    setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(AcoreEditorPlugin.INSTANCE.getImage("full/wizban/NewAcore")));
   }
 
   /**
@@ -278,13 +277,11 @@ public class AcoreModelWizard extends Wizard implements INewWizard
       //
       try
       {
-        page.openEditor(new FileEditorInput(modelFile),
-            workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
+        page.openEditor(new FileEditorInput(modelFile), workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
       }
       catch (PartInitException exception)
       {
-        MessageDialog.openError(workbenchWindow.getShell(),
-            AcoreEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
+        MessageDialog.openError(workbenchWindow.getShell(), AcoreEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
         return false;
       }
 
@@ -571,8 +568,8 @@ public class AcoreModelWizard extends Wizard implements INewWizard
       if (encodings == null)
       {
         encodings = new ArrayList<String>();
-        for (StringTokenizer stringTokenizer = new StringTokenizer(
-            AcoreEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens();)
+        for (StringTokenizer stringTokenizer = new StringTokenizer(AcoreEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer
+            .hasMoreTokens();)
         {
           encodings.add(stringTokenizer.nextToken());
         }
@@ -594,8 +591,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
     newFileCreationPage = new AcoreModelWizardNewFileCreationPage("Whatever", selection);
     newFileCreationPage.setTitle(AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreModelWizard_label"));
     newFileCreationPage.setDescription(AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreModelWizard_description"));
-    newFileCreationPage.setFileName(
-        AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0));
+    newFileCreationPage.setFileName(AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0));
     addPage(newFileCreationPage);
 
     // Try and get the resource selection to determine a current directory for the file dialog.
@@ -638,8 +634,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
     }
     initialObjectCreationPage = new AcoreModelWizardInitialObjectCreationPage("Whatever2");
     initialObjectCreationPage.setTitle(AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreModelWizard_label"));
-    initialObjectCreationPage
-        .setDescription(AcoreEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
+    initialObjectCreationPage.setDescription(AcoreEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
     addPage(initialObjectCreationPage);
   }
 

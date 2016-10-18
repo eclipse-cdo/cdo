@@ -94,16 +94,13 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     SignalCounter signalCounter = new SignalCounter(protocol);
 
     CDOBranch currentBranch = session.getBranchManager().getMainBranch();
-    testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, NB_CATEGORY,
-        true);
+    testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, NB_CATEGORY, true);
 
     currentBranch = currentBranch.getBranch(B1_BRANCH_NAME);
-    testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, 2 * NB_CATEGORY,
-        true);
+    testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, 2 * NB_CATEGORY, true);
 
     currentBranch = currentBranch.getBranch(B11_BRANCH_NAME);
-    testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, 3 * NB_CATEGORY,
-        true);
+    testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, 3 * NB_CATEGORY, true);
 
     protocol.removeListener(signalCounter);
   }
@@ -125,22 +122,19 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     SignalCounter signalCounter = new SignalCounter(protocol);
 
     CDOBranch currentBranch = session.getBranchManager().getMainBranch();
-    testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, NB_CATEGORY,
-        false);
+    testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, NB_CATEGORY, false);
 
     currentBranch = currentBranch.getBranch(B1_BRANCH_NAME);
-    testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, 2 * NB_CATEGORY,
-        false);
+    testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, 2 * NB_CATEGORY, false);
 
     currentBranch = currentBranch.getBranch(B11_BRANCH_NAME);
-    testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, 3 * NB_CATEGORY,
-        false);
+    testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, 3 * NB_CATEGORY, false);
 
     protocol.removeListener(signalCounter);
   }
 
-  private void testCDORevisionFetchWithChangesOnAllBranches(CDOSession session, CDOBranch currentBranch,
-      SignalCounter signalCounter, CDOID companyCDOID, int expectedNbCategories, boolean prefetch)
+  private void testCDORevisionFetchWithChangesOnAllBranches(CDOSession session, CDOBranch currentBranch, SignalCounter signalCounter, CDOID companyCDOID,
+      int expectedNbCategories, boolean prefetch)
   {
     CDOView view = session.openView(currentBranch);
     assertEquals(0, signalCounter.getCountFor(LoadRevisionsRequest.class));

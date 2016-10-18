@@ -203,8 +203,7 @@ public class CDOCheckoutViewProvider extends AbstractCDOViewProvider
     {
       EList<Adapter> adapters = resourceSet.eAdapters();
 
-      CheckoutViewProviderAdapter adapter = (CheckoutViewProviderAdapter)EcoreUtil.getAdapter(adapters,
-          CheckoutViewProviderAdapter.class);
+      CheckoutViewProviderAdapter adapter = (CheckoutViewProviderAdapter)EcoreUtil.getAdapter(adapters, CheckoutViewProviderAdapter.class);
       if (adapter != null && adapter.getTarget() != resourceSet)
       {
         adapters.remove(adapter);

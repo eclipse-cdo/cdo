@@ -32,6 +32,5 @@ public interface CDOUndoDetector
 
   public static final CDOUndoDetector ALL_FEATURES = new CDOUndoDetectorImpl();
 
-  public boolean detectUndo(CDOTransaction transaction, CDORevision cleanRevision, CDORevision currentRevision,
-      CDOFeatureDelta featureDelta);
+  public boolean detectUndo(CDOTransaction transaction, CDORevision cleanRevision, CDORevision currentRevision, CDOFeatureDelta featureDelta);
 }

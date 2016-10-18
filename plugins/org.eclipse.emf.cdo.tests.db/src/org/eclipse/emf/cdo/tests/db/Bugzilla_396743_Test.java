@@ -93,8 +93,7 @@ public class Bugzilla_396743_Test extends AbstractCDOTest
             @Override
             protected void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException
             {
-              if (((IDBPreparedStatement)stmt).getSQL().toUpperCase().startsWith("SELECT")
-                  && revision.getEClass() == getModel1Package().getCompany())
+              if (((IDBPreparedStatement)stmt).getSQL().toUpperCase().startsWith("SELECT") && revision.getEClass() == getModel1Package().getCompany())
               {
                 commitLatch.countDown(); // Let main thread execute a commit
                 awaitReadValues(); // Wait for commit to finish

@@ -329,8 +329,7 @@ public class ManageSecurityHandler extends LongRunningHandler
 
         // If there's no user ID, then the repository doesn't require authentication,
         // so we can use that session
-        if (session != null && !session.isClosed()
-            && (User.ADMINISTRATOR.equals(session.getUserID()) || StringUtil.isEmpty(session.getUserID()))
+        if (session != null && !session.isClosed() && (User.ADMINISTRATOR.equals(session.getUserID()) || StringUtil.isEmpty(session.getUserID()))
             && ObjectUtil.equals(session.getRepositoryInfo().getUUID(), repository.getUUID()))
         {
           return session;
@@ -368,8 +367,7 @@ public class ManageSecurityHandler extends LongRunningHandler
       IManagedContainer container = IPluginContainer.INSTANCE;
       String productGroup = CredentialsProviderFactory.PRODUCT_GROUP;
       String factoryType = "interactive"; //$NON-NLS-1$
-      IPasswordCredentialsProvider credentialsProvider = (IPasswordCredentialsProvider)container
-          .getElement(productGroup, factoryType, null);
+      IPasswordCredentialsProvider credentialsProvider = (IPasswordCredentialsProvider)container.getElement(productGroup, factoryType, null);
 
       if (credentialsProvider == null)
       {

@@ -89,8 +89,7 @@ public class DawnExplorer extends CDOSessionsView
   {
     try
     {
-      CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
-          PreferenceConstants.getServerName());
+      CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(), PreferenceConstants.getServerName());
       CDOSession session = CDOConnectionUtil.instance.openSession();
       view = CDOConnectionUtil.instance.openView(session);
     }
@@ -154,8 +153,7 @@ public class DawnExplorer extends CDOSessionsView
           else
           {
             CDOTransaction transaction = view.getSession().openTransaction();
-            CDOEditorInput editorInput = CDOEditorUtil.createCDOEditorInput(transaction, ((CDOResource)obj).getPath(),
-                true);
+            CDOEditorInput editorInput = CDOEditorUtil.createCDOEditorInput(transaction, ((CDOResource)obj).getPath(), true);
             try
             {
               DawnExplorer.this.getSite().getPage().openEditor(editorInput, CDOEditorUtil.getEditorID());

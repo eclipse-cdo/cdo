@@ -49,8 +49,7 @@ public class DawnAcoreModelWizard extends AcoreModelWizard implements INewWizard
   public DawnAcoreModelWizard()
   {
     super();
-    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
-        PreferenceConstants.getServerName());
+    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(), PreferenceConstants.getServerName());
     CDOSession session = CDOConnectionUtil.instance.openSession();
     view = CDOConnectionUtil.instance.openView(session);
   }
@@ -63,8 +62,7 @@ public class DawnAcoreModelWizard extends AcoreModelWizard implements INewWizard
 
     initialObjectCreationPage = new AcoreModelWizardInitialObjectCreationPage("Whatever2");
     initialObjectCreationPage.setTitle(AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreModelWizard_label"));
-    initialObjectCreationPage
-        .setDescription(AcoreEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
+    initialObjectCreationPage.setDescription(AcoreEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
     addPage(initialObjectCreationPage);
   }
 
@@ -87,8 +85,7 @@ public class DawnAcoreModelWizard extends AcoreModelWizard implements INewWizard
 
             URI resourceURI = newResourceCreationPage.getURI();
 
-            CDOTransaction transaction = CDOConnectionUtil.instance.openCurrentTransaction(resourceSet,
-                resourceURI.toString());
+            CDOTransaction transaction = CDOConnectionUtil.instance.openCurrentTransaction(resourceSet, resourceURI.toString());
 
             resource = transaction.getOrCreateResource(resourceURI.path());
 
@@ -142,8 +139,7 @@ public class DawnAcoreModelWizard extends AcoreModelWizard implements INewWizard
     }
     catch (PartInitException exception)
     {
-      MessageDialog.openError(workbenchWindow.getShell(),
-          AcoreEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
+      MessageDialog.openError(workbenchWindow.getShell(), AcoreEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
       throw new RuntimeException(exception);
     }
   }

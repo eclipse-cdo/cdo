@@ -35,8 +35,7 @@ public class CompareCDOMerger implements CDOMerger2
     throw new UnsupportedOperationException();
   }
 
-  public void merge(final CDOTransaction localTransaction, CDOView remoteView, Set<CDOID> affectedIDs)
-      throws ConflictException
+  public void merge(final CDOTransaction localTransaction, CDOView remoteView, Set<CDOID> affectedIDs) throws ConflictException
   {
     CDOCompareEditorUtil.closeTransactionAfterCommit(localTransaction);
     CDOCompareEditorUtil.closeEditorWithTransaction(localTransaction);

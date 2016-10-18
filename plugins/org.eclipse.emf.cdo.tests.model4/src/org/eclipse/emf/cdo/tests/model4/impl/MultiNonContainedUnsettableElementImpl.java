@@ -86,8 +86,7 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
    */
   public RefMultiNonContainedUnsettable getParent()
   {
-    return (RefMultiNonContainedUnsettable)eGet(model4Package.eINSTANCE.getMultiNonContainedUnsettableElement_Parent(),
-        true);
+    return (RefMultiNonContainedUnsettable)eGet(model4Package.eINSTANCE.getMultiNonContainedUnsettableElement_Parent(), true);
   }
 
   /**

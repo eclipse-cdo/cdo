@@ -41,6 +41,5 @@ public interface IAuthenticationProtocol
    *
    * @throws UnsupportedOperationException if credentials change is not supported
    */
-  public Response sendCredentialsChallenge(Challenge challenge, String userID, CredentialsUpdateOperation operation)
-      throws Exception;
+  public Response sendCredentialsChallenge(Challenge challenge, String userID, CredentialsUpdateOperation operation) throws Exception;
 }

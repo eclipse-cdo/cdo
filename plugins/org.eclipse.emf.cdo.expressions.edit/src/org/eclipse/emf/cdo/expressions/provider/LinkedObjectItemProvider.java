@@ -39,8 +39,8 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
-public class LinkedObjectItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+public class LinkedObjectItemProvider extends ItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
     ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
@@ -80,11 +80,10 @@ public class LinkedObjectItemProvider extends ItemProviderAdapter implements IEd
    */
   protected void addObjectPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_LinkedObject_object_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_LinkedObject_object_feature", "_UI_LinkedObject_type"),
-            ExpressionsPackage.Literals.LINKED_OBJECT__OBJECT, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_LinkedObject_object_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_LinkedObject_object_feature", "_UI_LinkedObject_type"),
+        ExpressionsPackage.Literals.LINKED_OBJECT__OBJECT, true, false, true, null, null, null));
   }
 
   /**

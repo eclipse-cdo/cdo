@@ -85,8 +85,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     });
   }
 
-  public void orderRegistration(final SocketChannel channel, final boolean client,
-      final ITCPActiveSelectorListener listener)
+  public void orderRegistration(final SocketChannel channel, final boolean client, final ITCPActiveSelectorListener listener)
   {
     assertValidListener(listener);
     order(client, new Runnable()
@@ -393,8 +392,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     }
   }
 
-  private void executeRegistration(final SocketChannel channel, final ITCPActiveSelectorListener listener,
-      boolean client)
+  private void executeRegistration(final SocketChannel channel, final ITCPActiveSelectorListener listener, boolean client)
   {
     if (TRACER.isEnabled())
     {

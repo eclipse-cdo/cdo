@@ -22,6 +22,5 @@ public interface IUserManager
   /**
    * @since 2.0
    */
-  public byte[] encrypt(String userID, byte[] data, String algorithmName, byte[] salt, int count)
-      throws SecurityException;
+  public byte[] encrypt(String userID, byte[] data, String algorithmName, byte[] salt, int count) throws SecurityException;
 }

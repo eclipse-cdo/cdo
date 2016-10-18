@@ -41,8 +41,8 @@ import java.util.List;
  *
  * @generated
  */
-public class MenuCardItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class MenuCardItemProvider extends ItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -78,12 +78,9 @@ public class MenuCardItemProvider extends ItemProviderAdapter implements IEditin
    */
   protected void addTitlePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_MenuCard_title_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_MenuCard_title_feature", "_UI_MenuCard_type"),
-            InventoryPackage.Literals.MENU_CARD__TITLE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-            null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_MenuCard_title_feature"), getString("_UI_PropertyDescriptor_description", "_UI_MenuCard_title_feature", "_UI_MenuCard_type"),
+        InventoryPackage.Literals.MENU_CARD__TITLE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -198,8 +195,7 @@ public class MenuCardItemProvider extends ItemProviderAdapter implements IEditin
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(InventoryPackage.Literals.MENU_CARD__SECTIONS,
-        InventoryFactory.eINSTANCE.createSection()));
+    newChildDescriptors.add(createChildParameter(InventoryPackage.Literals.MENU_CARD__SECTIONS, InventoryFactory.eINSTANCE.createSection()));
   }
 
   /**

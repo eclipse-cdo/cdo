@@ -61,8 +61,7 @@ public class CollaborationContainer extends Lifecycle implements ICollaborationC
     IListener[] listeners = getListeners();
     if (listeners != null)
     {
-      fireEvent(new SingleDeltaContainerEvent<ICollaboration>(this, collaboration, IContainerDelta.Kind.ADDED),
-          listeners);
+      fireEvent(new SingleDeltaContainerEvent<ICollaboration>(this, collaboration, IContainerDelta.Kind.ADDED), listeners);
     }
 
     collaboration.addListener(this);
@@ -82,8 +81,7 @@ public class CollaborationContainer extends Lifecycle implements ICollaborationC
       IListener[] listeners = getListeners();
       if (listeners != null)
       {
-        fireEvent(new SingleDeltaContainerEvent<ICollaboration>(this, collaboration, IContainerDelta.Kind.REMOVED),
-            listeners);
+        fireEvent(new SingleDeltaContainerEvent<ICollaboration>(this, collaboration, IContainerDelta.Kind.REMOVED), listeners);
       }
     }
 

@@ -43,9 +43,8 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
-public class PermissionItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+public class PermissionItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider,
+    IItemLabelProvider, IItemPropertySource, ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -84,12 +83,10 @@ public class PermissionItemProvider extends ItemProviderAdapter implements IEdit
    */
   protected void addAccessPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Permission_access_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_Permission_access_feature", "_UI_Permission_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.PERMISSION__ACCESS, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-            null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Permission_access_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Permission_access_feature", "_UI_Permission_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.PERMISSION__ACCESS, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**

@@ -98,16 +98,13 @@ public class DawnAcoreEditor extends AcoreEditor implements IDawnEditor
       return;
     }
 
-    selectionViewer.setContentProvider(new DawnSelectionViewerAdapterFactoryContentProvider(adapterFactory,
-        ((DawnEditorInput)getEditorInput()).getResource()));
-    selectionViewer
-        .setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
+    selectionViewer.setContentProvider(new DawnSelectionViewerAdapterFactoryContentProvider(adapterFactory, ((DawnEditorInput)getEditorInput()).getResource()));
+    selectionViewer.setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
     parentViewer.setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
     listViewer.setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
     treeViewer.setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
     tableViewer.setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
-    treeViewerWithColumns
-        .setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
+    treeViewerWithColumns.setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
 
     CDOResource resource = ((DawnEditorInput)getEditorInput()).getResource();
 
@@ -126,8 +123,7 @@ public class DawnAcoreEditor extends AcoreEditor implements IDawnEditor
     {
       if (view.hasConflict())
       {
-        MessageDialog.openError(Display.getDefault().getActiveShell(), "conflict",
-            "Your Resource is in conflict and cannot be committed");
+        MessageDialog.openError(Display.getDefault().getActiveShell(), "conflict", "Your Resource is in conflict and cannot be committed");
       }
       else
       {

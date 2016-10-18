@@ -51,8 +51,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
   {
     try
     {
-      Model2Factory theModel2Factory = (Model2Factory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/tests/legacy/model2/1.0.0");
+      Model2Factory theModel2Factory = (Model2Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/emf/CDO/tests/legacy/model2/1.0.0");
       if (theModel2Factory != null)
       {
         return theModel2Factory;

@@ -42,69 +42,59 @@ public class CDODeltaNotificationImpl extends ENotificationImpl implements CDODe
 {
   private CDORevisionDelta revisionDelta;
 
-  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, Object oldValue,
-      Object newValue)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, Object oldValue, Object newValue)
   {
     super(getEObject(notifier), eventType, feature, oldValue, newValue);
   }
 
-  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, Object oldValue,
-      Object newValue, int position)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, Object oldValue, Object newValue, int position)
   {
     super(getEObject(notifier), eventType, feature, oldValue, newValue, position);
   }
 
-  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature,
-      boolean oldBooleanValue, boolean newBooleanValue)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, boolean oldBooleanValue, boolean newBooleanValue)
   {
     super(getEObject(notifier), eventType, feature.getFeatureID(), oldBooleanValue, newBooleanValue);
     this.feature = feature;
   }
 
-  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature,
-      byte oldByteValue, byte newByteValue)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, byte oldByteValue, byte newByteValue)
   {
     super(getEObject(notifier), eventType, feature.getFeatureID(), oldByteValue, newByteValue);
     this.feature = feature;
   }
 
-  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature,
-      char oldCharValue, char newCharValue)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, char oldCharValue, char newCharValue)
   {
     super(getEObject(notifier), eventType, feature.getFeatureID(), oldCharValue, newCharValue);
     this.feature = feature;
   }
 
-  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature,
-      double oldDoubleValue, double newDoubleValue)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, double oldDoubleValue, double newDoubleValue)
   {
     super(getEObject(notifier), eventType, feature.getFeatureID(), oldDoubleValue, newDoubleValue);
     this.feature = feature;
   }
 
-  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature,
-      float oldFloatValue, float newFloatValue)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, float oldFloatValue, float newFloatValue)
   {
     super(getEObject(notifier), eventType, feature.getFeatureID(), oldFloatValue, newFloatValue);
     this.feature = feature;
   }
 
-  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, int oldIntValue,
-      int newIntValue)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, int oldIntValue, int newIntValue)
   {
     super(getEObject(notifier), eventType, feature.getFeatureID(), oldIntValue, newIntValue);
     this.feature = feature;
   }
 
-  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature,
-      long oldLongValue, long newLongValue)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, long oldLongValue, long newLongValue)
   {
     super(getEObject(notifier), eventType, feature.getFeatureID(), oldLongValue, newLongValue);
     this.feature = feature;
   }
 
-  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature,
-      short oldShortValue, short newShortValue)
+  public CDODeltaNotificationImpl(InternalEObject notifier, int eventType, EStructuralFeature feature, short oldShortValue, short newShortValue)
   {
     super(getEObject(notifier), eventType, feature.getFeatureID(), oldShortValue, newShortValue);
     this.feature = feature;

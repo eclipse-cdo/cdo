@@ -112,11 +112,10 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     return packageURICompressor;
   }
 
-  public OpenSessionResult openSession(String repositoryName, String userID, boolean passiveUpdateEnabled,
-      PassiveUpdateMode passiveUpdateMode, LockNotificationMode lockNotificationMode)
+  public OpenSessionResult openSession(String repositoryName, String userID, boolean passiveUpdateEnabled, PassiveUpdateMode passiveUpdateMode,
+      LockNotificationMode lockNotificationMode)
   {
-    return send(new OpenSessionRequest(this, repositoryName, userID, passiveUpdateEnabled, passiveUpdateMode,
-        lockNotificationMode), new Monitor());
+    return send(new OpenSessionRequest(this, repositoryName, userID, passiveUpdateEnabled, passiveUpdateMode, lockNotificationMode), new Monitor());
   }
 
   public void disablePassiveUpdate()
@@ -191,14 +190,12 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     return send(new LoadCommitDataRequest(this, timeStamp));
   }
 
-  public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex,
-      int fromIndex, int toIndex)
+  public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex, int fromIndex, int toIndex)
   {
     return send(new LoadChunkRequest(this, revision, feature, accessIndex, fetchIndex, fromIndex, toIndex));
   }
 
-  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk,
-      int prefetchDepth)
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
   {
     return send(new LoadRevisionsRequest(this, infos, branchPoint, referenceChunk, prefetchDepth));
   }
@@ -213,12 +210,10 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     return send(new LoadObjectLifetimeRequest(this, id, branchPoint));
   }
 
-  public RefreshSessionResult refresh(long lastUpdateTime,
-      Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
+  public RefreshSessionResult refresh(long lastUpdateTime, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
       boolean enablePassiveUpdates)
   {
-    return send(
-        new RefreshSessionRequest(this, lastUpdateTime, viewedRevisions, initialChunkSize, enablePassiveUpdates));
+    return send(new RefreshSessionRequest(this, lastUpdateTime, viewedRevisions, initialChunkSize, enablePassiveUpdates));
   }
 
   public void openView(int viewID, boolean readOnly, CDOBranchPoint branchPoint)
@@ -231,11 +226,10 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     return send(new OpenViewRequest(this, viewID, readOnly, durableLockingID));
   }
 
-  public void switchTarget(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects,
-      List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects, OMMonitor monitor)
+  public void switchTarget(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects, List<CDORevisionKey> allChangedObjects,
+      List<CDOIDAndVersion> allDetachedObjects, OMMonitor monitor)
   {
-    send(new SwitchTargetRequest(this, viewID, branchPoint, invalidObjects, allChangedObjects, allDetachedObjects),
-        monitor);
+    send(new SwitchTargetRequest(this, viewID, branchPoint, invalidObjects, allChangedObjects, allDetachedObjects), monitor);
   }
 
   public void closeView(int viewID)
@@ -266,8 +260,8 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   }
 
   @Deprecated
-  public LockObjectsResult lockObjects(List<InternalCDORevision> revisions, int viewID, CDOBranch viewedBranch,
-      LockType lockType, long timeout) throws InterruptedException
+  public LockObjectsResult lockObjects(List<InternalCDORevision> revisions, int viewID, CDOBranch viewedBranch, LockType lockType, long timeout)
+      throws InterruptedException
   {
     // List<CDORevisionKey> revisionKeys = new LinkedList<CDORevisionKey>();
     // for (InternalCDORevision rev : revisions)
@@ -280,8 +274,8 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     throw new UnsupportedOperationException();
   }
 
-  public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch,
-      LockType lockType, boolean recursive, long timeout) throws InterruptedException
+  public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch, LockType lockType, boolean recursive,
+      long timeout) throws InterruptedException
   {
     InterruptedException interruptedException = null;
     RuntimeException runtimeException = null;
@@ -318,16 +312,15 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     throw runtimeException;
   }
 
-  public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys,
-      CDOBranch viewedBranch, LockType lockType, boolean recursive, long timeout) throws InterruptedException
+  public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys, CDOBranch viewedBranch, LockType lockType,
+      boolean recursive, long timeout) throws InterruptedException
   {
     InterruptedException interruptedException = null;
     RuntimeException runtimeException = null;
 
     try
     {
-      return new LockDelegationRequest(this, lockAreaID, revisionKeys, viewedBranch, lockType, recursive, timeout)
-          .send();
+      return new LockDelegationRequest(this, lockAreaID, revisionKeys, viewedBranch, lockType, recursive, timeout).send();
     }
     catch (RemoteException ex)
     {
@@ -365,14 +358,12 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     throw new UnsupportedOperationException();
   }
 
-  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType,
-      boolean recursive)
+  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType, boolean recursive)
   {
     return send(new UnlockObjectsRequest(this, view.getViewID(), objectIDs, lockType, recursive));
   }
 
-  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType,
-      boolean recursive)
+  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType, boolean recursive)
   {
     return send(new UnlockDelegationRequest(this, lockAreaID, objectIDs, lockType, recursive));
   }
@@ -412,15 +403,14 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     }
   }
 
-  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     send(new HandleRevisionsRequest(this, eClass, branch, exactBranch, timeStamp, exactTime, handler));
   }
 
   @Deprecated
-  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
-      CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs, OMMonitor monitor)
+  public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData,
+      Collection<CDOLob<?>> lobs, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }
@@ -431,8 +421,8 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   }
 
   @Deprecated
-  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
-      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
+  public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment, CDOCommitData commitData,
+      Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }
@@ -498,8 +488,8 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   }
 
   @Deprecated
-  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
-      CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo)
+  public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
+      CDORevisionAvailabilityInfo sourceBaseInfo)
   {
     throw new UnsupportedOperationException();
   }
@@ -546,8 +536,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     send(new ChangeCredentialsRequest(this, CredentialsUpdateOperation.RESET_PASSWORD, userID), new Monitor());
   }
 
-  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler,
-      OMMonitor monitor)
+  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
     return send(new UnitRequest(this, viewID, rootID, opcode, revisionHandler), monitor);
   }

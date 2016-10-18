@@ -75,13 +75,10 @@ public class DawnGeneratorItemProvider extends ItemProviderAdapter
    */
   protected void addConflictColorPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_DawnGenerator_conflictColor_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_DawnGenerator_conflictColor_feature",
-                "_UI_DawnGenerator_type"),
-            DawngenmodelPackage.Literals.DAWN_GENERATOR__CONFLICT_COLOR, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DawnGenerator_conflictColor_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGenerator_conflictColor_feature", "_UI_DawnGenerator_type"),
+        DawngenmodelPackage.Literals.DAWN_GENERATOR__CONFLICT_COLOR, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -91,13 +88,10 @@ public class DawnGeneratorItemProvider extends ItemProviderAdapter
    */
   protected void addLocalLockColorPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_DawnGenerator_localLockColor_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_DawnGenerator_localLockColor_feature",
-                "_UI_DawnGenerator_type"),
-            DawngenmodelPackage.Literals.DAWN_GENERATOR__LOCAL_LOCK_COLOR, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DawnGenerator_localLockColor_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGenerator_localLockColor_feature", "_UI_DawnGenerator_type"),
+        DawngenmodelPackage.Literals.DAWN_GENERATOR__LOCAL_LOCK_COLOR, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -107,13 +101,10 @@ public class DawnGeneratorItemProvider extends ItemProviderAdapter
    */
   protected void addRemoteLockColorPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_DawnGenerator_remoteLockColor_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_DawnGenerator_remoteLockColor_feature",
-                "_UI_DawnGenerator_type"),
-            DawngenmodelPackage.Literals.DAWN_GENERATOR__REMOTE_LOCK_COLOR, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DawnGenerator_remoteLockColor_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGenerator_remoteLockColor_feature", "_UI_DawnGenerator_type"),
+        DawngenmodelPackage.Literals.DAWN_GENERATOR__REMOTE_LOCK_COLOR, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -136,8 +127,7 @@ public class DawnGeneratorItemProvider extends ItemProviderAdapter
   public String getText(Object object)
   {
     String label = ((DawnGenerator)object).getConflictColor();
-    return label == null || label.length() == 0 ? getString("_UI_DawnGenerator_type")
-        : getString("_UI_DawnGenerator_type") + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_DawnGenerator_type") : getString("_UI_DawnGenerator_type") + " " + label;
   }
 
   /**

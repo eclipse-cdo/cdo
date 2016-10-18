@@ -186,8 +186,7 @@ public class MergingTest extends AbstractCDOTest
     CDOCommitInfo commitInfo1 = transaction.commit();
 
     // Remerge from source1.
-    CDOChangeSetData check = transaction.merge(source1.getHead(), source1.getPoint(commitInfo1.getTimeStamp()),
-        new DefaultCDOMerger.PerFeature.ManyValued());
+    CDOChangeSetData check = transaction.merge(source1.getHead(), source1.getPoint(commitInfo1.getTimeStamp()), new DefaultCDOMerger.PerFeature.ManyValued());
     assertEquals(true, check.isEmpty());
     assertEquals(false, transaction.isDirty());
   }
@@ -261,8 +260,7 @@ public class MergingTest extends AbstractCDOTest
     assertEquals(1, ((CDORevision)commitInfo1.getNewObjects().get(0)).getVersion());
 
     // Remerge from source1.
-    CDOChangeSetData check = transaction.merge(source1.getHead(), source1.getPoint(commitInfo1.getTimeStamp()),
-        new DefaultCDOMerger.PerFeature.ManyValued());
+    CDOChangeSetData check = transaction.merge(source1.getHead(), source1.getPoint(commitInfo1.getTimeStamp()), new DefaultCDOMerger.PerFeature.ManyValued());
     assertEquals(true, check.isEmpty());
     assertEquals(false, transaction.isDirty());
   }
@@ -333,8 +331,7 @@ public class MergingTest extends AbstractCDOTest
     assertEquals(1, ((CDORevision)commitInfo2.getNewObjects().get(0)).getVersion());
 
     // Remerge from source2.
-    CDOChangeSetData check = transaction.merge(source2.getHead(), source2.getPoint(commitInfo2.getTimeStamp()),
-        new DefaultCDOMerger.PerFeature.ManyValued());
+    CDOChangeSetData check = transaction.merge(source2.getHead(), source2.getPoint(commitInfo2.getTimeStamp()), new DefaultCDOMerger.PerFeature.ManyValued());
     assertEquals(true, check.isEmpty());
     assertEquals(false, transaction.isDirty());
   }
@@ -393,8 +390,7 @@ public class MergingTest extends AbstractCDOTest
     long now = transaction.commit().getTimeStamp();
 
     // Remerge from source2.
-    CDOChangeSetData check = transaction.merge(source2.getHead(), source2.getPoint(now),
-        new DefaultCDOMerger.PerFeature.ManyValued());
+    CDOChangeSetData check = transaction.merge(source2.getHead(), source2.getPoint(now), new DefaultCDOMerger.PerFeature.ManyValued());
     assertEquals(true, check.isEmpty());
     assertEquals(false, transaction.isDirty());
   }
@@ -643,8 +639,7 @@ public class MergingTest extends AbstractCDOTest
     addCompany(sourceContents);
     long sourceCommit1 = commitAndSync(sourceTx, transaction).getTimeStamp();
 
-    CDOChangeSetData check1 = transaction.merge(source.getHead(), source.getBase(),
-        new DefaultCDOMerger.PerFeature.ManyValued());
+    CDOChangeSetData check1 = transaction.merge(source.getHead(), source.getBase(), new DefaultCDOMerger.PerFeature.ManyValued());
     long mainCommit1 = transaction.commit().getTimeStamp();
     assertEquals(1, check1.getNewObjects().size());
     assertEquals(1, check1.getChangedObjects().size());
@@ -655,8 +650,8 @@ public class MergingTest extends AbstractCDOTest
     commitAndSync(sourceTx, transaction);
     sourceTx.close();
 
-    CDOChangeSetData check2 = transaction.merge(source.getHead(), source.getPoint(sourceCommit1),
-        mainBranch.getPoint(mainCommit1), new DefaultCDOMerger.PerFeature.ManyValued());
+    CDOChangeSetData check2 = transaction.merge(source.getHead(), source.getPoint(sourceCommit1), mainBranch.getPoint(mainCommit1),
+        new DefaultCDOMerger.PerFeature.ManyValued());
     transaction.commit();
     assertEquals(1, check2.getNewObjects().size());
     assertEquals(1, check2.getChangedObjects().size());
@@ -690,12 +685,11 @@ public class MergingTest extends AbstractCDOTest
     long sourceCommit2 = commitAndSync(sourceTx).getTimeStamp();
     sourceTx.close();
 
-    transaction.merge(source.getHead(), source.getPoint(sourceCommit1), mainBranch.getPoint(mainCommit1),
-        new DefaultCDOMerger.PerFeature.ManyValued());
+    transaction.merge(source.getHead(), source.getPoint(sourceCommit1), mainBranch.getPoint(mainCommit1), new DefaultCDOMerger.PerFeature.ManyValued());
     long mainCommit2 = transaction.commit().getTimeStamp();
 
-    CDOChangeSetData check = transaction.merge(source.getHead(), source.getPoint(sourceCommit2),
-        mainBranch.getPoint(mainCommit2), new DefaultCDOMerger.PerFeature.ManyValued());
+    CDOChangeSetData check = transaction.merge(source.getHead(), source.getPoint(sourceCommit2), mainBranch.getPoint(mainCommit2),
+        new DefaultCDOMerger.PerFeature.ManyValued());
     assertEquals(true, check.isEmpty());
     assertEquals(false, transaction.isDirty());
   }
@@ -794,8 +788,7 @@ public class MergingTest extends AbstractCDOTest
     CDOBranch source1 = mainBranch.getBranch("source1");
 
     CDOTransaction transaction = session.openTransaction(mainBranch);
-    CDOChangeSetData check = transaction.merge(source1.getHead(), source1.getPoint(commitInfo.getTimeStamp()),
-        new DefaultCDOMerger.PerFeature.ManyValued());
+    CDOChangeSetData check = transaction.merge(source1.getHead(), source1.getPoint(commitInfo.getTimeStamp()), new DefaultCDOMerger.PerFeature.ManyValued());
     assertEquals(true, check.isEmpty());
     assertEquals(false, transaction.isDirty());
   }

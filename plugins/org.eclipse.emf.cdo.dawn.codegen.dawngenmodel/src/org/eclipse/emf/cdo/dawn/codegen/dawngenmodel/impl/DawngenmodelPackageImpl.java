@@ -88,9 +88,8 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
     }
 
     // Obtain or create and register package
-    DawngenmodelPackageImpl theDawngenmodelPackage = (DawngenmodelPackageImpl)(EPackage.Registry.INSTANCE
-        .get(eNS_URI) instanceof DawngenmodelPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-            : new DawngenmodelPackageImpl());
+    DawngenmodelPackageImpl theDawngenmodelPackage = (DawngenmodelPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof DawngenmodelPackageImpl
+        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new DawngenmodelPackageImpl());
 
     isInited = true;
 
@@ -278,29 +277,21 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
     // Add supertypes to classes
 
     // Initialize classes and features; add operations and parameters
-    initEClass(dawnGeneratorEClass, DawnGenerator.class, "DawnGenerator", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getDawnGenerator_ConflictColor(), theEcorePackage.getEString(), "conflictColor", null, 0, 1,
-        DawnGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEAttribute(getDawnGenerator_LocalLockColor(), theEcorePackage.getEString(), "localLockColor", null, 0, 1,
-        DawnGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEAttribute(getDawnGenerator_RemoteLockColor(), theEcorePackage.getEString(), "remoteLockColor", null, 0, 1,
-        DawnGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+    initEClass(dawnGeneratorEClass, DawnGenerator.class, "DawnGenerator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getDawnGenerator_ConflictColor(), theEcorePackage.getEString(), "conflictColor", null, 0, 1, DawnGenerator.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDawnGenerator_LocalLockColor(), theEcorePackage.getEString(), "localLockColor", null, 0, 1, DawnGenerator.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDawnGenerator_RemoteLockColor(), theEcorePackage.getEString(), "remoteLockColor", null, 0, 1, DawnGenerator.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(dawnFragmentGeneratorEClass, DawnFragmentGenerator.class, "DawnFragmentGenerator", !IS_ABSTRACT,
-        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getDawnFragmentGenerator_FragmentName(), theEcorePackage.getEString(), "fragmentName", null, 0, 1,
-        DawnFragmentGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getDawnFragmentGenerator_DawnEditorClassName(), theEcorePackage.getEString(), "dawnEditorClassName",
-        null, 0, 1, DawnFragmentGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDawnFragmentGenerator_DawnGenerator(), getDawnGenerator(), null, "dawnGenerator", null, 0, 1,
-        DawnFragmentGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(dawnFragmentGeneratorEClass, DawnFragmentGenerator.class, "DawnFragmentGenerator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getDawnFragmentGenerator_FragmentName(), theEcorePackage.getEString(), "fragmentName", null, 0, 1, DawnFragmentGenerator.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDawnFragmentGenerator_DawnEditorClassName(), theEcorePackage.getEString(), "dawnEditorClassName", null, 0, 1, DawnFragmentGenerator.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDawnFragmentGenerator_DawnGenerator(), getDawnGenerator(), null, "dawnGenerator", null, 0, 1, DawnFragmentGenerator.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

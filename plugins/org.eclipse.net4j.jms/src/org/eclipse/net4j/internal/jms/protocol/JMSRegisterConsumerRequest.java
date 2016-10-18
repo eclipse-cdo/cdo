@@ -35,8 +35,8 @@ public class JMSRegisterConsumerRequest extends RequestWithConfirmation<Long>
   /**
    * @since 2.0
    */
-  public JMSRegisterConsumerRequest(JMSClientProtocol protocol, int sessionID, DestinationImpl destination,
-      String messageSelector, boolean noLocal, boolean durable)
+  public JMSRegisterConsumerRequest(JMSClientProtocol protocol, int sessionID, DestinationImpl destination, String messageSelector, boolean noLocal,
+      boolean durable)
   {
     super(protocol, JMSProtocolConstants.SIGNAL_REGISTER_CONSUMER);
     this.sessionID = sessionID;

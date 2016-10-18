@@ -78,11 +78,10 @@ public class UserItemProvider extends AssigneeItemProvider
    */
   protected void addGroupsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_User_groups_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_User_groups_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.USER__GROUPS, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_User_groups_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_User_groups_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.USER__GROUPS, true, false, true, null, null, null));
   }
 
   /**
@@ -93,12 +92,10 @@ public class UserItemProvider extends AssigneeItemProvider
    */
   protected void addLabelPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_User_label_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_User_label_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.USER__LABEL, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
-            null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_User_label_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_User_label_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.USER__LABEL, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -109,12 +106,10 @@ public class UserItemProvider extends AssigneeItemProvider
    */
   protected void addFirstNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_User_firstName_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_User_firstName_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.USER__FIRST_NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-            null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_User_firstName_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_User_firstName_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.USER__FIRST_NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -125,12 +120,10 @@ public class UserItemProvider extends AssigneeItemProvider
    */
   protected void addLastNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_User_lastName_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_User_lastName_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.USER__LAST_NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-            null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_User_lastName_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_User_lastName_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.USER__LAST_NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -141,12 +134,10 @@ public class UserItemProvider extends AssigneeItemProvider
    */
   protected void addEmailPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_User_email_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_User_email_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.USER__EMAIL, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
-            null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_User_email_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_User_email_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.USER__EMAIL, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -157,12 +148,10 @@ public class UserItemProvider extends AssigneeItemProvider
    */
   protected void addDefaultAccessOverridePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_User_defaultAccessOverride_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_User_defaultAccessOverride_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.USER__DEFAULT_ACCESS_OVERRIDE, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_User_defaultAccessOverride_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_User_defaultAccessOverride_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.USER__DEFAULT_ACCESS_OVERRIDE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -173,12 +162,10 @@ public class UserItemProvider extends AssigneeItemProvider
    */
   protected void addDefaultAccessPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_User_defaultAccess_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_User_defaultAccess_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.USER__DEFAULT_ACCESS, false, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_User_defaultAccess_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_User_defaultAccess_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.USER__DEFAULT_ACCESS, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -189,12 +176,10 @@ public class UserItemProvider extends AssigneeItemProvider
    */
   protected void addLockedPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_User_locked_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_User_locked_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.USER__LOCKED, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null,
-            null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_User_locked_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_User_locked_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.USER__LOCKED, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -205,11 +190,10 @@ public class UserItemProvider extends AssigneeItemProvider
    */
   protected void addAllPermissionsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_User_allPermissions_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_User_allPermissions_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.USER__ALL_PERMISSIONS, false, false, false, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_User_allPermissions_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_User_allPermissions_feature", "_UI_User_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.USER__ALL_PERMISSIONS, false, false, false, null, null, null));
   }
 
   /**
@@ -338,8 +322,7 @@ public class UserItemProvider extends AssigneeItemProvider
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(
-        createChildParameter(SecurityPackage.Literals.USER__PASSWORD, SecurityFactory.eINSTANCE.createUserPassword()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.USER__PASSWORD, SecurityFactory.eINSTANCE.createUserPassword()));
   }
 
 }

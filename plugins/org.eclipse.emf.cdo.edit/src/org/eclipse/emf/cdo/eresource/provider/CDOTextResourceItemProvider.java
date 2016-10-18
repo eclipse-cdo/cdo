@@ -68,13 +68,11 @@ public class CDOTextResourceItemProvider extends CDOFileResourceItemProvider
    */
   protected void addContentsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_CDOTextResource_contents_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_CDOTextResource_contents_feature", //$NON-NLS-1$//$NON-NLS-2$
-                "_UI_CDOTextResource_type"), //$NON-NLS-1$
-            EresourcePackage.Literals.CDO_TEXT_RESOURCE__CONTENTS, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_CDOTextResource_contents_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_CDOTextResource_contents_feature", //$NON-NLS-1$//$NON-NLS-2$
+            "_UI_CDOTextResource_type"), //$NON-NLS-1$
+        EresourcePackage.Literals.CDO_TEXT_RESOURCE__CONTENTS, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -86,13 +84,11 @@ public class CDOTextResourceItemProvider extends CDOFileResourceItemProvider
    */
   protected void addEncodingPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_CDOTextResource_encoding_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_CDOTextResource_encoding_feature", //$NON-NLS-1$//$NON-NLS-2$
-                "_UI_CDOTextResource_type"), //$NON-NLS-1$
-            EresourcePackage.Literals.CDO_TEXT_RESOURCE__ENCODING, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_CDOTextResource_encoding_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_CDOTextResource_encoding_feature", //$NON-NLS-1$//$NON-NLS-2$
+            "_UI_CDOTextResource_type"), //$NON-NLS-1$
+        EresourcePackage.Literals.CDO_TEXT_RESOURCE__ENCODING, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**

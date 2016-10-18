@@ -46,8 +46,7 @@ public class DawnEcoreModelWizard extends EcoreModelWizard
   public DawnEcoreModelWizard()
   {
     super();
-    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
-        PreferenceConstants.getServerName());
+    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(), PreferenceConstants.getServerName());
     CDOSession session = CDOConnectionUtil.instance.openSession();
     view = CDOConnectionUtil.instance.openView(session);
   }
@@ -60,8 +59,7 @@ public class DawnEcoreModelWizard extends EcoreModelWizard
 
     initialObjectCreationPage = new EcoreModelWizardInitialObjectCreationPage("Whatever2");
     initialObjectCreationPage.setTitle(EcoreEditorPlugin.INSTANCE.getString("_UI_EcoreModelWizard_label"));
-    initialObjectCreationPage
-        .setDescription(EcoreEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
+    initialObjectCreationPage.setDescription(EcoreEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
     addPage(initialObjectCreationPage);
   }
 
@@ -84,8 +82,7 @@ public class DawnEcoreModelWizard extends EcoreModelWizard
 
             URI resourceURI = newResourceCreationPage.getURI();
 
-            CDOTransaction transaction = CDOConnectionUtil.instance.openCurrentTransaction(resourceSet,
-                resourceURI.toString());
+            CDOTransaction transaction = CDOConnectionUtil.instance.openCurrentTransaction(resourceSet, resourceURI.toString());
 
             resource = transaction.getOrCreateResource(resourceURI.path());
 
@@ -134,8 +131,7 @@ public class DawnEcoreModelWizard extends EcoreModelWizard
     }
     catch (PartInitException exception)
     {
-      MessageDialog.openError(workbenchWindow.getShell(),
-          EcoreEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
+      MessageDialog.openError(workbenchWindow.getShell(), EcoreEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
       throw new RuntimeException(exception);
     }
   }

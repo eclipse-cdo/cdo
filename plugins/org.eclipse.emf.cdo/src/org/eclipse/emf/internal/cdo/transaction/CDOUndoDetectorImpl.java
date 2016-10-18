@@ -35,8 +35,7 @@ import java.util.List;
  */
 public class CDOUndoDetectorImpl implements CDOUndoDetector
 {
-  public boolean detectUndo(CDOTransaction transaction, CDORevision cleanRevision, CDORevision currentRevision,
-      CDOFeatureDelta featureDelta)
+  public boolean detectUndo(CDOTransaction transaction, CDORevision cleanRevision, CDORevision currentRevision, CDOFeatureDelta featureDelta)
   {
     EStructuralFeature feature = featureDelta.getFeature();
     InternalCDORevision cleanInternalRevision = (InternalCDORevision)cleanRevision;
@@ -102,8 +101,7 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
     throw new UnsupportedOperationException();
   }
 
-  protected boolean detectUndoContainer(CDOTransaction transaction, InternalCDORevision cleanRevision,
-      InternalCDORevision currentRevision)
+  protected boolean detectUndoContainer(CDOTransaction transaction, InternalCDORevision cleanRevision, InternalCDORevision currentRevision)
   {
     CDOID cleanResourceID = cleanRevision.getResourceID();
     CDOID currentResourceID = currentRevision.getResourceID();
@@ -131,8 +129,7 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
     return true;
   }
 
-  protected boolean ignore(EStructuralFeature feature, InternalCDORevision cleanRevision,
-      InternalCDORevision currentRevision)
+  protected boolean ignore(EStructuralFeature feature, InternalCDORevision cleanRevision, InternalCDORevision currentRevision)
   {
     return feature.isMany() && !cleanRevision.isUnchunked() && !currentRevision.isUnchunked();
   }
@@ -166,8 +163,7 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
    */
   public static final class NoFeatures implements CDOUndoDetector
   {
-    public boolean detectUndo(CDOTransaction transaction, CDORevision cleanRevision, CDORevision currentRevision,
-        CDOFeatureDelta featureDelta)
+    public boolean detectUndo(CDOTransaction transaction, CDORevision cleanRevision, CDORevision currentRevision, CDOFeatureDelta featureDelta)
     {
       return false;
     }
@@ -179,8 +175,7 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
   public static final class SingleValuedFeatures extends CDOUndoDetectorImpl
   {
     @Override
-    protected boolean ignore(EStructuralFeature feature, InternalCDORevision cleanRevision,
-        InternalCDORevision currentRevision)
+    protected boolean ignore(EStructuralFeature feature, InternalCDORevision cleanRevision, InternalCDORevision currentRevision)
     {
       if (feature.isMany())
       {

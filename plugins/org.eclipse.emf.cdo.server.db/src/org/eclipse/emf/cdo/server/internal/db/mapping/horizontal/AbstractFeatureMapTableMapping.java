@@ -313,8 +313,8 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading list values for feature {0}.{1} of {2}v{3}", getContainingClass().getName(),
-          getFeature().getName(), revision.getID(), revision.getVersion());
+      TRACER.format("Reading list values for feature {0}.{1} of {2}v{3}", getContainingClass().getName(), getFeature().getName(), revision.getID(),
+          revision.getVersion());
     }
 
     String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
@@ -360,8 +360,8 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading list values done for feature {0}.{1} of {2}v{3}", getContainingClass().getName(),
-          getFeature().getName(), revision.getID(), revision.getVersion());
+      TRACER.format("Reading list values done for feature {0}.{1} of {2}v{3}", getContainingClass().getName(), getFeature().getName(), revision.getID(),
+          revision.getVersion());
     }
   }
 
@@ -381,8 +381,8 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading list chunk values for feature {0}.{1} of {2}v{3}", getContainingClass().getName(),
-          getFeature().getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
+      TRACER.format("Reading list chunk values for feature {0}.{1} of {2}v{3}", getContainingClass().getName(), getFeature().getName(),
+          chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
     }
 
     StringBuilder builder = new StringBuilder(sqlSelectChunksPrefix);
@@ -422,8 +422,7 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
 
           if (TRACER.isEnabled())
           {
-            TRACER.format("Current chunk no. {0} is [start = {1}, size = {2}]", chunkIndex - 1, chunk.getStartIndex(),
-                chunkSize);
+            TRACER.format("Current chunk no. {0} is [start = {1}, size = {2}]", chunkIndex - 1, chunk.getStartIndex(), chunkSize);
           }
         }
 
@@ -447,8 +446,7 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("Reading list chunk values done for feature {0}.{1} of {2}", getContainingClass().getName(),
-            getFeature(), chunkReader.getRevision());
+        TRACER.format("Reading list chunk values done for feature {0}.{1} of {2}", getContainingClass().getName(), getFeature(), chunkReader.getRevision());
       }
     }
     catch (SQLException ex)
@@ -580,8 +578,7 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
     return metaDataManager.getMetaID(feature, timeStamp);
   }
 
-  public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere,
-      QueryXRefsContext context, String idString)
+  public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere, QueryXRefsContext context, String idString)
   {
     /*
      * must never be called (a feature map is not associated with an EReference feature, so XRefs are nor supported

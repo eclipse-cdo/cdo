@@ -32,8 +32,7 @@ public abstract class Support
     @Override
     protected boolean determineAvailability() throws Throwable
     {
-      return CommonPlugin.loadClass("org.eclipse.emf.cdo.ui.team",
-          "org.eclipse.emf.cdo.ui.internal.team.history.CDOHistoryPage") != null;
+      return CommonPlugin.loadClass("org.eclipse.emf.cdo.ui.team", "org.eclipse.emf.cdo.ui.internal.team.history.CDOHistoryPage") != null;
     }
   };
 
@@ -42,8 +41,7 @@ public abstract class Support
     @Override
     protected boolean determineAvailability() throws Throwable
     {
-      return CommonPlugin.loadClass("org.eclipse.emf.cdo.ui.compare",
-          "org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil") != null;
+      return CommonPlugin.loadClass("org.eclipse.emf.cdo.ui.compare", "org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil") != null;
     }
   };
 

@@ -76,8 +76,7 @@ public class BImpl extends EObjectImpl implements B
       if (ownedC != oldOwnedC)
       {
         InternalEObject newOwnedC = (InternalEObject)ownedC;
-        NotificationChain msgs = oldOwnedC.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model6Package.B__OWNED_C, null,
-            null);
+        NotificationChain msgs = oldOwnedC.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model6Package.B__OWNED_C, null, null);
         if (newOwnedC.eInternalContainer() == null)
         {
           msgs = newOwnedC.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.B__OWNED_C, null, msgs);
@@ -115,8 +114,7 @@ public class BImpl extends EObjectImpl implements B
     ownedC = newOwnedC;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model6Package.B__OWNED_C,
-          oldOwnedC, newOwnedC);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model6Package.B__OWNED_C, oldOwnedC, newOwnedC);
       if (msgs == null)
       {
         msgs = notification;
@@ -140,13 +138,11 @@ public class BImpl extends EObjectImpl implements B
       NotificationChain msgs = null;
       if (ownedC != null)
       {
-        msgs = ((InternalEObject)ownedC).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model6Package.B__OWNED_C, null,
-            msgs);
+        msgs = ((InternalEObject)ownedC).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model6Package.B__OWNED_C, null, msgs);
       }
       if (newOwnedC != null)
       {
-        msgs = ((InternalEObject)newOwnedC).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.B__OWNED_C, null,
-            msgs);
+        msgs = ((InternalEObject)newOwnedC).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.B__OWNED_C, null, msgs);
       }
       msgs = basicSetOwnedC(newOwnedC, msgs);
       if (msgs != null)

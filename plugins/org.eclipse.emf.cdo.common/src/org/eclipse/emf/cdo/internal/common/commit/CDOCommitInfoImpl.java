@@ -59,8 +59,8 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
 
   // private transient CDOCommitInfo[] parents;
 
-  public CDOCommitInfoImpl(InternalCDOCommitInfoManager commitInfoManager, CDOBranch branch, long timeStamp,
-      long previousTimeStamp, String userID, String comment, CDOBranchPoint mergeSource, CDOCommitData commitData)
+  public CDOCommitInfoImpl(InternalCDOCommitInfoManager commitInfoManager, CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
+      String comment, CDOBranchPoint mergeSource, CDOCommitData commitData)
   {
     super(branch, timeStamp);
     CheckUtil.checkArg(commitInfoManager, "commitInfoManager"); //$NON-NLS-1$
@@ -102,8 +102,7 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
 
   public CDOCommitInfo getPreviousCommitInfo()
   {
-    return previousTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE ? null
-        : commitInfoManager.getCommitInfo(previousTimeStamp);
+    return previousTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE ? null : commitInfoManager.getCommitInfo(previousTimeStamp);
   }
 
   public String getUserID()

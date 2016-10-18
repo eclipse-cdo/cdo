@@ -90,8 +90,7 @@ public class CredentialsChallengeIndication extends IndicationWithMonitoring
         throw new IllegalStateException("No credentials update provider configured"); //$NON-NLS-1$
       }
 
-      IPasswordCredentialsUpdate credentials = ((IPasswordCredentialsUpdateProvider)credentialsProvider)
-          .getCredentialsUpdate(userID, operation);
+      IPasswordCredentialsUpdate credentials = ((IPasswordCredentialsUpdateProvider)credentialsProvider).getCredentialsUpdate(userID, operation);
       if (credentials == null)
       {
         // User canceled. Fine

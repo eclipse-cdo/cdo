@@ -127,8 +127,7 @@ public class Server extends QueueWorker<MessageImpl> implements IServer
     return connection;
   }
 
-  public ServerConsumer createConsumer(ServerDestination destination, String messageSelector, boolean noLocal,
-      boolean durable)
+  public ServerConsumer createConsumer(ServerDestination destination, String messageSelector, boolean noLocal, boolean durable)
   {
     long consumerID = consumerIDCounter.increment();
     ServerConsumer consumer = new ServerConsumer(consumerID, destination, messageSelector, noLocal, durable);

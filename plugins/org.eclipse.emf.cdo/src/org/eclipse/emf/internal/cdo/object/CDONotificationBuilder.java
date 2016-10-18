@@ -82,8 +82,8 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
   /**
    * @since 3.0
    */
-  public synchronized NotificationChain buildNotification(InternalEObject object, InternalCDORevision oldRevision,
-      CDORevisionDelta revisionDelta, Set<CDOObject> detachedObjects)
+  public synchronized NotificationChain buildNotification(InternalEObject object, InternalCDORevision oldRevision, CDORevisionDelta revisionDelta,
+      Set<CDOObject> detachedObjects)
   {
     notification = new NotificationChainImpl();
 
@@ -119,16 +119,14 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
       }
     }
 
-    add(new CDODeltaNotificationImpl(object, Notification.MOVE, feature, Integer.valueOf(oldPosition), oldValue,
-        newPosition));
+    add(new CDODeltaNotificationImpl(object, Notification.MOVE, feature, Integer.valueOf(oldPosition), oldValue, newPosition));
   }
 
   @Override
   public void visit(CDOAddFeatureDelta delta)
   {
     EStructuralFeature feature = delta.getFeature();
-    add(new CDODeltaNotificationImpl(object, Notification.ADD, feature, getOldValue(feature), delta.getValue(),
-        delta.getIndex()));
+    add(new CDODeltaNotificationImpl(object, Notification.ADD, feature, getOldValue(feature), delta.getValue(), delta.getIndex()));
   }
 
   @Override
@@ -253,8 +251,7 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
 
     }
 
-    add(new CDODeltaNotificationImpl(object, Notification.SET, EcorePackage.eINSTANCE.eContainmentFeature(), oldValue,
-        delta.getContainerID()));
+    add(new CDODeltaNotificationImpl(object, Notification.SET, EcorePackage.eINSTANCE.eContainmentFeature(), oldValue, delta.getContainerID()));
   }
 
   private CDOObject findObjectByID(CDOID id)
@@ -294,8 +291,7 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
     return oldRevision.getValue(feature);
   }
 
-  private CDODeltaNotificationImpl createNotification(int eventType, EStructuralFeature feature, Object oldValue,
-      Object newValue, int position)
+  private CDODeltaNotificationImpl createNotification(int eventType, EStructuralFeature feature, Object oldValue, Object newValue, int position)
   {
     EClassifier eType = feature.getEType();
 
@@ -343,42 +339,34 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
     return new CDODeltaNotificationImpl(object, eventType, feature, oldValue, newValue, position);
   }
 
-  private CDODeltaNotificationImpl createPrimitiveNotification(int eventType, EStructuralFeature feature,
-      Class<?> instanceClass, Object oldValue, Object newValue)
+  private CDODeltaNotificationImpl createPrimitiveNotification(int eventType, EStructuralFeature feature, Class<?> instanceClass, Object oldValue,
+      Object newValue)
   {
     switch (ReflectUtil.PrimitiveType.forClass(instanceClass))
     {
     case BOOLEAN:
-      return new CDODeltaNotificationImpl(object, eventType, feature, ((Boolean)oldValue).booleanValue(),
-          ((Boolean)newValue).booleanValue());
+      return new CDODeltaNotificationImpl(object, eventType, feature, ((Boolean)oldValue).booleanValue(), ((Boolean)newValue).booleanValue());
 
     case BYTE:
-      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).byteValue(),
-          ((Number)newValue).byteValue());
+      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).byteValue(), ((Number)newValue).byteValue());
 
     case CHAR:
-      return new CDODeltaNotificationImpl(object, eventType, feature, ((Character)oldValue).charValue(),
-          ((Character)newValue).charValue());
+      return new CDODeltaNotificationImpl(object, eventType, feature, ((Character)oldValue).charValue(), ((Character)newValue).charValue());
 
     case SHORT:
-      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).shortValue(),
-          ((Number)newValue).shortValue());
+      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).shortValue(), ((Number)newValue).shortValue());
 
     case INT:
-      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).intValue(),
-          ((Number)newValue).intValue());
+      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).intValue(), ((Number)newValue).intValue());
 
     case LONG:
-      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).longValue(),
-          ((Number)newValue).longValue());
+      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).longValue(), ((Number)newValue).longValue());
 
     case FLOAT:
-      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).floatValue(),
-          ((Number)newValue).floatValue());
+      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).floatValue(), ((Number)newValue).floatValue());
 
     case DOUBLE:
-      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).doubleValue(),
-          ((Number)newValue).doubleValue());
+      return new CDODeltaNotificationImpl(object, eventType, feature, ((Number)oldValue).doubleValue(), ((Number)newValue).doubleValue());
 
     case VOID:
       throw new IllegalArgumentException("Feature of void type not supported: " + feature); //$NON-NLS-1$

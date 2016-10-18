@@ -30,8 +30,7 @@ public class PrintReleaseDeliverablesForPlan
     for (File featureFolder : new File("../../features").listFiles())
     {
       String folderName = featureFolder.getName();
-      if (folderName.equals("org.eclipse.emf.cdo.site-feature")
-          || folderName.equals("org.eclipse.emf.cdo.license-feature"))
+      if (folderName.equals("org.eclipse.emf.cdo.site-feature") || folderName.equals("org.eclipse.emf.cdo.license-feature"))
       {
         continue;
       }

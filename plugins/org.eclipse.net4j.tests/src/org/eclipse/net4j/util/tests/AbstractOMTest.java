@@ -575,8 +575,7 @@ public abstract class AbstractOMTest extends TestCase
   {
     if (!Arrays.deepEquals(expected, actual))
     {
-      throw new AssertionFailedError(
-          "expected:" + Arrays.deepToString(expected) + " but was:" + Arrays.deepToString(actual));
+      throw new AssertionFailedError("expected:" + Arrays.deepToString(expected) + " but was:" + Arrays.deepToString(actual));
     }
   }
 
@@ -628,8 +627,7 @@ public abstract class AbstractOMTest extends TestCase
 
   public static void assertInstanceOf(Class<?> expected, Object object)
   {
-    assertEquals("Not an instance of " + expected + ": " + object.getClass().getName(), true,
-        expected.isInstance(object));
+    assertEquals("Not an instance of " + expected + ": " + object.getClass().getName(), true, expected.isInstance(object));
   }
 
   public static void assertNotInstanceOf(Class<?> expected, Object object)

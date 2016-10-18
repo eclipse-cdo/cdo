@@ -49,8 +49,8 @@ public abstract class DBConfig extends RepositoryConfig
 
   private transient IDBAdapter dbAdapter;
 
-  public DBConfig(String name, boolean supportingAudits, boolean supportingBranches, boolean withRanges,
-      boolean copyOnBranch, IDGenerationLocation idGenerationLocation)
+  public DBConfig(String name, boolean supportingAudits, boolean supportingBranches, boolean withRanges, boolean copyOnBranch,
+      IDGenerationLocation idGenerationLocation)
   {
     super(name, supportingAudits, supportingBranches, idGenerationLocation);
     this.withRanges = withRanges;

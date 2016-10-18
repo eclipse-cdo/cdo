@@ -26,8 +26,7 @@ public interface InternalUnitManager extends IUnitManager
 {
   public InternalRepository getRepository();
 
-  public List<InternalCDORevisionDelta> getUnitMoves(InternalCDORevisionDelta[] deltas, CDORevisionProvider before,
-      CDORevisionProvider after);
+  public List<InternalCDORevisionDelta> getUnitMoves(InternalCDORevisionDelta[] deltas, CDORevisionProvider before, CDORevisionProvider after);
 
   public InternalObjectAttacher attachObjects(InternalCommitContext commitContext);
 

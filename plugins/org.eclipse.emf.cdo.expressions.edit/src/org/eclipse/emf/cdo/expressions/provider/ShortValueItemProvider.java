@@ -68,14 +68,9 @@ public class ShortValueItemProvider extends ValueItemProvider
    */
   protected void addLiteralPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(
-            createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                getResourceLocator(), getString("_UI_ShortValue_literal_feature"),
-                getString("_UI_PropertyDescriptor_description", "_UI_ShortValue_literal_feature",
-                    "_UI_ShortValue_type"),
-                ExpressionsPackage.Literals.SHORT_VALUE__LITERAL, true, false, false,
-                ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ShortValue_literal_feature"), getString("_UI_PropertyDescriptor_description", "_UI_ShortValue_literal_feature", "_UI_ShortValue_type"),
+        ExpressionsPackage.Literals.SHORT_VALUE__LITERAL, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**

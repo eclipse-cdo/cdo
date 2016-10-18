@@ -127,8 +127,7 @@ public class MapTest extends AbstractCDOTest
     objects.put("address2", getModel1Factory().createAddress());
     objects.put("address3", getModel1Factory().createAddress());
 
-    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_StringToAddressContainmentMap(),
-        objects, null);
+    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_StringToAddressContainmentMap(), objects, null);
   }
 
   public void testStringToAddressReferenceMap() throws Exception
@@ -139,8 +138,7 @@ public class MapTest extends AbstractCDOTest
     objects.put("address2", getModel1Factory().createAddress());
     objects.put("address3", getModel1Factory().createAddress());
 
-    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_StringToAddressReferenceMap(),
-        objects, null);
+    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_StringToAddressReferenceMap(), objects, null);
   }
 
   public void testEObjectToEObjectMap() throws Exception
@@ -162,8 +160,7 @@ public class MapTest extends AbstractCDOTest
     objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
     objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
 
-    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_EObjectToEObjectKeyContainedMap(),
-        objects, null);
+    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_EObjectToEObjectKeyContainedMap(), objects, null);
   }
 
   public void testEObjectToEObjectValueContainedMap() throws Exception
@@ -174,8 +171,7 @@ public class MapTest extends AbstractCDOTest
     objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
     objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
 
-    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_EObjectToEObjectValueContainedMap(),
-        objects, null);
+    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_EObjectToEObjectValueContainedMap(), objects, null);
   }
 
   public void testEObjectToEObjectBothContainedMap() throws Exception
@@ -186,8 +182,7 @@ public class MapTest extends AbstractCDOTest
     objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
     objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
 
-    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_EObjectToEObjectBothContainedMap(),
-        objects, null);
+    testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_EObjectToEObjectBothContainedMap(), objects, null);
   }
 
   /**

@@ -133,8 +133,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
     passing = newPassing == null ? PASSING_EDEFAULT : newPassing;
     if (eNotificationRequired())
     {
-      eNotify(
-          new ENotificationImpl(this, Notification.SET, MangoPackage.MANGO_PARAMETER__PASSING, oldPassing, passing));
+      eNotify(new ENotificationImpl(this, Notification.SET, MangoPackage.MANGO_PARAMETER__PASSING, oldPassing, passing));
     }
   }
 

@@ -70,8 +70,7 @@ public class AcoreActionBarContributor extends EditingDomainActionBarContributor
    *
    * @generated
    */
-  protected IAction showPropertiesViewAction = new Action(
-      AcoreEditorPlugin.INSTANCE.getString("_UI_ShowPropertiesView_menu_item"))
+  protected IAction showPropertiesViewAction = new Action(AcoreEditorPlugin.INSTANCE.getString("_UI_ShowPropertiesView_menu_item"))
   {
     @Override
     public void run()
@@ -93,8 +92,7 @@ public class AcoreActionBarContributor extends EditingDomainActionBarContributor
    *
    * @generated
    */
-  protected IAction refreshViewerAction = new Action(
-      AcoreEditorPlugin.INSTANCE.getString("_UI_RefreshViewer_menu_item"))
+  protected IAction refreshViewerAction = new Action(AcoreEditorPlugin.INSTANCE.getString("_UI_RefreshViewer_menu_item"))
   {
     @Override
     public boolean isEnabled()
@@ -352,8 +350,7 @@ public class AcoreActionBarContributor extends EditingDomainActionBarContributor
    *
    * @generated
    */
-  protected void populateManager(IContributionManager manager, Collection<? extends IAction> actions,
-      String contributionID)
+  protected void populateManager(IContributionManager manager, Collection<? extends IAction> actions, String contributionID)
   {
     if (actions != null)
     {

@@ -69,8 +69,7 @@ public class LongValueImpl extends ValueImpl implements LongValue
   @Override
   public Long getLiteral()
   {
-    return (Long)eDynamicGet(ExpressionsPackage.LONG_VALUE__LITERAL, ExpressionsPackage.Literals.LONG_VALUE__LITERAL,
-        true, true);
+    return (Long)eDynamicGet(ExpressionsPackage.LONG_VALUE__LITERAL, ExpressionsPackage.Literals.LONG_VALUE__LITERAL, true, true);
   }
 
   /**

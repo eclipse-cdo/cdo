@@ -121,8 +121,8 @@ public class CustomTypeMappingTest extends AbstractCDOTest
    */
   public static class MyIntToVarcharTypeMapping extends AbstractTypeMapping
   {
-    public static final ITypeMapping.Descriptor DESCRIPTOR = TypeMappingUtil.createDescriptor(
-        "org.eclipse.emf.cdo.tests.db.EIntToVarchar", EcorePackage.eINSTANCE.getEInt(), DBType.VARCHAR);
+    public static final ITypeMapping.Descriptor DESCRIPTOR = TypeMappingUtil.createDescriptor("org.eclipse.emf.cdo.tests.db.EIntToVarchar",
+        EcorePackage.eINSTANCE.getEInt(), DBType.VARCHAR);
 
     public MyIntToVarcharTypeMapping()
     {

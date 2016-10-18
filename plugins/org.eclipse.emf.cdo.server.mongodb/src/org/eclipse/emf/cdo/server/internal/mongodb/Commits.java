@@ -149,8 +149,7 @@ public class Commits extends Coll
     idHandler = store.getIDHandler();
   }
 
-  public void writePackageUnits(MongoDBStoreAccessor mongoDBStoreAccessor, InternalCDOPackageUnit[] packageUnits,
-      OMMonitor monitor)
+  public void writePackageUnits(MongoDBStoreAccessor mongoDBStoreAccessor, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
     // This must be the first commit into the repo.
     systemPackageUnits = packageUnits;
@@ -413,8 +412,7 @@ public class Commits extends Coll
     }
   }
 
-  private void marshalRevisions(List<DBObject> docs, InternalCommitContext context, InternalCDORevision[] revisions,
-      CDOChangeKind changeKind)
+  private void marshalRevisions(List<DBObject> docs, InternalCommitContext context, InternalCDORevision[] revisions, CDOChangeKind changeKind)
   {
     for (InternalCDORevision revision : revisions)
     {
@@ -423,8 +421,7 @@ public class Commits extends Coll
     }
   }
 
-  private DBObject marshallRevision(InternalCommitContext context, InternalCDORevision revision,
-      CDOChangeKind changeKind)
+  private DBObject marshallRevision(InternalCommitContext context, InternalCDORevision revision, CDOChangeKind changeKind)
   {
     boolean resource = !(revision instanceof SyntheticCDORevision) && revision.isResource();
     if (resource && resourceNameFeature == null)
@@ -674,8 +671,7 @@ public class Commits extends Coll
     return CDOBranchPoint.UNSPECIFIED_DATE;
   }
 
-  public InternalCDORevision readRevision(final CDOID id, final CDOBranchPoint branchPoint, int listChunk,
-      CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevision(final CDOID id, final CDOBranchPoint branchPoint, int listChunk, CDORevisionCacheAdder cache)
   {
     final CDOBranch branch = branchPoint.getBranch();
     final long timeStamp = branchPoint.getTimeStamp();
@@ -736,8 +732,7 @@ public class Commits extends Coll
     }
   }
 
-  public InternalCDORevision readRevisionByVersion(final CDOID id, CDOBranchVersion branchVersion, int listChunk,
-      CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevisionByVersion(final CDOID id, CDOBranchVersion branchVersion, int listChunk, CDORevisionCacheAdder cache)
   {
     DBObject query = new BasicDBObject();
     idHandler.write(query, REVISIONS + "." + REVISIONS_ID, id);
@@ -921,8 +916,7 @@ public class Commits extends Coll
         String user = (String)doc.get(COMMITS_USER);
         String comment = (String)doc.get(COMMITS_COMMENT);
 
-        CDOCommitInfo commitInfo = commitManager.createCommitInfo(commitBranch, time, previous, user, comment, null,
-            null);
+        CDOCommitInfo commitInfo = commitManager.createCommitInfo(commitBranch, time, previous, user, comment, null, null);
         handler.handleCommitInfo(commitInfo);
         return null;
       }

@@ -77,8 +77,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              model4Package.IMPL_SINGLE_REF_NON_CONTAINER_NPL__ELEMENT, oldElement, element));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, model4Package.IMPL_SINGLE_REF_NON_CONTAINER_NPL__ELEMENT, oldElement, element));
         }
       }
     }
@@ -104,8 +103,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
     element = newElement;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_NON_CONTAINER_NPL__ELEMENT,
-          oldElement, element));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_NON_CONTAINER_NPL__ELEMENT, oldElement, element));
     }
   }
 

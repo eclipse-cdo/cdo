@@ -109,8 +109,7 @@ public final class CDOEditorUtil
    */
   public static CDOEditorInput createCDOEditorInputWithEditingDomain(CDOEditorInput input, EditingDomain editingDomain)
   {
-    return createCDOEditorInputWithEditingDomain(input.getView(), input.getResourcePath(), input.isViewOwned(),
-        editingDomain);
+    return createCDOEditorInputWithEditingDomain(input.getView(), input.getResourcePath(), input.isViewOwned(), editingDomain);
   }
 
   /**
@@ -126,8 +125,7 @@ public final class CDOEditorUtil
    *
    * @since 4.3
    */
-  public static CDOEditorInput createCDOEditorInputWithEditingDomain(CDOView view, String resourcePath,
-      boolean viewOwned, EditingDomain editingDomain)
+  public static CDOEditorInput createCDOEditorInputWithEditingDomain(CDOView view, String resourcePath, boolean viewOwned, EditingDomain editingDomain)
   {
     class CDOEditorInputWithEditingDomain extends CDOEditorInputImpl implements IEditingDomainProvider
     {
@@ -323,8 +321,7 @@ public final class CDOEditorUtil
   /**
    * @since 4.4
    */
-  public static IEditorInput createEditorInput(String editorID, CDOResourceLeaf resource, boolean viewOwned,
-      boolean lobCommitOnSave)
+  public static IEditorInput createEditorInput(String editorID, CDOResourceLeaf resource, boolean viewOwned, boolean lobCommitOnSave)
   {
     if (resource instanceof CDOResource)
     {

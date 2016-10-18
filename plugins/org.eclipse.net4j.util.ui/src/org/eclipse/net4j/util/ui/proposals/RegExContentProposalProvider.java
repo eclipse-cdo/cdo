@@ -361,13 +361,11 @@ public class RegExContentProposalProvider implements IContentProposalProvider
           String epilog = fExpression.substring(fDocumentOffset);
           if (epilog.startsWith(postfix))
           {
-            fPriorityProposals.add(
-                new Proposal(proposal.substring(i, cursorPosition), displayString, additionalInfo, cursorPosition - i));
+            fPriorityProposals.add(new Proposal(proposal.substring(i, cursorPosition), displayString, additionalInfo, cursorPosition - i));
           }
           else
           {
-            fPriorityProposals
-                .add(new Proposal(proposal.substring(i), displayString, additionalInfo, cursorPosition - i));
+            fPriorityProposals.add(new Proposal(proposal.substring(i), displayString, additionalInfo, cursorPosition - i));
           }
           return;
         }

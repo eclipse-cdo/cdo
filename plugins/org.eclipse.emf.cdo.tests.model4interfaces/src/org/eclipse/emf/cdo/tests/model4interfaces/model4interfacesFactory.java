@@ -25,8 +25,7 @@ public interface model4interfacesFactory extends EFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  model4interfacesFactory eINSTANCE = org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesFactoryImpl
-      .init();
+  model4interfacesFactory eINSTANCE = org.eclipse.emf.cdo.tests.model4interfaces.impl.model4interfacesFactoryImpl.init();
 
   /**
    * Returns the package supported by this factory.

@@ -91,8 +91,7 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
 
   @Override
   @Deprecated
-  public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency,
-      int resultSetHoldability) throws SQLException
+  public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException
   {
     throw new UnsupportedOperationException();
   }
@@ -123,8 +122,7 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
     return prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY, reuseProbability);
   }
 
-  public IDBPreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency,
-      ReuseProbability reuseProbability)
+  public IDBPreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency, ReuseProbability reuseProbability)
   {
     database.beginSchemaAccess(false);
 

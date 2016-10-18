@@ -134,8 +134,7 @@ public interface InternalSessionManager extends ISessionManager
   /**
    * @since 4.1
    */
-  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState,
-      CDOID rootResourceID);
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState, CDOID rootResourceID);
 
   /**
    * @deprecated As of 4.3 use {@link #sendBranchNotification(InternalSession, InternalCDOBranch, ChangeKind)}.
@@ -173,6 +172,5 @@ public interface InternalSessionManager extends ISessionManager
 
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode);
 
-  public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message,
-      int[] recipients);
+  public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message, int[] recipients);
 }

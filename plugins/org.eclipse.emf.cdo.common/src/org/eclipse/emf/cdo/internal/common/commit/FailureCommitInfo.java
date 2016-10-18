@@ -61,8 +61,7 @@ public class FailureCommitInfo implements CDOCommitInfo
 
   public CDOCommitInfo getPreviousCommitInfo()
   {
-    return previousTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE ? null
-        : commitInfoManager.getCommitInfo(previousTimeStamp);
+    return previousTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE ? null : commitInfoManager.getCommitInfo(previousTimeStamp);
   }
 
   public CDOBranch getBranch()

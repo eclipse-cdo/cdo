@@ -305,8 +305,7 @@ public class BranchingTest extends AbstractCDOTest
     assertEquals(mainBranch.getBasePath(), new CDOBranchPoint[] { mainBranch.getBase() });
     assertEquals(testing1.getBasePath(), new CDOBranchPoint[] { mainBranch.getBase(), testing1.getBase() });
     assertEquals(testing2.getBasePath(), new CDOBranchPoint[] { mainBranch.getBase(), testing2.getBase() });
-    assertEquals(subsub.getBasePath(),
-        new CDOBranchPoint[] { mainBranch.getBase(), testing1.getBase(), subsub.getBase() });
+    assertEquals(subsub.getBasePath(), new CDOBranchPoint[] { mainBranch.getBase(), testing1.getBase(), subsub.getBase() });
     session.close();
   }
 
@@ -995,20 +994,19 @@ public class BranchingTest extends AbstractCDOTest
     final List<CDORevision> revisions = new ArrayList<CDORevision>();
 
     CDOSessionProtocol sessionProtocol = ((InternalCDOSession)session).getSessionProtocol();
-    sessionProtocol.handleRevisions(null, subBranch, false, CDOBranchPoint.UNSPECIFIED_DATE, false,
-        new CDORevisionHandler()
+    sessionProtocol.handleRevisions(null, subBranch, false, CDOBranchPoint.UNSPECIFIED_DATE, false, new CDORevisionHandler()
+    {
+      public boolean handleRevision(CDORevision revision)
+      {
+        if (revision.getEClass() == getModel1Package().getProduct1())
         {
-          public boolean handleRevision(CDORevision revision)
-          {
-            if (revision.getEClass() == getModel1Package().getProduct1())
-            {
-              fail("Product1 has been detached and should not be passed in here");
-            }
+          fail("Product1 has been detached and should not be passed in here");
+        }
 
-            revisions.add(revision);
-            return true;
-          }
-        });
+        revisions.add(revision);
+        return true;
+      }
+    });
 
     assertEquals(3, revisions.size());
   }
@@ -1251,8 +1249,7 @@ public class BranchingTest extends AbstractCDOTest
     System.out.println();
     System.out.println();
     System.out.println(label);
-    System.out
-        .println("===============================================================================================");
+    System.out.println("===============================================================================================");
     CDORevisionUtil.dumpAllRevisions(revisions, System.out);
     System.out.println();
     System.out.println();

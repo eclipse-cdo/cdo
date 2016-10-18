@@ -523,13 +523,11 @@ public class Net4jDBTest extends AbstractCDOTest
       Class<?> componentType = type.getComponentType();
       if (componentType == byte.class)
       {
-        assertEquals("Error in column " + c + " of type " + dbType, true,
-            Arrays.equals((byte[])expected, (byte[])actual));
+        assertEquals("Error in column " + c + " of type " + dbType, true, Arrays.equals((byte[])expected, (byte[])actual));
       }
       else if (componentType == char.class)
       {
-        assertEquals("Error in column " + c + " with type " + dbType, true,
-            Arrays.equals((char[])expected, (char[])actual));
+        assertEquals("Error in column " + c + " with type " + dbType, true, Arrays.equals((char[])expected, (char[])actual));
       }
       else
       {

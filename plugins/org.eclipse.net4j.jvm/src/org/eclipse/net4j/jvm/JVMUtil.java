@@ -38,7 +38,6 @@ public final class JVMUtil
 
   public static IJVMConnector getConnector(IManagedContainer container, String description)
   {
-    return (IJVMConnector)container.getElement(JVMConnectorFactory.PRODUCT_GROUP, JVMConnectorFactory.TYPE,
-        description);
+    return (IJVMConnector)container.getElement(JVMConnectorFactory.PRODUCT_GROUP, JVMConnectorFactory.TYPE, description);
   }
 }

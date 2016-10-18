@@ -45,8 +45,7 @@ public class FileHibernateMappingProviderFactory implements IHibernateMappingPro
     NodeList mappingFileConfigs = config.getElementsByTagName(FILE_ELEMENT_TAG_NAME);
     if (mappingFileConfigs.getLength() != 1)
     {
-      throw new IllegalArgumentException(
-          "Zero or More than one mapping file location specified, only one location is supported."); //$NON-NLS-1$
+      throw new IllegalArgumentException("Zero or More than one mapping file location specified, only one location is supported."); //$NON-NLS-1$
     }
 
     final Element mappingFile = (Element)mappingFileConfigs.item(0);

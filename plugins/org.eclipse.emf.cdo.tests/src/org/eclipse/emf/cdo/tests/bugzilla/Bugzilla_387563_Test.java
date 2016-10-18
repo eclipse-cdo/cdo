@@ -157,9 +157,8 @@ public class Bugzilla_387563_Test extends AbstractCDOTest
     CDOObject cdoObject = CDOUtil.getCDOObject(category);
     CDOLockState lockState = cdoObject.cdoLockState();
 
-    assertEquals(
-        "new object " + category.getName() + (expected ? " should be locally locked" : " shouldn't be locally locked."),
-        expected, lockState.isLocked(LockType.WRITE, cdoObject.cdoView(), false));
+    assertEquals("new object " + category.getName() + (expected ? " should be locally locked" : " shouldn't be locally locked."), expected,
+        lockState.isLocked(LockType.WRITE, cdoObject.cdoView(), false));
 
     if (recursive)
     {

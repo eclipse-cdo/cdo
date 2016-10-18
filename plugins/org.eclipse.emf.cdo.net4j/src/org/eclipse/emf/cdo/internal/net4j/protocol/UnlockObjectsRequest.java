@@ -40,14 +40,12 @@ public class UnlockObjectsRequest extends CDOClientRequest<UnlockObjectsResult>
 
   private boolean recursive;
 
-  public UnlockObjectsRequest(CDOClientProtocol protocol, int viewID, Collection<CDOID> objects, LockType lockType,
-      boolean recursive)
+  public UnlockObjectsRequest(CDOClientProtocol protocol, int viewID, Collection<CDOID> objects, LockType lockType, boolean recursive)
   {
     this(protocol, CDOProtocolConstants.SIGNAL_UNLOCK_OBJECTS, viewID, objects, lockType, recursive);
   }
 
-  protected UnlockObjectsRequest(CDOClientProtocol protocol, short signalID, int viewID, Collection<CDOID> objectIDs,
-      LockType lockType, boolean recursive)
+  protected UnlockObjectsRequest(CDOClientProtocol protocol, short signalID, int viewID, Collection<CDOID> objectIDs, LockType lockType, boolean recursive)
   {
     super(protocol, signalID);
     this.viewID = viewID;

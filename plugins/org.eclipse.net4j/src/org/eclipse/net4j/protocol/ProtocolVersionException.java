@@ -46,8 +46,7 @@ public class ProtocolVersionException extends IllegalStateException
     int actualVersion = Net4jUtil.getProtocolVersion(protocol);
     if (actualVersion != expectedVersion)
     {
-      throw new ProtocolVersionException(
-          "Protocol version " + actualVersion + " does not match expected version " + expectedVersion);
+      throw new ProtocolVersionException("Protocol version " + actualVersion + " does not match expected version " + expectedVersion);
     }
   }
 }

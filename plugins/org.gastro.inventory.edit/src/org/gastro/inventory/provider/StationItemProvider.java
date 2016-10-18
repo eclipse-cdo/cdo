@@ -39,8 +39,8 @@ import java.util.List;
  *
  * @generated
  */
-public class StationItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class StationItemProvider extends ItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -76,12 +76,9 @@ public class StationItemProvider extends ItemProviderAdapter implements IEditing
    */
   protected void addStationIDPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Station_stationID_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_Station_stationID_feature", "_UI_Station_type"),
-            InventoryPackage.Literals.STATION__STATION_ID, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Station_stationID_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Station_stationID_feature", "_UI_Station_type"),
+        InventoryPackage.Literals.STATION__STATION_ID, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**

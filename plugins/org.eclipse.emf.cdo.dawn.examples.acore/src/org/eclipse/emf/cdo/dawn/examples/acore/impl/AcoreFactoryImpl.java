@@ -46,8 +46,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
   {
     try
     {
-      AcoreFactory theAcoreFactory = (AcoreFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore");
+      AcoreFactory theAcoreFactory = (AcoreFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore");
       if (theAcoreFactory != null)
       {
         return theAcoreFactory;
@@ -237,8 +236,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
     AccessType result = AccessType.get(initialValue);
     if (result == null)
     {
-      throw new IllegalArgumentException(
-          "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
     }
     return result;
   }

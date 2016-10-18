@@ -148,8 +148,7 @@ public final class CDOServerUtil
    * @deprecated As of 4.2 the legacy mode is always enabled, use {@link #openView(ISession, CDOBranchPoint, CDORevisionProvider)}.
    */
   @Deprecated
-  public static CDOView openView(ISession session, CDOBranchPoint branchPoint, boolean legacyModeEnabled,
-      CDORevisionProvider revisionProvider)
+  public static CDOView openView(ISession session, CDOBranchPoint branchPoint, boolean legacyModeEnabled, CDORevisionProvider revisionProvider)
   {
     return openView(session, branchPoint, revisionProvider);
   }
@@ -212,8 +211,7 @@ public final class CDOServerUtil
   /**
    * @since 3.0
    */
-  public static IRepositorySynchronizer createRepositorySynchronizer(
-      CDOSessionConfigurationFactory remoteSessionConfigurationFactory)
+  public static IRepositorySynchronizer createRepositorySynchronizer(CDOSessionConfigurationFactory remoteSessionConfigurationFactory)
   {
     RepositorySynchronizer synchronizer = new RepositorySynchronizer();
     synchronizer.setRemoteSessionConfigurationFactory(remoteSessionConfigurationFactory);
@@ -223,8 +221,7 @@ public final class CDOServerUtil
   /**
    * @since 3.0
    */
-  public static ISynchronizableRepository createOfflineClone(String name, IStore store, Map<String, String> props,
-      IRepositorySynchronizer synchronizer)
+  public static ISynchronizableRepository createOfflineClone(String name, IStore store, Map<String, String> props, IRepositorySynchronizer synchronizer)
   {
     OfflineClone repository = new OfflineClone();
     initRepository(repository, name, store, props);
@@ -235,8 +232,8 @@ public final class CDOServerUtil
   /**
    * @since 4.0
    */
-  public static ISynchronizableRepository createFailoverParticipant(String name, IStore store,
-      Map<String, String> props, IRepositorySynchronizer synchronizer, boolean master, boolean allowBackupCommits)
+  public static ISynchronizableRepository createFailoverParticipant(String name, IStore store, Map<String, String> props, IRepositorySynchronizer synchronizer,
+      boolean master, boolean allowBackupCommits)
   {
     FailoverParticipant repository = new FailoverParticipant();
     initRepository(repository, name, store, props);
@@ -253,8 +250,8 @@ public final class CDOServerUtil
   /**
    * @since 3.0
    */
-  public static ISynchronizableRepository createFailoverParticipant(String name, IStore store,
-      Map<String, String> props, IRepositorySynchronizer synchronizer, boolean master)
+  public static ISynchronizableRepository createFailoverParticipant(String name, IStore store, Map<String, String> props, IRepositorySynchronizer synchronizer,
+      boolean master)
   {
     return createFailoverParticipant(name, store, props, synchronizer, master, false);
   }
@@ -262,8 +259,7 @@ public final class CDOServerUtil
   /**
    * @since 4.0
    */
-  public static ISynchronizableRepository createFailoverParticipant(String name, IStore store,
-      Map<String, String> props, IRepositorySynchronizer synchronizer)
+  public static ISynchronizableRepository createFailoverParticipant(String name, IStore store, Map<String, String> props, IRepositorySynchronizer synchronizer)
   {
     return createFailoverParticipant(name, store, props, synchronizer, false);
   }
@@ -271,8 +267,7 @@ public final class CDOServerUtil
   /**
    * @since 4.0
    */
-  public static ISynchronizableRepository createFailoverParticipant(String name, IStore store,
-      Map<String, String> props)
+  public static ISynchronizableRepository createFailoverParticipant(String name, IStore store, Map<String, String> props)
   {
     return createFailoverParticipant(name, store, props, null);
   }
@@ -305,8 +300,7 @@ public final class CDOServerUtil
     return RepositoryFactory.get(container, name);
   }
 
-  public static Element getRepositoryConfig(String repositoryName)
-      throws ParserConfigurationException, SAXException, IOException
+  public static Element getRepositoryConfig(String repositoryName) throws ParserConfigurationException, SAXException, IOException
   {
     File configFile = OMPlatform.INSTANCE.getConfigFile("cdo-server.xml"); //$NON-NLS-1$
 
@@ -345,8 +339,7 @@ public final class CDOServerUtil
     {
     }
 
-    public void handleRevisionsBeforeSending(ISession session, CDORevision[] revisions,
-        List<CDORevision> additionalRevisions) throws RuntimeException
+    public void handleRevisionsBeforeSending(ISession session, CDORevision[] revisions, List<CDORevision> additionalRevisions) throws RuntimeException
     {
       List<String> violations = new ArrayList<String>();
       for (CDORevision revision : revisions)

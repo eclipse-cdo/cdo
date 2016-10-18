@@ -76,8 +76,7 @@ public class PackagePermissionImpl extends PermissionImpl implements PackagePerm
     eSet(SecurityPackage.Literals.PACKAGE_PERMISSION__APPLICABLE_PACKAGE, newApplicablePackage);
   }
 
-  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider,
-      CDOBranchPoint securityContext)
+  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
     EPackage actualPackage = revision.getEClass().getEPackage();
     EPackage applicablePackage = getApplicablePackage();

@@ -82,8 +82,7 @@ public class DB4OLockArea
       lockMap.put(cdoid, lockGrade);
     }
 
-    LockArea lockArea = CDOLockUtil.createLockArea(primitive.id, primitive.userID, branchpoint, primitive.readOnly,
-        lockMap);
+    LockArea lockArea = CDOLockUtil.createLockArea(primitive.id, primitive.userID, branchpoint, primitive.readOnly, lockMap);
     map.put(lockArea, primitive);
     return lockArea;
   }

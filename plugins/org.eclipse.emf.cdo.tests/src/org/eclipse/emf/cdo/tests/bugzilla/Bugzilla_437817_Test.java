@@ -48,11 +48,11 @@ public class Bugzilla_437817_Test extends AbstractCDOTest
     {
       ResourceSet resourceSet = new ResourceSetImpl();
 
-      URI sharedResource1URI = URI.createURI(CDONet4jUtil.PROTOCOL_TCP + "://localhost:2036/"
-          + RepositoryConfig.REPOSITORY_NAME + getResourcePath("/sharedResource1"))
+      URI sharedResource1URI = URI
+          .createURI(CDONet4jUtil.PROTOCOL_TCP + "://localhost:2036/" + RepositoryConfig.REPOSITORY_NAME + getResourcePath("/sharedResource1"))
           .appendQuery(CDOURIData.TRANSACTIONAL_PARAMETER + "=true");
-      URI sharedResource2URI = URI.createURI(CDONet4jUtil.PROTOCOL_TCP + "://localhost:2036/"
-          + RepositoryConfig.REPOSITORY_NAME + getResourcePath("/sharedResource2"))
+      URI sharedResource2URI = URI
+          .createURI(CDONet4jUtil.PROTOCOL_TCP + "://localhost:2036/" + RepositoryConfig.REPOSITORY_NAME + getResourcePath("/sharedResource2"))
           .appendQuery(CDOURIData.TRANSACTIONAL_PARAMETER + "=true");
       Resource sharedResource1 = resourceSet.createResource(sharedResource1URI);
       Resource sharedResource2 = resourceSet.createResource(sharedResource2URI);
@@ -61,8 +61,7 @@ public class Bugzilla_437817_Test extends AbstractCDOTest
       Assert.assertTrue(sharedResource2 instanceof CDOResource);
       CDOResource sharedCDOResource1 = (CDOResource)sharedResource1;
       CDOResource sharedCDOResource2 = (CDOResource)sharedResource2;
-      assertEquals(
-          "Both CDOResources should have the same CDOView as they have the same ResourceSet and use content from the same repository",
+      assertEquals("Both CDOResources should have the same CDOView as they have the same ResourceSet and use content from the same repository",
           sharedCDOResource1.cdoView(), sharedCDOResource2.cdoView());
     }
     finally

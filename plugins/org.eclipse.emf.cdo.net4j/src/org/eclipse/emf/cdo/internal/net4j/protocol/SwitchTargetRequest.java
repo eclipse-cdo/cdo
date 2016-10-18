@@ -42,9 +42,8 @@ public class SwitchTargetRequest extends CDOClientRequestWithMonitoring<Object>
 
   private List<CDOIDAndVersion> allDetachedObjects;
 
-  public SwitchTargetRequest(CDOClientProtocol protocol, int viewID, CDOBranchPoint branchPoint,
-      List<InternalCDOObject> invalidObjects, List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects)
+  public SwitchTargetRequest(CDOClientProtocol protocol, int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects,
+      List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_SWITCH_TARGET);
     this.viewID = viewID;

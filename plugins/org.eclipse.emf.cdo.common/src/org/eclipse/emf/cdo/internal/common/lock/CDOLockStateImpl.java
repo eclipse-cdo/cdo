@@ -41,8 +41,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
   public CDOLockStateImpl(Object lockedObject)
   {
     CheckUtil.checkArg(lockedObject, "lockedObject");
-    CheckUtil.checkState(lockedObject instanceof CDOID || lockedObject instanceof CDOIDAndBranch,
-        "lockedObject is of wrong type");
+    CheckUtil.checkState(lockedObject instanceof CDOID || lockedObject instanceof CDOIDAndBranch, "lockedObject is of wrong type");
     this.lockedObject = lockedObject;
   }
 
@@ -280,15 +279,13 @@ public class CDOLockStateImpl implements InternalCDOLockState
       return false;
     }
 
-    if (writeLockOwner == null && other.getWriteLockOwner() != null
-        || writeLockOwner != null && other.getWriteLockOwner() == null
+    if (writeLockOwner == null && other.getWriteLockOwner() != null || writeLockOwner != null && other.getWriteLockOwner() == null
         || writeLockOwner != null && !writeLockOwner.equals(other.getWriteLockOwner()))
     {
       return false;
     }
 
-    if (writeOptionOwner == null && other.getWriteOptionOwner() != null
-        || writeOptionOwner != null && other.getWriteOptionOwner() == null
+    if (writeOptionOwner == null && other.getWriteOptionOwner() != null || writeOptionOwner != null && other.getWriteOptionOwner() == null
         || writeOptionOwner != null && !writeOptionOwner.equals(other.getWriteOptionOwner()))
     {
       return false;

@@ -122,8 +122,7 @@ public class TransferDialog extends TitleAreaDialog
     return new Point(1000, 800);
   }
 
-  public static boolean open(Shell shell, final List<CDOTransferElement> sourceElements,
-      final CDOTransferElement targetElement)
+  public static boolean open(Shell shell, final List<CDOTransferElement> sourceElements, final CDOTransferElement targetElement)
   {
     final CDOTransferSystem sourceSystem = sourceElements.get(0).getSystem();
     final CDOTransferSystem targetSystem = targetElement.getSystem();

@@ -92,9 +92,7 @@ public interface IIDHandler extends Comparator<CDOID>
 
   public String unmapURI(IDBStoreAccessor accessor, CDOID id);
 
-  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
-      throws IOException;
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException;
 
-  public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor fork)
-      throws IOException;
+  public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor fork) throws IOException;
 }

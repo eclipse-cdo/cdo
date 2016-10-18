@@ -69,8 +69,7 @@ public class ImplSingleRefNonContainedElementImpl extends CDOObjectImpl implemen
    */
   public ISingleRefNonContainer getParent()
   {
-    return (ISingleRefNonContainer)eGet(model4interfacesPackage.eINSTANCE.getISingleRefNonContainedElement_Parent(),
-        true);
+    return (ISingleRefNonContainer)eGet(model4interfacesPackage.eINSTANCE.getISingleRefNonContainedElement_Parent(), true);
   }
 
   /**

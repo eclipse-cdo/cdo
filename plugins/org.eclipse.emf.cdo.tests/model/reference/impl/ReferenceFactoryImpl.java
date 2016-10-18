@@ -36,8 +36,7 @@ public class ReferenceFactoryImpl extends EFactoryImpl implements ReferenceFacto
   {
     try
     {
-      ReferenceFactory theReferenceFactory = (ReferenceFactory)EPackage.Registry.INSTANCE
-          .getEFactory("uuid://reference");
+      ReferenceFactory theReferenceFactory = (ReferenceFactory)EPackage.Registry.INSTANCE.getEFactory("uuid://reference");
       if (theReferenceFactory != null)
       {
         return theReferenceFactory;

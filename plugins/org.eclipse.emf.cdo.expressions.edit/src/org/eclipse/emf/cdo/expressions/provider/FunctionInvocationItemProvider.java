@@ -129,13 +129,11 @@ public class FunctionInvocationItemProvider extends InvocationItemProvider
     Object childFeature = feature;
     Object childObject = child;
 
-    boolean qualify = childFeature == ExpressionsPackage.Literals.INVOCATION__ARGUMENTS
-        || childFeature == ExpressionsPackage.Literals.INVOCATION__NAME;
+    boolean qualify = childFeature == ExpressionsPackage.Literals.INVOCATION__ARGUMENTS || childFeature == ExpressionsPackage.Literals.INVOCATION__NAME;
 
     if (qualify)
     {
-      return getString("_UI_CreateChild_text2",
-          new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+      return getString("_UI_CreateChild_text2", new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
     }
     return super.getCreateChildText(owner, feature, child, selection);
   }

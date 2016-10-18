@@ -159,14 +159,12 @@ public class Bugzilla_349804_Test extends AbstractCDOTest
    */
   private class Failure implements WriteAccessHandler
   {
-    public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
-        OMMonitor monitor) throws RuntimeException
+    public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
     {
       throw new IllegalArgumentException("Fail on purpose");
     }
 
-    public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext,
-        OMMonitor monitor)
+    public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
     {
       // Do nothing
     }

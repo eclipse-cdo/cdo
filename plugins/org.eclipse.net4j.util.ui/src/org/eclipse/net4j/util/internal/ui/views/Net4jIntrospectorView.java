@@ -63,8 +63,7 @@ import java.util.Stack;
 /**
  * @author Eike Stepper
  */
-public class Net4jIntrospectorView extends ViewPart
-    implements IPartListener, ISelectionListener, IDoubleClickListener, IListener
+public class Net4jIntrospectorView extends ViewPart implements IPartListener, ISelectionListener, IDoubleClickListener, IListener
 {
   public static final String VIEW_ID = "org.eclipse.net4j.util.Net4jIntrospectorView"; //$NON-NLS-1$
 

@@ -132,8 +132,7 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   /**
    * @since 4.3
    */
-  public void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta,
-      InternalCDORevision cleanRevision);
+  public void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta, InternalCDORevision cleanRevision);
 
   public void registerRevisionDelta(CDORevisionDelta revisionDelta);
 
@@ -159,8 +158,8 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    *             {@link #applyChangeSet(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint, boolean)}
    */
   @Deprecated
-  public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(CDOChangeSetData changeSetData,
-      CDORevisionProvider targetBaseProvider, CDORevisionProvider targetProvider, CDOBranchPoint source);
+  public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionProvider targetBaseProvider,
+      CDORevisionProvider targetProvider, CDOBranchPoint source);
 
   /**
    * @param source
@@ -169,9 +168,8 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    *          a {@link CDOBranch#isLocal() local} branch.
    * @since 4.1
    */
-  public ApplyChangeSetResult applyChangeSet(CDOChangeSetData changeSetData, CDORevisionProvider targetBaseProvider,
-      CDORevisionProvider targetProvider, CDOBranchPoint source, boolean keepVersions)
-      throws ChangeSetOutdatedException;
+  public ApplyChangeSetResult applyChangeSet(CDOChangeSetData changeSetData, CDORevisionProvider targetBaseProvider, CDORevisionProvider targetProvider,
+      CDOBranchPoint source, boolean keepVersions) throws ChangeSetOutdatedException;
 
   /**
    * @since 4.0

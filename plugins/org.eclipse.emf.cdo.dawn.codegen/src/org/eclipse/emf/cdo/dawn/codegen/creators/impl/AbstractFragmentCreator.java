@@ -61,11 +61,9 @@ public abstract class AbstractFragmentCreator implements Creator
     IFile dawnGenModelFile = (IFile)selectedElement;
 
     ResourceSet resourceSet = new ResourceSetImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-        .put(GenerateDawnGenModelAction.dawngenmodelFileExtension, new XMIResourceFactoryImpl());
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(GenerateDawnGenModelAction.dawngenmodelFileExtension, new XMIResourceFactoryImpl());
 
-    Resource dawnGenModelResource = resourceSet
-        .getResource(URI.createURI(dawnGenModelFile.getRawLocationURI().toString()), true);
+    Resource dawnGenModelResource = resourceSet.getResource(URI.createURI(dawnGenModelFile.getRawLocationURI().toString()), true);
 
     DawnFragmentGenerator dawnFragmentGenerator = (DawnFragmentGenerator)dawnGenModelResource.getContents().get(0);
     // DawnGenerator dawnGenerator = dawnFragmentGenerator.getDawnGenerator();

@@ -25,8 +25,7 @@ public class PrefTextAndDisable extends TextAndDisable implements OMPreference.P
 
   private final OMPreference<Boolean> disabledPreference;
 
-  public PrefTextAndDisable(Composite parent, int textStyle, OMPreference<String> textPreference,
-      OMPreference<Boolean> disabledPreference)
+  public PrefTextAndDisable(Composite parent, int textStyle, OMPreference<String> textPreference, OMPreference<Boolean> disabledPreference)
   {
     super(parent, textStyle, null);
     this.textPreference = textPreference;

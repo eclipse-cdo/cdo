@@ -146,8 +146,7 @@ public abstract class CDOServerExporter<OUT>
     }
   }
 
-  protected abstract void startPackageUnit(OUT out, String id, CDOPackageUnit.Type type, long time, String data)
-      throws Exception;
+  protected abstract void startPackageUnit(OUT out, String id, CDOPackageUnit.Type type, long time, String data) throws Exception;
 
   protected abstract void endPackageUnit(OUT out) throws Exception;
 
@@ -184,22 +183,21 @@ public abstract class CDOServerExporter<OUT>
 
   protected void exportRevisions(final OUT out, CDOBranch branch) throws Exception
   {
-    repository.handleRevisions(null, branch, true, CDOBranchPoint.INVALID_DATE, false,
-        new CDORevisionHandler.Filtered.Undetached(new CDORevisionHandler()
+    repository.handleRevisions(null, branch, true, CDOBranchPoint.INVALID_DATE, false, new CDORevisionHandler.Filtered.Undetached(new CDORevisionHandler()
+    {
+      public boolean handleRevision(CDORevision revision)
+      {
+        try
         {
-          public boolean handleRevision(CDORevision revision)
-          {
-            try
-            {
-              exportRevision(out, revision);
-              return true;
-            }
-            catch (Exception ex)
-            {
-              throw WrappedException.wrap(ex);
-            }
-          }
-        }));
+          exportRevision(out, revision);
+          return true;
+        }
+        catch (Exception ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+    }));
   }
 
   protected abstract void exportRevision(OUT out, CDORevision revision) throws Exception;
@@ -428,8 +426,7 @@ public abstract class CDOServerExporter<OUT>
     }
 
     @Override
-    protected void startPackageUnit(XMLOutput out, String id, CDOPackageUnit.Type type, long time, String data)
-        throws Exception
+    protected void startPackageUnit(XMLOutput out, String id, CDOPackageUnit.Type type, long time, String data) throws Exception
     {
       out.element(PACKAGE_UNIT);
       out.attribute(PACKAGE_UNIT_ID, id);
@@ -555,8 +552,7 @@ public abstract class CDOServerExporter<OUT>
       exportFeature(out, feature, FEATURE_TYPE, value);
     }
 
-    protected void exportFeature(XMLOutput out, EStructuralFeature feature, String featureType, Object value)
-        throws SAXException
+    protected void exportFeature(XMLOutput out, EStructuralFeature feature, String featureType, Object value) throws SAXException
     {
       if (value instanceof CDOID)
       {

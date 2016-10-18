@@ -78,9 +78,8 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
     }
 
     // Obtain or create and register package
-    DerivedPackageImpl theDerivedPackage = (DerivedPackageImpl)(EPackage.Registry.INSTANCE
-        .get(eNS_URI) instanceof DerivedPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-            : new DerivedPackageImpl());
+    DerivedPackageImpl theDerivedPackage = (DerivedPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof DerivedPackageImpl
+        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new DerivedPackageImpl());
 
     isInited = true;
 
@@ -183,8 +182,7 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
     derivedClassEClass.getESuperTypes().add(theBasePackage.getBaseClass());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(derivedClassEClass, DerivedClass.class, "DerivedClass", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
+    initEClass(derivedClassEClass, DerivedClass.class, "DerivedClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     addEOperation(derivedClassEClass, null, "decrement", 0, 1, IS_UNIQUE, IS_ORDERED);
 

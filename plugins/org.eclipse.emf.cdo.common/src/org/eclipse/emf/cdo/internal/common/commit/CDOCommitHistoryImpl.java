@@ -49,8 +49,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
 
   private final CDOBranch branch;
 
-  private final GrowingRandomAccessList<CDOCommitInfo> commitInfos = new GrowingRandomAccessList<CDOCommitInfo>(
-      CDOCommitInfo.class, DEFAULT_LOAD_COUNT);
+  private final GrowingRandomAccessList<CDOCommitInfo> commitInfos = new GrowingRandomAccessList<CDOCommitInfo>(CDOCommitInfo.class, DEFAULT_LOAD_COUNT);
 
   private final Object loadLock = new Object();
 

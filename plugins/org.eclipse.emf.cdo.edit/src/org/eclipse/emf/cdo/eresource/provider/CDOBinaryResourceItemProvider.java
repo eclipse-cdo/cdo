@@ -67,13 +67,11 @@ public class CDOBinaryResourceItemProvider extends CDOFileResourceItemProvider
    */
   protected void addContentsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_CDOBinaryResource_contents_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_CDOBinaryResource_contents_feature", //$NON-NLS-1$//$NON-NLS-2$
-                "_UI_CDOBinaryResource_type"), //$NON-NLS-1$
-            EresourcePackage.Literals.CDO_BINARY_RESOURCE__CONTENTS, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_CDOBinaryResource_contents_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_CDOBinaryResource_contents_feature", //$NON-NLS-1$//$NON-NLS-2$
+            "_UI_CDOBinaryResource_type"), //$NON-NLS-1$
+        EresourcePackage.Literals.CDO_BINARY_RESOURCE__CONTENTS, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**

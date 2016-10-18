@@ -108,8 +108,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     registerColumnTypeModifier("postgresql", new ColumnTypeModifier()
     {
       @Override
-      public DBType modify(Provider provider, IMappingStrategy mappingStrategy, EStructuralFeature feature,
-          DBType dbType)
+      public DBType modify(Provider provider, IMappingStrategy mappingStrategy, EStructuralFeature feature, DBType dbType)
       {
         EClassifier classifier = feature.getEType();
         if (classifier == EcorePackage.eINSTANCE.getEChar())
@@ -307,8 +306,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
       {
         EClassifier type = getEType(feature);
         throw new IllegalStateException(MessageFormat.format(Messages.getString("TypeMappingRegistry.1"),
-            feature.getEContainingClass().getName() + "." + feature.getName(),
-            type.getEPackage().getName() + "." + type.getName(), dbType.getKeyword()));
+            feature.getEContainingClass().getName() + "." + feature.getName(), type.getEPackage().getName() + "." + type.getName(), dbType.getKeyword()));
       }
 
       IFactory factory = getContainer().getFactory(ITypeMapping.Factory.PRODUCT_GROUP, descriptor.getFactoryType());
@@ -359,8 +357,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
       dbType = DBType.getTypeByKeyword(typeKeyword);
       if (dbType == null)
       {
-        throw new IllegalArgumentException(
-            "Unsupported columnType (" + typeKeyword + ") annotation of feature " + feature.getName());
+        throw new IllegalArgumentException("Unsupported columnType (" + typeKeyword + ") annotation of feature " + feature.getName());
       }
     }
     else
@@ -391,8 +388,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
 
     try
     {
-      columnTypeModifier = (ColumnTypeModifier)IPluginContainer.INSTANCE
-          .getElement(ColumnTypeModifier.Factory.PRODUCT_GROUP, factoryType, null);
+      columnTypeModifier = (ColumnTypeModifier)IPluginContainer.INSTANCE.getElement(ColumnTypeModifier.Factory.PRODUCT_GROUP, factoryType, null);
     }
     catch (FactoryNotFoundException ex)
     {

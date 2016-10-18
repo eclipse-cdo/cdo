@@ -79,32 +79,28 @@ public class AClassItemSemanticEditPolicy extends AcoreBaseItemSemanticEditPolic
       Edge incomingLink = (Edge)it.next();
       if (AcoreVisualIDRegistry.getVisualID(incomingLink) == AClassSubClassesEditPart.VISUAL_ID)
       {
-        DestroyReferenceRequest r = new DestroyReferenceRequest(incomingLink.getSource().getElement(), null,
-            incomingLink.getTarget().getElement(), false);
+        DestroyReferenceRequest r = new DestroyReferenceRequest(incomingLink.getSource().getElement(), null, incomingLink.getTarget().getElement(), false);
         cmd.add(new DestroyReferenceCommand(r));
         cmd.add(new DeleteCommand(getEditingDomain(), incomingLink));
         continue;
       }
       if (AcoreVisualIDRegistry.getVisualID(incomingLink) == AClassAssociationsEditPart.VISUAL_ID)
       {
-        DestroyReferenceRequest r = new DestroyReferenceRequest(incomingLink.getSource().getElement(), null,
-            incomingLink.getTarget().getElement(), false);
+        DestroyReferenceRequest r = new DestroyReferenceRequest(incomingLink.getSource().getElement(), null, incomingLink.getTarget().getElement(), false);
         cmd.add(new DestroyReferenceCommand(r));
         cmd.add(new DeleteCommand(getEditingDomain(), incomingLink));
         continue;
       }
       if (AcoreVisualIDRegistry.getVisualID(incomingLink) == AClassAggregationsEditPart.VISUAL_ID)
       {
-        DestroyReferenceRequest r = new DestroyReferenceRequest(incomingLink.getSource().getElement(), null,
-            incomingLink.getTarget().getElement(), false);
+        DestroyReferenceRequest r = new DestroyReferenceRequest(incomingLink.getSource().getElement(), null, incomingLink.getTarget().getElement(), false);
         cmd.add(new DestroyReferenceCommand(r));
         cmd.add(new DeleteCommand(getEditingDomain(), incomingLink));
         continue;
       }
       if (AcoreVisualIDRegistry.getVisualID(incomingLink) == AClassCompositionsEditPart.VISUAL_ID)
       {
-        DestroyReferenceRequest r = new DestroyReferenceRequest(incomingLink.getSource().getElement(), null,
-            incomingLink.getTarget().getElement(), false);
+        DestroyReferenceRequest r = new DestroyReferenceRequest(incomingLink.getSource().getElement(), null, incomingLink.getTarget().getElement(), false);
         cmd.add(new DestroyReferenceCommand(r));
         cmd.add(new DeleteCommand(getEditingDomain(), incomingLink));
         continue;
@@ -115,40 +111,35 @@ public class AClassItemSemanticEditPolicy extends AcoreBaseItemSemanticEditPolic
       Edge outgoingLink = (Edge)it.next();
       if (AcoreVisualIDRegistry.getVisualID(outgoingLink) == AClassSubClassesEditPart.VISUAL_ID)
       {
-        DestroyReferenceRequest r = new DestroyReferenceRequest(outgoingLink.getSource().getElement(), null,
-            outgoingLink.getTarget().getElement(), false);
+        DestroyReferenceRequest r = new DestroyReferenceRequest(outgoingLink.getSource().getElement(), null, outgoingLink.getTarget().getElement(), false);
         cmd.add(new DestroyReferenceCommand(r));
         cmd.add(new DeleteCommand(getEditingDomain(), outgoingLink));
         continue;
       }
       if (AcoreVisualIDRegistry.getVisualID(outgoingLink) == AClassImplementedInterfacesEditPart.VISUAL_ID)
       {
-        DestroyReferenceRequest r = new DestroyReferenceRequest(outgoingLink.getSource().getElement(), null,
-            outgoingLink.getTarget().getElement(), false);
+        DestroyReferenceRequest r = new DestroyReferenceRequest(outgoingLink.getSource().getElement(), null, outgoingLink.getTarget().getElement(), false);
         cmd.add(new DestroyReferenceCommand(r));
         cmd.add(new DeleteCommand(getEditingDomain(), outgoingLink));
         continue;
       }
       if (AcoreVisualIDRegistry.getVisualID(outgoingLink) == AClassAssociationsEditPart.VISUAL_ID)
       {
-        DestroyReferenceRequest r = new DestroyReferenceRequest(outgoingLink.getSource().getElement(), null,
-            outgoingLink.getTarget().getElement(), false);
+        DestroyReferenceRequest r = new DestroyReferenceRequest(outgoingLink.getSource().getElement(), null, outgoingLink.getTarget().getElement(), false);
         cmd.add(new DestroyReferenceCommand(r));
         cmd.add(new DeleteCommand(getEditingDomain(), outgoingLink));
         continue;
       }
       if (AcoreVisualIDRegistry.getVisualID(outgoingLink) == AClassAggregationsEditPart.VISUAL_ID)
       {
-        DestroyReferenceRequest r = new DestroyReferenceRequest(outgoingLink.getSource().getElement(), null,
-            outgoingLink.getTarget().getElement(), false);
+        DestroyReferenceRequest r = new DestroyReferenceRequest(outgoingLink.getSource().getElement(), null, outgoingLink.getTarget().getElement(), false);
         cmd.add(new DestroyReferenceCommand(r));
         cmd.add(new DeleteCommand(getEditingDomain(), outgoingLink));
         continue;
       }
       if (AcoreVisualIDRegistry.getVisualID(outgoingLink) == AClassCompositionsEditPart.VISUAL_ID)
       {
-        DestroyReferenceRequest r = new DestroyReferenceRequest(outgoingLink.getSource().getElement(), null,
-            outgoingLink.getTarget().getElement(), false);
+        DestroyReferenceRequest r = new DestroyReferenceRequest(outgoingLink.getSource().getElement(), null, outgoingLink.getTarget().getElement(), false);
         cmd.add(new DestroyReferenceCommand(r));
         cmd.add(new DeleteCommand(getEditingDomain(), outgoingLink));
         continue;
@@ -188,9 +179,8 @@ public class AClassItemSemanticEditPolicy extends AcoreBaseItemSemanticEditPolic
           switch (AcoreVisualIDRegistry.getVisualID(cnode))
           {
           case AAttribute2EditPart.VISUAL_ID:
-            cmd.add(
-                new DestroyElementCommand(new DestroyElementRequest(getEditingDomain(), cnode.getElement(), false))); // directlyOwned:
-                                                                                                                      // true
+            cmd.add(new DestroyElementCommand(new DestroyElementRequest(getEditingDomain(), cnode.getElement(), false))); // directlyOwned:
+                                                                                                                          // true
             // don't need explicit deletion of cnode as parent's view deletion would clean child views as well
             // cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
             break;
@@ -204,9 +194,8 @@ public class AClassItemSemanticEditPolicy extends AcoreBaseItemSemanticEditPolic
           switch (AcoreVisualIDRegistry.getVisualID(cnode))
           {
           case AOperation2EditPart.VISUAL_ID:
-            cmd.add(
-                new DestroyElementCommand(new DestroyElementRequest(getEditingDomain(), cnode.getElement(), false))); // directlyOwned:
-                                                                                                                      // true
+            cmd.add(new DestroyElementCommand(new DestroyElementRequest(getEditingDomain(), cnode.getElement(), false))); // directlyOwned:
+                                                                                                                          // true
             // don't need explicit deletion of cnode as parent's view deletion would clean child views as well
             // cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
             break;
@@ -223,8 +212,7 @@ public class AClassItemSemanticEditPolicy extends AcoreBaseItemSemanticEditPolic
   @Override
   protected Command getCreateRelationshipCommand(CreateRelationshipRequest req)
   {
-    Command command = req.getTarget() == null ? getStartCreateRelationshipCommand(req)
-        : getCompleteCreateRelationshipCommand(req);
+    Command command = req.getTarget() == null ? getStartCreateRelationshipCommand(req) : getCompleteCreateRelationshipCommand(req);
     return command != null ? command : super.getCreateRelationshipCommand(req);
   }
 

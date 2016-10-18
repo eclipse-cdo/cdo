@@ -172,8 +172,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     connector.deactivate();
   }
 
-  public void handleOperations(String connectorID, ExtendedDataInputStream in, ExtendedDataOutputStream out)
-      throws IOException
+  public void handleOperations(String connectorID, ExtendedDataInputStream in, ExtendedDataOutputStream out) throws IOException
   {
     HTTPServerConnector connector = httpConnectors.get(connectorID);
     if (connector == null)

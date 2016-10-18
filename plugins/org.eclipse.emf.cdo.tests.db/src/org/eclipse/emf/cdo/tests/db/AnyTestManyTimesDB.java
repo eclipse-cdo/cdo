@@ -38,8 +38,8 @@ public class AnyTestManyTimesDB extends TestSuite implements IConstants
 
   private static final IDGenerationLocation ID_GENERATION_LOCATION = IDGenerationLocation.STORE;
 
-  private static final RepositoryConfig REPOSITORY_CONFIG = new H2Config(SUPPORTING_AUDITS, SUPPORTING_BRANCHES,
-      WITH_RANGES, COPY_ON_BRANCH, ID_GENERATION_LOCATION);
+  private static final RepositoryConfig REPOSITORY_CONFIG = new H2Config(SUPPORTING_AUDITS, SUPPORTING_BRANCHES, WITH_RANGES, COPY_ON_BRANCH,
+      ID_GENERATION_LOCATION);
 
   private static final SessionConfig SESSION_CONFIG = JVM;
 

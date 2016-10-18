@@ -130,8 +130,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   public Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection)
   {
-    return readPackageUnits(connection, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE,
-        new Monitor());
+    return readPackageUnits(connection, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, new Monitor());
   }
 
   public final void writePackageUnits(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
@@ -147,8 +146,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     }
   }
 
-  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
-      throws IOException
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
     // Export package units
     String where = " WHERE p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.CORE_PACKAGE_URI + //
@@ -158,13 +156,12 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     DBUtil.serializeTable(out, connection, CDODBSchema.PACKAGE_UNITS, "p_u", where);
 
     // Export package infos
-    String join = ", " + CDODBSchema.PACKAGE_UNITS + " p_u" + where + " AND p_i." + CDODBSchema.PACKAGE_INFOS_UNIT
-        + "=p_u." + CDODBSchema.PACKAGE_UNITS_ID;
+    String join = ", " + CDODBSchema.PACKAGE_UNITS + " p_u" + where + " AND p_i." + CDODBSchema.PACKAGE_INFOS_UNIT + "=p_u." + CDODBSchema.PACKAGE_UNITS_ID;
     DBUtil.serializeTable(out, connection, CDODBSchema.PACKAGE_INFOS, "p_i", join);
   }
 
-  public Collection<InternalCDOPackageUnit> rawImport(Connection connection, CDODataInput in, long fromCommitTime,
-      long toCommitTime, OMMonitor monitor) throws IOException
+  public Collection<InternalCDOPackageUnit> rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor)
+      throws IOException
   {
     monitor.begin(3);
 
@@ -239,8 +236,8 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     try
     {
       String sql = "INSERT INTO " + CDODBSchema.PACKAGE_UNITS + " (" + CDODBSchema.PACKAGE_UNITS_ID + ", " //$NON-NLS-1$ //$NON-NLS-2$
-          + CDODBSchema.PACKAGE_UNITS_ORIGINAL_TYPE + ", " + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + ", "
-          + CDODBSchema.PACKAGE_UNITS_PACKAGE_DATA + ") VALUES (?, ?, ?, ?)";
+          + CDODBSchema.PACKAGE_UNITS_ORIGINAL_TYPE + ", " + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + ", " + CDODBSchema.PACKAGE_UNITS_PACKAGE_DATA
+          + ") VALUES (?, ?, ?, ?)";
       DBUtil.trace(sql);
 
       IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
@@ -351,8 +348,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     }
   }
 
-  private Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection, long fromCommitTime,
-      long toCommitTime, OMMonitor monitor)
+  private Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection, long fromCommitTime, long toCommitTime, OMMonitor monitor)
   {
     final Map<String, InternalCDOPackageUnit> packageUnits = new HashMap<String, InternalCDOPackageUnit>();
     IDBRowHandler unitRowHandler = new IDBRowHandler()
@@ -374,14 +370,13 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     String where = null;
     if (fromCommitTime != CDOBranchPoint.UNSPECIFIED_DATE)
     {
-      where = CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.CORE_PACKAGE_URI + "' AND "
-          + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.RESOURCE_PACKAGE_URI + "' AND "
-          + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.TYPES_PACKAGE_URI + "' AND "
+      where = CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.CORE_PACKAGE_URI + "' AND " + CDODBSchema.PACKAGE_UNITS_ID + "<>'"
+          + CDOModelConstants.RESOURCE_PACKAGE_URI + "' AND " + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.TYPES_PACKAGE_URI + "' AND "
           + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     }
 
-    DBUtil.select(connection, unitRowHandler, where, CDODBSchema.PACKAGE_UNITS_ID,
-        CDODBSchema.PACKAGE_UNITS_ORIGINAL_TYPE, CDODBSchema.PACKAGE_UNITS_TIME_STAMP);
+    DBUtil.select(connection, unitRowHandler, where, CDODBSchema.PACKAGE_UNITS_ID, CDODBSchema.PACKAGE_UNITS_ORIGINAL_TYPE,
+        CDODBSchema.PACKAGE_UNITS_TIME_STAMP);
 
     final Map<String, List<InternalCDOPackageInfo>> packageInfos = new HashMap<String, List<InternalCDOPackageInfo>>();
     IDBRowHandler infoRowHandler = new IDBRowHandler()
@@ -410,8 +405,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
     try
     {
-      DBUtil.select(connection, infoRowHandler, CDODBSchema.PACKAGE_INFOS_UNIT, CDODBSchema.PACKAGE_INFOS_URI,
-          CDODBSchema.PACKAGE_INFOS_PARENT);
+      DBUtil.select(connection, infoRowHandler, CDODBSchema.PACKAGE_INFOS_UNIT, CDODBSchema.PACKAGE_INFOS_URI, CDODBSchema.PACKAGE_INFOS_PARENT);
     }
     finally
     {

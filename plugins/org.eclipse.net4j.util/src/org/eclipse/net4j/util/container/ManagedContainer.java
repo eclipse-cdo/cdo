@@ -93,15 +93,13 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
       factoryRegistry.addListener(new ContainerEventAdapter<Map.Entry<IFactoryKey, IFactory>>()
       {
         @Override
-        protected void onAdded(IContainer<Map.Entry<IFactoryKey, IFactory>> container,
-            Map.Entry<IFactoryKey, IFactory> entry)
+        protected void onAdded(IContainer<Map.Entry<IFactoryKey, IFactory>> container, Map.Entry<IFactoryKey, IFactory> entry)
         {
           updateFactory(entry, ManagedContainer.this);
         }
 
         @Override
-        protected void onRemoved(IContainer<Map.Entry<IFactoryKey, IFactory>> container,
-            Map.Entry<IFactoryKey, IFactory> entry)
+        protected void onRemoved(IContainer<Map.Entry<IFactoryKey, IFactory>> container, Map.Entry<IFactoryKey, IFactory> entry)
         {
           updateFactory(entry, null);
         }
@@ -285,8 +283,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
     {
       ElementKey key = entry.getKey();
-      if (ObjectUtil.equals(key.getProductGroup(), productGroup)
-          && ObjectUtil.equals(key.getFactoryType(), factoryType))
+      if (ObjectUtil.equals(key.getProductGroup(), productGroup) && ObjectUtil.equals(key.getFactoryType(), factoryType))
       {
         result.add(entry.getValue());
       }
@@ -295,8 +292,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return result.toArray();
   }
 
-  public Object getElement(String productGroup, String factoryType, String description)
-      throws FactoryNotFoundException, ProductCreationException
+  public Object getElement(String productGroup, String factoryType, String description) throws FactoryNotFoundException, ProductCreationException
   {
     return getElement(productGroup, factoryType, description, true);
   }
@@ -566,8 +562,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     }
   }
 
-  protected Object createElement(String productGroup, String factoryType, String description)
-      throws FactoryNotFoundException, ProductCreationException
+  protected Object createElement(String productGroup, String factoryType, String description) throws FactoryNotFoundException, ProductCreationException
   {
     IFactory factory = getFactory(productGroup, factoryType);
     return factory.create(description);

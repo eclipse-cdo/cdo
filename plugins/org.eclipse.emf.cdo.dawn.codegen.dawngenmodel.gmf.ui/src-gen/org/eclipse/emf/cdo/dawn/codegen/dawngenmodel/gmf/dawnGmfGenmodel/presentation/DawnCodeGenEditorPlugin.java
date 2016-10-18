@@ -49,8 +49,7 @@ public final class DawnCodeGenEditorPlugin extends EMFPlugin
    */
   public DawnCodeGenEditorPlugin()
   {
-    super(new ResourceLocator[] { DawnCodeGenEditPlugin.INSTANCE, EcoreEditPlugin.INSTANCE, GenModelEditPlugin.INSTANCE,
-        EditorPlugin.INSTANCE, });
+    super(new ResourceLocator[] { DawnCodeGenEditPlugin.INSTANCE, EcoreEditPlugin.INSTANCE, GenModelEditPlugin.INSTANCE, EditorPlugin.INSTANCE, });
   }
 
   /**

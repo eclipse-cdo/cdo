@@ -79,8 +79,7 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              model4Package.IMPL_SINGLE_REF_NON_CONTAINER__ELEMENT, oldElement, element));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, model4Package.IMPL_SINGLE_REF_NON_CONTAINER__ELEMENT, oldElement, element));
         }
       }
     }
@@ -106,8 +105,8 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
     element = newElement;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          model4Package.IMPL_SINGLE_REF_NON_CONTAINER__ELEMENT, oldElement, newElement);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_NON_CONTAINER__ELEMENT, oldElement,
+          newElement);
       if (msgs == null)
       {
         msgs = notification;
@@ -131,15 +130,13 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
       NotificationChain msgs = null;
       if (element != null)
       {
-        msgs = ((InternalEObject)element).eInverseRemove(this,
-            model4interfacesPackage.ISINGLE_REF_NON_CONTAINED_ELEMENT__PARENT, ISingleRefNonContainedElement.class,
-            msgs);
+        msgs = ((InternalEObject)element).eInverseRemove(this, model4interfacesPackage.ISINGLE_REF_NON_CONTAINED_ELEMENT__PARENT,
+            ISingleRefNonContainedElement.class, msgs);
       }
       if (newElement != null)
       {
-        msgs = ((InternalEObject)newElement).eInverseAdd(this,
-            model4interfacesPackage.ISINGLE_REF_NON_CONTAINED_ELEMENT__PARENT, ISingleRefNonContainedElement.class,
-            msgs);
+        msgs = ((InternalEObject)newElement).eInverseAdd(this, model4interfacesPackage.ISINGLE_REF_NON_CONTAINED_ELEMENT__PARENT,
+            ISingleRefNonContainedElement.class, msgs);
       }
       msgs = basicSetElement(newElement, msgs);
       if (msgs != null)
@@ -149,8 +146,7 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_NON_CONTAINER__ELEMENT,
-          newElement, newElement));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_NON_CONTAINER__ELEMENT, newElement, newElement));
     }
   }
 
@@ -166,9 +162,8 @@ public class ImplSingleRefNonContainerImpl extends EObjectImpl implements ImplSi
     case model4Package.IMPL_SINGLE_REF_NON_CONTAINER__ELEMENT:
       if (element != null)
       {
-        msgs = ((InternalEObject)element).eInverseRemove(this,
-            model4interfacesPackage.ISINGLE_REF_NON_CONTAINED_ELEMENT__PARENT, ISingleRefNonContainedElement.class,
-            msgs);
+        msgs = ((InternalEObject)element).eInverseRemove(this, model4interfacesPackage.ISINGLE_REF_NON_CONTAINED_ELEMENT__PARENT,
+            ISingleRefNonContainedElement.class, msgs);
       }
       return basicSetElement((ISingleRefNonContainedElement)otherEnd, msgs);
     }

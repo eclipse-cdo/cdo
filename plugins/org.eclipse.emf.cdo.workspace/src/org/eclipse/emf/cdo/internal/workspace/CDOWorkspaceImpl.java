@@ -167,9 +167,8 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   /**
    * Checkout.
    */
-  public CDOWorkspaceImpl(String localRepositoryName, IStore store, IDGenerationLocation idGenerationLocation,
-      CDOIDGenerator idGenerator, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote, int branchID,
-      String branchPath, long timeStamp)
+  public CDOWorkspaceImpl(String localRepositoryName, IStore store, IDGenerationLocation idGenerationLocation, CDOIDGenerator idGenerator,
+      InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote, int branchID, String branchPath, long timeStamp)
   {
     init(localRepositoryName, store, idGenerationLocation, idGenerator, base, remote);
 
@@ -185,8 +184,8 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   /**
    * Open.
    */
-  public CDOWorkspaceImpl(String localRepositoryName, IStore store, IDGenerationLocation idGenerationLocation,
-      CDOIDGenerator idGenerator, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
+  public CDOWorkspaceImpl(String localRepositoryName, IStore store, IDGenerationLocation idGenerationLocation, CDOIDGenerator idGenerator,
+      InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
   {
     init(localRepositoryName, store, idGenerationLocation, idGenerator, base, remote);
     loadProperties();
@@ -269,8 +268,8 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     }
   }
 
-  protected void init(String localRepositoryName, IStore store, IDGenerationLocation idGenerationLocation,
-      CDOIDGenerator idGenerator, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
+  protected void init(String localRepositoryName, IStore store, IDGenerationLocation idGenerationLocation, CDOIDGenerator idGenerator,
+      InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
   {
     this.idGenerationLocation = idGenerationLocation;
     this.idGenerator = idGenerator;
@@ -588,8 +587,8 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     }
   }
 
-  private InternalCDOTransaction openLocalTransaction(final InternalCDOSession remoteSession,
-      final CDOChangeSetData remoteData, final CDOBranchPoint remotePoint, final long newTimeStamp)
+  private InternalCDOTransaction openLocalTransaction(final InternalCDOSession remoteSession, final CDOChangeSetData remoteData,
+      final CDOBranchPoint remotePoint, final long newTimeStamp)
   {
     InternalCDOTransaction transaction = (InternalCDOTransaction)getLocalSession().openTransaction();
     initView(transaction);
@@ -630,8 +629,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
         }
       }
 
-      private IStoreAccessor.Raw updateBase(InternalCDORevision localRevision, InternalCDORevision remoteRevision,
-          CDOID id, IStoreAccessor.Raw accessor)
+      private IStoreAccessor.Raw updateBase(InternalCDORevision localRevision, InternalCDORevision remoteRevision, CDOID id, IStoreAccessor.Raw accessor)
       {
         if (localRevision == null)
         {
@@ -740,8 +738,8 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     throw ex;
   }
 
-  private CDOChangeSetData getMergeResult(CDOMerger merger, CDOBranchPoint basePoint, CDOBranchPoint remotePoint,
-      CDOChangeSetData localData, CDOChangeSetData remoteData)
+  private CDOChangeSetData getMergeResult(CDOMerger merger, CDOBranchPoint basePoint, CDOBranchPoint remotePoint, CDOChangeSetData localData,
+      CDOChangeSetData remoteData)
   {
     if (localData.isEmpty())
     {
@@ -805,8 +803,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
       SyntheticCDORevision[] synthetics = { null };
       InternalCDORevisionManager revisionManager = localSession.getRevisionManager();
-      revisionManager.getRevision(id, localSessionHead, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true,
-          synthetics);
+      revisionManager.getRevision(id, localSessionHead, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetics);
 
       int max = synthetics[0].getVersion();
       EClass eClass = synthetics[0].getEClass();
@@ -948,8 +945,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     }
   }
 
-  protected Set<CDOID> checkinPostProcessing(InternalCDOTransaction remoteTransaction,
-      List<CDORevisionKey> changedObjects)
+  protected Set<CDOID> checkinPostProcessing(InternalCDOTransaction remoteTransaction, List<CDORevisionKey> changedObjects)
   {
     Set<CDOID> ids = new HashSet<CDOID>();
     IStoreAccessor.Raw accessor = null;
@@ -1399,8 +1395,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
   protected void loadProperties()
   {
-    Set<String> names = new HashSet<String>(
-        Arrays.asList(PROP_BRANCH_ID, PROP_BRANCH_PATH, PROP_TIME_STAMP, PROP_FIXED));
+    Set<String> names = new HashSet<String>(Arrays.asList(PROP_BRANCH_ID, PROP_BRANCH_PATH, PROP_TIME_STAMP, PROP_FIXED));
     Map<String, String> props = localRepository.getStore().getPersistentProperties(names);
     String prop = props.get(PROP_BRANCH_ID);
     branchID = prop == null ? InternalCDOWorkspace.NO_BRANCH_ID : Integer.parseInt(prop);

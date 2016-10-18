@@ -100,8 +100,7 @@ public class CDOCompare
   {
     Builder builder = EMFCompare.builder();
 
-    IMatchEngine.Factory.Registry matchEngineFactoryRegistry = createMatchEngineFactoryRegistry(matcher,
-        comparisonFactory);
+    IMatchEngine.Factory.Registry matchEngineFactoryRegistry = createMatchEngineFactoryRegistry(matcher, comparisonFactory);
     if (matchEngineFactoryRegistry != null)
     {
       builder.setMatchEngineFactoryRegistry(matchEngineFactoryRegistry);
@@ -140,8 +139,7 @@ public class CDOCompare
     return builder.build();
   }
 
-  protected IMatchEngine.Factory.Registry createMatchEngineFactoryRegistry(IEObjectMatcher matcher,
-      IComparisonFactory comparisonFactory)
+  protected IMatchEngine.Factory.Registry createMatchEngineFactoryRegistry(IEObjectMatcher matcher, IComparisonFactory comparisonFactory)
   {
     IMatchEngine.Factory.Registry registry = new MatchEngineFactoryRegistryImpl();
     registry.add(new CDOMatchEngine.Factory(matcher, comparisonFactory));
@@ -228,22 +226,18 @@ public class CDOCompare
 
     @Override
     protected Set<Match> matchPerId(Iterator<? extends EObject> leftEObjects, Iterator<? extends EObject> rightEObjects,
-        Iterator<? extends EObject> originEObjects, List<EObject> leftEObjectsNoID, List<EObject> rightEObjectsNoID,
-        List<EObject> originEObjectsNoID)
+        Iterator<? extends EObject> originEObjects, List<EObject> leftEObjectsNoID, List<EObject> rightEObjectsNoID, List<EObject> originEObjectsNoID)
     {
       if (GETPARENTEOBJECT_METHOD == null)
       {
-        return matchPerIdCompatibility(leftEObjects, rightEObjects, originEObjects, leftEObjectsNoID, rightEObjectsNoID,
-            originEObjectsNoID);
+        return matchPerIdCompatibility(leftEObjects, rightEObjects, originEObjects, leftEObjectsNoID, rightEObjectsNoID, originEObjectsNoID);
       }
 
-      return super.matchPerId(leftEObjects, rightEObjects, originEObjects, leftEObjectsNoID, rightEObjectsNoID,
-          originEObjectsNoID);
+      return super.matchPerId(leftEObjects, rightEObjects, originEObjects, leftEObjectsNoID, rightEObjectsNoID, originEObjectsNoID);
     }
 
-    private Set<Match> matchPerIdCompatibility(Iterator<? extends EObject> leftEObjects,
-        Iterator<? extends EObject> rightEObjects, Iterator<? extends EObject> originEObjects,
-        List<EObject> leftEObjectsNoID, List<EObject> rightEObjectsNoID, List<EObject> originEObjectsNoID)
+    private Set<Match> matchPerIdCompatibility(Iterator<? extends EObject> leftEObjects, Iterator<? extends EObject> rightEObjects,
+        Iterator<? extends EObject> originEObjects, List<EObject> leftEObjectsNoID, List<EObject> rightEObjectsNoID, List<EObject> originEObjectsNoID)
     {
       final List<EObject> leftEObjectsNoID1 = leftEObjectsNoID;
       final List<EObject> rightEObjectsNoID1 = rightEObjectsNoID;
@@ -409,8 +403,7 @@ public class CDOCompare
     }
 
     @Override
-    protected void match(Comparison comparison, IComparisonScope scope, final Notifier left, final Notifier right,
-        final Notifier origin, Monitor monitor)
+    protected void match(Comparison comparison, IComparisonScope scope, final Notifier left, final Notifier right, final Notifier origin, Monitor monitor)
     {
       // Omit special treatment of Resources (and ResourceSets). Just match EObjects.
       match(comparison, scope, (EObject)left, (EObject)right, (EObject)origin, monitor);

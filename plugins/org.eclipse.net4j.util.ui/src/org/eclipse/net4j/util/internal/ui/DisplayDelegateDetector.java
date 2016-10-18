@@ -46,8 +46,7 @@ public class DisplayDelegateDetector implements DelegateDetector
   /**
    * @author Eike Stepper
    */
-  public static abstract class Factory
-      extends org.eclipse.net4j.util.concurrent.DelegableReentrantLock.DelegateDetector.Factory
+  public static abstract class Factory extends org.eclipse.net4j.util.concurrent.DelegableReentrantLock.DelegateDetector.Factory
   {
     public static final String TYPE = "display";
 

@@ -42,8 +42,8 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ContainedObjectItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+public class ContainedObjectItemProvider extends ItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
     ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
@@ -186,8 +186,7 @@ public class ContainedObjectItemProvider extends ItemProviderAdapter implements 
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT,
-        EcoreFactory.eINSTANCE.createEObject()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, EcoreFactory.eINSTANCE.createEObject()));
   }
 
   /**

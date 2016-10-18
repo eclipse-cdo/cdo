@@ -45,8 +45,8 @@ public abstract class LongIDStore extends Store
   @ExcludeFromDump
   private transient AtomicLong nextLocalObjectID = new AtomicLong(Long.MAX_VALUE);
 
-  public LongIDStore(String type, Set<ChangeFormat> supportedChangeFormats,
-      Set<RevisionTemporality> supportedRevisionTemporalities, Set<RevisionParallelism> supportedRevisionParallelisms)
+  public LongIDStore(String type, Set<ChangeFormat> supportedChangeFormats, Set<RevisionTemporality> supportedRevisionTemporalities,
+      Set<RevisionParallelism> supportedRevisionParallelisms)
   {
     super(type, OBJECT_ID_TYPES, supportedChangeFormats, supportedRevisionTemporalities, supportedRevisionParallelisms);
   }

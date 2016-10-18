@@ -36,8 +36,7 @@ public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFac
   {
     try
     {
-      SubpackageFactory theSubpackageFactory = (SubpackageFactory)EPackage.Registry.INSTANCE
-          .getEFactory(SubpackagePackage.eNS_URI);
+      SubpackageFactory theSubpackageFactory = (SubpackageFactory)EPackage.Registry.INSTANCE.getEFactory(SubpackagePackage.eNS_URI);
       if (theSubpackageFactory != null)
       {
         return theSubpackageFactory;

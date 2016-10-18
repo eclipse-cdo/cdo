@@ -47,8 +47,7 @@ public abstract class BaseDialog<VIEWER extends Viewer> extends TitleAreaDialog
   /**
    * @since 3.4
    */
-  public BaseDialog(Shell parentShell, int shellStyle, String title, String message, IDialogSettings settings,
-      ImageDescriptor descriptor)
+  public BaseDialog(Shell parentShell, int shellStyle, String title, String message, IDialogSettings settings, ImageDescriptor descriptor)
   {
     super(parentShell);
     setShellStyle(shellStyle);

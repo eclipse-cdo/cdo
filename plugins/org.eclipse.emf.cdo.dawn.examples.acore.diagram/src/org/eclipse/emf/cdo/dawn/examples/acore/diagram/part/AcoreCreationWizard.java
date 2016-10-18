@@ -110,8 +110,7 @@ public class AcoreCreationWizard extends Wizard implements INewWizard
     this.workbench = workbench;
     this.selection = selection;
     setWindowTitle(Messages.AcoreCreationWizardTitle);
-    setDefaultPageImageDescriptor(
-        AcoreDiagramEditorPlugin.getBundledImageDescriptor("icons/wizban/NewAcoreWizard.gif")); //$NON-NLS-1$
+    setDefaultPageImageDescriptor(AcoreDiagramEditorPlugin.getBundledImageDescriptor("icons/wizban/NewAcoreWizard.gif")); //$NON-NLS-1$
     setNeedsProgressMonitor(true);
   }
 
@@ -158,8 +157,7 @@ public class AcoreCreationWizard extends Wizard implements INewWizard
       @Override
       protected void execute(IProgressMonitor monitor) throws CoreException, InterruptedException
       {
-        diagram = AcoreDiagramEditorUtil.createDiagram(diagramModelFilePage.getURI(), domainModelFilePage.getURI(),
-            monitor);
+        diagram = AcoreDiagramEditorUtil.createDiagram(diagramModelFilePage.getURI(), domainModelFilePage.getURI(), monitor);
         if (isOpenNewlyCreatedDiagramEditor() && diagram != null)
         {
           try
@@ -168,8 +166,7 @@ public class AcoreCreationWizard extends Wizard implements INewWizard
           }
           catch (PartInitException e)
           {
-            ErrorDialog.openError(getContainer().getShell(), Messages.AcoreCreationWizardOpenEditorError, null,
-                e.getStatus());
+            ErrorDialog.openError(getContainer().getShell(), Messages.AcoreCreationWizardOpenEditorError, null, e.getStatus());
           }
         }
       }
@@ -186,8 +183,7 @@ public class AcoreCreationWizard extends Wizard implements INewWizard
     {
       if (e.getTargetException() instanceof CoreException)
       {
-        ErrorDialog.openError(getContainer().getShell(), Messages.AcoreCreationWizardCreationError, null,
-            ((CoreException)e.getTargetException()).getStatus());
+        ErrorDialog.openError(getContainer().getShell(), Messages.AcoreCreationWizardCreationError, null, ((CoreException)e.getTargetException()).getStatus());
       }
       else
       {

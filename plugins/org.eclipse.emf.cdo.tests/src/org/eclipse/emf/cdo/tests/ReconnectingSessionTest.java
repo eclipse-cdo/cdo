@@ -77,8 +77,7 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       IManagedContainer clientContainer = getClientContainer();
       dumpEvents(clientContainer);
 
-      ReconnectingCDOSessionConfiguration configuration = CDONet4jUtil.createReconnectingSessionConfiguration(ADDRESS2,
-          repositoryName, clientContainer);
+      ReconnectingCDOSessionConfiguration configuration = CDONet4jUtil.createReconnectingSessionConfiguration(ADDRESS2, repositoryName, clientContainer);
       configuration.setHeartBeatEnabled(true);
 
       session2 = (CDONet4jSession)openSession(configuration);
@@ -166,8 +165,7 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       IManagedContainer clientContainer = getClientContainer();
       dumpEvents(clientContainer);
 
-      ReconnectingCDOSessionConfiguration configuration = CDONet4jUtil.createReconnectingSessionConfiguration(ADDRESS2,
-          repositoryName, clientContainer);
+      ReconnectingCDOSessionConfiguration configuration = CDONet4jUtil.createReconnectingSessionConfiguration(ADDRESS2, repositoryName, clientContainer);
       configuration.setHeartBeatEnabled(true);
 
       session2 = (CDONet4jSession)openSession(configuration);
@@ -249,8 +247,7 @@ public class ReconnectingSessionTest extends AbstractCDOTest
     {
       acceptor = TCPUtil.getAcceptor(getServerContainer(), ADDRESS2);
 
-      ReconnectingCDOSessionConfiguration configuration = CDONet4jUtil.createReconnectingSessionConfiguration(ADDRESS2,
-          repositoryName, getClientContainer());
+      ReconnectingCDOSessionConfiguration configuration = CDONet4jUtil.createReconnectingSessionConfiguration(ADDRESS2, repositoryName, getClientContainer());
       configuration.setHeartBeatEnabled(true);
 
       session = (CDONet4jSession)openSession(configuration);

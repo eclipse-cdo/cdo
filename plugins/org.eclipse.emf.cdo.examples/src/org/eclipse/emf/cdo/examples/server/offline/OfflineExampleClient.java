@@ -177,8 +177,7 @@ public class OfflineExampleClient
 
     System.out.println("Client starting...");
     IManagedContainer container = OfflineExampleUtil.createContainer();
-    IConnector connector = Net4jUtil.getConnector(container, AbstractOfflineExampleServer.TRANSPORT_TYPE,
-        "localhost:" + PORT);
+    IConnector connector = Net4jUtil.getConnector(container, AbstractOfflineExampleServer.TRANSPORT_TYPE, "localhost:" + PORT);
 
     CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setConnector(connector);

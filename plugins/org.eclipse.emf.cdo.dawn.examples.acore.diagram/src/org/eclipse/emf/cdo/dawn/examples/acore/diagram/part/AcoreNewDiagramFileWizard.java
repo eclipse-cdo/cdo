@@ -73,11 +73,9 @@ public class AcoreNewDiagramFileWizard extends Wizard
     assert diagramRoot != null : "Doagram root element must be specified"; //$NON-NLS-1$
     assert editingDomain != null : "Editing domain must be specified"; //$NON-NLS-1$
 
-    myFileCreationPage = new WizardNewFileCreationPage(Messages.AcoreNewDiagramFileWizard_CreationPageName,
-        StructuredSelection.EMPTY);
+    myFileCreationPage = new WizardNewFileCreationPage(Messages.AcoreNewDiagramFileWizard_CreationPageName, StructuredSelection.EMPTY);
     myFileCreationPage.setTitle(Messages.AcoreNewDiagramFileWizard_CreationPageTitle);
-    myFileCreationPage.setDescription(
-        NLS.bind(Messages.AcoreNewDiagramFileWizard_CreationPageDescription, ACoreRootEditPart.MODEL_ID));
+    myFileCreationPage.setDescription(NLS.bind(Messages.AcoreNewDiagramFileWizard_CreationPageDescription, ACoreRootEditPart.MODEL_ID));
     IPath filePath;
     String fileName = URI.decode(domainModelURI.trimFileExtension().lastSegment());
     if (domainModelURI.isPlatformResource())
@@ -96,8 +94,7 @@ public class AcoreNewDiagramFileWizard extends Wizard
     myFileCreationPage.setContainerFullPath(filePath);
     myFileCreationPage.setFileName(AcoreDiagramEditorUtil.getUniqueFileName(filePath, fileName, "acore_diagram")); //$NON-NLS-1$
 
-    diagramRootElementSelectionPage = new DiagramRootElementSelectionPage(
-        Messages.AcoreNewDiagramFileWizard_RootSelectionPageName);
+    diagramRootElementSelectionPage = new DiagramRootElementSelectionPage(Messages.AcoreNewDiagramFileWizard_RootSelectionPageName);
     diagramRootElementSelectionPage.setTitle(Messages.AcoreNewDiagramFileWizard_RootSelectionPageTitle);
     diagramRootElementSelectionPage.setDescription(Messages.AcoreNewDiagramFileWizard_RootSelectionPageDescription);
     diagramRootElementSelectionPage.setModelElement(diagramRoot);
@@ -128,8 +125,8 @@ public class AcoreNewDiagramFileWizard extends Wizard
     URI diagramModelURI = URI.createPlatformResourceURI(diagramFile.getFullPath().toString(), true);
     ResourceSet resourceSet = myEditingDomain.getResourceSet();
     final Resource diagramResource = resourceSet.createResource(diagramModelURI);
-    AbstractTransactionalCommand command = new AbstractTransactionalCommand(myEditingDomain,
-        Messages.AcoreNewDiagramFileWizard_InitDiagramCommand, affectedFiles)
+    AbstractTransactionalCommand command = new AbstractTransactionalCommand(myEditingDomain, Messages.AcoreNewDiagramFileWizard_InitDiagramCommand,
+        affectedFiles)
     {
 
       @Override
@@ -140,8 +137,8 @@ public class AcoreNewDiagramFileWizard extends Wizard
         {
           return CommandResult.newErrorCommandResult(Messages.AcoreNewDiagramFileWizard_IncorrectRootError);
         }
-        Diagram diagram = ViewService.createDiagram(diagramRootElementSelectionPage.getModelElement(),
-            ACoreRootEditPart.MODEL_ID, AcoreDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
+        Diagram diagram = ViewService.createDiagram(diagramRootElementSelectionPage.getModelElement(), ACoreRootEditPart.MODEL_ID,
+            AcoreDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
         diagramResource.getContents().add(diagram);
         return CommandResult.newOKCommandResult();
       }
@@ -201,9 +198,8 @@ public class AcoreNewDiagramFileWizard extends Wizard
         setErrorMessage(Messages.AcoreNewDiagramFileWizard_RootSelectionPageNoSelectionMessage);
         return false;
       }
-      boolean result = ViewService.getInstance()
-          .provides(new CreateDiagramViewOperation(new EObjectAdapter(selectedModelElement), ACoreRootEditPart.MODEL_ID,
-              AcoreDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT));
+      boolean result = ViewService.getInstance().provides(new CreateDiagramViewOperation(new EObjectAdapter(selectedModelElement), ACoreRootEditPart.MODEL_ID,
+          AcoreDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT));
       setErrorMessage(result ? null : Messages.AcoreNewDiagramFileWizard_RootSelectionPageInvalidSelectionMessage);
       return result;
     }

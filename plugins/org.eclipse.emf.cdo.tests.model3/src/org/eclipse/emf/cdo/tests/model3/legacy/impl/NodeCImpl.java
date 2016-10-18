@@ -120,8 +120,7 @@ public class NodeCImpl extends EObjectImpl implements NodeC
   {
     if (children == null)
     {
-      children = new EObjectContainmentWithInverseEList<NodeC>(NodeC.class, this, Model3Package.NODE_C__CHILDREN,
-          Model3Package.NODE_C__PARENT);
+      children = new EObjectContainmentWithInverseEList<NodeC>(NodeC.class, this, Model3Package.NODE_C__CHILDREN, Model3Package.NODE_C__PARENT);
     }
     return children;
   }
@@ -213,8 +212,8 @@ public class NodeCImpl extends EObjectImpl implements NodeC
   {
     if (otherNodes == null)
     {
-      otherNodes = new EObjectWithInverseResolvingEList.ManyInverse<NodeC>(NodeC.class, this,
-          Model3Package.NODE_C__OTHER_NODES, Model3Package.NODE_C__OPPOSITE_NODES);
+      otherNodes = new EObjectWithInverseResolvingEList.ManyInverse<NodeC>(NodeC.class, this, Model3Package.NODE_C__OTHER_NODES,
+          Model3Package.NODE_C__OPPOSITE_NODES);
     }
     return otherNodes;
   }
@@ -227,8 +226,8 @@ public class NodeCImpl extends EObjectImpl implements NodeC
   {
     if (oppositeNodes == null)
     {
-      oppositeNodes = new EObjectWithInverseResolvingEList.ManyInverse<NodeC>(NodeC.class, this,
-          Model3Package.NODE_C__OPPOSITE_NODES, Model3Package.NODE_C__OTHER_NODES);
+      oppositeNodes = new EObjectWithInverseResolvingEList.ManyInverse<NodeC>(NodeC.class, this, Model3Package.NODE_C__OPPOSITE_NODES,
+          Model3Package.NODE_C__OTHER_NODES);
     }
     return oppositeNodes;
   }

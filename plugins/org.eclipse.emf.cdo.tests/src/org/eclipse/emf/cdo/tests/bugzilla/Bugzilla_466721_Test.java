@@ -68,8 +68,7 @@ public class Bugzilla_466721_Test extends AbstractCDOTest
     catch (ObjectNotFoundException e)
     {
       Throwable t = exceptionAsserter.getThrowable();
-      Assert.assertFalse(t != null ? exceptionAsserter.getThrowable().toString() : "",
-          exceptionAsserter.exceptionsOccured());
+      Assert.assertFalse(t != null ? exceptionAsserter.getThrowable().toString() : "", exceptionAsserter.exceptionsOccured());
     }
     finally
     {

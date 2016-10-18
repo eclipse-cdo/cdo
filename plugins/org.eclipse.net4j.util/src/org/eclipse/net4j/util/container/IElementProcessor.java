@@ -17,6 +17,5 @@ package org.eclipse.net4j.util.container;
  */
 public interface IElementProcessor
 {
-  public Object process(IManagedContainer container, String productGroup, String factoryType, String description,
-      Object element);
+  public Object process(IManagedContainer container, String productGroup, String factoryType, String description, Object element);
 }

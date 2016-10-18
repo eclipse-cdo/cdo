@@ -368,8 +368,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
    *          the revision cache, the read revision is added to the cache
    * @return the read revision
    */
-  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
-      CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk, CDORevisionCacheAdder cache)
   {
     if (!HibernateUtil.getInstance().isStoreCreatedID(id))
     {
@@ -380,8 +379,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       if (getStore().isAuditing() && getStore().getHibernateAuditHandler().getCDOAuditHandler().isAudited(id))
       {
-        InternalCDORevision revision = getStore().getHibernateAuditHandler().readRevision(getHibernateSession(), id,
-            branchPoint.getTimeStamp());
+        InternalCDORevision revision = getStore().getHibernateAuditHandler().readRevision(getHibernateSession(), id, branchPoint.getTimeStamp());
         // found one, use it
         if (revision != null)
         {
@@ -477,8 +475,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       }
     }
 
-    final String qryStr = "select e from TeneoAuditCommitInfo e where e.commitTime>=:startTime and e.commitTime<=:endTime order by e.commitTime "
-        + direction;
+    final String qryStr = "select e from TeneoAuditCommitInfo e where e.commitTime>=:startTime and e.commitTime<=:endTime order by e.commitTime " + direction;
     final Query qry = session.createQuery(qryStr);
     if (count > 0)
     {
@@ -489,9 +486,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     for (Object o : qry.list())
     {
       final TeneoAuditCommitInfo teneoCommitInfo = (TeneoAuditCommitInfo)o;
-      final CDOCommitInfo cdoCommitInfo = commitInfoManager.createCommitInfo(
-          getStore().getRepository().getBranchManager().getMainBranch(), teneoCommitInfo.getCommitTime(),
-          teneoCommitInfo.getCommitTime() - 1, teneoCommitInfo.getUser(), teneoCommitInfo.getComment(), null, null);
+      final CDOCommitInfo cdoCommitInfo = commitInfoManager.createCommitInfo(getStore().getRepository().getBranchManager().getMainBranch(),
+          teneoCommitInfo.getCommitTime(), teneoCommitInfo.getCommitTime() - 1, teneoCommitInfo.getUser(), teneoCommitInfo.getComment(), null, null);
       handler.handleCommitInfo(cdoCommitInfo);
     }
   }
@@ -503,8 +499,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   // should only return revisions of the eclass itself and not of its subclasses.
-  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
 
     if (eClass != null)
@@ -521,8 +516,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       for (EPackage ePackage : getStore().getPackageHandler().getEPackages())
       {
         // an auditing epackage
-        if (ePackage == TeneoauditingPackage.eINSTANCE
-            || ePackage.getEAnnotation(Constants.ANNOTATION_SOURCE_AUDITING) != null)
+        if (ePackage == TeneoauditingPackage.eINSTANCE || ePackage.getEAnnotation(Constants.ANNOTATION_SOURCE_AUDITING) != null)
         {
           continue;
         }
@@ -583,14 +577,12 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   /**
    * @see #readRevision(CDOID, CDOBranchPoint, int, CDORevisionCacheAdder)
    */
-  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
-      CDORevisionCacheAdder cache)
+  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk, CDORevisionCacheAdder cache)
   {
     InternalCDORevision revision = null;
     if (getStore().getHibernateAuditHandler().getCDOAuditHandler().isAudited(id))
     {
-      revision = getStore().getHibernateAuditHandler().readRevisionByVersion(getHibernateSession(), id,
-          branchVersion.getVersion());
+      revision = getStore().getHibernateAuditHandler().readRevisionByVersion(getHibernateSession(), id, branchVersion.getVersion());
     }
     else
     {
@@ -677,8 +669,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         }
 
         final String revisionName = (String)value;
-        final boolean match = exactMatch || revisionName == null || name == null ? ObjectUtil.equals(revisionName, name)
-            : revisionName.startsWith(name);
+        final boolean match = exactMatch || revisionName == null || name == null ? ObjectUtil.equals(revisionName, name) : revisionName.startsWith(name);
 
         if (match && !context.addResource(HibernateUtil.getInstance().getCDOID(revision)))
         {
@@ -724,8 +715,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
           final String hql;
           if (eref.isMany())
           {
-            hql = "select ref from " + sourceEntityName + " as ref, " + targetEntityName
-                + " as refTo where refTo = :to and refTo in elements(ref." + eref.getName() + ")";
+            hql = "select ref from " + sourceEntityName + " as ref, " + targetEntityName + " as refTo where refTo = :to and refTo in elements(ref."
+                + eref.getName() + ")";
           }
           else
           {
@@ -805,8 +796,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       // TODO Can this happen? When?
       // the folder id is always a long
       final Long idValue = CDOIDUtil.getLong(id);
-      return CDOIDUtil.createLongWithClassifier(idValue,
-          new CDOClassifierRef(EresourcePackage.eINSTANCE.getCDOResourceNode()));
+      return CDOIDUtil.createLongWithClassifier(idValue, new CDOClassifierRef(EresourcePackage.eINSTANCE.getCDOResourceNode()));
     }
 
     return null;
@@ -872,8 +862,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     try
     {
       // start with fresh hibernate session to prevent side effects
-      final Session session = context instanceof HibernateRawCommitContext ? getHibernateSession()
-          : getNewHibernateSession(false);
+      final Session session = context instanceof HibernateRawCommitContext ? getHibernateSession() : getNewHibernateSession(false);
       session.setDefaultReadOnly(false);
 
       // decrement version, hibernate will increment it
@@ -937,8 +926,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
           {
             if (cdoRevision.getVersion() != revision.getVersion())
             {
-              throw new IllegalStateException(
-                  "Revision " + cdoRevision + " was already updated by another transaction");
+              throw new IllegalStateException("Revision " + cdoRevision + " was already updated by another transaction");
             }
             existingRevisions.put(revision.getID(), cdoRevision);
           }
@@ -1150,8 +1138,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   @SuppressWarnings("deprecation")
   @Override
-  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
-      String comment, OMMonitor monitor)
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor)
   {
     // is done in dowrite
   }
@@ -1176,8 +1163,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   @Override
-  protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created,
-      OMMonitor monitor)
+  protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created, OMMonitor monitor)
   {
     // TODO: implement HibernateStoreAccessor.writeRevisionDeltas(revisionDeltas, branch, created, monitor)
     throw new UnsupportedOperationException();
@@ -1332,15 +1318,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     return lob;
   }
 
-  public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
-      throws IOException
+  public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime) throws IOException
   {
     // we won't export any store specific stuff...
     // throw new UnsupportedOperationException();
   }
 
-  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
-      OMMonitor monitor) throws IOException
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
     throw new UnsupportedOperationException();
   }
@@ -1381,8 +1365,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     writeClob(id, size, reader);
   }
 
-  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
-      OMMonitor monitor)
+  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor)
   {
     // TODO: support export and import and auditing
   }

@@ -41,8 +41,7 @@ public class Bugzilla_285008_Test extends AbstractCDOTest
       boolean p2 = p.getRefMultiNonContainedUnsettable_Elements().isUnsettable();
       boolean p3 = !p.getMultiNonContainedUnsettableElement_Parent().isMany();
       boolean p4 = p.getMultiNonContainedUnsettableElement_Parent().isUnsettable();
-      boolean p5 = p.getRefMultiNonContainedUnsettable_Elements().getEOpposite() == p
-          .getMultiNonContainedUnsettableElement_Parent();
+      boolean p5 = p.getRefMultiNonContainedUnsettable_Elements().getEOpposite() == p.getMultiNonContainedUnsettableElement_Parent();
       if (!p1 || !p2 || !p3 || !p4 || !p5)
       {
         throw new RuntimeException("Model does not meet the prerequirements for this test");
@@ -98,8 +97,7 @@ public class Bugzilla_285008_Test extends AbstractCDOTest
       boolean p2 = p.getRefMultiNonContainedUnsettable_Elements().isUnsettable();
       boolean p3 = !p.getMultiNonContainedUnsettableElement_Parent().isMany();
       boolean p4 = p.getMultiNonContainedUnsettableElement_Parent().isUnsettable();
-      boolean p5 = p.getRefMultiNonContainedUnsettable_Elements().getEOpposite() == p
-          .getMultiNonContainedUnsettableElement_Parent();
+      boolean p5 = p.getRefMultiNonContainedUnsettable_Elements().getEOpposite() == p.getMultiNonContainedUnsettableElement_Parent();
       if (!p1 || !p2 || !p3 || !p4 || !p5)
       {
         throw new RuntimeException("Model does not meet the prerequirements for this test");

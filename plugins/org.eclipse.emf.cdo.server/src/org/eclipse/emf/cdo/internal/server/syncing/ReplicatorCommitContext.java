@@ -116,8 +116,7 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
     // Do nothing
   }
 
-  private static InternalCDOPackageUnit[] getNewPackageUnits(CDOCommitInfo commitInfo,
-      InternalCDOPackageRegistry packageRegistry)
+  private static InternalCDOPackageUnit[] getNewPackageUnits(CDOCommitInfo commitInfo, InternalCDOPackageRegistry packageRegistry)
   {
     List<CDOPackageUnit> list = commitInfo.getNewPackageUnits();
     InternalCDOPackageUnit[] result = new InternalCDOPackageUnit[list.size()];

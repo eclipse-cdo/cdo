@@ -78,8 +78,7 @@ import java.util.List;
  * @author Stefan Winkler
  * @author Lothar Werzinger
  */
-public class AuditListTableMappingWithRanges extends AbstractBasicListTableMapping
-    implements IListMappingDeltaSupport, IListMappingUnitSupport
+public class AuditListTableMappingWithRanges extends AbstractBasicListTableMapping implements IListMappingDeltaSupport, IListMappingUnitSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AuditListTableMappingWithRanges.class);
 
@@ -90,8 +89,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
 
   private static final String SQL_ORDER_BY_INDEX = " ORDER BY " + LIST_IDX;
 
-  private static final boolean CHECK_UNIT_ENTRIES = Boolean
-      .getBoolean("org.eclipse.emf.cdo.server.db.checkUnitEntries");
+  private static final boolean CHECK_UNIT_ENTRIES = Boolean.getBoolean("org.eclipse.emf.cdo.server.db.checkUnitEntries");
 
   /**
    * The table of this mapping.
@@ -149,8 +147,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       table.addField(LIST_IDX, DBType.INTEGER, true);
 
       // TODO think about indexes
-      table.addIndex(Type.NON_UNIQUE, LIST_REVISION_ID, LIST_REVISION_VERSION_ADDED, LIST_REVISION_VERSION_REMOVED,
-          LIST_IDX);
+      table.addIndex(Type.NON_UNIQUE, LIST_REVISION_ID, LIST_REVISION_VERSION_ADDED, LIST_REVISION_VERSION_REMOVED, LIST_IDX);
 
       typeMapping.createDBField(table, LIST_VALUE);
     }
@@ -295,8 +292,8 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
           " AND " + ATTRIBUTES_CREATED + "<=?" + //
           " AND (" + ATTRIBUTES_REVISED + "=0 OR " + ATTRIBUTES_REVISED + ">=?)" + //
           " AND cdo_list." + LIST_REVISION_VERSION_ADDED + "<=" + ATTRIBUTES_VERSION + //
-          " AND (cdo_list." + LIST_REVISION_VERSION_REMOVED + " IS NULL OR cdo_list." + LIST_REVISION_VERSION_REMOVED
-          + ">" + ATTRIBUTES_VERSION + ") ORDER BY cdo_list." + LIST_REVISION_ID + ", cdo_list." + LIST_IDX;
+          " AND (cdo_list." + LIST_REVISION_VERSION_REMOVED + " IS NULL OR cdo_list." + LIST_REVISION_VERSION_REMOVED + ">" + ATTRIBUTES_VERSION
+          + ") ORDER BY cdo_list." + LIST_REVISION_ID + ", cdo_list." + LIST_IDX;
     }
   }
 
@@ -364,8 +361,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       if (TRACER.isEnabled())
       {
         TRACER.format("Reading {4} list values done for feature {0}.{1} of {2}v{3}", //$NON-NLS-1$
-            getContainingClass().getName(), getFeature().getName(), revision.getID(), revision.getVersion(),
-            list.size());
+            getContainingClass().getName(), getFeature().getName(), revision.getID(), revision.getVersion(), list.size());
       }
     }
     catch (SQLException ex)
@@ -451,8 +447,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       if (TRACER.isEnabled())
       {
         TRACER.format("Reading list chunk values done for feature() {0}.{1} of {2}v{3}", //$NON-NLS-1$
-            getContainingClass().getName(), getFeature().getName(), chunkReader.getRevision().getID(),
-            chunkReader.getRevision().getVersion());
+            getContainingClass().getName(), getFeature().getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
       }
     }
     catch (SQLException ex)
@@ -487,8 +482,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     if (TRACER.isEnabled())
     {
       TRACER.format("Writing value for feature {0}.{1} index {2} of {3}v{4} : {5}", //$NON-NLS-1$
-          getContainingClass().getName(), getFeature().getName(), index, revision.getID(), revision.getVersion(),
-          value);
+          getContainingClass().getName(), getFeature().getName(), index, revision.getID(), revision.getVersion(), value);
     }
 
     addEntry(accessor, revision.getID(), revision.getVersion(), index, value);
@@ -505,8 +499,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   public void clearList(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmtDeleteTemp = accessor.getDBConnection().prepareStatement(sqlDeleteList,
-        ReuseProbability.HIGH);
+    IDBPreparedStatement stmtDeleteTemp = accessor.getDBConnection().prepareStatement(sqlDeleteList, ReuseProbability.HIGH);
     IDBPreparedStatement stmtClear = accessor.getDBConnection().prepareStatement(sqlClearList, ReuseProbability.HIGH);
 
     try
@@ -552,8 +545,8 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     CDOBranch main = getMappingStrategy().getStore().getRepository().getBranchManager().getMainBranch();
 
     // get revision from cache to find out version number
-    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id,
-        main.getHead(), /* chunksize = */0, CDORevision.DEPTH_NONE, true);
+    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id, main.getHead(),
+        /* chunksize = */0, CDORevision.DEPTH_NONE, true);
 
     // set cdo_revision_removed for all list items (so we have no NULL values)
     clearList(accessor, id, revision.getVersion(), FINAL_VERSION);
@@ -565,19 +558,16 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     throw new UnsupportedOperationException("Raw deletion does not work in range-based mappings");
   }
 
-  public ResultSet queryUnitEntries(IDBStoreAccessor accessor, IIDHandler idHandler, long timeStamp, CDOID rootID)
-      throws SQLException
+  public ResultSet queryUnitEntries(IDBStoreAccessor accessor, IIDHandler idHandler, long timeStamp, CDOID rootID) throws SQLException
   {
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectUnitEntries,
-        ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectUnitEntries, ReuseProbability.MEDIUM);
     idHandler.setCDOID(stmt, 1, rootID);
     stmt.setLong(2, timeStamp);
     stmt.setLong(3, timeStamp);
     return stmt.executeQuery();
   }
 
-  public void readUnitEntries(ResultSet resultSet, IIDHandler idHandler, CDOID id, MoveableList<Object> list)
-      throws SQLException
+  public void readUnitEntries(ResultSet resultSet, IIDHandler idHandler, CDOID id, MoveableList<Object> list) throws SQLException
   {
     int size = list.size();
     for (int i = 0; i < size; i++)
@@ -745,8 +735,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     return result;
   }
 
-  public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere,
-      QueryXRefsContext context, String idString)
+  public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere, QueryXRefsContext context, String idString)
   {
 
     String tableName = getTable().getName();
@@ -821,12 +810,12 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     }
   }
 
-  public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion,
-      final int newVersion, long created, CDOListFeatureDelta delta)
+  public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion, final int newVersion, long created,
+      CDOListFeatureDelta delta)
   {
     IRepository repo = accessor.getStore().getRepository();
-    InternalCDORevision originalRevision = (InternalCDORevision)repo.getRevisionManager().getRevision(id,
-        repo.getBranchManager().getMainBranch().getHead(), /* chunksize = */0, CDORevision.DEPTH_NONE, true);
+    InternalCDORevision originalRevision = (InternalCDORevision)repo.getRevisionManager().getRevision(id, repo.getBranchManager().getMainBranch().getHead(),
+        /* chunksize = */0, CDORevision.DEPTH_NONE, true);
 
     int oldListSize = originalRevision.getList(getFeature()).size();
 
@@ -869,8 +858,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
 
     private int lastRemovedIndex;
 
-    public ListDeltaVisitor(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int oldVersion,
-        int newVersion)
+    public ListDeltaVisitor(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int oldVersion, int newVersion)
     {
       this.accessor = accessor;
       id = originalRevision.getID();
@@ -1039,8 +1027,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       }
     }
 
-    private void moveOneUp(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex,
-        int endIndex)
+    private void moveOneUp(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex, int endIndex)
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
       IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
@@ -1107,8 +1094,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       }
     }
 
-    private void moveOneDown(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex,
-        int endIndex)
+    private void moveOneDown(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex, int endIndex)
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
       IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);

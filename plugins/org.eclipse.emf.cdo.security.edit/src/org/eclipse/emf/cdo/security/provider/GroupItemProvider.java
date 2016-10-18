@@ -68,11 +68,10 @@ public class GroupItemProvider extends AssigneeItemProvider
    */
   protected void addUsersPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Group_users_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_Group_users_feature", "_UI_Group_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.GROUP__USERS, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Group_users_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Group_users_feature", "_UI_Group_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.GROUP__USERS, true, false, true, null, null, null));
   }
 
   /**
@@ -83,11 +82,10 @@ public class GroupItemProvider extends AssigneeItemProvider
    */
   protected void addInheritedGroupsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Group_inheritedGroups_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_Group_inheritedGroups_feature", "_UI_Group_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.GROUP__INHERITED_GROUPS, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Group_inheritedGroups_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Group_inheritedGroups_feature", "_UI_Group_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.GROUP__INHERITED_GROUPS, true, false, true, null, null, null));
   }
 
   /**
@@ -98,11 +96,10 @@ public class GroupItemProvider extends AssigneeItemProvider
    */
   protected void addInheritingGroupsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Group_inheritingGroups_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_Group_inheritingGroups_feature", "_UI_Group_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.GROUP__INHERITING_GROUPS, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Group_inheritingGroups_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Group_inheritingGroups_feature", "_UI_Group_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.GROUP__INHERITING_GROUPS, true, false, true, null, null, null));
   }
 
   /**

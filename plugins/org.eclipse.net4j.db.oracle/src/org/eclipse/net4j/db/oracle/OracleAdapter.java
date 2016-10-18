@@ -175,8 +175,7 @@ public class OracleAdapter extends DBAdapter
   }
 
   @Override
-  protected ResultSet readTables(Connection connection, DatabaseMetaData metaData, String schemaName)
-      throws SQLException
+  protected ResultSet readTables(Connection connection, DatabaseMetaData metaData, String schemaName) throws SQLException
   {
     if (schemaName == null && connection instanceof IUserAware)
     {

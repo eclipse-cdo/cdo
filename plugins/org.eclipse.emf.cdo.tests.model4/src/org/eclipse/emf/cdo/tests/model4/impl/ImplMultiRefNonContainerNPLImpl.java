@@ -70,8 +70,7 @@ public class ImplMultiRefNonContainerNPLImpl extends CDOObjectImpl implements Im
   @SuppressWarnings("unchecked")
   public EList<IContainedElementNoParentLink> getElements()
   {
-    return (EList<IContainedElementNoParentLink>)eGet(
-        model4interfacesPackage.eINSTANCE.getIMultiRefNonContainerNPL_Elements(), true);
+    return (EList<IContainedElementNoParentLink>)eGet(model4interfacesPackage.eINSTANCE.getIMultiRefNonContainerNPL_Elements(), true);
   }
 
 } // ImplMultiRefNonContainerNPLImpl

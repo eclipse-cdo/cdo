@@ -57,8 +57,8 @@ public class ObjyPlacementManagerLocal
 
   Map<CDOID, ObjyObject> newObjyObjectsMap;
 
-  public ObjyPlacementManagerLocal(ObjectivityStore objyStore, ObjySession objySession,
-      InternalCommitContext commitContext, Map<CDOID, ObjyObject> newObjyObjectsMap)
+  public ObjyPlacementManagerLocal(ObjectivityStore objyStore, ObjySession objySession, InternalCommitContext commitContext,
+      Map<CDOID, ObjyObject> newObjyObjectsMap)
   {
     repositoryName = objyStore.getRepository().getName();
     this.objySession = objySession;
@@ -156,8 +156,7 @@ public class ObjyPlacementManagerLocal
     {
       // we have to put it somewhere.
       // call the global placement manager.
-      nearObject = objySession.getObjectManager().getGlobalPlacementManager().getNearObject(null, null,
-          revision.getEClass());
+      nearObject = objySession.getObjectManager().getGlobalPlacementManager().getNearObject(null, null, revision.getEClass());
     }
 
     ObjyObject objyObject = objySession.getObjectManager().newObject(eClass, nearObject);

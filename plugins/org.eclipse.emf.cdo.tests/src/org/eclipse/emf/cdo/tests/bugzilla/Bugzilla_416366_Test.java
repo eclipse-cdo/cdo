@@ -49,8 +49,7 @@ public class Bugzilla_416366_Test extends AbstractCDOTest
     transaction.commit();
 
     CDOView newView = session.openView();
-    CDOQuery ocl = newView.createQuery("ocl",
-        "Child.allInstances()->select(c|c.eContainer().oclAsType(Parent).name = 'B')", getModel5Package().getChild());
+    CDOQuery ocl = newView.createQuery("ocl", "Child.allInstances()->select(c|c.eContainer().oclAsType(Parent).name = 'B')", getModel5Package().getChild());
 
     // eContainer() is inherited implicitly from EObject
     ocl.setParameter("cdoImplicitRootClass", EcorePackage.Literals.EOBJECT);

@@ -52,8 +52,7 @@ public class HibernateTestFactoryImpl extends EFactoryImpl implements HibernateT
   {
     try
     {
-      HibernateTestFactory theHibernateTestFactory = (HibernateTestFactory)EPackage.Registry.INSTANCE
-          .getEFactory(HibernateTestPackage.eNS_URI);
+      HibernateTestFactory theHibernateTestFactory = (HibernateTestFactory)EPackage.Registry.INSTANCE.getEFactory(HibernateTestPackage.eNS_URI);
       if (theHibernateTestFactory != null)
       {
         return theHibernateTestFactory;
@@ -305,8 +304,7 @@ public class HibernateTestFactoryImpl extends EFactoryImpl implements HibernateT
     Bz387752_Enum result = Bz387752_Enum.get(initialValue);
     if (result == null)
     {
-      throw new IllegalArgumentException(
-          "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
     }
     return result;
   }

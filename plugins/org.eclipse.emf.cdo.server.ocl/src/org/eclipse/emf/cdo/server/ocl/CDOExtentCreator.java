@@ -92,8 +92,7 @@ public class CDOExtentCreator implements OCLExtentCreator
     return createExtent(eClass, accessor, branch, timeStamp, canceled);
   }
 
-  protected Set<EObject> createExtent(EClass eClass, IStoreAccessor accessor, CDOBranch branch, long timeStamp,
-      final AtomicBoolean canceled)
+  protected Set<EObject> createExtent(EClass eClass, IStoreAccessor accessor, CDOBranch branch, long timeStamp, final AtomicBoolean canceled)
   {
     final Set<EObject> extent = new HashSet<EObject>();
     if (changeSetData != null)
@@ -142,8 +141,8 @@ public class CDOExtentCreator implements OCLExtentCreator
   /**
    * @since 4.1
    */
-  protected void createExtent(EClass eClass, IStoreAccessor accessor, CDOBranch branch, long timeStamp,
-      final AtomicBoolean canceled, CDORevisionHandler revisionHandler)
+  protected void createExtent(EClass eClass, IStoreAccessor accessor, CDOBranch branch, long timeStamp, final AtomicBoolean canceled,
+      CDORevisionHandler revisionHandler)
   {
     handleRevisions(eClass, accessor, branch, timeStamp, revisionHandler);
 
@@ -166,8 +165,7 @@ public class CDOExtentCreator implements OCLExtentCreator
   /**
    * @since 4.2
    */
-  protected void handleRevisions(EClass eClass, IStoreAccessor accessor, CDOBranch branch, long timeStamp,
-      CDORevisionHandler revisionHandler)
+  protected void handleRevisions(EClass eClass, IStoreAccessor accessor, CDOBranch branch, long timeStamp, CDORevisionHandler revisionHandler)
   {
     if (!eClass.isAbstract() && !eClass.isInterface())
     {
@@ -211,8 +209,8 @@ public class CDOExtentCreator implements OCLExtentCreator
     }
 
     @Override
-    protected Set<EObject> createExtent(final EClass eClass, final IStoreAccessor accessor, final CDOBranch branch,
-        final long timeStamp, final AtomicBoolean canceled)
+    protected Set<EObject> createExtent(final EClass eClass, final IStoreAccessor accessor, final CDOBranch branch, final long timeStamp,
+        final AtomicBoolean canceled)
     {
       return new Set<EObject>()
       {

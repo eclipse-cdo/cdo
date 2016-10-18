@@ -63,8 +63,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   {
     try
     {
-      Model6Factory theModel6Factory = (Model6Factory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/tests/legacy/model6/1.0.0");
+      Model6Factory theModel6Factory = (Model6Factory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipse.org/emf/CDO/tests/legacy/model6/1.0.0");
       if (theModel6Factory != null)
       {
         return theModel6Factory;
@@ -450,8 +449,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
     MyEnum result = MyEnum.get(initialValue);
     if (result == null)
     {
-      throw new IllegalArgumentException(
-          "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
     }
     return result;
   }

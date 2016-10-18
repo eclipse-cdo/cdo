@@ -76,56 +76,54 @@ public class ClassPermissionItemProvider extends PermissionItemProvider
    */
   protected void addApplicableClassPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(new ItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_ClassPermission_applicableClass_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_ClassPermission_applicableClass_feature",
-                "_UI_ClassPermission_type"),
-            SecurityPackage.Literals.CLASS_PERMISSION__APPLICABLE_CLASS, true, false, true, null, null, null)
+    itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ClassPermission_applicableClass_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_ClassPermission_applicableClass_feature", "_UI_ClassPermission_type"),
+        SecurityPackage.Literals.CLASS_PERMISSION__APPLICABLE_CLASS, true, false, true, null, null, null)
+    {
+      @Override
+      public Collection<?> getChoiceOfValues(Object object)
+      {
+        if (object instanceof ClassPermission)
         {
-          @Override
-          public Collection<?> getChoiceOfValues(Object object)
+          ClassPermission classPermission = (ClassPermission)object;
+          CDOView view = classPermission.cdoView();
+          if (view != null)
           {
-            if (object instanceof ClassPermission)
+            List<EClass> result = new ArrayList<EClass>();
+            for (CDOPackageInfo packageInfo : view.getSession().getPackageRegistry().getPackageInfos())
             {
-              ClassPermission classPermission = (ClassPermission)object;
-              CDOView view = classPermission.cdoView();
-              if (view != null)
+              for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())
               {
-                List<EClass> result = new ArrayList<EClass>();
-                for (CDOPackageInfo packageInfo : view.getSession().getPackageRegistry().getPackageInfos())
+                if (classifier instanceof EClass)
                 {
-                  for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())
-                  {
-                    if (classifier instanceof EClass)
-                    {
-                      result.add((EClass)classifier);
+                  result.add((EClass)classifier);
 
-                    }
-                  }
                 }
-
-                Collections.sort(result, new Comparator<EClass>()
-                {
-                  public int compare(EClass c1, EClass c2)
-                  {
-                    int comparison = c1.getName().compareTo(c2.getName());
-                    if (comparison == 0)
-                    {
-                      comparison = c1.getEPackage().getNsURI().compareTo(c2.getEPackage().getNsURI());
-                    }
-
-                    return comparison;
-                  }
-                });
-
-                return result;
               }
             }
 
-            return super.getChoiceOfValues(object);
+            Collections.sort(result, new Comparator<EClass>()
+            {
+              public int compare(EClass c1, EClass c2)
+              {
+                int comparison = c1.getName().compareTo(c2.getName());
+                if (comparison == 0)
+                {
+                  comparison = c1.getEPackage().getNsURI().compareTo(c2.getEPackage().getNsURI());
+                }
+
+                return comparison;
+              }
+            });
+
+            return result;
           }
-        });
+        }
+
+        return super.getChoiceOfValues(object);
+      }
+    });
   }
 
   /**

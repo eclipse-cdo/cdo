@@ -80,8 +80,7 @@ public class Bugzilla_334608_Test extends AbstractCDOTest
       resource.getContents().remove(instanceB);
 
       InternalCDOCommitContext commitContext = ((CDOTransactionImpl)transaction).createCommitContext();
-      CommitIntegrityCheck integrityCheck = new CommitIntegrityCheck(commitContext,
-          CommitIntegrityCheck.Style.NO_EXCEPTION);
+      CommitIntegrityCheck integrityCheck = new CommitIntegrityCheck(commitContext, CommitIntegrityCheck.Style.NO_EXCEPTION);
       integrityCheck.check();
 
       transaction.commit();

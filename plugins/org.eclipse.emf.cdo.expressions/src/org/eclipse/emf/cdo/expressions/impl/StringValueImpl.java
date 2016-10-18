@@ -69,8 +69,7 @@ public class StringValueImpl extends ValueImpl implements StringValue
   @Override
   public String getLiteral()
   {
-    return (String)eDynamicGet(ExpressionsPackage.STRING_VALUE__LITERAL,
-        ExpressionsPackage.Literals.STRING_VALUE__LITERAL, true, true);
+    return (String)eDynamicGet(ExpressionsPackage.STRING_VALUE__LITERAL, ExpressionsPackage.Literals.STRING_VALUE__LITERAL, true, true);
   }
 
   /**
@@ -80,8 +79,7 @@ public class StringValueImpl extends ValueImpl implements StringValue
    */
   public void setLiteral(String newLiteral)
   {
-    eDynamicSet(ExpressionsPackage.STRING_VALUE__LITERAL, ExpressionsPackage.Literals.STRING_VALUE__LITERAL,
-        newLiteral);
+    eDynamicSet(ExpressionsPackage.STRING_VALUE__LITERAL, ExpressionsPackage.Literals.STRING_VALUE__LITERAL, newLiteral);
   }
 
   /**

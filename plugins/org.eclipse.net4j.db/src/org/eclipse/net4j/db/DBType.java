@@ -42,15 +42,13 @@ public enum DBType
   BOOLEAN(16)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       return writeValueBoolean(out, resultSet, column, canBeNull);
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       return readValueBoolean(in, statement, column, canBeNull, getCode());
     }
@@ -59,15 +57,13 @@ public enum DBType
   BIT(-7)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       return writeValueBoolean(out, resultSet, column, canBeNull);
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       return readValueBoolean(in, statement, column, canBeNull, getCode());
     }
@@ -76,8 +72,7 @@ public enum DBType
   TINYINT(-6)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       byte value = resultSet.getByte(column);
       if (canBeNull)
@@ -96,8 +91,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       if (canBeNull && !in.readBoolean())
       {
@@ -114,8 +108,7 @@ public enum DBType
   SMALLINT(5)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       short value = resultSet.getShort(column);
       if (canBeNull)
@@ -134,8 +127,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       if (canBeNull && !in.readBoolean())
       {
@@ -152,8 +144,7 @@ public enum DBType
   INTEGER(4)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       int value = resultSet.getInt(column);
       if (canBeNull)
@@ -172,8 +163,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       if (canBeNull && !in.readBoolean())
       {
@@ -190,8 +180,7 @@ public enum DBType
   BIGINT(-5)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       long value = resultSet.getLong(column);
       if (canBeNull)
@@ -210,8 +199,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       if (canBeNull && !in.readBoolean())
       {
@@ -228,8 +216,7 @@ public enum DBType
   FLOAT(6)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       float value = resultSet.getFloat(column);
       if (canBeNull)
@@ -248,8 +235,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       if (canBeNull && !in.readBoolean())
       {
@@ -266,8 +252,7 @@ public enum DBType
   REAL(7)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       float value = resultSet.getFloat(column);
       if (canBeNull)
@@ -286,8 +271,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       if (canBeNull && !in.readBoolean())
       {
@@ -304,8 +288,7 @@ public enum DBType
   DOUBLE(8)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       double value = resultSet.getDouble(column);
       if (canBeNull)
@@ -324,8 +307,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       if (canBeNull && !in.readBoolean())
       {
@@ -342,8 +324,7 @@ public enum DBType
   NUMERIC(2)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       throw new UnsupportedOperationException("SQL NULL has to be considered");
       // BigDecimal value = resultSet.getBigDecimal(column);
@@ -356,8 +337,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       throw new UnsupportedOperationException("SQL NULL has to be considered");
       // byte[] bytes = in.readByteArray();
@@ -373,8 +353,7 @@ public enum DBType
   DECIMAL(3)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       throw new UnsupportedOperationException("SQL NULL has to be considered");
       // BigDecimal value = resultSet.getBigDecimal(column);
@@ -387,8 +366,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       throw new UnsupportedOperationException("SQL NULL has to be considered");
       // byte[] bytes = in.readByteArray();
@@ -403,8 +381,7 @@ public enum DBType
   CHAR(1)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       String value = resultSet.getString(column);
       out.writeString(value);
@@ -412,8 +389,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       String value = in.readString();
       statement.setString(column, value);
@@ -424,8 +400,7 @@ public enum DBType
   VARCHAR(12)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       String value = resultSet.getString(column);
       out.writeString(value);
@@ -433,8 +408,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       String value = in.readString();
       statement.setString(column, value);
@@ -445,8 +419,7 @@ public enum DBType
   LONGVARCHAR(-1, "LONG VARCHAR") //$NON-NLS-1$
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       String value = resultSet.getString(column);
       out.writeString(value);
@@ -454,8 +427,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       String value = in.readString();
       statement.setString(column, value);
@@ -466,8 +438,7 @@ public enum DBType
   CLOB(2005)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       Reader value = null;
 
@@ -494,8 +465,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(final ExtendedDataInput in, PreparedStatement statement, int column,
-        boolean canBeNull) throws SQLException, IOException
+    public Object readValueWithResult(final ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       if (canBeNull && !in.readBoolean())
       {
@@ -514,8 +484,7 @@ public enum DBType
   DATE(91)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       java.sql.Date value = resultSet.getDate(column);
       if (canBeNull)
@@ -535,8 +504,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       if (canBeNull && !in.readBoolean())
       {
@@ -553,8 +521,7 @@ public enum DBType
   TIME(92)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       java.sql.Time value = resultSet.getTime(column);
       if (canBeNull)
@@ -574,8 +541,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       if (canBeNull && !in.readBoolean())
       {
@@ -592,8 +558,7 @@ public enum DBType
   TIMESTAMP(93)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       java.sql.Timestamp value = resultSet.getTimestamp(column);
       if (canBeNull)
@@ -613,8 +578,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       if (canBeNull && !in.readBoolean())
       {
@@ -634,8 +598,7 @@ public enum DBType
   BINARY(-2)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       byte[] value = resultSet.getBytes(column);
       if (canBeNull)
@@ -655,8 +618,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       if (canBeNull && !in.readBoolean())
       {
@@ -673,8 +635,7 @@ public enum DBType
   VARBINARY(-3)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       byte[] value = resultSet.getBytes(column);
       if (canBeNull)
@@ -694,8 +655,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       if (canBeNull && !in.readBoolean())
       {
@@ -712,8 +672,7 @@ public enum DBType
   LONGVARBINARY(-4, "LONG VARBINARY") //$NON-NLS-1$
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       byte[] value = resultSet.getBytes(column);
       if (canBeNull)
@@ -733,8 +692,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       if (canBeNull && !in.readBoolean())
       {
@@ -751,8 +709,7 @@ public enum DBType
   BLOB(2004)
   {
     @Override
-    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-        throws SQLException, IOException
+    public Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
     {
       InputStream value = null;
 
@@ -779,8 +736,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(final ExtendedDataInput in, PreparedStatement statement, int column,
-        boolean canBeNull) throws SQLException, IOException
+    public Object readValueWithResult(final ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       if (canBeNull && !in.readBoolean())
       {
@@ -836,8 +792,7 @@ public enum DBType
   /**
    * @since 3.0
    */
-  public void writeValue(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-      throws SQLException, IOException
+  public void writeValue(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
   {
     writeValueWithResult(out, resultSet, column, canBeNull);
   }
@@ -845,14 +800,12 @@ public enum DBType
   /**
    * @since 4.1
    */
-  public abstract Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column,
-      boolean canBeNull) throws SQLException, IOException;
+  public abstract Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException;
 
   /**
    * @since 3.0
    */
-  public void readValue(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull)
-      throws SQLException, IOException
+  public void readValue(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
   {
     readValueWithResult(in, statement, column, canBeNull);
   }
@@ -860,11 +813,9 @@ public enum DBType
   /**
    * @since 4.1
    */
-  public abstract Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column,
-      boolean canBeNull) throws SQLException, IOException;
+  public abstract Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException;
 
-  private static Boolean writeValueBoolean(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-      throws SQLException, IOException
+  private static Boolean writeValueBoolean(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
   {
     boolean value = resultSet.getBoolean(column);
     if (canBeNull)
@@ -883,8 +834,8 @@ public enum DBType
     return value;
   }
 
-  private static Boolean readValueBoolean(ExtendedDataInput in, PreparedStatement statement, int column,
-      boolean canBeNull, int sqlType) throws IOException, SQLException
+  private static Boolean readValueBoolean(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull, int sqlType)
+      throws IOException, SQLException
   {
     if (canBeNull)
     {

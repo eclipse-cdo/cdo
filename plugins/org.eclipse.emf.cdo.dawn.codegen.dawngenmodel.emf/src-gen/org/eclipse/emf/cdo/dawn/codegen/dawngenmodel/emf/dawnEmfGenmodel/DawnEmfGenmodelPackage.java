@@ -59,8 +59,7 @@ public interface DawnEmfGenmodelPackage extends EPackage
    *
    * @generated
    */
-  DawnEmfGenmodelPackage eINSTANCE = org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.impl.DawnEmfGenmodelPackageImpl
-      .init();
+  DawnEmfGenmodelPackage eINSTANCE = org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.impl.DawnEmfGenmodelPackageImpl.init();
 
   /**
    * The meta object id for the '

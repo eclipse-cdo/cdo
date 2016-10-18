@@ -39,8 +39,8 @@ import java.util.List;
  *
  * @generated
  */
-public class OfferingItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class OfferingItemProvider extends ItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -79,11 +79,9 @@ public class OfferingItemProvider extends ItemProviderAdapter implements IEditin
    */
   protected void addProductPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Offering_product_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_Offering_product_feature", "_UI_Offering_type"),
-            InventoryPackage.Literals.OFFERING__PRODUCT, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Offering_product_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Offering_product_feature", "_UI_Offering_type"),
+        InventoryPackage.Literals.OFFERING__PRODUCT, true, false, true, null, null, null));
   }
 
   /**
@@ -93,12 +91,9 @@ public class OfferingItemProvider extends ItemProviderAdapter implements IEditin
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Offering_name_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_Offering_name_feature", "_UI_Offering_type"),
-            InventoryPackage.Literals.OFFERING__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-            null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Offering_name_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Offering_name_feature", "_UI_Offering_type"),
+        InventoryPackage.Literals.OFFERING__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -108,14 +103,9 @@ public class OfferingItemProvider extends ItemProviderAdapter implements IEditin
    */
   protected void addDescriptionPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(
-            createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                getResourceLocator(), getString("_UI_Offering_description_feature"),
-                getString("_UI_PropertyDescriptor_description", "_UI_Offering_description_feature",
-                    "_UI_Offering_type"),
-                InventoryPackage.Literals.OFFERING__DESCRIPTION, true, false, false,
-                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Offering_description_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Offering_description_feature", "_UI_Offering_type"),
+        InventoryPackage.Literals.OFFERING__DESCRIPTION, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -125,12 +115,9 @@ public class OfferingItemProvider extends ItemProviderAdapter implements IEditin
    */
   protected void addPricePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Offering_price_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_Offering_price_feature", "_UI_Offering_type"),
-            InventoryPackage.Literals.OFFERING__PRICE, true, false, false, ItemPropertyDescriptor.REAL_VALUE_IMAGE,
-            null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Offering_price_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Offering_price_feature", "_UI_Offering_type"),
+        InventoryPackage.Literals.OFFERING__PRICE, true, false, false, ItemPropertyDescriptor.REAL_VALUE_IMAGE, null, null));
   }
 
   /**

@@ -137,8 +137,7 @@ public abstract class RevisionInfo
   public void execute(InternalCDORevisionManager revisionManager, int referenceChunk)
   {
     SyntheticCDORevision[] synthetics = new SyntheticCDORevision[1];
-    result = revisionManager.getRevision(getID(), requestedBranchPoint, referenceChunk, CDORevision.DEPTH_NONE, true,
-        synthetics);
+    result = revisionManager.getRevision(getID(), requestedBranchPoint, referenceChunk, CDORevision.DEPTH_NONE, true, synthetics);
     synthetic = synthetics[0];
   }
 
@@ -166,8 +165,7 @@ public abstract class RevisionInfo
     synthetic = (SyntheticCDORevision)readResult(in, getID(), requestedBranchPoint.getBranch(), result);
   }
 
-  public void processResult(InternalCDORevisionManager revisionManager, List<CDORevision> results,
-      SyntheticCDORevision[] synthetics, int i)
+  public void processResult(InternalCDORevisionManager revisionManager, List<CDORevision> results, SyntheticCDORevision[] synthetics, int i)
   {
     if (result instanceof DetachedCDORevision)
     {
@@ -238,8 +236,7 @@ public abstract class RevisionInfo
   /**
    * @since 4.1
    */
-  public static void writeResult(CDODataOutput out, InternalCDORevision revision, int referenceChunk,
-      CDOBranchPoint securityContext) throws IOException
+  public static void writeResult(CDODataOutput out, InternalCDORevision revision, int referenceChunk, CDOBranchPoint securityContext) throws IOException
   {
     if (revision == null)
     {
@@ -278,8 +275,7 @@ public abstract class RevisionInfo
     }
   }
 
-  private static InternalCDORevision readResult(CDODataInput in, CDOID id, CDOBranch branch, InternalCDORevision result)
-      throws IOException
+  private static InternalCDORevision readResult(CDODataInput in, CDOID id, CDOBranch branch, InternalCDORevision result) throws IOException
   {
     byte type = in.readByte();
     switch (type)
@@ -401,8 +397,7 @@ public abstract class RevisionInfo
     }
 
     @Override
-    protected void writeRevision(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext)
-        throws IOException
+    protected void writeRevision(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext) throws IOException
     {
       InternalCDORevision result = getResult();
       if (result != null && result.getBranch() == availableBranchVersion.getBranch())
@@ -471,8 +466,7 @@ public abstract class RevisionInfo
       }
 
       @Override
-      public void processResult(InternalCDORevisionManager revisionManager, List<CDORevision> results,
-          SyntheticCDORevision[] synthetics, int i)
+      public void processResult(InternalCDORevisionManager revisionManager, List<CDORevision> results, SyntheticCDORevision[] synthetics, int i)
       {
         if (!isLoadNeeded())
         {
@@ -495,8 +489,7 @@ public abstract class RevisionInfo
 
       private boolean hasTarget;
 
-      public Pointer(CDOID id, CDOBranchPoint requestedBranchPoint, CDOBranchVersion availableBranchVersion,
-          CDOBranchVersion targetBranchVersion)
+      public Pointer(CDOID id, CDOBranchPoint requestedBranchPoint, CDOBranchVersion availableBranchVersion, CDOBranchVersion targetBranchVersion)
       {
         super(id, requestedBranchPoint, availableBranchVersion);
         this.targetBranchVersion = targetBranchVersion;
@@ -557,8 +550,7 @@ public abstract class RevisionInfo
       }
 
       @Override
-      public void processResult(InternalCDORevisionManager revisionManager, List<CDORevision> results,
-          SyntheticCDORevision[] synthetics, int i)
+      public void processResult(InternalCDORevisionManager revisionManager, List<CDORevision> results, SyntheticCDORevision[] synthetics, int i)
       {
         if (!isLoadNeeded())
         {
@@ -600,8 +592,7 @@ public abstract class RevisionInfo
       }
 
       @Override
-      public void processResult(InternalCDORevisionManager revisionManager, List<CDORevision> results,
-          SyntheticCDORevision[] synthetics, int i)
+      public void processResult(InternalCDORevisionManager revisionManager, List<CDORevision> results, SyntheticCDORevision[] synthetics, int i)
       {
         if (!isLoadNeeded())
         {

@@ -88,8 +88,7 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
     return delegate.getMaxID(connection, idHandler);
   }
 
-  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
-      throws IOException
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
     delegate.rawExport(connection, out, fromCommitTime, toCommitTime);
   }

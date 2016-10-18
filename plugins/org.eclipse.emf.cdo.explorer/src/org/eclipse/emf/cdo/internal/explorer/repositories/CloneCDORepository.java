@@ -174,8 +174,7 @@ public class CloneCDORepository extends CDORepositoryImpl
       }
     };
 
-    IRepositorySynchronizer synchronizer = CDOServerUtil
-        .createRepositorySynchronizer(remoteSessionConfigurationFactory);
+    IRepositorySynchronizer synchronizer = CDOServerUtil.createRepositorySynchronizer(remoteSessionConfigurationFactory);
 
     repository = CDOServerUtil.createOfflineClone(repositoryName + "-clone", store, props, synchronizer);
 

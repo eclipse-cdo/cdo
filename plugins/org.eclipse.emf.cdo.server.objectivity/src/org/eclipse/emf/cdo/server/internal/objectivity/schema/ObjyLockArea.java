@@ -54,8 +54,8 @@ public class ObjyLockArea extends ooObj
     this.readOnly = readOnly;
   }
 
-  public static ObjyLockArea create(ooId scopeContOid, String durableLockingID, String userID, ObjyBranch branchPoint,
-      boolean readOnly, Map<CDOID, LockGrade> locks)
+  public static ObjyLockArea create(ooId scopeContOid, String durableLockingID, String userID, ObjyBranch branchPoint, boolean readOnly,
+      Map<CDOID, LockGrade> locks)
   {
     ObjyLockArea objyLockArea = new ObjyLockArea(durableLockingID, userID, branchPoint, readOnly);
     ooObj clusterObject = ooObj.create_ooObj(scopeContOid);
@@ -158,9 +158,7 @@ public class ObjyLockArea extends ooObj
   public String toString()
   {
     fetch();
-    return MessageFormat.format(
-        "ObjyLockArea[id={0}, user={1}, branchPoint={2}, readOnly={3}, readlocks={4}, writeLocks{5}, readWriteLocks{6}",
-        durableLockingID, userID, branchPoint, readOnly, readLockSet.size(), writeLockSet.size(),
-        readWriteLockSet.size());
+    return MessageFormat.format("ObjyLockArea[id={0}, user={1}, branchPoint={2}, readOnly={3}, readlocks={4}, writeLocks{5}, readWriteLocks{6}",
+        durableLockingID, userID, branchPoint, readOnly, readLockSet.size(), writeLockSet.size(), readWriteLockSet.size());
   }
 }

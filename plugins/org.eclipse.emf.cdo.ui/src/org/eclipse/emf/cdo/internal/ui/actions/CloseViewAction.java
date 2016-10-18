@@ -39,8 +39,7 @@ public final class CloseViewAction extends AbstractViewAction
     if (getView().isDirty())
     {
       MessageDialog dialog = new MessageDialog(getShell(), TITLE, null, Messages.getString("CloseViewAction.2"), //$NON-NLS-1$
-          MessageDialog.QUESTION,
-          new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL, IDialogConstants.CANCEL_LABEL }, 0);
+          MessageDialog.QUESTION, new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL, IDialogConstants.CANCEL_LABEL }, 0);
       if (dialog.open() != MessageDialog.OK)
       {
         cancel();

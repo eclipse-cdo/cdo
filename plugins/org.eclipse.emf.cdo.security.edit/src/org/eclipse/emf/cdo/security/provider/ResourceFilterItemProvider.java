@@ -78,13 +78,11 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
    */
   protected void addPathPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_ResourceFilter_path_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_path_feature", //$NON-NLS-1$//$NON-NLS-2$
-                "_UI_ResourceFilter_type"), //$NON-NLS-1$
-            SecurityPackage.Literals.RESOURCE_FILTER__PATH, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ResourceFilter_path_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_path_feature", //$NON-NLS-1$//$NON-NLS-2$
+            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        SecurityPackage.Literals.RESOURCE_FILTER__PATH, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -95,13 +93,11 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
    */
   protected void addPatternStylePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_ResourceFilter_patternStyle_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_patternStyle_feature", //$NON-NLS-1$//$NON-NLS-2$
-                "_UI_ResourceFilter_type"), //$NON-NLS-1$
-            SecurityPackage.Literals.RESOURCE_FILTER__PATTERN_STYLE, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ResourceFilter_patternStyle_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_patternStyle_feature", //$NON-NLS-1$//$NON-NLS-2$
+            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        SecurityPackage.Literals.RESOURCE_FILTER__PATTERN_STYLE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -112,13 +108,11 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
    */
   protected void addFoldersPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_ResourceFilter_folders_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_folders_feature", //$NON-NLS-1$//$NON-NLS-2$
-                "_UI_ResourceFilter_type"), //$NON-NLS-1$
-            SecurityPackage.Literals.RESOURCE_FILTER__FOLDERS, true, false, false,
-            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ResourceFilter_folders_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_folders_feature", //$NON-NLS-1$//$NON-NLS-2$
+            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        SecurityPackage.Literals.RESOURCE_FILTER__FOLDERS, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -129,13 +123,11 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
    */
   protected void addModelResourcesPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_ResourceFilter_modelResources_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_modelResources_feature", //$NON-NLS-1$//$NON-NLS-2$
-                "_UI_ResourceFilter_type"), //$NON-NLS-1$
-            SecurityPackage.Literals.RESOURCE_FILTER__MODEL_RESOURCES, true, false, false,
-            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ResourceFilter_modelResources_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_modelResources_feature", //$NON-NLS-1$//$NON-NLS-2$
+            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        SecurityPackage.Literals.RESOURCE_FILTER__MODEL_RESOURCES, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -146,13 +138,11 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
    */
   protected void addModelObjectsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_ResourceFilter_modelObjects_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_modelObjects_feature", //$NON-NLS-1$//$NON-NLS-2$
-                "_UI_ResourceFilter_type"), //$NON-NLS-1$
-            SecurityPackage.Literals.RESOURCE_FILTER__MODEL_OBJECTS, true, false, false,
-            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ResourceFilter_modelObjects_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_modelObjects_feature", //$NON-NLS-1$//$NON-NLS-2$
+            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        SecurityPackage.Literals.RESOURCE_FILTER__MODEL_OBJECTS, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -163,13 +153,11 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
    */
   protected void addIncludeParentsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_ResourceFilter_includeParents_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_includeParents_feature", //$NON-NLS-1$//$NON-NLS-2$
-                "_UI_ResourceFilter_type"), //$NON-NLS-1$
-            SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_PARENTS, true, false, false,
-            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ResourceFilter_includeParents_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_includeParents_feature", //$NON-NLS-1$//$NON-NLS-2$
+            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_PARENTS, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -180,13 +168,11 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
    */
   protected void addIncludeRootPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_ResourceFilter_includeRoot_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_includeRoot_feature", //$NON-NLS-1$//$NON-NLS-2$
-                "_UI_ResourceFilter_type"), //$NON-NLS-1$
-            SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_ROOT, true, false, false,
-            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ResourceFilter_includeRoot_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_includeRoot_feature", //$NON-NLS-1$//$NON-NLS-2$
+            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_ROOT, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -197,13 +183,11 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
    */
   protected void addTextResourcesPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_ResourceFilter_textResources_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_textResources_feature", //$NON-NLS-1$//$NON-NLS-2$
-                "_UI_ResourceFilter_type"), //$NON-NLS-1$
-            SecurityPackage.Literals.RESOURCE_FILTER__TEXT_RESOURCES, true, false, false,
-            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ResourceFilter_textResources_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_textResources_feature", //$NON-NLS-1$//$NON-NLS-2$
+            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        SecurityPackage.Literals.RESOURCE_FILTER__TEXT_RESOURCES, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -214,13 +198,11 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
    */
   protected void addBinaryResourcesPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_ResourceFilter_binaryResources_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_binaryResources_feature", //$NON-NLS-1$//$NON-NLS-2$
-                "_UI_ResourceFilter_type"), //$NON-NLS-1$
-            SecurityPackage.Literals.RESOURCE_FILTER__BINARY_RESOURCES, true, false, false,
-            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ResourceFilter_binaryResources_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_binaryResources_feature", //$NON-NLS-1$//$NON-NLS-2$
+            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        SecurityPackage.Literals.RESOURCE_FILTER__BINARY_RESOURCES, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**

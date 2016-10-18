@@ -64,8 +64,7 @@ public class CDOInterceptor extends EMFInterceptor
   }
 
   @Override
-  public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState,
-      String[] propertyNames, Type[] types)
+  public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState, String[] propertyNames, Type[] types)
   {
     return false;
   }

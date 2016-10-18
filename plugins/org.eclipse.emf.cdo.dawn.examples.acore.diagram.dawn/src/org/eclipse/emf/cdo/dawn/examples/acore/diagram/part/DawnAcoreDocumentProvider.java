@@ -75,8 +75,7 @@ public class DawnAcoreDocumentProvider extends AcoreDocumentProvider
   {
     TransactionalEditingDomain editingDomain = DawnDiagramEditingDomainFactory.getInstance().createEditingDomain();
     editingDomain.setID("org.eclipse.emf.cdo.dawn.examples.acore.diagram.EditingDomain"); //$NON-NLS-1$
-    final NotificationFilter diagramResourceModifiedFilter = NotificationFilter
-        .createNotifierFilter(editingDomain.getResourceSet())
+    final NotificationFilter diagramResourceModifiedFilter = NotificationFilter.createNotifierFilter(editingDomain.getResourceSet())
         .and(NotificationFilter.createEventTypeFilter(Notification.ADD))
         .and(NotificationFilter.createFeatureFilter(ResourceSet.class, ResourceSet.RESOURCE_SET__RESOURCES));
     editingDomain.getResourceSet().eAdapters().add(new Adapter()
@@ -201,8 +200,8 @@ public class DawnAcoreDocumentProvider extends AcoreDocumentProvider
         else
         {
           String msg = e.getLocalizedMessage();
-          thrownExcp = new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0,
-              msg != null ? msg : Messages.AcoreDocumentProvider_DiagramLoadingError, e));
+          thrownExcp = new CoreException(
+              new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0, msg != null ? msg : Messages.AcoreDocumentProvider_DiagramLoadingError, e));
         }
         throw thrownExcp;
       }

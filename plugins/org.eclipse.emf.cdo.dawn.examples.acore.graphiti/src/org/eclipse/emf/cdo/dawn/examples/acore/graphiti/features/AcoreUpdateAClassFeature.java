@@ -69,8 +69,7 @@ public class AcoreUpdateAClassFeature extends AbstractUpdateFeature
     }
 
     // update needed, if names are different
-    boolean updateNameNeeded = pictogramName == null && businessName != null
-        || pictogramName != null && !pictogramName.equals(businessName);
+    boolean updateNameNeeded = pictogramName == null && businessName != null || pictogramName != null && !pictogramName.equals(businessName);
     if (updateNameNeeded)
     {
       return Reason.createTrueReason("Name is out of date");

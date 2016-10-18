@@ -132,8 +132,7 @@ public class Bz398057BImpl extends EObjectImpl implements Bz398057B
    */
   public void setRefToClassA(Bz398057A newRefToClassA)
   {
-    if (newRefToClassA != eInternalContainer()
-        || eContainerFeatureID() != HibernateTestPackage.BZ398057_B__REF_TO_CLASS_A && newRefToClassA != null)
+    if (newRefToClassA != eInternalContainer() || eContainerFeatureID() != HibernateTestPackage.BZ398057_B__REF_TO_CLASS_A && newRefToClassA != null)
     {
       if (EcoreUtil.isAncestor(this, newRefToClassA))
       {
@@ -146,8 +145,7 @@ public class Bz398057BImpl extends EObjectImpl implements Bz398057B
       }
       if (newRefToClassA != null)
       {
-        msgs = ((InternalEObject)newRefToClassA).eInverseAdd(this, HibernateTestPackage.BZ398057_A__LIST_OF_B,
-            Bz398057A.class, msgs);
+        msgs = ((InternalEObject)newRefToClassA).eInverseAdd(this, HibernateTestPackage.BZ398057_A__LIST_OF_B, Bz398057A.class, msgs);
       }
       msgs = basicSetRefToClassA(newRefToClassA, msgs);
       if (msgs != null)
@@ -157,8 +155,7 @@ public class Bz398057BImpl extends EObjectImpl implements Bz398057B
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ398057_B__REF_TO_CLASS_A,
-          newRefToClassA, newRefToClassA));
+      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ398057_B__REF_TO_CLASS_A, newRefToClassA, newRefToClassA));
     }
   }
 
@@ -259,8 +256,7 @@ public class Bz398057BImpl extends EObjectImpl implements Bz398057B
     switch (eContainerFeatureID())
     {
     case HibernateTestPackage.BZ398057_B__REF_TO_CLASS_A:
-      return eInternalContainer().eInverseRemove(this, HibernateTestPackage.BZ398057_A__LIST_OF_B, Bz398057A.class,
-          msgs);
+      return eInternalContainer().eInverseRemove(this, HibernateTestPackage.BZ398057_A__LIST_OF_B, Bz398057A.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
   }

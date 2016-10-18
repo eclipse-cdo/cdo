@@ -70,8 +70,7 @@ public class ImplMultiRefContainerImpl extends CDOObjectImpl implements ImplMult
   @SuppressWarnings("unchecked")
   public EList<IMultiRefContainedElement> getElements()
   {
-    return (EList<IMultiRefContainedElement>)eGet(model4interfacesPackage.eINSTANCE.getIMultiRefContainer_Elements(),
-        true);
+    return (EList<IMultiRefContainedElement>)eGet(model4interfacesPackage.eINSTANCE.getIMultiRefContainer_Elements(), true);
   }
 
 } // ImplMultiRefContainerImpl

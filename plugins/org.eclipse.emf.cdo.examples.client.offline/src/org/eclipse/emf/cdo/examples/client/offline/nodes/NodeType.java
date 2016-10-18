@@ -228,8 +228,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     String browserPort = node.getSetting(BROWSER_PROPERTY);
     if (browserPort != null && browserPort.length() != 0)
     {
-      CDOServerBrowser browser = (CDOServerBrowser)IPluginContainer.INSTANCE
-          .getElement("org.eclipse.emf.cdo.server.browsers", "default", browserPort);
+      CDOServerBrowser browser = (CDOServerBrowser)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.server.browsers", "default", browserPort);
       node.setObject(CDOServerBrowser.class, browser);
     }
   }
@@ -775,8 +774,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
         }
 
         @Override
-        protected CDONet4jSessionConfiguration createSessionConfiguration(String connectorDescription,
-            String repositoryName)
+        protected CDONet4jSessionConfiguration createSessionConfiguration(String connectorDescription, String repositoryName)
         {
           IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", connectorDescription);
 
@@ -826,17 +824,15 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     {
       super.start(node);
 
-      org.eclipse.emf.cdo.server.net4j.FailoverMonitor monitor = (org.eclipse.emf.cdo.server.net4j.FailoverMonitor)IPluginContainer.INSTANCE
-          .getElement(org.eclipse.emf.cdo.server.net4j.FailoverMonitor.PRODUCT_GROUP,
-              org.eclipse.emf.cdo.server.net4j.FailoverMonitor.Factory.TYPE, node.getName());
+      org.eclipse.emf.cdo.server.net4j.FailoverMonitor monitor = (org.eclipse.emf.cdo.server.net4j.FailoverMonitor)IPluginContainer.INSTANCE.getElement(
+          org.eclipse.emf.cdo.server.net4j.FailoverMonitor.PRODUCT_GROUP, org.eclipse.emf.cdo.server.net4j.FailoverMonitor.Factory.TYPE, node.getName());
       node.setObject(org.eclipse.emf.cdo.server.net4j.FailoverMonitor.class, monitor);
     }
 
     @Override
     public void stop(Node node)
     {
-      org.eclipse.emf.cdo.server.net4j.FailoverMonitor monitor = node
-          .getObject(org.eclipse.emf.cdo.server.net4j.FailoverMonitor.class);
+      org.eclipse.emf.cdo.server.net4j.FailoverMonitor monitor = node.getObject(org.eclipse.emf.cdo.server.net4j.FailoverMonitor.class);
       LifecycleUtil.deactivate(monitor);
 
       super.stop(node);

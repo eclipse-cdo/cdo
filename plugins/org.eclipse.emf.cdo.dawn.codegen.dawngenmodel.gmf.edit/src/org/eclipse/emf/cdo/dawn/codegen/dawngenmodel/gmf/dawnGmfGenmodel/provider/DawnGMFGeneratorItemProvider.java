@@ -74,13 +74,11 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
    */
   protected void addDawnDocumentProviderClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_DawnGMFGenerator_dawnDocumentProviderClassName_feature"),
-            getString("_UI_PropertyDescriptor_description",
-                "_UI_DawnGMFGenerator_dawnDocumentProviderClassName_feature", "_UI_DawnGMFGenerator_type"),
-            DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_DOCUMENT_PROVIDER_CLASS_NAME, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_dawnDocumentProviderClassName_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnDocumentProviderClassName_feature", "_UI_DawnGMFGenerator_type"),
+        DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_DOCUMENT_PROVIDER_CLASS_NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+        null, null));
   }
 
   /**
@@ -91,13 +89,11 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
    */
   protected void addDawnEditorUtilClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_DawnGMFGenerator_dawnEditorUtilClassName_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnEditorUtilClassName_feature",
-                "_UI_DawnGMFGenerator_type"),
-            DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_EDITOR_UTIL_CLASS_NAME, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_dawnEditorUtilClassName_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnEditorUtilClassName_feature", "_UI_DawnGMFGenerator_type"),
+        DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_EDITOR_UTIL_CLASS_NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
+        null));
   }
 
   /**
@@ -108,13 +104,11 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
    */
   protected void addDawnCreationWizardClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_DawnGMFGenerator_dawnCreationWizardClassName_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnCreationWizardClassName_feature",
-                "_UI_DawnGMFGenerator_type"),
-            DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_CREATION_WIZARD_CLASS_NAME, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_dawnCreationWizardClassName_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnCreationWizardClassName_feature", "_UI_DawnGMFGenerator_type"),
+        DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_CREATION_WIZARD_CLASS_NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+        null, null));
   }
 
   /**
@@ -125,13 +119,11 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
    */
   protected void addDawnCanonicalEditingPolicyClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_DawnGMFGenerator_dawnCanonicalEditingPolicyClassName_feature"),
-            getString("_UI_PropertyDescriptor_description",
-                "_UI_DawnGMFGenerator_dawnCanonicalEditingPolicyClassName_feature", "_UI_DawnGMFGenerator_type"),
-            DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_CANONICAL_EDITING_POLICY_CLASS_NAME, true, false,
-            false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_dawnCanonicalEditingPolicyClassName_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnCanonicalEditingPolicyClassName_feature", "_UI_DawnGMFGenerator_type"),
+        DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_CANONICAL_EDITING_POLICY_CLASS_NAME, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -142,13 +134,11 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
    */
   protected void addDawnDiagramEditPartClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_DawnGMFGenerator_dawnDiagramEditPartClassName_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnDiagramEditPartClassName_feature",
-                "_UI_DawnGMFGenerator_type"),
-            DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_DIAGRAM_EDIT_PART_CLASS_NAME, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_dawnDiagramEditPartClassName_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnDiagramEditPartClassName_feature", "_UI_DawnGMFGenerator_type"),
+        DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_DIAGRAM_EDIT_PART_CLASS_NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+        null, null));
   }
 
   /**
@@ -159,13 +149,11 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
    */
   protected void addDawnEditPartFactoryClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_DawnGMFGenerator_dawnEditPartFactoryClassName_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnEditPartFactoryClassName_feature",
-                "_UI_DawnGMFGenerator_type"),
-            DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_EDIT_PART_FACTORY_CLASS_NAME, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_dawnEditPartFactoryClassName_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnEditPartFactoryClassName_feature", "_UI_DawnGMFGenerator_type"),
+        DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_EDIT_PART_FACTORY_CLASS_NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+        null, null));
   }
 
   /**
@@ -176,13 +164,11 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
    */
   protected void addDawnEditPartProviderClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_DawnGMFGenerator_dawnEditPartProviderClassName_feature"),
-            getString("_UI_PropertyDescriptor_description",
-                "_UI_DawnGMFGenerator_dawnEditPartProviderClassName_feature", "_UI_DawnGMFGenerator_type"),
-            DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_EDIT_PART_PROVIDER_CLASS_NAME, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_dawnEditPartProviderClassName_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnEditPartProviderClassName_feature", "_UI_DawnGMFGenerator_type"),
+        DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_EDIT_PART_PROVIDER_CLASS_NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+        null, null));
   }
 
   /**
@@ -193,13 +179,11 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
    */
   protected void addDawnEditPolicyProviderClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_DawnGMFGenerator_dawnEditPolicyProviderClassName_feature"),
-            getString("_UI_PropertyDescriptor_description",
-                "_UI_DawnGMFGenerator_dawnEditPolicyProviderClassName_feature", "_UI_DawnGMFGenerator_type"),
-            DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_EDIT_POLICY_PROVIDER_CLASS_NAME, true, false,
-            false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DawnGMFGenerator_dawnEditPolicyProviderClassName_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_dawnEditPolicyProviderClassName_feature", "_UI_DawnGMFGenerator_type"),
+        DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__DAWN_EDIT_POLICY_PROVIDER_CLASS_NAME, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -210,13 +194,10 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
    */
   protected void addGMFGenEditorGeneratorPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_DawnGMFGenerator_GMFGenEditorGenerator_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_GMFGenEditorGenerator_feature",
-            "_UI_DawnGMFGenerator_type"),
-        DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__GMF_GEN_EDITOR_GENERATOR, true, false, true, null, null,
-        null));
+        getString("_UI_PropertyDescriptor_description", "_UI_DawnGMFGenerator_GMFGenEditorGenerator_feature", "_UI_DawnGMFGenerator_type"),
+        DawnGmfGenmodelPackage.Literals.DAWN_GMF_GENERATOR__GMF_GEN_EDITOR_GENERATOR, true, false, true, null, null, null));
   }
 
   /**
@@ -239,8 +220,7 @@ public class DawnGMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
   public String getText(Object object)
   {
     String label = ((DawnGMFGenerator)object).getFragmentName();
-    return label == null || label.length() == 0 ? getString("_UI_DawnGMFGenerator_type")
-        : getString("_UI_DawnGMFGenerator_type") + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_DawnGMFGenerator_type") : getString("_UI_DawnGMFGenerator_type") + " " + label;
   }
 
   /**

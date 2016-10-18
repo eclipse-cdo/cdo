@@ -91,8 +91,7 @@ public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessio
             {
               try
               {
-                MessageDialog.openInformation(getShell(),
-                    MessageFormat.format(Messages.getString("CDORemoteSessionsView_0"), remoteSession), //$NON-NLS-1$
+                MessageDialog.openInformation(getShell(), MessageFormat.format(Messages.getString("CDORemoteSessionsView_0"), remoteSession), //$NON-NLS-1$
                     new String(message.getData()));
               }
               catch (RuntimeException ignore)
@@ -159,8 +158,7 @@ public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessio
       CDORemoteSession remoteSession = (CDORemoteSession)element;
       if (remoteSession.isSubscribed())
       {
-        InputDialog dlg = new InputDialog(getShell(),
-            MessageFormat.format(Messages.getString("CDORemoteSessionsView_1"), remoteSession), //$NON-NLS-1$
+        InputDialog dlg = new InputDialog(getShell(), MessageFormat.format(Messages.getString("CDORemoteSessionsView_1"), remoteSession), //$NON-NLS-1$
             Messages.getString("CDORemoteSessionsView_2"), "", null); //$NON-NLS-1$ //$NON-NLS-2$
         if (dlg.open() == InputDialog.OK)
         {

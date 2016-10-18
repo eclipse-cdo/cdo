@@ -122,8 +122,7 @@ public class Bz397682CImpl extends EObjectImpl implements Bz397682C
    */
   public void setRefToP(Bz397682P newRefToP)
   {
-    if (newRefToP != eInternalContainer()
-        || eContainerFeatureID() != HibernateTestPackage.BZ397682_C__REF_TO_P && newRefToP != null)
+    if (newRefToP != eInternalContainer() || eContainerFeatureID() != HibernateTestPackage.BZ397682_C__REF_TO_P && newRefToP != null)
     {
       if (EcoreUtil.isAncestor(this, newRefToP))
       {
@@ -136,8 +135,7 @@ public class Bz397682CImpl extends EObjectImpl implements Bz397682C
       }
       if (newRefToP != null)
       {
-        msgs = ((InternalEObject)newRefToP).eInverseAdd(this, HibernateTestPackage.BZ397682_P__LIST_OF_C,
-            Bz397682P.class, msgs);
+        msgs = ((InternalEObject)newRefToP).eInverseAdd(this, HibernateTestPackage.BZ397682_P__LIST_OF_C, Bz397682P.class, msgs);
       }
       msgs = basicSetRefToP(newRefToP, msgs);
       if (msgs != null)
@@ -147,8 +145,7 @@ public class Bz397682CImpl extends EObjectImpl implements Bz397682C
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ397682_C__REF_TO_P, newRefToP,
-          newRefToP));
+      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ397682_C__REF_TO_P, newRefToP, newRefToP));
     }
   }
 
@@ -167,8 +164,7 @@ public class Bz397682CImpl extends EObjectImpl implements Bz397682C
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, HibernateTestPackage.BZ397682_C__REF_TO_C,
-              oldRefToC, refToC));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, HibernateTestPackage.BZ397682_C__REF_TO_C, oldRefToC, refToC));
         }
       }
     }
@@ -196,8 +192,7 @@ public class Bz397682CImpl extends EObjectImpl implements Bz397682C
     refToC = newRefToC;
     if (eNotificationRequired())
     {
-      eNotify(
-          new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ397682_C__REF_TO_C, oldRefToC, refToC));
+      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ397682_C__REF_TO_C, oldRefToC, refToC));
     }
   }
 
@@ -273,8 +268,7 @@ public class Bz397682CImpl extends EObjectImpl implements Bz397682C
     switch (eContainerFeatureID())
     {
     case HibernateTestPackage.BZ397682_C__REF_TO_P:
-      return eInternalContainer().eInverseRemove(this, HibernateTestPackage.BZ397682_P__LIST_OF_C, Bz397682P.class,
-          msgs);
+      return eInternalContainer().eInverseRemove(this, HibernateTestPackage.BZ397682_P__LIST_OF_C, Bz397682P.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
   }

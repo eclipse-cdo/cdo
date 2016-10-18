@@ -202,8 +202,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.3
    */
-  protected ResultSet readTables(Connection connection, DatabaseMetaData metaData, String schemaName)
-      throws SQLException
+  protected ResultSet readTables(Connection connection, DatabaseMetaData metaData, String schemaName) throws SQLException
   {
     return metaData.getTables(null, schemaName, null, new String[] { "TABLE" });
   }
@@ -251,8 +250,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
-  protected void readIndices(Connection connection, DatabaseMetaData metaData, IDBTable table, String schemaName)
-      throws SQLException
+  protected void readIndices(Connection connection, DatabaseMetaData metaData, IDBTable table, String schemaName) throws SQLException
   {
     String tableName = table.getName();
 
@@ -266,8 +264,8 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
-  protected void readIndices(Connection connection, ResultSet resultSet, IDBTable table, int indexNameColumn,
-      int indexTypeColumn, int fieldNameColumn, int fieldPositionColumn) throws SQLException
+  protected void readIndices(Connection connection, ResultSet resultSet, IDBTable table, int indexNameColumn, int indexTypeColumn, int fieldNameColumn,
+      int fieldPositionColumn) throws SQLException
   {
     try
     {
@@ -322,8 +320,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
-  protected void addIndex(Connection connection, IDBTable table, String name, IDBIndex.Type type,
-      List<FieldInfo> fieldInfos)
+  protected void addIndex(Connection connection, IDBTable table, String name, IDBIndex.Type type, List<FieldInfo> fieldInfos)
   {
     IDBField[] fields = new IDBField[fieldInfos.size()];
 
@@ -349,8 +346,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
-  protected boolean isPrimaryKeyShadow(Connection connection, IDBTable table, String name, IDBIndex.Type type,
-      IDBField[] fields)
+  protected boolean isPrimaryKeyShadow(Connection connection, IDBTable table, String name, IDBIndex.Type type, IDBField[] fields)
   {
     if (type != IDBIndex.Type.UNIQUE)
     {
@@ -521,8 +517,7 @@ public abstract class DBAdapter implements IDBAdapter
    */
   protected void createField(Connection connection, String tableName, IDBField field)
   {
-    DBUtil.execute(connection,
-        "ALTER TABLE " + tableName + " ADD COLUMN " + field.getName() + " " + createFieldDefinition(field));
+    DBUtil.execute(connection, "ALTER TABLE " + tableName + " ADD COLUMN " + field.getName() + " " + createFieldDefinition(field));
   }
 
   /**

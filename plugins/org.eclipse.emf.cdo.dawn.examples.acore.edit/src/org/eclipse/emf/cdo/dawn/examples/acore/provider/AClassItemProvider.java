@@ -33,8 +33,8 @@ import java.util.List;
  *
  * @generated
  */
-public class AClassItemProvider extends ABasicClassItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class AClassItemProvider extends ABasicClassItemProvider
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -74,11 +74,9 @@ public class AClassItemProvider extends ABasicClassItemProvider implements IEdit
    */
   protected void addSubClassesPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_AClass_subClasses_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_AClass_subClasses_feature", "_UI_AClass_type"),
-            AcorePackage.Literals.ACLASS__SUB_CLASSES, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_AClass_subClasses_feature"), getString("_UI_PropertyDescriptor_description", "_UI_AClass_subClasses_feature", "_UI_AClass_type"),
+        AcorePackage.Literals.ACLASS__SUB_CLASSES, true, false, true, null, null, null));
   }
 
   /**
@@ -89,12 +87,10 @@ public class AClassItemProvider extends ABasicClassItemProvider implements IEdit
    */
   protected void addImplementedInterfacesPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_AClass_implementedInterfaces_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_AClass_implementedInterfaces_feature",
-                "_UI_AClass_type"),
-            AcorePackage.Literals.ACLASS__IMPLEMENTED_INTERFACES, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_AClass_implementedInterfaces_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_AClass_implementedInterfaces_feature", "_UI_AClass_type"),
+        AcorePackage.Literals.ACLASS__IMPLEMENTED_INTERFACES, true, false, true, null, null, null));
   }
 
   /**
@@ -104,11 +100,9 @@ public class AClassItemProvider extends ABasicClassItemProvider implements IEdit
    */
   protected void addAssociationsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_AClass_associations_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_AClass_associations_feature", "_UI_AClass_type"),
-            AcorePackage.Literals.ACLASS__ASSOCIATIONS, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_AClass_associations_feature"), getString("_UI_PropertyDescriptor_description", "_UI_AClass_associations_feature", "_UI_AClass_type"),
+        AcorePackage.Literals.ACLASS__ASSOCIATIONS, true, false, true, null, null, null));
   }
 
   /**
@@ -118,11 +112,9 @@ public class AClassItemProvider extends ABasicClassItemProvider implements IEdit
    */
   protected void addCompositionsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_AClass_compositions_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_AClass_compositions_feature", "_UI_AClass_type"),
-            AcorePackage.Literals.ACLASS__COMPOSITIONS, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_AClass_compositions_feature"), getString("_UI_PropertyDescriptor_description", "_UI_AClass_compositions_feature", "_UI_AClass_type"),
+        AcorePackage.Literals.ACLASS__COMPOSITIONS, true, false, true, null, null, null));
   }
 
   /**
@@ -132,11 +124,9 @@ public class AClassItemProvider extends ABasicClassItemProvider implements IEdit
    */
   protected void addAggregationsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_AClass_aggregations_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_AClass_aggregations_feature", "_UI_AClass_type"),
-            AcorePackage.Literals.ACLASS__AGGREGATIONS, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_AClass_aggregations_feature"), getString("_UI_PropertyDescriptor_description", "_UI_AClass_aggregations_feature", "_UI_AClass_type"),
+        AcorePackage.Literals.ACLASS__AGGREGATIONS, true, false, true, null, null, null));
   }
 
   /**
@@ -159,8 +149,7 @@ public class AClassItemProvider extends ABasicClassItemProvider implements IEdit
   public String getText(Object object)
   {
     String label = ((AClass)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_AClass_type")
-        : getString("_UI_AClass_type") + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_AClass_type") : getString("_UI_AClass_type") + " " + label;
   }
 
   /**

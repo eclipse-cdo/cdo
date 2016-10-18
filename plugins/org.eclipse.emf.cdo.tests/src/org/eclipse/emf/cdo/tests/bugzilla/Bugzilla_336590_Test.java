@@ -112,8 +112,7 @@ public class Bugzilla_336590_Test extends AbstractCDOTest
       throw new UnsupportedOperationException();
     }
 
-    public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
-        List<CDORevisionDelta> allRemoteDeltas)
+    public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts, List<CDORevisionDelta> allRemoteDeltas)
     {
       assertEquals(1, allRemoteDeltas.size());
 

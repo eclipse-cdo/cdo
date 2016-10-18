@@ -405,8 +405,8 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing value for feature {0}.{1} index {2} of {3}v{4} : {5}", getContainingClass().getName(),
-          getFeature().getName(), idx, revision.getID(), revision.getVersion(), value);
+      TRACER.format("Writing value for feature {0}.{1} index {2} of {3}v{4} : {5}", getContainingClass().getName(), getFeature().getName(), idx,
+          revision.getID(), revision.getVersion(), value);
     }
 
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertEntry, ReuseProbability.HIGH);
@@ -429,8 +429,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     }
   }
 
-  public boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere,
-      QueryXRefsContext context, String idString)
+  public boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere, QueryXRefsContext context, String idString)
   {
     String tableName = table.getName();
     String listJoin = getMappingStrategy().getListJoin("a_t", "l_t");

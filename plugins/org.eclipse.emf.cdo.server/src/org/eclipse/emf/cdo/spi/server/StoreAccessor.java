@@ -167,14 +167,13 @@ public abstract class StoreAccessor extends StoreAccessorBase
    * @deprecated As of 4.6 override {@link #writeCommitInfo(CDOBranch, long, long, String, String, CDOBranchPoint, OMMonitor)}.
    */
   @Deprecated
-  protected abstract void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
-      String comment, OMMonitor monitor);
+  protected abstract void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor);
 
   /**
    * @since 4.6
    */
-  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
-      String comment, CDOBranchPoint mergeSource, OMMonitor monitor)
+  protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOBranchPoint mergeSource,
+      OMMonitor monitor)
   {
     writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, monitor);
   }
@@ -182,8 +181,7 @@ public abstract class StoreAccessor extends StoreAccessorBase
   /**
    * @since 4.5
    */
-  protected void writeNewObjectRevisions(InternalCommitContext context, InternalCDORevision[] newObjects,
-      CDOBranch branch, OMMonitor monitor)
+  protected void writeNewObjectRevisions(InternalCommitContext context, InternalCDORevision[] newObjects, CDOBranch branch, OMMonitor monitor)
   {
     writeRevisions(newObjects, branch, monitor);
   }
@@ -191,8 +189,7 @@ public abstract class StoreAccessor extends StoreAccessorBase
   /**
    * @since 4.5
    */
-  protected void writeDirtyObjectRevisions(InternalCommitContext context, InternalCDORevision[] dirtyObjects,
-      CDOBranch branch, OMMonitor monitor)
+  protected void writeDirtyObjectRevisions(InternalCommitContext context, InternalCDORevision[] dirtyObjects, CDOBranch branch, OMMonitor monitor)
   {
     writeRevisions(dirtyObjects, branch, monitor);
   }
@@ -205,8 +202,7 @@ public abstract class StoreAccessor extends StoreAccessorBase
   /**
    * @since 3.0
    */
-  protected abstract void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created,
-      OMMonitor monitor);
+  protected abstract void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created, OMMonitor monitor);
 
   /**
    * @since 3.0

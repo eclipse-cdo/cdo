@@ -44,8 +44,8 @@ import java.util.List;
  * @since 4.0 <!-- end-user-doc -->
  * @generated
  */
-public class ModelElementItemProvider extends CDOItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+public class ModelElementItemProvider extends CDOItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
     ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
@@ -169,8 +169,7 @@ public class ModelElementItemProvider extends CDOItemProviderAdapter implements 
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(EtypesPackage.Literals.MODEL_ELEMENT__ANNOTATIONS,
-        EtypesFactory.eINSTANCE.createAnnotation()));
+    newChildDescriptors.add(createChildParameter(EtypesPackage.Literals.MODEL_ELEMENT__ANNOTATIONS, EtypesFactory.eINSTANCE.createAnnotation()));
   }
 
   /**

@@ -64,8 +64,7 @@ public class ObjyResourceList
   public static void buildSchema()
   {
     d_Module top_mod = ObjySchema.getTopModule();
-    if (top_mod.resolve_class(ObjyResourceList.className) == null
-        && top_mod.resolve_proposed_class(ObjyResourceList.className) == null)
+    if (top_mod.resolve_class(ObjyResourceList.className) == null && top_mod.resolve_proposed_class(ObjyResourceList.className) == null)
     {
 
       if (TRACER_DEBUG.isEnabled())
@@ -78,8 +77,7 @@ public class ObjyResourceList
       // Proposed_Class A = new Proposed_Class(ooArrayListId.ClassName);
       Proposed_Class propClass = top_mod.propose_new_class(ObjyResourceList.className);
 
-      propClass.add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC,
-          ObjyBase.CLASS_NAME /* "ooObj" */);
+      propClass.add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC, ObjyBase.CLASS_NAME /* "ooObj" */);
 
       propClass.add_ref_attribute(com.objy.as.app.d_Module.LAST, // Access kind
           d_Access_Kind.d_PUBLIC, // Access kind
@@ -170,8 +168,7 @@ public class ObjyResourceList
   // }
   // }
 
-  public void checkDuplicateResources(ObjectivityStoreAccessor storeAccessor, InternalCDORevision revision)
-      throws IllegalStateException
+  public void checkDuplicateResources(ObjectivityStoreAccessor storeAccessor, InternalCDORevision revision) throws IllegalStateException
   {
     // CDOID folderID = (CDOID)revision.data().getContainerID();
     CDOID folderId = (CDOID)revision.data().getContainerID();
@@ -192,8 +189,7 @@ public class ObjyResourceList
       {
         try
         {
-          resourceRevision = resource.getRevision(revision.getTimeStamp(), revision.getBranch().getID(),
-              objyObjectManager);
+          resourceRevision = resource.getRevision(revision.getTimeStamp(), revision.getBranch().getID(), objyObjectManager);
         }
         catch (RuntimeException ex)
         {
@@ -220,8 +216,7 @@ public class ObjyResourceList
       // int v = resource.getVersion();
       CDOID resourceFolderId = (CDOID)resourceRevision.getEContainer();
       String resourceName = ObjyResourceList.getResourceName(resourceRevision);
-      if (resourceFolderId != null && resourceFolderId.equals(folderId) && resourceName != null
-          && resourceName.equals(name))
+      if (resourceFolderId != null && resourceFolderId.equals(folderId) && resourceName != null && resourceName.equals(name))
       {
         throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder: " + folderId); //$NON-NLS-1$
       }
@@ -241,8 +236,7 @@ public class ObjyResourceList
 
   public static ObjyObject create(ooId nearOid)
   {
-    Class_Object classObject = Class_Object
-        .new_persistent_object(ObjySchema.getObjyClass(ObjyResourceList.className).getASClass(), nearOid, false);
+    Class_Object classObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(ObjyResourceList.className).getASClass(), nearOid, false);
     // ObjyObjectManager.newInternalObjCount++;
     // Class_Position position = classObject.position_in_class(ObjyResourceList.Attribute_arrayName);
     // Class_Object arrayClassObject = Class_Object.new_persistent_object(

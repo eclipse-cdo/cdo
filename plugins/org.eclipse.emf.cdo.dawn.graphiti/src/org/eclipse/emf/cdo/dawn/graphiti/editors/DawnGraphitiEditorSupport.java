@@ -198,8 +198,7 @@ public class DawnGraphitiEditorSupport extends DawnAbstractEditorSupport
 
     DiagramEditor editor = (DiagramEditor)getEditor();
 
-    List<PictogramElement> pictogramElements = DawnGraphitiUtil
-        .getPictgramElements(editor.getDiagramTypeProvider().getDiagram(), element);
+    List<PictogramElement> pictogramElements = DawnGraphitiUtil.getPictgramElements(editor.getDiagramTypeProvider().getDiagram(), element);
 
     for (PictogramElement pictogramElement : pictogramElements)
     {

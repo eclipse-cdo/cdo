@@ -198,8 +198,7 @@ public abstract class MasterDetailsView extends MultiViewersView
     }
 
     // Temporarily remember old values
-    String oldDetailTitle = detailItems == null || currentDetailIndex < 0 ? null
-        : detailItems[currentDetailIndex].getText();
+    String oldDetailTitle = detailItems == null || currentDetailIndex < 0 ? null : detailItems[currentDetailIndex].getText();
     StructuredViewer[] oldDetails = details;
     CTabItem[] oldDetailItems = detailItems;
 

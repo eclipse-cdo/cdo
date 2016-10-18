@@ -161,8 +161,7 @@ public final class CDOIDUtil
         return ((CDOIDObjectLongWithClassifierImpl)id).getLongValue();
       }
 
-      throw new IllegalArgumentException(
-          MessageFormat.format(Messages.getString("CDOIDUtil.0"), id.getClass().getName())); //$NON-NLS-1$
+      throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOIDUtil.0"), id.getClass().getName())); //$NON-NLS-1$
 
     case TEMP_OBJECT:
       throw new IllegalArgumentException(Messages.getString("CDOIDUtil.1")); //$NON-NLS-1$
@@ -172,8 +171,7 @@ public final class CDOIDUtil
       throw new IllegalArgumentException(Messages.getString("CDOIDUtil.2")); //$NON-NLS-1$
 
     default:
-      throw new IllegalArgumentException(
-          MessageFormat.format(Messages.getString("CDOIDUtil.3"), id.getClass().getName())); //$NON-NLS-1$
+      throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOIDUtil.3"), id.getClass().getName())); //$NON-NLS-1$
     }
   }
 

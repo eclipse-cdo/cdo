@@ -26,8 +26,7 @@ public class AllTestsDBH2NonAudit extends DBConfigs
     return new AllTestsDBH2NonAudit().getTestSuite();
   }
 
-  public static void initConfigSuites(ConfigTestSuite suite, TestSuite parent,
-      IDGenerationLocation idGenerationLocation)
+  public static void initConfigSuites(ConfigTestSuite suite, TestSuite parent, IDGenerationLocation idGenerationLocation)
   {
     suite.addScenario(parent, new H2Config(false, false, false, false, idGenerationLocation), JVM, NATIVE);
   }

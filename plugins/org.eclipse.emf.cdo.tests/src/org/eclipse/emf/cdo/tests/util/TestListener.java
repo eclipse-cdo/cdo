@@ -32,8 +32,7 @@ public class TestListener implements IListener
   {
   }
 
-  public <T extends IEvent> void assertEvent(final Class<?> eventType, final EventAssertion<T> assertion)
-      throws Exception
+  public <T extends IEvent> void assertEvent(final Class<?> eventType, final EventAssertion<T> assertion) throws Exception
   {
     new AbstractOMTest.PollingTimeOuter()
     {

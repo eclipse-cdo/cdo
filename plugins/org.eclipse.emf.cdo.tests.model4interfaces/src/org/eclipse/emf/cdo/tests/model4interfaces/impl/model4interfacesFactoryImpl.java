@@ -35,8 +35,7 @@ public class model4interfacesFactoryImpl extends EFactoryImpl implements model4i
   {
     try
     {
-      model4interfacesFactory themodel4interfacesFactory = (model4interfacesFactory)EPackage.Registry.INSTANCE
-          .getEFactory(model4interfacesPackage.eNS_URI);
+      model4interfacesFactory themodel4interfacesFactory = (model4interfacesFactory)EPackage.Registry.INSTANCE.getEFactory(model4interfacesPackage.eNS_URI);
       if (themodel4interfacesFactory != null)
       {
         return themodel4interfacesFactory;

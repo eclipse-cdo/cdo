@@ -25,6 +25,5 @@ import java.sql.SQLException;
  */
 public interface IClassMappingUnitSupport extends IClassMapping
 {
-  public void readUnitRevisions(IDBStoreAccessor accessor, CDOBranchPoint branchPoint, CDOID rootID,
-      CDORevisionHandler revisionHandler) throws SQLException;
+  public void readUnitRevisions(IDBStoreAccessor accessor, CDOBranchPoint branchPoint, CDOID rootID, CDORevisionHandler revisionHandler) throws SQLException;
 }

@@ -43,8 +43,7 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
 
   private CDOChangeKindCache changeKindCache;
 
-  public CDOChangeSetDataImpl(List<CDOIDAndVersion> newObjects, List<CDORevisionKey> changedObjects,
-      List<CDOIDAndVersion> detachedObjects)
+  public CDOChangeSetDataImpl(List<CDOIDAndVersion> newObjects, List<CDORevisionKey> changedObjects, List<CDOIDAndVersion> detachedObjects)
   {
     this.newObjects = newObjects;
     this.changedObjects = changedObjects;
@@ -144,8 +143,7 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
     detachedObjects = new ArrayList<CDOIDAndVersion>(detachedMap.values());
   }
 
-  private void mergeChangedObject(CDORevisionKey key, Map<CDOID, CDOIDAndVersion> newMap,
-      Map<CDOID, CDORevisionKey> changedMap)
+  private void mergeChangedObject(CDORevisionKey key, Map<CDOID, CDOIDAndVersion> newMap, Map<CDOID, CDORevisionKey> changedMap)
   {
     CDOID id = key.getID();
     if (key instanceof CDORevisionDelta)

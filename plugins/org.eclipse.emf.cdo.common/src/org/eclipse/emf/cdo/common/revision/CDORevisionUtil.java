@@ -217,8 +217,8 @@ public final class CDORevisionUtil
   /**
    * @since 4.0
    */
-  public static CDOChangeSetData createChangeSetData(Set<CDOID> ids, final CDOBranchPoint startPoint,
-      final CDOBranchPoint endPoint, final CDORevisionManager revisionManager)
+  public static CDOChangeSetData createChangeSetData(Set<CDOID> ids, final CDOBranchPoint startPoint, final CDOBranchPoint endPoint,
+      final CDORevisionManager revisionManager)
   {
     CDORevisionProvider startProvider = new ManagedRevisionProvider(revisionManager, startPoint);
     CDORevisionProvider endProvider = new ManagedRevisionProvider(revisionManager, endPoint);
@@ -228,8 +228,7 @@ public final class CDORevisionUtil
   /**
    * @since 4.0
    */
-  public static CDOChangeSetData createChangeSetData(Set<CDOID> ids, CDORevisionProvider startProvider,
-      CDORevisionProvider endProvider)
+  public static CDOChangeSetData createChangeSetData(Set<CDOID> ids, CDORevisionProvider startProvider, CDORevisionProvider endProvider)
   {
     return createChangeSetData(ids, startProvider, endProvider, false);
   }
@@ -237,8 +236,8 @@ public final class CDORevisionUtil
   /**
    * @since 4.1
    */
-  public static CDOChangeSetData createChangeSetData(Set<CDOID> ids, CDORevisionProvider startProvider,
-      CDORevisionProvider endProvider, boolean useStartVersions)
+  public static CDOChangeSetData createChangeSetData(Set<CDOID> ids, CDORevisionProvider startProvider, CDORevisionProvider endProvider,
+      boolean useStartVersions)
   {
     List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>();
     List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
@@ -285,8 +284,8 @@ public final class CDORevisionUtil
   /**
    * @since 4.0
    */
-  public static CDOChangeSetData createChangeSetData(List<CDOIDAndVersion> newObjects,
-      List<CDORevisionKey> changedObjects, List<CDOIDAndVersion> detachedObjects)
+  public static CDOChangeSetData createChangeSetData(List<CDOIDAndVersion> newObjects, List<CDORevisionKey> changedObjects,
+      List<CDOIDAndVersion> detachedObjects)
   {
     return new CDOChangeSetDataImpl(newObjects, changedObjects, detachedObjects);
   }
@@ -358,8 +357,7 @@ public final class CDORevisionUtil
   /**
    * @since 4.5
    */
-  public static void handleParentRevisions(CDORevision revision, CDORevisionProvider provider,
-      CDORevisionHandler handler)
+  public static void handleParentRevisions(CDORevision revision, CDORevisionProvider provider, CDORevisionHandler handler)
   {
     CDORevision parentRevision = getParentRevision(revision, provider);
     if (parentRevision != null)
@@ -421,8 +419,7 @@ public final class CDORevisionUtil
   /**
    * @since 4.5
    */
-  public static List<CDORevision> getChildRevisions(CDOID container, CDORevisionProvider provider,
-      boolean onlyProperContents)
+  public static List<CDORevision> getChildRevisions(CDOID container, CDORevisionProvider provider, boolean onlyProperContents)
   {
     InternalCDORevision revision = (InternalCDORevision)provider.getRevision(container);
     return getChildRevisions(revision, provider, onlyProperContents);
@@ -439,8 +436,7 @@ public final class CDORevisionUtil
   /**
    * @since 4.5
    */
-  public static List<CDORevision> getChildRevisions(CDORevision container, CDORevisionProvider provider,
-      boolean onlyProperContents)
+  public static List<CDORevision> getChildRevisions(CDORevision container, CDORevisionProvider provider, boolean onlyProperContents)
   {
     List<CDORevision> children = new ArrayList<CDORevision>();
 
@@ -478,8 +474,7 @@ public final class CDORevisionUtil
     return children;
   }
 
-  private static void addChildRevision(Object value, CDORevisionProvider provider, List<CDORevision> children,
-      boolean onlyProperContents)
+  private static void addChildRevision(Object value, CDORevisionProvider provider, List<CDORevision> children, boolean onlyProperContents)
   {
     if (value instanceof CDOID)
     {
@@ -521,8 +516,7 @@ public final class CDORevisionUtil
     return builder.toString();
   }
 
-  private static void getResourceNodePath(InternalCDORevision revision, CDORevisionProvider provider,
-      StringBuilder result)
+  private static void getResourceNodePath(InternalCDORevision revision, CDORevisionProvider provider, StringBuilder result)
   {
     InternalCDORevision container = null;
     if (!revision.isResourceNode())
@@ -722,9 +716,8 @@ public final class CDORevisionUtil
         @Override
         protected void dumpBranch(CDOBranch branch)
         {
-          out()
-              .println(padTimeRange(branch.getName() + "[" + branch.getID() + "]", pad, branch.getBase().getTimeStamp(), //$NON-NLS-1$ //$NON-NLS-2$
-                  CDORevision.UNSPECIFIED_DATE));
+          out().println(padTimeRange(branch.getName() + "[" + branch.getID() + "]", pad, branch.getBase().getTimeStamp(), //$NON-NLS-1$ //$NON-NLS-2$
+              CDORevision.UNSPECIFIED_DATE));
         }
 
         @Override
@@ -804,8 +797,7 @@ public final class CDORevisionUtil
           out.println("&nbsp;&nbsp;&nbsp;&nbsp;</td>");
 
           out.println("<td>");
-          out.println(CDOCommonUtil.formatTimeStamp(revision.getTimeStamp()) + " / "
-              + CDOCommonUtil.formatTimeStamp(revision.getRevised()));
+          out.println(CDOCommonUtil.formatTimeStamp(revision.getTimeStamp()) + " / " + CDOCommonUtil.formatTimeStamp(revision.getRevised()));
           out.println("</td>");
           out.println("</tr>");
         }

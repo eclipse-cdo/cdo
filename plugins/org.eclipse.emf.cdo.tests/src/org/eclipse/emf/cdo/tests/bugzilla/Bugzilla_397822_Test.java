@@ -141,8 +141,7 @@ public class Bugzilla_397822_Test extends AbstractCDOTest
     );
   }
 
-  private void assertRevisionDeltaContainsListChanges(CDORevisionDelta revisionDelta, EStructuralFeature feature,
-      CDOFeatureDelta... expectedListChanges)
+  private void assertRevisionDeltaContainsListChanges(CDORevisionDelta revisionDelta, EStructuralFeature feature, CDOFeatureDelta... expectedListChanges)
   {
     CDOFeatureDelta featureDelta = revisionDelta.getFeatureDelta(feature);
 

@@ -26,8 +26,7 @@ import org.eclipse.swt.widgets.Display;
  * @author Eike Stepper
  */
 @SuppressWarnings("deprecation")
-public abstract class StructuredContentProvider<INPUT> extends org.eclipse.jface.viewers.ViewerSorter
-    implements IStructuredContentProvider, IListener
+public abstract class StructuredContentProvider<INPUT> extends org.eclipse.jface.viewers.ViewerSorter implements IStructuredContentProvider, IListener
 {
   private StructuredViewer viewer;
 

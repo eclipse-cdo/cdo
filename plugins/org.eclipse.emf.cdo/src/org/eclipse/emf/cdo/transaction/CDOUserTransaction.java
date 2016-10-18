@@ -53,13 +53,13 @@ public interface CDOUserTransaction
       for (;;)
       {
         transaction.getViewLock().lock();
-
+  
         try
         {
           CDOResource resource = transaction.getResource("/stock/resource1");
-
+  
           // Modify the model here...
-
+  
           transaction.commit();
           break;
         }

@@ -50,8 +50,7 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
     if (eFeature instanceof EAttribute)
     {
       final EAttribute eAttribute = (EAttribute)eFeature;
-      if (eAttribute.getEAttributeType().getInstanceClass() != null
-          && byte[].class.isAssignableFrom(eAttribute.getEAttributeType().getInstanceClass()))
+      if (eAttribute.getEAttributeType().getInstanceClass() != null && byte[].class.isAssignableFrom(eAttribute.getEAttributeType().getInstanceClass()))
       {
         convertByteArray = true;
       }

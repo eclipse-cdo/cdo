@@ -61,8 +61,7 @@ public abstract class RepositoryUserManager extends Lifecycle implements IUserMa
     // Cann be overridden in subclasses.
   }
 
-  public byte[] encrypt(String userID, byte[] data, String algorithmName, byte[] salt, int count)
-      throws SecurityException
+  public byte[] encrypt(String userID, byte[] data, String algorithmName, byte[] salt, int count) throws SecurityException
   {
     try
     {
@@ -191,8 +190,7 @@ public abstract class RepositoryUserManager extends Lifecycle implements IUserMa
     {
     }
 
-    public Object process(IManagedContainer container, String productGroup, String factoryType, String description,
-        Object element)
+    public Object process(IManagedContainer container, String productGroup, String factoryType, String description, Object element)
     {
       if (element instanceof RepositoryUserManager)
       {

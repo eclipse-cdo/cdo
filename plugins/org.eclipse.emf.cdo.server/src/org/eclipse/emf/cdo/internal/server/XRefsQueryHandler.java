@@ -72,8 +72,7 @@ public class XRefsQueryHandler implements IQueryHandler
       CDOBranch branch = branchPoint.getBranch();
       int maxResults = info.getMaxResults();
 
-      while (!branch.isMainBranch()
-          && (maxResults == CDOQueryInfo.UNLIMITED_RESULTS || context.getResultCount() < maxResults))
+      while (!branch.isMainBranch() && (maxResults == CDOQueryInfo.UNLIMITED_RESULTS || context.getResultCount() < maxResults))
       {
         branchPoint = branch.getBase();
         branch = branchPoint.getBranch();
@@ -88,8 +87,7 @@ public class XRefsQueryHandler implements IQueryHandler
     }
   }
 
-  public static void collectSourceCandidates(IView view, Collection<EClass> concreteTypes,
-      Map<EClass, List<EReference>> sourceCandidates)
+  public static void collectSourceCandidates(IView view, Collection<EClass> concreteTypes, Map<EClass, List<EReference>> sourceCandidates)
   {
     InternalRepository repository = (InternalRepository)view.getRepository();
     CDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
@@ -114,8 +112,7 @@ public class XRefsQueryHandler implements IQueryHandler
     }
   }
 
-  public static void collectSourceCandidates(CDOPackageInfo packageInfo, Collection<EClass> concreteTypes,
-      Map<EClass, List<EReference>> sourceCandidates)
+  public static void collectSourceCandidates(CDOPackageInfo packageInfo, Collection<EClass> concreteTypes, Map<EClass, List<EReference>> sourceCandidates)
   {
     State state = packageInfo.getPackageUnit().getState();
     if (state == CDOPackageUnit.State.LOADED || state == CDOPackageUnit.State.PROXY)
@@ -131,8 +128,7 @@ public class XRefsQueryHandler implements IQueryHandler
     }
   }
 
-  public static void collectSourceCandidates(EClass eClass, Collection<EClass> concreteTypes,
-      Map<EClass, List<EReference>> sourceCandidates)
+  public static void collectSourceCandidates(EClass eClass, Collection<EClass> concreteTypes, Map<EClass, List<EReference>> sourceCandidates)
   {
     if (!eClass.isAbstract() && !eClass.isInterface())
     {
@@ -143,8 +139,8 @@ public class XRefsQueryHandler implements IQueryHandler
     }
   }
 
-  public static void collectSourceCandidates(EReference eReference, Collection<EClass> concreteTypes,
-      Map<EClass, List<EReference>> sourceCandidates, CDOPackageRegistry packageRegistry)
+  public static void collectSourceCandidates(EReference eReference, Collection<EClass> concreteTypes, Map<EClass, List<EReference>> sourceCandidates,
+      CDOPackageRegistry packageRegistry)
   {
     EClass rootClass = eReference.getEContainingClass();
     collectSourceCandidates(rootClass, eReference, concreteTypes, sourceCandidates);

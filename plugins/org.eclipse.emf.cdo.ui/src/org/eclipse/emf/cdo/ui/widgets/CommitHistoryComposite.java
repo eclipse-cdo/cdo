@@ -348,8 +348,7 @@ public class CommitHistoryComposite extends Composite
       if (branchAdapter != null)
       {
         branch = branchAdapter;
-        session = (CDOSession)((CDOSessionProtocol)((InternalCDOBranchManager)branch.getBranchManager())
-            .getBranchLoader()).getSession();
+        session = (CDOSession)((CDOSessionProtocol)((InternalCDOBranchManager)branch.getBranchManager()).getBranchLoader()).getSession();
         offline = determineOffline();
         object = null;
         return;

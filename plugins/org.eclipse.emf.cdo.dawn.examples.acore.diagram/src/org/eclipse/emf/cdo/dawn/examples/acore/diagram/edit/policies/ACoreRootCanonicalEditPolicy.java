@@ -135,8 +135,7 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
     }
     LinkedList<IAdaptable> createdViews = new LinkedList<IAdaptable>();
     // refreshSemanticChildren() alternative
-    List<AcoreNodeDescriptor> childDescriptors = AcoreDiagramUpdater
-        .getACoreRoot_1000SemanticChildren((View)getHost().getModel());
+    List<AcoreNodeDescriptor> childDescriptors = AcoreDiagramUpdater.getACoreRoot_1000SemanticChildren((View)getHost().getModel());
     ArrayList<EObject> semanticChildren = new ArrayList<EObject>(childDescriptors.size());
     for (Iterator<AcoreNodeDescriptor> it = childDescriptors.iterator(); it.hasNext();)
     {
@@ -156,15 +155,13 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
         it.remove();
       }
     }
-    ArrayList<CreateViewRequest.ViewDescriptor> viewDescriptors = new ArrayList<CreateViewRequest.ViewDescriptor>(
-        childDescriptors.size());
+    ArrayList<CreateViewRequest.ViewDescriptor> viewDescriptors = new ArrayList<CreateViewRequest.ViewDescriptor>(childDescriptors.size());
     for (Iterator<AcoreNodeDescriptor> it = childDescriptors.iterator(); it.hasNext();)
     {
       AcoreNodeDescriptor next = it.next();
       String hint = AcoreVisualIDRegistry.getType(next.getVisualID());
       IAdaptable elementAdapter = new CanonicalElementAdapter(next.getModelElement(), hint);
-      viewDescriptors.add(new CreateViewRequest.ViewDescriptor(elementAdapter, Node.class, hint, ViewUtil.APPEND, false,
-          host().getDiagramPreferencesHint()));
+      viewDescriptors.add(new CreateViewRequest.ViewDescriptor(elementAdapter, Node.class, hint, ViewUtil.APPEND, false, host().getDiagramPreferencesHint()));
     }
     //
     CreateViewRequest request = getCreateViewRequest(viewDescriptors);
@@ -223,13 +220,11 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
       EObject diagramLinkObject = nextDiagramLink.getElement();
       EObject diagramLinkSrc = nextDiagramLink.getSource().getElement();
       EObject diagramLinkDst = nextDiagramLink.getTarget().getElement();
-      for (Iterator<AcoreLinkDescriptor> linkDescriptorsIterator = linkDescriptors.iterator(); linkDescriptorsIterator
-          .hasNext();)
+      for (Iterator<AcoreLinkDescriptor> linkDescriptorsIterator = linkDescriptors.iterator(); linkDescriptorsIterator.hasNext();)
       {
         AcoreLinkDescriptor nextLinkDescriptor = linkDescriptorsIterator.next();
-        if (diagramLinkObject == nextLinkDescriptor.getModelElement()
-            && diagramLinkSrc == nextLinkDescriptor.getSource() && diagramLinkDst == nextLinkDescriptor.getDestination()
-            && diagramLinkVisualID == nextLinkDescriptor.getVisualID())
+        if (diagramLinkObject == nextLinkDescriptor.getModelElement() && diagramLinkSrc == nextLinkDescriptor.getSource()
+            && diagramLinkDst == nextLinkDescriptor.getDestination() && diagramLinkVisualID == nextLinkDescriptor.getVisualID())
         {
           linksIterator.remove();
           linkDescriptorsIterator.remove();
@@ -304,8 +299,7 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
   /**
    * @generated
    */
-  private Collection<IAdaptable> createConnections(Collection<AcoreLinkDescriptor> linkDescriptors,
-      Map<EObject, View> domain2NotationMap)
+  private Collection<IAdaptable> createConnections(Collection<AcoreLinkDescriptor> linkDescriptors, Map<EObject, View> domain2NotationMap)
   {
     LinkedList<IAdaptable> adapters = new LinkedList<IAdaptable>();
     for (Iterator<AcoreLinkDescriptor> it = linkDescriptors.iterator(); it.hasNext();)
@@ -318,8 +312,8 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
         continue;
       }
       CreateConnectionViewRequest.ConnectionViewDescriptor descriptor = new CreateConnectionViewRequest.ConnectionViewDescriptor(
-          nextLinkDescriptor.getSemanticAdapter(), String.valueOf(nextLinkDescriptor.getVisualID()), ViewUtil.APPEND,
-          false, ((IGraphicalEditPart)getHost()).getDiagramPreferencesHint());
+          nextLinkDescriptor.getSemanticAdapter(), String.valueOf(nextLinkDescriptor.getVisualID()), ViewUtil.APPEND, false,
+          ((IGraphicalEditPart)getHost()).getDiagramPreferencesHint());
       CreateConnectionViewRequest ccr = new CreateConnectionViewRequest(descriptor);
       ccr.setType(RequestConstants.REQ_CONNECTION_START);
       ccr.setSourceEditPart(sourceEditPart);

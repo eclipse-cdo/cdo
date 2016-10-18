@@ -54,8 +54,7 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
 
   private static final Color RED = UIUtil.getDisplay().getSystemColor(SWT.COLOR_RED);
 
-  private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages()
-      .getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
+  private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
 
   private Font bold;
 

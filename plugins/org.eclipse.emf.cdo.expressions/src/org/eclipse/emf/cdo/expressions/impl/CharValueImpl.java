@@ -69,8 +69,7 @@ public class CharValueImpl extends ValueImpl implements CharValue
   @Override
   public Character getLiteral()
   {
-    return (Character)eDynamicGet(ExpressionsPackage.CHAR_VALUE__LITERAL,
-        ExpressionsPackage.Literals.CHAR_VALUE__LITERAL, true, true);
+    return (Character)eDynamicGet(ExpressionsPackage.CHAR_VALUE__LITERAL, ExpressionsPackage.Literals.CHAR_VALUE__LITERAL, true, true);
   }
 
   /**

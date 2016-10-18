@@ -84,8 +84,7 @@ public final class CDODBUtil
   /**
    * @since 2.0
    */
-  public static IDBStore createStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter,
-      IDBConnectionProvider dbConnectionProvider)
+  public static IDBStore createStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider)
   {
     return createStore(mappingStrategy, dbAdapter, dbConnectionProvider, null);
   }
@@ -93,8 +92,8 @@ public final class CDODBUtil
   /**
    * @since 4.2
    */
-  public static IDBStore createStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter,
-      IDBConnectionProvider dbConnectionProvider, Map<String, String> properties)
+  public static IDBStore createStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider,
+      Map<String, String> properties)
   {
     DBStore store = new DBStore();
     store.setMappingStrategy(mappingStrategy);
@@ -123,8 +122,7 @@ public final class CDODBUtil
   /**
    * @since 4.1
    */
-  public static IMappingStrategy createHorizontalMappingStrategy(boolean auditing, boolean branching,
-      boolean withRanges)
+  public static IMappingStrategy createHorizontalMappingStrategy(boolean auditing, boolean branching, boolean withRanges)
   {
     if (branching)
     {

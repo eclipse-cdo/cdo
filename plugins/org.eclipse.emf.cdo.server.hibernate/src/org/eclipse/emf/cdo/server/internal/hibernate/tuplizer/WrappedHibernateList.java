@@ -197,8 +197,7 @@ public class WrappedHibernateList implements InternalCDOList
   public List<Object> getDelegate()
   {
     // if we got disconnected then internally use a new autoexpanding list
-    if (delegate instanceof AbstractPersistentCollection && !((AbstractPersistentCollection)delegate).wasInitialized()
-        && !isConnectedToSession())
+    if (delegate instanceof AbstractPersistentCollection && !((AbstractPersistentCollection)delegate).wasInitialized() && !isConnectedToSession())
     {
       delegate = new UninitializedCollection<Object>()
       {
@@ -244,8 +243,7 @@ public class WrappedHibernateList implements InternalCDOList
   {
     final AbstractPersistentCollection persistentCollection = (AbstractPersistentCollection)delegate;
     final SessionImplementor session = persistentCollection.getSession();
-    return session != null && session.isOpen()
-        && session.getPersistenceContext().containsCollection(persistentCollection);
+    return session != null && session.isOpen() && session.getPersistenceContext().containsCollection(persistentCollection);
   }
 
   /**

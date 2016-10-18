@@ -38,6 +38,5 @@ public interface IClassMappingDeltaSupport
    * @param monitor
    *          the monitor to report progress.
    */
-  public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created,
-      OMMonitor monitor);
+  public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created, OMMonitor monitor);
 }

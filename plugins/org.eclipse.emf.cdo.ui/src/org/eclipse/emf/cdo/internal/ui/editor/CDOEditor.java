@@ -182,8 +182,7 @@ import java.util.Map;
  * @author Eike Stepper
  * @generated
  */
-public class CDOEditor extends MultiPageEditorPart
-    implements IEditingDomainProvider, ISelectionProvider, IMenuListener, IViewerProvider
+public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider, IMenuListener, IViewerProvider
 {
   /**
    * The filters for file extensions supported by the editor.
@@ -212,8 +211,7 @@ public class CDOEditor extends MultiPageEditorPart
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOEditor.class);
 
-  private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages()
-      .getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
+  private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
 
   private static final Field PROPERTY_SHEET_PAGE_VIEWER_FIELD = getPropertySheetPageViewerField();
 
@@ -607,8 +605,7 @@ public class CDOEditor extends MultiPageEditorPart
   {
     if (updateProblemIndication)
     {
-      BasicDiagnostic diagnostic = new BasicDiagnostic(Diagnostic.OK, "org.eclipse.emf.cdo.ui", 0, null,
-          new Object[] { editingDomain.getResourceSet() });
+      BasicDiagnostic diagnostic = new BasicDiagnostic(Diagnostic.OK, "org.eclipse.emf.cdo.ui", 0, null, new Object[] { editingDomain.getResourceSet() });
       for (Diagnostic childDiagnostic : resourceToDiagnosticMap.values())
       {
         if (childDiagnostic.getSeverity() != Diagnostic.OK)
@@ -652,8 +649,7 @@ public class CDOEditor extends MultiPageEditorPart
    */
   protected boolean handleDirtyConflict()
   {
-    return MessageDialog.openQuestion(getSite().getShell(), getString("_UI_FileConflict_label"),
-        getString("_WARN_FileConflict"));
+    return MessageDialog.openQuestion(getSite().getShell(), getString("_UI_FileConflict_label"), getString("_WARN_FileConflict"));
   }
 
   /**
@@ -1121,15 +1117,14 @@ public class CDOEditor extends MultiPageEditorPart
     if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty())
     {
       BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0,
-          getString("_UI_CreateModelError_message", resource.getURI()),
-          new Object[] { exception == null ? (Object)resource : exception });
+          getString("_UI_CreateModelError_message", resource.getURI()), new Object[] { exception == null ? (Object)resource : exception });
       basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
       return basicDiagnostic;
     }
     else if (exception != null)
     {
-      return new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0,
-          getString("_UI_CreateModelError_message", resource.getURI()), new Object[] { exception });
+      return new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0, getString("_UI_CreateModelError_message", resource.getURI()),
+          new Object[] { exception });
     }
     else
     {
@@ -1437,8 +1432,7 @@ public class CDOEditor extends MultiPageEditorPart
    */
   protected ILabelProvider createLabelProvider()
   {
-    return new DecoratingLabelProvider(new CDOLabelProvider(adapterFactory, view, selectionViewer),
-        createLabelDecorator())
+    return new DecoratingLabelProvider(new CDOLabelProvider(adapterFactory, view, selectionViewer), createLabelDecorator())
     {
       @Override
       public Image getImage(Object element)
@@ -1671,14 +1665,12 @@ public class CDOEditor extends MultiPageEditorPart
           {
             // Select the root object in the view.
             //
-            contentOutlineViewer.setSelection(
-                new StructuredSelection(CDOUtil.getResources(editingDomain.getResourceSet()).get(0)), true);
+            contentOutlineViewer.setSelection(new StructuredSelection(CDOUtil.getResources(editingDomain.getResourceSet()).get(0)), true);
           }
         }
 
         @Override
-        public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager,
-            IStatusLineManager statusLineManager)
+        public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager, IStatusLineManager statusLineManager)
         {
           super.makeContributions(menuManager, toolBarManager, statusLineManager);
           contentOutlineStatusLineManager = statusLineManager;
@@ -1879,8 +1871,7 @@ public class CDOEditor extends MultiPageEditorPart
         boolean first = true;
         for (Resource resource : editingDomain.getResourceSet().getResources())
         {
-          if ((first || !resource.getContents().isEmpty() || isPersisted(resource))
-              && !editingDomain.isReadOnly(resource))
+          if ((first || !resource.getContents().isEmpty() || isPersisted(resource)) && !editingDomain.isReadOnly(resource))
           {
             try
             {
@@ -1945,8 +1936,7 @@ public class CDOEditor extends MultiPageEditorPart
         {
           for (Resource resource : resources)
           {
-            if ((first || !resource.getContents().isEmpty() || isPersisted(resource))
-                && !editingDomain.isReadOnly(resource))
+            if ((first || !resource.getContents().isEmpty() || isPersisted(resource)) && !editingDomain.isReadOnly(resource))
             {
               try
               {
@@ -2000,8 +1990,7 @@ public class CDOEditor extends MultiPageEditorPart
                     message = Messages.getString("CDOEditor.18"); //$NON-NLS-1$
                   }
 
-                  RollbackTransactionDialog dialog = new RollbackTransactionDialog(getEditorSite().getPage(), title,
-                      message, transaction);
+                  RollbackTransactionDialog dialog = new RollbackTransactionDialog(getEditorSite().getPage(), title, message, transaction);
                   if (dialog.open() == RollbackTransactionDialog.OK)
                   {
                     transaction.rollback();
@@ -2214,8 +2203,8 @@ public class CDOEditor extends MultiPageEditorPart
    */
   public void setStatusLineManager(ISelection selection)
   {
-    IStatusLineManager statusLineManager = currentViewer != null && currentViewer == contentOutlineViewer
-        ? contentOutlineStatusLineManager : getActionBars().getStatusLineManager();
+    IStatusLineManager statusLineManager = currentViewer != null && currentViewer == contentOutlineViewer ? contentOutlineStatusLineManager
+        : getActionBars().getStatusLineManager();
 
     if (statusLineManager != null)
     {
@@ -2333,8 +2322,7 @@ public class CDOEditor extends MultiPageEditorPart
         @Override
         protected void preRun() throws Exception
         {
-          SelectClassDialog dialog = new SelectClassDialog(page, "New Root Object",
-              "Select a package and a class for the new root object.");
+          SelectClassDialog dialog = new SelectClassDialog(page, "New Root Object", "Select a package and a class for the new root object.");
 
           if (dialog.open() == SelectClassDialog.OK)
           {
@@ -2348,8 +2336,7 @@ public class CDOEditor extends MultiPageEditorPart
         }
 
         @Override
-        protected void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor)
-            throws Exception
+        protected void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor) throws Exception
         {
           EList<EObject> contents = parent.getContents();
           contents.add(newObject);

@@ -52,8 +52,7 @@ public abstract class AbstractCapabilityTest extends TestCase
 
           Statement tx1stmt = transaction1.createStatement();
           tx1stmt.executeUpdate("update status_table set status = 'changed' where trans = 'transaction1'");
-          msg("Read value (transaction 1) is "
-              + select(transaction1, "select status from status_table where trans = 'transaction1'").toUpperCase());
+          msg("Read value (transaction 1) is " + select(transaction1, "select status from status_table where trans = 'transaction1'").toUpperCase());
           sleep(1000);
 
           transaction1.rollback();
@@ -74,8 +73,7 @@ public abstract class AbstractCapabilityTest extends TestCase
 
     transaction2.setAutoCommit(false);
 
-    msg("Read value (transaction 2) is "
-        + select(transaction2, "select status from status_table where trans = 'transaction1'").toUpperCase());
+    msg("Read value (transaction 2) is " + select(transaction2, "select status from status_table where trans = 'transaction1'").toUpperCase());
     msg("----------------------------------------------------------");
     transaction2.rollback();
     transaction2.close();
@@ -103,15 +101,13 @@ public abstract class AbstractCapabilityTest extends TestCase
       DBUtil.close(tx1stmt);
     }
 
-    msg("Read value before rollback is "
-        + select(transaction1, "select status from status_table where trans = 'transaction1'").toUpperCase());
+    msg("Read value before rollback is " + select(transaction1, "select status from status_table where trans = 'transaction1'").toUpperCase());
 
     transaction1.rollback();
     transaction1.close();
 
     Connection view = provider.getConnection();
-    msg("Read value after rollback is "
-        + select(view, "select status from status_table where trans = 'transaction1'").toUpperCase());
+    msg("Read value after rollback is " + select(view, "select status from status_table where trans = 'transaction1'").toUpperCase());
     view.close();
     msg("----------------------------------------------------------");
   }
@@ -170,15 +166,11 @@ public abstract class AbstractCapabilityTest extends TestCase
 
     Connection view = provider.getConnection();
 
-    msg("transaction1: unchanged table record is "
-        + select(view, "select status from status_table where trans = 'transaction1'").toUpperCase());
-    msg("transaction2: unchanged table record is "
-        + select(view, "select status from status_table where trans = 'transaction2'").toUpperCase());
+    msg("transaction1: unchanged table record is " + select(view, "select status from status_table where trans = 'transaction1'").toUpperCase());
+    msg("transaction2: unchanged table record is " + select(view, "select status from status_table where trans = 'transaction2'").toUpperCase());
 
-    msg("transaction1: changed table record is "
-        + select(view, "select status from change_table where trans = 'transaction1'").toUpperCase());
-    msg("transaction2: changed table record is "
-        + select(view, "select status from change_table where trans = 'transaction2'").toUpperCase());
+    msg("transaction1: changed table record is " + select(view, "select status from change_table where trans = 'transaction1'").toUpperCase());
+    msg("transaction2: changed table record is " + select(view, "select status from change_table where trans = 'transaction2'").toUpperCase());
 
     String present = "present";
     try

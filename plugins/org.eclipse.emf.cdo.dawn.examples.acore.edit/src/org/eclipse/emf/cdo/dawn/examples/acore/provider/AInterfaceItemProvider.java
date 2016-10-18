@@ -31,8 +31,8 @@ import java.util.List;
  *
  * @generated
  */
-public class AInterfaceItemProvider extends ABasicClassItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class AInterfaceItemProvider extends ABasicClassItemProvider
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -80,8 +80,7 @@ public class AInterfaceItemProvider extends ABasicClassItemProvider implements I
   public String getText(Object object)
   {
     String label = ((AInterface)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_AInterface_type")
-        : getString("_UI_AInterface_type") + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_AInterface_type") : getString("_UI_AInterface_type") + " " + label;
   }
 
   /**

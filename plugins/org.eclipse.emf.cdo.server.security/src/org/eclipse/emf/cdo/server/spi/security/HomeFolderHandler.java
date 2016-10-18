@@ -151,8 +151,7 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
     }
   }
 
-  protected void handleUsers(final InternalSecurityManager securityManager, final List<String> userIDs,
-      final boolean init)
+  protected void handleUsers(final InternalSecurityManager securityManager, final List<String> userIDs, final boolean init)
   {
     executorService.submit(new Runnable()
     {

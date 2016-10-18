@@ -200,12 +200,10 @@ public class CDOAdminServer extends AbstractCDOAdmin
     if (authProtocol instanceof CDOAdminServerProtocol)
     {
       CDOAdminServerProtocol protocol = (CDOAdminServerProtocol)authProtocol;
-      String message = MessageFormat
-          .format("The repository \"{0}\" has connected users. Proceed with deletion anyways?", delegate.getName());
+      String message = MessageFormat.format("The repository \"{0}\" has connected users. Proceed with deletion anyways?", delegate.getName());
       try
       {
-        if (protocol.sendConfirmationRequest("Repository In Use", message, Confirmation.NO, Confirmation.YES,
-            Confirmation.NO) != Confirmation.YES)
+        if (protocol.sendConfirmationRequest("Repository In Use", message, Confirmation.NO, Confirmation.YES, Confirmation.NO) != Confirmation.YES)
         {
           return false;
         }

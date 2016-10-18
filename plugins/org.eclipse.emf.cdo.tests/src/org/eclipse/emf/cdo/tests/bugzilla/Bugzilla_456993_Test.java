@@ -65,8 +65,7 @@ public class Bugzilla_456993_Test extends AbstractCDOTest
     testAllInstancesQueryOnBranches(CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES, null, null, null);
   }
 
-  private void testAllInstancesQueryOnBranches(String language, String queryStringSuffix, String parameterName,
-      String parameterValue) throws Exception
+  private void testAllInstancesQueryOnBranches(String language, String queryStringSuffix, String parameterName, String parameterValue) throws Exception
   {
     CDOSession session1 = openSession();
     CDOBranch mainBranch = session1.getBranchManager().getMainBranch();
@@ -217,8 +216,7 @@ public class Bugzilla_456993_Test extends AbstractCDOTest
   private CDOQuery createQuery(CDOView view, String language, EObject eObject, String queryStringSuffix)
   {
     EClass eClass = eObject.eClass();
-    CDOQuery query = view.createQuery(language,
-        queryStringSuffix != null ? eClass.getEPackage().getName() + "::" + eClass.getName() + queryStringSuffix : null,
+    CDOQuery query = view.createQuery(language, queryStringSuffix != null ? eClass.getEPackage().getName() + "::" + eClass.getName() + queryStringSuffix : null,
         eObject.eResource() != null ? eObject : null);
     if (queryStringSuffix == null)
     {

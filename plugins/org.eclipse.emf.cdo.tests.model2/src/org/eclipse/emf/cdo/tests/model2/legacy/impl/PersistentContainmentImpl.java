@@ -130,8 +130,7 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
     attrBefore = newAttrBefore;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.PERSISTENT_CONTAINMENT__ATTR_BEFORE,
-          oldAttrBefore, attrBefore));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.PERSISTENT_CONTAINMENT__ATTR_BEFORE, oldAttrBefore, attrBefore));
     }
   }
 
@@ -143,8 +142,8 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
   {
     if (children == null)
     {
-      children = new EObjectContainmentWithInverseEList<TransientContainer>(TransientContainer.class, this,
-          Model2Package.PERSISTENT_CONTAINMENT__CHILDREN, Model2Package.TRANSIENT_CONTAINER__PARENT);
+      children = new EObjectContainmentWithInverseEList<TransientContainer>(TransientContainer.class, this, Model2Package.PERSISTENT_CONTAINMENT__CHILDREN,
+          Model2Package.TRANSIENT_CONTAINER__PARENT);
     }
     return children;
   }
@@ -168,8 +167,7 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
     attrAfter = newAttrAfter;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.PERSISTENT_CONTAINMENT__ATTR_AFTER,
-          oldAttrAfter, attrAfter));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.PERSISTENT_CONTAINMENT__ATTR_AFTER, oldAttrAfter, attrAfter));
     }
   }
 

@@ -62,8 +62,7 @@ public class Bugzilla_405606_Test extends AbstractCDOTest
       CDOResource res = view.getResource(getResourcePath("/test"));
       Category cat = (Category)res.getContents().get(0);
 
-      IOUtil.OUT()
-          .println("Unchunked: " + ((InternalCDORevision)CDOUtil.getCDOObject(cat).cdoRevision()).isUnchunked());
+      IOUtil.OUT().println("Unchunked: " + ((InternalCDORevision)CDOUtil.getCDOObject(cat).cdoRevision()).isUnchunked());
 
       session.close();
     }
@@ -78,8 +77,7 @@ public class Bugzilla_405606_Test extends AbstractCDOTest
       CDOResource res = view.getResource(getResourcePath("/test"));
       Category cat = (Category)res.getContents().get(0);
 
-      IOUtil.OUT()
-          .println("Unchunked: " + ((InternalCDORevision)CDOUtil.getCDOObject(cat).cdoRevision()).isUnchunked());
+      IOUtil.OUT().println("Unchunked: " + ((InternalCDORevision)CDOUtil.getCDOObject(cat).cdoRevision()).isUnchunked());
 
       // Try to iterate over the items
       for (Category child : cat.getCategories())

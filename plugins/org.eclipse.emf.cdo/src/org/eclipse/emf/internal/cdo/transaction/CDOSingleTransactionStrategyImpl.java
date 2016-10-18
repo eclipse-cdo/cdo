@@ -60,8 +60,7 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
     InternalCDOSession session = transaction.getSession();
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
 
-    CommitTransactionResult result = sessionProtocol.commitTransaction(commitContext,
-        EclipseMonitor.convert(progressMonitor));
+    CommitTransactionResult result = sessionProtocol.commitTransaction(commitContext, EclipseMonitor.convert(progressMonitor));
 
     commitContext.postCommit(result);
 
@@ -109,8 +108,7 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
     String userID = session.getUserID();
 
     InternalCDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
-    return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource,
-        commitData);
+    return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource, commitData);
   }
 
   public void rollback(InternalCDOTransaction transaction, InternalCDOUserSavepoint savepoint)

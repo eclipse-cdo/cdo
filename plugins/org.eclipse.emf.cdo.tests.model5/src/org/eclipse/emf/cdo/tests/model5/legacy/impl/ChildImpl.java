@@ -165,8 +165,7 @@ public class ChildImpl extends EObjectImpl implements Child
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model5Package.CHILD__PREFERRED_BY, oldPreferredBy,
-              preferredBy));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model5Package.CHILD__PREFERRED_BY, oldPreferredBy, preferredBy));
         }
       }
     }
@@ -194,8 +193,7 @@ public class ChildImpl extends EObjectImpl implements Child
     preferredBy = newPreferredBy;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model5Package.CHILD__PREFERRED_BY,
-          oldPreferredBy, newPreferredBy);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model5Package.CHILD__PREFERRED_BY, oldPreferredBy, newPreferredBy);
       if (msgs == null)
       {
         msgs = notification;
@@ -234,8 +232,7 @@ public class ChildImpl extends EObjectImpl implements Child
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model5Package.CHILD__PREFERRED_BY, newPreferredBy,
-          newPreferredBy));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model5Package.CHILD__PREFERRED_BY, newPreferredBy, newPreferredBy));
     }
   }
 

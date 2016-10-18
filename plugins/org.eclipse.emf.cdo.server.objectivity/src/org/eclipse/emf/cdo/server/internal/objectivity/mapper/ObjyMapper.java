@@ -125,10 +125,9 @@ public class ObjyMapper
       return singleRef;
     }
 
-    TRACER_DEBUG.trace("ERROR: " + feature.getEType() + " not supported for feature "
-        + ((EClassifier)feature.eContainer()).getName() + "." + feature.getName());
-    throw new RuntimeException(feature.getEType() + " not supported for feature "
-        + ((EClassifier)feature.eContainer()).getName() + "." + feature.getName());
+    TRACER_DEBUG
+        .trace("ERROR: " + feature.getEType() + " not supported for feature " + ((EClassifier)feature.eContainer()).getName() + "." + feature.getName());
+    throw new RuntimeException(feature.getEType() + " not supported for feature " + ((EClassifier)feature.eContainer()).getName() + "." + feature.getName());
   }
 
   protected void initMap()

@@ -82,8 +82,7 @@ public class DImpl extends EObjectImpl implements D
     data = newData;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model6Package.D__DATA, oldData,
-          newData);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model6Package.D__DATA, oldData, newData);
       if (msgs == null)
       {
         msgs = notification;

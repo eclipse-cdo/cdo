@@ -63,8 +63,7 @@ public interface HibernateTestPackage extends EPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  HibernateTestPackage eINSTANCE = org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl
-      .init();
+  HibernateTestPackage eINSTANCE = org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.HibernateTestPackageImpl.init();
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl.Bz356181_MainImpl <em>Bz356181 Main</em>}' class.

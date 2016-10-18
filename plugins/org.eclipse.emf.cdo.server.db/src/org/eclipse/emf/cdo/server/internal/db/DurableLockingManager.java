@@ -111,8 +111,8 @@ public class DurableLockingManager extends Lifecycle
     this.store = store;
   }
 
-  public synchronized LockArea createLockArea(DBStoreAccessor accessor, String durableLockingID, String userID,
-      CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
+  public synchronized LockArea createLockArea(DBStoreAccessor accessor, String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly,
+      Map<CDOID, LockGrade> locks)
   {
     if (durableLockingID == null)
     {
@@ -300,14 +300,12 @@ public class DurableLockingManager extends Lifecycle
     commit(accessor);
   }
 
-  public void lock(DBStoreAccessor accessor, String durableLockingID, LockType type,
-      Collection<? extends Object> objectsToLock)
+  public void lock(DBStoreAccessor accessor, String durableLockingID, LockType type, Collection<? extends Object> objectsToLock)
   {
     changeLocks(accessor, durableLockingID, type, objectsToLock, true);
   }
 
-  public void unlock(DBStoreAccessor accessor, String durableLockingID, LockType type,
-      Collection<? extends Object> objectsToUnlock)
+  public void unlock(DBStoreAccessor accessor, String durableLockingID, LockType type, Collection<? extends Object> objectsToUnlock)
   {
     changeLocks(accessor, durableLockingID, type, objectsToUnlock, false);
   }
@@ -366,16 +364,16 @@ public class DurableLockingManager extends Lifecycle
       });
     }
 
-    sqlInsertLockArea = "INSERT INTO " + LOCK_AREAS + "(" + LOCK_AREAS_ID + "," + LOCK_AREAS_USER_ID + ","
-        + LOCK_AREAS_VIEW_BRANCH + "," + LOCK_AREAS_VIEW_TIME + "," + LOCK_AREAS_READ_ONLY + ") VALUES (?, ?, ?, ?, ?)";
-    sqlSelectLockArea = "SELECT " + LOCK_AREAS_USER_ID + "," + LOCK_AREAS_VIEW_BRANCH + "," + LOCK_AREAS_VIEW_TIME + ","
-        + LOCK_AREAS_READ_ONLY + " FROM " + LOCK_AREAS + " WHERE " + LOCK_AREAS_ID + "=?";
-    sqlSelectAllLockAreas = "SELECT " + LOCK_AREAS_ID + "," + LOCK_AREAS_USER_ID + "," + LOCK_AREAS_VIEW_BRANCH + ","
-        + LOCK_AREAS_VIEW_TIME + "," + LOCK_AREAS_READ_ONLY + " FROM " + LOCK_AREAS;
+    sqlInsertLockArea = "INSERT INTO " + LOCK_AREAS + "(" + LOCK_AREAS_ID + "," + LOCK_AREAS_USER_ID + "," + LOCK_AREAS_VIEW_BRANCH + "," + LOCK_AREAS_VIEW_TIME
+        + "," + LOCK_AREAS_READ_ONLY + ") VALUES (?, ?, ?, ?, ?)";
+    sqlSelectLockArea = "SELECT " + LOCK_AREAS_USER_ID + "," + LOCK_AREAS_VIEW_BRANCH + "," + LOCK_AREAS_VIEW_TIME + "," + LOCK_AREAS_READ_ONLY + " FROM "
+        + LOCK_AREAS + " WHERE " + LOCK_AREAS_ID + "=?";
+    sqlSelectAllLockAreas = "SELECT " + LOCK_AREAS_ID + "," + LOCK_AREAS_USER_ID + "," + LOCK_AREAS_VIEW_BRANCH + "," + LOCK_AREAS_VIEW_TIME + ","
+        + LOCK_AREAS_READ_ONLY + " FROM " + LOCK_AREAS;
     sqlSelectLockAreas = sqlSelectAllLockAreas + " WHERE " + LOCK_AREAS_USER_ID + " LIKE ?";
     sqlDeleteLockArea = "DELETE FROM " + LOCK_AREAS + " WHERE " + LOCK_AREAS_ID + "=?";
-    sqlDeleteLockAreas = "DELETE FROM " + LOCK_AREAS + " WHERE EXISTS (SELECT * FROM " + LOCKS + " WHERE " + LOCKS + "."
-        + LOCKS_AREA_ID + "=" + LOCK_AREAS + "." + LOCK_AREAS_ID + ")";
+    sqlDeleteLockAreas = "DELETE FROM " + LOCK_AREAS + " WHERE EXISTS (SELECT * FROM " + LOCKS + " WHERE " + LOCKS + "." + LOCKS_AREA_ID + "=" + LOCK_AREAS
+        + "." + LOCK_AREAS_ID + ")";
 
     // Locks
     locksTable = database.getSchema().getTable(LOCKS);
@@ -395,14 +393,10 @@ public class DurableLockingManager extends Lifecycle
       });
     }
 
-    sqlSelectLocks = "SELECT " + LOCKS_OBJECT_ID + "," + LOCKS_LOCK_GRADE + " FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID
-        + "=?";
-    sqlSelectLock = "SELECT " + LOCKS_LOCK_GRADE + " FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID + "=? AND "
-        + LOCKS_OBJECT_ID + "=?";
-    sqlInsertLock = "INSERT INTO " + LOCKS + "(" + LOCKS_AREA_ID + "," + LOCKS_OBJECT_ID + "," + LOCKS_LOCK_GRADE
-        + ") VALUES (?, ?, ?)";
-    sqlUpdateLock = "UPDATE " + LOCKS + " SET " + LOCKS_LOCK_GRADE + "=? " + " WHERE " + LOCKS_AREA_ID + "=? AND "
-        + LOCKS_OBJECT_ID + "=?";
+    sqlSelectLocks = "SELECT " + LOCKS_OBJECT_ID + "," + LOCKS_LOCK_GRADE + " FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID + "=?";
+    sqlSelectLock = "SELECT " + LOCKS_LOCK_GRADE + " FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID + "=? AND " + LOCKS_OBJECT_ID + "=?";
+    sqlInsertLock = "INSERT INTO " + LOCKS + "(" + LOCKS_AREA_ID + "," + LOCKS_OBJECT_ID + "," + LOCKS_LOCK_GRADE + ") VALUES (?, ?, ?)";
+    sqlUpdateLock = "UPDATE " + LOCKS + " SET " + LOCKS_LOCK_GRADE + "=? " + " WHERE " + LOCKS_AREA_ID + "=? AND " + LOCKS_OBJECT_ID + "=?";
     sqlDeleteLock = "DELETE FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID + "=? AND " + LOCKS_OBJECT_ID + "=?";
     sqlDeleteLocks = "DELETE FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID + "=?";
   }
@@ -425,8 +419,7 @@ public class DurableLockingManager extends Lifecycle
     }
   }
 
-  private LockArea makeLockArea(DBStoreAccessor accessor, String durableLockingID, String userID, int branchID,
-      long timeStamp, boolean readOnly)
+  private LockArea makeLockArea(DBStoreAccessor accessor, String durableLockingID, String userID, int branchID, long timeStamp, boolean readOnly)
   {
     CDOBranchPoint branchPoint = branchManager.getBranch(branchID).getPoint(timeStamp);
     Map<CDOID, LockGrade> lockMap = getLockMap(accessor, durableLockingID);
@@ -465,8 +458,7 @@ public class DurableLockingManager extends Lifecycle
     }
   }
 
-  private void changeLocks(DBStoreAccessor accessor, String durableLockingID, LockType type,
-      Collection<? extends Object> keys, boolean on)
+  private void changeLocks(DBStoreAccessor accessor, String durableLockingID, LockType type, Collection<? extends Object> keys, boolean on)
   {
     if (keys.isEmpty())
     {
@@ -475,11 +467,9 @@ public class DurableLockingManager extends Lifecycle
 
     String sql = on ? sqlInsertLock : sqlDeleteLock;
 
-    IDBPreparedStatement stmtSelect = accessor.getDBConnection().prepareStatement(sqlSelectLock,
-        ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmtSelect = accessor.getDBConnection().prepareStatement(sqlSelectLock, ReuseProbability.MEDIUM);
     IDBPreparedStatement stmtInsertOrDelete = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
-    IDBPreparedStatement stmtUpdate = accessor.getDBConnection().prepareStatement(sqlUpdateLock,
-        ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmtUpdate = accessor.getDBConnection().prepareStatement(sqlUpdateLock, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
@@ -536,15 +526,13 @@ public class DurableLockingManager extends Lifecycle
     }
   }
 
-  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
-      throws IOException
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
     DBUtil.serializeTable(out, connection, lockAreasTable, null, null);
     DBUtil.serializeTable(out, connection, locksTable, null, null);
   }
 
-  public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime,
-      OMMonitor monitor) throws IOException
+  public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
     monitor.begin(4);
 

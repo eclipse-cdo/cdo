@@ -41,8 +41,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
 
   private Status status;
 
-  public CDOTransferMappingImpl(CDOTransfer transfer, CDOTransferElement source, CDOTransferMapping parent,
-      IProgressMonitor monitor)
+  public CDOTransferMappingImpl(CDOTransfer transfer, CDOTransferElement source, CDOTransferMapping parent, IProgressMonitor monitor)
   {
     this.transfer = transfer;
     this.source = source;

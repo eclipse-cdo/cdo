@@ -380,8 +380,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
 
     if (resource != null)
     {
-      throw new IllegalArgumentException(
-          "Only intended to be called by CDOTransactionImpl.removeObject(CDOID, CDOObject");
+      throw new IllegalArgumentException("Only intended to be called by CDOTransactionImpl.removeObject(CDOID, CDOObject");
     }
 
     super.eSetDirectResource(null);
@@ -767,8 +766,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    * @since 2.0
    */
   @Override
-  public final NotificationChain eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID,
-      NotificationChain msgs)
+  public final NotificationChain eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID, NotificationChain msgs)
   {
     boolean isResource = this instanceof CDOResource;
     boolean isRootResource = isResource && ((CDOResource)this).isRoot();
@@ -803,8 +801,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     }
 
     CDOView oldView = viewAndState.view;
-    CDOView newView = newResource != null && newResource instanceof CDOResource ? ((CDOResource)newResource).cdoView()
-        : null;
+    CDOView newView = newResource != null && newResource instanceof CDOResource ? ((CDOResource)newResource).cdoView() : null;
 
     boolean moved = oldView != null && oldView == newView;
     if (!moved && oldResource != null && oldResource != newResource && !isRootResource)
@@ -829,8 +826,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       if (oldContainer != null && oldContainerFeatureID >= 0 && oldContainerFeatureID != newContainerFeatureID)
       {
-        ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, oldContainerFeatureID,
-            oldContainer, null);
+        ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, oldContainerFeatureID, oldContainer, null);
         if (msgs == null)
         {
           msgs = notification;
@@ -1235,8 +1231,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    * Adjust the reference ONLY if the opposite reference used CDOID. This is true ONLY if the state of <cdo>this</code>
    * was not {@link CDOState#NEW}.
    */
-  private static void adjustOppositeReference(InternalCDOObject instance, InternalEObject opposite,
-      EReference oppositeReference)
+  private static void adjustOppositeReference(InternalCDOObject instance, InternalEObject opposite, EReference oppositeReference)
   {
     if (opposite != null)
     {
@@ -1285,16 +1280,14 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 3.0
    */
-  public static void instanceToRevisionFeature(InternalCDOView view, InternalCDOObject object,
-      EStructuralFeature feature, Object setting)
+  public static void instanceToRevisionFeature(InternalCDOView view, InternalCDOObject object, EStructuralFeature feature, Object setting)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Populating feature {0}", feature); //$NON-NLS-1$
     }
 
-    PersistenceFilter filter = ((InternalCDOClassInfo)CDOModelUtil.getClassInfo(feature.getEContainingClass()))
-        .getPersistenceFilter(feature);
+    PersistenceFilter filter = ((InternalCDOClassInfo)CDOModelUtil.getClassInfo(feature.getEContainingClass())).getPersistenceFilter(feature);
     if (filter != null)
     {
       if (TRACER.isEnabled())
@@ -1332,8 +1325,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * @since 2.0
    */
-  public static void revisionToInstanceFeature(InternalCDOObject instance, InternalCDORevision revision,
-      EStructuralFeature eFeature)
+  public static void revisionToInstanceFeature(InternalCDOObject instance, InternalCDORevision revision, EStructuralFeature eFeature)
   {
     if (TRACER.isEnabled())
     {
@@ -1642,8 +1634,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     public CDOStoreEcoreEMap(EStructuralFeature eStructuralFeature)
     {
       super((EClass)eStructuralFeature.getEType(), BasicEMap.Entry.class, null);
-      delegateEList = new EStoreEObjectImpl.BasicEStoreEList<BasicEMap.Entry<Object, Object>>(CDOObjectImpl.this,
-          eStructuralFeature)
+      delegateEList = new EStoreEObjectImpl.BasicEStoreEList<BasicEMap.Entry<Object, Object>>(CDOObjectImpl.this, eStructuralFeature)
       {
         private static final long serialVersionUID = 1L;
 
@@ -1661,8 +1652,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
 
         @Override
-        protected void didSet(int index, BasicEMap.Entry<Object, Object> newObject,
-            BasicEMap.Entry<Object, Object> oldObject)
+        protected void didSet(int index, BasicEMap.Entry<Object, Object> newObject, BasicEMap.Entry<Object, Object> oldObject)
         {
           didRemove(index, oldObject);
           didAdd(index, newObject);

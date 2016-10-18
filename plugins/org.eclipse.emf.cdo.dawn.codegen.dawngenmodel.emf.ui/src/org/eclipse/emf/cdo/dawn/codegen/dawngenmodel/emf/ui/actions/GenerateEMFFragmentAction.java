@@ -56,8 +56,7 @@ public class GenerateEMFFragmentAction implements IObjectActionDelegate
 
           for (Creator creator : creators)
           {
-            IProgressMonitor monitor2 = new org.eclipse.core.runtime.SubProgressMonitor(monitor,
-                1000 / creators.size());
+            IProgressMonitor monitor2 = new org.eclipse.core.runtime.SubProgressMonitor(monitor, 1000 / creators.size());
             creator.create(monitor2);
             monitor2.done();
           }

@@ -90,8 +90,7 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
   private void testCDOLockState(CDOView view, boolean cdoLockStatePrefetchEnabled)
   {
     view.getResourceSet().eAdapters().add(new EContentAdapterQueringCDOLockState());
-    ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)view.getSession()).options()
-        .getNet4jProtocol();
+    ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)view.getSession()).options().getNet4jProtocol();
     SignalCounter signalCounter = new SignalCounter(protocol);
     view.getResource(getResourcePath(RESOURCE_NAME + "?" + CDOResource.PREFETCH_PARAMETER + "=" + Boolean.TRUE));
 
@@ -103,18 +102,14 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
     assertNotSame(0, signalCounter.getCountFor(QueryCancelRequest.class));
     assertNotSame(0, signalCounter.getCountFor(LoadRevisionsRequest.class));
     assertNotSame(0, signalCounter.getCountFor(LockStateRequest.class));
-    assertEquals("1 single query request should have been sent to get the resourcePath", 1,
-        signalCounter.getCountFor(QueryRequest.class));
-    assertEquals("1 single query request should have been sent to cancel the single QueryRequest", 1,
-        signalCounter.getCountFor(QueryCancelRequest.class));
+    assertEquals("1 single query request should have been sent to get the resourcePath", 1, signalCounter.getCountFor(QueryRequest.class));
+    assertEquals("1 single query request should have been sent to cancel the single QueryRequest", 1, signalCounter.getCountFor(QueryCancelRequest.class));
     assertEquals(
         "3 load revisions request should have been sent, 2 first for CDORevisions of CDOResourceFolders to get resource path and another in prefetch to load all CDORevisions of CDOResource",
         3, signalCounter.getCountFor(LoadRevisionsRequest.class));
     int expectedNbLockStateRequestCalls = (cdoLockStatePrefetchEnabled ? 0 : NB_CATEGORIES) + 2;
-    assertEquals(
-        "As CDOLockState prefetch is " + (cdoLockStatePrefetchEnabled ? "" : "not ") + "enabled "
-            + expectedNbLockStateRequestCalls + " LockStateRequests should have been sent to the server",
-        expectedNbLockStateRequestCalls, signalCounter.getCountFor(LockStateRequest.class));
+    assertEquals("As CDOLockState prefetch is " + (cdoLockStatePrefetchEnabled ? "" : "not ") + "enabled " + expectedNbLockStateRequestCalls
+        + " LockStateRequests should have been sent to the server", expectedNbLockStateRequestCalls, signalCounter.getCountFor(LockStateRequest.class));
 
     protocol.removeListener(signalCounter);
   }

@@ -70,7 +70,6 @@ public class Bugzilla_267050_Test extends AbstractCDOTest
     }.assertNoTimeOut();
 
     assertEquals(1, newPackagesUnits[0].size());
-    assertEquals(getModel1Package().getNsURI(),
-        newPackagesUnits[0].iterator().next().getTopLevelPackageInfo().getPackageURI());
+    assertEquals(getModel1Package().getNsURI(), newPackagesUnits[0].iterator().next().getTopLevelPackageInfo().getPackageURI());
   }
 }

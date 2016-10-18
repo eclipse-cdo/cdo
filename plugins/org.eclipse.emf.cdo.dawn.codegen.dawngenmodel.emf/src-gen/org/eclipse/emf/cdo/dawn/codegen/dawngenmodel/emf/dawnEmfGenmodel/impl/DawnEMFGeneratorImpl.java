@@ -83,8 +83,7 @@ public class DawnEMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              DawnEmfGenmodelPackage.DAWN_EMF_GENERATOR__EMF_GEN_MODEL, oldEmfGenModel, emfGenModel));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, DawnEmfGenmodelPackage.DAWN_EMF_GENERATOR__EMF_GEN_MODEL, oldEmfGenModel, emfGenModel));
         }
       }
     }
@@ -112,8 +111,7 @@ public class DawnEMFGeneratorImpl extends DawnFragmentGeneratorImpl implements D
     emfGenModel = newEmfGenModel;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, DawnEmfGenmodelPackage.DAWN_EMF_GENERATOR__EMF_GEN_MODEL,
-          oldEmfGenModel, emfGenModel));
+      eNotify(new ENotificationImpl(this, Notification.SET, DawnEmfGenmodelPackage.DAWN_EMF_GENERATOR__EMF_GEN_MODEL, oldEmfGenModel, emfGenModel));
     }
   }
 

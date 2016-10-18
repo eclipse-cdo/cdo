@@ -31,8 +31,7 @@ public abstract class TransactionalBackgroundAction extends LongRunningAction
 {
   private final CDOObject object;
 
-  public TransactionalBackgroundAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
-      CDOObject object)
+  public TransactionalBackgroundAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image, CDOObject object)
   {
     super(page, text, toolTipText, image);
     this.object = object;
@@ -83,8 +82,7 @@ public abstract class TransactionalBackgroundAction extends LongRunningAction
     }
   }
 
-  protected abstract void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor)
-      throws Exception;
+  protected abstract void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor) throws Exception;
 
   protected void postRun(CDOView view, CDOObject object)
   {

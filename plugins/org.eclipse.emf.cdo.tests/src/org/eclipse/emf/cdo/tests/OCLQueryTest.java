@@ -131,8 +131,7 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testAllProductsWithNameParameter() throws Exception
   {
-    CDOQuery query = createQuery("Product1.allInstances()->select(p | p.name=myname)",
-        getModel1Package().getProduct1());
+    CDOQuery query = createQuery("Product1.allInstances()->select(p | p.name=myname)", getModel1Package().getProduct1());
     query.setParameter("myname", "1");
 
     List<Product1> products = query.getResult();
@@ -141,8 +140,7 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testAllProductsWithVAT() throws Exception
   {
-    CDOQuery query = createQuery("Product1.allInstances()->select(p | p.vat=VAT::vat15)",
-        getModel1Package().getProduct1());
+    CDOQuery query = createQuery("Product1.allInstances()->select(p | p.vat=VAT::vat15)", getModel1Package().getProduct1());
 
     List<Product1> products = query.getResult();
     assertEquals(10, products.size());
@@ -218,8 +216,7 @@ public class OCLQueryTest extends AbstractCDOTest
     Product1 product = products.get(2);
     product.setName("1");
 
-    CDOQuery query = createQuery("Product1.allInstances()->select(p | p.name='1')", getModel1Package().getProduct1(),
-        true);
+    CDOQuery query = createQuery("Product1.allInstances()->select(p | p.name='1')", getModel1Package().getProduct1(), true);
 
     List<Product1> products = query.getResult();
     assertEquals(2, products.size());

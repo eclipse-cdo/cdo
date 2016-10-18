@@ -116,8 +116,7 @@ public class RefreshSessionIndication extends CDOServerReadIndication
     writeChangedObject(out, revision, null);
   }
 
-  protected void writeChangedObject(CDODataOutput out, InternalCDORevision revision, CDOBranchPoint securityContext)
-      throws IOException
+  protected void writeChangedObject(CDODataOutput out, InternalCDORevision revision, CDOBranchPoint securityContext) throws IOException
   {
     out.writeByte(CDOProtocolConstants.REFRESH_CHANGED_OBJECT);
     out.writeCDORevision(revision, initialChunkSize, securityContext); // Exposes revision to client side
@@ -153,8 +152,7 @@ public class RefreshSessionIndication extends CDOServerReadIndication
       {
         CDOID id = key.getID();
         synthetics[0] = null;
-        InternalCDORevision revision = revisionManager.getRevision(id, head, CDORevision.UNCHUNKED,
-            CDORevision.DEPTH_NONE, true, synthetics);
+        InternalCDORevision revision = revisionManager.getRevision(id, head, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetics);
 
         if (revision == null)
         {

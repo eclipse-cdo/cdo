@@ -175,8 +175,7 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
         InternalSession session = getRepository().getSessionManager().getSession(tx.getSessionID());
         StoreThreadLocal.setSession(session);
         // Do your call
-        durableLock = getRepository().getLockingManager().getLockArea(tx.getDurableLockingID()).getLocks()
-            .get(elementID);
+        durableLock = getRepository().getLockingManager().getLockArea(tx.getDurableLockingID()).getLocks().get(elementID);
       }
       finally
       {

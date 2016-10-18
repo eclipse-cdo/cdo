@@ -150,29 +150,21 @@ public class CombinedFilterItemProvider extends PermissionFilterItemProvider
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS,
-        SecurityFactory.eINSTANCE.createLinkedFilter()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS, SecurityFactory.eINSTANCE.createLinkedFilter()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS,
-        SecurityFactory.eINSTANCE.createPackageFilter()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS, SecurityFactory.eINSTANCE.createPackageFilter()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS,
-        SecurityFactory.eINSTANCE.createClassFilter()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS, SecurityFactory.eINSTANCE.createClassFilter()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS,
-        SecurityFactory.eINSTANCE.createResourceFilter()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS, SecurityFactory.eINSTANCE.createResourceFilter()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS,
-        SecurityFactory.eINSTANCE.createExpressionFilter()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS, SecurityFactory.eINSTANCE.createExpressionFilter()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS,
-        SecurityFactory.eINSTANCE.createNotFilter()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS, SecurityFactory.eINSTANCE.createNotFilter()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS,
-        SecurityFactory.eINSTANCE.createAndFilter()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS, SecurityFactory.eINSTANCE.createAndFilter()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS,
-        SecurityFactory.eINSTANCE.createOrFilter()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS, SecurityFactory.eINSTANCE.createOrFilter()));
   }
 
 }

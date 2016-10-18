@@ -155,8 +155,7 @@ public class MYSQLAdapter extends DBAdapter
   @Override
   public String sqlRenameField(IDBField field, String oldName)
   {
-    return "ALTER TABLE " + field.getTable() + " CHANGE COLUMN " + oldName + " " + field + " "
-        + createFieldDefinition(field);
+    return "ALTER TABLE " + field.getTable() + " CHANGE COLUMN " + oldName + " " + field + " " + createFieldDefinition(field);
   }
 
   @Override

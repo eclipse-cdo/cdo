@@ -33,7 +33,6 @@ public final class HTTPServerUtil
 
   public static IHTTPAcceptor getAcceptor(IManagedContainer container, String description)
   {
-    return (IHTTPAcceptor)container.getElement(HTTPAcceptorFactory.PRODUCT_GROUP, HTTPAcceptorFactory.TYPE,
-        description);
+    return (IHTTPAcceptor)container.getElement(HTTPAcceptorFactory.PRODUCT_GROUP, HTTPAcceptorFactory.TYPE, description);
   }
 }

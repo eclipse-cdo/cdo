@@ -55,8 +55,8 @@ public class DawnGMFEditingDomainFactory extends GMFEditingDomainFactory
     WorkspaceCommandStackImpl stack = new WorkspaceCommandStackImpl(history);
     stack.setResourceUndoContextPolicy(getResourceUndoContextPolicy());
 
-    TransactionalEditingDomain result = new DawnTransactionalEditingDomainImpl(
-        new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE), stack);
+    TransactionalEditingDomain result = new DawnTransactionalEditingDomainImpl(new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+        stack);
 
     mapResourceSet(result);
     // configures as the GMFEditingDomainFactory would do
@@ -78,8 +78,8 @@ public class DawnGMFEditingDomainFactory extends GMFEditingDomainFactory
     WorkspaceCommandStackImpl stack = new WorkspaceCommandStackImpl(history);
     stack.setResourceUndoContextPolicy(getResourceUndoContextPolicy());
 
-    TransactionalEditingDomain result = new DawnTransactionalEditingDomainImpl(
-        new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE), stack, rset);
+    TransactionalEditingDomain result = new DawnTransactionalEditingDomainImpl(new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+        stack, rset);
 
     mapResourceSet(result);
 

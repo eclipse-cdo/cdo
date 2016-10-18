@@ -92,8 +92,7 @@ public class CDOLobStorage extends AbstractDocumentProvider
   }
 
   @Override
-  protected void doSaveDocument(IProgressMonitor monitor, Object element, IDocument document, boolean overwrite)
-      throws CoreException
+  protected void doSaveDocument(IProgressMonitor monitor, Object element, IDocument document, boolean overwrite) throws CoreException
   {
     if (element instanceof CDOLobEditorInput)
     {

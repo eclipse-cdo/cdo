@@ -73,8 +73,7 @@ public class CDOIDUserType implements UserType
     return x.equals(y);
   }
 
-  public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor sessionImplementor, Object owner)
-      throws SQLException
+  public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor sessionImplementor, Object owner) throws SQLException
   {
     final String value = StandardBasicTypes.STRING.nullSafeGet(rs, names[0], sessionImplementor);
     if (rs.wasNull())
@@ -85,8 +84,7 @@ public class CDOIDUserType implements UserType
     return HibernateUtil.getInstance().convertStringToCDOID(value);
   }
 
-  public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor sessionImplementor)
-      throws SQLException
+  public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor sessionImplementor) throws SQLException
   {
     if (value == null || value instanceof CDOID && ((CDOID)value).isNull())
     {
@@ -107,8 +105,7 @@ public class CDOIDUserType implements UserType
       value = HibernateUtil.getInstance().getCDOIDHibernate((CDORevision)value);
     }
 
-    final String strValue = value instanceof String ? (String)value
-        : HibernateUtil.getInstance().convertCDOIDToString((CDOID)value);
+    final String strValue = value instanceof String ? (String)value : HibernateUtil.getInstance().convertCDOIDToString((CDOID)value);
     if (strValue == null)
     {
       statement.setNull(index, Types.VARCHAR);

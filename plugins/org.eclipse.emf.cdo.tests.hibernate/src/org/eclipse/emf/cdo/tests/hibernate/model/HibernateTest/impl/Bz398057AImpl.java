@@ -102,8 +102,8 @@ public class Bz398057AImpl extends EObjectImpl implements Bz398057A
   {
     if (listOfB == null)
     {
-      listOfB = new EObjectContainmentWithInverseEList<Bz398057B>(Bz398057B.class, this,
-          HibernateTestPackage.BZ398057_A__LIST_OF_B, HibernateTestPackage.BZ398057_B__REF_TO_CLASS_A);
+      listOfB = new EObjectContainmentWithInverseEList<Bz398057B>(Bz398057B.class, this, HibernateTestPackage.BZ398057_A__LIST_OF_B,
+          HibernateTestPackage.BZ398057_B__REF_TO_CLASS_A);
     }
     return listOfB;
   }

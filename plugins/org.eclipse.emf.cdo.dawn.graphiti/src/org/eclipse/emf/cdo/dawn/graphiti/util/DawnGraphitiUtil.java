@@ -40,8 +40,7 @@ public class DawnGraphitiUtil
   public static TransactionalEditingDomain createResourceSetAndEditingDomain()
   {
     // TODO check if this is still needed here
-    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
-        PreferenceConstants.getServerName());
+    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(), PreferenceConstants.getServerName());
     CDOConnectionUtil.instance.getCurrentSession();
 
     final ResourceSet resourceSet = new ResourceSetImpl();
@@ -51,8 +50,7 @@ public class DawnGraphitiUtil
         new DefaultOperationHistory());
 
     final TransactionalEditingDomainImpl editingDomain = new DawnTransactionalEditingDomainImpl(
-        new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE), workspaceCommandStack,
-        resourceSet);
+        new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE), workspaceCommandStack, resourceSet);
     WorkspaceEditingDomainFactory.INSTANCE.mapResourceSet(editingDomain);
     return editingDomain;
   }

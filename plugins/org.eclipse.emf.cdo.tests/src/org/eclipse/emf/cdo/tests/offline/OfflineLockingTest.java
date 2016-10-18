@@ -79,8 +79,7 @@ public class OfflineLockingTest extends AbstractSyncingTest
     waitForOnline(clone1Session.getRepositoryInfo());
 
     CDOSession clone2Session = openSession("repo2");
-    TestListener2 session2invalidationListener = new TestListener2(CDOSessionInvalidationEvent.class,
-        "session2invalidationListener");
+    TestListener2 session2invalidationListener = new TestListener2(CDOSessionInvalidationEvent.class, "session2invalidationListener");
     clone2Session.addListener(session2invalidationListener);
     TestListener2 session2lockListener = new TestListener2(CDOSessionLocksChangedEvent.class, "session2lockListener");
     clone2Session.addListener(session2lockListener);

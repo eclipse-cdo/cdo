@@ -70,12 +70,10 @@ public class DirectoryItemProvider extends SecurityItemItemProvider
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Directory_name_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_Directory_name_feature", "_UI_Directory_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            SecurityPackage.Literals.DIRECTORY__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-            null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Directory_name_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Directory_name_feature", "_UI_Directory_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        SecurityPackage.Literals.DIRECTORY__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -184,17 +182,13 @@ public class DirectoryItemProvider extends SecurityItemItemProvider
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(
-        createChildParameter(SecurityPackage.Literals.DIRECTORY__ITEMS, SecurityFactory.eINSTANCE.createDirectory()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.DIRECTORY__ITEMS, SecurityFactory.eINSTANCE.createDirectory()));
 
-    newChildDescriptors
-        .add(createChildParameter(SecurityPackage.Literals.DIRECTORY__ITEMS, SecurityFactory.eINSTANCE.createRole()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.DIRECTORY__ITEMS, SecurityFactory.eINSTANCE.createRole()));
 
-    newChildDescriptors
-        .add(createChildParameter(SecurityPackage.Literals.DIRECTORY__ITEMS, SecurityFactory.eINSTANCE.createGroup()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.DIRECTORY__ITEMS, SecurityFactory.eINSTANCE.createGroup()));
 
-    newChildDescriptors
-        .add(createChildParameter(SecurityPackage.Literals.DIRECTORY__ITEMS, SecurityFactory.eINSTANCE.createUser()));
+    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.DIRECTORY__ITEMS, SecurityFactory.eINSTANCE.createUser()));
   }
 
 }

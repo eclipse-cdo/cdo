@@ -181,8 +181,8 @@ public class AcoreDiagramEditorUtil
     final Resource diagramResource = editingDomain.getResourceSet().createResource(diagramURI);
     final Resource modelResource = editingDomain.getResourceSet().createResource(modelURI);
     final String diagramName = diagramURI.lastSegment();
-    AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain,
-        Messages.AcoreDiagramEditorUtil_CreateDiagramCommandLabel, Collections.EMPTY_LIST)
+    AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain, Messages.AcoreDiagramEditorUtil_CreateDiagramCommandLabel,
+        Collections.EMPTY_LIST)
     {
       @Override
       protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info) throws ExecutionException
@@ -190,8 +190,7 @@ public class AcoreDiagramEditorUtil
         ACoreRoot model = createInitialModel();
         attachModelToResource(model, modelResource);
 
-        Diagram diagram = ViewService.createDiagram(model, ACoreRootEditPart.MODEL_ID,
-            AcoreDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
+        Diagram diagram = ViewService.createDiagram(model, ACoreRootEditPart.MODEL_ID, AcoreDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
         if (diagram != null)
         {
           diagramResource.getContents().add(diagram);
@@ -201,10 +200,8 @@ public class AcoreDiagramEditorUtil
 
         try
         {
-          modelResource
-              .save(org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreDiagramEditorUtil.getSaveOptions());
-          diagramResource
-              .save(org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreDiagramEditorUtil.getSaveOptions());
+          modelResource.save(org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreDiagramEditorUtil.getSaveOptions());
+          diagramResource.save(org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreDiagramEditorUtil.getSaveOptions());
         }
         catch (IOException e)
         {
@@ -326,8 +323,7 @@ public class AcoreDiagramEditorUtil
   /**
    * @generated
    */
-  public static View findView(DiagramEditPart diagramEditPart, EObject targetElement,
-      LazyElement2ViewMap lazyElement2ViewMap)
+  public static View findView(DiagramEditPart diagramEditPart, EObject targetElement, LazyElement2ViewMap lazyElement2ViewMap)
   {
     boolean hasStructuralURI = false;
     if (targetElement.eResource() instanceof XMLResource)
@@ -421,8 +417,7 @@ public class AcoreDiagramEditorUtil
         return element2ViewMap;
       }
 
-      if (parentView.isSetElement() && !element2ViewMap.containsKey(parentView.getElement())
-          && elements.contains(parentView.getElement()))
+      if (parentView.isSetElement() && !element2ViewMap.containsKey(parentView.getElement()) && elements.contains(parentView.getElement()))
       {
         element2ViewMap.put(parentView.getElement(), parentView);
         if (elements.size() == element2ViewMap.size())

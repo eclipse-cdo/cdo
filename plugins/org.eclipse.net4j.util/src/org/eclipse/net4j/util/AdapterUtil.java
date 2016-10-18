@@ -112,8 +112,7 @@ public final class AdapterUtil
    */
   private static final class AdapterManagerHelper
   {
-    private static org.eclipse.core.runtime.IAdapterManager adapterManager = org.eclipse.core.runtime.Platform
-        .getAdapterManager();
+    private static org.eclipse.core.runtime.IAdapterManager adapterManager = org.eclipse.core.runtime.Platform.getAdapterManager();
 
     public static Object adapt(Object object, Class<?> type)
     {

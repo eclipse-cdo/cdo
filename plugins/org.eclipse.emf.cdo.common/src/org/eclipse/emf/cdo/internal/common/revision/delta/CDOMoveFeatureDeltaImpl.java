@@ -32,8 +32,7 @@ import java.text.MessageFormat;
 /**
  * @author Simon McDuff
  */
-public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl
-    implements CDOMoveFeatureDelta, ListIndexAffecting, WithIndex
+public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOMoveFeatureDelta, ListIndexAffecting, WithIndex
 {
   private int oldPosition;
 

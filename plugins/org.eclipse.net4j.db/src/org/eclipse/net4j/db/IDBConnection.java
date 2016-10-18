@@ -31,8 +31,7 @@ public interface IDBConnection extends Connection, IUserAware
 
   public IDBPreparedStatement prepareStatement(String sql, ReuseProbability reuseProbability);
 
-  public IDBPreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency,
-      ReuseProbability reuseProbability);
+  public IDBPreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency, ReuseProbability reuseProbability);
 
   /**
    * @deprecated Not supported.
@@ -44,8 +43,7 @@ public interface IDBConnection extends Connection, IUserAware
    * @deprecated Not supported.
    */
   @Deprecated
-  public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency,
-      int resultSetHoldability) throws SQLException;
+  public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException;
 
   /**
    * @deprecated Not supported.

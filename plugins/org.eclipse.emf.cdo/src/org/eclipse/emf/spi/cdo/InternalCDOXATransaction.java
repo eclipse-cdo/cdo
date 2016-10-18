@@ -118,8 +118,7 @@ public interface InternalCDOXATransaction extends CDOXATransaction, InternalCDOU
         }
       }
 
-      public abstract void handle(InternalCDOXACommitContext xaContext, IProgressMonitor progressMonitor)
-          throws Exception;
+      public abstract void handle(InternalCDOXACommitContext xaContext, IProgressMonitor progressMonitor) throws Exception;
     }
   }
 }

@@ -469,7 +469,7 @@ public interface Session extends Runnable
   *                         due to some internal error.
   * @exception InvalidDestinationException if an invalid destination
   * is specified.
-
+  
   * @exception InvalidSelectorException if the message selector is invalid.
   *
   * @since 1.1
@@ -507,14 +507,13 @@ public interface Session extends Runnable
    *                         due to some internal error.
    * @exception InvalidDestinationException if an invalid destination
     * is specified.
-
+  
    * @exception InvalidSelectorException if the message selector is invalid.
    *
    * @since 1.1
    *
    */
-  MessageConsumer createConsumer(Destination destination, java.lang.String messageSelector, boolean NoLocal)
-      throws JMSException;
+  MessageConsumer createConsumer(Destination destination, java.lang.String messageSelector, boolean NoLocal) throws JMSException;
 
   /** Creates a queue identity given a <CODE>Queue</CODE> name.
   *
@@ -657,8 +656,7 @@ public interface Session extends Runnable
     * @since 1.1
     */
 
-  TopicSubscriber createDurableSubscriber(Topic topic, String name, String messageSelector, boolean noLocal)
-      throws JMSException;
+  TopicSubscriber createDurableSubscriber(Topic topic, String name, String messageSelector, boolean noLocal) throws JMSException;
 
   /** Creates a <CODE>QueueBrowser</CODE> object to peek at the messages on
    * the specified queue.

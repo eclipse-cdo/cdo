@@ -40,8 +40,7 @@ public class CDORepositoryProperties extends Properties<CDORepository>
       }
     });
 
-    add(new Property<CDORepository>("connected", "Connected", "Whether this repository is connected",
-        CATEGORY_REPOSITORY)
+    add(new Property<CDORepository>("connected", "Connected", "Whether this repository is connected", CATEGORY_REPOSITORY)
     {
       @Override
       protected Object eval(CDORepository repository)

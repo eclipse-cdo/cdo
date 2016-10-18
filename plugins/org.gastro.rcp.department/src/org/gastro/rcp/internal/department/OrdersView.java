@@ -130,8 +130,7 @@ public class OrdersView extends ViewPart
             {
               public Object execute(OrderDetail orderDetail)
               {
-                orderDetail
-                    .setState(orderDetail.getState() == OrderState.ORDERED ? OrderState.SERVED : OrderState.ORDERED);
+                orderDetail.setState(orderDetail.getState() == OrderState.ORDERED ? OrderState.SERVED : OrderState.ORDERED);
                 return null;
               }
             });

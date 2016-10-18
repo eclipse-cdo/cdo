@@ -105,8 +105,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
    */
   public void setParent(IMultiRefContainer newParent)
   {
-    if (newParent != eInternalContainer()
-        || eContainerFeatureID() != model4Package.IMPL_MULTI_REF_CONTAINED_ELEMENT__PARENT && newParent != null)
+    if (newParent != eInternalContainer() || eContainerFeatureID() != model4Package.IMPL_MULTI_REF_CONTAINED_ELEMENT__PARENT && newParent != null)
     {
       if (EcoreUtil.isAncestor(this, newParent))
       {
@@ -119,8 +118,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
       }
       if (newParent != null)
       {
-        msgs = ((InternalEObject)newParent).eInverseAdd(this, model4interfacesPackage.IMULTI_REF_CONTAINER__ELEMENTS,
-            IMultiRefContainer.class, msgs);
+        msgs = ((InternalEObject)newParent).eInverseAdd(this, model4interfacesPackage.IMULTI_REF_CONTAINER__ELEMENTS, IMultiRefContainer.class, msgs);
       }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
@@ -130,8 +128,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_MULTI_REF_CONTAINED_ELEMENT__PARENT,
-          newParent, newParent));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_MULTI_REF_CONTAINED_ELEMENT__PARENT, newParent, newParent));
     }
   }
 
@@ -154,8 +151,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
     name = newName;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_MULTI_REF_CONTAINED_ELEMENT__NAME,
-          oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_MULTI_REF_CONTAINED_ELEMENT__NAME, oldName, name));
     }
   }
 
@@ -203,8 +199,7 @@ public class ImplMultiRefContainedElementImpl extends EObjectImpl implements Imp
     switch (eContainerFeatureID())
     {
     case model4Package.IMPL_MULTI_REF_CONTAINED_ELEMENT__PARENT:
-      return eInternalContainer().eInverseRemove(this, model4interfacesPackage.IMULTI_REF_CONTAINER__ELEMENTS,
-          IMultiRefContainer.class, msgs);
+      return eInternalContainer().eInverseRemove(this, model4interfacesPackage.IMULTI_REF_CONTAINER__ELEMENTS, IMultiRefContainer.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
   }

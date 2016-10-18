@@ -83,8 +83,7 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
   /**
    * @since 3.4
    */
-  public IPasswordCredentialsUpdate getCredentialsUpdate(final String realm, final String userID,
-      final CredentialsUpdateOperation operation)
+  public IPasswordCredentialsUpdate getCredentialsUpdate(final String realm, final String userID, final CredentialsUpdateOperation operation)
   {
     final IPasswordCredentialsUpdate[] update = { null };
     final Display display = UIUtil.getDisplay();

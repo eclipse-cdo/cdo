@@ -26,8 +26,7 @@ public class UnlockDelegationRequest extends UnlockObjectsRequest
 {
   private String lockAreaID;
 
-  public UnlockDelegationRequest(CDOClientProtocol protocol, String lockAreaID, Collection<CDOID> objectIDs,
-      LockType lockType, boolean recursive)
+  public UnlockDelegationRequest(CDOClientProtocol protocol, String lockAreaID, Collection<CDOID> objectIDs, LockType lockType, boolean recursive)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_UNLOCK_DELEGATION, 0, objectIDs, lockType, recursive);
     this.lockAreaID = lockAreaID;

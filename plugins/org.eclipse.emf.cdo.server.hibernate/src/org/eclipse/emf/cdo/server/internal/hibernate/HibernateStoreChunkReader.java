@@ -70,8 +70,7 @@ public class HibernateStoreChunkReader extends StoreChunkReader implements IHibe
     if (value instanceof PersistentCollection)
     {
       final PersistentCollection persistentCollection = (PersistentCollection)value;
-      persister = (QueryableCollection)((SessionFactoryImplementor)session.getSessionFactory())
-          .getCollectionPersister(persistentCollection.getRole());
+      persister = (QueryableCollection)((SessionFactoryImplementor)session.getSessionFactory()).getCollectionPersister(persistentCollection.getRole());
       entry = ((SessionImplementor)session).getPersistenceContext().getCollectionEntry(persistentCollection);
 
       useExtraLazyMode = !persister.getElementType().isEntityType();
@@ -113,8 +112,7 @@ public class HibernateStoreChunkReader extends StoreChunkReader implements IHibe
         {
           for (int i = startIndex; i < startIndex + maxElements; i++)
           {
-            final Object object = persister.getElementByIndex(entry.getLoadedKey(), i, (SessionImplementor)session,
-                latestRevision);
+            final Object object = persister.getElementByIndex(entry.getLoadedKey(), i, (SessionImplementor)session, latestRevision);
             // could happen if the index > size)
             if (object == null)
             {
@@ -164,8 +162,7 @@ public class HibernateStoreChunkReader extends StoreChunkReader implements IHibe
 
     if (store.isAuditing() && store.getHibernateAuditHandler().getCDOAuditHandler().isAudited(id))
     {
-      InternalCDORevision revision = store.getHibernateAuditHandler().readRevision(session, id,
-          getRevision().getTimeStamp());
+      InternalCDORevision revision = store.getHibernateAuditHandler().readRevision(session, id, getRevision().getTimeStamp());
       // found one, use it
       if (revision != null)
       {

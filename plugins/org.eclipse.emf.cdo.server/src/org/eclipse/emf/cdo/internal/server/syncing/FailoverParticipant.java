@@ -109,8 +109,7 @@ public class FailoverParticipant extends SynchronizableRepository implements Int
         return createWriteThroughCommitContext(transaction);
       }
 
-      throw new IllegalStateException(
-          "Only the repository synchronizer is allowed to commit transactions to a backup repository");
+      throw new IllegalStateException("Only the repository synchronizer is allowed to commit transactions to a backup repository");
     }
 
     return createNormalCommitContext(transaction);

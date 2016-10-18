@@ -170,8 +170,8 @@ public class Product1Impl extends EObjectImpl implements Product1
   {
     if (orderDetails == null)
     {
-      orderDetails = new EObjectWithInverseResolvingEList<OrderDetail>(OrderDetail.class, this,
-          Model1Package.PRODUCT1__ORDER_DETAILS, Model1Package.ORDER_DETAIL__PRODUCT);
+      orderDetails = new EObjectWithInverseResolvingEList<OrderDetail>(OrderDetail.class, this, Model1Package.PRODUCT1__ORDER_DETAILS,
+          Model1Package.ORDER_DETAIL__PRODUCT);
     }
     return orderDetails;
   }
@@ -229,8 +229,7 @@ public class Product1Impl extends EObjectImpl implements Product1
     String oldDescription = description;
     description = newDescription;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.PRODUCT1__DESCRIPTION, oldDescription,
-          description));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.PRODUCT1__DESCRIPTION, oldDescription, description));
   }
 
   /**

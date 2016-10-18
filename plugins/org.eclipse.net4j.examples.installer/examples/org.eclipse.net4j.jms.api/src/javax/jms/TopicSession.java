@@ -218,8 +218,7 @@ public interface TopicSession extends Session
     * @exception InvalidSelectorException if the message selector is invalid.
     */
 
-  TopicSubscriber createDurableSubscriber(Topic topic, String name, String messageSelector, boolean noLocal)
-      throws JMSException;
+  TopicSubscriber createDurableSubscriber(Topic topic, String name, String messageSelector, boolean noLocal) throws JMSException;
 
   /** Creates a publisher for the specified topic.
     *

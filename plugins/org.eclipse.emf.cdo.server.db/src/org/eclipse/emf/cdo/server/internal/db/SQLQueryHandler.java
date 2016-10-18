@@ -103,8 +103,8 @@ public class SQLQueryHandler implements IQueryHandler
     boolean mapQuery = false;
 
     IIDHandler idHandler = accessor.getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
-        ResultSet.CONCUR_READ_ONLY, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY,
+        ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
@@ -122,8 +122,7 @@ public class SQLQueryHandler implements IQueryHandler
             }
             catch (ClassCastException ex)
             {
-              throw new IllegalArgumentException("Parameter " + FIRST_RESULT + " must be an integer but it is a " + o
-                  + " class " + o.getClass().getName(), ex);
+              throw new IllegalArgumentException("Parameter " + FIRST_RESULT + " must be an integer but it is a " + o + " class " + o.getClass().getName(), ex);
             }
           }
         }
@@ -138,8 +137,8 @@ public class SQLQueryHandler implements IQueryHandler
             }
             catch (ClassCastException ex)
             {
-              throw new IllegalArgumentException("Parameter " + QUERY_STATEMENT + " must be an boolean but it is a " + o
-                  + " class " + o.getClass().getName(), ex);
+              throw new IllegalArgumentException("Parameter " + QUERY_STATEMENT + " must be an boolean but it is a " + o + " class " + o.getClass().getName(),
+                  ex);
             }
           }
         }
@@ -154,8 +153,8 @@ public class SQLQueryHandler implements IQueryHandler
             }
             catch (ClassCastException ex)
             {
-              throw new IllegalArgumentException("Parameter " + CDO_OBJECT_QUERY + " must be a boolean but it is a " + o
-                  + " class " + o.getClass().getName(), ex);
+              throw new IllegalArgumentException("Parameter " + CDO_OBJECT_QUERY + " must be a boolean but it is a " + o + " class " + o.getClass().getName(),
+                  ex);
             }
           }
         }
@@ -170,9 +169,7 @@ public class SQLQueryHandler implements IQueryHandler
             }
             catch (ClassCastException ex)
             {
-              throw new IllegalArgumentException(
-                  "Parameter " + MAP_QUERY + " must be a boolean but it is a " + o + " class " + o.getClass().getName(),
-                  ex);
+              throw new IllegalArgumentException("Parameter " + MAP_QUERY + " must be a boolean but it is a " + o + " class " + o.getClass().getName(), ex);
             }
           }
         }

@@ -46,8 +46,8 @@ public class LoadChunkRequest extends CDOClientRequest<Object>
 
   private int fetchIndex;
 
-  public LoadChunkRequest(CDOClientProtocol protocol, InternalCDORevision revision, EStructuralFeature feature,
-      int accessIndex, int fetchIndex, int fromIndex, int toIndex)
+  public LoadChunkRequest(CDOClientProtocol protocol, InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex, int fromIndex,
+      int toIndex)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_LOAD_CHUNK);
     this.revision = revision;

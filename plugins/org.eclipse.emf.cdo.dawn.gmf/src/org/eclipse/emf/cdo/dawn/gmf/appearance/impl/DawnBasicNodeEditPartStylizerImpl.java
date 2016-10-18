@@ -41,14 +41,12 @@ public class DawnBasicNodeEditPartStylizerImpl extends DawnBasicGraphicalEditPar
     {
     case DawnAppearancer.TYPE_LOCKED_GLOBALLY:
     {
-      setBorder(editPart, getBackgroundColor(editPart, DawnState.LOCKED_REMOTELY),
-          DawnAppearancer.DEFAULT_BORDER_THICKNESS);
+      setBorder(editPart, getBackgroundColor(editPart, DawnState.LOCKED_REMOTELY), DawnAppearancer.DEFAULT_BORDER_THICKNESS);
       break;
     }
     case DawnAppearancer.TYPE_LOCKED_LOCALLY:
     {
-      setBorder(editPart, getBackgroundColor(editPart, DawnState.LOCKED_LOCALLY),
-          DawnAppearancer.DEFAULT_BORDER_THICKNESS);
+      setBorder(editPart, getBackgroundColor(editPart, DawnState.LOCKED_LOCALLY), DawnAppearancer.DEFAULT_BORDER_THICKNESS);
       break;
     }
     }

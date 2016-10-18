@@ -344,8 +344,7 @@ public interface DawngenmodelPackage extends EPackage
      * @generated
      * @since 1.0
      */
-    EAttribute DAWN_FRAGMENT_GENERATOR__DAWN_EDITOR_CLASS_NAME = eINSTANCE
-        .getDawnFragmentGenerator_DawnEditorClassName();
+    EAttribute DAWN_FRAGMENT_GENERATOR__DAWN_EDITOR_CLASS_NAME = eINSTANCE.getDawnFragmentGenerator_DawnEditorClassName();
 
     /**
      * The meta object literal for the '<em><b>Dawn Generator</b></em>' reference feature. <!-- begin-user-doc --> <!--

@@ -68,8 +68,7 @@ public class HibernatePackageHandler extends Lifecycle
 
   // made static and synchronized because apparently there can be multiple package handlers
   // in some test cases: TestExternalReferenceTest.testOneXMIResourceManyViewsOnOneResourceSet
-  private static synchronized boolean writePackageUnits(InternalCDOPackageUnit[] packageUnits,
-      SessionFactory sessionFactory, EPackage.Registry registry)
+  private static synchronized boolean writePackageUnits(InternalCDOPackageUnit[] packageUnits, SessionFactory sessionFactory, EPackage.Registry registry)
   {
     if (TRACER.isEnabled())
     {
@@ -357,8 +356,7 @@ public class HibernatePackageHandler extends Lifecycle
 
       // prevent the drop at session factory close...
       // the drop is done by the de-activate
-      if (configuration.getProperty(Environment.HBM2DDL_AUTO) != null
-          && configuration.getProperty(Environment.HBM2DDL_AUTO).startsWith(HBM2DLL_CREATE))
+      if (configuration.getProperty(Environment.HBM2DDL_AUTO) != null && configuration.getProperty(Environment.HBM2DDL_AUTO).startsWith(HBM2DLL_CREATE))
       {
         doDropSchema = true;
         // note that the value create also re-creates the db and drops the old one

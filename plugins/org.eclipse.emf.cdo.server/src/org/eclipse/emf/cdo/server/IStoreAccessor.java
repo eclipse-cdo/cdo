@@ -122,16 +122,14 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    *
    * @since 4.0
    */
-  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
-      CDORevisionCacheAdder cache);
+  public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk, CDORevisionCacheAdder cache);
 
   /**
    * Reads a revision with the given version in the given branch from the back-end.
    *
    * @since 4.0
    */
-  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
-      CDORevisionCacheAdder cache);
+  public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk, CDORevisionCacheAdder cache);
 
   /**
    * Passes all revisions of the store to the {@link CDORevisionHandler handler} if <b>all</b> of the following
@@ -151,8 +149,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    *
    * @since 4.0
    */
-  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler);
+  public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler);
 
   /**
    * Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.
@@ -598,8 +595,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @throws UnsupportedOperationException
      *           if this {@link IStoreAccessor.Raw raw store accessor} does not support branching.
      */
-    public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
-        throws IOException;
+    public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime) throws IOException;
 
     /**
      * Deserializes backend data that has been serialized by the {@link #rawExport(CDODataOutput, int, int, long, long)
@@ -633,8 +629,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @throws UnsupportedOperationException
      *           if this {@link IStoreAccessor.Raw raw store accessor} does not support branching.
      */
-    public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
-        OMMonitor monitor) throws IOException;
+    public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException;
 
     /**
      * Stores the given {@link CDOPackageUnit package units} in the backend represented by this
@@ -746,8 +741,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      *          represented by this {@link IStoreAccessor.Raw raw store accessor}.
      * @see #rawCommit(double, OMMonitor)
      */
-    public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
-        OMMonitor monitor);
+    public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor);
 
     /**
      * Deletes the revision identified by the given {@link CDORevisionKey key} from the backend represented by this
@@ -818,8 +812,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      *          represented by this {@link IStoreAccessor.Raw2 raw store accessor}.
      * @see #rawCommit(double, OMMonitor)
      */
-    public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
-        CDOBranchPoint mergeSource, OMMonitor monitor);
+    public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOBranchPoint mergeSource,
+        OMMonitor monitor);
   }
 
   /**
@@ -848,8 +842,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    */
   public interface DurableLocking2 extends DurableLocking
   {
-    LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly,
-        Map<CDOID, LockGrade> locks);
+    LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks);
 
     public void updateLockArea(LockArea lockArea);
   }
@@ -867,11 +860,9 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
 
     public void readUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, OMMonitor monitor);
 
-    public Object initUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, Set<CDOID> initializedIDs,
-        long timeStamp, OMMonitor monitor);
+    public Object initUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, Set<CDOID> initializedIDs, long timeStamp, OMMonitor monitor);
 
-    public void finishUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, long timeStamp,
-        Object initResult, List<CDOID> ids);
+    public void finishUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, long timeStamp, Object initResult, List<CDOID> ids);
 
     public void writeUnits(Map<CDOID, CDOID> unitMappings, long timeStamp);
   }

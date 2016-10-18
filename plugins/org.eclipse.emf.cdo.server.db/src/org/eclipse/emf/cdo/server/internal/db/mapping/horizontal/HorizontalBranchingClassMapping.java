@@ -76,8 +76,7 @@ import java.util.Set;
  * @author Stefan Winkler
  * @since 3.0
  */
-public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapping
-    implements IClassMappingAuditSupport, IClassMappingDeltaSupport
+public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapping implements IClassMappingAuditSupport, IClassMappingDeltaSupport
 {
   /**
    * @author Stefan Winkler
@@ -394,8 +393,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   public boolean readRevisionByVersion(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectAttributesByVersion,
-        ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectAttributesByVersion, ReuseProbability.HIGH);
     boolean success = false;
 
     try
@@ -425,8 +423,8 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     return success;
   }
 
-  public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,
-      boolean exactMatch, CDOBranchPoint branchPoint)
+  public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name, boolean exactMatch,
+      CDOBranchPoint branchPoint)
   {
     EStructuralFeature nameFeature = EresourcePackage.eINSTANCE.getCDOResourceNode_Name();
 
@@ -479,8 +477,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(),
-        ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.MEDIUM);
 
     try
     {
@@ -590,8 +587,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   }
 
   @Override
-  protected void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp,
-      OMMonitor mon)
+  protected void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp, OMMonitor mon)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH);
@@ -649,8 +645,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   protected void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version, OMMonitor fork)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlRawDeleteAttributes,
-        ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlRawDeleteAttributes, ReuseProbability.HIGH);
 
     try
     {
@@ -693,8 +688,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   }
 
   @Override
-  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean mapType, boolean revise,
-      OMMonitor monitor)
+  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean mapType, boolean revise, OMMonitor monitor)
   {
     Async async = null;
     monitor.begin(10);
@@ -793,8 +787,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   }
 
   @Override
-  public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler)
+  public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     StringBuilder builder = new StringBuilder(sqlSelectForHandle);
     boolean whereAppend = false;
@@ -874,8 +867,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         {
           int branchID = resultSet.getInt(3);
           CDOBranchVersion branchVersion = branchManager.getBranch(branchID).getVersion(Math.abs(version));
-          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchVersion,
-              CDORevision.UNCHUNKED, true);
+          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchVersion, CDORevision.UNCHUNKED, true);
 
           if (!handler.handleRevision(revision))
           {
@@ -1003,8 +995,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     return builder.toString();
   }
 
-  public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created,
-      OMMonitor monitor)
+  public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created, OMMonitor monitor)
   {
     monitor.begin();
 
@@ -1042,8 +1033,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
   }
 
-  private void doCopyOnBranch(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created,
-      OMMonitor monitor)
+  private void doCopyOnBranch(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created, OMMonitor monitor)
   {
     monitor.begin(2);
     try

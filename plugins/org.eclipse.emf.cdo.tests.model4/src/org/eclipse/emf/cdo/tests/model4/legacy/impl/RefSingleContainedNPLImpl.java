@@ -83,8 +83,7 @@ public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleC
     element = newElement;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          model4Package.REF_SINGLE_CONTAINED_NPL__ELEMENT, oldElement, newElement);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, model4Package.REF_SINGLE_CONTAINED_NPL__ELEMENT, oldElement, newElement);
       if (msgs == null)
       {
         msgs = notification;
@@ -108,13 +107,11 @@ public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleC
       NotificationChain msgs = null;
       if (element != null)
       {
-        msgs = ((InternalEObject)element).eInverseRemove(this,
-            EOPPOSITE_FEATURE_BASE - model4Package.REF_SINGLE_CONTAINED_NPL__ELEMENT, null, msgs);
+        msgs = ((InternalEObject)element).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - model4Package.REF_SINGLE_CONTAINED_NPL__ELEMENT, null, msgs);
       }
       if (newElement != null)
       {
-        msgs = ((InternalEObject)newElement).eInverseAdd(this,
-            EOPPOSITE_FEATURE_BASE - model4Package.REF_SINGLE_CONTAINED_NPL__ELEMENT, null, msgs);
+        msgs = ((InternalEObject)newElement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - model4Package.REF_SINGLE_CONTAINED_NPL__ELEMENT, null, msgs);
       }
       msgs = basicSetElement(newElement, msgs);
       if (msgs != null)
@@ -124,8 +121,7 @@ public class RefSingleContainedNPLImpl extends EObjectImpl implements RefSingleC
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.REF_SINGLE_CONTAINED_NPL__ELEMENT, newElement,
-          newElement));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.REF_SINGLE_CONTAINED_NPL__ELEMENT, newElement, newElement));
     }
   }
 

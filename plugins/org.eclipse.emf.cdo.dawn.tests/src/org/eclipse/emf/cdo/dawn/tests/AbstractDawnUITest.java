@@ -110,15 +110,13 @@ public abstract class AbstractDawnUITest<T extends SWTWorkbenchBot> extends Abst
     editor.click(xPosition, yPosition);
   }
 
-  protected void createNodeWithLabel(String type, int xPosition, int yPosition, String labelText, SWTGefBot bot,
-      SWTBotGefEditor editor)
+  protected void createNodeWithLabel(String type, int xPosition, int yPosition, String labelText, SWTGefBot bot, SWTBotGefEditor editor)
   {
     createNode(type, xPosition, yPosition, bot, editor);
     typeTextToFocusedWidget(labelText, bot, true);
   }
 
-  protected void createEdge(String type, int fromXPosition, int fromYPosition, int toXPosition, int toYPosition,
-      SWTBotGefEditor editor)
+  protected void createEdge(String type, int fromXPosition, int fromYPosition, int toXPosition, int toYPosition, SWTBotGefEditor editor)
   {
     editor.activateTool(type);
     editor.drag(fromXPosition, fromYPosition, toXPosition, toYPosition);

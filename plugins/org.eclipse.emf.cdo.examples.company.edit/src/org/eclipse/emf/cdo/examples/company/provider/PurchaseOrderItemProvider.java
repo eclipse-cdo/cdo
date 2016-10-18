@@ -67,14 +67,10 @@ public class PurchaseOrderItemProvider extends OrderItemProvider
    */
   protected void addDatePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(
-            createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                getResourceLocator(), getString("_UI_PurchaseOrder_date_feature"),
-                getString("_UI_PropertyDescriptor_description", "_UI_PurchaseOrder_date_feature",
-                    "_UI_PurchaseOrder_type"),
-                CompanyPackage.Literals.PURCHASE_ORDER__DATE, true, false, false,
-                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_PurchaseOrder_date_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_PurchaseOrder_date_feature", "_UI_PurchaseOrder_type"),
+        CompanyPackage.Literals.PURCHASE_ORDER__DATE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -84,12 +80,10 @@ public class PurchaseOrderItemProvider extends OrderItemProvider
    */
   protected void addSupplierPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_PurchaseOrder_supplier_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_PurchaseOrder_supplier_feature",
-                "_UI_PurchaseOrder_type"),
-            CompanyPackage.Literals.PURCHASE_ORDER__SUPPLIER, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_PurchaseOrder_supplier_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_PurchaseOrder_supplier_feature", "_UI_PurchaseOrder_type"),
+        CompanyPackage.Literals.PURCHASE_ORDER__SUPPLIER, true, false, true, null, null, null));
   }
 
   /**
@@ -123,8 +117,7 @@ public class PurchaseOrderItemProvider extends OrderItemProvider
   {
     Date labelValue = ((PurchaseOrder)object).getDate();
     String label = labelValue == null ? null : labelValue.toString();
-    return label == null || label.length() == 0 ? getString("_UI_PurchaseOrder_type")
-        : getString("_UI_PurchaseOrder_type") + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_PurchaseOrder_type") : getString("_UI_PurchaseOrder_type") + " " + label;
   }
 
   /**

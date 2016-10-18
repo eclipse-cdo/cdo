@@ -41,6 +41,5 @@ public interface CDOConflictResolver2 extends CDOConflictResolver
    *          locally (depends on local revision caching and server behavior regarding transmission of deltas instead
    *          of invalidations).
    */
-  public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
-      List<CDORevisionDelta> allRemoteDeltas);
+  public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts, List<CDORevisionDelta> allRemoteDeltas);
 }

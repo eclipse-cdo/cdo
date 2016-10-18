@@ -91,8 +91,7 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model2Package.EOBJECT_TO_EOBJECT_MAP__KEY, oldKey,
-              key));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model2Package.EOBJECT_TO_EOBJECT_MAP__KEY, oldKey, key));
         }
       }
     }
@@ -136,8 +135,7 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model2Package.EOBJECT_TO_EOBJECT_MAP__VALUE,
-              oldValue, value));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model2Package.EOBJECT_TO_EOBJECT_MAP__VALUE, oldValue, value));
         }
       }
     }
@@ -163,8 +161,7 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
     value = newValue;
     if (eNotificationRequired())
     {
-      eNotify(
-          new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_MAP__VALUE, oldValue, value));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_MAP__VALUE, oldValue, value));
     }
   }
 

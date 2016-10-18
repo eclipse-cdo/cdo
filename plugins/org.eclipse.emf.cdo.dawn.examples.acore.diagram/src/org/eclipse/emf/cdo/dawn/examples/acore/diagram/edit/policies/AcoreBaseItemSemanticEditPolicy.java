@@ -141,8 +141,7 @@ public class AcoreBaseItemSemanticEditPolicy extends SemanticEditPolicy
   {
     if (editPolicyCommand != null)
     {
-      ICommand command = editPolicyCommand instanceof ICommandProxy ? ((ICommandProxy)editPolicyCommand).getICommand()
-          : new CommandProxy(editPolicyCommand);
+      ICommand command = editPolicyCommand instanceof ICommandProxy ? ((ICommandProxy)editPolicyCommand).getICommand() : new CommandProxy(editPolicyCommand);
       request.setParameter(AcoreBaseEditHelper.EDIT_POLICY_COMMAND, command);
     }
     IElementType requestContextElementType = getContextElementType(request);

@@ -28,8 +28,7 @@ public final class SyncingUtil
   {
   }
 
-  public static InternalView openViewWithLockArea(InternalSession session, InternalLockManager lockManager,
-      CDOBranch viewedBranch, String lockAreaID)
+  public static InternalView openViewWithLockArea(InternalSession session, InternalLockManager lockManager, CDOBranch viewedBranch, String lockAreaID)
   {
     LockArea lockArea;
     InternalView view;

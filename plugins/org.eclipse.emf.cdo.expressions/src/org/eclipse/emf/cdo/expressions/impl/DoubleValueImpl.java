@@ -69,8 +69,7 @@ public class DoubleValueImpl extends ValueImpl implements DoubleValue
   @Override
   public Double getLiteral()
   {
-    return (Double)eDynamicGet(ExpressionsPackage.DOUBLE_VALUE__LITERAL,
-        ExpressionsPackage.Literals.DOUBLE_VALUE__LITERAL, true, true);
+    return (Double)eDynamicGet(ExpressionsPackage.DOUBLE_VALUE__LITERAL, ExpressionsPackage.Literals.DOUBLE_VALUE__LITERAL, true, true);
   }
 
   /**
@@ -80,8 +79,7 @@ public class DoubleValueImpl extends ValueImpl implements DoubleValue
    */
   public void setLiteral(double newLiteral)
   {
-    eDynamicSet(ExpressionsPackage.DOUBLE_VALUE__LITERAL, ExpressionsPackage.Literals.DOUBLE_VALUE__LITERAL,
-        newLiteral);
+    eDynamicSet(ExpressionsPackage.DOUBLE_VALUE__LITERAL, ExpressionsPackage.Literals.DOUBLE_VALUE__LITERAL, newLiteral);
   }
 
   /**

@@ -59,8 +59,7 @@ public class CDOAdminView extends ContainerView
 
   private final CDOAdminClientManager adminManager = OM.getAdminManager();
 
-  private Image connectionImage = org.eclipse.net4j.ui.shared.SharedIcons
-      .getImage(org.eclipse.net4j.ui.shared.SharedIcons.OBJ_CONNECTOR);
+  private Image connectionImage = org.eclipse.net4j.ui.shared.SharedIcons.getImage(org.eclipse.net4j.ui.shared.SharedIcons.OBJ_CONNECTOR);
 
   private Image repositoryImage = SharedIcons.getImage(SharedIcons.OBJ_REPO);
 
@@ -95,8 +94,7 @@ public class CDOAdminView extends ContainerView
         if (obj instanceof CDOAdminRepository)
         {
           CDOAdminRepository repository = (CDOAdminRepository)obj;
-          return MessageFormat.format(Messages.CDOAdminView_0, repository.getName(), repository.getType(),
-              repository.getState());
+          return MessageFormat.format(Messages.CDOAdminView_0, repository.getName(), repository.getType(), repository.getState());
         }
 
         return super.getText(obj);
@@ -199,8 +197,7 @@ public class CDOAdminView extends ContainerView
 
       addConnectionAction.setText(Messages.CDOAdminView_2);
       addConnectionAction.setToolTipText(Messages.CDOAdminView_3);
-      addConnectionAction.setImageDescriptor(
-          org.eclipse.net4j.ui.shared.SharedIcons.getDescriptor(org.eclipse.net4j.ui.shared.SharedIcons.ETOOL_ADD));
+      addConnectionAction.setImageDescriptor(org.eclipse.net4j.ui.shared.SharedIcons.getDescriptor(org.eclipse.net4j.ui.shared.SharedIcons.ETOOL_ADD));
     }
 
     manager.add(addConnectionAction);
@@ -212,8 +209,7 @@ public class CDOAdminView extends ContainerView
     IManagedContainer container = adminManager.getContainer();
     String productGroup = CredentialsProviderFactory.PRODUCT_GROUP;
     String factoryType = "interactive"; //$NON-NLS-1$
-    IPasswordCredentialsProvider credentialsProvider = (IPasswordCredentialsProvider)container.getElement(productGroup,
-        factoryType, null);
+    IPasswordCredentialsProvider credentialsProvider = (IPasswordCredentialsProvider)container.getElement(productGroup, factoryType, null);
 
     if (credentialsProvider == null)
     {
@@ -262,13 +258,11 @@ public class CDOAdminView extends ContainerView
   /**
    * @author Eike Stepper
    */
-  public class OpenSessionAction extends AdminAction<CDOAdminClientRepository>
-      implements CDOAdminClientRepository.SessionConfigurator
+  public class OpenSessionAction extends AdminAction<CDOAdminClientRepository> implements CDOAdminClientRepository.SessionConfigurator
   {
     public OpenSessionAction(CDOAdminClientRepository repository)
     {
-      super(Messages.CDOAdminView_4, Messages.CDOAdminView_5, SharedIcons.getDescriptor(SharedIcons.ETOOL_OPEN_SESSION),
-          repository);
+      super(Messages.CDOAdminView_4, Messages.CDOAdminView_5, SharedIcons.getDescriptor(SharedIcons.ETOOL_OPEN_SESSION), repository);
     }
 
     public CDOAdminClientRepository getRepository()

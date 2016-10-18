@@ -171,8 +171,8 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
   public void initialize(Class_Object classObject, EStructuralFeature feature)
   {
     // Class_Position position = classObject.type_of().position_in_class(getAttributeName(feature));
-    Class_Object newClassObject = Class_Object.new_persistent_object(
-        ObjySchema.getObjyClass(ObjyArrayListString.ClassName).getASClass(), classObject.objectID(), false);
+    Class_Object newClassObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(ObjyArrayListString.ClassName).getASClass(),
+        classObject.objectID(), false);
     // ObjyObjectManager.newInternalObjCount++;
     classObject.nset_ooId(getAttributeName(feature), newClassObject.objectID());
     ObjyArrayListString.initObject(newClassObject);

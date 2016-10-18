@@ -44,8 +44,8 @@ public class HandleRevisionsRequest extends CDOClientRequest<Boolean>
 
   private CDORevisionHandler handler;
 
-  public HandleRevisionsRequest(CDOClientProtocol protocol, EClass eClass, CDOBranch branch, boolean exactBranch,
-      long timeStamp, boolean exactTime, CDORevisionHandler handler)
+  public HandleRevisionsRequest(CDOClientProtocol protocol, EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_HANDLE_REVISIONS);
     this.eClass = eClass;

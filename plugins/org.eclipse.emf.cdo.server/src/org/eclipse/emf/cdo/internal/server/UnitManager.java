@@ -296,8 +296,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     }
   }
 
-  public List<InternalCDORevisionDelta> getUnitMoves(InternalCDORevisionDelta[] deltas, CDORevisionProvider before,
-      CDORevisionProvider after)
+  public List<InternalCDORevisionDelta> getUnitMoves(InternalCDORevisionDelta[] deltas, CDORevisionProvider before, CDORevisionProvider after)
   {
     ReadLock readLock = managerLock.readLock();
     readLock.lock();
@@ -465,14 +464,12 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     return new UnitInitializer(rootID, view, revisionHandler);
   }
 
-  protected ObjectAttacher createObjectAttacher(InternalCommitContext commitContext,
-      List<InternalCDORevision> unmappedRevisions)
+  protected ObjectAttacher createObjectAttacher(InternalCommitContext commitContext, List<InternalCDORevision> unmappedRevisions)
   {
     return new ObjectAttacher(commitContext, unmappedRevisions);
   }
 
-  protected void mapAttachedObjectsToUnits(InternalCommitContext commitContext, long timeStamp,
-      Map<CDOID, CDOID> unitMappings)
+  protected void mapAttachedObjectsToUnits(InternalCommitContext commitContext, long timeStamp, Map<CDOID, CDOID> unitMappings)
   {
     UnitSupport storeAccessor = (UnitSupport)commitContext.getAccessor();
     storeAccessor.writeUnits(unitMappings, timeStamp);
@@ -591,8 +588,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     /**
      * Does not hold any manager lock when called.
      */
-    public void initialize(IView view, long timeStamp, CDORevisionHandler revisionHandler,
-        Map<ObjectAttacher, List<CDOID>> objectAttachers, OMMonitor monitor)
+    public void initialize(IView view, long timeStamp, CDORevisionHandler revisionHandler, Map<ObjectAttacher, List<CDOID>> objectAttachers, OMMonitor monitor)
     {
       UnitSupport storeAccessor = (UnitSupport)repository.getStore().getWriter(null);
 

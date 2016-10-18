@@ -262,8 +262,7 @@ public abstract class FailoverAgent extends Lifecycle implements CDOSessionConfi
     return CDOServerUtil.createRepositorySynchronizer(this);
   }
 
-  protected abstract CDOSessionConfiguration createSessionConfiguration(String connectorDescription,
-      String repositoryName);
+  protected abstract CDOSessionConfiguration createSessionConfiguration(String connectorDescription, String repositoryName);
 
   /**
    * The agent-side implementation of the {@link FailoverMonitor fail-over monitor} protocol.

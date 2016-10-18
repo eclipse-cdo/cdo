@@ -73,8 +73,7 @@ public class SecurityActionBarContributor extends EditingDomainActionBarContribu
    * <!-- end-user-doc -->
    * @generated
    */
-  protected IAction showPropertiesViewAction = new Action(
-      SecurityEditorPlugin.INSTANCE.getString("_UI_ShowPropertiesView_menu_item")) //$NON-NLS-1$
+  protected IAction showPropertiesViewAction = new Action(SecurityEditorPlugin.INSTANCE.getString("_UI_ShowPropertiesView_menu_item")) //$NON-NLS-1$
   {
     @Override
     public void run()
@@ -97,8 +96,7 @@ public class SecurityActionBarContributor extends EditingDomainActionBarContribu
    * <!-- end-user-doc -->
    * @generated
    */
-  protected IAction refreshViewerAction = new Action(
-      SecurityEditorPlugin.INSTANCE.getString("_UI_RefreshViewer_menu_item")) //$NON-NLS-1$
+  protected IAction refreshViewerAction = new Action(SecurityEditorPlugin.INSTANCE.getString("_UI_RefreshViewer_menu_item")) //$NON-NLS-1$
   {
     @Override
     public boolean isEnabled()
@@ -363,8 +361,7 @@ public class SecurityActionBarContributor extends EditingDomainActionBarContribu
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void populateManager(IContributionManager manager, Collection<? extends IAction> actions,
-      String contributionID)
+  protected void populateManager(IContributionManager manager, Collection<? extends IAction> actions, String contributionID)
   {
     if (actions != null)
     {

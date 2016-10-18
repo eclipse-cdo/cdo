@@ -254,14 +254,12 @@ public class AcoreDiagramEditor extends DiagramDocumentEditor implements IGotoMa
     final IEditorInput newInput = new FileEditorInput(file);
     // Check if the editor is already open
     IEditorMatchingStrategy matchingStrategy = getEditorDescriptor().getEditorMatchingStrategy();
-    IEditorReference[] editorRefs = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-        .getEditorReferences();
+    IEditorReference[] editorRefs = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getEditorReferences();
     for (int i = 0; i < editorRefs.length; i++)
     {
       if (matchingStrategy.matches(editorRefs[i], newInput))
       {
-        MessageDialog.openWarning(shell, Messages.AcoreDiagramEditor_SaveAsErrorTitle,
-            Messages.AcoreDiagramEditor_SaveAsErrorMessage);
+        MessageDialog.openWarning(shell, Messages.AcoreDiagramEditor_SaveAsErrorTitle, Messages.AcoreDiagramEditor_SaveAsErrorMessage);
         return;
       }
     }
@@ -269,8 +267,7 @@ public class AcoreDiagramEditor extends DiagramDocumentEditor implements IGotoMa
     try
     {
       provider.aboutToChange(newInput);
-      getDocumentProvider(newInput).saveDocument(progressMonitor, newInput,
-          getDocumentProvider().getDocument(getEditorInput()), true);
+      getDocumentProvider(newInput).saveDocument(progressMonitor, newInput, getDocumentProvider().getDocument(getEditorInput()), true);
       success = true;
     }
     catch (CoreException x)
@@ -278,8 +275,7 @@ public class AcoreDiagramEditor extends DiagramDocumentEditor implements IGotoMa
       IStatus status = x.getStatus();
       if (status == null || status.getSeverity() != IStatus.CANCEL)
       {
-        ErrorDialog.openError(shell, Messages.AcoreDiagramEditor_SaveErrorTitle,
-            Messages.AcoreDiagramEditor_SaveErrorMessage, x.getStatus());
+        ErrorDialog.openError(shell, Messages.AcoreDiagramEditor_SaveErrorTitle, Messages.AcoreDiagramEditor_SaveErrorMessage, x.getStatus());
       }
     }
     finally

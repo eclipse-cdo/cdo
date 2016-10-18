@@ -56,8 +56,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
   private ITransition<STATE, EVENT, SUBJECT, ?>[][] transitions;
 
   @SuppressWarnings("unchecked")
-  public FiniteStateMachine(Class<STATE> stateEnum, Class<EVENT> eventEnum,
-      ITransition<STATE, EVENT, SUBJECT, ?> defaultTransition)
+  public FiniteStateMachine(Class<STATE> stateEnum, Class<EVENT> eventEnum, ITransition<STATE, EVENT, SUBJECT, ?> defaultTransition)
   {
     states = stateEnum.getEnumConstants();
     events = eventEnum.getEnumConstants();

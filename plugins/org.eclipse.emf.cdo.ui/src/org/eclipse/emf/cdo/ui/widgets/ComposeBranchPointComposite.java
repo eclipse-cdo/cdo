@@ -64,8 +64,7 @@ public class ComposeBranchPointComposite extends Composite
    * @deprecated as of 4.4 use {@link #ComposeBranchPointComposite(Composite, boolean, CDOBranchPoint)}.
    */
   @Deprecated
-  public ComposeBranchPointComposite(Composite parent, int style, CDOSession session, CDOBranchPoint branchPoint,
-      boolean allowTimeStamp)
+  public ComposeBranchPointComposite(Composite parent, int style, CDOSession session, CDOBranchPoint branchPoint, boolean allowTimeStamp)
   {
     super(parent, style);
     this.allowTimeStamp = allowTimeStamp;
@@ -263,8 +262,7 @@ public class ComposeBranchPointComposite extends Composite
     timeStampGroup.setLayout(new GridLayout(1, false));
     timeStampGroup.setText("Time Stamp:");
 
-    SelectTimeStampComposite timeStampComposite = new SelectTimeStampComposite(timeStampGroup, SWT.NONE,
-        branchPoint.getBranch(), branchPoint.getTimeStamp())
+    SelectTimeStampComposite timeStampComposite = new SelectTimeStampComposite(timeStampGroup, SWT.NONE, branchPoint.getBranch(), branchPoint.getTimeStamp())
     {
       @Override
       protected void timeStampChanged(long timeStamp)

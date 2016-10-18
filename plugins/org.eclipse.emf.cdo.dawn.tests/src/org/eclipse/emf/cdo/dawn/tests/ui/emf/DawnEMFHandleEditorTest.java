@@ -73,11 +73,9 @@ public class DawnEMFHandleEditorTest extends AbstractDawnEMFTest
       transaction.close();
       session.close();
     }
-    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
-        PreferenceConstants.getServerName());
+    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(), PreferenceConstants.getServerName());
     CDOConnectionUtil.instance.openSession();
-    DawnSWTBotEMFEditor editor = DawnAcoreTestUtil.openAcoreEMFEditor(URI.createURI("cdo://repo1/default.acore"),
-        getBot());
+    DawnSWTBotEMFEditor editor = DawnAcoreTestUtil.openAcoreEMFEditor(URI.createURI("cdo://repo1/default.acore"), getBot());
     assertNotNull(editor);
     SWTBotTree tree = editor.getSelectionPageTree();
 

@@ -116,8 +116,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
     attrBefore = newAttrBefore;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.TRANSIENT_CONTAINER__ATTR_BEFORE,
-          oldAttrBefore, attrBefore));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.TRANSIENT_CONTAINER__ATTR_BEFORE, oldAttrBefore, attrBefore));
     }
   }
 
@@ -150,8 +149,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
    */
   public void setParent(PersistentContainment newParent)
   {
-    if (newParent != eInternalContainer()
-        || eContainerFeatureID() != Model2Package.TRANSIENT_CONTAINER__PARENT && newParent != null)
+    if (newParent != eInternalContainer() || eContainerFeatureID() != Model2Package.TRANSIENT_CONTAINER__PARENT && newParent != null)
     {
       if (EcoreUtil.isAncestor(this, newParent))
       {
@@ -164,8 +162,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
       }
       if (newParent != null)
       {
-        msgs = ((InternalEObject)newParent).eInverseAdd(this, Model2Package.PERSISTENT_CONTAINMENT__CHILDREN,
-            PersistentContainment.class, msgs);
+        msgs = ((InternalEObject)newParent).eInverseAdd(this, Model2Package.PERSISTENT_CONTAINMENT__CHILDREN, PersistentContainment.class, msgs);
       }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
@@ -175,8 +172,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.TRANSIENT_CONTAINER__PARENT, newParent,
-          newParent));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.TRANSIENT_CONTAINER__PARENT, newParent, newParent));
     }
   }
 
@@ -199,8 +195,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
     attrAfter = newAttrAfter;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.TRANSIENT_CONTAINER__ATTR_AFTER, oldAttrAfter,
-          attrAfter));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.TRANSIENT_CONTAINER__ATTR_AFTER, oldAttrAfter, attrAfter));
     }
   }
 
@@ -248,8 +243,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
     switch (eContainerFeatureID())
     {
     case Model2Package.TRANSIENT_CONTAINER__PARENT:
-      return eInternalContainer().eInverseRemove(this, Model2Package.PERSISTENT_CONTAINMENT__CHILDREN,
-          PersistentContainment.class, msgs);
+      return eInternalContainer().eInverseRemove(this, Model2Package.PERSISTENT_CONTAINMENT__CHILDREN, PersistentContainment.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
   }

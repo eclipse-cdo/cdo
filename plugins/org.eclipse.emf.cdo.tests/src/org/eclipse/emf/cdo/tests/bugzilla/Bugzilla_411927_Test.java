@@ -111,8 +111,7 @@ public class Bugzilla_411927_Test extends AbstractCDOTest
     getTestProperties().put(RepositoryConfig.PROP_TEST_REPOSITORY, repository);
   }
 
-  private void executeTestWith(FailureTime failureTime)
-      throws ConcurrentAccessException, CommitException, InterruptedException
+  private void executeTestWith(FailureTime failureTime) throws ConcurrentAccessException, CommitException, InterruptedException
   {
     disableConsole();
     initRepository(failureTime);
@@ -146,8 +145,7 @@ public class Bugzilla_411927_Test extends AbstractCDOTest
       clients[id].join();
     }
 
-    assertEquals("Invalidation queue is blocked", true,
-        session.waitForUpdate(getRepository().getLastCommitTimeStamp(), DEFAULT_TIMEOUT));
+    assertEquals("Invalidation queue is blocked", true, session.waitForUpdate(getRepository().getLastCommitTimeStamp(), DEFAULT_TIMEOUT));
   }
 
   /**

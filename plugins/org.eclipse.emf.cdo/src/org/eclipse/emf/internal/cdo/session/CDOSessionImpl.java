@@ -159,8 +159,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
-    implements InternalCDOSession, IExecutorServiceProvider
+public abstract class CDOSessionImpl extends CDOTransactionContainerImpl implements InternalCDOSession, IExecutorServiceProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
@@ -671,8 +670,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
     });
   }
 
-  public void processRefreshSessionResult(RefreshSessionResult result, CDOBranch branch,
-      List<InternalCDOView> branchViews, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
+  public void processRefreshSessionResult(RefreshSessionResult result, CDOBranch branch, List<InternalCDOView> branchViews,
+      Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
   {
     Map<CDOID, InternalCDORevision> oldRevisions = viewedRevisions.get(branch);
 
@@ -712,8 +711,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
     }
   }
 
-  private void collectViewedRevisions(Map<CDOBranch, List<InternalCDOView>> views,
-      Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
+  private void collectViewedRevisions(Map<CDOBranch, List<InternalCDOView>> views, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
   {
     for (InternalCDOView view : getViews())
     {
@@ -1100,8 +1098,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
   }
 
   @Deprecated
-  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache,
-      byte securityImpact, Map<CDOID, CDOPermission> newPermissions)
+  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache, byte securityImpact,
+      Map<CDOID, CDOPermission> newPermissions)
   {
     throw new UnsupportedOperationException();
   }
@@ -1191,14 +1189,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
     return CDORevisionUtil.createChangeSetData(ids, sourceInfo, targetInfo);
   }
 
-  public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase,
-      boolean computeChangeSets)
+  public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase, boolean computeChangeSets)
   {
     return getMergeData(target, source, null, sourceBase, computeChangeSets);
   }
 
-  public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint targetBase,
-      CDOBranchPoint sourceBase, boolean computeChangeSets)
+  public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint targetBase, CDOBranchPoint sourceBase, boolean computeChangeSets)
   {
     boolean auto;
     if (sourceBase == CDOBranchUtil.AUTO_BRANCH_POINT)
@@ -1265,8 +1261,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
       sourceChanges = createChangeSet(result.getSourceIDs(), sourceBaseInfo, sourceInfo);
     }
 
-    return new MergeData(target, targetInfo, targetBase, targetBaseInfo, result.getTargetIDs(), targetChanges, source,
-        sourceInfo, sourceBase, sourceBaseInfo, result.getSourceIDs(), sourceChanges, result.getResultBase());
+    return new MergeData(target, targetInfo, targetBase, targetBaseInfo, result.getTargetIDs(), targetChanges, source, sourceInfo, sourceBase, sourceBaseInfo,
+        result.getSourceIDs(), sourceChanges, result.getResultBase());
   }
 
   @Deprecated
@@ -1330,8 +1326,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
       if (revision.getBranch() != branch)
       {
         CDOID id = revision.getID();
-        CDORevision firstRevision = revisionManager.getCache().getRevisionByVersion(id,
-            branch.getVersion(CDOBranchVersion.FIRST_VERSION));
+        CDORevision firstRevision = revisionManager.getCache().getRevisionByVersion(id, branch.getVersion(CDOBranchVersion.FIRST_VERSION));
         if (firstRevision != null)
         {
           long revised = firstRevision.getTimeStamp() - 1L;
@@ -1343,8 +1338,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
     }
   }
 
-  private CDOChangeSet createChangeSet(Set<CDOID> ids, CDORevisionAvailabilityInfo startInfo,
-      CDORevisionAvailabilityInfo endInfo)
+  private CDOChangeSet createChangeSet(Set<CDOID> ids, CDORevisionAvailabilityInfo startInfo, CDORevisionAvailabilityInfo endInfo)
   {
     CDOChangeSetData data = CDORevisionUtil.createChangeSetData(ids, startInfo, endInfo);
     return CDORevisionUtil.createChangeSet(startInfo.getBranchPoint(), endInfo.getBranchPoint(), data);
@@ -1506,8 +1500,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
           IListener[] listeners = getListeners();
           if (listeners != null)
           {
-            fireEvent(new PassiveUpdateEventImpl(!passiveUpdateEnabled, passiveUpdateEnabled, passiveUpdateMode,
-                passiveUpdateMode), listeners);
+            fireEvent(new PassiveUpdateEventImpl(!passiveUpdateEnabled, passiveUpdateEnabled, passiveUpdateMode, passiveUpdateMode), listeners);
           }
         }
       }
@@ -1533,9 +1526,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
           IListener[] listeners = getListeners();
           if (listeners != null)
           {
-            fireEvent(
-                new PassiveUpdateEventImpl(passiveUpdateEnabled, passiveUpdateEnabled, oldMode, passiveUpdateMode),
-                listeners);
+            fireEvent(new PassiveUpdateEventImpl(passiveUpdateEnabled, passiveUpdateEnabled, oldMode, passiveUpdateMode), listeners);
           }
         }
       }
@@ -1713,8 +1704,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
     /**
      * @author Eike Stepper
      */
-    private final class GeneratedPackageEmulationEventImpl extends OptionsEvent
-        implements GeneratedPackageEmulationEvent
+    private final class GeneratedPackageEmulationEventImpl extends OptionsEvent implements GeneratedPackageEmulationEvent
     {
       private static final long serialVersionUID = 1L;
 
@@ -1739,8 +1729,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
 
       private PassiveUpdateMode newMode;
 
-      public PassiveUpdateEventImpl(boolean oldEnabled, boolean newEnabled, PassiveUpdateMode oldMode,
-          PassiveUpdateMode newMode)
+      public PassiveUpdateEventImpl(boolean oldEnabled, boolean newEnabled, PassiveUpdateMode oldMode, PassiveUpdateMode newMode)
       {
         super(OptionsImpl.this);
         this.oldEnabled = oldEnabled;
@@ -1906,10 +1895,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
 
       if (DEBUG)
       {
-        IOUtil.OUT()
-            .println(CDOSessionImpl.this + " [" + getLastUpdateTime() % 10000 + "] "
-                + invalidation.getPreviousTimeStamp() % 10000 + " --> " + invalidation.getTimeStamp() % 10000
-                + "    reorderQueue=" + reorderQueue + "    unfinishedLocalCommits=" + unfinishedLocalCommits);
+        IOUtil.OUT().println(CDOSessionImpl.this + " [" + getLastUpdateTime() % 10000 + "] " + invalidation.getPreviousTimeStamp() % 10000 + " --> "
+            + invalidation.getTimeStamp() % 10000 + "    reorderQueue=" + reorderQueue + "    unfinishedLocalCommits=" + unfinishedLocalCommits);
       }
 
       scheduleInvalidations();
@@ -2002,8 +1989,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
 
       if (Invalidator.DEBUG)
       {
-        IOUtil.OUT().println(
-            CDOSessionImpl.this + " [" + getLastUpdateTime() % 10000 + "] " + timeStamp % 10000 + "    INVALIDATE");
+        IOUtil.OUT().println(CDOSessionImpl.this + " [" + getLastUpdateTime() % 10000 + "] " + timeStamp % 10000 + "    INVALIDATE");
       }
 
       try
@@ -2044,8 +2030,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
 
         for (InternalCDOView view : views)
         {
-          invalidateView(commitInfo, view, sender, oldRevisions, invalidationData.isClearResourcePathCache(),
-              lockChangeInfo);
+          invalidateView(commitInfo, view, sender, oldRevisions, invalidationData.isClearResourcePathCache(), lockChangeInfo);
         }
       }
       catch (RuntimeException ex)
@@ -2142,8 +2127,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
         {
           CDORevisionDelta revisionDelta = (CDORevisionDelta)key;
 
-          InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, revisionDelta,
-              CDORevision.UNCHUNKED, false);
+          InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, revisionDelta, CDORevision.UNCHUNKED, false);
           if (oldRevision != null)
           {
             addOldValuesToDelta(oldRevision, revisionDelta);
@@ -2213,8 +2197,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
       revisionManager.addRevision(newRevision);
     }
 
-    private void invalidateView(CDOCommitInfo commitInfo, InternalCDOView view, InternalCDOTransaction sender,
-        Map<CDOID, InternalCDORevision> oldRevisions, boolean clearResourcePathCache, CDOLockChangeInfo lockChangeInfo)
+    private void invalidateView(CDOCommitInfo commitInfo, InternalCDOView view, InternalCDOTransaction sender, Map<CDOID, InternalCDORevision> oldRevisions,
+        boolean clearResourcePathCache, CDOLockChangeInfo lockChangeInfo)
     {
       try
       {
@@ -2268,8 +2252,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
 
     private Map<CDORevision, CDOPermission> oldPermissions;
 
-    public InvalidationEvent(InternalCDOTransaction sender, CDOCommitInfo commitInfo, byte securityImpact,
-        Map<CDORevision, CDOPermission> oldPermissions)
+    public InvalidationEvent(InternalCDOTransaction sender, CDOCommitInfo commitInfo, byte securityImpact, Map<CDORevision, CDOPermission> oldPermissions)
     {
       super(CDOSessionImpl.this);
       this.sender = sender;
@@ -2343,8 +2326,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
     public CDOCommitInfo getMergedCommitInfo()
     {
       CDOBranchPoint mergeSource = getMergeSource();
-      return mergeSource == null ? null
-          : commitInfoManager.getCommitInfo(mergeSource.getBranch(), mergeSource.getTimeStamp(), false);
+      return mergeSource == null ? null : commitInfoManager.getCommitInfo(mergeSource.getBranch(), mergeSource.getTimeStamp(), false);
     }
 
     public boolean isEmpty()

@@ -69,8 +69,7 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> impleme
     return newElement(properties);
   }
 
-  public void fireCheckoutOpenEvent(CDOCheckout checkout, CDOView view, CDOCheckout.State oldState,
-      CDOCheckout.State newState)
+  public void fireCheckoutOpenEvent(CDOCheckout checkout, CDOView view, CDOCheckout.State oldState, CDOCheckout.State newState)
   {
     if (view != null)
     {
@@ -148,8 +147,7 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> impleme
 
     private final CDOCheckout.State newState;
 
-    public CheckoutStateEventImpl(CDOCheckoutManager repositoryManager, CDOCheckout checkout,
-        CDOCheckout.State oldState, CDOCheckout.State newState)
+    public CheckoutStateEventImpl(CDOCheckoutManager repositoryManager, CDOCheckout checkout, CDOCheckout.State oldState, CDOCheckout.State newState)
     {
       super(repositoryManager);
       this.checkout = checkout;

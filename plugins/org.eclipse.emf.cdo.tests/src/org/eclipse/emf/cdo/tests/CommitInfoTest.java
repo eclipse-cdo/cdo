@@ -104,8 +104,7 @@ public class CommitInfoTest extends AbstractCDOTest
     userManager.addUser(USER_ID, PASSWORD);
 
     getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
-    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
-        new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
+    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER, new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
 
     getRepository(REPO_NAME);
 
@@ -147,8 +146,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -169,8 +167,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
 
     List<CDOCommitInfo> infos = handler.getInfos();
 
@@ -193,8 +190,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -211,8 +207,7 @@ public class CommitInfoTest extends AbstractCDOTest
     userManager.addUser(USER_ID, PASSWORD);
 
     getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
-    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
-        new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
+    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER, new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
 
     getRepository(REPO_NAME);
 
@@ -226,8 +221,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    getRepository(REPO_NAME).getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    getRepository(REPO_NAME).getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -252,8 +246,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -275,9 +268,8 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(
-        getRepository().getBranchManager().getBranch(transaction.getBranch().getID()), CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    getRepository().getCommitInfoManager().getCommitInfos(getRepository().getBranchManager().getBranch(transaction.getBranch().getID()),
+        CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -299,9 +291,8 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(
-        getRepository().getBranchManager().getBranch(transaction.getBranch().getID()), CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    getRepository().getCommitInfoManager().getCommitInfos(getRepository().getBranchManager().getBranch(transaction.getBranch().getID()),
+        CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -322,9 +313,8 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(
-        getRepository().getBranchManager().getBranch(transaction.getBranch().getID()), CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    getRepository().getCommitInfoManager().getCommitInfos(getRepository().getBranchManager().getBranch(transaction.getBranch().getID()),
+        CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(1, infos.size());
@@ -341,8 +331,7 @@ public class CommitInfoTest extends AbstractCDOTest
     userManager.addUser(USER_ID, PASSWORD);
 
     getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
-    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
-        new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
+    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER, new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
 
     getRepository(REPO_NAME);
 
@@ -356,8 +345,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    getRepository(REPO_NAME).getCommitInfoManager().getCommitInfos(
-        getRepository(REPO_NAME).getBranchManager().getBranch(transaction.getBranch().getID()),
+    getRepository(REPO_NAME).getCommitInfoManager().getCommitInfos(getRepository(REPO_NAME).getBranchManager().getBranch(transaction.getBranch().getID()),
         CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
@@ -383,9 +371,8 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(
-        getRepository().getBranchManager().getBranch(transaction.getBranch().getID()), CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    getRepository().getCommitInfoManager().getCommitInfos(getRepository().getBranchManager().getBranch(transaction.getBranch().getID()),
+        CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -406,8 +393,7 @@ public class CommitInfoTest extends AbstractCDOTest
     transaction.commit();
 
     Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(0, infos.size());
@@ -427,8 +413,7 @@ public class CommitInfoTest extends AbstractCDOTest
     transaction.commit();
 
     Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(0, infos.size());
@@ -449,8 +434,7 @@ public class CommitInfoTest extends AbstractCDOTest
     transaction.commit();
 
     Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(0, infos.size());
@@ -464,8 +448,7 @@ public class CommitInfoTest extends AbstractCDOTest
     userManager.addUser(USER_ID, PASSWORD);
 
     getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
-    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
-        new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
+    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER, new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
 
     getRepository(REPO_NAME);
 
@@ -480,8 +463,7 @@ public class CommitInfoTest extends AbstractCDOTest
     transaction.commit();
 
     Handler handler = new Handler();
-    getRepository(REPO_NAME).getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    getRepository(REPO_NAME).getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(0, infos.size());
@@ -504,8 +486,7 @@ public class CommitInfoTest extends AbstractCDOTest
     transaction.commit();
 
     Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(0, infos.size());
@@ -523,8 +504,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -564,8 +544,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -586,8 +565,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -603,8 +581,7 @@ public class CommitInfoTest extends AbstractCDOTest
     userManager.addUser(USER_ID, PASSWORD);
 
     getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
-    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
-        new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
+    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER, new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
 
     getRepository(REPO_NAME);
 
@@ -616,8 +593,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -639,8 +615,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -659,8 +634,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    session.getCommitInfoManager().getCommitInfos(transaction.getBranch(), CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    session.getCommitInfoManager().getCommitInfos(transaction.getBranch(), CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -679,8 +653,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    session.getCommitInfoManager().getCommitInfos(transaction.getBranch(), CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    session.getCommitInfoManager().getCommitInfos(transaction.getBranch(), CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -699,8 +672,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    session.getCommitInfoManager().getCommitInfos(transaction.getBranch(), CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    session.getCommitInfoManager().getCommitInfos(transaction.getBranch(), CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(1, infos.size());
@@ -716,8 +688,7 @@ public class CommitInfoTest extends AbstractCDOTest
     userManager.addUser(USER_ID, PASSWORD);
 
     getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
-    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
-        new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
+    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER, new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
 
     getRepository(REPO_NAME);
 
@@ -729,8 +700,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    session.getCommitInfoManager().getCommitInfos(transaction.getBranch(), CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    session.getCommitInfoManager().getCommitInfos(transaction.getBranch(), CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -752,8 +722,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOCommitInfo commitInfo = transaction.commit();
 
     Handler handler = new Handler();
-    session.getCommitInfoManager().getCommitInfos(transaction.getBranch(), CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    session.getCommitInfoManager().getCommitInfos(transaction.getBranch(), CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -772,8 +741,7 @@ public class CommitInfoTest extends AbstractCDOTest
     transaction.commit();
 
     Handler handler = new Handler();
-    session.getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    session.getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(0, infos.size());
@@ -791,8 +759,7 @@ public class CommitInfoTest extends AbstractCDOTest
     transaction.commit();
 
     Handler handler = new Handler();
-    session.getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    session.getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(0, infos.size());
@@ -811,8 +778,7 @@ public class CommitInfoTest extends AbstractCDOTest
     transaction.commit();
 
     Handler handler = new Handler();
-    session.getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    session.getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(0, infos.size());
@@ -826,8 +792,7 @@ public class CommitInfoTest extends AbstractCDOTest
     userManager.addUser(USER_ID, PASSWORD);
 
     getTestProperties().put(RepositoryConfig.PROP_TEST_AUTHENTICATOR, userManager);
-    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
-        new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
+    getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER, new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD)));
 
     getRepository(REPO_NAME);
 
@@ -840,8 +805,7 @@ public class CommitInfoTest extends AbstractCDOTest
     transaction.commit();
 
     Handler handler = new Handler();
-    session.getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    session.getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(0, infos.size());
@@ -862,8 +826,7 @@ public class CommitInfoTest extends AbstractCDOTest
     transaction.commit();
 
     Handler handler = new Handler();
-    session.getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    session.getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(0, infos.size());
@@ -887,8 +850,7 @@ public class CommitInfoTest extends AbstractCDOTest
     }
 
     Handler handler = new Handler();
-    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
 
     List<CDOCommitInfo> infos = handler.getInfos();
 
@@ -986,8 +948,7 @@ public class CommitInfoTest extends AbstractCDOTest
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     TextCommitInfoLog log = new TextCommitInfoLog(baos);
 
-    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
-        CDOBranchPoint.UNSPECIFIED_DATE, log);
+    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, log);
 
     System.out.println(baos.toString());
   }
@@ -1000,13 +961,11 @@ public class CommitInfoTest extends AbstractCDOTest
 
     getRepository().addHandler(new IRepository.WriteAccessHandler()
     {
-      public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
-          OMMonitor monitor) throws RuntimeException
+      public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
       {
       }
 
-      public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext,
-          OMMonitor monitor)
+      public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
       {
         log.handleCommitInfo(commitContext.createCommitInfo());
       }

@@ -30,8 +30,8 @@ public class RepositoryStateNotificationRequest extends CDOServerRequest
 
   private final CDOID rootResourceID;
 
-  public RepositoryStateNotificationRequest(CDOServerProtocol serverProtocol, CDOCommonRepository.State oldState,
-      CDOCommonRepository.State newState, CDOID rootResourceID)
+  public RepositoryStateNotificationRequest(CDOServerProtocol serverProtocol, CDOCommonRepository.State oldState, CDOCommonRepository.State newState,
+      CDOID rootResourceID)
   {
     super(serverProtocol, CDOProtocolConstants.SIGNAL_REPOSITORY_STATE_NOTIFICATION);
     this.oldState = oldState;

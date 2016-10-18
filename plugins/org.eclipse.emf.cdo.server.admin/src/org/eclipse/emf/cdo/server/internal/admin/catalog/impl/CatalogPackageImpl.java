@@ -93,9 +93,8 @@ public class CatalogPackageImpl extends EPackageImpl implements CatalogPackage
     }
 
     // Obtain or create and register package
-    CatalogPackageImpl theCatalogPackage = (CatalogPackageImpl)(EPackage.Registry.INSTANCE
-        .get(eNS_URI) instanceof CatalogPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-            : new CatalogPackageImpl());
+    CatalogPackageImpl theCatalogPackage = (CatalogPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof CatalogPackageImpl
+        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new CatalogPackageImpl());
 
     isInited = true;
 
@@ -256,24 +255,19 @@ public class CatalogPackageImpl extends EPackageImpl implements CatalogPackage
     // Add supertypes to classes
 
     // Initialize classes, features, and operations; add parameters
-    initEClass(repositoryCatalogEClass, RepositoryCatalog.class, "RepositoryCatalog", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRepositoryCatalog_Repositories(), getRepositoryConfiguration(), null, "repositories", null, 0, -1,
-        RepositoryCatalog.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(repositoryCatalogEClass, RepositoryCatalog.class, "RepositoryCatalog", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getRepositoryCatalog_Repositories(), getRepositoryConfiguration(), null, "repositories", null, 0, -1, RepositoryCatalog.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    EOperation op = initEOperation(getRepositoryCatalog__GetRepository__String(), getRepositoryConfiguration(),
-        "getRepository", 0, 1, IS_UNIQUE, IS_ORDERED);
+    EOperation op = initEOperation(getRepositoryCatalog__GetRepository__String(), getRepositoryConfiguration(), "getRepository", 0, 1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, theEcorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-    initEClass(repositoryConfigurationEClass, RepositoryConfiguration.class, "RepositoryConfiguration", !IS_ABSTRACT,
-        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getRepositoryConfiguration_Name(), ecorePackage.getEString(), "name", null, 1, 1,
-        RepositoryConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getRepositoryConfiguration_ConfigXML(), theEtypesPackage.getClob(), "configXML", null, 1, 1,
-        RepositoryConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEClass(repositoryConfigurationEClass, RepositoryConfiguration.class, "RepositoryConfiguration", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getRepositoryConfiguration_Name(), ecorePackage.getEString(), "name", null, 1, 1, RepositoryConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRepositoryConfiguration_ConfigXML(), theEtypesPackage.getClob(), "configXML", null, 1, 1, RepositoryConfiguration.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

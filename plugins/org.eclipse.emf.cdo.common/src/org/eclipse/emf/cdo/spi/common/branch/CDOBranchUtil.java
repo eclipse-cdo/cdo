@@ -192,8 +192,8 @@ public final class CDOBranchUtil
         branch = branch.getBase().getBranch();
         if (branch == null)
         {
-          throw new IllegalArgumentException("Time " + CDOCommonUtil.formatTimeStamp(timeStamp)
-              + " is before the repository creation time " + CDOCommonUtil.formatTimeStamp(baseTime));
+          throw new IllegalArgumentException(
+              "Time " + CDOCommonUtil.formatTimeStamp(timeStamp) + " is before the repository creation time " + CDOCommonUtil.formatTimeStamp(baseTime));
         }
       }
       else

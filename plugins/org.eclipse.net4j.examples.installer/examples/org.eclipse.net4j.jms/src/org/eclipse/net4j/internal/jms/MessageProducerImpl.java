@@ -119,8 +119,7 @@ public class MessageProducerImpl extends Lifecycle implements MessageProducer
     send(destination, message, getDeliveryMode(), getPriority(), getTimeToLive());
   }
 
-  public void send(Destination destination, Message message, int deliveryMode, int priority, long timeToLive)
-      throws JMSException
+  public void send(Destination destination, Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
   {
     if (message == null)
     {

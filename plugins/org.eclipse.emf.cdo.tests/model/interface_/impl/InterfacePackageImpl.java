@@ -78,9 +78,8 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
     }
 
     // Obtain or create and register package
-    InterfacePackageImpl theInterfacePackage = (InterfacePackageImpl)(EPackage.Registry.INSTANCE
-        .get(eNS_URI) instanceof InterfacePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-            : new InterfacePackageImpl());
+    InterfacePackageImpl theInterfacePackage = (InterfacePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof InterfacePackageImpl
+        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new InterfacePackageImpl());
 
     isInited = true;
 
@@ -187,10 +186,9 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
     // Add supertypes to classes
 
     // Initialize classes and features; add operations and parameters
-    initEClass(iInterfaceEClass, IInterface.class, "IInterface", IS_ABSTRACT, IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getIInterface_Test(), ecorePackage.getEString(), "test", null, 0, 1, IInterface.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(iInterfaceEClass, IInterface.class, "IInterface", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getIInterface_Test(), ecorePackage.getEString(), "test", null, 0, 1, IInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

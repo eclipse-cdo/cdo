@@ -23,8 +23,7 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
  * @author Stefan Winkler
  * @since 4.0
  */
-public abstract class AbstractTypeMappingFactory extends Factory
-    implements org.eclipse.emf.cdo.server.db.mapping.ITypeMapping.Factory
+public abstract class AbstractTypeMappingFactory extends Factory implements org.eclipse.emf.cdo.server.db.mapping.ITypeMapping.Factory
 {
   private ITypeMapping.Descriptor descriptor;
 

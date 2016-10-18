@@ -29,8 +29,7 @@ import java.io.IOException;
  */
 public class LoadRevisionByVersionIndication extends CDOServerReadIndication
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      LoadRevisionByVersionIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionByVersionIndication.class);
 
   private CDOID id;
 

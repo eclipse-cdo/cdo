@@ -42,8 +42,7 @@ public abstract class AbstractBranchPointActionProvider extends AbstractActionPr
 {
   private static final ImageDescriptor CHECKOUT_IMAGE_DESCRIPTOR = OM.getImageDescriptor("icons/checkout.gif");
 
-  private static final ImageDescriptor CHECKOUT_CLOSED_IMAGE_DESCRIPTOR = OM
-      .getImageDescriptor("icons/checkout_closed.gif");
+  private static final ImageDescriptor CHECKOUT_CLOSED_IMAGE_DESCRIPTOR = OM.getImageDescriptor("icons/checkout_closed.gif");
 
   public AbstractBranchPointActionProvider(String id, String title)
   {
@@ -106,8 +105,7 @@ public abstract class AbstractBranchPointActionProvider extends AbstractActionPr
           continue;
         }
 
-        if (otherCheckout.getBranchID() == checkout.getBranchID()
-            && otherCheckout.getTimeStamp() == checkout.getTimeStamp())
+        if (otherCheckout.getBranchID() == checkout.getBranchID() && otherCheckout.getTimeStamp() == checkout.getTimeStamp())
         {
           continue;
         }
@@ -117,8 +115,7 @@ public abstract class AbstractBranchPointActionProvider extends AbstractActionPr
     }
   }
 
-  protected void fillHistorizedAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout,
-      CDOBranchPoint branchPoint)
+  protected void fillHistorizedAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout, CDOBranchPoint branchPoint)
   {
     subMenu.add(new HistorizedBranchPointAction(page, checkout, branchPoint));
   }
@@ -138,8 +135,7 @@ public abstract class AbstractBranchPointActionProvider extends AbstractActionPr
     subMenu.add(new CommitBranchPointAction(page, checkout));
   }
 
-  protected void fillOtherCheckoutAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout,
-      CDOCheckout otherCheckout)
+  protected void fillOtherCheckoutAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout, CDOCheckout otherCheckout)
   {
     subMenu.add(new OtherCheckoutAction(page, checkout, otherCheckout));
   }

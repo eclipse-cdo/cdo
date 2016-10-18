@@ -68,8 +68,7 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue
    */
   public boolean isLiteral()
   {
-    return (Boolean)eDynamicGet(ExpressionsPackage.BOOLEAN_VALUE__LITERAL,
-        ExpressionsPackage.Literals.BOOLEAN_VALUE__LITERAL, true, true);
+    return (Boolean)eDynamicGet(ExpressionsPackage.BOOLEAN_VALUE__LITERAL, ExpressionsPackage.Literals.BOOLEAN_VALUE__LITERAL, true, true);
   }
 
   /**
@@ -79,8 +78,7 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue
    */
   public void setLiteral(boolean newLiteral)
   {
-    eDynamicSet(ExpressionsPackage.BOOLEAN_VALUE__LITERAL, ExpressionsPackage.Literals.BOOLEAN_VALUE__LITERAL,
-        newLiteral);
+    eDynamicSet(ExpressionsPackage.BOOLEAN_VALUE__LITERAL, ExpressionsPackage.Literals.BOOLEAN_VALUE__LITERAL, newLiteral);
   }
 
   /**

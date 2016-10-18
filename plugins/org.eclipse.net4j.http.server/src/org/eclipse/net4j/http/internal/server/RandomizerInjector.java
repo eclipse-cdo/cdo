@@ -25,8 +25,7 @@ public class RandomizerInjector implements IElementProcessor
   {
   }
 
-  public Object process(IManagedContainer container, String productGroup, String factoryType, String description,
-      Object element)
+  public Object process(IManagedContainer container, String productGroup, String factoryType, String description, Object element)
   {
     if (element instanceof HTTPAcceptor)
     {

@@ -84,8 +84,7 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
     element = newElement;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          model4Package.IMPL_SINGLE_REF_CONTAINER__ELEMENT, oldElement, newElement);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_CONTAINER__ELEMENT, oldElement, newElement);
       if (msgs == null)
       {
         msgs = notification;
@@ -109,13 +108,13 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
       NotificationChain msgs = null;
       if (element != null)
       {
-        msgs = ((InternalEObject)element).eInverseRemove(this,
-            model4interfacesPackage.ISINGLE_REF_CONTAINED_ELEMENT__PARENT, ISingleRefContainedElement.class, msgs);
+        msgs = ((InternalEObject)element).eInverseRemove(this, model4interfacesPackage.ISINGLE_REF_CONTAINED_ELEMENT__PARENT, ISingleRefContainedElement.class,
+            msgs);
       }
       if (newElement != null)
       {
-        msgs = ((InternalEObject)newElement).eInverseAdd(this,
-            model4interfacesPackage.ISINGLE_REF_CONTAINED_ELEMENT__PARENT, ISingleRefContainedElement.class, msgs);
+        msgs = ((InternalEObject)newElement).eInverseAdd(this, model4interfacesPackage.ISINGLE_REF_CONTAINED_ELEMENT__PARENT, ISingleRefContainedElement.class,
+            msgs);
       }
       msgs = basicSetElement(newElement, msgs);
       if (msgs != null)
@@ -125,8 +124,7 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_CONTAINER__ELEMENT,
-          newElement, newElement));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_CONTAINER__ELEMENT, newElement, newElement));
     }
   }
 
@@ -142,8 +140,7 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
     case model4Package.IMPL_SINGLE_REF_CONTAINER__ELEMENT:
       if (element != null)
       {
-        msgs = ((InternalEObject)element).eInverseRemove(this,
-            EOPPOSITE_FEATURE_BASE - model4Package.IMPL_SINGLE_REF_CONTAINER__ELEMENT, null, msgs);
+        msgs = ((InternalEObject)element).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - model4Package.IMPL_SINGLE_REF_CONTAINER__ELEMENT, null, msgs);
       }
       return basicSetElement((ISingleRefContainedElement)otherEnd, msgs);
     }

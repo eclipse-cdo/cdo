@@ -52,8 +52,7 @@ public class StandaloneManualExample
     IBufferProvider bufferProvider = Net4jUtil.createBufferPool();
     LifecycleUtil.activate(bufferProvider);
 
-    IProtocolProvider protocolProvider = new FactoriesProtocolProvider(
-        new org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocolFactory());
+    IProtocolProvider protocolProvider = new FactoriesProtocolProvider(new org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocolFactory());
 
     // Prepare selector
     org.eclipse.net4j.internal.tcp.TCPSelector selector = new org.eclipse.net4j.internal.tcp.TCPSelector();

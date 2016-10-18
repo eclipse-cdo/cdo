@@ -170,8 +170,7 @@ public class DawnGMFHandler extends BasicDawnTransactionHandler
           final EObject view = CDOUtil.getEObject(obj);
           if (view instanceof Edge)
           {
-            EditingDomain editingDomain = ((IEditingDomainProvider)view.eResource().getResourceSet())
-                .getEditingDomain();
+            EditingDomain editingDomain = ((IEditingDomainProvider)view.eResource().getResourceSet()).getEditingDomain();
             editingDomain.getCommandStack().execute(new RecordingCommand((TransactionalEditingDomain)editingDomain)
             {
               @Override

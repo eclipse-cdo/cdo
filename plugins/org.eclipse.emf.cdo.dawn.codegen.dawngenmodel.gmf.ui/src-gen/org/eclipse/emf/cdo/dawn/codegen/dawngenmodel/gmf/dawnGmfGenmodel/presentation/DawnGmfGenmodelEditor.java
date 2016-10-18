@@ -397,11 +397,9 @@ public class DawnGmfGenmodelEditor extends MultiPageEditorPart
           {
             if (delta.getResource().getType() == IResource.FILE)
             {
-              if (delta.getKind() == IResourceDelta.REMOVED
-                  || delta.getKind() == IResourceDelta.CHANGED && delta.getFlags() != IResourceDelta.MARKERS)
+              if (delta.getKind() == IResourceDelta.REMOVED || delta.getKind() == IResourceDelta.CHANGED && delta.getFlags() != IResourceDelta.MARKERS)
               {
-                Resource resource = resourceSet
-                    .getResource(URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
+                Resource resource = resourceSet.getResource(URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
                 if (resource != null)
                 {
                   if (delta.getKind() == IResourceDelta.REMOVED)
@@ -565,8 +563,7 @@ public class DawnGmfGenmodelEditor extends MultiPageEditorPart
   {
     if (updateProblemIndication)
     {
-      BasicDiagnostic diagnostic = new BasicDiagnostic(Diagnostic.OK,
-          "org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.ui", 0, null,
+      BasicDiagnostic diagnostic = new BasicDiagnostic(Diagnostic.OK, "org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.ui", 0, null,
           new Object[] { editingDomain.getResourceSet() });
       for (Diagnostic childDiagnostic : resourceToDiagnosticMap.values())
       {
@@ -628,8 +625,7 @@ public class DawnGmfGenmodelEditor extends MultiPageEditorPart
    */
   protected boolean handleDirtyConflict()
   {
-    return MessageDialog.openQuestion(getSite().getShell(), getString("_UI_FileConflict_label"),
-        getString("_WARN_FileConflict"));
+    return MessageDialog.openQuestion(getSite().getShell(), getString("_UI_FileConflict_label"), getString("_WARN_FileConflict"));
   }
 
   /**
@@ -940,10 +936,8 @@ public class DawnGmfGenmodelEditor extends MultiPageEditorPart
   {
     if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty())
     {
-      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR,
-          "org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.ui", 0,
-          getString("_UI_CreateModelError_message", resource.getURI()),
-          new Object[] { exception == null ? (Object)resource : exception });
+      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.ui", 0,
+          getString("_UI_CreateModelError_message", resource.getURI()), new Object[] { exception == null ? (Object)resource : exception });
       basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
       return basicDiagnostic;
     }
@@ -1146,14 +1140,12 @@ public class DawnGmfGenmodelEditor extends MultiPageEditorPart
           {
             // Select the root object in the view.
             //
-            contentOutlineViewer
-                .setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
+            contentOutlineViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
           }
         }
 
         @Override
-        public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager,
-            IStatusLineManager statusLineManager)
+        public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager, IStatusLineManager statusLineManager)
         {
           super.makeContributions(menuManager, toolBarManager, statusLineManager);
           contentOutlineStatusLineManager = statusLineManager;
@@ -1287,8 +1279,7 @@ public class DawnGmfGenmodelEditor extends MultiPageEditorPart
         boolean first = true;
         for (Resource resource : editingDomain.getResourceSet().getResources())
         {
-          if ((first || !resource.getContents().isEmpty() || isPersisted(resource))
-              && !editingDomain.isReadOnly(resource))
+          if ((first || !resource.getContents().isEmpty() || isPersisted(resource)) && !editingDomain.isReadOnly(resource))
           {
             try
             {
@@ -1399,8 +1390,8 @@ public class DawnGmfGenmodelEditor extends MultiPageEditorPart
     editingDomain.getResourceSet().getResources().get(0).setURI(uri);
     setInputWithNotify(editorInput);
     setPartName(editorInput.getName());
-    IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null
-        ? getActionBars().getStatusLineManager().getProgressMonitor() : new NullProgressMonitor();
+    IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars().getStatusLineManager().getProgressMonitor()
+        : new NullProgressMonitor();
     doSave(progressMonitor);
   }
 
@@ -1515,8 +1506,8 @@ public class DawnGmfGenmodelEditor extends MultiPageEditorPart
    */
   public void setStatusLineManager(ISelection selection)
   {
-    IStatusLineManager statusLineManager = currentViewer != null && currentViewer == contentOutlineViewer
-        ? contentOutlineStatusLineManager : getActionBars().getStatusLineManager();
+    IStatusLineManager statusLineManager = currentViewer != null && currentViewer == contentOutlineViewer ? contentOutlineStatusLineManager
+        : getActionBars().getStatusLineManager();
 
     if (statusLineManager != null)
     {

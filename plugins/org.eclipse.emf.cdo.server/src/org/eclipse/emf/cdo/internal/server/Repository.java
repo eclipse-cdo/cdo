@@ -525,8 +525,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     return accessor.loadCommitData(timeStamp);
   }
 
-  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk,
-      int prefetchDepth)
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
   {
     for (RevisionInfo info : infos)
     {
@@ -551,8 +550,8 @@ public class Repository extends Container<Object> implements InternalRepository,
         {
           CDOBranchVersion targetBranchVersion = pointerInfo.getTargetBranchVersion();
           InternalCDORevision target = loadRevisionByVersion(id, targetBranchVersion, referenceChunk);
-          PointerCDORevision pointer = new PointerCDORevision(target.getEClass(), id,
-              pointerInfo.getAvailableBranchVersion().getBranch(), CDORevision.UNSPECIFIED_DATE, target);
+          PointerCDORevision pointer = new PointerCDORevision(target.getEClass(), id, pointerInfo.getAvailableBranchVersion().getBranch(),
+              CDORevision.UNSPECIFIED_DATE, target);
 
           info.setResult(target);
           info.setSynthetic(pointer);
@@ -602,8 +601,8 @@ public class Repository extends Container<Object> implements InternalRepository,
         }
         else
         {
-          DetachedCDORevision detachedRevision = new DetachedCDORevision(EcorePackage.Literals.ECLASS, id,
-              branchPoint.getBranch(), 0, CDORevision.UNSPECIFIED_DATE);
+          DetachedCDORevision detachedRevision = new DetachedCDORevision(EcorePackage.Literals.ECLASS, id, branchPoint.getBranch(), 0,
+              CDORevision.UNSPECIFIED_DATE);
           info.setSynthetic(detachedRevision);
         }
       }
@@ -627,8 +626,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     return null;
   }
 
-  private InternalCDORevision loadRevisionTarget(CDOID id, CDOBranchPoint branchPoint, int referenceChunk,
-      IStoreAccessor accessor)
+  private InternalCDORevision loadRevisionTarget(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, IStoreAccessor accessor)
   {
     CDOBranch branch = branchPoint.getBranch();
     while (!branch.isMainBranch())
@@ -807,8 +805,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     }
   }
 
-  public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart,
-      int chunkEnd)
+  public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart, int chunkEnd)
   {
     if (!revision.isUnchunked())
     {
@@ -850,8 +847,8 @@ public class Repository extends Container<Object> implements InternalRepository,
     return true;
   }
 
-  protected IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature,
-      IStoreAccessor accessor, MoveableList<Object> list, int chunkStart, int chunkEnd)
+  protected IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, IStoreAccessor accessor, MoveableList<Object> list,
+      int chunkStart, int chunkEnd)
   {
     IStoreChunkReader chunkReader = null;
     int fromIndex = -1;
@@ -1311,8 +1308,8 @@ public class Repository extends Container<Object> implements InternalRepository,
 
   public Object[] getElements()
   {
-    final Object[] elements = { packageRegistry, branchManager, revisionManager, sessionManager, queryManager,
-        commitManager, commitInfoManager, getLockingManager(), store };
+    final Object[] elements = { packageRegistry, branchManager, revisionManager, sessionManager, queryManager, commitManager, commitInfoManager,
+        getLockingManager(), store };
     return elements;
   }
 
@@ -1425,8 +1422,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   /**
    * @since 2.0
    */
-  public void notifyReadAccessHandlers(InternalSession session, CDORevision[] revisions,
-      List<CDORevision> additionalRevisions)
+  public void notifyReadAccessHandlers(InternalSession session, CDORevision[] revisions, List<CDORevision> additionalRevisions)
   {
     ReadAccessHandler[] handlers;
     synchronized (readAccessHandlers)
@@ -1447,8 +1443,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     }
   }
 
-  public void notifyWriteAccessHandlers(ITransaction transaction, IStoreAccessor.CommitContext commitContext,
-      boolean beforeCommit, OMMonitor monitor)
+  public void notifyWriteAccessHandlers(ITransaction transaction, IStoreAccessor.CommitContext commitContext, boolean beforeCommit, OMMonitor monitor)
   {
     WriteAccessHandler[] handlers;
     synchronized (writeAccessHandlers)
@@ -1504,8 +1499,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     this.initialPackages = initialPackages;
   }
 
-  public CDOReplicationInfo replicateRaw(CDODataOutput out, int lastReplicatedBranchID, long lastReplicatedCommitTime)
-      throws IOException
+  public CDOReplicationInfo replicateRaw(CDODataOutput out, int lastReplicatedBranchID, long lastReplicatedCommitTime) throws IOException
   {
     final int fromBranchID = lastReplicatedBranchID + 1;
     final int toBranchID = store.getLastBranchID();
@@ -1560,8 +1554,8 @@ public class Repository extends Container<Object> implements InternalRepository,
   }
 
   @Deprecated
-  public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
-      CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor)
+  public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
+      CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor)
   {
     MergeDataResult result = getMergeData2(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo, monitor);
     Set<CDOID> ids = result.getTargetIDs();
@@ -1683,8 +1677,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     }
   }
 
-  private CDOBranchPointRange getLatestMerge(CDOChangeSetSegment[] targetSegments, CDOChangeSetSegment[] sourceSegments,
-      long ancestorTime)
+  private CDOBranchPointRange getLatestMerge(CDOChangeSetSegment[] targetSegments, CDOChangeSetSegment[] sourceSegments, long ancestorTime)
   {
     for (int i = targetSegments.length - 1; i >= 0; --i)
     {
@@ -1721,8 +1714,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     return null;
   }
 
-  private CDOBranchPoint getMergeSource(CDOCommitInfo commitInfo, CDOChangeSetSegment[] sourceSegments,
-      long ancestorTime)
+  private CDOBranchPoint getMergeSource(CDOCommitInfo commitInfo, CDOChangeSetSegment[] sourceSegments, long ancestorTime)
   {
     CDOBranchPoint mergeSource = commitInfo.getMergeSource();
     if (mergeSource != null)
@@ -1802,8 +1794,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     accessor.loadLob(id, out);
   }
 
-  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
-      final CDORevisionHandler handler)
+  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, final CDORevisionHandler handler)
   {
     CDORevisionHandler wrapper = handler;
     if (!exactBranch && !branch.isMainBranch())
@@ -1845,8 +1836,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     }
   }
 
-  public static List<Object> revisionKeysToObjects(List<CDORevisionKey> revisionKeys, CDOBranch viewedBranch,
-      boolean isSupportingBranches)
+  public static List<Object> revisionKeysToObjects(List<CDORevisionKey> revisionKeys, CDOBranch viewedBranch, boolean isSupportingBranches)
   {
     List<Object> lockables = new ArrayList<Object>();
     for (CDORevisionKey revKey : revisionKeys)
@@ -1865,15 +1855,13 @@ public class Repository extends Container<Object> implements InternalRepository,
     return lockables;
   }
 
-  public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revKeys, boolean recursive,
-      long timeout)
+  public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revKeys, boolean recursive, long timeout)
   {
     List<Object> lockables = revisionKeysToObjects(revKeys, view.getBranch(), isSupportingBranches());
     return lock(view, lockType, lockables, revKeys, recursive, timeout);
   }
 
-  protected LockObjectsResult lock(InternalView view, LockType type, List<Object> lockables,
-      List<CDORevisionKey> loadedRevs, boolean recursive, long timeout)
+  protected LockObjectsResult lock(InternalView view, LockType type, List<Object> lockables, List<CDORevisionKey> loadedRevs, boolean recursive, long timeout)
   {
     List<LockState<Object, IView>> newLockStates = null;
 
@@ -1911,20 +1899,18 @@ public class Repository extends Container<Object> implements InternalRepository,
     if (staleNoUpdate)
     {
       getLockingManager().unlock2(true, type, view, lockables, recursive);
-      return new LockObjectsResult(false, false, false, requiredTimestamp[0], staleRevisionsArray, new CDOLockState[0],
-          getTimeStamp());
+      return new LockObjectsResult(false, false, false, requiredTimestamp[0], staleRevisionsArray, new CDOLockState[0], getTimeStamp());
     }
 
     CDOLockState[] cdoLockStates = toCDOLockStates(newLockStates);
     sendLockNotifications(view, Operation.LOCK, type, cdoLockStates);
 
     boolean waitForUpdate = staleRevisionsArray.length > 0;
-    return new LockObjectsResult(true, false, waitForUpdate, requiredTimestamp[0], staleRevisionsArray, cdoLockStates,
-        getTimeStamp());
+    return new LockObjectsResult(true, false, waitForUpdate, requiredTimestamp[0], staleRevisionsArray, cdoLockStates, getTimeStamp());
   }
 
-  private CDORevisionKey[] checkStaleRevisions(InternalView view, List<CDORevisionKey> revisionKeys,
-      List<Object> objectsToLock, LockType lockType, long[] requiredTimestamp)
+  private CDORevisionKey[] checkStaleRevisions(InternalView view, List<CDORevisionKey> revisionKeys, List<Object> objectsToLock, LockType lockType,
+      long[] requiredTimestamp)
   {
     List<CDORevisionKey> staleRevisions = new LinkedList<CDORevisionKey>();
     if (revisionKeys != null)
@@ -1938,8 +1924,7 @@ public class Repository extends Container<Object> implements InternalRepository,
 
         if (rev == null)
         {
-          throw new IllegalArgumentException(
-              String.format("Object %s not found in branch %s (possibly detached)", id, viewedBranch));
+          throw new IllegalArgumentException(String.format("Object %s not found in branch %s (possibly detached)", id, viewedBranch));
         }
 
         if (!revKey.equals(rev))
@@ -1961,8 +1946,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   private void sendLockNotifications(IView view, Operation operation, LockType lockType, CDOLockState[] cdoLockStates)
   {
     long timestamp = getTimeStamp();
-    CDOLockChangeInfo lockChangeInfo = CDOLockUtil.createLockChangeInfo(timestamp, view, view.getBranch(), operation,
-        lockType, cdoLockStates);
+    CDOLockChangeInfo lockChangeInfo = CDOLockUtil.createLockChangeInfo(timestamp, view, view.getBranch(), operation, lockType, cdoLockStates);
     getSessionManager().sendLockNotification((InternalSession)view.getSession(), lockChangeInfo);
   }
 
@@ -1998,8 +1982,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     return doUnlock(view, lockType, unlockables, recursive);
   }
 
-  protected UnlockObjectsResult doUnlock(InternalView view, LockType lockType, List<Object> unlockables,
-      boolean recursive)
+  protected UnlockObjectsResult doUnlock(InternalView view, LockType lockType, List<Object> unlockables, boolean recursive)
   {
     List<LockState<Object, IView>> newLockStates = null;
     if (lockType == null) // Signals an unlock-all operation
@@ -2188,8 +2171,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     CDOBranchPoint head = branchManager.getMainBranch().getHead();
 
     CDORevisionFactory factory = getRevisionManager().getFactory();
-    InternalCDORevision rootResource = (InternalCDORevision)factory
-        .createRevision(EresourcePackage.Literals.CDO_RESOURCE);
+    InternalCDORevision rootResource = (InternalCDORevision)factory.createRevision(EresourcePackage.Literals.CDO_RESOURCE);
 
     rootResource.setBranchPoint(head);
     rootResource.setContainerID(CDOID.NULL);
@@ -2242,8 +2224,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     session.close();
   }
 
-  private InternalCDOPackageUnit[] getNewPackageUnitsForRootResource(
-      InternalCDOPackageRegistry commitContextPackageRegistry)
+  private InternalCDOPackageUnit[] getNewPackageUnitsForRootResource(InternalCDOPackageRegistry commitContextPackageRegistry)
   {
     Collection<InternalCDOPackageUnit> newPackageUnitsForRootResource = new ArrayList<InternalCDOPackageUnit>();
     IPackageClosure closure = new CompletePackageClosure();
@@ -2353,10 +2334,8 @@ public class Repository extends Container<Object> implements InternalRepository,
       throw new IllegalStateException("Store can not handle client-assigned IDs: " + store);
     }
 
-    store.setRevisionTemporality(
-        supportingAudits ? IStore.RevisionTemporality.AUDITING : IStore.RevisionTemporality.NONE);
-    store.setRevisionParallelism(
-        supportingBranches ? IStore.RevisionParallelism.BRANCHING : IStore.RevisionParallelism.NONE);
+    store.setRevisionTemporality(supportingAudits ? IStore.RevisionTemporality.AUDITING : IStore.RevisionTemporality.NONE);
+    store.setRevisionParallelism(supportingBranches ? IStore.RevisionParallelism.BRANCHING : IStore.RevisionParallelism.NONE);
     revisionManager.setSupportingAudits(supportingAudits);
     revisionManager.setSupportingBranches(supportingBranches);
 

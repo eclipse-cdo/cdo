@@ -93,8 +93,7 @@ public class AClassImplementedInterfacesReorientCommand extends EditElementComma
     {
       return false;
     }
-    return AcoreBaseItemSemanticEditPolicy.LinkConstraints.canExistAClassImplementedInterfaces_4002(getNewSource(),
-        getOldTarget());
+    return AcoreBaseItemSemanticEditPolicy.LinkConstraints.canExistAClassImplementedInterfaces_4002(getNewSource(), getOldTarget());
   }
 
   /**
@@ -106,8 +105,7 @@ public class AClassImplementedInterfacesReorientCommand extends EditElementComma
     {
       return false;
     }
-    return AcoreBaseItemSemanticEditPolicy.LinkConstraints.canExistAClassImplementedInterfaces_4002(getOldSource(),
-        getNewTarget());
+    return AcoreBaseItemSemanticEditPolicy.LinkConstraints.canExistAClassImplementedInterfaces_4002(getOldSource(), getNewTarget());
   }
 
   /**

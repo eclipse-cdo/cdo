@@ -66,8 +66,7 @@ public class Bugzilla_449806_Test extends AbstractCDOTest
     testCDOAbstractFeatureRuleAnalyzer(new CDOFeatureAnalyzerModelBased());
   }
 
-  private void testCDOAbstractFeatureRuleAnalyzer(CDOAbstractFeatureRuleAnalyzer abstractFeatureRuleAnalyzer)
-      throws Exception
+  private void testCDOAbstractFeatureRuleAnalyzer(CDOAbstractFeatureRuleAnalyzer abstractFeatureRuleAnalyzer) throws Exception
   {
     CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(new CDOCollectionLoadingPolicyImpl(1, 0));

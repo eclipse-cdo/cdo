@@ -24,8 +24,7 @@ import java.util.Map;
  * @author Eike Stepper
  */
 @Deprecated
-public class ContainerPathItemProvider<CONTAINER extends IContainer<Object>> extends ContainerItemProvider<CONTAINER>
-    implements ITreePathContentProvider
+public class ContainerPathItemProvider<CONTAINER extends IContainer<Object>> extends ContainerItemProvider<CONTAINER> implements ITreePathContentProvider
 {
   private Map<Object, List<TreePath>> parents = new HashMap<Object, List<TreePath>>();
 

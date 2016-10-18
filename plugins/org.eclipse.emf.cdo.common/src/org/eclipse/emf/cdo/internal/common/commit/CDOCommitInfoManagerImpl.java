@@ -33,8 +33,7 @@ import java.util.WeakHashMap;
 /**
  * @author Andre Dietisheim
  */
-public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBranch, CDOCommitHistory>
-    implements InternalCDOCommitInfoManager
+public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBranch, CDOCommitHistory> implements InternalCDOCommitInfoManager
 {
   private final Map<Long, CDOCommitInfo> cache;
 
@@ -129,18 +128,16 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     }
   }
 
-  public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
-      String comment, CDOCommitData commitData)
+  public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOCommitData commitData)
   {
     return createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null, commitData);
   }
 
-  public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
-      String comment, CDOBranchPoint mergeSource, CDOCommitData commitData)
+  public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOBranchPoint mergeSource,
+      CDOCommitData commitData)
   {
     checkActive();
-    CDOCommitInfo commitInfo = new CDOCommitInfoImpl(this, branch, timeStamp, previousTimeStamp, userID, comment,
-        mergeSource, commitData);
+    CDOCommitInfo commitInfo = new CDOCommitInfoImpl(this, branch, timeStamp, previousTimeStamp, userID, comment, mergeSource, commitData);
     return intern(commitInfo);
   }
 
@@ -216,8 +213,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     loader.loadCommitInfos(branch, startTime, endTime, handler);
   }
 
-  public void getCommitInfos(CDOBranch branch, long startTime, String reserved1, String reserved2, int count,
-      CDOCommitInfoHandler handler)
+  public void getCommitInfos(CDOBranch branch, long startTime, String reserved1, String reserved2, int count, CDOCommitInfoHandler handler)
   {
     if (reserved1 != null || reserved2 != null)
     {

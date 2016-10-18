@@ -69,8 +69,7 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
 
       for (IDBField sourceField : sourceTable.getFields())
       {
-        table.addField(sourceField.getName(), sourceField.getType(), sourceField.getPrecision(), sourceField.getScale(),
-            sourceField.isNotNull());
+        table.addField(sourceField.getName(), sourceField.getType(), sourceField.getPrecision(), sourceField.getScale(), sourceField.isNotNull());
       }
 
       for (IDBIndex sourceIndex : sourceTable.getIndices())

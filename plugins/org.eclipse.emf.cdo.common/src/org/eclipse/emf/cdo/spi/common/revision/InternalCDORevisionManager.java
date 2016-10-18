@@ -78,17 +78,15 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
 
   public void reviseVersion(CDOID id, CDOBranchVersion branchVersion, long timeStamp);
 
-  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
-      boolean loadOnDemand, SyntheticCDORevision[] synthetics);
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      SyntheticCDORevision[] synthetics);
 
-  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk,
-      int prefetchDepth, boolean loadOnDemand, SyntheticCDORevision[] synthetics);
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      SyntheticCDORevision[] synthetics);
 
-  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
-      boolean loadOnDemand);
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand);
 
-  public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk,
-      boolean loadOnDemand);
+  public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk, boolean loadOnDemand);
 
   /**
    * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -100,16 +98,14 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
    */
   public interface RevisionLoader
   {
-    public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk,
-        int prefetchDepth);
+    public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth);
 
     public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk);
 
     /**
      * @since 4.3
      */
-    public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
-        CDORevisionHandler handler);
+    public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, CDORevisionHandler handler);
   }
 
   /**

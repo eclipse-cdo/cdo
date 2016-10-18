@@ -78,8 +78,7 @@ public abstract class AccessImpl extends CDOObjectImpl implements Access
    */
   public Expression getName()
   {
-    return (Expression)eDynamicGet(ExpressionsPackage.ACCESS__NAME, ExpressionsPackage.Literals.ACCESS__NAME, true,
-        true);
+    return (Expression)eDynamicGet(ExpressionsPackage.ACCESS__NAME, ExpressionsPackage.Literals.ACCESS__NAME, true, true);
   }
 
   /**

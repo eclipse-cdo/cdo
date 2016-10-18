@@ -143,8 +143,7 @@ import java.util.concurrent.locks.Lock;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOObject, CDOObjectHistory>
-    implements InternalCDOView, DoNotDescend
+public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOObject, CDOObjectHistory> implements InternalCDOView, DoNotDescend
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, AbstractCDOView.class);
 
@@ -1436,8 +1435,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
-  public final CloseableIterator<CDOResourceNode> queryResourcesAsync(CDOResourceFolder folder, String name,
-      boolean exactMatch)
+  public final CloseableIterator<CDOResourceNode> queryResourcesAsync(CDOResourceFolder folder, String name, boolean exactMatch)
   {
     synchronized (getViewMonitor())
     {
@@ -1454,8 +1452,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
-  protected CloseableIterator<CDOResourceNode> queryResourcesUnsynced(CDOResourceFolder folder, String name,
-      boolean exactMatch)
+  protected CloseableIterator<CDOResourceNode> queryResourcesUnsynced(CDOResourceFolder folder, String name, boolean exactMatch)
   {
     CDOQuery resourceQuery = createResourcesQuery(folder, name, exactMatch);
     return resourceQuery.getResultAsync(CDOResourceNode.class);
@@ -1589,8 +1586,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
-  public final CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects,
-      EReference... sourceReferences)
+  public final CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects, EReference... sourceReferences)
   {
     synchronized (getViewMonitor())
     {
@@ -1607,8 +1603,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
-  protected CloseableIterator<CDOObjectReference> queryXRefsUnsynced(Set<CDOObject> targetObjects,
-      EReference... sourceReferences)
+  protected CloseableIterator<CDOObjectReference> queryXRefsUnsynced(Set<CDOObject> targetObjects, EReference... sourceReferences)
   {
     CDOQuery query = createXRefsQuery(true, null, targetObjects, sourceReferences);
     if (query.getQueryString() != null)
@@ -1619,8 +1614,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return AbstractCloseableIterator.emptyCloseable();
   }
 
-  protected final CDOQuery createXRefsQuery(boolean excludeNewObjects, Set<CDOID> targetIDs,
-      Set<CDOObject> targetObjects, EReference... sourceReferences)
+  protected final CDOQuery createXRefsQuery(boolean excludeNewObjects, Set<CDOID> targetIDs, Set<CDOObject> targetObjects, EReference... sourceReferences)
   {
     StringBuilder builder = null;
 
@@ -1637,8 +1631,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       {
         if (excludeNewObjects)
         {
-          throw new IllegalArgumentException(
-              "Cross referencing for uncommitted new objects is not supported: " + target);
+          throw new IllegalArgumentException("Cross referencing for uncommitted new objects is not supported: " + target);
         }
       }
       else
@@ -1871,8 +1864,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         {
           if (!view.getSession().getRepositoryInfo().getUUID().equals(getSession().getRepositoryInfo().getUUID()))
           {
-            throw new IllegalArgumentException(
-                MessageFormat.format(Messages.getString("CDOViewImpl.11"), objectFromDifferentView)); //$NON-NLS-1$
+            throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOViewImpl.11"), objectFromDifferentView)); //$NON-NLS-1$
           }
 
           CDOID id = object.cdoID();
@@ -2028,8 +2020,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       String oldName = existingResource.getName();
       existingResource.setName(oldName + ".renamed");
 
-      OM.LOG.warn("URI clash: resource being instantiated had same URI as a resource already present "
-          + "locally; local resource was renamed from " + oldName + " to " + existingResource.getName());
+      OM.LOG.warn("URI clash: resource being instantiated had same URI as a resource already present " + "locally; local resource was renamed from " + oldName
+          + " to " + existingResource.getName());
     }
 
     return getResource(path, true);
@@ -2194,8 +2186,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
           }
           else
           {
-            InternalCDOObject object = (InternalCDOObject)EcoreUtil
-                .getAdapter(((InternalEObject)potentialObject).eAdapters(), CDOLegacyAdapter.class);
+            InternalCDOObject object = (InternalCDOObject)EcoreUtil.getAdapter(((InternalEObject)potentialObject).eAdapters(), CDOLegacyAdapter.class);
             if (object != null)
             {
               CDOID id = getID(object, onlyPersistedID);
@@ -2248,8 +2239,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
             return object.cdoID();
           }
 
-          throw new IllegalArgumentException(
-              "Object " + object + " is managed by a view with different target: " + view);
+          throw new IllegalArgumentException("Object " + object + " is managed by a view with different target: " + view);
         }
 
         return null;
@@ -2549,8 +2539,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       Set<CDOObject> detachedObjects, //
       Map<CDOID, InternalCDORevision> oldRevisions)
   {
-    boolean hasConflictResolvers = this instanceof CDOTransaction
-        && ((CDOTransaction)this).options().getConflictResolvers().length != 0;
+    boolean hasConflictResolvers = this instanceof CDOTransaction && ((CDOTransaction)this).options().getConflictResolvers().length != 0;
     Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = null;
 
     // Bug 363355: manage detached objects before changed objects to avoid issue on eContainer
@@ -2647,8 +2636,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   /**
    * Overridden by {@link CDOTransactionImpl#handleConflicts(long, Map, List)}.
    */
-  protected void handleConflicts(long lastUpdateTime, Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
-      List<CDORevisionDelta> deltas)
+  protected void handleConflicts(long lastUpdateTime, Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts, List<CDORevisionDelta> deltas)
   {
     // Do nothing
   }
@@ -2940,8 +2928,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
     if (eClass == EresourcePackage.Literals.CDO_RESOURCE_FOLDER)
     {
-      CDOListFeatureDelta featureDelta = (CDOListFeatureDelta)delta
-          .getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES);
+      CDOListFeatureDelta featureDelta = (CDOListFeatureDelta)delta.getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES);
       if (canHaveResourcePathImpact(featureDelta))
       {
         return true;
@@ -2952,8 +2939,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     {
       if (rootResourceID == delta.getID())
       {
-        CDOListFeatureDelta featureDelta = (CDOListFeatureDelta)delta
-            .getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS);
+        CDOListFeatureDelta featureDelta = (CDOListFeatureDelta)delta.getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS);
         if (canHaveResourcePathImpact(featureDelta))
         {
           return true;
@@ -3110,8 +3096,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       switch (eventType)
       {
       case Notification.ADD:
-        event = new SingleDeltaContainerEvent<CDOResourceNode>(AbstractCDOView.this, (CDOResourceNode)msg.getNewValue(),
-            IContainerDelta.Kind.ADDED);
+        event = new SingleDeltaContainerEvent<CDOResourceNode>(AbstractCDOView.this, (CDOResourceNode)msg.getNewValue(), IContainerDelta.Kind.ADDED);
         break;
 
       case Notification.ADD_MANY:
@@ -3119,8 +3104,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         break;
 
       case Notification.REMOVE:
-        event = new SingleDeltaContainerEvent<CDOResourceNode>(AbstractCDOView.this, (CDOResourceNode)msg.getOldValue(),
-            IContainerDelta.Kind.REMOVED);
+        event = new SingleDeltaContainerEvent<CDOResourceNode>(AbstractCDOView.this, (CDOResourceNode)msg.getOldValue(), IContainerDelta.Kind.REMOVED);
         break;
 
       case Notification.REMOVE_MANY:

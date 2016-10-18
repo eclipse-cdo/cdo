@@ -138,8 +138,7 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
     value = newValue;
     if (eNotificationRequired())
     {
-      eNotify(
-          new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_STRING_MAP__VALUE, oldValue, value));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_STRING_MAP__VALUE, oldValue, value));
     }
   }
 

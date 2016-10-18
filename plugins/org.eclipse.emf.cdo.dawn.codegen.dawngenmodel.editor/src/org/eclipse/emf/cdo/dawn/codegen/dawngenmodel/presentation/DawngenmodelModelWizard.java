@@ -81,16 +81,16 @@ public class DawngenmodelModelWizard extends Wizard implements INewWizard
    *
    * @generated
    */
-  public static final List<String> FILE_EXTENSIONS = Collections.unmodifiableList(Arrays.asList(
-      DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_DawngenmodelEditorFilenameExtensions").split("\\s*,\\s*")));
+  public static final List<String> FILE_EXTENSIONS = Collections
+      .unmodifiableList(Arrays.asList(DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_DawngenmodelEditorFilenameExtensions").split("\\s*,\\s*")));
 
   /**
    * A formatted list of supported file extensions, suitable for display. <!-- begin-user-doc --> <!-- end-user-doc -->
    *
    * @generated
    */
-  public static final String FORMATTED_FILE_EXTENSIONS = DawnCodeGenEditorPlugin.INSTANCE
-      .getString("_UI_DawngenmodelEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", ");
+  public static final String FORMATTED_FILE_EXTENSIONS = DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_DawngenmodelEditorFilenameExtensions")
+      .replaceAll("\\s*,\\s*", ", ");
 
   /**
    * This caches an instance of the model package. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -152,8 +152,7 @@ public class DawngenmodelModelWizard extends Wizard implements INewWizard
     this.workbench = workbench;
     this.selection = selection;
     setWindowTitle(DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_Wizard_label"));
-    setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE
-        .getImageDescriptor(DawnCodeGenEditorPlugin.INSTANCE.getImage("full/wizban/NewDawngenmodel")));
+    setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(DawnCodeGenEditorPlugin.INSTANCE.getImage("full/wizban/NewDawngenmodel")));
   }
 
   /**
@@ -278,13 +277,11 @@ public class DawngenmodelModelWizard extends Wizard implements INewWizard
       //
       try
       {
-        page.openEditor(new FileEditorInput(modelFile),
-            workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
+        page.openEditor(new FileEditorInput(modelFile), workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
       }
       catch (PartInitException exception)
       {
-        MessageDialog.openError(workbenchWindow.getShell(),
-            DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
+        MessageDialog.openError(workbenchWindow.getShell(), DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
         return false;
       }
 
@@ -564,8 +561,8 @@ public class DawngenmodelModelWizard extends Wizard implements INewWizard
       if (encodings == null)
       {
         encodings = new ArrayList<String>();
-        for (StringTokenizer stringTokenizer = new StringTokenizer(
-            DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens();)
+        for (StringTokenizer stringTokenizer = new StringTokenizer(DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer
+            .hasMoreTokens();)
         {
           encodings.add(stringTokenizer.nextToken());
         }
@@ -586,11 +583,8 @@ public class DawngenmodelModelWizard extends Wizard implements INewWizard
     //
     newFileCreationPage = new DawngenmodelModelWizardNewFileCreationPage("Whatever", selection);
     newFileCreationPage.setTitle(DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_DawngenmodelModelWizard_label"));
-    newFileCreationPage
-        .setDescription(DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_DawngenmodelModelWizard_description"));
-    newFileCreationPage
-        .setFileName(DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_DawngenmodelEditorFilenameDefaultBase") + "."
-            + FILE_EXTENSIONS.get(0));
+    newFileCreationPage.setDescription(DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_DawngenmodelModelWizard_description"));
+    newFileCreationPage.setFileName(DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_DawngenmodelEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0));
     addPage(newFileCreationPage);
 
     // Try and get the resource selection to determine a current directory for the file dialog.
@@ -620,8 +614,7 @@ public class DawngenmodelModelWizard extends Wizard implements INewWizard
 
           // Make up a unique new name here.
           //
-          String defaultModelBaseFilename = DawnCodeGenEditorPlugin.INSTANCE
-              .getString("_UI_DawngenmodelEditorFilenameDefaultBase");
+          String defaultModelBaseFilename = DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_DawngenmodelEditorFilenameDefaultBase");
           String defaultModelFilenameExtension = FILE_EXTENSIONS.get(0);
           String modelFilename = defaultModelBaseFilename + "." + defaultModelFilenameExtension;
           for (int i = 1; ((IContainer)selectedResource).findMember(modelFilename) != null; ++i)
@@ -634,8 +627,7 @@ public class DawngenmodelModelWizard extends Wizard implements INewWizard
     }
     initialObjectCreationPage = new DawngenmodelModelWizardInitialObjectCreationPage("Whatever2");
     initialObjectCreationPage.setTitle(DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_DawngenmodelModelWizard_label"));
-    initialObjectCreationPage
-        .setDescription(DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
+    initialObjectCreationPage.setDescription(DawnCodeGenEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
     addPage(initialObjectCreationPage);
   }
 

@@ -58,8 +58,7 @@ public class ObjyFeatureMapArrayList extends ObjyArrayList<ObjyFeatureMapEntry>
   {
     // Connection.current().registerClass(MapEntryClassName);
     d_Module top_mod = ObjySchema.getTopModule();
-    if (top_mod.resolve_class(ObjyFeatureMapArrayList.ClassName) == null
-        && top_mod.resolve_proposed_class(ObjyFeatureMapArrayList.ClassName) == null)
+    if (top_mod.resolve_class(ObjyFeatureMapArrayList.ClassName) == null && top_mod.resolve_proposed_class(ObjyFeatureMapArrayList.ClassName) == null)
     {
 
       if (TRACER_DEBUG.isEnabled())

@@ -373,8 +373,8 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     }
   }
 
-  private CDOChangeSetData createChangeSetData(Map<CDOID, CDOObject> newObjects,
-      Map<CDOID, CDORevisionDelta> revisionDeltas, Map<CDOID, CDOObject> detachedObjects)
+  private CDOChangeSetData createChangeSetData(Map<CDOID, CDOObject> newObjects, Map<CDOID, CDORevisionDelta> revisionDeltas,
+      Map<CDOID, CDOObject> detachedObjects)
   {
     List<CDOIDAndVersion> newList = new ArrayList<CDOIDAndVersion>(newObjects.size());
     for (CDOObject object : newObjects.values())
@@ -450,8 +450,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
         }
 
         Map<CDOID, CDOObject> newObjects = CDOIDUtil.createMap();
-        for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint
-            .getNextSavepoint())
+        for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint.getNextSavepoint())
         {
           newObjects.putAll(savepoint.getNewObjects());
 
@@ -519,8 +518,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
 
         // We need to combined the result for all delta in different Savepoint
         Map<CDOID, CDORevisionDelta> allRevisionDeltas = CDOIDUtil.createMap();
-        for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint
-            .getNextSavepoint())
+        for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint.getNextSavepoint())
         {
           for (CDORevisionDelta revisionDelta : savepoint.getRevisionDeltas2().values())
           {
@@ -576,8 +574,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
         }
 
         Map<CDOID, CDOObject> detachedObjects = CDOIDUtil.createMap();
-        for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint
-            .getNextSavepoint())
+        for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint.getNextSavepoint())
         {
           for (Entry<CDOID, CDOObject> entry : savepoint.getDetachedObjects().entrySet())
           {

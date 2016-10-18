@@ -38,8 +38,7 @@ public class PostgresqlConfig extends AbstractSetupDBConfig
 
   private static final long serialVersionUID = 1L;
 
-  public PostgresqlConfig(boolean supportingAudits, boolean supportingBranches,
-      IDGenerationLocation idGenerationLocation)
+  public PostgresqlConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
   {
     super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, false, false, idGenerationLocation);
   }

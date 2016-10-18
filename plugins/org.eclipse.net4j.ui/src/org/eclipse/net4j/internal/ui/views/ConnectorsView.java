@@ -71,8 +71,8 @@ public class ConnectorsView extends ContainerView
 
   public static ElementWizardAction createNewConnectorAction(Shell shell, IManagedContainer container)
   {
-    return new ElementWizardAction(shell, "New Connector", "Open a new connector",
-        SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD_CONNECTOR), ConnectorFactory.PRODUCT_GROUP, container, "tcp")
+    return new ElementWizardAction(shell, "New Connector", "Open a new connector", SharedIcons.getDescriptor(SharedIcons.ETOOL_ADD_CONNECTOR),
+        ConnectorFactory.PRODUCT_GROUP, container, "tcp")
     {
       @Override
       public String getDefaultDescription(String factoryType)

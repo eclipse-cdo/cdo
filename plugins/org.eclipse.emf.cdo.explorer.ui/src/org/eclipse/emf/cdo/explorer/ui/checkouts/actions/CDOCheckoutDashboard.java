@@ -330,8 +330,7 @@ public class CDOCheckoutDashboard extends Composite implements ISelectionListene
 
       Label label = new Label(this, SWT.WRAP);
       label.setForeground(getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
-      label.setText("This dashboard is context-sensitive. "
-          + "Select checkouts or models to show view and transaction controls.");
+      label.setText("This dashboard is context-sensitive. " + "Select checkouts or models to show view and transaction controls.");
     }
   }
 

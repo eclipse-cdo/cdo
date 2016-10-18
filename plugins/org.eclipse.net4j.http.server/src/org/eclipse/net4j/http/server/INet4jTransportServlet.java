@@ -44,7 +44,6 @@ public interface INet4jTransportServlet extends Servlet
 
     public void handleDisonnect(String connectorID);
 
-    public void handleOperations(String connectorID, ExtendedDataInputStream in, ExtendedDataOutputStream out)
-        throws IOException;
+    public void handleOperations(String connectorID, ExtendedDataInputStream in, ExtendedDataOutputStream out) throws IOException;
   }
 }

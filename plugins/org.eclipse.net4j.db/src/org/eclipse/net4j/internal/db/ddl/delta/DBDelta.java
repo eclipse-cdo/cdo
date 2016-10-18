@@ -180,8 +180,7 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
     return object == null ? ChangeKind.REMOVE : oldObject == null ? ChangeKind.ADD : ChangeKind.CHANGE;
   }
 
-  protected static <T extends IDBSchemaElement> void compare(T[] elements, T[] oldElements,
-      SchemaElementComparator<T> comparator)
+  protected static <T extends IDBSchemaElement> void compare(T[] elements, T[] oldElements, SchemaElementComparator<T> comparator)
   {
     for (int i = 0; i < elements.length; i++)
     {

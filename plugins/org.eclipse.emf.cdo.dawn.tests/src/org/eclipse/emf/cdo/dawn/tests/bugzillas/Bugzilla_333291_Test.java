@@ -82,11 +82,9 @@ public class Bugzilla_333291_Test extends AbstractDawnEMFTest
       session.close();
     }
 
-    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
-        PreferenceConstants.getServerName());
+    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(), PreferenceConstants.getServerName());
     CDOConnectionUtil.instance.openSession();
-    DawnSWTBotEMFEditor editor = DawnEcoreTestUtil.openEcoreEMFEditor(URI.createURI("cdo://repo1/default.ecore"),
-        getBot());
+    DawnSWTBotEMFEditor editor = DawnEcoreTestUtil.openEcoreEMFEditor(URI.createURI("cdo://repo1/default.ecore"), getBot());
     assertNotNull(editor);
     SWTBotTree tree = editor.getSelectionPageTree();
 

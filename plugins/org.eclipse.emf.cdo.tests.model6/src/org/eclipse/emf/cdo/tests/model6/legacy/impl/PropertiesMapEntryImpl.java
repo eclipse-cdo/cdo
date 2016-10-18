@@ -129,12 +129,10 @@ public class PropertiesMapEntryImpl extends EObjectImpl implements BasicEMap.Ent
       if (value != oldValue)
       {
         InternalEObject newValue = (InternalEObject)value;
-        NotificationChain msgs = oldValue.eInverseRemove(this,
-            EOPPOSITE_FEATURE_BASE - Model6Package.PROPERTIES_MAP_ENTRY__VALUE, null, null);
+        NotificationChain msgs = oldValue.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model6Package.PROPERTIES_MAP_ENTRY__VALUE, null, null);
         if (newValue.eInternalContainer() == null)
         {
-          msgs = newValue.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.PROPERTIES_MAP_ENTRY__VALUE, null,
-              msgs);
+          msgs = newValue.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.PROPERTIES_MAP_ENTRY__VALUE, null, msgs);
         }
         if (msgs != null)
         {
@@ -142,8 +140,7 @@ public class PropertiesMapEntryImpl extends EObjectImpl implements BasicEMap.Ent
         }
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model6Package.PROPERTIES_MAP_ENTRY__VALUE, oldValue,
-              value));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model6Package.PROPERTIES_MAP_ENTRY__VALUE, oldValue, value));
         }
       }
     }
@@ -171,8 +168,7 @@ public class PropertiesMapEntryImpl extends EObjectImpl implements BasicEMap.Ent
     value = newValue;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          Model6Package.PROPERTIES_MAP_ENTRY__VALUE, oldValue, newValue);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model6Package.PROPERTIES_MAP_ENTRY__VALUE, oldValue, newValue);
       if (msgs == null)
       {
         msgs = notification;
@@ -197,13 +193,11 @@ public class PropertiesMapEntryImpl extends EObjectImpl implements BasicEMap.Ent
       NotificationChain msgs = null;
       if (value != null)
       {
-        msgs = ((InternalEObject)value).eInverseRemove(this,
-            EOPPOSITE_FEATURE_BASE - Model6Package.PROPERTIES_MAP_ENTRY__VALUE, null, msgs);
+        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model6Package.PROPERTIES_MAP_ENTRY__VALUE, null, msgs);
       }
       if (newValue != null)
       {
-        msgs = ((InternalEObject)newValue).eInverseAdd(this,
-            EOPPOSITE_FEATURE_BASE - Model6Package.PROPERTIES_MAP_ENTRY__VALUE, null, msgs);
+        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.PROPERTIES_MAP_ENTRY__VALUE, null, msgs);
       }
       msgs = basicSetTypedValue(newValue, msgs);
       if (msgs != null)
@@ -213,8 +207,7 @@ public class PropertiesMapEntryImpl extends EObjectImpl implements BasicEMap.Ent
     }
     else if (eNotificationRequired())
     {
-      eNotify(
-          new ENotificationImpl(this, Notification.SET, Model6Package.PROPERTIES_MAP_ENTRY__VALUE, newValue, newValue));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.PROPERTIES_MAP_ENTRY__VALUE, newValue, newValue));
     }
   }
 

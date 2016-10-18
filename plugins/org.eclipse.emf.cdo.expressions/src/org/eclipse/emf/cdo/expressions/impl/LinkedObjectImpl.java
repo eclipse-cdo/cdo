@@ -76,8 +76,7 @@ public class LinkedObjectImpl extends CDOObjectImpl implements LinkedObject
    */
   public EObject getObject()
   {
-    return (EObject)eDynamicGet(ExpressionsPackage.LINKED_OBJECT__OBJECT,
-        ExpressionsPackage.Literals.LINKED_OBJECT__OBJECT, true, true);
+    return (EObject)eDynamicGet(ExpressionsPackage.LINKED_OBJECT__OBJECT, ExpressionsPackage.Literals.LINKED_OBJECT__OBJECT, true, true);
   }
 
   /**
@@ -87,8 +86,7 @@ public class LinkedObjectImpl extends CDOObjectImpl implements LinkedObject
    */
   public EObject basicGetObject()
   {
-    return (EObject)eDynamicGet(ExpressionsPackage.LINKED_OBJECT__OBJECT,
-        ExpressionsPackage.Literals.LINKED_OBJECT__OBJECT, false, true);
+    return (EObject)eDynamicGet(ExpressionsPackage.LINKED_OBJECT__OBJECT, ExpressionsPackage.Literals.LINKED_OBJECT__OBJECT, false, true);
   }
 
   /**

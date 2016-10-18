@@ -67,8 +67,7 @@ public class AInterfaceItemSemanticEditPolicy extends AcoreBaseItemSemanticEditP
       Edge incomingLink = (Edge)it.next();
       if (AcoreVisualIDRegistry.getVisualID(incomingLink) == AClassImplementedInterfacesEditPart.VISUAL_ID)
       {
-        DestroyReferenceRequest r = new DestroyReferenceRequest(incomingLink.getSource().getElement(), null,
-            incomingLink.getTarget().getElement(), false);
+        DestroyReferenceRequest r = new DestroyReferenceRequest(incomingLink.getSource().getElement(), null, incomingLink.getTarget().getElement(), false);
         cmd.add(new DestroyReferenceCommand(r));
         cmd.add(new DeleteCommand(getEditingDomain(), incomingLink));
         continue;
@@ -108,9 +107,8 @@ public class AInterfaceItemSemanticEditPolicy extends AcoreBaseItemSemanticEditP
           switch (AcoreVisualIDRegistry.getVisualID(cnode))
           {
           case AAttributeEditPart.VISUAL_ID:
-            cmd.add(
-                new DestroyElementCommand(new DestroyElementRequest(getEditingDomain(), cnode.getElement(), false))); // directlyOwned:
-                                                                                                                      // true
+            cmd.add(new DestroyElementCommand(new DestroyElementRequest(getEditingDomain(), cnode.getElement(), false))); // directlyOwned:
+                                                                                                                          // true
             // don't need explicit deletion of cnode as parent's view deletion would clean child views as well
             // cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
             break;
@@ -124,9 +122,8 @@ public class AInterfaceItemSemanticEditPolicy extends AcoreBaseItemSemanticEditP
           switch (AcoreVisualIDRegistry.getVisualID(cnode))
           {
           case AOperationEditPart.VISUAL_ID:
-            cmd.add(
-                new DestroyElementCommand(new DestroyElementRequest(getEditingDomain(), cnode.getElement(), false))); // directlyOwned:
-                                                                                                                      // true
+            cmd.add(new DestroyElementCommand(new DestroyElementRequest(getEditingDomain(), cnode.getElement(), false))); // directlyOwned:
+                                                                                                                          // true
             // don't need explicit deletion of cnode as parent's view deletion would clean child views as well
             // cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
             break;
@@ -143,8 +140,7 @@ public class AInterfaceItemSemanticEditPolicy extends AcoreBaseItemSemanticEditP
   @Override
   protected Command getCreateRelationshipCommand(CreateRelationshipRequest req)
   {
-    Command command = req.getTarget() == null ? getStartCreateRelationshipCommand(req)
-        : getCompleteCreateRelationshipCommand(req);
+    Command command = req.getTarget() == null ? getStartCreateRelationshipCommand(req) : getCompleteCreateRelationshipCommand(req);
     return command != null ? command : super.getCreateRelationshipCommand(req);
   }
 

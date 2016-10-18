@@ -39,8 +39,8 @@ import java.util.List;
  *
  * @generated
  */
-public class RecipeItemProvider extends ProductItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class RecipeItemProvider extends ProductItemProvider
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -76,12 +76,9 @@ public class RecipeItemProvider extends ProductItemProvider implements IEditingD
    */
   protected void addCostPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(), getString("_UI_Recipe_cost_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_Recipe_cost_feature", "_UI_Recipe_type"),
-            InventoryPackage.Literals.RECIPE__COST, false, false, false, ItemPropertyDescriptor.REAL_VALUE_IMAGE, null,
-            null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Recipe_cost_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Recipe_cost_feature", "_UI_Recipe_type"),
+        InventoryPackage.Literals.RECIPE__COST, false, false, false, ItemPropertyDescriptor.REAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -185,8 +182,7 @@ public class RecipeItemProvider extends ProductItemProvider implements IEditingD
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(InventoryPackage.Literals.RECIPE__INGREDIENTS,
-        InventoryFactory.eINSTANCE.createIngredient()));
+    newChildDescriptors.add(createChildParameter(InventoryPackage.Literals.RECIPE__INGREDIENTS, InventoryFactory.eINSTANCE.createIngredient()));
   }
 
 }

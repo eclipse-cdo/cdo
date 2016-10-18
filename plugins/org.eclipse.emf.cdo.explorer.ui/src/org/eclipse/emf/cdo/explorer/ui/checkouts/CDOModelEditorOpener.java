@@ -57,8 +57,7 @@ public class CDOModelEditorOpener extends CDOEditorOpener.Default
     CDOCheckout checkout = CDOExplorerUtil.getCheckout(uri);
     if (checkout == null)
     {
-      MessageDialog.openError(page.getWorkbenchWindow().getShell(), "Error",
-          "The checkout for " + uri + " could not be found.");
+      MessageDialog.openError(page.getWorkbenchWindow().getShell(), "Error", "The checkout for " + uri + " could not be found.");
       return null;
     }
 

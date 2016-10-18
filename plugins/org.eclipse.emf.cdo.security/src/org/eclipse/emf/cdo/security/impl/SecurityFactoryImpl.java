@@ -69,8 +69,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   {
     try
     {
-      SecurityFactory theSecurityFactory = (SecurityFactory)EPackage.Registry.INSTANCE
-          .getEFactory(SecurityPackage.eNS_URI);
+      SecurityFactory theSecurityFactory = (SecurityFactory)EPackage.Registry.INSTANCE.getEFactory(SecurityPackage.eNS_URI);
       if (theSecurityFactory != null)
       {
         return theSecurityFactory;
@@ -578,8 +577,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
     PatternStyle result = PatternStyle.get(initialValue);
     if (result == null)
     {
-      throw new IllegalArgumentException(
-          "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
     return result;
   }
@@ -615,8 +613,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
     Access result = Access.get(initialValue);
     if (result == null)
     {
-      throw new IllegalArgumentException(
-          "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
     return result;
   }

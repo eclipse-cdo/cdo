@@ -128,32 +128,29 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
     return getDelegate().getObjectType(id);
   }
 
-  public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk,
-      boolean loadOnDemand)
+  public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk, boolean loadOnDemand)
   {
     return getDelegate().getRevisionByVersion(id, branchVersion, referenceChunk, loadOnDemand);
   }
 
-  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
-      boolean loadOnDemand)
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
   {
     return getDelegate().getRevision(id, branchPoint, referenceChunk, prefetchDepth, loadOnDemand);
   }
 
-  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
-      boolean loadOnDemand, SyntheticCDORevision[] synthetics)
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      SyntheticCDORevision[] synthetics)
   {
     return getDelegate().getRevision(id, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, synthetics);
   }
 
-  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk,
-      int prefetchDepth, boolean loadOnDemand)
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
   {
     return getDelegate().getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand);
   }
 
-  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk,
-      int prefetchDepth, boolean loadOnDemand, SyntheticCDORevision[] synthetics)
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      SyntheticCDORevision[] synthetics)
   {
     return getDelegate().getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, synthetics);
   }

@@ -153,8 +153,7 @@ public abstract class CDOServerImporter
    */
   public static interface Handler2 extends Handler
   {
-    public void handleCommitInfo(long time, long previous, int branch, String user, String comment,
-        int mergeSourceBranchID, long mergeSourceTime);
+    public void handleCommitInfo(long time, long previous, int branch, String user, String comment, int mergeSourceBranchID, long mergeSourceTime);
   }
 
   /**
@@ -303,8 +302,7 @@ public abstract class CDOServerImporter
       handleCommitInfo(time, previous, branchID, user, comment, 0, CDOBranchPoint.UNSPECIFIED_DATE);
     }
 
-    public void handleCommitInfo(long time, long previous, int branchID, String user, String comment,
-        int mergeSourceBranchID, long mergeSourceTime)
+    public void handleCommitInfo(long time, long previous, int branchID, String user, String comment, int mergeSourceBranchID, long mergeSourceTime)
     {
       CDOBranch branch = repository.getBranchManager().getBranch(branchID);
       if (mergeSourceBranchID != 0 && accessor instanceof Raw2)

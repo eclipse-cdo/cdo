@@ -72,8 +72,7 @@ public class DawnGraphitiHandler extends BasicDawnTransactionHandler
 
     EObject element = CDOUtil.getEObject(cdoObject); // either semantic object or notational
 
-    List<PictogramElement> pictgramElements = DawnGraphitiUtil
-        .getPictgramElements(((DiagramEditor)editor).getDiagramTypeProvider().getDiagram(), element);
+    List<PictogramElement> pictgramElements = DawnGraphitiUtil.getPictgramElements(((DiagramEditor)editor).getDiagramTypeProvider().getDiagram(), element);
 
     GraphicalViewer graphicalViewer = ((DiagramEditor)editor).getGraphicalViewer();
 
@@ -130,8 +129,7 @@ public class DawnGraphitiHandler extends BasicDawnTransactionHandler
           final EObject view = CDOUtil.getEObject(obj);
           if (view instanceof Edge)
           {
-            EditingDomain editingDomain = ((IEditingDomainProvider)view.eResource().getResourceSet())
-                .getEditingDomain();
+            EditingDomain editingDomain = ((IEditingDomainProvider)view.eResource().getResourceSet()).getEditingDomain();
             editingDomain.getCommandStack().execute(new RecordingCommand((TransactionalEditingDomain)editingDomain)
             {
               @Override

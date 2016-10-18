@@ -151,8 +151,7 @@ public class XMLUserType implements UserType
     return "String"; //$NON-NLS-1$
   }
 
-  public Object nullSafeGet(ResultSet arg0, java.lang.String[] arg1, SessionImplementor sessionImplementor, Object arg2)
-      throws HibernateException, SQLException
+  public Object nullSafeGet(ResultSet arg0, java.lang.String[] arg1, SessionImplementor sessionImplementor, Object arg2) throws HibernateException, SQLException
   {
     final Object value = arg0.getObject(arg1[0]);
     if (arg0.wasNull())
@@ -163,8 +162,7 @@ public class XMLUserType implements UserType
     return convertToString(value);
   }
 
-  public void nullSafeSet(PreparedStatement arg0, Object arg1, int arg2, SessionImplementor sessionImplementor)
-      throws HibernateException, SQLException
+  public void nullSafeSet(PreparedStatement arg0, Object arg1, int arg2, SessionImplementor sessionImplementor) throws HibernateException, SQLException
   {
     if (arg1 == null)
     {
@@ -274,15 +272,13 @@ public class XMLUserType implements UserType
       {
         return super.convertToString(value);
       }
-      return super.convertToString(
-          HibernateUtil.getInstance().getXMLGregorianCalendarDate((java.util.Date)value, false));
+      return super.convertToString(HibernateUtil.getInstance().getXMLGregorianCalendarDate((java.util.Date)value, false));
     }
 
     @Override
     protected Object convertToObject(java.lang.String value)
     {
-      return new java.sql.Date(
-          ((XMLGregorianCalendar)super.convertToObject(value)).toGregorianCalendar().getTime().getTime());
+      return new java.sql.Date(((XMLGregorianCalendar)super.convertToObject(value)).toGregorianCalendar().getTime().getTime());
     }
 
     @Override
@@ -301,15 +297,13 @@ public class XMLUserType implements UserType
       {
         return super.convertToString(value);
       }
-      return super.convertToString(
-          HibernateUtil.getInstance().getXMLGregorianCalendarDate((java.util.Date)value, true));
+      return super.convertToString(HibernateUtil.getInstance().getXMLGregorianCalendarDate((java.util.Date)value, true));
     }
 
     @Override
     protected Object convertToObject(java.lang.String value)
     {
-      return new java.sql.Timestamp(
-          ((XMLGregorianCalendar)super.convertToObject(value)).toGregorianCalendar().getTime().getTime());
+      return new java.sql.Timestamp(((XMLGregorianCalendar)super.convertToObject(value)).toGregorianCalendar().getTime().getTime());
     }
 
     @Override

@@ -134,8 +134,7 @@ import java.util.Map;
  *
  * @generated
  */
-public class AcoreEditor extends MultiPageEditorPart
-    implements IEditingDomainProvider, ISelectionProvider, IMenuListener, IViewerProvider, IGotoMarker
+public class AcoreEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider, IMenuListener, IViewerProvider, IGotoMarker
 {
   /**
    * This keeps track of the editing domain that is used to track all changes to the model. <!-- begin-user-doc --> <!--
@@ -447,11 +446,9 @@ public class AcoreEditor extends MultiPageEditorPart
           {
             if (delta.getResource().getType() == IResource.FILE)
             {
-              if (delta.getKind() == IResourceDelta.REMOVED
-                  || delta.getKind() == IResourceDelta.CHANGED && delta.getFlags() != IResourceDelta.MARKERS)
+              if (delta.getKind() == IResourceDelta.REMOVED || delta.getKind() == IResourceDelta.CHANGED && delta.getFlags() != IResourceDelta.MARKERS)
               {
-                Resource resource = resourceSet
-                    .getResource(URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
+                Resource resource = resourceSet.getResource(URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
                 if (resource != null)
                 {
                   if (delta.getKind() == IResourceDelta.REMOVED)
@@ -615,8 +612,8 @@ public class AcoreEditor extends MultiPageEditorPart
   {
     if (updateProblemIndication)
     {
-      BasicDiagnostic diagnostic = new BasicDiagnostic(Diagnostic.OK, "org.eclipse.emf.cdo.dawn.examples.acore.editor",
-          0, null, new Object[] { editingDomain.getResourceSet() });
+      BasicDiagnostic diagnostic = new BasicDiagnostic(Diagnostic.OK, "org.eclipse.emf.cdo.dawn.examples.acore.editor", 0, null,
+          new Object[] { editingDomain.getResourceSet() });
       for (Diagnostic childDiagnostic : resourceToDiagnosticMap.values())
       {
         if (childDiagnostic.getSeverity() != Diagnostic.OK)
@@ -677,8 +674,7 @@ public class AcoreEditor extends MultiPageEditorPart
    */
   protected boolean handleDirtyConflict()
   {
-    return MessageDialog.openQuestion(getSite().getShell(), getString("_UI_FileConflict_label"),
-        getString("_WARN_FileConflict"));
+    return MessageDialog.openQuestion(getSite().getShell(), getString("_UI_FileConflict_label"), getString("_WARN_FileConflict"));
   }
 
   /**
@@ -1003,10 +999,8 @@ public class AcoreEditor extends MultiPageEditorPart
   {
     if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty())
     {
-      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR,
-          "org.eclipse.emf.cdo.dawn.examples.acore.editor", 0,
-          getString("_UI_CreateModelError_message", resource.getURI()),
-          new Object[] { exception == null ? (Object)resource : exception });
+      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.dawn.examples.acore.editor", 0,
+          getString("_UI_CreateModelError_message", resource.getURI()), new Object[] { exception == null ? (Object)resource : exception });
       basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
       return basicDiagnostic;
     }
@@ -1065,8 +1059,7 @@ public class AcoreEditor extends MultiPageEditorPart
 
         selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
         selectionViewer.setInput(editingDomain.getResourceSet());
-        selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)),
-            true);
+        selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
         viewerPane.setTitle(editingDomain.getResourceSet());
 
         new AdapterFactoryTreeEditor(selectionViewer.getTree(), adapterFactory);
@@ -1412,14 +1405,12 @@ public class AcoreEditor extends MultiPageEditorPart
           {
             // Select the root object in the view.
             //
-            contentOutlineViewer
-                .setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
+            contentOutlineViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
           }
         }
 
         @Override
-        public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager,
-            IStatusLineManager statusLineManager)
+        public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager, IStatusLineManager statusLineManager)
         {
           super.makeContributions(menuManager, toolBarManager, statusLineManager);
           contentOutlineStatusLineManager = statusLineManager;
@@ -1568,8 +1559,7 @@ public class AcoreEditor extends MultiPageEditorPart
         boolean first = true;
         for (Resource resource : editingDomain.getResourceSet().getResources())
         {
-          if ((first || !resource.getContents().isEmpty() || isPersisted(resource))
-              && !editingDomain.isReadOnly(resource))
+          if ((first || !resource.getContents().isEmpty() || isPersisted(resource)) && !editingDomain.isReadOnly(resource))
           {
             try
             {
@@ -1680,8 +1670,8 @@ public class AcoreEditor extends MultiPageEditorPart
     editingDomain.getResourceSet().getResources().get(0).setURI(uri);
     setInputWithNotify(editorInput);
     setPartName(editorInput.getName());
-    IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null
-        ? getActionBars().getStatusLineManager().getProgressMonitor() : new NullProgressMonitor();
+    IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars().getStatusLineManager().getProgressMonitor()
+        : new NullProgressMonitor();
     doSave(progressMonitor);
   }
 
@@ -1803,8 +1793,8 @@ public class AcoreEditor extends MultiPageEditorPart
    */
   public void setStatusLineManager(ISelection selection)
   {
-    IStatusLineManager statusLineManager = currentViewer != null && currentViewer == contentOutlineViewer
-        ? contentOutlineStatusLineManager : getActionBars().getStatusLineManager();
+    IStatusLineManager statusLineManager = currentViewer != null && currentViewer == contentOutlineViewer ? contentOutlineStatusLineManager
+        : getActionBars().getStatusLineManager();
 
     if (statusLineManager != null)
     {

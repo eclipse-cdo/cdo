@@ -223,8 +223,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     else
     {
       EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());
-      if (feature instanceof EReference && feature.isMany()
-          && HibernateUtil.getInstance().isCDOResourceContents(feature))
+      if (feature instanceof EReference && feature.isMany() && HibernateUtil.getInstance().isCDOResourceContents(feature))
       {
         getter = new CDOManyAttributeGetter(this, mappedProperty.getName());
       }
@@ -290,8 +289,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     else
     {
       EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());
-      if (feature instanceof EReference && feature.isMany()
-          && HibernateUtil.getInstance().isCDOResourceContents(feature))
+      if (feature instanceof EReference && feature.isMany() && HibernateUtil.getInstance().isCDOResourceContents(feature))
       {
         setter = new CDOManyAttributeSetter(this, mappedProperty.getName());
       }

@@ -71,17 +71,13 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
 {
   public static final TestRecorder INSTANCE = new TestRecorder();
 
-  private static final String OUTPUT_FOLDER = OMPlatform.INSTANCE
-      .getProperty("org.eclipse.emf.cdo.test.recorder.outputFolder");
+  private static final String OUTPUT_FOLDER = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.test.recorder.outputFolder");
 
-  private static final String CLASS_NAME = OMPlatform.INSTANCE
-      .getProperty("org.eclipse.emf.cdo.test.recorder.className");
+  private static final String CLASS_NAME = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.test.recorder.className");
 
-  private static final String DESCRIPTION = OMPlatform.INSTANCE
-      .getProperty("org.eclipse.emf.cdo.test.recorder.description");
+  private static final String DESCRIPTION = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.test.recorder.description");
 
-  private static final boolean RECORD_VIEWS = Boolean
-      .parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.test.recorder.recordViews", "false"));
+  private static final boolean RECORD_VIEWS = Boolean.parseBoolean(OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.test.recorder.recordViews", "false"));
 
   private static final Map<Object, String> TYPES = new HashMap<Object, String>();
   static
@@ -240,8 +236,7 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
     Variable variable = createVariable("branch", branch);
 
     String lhs = "CDOBranch " + variable + " = ";
-    String create = ".createBranch(" + list(quot(branch.getName()), formatTimeStamp(originalBaseTimeStamp, true))
-        + ");";
+    String create = ".createBranch(" + list(quot(branch.getName()), formatTimeStamp(originalBaseTimeStamp, true)) + ");";
 
     CDOBranch baseBranch = branch.getBase().getBranch();
     if (baseBranch.isMainBranch())
@@ -257,8 +252,7 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
       }
       else
       {
-        println(lhs + variables.get(getSession(branch)) + ".getBranchManager().getBranch("
-            + quot(baseBranch.getPathName()) + ")" + create);
+        println(lhs + variables.get(getSession(branch)) + ".getBranchManager().getBranch(" + quot(baseBranch.getPathName()) + ")" + create);
       }
     }
   }
@@ -272,8 +266,8 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
     if (RECORD_VIEWS)
     {
       Variable variable = createVariable("view", view);
-      println("CDOView " + variable + " = " + variables.get(session) + ".openView("
-          + list(formatBranch(branch, true), formatTimeStamp(timeStamp, true)) + ");");
+      println(
+          "CDOView " + variable + " = " + variables.get(session) + ".openView(" + list(formatBranch(branch, true), formatTimeStamp(timeStamp, true)) + ");");
 
       addCloseListener(variable);
     }
@@ -282,8 +276,7 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
   public synchronized void openTransaction(TestRecorderTransaction transaction, CDOSession session, CDOBranch branch)
   {
     Variable variable = createVariable("transaction", transaction);
-    println("CDOTransaction " + variable + " = " + variables.get(session) + ".openTransaction("
-        + formatBranch(branch, true) + ");");
+    println("CDOTransaction " + variable + " = " + variables.get(session) + ".openTransaction(" + formatBranch(branch, true) + ");");
 
     addCloseListener(variable);
     transaction.addTransactionHandler(this);
@@ -300,8 +293,8 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
       String type = TYPES.get(eClass);
       Variable variable = createVariable(type, resourceNode);
 
-      println(typeName + " " + variable + " = " + variables.get(transaction) + "." + typeName.replace("CDO", "create")
-          + "(getResourcePath(" + quot(resourceNode.getPath()) + "));");
+      println(typeName + " " + variable + " = " + variables.get(transaction) + "." + typeName.replace("CDO", "create") + "(getResourcePath("
+          + quot(resourceNode.getPath()) + "));");
     }
   }
 
@@ -316,8 +309,7 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
     }
   }
 
-  public synchronized void modifyingObject(CDOTransaction transaction, final CDOObject object,
-      CDOFeatureDelta featureDelta)
+  public synchronized void modifyingObject(CDOTransaction transaction, final CDOObject object, CDOFeatureDelta featureDelta)
   {
     if (object instanceof CDOResourceNode)
     {
@@ -464,15 +456,12 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
 
   public synchronized void mergeTransaction(TestRecorderTransaction transaction, CDOBranch source, CDOMerger merger)
   {
-    println(variables.get(transaction) + ".merge(" + formatBranch(source, false) + ", new " + simpleClassName(merger)
-        + "());");
+    println(variables.get(transaction) + ".merge(" + formatBranch(source, false) + ", new " + simpleClassName(merger) + "());");
   }
 
-  public synchronized void mergeTransaction(TestRecorderTransaction transaction, CDOBranchPoint source,
-      CDOMerger merger)
+  public synchronized void mergeTransaction(TestRecorderTransaction transaction, CDOBranchPoint source, CDOMerger merger)
   {
-    println(variables.get(transaction) + ".merge(" + formatBranchPoint(source, false) + ", new "
-        + simpleClassName(merger) + "());");
+    println(variables.get(transaction) + ".merge(" + formatBranchPoint(source, false) + ", new " + simpleClassName(merger) + "());");
   }
 
   public synchronized void commitTransaction(TestRecorderTransaction transaction, CDOCommitInfo commitInfo)
@@ -493,8 +482,7 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
       variables.put(branchPoint, oldVariable);
     }
 
-    StringBuilder builder = new StringBuilder(
-        "CDOCommitInfo " + variable + " = commitAndSync(" + variables.get(transaction));
+    StringBuilder builder = new StringBuilder("CDOCommitInfo " + variable + " = commitAndSync(" + variables.get(transaction));
 
     for (InternalCDOView view : transaction.getSession().getViews())
     {
@@ -562,8 +550,7 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
     if (branchPointVariable == null)
     {
       branchPointVariable = createVariable("point", branchPoint);
-      println("CDOBranchPoint " + branchPointVariable + " = " + formatBranch(branch, false) + ".getPoint("
-          + formatTimeStamp(timeStamp, false) + ");");
+      println("CDOBranchPoint " + branchPointVariable + " = " + formatBranch(branch, false) + ".getPoint(" + formatTimeStamp(timeStamp, false) + ");");
     }
 
     return branchPointVariable.toString();
@@ -587,8 +574,7 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
       }
 
       branchVariable = createVariable("branch", branch);
-      println("CDOBranch " + branchVariable + " = " + sessionVariable + ".getBranchManager().getBranch("
-          + quot(branch.getPathName()) + ");");
+      println("CDOBranch " + branchVariable + " = " + sessionVariable + ".getBranchManager().getBranch(" + quot(branch.getPathName()) + ");");
     }
 
     return branchVariable.toString();
@@ -625,8 +611,8 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
       String type = TYPES.get(eClass);
       variable = createVariable(type, resourceNode);
 
-      println(typeName + " " + variable + " = " + variables.get(resourceNode.cdoView()) + "."
-          + typeName.replace("CDO", "get") + "(getResourcePath(" + quot(resourceNode.getPath()) + "));");
+      println(typeName + " " + variable + " = " + variables.get(resourceNode.cdoView()) + "." + typeName.replace("CDO", "get") + "(getResourcePath("
+          + quot(resourceNode.getPath()) + "));");
     }
 
     return variable.toString();
@@ -661,14 +647,12 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
             List<?> list = (List<?>)value;
             for (Object element : list)
             {
-              println(variable + ".get" + StringUtil.cap(feature.getName()) + "().add("
-                  + formatValue(object, feature, element) + ");");
+              println(variable + ".get" + StringUtil.cap(feature.getName()) + "().add(" + formatValue(object, feature, element) + ");");
             }
           }
           else if (value != null)
           {
-            println(variable + ".set" + StringUtil.cap(feature.getName()) + "(" + formatValue(object, feature, value)
-                + ");");
+            println(variable + ".set" + StringUtil.cap(feature.getName()) + "(" + formatValue(object, feature, value) + ");");
           }
         }
       }

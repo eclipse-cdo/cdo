@@ -93,8 +93,7 @@ public class EdgeImpl extends EObjectImpl implements Edge
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model3Package.EDGE__SOURCE_NODE, oldSourceNode,
-              sourceNode));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model3Package.EDGE__SOURCE_NODE, oldSourceNode, sourceNode));
         }
       }
     }
@@ -122,8 +121,7 @@ public class EdgeImpl extends EObjectImpl implements Edge
     sourceNode = newSourceNode;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model3Package.EDGE__SOURCE_NODE,
-          oldSourceNode, newSourceNode);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model3Package.EDGE__SOURCE_NODE, oldSourceNode, newSourceNode);
       if (msgs == null)
       {
         msgs = notification;
@@ -148,13 +146,11 @@ public class EdgeImpl extends EObjectImpl implements Edge
       NotificationChain msgs = null;
       if (sourceNode != null)
       {
-        msgs = ((InternalEObject)sourceNode).eInverseRemove(this, Model3Package.EDGE_TARGET__OUTGOING_EDGES,
-            EdgeTarget.class, msgs);
+        msgs = ((InternalEObject)sourceNode).eInverseRemove(this, Model3Package.EDGE_TARGET__OUTGOING_EDGES, EdgeTarget.class, msgs);
       }
       if (newSourceNode != null)
       {
-        msgs = ((InternalEObject)newSourceNode).eInverseAdd(this, Model3Package.EDGE_TARGET__OUTGOING_EDGES,
-            EdgeTarget.class, msgs);
+        msgs = ((InternalEObject)newSourceNode).eInverseAdd(this, Model3Package.EDGE_TARGET__OUTGOING_EDGES, EdgeTarget.class, msgs);
       }
       msgs = basicSetSourceNode(newSourceNode, msgs);
       if (msgs != null)
@@ -164,8 +160,7 @@ public class EdgeImpl extends EObjectImpl implements Edge
     }
     else if (eNotificationRequired())
     {
-      eNotify(
-          new ENotificationImpl(this, Notification.SET, Model3Package.EDGE__SOURCE_NODE, newSourceNode, newSourceNode));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.EDGE__SOURCE_NODE, newSourceNode, newSourceNode));
     }
   }
 
@@ -184,8 +179,7 @@ public class EdgeImpl extends EObjectImpl implements Edge
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model3Package.EDGE__TARGET_NODE, oldTargetNode,
-              targetNode));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model3Package.EDGE__TARGET_NODE, oldTargetNode, targetNode));
         }
       }
     }
@@ -213,8 +207,7 @@ public class EdgeImpl extends EObjectImpl implements Edge
     targetNode = newTargetNode;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model3Package.EDGE__TARGET_NODE,
-          oldTargetNode, newTargetNode);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model3Package.EDGE__TARGET_NODE, oldTargetNode, newTargetNode);
       if (msgs == null)
       {
         msgs = notification;
@@ -239,13 +232,11 @@ public class EdgeImpl extends EObjectImpl implements Edge
       NotificationChain msgs = null;
       if (targetNode != null)
       {
-        msgs = ((InternalEObject)targetNode).eInverseRemove(this, Model3Package.EDGE_TARGET__INCOMING_EDGES,
-            EdgeTarget.class, msgs);
+        msgs = ((InternalEObject)targetNode).eInverseRemove(this, Model3Package.EDGE_TARGET__INCOMING_EDGES, EdgeTarget.class, msgs);
       }
       if (newTargetNode != null)
       {
-        msgs = ((InternalEObject)newTargetNode).eInverseAdd(this, Model3Package.EDGE_TARGET__INCOMING_EDGES,
-            EdgeTarget.class, msgs);
+        msgs = ((InternalEObject)newTargetNode).eInverseAdd(this, Model3Package.EDGE_TARGET__INCOMING_EDGES, EdgeTarget.class, msgs);
       }
       msgs = basicSetTargetNode(newTargetNode, msgs);
       if (msgs != null)
@@ -255,8 +246,7 @@ public class EdgeImpl extends EObjectImpl implements Edge
     }
     else if (eNotificationRequired())
     {
-      eNotify(
-          new ENotificationImpl(this, Notification.SET, Model3Package.EDGE__TARGET_NODE, newTargetNode, newTargetNode));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.EDGE__TARGET_NODE, newTargetNode, newTargetNode));
     }
   }
 
@@ -273,15 +263,13 @@ public class EdgeImpl extends EObjectImpl implements Edge
     case Model3Package.EDGE__SOURCE_NODE:
       if (sourceNode != null)
       {
-        msgs = ((InternalEObject)sourceNode).eInverseRemove(this, Model3Package.EDGE_TARGET__OUTGOING_EDGES,
-            EdgeTarget.class, msgs);
+        msgs = ((InternalEObject)sourceNode).eInverseRemove(this, Model3Package.EDGE_TARGET__OUTGOING_EDGES, EdgeTarget.class, msgs);
       }
       return basicSetSourceNode((EdgeTarget)otherEnd, msgs);
     case Model3Package.EDGE__TARGET_NODE:
       if (targetNode != null)
       {
-        msgs = ((InternalEObject)targetNode).eInverseRemove(this, Model3Package.EDGE_TARGET__INCOMING_EDGES,
-            EdgeTarget.class, msgs);
+        msgs = ((InternalEObject)targetNode).eInverseRemove(this, Model3Package.EDGE_TARGET__INCOMING_EDGES, EdgeTarget.class, msgs);
       }
       return basicSetTargetNode((EdgeTarget)otherEnd, msgs);
     }

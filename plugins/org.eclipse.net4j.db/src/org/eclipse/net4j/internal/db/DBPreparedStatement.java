@@ -30,8 +30,7 @@ public class DBPreparedStatement extends DelegatingPreparedStatement implements 
 
   private int touch;
 
-  public DBPreparedStatement(DBConnection transaction, String sql, ReuseProbability reuseProbability,
-      PreparedStatement delegate)
+  public DBPreparedStatement(DBConnection transaction, String sql, ReuseProbability reuseProbability, PreparedStatement delegate)
   {
     super(delegate, transaction);
     this.sql = sql;

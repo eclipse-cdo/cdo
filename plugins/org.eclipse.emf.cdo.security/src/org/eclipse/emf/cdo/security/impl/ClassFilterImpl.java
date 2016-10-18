@@ -98,8 +98,7 @@ public class ClassFilterImpl extends PermissionFilterImpl implements ClassFilter
   }
 
   @Override
-  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
-      int level) throws Exception
+  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext, int level) throws Exception
   {
     EClass actualClass = revision.getEClass();
     EClass applicableClass = getApplicableClass();

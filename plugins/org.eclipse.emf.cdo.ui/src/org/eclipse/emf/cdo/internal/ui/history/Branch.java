@@ -52,14 +52,12 @@ public final class Branch extends SegmentList
       CDORevisionManager revisionManager = session.getRevisionManager();
 
       CDOBranchPoint lastPoint = cdoBranch.getHead();
-      CDORevision lastRevision = revisionManager.getRevision(objectID, lastPoint, CDORevision.UNCHUNKED,
-          CDORevision.DEPTH_NONE, true);
+      CDORevision lastRevision = revisionManager.getRevision(objectID, lastPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
 
       if (lastRevision != null && lastRevision.getBranch() == cdoBranch)
       {
         CDOBranchVersion firstVersion = cdoBranch.getVersion(CDOBranchVersion.FIRST_VERSION);
-        CDORevision firstRevision = revisionManager.getRevisionByVersion(objectID, firstVersion, CDORevision.UNCHUNKED,
-            true);
+        CDORevision firstRevision = revisionManager.getRevisionByVersion(objectID, firstVersion, CDORevision.UNCHUNKED, true);
 
         firstCommitTime = firstRevision.getTimeStamp();
         lastCommitTime = lastRevision.getTimeStamp();

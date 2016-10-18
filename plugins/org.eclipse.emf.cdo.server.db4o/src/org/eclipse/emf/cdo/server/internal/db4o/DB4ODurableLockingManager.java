@@ -38,8 +38,7 @@ public class DB4ODurableLockingManager extends Lifecycle
   {
   }
 
-  public LockArea createLockArea(DB4OStoreAccessor accessor, String userID, CDOBranchPoint branchPoint,
-      boolean readOnly, Map<CDOID, LockGrade> locks)
+  public LockArea createLockArea(DB4OStoreAccessor accessor, String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     String durableLockingID = getNextDurableLockingID(accessor);
     LockArea lockArea = CDOLockUtil.createLockArea(durableLockingID, userID, branchPoint, readOnly, locks);
@@ -61,8 +60,7 @@ public class DB4ODurableLockingManager extends Lifecycle
     return DB4OLockArea.getLockArea(accessor.getStore(), primitive);
   }
 
-  private DB4OLockArea getPrimitiveLockArea(DB4OStoreAccessor accessor, String durableLockingID)
-      throws LockAreaNotFoundException
+  private DB4OLockArea getPrimitiveLockArea(DB4OStoreAccessor accessor, String durableLockingID) throws LockAreaNotFoundException
   {
     ObjectContainer container = accessor.getObjectContainer();
     Query query = container.query();
@@ -113,8 +111,7 @@ public class DB4ODurableLockingManager extends Lifecycle
     container.commit();
   }
 
-  public void lock(DB4OStoreAccessor accessor, String durableLockingID, LockType type,
-      Collection<? extends Object> objectsToLock)
+  public void lock(DB4OStoreAccessor accessor, String durableLockingID, LockType type, Collection<? extends Object> objectsToLock)
   {
     // TODO (CD) Refactor? Next chunk of code copied verbatim from MEMStore.lock
     LockArea area = getLockArea(accessor, durableLockingID);
@@ -140,8 +137,7 @@ public class DB4ODurableLockingManager extends Lifecycle
     storeLockArea(accessor, area);
   }
 
-  public void unlock(DB4OStoreAccessor accessor, String durableLockingID, LockType type,
-      Collection<? extends Object> objectsToUnlock)
+  public void unlock(DB4OStoreAccessor accessor, String durableLockingID, LockType type, Collection<? extends Object> objectsToUnlock)
   {
     // TODO (CD) Refactor? Next chunk of code copied verbatim from MEMStore.lock
     LockArea area = getLockArea(accessor, durableLockingID);

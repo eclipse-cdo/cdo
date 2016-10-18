@@ -21,8 +21,8 @@ import org.eclipse.swt.widgets.Composite;
  */
 public interface IElementWizard
 {
-  public void create(Composite parent, IManagedContainer container, String productGroup, String factoryType,
-      String defaultDescription, ValidationContext context);
+  public void create(Composite parent, IManagedContainer container, String productGroup, String factoryType, String defaultDescription,
+      ValidationContext context);
 
   public String getResultDescription();
 

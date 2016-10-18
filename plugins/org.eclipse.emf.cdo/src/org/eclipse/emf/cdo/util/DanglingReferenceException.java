@@ -40,8 +40,7 @@ public class DanglingReferenceException extends CDOException
 
   public DanglingReferenceException(EObject object)
   {
-    super(
-        MessageFormat.format(Messages.getString("DanglingReferenceException.0"), object, object.getClass().getName())); //$NON-NLS-1$
+    super(MessageFormat.format(Messages.getString("DanglingReferenceException.0"), object, object.getClass().getName())); //$NON-NLS-1$
     target = object;
   }
 

@@ -43,8 +43,7 @@ import java.util.Map.Entry;
  */
 public class CommitXATransactionPhase2Request extends CommitXATransactionRequest
 {
-  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL,
-      CommitXATransactionPhase1Request.class);
+  private static final ContextTracer PROTOCOL = new ContextTracer(OM.DEBUG_PROTOCOL, CommitXATransactionPhase1Request.class);
 
   public CommitXATransactionPhase2Request(CDOClientProtocol protocol, InternalCDOXACommitContext xaContext)
   {
@@ -81,17 +80,15 @@ public class CommitXATransactionPhase2Request extends CommitXATransactionRequest
       InternalCDOXACommitContext commitContext = context.getTransactionManager().getCommitContext(entry.getValue());
       if (commitContext == null)
       {
-        throw new IllegalStateException(
-            MessageFormat.format(Messages.getString("CommitTransactionPhase2Request.1"), entry //$NON-NLS-1$
-                .getValue()));
+        throw new IllegalStateException(MessageFormat.format(Messages.getString("CommitTransactionPhase2Request.1"), entry //$NON-NLS-1$
+            .getValue()));
       }
 
       CDOID newID = commitContext.getResult().getIDMappings().get(oldCDOID);
       if (newID == null)
       {
-        throw new IllegalStateException(
-            MessageFormat.format(Messages.getString("CommitTransactionPhase2Request.2"), oldCDOID //$NON-NLS-1$
-                .toURIFragment()));
+        throw new IllegalStateException(MessageFormat.format(Messages.getString("CommitTransactionPhase2Request.2"), oldCDOID //$NON-NLS-1$
+            .toURIFragment()));
       }
 
       CDOID newIDExternal = CDOURIUtil.convertExternalCDOID(oldURIExternal, newID);

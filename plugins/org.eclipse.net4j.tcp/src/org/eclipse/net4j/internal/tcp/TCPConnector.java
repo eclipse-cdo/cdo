@@ -216,8 +216,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       if (byteBuffer != null)
       {
         short channelID = inputBuffer.getChannelID();
-        InternalChannel channel = channelID == ControlChannel.CONTROL_CHANNEL_INDEX ? controlChannel
-            : getChannel(channelID);
+        InternalChannel channel = channelID == ControlChannel.CONTROL_CHANNEL_INDEX ? controlChannel : getChannel(channelID);
         if (channel != null)
         {
           channel.handleBufferFromMultiplexer(inputBuffer);

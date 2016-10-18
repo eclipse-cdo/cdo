@@ -282,8 +282,8 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     return accessor.getDBConnection().prepareStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
   }
 
-  public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,
-      boolean exactMatch, CDOBranchPoint branchPoint)
+  public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name, boolean exactMatch,
+      CDOBranchPoint branchPoint)
   {
     long timeStamp = branchPoint.getTimeStamp();
     if (timeStamp != CDORevision.UNSPECIFIED_DATE)
@@ -320,8 +320,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(),
-        ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.MEDIUM);
 
     try
     {
@@ -361,8 +360,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     DBStore store = (DBStore)getMappingStrategy().getStore();
     IIDHandler idHandler = store.getIDHandler();
     IDBPreparedStatement stmtVersion = null;
-    IDBPreparedStatement stmtAttributes = accessor.getDBConnection().prepareStatement(sqlSelectCurrentAttributes,
-        ReuseProbability.HIGH);
+    IDBPreparedStatement stmtAttributes = accessor.getDBConnection().prepareStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
 
     try
     {
@@ -449,8 +447,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   }
 
   @Override
-  protected void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp,
-      OMMonitor monitor)
+  protected void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp, OMMonitor monitor)
   {
     rawDelete(accessor, id, version, branch, monitor);
 
@@ -459,8 +456,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   }
 
   @Override
-  protected void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version,
-      OMMonitor monitor)
+  protected void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version, OMMonitor monitor)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDelete, ReuseProbability.HIGH);
@@ -480,8 +476,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
   }
 
-  public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created,
-      OMMonitor monitor)
+  public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created, OMMonitor monitor)
   {
     Async async = null;
     monitor.begin();
@@ -719,8 +714,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       return builder.toString();
     }
 
-    private int setUpdateAttributeValues(List<Pair<ITypeMapping, Object>> attributeChanges, IDBPreparedStatement stmt,
-        int col) throws SQLException
+    private int setUpdateAttributeValues(List<Pair<ITypeMapping, Object>> attributeChanges, IDBPreparedStatement stmt, int col) throws SQLException
     {
       for (Pair<ITypeMapping, Object> change : attributeChanges)
       {
@@ -751,8 +745,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       return col;
     }
 
-    private int setUpdateListSizeChanges(List<Pair<EStructuralFeature, Integer>> attributeChanges,
-        IDBPreparedStatement stmt, int col) throws SQLException
+    private int setUpdateListSizeChanges(List<Pair<EStructuralFeature, Integer>> attributeChanges, IDBPreparedStatement stmt, int col) throws SQLException
     {
       for (Pair<EStructuralFeature, Integer> change : listSizeChanges)
       {

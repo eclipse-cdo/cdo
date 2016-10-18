@@ -54,8 +54,7 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
 
   public SelectPackageDialog(Shell shell, String title, String message, Set<String> excludedURIs)
   {
-    super(shell, DEFAULT_SHELL_STYLE | SWT.APPLICATION_MODAL, title, message,
-        OM.Activator.INSTANCE.getDialogSettings());
+    super(shell, DEFAULT_SHELL_STYLE | SWT.APPLICATION_MODAL, title, message, OM.Activator.INSTANCE.getDialogSettings());
     this.excludedURIs = excludedURIs;
   }
 

@@ -27,8 +27,7 @@ import java.io.IOException;
  */
 public class RemoteMessageNotificationIndication extends CDOClientIndication
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      RemoteMessageNotificationIndication.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, RemoteMessageNotificationIndication.class);
 
   public RemoteMessageNotificationIndication(CDOClientProtocol protocol)
   {

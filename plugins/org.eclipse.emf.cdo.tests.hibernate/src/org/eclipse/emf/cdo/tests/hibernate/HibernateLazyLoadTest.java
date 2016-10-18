@@ -136,8 +136,7 @@ public class HibernateLazyLoadTest extends AbstractCDOTest
       customer.setStreet("Street " + i);
       resource.getContents().add(customer);
 
-      final List<Product1> customerProducts = products.subList(productCounter,
-          productCounter + NUM_OF_PRODUCTS_CUSTOMER);
+      final List<Product1> customerProducts = products.subList(productCounter, productCounter + NUM_OF_PRODUCTS_CUSTOMER);
       for (int k = 0; k < NUM_OF_SALES_ORDERS; k++)
       {
         resource.getContents().add(createSalesOrder(i * 10 + k, customer, customerProducts));

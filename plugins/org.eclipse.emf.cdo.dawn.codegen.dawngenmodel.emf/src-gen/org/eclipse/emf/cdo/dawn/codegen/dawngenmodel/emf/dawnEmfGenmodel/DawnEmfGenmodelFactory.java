@@ -27,8 +27,7 @@ public interface DawnEmfGenmodelFactory extends EFactory
    *
    * @generated
    */
-  DawnEmfGenmodelFactory eINSTANCE = org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.impl.DawnEmfGenmodelFactoryImpl
-      .init();
+  DawnEmfGenmodelFactory eINSTANCE = org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.impl.DawnEmfGenmodelFactoryImpl.init();
 
   /**
    * Returns a new object of class '<em>Dawn EMF Generator</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->

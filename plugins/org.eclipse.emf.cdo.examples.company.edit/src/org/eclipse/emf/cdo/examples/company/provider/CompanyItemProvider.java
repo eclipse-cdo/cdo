@@ -123,8 +123,7 @@ public class CompanyItemProvider extends AddressableItemProvider
   public String getText(Object object)
   {
     String label = ((Company)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_Company_type")
-        : getString("_UI_Company_type") + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_Company_type") : getString("_UI_Company_type") + " " + label;
   }
 
   /**
@@ -162,20 +161,15 @@ public class CompanyItemProvider extends AddressableItemProvider
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(
-        createChildParameter(CompanyPackage.Literals.COMPANY__CATEGORIES, CompanyFactory.eINSTANCE.createCategory()));
+    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.COMPANY__CATEGORIES, CompanyFactory.eINSTANCE.createCategory()));
 
-    newChildDescriptors.add(
-        createChildParameter(CompanyPackage.Literals.COMPANY__SUPPLIERS, CompanyFactory.eINSTANCE.createSupplier()));
+    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.COMPANY__SUPPLIERS, CompanyFactory.eINSTANCE.createSupplier()));
 
-    newChildDescriptors.add(
-        createChildParameter(CompanyPackage.Literals.COMPANY__CUSTOMERS, CompanyFactory.eINSTANCE.createCustomer()));
+    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.COMPANY__CUSTOMERS, CompanyFactory.eINSTANCE.createCustomer()));
 
-    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.COMPANY__PURCHASE_ORDERS,
-        CompanyFactory.eINSTANCE.createPurchaseOrder()));
+    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.COMPANY__PURCHASE_ORDERS, CompanyFactory.eINSTANCE.createPurchaseOrder()));
 
-    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.COMPANY__SALES_ORDERS,
-        CompanyFactory.eINSTANCE.createSalesOrder()));
+    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.COMPANY__SALES_ORDERS, CompanyFactory.eINSTANCE.createSalesOrder()));
   }
 
 }

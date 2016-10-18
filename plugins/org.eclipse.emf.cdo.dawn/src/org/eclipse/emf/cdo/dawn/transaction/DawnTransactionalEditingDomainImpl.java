@@ -31,8 +31,7 @@ public class DawnTransactionalEditingDomainImpl extends TransactionalEditingDoma
     super(adapterFactory);
   }
 
-  public DawnTransactionalEditingDomainImpl(AdapterFactory adapterFactory, TransactionalCommandStack stack,
-      ResourceSet resourceSet)
+  public DawnTransactionalEditingDomainImpl(AdapterFactory adapterFactory, TransactionalCommandStack stack, ResourceSet resourceSet)
   {
     super(adapterFactory, stack, resourceSet);
   }

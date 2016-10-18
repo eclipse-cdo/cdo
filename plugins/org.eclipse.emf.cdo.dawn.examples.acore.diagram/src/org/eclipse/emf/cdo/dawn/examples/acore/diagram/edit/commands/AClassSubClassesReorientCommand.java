@@ -92,8 +92,7 @@ public class AClassSubClassesReorientCommand extends EditElementCommand
     {
       return false;
     }
-    return AcoreBaseItemSemanticEditPolicy.LinkConstraints.canExistAClassSubClasses_4001(getNewSource(),
-        getOldTarget());
+    return AcoreBaseItemSemanticEditPolicy.LinkConstraints.canExistAClassSubClasses_4001(getNewSource(), getOldTarget());
   }
 
   /**
@@ -105,8 +104,7 @@ public class AClassSubClassesReorientCommand extends EditElementCommand
     {
       return false;
     }
-    return AcoreBaseItemSemanticEditPolicy.LinkConstraints.canExistAClassSubClasses_4001(getOldSource(),
-        getNewTarget());
+    return AcoreBaseItemSemanticEditPolicy.LinkConstraints.canExistAClassSubClasses_4001(getOldSource(), getNewTarget());
   }
 
   /**

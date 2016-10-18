@@ -87,8 +87,7 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
     }
   }
 
-  private CDORevisionAvailabilityInfo readRevisionAvailabilityInfo(CDODataInput in, OMMonitor monitor)
-      throws IOException
+  private CDORevisionAvailabilityInfo readRevisionAvailabilityInfo(CDODataInput in, OMMonitor monitor) throws IOException
   {
     if (in.readBoolean())
     {
@@ -127,8 +126,7 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
     try
     {
       InternalRepository repository = getRepository();
-      MergeDataResult result = repository.getMergeData2(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo,
-          monitor.fork());
+      MergeDataResult result = repository.getMergeData2(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo, monitor.fork());
 
       Set<CDOID> targetIDs = result.getTargetIDs();
       Set<CDOID> targetAndSourceIDs = new HashSet<CDOID>();
@@ -203,8 +201,8 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
     }
   }
 
-  private void writeRevisionAvailabilityInfo(final CDODataOutput out, CDORevisionAvailabilityInfo info,
-      Set<CDORevisionKey> writtenRevisions, OMMonitor monitor) throws IOException
+  private void writeRevisionAvailabilityInfo(final CDODataOutput out, CDORevisionAvailabilityInfo info, Set<CDORevisionKey> writtenRevisions, OMMonitor monitor)
+      throws IOException
   {
     Collection<CDORevisionKey> revisions = info.getAvailableRevisions().values();
     for (Iterator<CDORevisionKey> it = revisions.iterator(); it.hasNext();)

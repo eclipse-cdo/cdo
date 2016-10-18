@@ -38,8 +38,7 @@ public class LissomeStoreWriter extends LissomeStoreReader
 
   @Deprecated
   @Override
-  public LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly,
-      Map<CDOID, LockGrade> locks)
+  public LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     // TODO: implement LissomeStoreWriter.createLockArea(durableLockingID, userID, branchPoint, readOnly, locks)
     throw new UnsupportedOperationException();
@@ -79,8 +78,7 @@ public class LissomeStoreWriter extends LissomeStoreReader
 
   @Deprecated
   @Override
-  public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,
-      Map<CDOID, LockGrade> locks) throws LockAreaAlreadyExistsException
+  public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks) throws LockAreaAlreadyExistsException
   {
     // TODO: implement LissomeStoreWriter.createLockArea(userID, branchPoint, readOnly, locks)
     throw new UnsupportedOperationException();

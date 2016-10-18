@@ -123,8 +123,7 @@ public class AnnotationHandler implements InternalSecurityManager.CommitHandler
     handlePermission(realm, eClass, key, access, filterClass, filterFeature);
   }
 
-  protected void handlePermission(Realm realm, EModelElement modelElement, String key, Access access,
-      EClass filterClass, EReference filterFeature)
+  protected void handlePermission(Realm realm, EModelElement modelElement, String key, Access access, EClass filterClass, EReference filterFeature)
   {
     String annotation = EcoreUtil.getAnnotation(modelElement, SOURCE_URI, key);
     if (annotation == null || annotation.length() == 0)

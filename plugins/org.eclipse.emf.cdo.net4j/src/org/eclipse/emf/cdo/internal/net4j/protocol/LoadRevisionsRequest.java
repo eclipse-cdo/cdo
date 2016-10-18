@@ -45,8 +45,7 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
 
   private int prefetchDepth;
 
-  public LoadRevisionsRequest(CDOClientProtocol protocol, List<RevisionInfo> infos, CDOBranchPoint branchPoint,
-      int referenceChunk, int prefetchDepth)
+  public LoadRevisionsRequest(CDOClientProtocol protocol, List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_LOAD_REVISIONS);
     this.infos = infos;
@@ -117,8 +116,7 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
       CDOID contextID = ruleManager.getContext();
 
       out.writeInt(fetchSize);
-      out.writeInt(
-          collectionLoadingPolicy != null ? collectionLoadingPolicy.getInitialChunkSize() : CDORevision.UNCHUNKED);
+      out.writeInt(collectionLoadingPolicy != null ? collectionLoadingPolicy.getInitialChunkSize() : CDORevision.UNCHUNKED);
       out.writeCDOID(contextID);
 
       for (CDOFetchRule fetchRule : fetchRules)
@@ -166,8 +164,7 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
   @Override
   public String toString()
   {
-    return MessageFormat.format(
-        "LoadRevisionsRequest(infos={0}, branchPoint={1}, referenceChunk={2}, prefetchDepth={3})", infos, branchPoint,
-        referenceChunk, prefetchDepth);
+    return MessageFormat.format("LoadRevisionsRequest(infos={0}, branchPoint={1}, referenceChunk={2}, prefetchDepth={3})", infos, branchPoint, referenceChunk,
+        prefetchDepth);
   }
 }

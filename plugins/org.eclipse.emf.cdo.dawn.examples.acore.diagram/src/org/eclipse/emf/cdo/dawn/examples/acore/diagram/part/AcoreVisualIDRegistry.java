@@ -121,8 +121,7 @@ public class AcoreVisualIDRegistry
     {
       return -1;
     }
-    if (AcorePackage.eINSTANCE.getACoreRoot().isSuperTypeOf(domainElement.eClass())
-        && isDiagram((ACoreRoot)domainElement))
+    if (AcorePackage.eINSTANCE.getACoreRoot().isSuperTypeOf(domainElement.eClass()) && isDiagram((ACoreRoot)domainElement))
     {
       return ACoreRootEditPart.VISUAL_ID;
     }
@@ -138,8 +137,7 @@ public class AcoreVisualIDRegistry
     {
       return -1;
     }
-    String containerModelID = org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry
-        .getModelID(containerView);
+    String containerModelID = org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry.getModelID(containerView);
     if (!ACoreRootEditPart.MODEL_ID.equals(containerModelID))
     {
       return -1;
@@ -147,8 +145,7 @@ public class AcoreVisualIDRegistry
     int containerVisualID;
     if (ACoreRootEditPart.MODEL_ID.equals(containerModelID))
     {
-      containerVisualID = org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry
-          .getVisualID(containerView);
+      containerVisualID = org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry.getVisualID(containerView);
     }
     else
     {
@@ -206,8 +203,7 @@ public class AcoreVisualIDRegistry
    */
   public static boolean canCreateNode(View containerView, int nodeVisualID)
   {
-    String containerModelID = org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry
-        .getModelID(containerView);
+    String containerModelID = org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry.getModelID(containerView);
     if (!ACoreRootEditPart.MODEL_ID.equals(containerModelID))
     {
       return false;
@@ -215,8 +211,7 @@ public class AcoreVisualIDRegistry
     int containerVisualID;
     if (ACoreRootEditPart.MODEL_ID.equals(containerModelID))
     {
-      containerVisualID = org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry
-          .getVisualID(containerView);
+      containerVisualID = org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry.getVisualID(containerView);
     }
     else
     {

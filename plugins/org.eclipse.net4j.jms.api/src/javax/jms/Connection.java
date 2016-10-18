@@ -352,8 +352,8 @@ public interface Connection
   * @see javax.jms.ConnectionConsumer
   */
 
-  ConnectionConsumer createConnectionConsumer(Destination destination, String messageSelector,
-      ServerSessionPool sessionPool, int maxMessages) throws JMSException;
+  ConnectionConsumer createConnectionConsumer(Destination destination, String messageSelector, ServerSessionPool sessionPool, int maxMessages)
+      throws JMSException;
 
   /** Create a durable connection consumer for this connection (optional operation).
     * This is an expert facility not used by regular JMS clients.
@@ -383,6 +383,6 @@ public interface Connection
     * @see javax.jms.ConnectionConsumer
     */
 
-  ConnectionConsumer createDurableConnectionConsumer(Topic topic, String subscriptionName, String messageSelector,
-      ServerSessionPool sessionPool, int maxMessages) throws JMSException;
+  ConnectionConsumer createDurableConnectionConsumer(Topic topic, String subscriptionName, String messageSelector, ServerSessionPool sessionPool,
+      int maxMessages) throws JMSException;
 }

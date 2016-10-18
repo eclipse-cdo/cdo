@@ -374,8 +374,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     writeCDORevision(revision, referenceChunk, null);
   }
 
-  public void writeCDORevision(CDORevision revision, int referenceChunk, CDOBranchPoint securityContext)
-      throws IOException
+  public void writeCDORevision(CDORevision revision, int referenceChunk, CDOBranchPoint securityContext) throws IOException
   {
     if (revision != null)
     {
@@ -396,8 +395,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     writeLong(revisable.getRevised());
   }
 
-  public void writeCDOList(EClass owner, EStructuralFeature feature, CDOList list, int referenceChunk)
-      throws IOException
+  public void writeCDOList(EClass owner, EStructuralFeature feature, CDOList list, int referenceChunk) throws IOException
   {
     // TODO Simon: Could most of this stuff be moved into the list?
     // (only if protected methods of this class don't need to become public)
@@ -534,8 +532,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
       type = CDOModelUtil.getPrimitiveType(value.getClass());
       if (type == null)
       {
-        throw new IllegalArgumentException(
-            MessageFormat.format(Messages.getString("CDODataOutputImpl.6"), value.getClass())); //$NON-NLS-1$
+        throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDODataOutputImpl.6"), value.getClass())); //$NON-NLS-1$
       }
     }
 

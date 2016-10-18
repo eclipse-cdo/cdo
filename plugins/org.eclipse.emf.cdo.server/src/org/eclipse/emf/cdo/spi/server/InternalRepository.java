@@ -66,8 +66,7 @@ import java.util.concurrent.Semaphore;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalRepository extends IRepository, PackageProcessor, PackageLoader, BranchLoader3,
-    RevisionLoader2, CommitInfoLoader, CDORevisionUnchunker
+public interface InternalRepository extends IRepository, PackageProcessor, PackageLoader, BranchLoader3, RevisionLoader2, CommitInfoLoader, CDORevisionUnchunker
 {
   public void setName(String name);
 
@@ -230,19 +229,15 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
    */
   public void ensureChunks(InternalCDORevision revision);
 
-  public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart,
-      int chunkEnd);
+  public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart, int chunkEnd);
 
-  public void notifyReadAccessHandlers(InternalSession session, CDORevision[] revisions,
-      List<CDORevision> additionalRevisions);
+  public void notifyReadAccessHandlers(InternalSession session, CDORevision[] revisions, List<CDORevision> additionalRevisions);
 
-  public void notifyWriteAccessHandlers(ITransaction transaction, IStoreAccessor.CommitContext commitContext,
-      boolean beforeCommit, OMMonitor monitor);
+  public void notifyWriteAccessHandlers(ITransaction transaction, IStoreAccessor.CommitContext commitContext, boolean beforeCommit, OMMonitor monitor);
 
   public void replicate(CDOReplicationContext context);
 
-  public CDOReplicationInfo replicateRaw(CDODataOutput out, int lastReplicatedBranchID, long lastReplicatedCommitTime)
-      throws IOException;
+  public CDOReplicationInfo replicateRaw(CDODataOutput out, int lastReplicatedBranchID, long lastReplicatedCommitTime) throws IOException;
 
   public CDOChangeSetData getChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint);
 
@@ -251,8 +246,8 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
    * @deprecated as of 4.6 use {@link #getMergeData2(CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, OMMonitor)}.
    */
   @Deprecated
-  public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
-      CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor);
+  public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
+      CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor);
 
   /**
    * @since 4.6
@@ -278,8 +273,7 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
   /**
    * @since 4.0
    */
-  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
-      CDORevisionHandler handler);
+  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, CDORevisionHandler handler);
 
   /**
    * @since 4.0
@@ -311,8 +305,7 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
   /**
    * @since 4.1
    */
-  public LockObjectsResult lock(InternalView view, LockType type, List<CDORevisionKey> keys, boolean recursive,
-      long timeout);
+  public LockObjectsResult lock(InternalView view, LockType type, List<CDORevisionKey> keys, boolean recursive, long timeout);
 
   /**
    * @since 4.1

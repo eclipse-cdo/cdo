@@ -106,6 +106,5 @@ public interface QueueConnection extends Connection
     * @see javax.jms.ConnectionConsumer
     */
 
-  ConnectionConsumer createConnectionConsumer(Queue queue, String messageSelector, ServerSessionPool sessionPool,
-      int maxMessages) throws JMSException;
+  ConnectionConsumer createConnectionConsumer(Queue queue, String messageSelector, ServerSessionPool sessionPool, int maxMessages) throws JMSException;
 }

@@ -39,8 +39,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     list.add("Ottawa");
     list.add("Toronto");
     list.add("Berlin");
-    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfString(),
-        getModel5Package().getGenListOfString_Elements());
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfString(), getModel5Package().getGenListOfString_Elements());
   }
 
   public void testListOfDate() throws Exception
@@ -49,8 +48,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     list.add(new Date(1000));
     list.add(new Date());
     list.add(new Date(new Date().getTime() - 100));
-    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfDate(),
-        getModel5Package().getGenListOfDate_Elements());
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfDate(), getModel5Package().getGenListOfDate_Elements());
   }
 
   public void testListOfInt() throws Exception
@@ -59,8 +57,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     list.add(10);
     list.add(11);
     list.add(20);
-    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfInt(),
-        getModel5Package().getGenListOfInt_Elements());
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfInt(), getModel5Package().getGenListOfInt_Elements());
   }
 
   public void testListOfShort() throws Exception
@@ -69,8 +66,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     list.add((short)10);
     list.add((short)11);
     list.add((short)20);
-    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfShort(),
-        getModel5Package().getGenListOfShort_Elements());
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfShort(), getModel5Package().getGenListOfShort_Elements());
   }
 
   public void testListOfFloat() throws Exception
@@ -79,8 +75,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     list.add((float)10);
     list.add((float)11);
     list.add((float)20);
-    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfFloat(),
-        getModel5Package().getGenListOfFloat_Elements());
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfFloat(), getModel5Package().getGenListOfFloat_Elements());
   }
 
   public void testListOfChar() throws Exception
@@ -89,8 +84,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     list.add('c');
     list.add('d');
     list.add('z');
-    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfChar(),
-        getModel5Package().getGenListOfChar_Elements());
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfChar(), getModel5Package().getGenListOfChar_Elements());
   }
 
   public void testListOfBoolean() throws Exception
@@ -98,8 +92,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     List<Boolean> list = new ArrayList<Boolean>();
     list.add(true);
     list.add(false);
-    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfBoolean(),
-        getModel5Package().getGenListOfBoolean_Elements());
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfBoolean(), getModel5Package().getGenListOfBoolean_Elements());
   }
 
   public void testListOfDouble() throws Exception
@@ -108,8 +101,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     list.add(10.1928);
     list.add(11.12);
     list.add(20.99991);
-    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfDouble(),
-        getModel5Package().getGenListOfDouble_Elements());
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfDouble(), getModel5Package().getGenListOfDouble_Elements());
   }
 
   public void testListOfInteger() throws Exception
@@ -124,8 +116,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     testMultiValuedIOfAttribute(list, containerClass, elements);
   }
 
-  protected <T> void testMultiValuedIOfAttribute(List<T> list, EClass containerClass, EStructuralFeature feature)
-      throws CommitException
+  protected <T> void testMultiValuedIOfAttribute(List<T> list, EClass containerClass, EStructuralFeature feature) throws CommitException
   {
     {
       CDOSession session = openSession();

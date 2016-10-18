@@ -26,8 +26,7 @@ import org.eclipse.internal.net4j.bundle.OM;
  *
  * @since 4.3
  */
-public class ConfirmationIndication<PROTOCOL extends SignalProtocol<?> & IConfirmationProvider.Provider>
-    extends IndicationWithMonitoring
+public class ConfirmationIndication<PROTOCOL extends SignalProtocol<?> & IConfirmationProvider.Provider> extends IndicationWithMonitoring
 {
   private ConfirmationPrompt prompt;
 
@@ -77,8 +76,8 @@ public class ConfirmationIndication<PROTOCOL extends SignalProtocol<?> & IConfir
         throw new IllegalStateException("No confirmation provider configured"); //$NON-NLS-1$
       }
 
-      Confirmation confirmation = confirmationProvider.confirm(prompt.getSubject(), prompt.getMessage(),
-          prompt.getAcceptableResponses(), prompt.getSuggestedResponse());
+      Confirmation confirmation = confirmationProvider.confirm(prompt.getSubject(), prompt.getMessage(), prompt.getAcceptableResponses(),
+          prompt.getSuggestedResponse());
       if (confirmation == null)
       {
         throw new IllegalStateException("No confirmation provided"); //$NON-NLS-1$

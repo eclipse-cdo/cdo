@@ -83,8 +83,7 @@ public class DawnEmfGenmodelPackageImpl extends EPackageImpl implements DawnEmfG
 
     // Obtain or create and register package
     DawnEmfGenmodelPackageImpl theDawnEmfGenmodelPackage = (DawnEmfGenmodelPackageImpl)(EPackage.Registry.INSTANCE
-        .get(eNS_URI) instanceof DawnEmfGenmodelPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-            : new DawnEmfGenmodelPackageImpl());
+        .get(eNS_URI) instanceof DawnEmfGenmodelPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new DawnEmfGenmodelPackageImpl());
 
     isInited = true;
 
@@ -93,8 +92,8 @@ public class DawnEmfGenmodelPackageImpl extends EPackageImpl implements DawnEmfG
 
     // Obtain or create and register interdependencies
     GenModelPackageImpl theGenmodelPackage = (GenModelPackageImpl)(EPackage.Registry.INSTANCE
-        .getEPackage(GenModelPackage.eNS_URI) instanceof GenModelPackageImpl
-            ? EPackage.Registry.INSTANCE.getEPackage(GenModelPackage.eNS_URI) : GenModelPackage.eINSTANCE);
+        .getEPackage(GenModelPackage.eNS_URI) instanceof GenModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(GenModelPackage.eNS_URI)
+            : GenModelPackage.eINSTANCE);
 
     // Create package meta-data objects
     theDawnEmfGenmodelPackage.createPackageContents();
@@ -195,10 +194,8 @@ public class DawnEmfGenmodelPackageImpl extends EPackageImpl implements DawnEmfG
     setNsURI(eNS_URI);
 
     // Obtain other dependent packages
-    DawngenmodelPackage theDawngenmodelPackage = (DawngenmodelPackage)EPackage.Registry.INSTANCE
-        .getEPackage(DawngenmodelPackage.eNS_URI);
-    GenModelPackage theGenmodelPackage = (GenModelPackage)EPackage.Registry.INSTANCE
-        .getEPackage(GenModelPackage.eNS_URI);
+    DawngenmodelPackage theDawngenmodelPackage = (DawngenmodelPackage)EPackage.Registry.INSTANCE.getEPackage(DawngenmodelPackage.eNS_URI);
+    GenModelPackage theGenmodelPackage = (GenModelPackage)EPackage.Registry.INSTANCE.getEPackage(GenModelPackage.eNS_URI);
 
     // Create type parameters
 
@@ -208,11 +205,9 @@ public class DawnEmfGenmodelPackageImpl extends EPackageImpl implements DawnEmfG
     dawnEMFGeneratorEClass.getESuperTypes().add(theDawngenmodelPackage.getDawnFragmentGenerator());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(dawnEMFGeneratorEClass, DawnEMFGenerator.class, "DawnEMFGenerator", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDawnEMFGenerator_EmfGenModel(), theGenmodelPackage.getGenModel(), null, "emfGenModel", null, 0, 1,
-        DawnEMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(dawnEMFGeneratorEClass, DawnEMFGenerator.class, "DawnEMFGenerator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getDawnEMFGenerator_EmfGenModel(), theGenmodelPackage.getGenModel(), null, "emfGenModel", null, 0, 1, DawnEMFGenerator.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

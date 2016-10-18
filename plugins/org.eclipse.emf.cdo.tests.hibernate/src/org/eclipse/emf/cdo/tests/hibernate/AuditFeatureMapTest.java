@@ -122,8 +122,7 @@ public class AuditFeatureMapTest extends AbstractCDOTest
     }
   }
 
-  private void addToResultMap(long timeStamp, Map<Long, Map<EStructuralFeature, Class<?>>> result,
-      FeatureMap featureMap)
+  private void addToResultMap(long timeStamp, Map<Long, Map<EStructuralFeature, Class<?>>> result, FeatureMap featureMap)
   {
     final Map<EStructuralFeature, Class<?>> entryResult = new HashMap<EStructuralFeature, Class<?>>();
     result.put(timeStamp, entryResult);

@@ -42,8 +42,8 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
 
   private LockNotificationMode lockNotificationMode;
 
-  public OpenSessionRequest(CDOClientProtocol protocol, String repositoryName, String userID,
-      boolean passiveUpdateEnabled, PassiveUpdateMode passiveUpdateMode, LockNotificationMode lockNotificationMode)
+  public OpenSessionRequest(CDOClientProtocol protocol, String repositoryName, String userID, boolean passiveUpdateEnabled, PassiveUpdateMode passiveUpdateMode,
+      LockNotificationMode lockNotificationMode)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_OPEN_SESSION);
     this.repositoryName = repositoryName;

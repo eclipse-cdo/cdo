@@ -173,8 +173,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   {
     TransactionalEditingDomain editingDomain = DiagramEditingDomainFactory.getInstance().createEditingDomain();
     editingDomain.setID("org.eclipse.emf.cdo.dawn.examples.acore.diagram.EditingDomain"); //$NON-NLS-1$
-    final NotificationFilter diagramResourceModifiedFilter = NotificationFilter
-        .createNotifierFilter(editingDomain.getResourceSet())
+    final NotificationFilter diagramResourceModifiedFilter = NotificationFilter.createNotifierFilter(editingDomain.getResourceSet())
         .and(NotificationFilter.createEventTypeFilter(Notification.ADD))
         .and(NotificationFilter.createFeatureFilter(ResourceSet.class, ResourceSet.RESOURCE_SET__RESOURCES));
     editingDomain.getResourceSet().eAdapters().add(new Adapter()
@@ -286,8 +285,8 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
         else
         {
           String msg = e.getLocalizedMessage();
-          thrownExcp = new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0,
-              msg != null ? msg : Messages.AcoreDocumentProvider_DiagramLoadingError, e));
+          thrownExcp = new CoreException(
+              new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0, msg != null ? msg : Messages.AcoreDocumentProvider_DiagramLoadingError, e));
         }
         throw thrownExcp;
       }
@@ -376,8 +375,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           files2Validate.add(file);
         }
       }
-      ResourcesPlugin.getWorkspace().validateEdit(files2Validate.toArray(new IFile[files2Validate.size()]),
-          computationContext);
+      ResourcesPlugin.getWorkspace().validateEdit(files2Validate.toArray(new IFile[files2Validate.size()]), computationContext);
     }
 
     super.doValidateState(element, computationContext);
@@ -640,23 +638,22 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
    * @generated
    */
   @Override
-  protected void doSaveDocument(IProgressMonitor monitor, Object element, IDocument document, boolean overwrite)
-      throws CoreException
+  protected void doSaveDocument(IProgressMonitor monitor, Object element, IDocument document, boolean overwrite) throws CoreException
   {
     ResourceSetInfo info = getResourceSetInfo(element);
     if (info != null)
     {
       if (!overwrite && !info.isSynchronized())
       {
-        throw new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID,
-            IResourceStatus.OUT_OF_SYNC_LOCAL, Messages.AcoreDocumentProvider_UnsynchronizedFileSaveError, null));
+        throw new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, IResourceStatus.OUT_OF_SYNC_LOCAL,
+            Messages.AcoreDocumentProvider_UnsynchronizedFileSaveError, null));
       }
       info.stopResourceListening();
       fireElementStateChanging(element);
       try
       {
-        monitor.beginTask(Messages.AcoreDocumentProvider_SaveDiagramTask,
-            info.getResourceSet().getResources().size() + 1); // "Saving diagram"
+        monitor.beginTask(Messages.AcoreDocumentProvider_SaveDiagramTask, info.getResourceSet().getResources().size() + 1); // "Saving
+                                                                                                                            // diagram"
         for (Iterator<Resource> it = info.getLoadedResourcesIterator(); it.hasNext();)
         {
           Resource nextResource = it.next();
@@ -670,8 +667,8 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
             catch (IOException e)
             {
               fireElementStateChangeFailed(element);
-              throw new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID,
-                  EditorStatusCodes.RESOURCE_FAILURE, e.getLocalizedMessage(), null));
+              throw new CoreException(
+                  new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, EditorStatusCodes.RESOURCE_FAILURE, e.getLocalizedMessage(), null));
             }
           }
           monitor.worked(1);
@@ -725,12 +722,11 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
       final Diagram diagramCopy = EcoreUtil.copy(diagramDocument.getDiagram());
       try
       {
-        new AbstractTransactionalCommand(diagramDocument.getEditingDomain(),
-            NLS.bind(Messages.AcoreDocumentProvider_SaveAsOperation, diagramCopy.getName()), affectedFiles)
+        new AbstractTransactionalCommand(diagramDocument.getEditingDomain(), NLS.bind(Messages.AcoreDocumentProvider_SaveAsOperation, diagramCopy.getName()),
+            affectedFiles)
         {
           @Override
-          protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
-              throws ExecutionException
+          protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info) throws ExecutionException
           {
             newResource.getContents().add(diagramCopy);
             return CommandResult.newOKCommandResult();
@@ -741,14 +737,12 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
       catch (ExecutionException e)
       {
         fireElementStateChangeFailed(element);
-        throw new CoreException(
-            new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0, e.getLocalizedMessage(), null));
+        throw new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0, e.getLocalizedMessage(), null));
       }
       catch (IOException e)
       {
         fireElementStateChangeFailed(element);
-        throw new CoreException(
-            new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0, e.getLocalizedMessage(), null));
+        throw new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0, e.getLocalizedMessage(), null));
       }
       newResource.unload();
     }
@@ -801,8 +795,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   {
     if (input instanceof FileEditorInput)
     {
-      IFile newFile = ResourcesPlugin.getWorkspace().getRoot()
-          .getFile(new Path(URI.decode(uri.path())).removeFirstSegments(1));
+      IFile newFile = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(URI.decode(uri.path())).removeFirstSegments(1));
       fireElementMoved(input, newFile == null ? null : new FileEditorInput(newFile));
       return;
     }
@@ -1171,8 +1164,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
     public ResourceSetModificationListener(ResourceSetInfo info)
     {
       myInfo = info;
-      myModifiedFilter = NotificationFilter.createEventTypeFilter(Notification.SET)
-          .or(NotificationFilter.createEventTypeFilter(Notification.UNSET))
+      myModifiedFilter = NotificationFilter.createEventTypeFilter(Notification.SET).or(NotificationFilter.createEventTypeFilter(Notification.UNSET))
           .and(NotificationFilter.createFeatureFilter(Resource.class, Resource.RESOURCE__IS_MODIFIED));
     }
 
@@ -1194,8 +1186,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           if (resource.isLoaded())
           {
             boolean modified = false;
-            for (Iterator /* <org.eclipse.emf.ecore.resource.Resource> */it = myInfo.getLoadedResourcesIterator(); it
-                .hasNext() && !modified;)
+            for (Iterator /* <org.eclipse.emf.ecore.resource.Resource> */it = myInfo.getLoadedResourcesIterator(); it.hasNext() && !modified;)
             {
               Resource nextResource = (Resource)it.next();
               if (nextResource.isLoaded())

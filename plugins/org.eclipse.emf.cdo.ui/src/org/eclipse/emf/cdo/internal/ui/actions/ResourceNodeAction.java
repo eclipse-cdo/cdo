@@ -24,8 +24,7 @@ public abstract class ResourceNodeAction extends LongRunningAction
 {
   private CDOResourceNode resourceNode;
 
-  public ResourceNodeAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image,
-      CDOResourceNode resourceNode)
+  public ResourceNodeAction(IWorkbenchPage page, String text, String toolTipText, ImageDescriptor image, CDOResourceNode resourceNode)
   {
     super(page, text, toolTipText, image);
     this.resourceNode = resourceNode;

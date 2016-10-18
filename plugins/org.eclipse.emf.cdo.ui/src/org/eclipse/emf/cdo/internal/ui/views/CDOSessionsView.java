@@ -53,8 +53,7 @@ public class CDOSessionsView extends ContainerView
 {
   public static final String ID = "org.eclipse.emf.cdo.ui.CDOSessionsView"; //$NON-NLS-1$
 
-  private static Map<String, ResourceOpener> resourceOpeners = Collections
-      .synchronizedMap(new HashMap<String, ResourceOpener>());
+  private static Map<String, ResourceOpener> resourceOpeners = Collections.synchronizedMap(new HashMap<String, ResourceOpener>());
 
   private OpenSessionAction openSessionAction;
 

@@ -120,8 +120,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
   {
     if (children == null)
     {
-      children = new EObjectContainmentWithInverseEList<NodeD>(NodeD.class, this, Model3Package.NODE_D__CHILDREN,
-          Model3Package.NODE_D__PARENT);
+      children = new EObjectContainmentWithInverseEList<NodeD>(NodeD.class, this, Model3Package.NODE_D__CHILDREN, Model3Package.NODE_D__PARENT);
     }
     return children;
   }
@@ -213,8 +212,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
   {
     if (otherNodes == null)
     {
-      otherNodes = new EObjectWithInverseResolvingEList<NodeD>(NodeD.class, this, Model3Package.NODE_D__OTHER_NODES,
-          Model3Package.NODE_D__OPPOSITE_NODE);
+      otherNodes = new EObjectWithInverseResolvingEList<NodeD>(NodeD.class, this, Model3Package.NODE_D__OTHER_NODES, Model3Package.NODE_D__OPPOSITE_NODE);
     }
     return otherNodes;
   }
@@ -233,8 +231,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model3Package.NODE_D__OPPOSITE_NODE,
-              oldOppositeNode, oppositeNode));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model3Package.NODE_D__OPPOSITE_NODE, oldOppositeNode, oppositeNode));
         }
       }
     }
@@ -260,8 +257,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
     oppositeNode = newOppositeNode;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          Model3Package.NODE_D__OPPOSITE_NODE, oldOppositeNode, newOppositeNode);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model3Package.NODE_D__OPPOSITE_NODE, oldOppositeNode, newOppositeNode);
       if (msgs == null)
       {
         msgs = notification;
@@ -285,13 +281,11 @@ public class NodeDImpl extends EObjectImpl implements NodeD
       NotificationChain msgs = null;
       if (oppositeNode != null)
       {
-        msgs = ((InternalEObject)oppositeNode).eInverseRemove(this, Model3Package.NODE_D__OTHER_NODES, NodeD.class,
-            msgs);
+        msgs = ((InternalEObject)oppositeNode).eInverseRemove(this, Model3Package.NODE_D__OTHER_NODES, NodeD.class, msgs);
       }
       if (newOppositeNode != null)
       {
-        msgs = ((InternalEObject)newOppositeNode).eInverseAdd(this, Model3Package.NODE_D__OTHER_NODES, NodeD.class,
-            msgs);
+        msgs = ((InternalEObject)newOppositeNode).eInverseAdd(this, Model3Package.NODE_D__OTHER_NODES, NodeD.class, msgs);
       }
       msgs = basicSetOppositeNode(newOppositeNode, msgs);
       if (msgs != null)
@@ -301,8 +295,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.NODE_D__OPPOSITE_NODE, newOppositeNode,
-          newOppositeNode));
+      eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.NODE_D__OPPOSITE_NODE, newOppositeNode, newOppositeNode));
     }
   }
 
@@ -329,8 +322,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
     case Model3Package.NODE_D__OPPOSITE_NODE:
       if (oppositeNode != null)
       {
-        msgs = ((InternalEObject)oppositeNode).eInverseRemove(this, Model3Package.NODE_D__OTHER_NODES, NodeD.class,
-            msgs);
+        msgs = ((InternalEObject)oppositeNode).eInverseRemove(this, Model3Package.NODE_D__OTHER_NODES, NodeD.class, msgs);
       }
       return basicSetOppositeNode((NodeD)otherEnd, msgs);
     }

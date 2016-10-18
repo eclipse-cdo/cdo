@@ -83,8 +83,7 @@ public class DawnCreationWizardTest extends AbstractCDOTest
     IWizardPage[] pages = creationWizard.getPages();
 
     DawnCreateNewDiagramResourceWizardPage dawnDiagramModelFilePage = (DawnCreateNewDiagramResourceWizardPage)pages[0];
-    DawnCreateNewResourceWizardPage dawnDomainModelFilePage = (DawnCreateNewResourceWizardPage)dawnDiagramModelFilePage
-        .getNextPage();
+    DawnCreateNewResourceWizardPage dawnDomainModelFilePage = (DawnCreateNewResourceWizardPage)dawnDiagramModelFilePage.getNextPage();
 
     dawnDomainModelFilePage.setVisible(true);
 
@@ -115,8 +114,7 @@ public class DawnCreationWizardTest extends AbstractCDOTest
     IWizardPage[] pages = creationWizard.getPages();
 
     DawnCreateNewDiagramResourceWizardPage dawnDiagramModelFilePage = (DawnCreateNewDiagramResourceWizardPage)pages[0];
-    DawnCreateNewResourceWizardPage dawnDomainModelFilePage = (DawnCreateNewResourceWizardPage)dawnDiagramModelFilePage
-        .getNextPage();
+    DawnCreateNewResourceWizardPage dawnDomainModelFilePage = (DawnCreateNewResourceWizardPage)dawnDiagramModelFilePage.getNextPage();
 
     dawnDomainModelFilePage.setVisible(true);
     dawnDomainModelFilePage.setResourceValidationType(ResourceChooserValidator.VALIDATION_ERROR);
@@ -281,8 +279,7 @@ public class DawnCreationWizardTest extends AbstractCDOTest
     callValidatePage(dawnDiagramModelFilePage);
     assertEquals(true, dawnDiagramModelFilePage.isPageComplete());
 
-    DawnCreateNewResourceWizardPage dawnDomainModelFilePage = (DawnCreateNewResourceWizardPage)dawnDiagramModelFilePage
-        .getNextPage();
+    DawnCreateNewResourceWizardPage dawnDomainModelFilePage = (DawnCreateNewResourceWizardPage)dawnDiagramModelFilePage.getNextPage();
     dawnDiagramModelFilePage.setVisible(false);
     dawnDomainModelFilePage.setVisible(true);
 

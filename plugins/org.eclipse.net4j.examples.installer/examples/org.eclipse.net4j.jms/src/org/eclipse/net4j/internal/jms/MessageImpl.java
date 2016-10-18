@@ -302,16 +302,14 @@ public class MessageImpl implements Message, Comparable<MessageImpl>
 
   public void setObjectProperty(String name, Object value) throws JMSException
   {
-    if (value instanceof Boolean || value instanceof Byte || value instanceof Short || value instanceof Integer
-        || value instanceof Long || value instanceof Float || value instanceof Double || value instanceof String
-        || value == null)
+    if (value instanceof Boolean || value instanceof Byte || value instanceof Short || value instanceof Integer || value instanceof Long
+        || value instanceof Float || value instanceof Double || value instanceof String || value == null)
     {
       setProperty(name, value);
     }
     else
     {
-      throw new MessageFormatException(
-          MessageFormat.format(Messages.getString("MessageImpl_11"), value.getClass().getName())); //$NON-NLS-1$
+      throw new MessageFormatException(MessageFormat.format(Messages.getString("MessageImpl_11"), value.getClass().getName())); //$NON-NLS-1$
     }
   }
 

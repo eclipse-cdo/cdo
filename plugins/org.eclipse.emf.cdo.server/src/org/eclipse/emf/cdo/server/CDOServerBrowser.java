@@ -685,8 +685,8 @@ public class CDOServerBrowser extends Worker
       }
     }
 
-    protected String showPackage(InternalCDOPackageInfo info, InternalCDOPackageRegistry packageRegistry,
-        CDOServerBrowser browser, String param, PrintStream out, String prefix)
+    protected String showPackage(InternalCDOPackageInfo info, InternalCDOPackageRegistry packageRegistry, CDOServerBrowser browser, String param,
+        PrintStream out, String prefix)
     {
       EPackage ePackage = info.getEPackage();
       out.println("<h3>" + prefix + ePackage.getName() + "&nbsp;&nbsp;[" + ePackage.getNsURI() + "]</h3>");
@@ -905,9 +905,8 @@ public class CDOServerBrowser extends Worker
     /**
      * @since 4.0
      */
-    protected void showRevision(PrintStream pout, CDOServerBrowser browser,
-        Map<CDOBranch, List<CDORevision>> allRevisions, Map<CDOID, List<CDORevision>> ids, String key,
-        InternalRepository repository)
+    protected void showRevision(PrintStream pout, CDOServerBrowser browser, Map<CDOBranch, List<CDORevision>> allRevisions, Map<CDOID, List<CDORevision>> ids,
+        String key, InternalRepository repository)
     {
       CDORevisionKey revisionKey = CDORevisionUtil.parseRevisionKey(key, repository.getBranchManager());
       for (CDORevision revision : allRevisions.get(revisionKey.getBranch()))
@@ -923,8 +922,7 @@ public class CDOServerBrowser extends Worker
     /**
      * @since 4.0
      */
-    protected void showRevision(PrintStream pout, CDOServerBrowser browser, Map<CDOID, List<CDORevision>> ids,
-        InternalCDORevision revision)
+    protected void showRevision(PrintStream pout, CDOServerBrowser browser, Map<CDOID, List<CDORevision>> ids, InternalCDORevision revision)
     {
       String className = revision.getEClass().toString();
       className = className.substring(className.indexOf(' '));
@@ -976,8 +974,7 @@ public class CDOServerBrowser extends Worker
     /**
      * @since 4.0
      */
-    protected Object getRevisionValue(Object value, CDOServerBrowser browser, Map<CDOID, List<CDORevision>> ids,
-        InternalCDORevision context)
+    protected Object getRevisionValue(Object value, CDOServerBrowser browser, Map<CDOID, List<CDORevision>> ids, InternalCDORevision context)
     {
       if (value instanceof CDOID)
       {
@@ -1263,8 +1260,7 @@ public class CDOServerBrowser extends Worker
       out.print("</table>\r\n");
     }
 
-    protected boolean showLob(PrintStream out, String type, byte[] id, long size, CDOServerBrowser browser,
-        String param)
+    protected boolean showLob(PrintStream out, String type, byte[] id, long size, CDOServerBrowser browser, String param)
     {
       String hex = HexUtil.bytesToHex(id);
       boolean selected = hex.equals(param);
@@ -1363,8 +1359,7 @@ public class CDOServerBrowser extends Worker
       }
     }
 
-    protected boolean showCommitInfo(PrintStream out, CDOCommitInfo commitInfo, CDOServerBrowser browser, String param,
-        boolean auditing)
+    protected boolean showCommitInfo(PrintStream out, CDOCommitInfo commitInfo, CDOServerBrowser browser, String param, boolean auditing)
     {
       String timeStamp = String.valueOf(commitInfo.getTimeStamp());
       boolean selected = timeStamp.equals(param);
@@ -1408,8 +1403,7 @@ public class CDOServerBrowser extends Worker
         }
         else
         {
-          String mergeSourceLabel = browser.escape(mergeSource.getBranch().getPathName()) + "&nbsp;-&nbsp;"
-              + formatTimeStamp(mergeSource.getTimeStamp());
+          String mergeSourceLabel = browser.escape(mergeSource.getBranch().getPathName()) + "&nbsp;-&nbsp;" + formatTimeStamp(mergeSource.getTimeStamp());
           out.print(browser.href(mergeSourceLabel, getName(), "time", String.valueOf(mergeSource.getTimeStamp())));
         }
 
@@ -1427,8 +1421,8 @@ public class CDOServerBrowser extends Worker
       for (CDOIDAndVersion key : commitInfo.getNewObjects())
       {
         CDORevision newObject = (CDORevision)key;
-        out.print("<li>" + browser.href(newObject.toString(), RevisionsPage.FromStore.NAME, "revision",
-            CDORevisionUtil.formatRevisionKey(newObject)) + "<br>\r\n");
+        out.print(
+            "<li>" + browser.href(newObject.toString(), RevisionsPage.FromStore.NAME, "revision", CDORevisionUtil.formatRevisionKey(newObject)) + "<br>\r\n");
       }
 
       out.print("</ul>\r\n");

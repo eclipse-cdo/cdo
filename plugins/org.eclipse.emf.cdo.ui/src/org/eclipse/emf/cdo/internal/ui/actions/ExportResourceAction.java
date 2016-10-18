@@ -95,8 +95,7 @@ public class ExportResourceAction extends AbstractViewAction
   {
     // Target Resource
     ResourceSet resourceSet = new ResourceSetImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION,
-        new XMIResourceFactoryImpl());
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
     Resource resource = resourceSet.createResource(sourceURI);
 
     Collection<EObject> copiedRoots = EcoreUtil.copyAll(sourceContents);

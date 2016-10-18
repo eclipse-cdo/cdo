@@ -47,8 +47,7 @@ public interface CDOStore extends EStore
   /**
    * @since 2.0
    */
-  public void setContainer(InternalEObject eObject, CDOResource newResource, InternalEObject newEContainer,
-      int newContainerFeatureID);
+  public void setContainer(InternalEObject eObject, CDOResource newResource, InternalEObject newEContainer, int newContainerFeatureID);
 
   public int getContainingFeatureID(InternalEObject eObject);
 
@@ -70,6 +69,5 @@ public interface CDOStore extends EStore
   /**
    * @since 2.0
    */
-  public Object convertToEMF(EObject eObject, InternalCDORevision revision, EStructuralFeature feature, int index,
-      Object value);
+  public Object convertToEMF(EObject eObject, InternalCDORevision revision, EStructuralFeature feature, int index, Object value);
 }

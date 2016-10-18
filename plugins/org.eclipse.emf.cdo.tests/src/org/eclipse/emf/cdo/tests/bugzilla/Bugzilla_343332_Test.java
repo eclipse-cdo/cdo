@@ -84,8 +84,7 @@ public class Bugzilla_343332_Test extends AbstractCDOTest
       ((Category)resource.getContents().get(1)).getCategories().add(nestedCategory);
 
       assertNotNull("CDOTransactionHandler1.attachingObject was not called", attachedObject[0]);
-      assertEquals(MessageFormat.format("Re-attached object was not the expected object {0}", cdoCategory), cdoCategory,
-          attachedObject[0]);
+      assertEquals(MessageFormat.format("Re-attached object was not the expected object {0}", cdoCategory), cdoCategory, attachedObject[0]);
     }
   }
 }

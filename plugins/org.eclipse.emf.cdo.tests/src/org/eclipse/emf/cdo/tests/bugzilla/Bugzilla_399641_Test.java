@@ -88,8 +88,7 @@ public class Bugzilla_399641_Test extends AbstractCDOTest
 
     public Object create(String description) throws ProductCreationException
     {
-      return new MyProduct(
-          (MyOtherProduct)getManagedContainer().getElement(MyOtherFactory.PRODUCT_GROUP, MyOtherFactory.TYPE, null));
+      return new MyProduct((MyOtherProduct)getManagedContainer().getElement(MyOtherFactory.PRODUCT_GROUP, MyOtherFactory.TYPE, null));
     }
 
     public IManagedContainer getManagedContainer()

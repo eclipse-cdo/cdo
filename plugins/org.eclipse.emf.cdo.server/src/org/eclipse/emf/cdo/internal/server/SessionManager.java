@@ -284,8 +284,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     sendRepositoryStateNotification(oldState, newState, null);
   }
 
-  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState,
-      CDOID rootResourceID)
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState, CDOID rootResourceID)
   {
     for (InternalSession session : getSessions())
     {
@@ -452,8 +451,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
-  public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message,
-      int[] recipients)
+  public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message, int[] recipients)
   {
     List<Integer> result = new ArrayList<Integer>();
     for (int i = 0; i < recipients.length; i++)
@@ -549,8 +547,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     changeUserCredentials(sessionProtocol, userID, CredentialsUpdateOperation.RESET_PASSWORD);
   }
 
-  protected void changeUserCredentials(IAuthenticationProtocol sessionProtocol, String userID,
-      CredentialsUpdateOperation operation)
+  protected void changeUserCredentials(IAuthenticationProtocol sessionProtocol, String userID, CredentialsUpdateOperation operation)
   {
 
     if (sessionProtocol == null)

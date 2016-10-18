@@ -136,8 +136,7 @@ public class MessageFormatParser extends AbstractParser
   {
     if (editorProcessor == null)
     {
-      editorProcessor = new MessageFormat(
-          getEditorPattern() == null ? getDefaultEditablePattern() : getEditorPattern());
+      editorProcessor = new MessageFormat(getEditorPattern() == null ? getDefaultEditablePattern() : getEditorPattern());
     }
     return editorProcessor;
   }

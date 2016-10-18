@@ -409,8 +409,7 @@ public class UnsetTest extends AbstractCDOTest
     baseElement.setUnsettable(true);
     baseElement.setDefaultValue(23);
 
-    EAttribute objectElement = EMFUtil.createEAttribute(cls, "objectElement",
-        EcorePackage.eINSTANCE.getEIntegerObject());
+    EAttribute objectElement = EMFUtil.createEAttribute(cls, "objectElement", EcorePackage.eINSTANCE.getEIntegerObject());
     objectElement.setUnsettable(true);
     objectElement.setDefaultValue(42);
     if (!isConfig(LEGACY))

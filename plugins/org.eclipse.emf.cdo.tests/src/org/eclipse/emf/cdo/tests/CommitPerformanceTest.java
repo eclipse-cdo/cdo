@@ -104,8 +104,7 @@ public class CommitPerformanceTest extends AbstractCDOTest
         {
           Product1 product = getModel1Factory().createProduct1();
           product.setName("Awesome Product " + i + "/" + j + "/" + k);
-          product
-              .setDescription("This descriptive text is the same for all products in all categories of all companies.");
+          product.setDescription("This descriptive text is the same for all products in all categories of all companies.");
           product.setVat(VAT.VAT15);
           category.getProducts().add(product);
         }

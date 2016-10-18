@@ -41,8 +41,7 @@ public class Bugzilla_314186_Test extends AbstractCDOTest
       @Override
       public void notifyChanged(Notification notification)
       {
-        if (notification.getFeature() != null
-            && notification.getFeature().equals(EresourcePackage.eINSTANCE.getCDOResource_ResourceSet()))
+        if (notification.getFeature() != null && notification.getFeature().equals(EresourcePackage.eINSTANCE.getCDOResource_ResourceSet()))
         {
           assertEquals(Resource.RESOURCE__RESOURCE_SET, notification.getFeatureID(Resource.class));
         }

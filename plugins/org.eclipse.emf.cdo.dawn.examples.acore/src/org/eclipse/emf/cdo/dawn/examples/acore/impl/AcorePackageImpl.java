@@ -153,8 +153,8 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
     }
 
     // Obtain or create and register package
-    AcorePackageImpl theAcorePackage = (AcorePackageImpl)(EPackage.Registry.INSTANCE
-        .get(eNS_URI) instanceof AcorePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new AcorePackageImpl());
+    AcorePackageImpl theAcorePackage = (AcorePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof AcorePackageImpl
+        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new AcorePackageImpl());
 
     isInited = true;
 
@@ -552,70 +552,54 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
     // Initialize classes and features; add operations and parameters
     initEClass(aClassEClass, AClass.class, "AClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAClass_SubClasses(), getAClass(), null, "subClasses", null, 0, -1, AClass.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEReference(getAClass_ImplementedInterfaces(), getAInterface(), null, "implementedInterfaces", null, 0, -1,
-        AClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAClass_Associations(), getAClass(), null, "associations", null, 0, -1, AClass.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEReference(getAClass_Compositions(), getAClass(), null, "compositions", null, 0, -1, AClass.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEReference(getAClass_Aggregations(), getAClass(), null, "aggregations", null, 0, -1, AClass.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEReference(getAClass_SubClasses(), getAClass(), null, "subClasses", null, 0, -1, AClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAClass_ImplementedInterfaces(), getAInterface(), null, "implementedInterfaces", null, 0, -1, AClass.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAClass_Associations(), getAClass(), null, "associations", null, 0, -1, AClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAClass_Compositions(), getAClass(), null, "compositions", null, 0, -1, AClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAClass_Aggregations(), getAClass(), null, "aggregations", null, 0, -1, AClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(aInterfaceEClass, AInterface.class, "AInterface", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
+    initEClass(aInterfaceEClass, AInterface.class, "AInterface", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(aCoreRootEClass, ACoreRoot.class, "ACoreRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getACoreRoot_Title(), ecorePackage.getEString(), "title", null, 0, 1, ACoreRoot.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getACoreRoot_Classes(), getAClass(), null, "classes", null, 0, -1, ACoreRoot.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEReference(getACoreRoot_Interfaces(), getAInterface(), null, "interfaces", null, 0, -1, ACoreRoot.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getACoreRoot_Title(), ecorePackage.getEString(), "title", null, 0, 1, ACoreRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getACoreRoot_Classes(), getAClass(), null, "classes", null, 0, -1, ACoreRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getACoreRoot_Interfaces(), getAInterface(), null, "interfaces", null, 0, -1, ACoreRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(aAttributeEClass, AAttribute.class, "AAttribute", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
+    initEClass(aAttributeEClass, AAttribute.class, "AAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(aOperationEClass, AOperation.class, "AOperation", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAOperation_Parameters(), getAParameter(), null, "parameters", null, 0, -1, AOperation.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEClass(aOperationEClass, AOperation.class, "AOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAOperation_Parameters(), getAParameter(), null, "parameters", null, 0, -1, AOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(aBasicClassEClass, ABasicClass.class, "ABasicClass", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getABasicClass_Operations(), getAOperation(), null, "operations", null, 0, -1, ABasicClass.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEReference(getABasicClass_Attributes(), getAAttribute(), null, "attributes", null, 0, -1, ABasicClass.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getABasicClass_Name(), ecorePackage.getEString(), "name", null, 0, 1, ABasicClass.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(aBasicClassEClass, ABasicClass.class, "ABasicClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getABasicClass_Operations(), getAOperation(), null, "operations", null, 0, -1, ABasicClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getABasicClass_Attributes(), getAAttribute(), null, "attributes", null, 0, -1, ABasicClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getABasicClass_Name(), ecorePackage.getEString(), "name", null, 0, 1, ABasicClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(aParameterEClass, AParameter.class, "AParameter", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getAParameter_Name(), ecorePackage.getEString(), "name", null, 0, 1, AParameter.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAParameter_Type(), ecorePackage.getEString(), "type", null, 0, 1, AParameter.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(aParameterEClass, AParameter.class, "AParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAParameter_Name(), ecorePackage.getEString(), "name", null, 0, 1, AParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAParameter_Type(), ecorePackage.getEString(), "type", null, 0, 1, AParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(aClassChildEClass, AClassChild.class, "AClassChild", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getAClassChild_Name(), ecorePackage.getEString(), "name", "", 0, 1, AClassChild.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAClassChild_Accessright(), getAccessType(), "accessright", "public", 0, 1, AClassChild.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAClassChild_DataType(), ecorePackage.getEString(), "dataType", null, 0, 1, AClassChild.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(aClassChildEClass, AClassChild.class, "AClassChild", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAClassChild_Name(), ecorePackage.getEString(), "name", "", 0, 1, AClassChild.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAClassChild_Accessright(), getAccessType(), "accessright", "public", 0, 1, AClassChild.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAClassChild_DataType(), ecorePackage.getEString(), "dataType", null, 0, 1, AClassChild.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(accessTypeEEnum, AccessType.class, "AccessType");
@@ -625,8 +609,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
     addEEnumLiteral(accessTypeEEnum, AccessType.PACKAGE);
 
     // Initialize data types
-    initEDataType(accessTypeObjectEDataType, AccessType.class, "AccessTypeObject", IS_SERIALIZABLE,
-        IS_GENERATED_INSTANCE_CLASS);
+    initEDataType(accessTypeObjectEDataType, AccessType.class, "AccessTypeObject", IS_SERIALIZABLE, IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);
@@ -646,8 +629,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
   {
     String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
     addAnnotation(accessTypeEEnum, source, new String[] { "name", "AccessType" });
-    addAnnotation(accessTypeObjectEDataType, source,
-        new String[] { "name", "AccessType:Object", "baseType", "AccessType" });
+    addAnnotation(accessTypeObjectEDataType, source, new String[] { "name", "AccessType:Object", "baseType", "AccessType" });
   }
 
 } // AcorePackageImpl

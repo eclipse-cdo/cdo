@@ -27,8 +27,7 @@ public class CollaborationLeftIndication extends Indication
 
   private ICollaborationProvider collaborationProvider;
 
-  public CollaborationLeftIndication(SignalProtocol<?> protocol, IBuddyProvider buddyProvider,
-      ICollaborationProvider collaborationProvider)
+  public CollaborationLeftIndication(SignalProtocol<?> protocol, IBuddyProvider buddyProvider, ICollaborationProvider collaborationProvider)
   {
     super(protocol, ProtocolConstants.SIGNAL_COLLABORATION_LEFT);
     this.buddyProvider = buddyProvider;

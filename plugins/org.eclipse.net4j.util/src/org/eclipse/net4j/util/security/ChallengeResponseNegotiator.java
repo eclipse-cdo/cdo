@@ -18,8 +18,7 @@ import java.nio.ByteBuffer;
 /**
  * @author Eike Stepper
  */
-public abstract class ChallengeResponseNegotiator extends Negotiator<IChallengeResponse.State, IChallengeResponse.Event>
-    implements IChallengeResponse
+public abstract class ChallengeResponseNegotiator extends Negotiator<IChallengeResponse.State, IChallengeResponse.Event> implements IChallengeResponse
 {
   private String encryptionAlgorithmName = SecurityUtil.PBE_WITH_MD5_AND_DES;
 

@@ -228,8 +228,7 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
     return instance.eBasicRemoveFromContainer(notifications);
   }
 
-  public NotificationChain eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID,
-      NotificationChain notifications)
+  public NotificationChain eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID, NotificationChain notifications)
   {
     return instance.eBasicSetContainer(newContainer, newContainerFeatureID, notifications);
   }
@@ -347,14 +346,12 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
     return instance.eInternalResource();
   }
 
-  public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, Class<?> baseClass,
-      NotificationChain notifications)
+  public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, Class<?> baseClass, NotificationChain notifications)
   {
     return instance.eInverseAdd(otherEnd, featureID, baseClass, notifications);
   }
 
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class<?> baseClass,
-      NotificationChain notifications)
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class<?> baseClass, NotificationChain notifications)
   {
     return instance.eInverseRemove(otherEnd, featureID, baseClass, notifications);
   }
@@ -372,10 +369,8 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
   public boolean eIsSet(int featureID)
   {
     // Features that need special handling
-    if (featureID == EcorePackage.ETYPED_ELEMENT__EGENERIC_TYPE
-        || featureID == EcorePackage.ECLASSIFIER__INSTANCE_TYPE_NAME
-        || featureID == EcorePackage.ECLASS__EGENERIC_SUPER_TYPES
-        || featureID == EcorePackage.EOPERATION__EGENERIC_EXCEPTIONS)
+    if (featureID == EcorePackage.ETYPED_ELEMENT__EGENERIC_TYPE || featureID == EcorePackage.ECLASSIFIER__INSTANCE_TYPE_NAME
+        || featureID == EcorePackage.ECLASS__EGENERIC_SUPER_TYPES || featureID == EcorePackage.EOPERATION__EGENERIC_EXCEPTIONS)
     {
       return isSetInstanceValue(instance, instance.eClass().getEStructuralFeature(featureID));
     }

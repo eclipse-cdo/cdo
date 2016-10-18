@@ -626,26 +626,20 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     // Create roles
 
     Role allReaderRole = realm.addRole(Role.ALL_OBJECTS_READER);
-    allReaderRole.getPermissions()
-        .add(SF.createFilterPermission(Access.READ, SF.createResourceFilter(".*", PatternStyle.REGEX)));
+    allReaderRole.getPermissions().add(SF.createFilterPermission(Access.READ, SF.createResourceFilter(".*", PatternStyle.REGEX)));
 
     Role allWriterRole = realm.addRole(Role.ALL_OBJECTS_WRITER);
-    allWriterRole.getPermissions()
-        .add(SF.createFilterPermission(Access.WRITE, SF.createResourceFilter(".*", PatternStyle.REGEX)));
+    allWriterRole.getPermissions().add(SF.createFilterPermission(Access.WRITE, SF.createResourceFilter(".*", PatternStyle.REGEX)));
 
     Role treeReaderRole = realm.addRole(Role.RESOURCE_TREE_READER);
-    treeReaderRole.getPermissions()
-        .add(SF.createFilterPermission(Access.READ, SF.createPackageFilter(EresourcePackage.eINSTANCE)));
+    treeReaderRole.getPermissions().add(SF.createFilterPermission(Access.READ, SF.createPackageFilter(EresourcePackage.eINSTANCE)));
 
     Role treeWriterRole = realm.addRole(Role.RESOURCE_TREE_WRITER);
-    treeWriterRole.getPermissions()
-        .add(SF.createFilterPermission(Access.WRITE, SF.createPackageFilter(EresourcePackage.eINSTANCE)));
+    treeWriterRole.getPermissions().add(SF.createFilterPermission(Access.WRITE, SF.createPackageFilter(EresourcePackage.eINSTANCE)));
 
     Role adminRole = realm.addRole(Role.ADMINISTRATION);
-    adminRole.getPermissions()
-        .add(SF.createFilterPermission(Access.WRITE, SF.createResourceFilter(realmPath, PatternStyle.EXACT, false)));
-    adminRole.getPermissions()
-        .add(SF.createFilterPermission(Access.READ, SF.createResourceFilter(realmPath, PatternStyle.EXACT, true)));
+    adminRole.getPermissions().add(SF.createFilterPermission(Access.WRITE, SF.createResourceFilter(realmPath, PatternStyle.EXACT, false)));
+    adminRole.getPermissions().add(SF.createFilterPermission(Access.READ, SF.createResourceFilter(realmPath, PatternStyle.EXACT, true)));
 
     // Create groups
 
@@ -686,8 +680,8 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return CDOPermission.NONE;
   }
 
-  protected CDOPermission authorize(CDORevision revision, CDORevisionProvider revisionProvider,
-      CDOBranchPoint securityContext, ISession session, Access defaultAccess, Permission[] permissions)
+  protected CDOPermission authorize(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext, ISession session,
+      Access defaultAccess, Permission[] permissions)
   {
     if (lastRealmModification != CDOBranchPoint.UNSPECIFIED_DATE)
     {
@@ -840,8 +834,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
       for (Permission permission : user.getAllPermissions())
       {
-        if (permission.getAccess() == Access.WRITE
-            && permission.isApplicable(revision, revisionProvider, securityContext))
+        if (permission.getAccess() == Access.WRITE && permission.isApplicable(revision, revisionProvider, securityContext))
         {
           return true;
         }
@@ -976,8 +969,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       throw new UnsupportedOperationException();
     }
 
-    public CDOPermission getPermission(CDORevision revision, final CDOBranchPoint securityContext,
-        final ISession session)
+    public CDOPermission getPermission(CDORevision revision, final CDOBranchPoint securityContext, final ISession session)
     {
       String userID = session.getUserID();
       if (SYSTEM_USER_ID.equals(userID))
@@ -1045,8 +1037,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   {
     private final IRepository.WriteAccessHandler realmValidationHandler = new RealmValidationHandler();
 
-    public void handleTransactionBeforeCommitting(ITransaction transaction, final CommitContext commitContext,
-        OMMonitor monitor) throws RuntimeException
+    public void handleTransactionBeforeCommitting(ITransaction transaction, final CommitContext commitContext, OMMonitor monitor) throws RuntimeException
     {
       doHandleTransactionBeforeCommitting(transaction, commitContext, monitor);
 
@@ -1057,8 +1048,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       }
     }
 
-    protected void doHandleTransactionBeforeCommitting(ITransaction transaction, final CommitContext commitContext,
-        OMMonitor monitor) throws RuntimeException
+    protected void doHandleTransactionBeforeCommitting(ITransaction transaction, final CommitContext commitContext, OMMonitor monitor) throws RuntimeException
     {
       if (transaction.getSessionID() == systemSession.getSessionID())
       {
@@ -1098,13 +1088,11 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
         for (int i = 0; i < revisions.length; i++)
         {
           InternalCDORevision revision = revisions[i];
-          CDOPermission permission = authorize(revision, commitContext, securityContext, session, userDefaultAccess,
-              userPermissions);
+          CDOPermission permission = authorize(revision, commitContext, securityContext, session, userDefaultAccess, userPermissions);
 
           if (permission != CDOPermission.WRITE)
           {
-            throw new SecurityException(
-                "User " + commitContext.getUserID() + " is not allowed to write to " + revision);
+            throw new SecurityException("User " + commitContext.getUserID() + " is not allowed to write to " + revision);
           }
 
           if (securityImpact != CommitNotificationInfo.IMPACT_REALM)
@@ -1177,8 +1165,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       }
     }
 
-    public void handleTransactionAfterCommitted(ITransaction transaction, final CommitContext commitContext,
-        OMMonitor monitor)
+    public void handleTransactionAfterCommitted(ITransaction transaction, final CommitContext commitContext, OMMonitor monitor)
     {
       if (commitContext.getSecurityImpact() == CommitNotificationInfo.IMPACT_REALM)
       {

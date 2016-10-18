@@ -126,8 +126,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   private static final boolean LOG_MULTI_VIEW_COMMIT = false;
 
-  private static final Boolean enableServerBrowser = Boolean
-      .getBoolean("org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser");
+  private static final Boolean enableServerBrowser = Boolean.getBoolean("org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser");
 
   private static final long serialVersionUID = 1L;
 
@@ -155,8 +154,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   private transient IRepository.WriteAccessHandler resourcePathChecker;
 
-  public RepositoryConfig(String name, boolean supportingAudits, boolean supportingBranches,
-      IDGenerationLocation idGenerationLocation)
+  public RepositoryConfig(String name, boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
   {
     super(name);
 
@@ -214,8 +212,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   @Override
   public String getName()
   {
-    return super.getName() + (supportingBranches ? "-branching" : supportingAudits ? "-auditing" : "")
-        + getMappingStrategySpecialization() + (idGenerationLocation == IDGenerationLocation.CLIENT ? "-uuids" : "");
+    return super.getName() + (supportingBranches ? "-branching" : supportingAudits ? "-auditing" : "") + getMappingStrategySpecialization()
+        + (idGenerationLocation == IDGenerationLocation.CLIENT ? "-uuids" : "");
   }
 
   protected String getMappingStrategySpecialization()
@@ -411,8 +409,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       repository.addHandler(new IRepository.WriteAccessHandler()
       {
-        public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
-            OMMonitor monitor) throws RuntimeException
+        public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
         {
           int count = 0;
           for (ISession session : repository.getSessionManager().getSessions())
@@ -427,8 +424,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
           }
         }
 
-        public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext,
-            OMMonitor monitor)
+        public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
         {
         }
       });
@@ -468,8 +464,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       }
     });
 
-    if (enableServerBrowser || Boolean.TRUE.equals(getTestProperty(PROP_TEST_ENABLE_SERVER_BROWSER))
-        || getCurrentTest().hasDefaultScenario())
+    if (enableServerBrowser || Boolean.TRUE.equals(getTestProperty(PROP_TEST_ENABLE_SERVER_BROWSER)) || getCurrentTest().hasDefaultScenario())
     {
       serverBrowser = new CDOServerBrowser(repositories);
       serverBrowser.activate();
@@ -551,8 +546,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       resourcePathChecker = new IRepository.WriteAccessHandler()
       {
-        public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
-            OMMonitor monitor) throws RuntimeException
+        public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
         {
           for (InternalCDORevision revision : commitContext.getNewObjects())
           {
@@ -563,16 +557,14 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
               String prefix = test.getResourcePath("");
               if (!path.startsWith(prefix) && !hasAnnotation(CleanRepositoriesBefore.class))
               {
-                throw new RuntimeException("Test case " + test.getClass().getName() + '.' + test.getName()
-                    + " does not use getResourcePath() for resource " + path + ", nor does it declare @"
-                    + CleanRepositoriesBefore.class.getSimpleName());
+                throw new RuntimeException("Test case " + test.getClass().getName() + '.' + test.getName() + " does not use getResourcePath() for resource "
+                    + path + ", nor does it declare @" + CleanRepositoriesBefore.class.getSimpleName());
               }
             }
           }
         }
 
-        public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext,
-            OMMonitor monitor)
+        public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
         {
           // Do nothing
         }
@@ -844,8 +836,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       stopMasterTransport();
     }
 
-    protected InternalRepository createMasterRepository(String masterName, String name, Map<String, String> props,
-        boolean failover)
+    protected InternalRepository createMasterRepository(String masterName, String name, Map<String, String> props, boolean failover)
     {
       IStore masterStore = createStore(masterName);
 
@@ -853,8 +844,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       if (failover)
       {
         InternalRepositorySynchronizer synchronizer = createSynchronizer("backup", name);
-        repository = (InternalRepository)CDOServerUtil.createFailoverParticipant(masterName, masterStore, props,
-            synchronizer, true);
+        repository = (InternalRepository)CDOServerUtil.createFailoverParticipant(masterName, masterStore, props, synchronizer, true);
       }
       else
       {
@@ -896,8 +886,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       InternalSynchronizableRepository repository;
       if (failover)
       {
-        repository = (InternalSynchronizableRepository)CDOServerUtil.createFailoverParticipant(name, store, props,
-            synchronizer, false);
+        repository = (InternalSynchronizableRepository)CDOServerUtil.createFailoverParticipant(name, store, props, synchronizer, false);
       }
       else
       {
@@ -944,8 +933,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
           IManagedContainer container = getCurrentTest().getServerContainer();
           IConnector connector = Net4jUtil.getConnector(container, "jvm", acceptorName);
 
-          InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)CDORevisionUtil
-              .createRevisionManager();
+          InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)CDORevisionUtil.createRevisionManager();
           revisionManager.setCache(new NOOPRevisionCache());
 
           CDONet4jSessionConfiguration config = new CDONet4jSessionConfigurationImpl()

@@ -68,14 +68,10 @@ public class DoubleValueItemProvider extends ValueItemProvider
    */
   protected void addLiteralPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors
-        .add(
-            createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                getResourceLocator(), getString("_UI_DoubleValue_literal_feature"),
-                getString("_UI_PropertyDescriptor_description", "_UI_DoubleValue_literal_feature",
-                    "_UI_DoubleValue_type"),
-                ExpressionsPackage.Literals.DOUBLE_VALUE__LITERAL, true, false, false,
-                ItemPropertyDescriptor.REAL_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DoubleValue_literal_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DoubleValue_literal_feature", "_UI_DoubleValue_type"),
+        ExpressionsPackage.Literals.DOUBLE_VALUE__LITERAL, true, false, false, ItemPropertyDescriptor.REAL_VALUE_IMAGE, null, null));
   }
 
   /**

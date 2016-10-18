@@ -83,8 +83,8 @@ public class ImplSingleRefContainerNPLImpl extends EObjectImpl implements ImplSi
     element = newElement;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-          model4Package.IMPL_SINGLE_REF_CONTAINER_NPL__ELEMENT, oldElement, newElement);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_CONTAINER_NPL__ELEMENT, oldElement,
+          newElement);
       if (msgs == null)
       {
         msgs = notification;
@@ -108,13 +108,11 @@ public class ImplSingleRefContainerNPLImpl extends EObjectImpl implements ImplSi
       NotificationChain msgs = null;
       if (element != null)
       {
-        msgs = ((InternalEObject)element).eInverseRemove(this,
-            EOPPOSITE_FEATURE_BASE - model4Package.IMPL_SINGLE_REF_CONTAINER_NPL__ELEMENT, null, msgs);
+        msgs = ((InternalEObject)element).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - model4Package.IMPL_SINGLE_REF_CONTAINER_NPL__ELEMENT, null, msgs);
       }
       if (newElement != null)
       {
-        msgs = ((InternalEObject)newElement).eInverseAdd(this,
-            EOPPOSITE_FEATURE_BASE - model4Package.IMPL_SINGLE_REF_CONTAINER_NPL__ELEMENT, null, msgs);
+        msgs = ((InternalEObject)newElement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - model4Package.IMPL_SINGLE_REF_CONTAINER_NPL__ELEMENT, null, msgs);
       }
       msgs = basicSetElement(newElement, msgs);
       if (msgs != null)
@@ -124,8 +122,7 @@ public class ImplSingleRefContainerNPLImpl extends EObjectImpl implements ImplSi
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_CONTAINER_NPL__ELEMENT,
-          newElement, newElement));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_CONTAINER_NPL__ELEMENT, newElement, newElement));
     }
   }
 

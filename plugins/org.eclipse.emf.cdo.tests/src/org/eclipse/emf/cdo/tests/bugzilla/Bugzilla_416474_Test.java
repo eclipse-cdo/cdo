@@ -56,8 +56,7 @@ public class Bugzilla_416474_Test extends AbstractCDOTest
     transaction.commit();
 
     CDOView newView = session.openView();
-    CDOQuery ocl = newView.createQuery("ocl",
-        "eresource::CDOResource.allInstances()->any(path=rootPath).cdoAllProperContents()",
+    CDOQuery ocl = newView.createQuery("ocl", "eresource::CDOResource.allInstances()->any(path=rootPath).cdoAllProperContents()",
         EcorePackage.Literals.EPACKAGE);
     ocl.setParameter("rootPath", rootPath);
 
@@ -91,8 +90,7 @@ public class Bugzilla_416474_Test extends AbstractCDOTest
     transaction.commit();
 
     CDOView newView = session.openView();
-    CDOQuery ocl = newView.createQuery("ocl",
-        "eresource::CDOResource.allInstances()->any(path=rootPath).cdoAllProperContents(EClass).name->asSet()",
+    CDOQuery ocl = newView.createQuery("ocl", "eresource::CDOResource.allInstances()->any(path=rootPath).cdoAllProperContents(EClass).name->asSet()",
         EcorePackage.Literals.EPACKAGE);
     ocl.setParameter("rootPath", rootPath);
 
@@ -132,8 +130,7 @@ public class Bugzilla_416474_Test extends AbstractCDOTest
     String scopeClause = "e.eResource().oclAsType(eresource::CDOResource).path.startsWith(folderPath) and ";
 
     CDOView newView = session.openView();
-    CDOQuery ocl = newView.createQuery("ocl",
-        "EModelElement.allInstances()->select(e | " + scopeClause + "e.cdoMatches('.*bug416474.*'))",
+    CDOQuery ocl = newView.createQuery("ocl", "EModelElement.allInstances()->select(e | " + scopeClause + "e.cdoMatches('.*bug416474.*'))",
         EcorePackage.Literals.EPACKAGE);
     ocl.setParameter("cdoImplicitRootClass", EcorePackage.Literals.EOBJECT);
     ocl.setParameter("folderPath", folderPath);
@@ -143,9 +140,7 @@ public class Bugzilla_416474_Test extends AbstractCDOTest
     assertEquals(true, results.contains(newView.getObject(nested)));
     assertEquals(2, results.size());
 
-    ocl = newView.createQuery("ocl",
-        "EModelElement.allInstances()->select(e | " + scopeClause + "e.cdoMatches('.*Nested.?'))",
-        EcorePackage.Literals.EPACKAGE);
+    ocl = newView.createQuery("ocl", "EModelElement.allInstances()->select(e | " + scopeClause + "e.cdoMatches('.*Nested.?'))", EcorePackage.Literals.EPACKAGE);
     ocl.setParameter("cdoImplicitRootClass", EcorePackage.Literals.EOBJECT);
     ocl.setParameter("folderPath", folderPath);
 

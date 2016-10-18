@@ -89,8 +89,7 @@ public class CDOIDAnyUserType implements UserType
     return x.equals(y);
   }
 
-  public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor sessionImplementor, Object owner)
-      throws SQLException
+  public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor sessionImplementor, Object owner) throws SQLException
   {
     final String value = StandardBasicTypes.STRING.nullSafeGet(rs, names[1], sessionImplementor);
     if (rs.wasNull())
@@ -101,8 +100,7 @@ public class CDOIDAnyUserType implements UserType
     return deserializeId(entityName, value);
   }
 
-  public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor sessionImplementor)
-      throws SQLException
+  public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor sessionImplementor) throws SQLException
   {
     final String entityName;
     final CDOID localValue;

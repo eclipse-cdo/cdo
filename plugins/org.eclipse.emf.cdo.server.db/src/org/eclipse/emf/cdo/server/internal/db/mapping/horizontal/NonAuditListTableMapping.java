@@ -188,8 +188,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   }
 
   @Override
-  public void addRangedChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int fromIndex,
-      int toIndex)
+  public void addRangedChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int fromIndex, int toIndex)
   {
     int offset = getCurrentIndexOffset(accessor, cdoid);
     super.addRangedChunkWhere(accessor, cdoid, builder, fromIndex + offset, toIndex + offset);
@@ -250,8 +249,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   public int getCurrentIndexOffset(IDBStoreAccessor accessor, CDOID id)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlReadCurrentIndexOffset,
-        ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlReadCurrentIndexOffset, ReuseProbability.HIGH);
     ResultSet rset = null;
 
     try
@@ -278,8 +276,8 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     }
   }
 
-  public void processDelta(final IDBStoreAccessor accessor, final CDOID id, int branchId, int oldVersion,
-      final int newVersion, long created, CDOListFeatureDelta delta)
+  public void processDelta(final IDBStoreAccessor accessor, final CDOID id, int branchId, int oldVersion, final int newVersion, long created,
+      CDOListFeatureDelta delta)
   {
     int oldListSize = delta.getOriginSize();
 
@@ -1189,8 +1187,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     @Override
     public String toString()
     {
-      return MessageFormat.format(
-          "Manipulation[type={0}, sourceIndex={1}, tempIndex={2}, destinationIndex={3}, value={4}]", formatType(type),
+      return MessageFormat.format("Manipulation[type={0}, sourceIndex={1}, tempIndex={2}, destinationIndex={3}, value={4}]", formatType(type),
           formatIndex(sourceIndex), formatIndex(tempIndex), formatIndex(destinationIndex), formatValue(value));
     }
 

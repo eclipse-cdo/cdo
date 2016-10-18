@@ -73,8 +73,7 @@ public class AcoreNavigatorLinkHelper implements ILinkHelper
    */
   public IStructuredSelection findSelection(IEditorInput anInput)
   {
-    IDiagramDocument document = AcoreDiagramEditorPlugin.getInstance().getDocumentProvider()
-        .getDiagramDocument(anInput);
+    IDiagramDocument document = AcoreDiagramEditorPlugin.getInstance().getDocumentProvider().getDiagramDocument(anInput);
     if (document == null)
     {
       return StructuredSelection.EMPTY;

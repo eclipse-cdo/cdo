@@ -51,8 +51,8 @@ public class TransportConfig implements ITransportConfig, IExecutorServiceProvid
     this.lifecycle = lifecycle;
   }
 
-  public TransportConfig(ILifecycle lifecycle, ExecutorService receiveExecutor, IBufferProvider bufferProvider,
-      IProtocolProvider protocolProvider, INegotiator negotiator)
+  public TransportConfig(ILifecycle lifecycle, ExecutorService receiveExecutor, IBufferProvider bufferProvider, IProtocolProvider protocolProvider,
+      INegotiator negotiator)
   {
     this(lifecycle);
     this.receiveExecutor = receiveExecutor;
@@ -123,8 +123,7 @@ public class TransportConfig implements ITransportConfig, IExecutorServiceProvid
   @Override
   public String toString()
   {
-    return MessageFormat.format(
-        "TransportConfig[receiveExecutor={0}, bufferProvider={1}, protocolProvider={2}, negotiator={3}]", //$NON-NLS-1$
+    return MessageFormat.format("TransportConfig[receiveExecutor={0}, bufferProvider={1}, protocolProvider={2}, negotiator={3}]", //$NON-NLS-1$
         receiveExecutor, bufferProvider, protocolProvider, negotiator);
   }
 }

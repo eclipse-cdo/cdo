@@ -27,8 +27,7 @@ public class RepositoryTypeNotificationRequest extends CDOServerRequest
 
   private CDOCommonRepository.Type newType;
 
-  public RepositoryTypeNotificationRequest(CDOServerProtocol serverProtocol, CDOCommonRepository.Type oldType,
-      CDOCommonRepository.Type newType)
+  public RepositoryTypeNotificationRequest(CDOServerProtocol serverProtocol, CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
   {
     super(serverProtocol, CDOProtocolConstants.SIGNAL_REPOSITORY_TYPE_NOTIFICATION);
     this.oldType = oldType;

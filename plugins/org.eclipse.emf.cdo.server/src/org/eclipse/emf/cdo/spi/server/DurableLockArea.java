@@ -43,8 +43,7 @@ public class DurableLockArea implements LockArea
 
   private Map<CDOID, LockGrade> locks;
 
-  public DurableLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly,
-      Map<CDOID, LockGrade> locks)
+  public DurableLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     this.durableLockingID = durableLockingID;
     this.userID = userID;
@@ -86,8 +85,8 @@ public class DurableLockArea implements LockArea
   @Override
   public String toString()
   {
-    return MessageFormat.format("DurableLockArea\nid={0}\nuser={1}\nbranchPoint={2}\nreadOnly={3}\nlocks={4}",
-        durableLockingID, userID, branchPoint, readOnly, locks);
+    return MessageFormat.format("DurableLockArea\nid={0}\nuser={1}\nbranchPoint={2}\nreadOnly={3}\nlocks={4}", durableLockingID, userID, branchPoint, readOnly,
+        locks);
   }
 
   public static String createDurableLockingID()

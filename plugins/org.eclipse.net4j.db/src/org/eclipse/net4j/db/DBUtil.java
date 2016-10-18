@@ -62,8 +62,7 @@ public final class DBUtil
   /**
    * @since 4.2
    */
-  public static final int MAX_BATCH_SIZE = Integer
-      .parseInt(OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.db.MAX_BATCH_SIZE", "2000"));
+  public static final int MAX_BATCH_SIZE = Integer.parseInt(OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.db.MAX_BATCH_SIZE", "2000"));
 
   /**
    * A system property to enable noisy close, i.e. exception catch in close methods are thrown as {@link DBException} exception.
@@ -72,8 +71,7 @@ public final class DBUtil
    */
   public static final String PROP_ENABLE_NOISY_CLOSE = "org.eclipse.net4j.db.close.noisy";
 
-  private static final boolean isNoisyCloseEnabled = Boolean
-      .valueOf(OMPlatform.INSTANCE.getProperty(PROP_ENABLE_NOISY_CLOSE, Boolean.FALSE.toString()));
+  private static final boolean isNoisyCloseEnabled = Boolean.valueOf(OMPlatform.INSTANCE.getProperty(PROP_ENABLE_NOISY_CLOSE, Boolean.FALSE.toString()));
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SQL, DBUtil.class);
 
@@ -203,8 +201,7 @@ public final class DBUtil
   /**
    * @since 4.2
    */
-  public static IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider,
-      String schemaName)
+  public static IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName)
   {
     return openDatabase(adapter, connectionProvider, schemaName, false);
   }
@@ -212,8 +209,7 @@ public final class DBUtil
   /**
    * @since 4.2
    */
-  public static IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider,
-      String schemaName, boolean fixNullableIndexColumns)
+  public static IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName, boolean fixNullableIndexColumns)
   {
     return new DBDatabase((DBAdapter)adapter, connectionProvider, schemaName, fixNullableIndexColumns);
   }
@@ -242,8 +238,7 @@ public final class DBUtil
   /**
    * @since 4.2
    */
-  public static IDBSchema readSchema(IDBAdapter adapter, Connection connection, String name,
-      boolean fixNullableIndexColumns)
+  public static IDBSchema readSchema(IDBAdapter adapter, Connection connection, String name, boolean fixNullableIndexColumns)
   {
     IDBSchema schema = new org.eclipse.net4j.internal.db.ddl.DBSchema(name);
 
@@ -279,8 +274,7 @@ public final class DBUtil
     return schema;
   }
 
-  private static void fixNullableIndexFields(IDBAdapter adapter, Connection connection,
-      Set<IDBField> nullableIndexFields)
+  private static void fixNullableIndexFields(IDBAdapter adapter, Connection connection, Set<IDBField> nullableIndexFields)
   {
     StringBuilder builder = new StringBuilder();
     builder.append("The internal schema migration has fixed the following nullable index columns:");
@@ -724,8 +718,7 @@ public final class DBUtil
     return asLong(number);
   }
 
-  private static Number getFunctionResult(Connection connection, IDBField field, String function, String... where)
-      throws DBException
+  private static Number getFunctionResult(Connection connection, IDBField field, String function, String... where) throws DBException
   {
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
@@ -961,8 +954,7 @@ public final class DBUtil
     return update(connection, sql);
   }
 
-  public static int select(Connection connection, IDBRowHandler rowHandler, String where, IDBField... fields)
-      throws DBException
+  public static int select(Connection connection, IDBRowHandler rowHandler, String where, IDBField... fields) throws DBException
   {
     IDBTable table = fields[0].getTable();
     for (int i = 1; i < fields.length; i++)
@@ -1167,8 +1159,8 @@ public final class DBUtil
   /**
    * @since 3.0
    */
-  public static void serializeTable(ExtendedDataOutput out, Connection connection, IDBTable table, String tableAlias,
-      String sqlSuffix) throws DBException, IOException
+  public static void serializeTable(ExtendedDataOutput out, Connection connection, IDBTable table, String tableAlias, String sqlSuffix)
+      throws DBException, IOException
   {
     serializeTable(out, connection, table, tableAlias, sqlSuffix, null);
   }
@@ -1176,8 +1168,8 @@ public final class DBUtil
   /**
    * @since 4.1
    */
-  public static void serializeTable(ExtendedDataOutput out, Connection connection, IDBTable table, String tableAlias,
-      String sqlSuffix, SerializeRowHandler handler) throws DBException, IOException
+  public static void serializeTable(ExtendedDataOutput out, Connection connection, IDBTable table, String tableAlias, String sqlSuffix,
+      SerializeRowHandler handler) throws DBException, IOException
   {
     IDBField[] fields = table.getFields();
 
@@ -1294,8 +1286,7 @@ public final class DBUtil
   /**
    * @since 4.0
    */
-  public static void deserializeTable(ExtendedDataInput in, Connection connection, IDBTable table, OMMonitor monitor)
-      throws IOException
+  public static void deserializeTable(ExtendedDataInput in, Connection connection, IDBTable table, OMMonitor monitor) throws IOException
   {
     deserializeTable(in, connection, table, monitor, null);
   }
@@ -1303,8 +1294,8 @@ public final class DBUtil
   /**
    * @since 4.1
    */
-  public static void deserializeTable(ExtendedDataInput in, Connection connection, IDBTable table, OMMonitor monitor,
-      DeserializeRowHandler handler) throws IOException
+  public static void deserializeTable(ExtendedDataInput in, Connection connection, IDBTable table, OMMonitor monitor, DeserializeRowHandler handler)
+      throws IOException
   {
     int size = in.readInt();
     if (size == 0)
@@ -1477,8 +1468,7 @@ public final class DBUtil
    */
   public interface SerializeRowHandler extends RowHandler
   {
-    public void handleRow(ExtendedDataOutput out, Connection connection, IDBField[] fields, Object[] values)
-        throws SQLException, IOException;
+    public void handleRow(ExtendedDataOutput out, Connection connection, IDBField[] fields, Object[] values) throws SQLException, IOException;
   }
 
   /**
@@ -1490,7 +1480,6 @@ public final class DBUtil
    */
   public interface DeserializeRowHandler extends RowHandler
   {
-    public void handleRow(ExtendedDataInput in, Connection connection, IDBField[] fields, Object[] values)
-        throws SQLException, IOException;
+    public void handleRow(ExtendedDataInput in, Connection connection, IDBField[] fields, Object[] values) throws SQLException, IOException;
   }
 }

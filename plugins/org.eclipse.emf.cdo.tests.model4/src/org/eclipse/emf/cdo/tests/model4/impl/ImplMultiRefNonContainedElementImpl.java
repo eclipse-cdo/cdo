@@ -69,8 +69,7 @@ public class ImplMultiRefNonContainedElementImpl extends CDOObjectImpl implement
    */
   public IMultiRefNonContainer getParent()
   {
-    return (IMultiRefNonContainer)eGet(model4interfacesPackage.eINSTANCE.getIMultiRefNonContainedElement_Parent(),
-        true);
+    return (IMultiRefNonContainer)eGet(model4interfacesPackage.eINSTANCE.getIMultiRefNonContainedElement_Parent(), true);
   }
 
   /**

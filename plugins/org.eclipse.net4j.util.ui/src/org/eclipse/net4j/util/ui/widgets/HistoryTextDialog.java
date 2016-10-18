@@ -41,8 +41,7 @@ public class HistoryTextDialog extends InputDialog
 
   private HistoryText historyText;
 
-  public HistoryTextDialog(Shell parentShell, String dialogTitle, String dialogMessage, IHistory<String> history,
-      IInputValidator validator)
+  public HistoryTextDialog(Shell parentShell, String dialogTitle, String dialogMessage, IHistory<String> history, IInputValidator validator)
   {
     super(parentShell, dialogTitle, dialogMessage, history.getMostRecent(), validator);
     this.history = history;

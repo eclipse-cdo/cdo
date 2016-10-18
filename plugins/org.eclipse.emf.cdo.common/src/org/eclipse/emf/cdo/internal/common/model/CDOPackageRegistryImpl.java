@@ -204,8 +204,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
 
       InternalCDOPackageUnit oldPackageUnit = oldPackageInfo.getPackageUnit();
       InternalCDOPackageUnit newPackageUnit = newPackageInfo.getPackageUnit();
-      if (oldPackageUnit.getState() == CDOPackageUnit.State.NEW
-          && newPackageUnit.getState() != CDOPackageUnit.State.NEW)
+      if (oldPackageUnit.getState() == CDOPackageUnit.State.NEW && newPackageUnit.getState() != CDOPackageUnit.State.NEW)
       {
         oldPackageUnit.setState(CDOPackageUnit.State.LOADED);
       }

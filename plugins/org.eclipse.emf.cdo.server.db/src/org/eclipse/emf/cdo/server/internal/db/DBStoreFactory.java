@@ -64,8 +64,7 @@ public class DBStoreFactory implements IStoreFactory
     return store;
   }
 
-  private IMappingStrategy getMappingStrategy(String repositoryName, Map<String, String> repositoryProperties,
-      Element storeConfig)
+  private IMappingStrategy getMappingStrategy(String repositoryName, Map<String, String> repositoryProperties, Element storeConfig)
   {
     NodeList mappingStrategyConfigs = storeConfig.getElementsByTagName("mappingStrategy"); //$NON-NLS-1$
     if (mappingStrategyConfigs.getLength() != 1)

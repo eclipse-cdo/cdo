@@ -25,8 +25,8 @@ public class CDOCommitDataImpl extends CDOChangeSetDataImpl implements CDOCommit
 {
   private List<CDOPackageUnit> newPackageUnits;
 
-  public CDOCommitDataImpl(List<CDOPackageUnit> newPackageUnits, List<CDOIDAndVersion> newObjects,
-      List<CDORevisionKey> changedObjects, List<CDOIDAndVersion> detachedObjects)
+  public CDOCommitDataImpl(List<CDOPackageUnit> newPackageUnits, List<CDOIDAndVersion> newObjects, List<CDORevisionKey> changedObjects,
+      List<CDOIDAndVersion> detachedObjects)
   {
     super(newObjects, changedObjects, detachedObjects);
     this.newPackageUnits = newPackageUnits;
@@ -45,9 +45,8 @@ public class CDOCommitDataImpl extends CDOChangeSetDataImpl implements CDOCommit
 
   public static String toString(CDOCommitData commitData)
   {
-    return MessageFormat.format(
-        "CommitData[newPackageUnits={0}, newObjects={1}, changedObjects={2}, detachedObjects={3}]", //$NON-NLS-1$
-        commitData.getNewPackageUnits().size(), commitData.getNewObjects().size(),
-        commitData.getChangedObjects().size(), commitData.getDetachedObjects().size());
+    return MessageFormat.format("CommitData[newPackageUnits={0}, newObjects={1}, changedObjects={2}, detachedObjects={3}]", //$NON-NLS-1$
+        commitData.getNewPackageUnits().size(), commitData.getNewObjects().size(), commitData.getChangedObjects().size(),
+        commitData.getDetachedObjects().size());
   }
 }

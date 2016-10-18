@@ -40,8 +40,7 @@ public final class OpenResourceEditorAction extends ResourceNodeAction
 
   public OpenResourceEditorAction(IWorkbenchPage page, CDOResourceLeaf resource)
   {
-    super(page, resource instanceof CDOResource ? TITLE : FILE_TITLE,
-        resource instanceof CDOResource ? TOOL_TIP : FILE_TOOL_TIP, null, resource);
+    super(page, resource instanceof CDOResource ? TITLE : FILE_TITLE, resource instanceof CDOResource ? TOOL_TIP : FILE_TOOL_TIP, null, resource);
   }
 
   @Override

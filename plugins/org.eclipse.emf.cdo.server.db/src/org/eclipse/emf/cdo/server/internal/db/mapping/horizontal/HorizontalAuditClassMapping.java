@@ -86,8 +86,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalAuditClassMapping.class);
 
-  private static final ContextTracer TRACER_UNITS = new ContextTracer(OM.DEBUG_UNITS,
-      HorizontalAuditClassMapping.class);
+  private static final ContextTracer TRACER_UNITS = new ContextTracer(OM.DEBUG_UNITS, HorizontalAuditClassMapping.class);
 
   private String sqlInsertAttributes;
 
@@ -333,8 +332,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
   public boolean readRevisionByVersion(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectAttributesByVersion,
-        ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectAttributesByVersion, ReuseProbability.HIGH);
 
     try
     {
@@ -362,8 +360,8 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     }
   }
 
-  public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,
-      boolean exactMatch, CDOBranchPoint branchPoint)
+  public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name, boolean exactMatch,
+      CDOBranchPoint branchPoint)
   {
     EStructuralFeature nameFeature = EresourcePackage.eINSTANCE.getCDOResourceNode_Name();
     long timeStamp = branchPoint.getTimeStamp();
@@ -412,8 +410,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(),
-        ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.MEDIUM);
 
     try
     {
@@ -522,8 +519,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
   }
 
   @Override
-  protected void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp,
-      OMMonitor mon)
+  protected void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp, OMMonitor mon)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH);
@@ -579,8 +575,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
   @Override
   protected void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version, OMMonitor fork)
   {
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlRawDeleteAttributes,
-        ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlRawDeleteAttributes, ReuseProbability.HIGH);
 
     try
     {
@@ -621,8 +616,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     }
   }
 
-  public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created,
-      OMMonitor monitor)
+  public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created, OMMonitor monitor)
   {
     Async async = null;
     monitor.begin();
@@ -681,8 +675,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     return builder.toString();
   }
 
-  public void readUnitRevisions(IDBStoreAccessor accessor, CDOBranchPoint branchPoint, CDOID rootID,
-      CDORevisionHandler revisionHandler) throws SQLException
+  public void readUnitRevisions(IDBStoreAccessor accessor, CDOBranchPoint branchPoint, CDOID rootID, CDORevisionHandler revisionHandler) throws SQLException
   {
     DBStore store = (DBStore)getMappingStrategy().getStore();
     InternalRepository repository = store.getRepository();
@@ -732,8 +725,8 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
       if (start1 != CDOBranchPoint.UNSPECIFIED_DATE)
       {
-        TRACER_UNITS.format("Read {0} revisions of unit {1}: {2} millis + {3} millis", eClass.getName(), rootID,
-            start2 - start1, System.currentTimeMillis() - start2);
+        TRACER_UNITS.format("Read {0} revisions of unit {1}: {2} millis + {3} millis", eClass.getName(), rootID, start2 - start1,
+            System.currentTimeMillis() - start2);
       }
     }
     finally
@@ -771,8 +764,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
     private Throwable exception;
 
-    public AsnychronousListFiller(IDBStoreAccessor accessor, long timeStamp, CDOID rootID,
-        CDORevisionHandler revisionHandler)
+    public AsnychronousListFiller(IDBStoreAccessor accessor, long timeStamp, CDOID rootID, CDORevisionHandler revisionHandler)
     {
       this.accessor = accessor;
       this.timeStamp = timeStamp;
@@ -938,8 +930,8 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
         TRACER.format("FeatureDeltaWriter: old version: {0}, new version: {1}", oldVersion, oldVersion + 1); //$NON-NLS-1$
       }
 
-      InternalCDORevision originalRevision = (InternalCDORevision)accessor.getStore().getRepository()
-          .getRevisionManager().getRevisionByVersion(id, delta, 0, true);
+      InternalCDORevision originalRevision = (InternalCDORevision)accessor.getStore().getRepository().getRevisionManager().getRevisionByVersion(id, delta, 0,
+          true);
 
       newRevision = originalRevision.copy();
 

@@ -33,8 +33,7 @@ public class CreateRepositoryAction extends AdminAction<CDOAdminClient>
 
   public CreateRepositoryAction(CDOAdminClient admin)
   {
-    super(Messages.CreateRepositoryAction_0, Messages.CreateRepositoryAction_1,
-        OM.getImageDescriptor("icons/full/ctool16/create_repo.gif"), admin); //$NON-NLS-1$
+    super(Messages.CreateRepositoryAction_0, Messages.CreateRepositoryAction_1, OM.getImageDescriptor("icons/full/ctool16/create_repo.gif"), admin); //$NON-NLS-1$
   }
 
   @Override

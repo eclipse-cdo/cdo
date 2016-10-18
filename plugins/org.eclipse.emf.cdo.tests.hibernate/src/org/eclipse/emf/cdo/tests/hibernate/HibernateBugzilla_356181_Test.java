@@ -73,10 +73,8 @@ public class HibernateBugzilla_356181_Test extends AbstractCDOTest
       assertEquals(1, results.size());
       assertEquals(2, cdoResource.getContents().size());
       assertEquals(1, results.size());
-      assertEquals(true,
-          results.get(0).getSourceObject().eClass() == HibernateTestPackage.eINSTANCE.getBz356181_NonTransient());
-      assertEquals(true,
-          results.get(0).getTargetObject().eClass() == HibernateTestPackage.eINSTANCE.getBz356181_Main());
+      assertEquals(true, results.get(0).getSourceObject().eClass() == HibernateTestPackage.eINSTANCE.getBz356181_NonTransient());
+      assertEquals(true, results.get(0).getTargetObject().eClass() == HibernateTestPackage.eINSTANCE.getBz356181_Main());
       session.close();
     }
   }

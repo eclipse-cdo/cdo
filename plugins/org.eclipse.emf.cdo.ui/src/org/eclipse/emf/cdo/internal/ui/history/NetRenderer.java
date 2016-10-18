@@ -368,8 +368,7 @@ public final class NetRenderer implements Listener
     return x;
   }
 
-  private void drawHorizontalLineWithRoundEdge(Color color, int lineStyle, int commitTrackCenter, int trackCenter,
-      int horizontal, boolean down)
+  private void drawHorizontalLineWithRoundEdge(Color color, int lineStyle, int commitTrackCenter, int trackCenter, int horizontal, boolean down)
   {
     LinePlotter plotter = new LinePlotter(color, lineStyle, commitTrackCenter, cellHeightHalf);
     plotter.relative(horizontal, 0);

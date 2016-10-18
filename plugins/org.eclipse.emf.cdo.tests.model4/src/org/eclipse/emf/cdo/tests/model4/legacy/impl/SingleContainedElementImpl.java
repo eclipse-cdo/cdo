@@ -94,8 +94,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
     name = newName;
     if (eNotificationRequired())
     {
-      eNotify(
-          new ENotificationImpl(this, Notification.SET, model4Package.SINGLE_CONTAINED_ELEMENT__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.SINGLE_CONTAINED_ELEMENT__NAME, oldName, name));
     }
   }
 
@@ -128,8 +127,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
    */
   public void setParent(RefSingleContained newParent)
   {
-    if (newParent != eInternalContainer()
-        || eContainerFeatureID() != model4Package.SINGLE_CONTAINED_ELEMENT__PARENT && newParent != null)
+    if (newParent != eInternalContainer() || eContainerFeatureID() != model4Package.SINGLE_CONTAINED_ELEMENT__PARENT && newParent != null)
     {
       if (EcoreUtil.isAncestor(this, newParent))
       {
@@ -142,8 +140,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
       }
       if (newParent != null)
       {
-        msgs = ((InternalEObject)newParent).eInverseAdd(this, model4Package.REF_SINGLE_CONTAINED__ELEMENT,
-            RefSingleContained.class, msgs);
+        msgs = ((InternalEObject)newParent).eInverseAdd(this, model4Package.REF_SINGLE_CONTAINED__ELEMENT, RefSingleContained.class, msgs);
       }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
@@ -153,8 +150,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.SINGLE_CONTAINED_ELEMENT__PARENT, newParent,
-          newParent));
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.SINGLE_CONTAINED_ELEMENT__PARENT, newParent, newParent));
     }
   }
 
@@ -202,8 +198,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
     switch (eContainerFeatureID())
     {
     case model4Package.SINGLE_CONTAINED_ELEMENT__PARENT:
-      return eInternalContainer().eInverseRemove(this, model4Package.REF_SINGLE_CONTAINED__ELEMENT,
-          RefSingleContained.class, msgs);
+      return eInternalContainer().eInverseRemove(this, model4Package.REF_SINGLE_CONTAINED__ELEMENT, RefSingleContained.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
   }

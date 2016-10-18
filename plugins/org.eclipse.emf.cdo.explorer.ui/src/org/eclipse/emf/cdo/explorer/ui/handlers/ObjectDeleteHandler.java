@@ -169,8 +169,7 @@ public class ObjectDeleteHandler extends AbstractObjectHandler
       }
       else
       {
-        setMessage("Are you sure you want to delete " + (size == 1 ? "this" : "these") + " " + size + " "
-            + (size == 1 ? "object" : "objects") + "?");
+        setMessage("Are you sure you want to delete " + (size == 1 ? "this" : "these") + " " + size + " " + (size == 1 ? "object" : "objects") + "?");
       }
     }
   }

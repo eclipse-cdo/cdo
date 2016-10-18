@@ -51,8 +51,7 @@ public class NotFilterImpl extends CombinedFilterImpl implements NotFilter
   }
 
   @Override
-  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext,
-      int level) throws Exception
+  protected boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext, int level) throws Exception
   {
     PermissionFilter operand = getOperands().get(0);
     return !operand.isApplicable(revision, revisionProvider, securityContext, level + 1);

@@ -270,8 +270,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     }
 
     CDOChangeSetData data = readCDOChangeSetData();
-    return CDOCommitInfoUtil.createCommitData(newPackageUnits, data.getNewObjects(), data.getChangedObjects(),
-        data.getDetachedObjects());
+    return CDOCommitInfoUtil.createCommitData(newPackageUnits, data.getNewObjects(), data.getChangedObjects(), data.getDetachedObjects());
   }
 
   public CDOCommitInfo readCDOCommitInfo() throws IOException
@@ -288,8 +287,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       CDOBranchPoint mergeSource = CDOBranchUtil.readBranchPointOrNull(this);
       CDOCommitData commitData = readCDOCommitData();
 
-      return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource,
-          commitData);
+      return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource, commitData);
     }
 
     return new FailureCommitInfo(commitInfoManager, timeStamp, previousTimeStamp);

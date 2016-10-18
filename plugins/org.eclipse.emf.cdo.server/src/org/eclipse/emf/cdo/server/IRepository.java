@@ -210,8 +210,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
      *           to indicate that none of the revisions must be sent to the client. This exception will be visible at
      *           the client side!
      */
-    public void handleRevisionsBeforeSending(ISession session, CDORevision[] revisions,
-        List<CDORevision> additionalRevisions) throws RuntimeException;
+    public void handleRevisionsBeforeSending(ISession session, CDORevision[] revisions, List<CDORevision> additionalRevisions) throws RuntimeException;
   }
 
   /**
@@ -241,8 +240,8 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
      *           to indicate that the commit operation must not be executed against the backend store. This exception
      *           will be visible at the client side!
      */
-    public void handleTransactionBeforeCommitting(ITransaction transaction, IStoreAccessor.CommitContext commitContext,
-        OMMonitor monitor) throws RuntimeException;
+    public void handleTransactionBeforeCommitting(ITransaction transaction, IStoreAccessor.CommitContext commitContext, OMMonitor monitor)
+        throws RuntimeException;
 
     /**
      * Provides a way to handle transactions after they have been committed to the backend store.
@@ -257,8 +256,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
      *          A monitor that should be used by the implementor to avoid timeouts.
      * @since 3.0
      */
-    public void handleTransactionAfterCommitted(ITransaction transaction, IStoreAccessor.CommitContext commitContext,
-        OMMonitor monitor);
+    public void handleTransactionAfterCommitted(ITransaction transaction, IStoreAccessor.CommitContext commitContext, OMMonitor monitor);
 
     /**
      * An exception that a {@link WriteAccessHandler} may throw to indicate that a

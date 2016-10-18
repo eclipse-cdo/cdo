@@ -449,8 +449,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
     MyEnum result = MyEnum.get(initialValue);
     if (result == null)
     {
-      throw new IllegalArgumentException(
-          "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
     }
     return result;
   }

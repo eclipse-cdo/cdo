@@ -148,24 +148,23 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     CDOClientProtocol protocol = createProtocol();
     setSessionProtocol(protocol);
     hookSessionProtocol();
-  
+
     try
     {
       String userID = getUserID();
       boolean passiveUpdateEnabled = options().isPassiveUpdateEnabled();
       PassiveUpdateMode passiveUpdateMode = options().getPassiveUpdateMode();
       LockNotificationMode lockNotificationMode = options().getLockNotificationMode();
-  
+
       // TODO (CD) The next call is on the CDOClientProtocol; shouldn't it be on the DelegatingSessionProtocol instead?
-      OpenSessionResult result = protocol.openSession(repositoryName, userID, passiveUpdateEnabled, passiveUpdateMode,
-          lockNotificationMode);
-  
+      OpenSessionResult result = protocol.openSession(repositoryName, userID, passiveUpdateEnabled, passiveUpdateMode, lockNotificationMode);
+
       if (result == null)
       {
         // Skip to response because the user has canceled the authentication
         return null;
       }
-  
+
       setSessionID(result.getSessionID());
       setUserID(result.getUserID());
       setLastUpdateTime(result.getLastUpdateTime());
@@ -178,7 +177,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       {
         throw (SecurityException)ex.getCause();
       }
-  
+
       throw ex;
     }
   }
@@ -298,7 +297,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     {
       protocol.setStreamWrapper(streamWrapper);
     }
-  
+
     protocol.open(connector);
     protocol.setTimeout(signalTimeout);
     return protocol;
@@ -319,15 +318,14 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     {
       clientProtocol = (CDOClientProtocol)sessionProtocol;
     }
-  
+
     return clientProtocol;
   }
 
   /**
    * @author Eike Stepper
    */
-  protected class OptionsImpl extends org.eclipse.emf.internal.cdo.session.CDOSessionImpl.OptionsImpl
-      implements org.eclipse.emf.cdo.net4j.CDOSession.Options
+  protected class OptionsImpl extends org.eclipse.emf.internal.cdo.session.CDOSessionImpl.OptionsImpl implements org.eclipse.emf.cdo.net4j.CDOSession.Options
   {
     private int commitTimeout = CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS;
 

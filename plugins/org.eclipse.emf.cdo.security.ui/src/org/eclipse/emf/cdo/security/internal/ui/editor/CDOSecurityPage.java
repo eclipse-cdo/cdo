@@ -337,18 +337,16 @@ public class CDOSecurityPage extends FormPage
 
   private IAction createEditAdvancedAction()
   {
-    return new Action(Messages.CDOSecurityPage_0, ExtendedImageRegistry.getInstance()
-        .getImageDescriptor(URI.createPlatformPluginURI(OM.BUNDLE_ID + "/icons/full/elcl16/advanced.gif", true))) //$NON-NLS-1$
+    return new Action(Messages.CDOSecurityPage_0,
+        ExtendedImageRegistry.getInstance().getImageDescriptor(URI.createPlatformPluginURI(OM.BUNDLE_ID + "/icons/full/elcl16/advanced.gif", true))) //$NON-NLS-1$
     {
       @Override
       public void run()
       {
         try
         {
-          IEditorInput newEditorInput = CDOEditorUtil
-              .createCDOEditorInputWithEditingDomain((CDOEditorInput)getEditorInput(), getEditingDomain());
-          getSite().getPage().openEditor(newEditorInput, CDOEditorUtil.getEditorID(), true,
-              IWorkbenchPage.MATCH_INPUT | IWorkbenchPage.MATCH_ID);
+          IEditorInput newEditorInput = CDOEditorUtil.createCDOEditorInputWithEditingDomain((CDOEditorInput)getEditorInput(), getEditingDomain());
+          getSite().getPage().openEditor(newEditorInput, CDOEditorUtil.getEditorID(), true, IWorkbenchPage.MATCH_INPUT | IWorkbenchPage.MATCH_ID);
         }
         catch (PartInitException e)
         {

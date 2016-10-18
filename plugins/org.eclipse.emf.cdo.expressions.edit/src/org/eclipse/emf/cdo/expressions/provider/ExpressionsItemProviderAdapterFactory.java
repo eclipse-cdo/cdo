@@ -75,8 +75,8 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
-      ExpressionsEditPlugin.INSTANCE, ExpressionsPackage.eNS_URI);
+  protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(ExpressionsEditPlugin.INSTANCE,
+      ExpressionsPackage.eNS_URI);
 
   /**
    * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.

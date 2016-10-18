@@ -51,8 +51,7 @@ public abstract class SecurityManagerCommand extends CDOCommand.WithRepository
   {
     public AddUser()
     {
-      super("adduser", "adds a user to the security realm of a repository", parameter("username"),
-          optional("password"));
+      super("adduser", "adds a user to the security realm of a repository", parameter("username"), optional("password"));
     }
 
     @Override
@@ -80,8 +79,7 @@ public abstract class SecurityManagerCommand extends CDOCommand.WithRepository
   {
     public SetPassword()
     {
-      super("setpassword", "sets or unsets the password of a repository user", parameter("username"),
-          optional("password"));
+      super("setpassword", "sets or unsets the password of a repository user", parameter("username"), optional("password"));
     }
 
     @Override

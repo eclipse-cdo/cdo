@@ -31,7 +31,7 @@
     -->
 
     <!-- Example http://bugs.eclipse.org/302775
-			<authenticator type="file" description="_database/repo1.users"/>
+			<authenticator type="file" description="@config/repo1.users"/>
     -->
 
     <!-- Example http://bugs.eclipse.org/345431

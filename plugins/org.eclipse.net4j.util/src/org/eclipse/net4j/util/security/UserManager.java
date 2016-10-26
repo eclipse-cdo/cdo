@@ -47,7 +47,7 @@ public class UserManager extends Lifecycle implements IUserManager, IAuthenticat
   /**
    * @since 3.3
    */
-  public char[] getPassword(String userID)
+  public synchronized char[] getPassword(String userID)
   {
     return users.get(userID);
   }

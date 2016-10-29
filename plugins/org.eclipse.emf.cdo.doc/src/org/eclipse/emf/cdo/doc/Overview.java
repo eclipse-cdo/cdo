@@ -130,16 +130,16 @@ public class Overview
    * connections.
    * <p>
    * CDO has been designed to take full advantage of the OSGi platform, if available at runtime, but can perfectly be
-   * operated in standalone deployments or in various kinds of containers such as JEE web or application servers.
+   * operated in stand-alone deployments or in various kinds of containers such as JEE web or application servers.
    * <p>
-   * The following chapters give an overview about the architecures of applications and repositories, respectively.
+   * The following chapters give an overview about the architectures of applications and repositories, respectively.
    */
   public class Architecture
   {
     /**
      * Client Architecture
      * <p>
-     * {@link org.eclipse.emf.cdo.doc.programmers.client.Doc01_Architecture !!inline!!}
+     * {@link org.eclipse.emf.cdo.doc.programmers.client.Doc01_Architecture @inline}
      *
      * @see org.eclipse.emf.cdo.doc.programmers.client.Doc01_Architecture
      */
@@ -150,7 +150,7 @@ public class Overview
     /**
      * Repository Architecture
      * <p>
-     * {@link org.eclipse.emf.cdo.doc.programmers.server.Architecture !!inline!!}
+     * {@link org.eclipse.emf.cdo.doc.programmers.server.Architecture @inline}
      *
      * @see org.eclipse.emf.cdo.doc.programmers.server.Architecture
      */

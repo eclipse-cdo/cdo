@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionKeyImpl;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
@@ -1217,8 +1218,8 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
       InternalCDORevision rev = getRevisionByVersion(list, version);
       if (rev != null)
       {
-        rev = getRevisionByVersion(list, version);
-        throw new IllegalStateException("Concurrent modification of " + rev.getEClass().getName() + "@" + rev.getID());
+        throw new IllegalStateException(
+            "Concurrent modification of " + rev.getEClass().getName() + "@" + new CDORevisionKeyImpl(rev.getID(), rev.getBranch(), version));
       }
 
       // Revise old revision

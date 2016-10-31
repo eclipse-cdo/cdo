@@ -56,7 +56,7 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
     container1.getTasks().add(getModel2Factory().createTask());
     tr1.commit();
 
-    CDOBranch branch2 = tr1.getBranch().createBranch("branch2");
+    CDOBranch branch2 = tr1.getBranch().createBranch("branch-" + System.currentTimeMillis());
     CDOTransaction tr2 = session.openTransaction(branch2);
 
     TaskContainer container2 = tr2.getObject(container1);
@@ -71,7 +71,7 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
     commitAndSync(tr2, tr1);
 
     // Merge the other branch to main.
-    tr1.merge(tr2.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
+    tr1.merge(tr2.getBranch(), new DefaultCDOMerger.PerFeature.ManyValued());
 
     tr1.commit();
     assertEquals(false, tr1.isDirty());

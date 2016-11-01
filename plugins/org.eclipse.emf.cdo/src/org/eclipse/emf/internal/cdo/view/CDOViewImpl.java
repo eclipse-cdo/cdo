@@ -1240,6 +1240,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         CDOLockChangeInfo lockChangeInfo = invalidationData.getLockChangeInfo();
         if (lockChangeInfo != null)
         {
+          updateLockStates(lockChangeInfo.getLockStates());
           fireLocksChangedEvent(null, lockChangeInfo);
         }
       }

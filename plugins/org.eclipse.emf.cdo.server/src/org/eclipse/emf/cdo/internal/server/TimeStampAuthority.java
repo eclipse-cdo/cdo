@@ -73,6 +73,22 @@ class TimeStampAuthority
   }
 
   /**
+   * The purpose of this method is to make sure that no commit can occur at the same time as
+   * the base of a new branch. Otherwise that commit could change revisions of that branch base.
+   * See bug 506768 and bug 383602.
+   */
+  synchronized long getMaxBaseTimeForNewBranch()
+  {
+    long now = repository.getTimeStamp();
+    while (repository.getTimeStamp() == now)
+    {
+      ConcurrencyUtil.sleep(1);
+    }
+
+    return now;
+  }
+
+  /**
    * @deprecated Not used anymore.
    */
   @Deprecated

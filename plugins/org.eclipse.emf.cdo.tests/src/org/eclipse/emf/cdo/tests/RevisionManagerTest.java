@@ -255,7 +255,7 @@ public class RevisionManagerTest extends AbstractCDOTest
 
   private static void assertRevision(InternalCDORevision expected, InternalCDORevision actual)
   {
-    if (expected == null || actual == null)
+    if (expected == null)
     {
       assertEquals(null, actual);
     }
@@ -420,12 +420,12 @@ public class RevisionManagerTest extends AbstractCDOTest
     long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
     InternalCDORevision expected = null;
 
-    InternalCDORevision revision = getRevision(branch, timeStamp);
-    assertRevision(expected, revision);
+    InternalCDORevision revision1 = getRevision(branch, timeStamp);
+    assertRevision(expected, revision1);
     assertLoads(1);
 
-    revision = getRevision(branch, timeStamp);
-    assertRevision(expected, revision);
+    InternalCDORevision revision2 = getRevision(branch, timeStamp);
+    assertRevision(expected, revision2);
     assertLoads(0);
   }
 
@@ -435,12 +435,12 @@ public class RevisionManagerTest extends AbstractCDOTest
     long timeStamp = branch3.getBase().getTimeStamp() + 2;
     InternalCDORevision expected = revisions1[1];
 
-    InternalCDORevision revision = getRevision(branch, timeStamp);
-    assertRevision(expected, revision);
+    InternalCDORevision revision1 = getRevision(branch, timeStamp);
+    assertRevision(expected, revision1);
     assertLoads(1);
 
-    revision = getRevision(branch, timeStamp);
-    assertRevision(expected, revision);
+    InternalCDORevision revision2 = getRevision(branch, timeStamp);
+    assertRevision(expected, revision2);
     assertLoads(0);
   }
 

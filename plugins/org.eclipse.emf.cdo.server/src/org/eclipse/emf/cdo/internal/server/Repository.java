@@ -444,11 +444,12 @@ public class Repository extends Container<Object> implements InternalRepository,
       throw new IllegalStateException("Branching is not supported by " + this);
     }
 
-    long lastCommitTimeStamp = getLastCommitTimeStamp();
     long baseTimeStamp = branchInfo.getBaseTimeStamp();
-    if (baseTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE || baseTimeStamp > lastCommitTimeStamp)
+    long baseTimeStampMax = timeStampAuthority.getMaxBaseTimeForNewBranch();
+
+    if (baseTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE || baseTimeStamp > baseTimeStampMax)
     {
-      baseTimeStamp = lastCommitTimeStamp;
+      baseTimeStamp = baseTimeStampMax;
       branchInfo = new BranchInfo(branchInfo.getName(), branchInfo.getBaseBranchID(), baseTimeStamp);
     }
 

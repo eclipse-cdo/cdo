@@ -608,6 +608,20 @@ public final class CDOUtil
   }
 
   /**
+   * @since 4.6
+   */
+  public static List<? extends CDOObject> getCDOObjects(Collection<? extends EObject> objects)
+  {
+    List<CDOObject> result = new ArrayList<CDOObject>();
+    for (EObject object : objects)
+    {
+      result.add(getCDOObject(object));
+    }
+
+    return result;
+  }
+
+  /**
    * @since 4.4
    */
   public static boolean isCDOObject(EObject object)

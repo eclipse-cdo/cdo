@@ -48,12 +48,14 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentials;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
@@ -79,6 +81,10 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   public static final String PROP_REALM = "realm";
 
   public static final String REPOSITORY_KEY = CDORepository.class.getName();
+
+  private static final boolean READABLE_IDS = OMPlatform.INSTANCE.isProperty("cdo.explorer.readableIDs");
+
+  private static final boolean SET_USER_NAME = OMPlatform.INSTANCE.isProperty("cdo.explorer.setUserName");
 
   private final Set<CDOCheckout> checkouts = new HashSet<CDOCheckout>();
 
@@ -611,7 +617,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     config.setConnector(connector);
     config.setRepositoryName(name);
 
-    if (Boolean.getBoolean("cdo.explorer.readableIDs"))
+    if (READABLE_IDS)
     {
       config.setIDGenerator(new CDOIDGenerator()
       {
@@ -711,6 +717,16 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
     CDOSession session = sessionConfiguration.openSession();
     session.options().setGeneratedPackageEmulationEnabled(true);
+
+    if (SET_USER_NAME && StringUtil.isEmpty(session.getUserID()))
+    {
+      String userName = System.getProperty("user.name");
+      if (!StringUtil.isEmpty(userName))
+      {
+        ((InternalCDOSession)session).setUserID(userName);
+      }
+    }
+
     return session;
   }
 

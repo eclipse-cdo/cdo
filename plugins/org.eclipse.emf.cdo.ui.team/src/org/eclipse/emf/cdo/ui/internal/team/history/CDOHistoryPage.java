@@ -225,7 +225,7 @@ public class CDOHistoryPage extends HistoryPage
       });
     }
 
-    if (TEST)
+    if (DEBUG)
     {
       ((LabelProvider)tableViewer.getLabelProvider()).setFormatTimeStamps(false);
     }

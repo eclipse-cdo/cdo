@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
 <setAttribute key="additional_plugins">
+<setEntry value="banking.edit:1.0.0.qualifier:default:true"/>
+<setEntry value="banking:0.1.0.qualifier:default:true"/>
 <setEntry value="javax.servlet:3.1.0.v201410161800:default:false"/>
-<setEntry value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.edit:2.0.300.qualifier:default:true"/>
-<setEntry value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.edit:1.0.300.qualifier:default:true"/>
-<setEntry value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.edit:1.0.300.qualifier:default:true"/>
-<setEntry value="org.eclipse.emf.cdo.dawn.examples.acore.edit:1.0.400.qualifier:default:true"/>
+<setEntry value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.edit:2.0.400.qualifier:default:true"/>
+<setEntry value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.edit:1.0.400.qualifier:default:true"/>
+<setEntry value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.edit:1.0.400.qualifier:default:true"/>
+<setEntry value="org.eclipse.emf.cdo.dawn.examples.acore.edit:1.0.500.qualifier:default:true"/>
 <setEntry value="org.eclipse.emf.cdo.edit:4.4.100.qualifier:default:true"/>
-<setEntry value="org.eclipse.emf.cdo.examples.company.edit:4.0.400.qualifier:default:true"/>
+<setEntry value="org.eclipse.emf.cdo.examples.company.edit:4.0.500.qualifier:default:true"/>
 <setEntry value="org.eclipse.emf.cdo.expressions.edit:4.3.200.qualifier:default:true"/>
 <setEntry value="org.eclipse.emf.cdo.security.edit:4.3.200.qualifier:default:true"/>
 <setEntry value="org.eclipse.emf.compare.edit:4.2.1.201608311750:default:true"/>
@@ -59,7 +61,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -nosplash&#13;&#10;-clean"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-XX:MaxPermSize=512m&#13;&#10;-Xms40m&#13;&#10;-Xmx2g&#13;&#10;-Dosgi.console.enable.builtin=true&#13;&#10;-Dosgi.checkConfiguration=false&#13;&#10;-Dorg.eclipse.emf.cdo.ui.team.history.test=false"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx2g&#13;&#10;-Dosgi.console.enable.builtin=true&#13;&#10;-Dosgi.checkConfiguration=false&#13;&#10;-Dorg.eclipse.emf.cdo.ui.team.history.test=true&#13;&#10;-Dcdo.explorer.setUserName=true"/>
 <stringAttribute key="pde.version" value="3.3"/>
 <stringAttribute key="product" value="org.eclipse.platform.ide"/>
 <setAttribute key="selected_features">

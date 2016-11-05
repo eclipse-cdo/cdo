@@ -68,6 +68,7 @@ import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.concurrent.DelegableReentrantLock;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.security.CredentialsProviderFactory;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -829,6 +830,9 @@ public final class CDOUtil
     data.setTransactional(false);
 
     String resource = data.toString();
+    IPluginContainer.INSTANCE.putElement(CredentialsProviderFactory.PRODUCT_GROUP, "password", resource, provider);
+
+    // The following is to stay compatible with the formerly wrong product group (".security" was missing).
     IPluginContainer.INSTANCE.putElement("org.eclipse.net4j.util.credentialsProviders", "password", resource, provider);
   }
 

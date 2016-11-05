@@ -23,6 +23,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.security.CredentialsProviderFactory;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 
@@ -208,11 +209,24 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
 
       try
       {
-        credentialsProvider = (IPasswordCredentialsProvider)getContainer().getElement("org.eclipse.net4j.util.credentialsProviders", "password", resource);
+        credentialsProvider = (IPasswordCredentialsProvider)getContainer().getElement(CredentialsProviderFactory.PRODUCT_GROUP, "password", resource);
       }
       catch (FactoryNotFoundException ex)
       {
         // Ignore
+      }
+
+      // The following is to stay compatible with the formerly wrong product group (".security" was missing).
+      if (credentialsProvider == null)
+      {
+        try
+        {
+          credentialsProvider = (IPasswordCredentialsProvider)getContainer().getElement("org.eclipse.net4j.util.credentialsProviders", "password", resource);
+        }
+        catch (FactoryNotFoundException ex)
+        {
+          // Ignore
+        }
       }
     }
 

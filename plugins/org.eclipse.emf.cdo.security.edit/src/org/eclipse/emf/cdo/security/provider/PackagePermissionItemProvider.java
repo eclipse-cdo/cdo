@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.security.provider;
 
-import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.security.Access;
 import org.eclipse.emf.cdo.security.PackagePermission;
 import org.eclipse.emf.cdo.security.SecurityPackage;
@@ -23,10 +22,7 @@ import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -85,25 +81,10 @@ public class PackagePermissionItemProvider extends PermissionItemProvider
       {
         if (object instanceof PackagePermission)
         {
-          PackagePermission packagePermission = (PackagePermission)object;
-          CDOView view = packagePermission.cdoView();
+          CDOView view = ((PackagePermission)object).cdoView();
           if (view != null)
           {
-            List<EPackage> result = new ArrayList<EPackage>();
-            for (CDOPackageInfo packageInfo : view.getSession().getPackageRegistry().getPackageInfos())
-            {
-              result.add(packageInfo.getEPackage());
-            }
-
-            Collections.sort(result, new Comparator<EPackage>()
-            {
-              public int compare(EPackage p1, EPackage p2)
-              {
-                return p1.getNsURI().compareTo(p2.getNsURI());
-              }
-            });
-
-            return result;
+            return SecurityEditPlugin.getSortedPackages(view);
           }
         }
 

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.security.provider;
 import org.eclipse.emf.cdo.security.ClassFilter;
 import org.eclipse.emf.cdo.security.PermissionFilter;
 import org.eclipse.emf.cdo.security.SecurityPackage;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -67,15 +68,30 @@ public class ClassFilterItemProvider extends PermissionFilterItemProvider
    * This adds a property descriptor for the Applicable Class feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected void addApplicableClassPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_ClassFilter_applicableClass_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ClassFilter_applicableClass_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_ClassFilter_type"), //$NON-NLS-1$
-        SecurityPackage.Literals.CLASS_FILTER__APPLICABLE_CLASS, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ClassFilter_applicableClass_feature"), getString("_UI_PropertyDescriptor_description", "_UI_ClassFilter_applicableClass_feature", //$NON-NLS-2$//$NON-NLS-3$
+            "_UI_ClassFilter_type"),
+        SecurityPackage.Literals.CLASS_FILTER__APPLICABLE_CLASS, true, false, true, null, null, null)
+    {
+      @Override
+      public Collection<?> getChoiceOfValues(Object object)
+      {
+        if (object instanceof ClassFilter)
+        {
+          CDOView view = ((ClassFilter)object).cdoView();
+          if (view != null)
+          {
+            return SecurityEditPlugin.getSortedClasses(view);
+          }
+        }
+
+        return super.getChoiceOfValues(object);
+      }
+    });
   }
 
   /**

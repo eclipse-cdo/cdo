@@ -10,13 +10,16 @@
  */
 package org.eclipse.emf.cdo.security.provider;
 
+import org.eclipse.emf.cdo.security.PackageFilter;
 import org.eclipse.emf.cdo.security.PermissionFilter;
 import org.eclipse.emf.cdo.security.SecurityPackage;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 
 import java.util.Collection;
 import java.util.List;
@@ -63,15 +66,30 @@ public class PackageFilterItemProvider extends PermissionFilterItemProvider
    * This adds a property descriptor for the Applicable Package feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected void addApplicablePackagePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_PackageFilter_applicablePackage_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_PackageFilter_applicablePackage_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_PackageFilter_type"), //$NON-NLS-1$
-        SecurityPackage.Literals.PACKAGE_FILTER__APPLICABLE_PACKAGE, true, false, true, null, null, null));
+    itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_PackageFilter_applicablePackage_feature"), getString("_UI_PropertyDescriptor_description", "_UI_PackageFilter_applicablePackage_feature", //$NON-NLS-2$//$NON-NLS-3$
+            "_UI_PackageFilter_type"),
+        SecurityPackage.Literals.PACKAGE_FILTER__APPLICABLE_PACKAGE, true, false, true, null, null, null)
+    {
+      @Override
+      public Collection<?> getChoiceOfValues(Object object)
+      {
+        if (object instanceof PackageFilter)
+        {
+          CDOView view = ((PackageFilter)object).cdoView();
+          if (view != null)
+          {
+            return SecurityEditPlugin.getSortedPackages(view);
+          }
+        }
+
+        return super.getChoiceOfValues(object);
+      }
+    });
   }
 
   /**

@@ -10,12 +10,22 @@
  */
 package org.eclipse.emf.cdo.security.provider;
 
+import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.edit.CDOEditPlugin;
 import org.eclipse.emf.cdo.expressions.provider.ExpressionsEditPlugin;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * This is the central singleton for the Security edit plugin.
@@ -75,6 +85,63 @@ public final class SecurityEditPlugin extends EMFPlugin
   public static Implementation getPlugin()
   {
     return plugin;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static List<EPackage> getSortedPackages(CDOView view)
+  {
+    List<EPackage> result = new ArrayList<EPackage>();
+    for (CDOPackageInfo packageInfo : view.getSession().getPackageRegistry().getPackageInfos())
+    {
+      result.add(packageInfo.getEPackage());
+    }
+
+    Collections.sort(result, new Comparator<EPackage>()
+    {
+      public int compare(EPackage p1, EPackage p2)
+      {
+        return p1.getNsURI().compareTo(p2.getNsURI());
+      }
+    });
+
+    return result;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static List<EClass> getSortedClasses(CDOView view)
+  {
+    List<EClass> result = new ArrayList<EClass>();
+    for (CDOPackageInfo packageInfo : view.getSession().getPackageRegistry().getPackageInfos())
+    {
+      for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())
+      {
+        if (classifier instanceof EClass)
+        {
+          result.add((EClass)classifier);
+
+        }
+      }
+    }
+
+    Collections.sort(result, new Comparator<EClass>()
+    {
+      public int compare(EClass c1, EClass c2)
+      {
+        int comparison = c1.getName().compareTo(c2.getName());
+        if (comparison == 0)
+        {
+          comparison = c1.getEPackage().getNsURI().compareTo(c2.getEPackage().getNsURI());
+        }
+
+        return comparison;
+      }
+    });
+
+    return result;
   }
 
   /**

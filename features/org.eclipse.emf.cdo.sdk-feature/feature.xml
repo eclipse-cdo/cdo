@@ -40,7 +40,27 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.doc"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.compare"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.compare.source"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.server"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server.embedded"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.server.embedded.source"
          version="0.0.0"/>
 
    <includes
@@ -53,10 +73,6 @@
 
    <includes
          id="org.eclipse.emf.cdo.server.lissome"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.doc"
          version="0.0.0"/>
 
    <includes
@@ -81,14 +97,6 @@
 
    <includes
          id="org.eclipse.emf.cdo.examples.installer"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.compare"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.compare.source"
          version="0.0.0"/>
 
    <plugin

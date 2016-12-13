@@ -169,19 +169,34 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
     return new ReferenceQueue<V>();
   }
 
+  /**
+   * @since 3.7
+   */
   @SuppressWarnings("unchecked")
-  protected void purgeQueue()
+  protected int internalPurgeQueue()
   {
     if (queue != null)
     {
+      int purged = 0;
       KeyedReference<K, V> ref;
+
       while ((ref = (KeyedReference<K, V>)queue.poll()) != null)
       {
         K key = ref.getKey();
         map.remove(key);
         purged(key);
+        ++purged;
       }
+
+      return purged;
     }
+
+    return 0;
+  }
+
+  protected void purgeQueue()
+  {
+    internalPurgeQueue();
   }
 
   protected void purged(K key)

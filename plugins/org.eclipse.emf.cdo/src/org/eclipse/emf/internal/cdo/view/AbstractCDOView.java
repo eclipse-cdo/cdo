@@ -66,6 +66,7 @@ import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOQuery;
+import org.eclipse.emf.cdo.view.CDORegistrationHandler;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewAdaptersNotifiedEvent;
 import org.eclipse.emf.cdo.view.CDOViewEvent;
@@ -81,6 +82,7 @@ import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -127,6 +129,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -183,6 +186,15 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     protected CDOObjectHandler[] newArray(int length)
     {
       return new CDOObjectHandler[length];
+    }
+  };
+
+  private final ConcurrentArray<CDORegistrationHandler> registrationHandlers = new ConcurrentArray<CDORegistrationHandler>()
+  {
+    @Override
+    protected CDORegistrationHandler[] newArray(int length)
+    {
+      return new CDORegistrationHandler[length];
     }
   };
 
@@ -294,6 +306,18 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  public int purgeUnusedObjects()
+  {
+    if (objects instanceof ReferenceValueMap2)
+    {
+      ReferenceValueMap2<CDOID, InternalCDOObject> map = (ReferenceValueMap2<CDOID, InternalCDOObject>)objects;
+      Method method = ReflectUtil.getMethod(ReferenceValueMap2.class, "internalPurgeQueue");
+      return (Integer)ReflectUtil.invokeMethod(method, map);
+    }
+
+    return 0;
+  }
+
   public Map<CDOID, InternalCDOObject> getObjects()
   {
     synchronized (getViewMonitor())
@@ -347,7 +371,15 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       }
 
       Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
-      newObjects = new ReferenceValueMap2.Strong<CDOID, InternalCDOObject>(map);
+      newObjects = new ReferenceValueMap2.Strong<CDOID, InternalCDOObject>(map)
+      {
+        @Override
+        protected void purged(CDOID id)
+        {
+          objectCollected(id);
+        }
+      };
+
       break;
     }
 
@@ -359,7 +391,15 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       }
 
       Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
-      newObjects = new ReferenceValueMap2.Soft<CDOID, InternalCDOObject>(map);
+      newObjects = new ReferenceValueMap2.Soft<CDOID, InternalCDOObject>(map)
+      {
+        @Override
+        protected void purged(CDOID id)
+        {
+          objectCollected(id);
+        }
+      };
+
       break;
     }
 
@@ -371,7 +411,15 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       }
 
       Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
-      newObjects = new ReferenceValueMap2.Weak<CDOID, InternalCDOObject>(map);
+      newObjects = new ReferenceValueMap2.Weak<CDOID, InternalCDOObject>(map)
+      {
+        @Override
+        protected void purged(CDOID id)
+        {
+          objectCollected(id);
+        }
+      };
+
       break;
     }
 
@@ -1948,11 +1996,6 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
-  protected void objectDeregistered(InternalCDOObject object)
-  {
-    // Subclasses may override.
-  }
-
   /**
    * @return Never <code>null</code>
    */
@@ -2432,11 +2475,6 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
-  protected void objectRegistered(InternalCDOObject object)
-  {
-    // Subclasses may override.
-  }
-
   public void deregisterObject(InternalCDOObject object)
   {
     synchronized (getViewMonitor())
@@ -2455,6 +2493,81 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       finally
       {
         unlockView();
+      }
+    }
+  }
+
+  protected void objectRegistered(InternalCDOObject object)
+  {
+    CDORegistrationHandler[] handlers = getRegistrationHandlers();
+    if (handlers.length != 0)
+    {
+      synchronized (getViewMonitor())
+      {
+        lockView();
+
+        try
+        {
+          for (int i = 0; i < handlers.length; i++)
+          {
+            CDORegistrationHandler handler = handlers[i];
+            handler.objectRegistered(this, object);
+          }
+        }
+        finally
+        {
+          unlockView();
+        }
+      }
+    }
+  }
+
+  protected void objectDeregistered(InternalCDOObject object)
+  {
+    CDORegistrationHandler[] handlers = getRegistrationHandlers();
+    if (handlers.length != 0)
+    {
+      synchronized (getViewMonitor())
+      {
+        lockView();
+
+        try
+        {
+          for (int i = 0; i < handlers.length; i++)
+          {
+            CDORegistrationHandler handler = handlers[i];
+            handler.objectDeregistered(this, object);
+          }
+        }
+        finally
+        {
+          unlockView();
+        }
+      }
+    }
+  }
+
+  protected void objectCollected(CDOID id)
+  {
+    CDORegistrationHandler[] handlers = getRegistrationHandlers();
+    if (handlers.length != 0)
+    {
+      synchronized (getViewMonitor())
+      {
+        lockView();
+
+        try
+        {
+          for (int i = 0; i < handlers.length; i++)
+          {
+            CDORegistrationHandler handler = handlers[i];
+            handler.objectCollected(this, id);
+          }
+        }
+        finally
+        {
+          unlockView();
+        }
       }
     }
   }
@@ -2508,24 +2621,42 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   public void handleObjectStateChanged(InternalCDOObject object, CDOState oldState, CDOState newState)
   {
-    synchronized (getViewMonitor())
+    CDOObjectHandler[] handlers = getObjectHandlers();
+    if (handlers.length != 0)
     {
-      lockView();
-
-      try
+      synchronized (getViewMonitor())
       {
-        CDOObjectHandler[] handlers = getObjectHandlers();
-        for (int i = 0; i < handlers.length; i++)
+        lockView();
+
+        try
         {
-          CDOObjectHandler handler = handlers[i];
-          handler.objectStateChanged(this, object, oldState, newState);
+          for (int i = 0; i < handlers.length; i++)
+          {
+            CDOObjectHandler handler = handlers[i];
+            handler.objectStateChanged(this, object, oldState, newState);
+          }
+        }
+        finally
+        {
+          unlockView();
         }
       }
-      finally
-      {
-        unlockView();
-      }
     }
+  }
+
+  public void addRegistrationHandler(CDORegistrationHandler handler)
+  {
+    registrationHandlers.add(handler);
+  }
+
+  public void removeRegistrationHandler(CDORegistrationHandler handler)
+  {
+    registrationHandlers.remove(handler);
+  }
+
+  public CDORegistrationHandler[] getRegistrationHandlers()
+  {
+    return registrationHandlers.get();
   }
 
   /*

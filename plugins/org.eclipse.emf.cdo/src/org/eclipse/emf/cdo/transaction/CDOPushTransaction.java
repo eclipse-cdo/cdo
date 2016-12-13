@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOQuery;
+import org.eclipse.emf.cdo.view.CDORegistrationHandler;
 import org.eclipse.emf.cdo.view.CDOUnitManager;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
@@ -330,6 +331,14 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   }
 
   /**
+   * @since 4.6
+   */
+  public void addRegistrationHandler(CDORegistrationHandler handler)
+  {
+    delegate.addRegistrationHandler(handler);
+  }
+
+  /**
    * @since 4.0
    */
   public void addTransactionHandler(CDOTransactionHandlerBase handler)
@@ -489,6 +498,14 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public CDOObjectHandler[] getObjectHandlers()
   {
     return delegate.getObjectHandlers();
+  }
+
+  /**
+   * @since 4.6
+   */
+  public CDORegistrationHandler[] getRegistrationHandlers()
+  {
+    return delegate.getRegistrationHandlers();
   }
 
   public CDOResource getOrCreateResource(String path)
@@ -815,6 +832,14 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public void removeObjectHandler(CDOObjectHandler handler)
   {
     delegate.removeObjectHandler(handler);
+  }
+
+  /**
+   * @since 4.6
+   */
+  public void removeRegistrationHandler(CDORegistrationHandler handler)
+  {
+    delegate.removeRegistrationHandler(handler);
   }
 
   /**

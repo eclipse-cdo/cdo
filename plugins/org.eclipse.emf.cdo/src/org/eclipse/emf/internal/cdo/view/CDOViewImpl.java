@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.internal.cdo.view;
 
+import org.eclipse.emf.cdo.CDOLocalAdapter;
 import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonView;
@@ -970,6 +971,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   @Override
   protected void objectRegistered(InternalCDOObject object)
   {
+    super.objectRegistered(object);
     unitManager.addObject(object);
   }
 
@@ -977,6 +979,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   protected void objectDeregistered(InternalCDOObject object)
   {
     removeLockState(object);
+    super.objectDeregistered(object);
   }
 
   public CDOLockState[] getLockStates(Collection<CDOID> ids)
@@ -1379,7 +1382,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
             }
           }
 
-          getChangeSubscriptionManager().handleDetachedObjects(detachedObjects);
+          changeSubscriptionManager.handleDetachedObjects(detachedObjects);
         }
       }
       finally
@@ -2529,6 +2532,11 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
     private boolean shouldSubscribe(EObject eObject, Adapter adapter)
     {
+      if (adapter instanceof CDOLocalAdapter)
+      {
+        return false;
+      }
+
       if (unitManager.getOpenUnitUnsynced(eObject) != null)
       {
         return false;

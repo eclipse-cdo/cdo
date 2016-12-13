@@ -565,6 +565,21 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   public CDOObjectHandler[] getObjectHandlers();
 
   /**
+   * @since 4.6
+   */
+  public void addRegistrationHandler(CDORegistrationHandler handler);
+
+  /**
+   * @since 4.6
+   */
+  public void removeRegistrationHandler(CDORegistrationHandler handler);
+
+  /**
+   * @since 4.6
+   */
+  public CDORegistrationHandler[] getRegistrationHandlers();
+
+  /**
    * Same as <code>createQuery(language, queryString, null)</code>.
    *
    * @see #createQuery(String, String, Object)

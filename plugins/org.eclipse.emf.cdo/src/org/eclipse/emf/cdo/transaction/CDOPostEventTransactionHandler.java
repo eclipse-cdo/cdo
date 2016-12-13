@@ -144,23 +144,32 @@ public abstract class CDOPostEventTransactionHandler implements CDOTransactionHa
           {
             postEvent((CDOTransaction)object.cdoView(), object, msg);
 
-            boolean eDeliver = object.eDeliver();
+            boolean deliver = object.eDeliver();
 
             try
             {
-              object.eSetDeliver(false);
+              if (deliver)
+              {
+                object.eSetDeliver(false);
+              }
+
               adapters.remove(this);
             }
             finally
             {
-              object.eSetDeliver(eDeliver);
+              if (deliver)
+              {
+                object.eSetDeliver(true);
+              }
             }
           }
         }
       }
     }
 
-    private boolean isModifyingEvent(int eventType)
+    protected abstract void postEvent(CDOTransaction transaction, CDOObject object, Notification msg);
+
+    private static boolean isModifyingEvent(int eventType)
     {
       switch (eventType)
       {
@@ -177,7 +186,5 @@ public abstract class CDOPostEventTransactionHandler implements CDOTransactionHa
         return false;
       }
     }
-
-    protected abstract void postEvent(CDOTransaction transaction, CDOObject object, Notification msg);
   }
 }

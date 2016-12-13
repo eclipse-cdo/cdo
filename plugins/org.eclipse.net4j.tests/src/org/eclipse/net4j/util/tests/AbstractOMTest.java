@@ -768,6 +768,30 @@ public abstract class AbstractOMTest extends TestCase
     skipTest(true);
   }
 
+  public static void triggerGC()
+  {
+    List<byte[]> bigdata = new ArrayList<byte[]>();
+
+    try
+    {
+      while (true)
+      {
+        try
+        {
+          bigdata.add(new byte[1024 * 1024]);
+        }
+        catch (Throwable ex)
+        {
+          break;
+        }
+      }
+    }
+    catch (Throwable ex)
+    {
+      //$FALL-THROUGH$
+    }
+  }
+
   public static void disableLog4j()
   {
     BasicConfigurator.configure(new Appender()

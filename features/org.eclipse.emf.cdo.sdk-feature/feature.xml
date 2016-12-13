@@ -36,10 +36,6 @@
    </url>
 
    <includes
-         id="org.eclipse.emf.cdo"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.doc"
          version="0.0.0"/>
 
@@ -49,10 +45,6 @@
 
    <includes
          id="org.eclipse.emf.cdo.compare.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.server"
          version="0.0.0"/>
 
    <includes

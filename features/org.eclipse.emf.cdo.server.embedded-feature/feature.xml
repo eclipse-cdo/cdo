@@ -35,8 +35,23 @@
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
 
+   <includes
+         id="org.eclipse.emf.cdo.server"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.emf.cdo.server.embedded"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.net4j.jvm"
          download-size="0"
          install-size="0"
          version="0.0.0"

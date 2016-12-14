@@ -39,12 +39,16 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.admin.CDOAdminServerUtil;
+import org.eclipse.emf.cdo.server.internal.embedded.ServerBranchLoader;
+import org.eclipse.emf.cdo.server.internal.embedded.ServerRevisionLoader;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.server.ocl.OCLQueryHandler;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
 import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -71,6 +75,7 @@ import org.eclipse.net4j.util.concurrent.DelegatingExecutorService;
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.ThrowableEvent;
@@ -355,8 +360,12 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
         }
       }
 
-      IManagedContainer serverContainer = getServerContainer();
-      repository.setContainer(serverContainer);
+      if (repository.getContainer() == IPluginContainer.INSTANCE)
+      {
+        IManagedContainer serverContainer = getServerContainer();
+        repository.setContainer(serverContainer);
+      }
+
       registerRepository(repository);
 
       if (activate)
@@ -596,7 +605,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     IStore store = createStore(name);
 
     Map<String, String> repoProps = getRepositoryProperties();
-    InternalRepository repository = (InternalRepository)CDOServerUtil.createRepository(name, store, repoProps);
+    InternalRepository repository = createRepository(name, store, repoProps);
 
     if (hasAnnotation(CountedTime.class))
     {
@@ -653,6 +662,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
 
     return repository;
+  }
+
+  protected InternalRepository createRepository(String name, IStore store, Map<String, String> props)
+  {
+    return (InternalRepository)CDOServerUtil.createRepository(name, store, props);
   }
 
   protected InternalRepository getTestRepository()
@@ -1075,9 +1089,14 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     private static final long serialVersionUID = 1L;
 
+    public MEMConfig(String name, boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
+    {
+      super(name, supportingAudits, supportingBranches, idGenerationLocation);
+    }
+
     public MEMConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
     {
-      super(STORE_NAME, supportingAudits, supportingBranches, idGenerationLocation);
+      this(STORE_NAME, supportingAudits, supportingBranches, idGenerationLocation);
     }
 
     @Override
@@ -1095,6 +1114,34 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     public IStore createStore(String repoName)
     {
       return MEMStoreUtil.createMEMStore();
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class Embedded extends MEMConfig
+    {
+      private static final long serialVersionUID = 1L;
+
+      public Embedded(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
+      {
+        super(STORE_NAME + "Embedded", supportingAudits, supportingBranches, idGenerationLocation);
+      }
+
+      @Override
+      protected InternalRepository createRepository(String name)
+      {
+        InternalRepository repository = super.createRepository(name);
+
+        InternalCDORevisionManager revisionManager = repository.getRevisionManager();
+        revisionManager.setRevisionLoader(new ServerRevisionLoader(repository));
+
+        InternalCDOBranchManager branchManager = CDOBranchUtil.createBranchManager();
+        branchManager.setBranchLoader(new ServerBranchLoader(repository));
+        repository.setBranchManager(branchManager);
+
+        return repository;
+      }
     }
   }
 

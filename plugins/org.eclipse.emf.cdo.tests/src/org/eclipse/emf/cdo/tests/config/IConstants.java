@@ -33,11 +33,9 @@ public interface IConstants
 
   public static final RepositoryConfig MEM_OFFLINE = new MEMOfflineConfig(IDGenerationLocation.CLIENT);
 
-  /**
-   * @deprecated Not yet supported.
-   */
-  @Deprecated
-  public static final SessionConfig EMBEDDED = SessionConfig.Embedded.INSTANCE;
+  public static final RepositoryConfig MEM_EMBEDDED_BRANCHES = new MEMConfig.Embedded(true, true, IDGenerationLocation.STORE);
+
+  public static final SessionConfig EMBEDDED = Net4j.JVM.Embedded.INSTANCE;
 
   public static final SessionConfig JVM = Net4j.JVM.INSTANCE;
 

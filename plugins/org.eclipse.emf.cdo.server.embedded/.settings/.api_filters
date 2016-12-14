@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.server.embedded" version="2">
-    <resource path="src/org/eclipse/emf/cdo/server/internal/embedded/EmbeddedRepository.java" type="org.eclipse.emf.cdo.server.internal.embedded.EmbeddedRepository$ClientAwareRevisionLoader">
+    <resource path="src/org/eclipse/emf/cdo/server/internal/embedded/ClientBranchManager.java" type="org.eclipse.emf.cdo.server.internal.embedded.ClientBranchManager">
         <filter id="574619656">
             <message_arguments>
-                <message_argument value="RevisionLoader"/>
-                <message_argument value="ClientAwareRevisionLoader"/>
+                <message_argument value="InternalCDOBranchManager"/>
+                <message_argument value="ClientBranchManager"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/server/internal/embedded/EmbeddedRepository.java" type="org.eclipse.emf.cdo.server.internal.embedded.EmbeddedRepository$DelegatingRevisionManager">
+    <resource path="src/org/eclipse/emf/cdo/server/internal/embedded/ClientRevisionManager.java" type="org.eclipse.emf.cdo.server.internal.embedded.ClientRevisionManager">
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="InternalCDORevisionManager"/>
-                <message_argument value="DelegatingRevisionManager"/>
+                <message_argument value="ClientRevisionManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/internal/embedded/ServerRevisionLoader.java" type="org.eclipse.emf.cdo.server.internal.embedded.ServerRevisionLoader">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="RevisionLoader"/>
+                <message_argument value="ServerRevisionLoader"/>
+            </message_arguments>
+        </filter>
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="RevisionLoader2"/>
+                <message_argument value="ServerRevisionLoader"/>
             </message_arguments>
         </filter>
     </resource>

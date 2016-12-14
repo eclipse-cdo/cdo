@@ -11,14 +11,18 @@
  */
 package org.eclipse.emf.cdo.tests.config.impl;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDONet4jViewProvider;
-import org.eclipse.emf.cdo.server.CDOServerUtil;
-import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.internal.embedded.ClientBranchManager;
+import org.eclipse.emf.cdo.server.internal.embedded.ClientRevisionManager;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
@@ -315,56 +319,6 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   /**
    * @author Eike Stepper
-   * @deprecated Not yet supported.
-   */
-  @Deprecated
-  public static final class Embedded extends SessionConfig
-  {
-    public static final String NAME = "Embedded";
-
-    public static final Embedded INSTANCE = new Embedded();
-
-    private static final long serialVersionUID = 1L;
-
-    public Embedded()
-    {
-      super(NAME);
-    }
-
-    public void initCapabilities(Set<String> capabilities)
-    {
-      capabilities.add(CAPABILITY_EMBEDDED);
-    }
-
-    public String getURIProtocol()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public String getURIPrefix()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public CDOSessionConfiguration createSessionConfiguration(String repositoryName)
-    {
-      IRepository repository = getCurrentTest().getRepository(repositoryName);
-
-      org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration configuration = CDOServerUtil.createSessionConfiguration();
-      configuration.setRepository(repository);
-      return configuration;
-    }
-
-    @Override
-    protected boolean usesServerContainer()
-    {
-      return true;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
    */
   public static abstract class Net4j extends SessionConfig
   {
@@ -620,7 +574,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     /**
      * @author Eike Stepper
      */
-    public static final class JVM extends SessionConfig.Net4j
+    public static class JVM extends SessionConfig.Net4j
     {
       public static final String NAME = "JVM";
 
@@ -630,9 +584,14 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
       private static final long serialVersionUID = 1L;
 
+      public JVM(String name)
+      {
+        super(name);
+      }
+
       public JVM()
       {
-        super(NAME);
+        this(NAME);
       }
 
       @Override
@@ -683,6 +642,52 @@ public abstract class SessionConfig extends Config implements ISessionConfig
             return container;
           }
         };
+      }
+
+      /**
+       * @author Eike Stepper
+       */
+      public static final class Embedded extends SessionConfig.Net4j.JVM
+      {
+        public static final String NAME = "JVMEmbedded";
+
+        public static final Embedded INSTANCE = new Embedded();
+
+        private static final long serialVersionUID = 1L;
+
+        public Embedded()
+        {
+          super(NAME);
+        }
+
+        @Override
+        public void initCapabilities(Set<String> capabilities)
+        {
+          super.initCapabilities(capabilities);
+          capabilities.add(CAPABILITY_NET4J_EMBEDDED);
+        }
+
+        @Override
+        public CDOSessionConfiguration createSessionConfiguration(String repositoryName)
+        {
+          InternalRepository repository = getCurrentTest().getRepository(repositoryName);
+          CDOBranchManager branchManager = new ClientBranchManager(repository.getBranchManager());
+          CDORevisionManager revisionManager = new ClientRevisionManager(repository.getRevisionManager());
+
+          CDONet4jSessionConfiguration configuration = (CDONet4jSessionConfiguration)super.createSessionConfiguration(repositoryName);
+          configuration.setBranchManager(branchManager);
+          configuration.setRevisionManager(revisionManager);
+          configuration.setSignalTimeout(Integer.MAX_VALUE);
+
+          return configuration;
+        }
+
+        @Override
+        public void configureSession(CDOSession session)
+        {
+          super.configureSession(session);
+          ((CDONet4jSession)session).options().setCommitTimeout(Integer.MAX_VALUE);
+        }
       }
     }
   }

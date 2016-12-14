@@ -544,7 +544,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
   public synchronized void addRevision(InternalCDORevision revision, boolean raw)
   {
     InternalCDOBranch branch = revision.getBranch();
-    if (branch.getBranchManager().getBranchLoader() != getRepository())
+    if (branch.getBranchManager().getRepository() != getRepository())
     {
       throw new IllegalArgumentException("Branch does not belong to this repository: " + branch);
     }

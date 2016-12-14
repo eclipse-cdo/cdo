@@ -1,17 +1,34 @@
+/*
+ * Copyright (c) 2016 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
 package org.eclipse.emf.cdo.server.embedded;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
+import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.internal.embedded.EmbeddedRepository;
-import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 
+import org.eclipse.net4j.acceptor.IAcceptor;
+import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -27,6 +44,8 @@ import java.util.Map;
  */
 public abstract class CDOEmbeddedRepositoryConfig extends Lifecycle
 {
+  private static final String JVM_ACCEPTOR_PREFIX = "cdo_embedded_repo_";
+
   private final String repositoryName;
 
   private EmbeddedRepository repository;
@@ -41,7 +60,7 @@ public abstract class CDOEmbeddedRepositoryConfig extends Lifecycle
     return repository;
   }
 
-  public final CDOSession openClientSession()
+  public final CDONet4jSession openClientSession()
   {
     return repository.openClientSession();
   }
@@ -96,22 +115,55 @@ public abstract class CDOEmbeddedRepositoryConfig extends Lifecycle
   /**
    * Subclasses may override.
    */
-  public void modifySessionConfiguration(IRepository repository, CDONet4jSessionConfiguration config)
+  public void modifySession(IRepository repository, CDONet4jSession session)
   {
-    // Do nothing.
+    session.options().setCommitTimeout(Integer.MAX_VALUE);
   }
 
   /**
    * Subclasses may override.
    */
-  public void modifySession(IRepository repository, CDONet4jSession session)
+  public CDONet4jSessionConfiguration createSessionConfiguration(IConnector connector, CDOBranchManager branchManager, CDORevisionManager revisionManager)
   {
-    // Do nothing.
+    CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
+    configuration.setConnector(connector);
+    configuration.setRepositoryName(repositoryName);
+    configuration.setSignalTimeout(Integer.MAX_VALUE);
+    configuration.setBranchManager(branchManager);
+    configuration.setRevisionManager(revisionManager);
+    return configuration;
   }
 
-  public abstract IStore createStore();
+  /**
+   * Subclasses may override.
+   */
+  public IAcceptor createAcceptor(IManagedContainer container)
+  {
+    return JVMUtil.getAcceptor(container, JVM_ACCEPTOR_PREFIX + repositoryName);
+  }
 
-  public abstract void initProperties(Map<String, String> properties);
+  /**
+   * Subclasses may override.
+   */
+  public IConnector createConnector(IManagedContainer container)
+  {
+    return JVMUtil.getConnector(container, JVM_ACCEPTOR_PREFIX + repositoryName);
+  }
+
+  public abstract IStore createStore(IManagedContainer container);
+
+  public abstract void initProperties(IManagedContainer container, Map<String, String> properties);
+
+  protected void activateRepository(IRepository repository)
+  {
+    LifecycleUtil.activate(repository);
+  }
+
+  protected void deactivateRepository()
+  {
+    LifecycleUtil.deactivate(repository);
+    repository = null;
+  }
 
   @Override
   protected void doActivate() throws Exception
@@ -120,25 +172,34 @@ public abstract class CDOEmbeddedRepositoryConfig extends Lifecycle
     IManagedContainer container = getContainer();
 
     // Initialize store.
-    IStore store = createStore();
+    IStore store = createStore(container);
 
     // Initialize properties.
     Map<String, String> properties = new HashMap<String, String>();
     properties.put(IRepository.Props.OVERRIDE_UUID, "");
-    initProperties(properties);
+    initProperties(container, properties);
 
     repository = new EmbeddedRepository(this);
     ((InternalRepository)repository).setContainer(container);
     ((InternalRepository)repository).setName(repositoryName);
     ((InternalRepository)repository).setStore((InternalStore)store);
     ((InternalRepository)repository).setProperties(properties);
-    LifecycleUtil.activate(repository);
+
+    activateRepository(repository);
+
+    repository.addListener(new LifecycleEventAdapter()
+    {
+      @Override
+      protected void onDeactivated(ILifecycle lifecycle)
+      {
+        CDOEmbeddedRepositoryConfig.this.deactivate();
+      }
+    });
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    LifecycleUtil.deactivate(repository);
-    repository = null;
+    deactivateRepository();
   }
 }

@@ -2296,8 +2296,9 @@ public class Repository extends Container<Object> implements InternalRepository,
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(store, "store"); //$NON-NLS-1$
+
     checkState(!StringUtil.isEmpty(name), "name is empty"); //$NON-NLS-1$
+    checkState(store, "store"); //$NON-NLS-1$
     checkState(packageRegistry, "packageRegistry"); //$NON-NLS-1$
     checkState(sessionManager, "sessionManager"); //$NON-NLS-1$
     checkState(branchManager, "branchManager"); //$NON-NLS-1$
@@ -2308,20 +2309,66 @@ public class Repository extends Container<Object> implements InternalRepository,
     checkState(lockingManager, "lockingManager"); //$NON-NLS-1$
 
     packageRegistry.setReplacingDescriptors(true);
-    packageRegistry.setPackageProcessor(this);
-    packageRegistry.setPackageLoader(this);
 
-    branchManager.setRepository(this);
-    branchManager.setBranchLoader(this);
+    if (packageRegistry.getPackageProcessor() == null)
+    {
+      packageRegistry.setPackageProcessor(this);
+    }
 
-    revisionManager.setRevisionLoader(this);
-    sessionManager.setRepository(this);
-    queryManager.setRepository(this);
-    commitInfoManager.setRepository(this);
-    commitInfoManager.setCommitInfoLoader(this);
-    commitManager.setRepository(this);
-    lockingManager.setRepository(this);
-    store.setRepository(this);
+    if (packageRegistry.getPackageLoader() == null)
+    {
+      packageRegistry.setPackageLoader(this);
+    }
+
+    if (branchManager.getRepository() == null)
+    {
+      branchManager.setRepository(this);
+    }
+
+    if (branchManager.getBranchLoader() == null)
+    {
+      branchManager.setBranchLoader(this);
+    }
+
+    if (revisionManager.getRevisionLoader() == null)
+    {
+      revisionManager.setRevisionLoader(this);
+    }
+
+    if (sessionManager.getRepository() == null)
+    {
+      sessionManager.setRepository(this);
+    }
+
+    if (queryManager.getRepository() == null)
+    {
+      queryManager.setRepository(this);
+    }
+
+    if (commitInfoManager.getRepository() == null)
+    {
+      commitInfoManager.setRepository(this);
+    }
+
+    if (commitInfoManager.getCommitInfoLoader() == null)
+    {
+      commitInfoManager.setCommitInfoLoader(this);
+    }
+
+    if (commitManager.getRepository() == null)
+    {
+      commitManager.setRepository(this);
+    }
+
+    if (lockingManager.getRepository() == null)
+    {
+      lockingManager.setRepository(this);
+    }
+
+    if (store.getRepository() == null)
+    {
+      store.setRepository(this);
+    }
   }
 
   @Override

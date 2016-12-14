@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
-import org.eclipse.net4j.util.event.IListener;
 
 import java.util.List;
 
@@ -69,12 +68,6 @@ public class TestRevisionManager extends CDORevisionManagerImpl
     }
 
     return super.getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, synthetics);
-  }
-
-  @Override
-  public void addListener(IListener listener)
-  {
-    super.addListener(listener);
   }
 
   public void resetLoadCounter()

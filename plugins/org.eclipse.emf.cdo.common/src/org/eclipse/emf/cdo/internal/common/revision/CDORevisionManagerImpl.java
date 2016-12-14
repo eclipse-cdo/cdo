@@ -473,8 +473,10 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
         int oldVersion = revision.getVersion() - 1;
         if (oldVersion >= CDORevision.UNSPECIFIED_VERSION)
         {
+          CDOID id = revision.getID();
           CDOBranchVersion old = revision.getBranch().getVersion(oldVersion);
-          InternalCDORevision oldRevision = getCachedRevisionByVersion(revision.getID(), old);
+
+          InternalCDORevision oldRevision = getCachedRevisionByVersion(id, old);
           if (!revision.isHistorical())
           {
             if (oldRevision != null)
@@ -484,12 +486,12 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
             else
             {
               // Remove last revision from cache, which is not revised
-              InternalCDORevision cachedLatestRevision = getCachedRevision(revision.getID(), revision);
+              InternalCDORevision cachedLatestRevision = getCachedRevision(id, revision);
               if (cachedLatestRevision != null && !cachedLatestRevision.isHistorical())
               {
                 // Found revision is stale.
                 // We cannot revise it now because of lack information, thus remove it from the cache
-                cache.removeRevision(cachedLatestRevision.getID(), cachedLatestRevision);
+                cache.removeRevision(id, cachedLatestRevision);
               }
             }
           }

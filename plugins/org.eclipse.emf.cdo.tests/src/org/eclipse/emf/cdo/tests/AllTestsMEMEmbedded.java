@@ -15,9 +15,7 @@ import junit.framework.TestSuite;
 
 /**
  * @author Eike Stepper
- * @deprecated Not yet supported.
  */
-@Deprecated
 public class AllTestsMEMEmbedded extends AllConfigs
 {
   public static Test suite()
@@ -28,6 +26,6 @@ public class AllTestsMEMEmbedded extends AllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, MEM, EMBEDDED, NATIVE);
+    addScenario(parent, MEM_EMBEDDED_BRANCHES, EMBEDDED, NATIVE);
   }
 }

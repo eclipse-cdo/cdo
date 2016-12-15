@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping3;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.internal.db.DBIndexAnnotation;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -252,6 +253,68 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
             }
 
             unsettableFields.put(feature, field);
+          }
+        }
+      }
+
+      initIndices(allPersistentFeatures);
+    }
+  }
+
+  private void initIndices(EStructuralFeature[] allPersistentFeatures)
+  {
+    for (List<EStructuralFeature> features : DBIndexAnnotation.getIndices(eClass, allPersistentFeatures))
+    {
+      int size = features.size();
+      if (size > 1)
+      {
+        IDBField[] fields = new IDBField[size];
+
+        for (int i = 0; i < size; i++)
+        {
+          EStructuralFeature feature = features.get(i);
+
+          ITypeMapping typeMapping = getValueMapping(feature);
+          IDBField field = typeMapping.getField();
+          fields[i] = field;
+        }
+
+        if (!table.hasIndexFor(fields))
+        {
+          InternalDBIndex index = (InternalDBIndex)table.addIndex(IDBIndex.Type.NON_UNIQUE, fields);
+          index.setOptional(true); // Creation might fail for unsupported column type!
+        }
+      }
+      else
+      {
+        EStructuralFeature feature = features.get(0);
+        if (feature.isMany())
+        {
+          IListMapping listMapping = getListMapping(feature);
+          if (listMapping instanceof AbstractListTableMapping)
+          {
+            AbstractListTableMapping mapping = (AbstractListTableMapping)listMapping;
+
+            IDBTable table = mapping.getDBTables().iterator().next();
+            ITypeMapping typeMapping = mapping.getTypeMapping();
+            IDBField field = typeMapping.getField();
+
+            if (!table.hasIndexFor(field))
+            {
+              InternalDBIndex index = (InternalDBIndex)table.addIndex(IDBIndex.Type.NON_UNIQUE, field);
+              index.setOptional(true); // Creation might fail for unsupported column type!
+            }
+          }
+        }
+        else
+        {
+          ITypeMapping typeMapping = getValueMapping(feature);
+          IDBField field = typeMapping.getField();
+
+          if (!table.hasIndexFor(field))
+          {
+            InternalDBIndex index = (InternalDBIndex)table.addIndex(IDBIndex.Type.NON_UNIQUE, field);
+            index.setOptional(true); // Creation might fail for unsupported column type!
           }
         }
       }

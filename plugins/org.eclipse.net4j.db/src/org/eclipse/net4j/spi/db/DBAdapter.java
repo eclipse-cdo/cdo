@@ -395,7 +395,7 @@ public abstract class DBAdapter implements IDBAdapter
           break;
 
         default:
-          throw new IllegalStateException("Illegal change kind: " + changeKind);
+          throw illegalChangeKind(changeKind);
         }
       }
 
@@ -441,8 +441,16 @@ public abstract class DBAdapter implements IDBAdapter
           break;
 
         default:
-          throw new IllegalStateException("Illegal change kind: " + changeKind);
+          throw illegalChangeKind(changeKind);
         }
+
+        stopRecursion();
+      }
+
+      @Override
+      public void visit(IDBFieldDelta delta)
+      {
+        stopRecursion();
       }
     };
 
@@ -502,13 +510,8 @@ public abstract class DBAdapter implements IDBAdapter
         break;
 
       default:
-        throw new IllegalStateException("Illegal change kind: " + changeKind);
+        throw IDBDeltaVisitor.Default.illegalChangeKind(changeKind);
       }
-    }
-
-    if (delta.getIndexDeltaCount() != 0)
-    {
-      throw new UnsupportedOperationException("Not yet implemented");
     }
   }
 

@@ -77,7 +77,7 @@ public interface IDBDeltaVisitor
           break;
 
         default:
-          illegalChangeKind(changeKind);
+          throw illegalChangeKind(changeKind);
         }
       }
       else
@@ -121,7 +121,7 @@ public interface IDBDeltaVisitor
           break;
 
         default:
-          illegalChangeKind(changeKind);
+          throw illegalChangeKind(changeKind);
         }
       }
       else
@@ -165,7 +165,7 @@ public interface IDBDeltaVisitor
           break;
 
         default:
-          illegalChangeKind(changeKind);
+          throw illegalChangeKind(changeKind);
         }
       }
       else
@@ -209,7 +209,7 @@ public interface IDBDeltaVisitor
           break;
 
         default:
-          illegalChangeKind(changeKind);
+          throw illegalChangeKind(changeKind);
         }
       }
       else
@@ -253,7 +253,7 @@ public interface IDBDeltaVisitor
           break;
 
         default:
-          illegalChangeKind(changeKind);
+          throw illegalChangeKind(changeKind);
         }
       }
       else
@@ -297,7 +297,7 @@ public interface IDBDeltaVisitor
           break;
 
         default:
-          illegalChangeKind(changeKind);
+          throw illegalChangeKind(changeKind);
         }
       }
       else
@@ -336,9 +336,12 @@ public interface IDBDeltaVisitor
       throw new StopRecursion();
     }
 
-    private void illegalChangeKind(ChangeKind changeKind)
+    /**
+     * @since 4.6
+     */
+    public static RuntimeException illegalChangeKind(ChangeKind changeKind)
     {
-      throw new IllegalStateException("Illegal change kind: " + changeKind);
+      return new IllegalStateException("Illegal change kind: " + changeKind);
     }
   }
 

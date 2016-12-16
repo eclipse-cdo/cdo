@@ -21,6 +21,7 @@ import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -50,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -283,6 +285,35 @@ public final class EMFUtil
     });
 
     return array;
+  }
+
+  /**
+   * @since 4.6
+   */
+  public static EList<EAnnotation> getAnnotations(EClass eClass, String sourceURI)
+  {
+    EList<EAnnotation> annotations = new BasicEList<EAnnotation>();
+    getAnnotations(eClass, sourceURI, annotations, new HashSet<EClass>());
+    return annotations;
+  }
+
+  private static void getAnnotations(EClass eClass, String sourceURI, EList<EAnnotation> annotations, Set<EClass> visited)
+  {
+    if (visited.add(eClass))
+    {
+      for (EAnnotation annotation : eClass.getEAnnotations())
+      {
+        if (sourceURI == null || sourceURI.equals(annotation.getSource()))
+        {
+          annotations.add(annotation);
+        }
+      }
+
+      for (EClass superType : eClass.getESuperTypes())
+      {
+        getAnnotations(superType, sourceURI, annotations, visited);
+      }
+    }
   }
 
   public static EPackage getTopLevelPackage(EPackage ePackage)

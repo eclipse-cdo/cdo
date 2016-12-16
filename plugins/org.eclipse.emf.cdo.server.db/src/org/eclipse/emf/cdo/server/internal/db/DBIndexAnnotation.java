@@ -10,10 +10,9 @@
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
-import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -43,7 +42,7 @@ public final class DBIndexAnnotation
   {
     Set<List<EStructuralFeature>> indices = new HashSet<List<EStructuralFeature>>();
 
-    for (EAnnotation annotation : getAnnotations(eClass))
+    for (EAnnotation annotation : EMFUtil.getAnnotations(eClass, SOURCE_URI))
     {
       List<EStructuralFeature> features = new ArrayList<EStructuralFeature>();
 
@@ -119,32 +118,6 @@ public final class DBIndexAnnotation
     }
 
     return indices;
-  }
-
-  private static EList<EAnnotation> getAnnotations(EClass eClass)
-  {
-    EList<EAnnotation> annotations = new BasicEList<EAnnotation>();
-    getAnnotations(eClass, annotations, new HashSet<EClass>());
-    return annotations;
-  }
-
-  private static void getAnnotations(EClass eClass, EList<EAnnotation> annotations, Set<EClass> visited)
-  {
-    if (visited.add(eClass))
-    {
-      for (EAnnotation annotation : eClass.getEAnnotations())
-      {
-        if (SOURCE_URI.equals(annotation.getSource()))
-        {
-          annotations.add(annotation);
-        }
-      }
-
-      for (EClass superType : eClass.getESuperTypes())
-      {
-        getAnnotations(superType, annotations, visited);
-      }
-    }
   }
 
   private static EStructuralFeature getPersistentFeature(String featureName, EStructuralFeature[] allPersistentFeatures)

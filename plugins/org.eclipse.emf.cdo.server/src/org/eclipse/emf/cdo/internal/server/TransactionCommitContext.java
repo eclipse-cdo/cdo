@@ -165,6 +165,10 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private Map<CDOID, InternalCDORevision> cachedRevisions;
 
+  private Map<CDOID, InternalCDORevision> oldRevisions = CDOIDUtil.createMap();
+
+  private Map<CDOID, InternalCDORevision> newRevisions;
+
   private Set<Object> lockedObjects = new HashSet<Object>();
 
   private List<CDOID> lockedTargets;
@@ -325,12 +329,20 @@ public class TransactionCommitContext implements InternalCommitContext
 
   public InternalCDORevision[] getDetachedRevisions()
   {
-    // This array can contain null values as they only come from the cache!
-    for (InternalCDORevision cachedDetachedRevision : cachedDetachedRevisions)
+    return getDetachedRevisions(true);
+  }
+
+  public InternalCDORevision[] getDetachedRevisions(boolean check)
+  {
+    if (check)
     {
-      if (cachedDetachedRevision == null)
+      // This array can contain null values as they only come from the cache!
+      for (InternalCDORevision cachedDetachedRevision : cachedDetachedRevisions)
       {
-        throw new AssertionError("Detached revisions are incomplete");
+        if (cachedDetachedRevision == null)
+        {
+          throw new AssertionError("Detached revisions are incomplete");
+        }
       }
     }
 
@@ -340,6 +352,27 @@ public class TransactionCommitContext implements InternalCommitContext
   public InternalCDORevisionDelta[] getDirtyObjectDeltas()
   {
     return dirtyObjectDeltas;
+  }
+
+  public Map<CDOID, InternalCDORevision> getOldRevisions()
+  {
+    return oldRevisions;
+  }
+
+  public Map<CDOID, InternalCDORevision> getNewRevisions()
+  {
+    if (newRevisions == null)
+    {
+      newRevisions = CDOIDUtil.createMap();
+
+      for (int i = 0; i < newObjects.length; i++)
+      {
+        InternalCDORevision revision = newObjects[i];
+        newRevisions.put(revision.getID(), revision);
+      }
+    }
+
+    return newRevisions;
   }
 
   public InternalCDORevision getRevision(CDOID id)
@@ -1203,6 +1236,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
     // Make sure all chunks are loaded
     repository.ensureChunks(oldRevision, CDORevision.UNCHUNKED);
+
+    oldRevisions.put(id, oldRevision);
 
     InternalCDORevision newRevision = oldRevision.copy();
     newRevision.adjustForCommit(branch, timeStamp);

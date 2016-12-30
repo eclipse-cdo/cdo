@@ -36,9 +36,10 @@ public class H2Config extends DBConfig
 
   private static JdbcDataSource defaultDataSource;
 
-  public H2Config(boolean supportingAudits, boolean supportingBranches, boolean withRanges, boolean copyOnBranch, IDGenerationLocation idGenerationLocation)
+  public H2Config(boolean supportingAudits, boolean supportingBranches, boolean withRanges, boolean copyOnBranch, boolean inverseLists,
+      IDGenerationLocation idGenerationLocation)
   {
-    super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, withRanges, copyOnBranch, idGenerationLocation);
+    super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, withRanges, copyOnBranch, inverseLists, idGenerationLocation);
   }
 
   @Override

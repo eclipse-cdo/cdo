@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
@@ -37,6 +39,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 /**
  * @author Caspar De Groot
  */
+@Requires(IModelConfig.CAPABILITY_LEGACY)
 public class Bugzilla_335675_Test extends AbstractCDOTest
 {
   public void test0() throws Exception

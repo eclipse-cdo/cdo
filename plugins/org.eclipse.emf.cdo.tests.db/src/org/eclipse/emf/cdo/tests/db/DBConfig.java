@@ -39,6 +39,8 @@ public abstract class DBConfig extends RepositoryConfig
 
   public static final String CAPABILITY_COPY_ON_BRANCH = "DB.copy.on.branch";
 
+  public static final String CAPABILITY_INVERSE_LISTS = "DB.inverse.lists";
+
   public static final String PROP_TEST_MAPPING_STRATEGY = "test.repository.MappingStrategy";
 
   private static final long serialVersionUID = 1L;
@@ -47,14 +49,17 @@ public abstract class DBConfig extends RepositoryConfig
 
   private boolean copyOnBranch;
 
+  private boolean inverseLists;
+
   private transient IDBAdapter dbAdapter;
 
-  public DBConfig(String name, boolean supportingAudits, boolean supportingBranches, boolean withRanges, boolean copyOnBranch,
+  public DBConfig(String name, boolean supportingAudits, boolean supportingBranches, boolean withRanges, boolean copyOnBranch, boolean inverseLists,
       IDGenerationLocation idGenerationLocation)
   {
     super(name, supportingAudits, supportingBranches, idGenerationLocation);
     this.withRanges = withRanges;
     this.copyOnBranch = copyOnBranch;
+    this.inverseLists = inverseLists;
   }
 
   @Override
@@ -72,6 +77,11 @@ public abstract class DBConfig extends RepositoryConfig
     if (isCopyOnBranch())
     {
       capabilities.add(CAPABILITY_COPY_ON_BRANCH);
+    }
+
+    if (isInverseLists())
+    {
+      capabilities.add(CAPABILITY_INVERSE_LISTS);
     }
   }
 
@@ -101,6 +111,11 @@ public abstract class DBConfig extends RepositoryConfig
   public boolean isCopyOnBranch()
   {
     return copyOnBranch;
+  }
+
+  public boolean isInverseLists()
+  {
+    return inverseLists;
   }
 
   @Override
@@ -161,7 +176,7 @@ public abstract class DBConfig extends RepositoryConfig
   @Override
   protected String getMappingStrategySpecialization()
   {
-    return (withRanges ? "-ranges" : "") + (copyOnBranch ? "-copy" : "");
+    return (withRanges ? "-ranges" : "") + (copyOnBranch ? "-copy" : "") + (inverseLists ? "-inverse" : "");
   }
 
   protected abstract IDBAdapter createDBAdapter();

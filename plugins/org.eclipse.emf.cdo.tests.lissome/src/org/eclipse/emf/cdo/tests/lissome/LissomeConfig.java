@@ -63,6 +63,12 @@ public class LissomeConfig extends RepositoryConfig
     return true;
   }
 
+  @Override
+  public boolean isSupportingExtRefs()
+  {
+    return false;
+  }
+
   public IStore createStore(String repoName)
   {
     if (reusableFolder == null)

@@ -423,7 +423,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   }
 
   /**
-   * This is an intermediate implementation. It should be changed after classmappings support a general way to implement
+   * This is an intermediate implementation. It should be changed after class mappings support a general way to implement
    * queries ...
    *
    * @param accessor

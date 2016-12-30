@@ -250,9 +250,11 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     protocol.removeListener(signalCounter);
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private class CustomCDOFetchRuleManager implements CDOFetchRuleManager
   {
-
     private CDOID companyCDOID;
 
     public CustomCDOFetchRuleManager(CDOID companyCDOID)

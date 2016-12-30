@@ -103,6 +103,11 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDO
   public InternalCDORevision[] getDetachedRevisions();
 
   /**
+   * @since 4.6
+   */
+  public InternalCDORevision[] getDetachedRevisions(boolean check);
+
+  /**
    * @since 4.2
    */
   public void setClearResourcePathCache(boolean clearResourcePathCache);

@@ -508,7 +508,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     {
       async = monitor.forkAsync();
 
-      boolean isInitialCommit = passedPackageUnits && contains(packageUnits, EresourcePackage.eINSTANCE.getNsURI());
+      boolean isInitialCommit = passedPackageUnits && containsPackageUnit(packageUnits, EresourcePackage.eINSTANCE.getNsURI());
       if (isInitialCommit)
       {
         systemPackageMappingInfo = new SystemPackageMappingInfo();
@@ -629,42 +629,33 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     return store.getDBSchema().getTable(tableName) != null;
   }
 
-  private boolean contains(InternalCDOPackageUnit[] packageUnits, String packageUnitID)
+  protected Set<IClassMapping> mapPackageUnits(InternalCDOPackageUnit[] packageUnits, Connection connection, boolean unmap)
   {
-    for (InternalCDOPackageUnit packageUnit : packageUnits)
-    {
-      if (packageUnit.getID().equals(packageUnitID))
-      {
-        return true;
-      }
-    }
+    Set<IClassMapping> classMappings = new HashSet<IClassMapping>();
 
-    return false;
-  }
-
-  private void mapPackageUnits(InternalCDOPackageUnit[] packageUnits, Connection connection, boolean unmap)
-  {
     if (packageUnits != null && packageUnits.length != 0)
     {
       for (InternalCDOPackageUnit packageUnit : packageUnits)
       {
         InternalCDOPackageInfo[] packageInfos = packageUnit.getPackageInfos();
-        mapPackageInfos(packageInfos, connection, unmap);
+        mapPackageInfos(packageInfos, connection, unmap, classMappings);
       }
     }
+
+    return classMappings;
   }
 
-  private void mapPackageInfos(InternalCDOPackageInfo[] packageInfos, Connection connection, boolean unmap)
+  private void mapPackageInfos(InternalCDOPackageInfo[] packageInfos, Connection connection, boolean unmap, Set<IClassMapping> classMappings)
   {
     for (InternalCDOPackageInfo packageInfo : packageInfos)
     {
       EPackage ePackage = packageInfo.getEPackage();
       EClass[] persistentClasses = EMFUtil.getPersistentClasses(ePackage);
-      mapClasses(connection, unmap, persistentClasses);
+      mapClasses(connection, unmap, persistentClasses, classMappings);
     }
   }
 
-  private void mapClasses(Connection connection, boolean unmap, EClass... eClasses)
+  private void mapClasses(Connection connection, boolean unmap, EClass[] eClasses, Set<IClassMapping> classMappings)
   {
     for (EClass eClass : eClasses)
     {
@@ -678,13 +669,10 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
           continue;
         }
 
-        if (unmap)
+        IClassMapping classMapping = unmap ? removeClassMapping(eClass) : createClassMapping(eClass);
+        if (classMapping != null)
         {
-          removeClassMapping(eClass);
-        }
-        else
-        {
-          createClassMapping(eClass);
+          classMappings.add(classMapping);
         }
       }
     }
@@ -692,29 +680,30 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   private IClassMapping createClassMapping(EClass eClass)
   {
-    IClassMapping mapping = doCreateClassMapping(eClass);
-    if (mapping != null)
+    IClassMapping classMapping = doCreateClassMapping(eClass);
+    if (classMapping != null)
     {
-      classMappings.put(eClass, mapping);
+      classMappings.put(eClass, classMapping);
     }
 
-    return mapping;
+    return classMapping;
   }
 
   private IClassMapping removeClassMapping(EClass eClass)
   {
-    IClassMapping mapping = classMappings.get(eClass);
-    if (mapping != null)
+    IClassMapping classMapping = classMappings.get(eClass);
+    if (classMapping != null)
     {
       IDBSchema schema = getStore().getDBSchema();
-      for (IDBTable table : mapping.getDBTables())
+      for (IDBTable table : classMapping.getDBTables())
       {
         schema.removeTable(table.getName());
       }
 
       classMappings.remove(eClass);
     }
-    return mapping;
+
+    return classMapping;
   }
 
   protected abstract IClassMapping doCreateClassMapping(EClass eClass);
@@ -781,17 +770,14 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
     for (InternalCDOPackageInfo packageInfo : packageRegistry.getPackageInfos())
     {
-      if (!packageInfo.isSystemPackage())
+      for (EClassifier eClassifier : packageInfo.getEPackage().getEClassifiers())
       {
-        for (EClassifier eClassifier : packageInfo.getEPackage().getEClassifiers())
+        if (eClassifier instanceof EClass)
         {
-          if (eClassifier instanceof EClass)
+          EClass eClass = (EClass)eClassifier;
+          if (isMapped(eClass))
           {
-            EClass eClass = (EClass)eClassifier;
-            if (isMapped(eClass))
-            {
-              getClassMapping(eClass); // Get or create it
-            }
+            getClassMapping(eClass); // Get or create it
           }
         }
       }
@@ -840,6 +826,19 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     {
       LifecycleUtil.deactivate(classMapping);
     }
+  }
+
+  private static boolean containsPackageUnit(InternalCDOPackageUnit[] packageUnits, String packageUnitID)
+  {
+    for (InternalCDOPackageUnit packageUnit : packageUnits)
+    {
+      if (packageUnit.getID().equals(packageUnitID))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   private static Set<CDOFeatureType> doGetForceIndexes(IMappingStrategy mappingStrategy)

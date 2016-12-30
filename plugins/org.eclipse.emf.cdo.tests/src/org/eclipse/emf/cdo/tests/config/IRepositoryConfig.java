@@ -35,6 +35,10 @@ public interface IRepositoryConfig extends IConfig, IRepositoryProvider
 
   public static final String CAPABILITY_BRANCHING = "repository.branching";
 
+  public static final String CAPABILITY_CHUNKING = "repository.chunking";
+
+  public static final String CAPABILITY_EXTERNAL_REFS = "repository.external.refs";
+
   public static final String CAPABILITY_UUIDS = "repository.uuids";
 
   public static final String CAPABILITY_OFFLINE = "repository.offline";
@@ -48,6 +52,10 @@ public interface IRepositoryConfig extends IConfig, IRepositoryProvider
   public boolean isSupportingAudits();
 
   public boolean isSupportingBranches();
+
+  public boolean isSupportingChunks();
+
+  public boolean isSupportingExtRefs();
 
   public IDGenerationLocation getIDGenerationLocation();
 

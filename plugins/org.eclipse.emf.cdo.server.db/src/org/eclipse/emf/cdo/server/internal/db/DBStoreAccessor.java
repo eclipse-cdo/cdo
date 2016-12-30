@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
@@ -47,6 +48,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy2;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractHorizontalClassMapping;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.UnitMappingTable;
@@ -209,7 +211,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     return mappingStrategy.readObjectType(this, id);
   }
 
-  protected EClass getObjectType(CDOID id)
+  public EClass getObjectType(CDOID id)
   {
     IRepository repository = getStore().getRepository();
     if (id.equals(repository.getRootResourceID()))
@@ -221,6 +223,16 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     if (result != null)
     {
       return result;
+    }
+
+    CommitContext commitContext = StoreThreadLocal.getCommitContext();
+    if (commitContext != null)
+    {
+      InternalCDORevision revision = commitContext.getNewRevisions().get(id);
+      if (revision != null)
+      {
+        return revision.getEClass();
+      }
     }
 
     CDOClassifierRef type = readObjectType(id);
@@ -601,6 +613,28 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
     IClassMapping mapping = getStore().getMappingStrategy().getClassMapping(eClass);
     mapping.writeRevision(this, revision, mapType, revise, monitor);
+  }
+
+  @Override
+  protected boolean needsRevisionPostProcessing()
+  {
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    if (mappingStrategy instanceof IMappingStrategy2)
+    {
+      return ((IMappingStrategy2)mappingStrategy).needsRevisionPostProcessing();
+    }
+
+    return super.needsRevisionPostProcessing();
+  }
+
+  @Override
+  protected void postProcessRevisions(InternalCommitContext context, OMMonitor monitor)
+  {
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    if (mappingStrategy instanceof IMappingStrategy2)
+    {
+      ((IMappingStrategy2)mappingStrategy).postProcessRevisions(this, context, monitor);
+    }
   }
 
   /*

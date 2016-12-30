@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -98,6 +99,7 @@ public class ViewTest extends AbstractCDOTest
     session.close();
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
   public void testUniqueResourceContents() throws Exception
   {
     {
@@ -137,6 +139,7 @@ public class ViewTest extends AbstractCDOTest
     session.close();
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
   public void testNonUniqueResourceContents() throws Exception
   {
     {

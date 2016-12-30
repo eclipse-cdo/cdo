@@ -217,6 +217,16 @@ public class HibernateRawCommitContext implements InternalCommitContext
     return new CDOBranchVersion[0];
   }
 
+  public Map<CDOID, InternalCDORevision> getOldRevisions()
+  {
+    return null;
+  }
+
+  public Map<CDOID, InternalCDORevision> getNewRevisions()
+  {
+    return null;
+  }
+
   public ExtendedDataInputStream getLobs()
   {
     return null;
@@ -290,6 +300,11 @@ public class HibernateRawCommitContext implements InternalCommitContext
   public InternalCDORevision[] getDetachedRevisions()
   {
     return new InternalCDORevision[0];
+  }
+
+  public InternalCDORevision[] getDetachedRevisions(boolean check)
+  {
+    return getDetachedRevisions();
   }
 
   public void setClearResourcePathCache(boolean clearResourcePathCache)

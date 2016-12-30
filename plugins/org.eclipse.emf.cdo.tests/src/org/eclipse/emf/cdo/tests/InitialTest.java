@@ -183,6 +183,33 @@ public class InitialTest extends AbstractCDOTest
     assertCreatedTime(supplier, commit.getTimeStamp());
   }
 
+  public void testCommitNewInverseList() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+
+    Category category = getModel1Factory().createCategory();
+    category.setName("Category");
+    resource.getContents().add(category);
+
+    Product1 product = getModel1Factory().createProduct1();
+    product.setName("Product1");
+    category.getProducts().add(product);
+
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+    orderDetail.setPrice(47.11f);
+    orderDetail.setProduct(product);
+    resource.getContents().add(orderDetail);
+
+    CDOCommitInfo commit = transaction.commit();
+    assertEquals(CDOState.CLEAN, resource.cdoState());
+    assertEquals(CDOState.CLEAN, CDOUtil.getCDOObject(orderDetail).cdoState());
+    assertEquals(1, CDOUtil.getCDOObject(orderDetail).cdoRevision().getVersion());
+    assertCreatedTime(resource, commit.getTimeStamp());
+    assertCreatedTime(orderDetail, commit.getTimeStamp());
+  }
+
   public void testReadResourceClean() throws Exception
   {
     CDOSession session = openSession();
@@ -260,6 +287,41 @@ public class InitialTest extends AbstractCDOTest
     assertEquals(CDOState.CLEAN, resource.cdoState());
     assertEquals(CDOState.CLEAN, CDOUtil.getCDOObject(supplier).cdoState());
     assertCreatedTime(supplier, commitTime2);
+  }
+
+  public void testCommitDirtyInverseList() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+
+    Category category = getModel1Factory().createCategory();
+    category.setName("Category");
+    resource.getContents().add(category);
+
+    Product1 product = getModel1Factory().createProduct1();
+    product.setName("Product1");
+    category.getProducts().add(product);
+
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+    orderDetail.setPrice(47.11f);
+    orderDetail.setProduct(product);
+    resource.getContents().add(orderDetail);
+
+    CDOCommitInfo commit = transaction.commit();
+    long commitTime1 = commit.getTimeStamp();
+    assertCreatedTime(product, commitTime1);
+
+    OrderDetail orderDetail2 = getModel1Factory().createOrderDetail();
+    orderDetail2.setPrice(0.815f);
+    orderDetail2.setProduct(product);
+    resource.getContents().add(orderDetail2);
+
+    long commitTime2 = transaction.commit().getTimeStamp();
+    assertEquals(true, commitTime1 < commitTime2);
+    assertEquals(CDOState.CLEAN, resource.cdoState());
+    assertEquals(CDOState.CLEAN, CDOUtil.getCDOObject(product).cdoState());
+    assertCreatedTime(product, commitTime2);
   }
 
   public void testGetResource() throws Exception
@@ -454,6 +516,52 @@ public class InitialTest extends AbstractCDOTest
     Supplier s = (Supplier)contents.get(0);
     assertNotNull(s);
     assertEquals("Stepper", s.getName());
+  }
+
+  public void testLoadObjectInverseList() throws Exception
+  {
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+
+      Category category = getModel1Factory().createCategory();
+      category.setName("Category");
+      resource.getContents().add(category);
+
+      Product1 product = getModel1Factory().createProduct1();
+      product.setName("Product1");
+      category.getProducts().add(product);
+
+      OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+      orderDetail.setPrice(47.11f);
+      orderDetail.setProduct(product);
+      resource.getContents().add(orderDetail);
+
+      transaction.commit();
+      session.close();
+      clearCache(getRepository().getRevisionManager());
+    }
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
+    EList<EObject> contents = resource.getContents();
+
+    Category category = (Category)contents.get(0);
+    assertNotNull(category);
+    assertEquals("Category", category.getName());
+    assertEquals(1, category.getProducts().size());
+
+    Product1 product = category.getProducts().get(0);
+    assertNotNull(product);
+    assertEquals("Product1", product.getName());
+    assertEquals(1, product.getOrderDetails().size());
+
+    OrderDetail orderDetail = product.getOrderDetails().get(0);
+    assertNotNull(orderDetail);
+    assertEquals(47.11f, orderDetail.getPrice());
+    assertEquals(product, orderDetail.getProduct());
   }
 
   /**

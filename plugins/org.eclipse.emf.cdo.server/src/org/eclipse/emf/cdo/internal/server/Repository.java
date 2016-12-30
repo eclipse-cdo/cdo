@@ -2112,7 +2112,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     initSystemPackages(true);
   }
 
-  public void initSystemPackages(boolean firstStart)
+  public void initSystemPackages(final boolean firstStart)
   {
     IStoreAccessor writer = store.getWriter(null);
     StoreThreadLocal.setAccessor(writer);
@@ -2149,6 +2149,19 @@ public class Repository extends Container<Object> implements InternalRepository,
     {
       StoreThreadLocal.release();
     }
+
+    fireEvent(new PackagesInitializedEvent()
+    {
+      public InternalRepository getSource()
+      {
+        return Repository.this;
+      }
+
+      public boolean isFirstStart()
+      {
+        return firstStart;
+      }
+    });
   }
 
   protected InternalCDOPackageUnit initPackage(EPackage ePackage)
@@ -2420,6 +2433,7 @@ public class Repository extends Container<Object> implements InternalRepository,
       {
         readPackageUnits();
         initSystemPackages(false);
+
         readRootResource();
       }
     }

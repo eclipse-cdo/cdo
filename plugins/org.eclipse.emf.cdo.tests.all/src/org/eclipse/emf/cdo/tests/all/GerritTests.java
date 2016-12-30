@@ -31,7 +31,7 @@ public class GerritTests extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, new H2Config(false, false, true, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    addScenario(parent, new H2Config(true, true, true, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new H2Config(false, false, true, false, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new H2Config(true, true, true, false, false, IDGenerationLocation.STORE), JVM, NATIVE);
   }
 }

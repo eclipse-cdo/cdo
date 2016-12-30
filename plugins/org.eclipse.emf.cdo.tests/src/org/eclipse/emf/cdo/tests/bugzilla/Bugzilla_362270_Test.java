@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
@@ -52,6 +54,7 @@ import java.util.Map;
  *
  * @author Esteban Dugueperoux
  */
+@Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
 public class Bugzilla_362270_Test extends AbstractCDOTest
 {
   private final EReference SUPPLIERS = getModel1Package().getCompany_Suppliers();

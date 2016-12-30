@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
@@ -53,6 +54,7 @@ public class Bugzilla_362270c_Test extends AbstractCDOTest
 {
   private static final String RESOURCE_PATH = "/test1";
 
+  @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testNotifierNotACDOLegacyAdapter() throws Exception
   {
     TransactionalEditingDomain domain = TransactionalEditingDomain.Factory.INSTANCE.createEditingDomain();

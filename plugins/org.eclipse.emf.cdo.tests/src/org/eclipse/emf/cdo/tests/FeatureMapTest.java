@@ -36,6 +36,7 @@ import java.util.List;
 /**
  * @author Simon McDuff
  */
+@Deprecated
 public class FeatureMapTest extends AbstractCDOTest
 {
   private EPackage pkg;

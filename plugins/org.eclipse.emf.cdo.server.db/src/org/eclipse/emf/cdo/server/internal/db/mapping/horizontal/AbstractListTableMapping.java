@@ -39,7 +39,6 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -132,8 +131,8 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
 
       if (!table.hasIndexFor(field))
       {
-        InternalDBIndex index = (InternalDBIndex)table.addIndex(IDBIndex.Type.NON_UNIQUE, field);
-        index.setOptional(true); // Creation might fail for unsupported column type!
+        IDBIndex index = table.addIndex(IDBIndex.Type.NON_UNIQUE, field);
+        DBUtil.setOptional(index, true); // Creation might fail for unsupported column type!
       }
     }
   }
@@ -272,7 +271,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
       {
         if (stmt.getMaxRows() != 0)
         {
-          stmt.setMaxRows(0);
+          stmt.setMaxRows(0); // No limit.
         }
       }
 
@@ -472,12 +471,12 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
         CDOID targetId = idHandler.getCDOID(resultSet, 2);
         int idx = resultSet.getInt(3);
 
-        boolean more = context.addXRef(targetId, srcId, (EReference)getFeature(), idx);
         if (TRACER.isEnabled())
         {
           TRACER.format("  add XRef to context: src={0}, tgt={1}, idx={2}", srcId, targetId, idx);
         }
 
+        boolean more = context.addXRef(targetId, srcId, (EReference)getFeature(), idx);
         if (!more)
         {
           if (TRACER.isEnabled())

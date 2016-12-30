@@ -73,11 +73,13 @@ public abstract class StoreAccessor extends StoreAccessorBase
     CDOID[] detachedObjects = context.getDetachedObjects();
     InternalCDORevisionDelta[] dirtyObjectDeltas = context.getDirtyObjectDeltas();
     InternalCDORevision[] dirtyObjects = context.getDirtyObjects();
+
     int dirtyCount = deltas ? dirtyObjectDeltas.length : dirtyObjects.length;
+    int postProcessCount = needsRevisionPostProcessing() ? newObjects.length + detachedObjects.length + dirtyCount : 0;
 
     try
     {
-      monitor.begin(1 + newPackageUnits.length + 2 + newObjects.length + detachedObjects.length + dirtyCount + 1);
+      monitor.begin(1 + newPackageUnits.length + 2 + newObjects.length + detachedObjects.length + dirtyCount + postProcessCount + 1);
 
       writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, mergeSource, monitor.fork());
       writePackageUnits(newPackageUnits, monitor.fork(newPackageUnits.length));
@@ -110,6 +112,11 @@ public abstract class StoreAccessor extends StoreAccessorBase
         {
           writeDirtyObjectRevisions(context, dirtyObjects, branch, monitor.fork(dirtyCount));
         }
+      }
+
+      if (needsRevisionPostProcessing())
+      {
+        postProcessRevisions(context, monitor.fork(postProcessCount));
       }
 
       ExtendedDataInputStream in = context.getLobs();
@@ -152,6 +159,15 @@ public abstract class StoreAccessor extends StoreAccessorBase
     {
       monitor.done();
     }
+  }
+
+  protected boolean needsRevisionPostProcessing()
+  {
+    return false;
+  }
+
+  protected void postProcessRevisions(InternalCommitContext context, OMMonitor monitor)
+  {
   }
 
   /**

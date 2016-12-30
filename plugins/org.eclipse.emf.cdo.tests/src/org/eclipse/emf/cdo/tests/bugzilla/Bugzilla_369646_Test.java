@@ -64,6 +64,7 @@ public class Bugzilla_369646_Test extends AbstractCDOTest
     transaction.setBranch(sub1);
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
   public void testSetBranchWithPCL() throws Exception
   {
     {

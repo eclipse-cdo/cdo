@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -22,10 +23,9 @@ import org.eclipse.emf.ecore.EReference;
  */
 public class MetaTest extends AbstractCDOTest
 {
+  @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testMetaReference() throws Exception
   {
-    skipStoreWithoutExternalReferences();
-
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
@@ -46,10 +46,9 @@ public class MetaTest extends AbstractCDOTest
     assertEquals(getModel3Package(), metaRef.getEPackageRef());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testMetaReferenceAttachFirst() throws Exception
   {
-    skipStoreWithoutExternalReferences();
-
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
@@ -70,10 +69,9 @@ public class MetaTest extends AbstractCDOTest
     assertEquals(getModel3Package(), metaRef.getEPackageRef());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testMetaReference2() throws Exception
   {
-    skipStoreWithoutExternalReferences();
-
     EReference targetRef = getModel3SubpackagePackage().getClass2_Class1();
 
     {

@@ -36,6 +36,8 @@ public class Bugzilla_485394_Test extends AbstractCDOTest
     return map;
   }
 
+  // With inverse list mappings there is no referential integrity violation in this case.
+  @Skips("DB.inverse.lists")
   public void testReferentialIntegrityWithContainmentProxy() throws Exception
   {
     skipStoreWithoutQueryXRefs();

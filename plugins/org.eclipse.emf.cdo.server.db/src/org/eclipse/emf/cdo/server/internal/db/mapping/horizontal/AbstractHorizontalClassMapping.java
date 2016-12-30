@@ -53,7 +53,6 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
 import org.eclipse.net4j.util.lifecycle.IDeactivateable;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -137,7 +136,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       table.addField(ATTRIBUTES_CREATED, DBType.BIGINT, true);
       table.addField(ATTRIBUTES_REVISED, DBType.BIGINT, true);
       table.addField(ATTRIBUTES_RESOURCE, idType, idLength, true);
-      table.addField(ATTRIBUTES_CONTAINER, idType, idLength, true);
+      addContainerField(table, idType, idLength);
       table.addField(ATTRIBUTES_FEATURE, DBType.INTEGER, true);
 
       IDBIndex primaryKey = table.addIndex(IDBIndex.Type.PRIMARY_KEY, ATTRIBUTES_ID, ATTRIBUTES_VERSION);
@@ -177,6 +176,11 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
           else
           {
             mapping = mappingStrategy.createListMapping(eClass, feature);
+          }
+
+          if (mapping == null)
+          {
+            continue;
           }
 
           if (mapping instanceof IListMapping3)
@@ -225,8 +229,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
             if (!table.hasIndexFor(field))
             {
-              InternalDBIndex index = (InternalDBIndex)table.addIndex(IDBIndex.Type.NON_UNIQUE, field);
-              index.setOptional(true); // Creation might fail for unsupported column type!
+              IDBIndex index = table.addIndex(IDBIndex.Type.NON_UNIQUE, field);
+              DBUtil.setOptional(index, true); // Creation might fail for unsupported column type!
             }
           }
 
@@ -281,8 +285,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
         if (!table.hasIndexFor(fields))
         {
-          InternalDBIndex index = (InternalDBIndex)table.addIndex(IDBIndex.Type.NON_UNIQUE, fields);
-          index.setOptional(true); // Creation might fail for unsupported column type!
+          IDBIndex index = table.addIndex(IDBIndex.Type.NON_UNIQUE, fields);
+          DBUtil.setOptional(index, true); // Creation might fail for unsupported column type!
         }
       }
       else
@@ -301,8 +305,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
             if (!table.hasIndexFor(field))
             {
-              InternalDBIndex index = (InternalDBIndex)table.addIndex(IDBIndex.Type.NON_UNIQUE, field);
-              index.setOptional(true); // Creation might fail for unsupported column type!
+              IDBIndex index = table.addIndex(IDBIndex.Type.NON_UNIQUE, field);
+              DBUtil.setOptional(index, true); // Creation might fail for unsupported column type!
             }
           }
         }
@@ -313,8 +317,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
           if (!table.hasIndexFor(field))
           {
-            InternalDBIndex index = (InternalDBIndex)table.addIndex(IDBIndex.Type.NON_UNIQUE, field);
-            index.setOptional(true); // Creation might fail for unsupported column type!
+            IDBIndex index = table.addIndex(IDBIndex.Type.NON_UNIQUE, field);
+            DBUtil.setOptional(index, true); // Creation might fail for unsupported column type!
           }
         }
       }
@@ -339,6 +343,11 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
     sqlSelectForChangeSet = builder.toString();
+  }
+
+  protected IDBField addContainerField(IDBTable table, DBType idType, int idLength)
+  {
+    return table.addField(ATTRIBUTES_CONTAINER, idType, idLength, true);
   }
 
   protected IDBField addBranchField(IDBTable table)

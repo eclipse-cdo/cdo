@@ -80,9 +80,9 @@ public class XATransactionTest extends AbstractCDOTest
     xaTransaction.commit();
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testRollback_AfterSetpoint() throws Exception
   {
-    skipStoreWithoutExternalReferences();
     getRepository(REPOSITORY2_NAME);
 
     CDOSession sessionA = openSession();
@@ -143,9 +143,9 @@ public class XATransactionTest extends AbstractCDOTest
 
   // XXX disabled because of Bug 290097
   @Skips("Postgresql")
+  @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testCommitFromTransactionDisabled() throws Exception
   {
-    skipStoreWithoutExternalReferences();
     getRepository(REPOSITORY2_NAME);
 
     {
@@ -191,9 +191,9 @@ public class XATransactionTest extends AbstractCDOTest
 
   // Skip this test until the problems with XATransactions are solved.
   @Skips({ IModelConfig.CAPABILITY_LEGACY, IRepositoryConfig.CAPABILITY_UUIDS, "DB" })
+  @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testNotUsingXATransaction_Exception() throws Exception
   {
-    skipStoreWithoutExternalReferences();
     getRepository(REPOSITORY2_NAME);
 
     {
@@ -236,9 +236,9 @@ public class XATransactionTest extends AbstractCDOTest
 
   // XXX disabled because of Bug 290097
   @Skips("Postgresql")
+  @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void test_ExceptionInReadingStream() throws Exception
   {
-    skipStoreWithoutExternalReferences();
     getRepository(REPOSITORY2_NAME);
 
     CDOSession sessionA = openSession();

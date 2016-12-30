@@ -33,10 +33,9 @@ public class Bugzilla_351393_Test extends AbstractCDOTest
 {
   // Ext-Refs with client-side UUIDs are stored "in sito", where the tests use even less chars.
   @Skips(IRepositoryConfig.CAPABILITY_UUIDS)
+  @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testExtRef() throws Exception
   {
-    skipStoreWithoutExternalReferences();
-
     ResourceSet resourceSet = new ResourceSetImpl();
     resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
     URI uri = URI.createURI("test:///tmp/file.xmi?" + "12345678901234567890" + // 41

@@ -28,7 +28,8 @@ public enum DBAnnotation
   COLUMN_NAME("columnName"), //
   COLUMN_TYPE("columnType"), //
   COLUMN_LENGTH("columnLength"), //
-  TYPE_MAPPING("typeMapping");
+  TYPE_MAPPING("typeMapping"), //
+  INVERSE_LIST("inverseList");
 
   public static final String SOURCE_URI = "http://www.eclipse.org/CDO/DBStore";
 

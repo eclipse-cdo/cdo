@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -31,6 +32,7 @@ import java.util.Iterator;
  */
 public class ChunkingClearCachedRevisionTest extends AbstractCDOTest
 {
+  @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
   public void testReadNative() throws Exception
   {
     CDORevision revisionToRemove = null;
@@ -78,6 +80,7 @@ public class ChunkingClearCachedRevisionTest extends AbstractCDOTest
     }
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
   public void testWriteNative() throws Exception
   {
     CDORevision revisionToRemove = null;

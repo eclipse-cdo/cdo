@@ -85,4 +85,10 @@ public class MongoDBConfig extends RepositoryConfig
       }
     }
   }
+
+  @Override
+  public boolean isSupportingExtRefs()
+  {
+    return false;
+  }
 }

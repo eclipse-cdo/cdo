@@ -35,7 +35,7 @@ public class MysqlConfig extends AbstractSetupDBConfig
    */
   public static final String HOST = "localhost";
 
-  public static final String SCHEMA = "test";
+  public static final String SCHEMA = "big";
 
   public static final String USER = "test";
 
@@ -43,9 +43,9 @@ public class MysqlConfig extends AbstractSetupDBConfig
 
   private static final long serialVersionUID = 1L;
 
-  public MysqlConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
+  public MysqlConfig(boolean supportingAudits, boolean supportingBranches, boolean inverseLists, IDGenerationLocation idGenerationLocation)
   {
-    super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, false, false, idGenerationLocation);
+    super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, false, false, inverseLists, idGenerationLocation);
   }
 
   @Override

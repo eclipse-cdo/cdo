@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.tests.CrossReferenceTest;
 import org.eclipse.emf.cdo.tests.DynamicXSDTest;
 import org.eclipse.emf.cdo.tests.EMFCompareTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
-import org.eclipse.emf.cdo.tests.FeatureMapTest;
 import org.eclipse.emf.cdo.tests.LockingManagerRestartRepositoryTest;
 import org.eclipse.emf.cdo.tests.LockingManagerRestartSessionTest;
 import org.eclipse.emf.cdo.tests.LockingManagerRestartTransactionTest;
@@ -187,7 +186,7 @@ public class AllTestsHibernate extends AllConfigs
       testClasses.add(Hibernate_Bugzilla_303466_Test.class);
 
       // feature maps are not handled correctly in CDO with auditing
-      testClasses.remove(FeatureMapTest.class);
+      // testClasses.remove(FeatureMapTest.class);
     }
     else
     {

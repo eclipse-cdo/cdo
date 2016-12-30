@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.db.ddl.delta;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndexField;
@@ -23,7 +24,6 @@ import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
-import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 
 import java.text.MessageFormat;
@@ -204,8 +204,8 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
       Boolean optional = delta.getPropertyValue(IDBIndexDelta.OPTIONAL_PROPERTY);
 
       IDBTable table = delta.getParent().getSchemaElement(schema);
-      InternalDBIndex index = (InternalDBIndex)table.addIndexEmpty(name, type);
-      index.setOptional(optional == Boolean.TRUE);
+      IDBIndex index = table.addIndexEmpty(name, type);
+      DBUtil.setOptional(index, optional == Boolean.TRUE);
     }
 
     @Override

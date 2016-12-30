@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -31,6 +33,7 @@ import java.util.List;
 /**
  * @author Simon McDuff
  */
+@Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
 public class MultiValuedOfAttributeTest extends AbstractCDOTest
 {
   public void testListOfString() throws Exception

@@ -38,7 +38,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.NonAuditListTableMapping.NewListSizeResult;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractBasicListTableMapping.AbstractListDeltaWriter.NewListSizeResult;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
@@ -447,6 +447,28 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   }
 
   @Override
+  protected void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long timeStamp)
+  {
+    // do nothing
+  }
+
+  @Override
+  protected String getListXRefsWhere(QueryXRefsContext context)
+  {
+    if (CDORevision.UNSPECIFIED_DATE != context.getTimeStamp())
+    {
+      throw new IllegalArgumentException("Non-audit mode does not support timestamp specification");
+    }
+
+    if (!context.getBranch().isMainBranch())
+    {
+      throw new IllegalArgumentException("Non-audit mode does not support branch specification");
+    }
+
+    return ATTRIBUTES_REVISED + "=0";
+  }
+
+  @Override
   protected void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp, OMMonitor monitor)
   {
     rawDelete(accessor, id, version, branch, monitor);
@@ -570,6 +592,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       }
     }
 
+    @Deprecated
     public void visit(CDOMoveFeatureDelta delta)
     {
       throw new ImplementationError("Should not be called"); //$NON-NLS-1$
@@ -621,16 +644,19 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       }
     }
 
+    @Deprecated
     public void visit(CDOClearFeatureDelta delta)
     {
       throw new ImplementationError("Should not be called"); //$NON-NLS-1$
     }
 
+    @Deprecated
     public void visit(CDOAddFeatureDelta delta)
     {
       throw new ImplementationError("Should not be called"); //$NON-NLS-1$
     }
 
+    @Deprecated
     public void visit(CDORemoveFeatureDelta delta)
     {
       throw new ImplementationError("Should not be called"); //$NON-NLS-1$
@@ -754,27 +780,5 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
       return col;
     }
-  }
-
-  @Override
-  protected void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long timeStamp)
-  {
-    // do nothing
-  }
-
-  @Override
-  protected String getListXRefsWhere(QueryXRefsContext context)
-  {
-    if (CDORevision.UNSPECIFIED_DATE != context.getTimeStamp())
-    {
-      throw new IllegalArgumentException("Non-audit mode does not support timestamp specification");
-    }
-
-    if (!context.getBranch().isMainBranch())
-    {
-      throw new IllegalArgumentException("Non-audit mode does not support branch specification");
-    }
-
-    return ATTRIBUTES_REVISED + "=0";
   }
 }

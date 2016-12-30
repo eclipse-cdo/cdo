@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.VAT;
-import org.eclipse.emf.cdo.tests.model1.legacy.Model1Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -36,7 +35,7 @@ public class Bugzilla_306998_Test extends AbstractCDOTest
   {
     EPackage pkg = createUniquePackage();
     EClass cls = EMFUtil.createEClass(pkg, "cls", false, false);
-    EAttribute att = EMFUtil.createEAttribute(cls, "att", Model1Package.eINSTANCE.getVAT());
+    EAttribute att = EMFUtil.createEAttribute(cls, "att", getModel1Package().getVAT());
     att.setDefaultValueLiteral("vat7");
 
     CDOUtil.prepareDynamicEPackage(pkg);
@@ -75,9 +74,9 @@ public class Bugzilla_306998_Test extends AbstractCDOTest
   {
     EPackage pkg = createUniquePackage();
     EClass cls = EMFUtil.createEClass(pkg, "cls", false, false);
-    EAttribute att = EMFUtil.createEAttribute(cls, "att", Model1Package.eINSTANCE.getVAT());
+    EAttribute att = EMFUtil.createEAttribute(cls, "att", getModel1Package().getVAT());
     att.setDefaultValueLiteral("vat8");
-    att.setDefaultValue(Model1Package.eINSTANCE.getVAT().getEEnumLiteral("vat8"));
+    att.setDefaultValue(getModel1Package().getVAT().getEEnumLiteral("vat8"));
 
     CDOUtil.prepareDynamicEPackage(pkg);
 

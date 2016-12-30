@@ -10,10 +10,13 @@
  */
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.UnitSupport;
 
 import org.eclipse.net4j.db.IDBConnection;
+
+import org.eclipse.emf.ecore.EClass;
 
 import java.sql.Connection;
 
@@ -34,6 +37,11 @@ public interface IDBStoreAccessor extends IStoreAccessor.Raw2, UnitSupport
   public IDBConnection getDBConnection();
 
   public Connection getConnection();
+
+  /**
+   * @since 4.5
+   */
+  public EClass getObjectType(CDOID id);
 
   /**
    * @since 2.0

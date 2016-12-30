@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
@@ -326,9 +327,9 @@ public class CrossReferenceTest extends AbstractCDOTest
   }
 
   @Skips("Hibernate")
+  @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testDetachXRefExternal() throws Exception
   {
-    skipStoreWithoutExternalReferences();
 
     Customer customer = getModel1Factory().createCustomer();
     customer.setName("customer");
@@ -393,9 +394,9 @@ public class CrossReferenceTest extends AbstractCDOTest
   }
 
   @Skips("Hibernate")
+  @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testNewMakeExternal() throws Exception
   {
-    skipStoreWithoutExternalReferences();
     Customer customer = getModel1Factory().createCustomer();
     customer.setName("customer");
 
@@ -423,6 +424,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     assertEquals(true, id.isExternal());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testExternalMakeNew() throws Exception
   {
     Customer customer = getModel1Factory().createCustomer();
@@ -456,10 +458,9 @@ public class CrossReferenceTest extends AbstractCDOTest
   }
 
   @Skips("Hibernate")
+  @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testExternalMakeDangling() throws Exception
   {
-    skipStoreWithoutExternalReferences();
-
     Customer customer = getModel1Factory().createCustomer();
     customer.setName("customer");
 

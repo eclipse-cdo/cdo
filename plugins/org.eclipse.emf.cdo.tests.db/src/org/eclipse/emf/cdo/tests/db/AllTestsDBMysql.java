@@ -36,7 +36,7 @@ public class AllTestsDBMysql extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, new MysqlConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new MysqlConfig(false, false, false, IDGenerationLocation.STORE), JVM, NATIVE);
   }
 
   @Override

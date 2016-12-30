@@ -179,6 +179,16 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       }
     }
 
+    if (isSupportingChunks())
+    {
+      capabilities.add(CAPABILITY_CHUNKING);
+    }
+
+    if (isSupportingExtRefs())
+    {
+      capabilities.add(CAPABILITY_EXTERNAL_REFS);
+    }
+
     if (getIDGenerationLocation() == IDGenerationLocation.CLIENT)
     {
       capabilities.add(CAPABILITY_UUIDS);
@@ -207,6 +217,16 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public boolean isSupportingBranches()
   {
     return supportingBranches;
+  }
+
+  public boolean isSupportingChunks()
+  {
+    return true;
+  }
+
+  public boolean isSupportingExtRefs()
+  {
+    return true;
   }
 
   public IDGenerationLocation getIDGenerationLocation()

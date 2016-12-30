@@ -31,9 +31,9 @@ public abstract class AbstractSetupDBConfig extends DBConfig
   private transient DataSource setupDataSource;
 
   public AbstractSetupDBConfig(String name, boolean supportingAudits, boolean supportingBranches, boolean withRanges, boolean copyOnBranch,
-      IDGenerationLocation idGenerationLocation)
+      boolean inverseLists, IDGenerationLocation idGenerationLocation)
   {
-    super(name, supportingAudits, supportingBranches, withRanges, copyOnBranch, idGenerationLocation);
+    super(name, supportingAudits, supportingBranches, withRanges, copyOnBranch, inverseLists, idGenerationLocation);
   }
 
   protected String getDBName(String repoName)

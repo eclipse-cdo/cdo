@@ -57,12 +57,14 @@ public class CDOIDTest extends AbstractCDOTest
     assertIllegalArgument(id);
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testGetLong_ExtTempId()
   {
     CDOIDTempObjectExternalImpl id = CDOIDTempObjectExternalImpl.create("cdo://repo123/resource456");
     assertIllegalArgument(id);
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testGetLong_ExtId()
   {
     CDOIDExternal id = CDOIDUtil.createExternal("cdo://repo123/resource456");

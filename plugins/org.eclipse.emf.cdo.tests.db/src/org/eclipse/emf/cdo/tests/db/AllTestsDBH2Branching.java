@@ -29,10 +29,10 @@ public class AllTestsDBH2Branching extends DBConfigs
   public static void initConfigSuites(ConfigTestSuite suite, TestSuite parent, IDGenerationLocation idGenerationLocation)
   {
     // Without ranges
-    suite.addScenario(parent, new H2Config(true, true, false, false, idGenerationLocation), JVM, NATIVE);
+    suite.addScenario(parent, new H2Config(true, true, false, false, false, idGenerationLocation), JVM, NATIVE);
 
     // With ranges
-    suite.addScenario(parent, new H2Config(true, true, true, false, idGenerationLocation), JVM, NATIVE);
+    suite.addScenario(parent, new H2Config(true, true, true, false, false, idGenerationLocation), JVM, NATIVE);
 
     // With ranges and copy-on-branch
     // suite.addScenario(parent, new H2Config(true, true, true, true, idGenerationLocation), JVM, NATIVE);

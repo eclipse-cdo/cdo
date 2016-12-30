@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -26,6 +27,7 @@ import org.eclipse.net4j.util.io.IOUtil;
  */
 public class Bugzilla_405606_Test extends AbstractCDOTest
 {
+  @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
   public void testUnchunkedRevisionWithPCL() throws Exception
   {
     {

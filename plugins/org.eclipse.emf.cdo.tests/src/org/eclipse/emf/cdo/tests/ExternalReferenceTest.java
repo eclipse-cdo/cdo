@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.net4j.protocol.LoadRevisionsRequest;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
@@ -59,14 +61,13 @@ import java.util.Map;
 /**
  * @author Simon McDuff
  */
+@Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
 public class ExternalReferenceTest extends AbstractCDOTest
 {
   private static final String REPOSITORY_B_NAME = "repo2";
 
   public void testExternalWithDynamicEObject() throws Exception
   {
-    skipStoreWithoutExternalReferences();
-
     ResourceSet resourceSet = new ResourceSetImpl();
     resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
 
@@ -94,8 +95,6 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testExternalWithEClass() throws Exception
   {
-    skipStoreWithoutExternalReferences();
-
     {
       ResourceSet resourceSet = new ResourceSetImpl();
 
@@ -129,8 +128,6 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testExternalWithEPackage() throws Exception
   {
-    skipStoreWithoutExternalReferences();
-
     {
       CDOSession sessionA = openSession();
 
@@ -168,8 +165,6 @@ public class ExternalReferenceTest extends AbstractCDOTest
   @Skips("Postgresql")
   public void testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
   {
-    skipStoreWithoutExternalReferences();
-
     byte[] dataOfresD = null;
     getRepository(REPOSITORY_B_NAME);
 
@@ -279,8 +274,6 @@ public class ExternalReferenceTest extends AbstractCDOTest
   @Skips({ IModelConfig.CAPABILITY_LEGACY, "Postgresql" })
   public void testManyViewsOnOneResourceSet() throws Exception
   {
-    skipStoreWithoutExternalReferences();
-
     getRepository(REPOSITORY_B_NAME);
 
     {
@@ -390,8 +383,6 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testWithXML() throws Exception
   {
-    skipStoreWithoutExternalReferences();
-
     ResourceSet resourceSet = new ResourceSetImpl();
     Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
     map.put("xml", new XMLResourceFactoryImpl());
@@ -417,7 +408,6 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testWithXMLAndPrefetching() throws Exception
   {
-    skipStoreWithoutExternalReferences();
 
     {
       ResourceSet resourceSet = new ResourceSetImpl();
@@ -491,8 +481,6 @@ public class ExternalReferenceTest extends AbstractCDOTest
   @CleanRepositoriesBefore(reason = "Ref counting")
   public void testXRefExternalObject() throws Exception
   {
-    skipStoreWithoutExternalReferences();
-
     ResourceSet resourceSet = new ResourceSetImpl();
     Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
     map.put("xml", new XMLResourceFactoryImpl());

@@ -30,10 +30,10 @@ public class AllTestsDBH2Audit extends DBConfigs
   public static void initConfigSuites(ConfigTestSuite suite, TestSuite parent, IDGenerationLocation idGenerationLocation)
   {
     // Without ranges
-    suite.addScenario(parent, new H2Config(true, false, false, false, idGenerationLocation), JVM, NATIVE);
+    suite.addScenario(parent, new H2Config(true, false, false, false, false, idGenerationLocation), JVM, NATIVE);
 
     // With ranges
-    suite.addScenario(parent, new H2Config(true, false, true, false, idGenerationLocation), JVM, NATIVE);
+    suite.addScenario(parent, new H2Config(true, false, true, false, false, idGenerationLocation), JVM, NATIVE);
   }
 
   @Override

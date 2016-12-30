@@ -40,7 +40,7 @@ import java.sql.Statement;
  *
  * @author Eike Stepper
  */
-@Skips(IRepositoryConfig.CAPABILITY_AUDITING)
+@Skips({ IRepositoryConfig.CAPABILITY_AUDITING, "DB.inverse.lists" })
 public class Bugzilla_351068_Test extends AbstractCDOTest
 {
   @CleanRepositoriesBefore(reason = "Row counting")

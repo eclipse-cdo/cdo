@@ -43,6 +43,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.Revisi
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -321,4 +322,15 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
    * @since 4.3
    */
   public void setOptimisticLockingTimeout(long optimisticLockingTimeout);
+
+  /**
+   * @author Eike Stepper
+   * @since 4.6
+   */
+  public interface PackagesInitializedEvent extends IEvent
+  {
+    public InternalRepository getSource();
+
+    public boolean isFirstStart();
+  }
 }

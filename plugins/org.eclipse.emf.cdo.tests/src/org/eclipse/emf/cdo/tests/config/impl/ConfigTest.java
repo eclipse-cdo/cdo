@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoChangeSets;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoCommitInfos;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoDurableLocking;
-import org.eclipse.emf.cdo.spi.server.InternalStore.NoExternalReferences;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoFeatureMaps;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoHandleRevisions;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoLargeObjects;
@@ -724,11 +723,6 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     return ObjectUtil.equals(getRepositoryConfig(), config) //
         || ObjectUtil.equals(getSessionConfig(), config) //
         || ObjectUtil.equals(getModelConfig(), config);
-  }
-
-  protected void skipStoreWithoutExternalReferences()
-  {
-    skipTest(getRepository().getStore() instanceof NoExternalReferences);
   }
 
   protected void skipStoreWithoutQueryXRefs()

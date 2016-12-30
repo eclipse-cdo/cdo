@@ -36,7 +36,6 @@ public class Bugzilla_323930_Test extends AbstractCDOTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-    skipStoreWithoutQueryXRefs();
   }
 
   public void testChangeIndexesInTargetList() throws Exception

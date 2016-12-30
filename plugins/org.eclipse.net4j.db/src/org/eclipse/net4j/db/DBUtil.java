@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.db;
 
+import org.eclipse.net4j.db.ddl.IDBElement;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBNamedElement;
 import org.eclipse.net4j.db.ddl.IDBSchema;
@@ -22,6 +23,7 @@ import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.internal.db.ddl.DBIndex;
 import org.eclipse.net4j.internal.db.ddl.DBNamedElement;
 import org.eclipse.net4j.spi.db.DBAdapter;
+import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
@@ -469,6 +471,35 @@ public final class DBUtil
   }
 
   /**
+   * @since 4.6
+   */
+  public static boolean isOptional(IDBElement element)
+  {
+    if (element instanceof InternalDBIndex)
+    {
+      InternalDBIndex index = (InternalDBIndex)element;
+      return index.isOptional();
+    }
+
+    return false;
+  }
+
+  /**
+   * @since 4.6
+   */
+  public static boolean setOptional(IDBElement element, boolean optional)
+  {
+    if (element instanceof InternalDBIndex)
+    {
+      InternalDBIndex index = (InternalDBIndex)element;
+      index.setOptional(optional);
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
    * @since 4.2
    */
   public static boolean setAutoCommit(Connection connection, boolean autoCommit)
@@ -875,6 +906,17 @@ public final class DBUtil
     catch (SQLException ex)
     {
       throw new DBException(ex);
+    }
+    finally
+    {
+      try
+      {
+        stmt.clearBatch();
+      }
+      catch (SQLException ex)
+      {
+        OM.LOG.warn(ex);
+      }
     }
   }
 

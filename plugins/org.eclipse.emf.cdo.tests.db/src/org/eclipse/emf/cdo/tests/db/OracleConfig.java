@@ -51,7 +51,7 @@ public abstract class OracleConfig extends AbstractSetupDBConfig
 
   public OracleConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
   {
-    super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, false, false, idGenerationLocation);
+    super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, false, false, false, idGenerationLocation);
   }
 
   @Override

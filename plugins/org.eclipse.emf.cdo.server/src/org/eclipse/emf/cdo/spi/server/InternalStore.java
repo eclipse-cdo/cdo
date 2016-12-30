@@ -70,7 +70,9 @@ public interface InternalStore extends IStore, ILifecycle
    *
    * @author Eike Stepper
    * @since 4.0
+   * @deprecated As of 4.6 use IRepositoryConfig.CAPABILITY_EXTERNAL_REFS.
    */
+  @Deprecated
   public interface NoExternalReferences
   {
   }

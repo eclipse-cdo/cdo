@@ -161,11 +161,17 @@ public abstract class StoreAccessor extends StoreAccessorBase
     }
   }
 
+  /**
+   * @since 4.6
+   */
   protected boolean needsRevisionPostProcessing()
   {
     return false;
   }
 
+  /**
+   * @since 4.6
+   */
   protected void postProcessRevisions(InternalCommitContext context, OMMonitor monitor)
   {
   }

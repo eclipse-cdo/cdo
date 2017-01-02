@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -516,9 +517,14 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
           return Collections.unmodifiableMap(getRevisionDeltas2());
         }
 
-        // We need to combined the result for all delta in different Savepoint
+        InternalCDOSavepoint firstSavePoint = getFirstSavePoint();
+        boolean multiSavepoint = firstSavePoint.getNextSavepoint() != null;
+        Set<CDOFeatureDelta> originalFeatureDeltas = multiSavepoint ? new HashSet<CDOFeatureDelta>() : null;
+
+        // We need to combine the results for all deltas in different savepoints.
         Map<CDOID, CDORevisionDelta> allRevisionDeltas = CDOIDUtil.createMap();
-        for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint.getNextSavepoint())
+
+        for (InternalCDOSavepoint savepoint = firstSavePoint; savepoint != null; savepoint = savepoint.getNextSavepoint())
         {
           for (CDORevisionDelta revisionDelta : savepoint.getRevisionDeltas2().values())
           {
@@ -528,14 +534,25 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
               CDORevisionDeltaImpl oldRevisionDelta = (CDORevisionDeltaImpl)allRevisionDeltas.get(id);
               if (oldRevisionDelta == null)
               {
+                if (multiSavepoint)
+                {
+                  for (CDOFeatureDelta featureDelta : revisionDelta.getFeatureDeltas())
+                  {
+                    originalFeatureDeltas.add(featureDelta);
+                  }
+                }
+
                 allRevisionDeltas.put(id, revisionDelta.copy());
               }
               else
               {
-                for (CDOFeatureDelta delta : revisionDelta.getFeatureDeltas())
+                for (CDOFeatureDelta featureDelta : revisionDelta.getFeatureDeltas())
                 {
-                  CDOFeatureDelta copy = ((InternalCDOFeatureDelta)delta).copy();
-                  oldRevisionDelta.addFeatureDelta(copy, null);
+                  if (!multiSavepoint || originalFeatureDeltas.add(featureDelta))
+                  {
+                    CDOFeatureDelta copy = ((InternalCDOFeatureDelta)featureDelta).copy();
+                    oldRevisionDelta.addFeatureDelta(copy, null);
+                  }
                 }
               }
             }

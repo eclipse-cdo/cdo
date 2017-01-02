@@ -41,7 +41,15 @@ public final class StoreThreadLocal
    */
   public static void setSession(InternalSession session)
   {
-    SESSION.set(session);
+    if (session == null)
+    {
+      SESSION.remove();
+    }
+    else
+    {
+      SESSION.set(session);
+    }
+
     ACCESSOR.remove();
     COMMIT_CONTEXT.remove();
   }
@@ -75,8 +83,16 @@ public final class StoreThreadLocal
 
   public static void setAccessor(IStoreAccessor accessor)
   {
-    SESSION.set(accessor == null ? null : accessor.getSession());
-    ACCESSOR.set(accessor);
+    if (accessor == null)
+    {
+      ACCESSOR.remove();
+      SESSION.remove();
+    }
+    else
+    {
+      ACCESSOR.set(accessor);
+      SESSION.set(accessor.getSession());
+    }
   }
 
   public static IStoreAccessor getAccessor() throws NoSessionRegisteredException
@@ -95,7 +111,14 @@ public final class StoreThreadLocal
 
   public static void setCommitContext(IStoreAccessor.CommitContext commitContext)
   {
-    COMMIT_CONTEXT.set(commitContext);
+    if (commitContext == null)
+    {
+      COMMIT_CONTEXT.remove();
+    }
+    else
+    {
+      COMMIT_CONTEXT.set(commitContext);
+    }
   }
 
   public static IStoreAccessor.CommitContext getCommitContext()

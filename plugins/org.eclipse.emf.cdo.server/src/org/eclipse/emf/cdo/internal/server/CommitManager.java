@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalCommitManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -181,11 +182,18 @@ public class CommitManager extends Lifecycle implements InternalCommitManager
       {
         public Object call() throws Exception
         {
-          context.write(monitor);
-
-          if (in instanceof Closeable)
+          try
           {
-            IOUtil.closeSilent((Closeable)in);
+            StoreThreadLocal.setCommitContext(context);
+            context.write(monitor);
+          }
+          finally
+          {
+            StoreThreadLocal.setCommitContext(null);
+            if (in instanceof Closeable)
+            {
+              IOUtil.closeSilent((Closeable)in);
+            }
           }
 
           return null;

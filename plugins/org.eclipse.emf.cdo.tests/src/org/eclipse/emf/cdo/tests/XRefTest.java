@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -133,6 +134,7 @@ public class XRefTest extends AbstractCDOTest
     }
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   @SuppressWarnings("unchecked")
   public void testXRefsToMany() throws Exception
   {
@@ -354,6 +356,7 @@ public class XRefTest extends AbstractCDOTest
     assertEquals(true, found1 && found2);
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   @SuppressWarnings({ "unchecked", "unused" })
   public void testSpecificReferences0() throws Exception
   {
@@ -430,6 +433,7 @@ public class XRefTest extends AbstractCDOTest
     }
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   @SuppressWarnings({ "unchecked", "unused" })
   public void testSpecificReferences1() throws Exception
   {
@@ -501,6 +505,7 @@ public class XRefTest extends AbstractCDOTest
     }
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   @SuppressWarnings({ "unchecked", "unused" })
   public void testSpecificReferences2() throws Exception
   {

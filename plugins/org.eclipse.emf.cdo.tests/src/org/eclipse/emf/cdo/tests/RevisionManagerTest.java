@@ -96,7 +96,7 @@ public class RevisionManagerTest extends AbstractCDOTest
   {
     super.doSetUp();
 
-    if (getRepositoryConfig().getIDGenerationLocation() == IDGenerationLocation.STORE)
+    if (getRepositoryConfig().idGenerationLocation() == IDGenerationLocation.STORE)
     {
       objectID = CDOIDUtil.createLong(2);
     }

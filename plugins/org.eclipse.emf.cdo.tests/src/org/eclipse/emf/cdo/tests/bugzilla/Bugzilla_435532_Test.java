@@ -31,7 +31,7 @@ import java.util.List;
  *
  * @author Alex Lagarde
  */
-@Skips({ IRepositoryConfig.CAPABILITY_AUDITING, IRepositoryConfig.CAPABILITY_BRANCHING })
+@Skips({ IRepositoryConfig.CAPABILITY_AUDITING, IRepositoryConfig.CAPABILITY_BRANCHING, IRepositoryConfig.CAPABILITY_UNORDERED_LISTS })
 public class Bugzilla_435532_Test extends AbstractCDOTest
 {
   private static final int CHILDREN_NUMBER = 100;

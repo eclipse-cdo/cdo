@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.tests.db.bundle.OM;
@@ -45,9 +44,9 @@ public class HsqldbConfig extends DBConfig
 
   private transient ArrayList<HSQLDBDataSource> dataSources;
 
-  public HsqldbConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
+  public HsqldbConfig()
   {
-    super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, false, false, false, idGenerationLocation);
+    super(DB_ADAPTER_NAME);
   }
 
   @Override

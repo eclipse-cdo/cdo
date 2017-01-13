@@ -12,8 +12,6 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -37,8 +35,8 @@ public class AllTestsDBPsql extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, new PostgresqlConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    addScenario(parent, new PostgresqlConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    addScenario(parent, new PostgresqlConfig(true, true, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new PostgresqlConfig(), JVM, NATIVE);
+    addScenario(parent, new PostgresqlConfig().supportingAudits(true), JVM, NATIVE);
+    addScenario(parent, new PostgresqlConfig().supportingBranches(true), JVM, NATIVE);
   }
 }

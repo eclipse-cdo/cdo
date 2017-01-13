@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
@@ -363,6 +364,7 @@ public class PushTransactionTest extends AbstractCDOTest
     assertEquals(orderDetailPrice, detail.getPrice());
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   public void testMoveObject() throws Exception
   {
     {

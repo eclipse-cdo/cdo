@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
-
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 
@@ -30,10 +28,9 @@ public abstract class AbstractSetupDBConfig extends DBConfig
 
   private transient DataSource setupDataSource;
 
-  public AbstractSetupDBConfig(String name, boolean supportingAudits, boolean supportingBranches, boolean withRanges, boolean copyOnBranch,
-      boolean inverseLists, IDGenerationLocation idGenerationLocation)
+  public AbstractSetupDBConfig(String name)
   {
-    super(name, supportingAudits, supportingBranches, withRanges, copyOnBranch, inverseLists, idGenerationLocation);
+    super(name);
   }
 
   protected String getDBName(String repoName)

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.ListOrdering;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -71,7 +72,15 @@ public class Bugzilla_384496_Test extends AbstractCDOTest
       }
     }.assertNoTimeOut();
 
-    assertEquals(1, adapter.getNotifications().length);
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(1, adapter.getNotifications().length);
+    }
+    else
+    {
+      assertEquals(2, adapter.getNotifications().length);
+    }
+
     assertEquals(1, adapter.getNotifications()[0].getPosition());
   }
 }

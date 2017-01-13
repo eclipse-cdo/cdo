@@ -30,9 +30,19 @@ public interface InternalCDOFeatureDelta extends CDOFeatureDelta
    */
   public interface WithIndex
   {
+    /**
+     * @since 4.6
+     */
+    public int getIndex();
+
     public void adjustAfterAddition(int index);
 
     public void adjustAfterRemoval(int index);
+
+    /**
+     * @since 4.6
+     */
+    public void adjustAfterMove(int oldPosition, int newPosition);
   }
 
   /**
@@ -48,6 +58,11 @@ public interface InternalCDOFeatureDelta extends CDOFeatureDelta
      * Expects the number of indices in the first element of the indices array.
      */
     public void affectIndices(ListTargetAdding source[], int[] indices);
+
+    /**
+     * @since 4.6
+     */
+    public int projectIndex(int index);
   }
 
   /**

@@ -23,17 +23,17 @@ import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
  */
 public interface IConstants
 {
-  public static final RepositoryConfig MEM = new MEMConfig(false, false, IDGenerationLocation.STORE);
+  public static final RepositoryConfig MEM = new MEMConfig();
 
-  public static final RepositoryConfig MEM_AUDITS = new MEMConfig(true, false, IDGenerationLocation.STORE);
+  public static final RepositoryConfig MEM_AUDITS = new MEMConfig().supportingAudits(true);
 
-  public static final RepositoryConfig MEM_BRANCHES = new MEMConfig(true, true, IDGenerationLocation.STORE);
+  public static final RepositoryConfig MEM_BRANCHES = new MEMConfig().supportingBranches(true);
 
-  public static final RepositoryConfig MEM_BRANCHES_UUIDS = new MEMConfig(true, true, IDGenerationLocation.CLIENT);
+  public static final RepositoryConfig MEM_BRANCHES_UUIDS = new MEMConfig().idGenerationLocation(IDGenerationLocation.CLIENT);
 
-  public static final RepositoryConfig MEM_OFFLINE = new MEMOfflineConfig(IDGenerationLocation.CLIENT);
+  public static final RepositoryConfig MEM_OFFLINE = new MEMOfflineConfig().idGenerationLocation(IDGenerationLocation.CLIENT);
 
-  public static final RepositoryConfig MEM_EMBEDDED_BRANCHES = new MEMConfig.Embedded(true, true, IDGenerationLocation.STORE);
+  public static final RepositoryConfig MEM_EMBEDDED_BRANCHES = new MEMConfig.Embedded().supportingBranches(true);
 
   public static final SessionConfig EMBEDDED = Net4j.JVM.Embedded.INSTANCE;
 

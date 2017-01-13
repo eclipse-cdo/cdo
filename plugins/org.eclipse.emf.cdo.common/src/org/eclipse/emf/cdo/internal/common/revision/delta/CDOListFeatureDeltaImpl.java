@@ -467,6 +467,19 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
           --this.index;
         }
       }
+
+      public void adjustAfterMove(int oldPosition, int newPosition)
+      {
+        if (index == oldPosition)
+        {
+          index = newPosition;
+        }
+        else
+        {
+          adjustAfterRemoval(oldPosition);
+          adjustAfterAddition(newPosition);
+        }
+      }
     }
 
     int size = listChanges.size();
@@ -483,8 +496,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
         int newPosition = ((CDOMoveFeatureDelta)fd).getNewPosition();
         for (DeltaProxy proxy : proxies)
         {
-          proxy.adjustAfterRemoval(oldPosition);
-          proxy.adjustAfterAddition(newPosition);
+          proxy.adjustAfterMove(oldPosition, newPosition);
         }
 
         break;

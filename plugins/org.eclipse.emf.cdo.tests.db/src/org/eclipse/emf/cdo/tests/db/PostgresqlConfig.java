@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
-
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.postgresql.PostgreSQLAdapter;
 
@@ -38,9 +36,9 @@ public class PostgresqlConfig extends AbstractSetupDBConfig
 
   private static final long serialVersionUID = 1L;
 
-  public PostgresqlConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
+  public PostgresqlConfig()
   {
-    super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, false, false, false, idGenerationLocation);
+    super(DB_ADAPTER_NAME);
   }
 
   @Override

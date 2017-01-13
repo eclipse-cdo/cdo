@@ -53,6 +53,20 @@ public class CDOAddFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl imple
 
     InternalCDORevision internalRevision = (InternalCDORevision)revision;
     CDOList list = internalRevision.getList(feature);
+
+    if (index < 0)
+    {
+      index = 0;
+    }
+    else
+    {
+      int size = list.size();
+      if (index > size)
+      {
+        index = size;
+      }
+    }
+
     list.add(index, value);
     return null;
   }
@@ -82,5 +96,15 @@ public class CDOAddFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl imple
         ++indices[i];
       }
     }
+  }
+
+  public int projectIndex(int index)
+  {
+    if (index >= getIndex())
+    {
+      --index;
+    }
+
+    return index;
   }
 }

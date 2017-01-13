@@ -148,6 +148,19 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
     }
   }
 
+  public void adjustAfterMove(int oldPosition, int newPosition)
+  {
+    if (index == oldPosition)
+    {
+      index = newPosition;
+    }
+    else
+    {
+      adjustAfterRemoval(oldPosition);
+      adjustAfterAddition(newPosition);
+    }
+  }
+
   @Override
   public boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster)
   {

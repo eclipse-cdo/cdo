@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.objectivity;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStoreConfig;
 import org.eclipse.emf.cdo.server.objectivity.ObjyStoreUtil;
@@ -27,9 +26,9 @@ public class ObjyConfig extends RepositoryConfig
 
   private static ObjectivityStoreConfig storeConfig = new ObjectivityStoreConfig();
 
-  public ObjyConfig(boolean supportingAudits, boolean supportingBranches)
+  public ObjyConfig()
   {
-    super(STORE_NAME, supportingAudits, supportingBranches, IDGenerationLocation.STORE);
+    super(STORE_NAME);
 
     org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM.DEBUG.setEnabled(true);
     org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM.INFO.setEnabled(true);

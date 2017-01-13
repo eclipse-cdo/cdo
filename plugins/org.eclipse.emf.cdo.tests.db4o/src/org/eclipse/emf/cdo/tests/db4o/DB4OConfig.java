@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.db4o;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.internal.db4o.DB4OStore;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
@@ -42,7 +41,7 @@ public class DB4OConfig extends RepositoryConfig
 
   public DB4OConfig(boolean mem)
   {
-    super("DB4O-" + (mem ? "mem" : "net"), false, false, IDGenerationLocation.STORE);
+    super("DB4O-" + (mem ? "mem" : "net"));
     this.mem = mem;
   }
 

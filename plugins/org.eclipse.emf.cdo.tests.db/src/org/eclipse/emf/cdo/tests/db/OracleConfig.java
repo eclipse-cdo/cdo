@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.tests.db.bundle.OM;
 
@@ -49,9 +48,9 @@ public abstract class OracleConfig extends AbstractSetupDBConfig
 
   private static final long serialVersionUID = 1L;
 
-  public OracleConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
+  public OracleConfig()
   {
-    super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, false, false, false, idGenerationLocation);
+    super(DB_ADAPTER_NAME);
   }
 
   @Override
@@ -106,9 +105,8 @@ public abstract class OracleConfig extends AbstractSetupDBConfig
   {
     private static final long serialVersionUID = 1L;
 
-    public SingleUser(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
+    public SingleUser()
     {
-      super(supportingAudits, supportingBranches, idGenerationLocation);
     }
 
     @Override
@@ -138,9 +136,8 @@ public abstract class OracleConfig extends AbstractSetupDBConfig
   {
     private static final long serialVersionUID = 1L;
 
-    public MultiUser(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
+    public MultiUser()
     {
-      super(supportingAudits, supportingBranches, idGenerationLocation);
     }
 
     @Override

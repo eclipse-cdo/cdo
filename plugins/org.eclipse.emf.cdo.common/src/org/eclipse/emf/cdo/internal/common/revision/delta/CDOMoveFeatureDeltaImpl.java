@@ -24,10 +24,14 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.WithIndex
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcorePackage;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Simon McDuff
@@ -79,6 +83,11 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     return Type.MOVE;
   }
 
+  public int getIndex()
+  {
+    return oldPosition;
+  }
+
   public Object getValue()
   {
     return value;
@@ -112,6 +121,27 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
 
     InternalCDORevision internalRevision = (InternalCDORevision)revision;
     CDOList list = internalRevision.getList(feature);
+
+    if (oldPosition < 0)
+    {
+      return null;
+    }
+
+    int size = list.size();
+    if (oldPosition > size)
+    {
+      return null;
+    }
+
+    if (newPosition < 0)
+    {
+      newPosition = 0;
+    }
+    else if (newPosition > size)
+    {
+      newPosition = size;
+    }
+
     return list.move(newPosition, oldPosition);
   }
 
@@ -145,6 +175,64 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
         }
       }
     }
+  }
+
+  public static void main(String[] args)
+  {
+    final EReference feature = EcorePackage.Literals.EPACKAGE__ECLASSIFIERS;
+
+    List<CDOFeatureDelta> deltas = new ArrayList<CDOFeatureDelta>();
+    deltas.add(new CDOMoveFeatureDeltaImpl(feature, 7, 1));
+    // deltas.add(new CDORemoveFeatureDeltaImpl(feature, 1));
+    // deltas.add(new CDORemoveFeatureDeltaImpl(feature, 1));
+
+    for (int i = 0; i < 10; i++)
+    {
+      projectIndex(deltas, i);
+    }
+  }
+
+  private static void projectIndex(List<CDOFeatureDelta> deltas, int index)
+  {
+    for (CDOFeatureDelta delta : deltas)
+    {
+      if (delta instanceof ListIndexAffecting)
+      {
+        index = ((ListIndexAffecting)delta).projectIndex(index);
+      }
+    }
+
+    System.out.println(index);
+  }
+
+  public int projectIndex(int index)
+  {
+    if (oldPosition < newPosition)
+    {
+      // Move to right.
+      if (oldPosition <= index && index < newPosition)
+      {
+        ++index;
+      }
+      else if (index == newPosition)
+      {
+        index = oldPosition;
+      }
+    }
+    else
+    {
+      // Move to left.
+      if (newPosition < index && index <= oldPosition)
+      {
+        --index;
+      }
+      else if (index == newPosition)
+      {
+        index = oldPosition;
+      }
+    }
+
+    return index;
   }
 
   public void accept(CDOFeatureDeltaVisitor visitor)
@@ -181,6 +269,19 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     if (index < newPosition && newPosition > 0)
     {
       --newPosition;
+    }
+  }
+
+  public void adjustAfterMove(int oldPosition, int newPosition)
+  {
+    if (this.oldPosition == oldPosition)
+    {
+      this.oldPosition = newPosition;
+    }
+    else
+    {
+      adjustAfterRemoval(oldPosition);
+      adjustAfterAddition(newPosition);
     }
   }
 

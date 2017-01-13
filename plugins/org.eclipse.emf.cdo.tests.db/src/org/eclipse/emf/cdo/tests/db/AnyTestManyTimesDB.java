@@ -40,8 +40,8 @@ public class AnyTestManyTimesDB extends TestSuite implements IConstants
 
   private static final IDGenerationLocation ID_GENERATION_LOCATION = IDGenerationLocation.STORE;
 
-  private static final RepositoryConfig REPOSITORY_CONFIG = new H2Config(SUPPORTING_AUDITS, SUPPORTING_BRANCHES, WITH_RANGES, COPY_ON_BRANCH, INVERSE_LISTS,
-      ID_GENERATION_LOCATION);
+  private static final RepositoryConfig REPOSITORY_CONFIG = new H2Config().supportingAudits(SUPPORTING_AUDITS).supportingBranches(SUPPORTING_BRANCHES)
+      .withRanges(WITH_RANGES).copyOnBranch(COPY_ON_BRANCH).inverseLists(INVERSE_LISTS).idGenerationLocation(ID_GENERATION_LOCATION);
 
   private static final SessionConfig SESSION_CONFIG = JVM;
 

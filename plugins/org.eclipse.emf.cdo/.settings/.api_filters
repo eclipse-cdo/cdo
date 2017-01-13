@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="923795461">
+            <message_arguments>
+                <message_argument value="4.6.0"/>
+                <message_argument value="4.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDByteArray">
         <filter id="305422471">
             <message_arguments>
@@ -718,6 +726,80 @@
             <message_arguments>
                 <message_argument value="CDOCommonRepository"/>
                 <message_argument value="OpenSessionResult"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/spi/cdo/DefaultCDOMerger.java" type="org.eclipse.emf.spi.cdo.DefaultCDOMerger$PerFeature$ManyValued">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued"/>
+                <message_argument value="adjustAfterAddition(List&lt;CDOFeatureDelta&gt;, int)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued"/>
+                <message_argument value="adjustAfterMove(List&lt;CDOFeatureDelta&gt;, int, int)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued"/>
+                <message_argument value="adjustAfterRemoval(List&lt;CDOFeatureDelta&gt;, int)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued"/>
+                <message_argument value="createResult(EStructuralFeature)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued"/>
+                <message_argument value="handleListDelta(List&lt;CDOFeatureDelta&gt;, List&lt;CDOFeatureDelta&gt;, List&lt;CDOFeatureDelta&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued"/>
+                <message_argument value="handleListDeltaAdd(List&lt;CDOFeatureDelta&gt;, CDOAddFeatureDelta, List&lt;CDOFeatureDelta&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued"/>
+                <message_argument value="handleListDeltaMove(List&lt;CDOFeatureDelta&gt;, CDOMoveFeatureDelta, List&lt;CDOFeatureDelta&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued"/>
+                <message_argument value="handleListDeltaRemove(List&lt;CDOFeatureDelta&gt;, CDORemoveFeatureDelta, List&lt;CDOFeatureDelta&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued"/>
+                <message_argument value="other(DefaultCDOMerger.PerFeature.ManyValued.Side)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued.Element"/>
+                <message_argument value="org.eclipse.emf.cdo_4.6.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued.PerSide"/>
+                <message_argument value="org.eclipse.emf.cdo_4.6.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.spi.cdo.DefaultCDOMerger.PerFeature.ManyValued.Side"/>
+                <message_argument value="org.eclipse.emf.cdo_4.6.0"/>
             </message_arguments>
         </filter>
     </resource>

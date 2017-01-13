@@ -109,10 +109,15 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
     return dump("                              ", rightCompany);
   }
 
+  private CDOMerger createMerger()
+  {
+    return new DefaultCDOMerger.PerFeature.ManyValued();
+  }
+
   private List<CDOID> leftMerge() throws CommitException
   {
     System.out.println("             <----------------");
-    CDOMerger merger = new DefaultCDOMerger.PerFeature.ManyValued();
+    CDOMerger merger = createMerger();
     leftTransaction.merge(rightTransaction.getBranch(), merger);
     lastCommit = null;
     return leftCommit();
@@ -121,7 +126,7 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
   private List<CDOID> rightMerge() throws CommitException
   {
     System.out.println("             ---------------->");
-    CDOMerger merger = new DefaultCDOMerger.PerFeature.ManyValued();
+    CDOMerger merger = createMerger();
     rightTransaction.merge(leftTransaction.getBranch(), merger);
     lastCommit = null;
     return rightCommit();
@@ -205,15 +210,15 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
   {
     CDOID customer1 = leftAdd(getModel1Package().getCustomer());
     CDOID customer1b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(leftMerge(), customer1, customer1b);
+    assertIDs(leftMerge(), customer1b, customer1);
 
     CDOID customer2 = leftAdd(getModel1Package().getCustomer());
     CDOID customer2b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(leftMerge(), customer1, customer2b, customer2, customer1b);
+    assertIDs(leftMerge(), customer1b, customer2b, customer1, customer2);
 
     CDOID customer3 = leftAdd(getModel1Package().getCustomer());
     CDOID customer3b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(leftMerge(), customer1, customer2b, customer3b, customer3, customer2, customer1b);
+    assertIDs(leftMerge(), customer1b, customer2b, customer3b, customer1, customer2, customer3);
   }
 
   public void testCrossMerge() throws Exception
@@ -228,8 +233,8 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
   {
     CDOID customer1 = leftAdd(getModel1Package().getCustomer());
     CDOID customer1b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(leftMerge(), customer1, customer1b);
-    assertIDs(rightMerge(), customer1, customer1b);
+    assertIDs(leftMerge(), customer1b, customer1);
+    assertIDs(rightMerge(), customer1b, customer1);
   }
 
   public void testCrossMergeAndRemerge() throws Exception
@@ -246,10 +251,10 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
   {
     CDOID customer1 = leftAdd(getModel1Package().getCustomer());
     CDOID customer1b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(rightMerge(), customer1b, customer1);
+    assertIDs(rightMerge(), customer1, customer1b);
 
     CDOID customer2b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(leftMerge(), customer1b, customer1, customer2b);
+    assertIDs(leftMerge(), customer1, customer1b, customer2b);
   }
 
   public void testMergeAndCrossMergeAndRemerge() throws Exception
@@ -267,11 +272,11 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
   {
     CDOID customer1 = leftAdd(getModel1Package().getCustomer());
     CDOID customer1b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(leftMerge(), customer1, customer1b);
-    assertIDs(rightMerge(), customer1, customer1b);
+    assertIDs(leftMerge(), customer1b, customer1);
+    assertIDs(rightMerge(), customer1b, customer1);
 
     CDOID customer2b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(leftMerge(), customer1, customer1b, customer2b);
+    assertIDs(leftMerge(), customer1b, customer1, customer2b);
   }
 
   public void testCrossMergeAndMultipleRemerges() throws Exception
@@ -292,14 +297,14 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
   {
     CDOID customer1 = leftAdd(getModel1Package().getCustomer());
     CDOID customer1b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(leftMerge(), customer1, customer1b);
-    assertIDs(rightMerge(), customer1, customer1b);
+    assertIDs(leftMerge(), customer1b, customer1);
+    assertIDs(rightMerge(), customer1b, customer1);
 
     CDOID customer2b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(leftMerge(), customer1, customer1b, customer2b);
+    assertIDs(leftMerge(), customer1b, customer1, customer2b);
 
     CDOID customer3b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(leftMerge(), customer1, customer1b, customer2b, customer3b);
+    assertIDs(leftMerge(), customer1b, customer1, customer2b, customer3b);
   }
 
   public void testCrossMergeAndAdditionsAndRemerges() throws Exception
@@ -322,15 +327,15 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
   {
     CDOID customer1 = leftAdd(getModel1Package().getCustomer());
     CDOID customer1b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(leftMerge(), customer1, customer1b);
-    assertIDs(rightMerge(), customer1, customer1b);
+    assertIDs(leftMerge(), customer1b, customer1);
+    assertIDs(rightMerge(), customer1b, customer1);
 
     CDOID customer2 = leftAdd(getModel1Package().getCustomer());
     CDOID customer2b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(leftMerge(), customer1, customer1b, customer2, customer2b);
+    assertIDs(leftMerge(), customer1b, customer1, customer2b, customer2);
 
     CDOID customer3 = leftAdd(getModel1Package().getCustomer());
     CDOID customer3b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(leftMerge(), customer1, customer1b, customer2, customer3b, customer3, customer2b);
+    assertIDs(leftMerge(), customer1b, customer1, customer2b, customer3b, customer2, customer3);
   }
 }

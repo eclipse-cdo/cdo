@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.db.offline;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.tests.db.MysqlConfig;
 
 import org.eclipse.net4j.db.DBUtil;
@@ -51,9 +50,9 @@ public class MysqlOfflineConfig extends DBOfflineConfig
 
   private transient List<String> databases = new ArrayList<String>();
 
-  public MysqlOfflineConfig(boolean withRanges, boolean copyOnBranch, IDGenerationLocation idGenerationLocation)
+  public MysqlOfflineConfig()
   {
-    super("MySqlOffline", withRanges, copyOnBranch, idGenerationLocation);
+    super("MySqlOffline");
   }
 
   @Override

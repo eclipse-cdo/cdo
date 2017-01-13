@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
 import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.MergingTest;
@@ -36,7 +35,7 @@ public class AllTestsDBMysql extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, new MysqlConfig(false, false, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new MysqlConfig(), JVM, NATIVE);
   }
 
   @Override

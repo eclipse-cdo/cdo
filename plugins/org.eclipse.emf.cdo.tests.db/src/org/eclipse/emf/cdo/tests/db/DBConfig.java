@@ -53,13 +53,9 @@ public abstract class DBConfig extends RepositoryConfig
 
   private transient IDBAdapter dbAdapter;
 
-  public DBConfig(String name, boolean supportingAudits, boolean supportingBranches, boolean withRanges, boolean copyOnBranch, boolean inverseLists,
-      IDGenerationLocation idGenerationLocation)
+  public DBConfig(String name)
   {
-    super(name, supportingAudits, supportingBranches, idGenerationLocation);
-    this.withRanges = withRanges;
-    this.copyOnBranch = copyOnBranch;
-    this.inverseLists = inverseLists;
+    super(name);
   }
 
   @Override
@@ -69,17 +65,17 @@ public abstract class DBConfig extends RepositoryConfig
     capabilities.add(CAPABILITY);
     capabilities.add(getDBAdapterName());
 
-    if (isWithRanges())
+    if (withRanges())
     {
       capabilities.add(CAPABILITY_RANGES);
     }
 
-    if (isCopyOnBranch())
+    if (copyOnBranch())
     {
       capabilities.add(CAPABILITY_COPY_ON_BRANCH);
     }
 
-    if (isInverseLists())
+    if (inverseLists())
     {
       capabilities.add(CAPABILITY_INVERSE_LISTS);
     }
@@ -103,19 +99,67 @@ public abstract class DBConfig extends RepositoryConfig
     return "DB";
   }
 
-  public boolean isWithRanges()
+  @Override
+  public DBConfig supportingAudits(boolean supportingAudits)
+  {
+    return (DBConfig)super.supportingAudits(supportingAudits);
+  }
+
+  @Override
+  public DBConfig supportingBranches(boolean supportingBranches)
+  {
+    return (DBConfig)super.supportingBranches(supportingBranches);
+  }
+
+  @Override
+  public DBConfig supportingChunks(boolean supportingChunks)
+  {
+    return (DBConfig)super.supportingChunks(supportingChunks);
+  }
+
+  @Override
+  public DBConfig supportingExtRefs(boolean supportingExtRefs)
+  {
+    return (DBConfig)super.supportingExtRefs(supportingExtRefs);
+  }
+
+  @Override
+  public DBConfig idGenerationLocation(IDGenerationLocation idGenerationLocation)
+  {
+    return (DBConfig)super.idGenerationLocation(idGenerationLocation);
+  }
+
+  public boolean withRanges()
   {
     return withRanges;
   }
 
-  public boolean isCopyOnBranch()
+  public DBConfig withRanges(boolean withRanges)
+  {
+    this.withRanges = withRanges;
+    return this;
+  }
+
+  public boolean copyOnBranch()
   {
     return copyOnBranch;
   }
 
-  public boolean isInverseLists()
+  public DBConfig copyOnBranch(boolean copyOnBranch)
+  {
+    this.copyOnBranch = copyOnBranch;
+    return this;
+  }
+
+  public boolean inverseLists()
   {
     return inverseLists;
+  }
+
+  public DBConfig inverseLists(boolean inverseLists)
+  {
+    this.inverseLists = inverseLists;
+    return this;
   }
 
   @Override
@@ -165,7 +209,7 @@ public abstract class DBConfig extends RepositoryConfig
       return mappingStrategy;
     }
 
-    return CDODBUtil.createHorizontalMappingStrategy(isSupportingAudits(), isSupportingBranches(), withRanges);
+    return CDODBUtil.createHorizontalMappingStrategy(supportingAudits(), supportingBranches(), withRanges);
   }
 
   protected IMappingStrategy getTestMappingStrategy()

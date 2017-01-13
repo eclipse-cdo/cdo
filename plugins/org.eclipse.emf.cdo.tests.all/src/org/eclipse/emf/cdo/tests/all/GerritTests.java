@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.tests.all;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.tests.db.DBConfigs;
 import org.eclipse.emf.cdo.tests.db.H2Config;
 
@@ -31,7 +30,7 @@ public class GerritTests extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, new H2Config(false, false, true, false, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    addScenario(parent, new H2Config(true, true, true, false, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new H2Config(), JVM, NATIVE);
+    addScenario(parent, new H2Config().supportingBranches(true), JVM, NATIVE);
   }
 }

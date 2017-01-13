@@ -35,6 +35,6 @@ public class AllTestsDBOracle extends DBConfigs
 
   private void addScenarios(TestSuite parent, IDGenerationLocation idGenerationLocation)
   {
-    addScenario(parent, new OracleConfig.SingleUser(false, false, idGenerationLocation), JVM, NATIVE);
+    addScenario(parent, new OracleConfig.SingleUser().idGenerationLocation(idGenerationLocation), JVM, NATIVE);
   }
 }

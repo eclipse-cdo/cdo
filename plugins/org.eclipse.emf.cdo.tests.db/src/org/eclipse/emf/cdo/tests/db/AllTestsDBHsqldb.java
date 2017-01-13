@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_266982_Test;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
@@ -33,7 +32,7 @@ public class AllTestsDBHsqldb extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, new HsqldbConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new HsqldbConfig().supportingAudits(true), JVM, NATIVE);
   }
 
   @Override

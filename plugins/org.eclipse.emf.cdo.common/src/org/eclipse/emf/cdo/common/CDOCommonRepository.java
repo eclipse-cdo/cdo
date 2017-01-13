@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 
 import org.eclipse.net4j.util.event.IEvent;
 
+import org.eclipse.emf.ecore.EReference;
+
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -153,6 +155,53 @@ public interface CDOCommonRepository extends CDOTimeProvider, IAdaptable
   public enum IDGenerationLocation
   {
     STORE, CLIENT
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.6
+   */
+  public static enum ListOrdering
+  {
+    ORDERED
+    {
+      @Override
+      public boolean isOrdered(EReference reference)
+      {
+        return true;
+      }
+    },
+
+    UNORDERED
+    {
+      @Override
+      public boolean isOrdered(EReference reference)
+      {
+        return false;
+      }
+    },
+
+    BY_ECORE
+    {
+      @Override
+      public boolean isOrdered(EReference reference)
+      {
+        return reference.isOrdered();
+      }
+    },
+
+    BY_ANNOTATED_ECORE
+    {
+      @Override
+      public boolean isOrdered(EReference reference)
+      {
+        // TODO list-ordering
+        // return !EMFUtil.isUnordered(reference);
+        return reference.isOrdered();
+      }
+    };
+
+    public abstract boolean isOrdered(EReference reference);
   }
 
   /**

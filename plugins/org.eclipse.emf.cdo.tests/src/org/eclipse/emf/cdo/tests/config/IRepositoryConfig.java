@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.config;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.ListOrdering;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -39,6 +40,8 @@ public interface IRepositoryConfig extends IConfig, IRepositoryProvider
 
   public static final String CAPABILITY_EXTERNAL_REFS = "repository.external.refs";
 
+  public static final String CAPABILITY_UNORDERED_LISTS = "repository.unordered.lists";
+
   public static final String CAPABILITY_UUIDS = "repository.uuids";
 
   public static final String CAPABILITY_OFFLINE = "repository.offline";
@@ -49,15 +52,17 @@ public interface IRepositoryConfig extends IConfig, IRepositoryProvider
 
   public boolean hasServerContainer();
 
-  public boolean isSupportingAudits();
+  public boolean supportingAudits();
 
-  public boolean isSupportingBranches();
+  public boolean supportingBranches();
 
-  public boolean isSupportingChunks();
+  public boolean supportingChunks();
 
-  public boolean isSupportingExtRefs();
+  public boolean supportingExtRefs();
 
-  public IDGenerationLocation getIDGenerationLocation();
+  public IDGenerationLocation idGenerationLocation();
+
+  public ListOrdering listOrdering();
 
   public Map<String, String> getRepositoryProperties();
 

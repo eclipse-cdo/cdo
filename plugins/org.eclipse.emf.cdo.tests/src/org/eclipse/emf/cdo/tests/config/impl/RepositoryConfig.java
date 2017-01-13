@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.ListOrdering;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
@@ -147,7 +148,13 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   private boolean supportingBranches;
 
-  private IDGenerationLocation idGenerationLocation;
+  private boolean supportingChunks = true;
+
+  private boolean supportingExtRefs = true;
+
+  private IDGenerationLocation idGenerationLocation = IDGenerationLocation.STORE;
+
+  private ListOrdering listOrdering = ListOrdering.ORDERED;
 
   /**
    * Flag used to signal that a repository is being restarted. This prevents cleaning and reinitialization of persistent
@@ -159,37 +166,38 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   private transient IRepository.WriteAccessHandler resourcePathChecker;
 
-  public RepositoryConfig(String name, boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
+  public RepositoryConfig(String name)
   {
     super(name);
-
-    this.supportingAudits = supportingAudits;
-    this.supportingBranches = supportingBranches;
-    this.idGenerationLocation = idGenerationLocation;
   }
 
   public void initCapabilities(Set<String> capabilities)
   {
-    if (isSupportingAudits())
+    if (supportingAudits())
     {
       capabilities.add(CAPABILITY_AUDITING);
-      if (isSupportingBranches())
+      if (supportingBranches())
       {
         capabilities.add(CAPABILITY_BRANCHING);
       }
     }
 
-    if (isSupportingChunks())
+    if (supportingChunks())
     {
       capabilities.add(CAPABILITY_CHUNKING);
     }
 
-    if (isSupportingExtRefs())
+    if (supportingExtRefs())
     {
       capabilities.add(CAPABILITY_EXTERNAL_REFS);
     }
 
-    if (getIDGenerationLocation() == IDGenerationLocation.CLIENT)
+    if (listOrdering() != ListOrdering.ORDERED)
+    {
+      capabilities.add(CAPABILITY_UNORDERED_LISTS);
+    }
+
+    if (idGenerationLocation() == IDGenerationLocation.CLIENT)
     {
       capabilities.add(CAPABILITY_UUIDS);
     }
@@ -209,29 +217,82 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return true;
   }
 
-  public boolean isSupportingAudits()
+  public boolean supportingAudits()
   {
     return supportingAudits;
   }
 
-  public boolean isSupportingBranches()
+  public RepositoryConfig supportingAudits(boolean supportingAudits)
+  {
+    this.supportingAudits = supportingAudits;
+
+    if (!supportingAudits)
+    {
+      supportingBranches(false);
+    }
+
+    return this;
+  }
+
+  public boolean supportingBranches()
   {
     return supportingBranches;
   }
 
-  public boolean isSupportingChunks()
+  public RepositoryConfig supportingBranches(boolean supportingBranches)
   {
-    return true;
+    this.supportingBranches = supportingBranches;
+
+    if (supportingBranches)
+    {
+      supportingAudits(true);
+    }
+
+    return this;
   }
 
-  public boolean isSupportingExtRefs()
+  public boolean supportingChunks()
   {
-    return true;
+    return supportingChunks;
   }
 
-  public IDGenerationLocation getIDGenerationLocation()
+  public RepositoryConfig supportingChunks(boolean supportingChunks)
+  {
+    this.supportingChunks = supportingChunks;
+    return this;
+  }
+
+  public boolean supportingExtRefs()
+  {
+    return supportingExtRefs;
+  }
+
+  public RepositoryConfig supportingExtRefs(boolean supportingExtRefs)
+  {
+    this.supportingExtRefs = supportingExtRefs;
+    return this;
+  }
+
+  public IDGenerationLocation idGenerationLocation()
   {
     return idGenerationLocation;
+  }
+
+  public RepositoryConfig idGenerationLocation(IDGenerationLocation idGenerationLocation)
+  {
+    this.idGenerationLocation = idGenerationLocation;
+    return this;
+  }
+
+  public ListOrdering listOrdering()
+  {
+    return listOrdering;
+  }
+
+  public RepositoryConfig listOrdering(ListOrdering listOrdering)
+  {
+    this.listOrdering = listOrdering;
+    return this;
   }
 
   @Override
@@ -417,6 +478,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     props.put(Props.SUPPORTING_AUDITS, Boolean.toString(supportingAudits));
     props.put(Props.SUPPORTING_BRANCHES, Boolean.toString(supportingBranches));
     props.put(Props.ID_GENERATION_LOCATION, idGenerationLocation.toString());
+
+    // TODO list-ordering
+    // props.put(Props.LIST_ORDERING, listOrdering.toString());
   }
 
   public void registerRepository(final InternalRepository repository)
@@ -841,9 +905,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     private transient IAcceptor masterAcceptor;
 
-    public OfflineConfig(String name, IDGenerationLocation idGenerationLocation)
+    public OfflineConfig(String name)
     {
-      super(name, true, true, idGenerationLocation);
+      super(name);
+      supportingAudits(true);
+      supportingBranches(true);
     }
 
     @Override
@@ -1109,14 +1175,14 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     private static final long serialVersionUID = 1L;
 
-    public MEMConfig(String name, boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
+    public MEMConfig(String name)
     {
-      super(name, supportingAudits, supportingBranches, idGenerationLocation);
+      super(name);
     }
 
-    public MEMConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
+    public MEMConfig()
     {
-      this(STORE_NAME, supportingAudits, supportingBranches, idGenerationLocation);
+      this(STORE_NAME);
     }
 
     @Override
@@ -1143,9 +1209,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       private static final long serialVersionUID = 1L;
 
-      public Embedded(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
+      public Embedded()
       {
-        super(STORE_NAME + "Embedded", supportingAudits, supportingBranches, idGenerationLocation);
+        super(STORE_NAME + "Embedded");
       }
 
       @Override
@@ -1172,9 +1238,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   {
     private static final long serialVersionUID = 1L;
 
-    public MEMOfflineConfig(IDGenerationLocation idGenerationLocation)
+    public MEMOfflineConfig()
     {
-      super(MEMConfig.STORE_NAME + "Offline", idGenerationLocation);
+      super(MEMConfig.STORE_NAME + "Offline");
     }
 
     @Override

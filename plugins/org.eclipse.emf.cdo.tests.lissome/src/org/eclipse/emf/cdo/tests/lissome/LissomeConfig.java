@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.lissome;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.internal.lissome.LissomeBrowserPage;
 import org.eclipse.emf.cdo.server.internal.lissome.LissomeStore;
@@ -32,7 +31,7 @@ import java.io.File;
  */
 public class LissomeConfig extends RepositoryConfig
 {
-  public static final RepositoryConfig INSTANCE = new LissomeConfig(IDGenerationLocation.STORE);
+  public static final RepositoryConfig INSTANCE = new LissomeConfig();
 
   public static final String STORE_NAME = "Lissome";
 
@@ -40,9 +39,11 @@ public class LissomeConfig extends RepositoryConfig
 
   private static File reusableFolder;
 
-  public LissomeConfig(IDGenerationLocation idGenerationLocation)
+  public LissomeConfig()
   {
-    super(STORE_NAME, true, true, idGenerationLocation);
+    super(STORE_NAME);
+    supportingAudits(true);
+    supportingBranches(true);
   }
 
   @Override
@@ -64,7 +65,7 @@ public class LissomeConfig extends RepositoryConfig
   }
 
   @Override
-  public boolean isSupportingExtRefs()
+  public boolean supportingExtRefs()
   {
     return false;
   }

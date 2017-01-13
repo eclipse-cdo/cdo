@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.ListOrdering;
 import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -43,11 +44,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 {
   private static final String TEST_RESOURCE_NAME = "/test1";
 
-  // --- initialize model ----------------------------------------------------
-
-  // --- conflict test -------------------------------------------------------
-
-  public void _testProvokeConflictOnServerTest() throws Exception
+  public void _testProvokeConflictOnServer() throws Exception
   {
     initTestModelSimple();
 
@@ -74,7 +71,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     }
   }
 
-  public void _testProvokeConflictLocalTest() throws Exception
+  public void _testProvokeConflictLocal() throws Exception
   {
     initTestModelSimple();
 
@@ -101,9 +98,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     }
   }
 
-  // --- single value conflict resolver tests --------------------------
-
-  public void testChangeChangeTest() throws Exception
+  public void testChangeChange() throws Exception
   {
     initTestModelSimple();
 
@@ -124,7 +119,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(true, thatTransaction.hasConflict());
   }
 
-  public void testRemoveChangeTest() throws Exception
+  public void testRemoveChange() throws Exception
   {
     initTestModelSimple();
 
@@ -146,7 +141,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(true, thatTransaction.hasConflict());
   }
 
-  public void testChangeRemoveTest() throws Exception
+  public void testChangeRemove() throws Exception
   {
     initTestModelSimple();
 
@@ -175,7 +170,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(objects - 1, getTestModelRoot(thisTransaction).getListA().size());
   }
 
-  public void testRemoveAddTest() throws Exception
+  public void testRemoveAdd() throws Exception
   {
     initTestModelSimple();
 
@@ -202,7 +197,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(true, thatTransaction.hasConflict());
   }
 
-  public void testAddRemoveTest() throws Exception
+  public void testAddRemove() throws Exception
   {
     initTestModelSimple();
 
@@ -234,7 +229,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(objects - 1, getTestModelRoot(thisTransaction).getListB().size());
   }
 
-  public void testRemoveRemoveTest() throws Exception
+  public void testRemoveRemove() throws Exception
   {
     initTestModelSimple();
 
@@ -261,9 +256,40 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(false, thatTransaction.hasConflict());
   }
 
-  // --- resolve many valued changes -------------------------------------
+  public void test_RemoveRemove_MoveRemoveRemoveRemove() throws Exception
+  {
+    initTestModel();
 
-  public void testManyValuedAddAddTest() throws Exception
+    CDOSession session = openSessionWithAdditionsMode();
+    CDOTransaction thisTransaction = session.openTransaction();
+    CDOTransaction thatTransaction = session.openTransaction();
+    addConflictResolver(thatTransaction);
+
+    Root thisRoot = getTestModelRoot(thisTransaction);
+    Root thatRoot = thatTransaction.getObject(thisRoot);
+
+    EList<BaseObject> thisList = thisRoot.getListA();
+    EList<BaseObject> thatList = thatRoot.getListA();
+    BaseObject thatLastObject = thatList.get(4);
+
+    thisList.remove(1); // Removes the original index 1.
+    thisList.remove(1); // Removes the original index 2.
+
+    thatList.move(1, 4);
+    thatList.remove(3); // Removes the original index 2.
+    thatList.remove(3); // Removes the original index 3.
+    thatList.remove(2); // Removes the original index 1.
+    thatList.remove(0); // Removes the original index 4.
+
+    commitAndSync(thisTransaction, thatTransaction);
+    assertEquals(true, thatTransaction.isDirty());
+    assertEquals(false, thatTransaction.hasConflict());
+
+    assertEquals(1, thatList.size());
+    assertEquals(thatLastObject, thatList.get(0));
+  }
+
+  public void testManyValuedAddAdd() throws Exception
   {
     initTestModelSimple();
 
@@ -291,7 +317,92 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(false, thatTransaction.isDirty());
   }
 
-  public void testManyValuedAddChangeTest() throws Exception
+  public void testManyValuedAddAdd_SameValue() throws Exception
+  {
+    initTestModel();
+
+    CDOSession session = openSessionWithAdditionsMode();
+    CDOTransaction thisTransaction = session.openTransaction();
+    CDOTransaction thatTransaction = session.openTransaction();
+    addConflictResolver(thatTransaction);
+
+    Root thisRoot = getTestModelRoot(thisTransaction);
+    EList<BaseObject> thisList = thisRoot.getListA();
+    int objects = thisList.size();
+
+    Root thatRoot = thatTransaction.getObject(thisRoot);
+    EList<BaseObject> thatList = thatRoot.getListA();
+
+    // Add the same existing element from list B.
+    thisList.add(0, thisRoot.getListB().get(0));
+    thatList.add(0, thatRoot.getListB().get(0));
+    thatList.remove(1);
+
+    commitAndSync(thisTransaction, thatTransaction);
+    commitAndSync(thatTransaction, thisTransaction);
+
+    assertEquals(objects + 1 - 1, thisList.size());
+    assertEquals(false, thisTransaction.isDirty());
+    assertEquals(false, thatTransaction.isDirty());
+  }
+
+  public void testManyValuedAddSet_SameValue() throws Exception
+  {
+    initTestModel();
+
+    CDOSession session = openSessionWithAdditionsMode();
+    CDOTransaction thisTransaction = session.openTransaction();
+    CDOTransaction thatTransaction = session.openTransaction();
+    addConflictResolver(thatTransaction);
+
+    Root thisRoot = getTestModelRoot(thisTransaction);
+    EList<BaseObject> thisList = thisRoot.getListA();
+    int objects = thisList.size();
+
+    Root thatRoot = thatTransaction.getObject(thisRoot);
+    EList<BaseObject> thatList = thatRoot.getListA();
+
+    // Add the same existing element from list B.
+    thisList.add(0, thisRoot.getListB().get(0));
+    thatList.set(0, thatRoot.getListB().get(0));
+
+    commitAndSync(thisTransaction, thatTransaction);
+    commitAndSync(thatTransaction, thisTransaction);
+
+    assertEquals(objects + 1 - 1, thisList.size());
+    assertEquals(false, thisTransaction.isDirty());
+    assertEquals(false, thatTransaction.isDirty());
+  }
+
+  public void testManyValuedSetAdd_SameValue() throws Exception
+  {
+    initTestModel();
+
+    CDOSession session = openSessionWithAdditionsMode();
+    CDOTransaction thisTransaction = session.openTransaction();
+    CDOTransaction thatTransaction = session.openTransaction();
+    addConflictResolver(thatTransaction);
+
+    Root thisRoot = getTestModelRoot(thisTransaction);
+    EList<BaseObject> thisList = thisRoot.getListA();
+    int objects = thisList.size();
+
+    Root thatRoot = thatTransaction.getObject(thisRoot);
+    EList<BaseObject> thatList = thatRoot.getListA();
+
+    // Add the same existing element from list B.
+    thisList.set(0, thisRoot.getListB().get(0));
+    thatList.add(0, thatRoot.getListB().get(0));
+
+    commitAndSync(thisTransaction, thatTransaction);
+    commitAndSync(thatTransaction, thisTransaction);
+
+    assertEquals(objects + 1 - 1, thisList.size());
+    assertEquals(false, thisTransaction.isDirty());
+    assertEquals(false, thatTransaction.isDirty());
+  }
+
+  public void testManyValuedAddChange() throws Exception
   {
     initTestModelSimple();
 
@@ -322,7 +433,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(objects + 1, getTestModelRoot(thisTransaction).getListA().size());
   }
 
-  public void testManyValuedChangeAddTest() throws Exception
+  public void testManyValuedChangeAdd() throws Exception
   {
     initTestModelSimple();
 
@@ -353,7 +464,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(objects + 1, getTestModelRoot(thisTransaction).getListA().size());
   }
 
-  public void testManyValuedAddRemoveTest() throws Exception
+  public void testManyValuedAddRemove() throws Exception
   {
     initTestModelSimple();
 
@@ -383,7 +494,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(objects, getTestModelRoot(thisTransaction).getListA().size());
   }
 
-  public void testManyValuedRemoveAddTest() throws Exception
+  public void testManyValuedRemoveAdd() throws Exception
   {
     initTestModelSimple();
 
@@ -413,7 +524,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(objects, thisList.size());
   }
 
-  public void testManyValuedChangeRemoveTest() throws Exception
+  public void testManyValuedChangeRemove() throws Exception
   {
     initTestModelSimple();
 
@@ -472,7 +583,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(objects - 1, thisList.size());
   }
 
-  public void testManyValuedRemoveChangeTest() throws Exception
+  public void testManyValuedRemoveChange() throws Exception
   {
     initTestModelSimple();
 
@@ -523,7 +634,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(false, thatTransaction.hasConflict());
   }
 
-  public void testManyValuedChangeChangeTest() throws Exception
+  public void testManyValuedChangeChange() throws Exception
   {
     initTestModelSimple();
 
@@ -581,7 +692,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(objects, getTestModelRoot(thisTransaction).getListA().size());
   }
 
-  public void testManyValuedRemoveRemoveTest() throws Exception
+  public void testManyValuedRemoveRemove() throws Exception
   {
     initTestModelSimple();
 
@@ -635,7 +746,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(objects - 1, getTestModelRoot(thisTransaction).getListA().size());
   }
 
-  public void testManyValuedAddAddRemoveRemoveTest() throws Exception
+  public void testManyValuedAddAddRemoveRemove() throws Exception
   {
     initTestModelSimple();
 
@@ -668,7 +779,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(objects, thisList.size());
   }
 
-  public void testManyValuedAddAddRemoveRemove2Test() throws Exception
+  public void testManyValuedAddAddRemoveRemove2() throws Exception
   {
     initTestModelSimple();
 
@@ -701,9 +812,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   }
 
-  // --- initialize model ----------------------------------------------------
-
-  public void testManyValuedRemoveRemoveAddAddTest() throws Exception
+  public void testManyValuedRemoveRemoveAddAdd() throws Exception
   {
     initTestModelSimple();
 
@@ -736,9 +845,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   }
 
-  // --- list conflict resolver tests ----------------------------------------
-
-  public void testAddHeadAddHeadTest() throws Exception
+  public void testAddHeadAddHead() throws Exception
   {
     initTestModel();
 
@@ -774,13 +881,17 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     // Check indices.
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisListA.get(1), thisObject);
-    assertEquals(thisListA.get(0), thisTransaction.getObject(thatObject));
-    assertEquals(thatListA.get(1), thatTransaction.getObject(thisObject));
-    assertEquals(thatListA.get(0), thatObject);
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisListA.get(0), thisObject);
+      assertEquals(thisListA.get(1), thisTransaction.getObject(thatObject));
+      assertEquals(thatListA.get(0), thatTransaction.getObject(thisObject));
+      assertEquals(thatListA.get(1), thatObject);
+    }
   }
 
-  public void testAddHeadAddTailTest() throws Exception
+  public void testAddHeadAddTail() throws Exception
   {
     initTestModel();
 
@@ -822,7 +933,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(objects + 2, thatList.size());
   }
 
-  public void testAddTailAddTailTest() throws Exception
+  public void testAddTailAddTail() throws Exception
   {
     initTestModel();
 
@@ -857,13 +968,13 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int size = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisRoot.getListA().get(size - 1), thisObject);
-    assertEquals(thisRoot.getListA().get(size - 2), thisTransaction.getObject(thatObject));
-    assertEquals(thatRoot.getListA().get(size - 1), thatTransaction.getObject(thisObject));
-    assertEquals(thatRoot.getListA().get(size - 2), thatObject);
+    assertEquals(thisRoot.getListA().get(size - 2), thisObject);
+    assertEquals(thisRoot.getListA().get(size - 1), thisTransaction.getObject(thatObject));
+    assertEquals(thatRoot.getListA().get(size - 2), thatTransaction.getObject(thisObject));
+    assertEquals(thatRoot.getListA().get(size - 1), thatObject);
   }
 
-  public void testAddTailAddHeadTest() throws Exception
+  public void testAddTailAddHead() throws Exception
   {
     initTestModel();
 
@@ -901,15 +1012,17 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int size = thisList.size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisList.get(size - 1), thisObject);
-    assertEquals(thisList.get(0), thisTransaction.getObject(thatObject));
-    assertEquals(thatList.get(size - 1), thatTransaction.getObject(thisObject));
-    assertEquals(thatList.get(0), thatObject);
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisList.get(size - 1), thisObject);
+      assertEquals(thisList.get(0), thisTransaction.getObject(thatObject));
+      assertEquals(thatList.get(size - 1), thatTransaction.getObject(thisObject));
+      assertEquals(thatList.get(0), thatObject);
+    }
   }
 
-  // Add - remove
-
-  public void testAddHeadRemoveHeadTest() throws Exception
+  public void testAddHeadRemoveHead() throws Exception
   {
     initTestModel();
 
@@ -947,15 +1060,19 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     // Check indices.
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisRoot.getListA().get(0), thisObject);
-    assertEquals(thisRoot.getListA().get(1), thisTransaction.getObject(thatAfterRemoveObject));
-    assertEquals(thatRoot.getListA().get(0), thatTransaction.getObject(thisObject));
-    assertEquals(thatRoot.getListA().get(1), thatAfterRemoveObject);
     assertEquals(CDOUtil.getCDOObject(thisRemoveObject).cdoState(), CDOState.INVALID);
     assertEquals(CDOUtil.getCDOObject(thatRemoveObject).cdoState(), CDOState.TRANSIENT);
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisRoot.getListA().get(0), thisObject);
+      assertEquals(thisRoot.getListA().get(1), thisTransaction.getObject(thatAfterRemoveObject));
+      assertEquals(thatRoot.getListA().get(0), thatTransaction.getObject(thisObject));
+      assertEquals(thatRoot.getListA().get(1), thatAfterRemoveObject);
+    }
   }
 
-  public void testAddHeadRemoveTailTest() throws Exception
+  public void testAddHeadRemoveTail() throws Exception
   {
     initTestModel();
 
@@ -995,15 +1112,19 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int size = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisRoot.getListA().get(0), thisObject);
-    assertEquals(thisRoot.getListA().get(size - 1), thisTransaction.getObject(thatBeforeRemoveObject));
-    assertEquals(thatRoot.getListA().get(0), thatTransaction.getObject(thisObject));
-    assertEquals(thatRoot.getListA().get(size - 1), thatBeforeRemoveObject);
     assertEquals(CDOUtil.getCDOObject(thisRemoveObject).cdoState(), CDOState.INVALID);
     assertEquals(CDOUtil.getCDOObject(thatRemoveObject).cdoState(), CDOState.TRANSIENT);
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisRoot.getListA().get(0), thisObject);
+      assertEquals(thisRoot.getListA().get(size - 1), thisTransaction.getObject(thatBeforeRemoveObject));
+      assertEquals(thatRoot.getListA().get(0), thatTransaction.getObject(thisObject));
+      assertEquals(thatRoot.getListA().get(size - 1), thatBeforeRemoveObject);
+    }
   }
 
-  public void testAddTailRemoveTailTest() throws Exception
+  public void testAddTailRemoveTail() throws Exception
   {
     initTestModel();
 
@@ -1051,7 +1172,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOUtil.getCDOObject(thatRemoveObject).cdoState(), CDOState.TRANSIENT);
   }
 
-  public void testAddTailRemoveHeadTest() throws Exception
+  public void testAddTailRemoveHead() throws Exception
   {
     initTestModel();
 
@@ -1098,9 +1219,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOUtil.getCDOObject(thatRemoveObject).cdoState(), CDOState.TRANSIENT);
   }
 
-  // Add - move
-
-  public void testAddHeadMoveHeadTest() throws Exception
+  public void testAddHeadMoveHead() throws Exception
   {
     initTestModel();
 
@@ -1136,13 +1255,17 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int size = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisRoot.getListA().get(0), thisObject);
-    assertEquals(thisRoot.getListA().get(size - 1), thisTransaction.getObject(thatMoveObject));
-    assertEquals(thatRoot.getListA().get(0), thatTransaction.getObject(thisObject));
-    assertEquals(thatRoot.getListA().get(size - 1), thatMoveObject);
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisRoot.getListA().get(0), thisObject);
+      assertEquals(thisRoot.getListA().get(size - 1), thisTransaction.getObject(thatMoveObject));
+      assertEquals(thatRoot.getListA().get(0), thatTransaction.getObject(thisObject));
+      assertEquals(thatRoot.getListA().get(size - 1), thatMoveObject);
+    }
   }
 
-  public void testAddHeadMoveTailTest() throws Exception
+  public void testAddHeadMoveTail() throws Exception
   {
     initTestModel();
 
@@ -1182,7 +1305,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(objects + 1, thatList.size());
   }
 
-  public void testAddTailMoveTailTest() throws Exception
+  public void testAddTailMoveTail() throws Exception
   {
     initTestModel();
 
@@ -1218,13 +1341,17 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int size = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisRoot.getListA().get(size - 1), thisObject);
-    assertEquals(thisRoot.getListA().get(0), thisTransaction.getObject(thatMoveObject));
-    assertEquals(thatRoot.getListA().get(size - 1), thatTransaction.getObject(thisObject));
-    assertEquals(thatRoot.getListA().get(0), thatMoveObject);
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisRoot.getListA().get(size - 1), thisObject);
+      assertEquals(thisRoot.getListA().get(0), thisTransaction.getObject(thatMoveObject));
+      assertEquals(thatRoot.getListA().get(size - 1), thatTransaction.getObject(thisObject));
+      assertEquals(thatRoot.getListA().get(0), thatMoveObject);
+    }
   }
 
-  public void testAddTailMoveHeadTest() throws Exception
+  public void testAddTailMoveHead() throws Exception
   {
     initTestModel();
 
@@ -1266,7 +1393,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(thatRoot.getListA().get(0), thatAfterRemoveObject);
   }
 
-  public void testAddHeadClearTest() throws Exception
+  public void testAddHeadClear() throws Exception
   {
     initTestModel();
 
@@ -1311,7 +1438,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.CLEAN, CDOUtil.getCDOObject(thisObject).cdoState());
   }
 
-  public void testAddTailClearTest() throws Exception
+  public void testAddTailClear() throws Exception
   {
     initTestModel();
 
@@ -1356,7 +1483,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.CLEAN, CDOUtil.getCDOObject(thisObject).cdoState());
   }
 
-  public void testRemoveHeadAddHeadTest() throws Exception
+  public void testRemoveHeadAddHead() throws Exception
   {
     initTestModel();
 
@@ -1394,15 +1521,19 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     // Check indices.
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisRoot.getListA().get(0), thisTransaction.getObject(thatObject));
-    assertEquals(thisRoot.getListA().get(1), thisAfterRemoveObject);
-    assertEquals(thatRoot.getListA().get(0), thatTransaction.getObject(thatObject));
-    assertEquals(thatRoot.getListA().get(1), thatTransaction.getObject(thisAfterRemoveObject));
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thisRemoveObject).cdoState());
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatRemoveObject).cdoState());
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisRoot.getListA().get(0), thisTransaction.getObject(thatObject));
+      assertEquals(thisRoot.getListA().get(1), thisAfterRemoveObject);
+      assertEquals(thatRoot.getListA().get(0), thatTransaction.getObject(thatObject));
+      assertEquals(thatRoot.getListA().get(1), thatTransaction.getObject(thisAfterRemoveObject));
+    }
   }
 
-  public void testRemoveHeadAddTailTest() throws Exception
+  public void testRemoveHeadAddTail() throws Exception
   {
     initTestModel();
 
@@ -1449,7 +1580,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatRemoveObject).cdoState());
   }
 
-  public void testRemoveTailAddHeadTest() throws Exception
+  public void testRemoveTailAddHead() throws Exception
   {
     initTestModel();
 
@@ -1488,15 +1619,19 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int listSize = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisRoot.getListA().get(0), thisTransaction.getObject(thatObject));
-    assertEquals(thisRoot.getListA().get(listSize - 1), thisAfterRemoveObject);
-    assertEquals(thatRoot.getListA().get(0), thatTransaction.getObject(thatObject));
-    assertEquals(thatRoot.getListA().get(listSize - 1), thatTransaction.getObject(thisAfterRemoveObject));
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thisRemoveObject).cdoState());
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatRemoveObject).cdoState());
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisRoot.getListA().get(0), thisTransaction.getObject(thatObject));
+      assertEquals(thisRoot.getListA().get(listSize - 1), thisAfterRemoveObject);
+      assertEquals(thatRoot.getListA().get(0), thatTransaction.getObject(thatObject));
+      assertEquals(thatRoot.getListA().get(listSize - 1), thatTransaction.getObject(thisAfterRemoveObject));
+    }
   }
 
-  public void testRemoveTailAddTailTest() throws Exception
+  public void testRemoveTailAddTail() throws Exception
   {
     initTestModel();
 
@@ -1543,7 +1678,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatRemoveObject).cdoState());
   }
 
-  public void testRemoveHeadRemoveHeadTest() throws Exception
+  public void testRemoveHeadRemoveHead() throws Exception
   {
     initTestModel();
 
@@ -1592,7 +1727,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thatRemoveObject2).cdoState());
   }
 
-  public void testRemoveHeadRemoveTailTest() throws Exception
+  public void testRemoveHeadRemoveTail() throws Exception
   {
     initTestModel();
 
@@ -1644,7 +1779,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thatRemoveObject2).cdoState());
   }
 
-  public void testRemoveTailRemoveHeadTest() throws Exception
+  public void testRemoveTailRemoveHead() throws Exception
   {
     initTestModel();
 
@@ -1696,7 +1831,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thatRemoveObject2).cdoState());
   }
 
-  public void testRemoveTailRemoveTailTest() throws Exception
+  public void testRemoveTailRemoveTail() throws Exception
   {
     initTestModel();
 
@@ -1748,7 +1883,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thatRemoveObject2).cdoState());
   }
 
-  public void testRemoveHeadMoveHeadTest() throws Exception
+  public void testRemoveHeadMoveHead() throws Exception
   {
     initTestModel();
 
@@ -1798,7 +1933,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatMoveObject).cdoState());
   }
 
-  public void testRemoveHeadMoveTailTest() throws Exception
+  public void testRemoveHeadMoveTail() throws Exception
   {
     initTestModel();
 
@@ -1838,17 +1973,21 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int listSize = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisAfterRemoveObject, thisRoot.getListA().get(1));
-    assertEquals(thatTransaction.getObject(thisAfterRemoveObject), thatRoot.getListA().get(1));
-    assertEquals(thisTransaction.getObject(thatMoveObject), thisRoot.getListA().get(0));
-    assertEquals(thatMoveObject, thatRoot.getListA().get(0));
-    assertEquals(thisTransaction.getObject(thatAfterMoveObject), thisRoot.getListA().get(listSize - 1));
-    assertEquals(thatAfterMoveObject, thatRoot.getListA().get(listSize - 1));
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thisRemoveObject).cdoState());
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatRemoveObject).cdoState());
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisAfterRemoveObject, thisRoot.getListA().get(1));
+      assertEquals(thatTransaction.getObject(thisAfterRemoveObject), thatRoot.getListA().get(1));
+      assertEquals(thisTransaction.getObject(thatMoveObject), thisRoot.getListA().get(0));
+      assertEquals(thatMoveObject, thatRoot.getListA().get(0));
+      assertEquals(thisTransaction.getObject(thatAfterMoveObject), thisRoot.getListA().get(listSize - 1));
+      assertEquals(thatAfterMoveObject, thatRoot.getListA().get(listSize - 1));
+    }
   }
 
-  public void testRemoveTailMoveHeadTest() throws Exception
+  public void testRemoveTailMoveHead() throws Exception
   {
     initTestModel();
 
@@ -1888,17 +2027,21 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int listSize = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisAfterRemoveObject, thisRoot.getListA().get(listSize - 2));
-    assertEquals(thatTransaction.getObject(thisAfterRemoveObject), thatRoot.getListA().get(listSize - 2));
-    assertEquals(thisTransaction.getObject(thatMoveObject), thisRoot.getListA().get(listSize - 1));
-    assertEquals(thatMoveObject, thatRoot.getListA().get(listSize - 1));
-    assertEquals(thisTransaction.getObject(thatAfterMoveObject), thisRoot.getListA().get(0));
-    assertEquals(thatAfterMoveObject, thatRoot.getListA().get(0));
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thisRemoveObject).cdoState());
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatRemoveObject).cdoState());
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisAfterRemoveObject, thisRoot.getListA().get(listSize - 2));
+      assertEquals(thatTransaction.getObject(thisAfterRemoveObject), thatRoot.getListA().get(listSize - 2));
+      assertEquals(thisTransaction.getObject(thatMoveObject), thisRoot.getListA().get(listSize - 1));
+      assertEquals(thatMoveObject, thatRoot.getListA().get(listSize - 1));
+      assertEquals(thisTransaction.getObject(thatAfterMoveObject), thisRoot.getListA().get(0));
+      assertEquals(thatAfterMoveObject, thatRoot.getListA().get(0));
+    }
   }
 
-  public void testRemoveTailMoveTailTest() throws Exception
+  public void testRemoveTailMoveTail() throws Exception
   {
     initTestModel();
 
@@ -1947,7 +2090,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatMoveObject).cdoState());
   }
 
-  public void testRemoveHeadClearTest() throws Exception
+  public void testRemoveHeadClear() throws Exception
   {
     initTestModel();
 
@@ -1995,7 +2138,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thisAfterRemoveObject).cdoState());
   }
 
-  public void testRemoveTailClearTest() throws Exception
+  public void testRemoveTailClear() throws Exception
   {
     initTestModel();
 
@@ -2039,7 +2182,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thisAfterRemoveObject).cdoState());
   }
 
-  public void testMoveHeadAddHeadTest() throws Exception
+  public void testMoveHeadAddHead() throws Exception
   {
     initTestModel();
 
@@ -2052,39 +2195,46 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     Root thisRoot = getTestModelRoot(thisTransaction);
     Root thatRoot = thatTransaction.getObject(thisRoot);
 
+    EList<BaseObject> thisList = thisRoot.getListA();
+    EList<BaseObject> thatList = thatRoot.getListA();
+
     // Attach adapters.
     thisRoot.eAdapters().add(new ListPrintingAdapter("This root: "));
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // Move object.
-    BaseObject thisMoveObject = thisRoot.getListA().get(0);
-    thisRoot.getListA().move(thisRoot.getListA().size() - 1, 0);
-    BaseObject thisAfterMoveObject = thisRoot.getListA().get(0);
+    BaseObject thisMoveObject = thisList.get(0);
+    thisList.move(thisList.size() - 1, 0);
+    BaseObject thisAfterMoveObject = thisList.get(0);
 
     // Create object.
     BaseObject thatObject = createBaseObject("ThatBaseObject 0");
-    thatRoot.getListA().add(0, thatObject);
+    thatList.add(0, thatObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // Print contents of lists
-    printList("This ", thisRoot.getListA());
-    printList("That ", thatRoot.getListA());
+    printList("This ", thisList);
+    printList("That ", thatList);
 
     // Check indices.
-    int size = thisRoot.getListA().size();
+    int size = thisList.size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisTransaction.getObject(thatObject), thisRoot.getListA().get(0));
-    assertEquals(thatObject, thatRoot.getListA().get(0));
-    assertEquals(thisAfterMoveObject, thisRoot.getListA().get(1));
-    assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatRoot.getListA().get(1));
-    assertEquals(thisMoveObject, thisRoot.getListA().get(size - 1));
-    assertEquals(thatTransaction.getObject(thisMoveObject), thatRoot.getListA().get(size - 1));
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisTransaction.getObject(thatObject), thisList.get(4));
+      assertEquals(thatObject, thatList.get(4));
+      assertEquals(thisAfterMoveObject, thisList.get(0));
+      assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatList.get(0));
+      assertEquals(thisMoveObject, thisList.get(size - 1));
+      assertEquals(thatTransaction.getObject(thisMoveObject), thatList.get(size - 1));
+    }
   }
 
-  public void testMoveHeadAddTailTest() throws Exception
+  public void testMoveHeadAddTail() throws Exception
   {
     initTestModel();
 
@@ -2121,15 +2271,19 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int size = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisTransaction.getObject(thatObject), thisRoot.getListA().get(size - 1));
-    assertEquals(thatObject, thatRoot.getListA().get(size - 1));
-    assertEquals(thisAfterMoveObject, thisRoot.getListA().get(0));
-    assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatRoot.getListA().get(0));
-    assertEquals(thisMoveObject, thisRoot.getListA().get(size - 2));
-    assertEquals(thatTransaction.getObject(thisMoveObject), thatRoot.getListA().get(size - 2));
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisTransaction.getObject(thatObject), thisRoot.getListA().get(size - 1));
+      assertEquals(thatObject, thatRoot.getListA().get(size - 1));
+      assertEquals(thisAfterMoveObject, thisRoot.getListA().get(0));
+      assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatRoot.getListA().get(0));
+      assertEquals(thisMoveObject, thisRoot.getListA().get(size - 2));
+      assertEquals(thatTransaction.getObject(thisMoveObject), thatRoot.getListA().get(size - 2));
+    }
   }
 
-  public void testMoveTailAddHeadTest() throws Exception
+  public void testMoveTailAddHead() throws Exception
   {
     initTestModel();
 
@@ -2142,39 +2296,46 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     Root thisRoot = getTestModelRoot(thisTransaction);
     Root thatRoot = thatTransaction.getObject(thisRoot);
 
+    EList<BaseObject> thisList = thisRoot.getListA();
+    EList<BaseObject> thatList = thatRoot.getListA();
+
     // Attach adapters.
     thisRoot.eAdapters().add(new ListPrintingAdapter("This root: "));
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // Move object.
-    BaseObject thisMoveObject = thisRoot.getListA().get(thisRoot.getListA().size() - 1);
-    thisRoot.getListA().move(0, thisRoot.getListA().size() - 1);
-    BaseObject thisAfterMoveObject = thisRoot.getListA().get(thisRoot.getListA().size() - 1);
+    BaseObject thisMoveObject = thisList.get(thisList.size() - 1);
+    thisList.move(0, thisList.size() - 1);
+    BaseObject thisAfterMoveObject = thisList.get(thisList.size() - 1);
 
     // Create object.
     BaseObject thatObject = createBaseObject("ThatBaseObject 0");
-    thatRoot.getListA().add(0, thatObject);
+    thatList.add(0, thatObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // Print contents of lists
-    printList("This ", thisRoot.getListA());
-    printList("That ", thatRoot.getListA());
+    printList("This ", thisList);
+    printList("That ", thatList);
 
     // Check indices.
-    int size = thisRoot.getListA().size();
+    int size = thisList.size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisTransaction.getObject(thatObject), thisRoot.getListA().get(0));
-    assertEquals(thatObject, thatRoot.getListA().get(0));
-    assertEquals(thisAfterMoveObject, thisRoot.getListA().get(size - 1));
-    assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatRoot.getListA().get(size - 1));
-    assertEquals(thisMoveObject, thisRoot.getListA().get(1));
-    assertEquals(thatTransaction.getObject(thisMoveObject), thatRoot.getListA().get(1));
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisTransaction.getObject(thatObject), thisList.get(1));
+      assertEquals(thatObject, thatList.get(1));
+      assertEquals(thisAfterMoveObject, thisList.get(size - 1));
+      assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatList.get(size - 1));
+      assertEquals(thisMoveObject, thisList.get(0));
+      assertEquals(thatTransaction.getObject(thisMoveObject), thatList.get(0));
+    }
   }
 
-  public void testMoveTailAddTailTest() throws Exception
+  public void testMoveTailAddTail() throws Exception
   {
     initTestModel();
 
@@ -2211,15 +2372,19 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int size = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisTransaction.getObject(thatObject), thisRoot.getListA().get(size - 1));
-    assertEquals(thatObject, thatRoot.getListA().get(size - 1));
-    assertEquals(thisAfterMoveObject, thisRoot.getListA().get(size - 2));
-    assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatRoot.getListA().get(size - 2));
-    assertEquals(thisMoveObject, thisRoot.getListA().get(0));
-    assertEquals(thatTransaction.getObject(thisMoveObject), thatRoot.getListA().get(0));
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisTransaction.getObject(thatObject), thisRoot.getListA().get(size - 1));
+      assertEquals(thatObject, thatRoot.getListA().get(size - 1));
+      assertEquals(thisAfterMoveObject, thisRoot.getListA().get(size - 2));
+      assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatRoot.getListA().get(size - 2));
+      assertEquals(thisMoveObject, thisRoot.getListA().get(0));
+      assertEquals(thatTransaction.getObject(thisMoveObject), thatRoot.getListA().get(0));
+    }
   }
 
-  public void testMoveHeadRemoveHeadTest() throws Exception
+  public void testMoveHeadRemoveHead() throws Exception
   {
     initTestModel();
 
@@ -2232,41 +2397,44 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     Root thisRoot = getTestModelRoot(thisTransaction);
     Root thatRoot = thatTransaction.getObject(thisRoot);
 
+    EList<BaseObject> thisList = thisRoot.getListA();
+    EList<BaseObject> thatList = thatRoot.getListA();
+
     // Attach adapters.
     thisRoot.eAdapters().add(new ListPrintingAdapter("This root: "));
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // Move object.
-    BaseObject thisMoveObject = thisRoot.getListA().get(0);
-    thisRoot.getListA().move(thisRoot.getListA().size() - 1, 0);
-    BaseObject thisAfterMoveObject = thisRoot.getListA().get(0);
+    BaseObject thisMoveObject = thisList.get(0);
+    thisList.move(thisList.size() - 1, 0);
+    BaseObject thisAfterMoveObject = thisList.get(0);
 
     // Remove object.
-    BaseObject thatRemoveObject = thatRoot.getListA().get(0);
+    BaseObject thatRemoveObject = thatList.get(0);
     BaseObject thisRemoveObject = thisTransaction.getObject(thatRemoveObject);
-    thatRoot.getListA().remove(0);
-    BaseObject thatAfterRemoveObject = thatRoot.getListA().get(0);
+    thatList.remove(0);
+    BaseObject thatAfterRemoveObject = thatList.get(0);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // Print contents of lists
-    printList("This ", thisRoot.getListA());
-    printList("That ", thatRoot.getListA());
+    printList("This ", thisList);
+    printList("That ", thatList);
 
     // Check indices.
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisAfterMoveObject, thisRoot.getListA().get(0));
-    assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatRoot.getListA().get(0));
-    assertEquals(thisTransaction.getObject(thatAfterRemoveObject), thisRoot.getListA().get(0));
-    assertEquals(thatAfterRemoveObject, thatRoot.getListA().get(0));
+    assertEquals(thisAfterMoveObject, thisList.get(0));
+    assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatList.get(0));
+    assertEquals(thisTransaction.getObject(thatAfterRemoveObject), thisList.get(0));
+    assertEquals(thatAfterRemoveObject, thatList.get(0));
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thisRemoveObject).cdoState());
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thatRemoveObject).cdoState());
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thisMoveObject).cdoState());
   }
 
-  public void testMoveHeadRemoveTailTest() throws Exception
+  public void testMoveHeadRemoveTail() throws Exception
   {
     initTestModel();
 
@@ -2305,17 +2473,21 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int size = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisAfterMoveObject, thisRoot.getListA().get(0));
-    assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatRoot.getListA().get(0));
-    assertEquals(thisMoveObject, thisRoot.getListA().get(size - 1));
-    assertEquals(thatTransaction.getObject(thisMoveObject), thatRoot.getListA().get(size - 1));
-    assertEquals(thisTransaction.getObject(thatAfterRemoveObject), thisRoot.getListA().get(size - 2));
-    assertEquals(thatAfterRemoveObject, thatRoot.getListA().get(size - 2));
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thisRemoveObject).cdoState());
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thatRemoveObject).cdoState());
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisAfterMoveObject, thisRoot.getListA().get(0));
+      assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatRoot.getListA().get(0));
+      assertEquals(thisMoveObject, thisRoot.getListA().get(size - 1));
+      assertEquals(thatTransaction.getObject(thisMoveObject), thatRoot.getListA().get(size - 1));
+      assertEquals(thisTransaction.getObject(thatAfterRemoveObject), thisRoot.getListA().get(size - 2));
+      assertEquals(thatAfterRemoveObject, thatRoot.getListA().get(size - 2));
+    }
   }
 
-  public void testMoveTailRemoveHeadTest() throws Exception
+  public void testMoveTailRemoveHead() throws Exception
   {
     initTestModel();
 
@@ -2354,17 +2526,21 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int size = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisAfterMoveObject, thisRoot.getListA().get(size - 1));
-    assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatRoot.getListA().get(size - 1));
-    assertEquals(thisMoveObject, thisRoot.getListA().get(0));
-    assertEquals(thatTransaction.getObject(thisMoveObject), thatRoot.getListA().get(0));
-    assertEquals(thisTransaction.getObject(thatAfterRemoveObject), thisRoot.getListA().get(1));
-    assertEquals(thatAfterRemoveObject, thatRoot.getListA().get(1));
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thisRemoveObject).cdoState());
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thatRemoveObject).cdoState());
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisAfterMoveObject, thisRoot.getListA().get(size - 1));
+      assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatRoot.getListA().get(size - 1));
+      assertEquals(thisMoveObject, thisRoot.getListA().get(0));
+      assertEquals(thatTransaction.getObject(thisMoveObject), thatRoot.getListA().get(0));
+      assertEquals(thisTransaction.getObject(thatAfterRemoveObject), thisRoot.getListA().get(1));
+      assertEquals(thatAfterRemoveObject, thatRoot.getListA().get(1));
+    }
   }
 
-  public void testMoveTailRemoveTailTest() throws Exception
+  public void testMoveTailRemoveTail() throws Exception
   {
     initTestModel();
 
@@ -2412,7 +2588,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thisMoveObject).cdoState());
   }
 
-  public void testMoveHeadMoveHeadTest() throws Exception
+  public void testMoveHeadMoveHead() throws Exception
   {
     initTestModel();
 
@@ -2454,17 +2630,21 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int size = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisMoveObject1, thisRoot.getListA().get(size - 1));
-    assertEquals(thatMoveObject1, thatRoot.getListA().get(size - 1));
-    assertEquals(thisMoveObject2, thisRoot.getListA().get(size - 1));
-    assertEquals(thatMoveObject2, thatRoot.getListA().get(size - 1));
-    assertEquals(thisAfterMoveObject1, thisRoot.getListA().get(0));
-    assertEquals(thatAfterMoveObject1, thatRoot.getListA().get(0));
-    assertEquals(thisAfterMoveObject2, thisRoot.getListA().get(0));
-    assertEquals(thatAfterMoveObject2, thatRoot.getListA().get(0));
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisMoveObject1, thisRoot.getListA().get(size - 1));
+      assertEquals(thatMoveObject1, thatRoot.getListA().get(size - 1));
+      assertEquals(thisMoveObject2, thisRoot.getListA().get(size - 1));
+      assertEquals(thatMoveObject2, thatRoot.getListA().get(size - 1));
+      assertEquals(thisAfterMoveObject1, thisRoot.getListA().get(0));
+      assertEquals(thatAfterMoveObject1, thatRoot.getListA().get(0));
+      assertEquals(thisAfterMoveObject2, thisRoot.getListA().get(0));
+      assertEquals(thatAfterMoveObject2, thatRoot.getListA().get(0));
+    }
   }
 
-  public void testMoveHeadMoveTailTest() throws Exception
+  public void testMoveHeadMoveTail() throws Exception
   {
     initTestModel();
 
@@ -2506,17 +2686,21 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int size = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisMoveObject1, thisRoot.getListA().get(size - 1));
-    assertEquals(thatMoveObject1, thatRoot.getListA().get(size - 1));
-    assertEquals(thisMoveObject2, thisRoot.getListA().get(0));
-    assertEquals(thatMoveObject2, thatRoot.getListA().get(0));
-    assertEquals(thisAfterMoveObject1, thisRoot.getListA().get(1));
-    assertEquals(thatAfterMoveObject1, thatRoot.getListA().get(1));
-    assertEquals(thisAfterMoveObject2, thisRoot.getListA().get(size - 2));
-    assertEquals(thatAfterMoveObject2, thatRoot.getListA().get(size - 2));
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisMoveObject1, thisRoot.getListA().get(size - 1));
+      assertEquals(thatMoveObject1, thatRoot.getListA().get(size - 1));
+      assertEquals(thisMoveObject2, thisRoot.getListA().get(0));
+      assertEquals(thatMoveObject2, thatRoot.getListA().get(0));
+      assertEquals(thisAfterMoveObject1, thisRoot.getListA().get(1));
+      assertEquals(thatAfterMoveObject1, thatRoot.getListA().get(1));
+      assertEquals(thisAfterMoveObject2, thisRoot.getListA().get(size - 2));
+      assertEquals(thatAfterMoveObject2, thatRoot.getListA().get(size - 2));
+    }
   }
 
-  public void testMoveTailMoveHeadTest() throws Exception
+  public void testMoveTailMoveHead() throws Exception
   {
     initTestModel();
 
@@ -2558,17 +2742,21 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int size = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisMoveObject1, thisRoot.getListA().get(0));
-    assertEquals(thatMoveObject1, thatRoot.getListA().get(0));
-    assertEquals(thisMoveObject2, thisRoot.getListA().get(size - 1));
-    assertEquals(thatMoveObject2, thatRoot.getListA().get(size - 1));
-    assertEquals(thisAfterMoveObject1, thisRoot.getListA().get(size - 2));
-    assertEquals(thatAfterMoveObject1, thatRoot.getListA().get(size - 2));
-    assertEquals(thisAfterMoveObject2, thisRoot.getListA().get(1));
-    assertEquals(thatAfterMoveObject2, thatRoot.getListA().get(1));
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisMoveObject1, thisRoot.getListA().get(0));
+      assertEquals(thatMoveObject1, thatRoot.getListA().get(0));
+      assertEquals(thisMoveObject2, thisRoot.getListA().get(size - 1));
+      assertEquals(thatMoveObject2, thatRoot.getListA().get(size - 1));
+      assertEquals(thisAfterMoveObject1, thisRoot.getListA().get(size - 2));
+      assertEquals(thatAfterMoveObject1, thatRoot.getListA().get(size - 2));
+      assertEquals(thisAfterMoveObject2, thisRoot.getListA().get(1));
+      assertEquals(thatAfterMoveObject2, thatRoot.getListA().get(1));
+    }
   }
 
-  public void testMoveTailMoveTailTest() throws Exception
+  public void testMoveTailMoveTail() throws Exception
   {
     initTestModel();
 
@@ -2610,17 +2798,21 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     int size = thisRoot.getListA().size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisMoveObject1, thisRoot.getListA().get(0));
-    assertEquals(thatMoveObject1, thatRoot.getListA().get(0));
-    assertEquals(thisMoveObject2, thisRoot.getListA().get(0));
-    assertEquals(thatMoveObject2, thatRoot.getListA().get(0));
-    assertEquals(thisAfterMoveObject1, thisRoot.getListA().get(size - 1));
-    assertEquals(thatAfterMoveObject1, thatRoot.getListA().get(size - 1));
-    assertEquals(thisAfterMoveObject2, thisRoot.getListA().get(size - 1));
-    assertEquals(thatAfterMoveObject2, thatRoot.getListA().get(size - 1));
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisMoveObject1, thisRoot.getListA().get(0));
+      assertEquals(thatMoveObject1, thatRoot.getListA().get(0));
+      assertEquals(thisMoveObject2, thisRoot.getListA().get(0));
+      assertEquals(thatMoveObject2, thatRoot.getListA().get(0));
+      assertEquals(thisAfterMoveObject1, thisRoot.getListA().get(size - 1));
+      assertEquals(thatAfterMoveObject1, thatRoot.getListA().get(size - 1));
+      assertEquals(thisAfterMoveObject2, thisRoot.getListA().get(size - 1));
+      assertEquals(thatAfterMoveObject2, thatRoot.getListA().get(size - 1));
+    }
   }
 
-  public void testMoveHeadClearTest() throws Exception
+  public void testMoveHeadClear() throws Exception
   {
     initTestModel();
 
@@ -2665,7 +2857,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thatAfterMoveObject).cdoState());
   }
 
-  public void testMoveTailClearTest() throws Exception
+  public void testMoveTailClear() throws Exception
   {
     initTestModel();
 
@@ -2710,7 +2902,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thatAfterMoveObject).cdoState());
   }
 
-  public void testClearAddHeadTest() throws Exception
+  public void testClearAddHead() throws Exception
   {
     initTestModel();
 
@@ -2750,7 +2942,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(thatObject, thatRoot.getListA().get(0));
   }
 
-  public void testClearAddTailTest() throws Exception
+  public void testClearAddTail() throws Exception
   {
     initTestModel();
 
@@ -2790,7 +2982,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(thatObject, thatRoot.getListA().get(0));
   }
 
-  public void testClearRemoveHeadTest() throws Exception
+  public void testClearRemoveHead() throws Exception
   {
     initTestModel();
 
@@ -2833,7 +3025,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatAfterRemoveObject).cdoState());
   }
 
-  public void testClearRemoveTailTest() throws Exception
+  public void testClearRemoveTail() throws Exception
   {
     initTestModel();
 
@@ -2876,7 +3068,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatAfterRemoveObject).cdoState());
   }
 
-  public void testClearMoveHeadTest() throws Exception
+  public void testClearMoveHead() throws Exception
   {
     initTestModel();
 
@@ -2920,7 +3112,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thisAfterMoveObject).cdoState());
   }
 
-  public void testClearMoveTailTest() throws Exception
+  public void testClearMoveTail() throws Exception
   {
     initTestModel();
 
@@ -2964,7 +3156,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thisAfterMoveObject).cdoState());
   }
 
-  public void testClearClearTest() throws Exception
+  public void testClearClear() throws Exception
   {
     initTestModel();
 
@@ -3004,7 +3196,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thatObject).cdoState());
   }
 
-  public void testRemoveHeadMoveHeadRemoveMiddleTest() throws Exception
+  public void testRemoveHeadMoveHeadRemoveMiddle() throws Exception
   {
     initTestModel();
 
@@ -3059,7 +3251,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thatMoveObject).cdoState());
   }
 
-  public void testMoveHeadMoveHeadRemoveMiddleTest() throws Exception
+  public void testMoveHeadMoveHeadRemoveMiddle() throws Exception
   {
     initTestModel();
 
@@ -3072,48 +3264,55 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     Root thisRoot = getTestModelRoot(thisTransaction);
     Root thatRoot = thatTransaction.getObject(thisRoot);
 
+    EList<BaseObject> thisList = thisRoot.getListA();
+    EList<BaseObject> thatList = thatRoot.getListA();
+
     // Attach adapters.
     thisRoot.eAdapters().add(new ListPrintingAdapter("This root: "));
     thatRoot.eAdapters().add(new ListPrintingAdapter("That root: "));
 
     // Move object.
-    BaseObject thisMoveObject = thisRoot.getListA().get(0);
-    thisRoot.getListA().move(thisRoot.getListA().size() - 1, 0);
-    BaseObject thisAfterMoveObject = thisRoot.getListA().get(0);
+    BaseObject thisMoveObject = thisList.get(0);
+    thisList.move(thisList.size() - 1, 0);
+    BaseObject thisAfterMoveObject = thisList.get(0);
 
     // Move object.
-    BaseObject thatMoveObject = thatRoot.getListA().get(0);
-    BaseObject thatRemoveAfterMoveObject = thatRoot.getListA().get(2);
-    BaseObject thatAfterRemoveAfterMoveObject = thatRoot.getListA().get(3);
-    thatRoot.getListA().move(thatRoot.getListA().size() - 1, 0);
-    BaseObject thatAfterMoveObject = thatRoot.getListA().get(0);
+    BaseObject thatMoveObject = thatList.get(0);
+    BaseObject thatRemoveAfterMoveObject = thatList.get(2);
+    BaseObject thatAfterRemoveAfterMoveObject = thatList.get(3);
+    thatList.move(thatList.size() - 1, 0);
+    BaseObject thatAfterMoveObject = thatList.get(0);
 
     // Remove object.
     BaseObject thisRemoveAfterMoveObject = thisTransaction.getObject(thatRemoveAfterMoveObject);
-    thatRoot.getListA().remove(thatRemoveAfterMoveObject);
+    thatList.remove(thatRemoveAfterMoveObject);
 
     commitAndSync(thisTransaction, thatTransaction);
     commitAndSync(thatTransaction, thisTransaction);
 
     // Print contents of lists
-    printList("This ", thisRoot.getListA());
-    printList("That ", thatRoot.getListA());
+    printList("This ", thisList);
+    printList("That ", thatList);
 
     // Check indices.
-    int listSize = thisRoot.getListA().size();
+    int listSize = thisList.size();
     assertEquals(false, thisTransaction.isDirty());
     assertEquals(false, thatTransaction.isDirty());
-    assertEquals(thisMoveObject, thisRoot.getListA().get(listSize - 1));
-    assertEquals(thatMoveObject, thatRoot.getListA().get(listSize - 1));
-    assertEquals(thisAfterMoveObject, thisRoot.getListA().get(0));
-    assertEquals(thatAfterMoveObject, thatRoot.getListA().get(0));
-    assertEquals(thisTransaction.getObject(thatAfterRemoveAfterMoveObject), thisRoot.getListA().get(1));
-    assertEquals(thatAfterRemoveAfterMoveObject, thatRoot.getListA().get(1));
     assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(thatRemoveAfterMoveObject).cdoState());
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(thisRemoveAfterMoveObject).cdoState());
+
+    if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
+    {
+      assertEquals(thisMoveObject, thisList.get(listSize - 1));
+      assertEquals(thatMoveObject, thatList.get(listSize - 1));
+      assertEquals(thisAfterMoveObject, thisList.get(0));
+      assertEquals(thatAfterMoveObject, thatList.get(0));
+      assertEquals(thisTransaction.getObject(thatAfterRemoveAfterMoveObject), thisList.get(1));
+      assertEquals(thatAfterRemoveAfterMoveObject, thatList.get(1));
+    }
   }
 
-  public void testMoveHeadRemoveHeadRemoveMiddleTest() throws Exception
+  public void testMoveHeadRemoveHeadRemoveMiddle() throws Exception
   {
     initTestModel();
 
@@ -3468,8 +3667,6 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     assertEquals(true, thatTransaction.hasConflict());
   }
 
-  // ========== HELPERS ======================================================
-
   protected BaseObject createBaseObject(String attribute)
   {
     BaseObject baseObj = getModel6Factory().createBaseObject();
@@ -3498,8 +3695,6 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     session.options().setPassiveUpdateMode(CDOCommonSession.Options.PassiveUpdateMode.ADDITIONS);
     return session;
   }
-
-  // --- initialize model ----------------------------------------------------
 
   private void initTestModelSimple() throws CommitException
   {

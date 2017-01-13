@@ -220,8 +220,8 @@ public class ConflictResolverTest extends AbstractCDOTest
     commitAndSync(transaction2, transaction1);
 
     assertEquals(2, orderDetails1.size());
-    assertEquals(CDOUtil.getCDOObject(orderDetail2).cdoID(), CDOUtil.getCDOObject(orderDetails1.get(0)).cdoID());
-    assertEquals(CDOUtil.getCDOObject(orderDetail1).cdoID(), CDOUtil.getCDOObject(orderDetails1.get(1)).cdoID());
+    assertEquals(CDOUtil.getCDOObject(orderDetail1).cdoID(), CDOUtil.getCDOObject(orderDetails1.get(0)).cdoID());
+    assertEquals(CDOUtil.getCDOObject(orderDetail2).cdoID(), CDOUtil.getCDOObject(orderDetails1.get(1)).cdoID());
   }
 
   protected CDOConflictResolver createConflictResolver()

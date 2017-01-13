@@ -45,9 +45,7 @@ public class AllTestsDBH2Offline extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    // addScenario(parent, new H2OfflineConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    addScenario(parent, new H2OfflineConfig(false, false, IDGenerationLocation.CLIENT), JVM, NATIVE);
-    // addScenario(parent, new H2OfflineConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new H2OfflineConfig().idGenerationLocation(IDGenerationLocation.CLIENT), JVM, NATIVE);
   }
 
   @Override

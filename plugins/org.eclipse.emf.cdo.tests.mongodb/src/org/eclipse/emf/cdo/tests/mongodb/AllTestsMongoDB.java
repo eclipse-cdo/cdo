@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.tests.mongodb;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.tests.AllConfigs;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
 import org.eclipse.emf.cdo.tests.config.IScenario;
@@ -35,9 +34,8 @@ public class AllTestsMongoDB extends AllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, new MongoDBConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    addScenario(parent, new MongoDBConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    // addScenario(parent, MongoDBStoreRepositoryConfig.BRANCHING, JVM, NATIVE);
+    addScenario(parent, new MongoDBConfig(), JVM, NATIVE);
+    addScenario(parent, new MongoDBConfig().supportingAudits(true), JVM, NATIVE);
   }
 
   @Override

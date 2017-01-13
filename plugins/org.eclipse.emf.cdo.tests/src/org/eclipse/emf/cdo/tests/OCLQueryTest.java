@@ -234,7 +234,7 @@ public class OCLQueryTest extends AbstractCDOTest
     List<Product1> products = query.getResult();
     assertEquals(NUM_OF_PRODUCTS + 1, products.size());
 
-    resource.getContents().remove(0);
+    resource.getContents().remove(p1);
     assertEquals(true, transaction.isDirty());
 
     query = createQuery("Product1.allInstances()", getModel1Package().getProduct1(), true);
@@ -255,7 +255,7 @@ public class OCLQueryTest extends AbstractCDOTest
     resource.getContents().add(0, p1);
     transaction.commit();
 
-    resource.getContents().remove(0);
+    resource.getContents().remove(p1);
     transaction.commit();
 
     query = createQuery("Product1.allInstances()", getModel1Package().getProduct1(), true);
@@ -271,7 +271,7 @@ public class OCLQueryTest extends AbstractCDOTest
     resource.getContents().add(0, p1);
     transaction.commit();
 
-    resource.getContents().remove(0);
+    resource.getContents().remove(p1);
     transaction.commit();
 
     CDOQuery query = createQuery("Product1.allInstances()", getModel1Package().getProduct1(), false);
@@ -290,7 +290,7 @@ public class OCLQueryTest extends AbstractCDOTest
     resource.getContents().add(0, p1);
     CDOCommitInfo commitInfo = transaction.commit();
 
-    resource.getContents().remove(0);
+    resource.getContents().remove(p1);
     transaction.commit();
 
     CDOView audit = transaction.getSession().openView(commitInfo);

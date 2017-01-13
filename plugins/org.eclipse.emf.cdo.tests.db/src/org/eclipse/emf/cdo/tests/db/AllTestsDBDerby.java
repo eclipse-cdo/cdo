@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -28,7 +26,7 @@ public class AllTestsDBDerby extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, new DerbyConfig(true, true, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new DerbyConfig().supportingBranches(true), JVM, NATIVE);
     // addScenario(parent, AllTestsDBDerby.Derby.INSTANCE, TCP, NATIVE);
   }
 }

@@ -38,7 +38,7 @@ public class Bugzilla_351078_DB_Test extends Bugzilla_351078_Test
 
     // XXX use capabilities?!
     DBOfflineConfig config = (DBOfflineConfig)getRepositoryConfig();
-    if (config.isWithRanges())
+    if (config.withRanges())
     {
       byte[] masterTable = readTable(master);
       byte[] cloneTable = readTable(getRepository());

@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.hibernate.CDOHibernateUtil;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
@@ -30,9 +29,9 @@ public class HibernateConfig extends RepositoryConfig
 {
   public static final String STORE_NAME = "Hibernate";
 
-  public static final HibernateConfig INSTANCE = new HibernateConfig(false);
+  public static final HibernateConfig INSTANCE = new HibernateConfig();
 
-  public static final HibernateConfig AUDIT_INSTANCE = new HibernateConfig(true);
+  public static final HibernateConfig AUDIT_INSTANCE = (HibernateConfig)new HibernateConfig().supportingAudits(true);
 
   public static final String MAPPING_FILE = "mappingfile";
 
@@ -40,9 +39,9 @@ public class HibernateConfig extends RepositoryConfig
 
   private Map<String, String> additionalProperties = new HashMap<String, String>();
 
-  public HibernateConfig(boolean supportAuditing)
+  public HibernateConfig()
   {
-    super(STORE_NAME, supportAuditing, false, IDGenerationLocation.STORE);
+    super(STORE_NAME);
   }
 
   @Override

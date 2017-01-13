@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.ListOrdering;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -410,9 +411,12 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
 
-      for (int i = 0; i < orders.size(); i++)
+      if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
       {
-        assertEquals(positions[i], orders.get(i).getId());
+        for (int i = 0; i < orders.size(); i++)
+        {
+          assertEquals(positions[i], orders.get(i).getId());
+        }
       }
 
       transaction.close();
@@ -473,9 +477,12 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
 
-      for (int i = 0; i < orders.size(); i++)
+      if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
       {
-        assertEquals(positions[i], orders.get(i).getId());
+        for (int i = 0; i < orders.size(); i++)
+        {
+          assertEquals(positions[i], orders.get(i).getId());
+        }
       }
 
       transaction.close();
@@ -533,9 +540,12 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
 
-      for (int i = 0; i < orders.size(); i++)
+      if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
       {
-        assertEquals(positions[i], orders.get(i).getId());
+        for (int i = 0; i < orders.size(); i++)
+        {
+          assertEquals(positions[i], orders.get(i).getId());
+        }
       }
 
       transaction.close();
@@ -592,9 +602,12 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
 
-      for (int i = 0; i < orders.size(); i++)
+      if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
       {
-        assertEquals(positions[i], orders.get(i).getId());
+        for (int i = 0; i < orders.size(); i++)
+        {
+          assertEquals(positions[i], orders.get(i).getId());
+        }
       }
 
       transaction.close();
@@ -774,9 +787,12 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
 
-      for (int i = 0; i < orders.size(); i++)
+      if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
       {
-        assertEquals(positions[i], orders.get(i).getId());
+        for (int i = 0; i < orders.size(); i++)
+        {
+          assertEquals(positions[i], orders.get(i).getId());
+        }
       }
 
       transaction.close();
@@ -829,7 +845,6 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       }
 
       transaction.commit();
-
       session.close();
     }
 
@@ -844,9 +859,12 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
 
       // assertEquals(4, orders.size());
 
-      for (int i = 0; i < orders.size(); i++)
+      if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
       {
-        assertEquals(positions[i], orders.get(i).getId());
+        for (int i = 0; i < orders.size(); i++)
+        {
+          assertEquals(positions[i], orders.get(i).getId());
+        }
       }
 
       transaction.close();
@@ -902,10 +920,13 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
 
       assertEquals(4, orders.size());
 
-      int[] array = { 0, 1, 3, 2 };
-      for (int i = 0; i < array.length; i++)
+      if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
       {
-        assertEquals(array[i], orders.get(i).getId());
+        int[] array = { 0, 1, 3, 2 };
+        for (int i = 0; i < array.length; i++)
+        {
+          assertEquals(array[i], orders.get(i).getId());
+        }
       }
 
       transaction.close();
@@ -960,10 +981,13 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
 
       assertEquals(3, orders.size());
 
-      int[] array = { 3, 0, 2 };
-      for (int i = 0; i < array.length; i++)
+      if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
       {
-        assertEquals(array[i], orders.get(i).getId());
+        int[] array = { 3, 0, 2 };
+        for (int i = 0; i < array.length; i++)
+        {
+          assertEquals(array[i], orders.get(i).getId());
+        }
       }
 
       transaction.close();

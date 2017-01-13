@@ -36,7 +36,7 @@ public abstract class ObjyDBConfigs extends AllConfigs
 
     // remove BranchingTests because most mappings do not support it
     // Subclasses should add Banching tests if supported
-    if (!scenario.getRepositoryConfig().isSupportingBranches())
+    if (!scenario.getRepositoryConfig().supportingBranches())
     {
       testClasses.remove(BranchingTest.class);
       testClasses.remove(BranchingSameSessionTest.class);
@@ -44,7 +44,7 @@ public abstract class ObjyDBConfigs extends AllConfigs
       testClasses.remove(Bugzilla_303807_Test.class);
     }
 
-    if (!scenario.getRepositoryConfig().isSupportingAudits())
+    if (!scenario.getRepositoryConfig().supportingAudits())
     {
       // non-audit mode - remove audit tests
       testClasses.remove(AuditTest.class);

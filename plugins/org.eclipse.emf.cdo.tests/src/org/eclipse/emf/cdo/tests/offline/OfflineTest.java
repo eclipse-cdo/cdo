@@ -324,7 +324,7 @@ public class OfflineTest extends AbstractSyncingTest
 
     assertEquals(1, transaction.getNewObjects().size());
     CDOObject offlineCompany = transaction.getNewObjects().values().iterator().next();
-    if (getRepositoryConfig().getIDGenerationLocation() != IDGenerationLocation.CLIENT)
+    if (getRepositoryConfig().idGenerationLocation() != IDGenerationLocation.CLIENT)
     {
       assertEquals(CDOID.Type.TEMP_OBJECT, offlineCompany.cdoID().getType());
     }

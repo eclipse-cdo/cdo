@@ -39,7 +39,7 @@ public class SampleTestsObjy extends ObjyDBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, new ObjyConfig(false, false), JVM, NATIVE);
+    addScenario(parent, new ObjyConfig(), JVM, NATIVE);
   }
 
   @Override

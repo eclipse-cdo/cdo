@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.mongodb;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.mongodb.CDOMongoDBUtil;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
@@ -31,9 +30,9 @@ public class MongoDBConfig extends RepositoryConfig
 
   private static final long serialVersionUID = 1L;
 
-  public MongoDBConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
+  public MongoDBConfig()
   {
-    super(STORE_NAME, supportingAudits, supportingBranches, idGenerationLocation);
+    super(STORE_NAME);
   }
 
   @Override
@@ -87,7 +86,7 @@ public class MongoDBConfig extends RepositoryConfig
   }
 
   @Override
-  public boolean isSupportingExtRefs()
+  public boolean supportingExtRefs()
   {
     return false;
   }

@@ -408,7 +408,6 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testWithXMLAndPrefetching() throws Exception
   {
-
     {
       ResourceSet resourceSet = new ResourceSetImpl();
       Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
@@ -420,13 +419,14 @@ public class ExternalReferenceTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction(resourceSet);
 
       Supplier supplier = getModel1Factory().createSupplier();
+      EList<PurchaseOrder> purchaseOrders = supplier.getPurchaseOrders();
 
       for (int i = 0; i < 200; i++)
       {
         PurchaseOrder externalObject = getModel1Factory().createPurchaseOrder();
         externalResource.getContents().add(externalObject);
 
-        supplier.getPurchaseOrders().add(externalObject);
+        purchaseOrders.add(externalObject);
       }
 
       CDOResource resource = transaction.createResource(getResourcePath("/internal"));

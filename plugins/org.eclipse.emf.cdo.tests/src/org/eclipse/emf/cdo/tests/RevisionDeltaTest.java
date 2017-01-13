@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
@@ -351,6 +352,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     });
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   public void testListSimpleMove()
   {
     testStoreDelta(new ListManipulator()
@@ -362,6 +364,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     });
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   public void testListMoveToLast()
   {
     testStoreDelta(new ListManipulator()
@@ -373,6 +376,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     });
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   public void testListMoveToFirst()
   {
     testStoreDelta(new ListManipulator()
@@ -384,6 +388,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     });
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   public void testListTwoIndependentMoves()
   {
     testStoreDelta(new ListManipulator()
@@ -396,6 +401,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     });
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   public void testListTwoIntersectingMoves()
   {
     testStoreDelta(new ListManipulator()
@@ -408,6 +414,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     });
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   public void testListInsertFirst()
   {
     testStoreDelta(new ListManipulator()
@@ -423,6 +430,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     });
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   public void testListInsertMiddle()
   {
     testStoreDelta(new ListManipulator()
@@ -453,6 +461,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     });
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   public void testListMultipleOpsWithClear()
   {
     testStoreDelta(new ListManipulator()
@@ -491,6 +500,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     });
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   public void testListMultipleOps()
   {
     testStoreDelta(new ListManipulator()
@@ -529,6 +539,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     });
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   public void testMultipleInserts()
   {
     testStoreDelta(new ListManipulator()
@@ -547,6 +558,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     });
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   public void testInsertAndRemove()
   {
     testStoreDelta(new ListManipulator()
@@ -563,6 +575,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     });
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   public void testInsertAndMove()
   {
     testStoreDelta(new ListManipulator()
@@ -610,6 +623,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     });
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   public void testInsertAndSet()
   {
     testStoreDelta(new ListManipulator()
@@ -629,6 +643,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     });
   }
 
+  @Skips(IRepositoryConfig.CAPABILITY_UNORDERED_LISTS)
   public void testSetAndRemove()
   {
     testStoreDelta(new ListManipulator()

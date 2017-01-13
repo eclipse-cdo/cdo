@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.db.performance;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.tests.db.H2Config;
 import org.eclipse.emf.cdo.tests.performance.AllPerformanceTests;
 
@@ -30,6 +29,6 @@ public class AllPerformanceTestsH2NonAudit extends AllPerformanceTests
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, new H2Config(false, false, false, false, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, new H2Config(), JVM, NATIVE);
   }
 }

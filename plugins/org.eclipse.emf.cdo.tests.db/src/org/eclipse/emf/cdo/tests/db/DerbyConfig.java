@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
-
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.derby.EmbeddedDerbyAdapter;
@@ -41,9 +39,9 @@ public class DerbyConfig extends DBConfig
 
   private static HashMap<File, EmbeddedDataSource> dataSources = new HashMap<File, EmbeddedDataSource>();
 
-  public DerbyConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
+  public DerbyConfig()
   {
-    super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, false, false, false, idGenerationLocation);
+    super(DB_ADAPTER_NAME);
   }
 
   @Override

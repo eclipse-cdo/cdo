@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.db.offline;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.tests.db.H2Config;
 
 import org.eclipse.net4j.db.DBUtil;
@@ -40,9 +39,9 @@ public class H2OfflineConfig extends DBOfflineConfig
 
   private static JdbcDataSource defaultDataSource;
 
-  public H2OfflineConfig(boolean withRanges, boolean copyOnBranch, IDGenerationLocation idGenerationLocation)
+  public H2OfflineConfig()
   {
-    super("H2Offline", withRanges, copyOnBranch, idGenerationLocation);
+    super("H2Offline");
   }
 
   @Override

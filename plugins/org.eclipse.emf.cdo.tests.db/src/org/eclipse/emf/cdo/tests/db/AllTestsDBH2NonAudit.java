@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,7 +29,12 @@ public class AllTestsDBH2NonAudit extends DBConfigs
 
   public static void initConfigSuites(ConfigTestSuite suite, TestSuite parent, IDGenerationLocation idGenerationLocation)
   {
-    suite.addScenario(parent, new H2Config(false, false, false, false, false, idGenerationLocation), JVM, NATIVE);
+    RepositoryConfig config = new H2Config().idGenerationLocation(idGenerationLocation);
+
+    // TODO list-ordering
+    // config.listOrdering(ListOrdering.UNORDERED).supportingChunks(false);
+
+    suite.addScenario(parent, config, JVM, NATIVE);
   }
 
   @Override

@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
-
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -36,10 +34,9 @@ public class H2Config extends DBConfig
 
   private static JdbcDataSource defaultDataSource;
 
-  public H2Config(boolean supportingAudits, boolean supportingBranches, boolean withRanges, boolean copyOnBranch, boolean inverseLists,
-      IDGenerationLocation idGenerationLocation)
+  public H2Config()
   {
-    super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, withRanges, copyOnBranch, inverseLists, idGenerationLocation);
+    super(DB_ADAPTER_NAME);
   }
 
   @Override

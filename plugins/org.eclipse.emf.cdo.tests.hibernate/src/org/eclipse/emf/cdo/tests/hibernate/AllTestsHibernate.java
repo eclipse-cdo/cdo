@@ -94,7 +94,7 @@ public class AllTestsHibernate extends AllConfigs
     super.initTestClasses(testClasses, scenario);
 
     // TODO: find out why this does not work for non-auditing
-    if (scenario.getRepositoryConfig().isSupportingAudits())
+    if (scenario.getRepositoryConfig().supportingAudits())
     {
       testClasses.add(HibernateBugzilla_380987_Test.class);
     }
@@ -160,7 +160,7 @@ public class AllTestsHibernate extends AllConfigs
     // TODO: research this
     testClasses.remove(Bugzilla_416474_Test.class);
 
-    if (scenario.getRepositoryConfig().isSupportingAudits())
+    if (scenario.getRepositoryConfig().supportingAudits())
     {
       // need to add additional auditing annotations
       testClasses.remove(HibernateBugzilla_405191_Test.class);

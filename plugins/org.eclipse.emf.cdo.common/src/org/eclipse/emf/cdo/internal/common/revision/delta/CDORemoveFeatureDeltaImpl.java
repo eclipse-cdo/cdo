@@ -101,4 +101,14 @@ public class CDORemoveFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl im
       }
     }
   }
+
+  public int projectIndex(int index)
+  {
+    if (index >= getIndex())
+    {
+      ++index;
+    }
+
+    return index;
+  }
 }

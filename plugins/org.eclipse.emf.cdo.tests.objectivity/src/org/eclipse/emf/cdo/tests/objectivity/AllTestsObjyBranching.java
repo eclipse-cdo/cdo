@@ -27,6 +27,6 @@ public class AllTestsObjyBranching extends ObjyDBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, new ObjyConfig(true, true), JVM, NATIVE);
+    addScenario(parent, new ObjyConfig().supportingBranches(true), JVM, NATIVE);
   }
 }

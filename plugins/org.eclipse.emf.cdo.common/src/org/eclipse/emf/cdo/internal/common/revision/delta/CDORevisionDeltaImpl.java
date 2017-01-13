@@ -43,6 +43,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.util.Predicate;
 import org.eclipse.net4j.util.Predicates;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
@@ -66,6 +67,8 @@ import java.util.Map;
  */
 public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
 {
+  private static final boolean WORK_AROUND_BUG_308618 = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.common.revision.delta.WORK_AROUND_BUG_308618");
+
   private EClass eClass;
 
   private CDOID id;
@@ -406,8 +409,17 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
             protected void createRemoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object value, int index)
             {
               CDORemoveFeatureDeltaImpl delta = new CDORemoveFeatureDeltaImpl(feature, index);
-              // fix until ListDifferenceAnalyzer delivers the correct value (bug #308618).
-              delta.setValue(oldList.get(index));
+
+              if (WORK_AROUND_BUG_308618)
+              {
+                // Fix until ListDifferenceAnalyzer delivers the correct value (bug 308618).
+                delta.setValue(oldList.get(index));
+              }
+              else
+              {
+                delta.setValue(value);
+              }
+
               changes.add(delta);
               oldList.remove(index);
             }
@@ -416,8 +428,17 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
             protected void createMoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object value, int index, int toIndex)
             {
               CDOMoveFeatureDeltaImpl delta = new CDOMoveFeatureDeltaImpl(feature, toIndex, index);
-              // fix until ListDifferenceAnalyzer delivers the correct value (same problem as bug #308618).
-              delta.setValue(oldList.get(index));
+
+              if (WORK_AROUND_BUG_308618)
+              {
+                // Fix until ListDifferenceAnalyzer delivers the correct value (bug 308618).
+                delta.setValue(oldList.get(index));
+              }
+              else
+              {
+                delta.setValue(value);
+              }
+
               changes.add(delta);
               oldList.move(toIndex, index);
             }

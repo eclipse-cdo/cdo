@@ -28,6 +28,6 @@ public class AllTestsDBH2BranchingUUIDs extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, new H2Config(true, true, false, false, false, IDGenerationLocation.CLIENT), JVM, NATIVE);
+    addScenario(parent, new H2Config().supportingBranches(true).idGenerationLocation(IDGenerationLocation.CLIENT), JVM, NATIVE);
   }
 }

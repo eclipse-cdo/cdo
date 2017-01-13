@@ -39,21 +39,61 @@ public abstract class DBOfflineConfig extends OfflineConfig
 
   private boolean copyOnBranch;
 
-  public DBOfflineConfig(String name, boolean withRanges, boolean copyOnBranch, IDGenerationLocation idGenerationLocation)
+  public DBOfflineConfig(String name)
   {
-    super(name, idGenerationLocation);
-    this.withRanges = withRanges;
-    this.copyOnBranch = copyOnBranch;
+    super(name);
   }
 
-  public boolean isWithRanges()
+  @Override
+  public DBOfflineConfig supportingAudits(boolean supportingAudits)
+  {
+    return (DBOfflineConfig)super.supportingAudits(supportingAudits);
+  }
+
+  @Override
+  public DBOfflineConfig supportingBranches(boolean supportingBranches)
+  {
+    return (DBOfflineConfig)super.supportingBranches(supportingBranches);
+  }
+
+  @Override
+  public DBOfflineConfig supportingChunks(boolean supportingChunks)
+  {
+    return (DBOfflineConfig)super.supportingChunks(supportingChunks);
+  }
+
+  @Override
+  public DBOfflineConfig supportingExtRefs(boolean supportingExtRefs)
+  {
+    return (DBOfflineConfig)super.supportingExtRefs(supportingExtRefs);
+  }
+
+  @Override
+  public DBOfflineConfig idGenerationLocation(IDGenerationLocation idGenerationLocation)
+  {
+    return (DBOfflineConfig)super.idGenerationLocation(idGenerationLocation);
+  }
+
+  public boolean withRanges()
   {
     return withRanges;
   }
 
-  public boolean isCopyOnBranch()
+  public DBOfflineConfig withRanges(boolean withRanges)
+  {
+    this.withRanges = withRanges;
+    return this;
+  }
+
+  public boolean copyOnBranch()
   {
     return copyOnBranch;
+  }
+
+  public DBOfflineConfig copyOnBranch(boolean copyOnBranch)
+  {
+    this.copyOnBranch = copyOnBranch;
+    return this;
   }
 
   @Override
@@ -67,12 +107,12 @@ public abstract class DBOfflineConfig extends OfflineConfig
   {
     super.initCapabilities(capabilities);
 
-    if (isWithRanges())
+    if (withRanges())
     {
       capabilities.add(DBConfig.CAPABILITY_RANGES);
     }
 
-    if (isCopyOnBranch())
+    if (copyOnBranch())
     {
       capabilities.add(DBConfig.CAPABILITY_COPY_ON_BRANCH);
     }
@@ -108,7 +148,7 @@ public abstract class DBOfflineConfig extends OfflineConfig
 
   protected IMappingStrategy createMappingStrategy()
   {
-    return CDODBUtil.createHorizontalMappingStrategy(isSupportingAudits(), isSupportingBranches(), withRanges);
+    return CDODBUtil.createHorizontalMappingStrategy(supportingAudits(), supportingBranches(), withRanges);
   }
 
   @Override

@@ -513,7 +513,6 @@ public class SessionManager extends Container<ISession> implements InternalSessi
 
       ByteArrayInputStream bais = new ByteArrayInputStream(authenticationServer.handleResponse(response));
 
-      @SuppressWarnings("resource")
       ExtendedDataInputStream stream = new ExtendedDataInputStream(bais);
       String userID = stream.readString();
       char[] password = stream.readString().toCharArray();
@@ -575,7 +574,6 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       }
 
       ByteArrayInputStream baos = new ByteArrayInputStream(authenticationServer.handleResponse(response));
-      @SuppressWarnings("resource")
       ExtendedDataInputStream stream = new ExtendedDataInputStream(baos);
 
       if (operation == CredentialsUpdateOperation.RESET_PASSWORD)

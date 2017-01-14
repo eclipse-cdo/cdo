@@ -71,7 +71,6 @@ public class RepositoryTransferDragListener extends DragSourceAdapter
     try
     {
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      @SuppressWarnings("resource")
       ExtendedDataOutputStream out = new ExtendedDataOutputStream(baos);
 
       CDOView view = null;

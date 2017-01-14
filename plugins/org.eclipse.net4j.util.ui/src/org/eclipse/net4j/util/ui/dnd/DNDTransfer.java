@@ -74,7 +74,6 @@ public abstract class DNDTransfer<TYPE> extends ByteArrayTransfer
     }
   }
 
-  @SuppressWarnings("resource")
   @Override
   protected Object nativeToJava(TransferData transferData)
   {

@@ -105,7 +105,6 @@ public class RepositoryPluginDropAdapter implements IDropActionDelegate
     try
     {
       ByteArrayInputStream bais = new ByteArrayInputStream((byte[])source);
-      @SuppressWarnings("resource")
       ExtendedDataInputStream in = new ExtendedDataInputStream(bais);
 
       int viewID = in.readInt();

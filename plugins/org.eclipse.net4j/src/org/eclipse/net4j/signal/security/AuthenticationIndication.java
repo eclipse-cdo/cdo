@@ -106,7 +106,6 @@ public class AuthenticationIndication extends IndicationWithMonitoring
       String password = new String(credentials.getPassword());
 
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      @SuppressWarnings("resource")
       ExtendedDataOutputStream stream = new ExtendedDataOutputStream(baos);
       stream.writeString(userID);
       stream.writeString(password);

@@ -32,7 +32,6 @@ import org.eclipse.emf.ecore.util.FeatureMapUtil;
  * 
  * @since 2.9
  */
-@SuppressWarnings("javadoc")
 public abstract class MinimalEStoreEObjectImpl extends MinimalEObjectImpl {
 	private static final EObservableAdapterList.Listener ADAPTERS_LISTENER = new EObservableAdapterList.Listener() {
 		public void added(Notifier notifier, Adapter adapter) {

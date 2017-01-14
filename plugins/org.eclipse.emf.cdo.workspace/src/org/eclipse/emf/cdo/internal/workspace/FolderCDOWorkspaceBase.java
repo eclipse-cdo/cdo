@@ -203,8 +203,6 @@ public class FolderCDOWorkspaceBase extends AbstractCDOWorkspaceBase
     try
     {
       fileReader = new FileReader(addedAndDetachedFile);
-
-      @SuppressWarnings("resource")
       BufferedReader lineReader = new BufferedReader(fileReader);
 
       String line;

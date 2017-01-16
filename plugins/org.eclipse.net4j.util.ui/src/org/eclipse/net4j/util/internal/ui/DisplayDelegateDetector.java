@@ -46,7 +46,7 @@ public class DisplayDelegateDetector implements DelegateDetector
   /**
    * @author Eike Stepper
    */
-  public static abstract class Factory extends org.eclipse.net4j.util.concurrent.DelegableReentrantLock.DelegateDetector.Factory
+  public static class Factory extends org.eclipse.net4j.util.concurrent.DelegableReentrantLock.DelegateDetector.Factory
   {
     public static final String TYPE = "display";
 
@@ -56,7 +56,7 @@ public class DisplayDelegateDetector implements DelegateDetector
     }
 
     @Override
-    public DelegateDetector create(String description) throws ProductCreationException
+    public DisplayDelegateDetector create(String description) throws ProductCreationException
     {
       return new DisplayDelegateDetector();
     }

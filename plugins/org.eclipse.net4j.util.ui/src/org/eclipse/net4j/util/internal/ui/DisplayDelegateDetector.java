@@ -29,7 +29,7 @@ public class DisplayDelegateDetector implements DelegateDetector
 
   public boolean isDelegate(Thread thread, Thread owner)
   {
-    if (owner.getState() == State.WAITING)
+    if (owner != null && owner.getState() == State.WAITING)
     {
       Display display = UIUtil.getDisplay();
       Thread displayThread = display.getThread();

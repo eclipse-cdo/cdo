@@ -253,7 +253,13 @@ public class NonFairReentrantLock implements Lock, Serializable
 
     private boolean isHeldExclusively(Thread current)
     {
-      return isOwner(current, getExclusiveOwnerThread());
+      Thread exclusiveOwnerThread = getExclusiveOwnerThread();
+      if (exclusiveOwnerThread == null)
+      {
+        return false;
+      }
+
+      return isOwner(current, exclusiveOwnerThread);
     }
 
     /**

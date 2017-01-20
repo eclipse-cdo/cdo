@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.emf.cdo.dawn.sdk"
       label="%featureName"
-      version="2.1.100.qualifier"
+      version="2.1.200.qualifier"
       provider-name="%providerName"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.cdo.license"
@@ -40,23 +40,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.dawn.codegen.gmf.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.dawn"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.dawn.codegen"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.dawn.examples"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.dawn.ecore.editor.dawn"
          version="0.0.0"/>
 
    <plugin

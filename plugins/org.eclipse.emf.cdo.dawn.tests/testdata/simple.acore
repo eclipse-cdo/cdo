@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<acore:ACoreRoot xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:acore="http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore">
-  <classes name="A"/>
-  <classes name="B" subClasses="//@classes.0"/>
-  <classes name="C" subClasses="//@classes.1"/>
-</acore:ACoreRoot>

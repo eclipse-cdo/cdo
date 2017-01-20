@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classdiagram:ClassDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:classdiagram="http://class.uml.diagram.mftech.org">
-  <classes name="ClassA" implementedInterfaces="//@interfaces.0"/>
-  <classes name="ClassB" subClasses="//@classes.0" implementedInterfaces="//@interfaces.0"/>
-  <interfaces name="Interface1"/>
-</classdiagram:ClassDiagram>

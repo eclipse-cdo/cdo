@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<dawngenmodel:DawnGenerator xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:dawngenmodel="http://www.eclipse.org/emf/cdo/dawn/2010/GenModel">
-  <emfFragmentgenerator fragmentName="org.eclipse.emf.cdo.dawn.examples.acore.editor.dawn" dawnEditorClassName="DawnAcoreEditor">
-    <emfGenModel href="acore.genmodel#/"/>
-  </emfFragmentgenerator>
-  <gmfFragmentgenerator fragmentName="org.eclipse.emf.cdo.dawn.examples.acore.diagram.dawn" dawnEditorClassName="DawnAcoreDiagramEditor" dawnDocumentProviderClassName="DawnAcoreDocumentProvider" dawnEditorUtilClassName="DawnAcoreDiagramEditorUtil" dawnCreationWizardClassName="DawnAcoreCreationWizard" dawnCanonicalEditingPolicyClassName="DawnACoreRootCanonicalEditPolicy" dawnDiagramEditPartClassName="DawnACoreRootEditPart" dawnEditPartFactoryClassName="DawnAcoreEditPartFactory" dawnEditPartProviderClassName="DawnAcoreEditPartProvider" dawnEditPolicyProviderClassName="DawnAcoreEditPolicyProvider">
-    <GMFGenEditorGenerator href="acore.gmfgen#/"/>
-  </gmfFragmentgenerator>
-</dawngenmodel:DawnGenerator>

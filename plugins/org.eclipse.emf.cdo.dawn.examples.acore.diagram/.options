@@ -1,7 +1,0 @@
-# Tracing options for the org.eclipse.emf.cdo.dawn.examples.acore.diagram plug-in
-
-# Common issues
-org.eclipse.emf.cdo.dawn.examples.acore.diagram/debug=false
-
-# Visual IDs
-org.eclipse.emf.cdo.dawn.examples.acore.diagram/debug/visualID=false

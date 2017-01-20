@@ -27,12 +27,7 @@
 
 	<!-- CDO Dawn -->
 	<feature id="org.eclipse.emf.cdo.dawn" version="0.0.0"><category name="org.eclipse.emf.cdo.dawn.category"/></feature>
-	<feature id="org.eclipse.emf.cdo.dawn.codegen" version="0.0.0"><category name="org.eclipse.emf.cdo.dawn.category"/></feature>
-	<feature id="org.eclipse.emf.cdo.dawn.codegen.gmf" version="0.0.0"><category name="org.eclipse.emf.cdo.dawn.category"/></feature>
-	<feature id="org.eclipse.emf.cdo.dawn.examples" version="0.0.0"><category name="org.eclipse.emf.cdo.dawn.category"/></feature>
-	<feature id="org.eclipse.emf.cdo.dawn.tests" version="0.0.0"><category name="org.eclipse.emf.cdo.dawn.category"/></feature>
 	<feature id="org.eclipse.emf.cdo.dawn.sdk" version="0.0.0"><category name="org.eclipse.emf.cdo.dawn.category"/></feature>
-	<feature id="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn" version="0.0.0"><category name="org.eclipse.emf.cdo.dawn.category"/></feature>
 
 	<!-- Net4j Signalling Platform -->
 	<feature id="org.eclipse.net4j" version="0.0.0"><category name="org.eclipse.net4j.category"/></feature>

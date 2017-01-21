@@ -43,7 +43,7 @@
 		</rm:provider>
 
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/eclipse/updates/4.7"/>
+			<rm:uri format="http://download.eclipse.org/eclipse/updates/4.7-I-builds"/>
     </rm:provider>
     
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">

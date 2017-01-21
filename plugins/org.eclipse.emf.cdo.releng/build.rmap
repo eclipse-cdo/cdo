@@ -66,6 +66,10 @@
 			<rm:uri format="http://www.elver.org/eclipse/2.1.0/update"/>
     </rm:provider>
 
+    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/tools/orbit/downloads/latest-S"/>
+    </rm:provider>
+
 		<!--
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/modeling/emf/emf/updates/2.12/core"/>

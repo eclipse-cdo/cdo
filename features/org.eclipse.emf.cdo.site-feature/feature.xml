@@ -31,19 +31,7 @@
    </license>
 
    <includes
-         id="org.eclipse.emf.cdo.dawn.codegen.gmf"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.dawn.sdk"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.dawn.tests"
          version="0.0.0"/>
 
    <includes
@@ -57,10 +45,6 @@
    <includes
          id="org.eclipse.emf.cdo.examples.hibernate"
          version="0.0.0"/>
-
-   <!--includes
-         id="org.eclipse.emf.cdo.explorer.product"
-         version="0.0.0"/-->
 
    <includes
          id="org.eclipse.emf.cdo.sdk"
@@ -77,10 +61,6 @@
    <includes
          id="org.eclipse.emf.cdo.server.objectivity"
          version="0.0.0"/>
-
-   <!--includes
-         id="org.eclipse.emf.cdo.server.product"
-         version="0.0.0"/-->
 
    <includes
          id="org.eclipse.emf.cdo.tests"

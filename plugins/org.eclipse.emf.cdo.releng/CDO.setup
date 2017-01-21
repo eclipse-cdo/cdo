@@ -147,6 +147,8 @@
         <repository
             url="http://download.eclipse.org/eclipse/updates/4.7-I-builds"/>
         <repository
+            url="http://download.eclipse.org/tools/orbit/downloads/latest-S"/>
+        <repository
             url="http://download.eclipse.org/modeling/mdt/uml2/updates/5.3milestones"/>
         <repository
             url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>

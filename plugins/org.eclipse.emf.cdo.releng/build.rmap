@@ -2,10 +2,6 @@
 <rm:rmap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bc="http://www.eclipse.org/buckminster/Common-1.0"
 	xmlns:psf="http://www.eclipse.org/buckminster/PSFProvider-1.0" xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0">
 
-	<!-- Properties -->
-
-	<rm:property mutable="true" key="train" value="mars"/>
-
 	<!-- Locators -->
 
 	<rm:locator searchPathRef="git" pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$"/>
@@ -43,19 +39,15 @@
 	<rm:searchPath name="p2">
 
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/releases/neon"/>
+			<rm:uri format="http://download.eclipse.org/releases/oxygen"/>
 		</rm:provider>
 
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/releases/neon"/>
-		</rm:provider>
-    
-    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/eclipse/updates/4.6"/>
+			<rm:uri format="http://download.eclipse.org/eclipse/updates/4.7"/>
     </rm:provider>
     
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/mdt/uml2/updates/5.2"/>
+			<rm:uri format="http://download.eclipse.org/modeling/mdt/uml2/updates/5.3milestones"/>
     </rm:provider>
     
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
@@ -63,15 +55,7 @@
     </rm:provider>
     
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/nebula/releases/1.0.0"/>
-    </rm:provider>
-    
-    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/tools/buckminster/updates-4.5"/>
-    </rm:provider>
-    
-    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
+			<rm:uri format="http://download.eclipse.org/nebula/releases/1.1.0"/>
     </rm:provider>
     
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
@@ -79,25 +63,13 @@
     </rm:provider>
     
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://www.elver.org/eclipse/2.1.0/update"/>
+			<rm:uri format="http://www.elver.org/eclipse/2.2.0/update"/>
     </rm:provider>
 
 		<!--
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/eclipse/updates/4.6"/>
-		</rm:provider>
-
-    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-      <rm:uri format="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
-    </rm:provider>
-
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/modeling/emf/emf/updates/2.12/core"/>
 		</rm:provider>
-
-    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-      <rm:uri format="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
-    </rm:provider>
 
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/modeling/emf/transaction/updates/milestones"/>
@@ -112,14 +84,6 @@
 		</rm:provider>
 
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/emft/mwe/updates/milestones"/>
-		</rm:provider>
-
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/gmp/gmf-tooling/updates/milestones"/>
-		</rm:provider>
-
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/modeling/gmp/gmf-runtime/updates/milestones"/>
 		</rm:provider>
 
@@ -127,24 +91,8 @@
 			<rm:uri format="http://download.eclipse.org/modeling/gmp/gmf-notation/updates/milestones"/>
 		</rm:provider>
 
-    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-      <rm:uri format="http://download.eclipse.org/modeling/m2t/xpand/updates/milestones"/>
-    </rm:provider>
-
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/modeling/mdt/ocl/updates/milestones"/>
-		</rm:provider>
-
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/mdt/uml2/updates/5.1milestones"/>
-		</rm:provider>
-
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/mmt/qvto/updates/milestones/3.6.0"/>
-		</rm:provider>
-
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
 		</rm:provider>
 
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
@@ -152,35 +100,11 @@
 		</rm:provider>
 
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/mylyn/snapshots/weekly"/>
-		</rm:provider>
-
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/tools/gef/updates/interim"/>
-		</rm:provider>
-
-    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/tools/buckminster/headless-4.5"/>
-		</rm:provider>
-
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/technology/swtbot/snapshots"/>
-		</rm:provider>
-
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/technology/nebula/snapshot"/>
 		</rm:provider>
 
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/ecp/releases/preview/ecp"/>
-		</rm:provider>
-
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.oracle.com/otn_software/oepe/12.2.1/mars/repository"/>
-		</rm:provider>
-
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://www.elver.org/eclipse/2.1.0/update"/>
 		</rm:provider>
       -->
 

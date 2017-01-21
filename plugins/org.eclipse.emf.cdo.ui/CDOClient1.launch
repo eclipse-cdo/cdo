@@ -31,7 +31,6 @@
 <setEntry value="org.eclipse.emf.ecp.view.treemasterdetail.model.edit:1.10.0.20160912-1709:default:true"/>
 <setEntry value="org.eclipse.emf.ecp.view.vertical.model.edit:1.10.0.20160912-1709:default:true"/>
 <setEntry value="org.eclipse.emf.edit:2.12.0.v20160526-0356:default:true"/>
-<setEntry value="org.eclipse.gmf.codegen.edit:2.9.0.201509291144:default:true"/>
 <setEntry value="org.eclipse.gmf.runtime.notation.edit:1.7.0.201606071631:default:true"/>
 </setAttribute>
 <booleanAttribute key="append.args" value="true"/>

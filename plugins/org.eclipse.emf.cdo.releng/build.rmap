@@ -63,7 +63,7 @@
     </rm:provider>
     
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://www.elver.org/eclipse/2.2.0/update"/>
+			<rm:uri format="http://www.elver.org/eclipse/2.1.0/update"/>
     </rm:provider>
 
 		<!--

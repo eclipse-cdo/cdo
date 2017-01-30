@@ -38,8 +38,8 @@ public class ReplicateRepositoryRawRequest extends CDOClientRequestWithMonitorin
     int lastReplicatedBranchID = context.getLastReplicatedBranchID();
     long lastReplicatedCommitTime = context.getLastReplicatedCommitTime();
 
-    out.writeInt(lastReplicatedBranchID);
-    out.writeLong(lastReplicatedCommitTime);
+    out.writeXInt(lastReplicatedBranchID);
+    out.writeXLong(lastReplicatedCommitTime);
   }
 
   @Override

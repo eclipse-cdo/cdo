@@ -129,7 +129,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
 
       // Write resultSet size for progress monitoring
       int size = DBUtil.getRowCount(resultSet);
-      out.writeInt(size);
+      out.writeXInt(size);
       if (size == 0)
       {
         return;
@@ -144,10 +144,10 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
         int idx = resultSet.getInt(5);
 
         out.writeCDOID(source);
-        out.writeInt(branch);
-        out.writeInt(versionAdded);
-        out.writeInt(versionRemoved);
-        out.writeInt(idx);
+        out.writeXInt(branch);
+        out.writeXInt(versionAdded);
+        out.writeXInt(versionRemoved);
+        out.writeXInt(idx);
       }
     }
     catch (SQLException ex)
@@ -190,7 +190,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
 
   private void rawImportListPostProcess(CDODataInput in, IDBConnection connection, IDBTable table, OMMonitor monitor) throws IOException
   {
-    int size = in.readInt();
+    int size = in.readXInt();
     if (size == 0)
     {
       return;
@@ -224,10 +224,10 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
       for (int row = 0; row < size; row++)
       {
         CDOID source = in.readCDOID();
-        int branch = in.readInt();
-        int versionAdded = in.readInt();
-        int versionRemoved = in.readInt();
-        int idx = in.readInt();
+        int branch = in.readXInt();
+        int versionAdded = in.readXInt();
+        int versionRemoved = in.readXInt();
+        int idx = in.readXInt();
 
         stmt.setInt(1, versionRemoved);
         idHandler.setCDOID(stmt, 2, source);

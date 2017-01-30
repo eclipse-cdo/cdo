@@ -43,7 +43,7 @@ public class QueryCancelRequest extends CDOClientRequest<Boolean>
       TRACER.trace("Cancel query " + queryID); //$NON-NLS-1$
     }
 
-    out.writeInt(queryID);
+    out.writeXInt(queryID);
   }
 
   @Override

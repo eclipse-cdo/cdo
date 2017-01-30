@@ -53,7 +53,7 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   public CDOContainerFeatureDeltaImpl(CDODataInput in, EClass eClass) throws IOException
   {
     super(CONTAINER_FEATURE);
-    newContainerFeatureID = in.readInt();
+    newContainerFeatureID = in.readXInt();
     newContainerID = in.readCDOID();
     newResourceID = in.readCDOID();
   }
@@ -117,8 +117,8 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   @Override
   public void write(CDODataOutput out, EClass eClass) throws IOException
   {
-    out.writeInt(getType().ordinal());
-    out.writeInt(newContainerFeatureID);
+    out.writeXInt(getType().ordinal());
+    out.writeXInt(newContainerFeatureID);
     out.writeCDOID(out.getIDProvider().provideCDOID(newContainerID));
     out.writeCDOID(newResourceID);
   }

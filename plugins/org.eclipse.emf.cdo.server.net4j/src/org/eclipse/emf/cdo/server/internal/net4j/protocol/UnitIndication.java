@@ -53,7 +53,7 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
   @Override
   protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
-    viewID = in.readInt();
+    viewID = in.readXInt();
     rootID = in.readCDOID();
     opcode = UnitOpcode.values()[in.readByte()];
   }

@@ -59,6 +59,16 @@ import java.io.IOException;
  */
 public interface CDODataOutput extends ExtendedDataOutput
 {
+  /**
+   * @since 4.6
+   */
+  public void writeXInt(int v) throws IOException;
+
+  /**
+   * @since 4.6
+   */
+  public void writeXLong(long v) throws IOException;
+
   public CDOPackageRegistry getPackageRegistry();
 
   public CDOIDProvider getIDProvider();

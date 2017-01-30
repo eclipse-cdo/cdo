@@ -25,6 +25,16 @@ import java.io.InputStream;
  */
 public interface ExtendedDataInput extends DataInput
 {
+  /**
+   * @since 3.7
+   */
+  public int readVarInt() throws IOException;
+
+  /**
+   * @since 3.7
+   */
+  public long readVarLong() throws IOException;
+
   public byte[] readByteArray() throws IOException;
 
   public Object readObject() throws IOException;
@@ -172,6 +182,16 @@ public interface ExtendedDataInput extends DataInput
     public String readUTF() throws IOException
     {
       return delegate.readUTF();
+    }
+
+    public int readVarInt() throws IOException
+    {
+      return delegate.readVarInt();
+    }
+
+    public long readVarLong() throws IOException
+    {
+      return delegate.readVarLong();
     }
 
     public int skipBytes(int n) throws IOException

@@ -40,13 +40,13 @@ public class ResetTransactionIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    transactionID = in.readInt();
+    transactionID = in.readXInt();
     if (TRACER.isEnabled())
     {
       TRACER.format("Read transactionID: {0}", transactionID); //$NON-NLS-1$
     }
 
-    commitNumber = in.readInt();
+    commitNumber = in.readXInt();
     if (TRACER.isEnabled())
     {
       TRACER.format("Read commitNumber: {0}", commitNumber); //$NON-NLS-1$
@@ -61,8 +61,8 @@ public class ResetTransactionIndication extends CDOServerReadIndication
     if (lastCommitSuccess != null && lastCommitSuccess.getCommitNumber() == commitNumber)
     {
       out.writeBoolean(true);
-      out.writeLong(lastCommitSuccess.getTimeStamp());
-      out.writeLong(lastCommitSuccess.getPreviousTimeStamp());
+      out.writeXLong(lastCommitSuccess.getTimeStamp());
+      out.writeXLong(lastCommitSuccess.getPreviousTimeStamp());
     }
     else
     {

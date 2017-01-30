@@ -24,6 +24,16 @@ public class ExtendedDataOutputStream extends DataOutputStream implements Extend
     super(out);
   }
 
+  public void writeVarInt(int v) throws IOException
+  {
+    ExtendedIOUtil.writeVarInt(this, v);
+  }
+
+  public void writeVarLong(long v) throws IOException
+  {
+    ExtendedIOUtil.writeVarLong(this, v);
+  }
+
   public void writeByteArray(byte[] b) throws IOException
   {
     ExtendedIOUtil.writeByteArray(this, b);

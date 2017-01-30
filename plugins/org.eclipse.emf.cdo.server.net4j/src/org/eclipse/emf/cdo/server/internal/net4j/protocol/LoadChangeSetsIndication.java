@@ -36,7 +36,7 @@ public class LoadChangeSetsIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    int size = in.readInt();
+    int size = in.readXInt();
     ranges = new CDOBranchPointRange[size];
     for (int i = 0; i < ranges.length; i++)
     {

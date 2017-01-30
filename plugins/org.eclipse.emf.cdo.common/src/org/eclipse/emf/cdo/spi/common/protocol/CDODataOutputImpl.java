@@ -88,6 +88,30 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     super(delegate);
   }
 
+  public void writeXInt(int v) throws IOException
+  {
+    if (isXCompression())
+    {
+      writeVarInt(v);
+    }
+    else
+    {
+      writeInt(v);
+    }
+  }
+
+  public void writeXLong(long v) throws IOException
+  {
+    if (isXCompression())
+    {
+      writeVarLong(v);
+    }
+    else
+    {
+      writeLong(v);
+    }
+  }
+
   public void writeCDOPackageUnit(CDOPackageUnit packageUnit, boolean withPackages) throws IOException
   {
     ((InternalCDOPackageUnit)packageUnit).write(this, withPackages);
@@ -96,7 +120,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   public void writeCDOPackageUnits(CDOPackageUnit... packageUnits) throws IOException
   {
     int size = packageUnits.length;
-    writeInt(size);
+    writeXInt(size);
     if (TRACER.isEnabled())
     {
       TRACER.format("Writing {0} package units", size); //$NON-NLS-1$
@@ -140,25 +164,25 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
 
   public void writeCDOBranch(CDOBranch branch) throws IOException
   {
-    writeInt(branch.getID());
+    writeXInt(branch.getID());
   }
 
   public void writeCDOBranchPoint(CDOBranchPoint branchPoint) throws IOException
   {
     writeCDOBranch(branchPoint.getBranch());
-    writeLong(branchPoint.getTimeStamp());
+    writeXLong(branchPoint.getTimeStamp());
   }
 
   public void writeCDOBranchVersion(CDOBranchVersion branchVersion) throws IOException
   {
     writeCDOBranch(branchVersion.getBranch());
-    writeInt(branchVersion.getVersion());
+    writeXInt(branchVersion.getVersion());
   }
 
   public void writeCDOChangeSetData(CDOChangeSetData changeSetData) throws IOException
   {
     Collection<CDOIDAndVersion> newObjects = changeSetData.getNewObjects();
-    writeInt(newObjects.size());
+    writeXInt(newObjects.size());
     for (CDOIDAndVersion data : newObjects)
     {
       if (data instanceof CDORevision)
@@ -174,7 +198,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     }
 
     Collection<CDORevisionKey> changedObjects = changeSetData.getChangedObjects();
-    writeInt(changedObjects.size());
+    writeXInt(changedObjects.size());
     for (CDORevisionKey data : changedObjects)
     {
       if (data instanceof CDORevisionDelta)
@@ -190,13 +214,13 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     }
 
     Collection<CDOIDAndVersion> detachedObjects = changeSetData.getDetachedObjects();
-    writeInt(detachedObjects.size());
+    writeXInt(detachedObjects.size());
     for (CDOIDAndVersion data : detachedObjects)
     {
       writeCDOID(data.getID());
       boolean isCDORevisionKey = data instanceof CDORevisionKey;
       int version = data.getVersion();
-      writeInt(version);
+      writeXInt(version);
       writeBoolean(isCDORevisionKey);
       if (isCDORevisionKey)
       {
@@ -209,7 +233,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   public void writeCDOCommitData(CDOCommitData commitData) throws IOException
   {
     Collection<CDOPackageUnit> newPackageUnits = commitData.getNewPackageUnits();
-    writeInt(newPackageUnits.size());
+    writeXInt(newPackageUnits.size());
     for (CDOPackageUnit data : newPackageUnits)
     {
       writeCDOPackageUnit(data, false);
@@ -220,8 +244,8 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
 
   public void writeCDOCommitInfo(CDOCommitInfo commitInfo) throws IOException
   {
-    writeLong(commitInfo.getTimeStamp());
-    writeLong(commitInfo.getPreviousTimeStamp());
+    writeXLong(commitInfo.getTimeStamp());
+    writeXLong(commitInfo.getPreviousTimeStamp());
 
     CDOBranch branch = commitInfo.getBranch();
     if (branch != null)
@@ -255,7 +279,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
       writeCDOLockType(lockChangeInfo.getLockType());
 
       CDOLockState[] lockStates = lockChangeInfo.getLockStates();
-      writeInt(lockStates.length);
+      writeXInt(lockStates.length);
       for (CDOLockState lockState : lockStates)
       {
         writeCDOLockState(lockState);
@@ -267,11 +291,11 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   {
     writeString(lockArea.getDurableLockingID());
     writeCDOBranch(lockArea.getBranch());
-    writeLong(lockArea.getTimeStamp());
+    writeXLong(lockArea.getTimeStamp());
     writeString(lockArea.getUserID());
     writeBoolean(lockArea.isReadOnly());
 
-    writeInt(lockArea.getLocks().size());
+    writeXInt(lockArea.getLocks().size());
     for (Map.Entry<CDOID, LockGrade> entry : lockArea.getLocks().entrySet())
     {
       writeCDOID(entry.getKey());
@@ -281,8 +305,8 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
 
   public void writeCDOLockOwner(CDOLockOwner lockOwner) throws IOException
   {
-    writeInt(lockOwner.getSessionID());
-    writeInt(lockOwner.getViewID());
+    writeXInt(lockOwner.getSessionID());
+    writeXInt(lockOwner.getViewID());
     writeString(lockOwner.getDurableLockingID());
     writeBoolean(lockOwner.isDurableView());
   }
@@ -306,7 +330,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     }
 
     Set<CDOLockOwner> readLockOwners = lockState.getReadLockOwners();
-    writeInt(readLockOwners.size());
+    writeXInt(readLockOwners.size());
     for (CDOLockOwner readLockOwner : readLockOwners)
     {
       writeCDOLockOwner(readLockOwner);
@@ -353,7 +377,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   public void writeCDOIDAndVersion(CDOIDAndVersion idAndVersion) throws IOException
   {
     writeCDOID(idAndVersion.getID());
-    writeInt(idAndVersion.getVersion());
+    writeXInt(idAndVersion.getVersion());
   }
 
   public void writeCDOIDAndBranch(CDOIDAndBranch idAndBranch) throws IOException
@@ -366,7 +390,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   {
     writeCDOID(revisionKey.getID());
     writeCDOBranch(revisionKey.getBranch());
-    writeInt(revisionKey.getVersion());
+    writeXInt(revisionKey.getVersion());
   }
 
   public void writeCDORevision(CDORevision revision, int referenceChunk) throws IOException
@@ -390,9 +414,9 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   public void writeCDORevisable(CDORevisable revisable) throws IOException
   {
     writeCDOBranch(revisable.getBranch());
-    writeInt(revisable.getVersion());
-    writeLong(revisable.getTimeStamp());
-    writeLong(revisable.getRevised());
+    writeXInt(revisable.getVersion());
+    writeXLong(revisable.getTimeStamp());
+    writeXLong(revisable.getRevised());
   }
 
   public void writeCDOList(EClass owner, EStructuralFeature feature, CDOList list, int referenceChunk) throws IOException
@@ -424,8 +448,8 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
         TRACER.format("Writing feature {0}: size={1}, referenceChunk={2}", feature.getName(), size, referenceChunk); //$NON-NLS-1$
       }
 
-      writeInt(-size);
-      writeInt(referenceChunk);
+      writeXInt(-size);
+      writeXInt(referenceChunk);
       size = referenceChunk;
     }
     else
@@ -435,7 +459,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
         TRACER.format("Writing feature {0}: size={1}", feature.getName(), size); //$NON-NLS-1$
       }
 
-      writeInt(size);
+      writeXInt(size);
     }
 
     CDOIDProvider idProvider = getIDProvider();
@@ -467,7 +491,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
           writeCDOClassifierRef(eClass);
 
           int featureID = eClass.getFeatureID(innerFeature);
-          writeInt(featureID);
+          writeXInt(featureID);
         }
       }
 
@@ -575,6 +599,14 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   public CDORevisionUnchunker getRevisionUnchunker()
   {
     return null;
+  }
+
+  /**
+   * @since 4.6
+   */
+  protected boolean isXCompression()
+  {
+    return false;
   }
 
   protected StringIO getPackageURICompressor()

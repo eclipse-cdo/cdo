@@ -57,7 +57,7 @@ public class UnlockObjectsRequest extends CDOClientRequest<UnlockObjectsResult>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(viewID);
+    out.writeXInt(viewID);
     out.writeCDOLockType(lockType);
     out.writeBoolean(recursive);
     if (objectIDs == null)
@@ -67,7 +67,7 @@ public class UnlockObjectsRequest extends CDOClientRequest<UnlockObjectsResult>
         TRACER.format("Unlocking all objects for view {0}", viewID); //$NON-NLS-1$
       }
 
-      out.writeInt(CDOProtocolConstants.RELEASE_ALL_LOCKS);
+      out.writeXInt(CDOProtocolConstants.RELEASE_ALL_LOCKS);
     }
     else
     {
@@ -77,7 +77,7 @@ public class UnlockObjectsRequest extends CDOClientRequest<UnlockObjectsResult>
             : "write", viewID); //$NON-NLS-1$
       }
 
-      out.writeInt(objectIDs.size());
+      out.writeXInt(objectIDs.size());
       for (CDOID id : objectIDs)
       {
         if (TRACER.isEnabled())
@@ -93,8 +93,8 @@ public class UnlockObjectsRequest extends CDOClientRequest<UnlockObjectsResult>
   @Override
   protected UnlockObjectsResult confirming(CDODataInput in) throws IOException
   {
-    long timestamp = in.readLong();
-    int n = in.readInt();
+    long timestamp = in.readXLong();
+    int n = in.readXInt();
     CDOLockState[] newLockStates = new CDOLockState[n];
     for (int i = 0; i < n; i++)
     {

@@ -271,8 +271,8 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     }
 
     out.writeCDOPackageUnitType(originalType);
-    out.writeLong(timeStamp);
-    out.writeInt(packageInfos.length);
+    out.writeXLong(timeStamp);
+    out.writeXInt(packageInfos.length);
     for (InternalCDOPackageInfo packageInfo : packageInfos)
     {
       out.writeCDOPackageInfo(packageInfo);
@@ -310,8 +310,8 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     }
 
     originalType = in.readCDOPackageUnitType();
-    timeStamp = in.readLong();
-    packageInfos = new InternalCDOPackageInfo[in.readInt()];
+    timeStamp = in.readXLong();
+    packageInfos = new InternalCDOPackageInfo[in.readXInt()];
     for (int i = 0; i < packageInfos.length; i++)
     {
       packageInfos[i] = (InternalCDOPackageInfo)in.readCDOPackageInfo();

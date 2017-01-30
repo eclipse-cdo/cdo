@@ -59,13 +59,13 @@ public abstract class CDOTimeRequest<RESULT> extends CDOClientRequest<RESULT>
       TRACER.format("Confirmed: {0}", CDOCommonUtil.formatTimeStamp(repositoryTimeResult.getConfirmed())); //$NON-NLS-1$
     }
 
-    repositoryTimeResult.setIndicated(in.readLong());
+    repositoryTimeResult.setIndicated(in.readXLong());
     if (TRACER.isEnabled())
     {
       TRACER.format("Read indicated: {0}", CDOCommonUtil.formatTimeStamp(repositoryTimeResult.getIndicated())); //$NON-NLS-1$
     }
 
-    repositoryTimeResult.setResponded(in.readLong());
+    repositoryTimeResult.setResponded(in.readXLong());
     if (TRACER.isEnabled())
     {
       TRACER.format("Read responded: {0}", CDOCommonUtil.formatTimeStamp(repositoryTimeResult.getResponded())); //$NON-NLS-1$

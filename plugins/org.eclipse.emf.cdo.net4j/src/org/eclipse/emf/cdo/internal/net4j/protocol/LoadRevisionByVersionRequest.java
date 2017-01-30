@@ -65,7 +65,7 @@ public class LoadRevisionByVersionRequest extends CDOClientRequest<InternalCDORe
       TRACER.format("Writing referenceChunk: {0}", referenceChunk); //$NON-NLS-1$
     }
 
-    out.writeInt(referenceChunk);
+    out.writeXInt(referenceChunk);
   }
 
   @Override

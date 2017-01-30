@@ -40,8 +40,8 @@ public class LoadBranchesRequest extends CDOClientRequest<Integer>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(startID);
-    out.writeInt(endID);
+    out.writeXInt(startID);
+    out.writeXInt(endID);
   }
 
   @Override

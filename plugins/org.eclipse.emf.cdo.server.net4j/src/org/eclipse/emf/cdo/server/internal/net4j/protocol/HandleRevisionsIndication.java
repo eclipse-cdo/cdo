@@ -74,7 +74,7 @@ public class HandleRevisionsIndication extends CDOServerReadIndication
       }
     }
 
-    timeStamp = in.readLong();
+    timeStamp = in.readXLong();
     if (TRACER.isEnabled())
     {
       TRACER.format("Read timeStamp: {0}", CDOCommonUtil.formatTimeStamp(timeStamp)); //$NON-NLS-1$

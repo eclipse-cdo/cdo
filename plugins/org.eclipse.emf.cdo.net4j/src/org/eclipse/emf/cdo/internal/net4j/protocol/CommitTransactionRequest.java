@@ -148,7 +148,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
   protected void requestingTransactionInfo(CDODataOutput out) throws IOException
   {
-    out.writeInt(viewID);
+    out.writeXInt(viewID);
   }
 
   protected void requestingCommit(CDODataOutput out) throws IOException
@@ -158,17 +158,17 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     List<CDORevisionKey> changedObjects = commitData.getChangedObjects();
     List<CDOIDAndVersion> detachedObjects = commitData.getDetachedObjects();
 
-    out.writeLong(getLastUpdateTime());
-    out.writeInt(commitNumber);
+    out.writeXLong(getLastUpdateTime());
+    out.writeXInt(commitNumber);
     out.writeString(commitComment);
     CDOBranchUtil.writeBranchPointOrNull(out, commitMergeSource);
 
-    out.writeInt(locksOnNewObjects.size());
-    out.writeInt(idsToUnlock.size());
-    out.writeInt(newPackageUnits.size());
-    out.writeInt(newObjects.size());
-    out.writeInt(changedObjects.size());
-    out.writeInt(detachedObjects.size());
+    out.writeXInt(locksOnNewObjects.size());
+    out.writeXInt(idsToUnlock.size());
+    out.writeXInt(newPackageUnits.size());
+    out.writeXInt(newObjects.size());
+    out.writeXInt(changedObjects.size());
+    out.writeXInt(detachedObjects.size());
 
     if (TRACER.isEnabled())
     {
@@ -263,13 +263,13 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
           CDOBranch branch = ((CDORevisionKey)detachedObject).getBranch();
           if (branch != transactionBranch)
           {
-            out.writeInt(-version);
+            out.writeXInt(-version);
             out.writeCDOBranch(branch);
             continue;
           }
         }
 
-        out.writeInt(version);
+        out.writeXInt(version);
       }
     }
 
@@ -361,9 +361,9 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     result.setRollbackReason(in.readByte());
     result.setRollbackMessage(in.readString());
     result.setBranchPoint(in.readCDOBranchPoint());
-    result.setPreviousTimeStamp(in.readLong());
+    result.setPreviousTimeStamp(in.readXLong());
 
-    int size = in.readInt();
+    int size = in.readXInt();
     if (size != 0)
     {
       List<CDOObjectReference> xRefs = new ArrayList<CDOObjectReference>(size);
@@ -385,7 +385,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     result.setIDProvider(transaction);
     result.setClearResourcePathCache(clearResourcePathCache);
     result.setBranchPoint(in.readCDOBranchPoint());
-    result.setPreviousTimeStamp(in.readLong());
+    result.setPreviousTimeStamp(in.readXLong());
     result.setSecurityImpact(in.readByte());
     return result;
   }
@@ -415,7 +415,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
   protected void confirmingNewLockStates(CDODataInput in, CommitTransactionResult result) throws IOException
   {
-    int n = in.readInt();
+    int n = in.readXInt();
     CDOLockState[] newLockStates = new CDOLockState[n];
 
     for (int i = 0; i < n; i++)
@@ -430,7 +430,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
   {
     if (in.readBoolean())
     {
-      int n = in.readInt();
+      int n = in.readXInt();
       for (int i = 0; i < n; i++)
       {
         CDOID id = in.readCDOID();

@@ -37,11 +37,11 @@ public class ReplicateRepositoryRequest extends CDOClientRequest<Boolean>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(context.getLastReplicatedBranchID());
-    out.writeLong(context.getLastReplicatedCommitTime());
+    out.writeXInt(context.getLastReplicatedBranchID());
+    out.writeXLong(context.getLastReplicatedCommitTime());
 
     String[] lockAreaIDs = context.getLockAreaIDs();
-    out.writeInt(lockAreaIDs.length);
+    out.writeXInt(lockAreaIDs.length);
     for (int i = 0; i < lockAreaIDs.length; i++)
     {
       out.writeString(lockAreaIDs[i]);

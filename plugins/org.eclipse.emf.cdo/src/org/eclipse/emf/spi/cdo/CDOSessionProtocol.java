@@ -419,15 +419,15 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       state = in.readEnum(CDOCommonRepository.State.class);
       storeType = in.readString();
 
-      int types = in.readInt();
+      int types = in.readXInt();
       for (int i = 0; i < types; i++)
       {
         CDOID.ObjectType objectIDType = in.readEnum(CDOID.ObjectType.class);
         objectIDTypes.add(objectIDType);
       }
 
-      repositoryCreationTime = in.readLong();
-      lastUpdateTime = in.readLong();
+      repositoryCreationTime = in.readXLong();
+      lastUpdateTime = in.readXLong();
       rootResourceID = in.readCDOID();
       authenticating = in.readBoolean();
       supportingAudits = in.readBoolean();

@@ -88,7 +88,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
 
   protected void initializeCommitContext(CDODataInput in) throws Exception
   {
-    int viewID = in.readInt();
+    int viewID = in.readXInt();
     commitContext = getTransaction(viewID).createCommitContext();
   }
 
@@ -126,17 +126,17 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     initializeCommitContext(in);
     commitContext.preWrite();
 
-    long lastUpdateTime = in.readLong();
-    int commitNumber = in.readInt();
+    long lastUpdateTime = in.readXLong();
+    int commitNumber = in.readXInt();
     String commitComment = in.readString();
     CDOBranchPoint commitMergeSource = CDOBranchUtil.readBranchPointOrNull(in);
 
-    CDOLockState[] locksOnNewObjects = new CDOLockState[in.readInt()];
-    CDOID[] idsToUnlock = new CDOID[in.readInt()];
-    InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[in.readInt()];
-    InternalCDORevision[] newObjects = new InternalCDORevision[in.readInt()];
-    InternalCDORevisionDelta[] dirtyObjectDeltas = new InternalCDORevisionDelta[in.readInt()];
-    CDOID[] detachedObjects = new CDOID[in.readInt()];
+    CDOLockState[] locksOnNewObjects = new CDOLockState[in.readXInt()];
+    CDOID[] idsToUnlock = new CDOID[in.readXInt()];
+    InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[in.readXInt()];
+    InternalCDORevision[] newObjects = new InternalCDORevision[in.readXInt()];
+    InternalCDORevisionDelta[] dirtyObjectDeltas = new InternalCDORevisionDelta[in.readXInt()];
+    CDOID[] detachedObjects = new CDOID[in.readXInt()];
     monitor
         .begin(locksOnNewObjects.length + idsToUnlock.length + newPackageUnits.length + newObjects.length + dirtyObjectDeltas.length + detachedObjects.length);
 
@@ -265,7 +265,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         if (detachedObjectVersions != null)
         {
           CDOBranch branch;
-          int version = in.readInt();
+          int version = in.readXInt();
           if (version < 0)
           {
             version = -version;
@@ -361,11 +361,11 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       out.writeByte(rollbackReason);
       out.writeString(rollbackMessage);
       out.writeCDOBranchPoint(commitContext.getBranchPoint());
-      out.writeLong(commitContext.getPreviousTimeStamp());
+      out.writeXLong(commitContext.getPreviousTimeStamp());
 
       if (xRefs != null)
       {
-        out.writeInt(xRefs.size());
+        out.writeXInt(xRefs.size());
         for (CDOIDReference xRef : xRefs)
         {
           out.writeCDOIDReference(xRef);
@@ -373,7 +373,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       }
       else
       {
-        out.writeInt(0);
+        out.writeXInt(0);
       }
     }
 
@@ -383,7 +383,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
   protected void respondingResult(CDODataOutput out) throws Exception
   {
     out.writeCDOBranchPoint(commitContext.getBranchPoint());
-    out.writeLong(commitContext.getPreviousTimeStamp());
+    out.writeXLong(commitContext.getPreviousTimeStamp());
     out.writeByte(commitContext.getSecurityImpact());
   }
 
@@ -406,7 +406,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     List<LockState<Object, IView>> newLockStates = commitContext.getPostCommmitLockStates();
     if (newLockStates != null)
     {
-      out.writeInt(newLockStates.size());
+      out.writeXInt(newLockStates.size());
       for (LockState<Object, IView> lockState : newLockStates)
       {
         CDOLockState cdoLockState = CDOLockUtil.createLockState(lockState);
@@ -415,7 +415,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     }
     else
     {
-      out.writeInt(0);
+      out.writeXInt(0);
     }
   }
 
@@ -432,7 +432,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         InternalCDORevision[] newObjects = commitContext.getNewObjects();
         InternalCDORevision[] dirtyObjects = commitContext.getDirtyObjects();
 
-        out.writeInt(newObjects.length + dirtyObjects.length);
+        out.writeXInt(newObjects.length + dirtyObjects.length);
         respondingNewPermissions(out, permissionManager, session, newObjects);
         respondingNewPermissions(out, permissionManager, session, dirtyObjects);
 

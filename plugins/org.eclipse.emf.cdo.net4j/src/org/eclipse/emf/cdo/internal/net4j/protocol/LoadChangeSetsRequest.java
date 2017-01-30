@@ -35,7 +35,7 @@ public class LoadChangeSetsRequest extends CDOClientRequest<CDOChangeSetData[]>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(ranges.length);
+    out.writeXInt(ranges.length);
     for (CDOBranchPointRange range : ranges)
     {
       CDOBranchUtil.writeRange(out, range);

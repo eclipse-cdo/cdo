@@ -49,12 +49,12 @@ public class LockObjectsIndication extends CDOServerWriteIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    int viewID = in.readInt();
+    int viewID = in.readXInt();
     LockType lockType = in.readCDOLockType();
     boolean recursive = in.readBoolean();
-    long timeout = in.readLong();
+    long timeout = in.readXLong();
 
-    int nRevisions = in.readInt();
+    int nRevisions = in.readXInt();
     List<CDORevisionKey> revisionKeys = new LinkedList<CDORevisionKey>();
     for (int i = 0; i < nRevisions; i++)
     {
@@ -72,19 +72,19 @@ public class LockObjectsIndication extends CDOServerWriteIndication
     out.writeBoolean(result.isSuccessful());
     out.writeBoolean(result.isTimedOut());
     out.writeBoolean(result.isWaitForUpdate());
-    out.writeLong(result.getRequiredTimestamp());
+    out.writeXLong(result.getRequiredTimestamp());
 
     CDORevisionKey[] staleRevisions = result.getStaleRevisions();
-    out.writeInt(staleRevisions.length);
+    out.writeXInt(staleRevisions.length);
     for (CDORevisionKey revKey : staleRevisions)
     {
       out.writeCDORevisionKey(revKey);
     }
 
-    out.writeLong(result.getTimestamp());
+    out.writeXLong(result.getTimestamp());
 
     CDOLockState[] newLockStates = result.getNewLockStates();
-    out.writeInt(newLockStates.length);
+    out.writeXInt(newLockStates.length);
     for (CDOLockState lockState : newLockStates)
     {
       out.writeCDOLockState(lockState);

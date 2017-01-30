@@ -57,6 +57,16 @@ import java.io.IOException;
  */
 public interface CDODataInput extends ExtendedDataInput
 {
+  /**
+   * @since 4.6
+   */
+  public int readXInt() throws IOException;
+
+  /**
+   * @since 4.6
+   */
+  public long readXLong() throws IOException;
+
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 
   public CDOPackageUnit readCDOPackageUnit(ResourceSet resourceSet) throws IOException;

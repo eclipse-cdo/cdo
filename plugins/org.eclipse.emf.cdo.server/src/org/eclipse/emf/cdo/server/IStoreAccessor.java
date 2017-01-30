@@ -404,7 +404,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * <ol>
      * <li> {@link ExtendedDataInputStream#readByteArray() int + byte[]}: the id of the lob (prepended by the size of the
      * id).
-     * <li> {@link ExtendedDataInputStream#readLong() long}: the size of the lob. The foollowing interpretation applies:
+     * <li> {@link ExtendedDataInputStream#readLong() long}: the size of the lob. The following interpretation applies:
      * <ul>
      * <li>A positive size indicates a {@link CDOBlob blob} and means the number of bytes that can be
      * {@link IOUtil#copyBinary(java.io.InputStream, java.io.OutputStream) read}.

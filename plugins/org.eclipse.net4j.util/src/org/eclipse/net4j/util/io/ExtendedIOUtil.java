@@ -56,8 +56,98 @@ public final class ExtendedIOUtil
 
   private static final int CHARACTER_BUFFER_SIZE = 4096;
 
+  private static final byte[] EMPTY_BYTE_ARRAY = {};
+
   private ExtendedIOUtil()
   {
+  }
+
+  /**
+   * @since 3.7
+   */
+  public static void writeVarInt(DataOutput out, int v) throws IOException
+  {
+    while ((v & ~0x7f) != 0)
+    {
+      out.writeByte((byte)(0x80 | v & 0x7f));
+      v >>>= 7;
+    }
+
+    out.writeByte((byte)v);
+  }
+
+  /**
+   * @since 3.7
+   */
+  public static int readVarInt(DataInput in) throws IOException
+  {
+    int b = in.readByte();
+    if (b >= 0)
+    {
+      return b;
+    }
+
+    int v = b & 0x7f;
+    b = in.readByte();
+    if (b >= 0)
+    {
+      return v | b << 7;
+    }
+
+    v |= (b & 0x7f) << 7;
+    b = in.readByte();
+    if (b >= 0)
+    {
+      return v | b << 14;
+    }
+
+    v |= (b & 0x7f) << 14;
+    b = in.readByte();
+    if (b >= 0)
+    {
+      return v | b << 21;
+    }
+
+    v |= (b & 0x7f) << 21;
+    b = in.readByte();
+    return v | b << 28;
+  }
+
+  /**
+   * @since 3.7
+   */
+  public static void writeVarLong(DataOutput out, long v) throws IOException
+  {
+    while ((v & ~0x7f) != 0)
+    {
+      out.writeByte((byte)(v & 0x7f | 0x80));
+      v >>>= 7;
+    }
+
+    out.writeByte((byte)v);
+  }
+
+  /**
+   * @since 3.7
+   */
+  public static long readVarLong(DataInput in) throws IOException
+  {
+    long v = in.readByte();
+    if (v >= 0)
+    {
+      return v;
+    }
+
+    v &= 0x7f;
+    for (int s = 7;; s += 7)
+    {
+      long b = in.readByte();
+      v |= (b & 0x7f) << s;
+      if (b >= 0)
+      {
+        return v;
+      }
+    }
   }
 
   public static void writeByteArray(DataOutput out, byte[] b) throws IOException
@@ -79,6 +169,11 @@ public final class ExtendedIOUtil
     if (length < 0)
     {
       return null;
+    }
+
+    if (length == 0)
+    {
+      return EMPTY_BYTE_ARRAY;
     }
 
     byte[] b;

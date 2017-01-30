@@ -14,6 +14,8 @@
  */
 package org.eclipse.emf.cdo.common.protocol;
 
+import org.eclipse.net4j.util.om.OMPlatform;
+
 /**
  * Symbolic protocol constants commonly used in CDO.
  *
@@ -52,6 +54,11 @@ public interface CDOProtocolConstants
   // public static final int PROTOCOL_VERSION = 19; // Branch renaming
   // public static final int PROTOCOL_VERSION = 18; // Password change protocol
   // public static final int PROTOCOL_VERSION = 17; // Last update for make query fail in sequence
+
+  /**
+   * @since 4.6
+   */
+  public static final boolean X_COMPRESSION = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.common.protocol.X_COMPRESSION", true);
 
   // //////////////////////////////////////////////////////////////////////
   // Signal IDs

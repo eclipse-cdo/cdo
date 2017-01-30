@@ -35,7 +35,7 @@ public class EnableLockNotificationRequest extends CDOClientRequest<Boolean>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(viewID);
+    out.writeXInt(viewID);
     out.writeBoolean(on);
   }
 

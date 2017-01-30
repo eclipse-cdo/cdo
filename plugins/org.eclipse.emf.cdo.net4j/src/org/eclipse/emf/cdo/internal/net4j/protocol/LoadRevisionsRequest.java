@@ -68,7 +68,7 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
       TRACER.format("Writing referenceChunk: {0}", referenceChunk); //$NON-NLS-1$
     }
 
-    out.writeInt(referenceChunk);
+    out.writeXInt(referenceChunk);
     int size = infos.size();
     if (TRACER.isEnabled())
     {
@@ -77,17 +77,17 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
 
     if (prefetchDepth == 0)
     {
-      out.writeInt(size);
+      out.writeXInt(size);
     }
     else
     {
-      out.writeInt(-size);
+      out.writeXInt(-size);
       if (TRACER.isEnabled())
       {
         TRACER.format("Writing prefetchDepth: {0}", prefetchDepth); //$NON-NLS-1$
       }
 
-      out.writeInt(prefetchDepth);
+      out.writeXInt(prefetchDepth);
     }
 
     Collection<CDOID> ids = new ArrayList<CDOID>(size);
@@ -107,7 +107,7 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
     List<CDOFetchRule> fetchRules = ruleManager.getFetchRules(ids);
     if (fetchRules == null || fetchRules.size() <= 0)
     {
-      out.writeInt(0);
+      out.writeXInt(0);
     }
     else
     {
@@ -115,8 +115,8 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
       int fetchSize = fetchRules.size();
       CDOID contextID = ruleManager.getContext();
 
-      out.writeInt(fetchSize);
-      out.writeInt(collectionLoadingPolicy != null ? collectionLoadingPolicy.getInitialChunkSize() : CDORevision.UNCHUNKED);
+      out.writeXInt(fetchSize);
+      out.writeXInt(collectionLoadingPolicy != null ? collectionLoadingPolicy.getInitialChunkSize() : CDORevision.UNCHUNKED);
       out.writeCDOID(contextID);
 
       for (CDOFetchRule fetchRule : fetchRules)
@@ -141,7 +141,7 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
     }
 
     List<RevisionInfo> additionalRevisionInfos = null;
-    int additionalSize = in.readInt();
+    int additionalSize = in.readXInt();
     if (additionalSize != 0)
     {
       if (TRACER.isEnabled())

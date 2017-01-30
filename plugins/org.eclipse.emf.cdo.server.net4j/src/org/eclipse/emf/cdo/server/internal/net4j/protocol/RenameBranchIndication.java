@@ -42,7 +42,7 @@ public class RenameBranchIndication extends CDOServerWriteIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    branchID = in.readInt();
+    branchID = in.readXInt();
     oldName = in.readString();
     newName = in.readString();
   }

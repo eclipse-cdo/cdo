@@ -47,8 +47,8 @@ public class ReplicateRepositoryRawIndication extends CDOServerReadIndicationWit
     {
       monitor.begin();
 
-      lastReplicatedBranchID = in.readInt();
-      lastReplicatedCommitTime = in.readLong();
+      lastReplicatedBranchID = in.readXInt();
+      lastReplicatedCommitTime = in.readXLong();
     }
     finally
     {

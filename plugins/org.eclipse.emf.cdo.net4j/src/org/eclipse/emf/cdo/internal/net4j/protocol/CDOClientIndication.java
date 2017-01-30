@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListWithElementProxiesImpl;
@@ -73,6 +74,17 @@ public abstract class CDOClientIndication extends Indication
 
     indicating(new CDODataInputImpl(in)
     {
+      public CDOPackageRegistry getPackageRegistry()
+      {
+        return session.getPackageRegistry();
+      }
+
+      @Override
+      protected boolean isXCompression()
+      {
+        return CDOProtocolConstants.X_COMPRESSION;
+      }
+
       @Override
       protected StringIO getPackageURICompressor()
       {
@@ -83,11 +95,6 @@ public abstract class CDOClientIndication extends Indication
       protected CDOListFactory getListFactory()
       {
         return CDOListWithElementProxiesImpl.FACTORY;
-      }
-
-      public CDOPackageRegistry getPackageRegistry()
-      {
-        return session.getPackageRegistry();
       }
 
       @Override

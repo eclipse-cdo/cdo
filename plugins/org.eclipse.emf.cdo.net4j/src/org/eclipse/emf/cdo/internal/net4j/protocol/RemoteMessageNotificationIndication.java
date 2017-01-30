@@ -37,7 +37,7 @@ public class RemoteMessageNotificationIndication extends CDOClientIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    int senderID = in.readInt();
+    int senderID = in.readXInt();
     if (TRACER.isEnabled())
     {
       TRACER.trace("Read senderID: " + senderID); //$NON-NLS-1$

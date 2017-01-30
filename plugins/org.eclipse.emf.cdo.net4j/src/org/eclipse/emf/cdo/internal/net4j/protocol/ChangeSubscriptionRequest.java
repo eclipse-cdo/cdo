@@ -59,9 +59,9 @@ public class ChangeSubscriptionRequest extends CDOClientRequest<Boolean>
       TRACER.trace("View " + viewID + " subscribing to " + ids.size()); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    out.writeInt(viewID);
+    out.writeXInt(viewID);
     out.writeBoolean(clear);
-    out.writeInt(subscribeMode ? ids.size() : -ids.size());
+    out.writeXInt(subscribeMode ? ids.size() : -ids.size());
     for (CDOID id : ids)
     {
       out.writeCDOID(id);

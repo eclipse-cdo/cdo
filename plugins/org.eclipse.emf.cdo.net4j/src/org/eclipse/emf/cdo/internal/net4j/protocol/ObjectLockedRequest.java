@@ -55,7 +55,7 @@ public class ObjectLockedRequest extends CDOClientRequest<Boolean>
           lockType == LockType.READ ? "read" : "write"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    out.writeInt(view.getViewID());
+    out.writeXInt(view.getViewID());
     out.writeCDOLockType(lockType);
     out.writeCDOID(object.cdoID());
     out.writeBoolean(byOthers);

@@ -34,7 +34,7 @@ public class LoadCommitDataRequest extends CDOClientRequest<CDOCommitData>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeLong(timeStamp);
+    out.writeXLong(timeStamp);
   }
 
   @Override

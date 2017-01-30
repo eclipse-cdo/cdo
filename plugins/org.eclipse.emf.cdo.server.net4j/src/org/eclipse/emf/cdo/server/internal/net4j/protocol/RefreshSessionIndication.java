@@ -64,17 +64,17 @@ public class RefreshSessionIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    lastUpdateTime = in.readLong();
-    initialChunkSize = in.readInt();
+    lastUpdateTime = in.readXLong();
+    initialChunkSize = in.readXInt();
     enablePassiveUpdates = in.readBoolean();
 
-    int branches = in.readInt();
+    int branches = in.readXInt();
     for (int i = 0; i < branches; i++)
     {
       CDOBranch branch = in.readCDOBranch();
       List<CDORevisionKey> revisions = new ArrayList<CDORevisionKey>();
       viewedRevisions.put(branch, revisions);
-      int size = in.readInt();
+      int size = in.readXInt();
       for (int j = 0; j < size; j++)
       {
         CDORevisionKey revision = in.readCDORevisionKey();
@@ -87,7 +87,7 @@ public class RefreshSessionIndication extends CDOServerReadIndication
   protected void responding(CDODataOutput out) throws IOException
   {
     long lastCommitTimeStamp = getRepository().getLastCommitTimeStamp();
-    out.writeLong(lastCommitTimeStamp);
+    out.writeXLong(lastCommitTimeStamp);
 
     writePackageUnits(out, lastCommitTimeStamp);
     writeRevisions(out);

@@ -36,7 +36,7 @@ public class LockAreaIndication extends CDOServerWriteIndication
   {
     InternalLockManager lockManager = getRepository().getLockingManager();
 
-    int viewID = in.readInt();
+    int viewID = in.readXInt();
     InternalView view = getView(viewID);
 
     boolean create = in.readBoolean();

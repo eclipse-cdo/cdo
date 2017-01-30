@@ -145,15 +145,15 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
       public BranchInfo(CDODataInput in) throws IOException
       {
         name = in.readString();
-        baseBranchID = in.readInt();
-        baseTimeStamp = in.readLong();
+        baseBranchID = in.readXInt();
+        baseTimeStamp = in.readXLong();
       }
 
       public void write(CDODataOutput out) throws IOException
       {
         out.writeString(name);
-        out.writeInt(baseBranchID);
-        out.writeLong(baseTimeStamp);
+        out.writeXInt(baseBranchID);
+        out.writeXLong(baseTimeStamp);
       }
 
       public String getName()
@@ -208,16 +208,16 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
 
       public SubBranchInfo(CDODataInput in) throws IOException
       {
-        id = in.readInt();
+        id = in.readXInt();
         name = in.readString();
-        baseTimeStamp = in.readLong();
+        baseTimeStamp = in.readXLong();
       }
 
       public void write(CDODataOutput out) throws IOException
       {
-        out.writeInt(id);
+        out.writeXInt(id);
         out.writeString(name);
-        out.writeLong(baseTimeStamp);
+        out.writeXLong(baseTimeStamp);
       }
 
       public int getID()

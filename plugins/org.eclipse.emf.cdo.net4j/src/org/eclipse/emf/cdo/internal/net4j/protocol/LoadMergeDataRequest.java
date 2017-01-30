@@ -61,7 +61,7 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<MergeDa
   @Override
   protected void requesting(CDODataOutput out, OMMonitor monitor) throws IOException
   {
-    out.writeInt(infos);
+    out.writeXInt(infos);
     monitor.begin(infos);
 
     try
@@ -96,7 +96,7 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<MergeDa
       int size = availableRevisions.size();
 
       out.writeCDOBranchPoint(branchPoint);
-      out.writeInt(size);
+      out.writeXInt(size);
 
       monitor.begin(size);
 
@@ -206,7 +206,7 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<MergeDa
 
   private void readRevisionAvailabilityInfo(CDODataInput in, CDORevisionAvailabilityInfo info, Set<CDOID> result, OMMonitor monitor) throws IOException
   {
-    int size = in.readInt();
+    int size = in.readXInt();
     monitor.begin(size + 1);
 
     try

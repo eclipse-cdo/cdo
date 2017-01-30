@@ -57,7 +57,7 @@ public class GetRemoteSessionsRequest extends CDOClientRequest<List<CDORemoteSes
 
     for (;;)
     {
-      int sessionID = in.readInt();
+      int sessionID = in.readXInt();
       if (sessionID == CDOProtocolConstants.NO_MORE_REMOTE_SESSIONS)
       {
         break;

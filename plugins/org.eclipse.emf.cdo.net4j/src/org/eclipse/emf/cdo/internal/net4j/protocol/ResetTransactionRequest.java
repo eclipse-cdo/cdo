@@ -47,14 +47,14 @@ public class ResetTransactionRequest extends CDOClientRequest<CDOCommitInfo>
       TRACER.format("Writing transactionID: {0}", transactionID); //$NON-NLS-1$
     }
 
-    out.writeInt(transactionID);
+    out.writeXInt(transactionID);
 
     if (TRACER.isEnabled())
     {
       TRACER.format("Writing commitNumber: {0}", commitNumber); //$NON-NLS-1$
     }
 
-    out.writeInt(commitNumber);
+    out.writeXInt(commitNumber);
   }
 
   @Override
@@ -62,8 +62,8 @@ public class ResetTransactionRequest extends CDOClientRequest<CDOCommitInfo>
   {
     if (in.readBoolean())
     {
-      long timeStamp = in.readLong();
-      long previousTimeStamp = in.readLong();
+      long timeStamp = in.readXLong();
+      long previousTimeStamp = in.readXLong();
 
       InternalCDOCommitInfoManager commitInfoManager = getSession().getCommitInfoManager();
       return commitInfoManager.createCommitInfo(null, timeStamp, previousTimeStamp, null, null, null, null);

@@ -45,7 +45,7 @@ public class RemoteMessageIndication extends CDOServerReadIndication
       TRACER.trace("Read message: " + message); //$NON-NLS-1$
     }
 
-    int count = in.readInt();
+    int count = in.readXInt();
     if (TRACER.isEnabled())
     {
       TRACER.format("Reading {0} recipients", count); //$NON-NLS-1$
@@ -54,7 +54,7 @@ public class RemoteMessageIndication extends CDOServerReadIndication
     int[] recipients = new int[count];
     for (int i = 0; i < recipients.length; i++)
     {
-      recipients[i] = in.readInt();
+      recipients[i] = in.readXInt();
     }
 
     InternalSessionManager sessionManager = getRepository().getSessionManager();
@@ -64,10 +64,10 @@ public class RemoteMessageIndication extends CDOServerReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    out.writeInt(result.size());
+    out.writeXInt(result.size());
     for (Integer recipient : result)
     {
-      out.writeInt(recipient);
+      out.writeXInt(recipient);
     }
   }
 }

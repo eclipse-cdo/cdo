@@ -22,6 +22,16 @@ import java.io.OutputStream;
  */
 public interface ExtendedDataOutput extends DataOutput
 {
+  /**
+   * @since 3.7
+   */
+  public void writeVarInt(int v) throws IOException;
+
+  /**
+   * @since 3.7
+   */
+  public void writeVarLong(long v) throws IOException;
+
   public void writeByteArray(byte[] b) throws IOException;
 
   public void writeObject(Object object) throws IOException;
@@ -155,6 +165,16 @@ public interface ExtendedDataOutput extends DataOutput
     public void writeUTF(String str) throws IOException
     {
       delegate.writeUTF(str);
+    }
+
+    public void writeVarInt(int v) throws IOException
+    {
+      delegate.writeVarInt(v);
+    }
+
+    public void writeVarLong(long v) throws IOException
+    {
+      delegate.writeVarLong(v);
     }
 
     /**

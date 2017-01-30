@@ -42,16 +42,16 @@ public class LockStateRequest extends CDOClientRequest<CDOLockState[]>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(viewID);
+    out.writeXInt(viewID);
 
     if (prefetchDepth == CDOLockState.DEPTH_NONE)
     {
-      out.writeInt(ids.size());
+      out.writeXInt(ids.size());
     }
     else
     {
-      out.writeInt(-ids.size());
-      out.writeInt(prefetchDepth);
+      out.writeXInt(-ids.size());
+      out.writeXInt(prefetchDepth);
     }
 
     for (CDOID id : ids)
@@ -63,7 +63,7 @@ public class LockStateRequest extends CDOClientRequest<CDOLockState[]>
   @Override
   protected CDOLockState[] confirming(CDODataInput in) throws IOException
   {
-    int n = in.readInt();
+    int n = in.readXInt();
     CDOLockState[] lockStates = new CDOLockState[n];
     for (int i = 0; i < n; i++)
     {

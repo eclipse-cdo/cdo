@@ -37,7 +37,7 @@ public class RemoteSessionNotificationRequest extends CDOServerRequest
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(sender.getSessionID());
+    out.writeXInt(sender.getSessionID());
     out.writeByte(opcode);
     if (opcode == CDOProtocolConstants.REMOTE_SESSION_OPENED)
     {

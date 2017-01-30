@@ -34,7 +34,7 @@ public class LoadBranchIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    branchID = in.readInt();
+    branchID = in.readXInt();
   }
 
   @Override

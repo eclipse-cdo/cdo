@@ -26,6 +26,16 @@ public class ExtendedDataInputStream extends DataInputStream implements Extended
     super(in);
   }
 
+  public int readVarInt() throws IOException
+  {
+    return ExtendedIOUtil.readVarInt(this);
+  }
+
+  public long readVarLong() throws IOException
+  {
+    return ExtendedIOUtil.readVarLong(this);
+  }
+
   public byte[] readByteArray() throws IOException
   {
     return ExtendedIOUtil.readByteArray(this);

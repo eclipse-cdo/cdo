@@ -49,7 +49,7 @@ public class LockStateIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    int viewID = in.readInt();
+    int viewID = in.readXInt();
     InternalView view = getView(viewID);
     if (view == null)
     {
@@ -59,11 +59,11 @@ public class LockStateIndication extends CDOServerReadIndication
     InternalLockManager lockManager = getRepository().getLockingManager();
 
     existingLockStates = new ArrayList<CDOLockState>();
-    int n = in.readInt();
+    int n = in.readXInt();
     if (n < 0)
     {
       n = -n;
-      prefetchDepth = in.readInt();
+      prefetchDepth = in.readXInt();
     }
 
     if (n == 0)
@@ -150,7 +150,7 @@ public class LockStateIndication extends CDOServerReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    out.writeInt(existingLockStates.size());
+    out.writeXInt(existingLockStates.size());
     for (CDOLockState lockState : existingLockStates)
     {
       out.writeCDOLockState(lockState);

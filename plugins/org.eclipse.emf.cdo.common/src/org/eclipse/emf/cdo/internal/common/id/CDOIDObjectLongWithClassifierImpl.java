@@ -69,7 +69,7 @@ public final class CDOIDObjectLongWithClassifierImpl extends AbstractCDOID imple
   @Override
   public void write(CDODataOutput out) throws IOException
   {
-    out.writeLong(value);
+    out.writeXLong(value);
     out.writeCDOClassifierRef(classifierRef);
   }
 
@@ -138,7 +138,7 @@ public final class CDOIDObjectLongWithClassifierImpl extends AbstractCDOID imple
 
   public static CDOIDObjectLongWithClassifierImpl create(CDODataInput in) throws IOException
   {
-    long value = in.readLong();
+    long value = in.readXLong();
     CDOClassifierRef classifierRef = in.readCDOClassifierRef();
     return create(value, classifierRef);
   }

@@ -57,7 +57,7 @@ public final class CDOIDTempObjectImpl extends AbstractCDOID implements CDOIDTem
   @Override
   public void write(CDODataOutput out) throws IOException
   {
-    out.writeInt(value);
+    out.writeXInt(value);
   }
 
   public String toURIFragment()
@@ -126,7 +126,7 @@ public final class CDOIDTempObjectImpl extends AbstractCDOID implements CDOIDTem
 
   public static CDOIDTempObjectImpl create(CDODataInput in) throws IOException
   {
-    int value = in.readInt();
+    int value = in.readXInt();
     return create(value);
   }
 

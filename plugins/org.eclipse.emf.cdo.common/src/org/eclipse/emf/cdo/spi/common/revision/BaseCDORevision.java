@@ -212,15 +212,15 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     id = in.readCDOID();
     branchPoint = in.readCDOBranchPoint();
-    version = in.readInt();
+    version = in.readXInt();
     if (!id.isTemporary())
     {
-      revised = in.readLong();
+      revised = in.readXLong();
     }
 
     resourceID = in.readCDOID();
     containerID = in.readCDOID();
-    containingFeatureID = in.readInt();
+    containingFeatureID = in.readXInt();
 
     if (TRACER.isEnabled())
     {
@@ -368,15 +368,15 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     out.writeCDOClassifierRef(classRef);
     out.writeCDOID(id);
     out.writeCDOBranchPoint(branchPoint);
-    out.writeInt(getVersion());
+    out.writeXInt(getVersion());
     if (!id.isTemporary())
     {
-      out.writeLong(revised);
+      out.writeXLong(revised);
     }
 
     out.writeCDOID(resourceID);
     out.writeCDOID(out.getIDProvider().provideCDOID(containerID));
-    out.writeInt(containingFeatureID);
+    out.writeXInt(containingFeatureID);
   }
 
   /**

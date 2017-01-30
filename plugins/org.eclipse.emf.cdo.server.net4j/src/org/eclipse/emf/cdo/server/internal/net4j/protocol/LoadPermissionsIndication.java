@@ -44,7 +44,7 @@ public class LoadPermissionsIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    int length = in.readInt();
+    int length = in.readXInt();
     ids = new CDOID[length];
     oldPermissions = new CDOPermission[length];
 
@@ -54,7 +54,7 @@ public class LoadPermissionsIndication extends CDOServerReadIndication
       oldPermissions[i] = CDOPermission.get(in.readByte());
     }
 
-    referenceChunk = in.readInt();
+    referenceChunk = in.readXInt();
   }
 
   @Override

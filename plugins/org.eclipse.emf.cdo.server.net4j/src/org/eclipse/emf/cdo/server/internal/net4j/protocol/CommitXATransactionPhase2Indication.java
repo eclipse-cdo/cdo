@@ -44,7 +44,7 @@ public class CommitXATransactionPhase2Indication extends CommitTransactionIndica
     initializeCommitContext(in);
     XATransactionCommitContext xaContextContext = (XATransactionCommitContext)commitContext;
 
-    int size = in.readInt();
+    int size = in.readXInt();
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Receiving {0} mapping informations", size); //$NON-NLS-1$
@@ -91,7 +91,7 @@ public class CommitXATransactionPhase2Indication extends CommitTransactionIndica
   @Override
   protected void initializeCommitContext(CDODataInput in) throws Exception
   {
-    int viewID = in.readInt();
+    int viewID = in.readXInt();
     commitContext = getRepository().getCommitManager().get(getTransaction(viewID));
   }
 }

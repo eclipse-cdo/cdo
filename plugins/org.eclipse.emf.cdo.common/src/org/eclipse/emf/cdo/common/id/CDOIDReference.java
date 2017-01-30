@@ -55,7 +55,7 @@ public class CDOIDReference implements CDOReference<CDOID>
     String featureName = in.readString();
     sourceFeature = eClass.getEStructuralFeature(featureName);
 
-    sourceIndex = in.readInt();
+    sourceIndex = in.readXInt();
   }
 
   public void write(CDODataOutput out) throws IOException
@@ -64,7 +64,7 @@ public class CDOIDReference implements CDOReference<CDOID>
     out.writeCDOID(sourceID);
     out.writeCDOClassifierRef(sourceFeature.getEContainingClass());
     out.writeString(sourceFeature.getName());
-    out.writeInt(sourceIndex);
+    out.writeXInt(sourceIndex);
   }
 
   public CDOID getTargetObject()

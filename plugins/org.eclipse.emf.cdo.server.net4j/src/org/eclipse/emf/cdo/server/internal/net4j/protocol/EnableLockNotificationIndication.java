@@ -30,7 +30,7 @@ public class EnableLockNotificationIndication extends CDOServerIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    int viewID = in.readInt();
+    int viewID = in.readXInt();
     boolean enable = in.readBoolean();
 
     InternalView view = getView(viewID);

@@ -43,9 +43,9 @@ public class ReplicateRepositoryIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    lastReplicatedBranchID = in.readInt();
-    lastReplicatedCommitTime = in.readLong();
-    lockAreaIDs = new String[in.readInt()];
+    lastReplicatedBranchID = in.readXInt();
+    lastReplicatedCommitTime = in.readXLong();
+    lockAreaIDs = new String[in.readXInt()];
     for (int i = 0; i < lockAreaIDs.length; i++)
     {
       lockAreaIDs[i] = in.readString();

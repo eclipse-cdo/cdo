@@ -48,7 +48,7 @@ public class RemoteMessageNotificationRequest extends CDOServerRequest
       TRACER.trace("Writing senderID: " + senderID); //$NON-NLS-1$
     }
 
-    out.writeInt(senderID);
+    out.writeXInt(senderID);
     if (TRACER.isEnabled())
     {
       TRACER.trace("Writing message: " + message); //$NON-NLS-1$

@@ -54,12 +54,12 @@ public class RepositoryTimeIndication extends CDOServerIndication
       TRACER.format("Writing indicated: {0}", CDOCommonUtil.formatTimeStamp(indicated)); //$NON-NLS-1$
     }
 
-    out.writeLong(indicated);
+    out.writeXLong(indicated);
     if (TRACER.isEnabled())
     {
       TRACER.format("Writing responded: {0}", CDOCommonUtil.formatTimeStamp(responded)); //$NON-NLS-1$
     }
 
-    out.writeLong(responded);
+    out.writeXLong(responded);
   }
 }

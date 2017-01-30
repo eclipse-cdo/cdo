@@ -61,18 +61,18 @@ public class RefreshSessionRequest extends CDOClientRequest<RefreshSessionResult
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeLong(lastUpdateTime);
-    out.writeInt(initialChunkSize);
+    out.writeXLong(lastUpdateTime);
+    out.writeXInt(initialChunkSize);
     out.writeBoolean(enablePassiveUpdates);
 
-    out.writeInt(viewedRevisions.size());
+    out.writeXInt(viewedRevisions.size());
     for (Entry<CDOBranch, Map<CDOID, InternalCDORevision>> entry : viewedRevisions.entrySet())
     {
       CDOBranch branch = entry.getKey();
       Map<CDOID, InternalCDORevision> revisions = entry.getValue();
 
       out.writeCDOBranch(branch);
-      out.writeInt(revisions.size());
+      out.writeXInt(revisions.size());
       for (InternalCDORevision revision : revisions.values())
       {
         out.writeCDORevisionKey(revision);
@@ -83,7 +83,7 @@ public class RefreshSessionRequest extends CDOClientRequest<RefreshSessionResult
   @Override
   protected RefreshSessionResult confirming(CDODataInput in) throws IOException
   {
-    lastUpdateTime = in.readLong();
+    lastUpdateTime = in.readXLong();
     RefreshSessionResult result = new RefreshSessionResult(lastUpdateTime);
 
     ResourceSet resourceSet = EMFUtil.newEcoreResourceSet();

@@ -49,7 +49,7 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   public CDOSingleValueFeatureDeltaImpl(CDODataInput in, EClass eClass) throws IOException
   {
     super(in, eClass);
-    index = in.readInt();
+    index = in.readXInt();
     value = readValue(in, eClass);
   }
 
@@ -57,7 +57,7 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   public void write(CDODataOutput out, EClass eClass) throws IOException
   {
     super.write(out, eClass);
-    out.writeInt(index);
+    out.writeXInt(index);
     writeValue(out, eClass);
   }
 
@@ -82,7 +82,7 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
       valueToWrite = entry.getValue();
 
       int featureID = eClass.getFeatureID(feature);
-      out.writeInt(featureID);
+      out.writeXInt(featureID);
     }
 
     if (valueToWrite != null && feature instanceof EReference)
@@ -98,7 +98,7 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
     EStructuralFeature feature = getFeature();
     if (FeatureMapUtil.isFeatureMap(feature))
     {
-      int featureID = in.readInt();
+      int featureID = in.readXInt();
       feature = eClass.getEStructuralFeature(featureID);
       Object innerValue = in.readCDOFeatureValue(feature);
       return CDORevisionUtil.createFeatureMapEntry(feature, innerValue);

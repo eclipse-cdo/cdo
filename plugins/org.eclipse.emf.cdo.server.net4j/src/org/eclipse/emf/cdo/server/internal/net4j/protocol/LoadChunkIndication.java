@@ -69,20 +69,20 @@ public class LoadChunkIndication extends CDOServerReadIndication
     }
 
     EClass eClass = (EClass)in.readCDOClassifierRefAndResolve();
-    int featureID = in.readInt();
+    int featureID = in.readXInt();
     feature = eClass.getEStructuralFeature(featureID);
     if (TRACER.isEnabled())
     {
       TRACER.format("Read feature: {0}", feature); //$NON-NLS-1$
     }
 
-    fromIndex = in.readInt();
+    fromIndex = in.readXInt();
     if (TRACER.isEnabled())
     {
       TRACER.format("Read fromIndex: {0}", fromIndex); //$NON-NLS-1$
     }
 
-    toIndex = in.readInt();
+    toIndex = in.readXInt();
     if (TRACER.isEnabled())
     {
       TRACER.format("Read toIndex: {0}", toIndex); //$NON-NLS-1$

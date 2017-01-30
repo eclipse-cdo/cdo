@@ -35,7 +35,7 @@ public class QueryLobsRequest extends CDOClientRequest<List<byte[]>>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(ids.size());
+    out.writeXInt(ids.size());
     for (byte[] id : ids)
     {
       out.writeByteArray(id);
@@ -45,7 +45,7 @@ public class QueryLobsRequest extends CDOClientRequest<List<byte[]>>
   @Override
   protected List<byte[]> confirming(CDODataInput in) throws IOException
   {
-    int size = in.readInt();
+    int size = in.readXInt();
     List<byte[]> result = new ArrayList<byte[]>(size);
     for (int i = 0; i < size; i++)
     {

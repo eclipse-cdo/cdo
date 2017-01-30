@@ -57,7 +57,7 @@ public class LoadRevisionByVersionIndication extends CDOServerReadIndication
       TRACER.format("Read branchVersion: {0}", branchVersion); //$NON-NLS-1$
     }
 
-    referenceChunk = in.readInt();
+    referenceChunk = in.readXInt();
     if (TRACER.isEnabled())
     {
       TRACER.format("Read referenceChunk: {0}", referenceChunk); //$NON-NLS-1$

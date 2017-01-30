@@ -38,8 +38,8 @@ public class LoadBranchesIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    startID = in.readInt();
-    endID = in.readInt();
+    startID = in.readXInt();
+    endID = in.readXInt();
   }
 
   @Override

@@ -502,7 +502,7 @@ public final class CDOIDUtil
       return CDOID.NULL;
 
     case TEMP_OBJECT:
-      return CDOIDTempObjectImpl.create(in.readInt());
+      return CDOIDTempObjectImpl.create(in.readXInt());
 
     case EXTERNAL_OBJECT:
       return CDOIDExternalImpl.create(in.readString());

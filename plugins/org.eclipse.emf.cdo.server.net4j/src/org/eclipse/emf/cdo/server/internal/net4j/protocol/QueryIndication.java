@@ -47,7 +47,7 @@ public class QueryIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    int viewID = in.readInt();
+    int viewID = in.readXInt();
     InternalView view = getView(viewID);
 
     CDOQueryInfo queryInfo = new CDOQueryInfoImpl(in);
@@ -64,7 +64,7 @@ public class QueryIndication extends CDOServerReadIndication
   protected void responding(CDODataOutput out) throws IOException
   {
     // Return queryID immediately.
-    out.writeInt(queryResult.getQueryID());
+    out.writeXInt(queryResult.getQueryID());
     flushUnlessDisabled();
 
     int numberOfResults = 0;

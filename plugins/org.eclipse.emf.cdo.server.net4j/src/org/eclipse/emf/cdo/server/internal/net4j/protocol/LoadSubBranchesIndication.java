@@ -34,7 +34,7 @@ public class LoadSubBranchesIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    branchID = in.readInt();
+    branchID = in.readXInt();
   }
 
   @Override
@@ -43,7 +43,7 @@ public class LoadSubBranchesIndication extends CDOServerReadIndication
     InternalCDOBranchManager branchManager = getRepository().getBranchManager();
     InternalCDOBranch branch = branchManager.getBranch(branchID);
     InternalCDOBranch[] branches = branch.getBranches();
-    out.writeInt(branches.length);
+    out.writeXInt(branches.length);
     for (InternalCDOBranch subBranch : branches)
     {
       SubBranchInfo info = new SubBranchInfo(subBranch.getID(), subBranch.getName(), subBranch.getBase().getTimeStamp());

@@ -44,7 +44,7 @@ public class CommitXATransactionPhase3Indication extends CommitTransactionIndica
   @Override
   protected void initializeCommitContext(CDODataInput in) throws Exception
   {
-    int viewID = in.readInt();
+    int viewID = in.readXInt();
     commitContext = getRepository().getCommitManager().get(getTransaction(viewID));
   }
 }

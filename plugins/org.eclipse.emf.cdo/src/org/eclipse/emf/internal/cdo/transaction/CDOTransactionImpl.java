@@ -151,6 +151,7 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.MonitorCanceledException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.OptionsEvent;
@@ -211,6 +212,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransaction
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION, CDOTransactionImpl.class);
+
+  private static final boolean X_COMPRESSION = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.transaction.X_COMPRESSION");
 
   private Object transactionHandlersLock = new Object();
 
@@ -2618,6 +2621,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           {
             return getSession();
           }
+
+          @Override
+          protected boolean isXCompression()
+          {
+            return X_COMPRESSION;
+          }
         };
 
         List<CDOSavepoint> savepoints = new ArrayList<CDOSavepoint>();
@@ -2632,7 +2641,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           savepoint = savepoint.getNextSavepoint();
         }
 
-        out.writeInt(totalNewObjects);
+        out.writeXInt(totalNewObjects);
 
         savepoint = firstSavepoint;
         while (savepoint != null)
@@ -2648,13 +2657,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           savepoints.add(savepoint);
           out.writeBoolean(true);
 
-          out.writeInt(newObjects.size());
+          out.writeXInt(newObjects.size());
           for (CDOObject newObject : newObjects)
           {
             out.writeCDORevision(newObject.cdoRevision(), CDORevision.UNCHUNKED);
           }
 
-          out.writeInt(revisionDeltas.size());
+          out.writeXInt(revisionDeltas.size());
           for (CDORevisionDelta revisionDelta : revisionDeltas)
           {
             out.writeCDORevisionDelta(revisionDelta);
@@ -2720,10 +2729,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             {
               return CDOListWithElementProxiesImpl.FACTORY;
             }
+
+            @Override
+            protected boolean isXCompression()
+            {
+              return X_COMPRESSION;
+            }
           };
 
           // Increase the internal tempID counter to prevent ID collisions during mapping
-          int totalNewObjects = in.readInt();
+          int totalNewObjects = in.readXInt();
           for (int i = 0; i < totalNewObjects; i++)
           {
             createIDForNewObject(null);
@@ -2808,7 +2823,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private void importNewRevisions(CDODataInput in, List<InternalCDORevision> revisions, Map<CDOID, CDOID> idMappings) throws IOException
   {
-    int size = in.readInt();
+    int size = in.readXInt();
     for (int i = 0; i < size; i++)
     {
       InternalCDORevision revision = (InternalCDORevision)in.readCDORevision(false);
@@ -2827,7 +2842,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private List<InternalCDORevisionDelta> importRevisionDeltas(CDODataInput in) throws IOException
   {
-    int size = in.readInt();
+    int size = in.readXInt();
     List<InternalCDORevisionDelta> deltas = new ArrayList<InternalCDORevisionDelta>(size);
     for (int i = 0; i < size; i++)
     {

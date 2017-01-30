@@ -120,6 +120,26 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     super(delegate);
   }
 
+  public int readXInt() throws IOException
+  {
+    if (isXCompression())
+    {
+      return readVarInt();
+    }
+
+    return readInt();
+  }
+
+  public long readXLong() throws IOException
+  {
+    if (isXCompression())
+    {
+      return readVarLong();
+    }
+
+    return readLong();
+  }
+
   public CDOPackageUnit readCDOPackageUnit(ResourceSet resourceSet) throws IOException
   {
     InternalCDOPackageUnit packageUnit = (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
@@ -129,7 +149,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
   public CDOPackageUnit[] readCDOPackageUnits(ResourceSet resourceSet) throws IOException
   {
-    int size = readInt();
+    int size = readXInt();
     if (TRACER.isEnabled())
     {
       TRACER.format("Reading {0} package units", size); //$NON-NLS-1$
@@ -186,7 +206,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
   public CDOBranch readCDOBranch() throws IOException
   {
-    int branchID = readInt();
+    int branchID = readXInt();
     CDOBranch branch = getBranchManager().getBranch(branchID);
     if (branch == null)
     {
@@ -199,20 +219,20 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   public CDOBranchPoint readCDOBranchPoint() throws IOException
   {
     CDOBranch branch = readCDOBranch();
-    long timeStamp = readLong();
+    long timeStamp = readXLong();
     return branch.getPoint(timeStamp);
   }
 
   public CDOBranchVersion readCDOBranchVersion() throws IOException
   {
     CDOBranch branch = readCDOBranch();
-    int version = readInt();
+    int version = readXInt();
     return branch.getVersion(version);
   }
 
   public CDOChangeSetData readCDOChangeSetData() throws IOException
   {
-    int size1 = readInt();
+    int size1 = readXInt();
     List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>(size1);
     for (int i = 0; i < size1; i++)
     {
@@ -221,7 +241,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       newObjects.add(data);
     }
 
-    int size2 = readInt();
+    int size2 = readXInt();
     List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>(size2);
     for (int i = 0; i < size2; i++)
     {
@@ -230,12 +250,12 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       changedObjects.add(data);
     }
 
-    int size3 = readInt();
+    int size3 = readXInt();
     List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>(size3);
     for (int i = 0; i < size3; i++)
     {
       CDOID id = readCDOID();
-      int version = readInt();
+      int version = readXInt();
       boolean isCDORevisionKey = readBoolean();
       CDOIDAndVersion data;
       if (isCDORevisionKey)
@@ -260,7 +280,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     ResourceSet resourceSet = new ResourceSetImpl();
     resourceSet.setPackageRegistry(packageRegistry);
 
-    int size = readInt();
+    int size = readXInt();
     List<CDOPackageUnit> newPackageUnits = new ArrayList<CDOPackageUnit>(size);
     for (int i = 0; i < size; i++)
     {
@@ -276,8 +296,8 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   public CDOCommitInfo readCDOCommitInfo() throws IOException
   {
     InternalCDOCommitInfoManager commitInfoManager = (InternalCDOCommitInfoManager)getCommitInfoManager();
-    long timeStamp = readLong();
-    long previousTimeStamp = readLong();
+    long timeStamp = readXLong();
+    long previousTimeStamp = readXLong();
 
     if (readBoolean())
     {
@@ -306,7 +326,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     Operation operation = readEnum(Operation.class);
     LockType lockType = readCDOLockType();
 
-    int n = readInt();
+    int n = readXInt();
     CDOLockState[] lockStates = new CDOLockState[n];
     for (int i = 0; i < n; i++)
     {
@@ -320,11 +340,11 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   {
     String durableLockingID = readString();
     CDOBranch branch = readCDOBranch();
-    long timestamp = readLong();
+    long timestamp = readXLong();
     String userID = readString();
     boolean readOnly = readBoolean();
 
-    int nLockStates = readInt();
+    int nLockStates = readXInt();
     Map<CDOID, LockGrade> locks = CDOIDUtil.createMap();
     for (int i = 0; i < nLockStates; i++)
     {
@@ -338,8 +358,8 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
   public CDOLockOwner readCDOLockOwner() throws IOException
   {
-    int session = readInt();
-    int view = readInt();
+    int session = readXInt();
+    int view = readXInt();
     String lockAreaID = readString();
     boolean isDurableView = readBoolean();
     return new CDOLockOwnerImpl(session, view, lockAreaID, isDurableView);
@@ -360,7 +380,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
     InternalCDOLockState lockState = new CDOLockStateImpl(target);
 
-    int nReadLockOwners = readInt();
+    int nReadLockOwners = readXInt();
     for (int i = 0; i < nReadLockOwners; i++)
     {
       CDOLockOwner lockOwner = readCDOLockOwner();
@@ -402,7 +422,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   public CDOIDAndVersion readCDOIDAndVersion() throws IOException
   {
     CDOID id = readCDOID();
-    int version = readInt();
+    int version = readXInt();
     return new CDOIDAndVersionImpl(id, version);
   }
 
@@ -417,7 +437,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   {
     CDOID id = readCDOID();
     CDOBranch branch = readCDOBranch();
-    int version = readInt();
+    int version = readXInt();
     return CDORevisionUtil.createRevisionKey(id, branch, version);
   }
 
@@ -448,20 +468,20 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   public CDORevisable readCDORevisable() throws IOException
   {
     CDOBranch branch = readCDOBranch();
-    int version = readInt();
-    long timeStamp = readLong();
-    long revised = readLong();
+    int version = readXInt();
+    long timeStamp = readXLong();
+    long revised = readXLong();
     return CDORevisionUtil.createRevisable(branch, version, timeStamp, revised);
   }
 
   public CDOList readCDOList(EClass owner, EStructuralFeature feature) throws IOException
   {
     int referenceChunk;
-    int size = readInt();
+    int size = readXInt();
     if (size < 0)
     {
       size = -size;
-      referenceChunk = readInt();
+      referenceChunk = readXInt();
       if (TRACER.isEnabled())
       {
         TRACER.format("Read feature {0}: size={1}, referenceChunk={2}", feature.getName(), size, referenceChunk); //$NON-NLS-1$
@@ -537,7 +557,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
         else
         {
           EClass eClass = (EClass)readCDOClassifierRefAndResolve();
-          innerFeature = eClass.getEStructuralFeature(readInt());
+          innerFeature = eClass.getEStructuralFeature(readXInt());
         }
 
         type = CDOModelUtil.getType(innerFeature.getEType());
@@ -579,7 +599,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
   public CDOFeatureDelta readCDOFeatureDelta(EClass owner) throws IOException
   {
-    int typeOrdinal = readInt();
+    int typeOrdinal = readXInt();
     CDOFeatureDelta.Type type = CDOFeatureDelta.Type.values()[typeOrdinal];
     switch (type)
     {
@@ -627,6 +647,14 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     }
 
     return readCDORevisionOrPrimitive();
+  }
+
+  /**
+   * @since 4.6
+   */
+  protected boolean isXCompression()
+  {
+    return false;
   }
 
   protected StringIO getPackageURICompressor()

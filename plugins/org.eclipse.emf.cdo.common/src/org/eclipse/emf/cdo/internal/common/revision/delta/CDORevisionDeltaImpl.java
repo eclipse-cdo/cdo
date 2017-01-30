@@ -145,14 +145,14 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     eClass = (EClass)in.readCDOClassifierRefAndResolve();
     id = in.readCDOID();
     branch = in.readCDOBranch();
-    version = in.readInt();
+    version = in.readXInt();
     if (version < 0)
     {
       version = -version;
       target = in.readCDORevisable();
     }
 
-    int size = in.readInt();
+    int size = in.readXInt();
     for (int i = 0; i < size; i++)
     {
       CDOFeatureDelta featureDelta = in.readCDOFeatureDelta(eClass);
@@ -167,15 +167,15 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     out.writeCDOBranch(branch);
     if (target == null)
     {
-      out.writeInt(version);
+      out.writeXInt(version);
     }
     else
     {
-      out.writeInt(-version);
+      out.writeXInt(-version);
       out.writeCDORevisable(target);
     }
 
-    out.writeInt(featureDeltas.size());
+    out.writeXInt(featureDeltas.size());
     for (CDOFeatureDelta featureDelta : featureDeltas.values())
     {
       out.writeCDOFeatureDelta(eClass, featureDelta);

@@ -37,7 +37,7 @@ public class QueryCancelIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    queryID = in.readInt();
+    queryID = in.readXInt();
     if (TRACER.isEnabled())
     {
       TRACER.trace("Query " + queryID + " will be cancelled"); //$NON-NLS-1$ //$NON-NLS-2$

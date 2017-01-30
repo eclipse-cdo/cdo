@@ -1508,8 +1508,8 @@ public class Repository extends Container<Object> implements InternalRepository,
     final long fromCommitTime = lastReplicatedCommitTime + 1L;
     final long toCommitTime = store.getLastCommitTime();
 
-    out.writeInt(toBranchID);
-    out.writeLong(toCommitTime);
+    out.writeXInt(toBranchID);
+    out.writeXLong(toCommitTime);
 
     IStoreAccessor.Raw accessor = (IStoreAccessor.Raw)StoreThreadLocal.getAccessor();
     accessor.rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);

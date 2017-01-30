@@ -63,7 +63,7 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
   @Override
   protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
-    infos = in.readInt();
+    infos = in.readXInt();
     monitor.begin(infos);
 
     try
@@ -94,7 +94,7 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
       CDOBranchPoint branchPoint = in.readCDOBranchPoint();
       CDORevisionAvailabilityInfo info = new CDORevisionAvailabilityInfo(branchPoint);
 
-      int size = in.readInt();
+      int size = in.readXInt();
       monitor.begin(size);
 
       try
@@ -215,7 +215,7 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
     }
 
     int size = revisions.size();
-    out.writeInt(size);
+    out.writeXInt(size);
     monitor.begin(size);
 
     try

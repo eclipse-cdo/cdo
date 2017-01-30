@@ -57,14 +57,14 @@ public class QueryRequest extends CDOClientRequest<Boolean>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(view.getViewID());
+    out.writeXInt(view.getViewID());
     ((CDOQueryInfoImpl)queryResult.getQueryInfo()).write(out);
   }
 
   @Override
   protected Boolean confirming(CDODataInput in) throws IOException
   {
-    int queryID = in.readInt();
+    int queryID = in.readXInt();
     queryResult.setQueryID(queryID);
     CDOQueryQueue<Object> resultQueue = queryResult.getQueue();
 

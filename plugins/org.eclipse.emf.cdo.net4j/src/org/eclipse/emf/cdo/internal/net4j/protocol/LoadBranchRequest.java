@@ -33,7 +33,7 @@ public class LoadBranchRequest extends CDOClientRequest<BranchInfo>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(branchID);
+    out.writeXInt(branchID);
   }
 
   @Override

@@ -39,7 +39,7 @@ public class LoadPermissionsRequest extends CDOClientRequest<Map<CDORevision, CD
   protected void requesting(CDODataOutput out) throws IOException
   {
     int length = revisions.length;
-    out.writeInt(length);
+    out.writeXInt(length);
 
     for (int i = 0; i < length; i++)
     {
@@ -52,7 +52,7 @@ public class LoadPermissionsRequest extends CDOClientRequest<Map<CDORevision, CD
     }
 
     int referenceChunk = getSession().options().getCollectionLoadingPolicy().getInitialChunkSize();
-    out.writeInt(referenceChunk);
+    out.writeXInt(referenceChunk);
   }
 
   @Override

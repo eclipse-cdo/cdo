@@ -38,7 +38,7 @@ public class RenameBranchRequest extends CDOClientRequest<Boolean>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(branchID);
+    out.writeXInt(branchID);
     out.writeString(oldName);
     out.writeString(newName);
   }

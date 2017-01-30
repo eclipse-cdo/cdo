@@ -42,10 +42,10 @@ public final class CDOFetchRule
   public CDOFetchRule(CDODataInput in, CDOPackageRegistry packageManager) throws IOException
   {
     eClass = (EClass)in.readCDOClassifierRefAndResolve();
-    int size = in.readInt();
+    int size = in.readXInt();
     for (int i = 0; i < size; i++)
     {
-      int featureID = in.readInt();
+      int featureID = in.readXInt();
       EStructuralFeature feature = eClass.getEStructuralFeature(featureID);
       features.add(feature);
     }
@@ -54,10 +54,10 @@ public final class CDOFetchRule
   public void write(CDODataOutput out) throws IOException
   {
     out.writeCDOClassifierRef(eClass);
-    out.writeInt(features.size());
+    out.writeXInt(features.size());
     for (EStructuralFeature feature : features)
     {
-      out.writeInt(feature.getFeatureID());
+      out.writeXInt(feature.getFeatureID());
     }
   }
 

@@ -95,7 +95,7 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
   @Override
   protected OpenSessionResult confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
-    int sessionID = in.readInt();
+    int sessionID = in.readXInt();
     if (sessionID == 0)
     {
       // The user has canceled the authentication

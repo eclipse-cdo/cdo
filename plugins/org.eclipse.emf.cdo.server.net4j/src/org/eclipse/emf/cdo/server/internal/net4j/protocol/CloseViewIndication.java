@@ -30,7 +30,7 @@ public class CloseViewIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    int viewID = in.readInt();
+    int viewID = in.readXInt();
     IView view = getView(viewID);
     if (view != null)
     {

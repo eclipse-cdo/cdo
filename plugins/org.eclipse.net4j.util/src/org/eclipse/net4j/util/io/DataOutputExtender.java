@@ -96,6 +96,16 @@ public class DataOutputExtender implements ExtendedDataOutput, Closeable
     output.writeUTF(str);
   }
 
+  public void writeVarInt(int v) throws IOException
+  {
+    ExtendedIOUtil.writeVarInt(output, v);
+  }
+
+  public void writeVarLong(long v) throws IOException
+  {
+    ExtendedIOUtil.writeVarLong(output, v);
+  }
+
   public void writeByteArray(byte[] b) throws IOException
   {
     ExtendedIOUtil.writeByteArray(output, b);

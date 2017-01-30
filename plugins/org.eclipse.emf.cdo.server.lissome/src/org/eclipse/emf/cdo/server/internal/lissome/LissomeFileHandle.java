@@ -56,8 +56,10 @@ import org.eclipse.net4j.util.io.DataInputOutputFile;
 import org.eclipse.net4j.util.io.DataOutputExtender;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
+import org.eclipse.net4j.util.io.ExtendedIOUtil;
 import org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver;
 import org.eclipse.net4j.util.io.IORuntimeException;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -72,6 +74,8 @@ import java.io.IOException;
  */
 public class LissomeFileHandle extends DataInputOutputFile implements CDODataInput, CDODataOutput, LissomeFile.RevisionProvider
 {
+  private static final boolean X_COMPRESSION = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.server.lissome.X_COMPRESSION");
+
   private LissomeFile file;
 
   private CDODataInput in;
@@ -173,14 +177,14 @@ public class LissomeFileHandle extends DataInputOutputFile implements CDODataInp
         boolean detached = readBoolean();
         if (detached)
         {
-          int cid = readInt();
+          int cid = readXInt();
           EClass eClass = (EClass)file.getStore().getMetaObject(cid);
 
           CDOID id = readCDOID();
           CDOBranch branch = readCDOBranch();
-          int version = readInt();
-          long timeStamp = readLong();
-          long revised = readLong();
+          int version = readXInt();
+          long timeStamp = readXLong();
+          long revised = readXLong();
 
           return new DetachedCDORevision(eClass, id, branch, version, timeStamp, revised);
         }
@@ -223,6 +227,36 @@ public class LissomeFileHandle extends DataInputOutputFile implements CDODataInp
         return LissomeFileHandle.this.getLobStore();
       }
     };
+  }
+
+  public int readVarInt() throws IOException
+  {
+    return ExtendedIOUtil.readVarInt(in());
+  }
+
+  public long readVarLong() throws IOException
+  {
+    return ExtendedIOUtil.readVarLong(in());
+  }
+
+  public int readXInt() throws IOException
+  {
+    if (isXCompression())
+    {
+      return readVarInt();
+    }
+
+    return readInt();
+  }
+
+  public long readXLong() throws IOException
+  {
+    if (isXCompression())
+    {
+      return readVarLong();
+    }
+
+    return readLong();
   }
 
   public byte[] readByteArray() throws IOException
@@ -448,13 +482,13 @@ public class LissomeFileHandle extends DataInputOutputFile implements CDODataInp
         if (detached)
         {
           int cid = file.getStore().getMetaID(revision.getEClass());
-          writeInt(cid);
+          writeXInt(cid);
 
           writeCDOID(revision.getID());
           writeCDOBranch(revision.getBranch());
-          writeInt(revision.getVersion());
-          writeLong(revision.getTimeStamp());
-          writeLong(revision.getRevised());
+          writeXInt(revision.getVersion());
+          writeXLong(revision.getTimeStamp());
+          writeXLong(revision.getRevised());
         }
         else
         {
@@ -474,6 +508,40 @@ public class LissomeFileHandle extends DataInputOutputFile implements CDODataInp
         return LissomeFileHandle.this.getIDProvider();
       }
     };
+  }
+
+  public void writeVarInt(int v) throws IOException
+  {
+    ExtendedIOUtil.writeVarInt(out(), v);
+  }
+
+  public void writeVarLong(long v) throws IOException
+  {
+    ExtendedIOUtil.writeVarLong(out(), v);
+  }
+
+  public void writeXInt(int v) throws IOException
+  {
+    if (isXCompression())
+    {
+      writeVarInt(v);
+    }
+    else
+    {
+      writeInt(v);
+    }
+  }
+
+  public void writeXLong(long v) throws IOException
+  {
+    if (isXCompression())
+    {
+      writeVarLong(v);
+    }
+    else
+    {
+      writeLong(v);
+    }
   }
 
   public void writeByteArray(byte[] b) throws IOException
@@ -695,5 +763,10 @@ public class LissomeFileHandle extends DataInputOutputFile implements CDODataInp
     {
       throw new IORuntimeException(ex);
     }
+  }
+
+  protected boolean isXCompression()
+  {
+    return X_COMPRESSION;
   }
 }

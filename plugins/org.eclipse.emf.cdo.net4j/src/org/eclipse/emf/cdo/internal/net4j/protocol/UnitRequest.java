@@ -47,7 +47,7 @@ public class UnitRequest extends CDOClientRequestWithMonitoring<Boolean>
   @Override
   protected void requesting(CDODataOutput out, OMMonitor monitor) throws IOException
   {
-    out.writeInt(viewID);
+    out.writeXInt(viewID);
     out.writeCDOID(rootID);
     out.writeByte(opcode.ordinal());
   }

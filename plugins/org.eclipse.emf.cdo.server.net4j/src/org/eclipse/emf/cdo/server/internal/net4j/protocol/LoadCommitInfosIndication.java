@@ -43,8 +43,8 @@ public class LoadCommitInfosIndication extends CDOServerReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     branch = in.readBoolean() ? in.readCDOBranch() : null;
-    startTime = in.readLong();
-    endTime = in.readLong();
+    startTime = in.readXLong();
+    endTime = in.readXLong();
   }
 
   @Override
@@ -60,13 +60,13 @@ public class LoadCommitInfosIndication extends CDOServerReadIndication
           try
           {
             out.writeBoolean(true);
-            out.writeLong(commitInfo.getPreviousTimeStamp());
+            out.writeXLong(commitInfo.getPreviousTimeStamp());
             if (branch == null)
             {
               out.writeCDOBranch(commitInfo.getBranch());
             }
 
-            out.writeLong(commitInfo.getTimeStamp());
+            out.writeXLong(commitInfo.getTimeStamp());
             out.writeString(commitInfo.getUserID());
             out.writeString(commitInfo.getComment());
             CDOBranchUtil.writeBranchPointOrNull(out, commitInfo.getMergeSource());

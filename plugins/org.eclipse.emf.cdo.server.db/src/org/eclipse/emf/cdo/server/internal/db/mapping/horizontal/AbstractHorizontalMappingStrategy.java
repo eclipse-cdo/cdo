@@ -186,7 +186,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     IDBConnection connection = accessor.getDBConnection();
 
     Collection<IClassMapping> classMappings = getClassMappings(true).values();
-    out.writeInt(classMappings.size());
+    out.writeXInt(classMappings.size());
 
     for (IClassMapping classMapping : classMappings)
     {
@@ -227,7 +227,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
   public void rawImport(IDBStoreAccessor accessor, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
-    int size = in.readInt();
+    int size = in.readXInt();
     if (size == 0)
     {
       return;

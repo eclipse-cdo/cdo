@@ -162,12 +162,12 @@ public abstract class CDOTypeImpl implements CDOType
   {
     public void writeValue(CDODataOutput out, Object value) throws IOException
     {
-      out.writeInt((Integer)(value == null ? getDefaultValue() : value));
+      out.writeXInt((Integer)(value == null ? getDefaultValue() : value));
     }
 
     public Integer readValue(CDODataInput in) throws IOException
     {
-      return in.readInt();
+      return in.readXInt();
     }
   };
 
@@ -175,12 +175,12 @@ public abstract class CDOTypeImpl implements CDOType
   {
     public void writeValue(CDODataOutput out, Object value) throws IOException
     {
-      out.writeLong((Long)(value == null ? getDefaultValue() : value));
+      out.writeXLong((Long)(value == null ? getDefaultValue() : value));
     }
 
     public Long readValue(CDODataInput in) throws IOException
     {
-      return in.readLong();
+      return in.readXLong();
     }
   };
 
@@ -204,7 +204,7 @@ public abstract class CDOTypeImpl implements CDOType
     {
       BigDecimal bigDecimal = (BigDecimal)value;
       out.writeByteArray(bigDecimal.unscaledValue().toByteArray());
-      out.writeInt(bigDecimal.scale());
+      out.writeXInt(bigDecimal.scale());
     }
 
     @Override
@@ -212,7 +212,7 @@ public abstract class CDOTypeImpl implements CDOType
     {
       byte[] array = in.readByteArray();
       BigInteger unscaled = new BigInteger(array);
-      int scale = in.readInt();
+      int scale = in.readXInt();
       return new BigDecimal(unscaled, scale);
     }
   };
@@ -309,13 +309,13 @@ public abstract class CDOTypeImpl implements CDOType
     @Override
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
     {
-      out.writeLong(((Date)value).getTime());
+      out.writeXLong(((Date)value).getTime());
     }
 
     @Override
     protected Date doReadValue(CDODataInput in) throws IOException
     {
-      return new Date(in.readLong());
+      return new Date(in.readXLong());
     }
   };
 
@@ -354,13 +354,13 @@ public abstract class CDOTypeImpl implements CDOType
     @Override
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
     {
-      out.writeInt((Integer)value);
+      out.writeXInt((Integer)value);
     }
 
     @Override
     protected Integer doReadValue(CDODataInput in) throws IOException
     {
-      return in.readInt();
+      return in.readXInt();
     }
   };
 
@@ -369,13 +369,13 @@ public abstract class CDOTypeImpl implements CDOType
     @Override
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
     {
-      out.writeLong((Long)value);
+      out.writeXLong((Long)value);
     }
 
     @Override
     protected Long doReadValue(CDODataInput in) throws IOException
     {
-      return in.readLong();
+      return in.readXLong();
     }
   };
 
@@ -659,13 +659,13 @@ public abstract class CDOTypeImpl implements CDOType
     @Override
     public void doWriteValue(CDODataOutput out, Object value) throws IOException
     {
-      out.writeInt((Integer)value);
+      out.writeXInt((Integer)value);
     }
 
     @Override
     public Integer doReadValue(CDODataInput in) throws IOException
     {
-      return in.readInt();
+      return in.readXInt();
     }
 
     @Override
@@ -705,14 +705,14 @@ public abstract class CDOTypeImpl implements CDOType
       }
 
       out.writeCDOClassifierRef(eEnum);
-      out.writeInt(((Enumerator)value).getValue());
+      out.writeXInt(((Enumerator)value).getValue());
     }
 
     @Override
     protected Object doReadValue(CDODataInput in) throws IOException
     {
       EEnum eEnum = (EEnum)in.readCDOClassifierRefAndResolve();
-      int ordinal = in.readInt();
+      int ordinal = in.readXInt();
 
       EEnumLiteral literal = eEnum.getEEnumLiteral(ordinal);
       if (literal == null)
@@ -814,7 +814,7 @@ public abstract class CDOTypeImpl implements CDOType
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
     {
       Object[] objects = (Object[])value;
-      out.writeInt(objects.length);
+      out.writeXInt(objects.length);
       for (Object object : objects)
       {
         writeTypeAndValue(out, object);
@@ -824,7 +824,7 @@ public abstract class CDOTypeImpl implements CDOType
     @Override
     protected Object[] doReadValue(CDODataInput in) throws IOException
     {
-      int size = in.readInt();
+      int size = in.readXInt();
       Object[] objects = new Object[size];
       for (int i = 0; i < size; i++)
       {
@@ -864,7 +864,7 @@ public abstract class CDOTypeImpl implements CDOType
     {
       @SuppressWarnings("unchecked")
       Map<Object, Object> map = (Map<Object, Object>)value;
-      out.writeInt(map.size());
+      out.writeXInt(map.size());
 
       for (Entry<Object, Object> entry : map.entrySet())
       {
@@ -877,7 +877,7 @@ public abstract class CDOTypeImpl implements CDOType
     protected Map<Object, Object> doReadValue(CDODataInput in) throws IOException
     {
       Map<Object, Object> result = new HashMap<Object, Object>();
-      int size = in.readInt();
+      int size = in.readXInt();
       for (int i = 0; i < size; i++)
       {
         Object key = readTypeAndValue(in);
@@ -896,7 +896,7 @@ public abstract class CDOTypeImpl implements CDOType
     {
       @SuppressWarnings("unchecked")
       Set<Object> set = (Set<Object>)value;
-      out.writeInt(set.size());
+      out.writeXInt(set.size());
       for (Object element : set)
       {
         writeTypeAndValue(out, element);
@@ -907,7 +907,7 @@ public abstract class CDOTypeImpl implements CDOType
     protected Set<Object> doReadValue(CDODataInput in) throws IOException
     {
       Set<Object> result = new HashSet<Object>();
-      int size = in.readInt();
+      int size = in.readXInt();
       for (int i = 0; i < size; i++)
       {
         Object element = readTypeAndValue(in);
@@ -925,7 +925,7 @@ public abstract class CDOTypeImpl implements CDOType
     {
       @SuppressWarnings("unchecked")
       List<Object> list = (List<Object>)value;
-      out.writeInt(list.size());
+      out.writeXInt(list.size());
       for (Object element : list)
       {
         writeTypeAndValue(out, element);
@@ -936,7 +936,7 @@ public abstract class CDOTypeImpl implements CDOType
     protected List<Object> doReadValue(CDODataInput in) throws IOException
     {
       List<Object> result = new ArrayList<Object>();
-      int size = in.readInt();
+      int size = in.readXInt();
       for (int i = 0; i < size; i++)
       {
         Object element = readTypeAndValue(in);

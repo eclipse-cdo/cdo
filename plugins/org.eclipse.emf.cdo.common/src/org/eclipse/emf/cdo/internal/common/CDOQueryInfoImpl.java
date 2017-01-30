@@ -66,14 +66,14 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
       //$FALL-THROUGH$
     }
 
-    maxResults = in.readInt();
+    maxResults = in.readXInt();
 
     if (in.readBoolean())
     {
       changeSetData = in.readCDOChangeSetData();
     }
 
-    int size = in.readInt();
+    int size = in.readXInt();
     for (int i = 0; i < size; i++)
     {
       String key = in.readString();
@@ -98,7 +98,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     out.writeString(queryLanguage);
     out.writeString(queryString);
     out.writeCDORevisionOrPrimitiveOrClassifier(context);
-    out.writeInt(maxResults);
+    out.writeXInt(maxResults);
 
     if (changeSetData != null)
     {
@@ -110,7 +110,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
       out.writeBoolean(false);
     }
 
-    out.writeInt(parameters.size());
+    out.writeXInt(parameters.size());
     for (Entry<String, Object> entry : parameters.entrySet())
     {
       out.writeString(entry.getKey());

@@ -36,7 +36,7 @@ public class LockAreaRequest extends CDOClientRequest<String>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(view.getViewID());
+    out.writeXInt(view.getViewID());
     out.writeBoolean(create);
   }
 

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -73,6 +74,12 @@ public abstract class CDOServerRequest extends Request
       public CDORevisionUnchunker getRevisionUnchunker()
       {
         return getSession().getManager().getRepository();
+      }
+
+      @Override
+      protected boolean isXCompression()
+      {
+        return CDOProtocolConstants.X_COMPRESSION;
       }
 
       @Override

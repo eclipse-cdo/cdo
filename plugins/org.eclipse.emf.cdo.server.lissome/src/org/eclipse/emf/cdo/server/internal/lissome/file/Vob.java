@@ -37,7 +37,7 @@ public class Vob extends LissomeFile
     super(store, store.getRepository().getName() + "." + EXTENSION);
     writer = openWriter();
     writer.seek(0);
-    writer.writeLong(System.currentTimeMillis());
+    writer.writeXLong(System.currentTimeMillis());
   }
 
   @Override

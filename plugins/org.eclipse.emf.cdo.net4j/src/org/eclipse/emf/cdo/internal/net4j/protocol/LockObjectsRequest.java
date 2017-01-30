@@ -60,12 +60,12 @@ public class LockObjectsRequest extends CDOClientRequest<LockObjectsResult>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(viewID);
+    out.writeXInt(viewID);
     out.writeCDOLockType(lockType);
     out.writeBoolean(recursive);
-    out.writeLong(timeout);
+    out.writeXLong(timeout);
 
-    out.writeInt(revisionKeys.size());
+    out.writeXInt(revisionKeys.size());
     for (CDORevisionKey revKey : revisionKeys)
     {
       out.writeCDORevisionKey(revKey);
@@ -78,18 +78,18 @@ public class LockObjectsRequest extends CDOClientRequest<LockObjectsResult>
     boolean succesful = in.readBoolean();
     boolean timeout = in.readBoolean();
     boolean waitForUpdate = in.readBoolean();
-    long requiredTimestamp = in.readLong();
+    long requiredTimestamp = in.readXLong();
 
-    int nStaleRevisions = in.readInt();
+    int nStaleRevisions = in.readXInt();
     CDORevisionKey[] staleRevisions = new CDORevisionKey[nStaleRevisions];
     for (int i = 0; i < nStaleRevisions; i++)
     {
       staleRevisions[i] = in.readCDORevisionKey();
     }
 
-    long timestamp = in.readLong();
+    long timestamp = in.readXLong();
 
-    int n = in.readInt();
+    int n = in.readXInt();
     CDOLockState[] newLockStates = new CDOLockState[n];
     for (int i = 0; i < n; i++)
     {

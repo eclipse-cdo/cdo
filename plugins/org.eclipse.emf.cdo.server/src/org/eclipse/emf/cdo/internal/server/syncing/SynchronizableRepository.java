@@ -424,9 +424,9 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       long previousCommitTime = getLastCommitTimeStamp();
 
       int fromBranchID = lastReplicatedBranchID + 1;
-      int toBranchID = in.readInt();
+      int toBranchID = in.readXInt();
       long fromCommitTime = lastReplicatedCommitTime + 1L;
-      long toCommitTime = in.readLong();
+      long toCommitTime = in.readXLong();
 
       StoreThreadLocal.setSession(replicatorSession);
       IStoreAccessor.Raw accessor = (IStoreAccessor.Raw)StoreThreadLocal.getAccessor();

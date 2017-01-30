@@ -124,8 +124,8 @@ public class Journal extends LissomeFile
     try
     {
       writer.seek(0);
-      writer.writeLong(commitPointer);
-      writer.writeLong(packageUnitPointer);
+      writer.writeXLong(commitPointer);
+      writer.writeXLong(packageUnitPointer);
     }
     catch (IOException ex)
     {
@@ -142,8 +142,8 @@ public class Journal extends LissomeFile
     try
     {
       writer.seek(0);
-      commitPointer = writer.readLong();
-      packageUnitPointer = writer.readLong();
+      commitPointer = writer.readXLong();
+      packageUnitPointer = writer.readXLong();
     }
     catch (IOException ex)
     {
@@ -171,16 +171,16 @@ public class Journal extends LissomeFile
       while (filePointer != 0)
       {
         reader.seek(filePointer);
-        filePointer = reader.readLong();
+        filePointer = reader.readXLong();
 
-        int size = reader.readInt();
+        int size = reader.readXInt();
         for (int i = 0; i < size; i++)
         {
           InternalCDOPackageUnit packageUnit = (InternalCDOPackageUnit)reader.readCDOPackageUnit(resourceSet);
           packageUnit.setPackageRegistry(packageRegistry);
           result.add(packageUnit);
 
-          long ePackagePointer = reader.readLong();
+          long ePackagePointer = reader.readXLong();
           ePackagePointers.put(packageUnit.getID(), ePackagePointer);
 
           EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
@@ -244,33 +244,33 @@ public class Journal extends LissomeFile
     LissomeStore store = getStore();
 
     checkMetaObject(ePackage, reader.readString());
-    store.mapMetaObject(ePackage, reader.readInt());
+    store.mapMetaObject(ePackage, reader.readXInt());
 
     EList<EClassifier> eClassifiers = ePackage.getEClassifiers();
-    checkListSize(eClassifiers, reader.readInt());
+    checkListSize(eClassifiers, reader.readXInt());
 
     for (EClassifier eClassifier : eClassifiers)
     {
       checkMetaObject(eClassifier, reader.readString());
-      store.mapMetaObject(eClassifier, reader.readInt());
+      store.mapMetaObject(eClassifier, reader.readXInt());
 
       if (eClassifier instanceof EClass)
       {
         EClass eClass = (EClass)eClassifier;
 
         EList<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
-        checkListSize(eStructuralFeatures, reader.readInt());
+        checkListSize(eStructuralFeatures, reader.readXInt());
 
         for (EStructuralFeature eStructuralFeature : eStructuralFeatures)
         {
           checkMetaObject(eStructuralFeature, reader.readString());
-          store.mapMetaObject(eStructuralFeature, reader.readInt());
+          store.mapMetaObject(eStructuralFeature, reader.readXInt());
         }
       }
     }
 
     EList<EPackage> eSubpackages = ePackage.getESubpackages();
-    checkListSize(eSubpackages, reader.readInt());
+    checkListSize(eSubpackages, reader.readXInt());
 
     for (EPackage eSubpackage : eSubpackages)
     {
@@ -283,33 +283,33 @@ public class Journal extends LissomeFile
     LissomeStore store = getStore();
 
     writer.writeString(ePackage.getName());
-    writer.writeInt(store.mapMetaObject(ePackage));
+    writer.writeXInt(store.mapMetaObject(ePackage));
 
     EList<EClassifier> eClassifiers = ePackage.getEClassifiers();
-    writer.writeInt(eClassifiers.size());
+    writer.writeXInt(eClassifiers.size());
 
     for (EClassifier eClassifier : eClassifiers)
     {
       writer.writeString(eClassifier.getName());
-      writer.writeInt(store.mapMetaObject(eClassifier));
+      writer.writeXInt(store.mapMetaObject(eClassifier));
 
       if (eClassifier instanceof EClass)
       {
         EClass eClass = (EClass)eClassifier;
 
         EList<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
-        writer.writeInt(eStructuralFeatures.size());
+        writer.writeXInt(eStructuralFeatures.size());
 
         for (EStructuralFeature eStructuralFeature : eStructuralFeatures)
         {
           writer.writeString(eStructuralFeature.getName());
-          writer.writeInt(store.mapMetaObject(eStructuralFeature));
+          writer.writeXInt(store.mapMetaObject(eStructuralFeature));
         }
       }
     }
 
     EList<EPackage> eSubpackages = ePackage.getESubpackages();
-    writer.writeInt(eSubpackages.size());
+    writer.writeXInt(eSubpackages.size());
 
     for (EPackage eSubpackage : eSubpackages)
     {
@@ -357,7 +357,7 @@ public class Journal extends LissomeFile
 
   protected void writePackageUnits(LissomeFileHandle writer, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor) throws IOException
   {
-    writer.writeInt(packageUnits.length);
+    writer.writeXInt(packageUnits.length);
     for (InternalCDOPackageUnit packageUnit : packageUnits)
     {
       long ePackagePointer = writer.getFilePointer();
@@ -370,15 +370,15 @@ public class Journal extends LissomeFile
     }
 
     newPackageUnitPointer = writer.getFilePointer();
-    writer.writeLong(packageUnitPointer);
+    writer.writeXLong(packageUnitPointer);
 
-    writer.writeInt(packageUnits.length);
+    writer.writeXInt(packageUnits.length);
     for (InternalCDOPackageUnit packageUnit : packageUnits)
     {
       writer.writeCDOPackageUnit(packageUnit, false);
 
       long ePackagePointer = ePackagePointers.get(packageUnit.getID());
-      writer.writeLong(ePackagePointer);
+      writer.writeXLong(ePackagePointer);
 
       EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
       mapPackage(ePackage);
@@ -399,10 +399,10 @@ public class Journal extends LissomeFile
       public void execute(LissomeFileHandle writer) throws IOException
       {
         writer.writeByte(CREATE_BRANCH_BLOCK);
-        writer.writeInt(branchID);
+        writer.writeXInt(branchID);
         writer.writeString(branchInfo.getName());
-        writer.writeInt(branchInfo.getBaseBranchID());
-        writer.writeLong(branchInfo.getBaseTimeStamp());
+        writer.writeXInt(branchInfo.getBaseBranchID());
+        writer.writeXLong(branchInfo.getBaseTimeStamp());
       }
     });
   }
@@ -438,9 +438,9 @@ public class Journal extends LissomeFile
         public void execute(LissomeFileHandle writer) throws IOException
         {
           writer.writeByte(COMMIT_TRANSACTION_BLOCK);
-          writer.writeLong(commitPointer);
+          writer.writeXLong(commitPointer);
           writer.writeCDOBranchPoint(branchPoint);
-          writer.writeLong(previousTimeStamp);
+          writer.writeXLong(previousTimeStamp);
           writer.writeString(userID);
           writer.writeString(commitComment);
           monitor.worked();
@@ -464,7 +464,7 @@ public class Journal extends LissomeFile
 
           writer.writeBoolean(detachedObjectTypes != null);
           writer.writeBoolean(detachedObjectVersions != null);
-          writer.writeInt(detachedObjects.length);
+          writer.writeXInt(detachedObjects.length);
 
           for (int i = 0; i < detachedObjects.length; i++)
           {
@@ -482,7 +482,7 @@ public class Journal extends LissomeFile
             if (eClass != null)
             {
               int cid = getStore().getMetaID(eClass);
-              writer.writeInt(cid);
+              writer.writeXInt(cid);
             }
 
             if (branchVersion != null)
@@ -490,11 +490,11 @@ public class Journal extends LissomeFile
               int version = branchVersion.getVersion();
               if (branchVersion.getBranch() == transactionBranch)
               {
-                writer.writeInt(version);
+                writer.writeXInt(version);
               }
               else
               {
-                writer.writeInt(-version);
+                writer.writeXInt(-version);
                 writer.writeCDOBranch(branchVersion.getBranch());
               }
             }
@@ -504,7 +504,7 @@ public class Journal extends LissomeFile
 
           // New objects
           Map<CDORevision, Long> newObjectPointers = commitTransactionTask.getNewObjectPointers();
-          writer.writeInt(newObjects.length);
+          writer.writeXInt(newObjects.length);
           for (InternalCDORevision revision : newObjects)
           {
             long pointer = writer.getFilePointer();
@@ -514,7 +514,7 @@ public class Journal extends LissomeFile
           }
 
           // Dirty object deltas
-          writer.writeInt(dirtyObjectDeltas.length);
+          writer.writeXInt(dirtyObjectDeltas.length);
           for (InternalCDORevisionDelta revisionDelta : dirtyObjectDeltas)
           {
             writer.writeCDORevisionDelta(revisionDelta);
@@ -581,8 +581,8 @@ public class Journal extends LissomeFile
         packageUnitPointer = newPackageUnitPointer;
 
         writer.seek(0L);
-        writer.writeLong(commitPointer);
-        writer.writeLong(packageUnitPointer);
+        writer.writeXLong(commitPointer);
+        writer.writeXLong(packageUnitPointer);
       }
 
       return commitTransactionTask;
@@ -626,12 +626,12 @@ public class Journal extends LissomeFile
     {
       reader.seek(pointer);
       reader.readByte(); // COMMIT_TRANSACTION_BLOCK
-      reader.readLong(); // commitPointer
+      reader.readXLong(); // commitPointer
 
       CDOBranchPoint branchPoint = reader.readCDOBranchPoint();
       CDOBranch branch = branchPoint.getBranch();
       long timeStamp = branchPoint.getTimeStamp();
-      long previousTimeStamp = reader.readLong();
+      long previousTimeStamp = reader.readXLong();
       String userID = reader.readString();
       String comment = reader.readString();
 

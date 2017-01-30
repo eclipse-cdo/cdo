@@ -55,8 +55,8 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
   public CDOMoveFeatureDeltaImpl(CDODataInput in, EClass eClass) throws IOException
   {
     super(in, eClass);
-    newPosition = in.readInt();
-    oldPosition = in.readInt();
+    newPosition = in.readXInt();
+    oldPosition = in.readXInt();
     value = UNKNOWN_VALUE;
   }
 
@@ -64,8 +64,8 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
   public void write(CDODataOutput out, EClass eClass) throws IOException
   {
     super.write(out, eClass);
-    out.writeInt(newPosition);
-    out.writeInt(oldPosition);
+    out.writeXInt(newPosition);
+    out.writeXInt(oldPosition);
   }
 
   public int getNewPosition()

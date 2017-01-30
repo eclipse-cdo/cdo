@@ -33,7 +33,7 @@ public class QueryLobsIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    int size = in.readInt();
+    int size = in.readXInt();
     for (int i = 0; i < size; i++)
     {
       ids.add(in.readByteArray());
@@ -44,7 +44,7 @@ public class QueryLobsIndication extends CDOServerReadIndication
   protected void responding(CDODataOutput out) throws IOException
   {
     getRepository().queryLobs(ids);
-    out.writeInt(ids.size());
+    out.writeXInt(ids.size());
     for (byte[] id : ids)
     {
       out.writeByteArray(id);

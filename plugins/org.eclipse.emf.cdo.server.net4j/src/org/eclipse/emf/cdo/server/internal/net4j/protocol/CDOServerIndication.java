@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
@@ -112,6 +113,12 @@ public abstract class CDOServerIndication extends IndicationWithResponse
       }
 
       @Override
+      protected boolean isXCompression()
+      {
+        return CDOProtocolConstants.X_COMPRESSION;
+      }
+
+      @Override
       protected StringIO getPackageURICompressor()
       {
         return getProtocol().getPackageURICompressor();
@@ -176,6 +183,12 @@ public abstract class CDOServerIndication extends IndicationWithResponse
       public CDOPermissionProvider getPermissionProvider()
       {
         return getSession();
+      }
+
+      @Override
+      protected boolean isXCompression()
+      {
+        return CDOProtocolConstants.X_COMPRESSION;
       }
 
       @Override

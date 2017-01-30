@@ -58,8 +58,8 @@ public class LoadCommitInfosRequest extends CDOClientRequest<Boolean>
       out.writeCDOBranch(branch);
     }
 
-    out.writeLong(startTime);
-    out.writeLong(endTime);
+    out.writeXLong(startTime);
+    out.writeXLong(endTime);
   }
 
   @Override
@@ -68,9 +68,9 @@ public class LoadCommitInfosRequest extends CDOClientRequest<Boolean>
     InternalCDOCommitInfoManager manager = getSession().getCommitInfoManager();
     while (in.readBoolean())
     {
-      long id = in.readLong();
+      long id = in.readXLong();
       CDOBranch branch = this.branch == null ? in.readCDOBranch() : this.branch;
-      long timeStamp = in.readLong();
+      long timeStamp = in.readXLong();
       String userID = in.readString();
       String comment = in.readString();
       CDOBranchPoint mergeSource = CDOBranchUtil.readBranchPointOrNull(in);

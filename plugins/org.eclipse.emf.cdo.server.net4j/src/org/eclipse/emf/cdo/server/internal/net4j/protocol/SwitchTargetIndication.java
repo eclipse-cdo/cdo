@@ -55,10 +55,10 @@ public class SwitchTargetIndication extends CDOServerReadIndicationWithMonitorin
 
       try
       {
-        int viewID = in.readInt();
+        int viewID = in.readXInt();
         CDOBranchPoint branchPoint = in.readCDOBranchPoint();
 
-        int size = in.readInt();
+        int size = in.readXInt();
         List<CDOID> invalidObjects = new ArrayList<CDOID>(size);
         for (int i = 0; i < size; i++)
         {
@@ -84,13 +84,13 @@ public class SwitchTargetIndication extends CDOServerReadIndicationWithMonitorin
   @Override
   protected void responding(CDODataOutput out, OMMonitor monitor) throws IOException
   {
-    out.writeInt(allChangedObjects.size());
+    out.writeXInt(allChangedObjects.size());
     for (CDORevisionDelta delta : allChangedObjects)
     {
       out.writeCDORevisionDelta(delta);
     }
 
-    out.writeInt(allDetachedObjects.size());
+    out.writeXInt(allDetachedObjects.size());
     for (CDOID id : allDetachedObjects)
     {
       out.writeCDOID(id);

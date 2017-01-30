@@ -46,7 +46,7 @@ public class CommitXATransactionPhase1Indication extends CommitTransactionIndica
   @Override
   protected void initializeCommitContext(CDODataInput in) throws Exception
   {
-    int viewID = in.readInt();
+    int viewID = in.readXInt();
     InternalTransaction transaction = getTransaction(viewID);
     commitContext = new XATransactionCommitContext(transaction);
   }

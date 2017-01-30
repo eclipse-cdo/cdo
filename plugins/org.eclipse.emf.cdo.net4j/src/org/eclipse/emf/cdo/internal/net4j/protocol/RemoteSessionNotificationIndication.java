@@ -29,7 +29,7 @@ public class RemoteSessionNotificationIndication extends CDOClientIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    int sessionID = in.readInt();
+    int sessionID = in.readXInt();
     byte opcode = in.readByte();
     switch (opcode)
     {

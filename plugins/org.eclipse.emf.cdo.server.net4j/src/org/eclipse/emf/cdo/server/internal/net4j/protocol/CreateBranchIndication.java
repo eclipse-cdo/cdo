@@ -39,7 +39,7 @@ public class CreateBranchIndication extends CDOServerWriteIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    branchID = in.readInt();
+    branchID = in.readXInt();
     branchInfo = new BranchInfo(in);
   }
 
@@ -54,7 +54,7 @@ public class CreateBranchIndication extends CDOServerWriteIndication
     InternalSessionManager sessionManager = getRepository().getSessionManager();
     sessionManager.sendBranchNotification(session, branch, ChangeKind.CREATED);
 
-    out.writeInt(branch.getID());
-    out.writeLong(branch.getBase().getTimeStamp());
+    out.writeXInt(branch.getID());
+    out.writeXLong(branch.getBase().getTimeStamp());
   }
 }

@@ -33,7 +33,7 @@ public class LoadCommitDataIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    timeStamp = in.readLong();
+    timeStamp = in.readXLong();
   }
 
   @Override

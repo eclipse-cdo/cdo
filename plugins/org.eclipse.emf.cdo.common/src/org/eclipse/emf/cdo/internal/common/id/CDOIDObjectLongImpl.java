@@ -58,7 +58,7 @@ public final class CDOIDObjectLongImpl extends AbstractCDOID implements Internal
   @Override
   public void write(CDODataOutput out) throws IOException
   {
-    out.writeLong(value);
+    out.writeXLong(value);
   }
 
   public String toURIFragment()
@@ -129,7 +129,7 @@ public final class CDOIDObjectLongImpl extends AbstractCDOID implements Internal
 
   public static CDOIDObjectLongImpl create(CDODataInput in) throws IOException
   {
-    long value = in.readLong();
+    long value = in.readXLong();
     return create(value);
   }
 

@@ -77,12 +77,12 @@ public interface CDOProtocol extends CDOProtocolConstants
 
     public CommitNotificationInfo(CDODataInput in) throws IOException
     {
-      senderID = in.readInt();
+      senderID = in.readXInt();
       commitInfo = in.readCDOCommitInfo();
       clearResourcePathCache = in.readBoolean();
       securityImpact = in.readByte();
 
-      int size = in.readInt();
+      int size = in.readXInt();
       if (size != 0)
       {
         newPermissions = CDOIDUtil.createMap();
@@ -104,7 +104,7 @@ public interface CDOProtocol extends CDOProtocolConstants
 
     public void write(CDODataOutput out) throws IOException
     {
-      out.writeInt(senderID);
+      out.writeXInt(senderID);
       out.writeCDOCommitInfo(commitInfo);
       out.writeBoolean(clearResourcePathCache);
       out.writeByte(securityImpact); // Must come after writeCDOCommitInfo()
@@ -112,12 +112,12 @@ public interface CDOProtocol extends CDOProtocolConstants
       // Must come after writeCDOCommitInfo()
       if (newPermissions == null)
       {
-        out.writeInt(0);
+        out.writeXInt(0);
       }
       else
       {
         int size = newPermissions.size();
-        out.writeInt(size);
+        out.writeXInt(size);
 
         for (Map.Entry<CDOID, CDOPermission> entry : newPermissions.entrySet())
         {

@@ -40,7 +40,7 @@ public class OpenViewIndication extends CDOServerReadIndication
   {
     InternalSession session = getSession();
 
-    int viewID = in.readInt();
+    int viewID = in.readXInt();
     boolean readOnly = in.readBoolean();
 
     if (in.readBoolean())

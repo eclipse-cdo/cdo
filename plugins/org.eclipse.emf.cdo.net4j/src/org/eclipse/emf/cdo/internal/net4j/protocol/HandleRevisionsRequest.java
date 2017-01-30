@@ -99,7 +99,7 @@ public class HandleRevisionsRequest extends CDOClientRequest<Boolean>
       TRACER.format("Writing timeStamp: {0}", CDOCommonUtil.formatTimeStamp(timeStamp)); //$NON-NLS-1$
     }
 
-    out.writeLong(timeStamp);
+    out.writeXLong(timeStamp);
     if (TRACER.isEnabled())
     {
       TRACER.format("Writing exactTime: {0}", exactTime); //$NON-NLS-1$

@@ -247,7 +247,7 @@ public abstract class RevisionInfo
       PointerCDORevision pointer = (PointerCDORevision)revision;
       out.writeByte(POINTER_RESULT);
       out.writeCDOClassifierRef(pointer.getEClass());
-      out.writeLong(pointer.getRevised());
+      out.writeXLong(pointer.getRevised());
 
       CDOBranchVersion target = pointer.getTarget();
       if (target instanceof InternalCDORevision)
@@ -264,9 +264,9 @@ public abstract class RevisionInfo
       DetachedCDORevision detached = (DetachedCDORevision)revision;
       out.writeByte(DETACHED_RESULT);
       out.writeCDOClassifierRef(detached.getEClass());
-      out.writeLong(detached.getTimeStamp());
-      out.writeLong(detached.getRevised());
-      out.writeInt(detached.getVersion());
+      out.writeXLong(detached.getTimeStamp());
+      out.writeXLong(detached.getRevised());
+      out.writeXInt(detached.getVersion());
     }
     else
     {
@@ -286,7 +286,7 @@ public abstract class RevisionInfo
     case POINTER_RESULT:
     {
       EClassifier classifier = in.readCDOClassifierRefAndResolve();
-      long revised = in.readLong();
+      long revised = in.readXLong();
       InternalCDORevision target = readResult(in, id, branch);
       // If target is null and we are in a Available RevisionInfo it means that we can use
       // availableBranchVersion/result as target
@@ -300,9 +300,9 @@ public abstract class RevisionInfo
     case DETACHED_RESULT:
     {
       EClassifier classifier = in.readCDOClassifierRefAndResolve();
-      long timeStamp = in.readLong();
-      long revised = in.readLong();
-      int version = in.readInt();
+      long timeStamp = in.readXLong();
+      long revised = in.readXLong();
+      int version = in.readXInt();
       return new DetachedCDORevision((EClass)classifier, id, branch, version, timeStamp, revised);
     }
 

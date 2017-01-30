@@ -66,8 +66,8 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   public CDOListFeatureDeltaImpl(CDODataInput in, EClass eClass) throws IOException
   {
     super(in, eClass);
-    originSize = in.readInt();
-    int size = in.readInt();
+    originSize = in.readXInt();
+    int size = in.readXInt();
     for (int i = 0; i < size; i++)
     {
       listChanges.add(in.readCDOFeatureDelta(eClass));
@@ -135,8 +135,8 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   public void write(CDODataOutput out, EClass eClass) throws IOException
   {
     super.write(out, eClass);
-    out.writeInt(originSize);
-    out.writeInt(listChanges.size());
+    out.writeXInt(originSize);
+    out.writeXInt(listChanges.size());
     for (CDOFeatureDelta featureDelta : listChanges)
     {
       out.writeCDOFeatureDelta(eClass, featureDelta);

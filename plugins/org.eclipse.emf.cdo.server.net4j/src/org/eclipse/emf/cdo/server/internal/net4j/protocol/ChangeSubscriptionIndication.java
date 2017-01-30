@@ -39,9 +39,9 @@ public class ChangeSubscriptionIndication extends CDOServerReadIndication
   {
     boolean subscribeMode = true;
 
-    int viewID = in.readInt();
+    int viewID = in.readXInt();
     boolean clear = in.readBoolean();
-    int size = in.readInt();
+    int size = in.readXInt();
     if (size <= 0)
     {
       subscribeMode = false;

@@ -50,7 +50,7 @@ public class OpenViewRequest extends CDOClientRequest<CDOBranchPoint>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(viewID);
+    out.writeXInt(viewID);
     out.writeBoolean(readOnly);
 
     if (branchPoint != null)

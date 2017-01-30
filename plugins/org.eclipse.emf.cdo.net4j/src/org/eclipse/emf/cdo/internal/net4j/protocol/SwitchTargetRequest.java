@@ -56,10 +56,10 @@ public class SwitchTargetRequest extends CDOClientRequestWithMonitoring<Object>
   @Override
   protected void requesting(CDODataOutput out, OMMonitor monitor) throws IOException
   {
-    out.writeInt(viewID);
+    out.writeXInt(viewID);
     out.writeCDOBranchPoint(branchPoint);
 
-    out.writeInt(invalidObjects.size());
+    out.writeXInt(invalidObjects.size());
     for (InternalCDOObject object : invalidObjects)
     {
       out.writeCDOID(object.cdoID());
@@ -69,13 +69,13 @@ public class SwitchTargetRequest extends CDOClientRequestWithMonitoring<Object>
   @Override
   protected boolean[] confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
-    int size = in.readInt();
+    int size = in.readXInt();
     for (int i = 0; i < size; i++)
     {
       allChangedObjects.add(in.readCDORevisionDelta());
     }
 
-    size = in.readInt();
+    size = in.readXInt();
     for (int i = 0; i < size; i++)
     {
       CDOID id = in.readCDOID();

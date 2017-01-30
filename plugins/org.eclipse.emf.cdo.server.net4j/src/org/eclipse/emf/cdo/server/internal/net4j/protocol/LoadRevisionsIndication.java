@@ -76,17 +76,17 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
       TRACER.format("Read branchPoint: {0}", branchPoint); //$NON-NLS-1$
     }
 
-    referenceChunk = in.readInt();
+    referenceChunk = in.readXInt();
     if (TRACER.isEnabled())
     {
       TRACER.format("Read referenceChunk: {0}", referenceChunk); //$NON-NLS-1$
     }
 
-    int size = in.readInt();
+    int size = in.readXInt();
     if (size < 0)
     {
       size = -size;
-      prefetchDepth = in.readInt();
+      prefetchDepth = in.readXInt();
       if (TRACER.isEnabled())
       {
         TRACER.format("Read prefetchDepth: {0}", prefetchDepth); //$NON-NLS-1$
@@ -110,10 +110,10 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
       infos[i] = info;
     }
 
-    int fetchSize = in.readInt();
+    int fetchSize = in.readXInt();
     if (fetchSize > 0)
     {
-      loadRevisionCollectionChunkSize = in.readInt();
+      loadRevisionCollectionChunkSize = in.readXInt();
       if (loadRevisionCollectionChunkSize < 1)
       {
         loadRevisionCollectionChunkSize = 1;
@@ -197,7 +197,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
       TRACER.format("Writing {0} additional revision infos", additionalSize); //$NON-NLS-1$
     }
 
-    out.writeInt(additionalSize);
+    out.writeXInt(additionalSize);
     for (int i = 0; i < additionalSize; i++)
     {
       InternalCDORevision revision = (InternalCDORevision)additionalRevisions.get(i);

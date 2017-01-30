@@ -65,7 +65,7 @@ public class CommitXATransactionPhase2Request extends CommitXATransactionRequest
     InternalCDOXACommitContext context = getCommitContext();
     Map<CDOIDTempObjectExternalImpl, InternalCDOTransaction> requestedIDs = context.getRequestedIDs();
     int size = requestedIDs.size();
-    out.writeInt(size);
+    out.writeXInt(size);
     if (PROTOCOL.isEnabled())
     {
       PROTOCOL.format("Number of ids requested: {0}", size); //$NON-NLS-1$

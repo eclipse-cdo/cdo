@@ -48,10 +48,10 @@ public class UnlockObjectsIndication extends CDOServerWriteIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    int viewID = in.readInt();
+    int viewID = in.readXInt();
     LockType lockType = in.readCDOLockType();
     boolean recursive = in.readBoolean();
-    int size = in.readInt();
+    int size = in.readXInt();
 
     InternalRepository repository = getRepository();
     IView view = getView(viewID);
@@ -75,9 +75,9 @@ public class UnlockObjectsIndication extends CDOServerWriteIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    out.writeLong(result.getTimestamp());
+    out.writeXLong(result.getTimestamp());
     CDOLockState[] newLockStates = result.getNewLockStates();
-    out.writeInt(newLockStates.length);
+    out.writeXInt(newLockStates.length);
     for (CDOLockState state : newLockStates)
     {
       out.writeCDOLockState(state);

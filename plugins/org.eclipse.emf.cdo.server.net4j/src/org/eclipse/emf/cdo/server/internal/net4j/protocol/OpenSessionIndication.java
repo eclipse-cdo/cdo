@@ -142,7 +142,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       catch (NotAuthenticatedException ex)
       {
         // Skip response because the user has canceled the authentication
-        out.writeInt(0);
+        out.writeXInt(0);
         flush();
 
         protocol.getExecutorService().submit(new Runnable()
@@ -172,7 +172,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
         TRACER.format("Writing sessionID: {0}", session.getSessionID()); //$NON-NLS-1$
       }
 
-      out.writeInt(session.getSessionID());
+      out.writeXInt(session.getSessionID());
       if (TRACER.isEnabled())
       {
         TRACER.format("Writing userID: {0}", session.getUserID()); //$NON-NLS-1$
@@ -192,14 +192,14 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
 
       Set<CDOID.ObjectType> objectIDTypes = repository.getObjectIDTypes();
       int types = objectIDTypes.size();
-      out.writeInt(types);
+      out.writeXInt(types);
       for (CDOID.ObjectType objectIDType : objectIDTypes)
       {
         out.writeEnum(objectIDType);
       }
 
-      out.writeLong(repository.getCreationTime());
-      out.writeLong(session.getFirstUpdateTime());
+      out.writeXLong(repository.getCreationTime());
+      out.writeXLong(session.getFirstUpdateTime());
       out.writeCDOID(repository.getRootResourceID());
       out.writeBoolean(repository.isAuthenticating());
       out.writeBoolean(repository.isSupportingAudits());

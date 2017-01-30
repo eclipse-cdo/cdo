@@ -38,15 +38,15 @@ public class CreateBranchRequest extends CDOClientRequest<Pair<Integer, Long>>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(branchID);
+    out.writeXInt(branchID);
     branchInfo.write(out);
   }
 
   @Override
   protected Pair<Integer, Long> confirming(CDODataInput in) throws IOException
   {
-    branchID = in.readInt();
-    long baseTimeStamp = in.readLong();
+    branchID = in.readXInt();
+    long baseTimeStamp = in.readXLong();
     return Pair.create(branchID, baseTimeStamp);
   }
 }

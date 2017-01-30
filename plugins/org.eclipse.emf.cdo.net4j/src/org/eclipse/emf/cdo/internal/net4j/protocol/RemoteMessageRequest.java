@@ -56,7 +56,7 @@ public class RemoteMessageRequest extends CDOClientRequest<Set<Integer>>
       TRACER.format("Writing {0} recipients", recipients.size()); //$NON-NLS-1$
     }
 
-    out.writeInt(recipients.size());
+    out.writeXInt(recipients.size());
     for (CDORemoteSession recipient : recipients)
     {
       if (TRACER.isEnabled())
@@ -64,7 +64,7 @@ public class RemoteMessageRequest extends CDOClientRequest<Set<Integer>>
         TRACER.trace("Writing recipient: " + recipient); //$NON-NLS-1$
       }
 
-      out.writeInt(recipient.getSessionID());
+      out.writeXInt(recipient.getSessionID());
     }
   }
 
@@ -72,10 +72,10 @@ public class RemoteMessageRequest extends CDOClientRequest<Set<Integer>>
   protected Set<Integer> confirming(CDODataInput in) throws IOException
   {
     Set<Integer> sessionIDs = new HashSet<Integer>();
-    int count = in.readInt();
+    int count = in.readXInt();
     for (int i = 0; i < count; i++)
     {
-      int sessionID = in.readInt();
+      int sessionID = in.readXInt();
       sessionIDs.add(sessionID);
     }
 

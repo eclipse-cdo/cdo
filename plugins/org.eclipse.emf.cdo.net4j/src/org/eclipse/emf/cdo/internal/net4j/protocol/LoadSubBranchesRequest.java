@@ -33,13 +33,13 @@ public class LoadSubBranchesRequest extends CDOClientRequest<SubBranchInfo[]>
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(branchID);
+    out.writeXInt(branchID);
   }
 
   @Override
   protected SubBranchInfo[] confirming(CDODataInput in) throws IOException
   {
-    int size = in.readInt();
+    int size = in.readXInt();
     SubBranchInfo[] infos = new SubBranchInfo[size];
     for (int i = 0; i < infos.length; i++)
     {

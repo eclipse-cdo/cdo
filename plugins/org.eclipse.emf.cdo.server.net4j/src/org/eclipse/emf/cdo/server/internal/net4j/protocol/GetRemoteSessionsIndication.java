@@ -53,13 +53,13 @@ public class GetRemoteSessionsIndication extends CDOServerReadIndication
     {
       if (session != localSession)
       {
-        out.writeInt(session.getSessionID());
+        out.writeXInt(session.getSessionID());
         out.writeString(session.getUserID());
         out.writeBoolean(session.isSubscribed());
       }
     }
 
-    out.writeInt(CDOProtocolConstants.NO_MORE_REMOTE_SESSIONS);
+    out.writeXInt(CDOProtocolConstants.NO_MORE_REMOTE_SESSIONS);
     localSession.setSubscribed(subscribe);
   }
 }

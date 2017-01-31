@@ -108,7 +108,6 @@
           <sysproperties />
         </properties>
         <args>
-          <jvmarg value="-XX:MaxPermSize=256M" />
           <jvmarg value="-Xmx4g" />
           <jvmarg value="-Dsite.pack200=false" />
           <jvmarg value="-Dsite.retain.unpacked=true" />

@@ -112,7 +112,7 @@
           <jvmarg value="-Xmx4g" />
           <jvmarg value="-Dsite.pack200=false" />
           <jvmarg value="-Dsite.retain.unpacked=true" />
-          <jvmarg value="-Dorg.eclipse.update.jarprocessor.pack200=/shared/common/jdk1.6.0-latest/bin" />
+          <jvmarg value="-Dorg.eclipse.update.jarprocessor.pack200=/shared/common/jdk1.8.0_x64-latest/bin" />
           <jvmarg value="-Declipse.p2.MD5Check=false" />
           <jvmarg value="-Declipse.p2.mirrors=${p2.mirrors}" />
           <jvmarg value="-Declipse.p2.unsignedPolicy=allow" />

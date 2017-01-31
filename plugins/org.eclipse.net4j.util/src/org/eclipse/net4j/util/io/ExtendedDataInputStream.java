@@ -26,11 +26,17 @@ public class ExtendedDataInputStream extends DataInputStream implements Extended
     super(in);
   }
 
+  /**
+   * @since 3.7
+   */
   public int readVarInt() throws IOException
   {
     return ExtendedIOUtil.readVarInt(this);
   }
 
+  /**
+  * @since 3.7
+  */
   public long readVarLong() throws IOException
   {
     return ExtendedIOUtil.readVarLong(this);

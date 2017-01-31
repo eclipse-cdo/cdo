@@ -88,6 +88,9 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     super(delegate);
   }
 
+  /**
+   * @since 4.6
+   */
   public void writeXInt(int v) throws IOException
   {
     if (isXCompression())
@@ -100,6 +103,9 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     }
   }
 
+  /**
+   * @since 4.6
+   */
   public void writeXLong(long v) throws IOException
   {
     if (isXCompression())

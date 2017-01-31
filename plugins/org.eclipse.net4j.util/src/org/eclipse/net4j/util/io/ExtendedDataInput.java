@@ -184,11 +184,17 @@ public interface ExtendedDataInput extends DataInput
       return delegate.readUTF();
     }
 
+    /**
+     * @since 3.7
+     */
     public int readVarInt() throws IOException
     {
       return delegate.readVarInt();
     }
 
+    /**
+     * @since 3.7
+     */
     public long readVarLong() throws IOException
     {
       return delegate.readVarLong();

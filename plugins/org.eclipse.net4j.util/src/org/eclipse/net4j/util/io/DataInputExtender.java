@@ -98,11 +98,17 @@ public class DataInputExtender implements ExtendedDataInput, Closeable
     return input.readUTF();
   }
 
+  /**
+   * @since 3.7
+   */
   public int readVarInt() throws IOException
   {
     return ExtendedIOUtil.readVarInt(input);
   }
 
+  /**
+   * @since 3.7
+   */
   public long readVarLong() throws IOException
   {
     return ExtendedIOUtil.readVarLong(input);

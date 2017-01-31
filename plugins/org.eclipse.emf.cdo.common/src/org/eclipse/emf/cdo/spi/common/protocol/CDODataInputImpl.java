@@ -120,6 +120,9 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     super(delegate);
   }
 
+  /**
+   * @since 4.6
+   */
   public int readXInt() throws IOException
   {
     if (isXCompression())
@@ -130,6 +133,9 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return readInt();
   }
 
+  /**
+   * @since 4.6
+   */
   public long readXLong() throws IOException
   {
     if (isXCompression())

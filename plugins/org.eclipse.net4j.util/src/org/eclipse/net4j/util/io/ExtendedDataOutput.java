@@ -167,11 +167,17 @@ public interface ExtendedDataOutput extends DataOutput
       delegate.writeUTF(str);
     }
 
+    /**
+     * @since 3.7
+     */
     public void writeVarInt(int v) throws IOException
     {
       delegate.writeVarInt(v);
     }
 
+    /**
+     * @since 3.7
+     */
     public void writeVarLong(long v) throws IOException
     {
       delegate.writeVarLong(v);

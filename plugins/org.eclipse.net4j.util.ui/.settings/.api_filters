@@ -116,6 +116,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/ui/views/ContainerItemProvider.java" type="org.eclipse.net4j.util.ui.views.ContainerItemProvider$AbstractNode">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="Node"/>
+                <message_argument value="AbstractNode"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/util/ui/widgets/FirstChildLayout.java" type="org.eclipse.net4j.util.ui.widgets.FirstChildLayout">
         <filter id="1108344834">
             <message_arguments>

@@ -85,6 +85,92 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/eresource/impl/CDOBinaryResourceImpl.java" type="org.eclipse.emf.cdo.eresource.impl.CDOBinaryResourceImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOBinaryResource"/>
+                <message_argument value="CDOBinaryResourceImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/eresource/impl/CDOFileResourceImpl.java" type="org.eclipse.emf.cdo.eresource.impl.CDOFileResourceImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOFileResource&lt;IO&gt;"/>
+                <message_argument value="CDOFileResourceImpl&lt;IO&gt;"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/eresource/impl/CDOResourceFactoryImpl.java" type="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOResourceFactory"/>
+                <message_argument value="CDOResourceFactoryImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/eresource/impl/CDOResourceFolderImpl.java" type="org.eclipse.emf.cdo.eresource.impl.CDOResourceFolderImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOResourceFolder"/>
+                <message_argument value="CDOResourceFolderImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.java" type="org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOResource"/>
+                <message_argument value="CDOResourceImpl"/>
+            </message_arguments>
+        </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="InternalCDOResource"/>
+                <message_argument value="CDOResourceImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/eresource/impl/CDOResourceLeafImpl.java" type="org.eclipse.emf.cdo.eresource.impl.CDOResourceLeafImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOResourceLeaf"/>
+                <message_argument value="CDOResourceLeafImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/eresource/impl/CDOResourceNodeImpl.java" type="org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOResourceNode"/>
+                <message_argument value="CDOResourceNodeImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/eresource/impl/CDOTextResourceImpl.java" type="org.eclipse.emf.cdo.eresource.impl.CDOTextResourceImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOTextResource"/>
+                <message_argument value="CDOTextResourceImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/eresource/impl/EresourceFactoryImpl.java" type="org.eclipse.emf.cdo.eresource.impl.EresourceFactoryImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="EresourceFactory"/>
+                <message_argument value="EresourceFactoryImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/eresource/impl/EresourcePackageImpl.java" type="org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="EresourcePackage"/>
+                <message_argument value="EresourcePackageImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/eresource/util/EresourceSwitch.java" type="org.eclipse.emf.cdo.eresource.util.EresourceSwitch">
         <filter id="420679712">
             <message_arguments>
@@ -104,6 +190,22 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.etypes.EtypesPackage.Literals"/>
                 <message_argument value="READER"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/etypes/ModelElement.java" type="org.eclipse.emf.cdo.etypes.ModelElement">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="CDOObject"/>
+                <message_argument value="ModelElement"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/etypes/impl/AnnotationImpl.java" type="org.eclipse.emf.cdo.etypes.impl.AnnotationImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="Annotation"/>
+                <message_argument value="AnnotationImpl"/>
             </message_arguments>
         </filter>
     </resource>
@@ -136,6 +238,20 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.etypes.impl.EtypesFactoryImpl"/>
                 <message_argument value="createClobFromString(EDataType, String)"/>
+            </message_arguments>
+        </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="EtypesFactory"/>
+                <message_argument value="EtypesFactoryImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/etypes/impl/EtypesPackageImpl.java" type="org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="EtypesPackage"/>
+                <message_argument value="EtypesPackageImpl"/>
             </message_arguments>
         </filter>
     </resource>
@@ -178,6 +294,12 @@
                 <message_argument value="CDOSessionLocksChangedEvent"/>
             </message_arguments>
         </filter>
+        <filter id="576778288">
+            <message_arguments>
+                <message_argument value="CDOSessionEvent"/>
+                <message_argument value="CDOSessionLocksChangedEvent"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/transaction/CDOPushTransaction.java" type="org.eclipse.emf.cdo.transaction.CDOPushTransaction">
         <filter id="574660632">
@@ -192,6 +314,12 @@
                 <message_argument value="CDOTransaction"/>
                 <message_argument value="CDOPushTransaction"/>
                 <message_argument value="CDOCommonView"/>
+            </message_arguments>
+        </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOTransaction"/>
+                <message_argument value="CDOPushTransaction"/>
             </message_arguments>
         </filter>
     </resource>
@@ -231,6 +359,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/util/ValidationException.java" type="org.eclipse.emf.cdo.util.ValidationException">
+        <filter id="576778288">
+            <message_arguments>
+                <message_argument value="DataIntegrityException"/>
+                <message_argument value="ValidationException"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/view/CDOInvalidationPolicy.java" type="org.eclipse.emf.cdo.view.CDOInvalidationPolicy">
         <filter id="403767336">
             <message_arguments>
@@ -266,6 +402,62 @@
             <message_arguments>
                 <message_argument value="Options"/>
                 <message_argument value="Options"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/view/CDOViewEventProducer.java" type="org.eclipse.emf.cdo.view.CDOViewEventProducer$CDOAttachingObjectEvent">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOViewEvent"/>
+                <message_argument value="CDOAttachingObjectEvent"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/view/CDOViewEventProducer.java" type="org.eclipse.emf.cdo.view.CDOViewEventProducer$CDOCommittedTransactionEvent">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOViewEvent"/>
+                <message_argument value="CDOCommittedTransactionEvent"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/view/CDOViewEventProducer.java" type="org.eclipse.emf.cdo.view.CDOViewEventProducer$CDOCommittingTransactionEvent">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOViewEvent"/>
+                <message_argument value="CDOCommittingTransactionEvent"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/view/CDOViewEventProducer.java" type="org.eclipse.emf.cdo.view.CDOViewEventProducer$CDODetachingObjectEvent">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOViewEvent"/>
+                <message_argument value="CDODetachingObjectEvent"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/view/CDOViewEventProducer.java" type="org.eclipse.emf.cdo.view.CDOViewEventProducer$CDOModifyingObjectEvent">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOViewEvent"/>
+                <message_argument value="CDOModifyingObjectEvent"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/view/CDOViewEventProducer.java" type="org.eclipse.emf.cdo.view.CDOViewEventProducer$CDOObjectStateChangedEvent">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOViewEvent"/>
+                <message_argument value="CDOObjectStateChangedEvent"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/view/CDOViewEventProducer.java" type="org.eclipse.emf.cdo.view.CDOViewEventProducer$CDORolledBackTransactionEvent">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOViewEvent"/>
+                <message_argument value="CDORolledBackTransactionEvent"/>
             </message_arguments>
         </filter>
     </resource>
@@ -571,6 +763,12 @@
                 <message_argument value="eStore()"/>
             </message_arguments>
         </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="InternalCDOObject"/>
+                <message_argument value="CDOObjectImpl"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/CDOObjectImpl.java" type="org.eclipse.emf.internal.cdo.CDOObjectImpl$CDOStoreEcoreEMap">
         <filter id="337686583">
@@ -808,6 +1006,22 @@
             <message_arguments>
                 <message_argument value="CDOObjectMarker"/>
                 <message_argument value="InternalCDOObject"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/spi/cdo/InternalCDOSessionInvalidationEvent.java" type="org.eclipse.emf.spi.cdo.InternalCDOSessionInvalidationEvent">
+        <filter id="576778288">
+            <message_arguments>
+                <message_argument value="CDOSessionInvalidationEvent"/>
+                <message_argument value="InternalCDOSessionInvalidationEvent"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/spi/cdo/InternalCDOXATransaction.java" type="org.eclipse.emf.spi.cdo.InternalCDOXATransaction$InternalCDOXACommitContext">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="InternalCDOCommitContext"/>
+                <message_argument value="InternalCDOXACommitContext"/>
             </message_arguments>
         </filter>
     </resource>

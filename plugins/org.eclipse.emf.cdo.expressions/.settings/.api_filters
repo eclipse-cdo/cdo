@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.expressions" version="2">
+    <resource path="src/org/eclipse/emf/cdo/expressions/impl/ExpressionsFactoryImpl.java" type="org.eclipse.emf.cdo.expressions.impl.ExpressionsFactoryImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ExpressionsFactory"/>
+                <message_argument value="ExpressionsFactoryImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/expressions/impl/ExpressionsPackageImpl.java" type="org.eclipse.emf.cdo.expressions.impl.ExpressionsPackageImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ExpressionsPackage"/>
+                <message_argument value="ExpressionsPackageImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

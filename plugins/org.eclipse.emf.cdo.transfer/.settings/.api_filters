@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.transfer" version="2">
+    <resource path="src/org/eclipse/emf/cdo/transfer/CDOTransferType.java" type="org.eclipse.emf.cdo.transfer.CDOTransferType$Text">
+        <filter id="576778288">
+            <message_arguments>
+                <message_argument value="CDOTransferType"/>
+                <message_argument value="Text"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

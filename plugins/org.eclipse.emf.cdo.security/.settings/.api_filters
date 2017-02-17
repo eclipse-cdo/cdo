@@ -282,7 +282,61 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/security/impl/AssigneeImpl.java" type="org.eclipse.emf.cdo.security.impl.AssigneeImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="Assignee"/>
+                <message_argument value="AssigneeImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/security/impl/DirectoryImpl.java" type="org.eclipse.emf.cdo.security.impl.DirectoryImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="Directory"/>
+                <message_argument value="DirectoryImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/security/impl/GroupImpl.java" type="org.eclipse.emf.cdo.security.impl.GroupImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="Group"/>
+                <message_argument value="GroupImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/security/impl/RealmImpl.java" type="org.eclipse.emf.cdo.security.impl.RealmImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="Realm"/>
+                <message_argument value="RealmImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/security/impl/RoleImpl.java" type="org.eclipse.emf.cdo.security.impl.RoleImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="Role"/>
+                <message_argument value="RoleImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/security/impl/SecurityElementImpl.java" type="org.eclipse.emf.cdo.security.impl.SecurityElementImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="SecurityElement"/>
+                <message_argument value="SecurityElementImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.java" type="org.eclipse.emf.cdo.security.impl.SecurityFactoryImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="SecurityFactory"/>
+                <message_argument value="SecurityFactoryImpl"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="createClassPermission(EClass, Access)"/>
@@ -331,6 +385,38 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="createUser(String, String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/security/impl/SecurityItemImpl.java" type="org.eclipse.emf.cdo.security.impl.SecurityItemImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="SecurityItem"/>
+                <message_argument value="SecurityItemImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/security/impl/SecurityPackageImpl.java" type="org.eclipse.emf.cdo.security.impl.SecurityPackageImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="SecurityPackage"/>
+                <message_argument value="SecurityPackageImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/security/impl/UserImpl.java" type="org.eclipse.emf.cdo.security.impl.UserImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="User"/>
+                <message_argument value="UserImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/security/impl/UserPasswordImpl.java" type="org.eclipse.emf.cdo.security.impl.UserPasswordImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="UserPassword"/>
+                <message_argument value="UserPasswordImpl"/>
             </message_arguments>
         </filter>
     </resource>

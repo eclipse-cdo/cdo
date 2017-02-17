@@ -68,12 +68,92 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/container/ContainerEvent.java" type="org.eclipse.net4j.util.container.ContainerEvent">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="IContainerEvent&lt;E&gt;"/>
+                <message_argument value="ContainerEvent&lt;E&gt;"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/util/container/IManagedContainerFactory.java" type="org.eclipse.net4j.util.container.IManagedContainerFactory">
         <filter comment="https://bugs.eclipse.org/bugs/show_bug.cgi?id=404845" id="403984517">
             <message_arguments>
                 <message_argument value="org.eclipse.net4j.util.container.IManagedContainerFactory"/>
                 <message_argument value="org.eclipse.net4j.util.container.IManagedContainer$ContainerAware"/>
                 <message_argument value="setManagedContainer(IManagedContainer)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/container/ManagedContainer.java" type="org.eclipse.net4j.util.container.ManagedContainer">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="IManagedContainer"/>
+                <message_argument value="ManagedContainer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/container/SingleDeltaContainerEvent.java" type="org.eclipse.net4j.util.container.SingleDeltaContainerEvent">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="IContainerEvent&lt;E&gt;"/>
+                <message_argument value="SingleDeltaContainerEvent&lt;E&gt;"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/factory/FactoryKey.java" type="org.eclipse.net4j.util.factory.FactoryKey">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="IFactoryKey"/>
+                <message_argument value="FactoryKey"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/io/DataInputExtender.java" type="org.eclipse.net4j.util.io.DataInputExtender">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ExtendedDataInput"/>
+                <message_argument value="DataInputExtender"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/io/DataOutputExtender.java" type="org.eclipse.net4j.util.io.DataOutputExtender">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ExtendedDataOutput"/>
+                <message_argument value="DataOutputExtender"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/io/ExtendedDataInput.java" type="org.eclipse.net4j.util.io.ExtendedDataInput$Delegating">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ExtendedDataInput"/>
+                <message_argument value="Delegating"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/io/ExtendedDataInputStream.java" type="org.eclipse.net4j.util.io.ExtendedDataInputStream">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ExtendedDataInput"/>
+                <message_argument value="ExtendedDataInputStream"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/io/ExtendedDataOutput.java" type="org.eclipse.net4j.util.io.ExtendedDataOutput$Delegating">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ExtendedDataOutput"/>
+                <message_argument value="Delegating"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/io/ExtendedDataOutputStream.java" type="org.eclipse.net4j.util.io.ExtendedDataOutputStream">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ExtendedDataOutput"/>
+                <message_argument value="ExtendedDataOutputStream"/>
             </message_arguments>
         </filter>
     </resource>
@@ -91,6 +171,62 @@
                 <message_argument value="org.eclipse.net4j.util.lifecycle.ILifecycle"/>
                 <message_argument value="org.eclipse.net4j.util.lifecycle.IDeactivateable"/>
                 <message_argument value="deactivate()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/lifecycle/LifecycleEvent.java" type="org.eclipse.net4j.util.lifecycle.LifecycleEvent">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ILifecycleEvent"/>
+                <message_argument value="LifecycleEvent"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/om/log/Logger.java" type="org.eclipse.net4j.util.om.log.Logger">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="OMLogger"/>
+                <message_argument value="Logger"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/om/monitor/AbstractMonitor.java" type="org.eclipse.net4j.util.om.monitor.AbstractMonitor">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="OMMonitor"/>
+                <message_argument value="AbstractMonitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/om/monitor/DelegatingMonitor.java" type="org.eclipse.net4j.util.om.monitor.DelegatingMonitor">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="OMMonitor"/>
+                <message_argument value="DelegatingMonitor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/om/monitor/NotifyingMonitor.java" type="org.eclipse.net4j.util.om.monitor.NotifyingMonitor$ProgressEvent">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="OMMonitorProgress"/>
+                <message_argument value="ProgressEvent"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/om/trace/TraceHandlerEvent.java" type="org.eclipse.net4j.util.om.trace.TraceHandlerEvent">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="OMTraceHandlerEvent"/>
+                <message_argument value="TraceHandlerEvent"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/om/trace/Tracer.java" type="org.eclipse.net4j.util.om.trace.Tracer">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="OMTracer"/>
+                <message_argument value="Tracer"/>
             </message_arguments>
         </filter>
     </resource>

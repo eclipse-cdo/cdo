@@ -263,6 +263,22 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/CDOServerExporter.java" type="org.eclipse.emf.cdo.server.CDOServerExporter$XML">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="XMLConstants"/>
+                <message_argument value="XML"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/CDOServerImporter.java" type="org.eclipse.emf.cdo.server.CDOServerImporter$XML">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="XMLConstants"/>
+                <message_argument value="XML"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/IQueryContext.java" type="org.eclipse.emf.cdo.server.IQueryContext">
         <filter id="571473929">
             <message_arguments>
@@ -300,6 +316,14 @@
             <message_arguments>
                 <message_argument value="CDOBranchPoint"/>
                 <message_argument value="QueryResourcesContext"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/IStoreAccessor.java" type="org.eclipse.emf.cdo.server.IStoreAccessor$QueryResourcesContext$ExactMatch">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="QueryResourcesContext"/>
+                <message_argument value="ExactMatch"/>
             </message_arguments>
         </filter>
     </resource>
@@ -356,6 +380,12 @@
                 <message_argument value="QueryResourcesContext"/>
                 <message_argument value="DelegatingQueryResourcesContext"/>
                 <message_argument value="CDOBranchPoint"/>
+            </message_arguments>
+        </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="QueryResourcesContext"/>
+                <message_argument value="DelegatingQueryResourcesContext"/>
             </message_arguments>
         </filter>
     </resource>

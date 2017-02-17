@@ -46,6 +46,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/commit/CDOCommitHistory.java" type="org.eclipse.emf.cdo.common.commit.CDOCommitHistory$TriggerLoadElement">
+        <filter id="576778288">
+            <message_arguments>
+                <message_argument value="CDOCommitInfo"/>
+                <message_argument value="TriggerLoadElement"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/common/id/CDOID.java" type="org.eclipse.emf.cdo.common.id.CDOID">
         <filter id="404791350">
             <message_arguments>
@@ -67,10 +75,34 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/id/CDOIDReference.java" type="org.eclipse.emf.cdo.common.id.CDOIDReference">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOReference&lt;OBJECT&gt;"/>
+                <message_argument value="CDOIDReference"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/common/id/CDOIDTemp.java" type="org.eclipse.emf.cdo.common.id.CDOIDTemp">
         <filter id="404791350">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.common.id.CDOIDTemp"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/lob/CDOBlob.java" type="org.eclipse.emf.cdo.common.lob.CDOBlob">
+        <filter id="576778288">
+            <message_arguments>
+                <message_argument value="CDOLob&lt;IO&gt;"/>
+                <message_argument value="CDOBlob"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/lob/CDOClob.java" type="org.eclipse.emf.cdo.common.lob.CDOClob">
+        <filter id="576778288">
+            <message_arguments>
+                <message_argument value="CDOLob&lt;IO&gt;"/>
+                <message_argument value="CDOClob"/>
             </message_arguments>
         </filter>
     </resource>
@@ -146,6 +178,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/model/CDOModelUtil.java" type="org.eclipse.emf.cdo.common.model.CDOModelUtil">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOModelConstants"/>
+                <message_argument value="CDOModelUtil"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/common/protocol/CDODataInput.java" type="org.eclipse.emf.cdo.common.protocol.CDODataInput">
         <filter id="571473929">
             <message_arguments>
@@ -192,10 +232,56 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/util/RepositoryStateChangedEvent.java" type="org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="StateChangedEvent"/>
+                <message_argument value="RepositoryStateChangedEvent"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/util/RepositoryTypeChangedEvent.java" type="org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="TypeChangedEvent"/>
+                <message_argument value="RepositoryTypeChangedEvent"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/common/CDORawReplicationContext.java" type="org.eclipse.emf.cdo.spi.common.CDORawReplicationContext">
+        <filter id="576778288">
+            <message_arguments>
+                <message_argument value="CDOReplicationInfo"/>
+                <message_argument value="CDORawReplicationContext"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/common/admin/AbstractCDOAdmin.java" type="org.eclipse.emf.cdo.spi.common.admin.AbstractCDOAdmin">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOAdmin"/>
+                <message_argument value="AbstractCDOAdmin"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.java" type="org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOBranchPoint"/>
+                <message_argument value="CDOChangeSetSegment"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.java" type="org.eclipse.emf.cdo.spi.common.id.AbstractCDOID">
         <filter id="337682486">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.spi.common.id.AbstractCDOID"/>
+            </message_arguments>
+        </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDOID"/>
+                <message_argument value="AbstractCDOID"/>
             </message_arguments>
         </filter>
     </resource>
@@ -203,6 +289,38 @@
         <filter id="404791350">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/common/model/DelegatingCDOPackageRegistry.java" type="org.eclipse.emf.cdo.spi.common.model.DelegatingCDOPackageRegistry">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="InternalCDOPackageRegistry"/>
+                <message_argument value="DelegatingCDOPackageRegistry"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.java" type="org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo">
+        <filter id="576778288">
+            <message_arguments>
+                <message_argument value="CDOClassInfo"/>
+                <message_argument value="InternalCDOClassInfo"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/common/protocol/CDODataInputImpl.java" type="org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDODataInput"/>
+                <message_argument value="CDODataInputImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/common/protocol/CDODataOutputImpl.java" type="org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="CDODataOutput"/>
+                <message_argument value="CDODataOutputImpl"/>
             </message_arguments>
         </filter>
     </resource>
@@ -217,6 +335,44 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.spi.common.revision.AbstractCDORevision"/>
                 <message_argument value="getEClass()"/>
+            </message_arguments>
+        </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="InternalCDORevision"/>
+                <message_argument value="AbstractCDORevision"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevision.java" type="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevision">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="InternalCDORevision"/>
+                <message_argument value="DelegatingCDORevision"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.java" type="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevisionManager">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="InternalCDORevisionManager"/>
+                <message_argument value="DelegatingCDORevisionManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/common/revision/InternalCDOFeatureDelta.java" type="org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta">
+        <filter id="576778288">
+            <message_arguments>
+                <message_argument value="CDOFeatureDelta"/>
+                <message_argument value="InternalCDOFeatureDelta"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.java" type="org.eclipse.emf.cdo.spi.common.revision.InternalCDOList">
+        <filter id="576778288">
+            <message_arguments>
+                <message_argument value="CDOList"/>
+                <message_argument value="InternalCDOList"/>
             </message_arguments>
         </filter>
     </resource>

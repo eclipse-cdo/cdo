@@ -1,5 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.net4j" version="2">
+    <resource path="src/org/eclipse/net4j/connector/IConnector.java" type="org.eclipse.net4j.connector.IConnector">
+        <filter id="576778288">
+            <message_arguments>
+                <message_argument value="IChannelMultiplexer"/>
+                <message_argument value="IConnector"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/connector/IServerConnector.java" type="org.eclipse.net4j.connector.IServerConnector">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="IConnector"/>
+                <message_argument value="IServerConnector"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/spi/net4j/InternalAcceptor.java" type="org.eclipse.spi.net4j.InternalAcceptor">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="IAcceptor"/>
+                <message_argument value="InternalAcceptor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/spi/net4j/InternalBuffer.java" type="org.eclipse.spi.net4j.InternalBuffer">
+        <filter id="576778288">
+            <message_arguments>
+                <message_argument value="IBuffer"/>
+                <message_argument value="InternalBuffer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/spi/net4j/InternalChannel.java" type="org.eclipse.spi.net4j.InternalChannel">
+        <filter id="576778288">
+            <message_arguments>
+                <message_argument value="IChannel"/>
+                <message_argument value="InternalChannel"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/spi/net4j/InternalChannelMultiplexer.java" type="org.eclipse.spi.net4j.InternalChannelMultiplexer">
         <filter id="403767336">
             <message_arguments>
@@ -11,6 +51,20 @@
             <message_arguments>
                 <message_argument value="org.eclipse.spi.net4j.InternalChannelMultiplexer"/>
                 <message_argument value="CONTEXT_MULTIPLEXER"/>
+            </message_arguments>
+        </filter>
+        <filter id="576778288">
+            <message_arguments>
+                <message_argument value="IChannelMultiplexer"/>
+                <message_argument value="InternalChannelMultiplexer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/spi/net4j/InternalConnector.java" type="org.eclipse.spi.net4j.InternalConnector">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="IConnector"/>
+                <message_argument value="InternalConnector"/>
             </message_arguments>
         </filter>
     </resource>

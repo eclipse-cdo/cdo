@@ -197,9 +197,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/net4j/internal/db/DBPreparedStatement.java">
-        <filter id="0"/>
-    </resource>
     <resource path="src/org/eclipse/net4j/internal/db/DBPreparedStatement.java" type="org.eclipse.net4j.internal.db.DBPreparedStatement">
         <filter id="646971428">
             <message_arguments>
@@ -890,6 +887,14 @@
                 <message_argument value="ResultSet"/>
                 <message_argument value="updateSQLXML(int, SQLXML)"/>
                 <message_argument value="J2SE-1.5"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/spi/db/DBAdapter.java" type="org.eclipse.net4j.spi.db.DBAdapter">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="IDBAdapter"/>
+                <message_argument value="DBAdapter"/>
             </message_arguments>
         </filter>
     </resource>

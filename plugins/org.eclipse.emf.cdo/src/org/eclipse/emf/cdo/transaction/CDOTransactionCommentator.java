@@ -53,7 +53,7 @@ public class CDOTransactionCommentator implements Closeable
         String commitComment = transaction.getCommitComment();
         if (commitComment != null)
         {
-          transaction.setCommitComment(commitComment = " " + lastComment);
+          transaction.setCommitComment(commitComment + " " + lastComment);
         }
         else
         {

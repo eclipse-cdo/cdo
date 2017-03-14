@@ -131,19 +131,6 @@
     </sequential>
   </macrodef>
 
-  <!-- ======================= -->
-  <!-- Replace Product Version -->
-  <!-- ======================= -->
-
-  <macrodef name="replace.product.version">
-    <attribute name="feature" />
-    <attribute name="profile" />
-    <attribute name="version" />
-    <sequential>
-    	<replace file="${features}/@{feature}-feature/@{profile}.product" token=".qualifier" value=".@{version}" />
-    </sequential>
-  </macrodef>
-
   <!-- ============= -->
   <!-- Generate Site -->
   <!-- ============= -->
@@ -276,13 +263,6 @@
       <echo message="Generating dropin archives" />
       <property name="temp.dropins" location="${result}/temp.dropins" />
       <cleandir dir="${temp.dropins}" />
-
-      <copy todir="${temp.dropins}" failonerror="true">
-        <fileset dir="${features}/org.eclipse.emf.cdo.server.product-feature/rootfiles">
-          <include name="epl-v10.html" />
-          <include name="notice.html" />
-        </fileset>
-      </copy>
 
       <copy todir="${temp.dropins}/features" flatten="true">
         <fileset dir="${buckminster.output.root}">
@@ -713,9 +693,6 @@
             <arg value="CDO Baseline" />
           </cmdargs>
         </buckminster>
-
-      	<replace.product.version feature="org.eclipse.emf.cdo.explorer.product" profile="CDOExplorer" version="${build.version}" />
-      	<replace.product.version feature="org.eclipse.emf.cdo.server.product" profile="CDOServer" version="${build.version}" />
       </then>
     </if>
   </target>

@@ -75,6 +75,7 @@ import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -587,10 +588,7 @@ public class Repository extends Container<Object> implements InternalRepository,
           InternalCDORevision target = loadRevisionTarget(id, branchPoint, referenceChunk, accessor);
           if (target != null)
           {
-            if (referenceChunk == UNCHUNKED)
-            {
-              target.setUnchunked();
-            }
+            target = normalizeRevision(target, info, referenceChunk);
 
             CDOBranch branch = branchPoint.getBranch();
             long revised = loadRevisionRevised(id, branch);
@@ -614,17 +612,40 @@ public class Repository extends Container<Object> implements InternalRepository,
       }
       else
       {
-        if (referenceChunk == UNCHUNKED)
-        {
-          revision.setUnchunked();
-        }
-
         revision.freeze();
+
+        revision = normalizeRevision(revision, info, referenceChunk);
         info.setResult(revision);
       }
     }
 
     return null;
+  }
+
+  private InternalCDORevision normalizeRevision(InternalCDORevision revision, RevisionInfo info, int referenceChunk)
+  {
+    if (info instanceof RevisionInfo.Available)
+    {
+      RevisionInfo.Available availableInfo = (RevisionInfo.Available)info;
+
+      CDOBranchVersion availableBranchVersion = availableInfo.getAvailableBranchVersion();
+      if (availableBranchVersion instanceof BaseCDORevision)
+      {
+        BaseCDORevision availableRevision = (BaseCDORevision)availableBranchVersion;
+        if (availableRevision.equals(revision))
+        {
+          ensureChunks(availableRevision, referenceChunk);
+          return availableRevision;
+        }
+      }
+    }
+
+    if (referenceChunk == UNCHUNKED)
+    {
+      revision.setUnchunked();
+    }
+
+    return revision;
   }
 
   private InternalCDORevision loadRevisionTarget(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, IStoreAccessor accessor)

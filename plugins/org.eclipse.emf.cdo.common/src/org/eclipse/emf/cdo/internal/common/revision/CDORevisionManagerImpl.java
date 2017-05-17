@@ -383,26 +383,26 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
   private RevisionInfo.Available createRevisionInfoAvailable(InternalCDORevision revision, CDOBranchPoint requestedBranchPoint)
   {
+    CDOID id = revision.getID();
+
     if (revision instanceof PointerCDORevision)
     {
-      PointerCDORevision pointer = (PointerCDORevision)revision;
-      CDOBranchVersion target = pointer.getTarget();
-      InternalCDORevision targetRevision = target == null ? null : getCachedRevisionByVersion(pointer.getID(), target);
+      CDOBranchVersion target = ((PointerCDORevision)revision).getTarget();
+      InternalCDORevision targetRevision = target == null ? null : getCachedRevisionByVersion(id, target);
       if (targetRevision != null)
       {
         target = targetRevision;
       }
 
-      return new RevisionInfo.Available.Pointer(pointer.getID(), requestedBranchPoint, pointer, target);
+      return new RevisionInfo.Available.Pointer(id, requestedBranchPoint, revision, target);
     }
 
     if (revision instanceof DetachedCDORevision)
     {
-      DetachedCDORevision detached = (DetachedCDORevision)revision;
-      return new RevisionInfo.Available.Detached(detached.getID(), requestedBranchPoint, detached);
+      return new RevisionInfo.Available.Detached(id, requestedBranchPoint, revision);
     }
 
-    return new RevisionInfo.Available.Normal(revision.getID(), requestedBranchPoint, revision);
+    return new RevisionInfo.Available.Normal(id, requestedBranchPoint, revision);
   }
 
   private RevisionInfo.Missing createRevisionInfoMissing(CDOID id, CDOBranchPoint requestedBranchPoint)

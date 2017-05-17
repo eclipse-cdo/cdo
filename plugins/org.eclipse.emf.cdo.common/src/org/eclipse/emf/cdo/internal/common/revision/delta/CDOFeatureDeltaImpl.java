@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 
 import org.eclipse.net4j.util.CheckUtil;
 
+import org.eclipse.emf.common.notify.impl.NotifierImpl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -94,4 +95,16 @@ public abstract class CDOFeatureDeltaImpl implements InternalCDOFeatureDelta
   public abstract boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster);
 
   protected abstract String toStringAdditional();
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class UnknownValue extends NotifierImpl
+  {
+    @Override
+    public String toString()
+    {
+      return "UNKNOWN"; //$NON-NLS-1$
+    }
+  }
 }

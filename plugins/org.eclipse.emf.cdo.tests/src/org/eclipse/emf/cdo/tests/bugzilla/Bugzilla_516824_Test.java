@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
@@ -31,14 +30,12 @@ import org.eclipse.emf.ecore.util.EContentAdapter;
  *
  * @author Maxime Porhel (Obeo)
  */
-@CleanRepositoriesBefore(reason = "because")
 @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
 public class Bugzilla_516824_Test extends AbstractCDOTest
 {
   /**
    * Ensure that there is no ClassCastException thrown during the branch switching.
    */
-  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testSetBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -52,7 +49,7 @@ public class Bugzilla_516824_Test extends AbstractCDOTest
     company.setName("c0");
     company.getSuppliers().add(supplier);
 
-    CDOResource resource = transaction.createResource("newResource.company");
+    CDOResource resource = transaction.createResource(getResourcePath("newResource.company"));
     resource.getContents().add(company);
 
     transaction.commit();
@@ -64,13 +61,12 @@ public class Bugzilla_516824_Test extends AbstractCDOTest
     transaction.setBranch(subBranch);
   }
 
-  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testSetBranchLegacy() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
-    CDOResource resource = transaction.createResource("newResource.ecore");
+    CDOResource resource = transaction.createResource(getResourcePath("newResource.ecore"));
     EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
     EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 

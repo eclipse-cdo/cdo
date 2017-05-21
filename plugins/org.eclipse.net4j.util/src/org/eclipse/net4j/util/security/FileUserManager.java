@@ -32,6 +32,8 @@ public class FileUserManager extends UserManager
 {
   private static final boolean FALL_BACK_TO_CONFIG_FOLDER = OMPlatform.INSTANCE.isProperty("net4j.security.FileUserManager.fallBackToConfigFolder");
 
+  private static final boolean FAIL_IF_FILE_DOES_NOT_EXIST = OMPlatform.INSTANCE.isProperty("net4j.security.FileUserManager.failIfFileDoesNotExist");
+
   private static final String CONFIG_FOLDER_PREFIX = "@config/";
 
   protected String fileName;
@@ -56,8 +58,8 @@ public class FileUserManager extends UserManager
    * <li> If it is relative it is interpreted as relative to the application's current directory.
    * <li> Otherwise it is interpreted as absolute.
    * </ol>
-   * The resolved file is not required to exist when this user manager is activated. In this case it will be created when {@link #addUser(String, char[]) addUser()}
-   * or {@link #removeUser(String) removeUser()} are called.
+   * Unless &quot;-Dnet4j.security.FileUserManager.failIfFileDoesNotExist=true&quot; is specified the resolved file is not required to exist when this user manager is activated.
+   * In this case it will be created when {@link #addUser(String, char[]) addUser()} or {@link #removeUser(String) removeUser()} are called.
    * <p>
    * With &quot;-Dnet4j.security.FileUserManager.fallBackToConfigFolder=true&quot; a relative path is resolved in both the application's current folder
    * and the config folder (in this order).
@@ -127,21 +129,24 @@ public class FileUserManager extends UserManager
   @Override
   protected void load(Map<String, char[]> users) throws IORuntimeException
   {
-    if (file != null && file.isFile())
+    if (file != null)
     {
-      FileInputStream stream = IOUtil.openInputStream(file);
+      if (FAIL_IF_FILE_DOES_NOT_EXIST || file.isFile())
+      {
+        FileInputStream stream = IOUtil.openInputStream(file);
 
-      try
-      {
-        load(users, stream);
-      }
-      catch (IOException ex)
-      {
-        throw new IORuntimeException(ex);
-      }
-      finally
-      {
-        IOUtil.closeSilent(stream);
+        try
+        {
+          load(users, stream);
+        }
+        catch (IOException ex)
+        {
+          throw new IORuntimeException(ex);
+        }
+        finally
+        {
+          IOUtil.closeSilent(stream);
+        }
       }
     }
   }

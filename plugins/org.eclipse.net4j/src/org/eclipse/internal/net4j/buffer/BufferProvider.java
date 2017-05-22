@@ -12,12 +12,14 @@ package org.eclipse.internal.net4j.buffer;
 
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
-import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.Notifier;
 
 /**
  * @author Eike Stepper
  */
-public abstract class BufferProvider extends Lifecycle implements IBufferProvider.Introspection
+public abstract class BufferProvider extends Notifier implements IBufferProvider.Introspection, IBufferProvider.Notification
 {
   private short bufferCapacity;
 
@@ -47,14 +49,28 @@ public abstract class BufferProvider extends Lifecycle implements IBufferProvide
 
   public final IBuffer provideBuffer()
   {
+    IBuffer buffer = doProvideBuffer();
     ++providedBuffers;
-    return doProvideBuffer();
+
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      fireEvent(new BufferProviderEvent.Provided(this, buffer), listeners);
+    }
+
+    return buffer;
   }
 
   public final void retainBuffer(IBuffer buffer)
   {
-    ++retainedBuffers;
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      fireEvent(new BufferProviderEvent.Retaining(this, buffer), listeners);
+    }
+
     doRetainBuffer(buffer);
+    ++retainedBuffers;
   }
 
   @Override
@@ -66,4 +82,75 @@ public abstract class BufferProvider extends Lifecycle implements IBufferProvide
   protected abstract IBuffer doProvideBuffer();
 
   protected abstract void doRetainBuffer(IBuffer buffer);
+
+  /**
+   * @author Eike Stepper
+   */
+  protected static abstract class BufferProviderEvent extends Event
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final IBuffer buffer;
+
+    public BufferProviderEvent(IBufferProvider.Notification bufferProvider, IBuffer buffer)
+    {
+      super(bufferProvider);
+      this.buffer = buffer;
+    }
+
+    @Override
+    public IBufferProvider.Notification getSource()
+    {
+      return (IBufferProvider.Notification)super.getSource();
+    }
+
+    public IBuffer getBuffer()
+    {
+      return buffer;
+    }
+
+    @Override
+    protected String formatAdditionalParameters()
+    {
+      return "buffer=" + buffer;
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private static final class Provided extends BufferProviderEvent implements BufferProvidedEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public Provided(IBufferProvider.Notification bufferProvider, IBuffer buffer)
+      {
+        super(bufferProvider, buffer);
+      }
+
+      @Override
+      protected String formatEventName()
+      {
+        return "BufferProvidedEvent";
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private static final class Retaining extends BufferProviderEvent implements BufferRetainingEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public Retaining(IBufferProvider.Notification bufferProvider, IBuffer buffer)
+      {
+        super(bufferProvider, buffer);
+      }
+
+      @Override
+      protected String formatEventName()
+      {
+        return "BufferRetainingEvent";
+      }
+    }
+  }
 }

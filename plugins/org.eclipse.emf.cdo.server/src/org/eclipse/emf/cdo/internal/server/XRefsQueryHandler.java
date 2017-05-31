@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.State;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
@@ -32,7 +33,11 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.StoreThreadLocal.NoSessionRegisteredException;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.QueryHandlerFactory;
 
@@ -47,8 +52,10 @@ import org.eclipse.emf.ecore.EcorePackage;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 /**
@@ -65,20 +72,29 @@ public class XRefsQueryHandler implements IQueryHandler
     try
     {
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-      QueryContext xrefsContext = new QueryContext(info, context);
-      accessor.queryXRefs(xrefsContext);
 
       CDOBranchPoint branchPoint = context;
       CDOBranch branch = branchPoint.getBranch();
-      int maxResults = info.getMaxResults();
 
-      while (!branch.isMainBranch() && (maxResults == CDOQueryInfo.UNLIMITED_RESULTS || context.getResultCount() < maxResults))
+      if (branch.isMainBranch())
       {
-        branchPoint = branch.getBase();
-        branch = branchPoint.getBranch();
-
-        xrefsContext.setBranchPoint(branchPoint);
+        QueryContext xrefsContext = new QueryContext(info, context);
         accessor.queryXRefs(xrefsContext);
+      }
+      else
+      {
+        QueryContext xrefsContext = new QueryContextBranching(info, context);
+        accessor.queryXRefs(xrefsContext);
+
+        int maxResults = info.getMaxResults();
+        while (!branch.isMainBranch() && (maxResults == CDOQueryInfo.UNLIMITED_RESULTS || context.getResultCount() < maxResults))
+        {
+          branchPoint = branch.getBase();
+          branch = branchPoint.getBranch();
+
+          xrefsContext.setBranchPoint(branchPoint);
+          accessor.queryXRefs(xrefsContext);
+        }
       }
     }
     catch (NoSessionRegisteredException ex)
@@ -208,7 +224,7 @@ public class XRefsQueryHandler implements IQueryHandler
    * @author Eike Stepper
    * @since 3.0
    */
-  private static final class QueryContext implements IStoreAccessor.QueryXRefsContext
+  private static class QueryContext implements IStoreAccessor.QueryXRefsContext
   {
     private CDOQueryInfo info;
 
@@ -229,26 +245,26 @@ public class XRefsQueryHandler implements IQueryHandler
       branchPoint = context;
     }
 
-    public void setBranchPoint(CDOBranchPoint branchPoint)
+    public final void setBranchPoint(CDOBranchPoint branchPoint)
     {
       this.branchPoint = branchPoint;
     }
 
-    public CDOBranch getBranch()
+    public final CDOBranch getBranch()
     {
       return branchPoint.getBranch();
     }
 
-    public long getTimeStamp()
+    public final long getTimeStamp()
     {
       return branchPoint.getTimeStamp();
     }
 
-    public Map<CDOID, EClass> getTargetObjects()
+    public final Map<CDOID, EClass> getTargetObjects()
     {
       if (targetObjects == null)
       {
-        IRepository repository = context.getView().getRepository();
+        IRepository repository = getRepository();
         IStore store = repository.getStore();
         CDOPackageRegistry packageRegistry = repository.getPackageRegistry();
 
@@ -287,7 +303,7 @@ public class XRefsQueryHandler implements IQueryHandler
       return targetObjects;
     }
 
-    public EReference[] getSourceReferences()
+    public final EReference[] getSourceReferences()
     {
       if (sourceReferences == null)
       {
@@ -297,10 +313,66 @@ public class XRefsQueryHandler implements IQueryHandler
       return sourceReferences;
     }
 
+    public final Map<EClass, List<EReference>> getSourceCandidates()
+    {
+      if (sourceCandidates == null)
+      {
+        sourceCandidates = new HashMap<EClass, List<EReference>>();
+        Collection<EClass> concreteTypes = getTargetObjects().values();
+        EReference[] sourceReferences = getSourceReferences();
+
+        if (sourceReferences.length != 0)
+        {
+          InternalRepository repository = (InternalRepository)getRepository();
+          InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
+          for (EReference eReference : sourceReferences)
+          {
+            collectSourceCandidates(eReference, concreteTypes, sourceCandidates, packageRegistry);
+          }
+        }
+        else
+        {
+          collectSourceCandidates(context.getView(), concreteTypes, sourceCandidates);
+        }
+      }
+
+      return sourceCandidates;
+    }
+
+    public final int getMaxResults()
+    {
+      return info.getMaxResults();
+    }
+
+    public final IRepository getRepository()
+    {
+      return context.getView().getRepository();
+    }
+
+    public final boolean addXRef(CDOID targetID, CDOID sourceID, EReference sourceReference, int sourceIndex)
+    {
+      if (CDOIDUtil.isNull(targetID))
+      {
+        return true;
+      }
+
+      if (isIgnoredObject(sourceID))
+      {
+        return true;
+      }
+
+      return context.addResult(new CDOIDReference(targetID, sourceID, sourceReference, sourceIndex));
+    }
+
+    protected boolean isIgnoredObject(CDOID sourceID)
+    {
+      return false;
+    }
+
     private EReference[] parseSourceReferences()
     {
       List<EReference> result = new ArrayList<EReference>();
-      CDOPackageRegistry packageRegistry = context.getView().getRepository().getPackageRegistry();
+      CDOPackageRegistry packageRegistry = getRepository().getPackageRegistry();
 
       String params = (String)info.getParameters().get(CDOProtocolConstants.QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES);
       if (params == null)
@@ -322,46 +394,53 @@ public class XRefsQueryHandler implements IQueryHandler
 
       return result.toArray(new EReference[result.size()]);
     }
+  }
 
-    public Map<EClass, List<EReference>> getSourceCandidates()
+  /**
+   * @author Eike Stepper
+   */
+  private static final class QueryContextBranching extends QueryContext
+  {
+    private final CDOBranchPoint originalBranchPoint;
+
+    private final Set<CDOID> ignoredObjects = new HashSet<CDOID>();
+
+    public QueryContextBranching(CDOQueryInfo info, IQueryContext context)
     {
-      if (sourceCandidates == null)
-      {
-        sourceCandidates = new HashMap<EClass, List<EReference>>();
-        Collection<EClass> concreteTypes = getTargetObjects().values();
-        EReference[] sourceReferences = getSourceReferences();
-
-        if (sourceReferences.length != 0)
-        {
-          InternalRepository repository = (InternalRepository)context.getView().getRepository();
-          InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
-          for (EReference eReference : sourceReferences)
-          {
-            collectSourceCandidates(eReference, concreteTypes, sourceCandidates, packageRegistry);
-          }
-        }
-        else
-        {
-          collectSourceCandidates(context.getView(), concreteTypes, sourceCandidates);
-        }
-      }
-
-      return sourceCandidates;
+      super(info, context);
+      originalBranchPoint = CDOBranchUtil.copyBranchPoint(context);
     }
 
-    public int getMaxResults()
+    @Override
+    protected boolean isIgnoredObject(CDOID sourceID)
     {
-      return info.getMaxResults();
-    }
-
-    public boolean addXRef(CDOID targetID, CDOID sourceID, EReference sourceReference, int sourceIndex)
-    {
-      if (CDOIDUtil.isNull(targetID))
+      if (!ignoredObjects.add(sourceID))
       {
         return true;
       }
 
-      return context.addResult(new CDOIDReference(targetID, sourceID, sourceReference, sourceIndex));
+      if (isDetachedObject(sourceID))
+      {
+        ignoredObjects.add(sourceID);
+        return true;
+      }
+
+      return false;
+    }
+
+    private boolean isDetachedObject(CDOID sourceID)
+    {
+      if (getBranch() == originalBranchPoint.getBranch())
+      {
+        return false;
+      }
+
+      SyntheticCDORevision[] synthetics = { null };
+
+      InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)getRepository().getRevisionManager();
+      revisionManager.getRevision(sourceID, originalBranchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetics);
+
+      return synthetics[0] instanceof DetachedCDORevision;
     }
   }
 

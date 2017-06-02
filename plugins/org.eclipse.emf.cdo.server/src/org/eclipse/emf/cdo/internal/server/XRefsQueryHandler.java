@@ -451,7 +451,7 @@ public class XRefsQueryHandler implements IQueryHandler
   {
     public Factory()
     {
-      super(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES);
+      super(CDOProtocolConstants.QUERY_LANGUAGE_XREFS);
     }
 
     @Override

@@ -64,6 +64,7 @@
       vm="true"/>
   <setupTask
       xsi:type="setup:EclipseIniTask"
+      disabled="true"
       option="-Doomph.targlets.iu.filter"
       value="=.*cdo.*"
       vm="true"/>
@@ -75,15 +76,23 @@
       encoding="UTF-8"/>
   <setupTask
       xsi:type="setup:PreferenceTask"
-      key="instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE"
+      key="/instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE"
       value="ignore"/>
   <setupTask
       xsi:type="setup:PreferenceTask"
-      key="instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unclosedCloseable"
+      key="/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unclosedCloseable"
       value="ignore"/>
   <setupTask
       xsi:type="setup:PreferenceTask"
-      key="instance/org.eclipse.pde/compilers.f.unresolved-features"
+      key="/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unlikelyCollectionMethodArgumentType"
+      value="ignore"/>
+  <setupTask
+      xsi:type="setup:PreferenceTask"
+      key="/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unlikelyEqualsArgumentType"
+      value="ignore"/>
+  <setupTask
+      xsi:type="setup:PreferenceTask"
+      key="/instance/org.eclipse.pde/compilers.f.unresolved-features"
       value="2"/>
   <setupTask
       xsi:type="setup:VariableTask"
@@ -115,7 +124,8 @@
       xsi:type="setup.targlets:TargletTask">
     <targlet
         name="CDO"
-        activeRepositoryList="${eclipse.target.platform}">
+        activeRepositoryList="${eclipse.target.platform}"
+        includeBinaryEquivalents="false">
       <requirement
           name="org.eclipse.emf.cdo.site.feature.group"/>
       <requirement
@@ -140,6 +150,25 @@
           name="org.eclipse.equinox.executable.feature.group"/>
       <sourceLocator
           rootFolder="${cdo.git.clone.location}"/>
+      <repositoryList
+          name="Photon">
+        <repository
+            url="http://download.eclipse.org/releases/oxygen"/>
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.7-I-builds"/>
+        <repository
+            url="http://download.eclipse.org/tools/orbit/downloads/latest-S"/>
+        <repository
+            url="http://download.eclipse.org/modeling/mdt/uml2/updates/5.3milestones"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="http://download.eclipse.org/nebula/releases/latest"/>
+        <repository
+            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+        <repository
+            url="http://www.elver.org/eclipse/2.1.0/update"/>
+      </repositoryList>
       <repositoryList
           name="Oxygen">
         <repository
@@ -188,25 +217,9 @@
       activateTarget="false">
     <targlet
         name="CDO"
-        activeRepositoryList="${cdo.baseline.version}">
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.codegen.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.codegen.emf.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.codegen.gmf.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.ecore.editor.dawn.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.examples.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.sdk.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.tests.feature.group"/>
+        activeRepositoryList="${cdo.baseline.version}"
+        includeSources="false"
+        includeBinaryEquivalents="false">
       <requirement
           name="org.gastro.feature.group"/>
       <requirement
@@ -294,6 +307,27 @@
       <requirement
           name="org.eclipse.equinox.executable.feature.group"/>
       <repositoryList
+          name="4.6">
+        <repository
+            url="http://download.eclipse.org/modeling/emf/cdo/drops/R20170614-0227"/>
+        <repository
+            url="http://download.eclipse.org/releases/oxygen/201706281000"/>
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.7"/>
+        <repository
+            url="http://download.eclipse.org/modeling/mdt/uml2/updates/5.3"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="http://download.eclipse.org/nebula/releases/1.3.0"/>
+        <repository
+            url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
+        <repository
+            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+        <repository
+            url="http://www.elver.org/eclipse/2.1.0/update"/>
+      </repositoryList>
+      <repositoryList
           name="4.5">
         <repository
             url="http://download.eclipse.org/modeling/emf/cdo/drops/R20160607-1209"/>
@@ -317,6 +351,34 @@
     </targlet>
   </setupTask>
   <setupTask
+      xsi:type="setup.targlets:TargletTask"
+      disabled="true"
+      targetName="Baseline Target"
+      activateTarget="false">
+    <targlet
+        name="CDO Dawn"
+        activeRepositoryList="${cdo.baseline.version}">
+      <requirement
+          name="org.eclipse.emf.cdo.dawn.codegen.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.cdo.dawn.codegen.emf.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.cdo.dawn.codegen.gmf.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.cdo.dawn.ecore.editor.dawn.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.cdo.dawn.examples.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.cdo.dawn.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.cdo.dawn.sdk.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.cdo.dawn.tests.feature.group"/>
+    </targlet>
+  </setupTask>
+  <setupTask
       xsi:type="setup.workingsets:WorkingSetTask">
     <workingSet
         name="CDO"
@@ -334,7 +396,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.1 //@setupTasks.11/@workingSets.2 //@setupTasks.11/@workingSets.3 //@setupTasks.11/@workingSets.7 //@setupTasks.11/@workingSets.8"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.1 //@setupTasks.14/@workingSets.2 //@setupTasks.14/@workingSets.3 //@setupTasks.14/@workingSets.7 //@setupTasks.14/@workingSets.8"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -347,7 +409,7 @@
             pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -366,7 +428,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -379,7 +441,7 @@
             pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -392,7 +454,7 @@
             pattern="org\.eclipse\.net4j.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.5 //@setupTasks.11/@workingSets.6 //@setupTasks.11/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.5 //@setupTasks.14/@workingSets.6 //@setupTasks.14/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -405,7 +467,7 @@
             pattern="org\.eclipse\.net4j\.db.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -427,7 +489,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -453,7 +515,7 @@
             pattern="org\.eclipse\.emf\.cdo\.releng.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.7"/>
       </predicate>
     </workingSet>
   </setupTask>
@@ -553,7 +615,7 @@
     </setupTask>
   </setupTask>
   <stream name="master"
-      label="4.6 Integration (Oxygen)">
+      label="4.7 Integration (Photon)">
     <setupTask
         xsi:type="setup.p2:P2Task">
       <requirement
@@ -571,6 +633,60 @@
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.target.platform"
+        value="Photon"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="cdo.bugzilla.version"
+        value="4.7"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="cdo.baseline.version"
+        value="4.6"/>
+    <setupTask
+        xsi:type="jdt:JRETask"
+        version="JavaSE-1.8"
+        location="${jre.location-1.8}"/>
+    <setupTask
+        xsi:type="pde:APIBaselineFromTargetTask"
+        name="CDO 4.6"
+        targetName="Baseline Target"/>
+    <setupTask
+        xsi:type="setup.workingsets:WorkingSetTask">
+      <workingSet
+          name="Infrastructure"
+          id="CDO Infrastructure">
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="org\.eclipse\.emf\.cdo\.releng\.promotion.*"/>
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="org\.eclipse\.emf\.cdo\.releng\.doc\.supplemental.*"/>
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="cdo\.www.*"/>
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="org\.eclipse\.simrel\.build.*"/>
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="com\.ibm\.db2\.jcc.*"/>
+      </workingSet>
+    </setupTask>
+  </stream>
+  <stream name="4.6-maintenance"
+      label="4.6 Maintenance (Oxygen)">
+    <setupTask
+        xsi:type="setup.p2:P2Task">
+      <requirement
+          name="org.eclipse.emf.sdk.feature.group"/>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="cdo.git.branch"
+        value="streams/4.6-maintenance"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="cdo.target.platform"
         value="Oxygen"/>
     <setupTask
         xsi:type="setup:VariableTask"
@@ -579,14 +695,14 @@
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.baseline.version"
-        value="4.5"/>
+        value="4.6"/>
     <setupTask
         xsi:type="jdt:JRETask"
         version="JavaSE-1.8"
         location="${jre.location-1.8}"/>
     <setupTask
         xsi:type="pde:APIBaselineFromTargetTask"
-        name="CDO 4.5"
+        name="CDO 4.6"
         targetName="Baseline Target"/>
     <setupTask
         xsi:type="setup.workingsets:WorkingSetTask">

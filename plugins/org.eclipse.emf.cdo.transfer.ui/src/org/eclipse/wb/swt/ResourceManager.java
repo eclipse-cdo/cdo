@@ -166,6 +166,7 @@ public class ResourceManager extends SWTResourceManager
       final Point baseImageSize = new Point(bib.width, bib.height);
       CompositeImageDescriptor compositImageDesc = new CompositeImageDescriptor()
       {
+        @SuppressWarnings("deprecation")
         @Override
         protected void drawCompositeImage(int width, int height)
         {

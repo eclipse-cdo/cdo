@@ -56,6 +56,8 @@
       <!-- Clean -->
       <delete includeemptydirs="true" failonerror="false">
         <fileset dir="@{todir}" defaultexcludes="false">
+          <include name="target/**" />
+          <include name="category.xml" />
           <include name="binary/**" />
           <include name="features/**" />
           <include name="plugins/**" />

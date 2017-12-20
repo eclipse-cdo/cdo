@@ -455,7 +455,7 @@
             <equals arg1="${skip.generate.site}" arg2="true" />
           </not>
           <then>
-            <generate.site site="${releng.site}" />
+            <generate.site site="${releng.site}/target/repository" />
           </then>
         </if>
 

@@ -72,14 +72,16 @@
       </copy>
     	
       <unzip src="${build.root}/content.jar" dest="${build.root}" />
-      <replace file="${build.root}/content.xml"  token="Build Local" value="${build.qualifier}" />
+      <replaceregexp file="${build.root}/content.xml" match="Build Local" replace="${build.qualifier}" />
       <delete file="${build.root}/content.jar" />
     	<zip destfile="${build.root}/content.jar" basedir="${build.root}" file="content.xml" />
+      <delete file="${build.root}/content.xml" />
         
       <unzip src="${build.root}/artifacts.jar" dest="${build.root}" />
-      <replace file="${build.root}/artifacts.xml"  token="Build Local" value="${build.qualifier}" />
+      <replaceregexp file="${build.root}/artifacts.xml" match="Build Local" replace="${build.qualifier}" />
       <delete file="${build.root}/artifacts.jar" />
     	<zip destfile="${build.root}/artifacts.jar" basedir="${build.root}" file="artifacts.xml" />
+      <delete file="${build.root}/artifacts.xml" />
     </sequential>
   </macrodef>
 

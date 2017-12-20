@@ -1,8 +1,10 @@
 bin/
 state/
+target/
 *.local.launch
 Copy of *.launch
 *~
 ~*.docx
 ~*.pptx
 com.chronon.sb.browser.launcher.prefs
+.DS_Store

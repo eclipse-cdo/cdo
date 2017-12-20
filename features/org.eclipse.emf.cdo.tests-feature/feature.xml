@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.emf.cdo.tests"
       label="%featureName"
-      version="4.2.400.qualifier"
+      version="4.3.0.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.emf.cdo.license"
       license-feature-version="0.0.0">
@@ -34,10 +34,6 @@
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
 
-   <includes
-         id="org.eclipse.emf.cdo.tests.source"
-         version="0.0.0"/>
-
    <plugin
          id="org.eclipse.emf.cdo.tests"
          download-size="0"
@@ -54,6 +50,13 @@
 
    <plugin
          id="org.eclipse.emf.cdo.tests.lissome"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.tests.hibernate"
          download-size="0"
          install-size="0"
          version="0.0.0"

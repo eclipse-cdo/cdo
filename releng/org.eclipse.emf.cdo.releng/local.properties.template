@@ -1,0 +1,30 @@
+# Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#    Eike Stepper - initial API and implementation
+
+ant.contrib = C:/develop/bin/ant-contrib/ant-contrib-1.0b3.jar
+original.git.dir = C:/develop/cdo/master/git/cdo
+build.root = C:/develop/cdo/master/build
+
+build.type = N
+loglevel = INFO
+
+# Set the following properties to true to speed up repeated builds
+keep.git = false
+
+skip.clean = false
+skip.test = false
+skip.generate = false
+
+skip.generate = false
+skip.generate.site = false
+skip.generate.help = false
+skip.generate.index = false
+skip.generate.bookmarks = false
+skip.generate.dropins = false
+skip.generate.apireports = false

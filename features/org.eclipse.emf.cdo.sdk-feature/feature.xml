@@ -44,15 +44,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.compare.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.server.embedded"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.server.embedded.source"
          version="0.0.0"/>
 
    <includes
@@ -65,22 +57,6 @@
 
    <includes
          id="org.eclipse.emf.cdo.server.lissome"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.sdk.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.server.hibernate.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.server.db4o.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.server.objectivity.source"
          version="0.0.0"/>
 
    <includes

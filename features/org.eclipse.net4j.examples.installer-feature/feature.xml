@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.net4j.examples.installer"
       label="%featureName"
-      version="4.2.400.qualifier"
+      version="4.2.500.qualifier"
       provider-name="%providerName"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.cdo.license"
@@ -34,10 +34,6 @@
       <update label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
-
-   <includes
-         id="org.eclipse.net4j.examples.installer.source"
-         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.net4j.examples.installer"

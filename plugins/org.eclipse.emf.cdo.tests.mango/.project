@@ -24,7 +24,7 @@
 				</dictionary>
 				<dictionary>
 					<key>release.path</key>
-					<value>/org.eclipse.emf.cdo.releng.release/release.xml</value>
+					<value>/org.eclipse.emf.cdo.releng/versions/release.xml</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>
@@ -34,4 +34,15 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.oomph.version.VersionNature</nature>
 	</natures>
+  <filteredResources>
+    <filter>
+      <id>1396938000000</id>
+      <name></name>
+      <type>10</type>
+      <matcher>
+        <id>org.eclipse.ui.ide.multiFilter</id>
+        <arguments>1.0-projectRelativePath-matches-true-false-target</arguments>
+      </matcher>
+    </filter>
+  </filteredResources>
 </projectDescription>

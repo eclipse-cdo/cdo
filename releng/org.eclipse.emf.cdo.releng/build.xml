@@ -70,6 +70,16 @@
           <include name="**" />
         </fileset>
       </copy>
+    	
+      <unzip src="${build.root}/content.jar" dest="${build.root}" />
+      <replace file="${build.root}/content.xml"  token="Build Local" value="${build.qualifier}" />
+      <delete file="${build.root}/content.jar" />
+    	<zip destfile="${build.root}/content.jar" file="${build.root}/content.xml" />
+        
+      <unzip src="${build.root}/artifacts.jar" dest="${build.root}" />
+      <replace file="${build.root}/artifacts.xml"  token="Build Local" value="${build.qualifier}" />
+      <delete file="${build.root}/artifacts.jar" />
+    	<zip destfile="${build.root}/artifacts.jar" file="${build.root}/artifacts.xml" />
     </sequential>
   </macrodef>
 
@@ -252,27 +262,6 @@
         <property name="build.type" value="${env.BUILD_TYPE}" />
       </else>
     </if>
-
-    <!-- site.signing -->
-    <condition property="site.signing" value="true" else="false">
-      <and>
-        <not>
-          <equals arg1="${build.type}" arg2="N" />
-        </not>
-      	<or>
-      	  <equals arg1="${env.HUDSON_URL}" arg2="https://hudson.eclipse.org/cdo/" />
-      	  <equals arg1="${env.HUDSON_URL}" arg2="https://hudson.eclipse.org/hudson/" />
-      	</or>
-      </and>
-    </condition>
-
-    <!-- eclipse.staging.area -->
-    <if>
-      <equals arg1="${site.signing}" arg2="true" />
-      <then>
-        <property name="eclipse.staging.area" value="/shared/download-staging.priv/modeling/emf/cdo/${env.JOB_NAME}" />
-      </then>
-    </if>
   </target>
 
   <!-- ========== -->
@@ -284,7 +273,6 @@
 
     <property name="build.location" value="local" />
     <property name="build.trigger" value="manual" />
-    <property name="site.signing" value="false" />
     <property name="git.clone" value="${build.root}/git" />
 
     <!-- build.timestamp -->
@@ -373,7 +361,6 @@
     <echo message="build.trigger = ${build.trigger}" />
     <echo message="build.timestamp = ${build.timestamp}" />
     <echo message="build.qualifier = ${build.qualifier}" />
-    <echo message="site.signing = ${site.signing}" />
   </target>
 
   <!-- ===== -->

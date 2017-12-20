@@ -26,3 +26,4 @@ skip.generate.site = false
 skip.generate.help = false
 skip.generate.index = false
 skip.generate.dropins = false
+skip.generate.bookmarks =false

@@ -109,6 +109,41 @@
     </sequential>
   </macrodef>
 
+  <!-- =================== -->
+  <!-- Generate Booksmarks -->
+  <!-- =================== -->
+
+  <macrodef name="generate.bookmarks">
+    <sequential>
+      <echo message="" />
+      <echo message="Generating dependency bookmarks" />
+      <property name="bookmarks.tmp" location="${build.root}/bookmarks.tmp" />
+      <xslt style="xsl/bom2bookmarks.xsl" in="${releng.dir}/org.eclipse.emf.cdo.releng.target" out="${bookmarks.tmp}" />
+      <property name="bookmarks.xml" location="${build.root}/bookmarks.xml" />
+      <concat destfile="${bookmarks.xml}">
+        <header filtering="false">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;bookmarks&gt;
+</header>
+        <union>
+          <sort>
+            <tokens>
+              <file file="${bookmarks.tmp}" />
+              <linetokenizer includedelims="true" />
+            </tokens>
+          </sort>
+        </union>
+        <filterchain>
+          <linecontains>
+            <contains value="http://" />
+          </linecontains>
+        </filterchain>
+        <footer filtering="false">&lt;/bookmarks&gt;
+			</footer>
+      </concat>
+      <delete file="${bookmarks.tmp}" />
+    </sequential>
+  </macrodef>
+
   <!-- ================ -->
   <!-- Generate Dropins -->
   <!-- ================ -->
@@ -125,7 +160,7 @@
           <include name="plugins/*.jar" />
         </fileset>
       </zip>
-      <echo message=" for use with a &lt;a href=&quot;http://help.eclipse.org/indigo/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/misc/p2_dropins_format.html&quot;&gt;dropins&lt;/a&gt; folder."
+      <echo message=" for use with a &lt;a href=&quot;http://help.eclipse.org/oxygen/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/misc/p2_dropins_format.html&quot;&gt;dropins&lt;/a&gt; folder."
             file="${zips}/emf-cdo-${build.qualifier}-Dropins.properties" />
     </sequential>
   </macrodef>
@@ -437,6 +472,15 @@
           </not>
           <then>
             <generate.index />
+          </then>
+        </if>
+
+        <if>
+          <not>
+            <equals arg1="${skip.generate.bookmarks}" arg2="true" />
+          </not>
+          <then>
+            <generate.bookmarks />
           </then>
         </if>
 

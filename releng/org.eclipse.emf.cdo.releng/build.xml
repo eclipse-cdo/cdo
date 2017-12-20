@@ -56,8 +56,6 @@
       <!-- Clean -->
       <delete includeemptydirs="true" failonerror="false">
         <fileset dir="@{todir}" defaultexcludes="false">
-          <include name="target/**" />
-          <include name="category.xml" />
           <include name="binary/**" />
           <include name="features/**" />
           <include name="plugins/**" />
@@ -108,43 +106,6 @@
       <xslt style="xsl/content2html.xsl" in="${content.xml}" out="${build.root}/index.html" />
       <xslt style="xsl/content2xml.xsl" in="${content.xml}" out="${build.root}/index.xml" />
       <delete file="${content.xml}" />
-    </sequential>
-  </macrodef>
-
-  <!-- =================== -->
-  <!-- Generate Booksmarks -->
-  <!-- =================== -->
-
-  <macrodef name="generate.bookmarks">
-    <sequential>
-      <echo message="" />
-      <echo message="Generating dependency bookmarks" />
-      <property name="bookmarks.tmp" location="${build.root}/bookmarks.tmp" />
-      <xslt style="xsl/bom2bookmarks.xsl" in="${build.root}/bom.xml" out="${bookmarks.tmp}" />
-      <replace file="${bookmarks.tmp}" token="http://dev.eclipse.org" value="file://to-be-removed" />
-      <replace file="${bookmarks.tmp}" token="file:/home/data/httpd/" value="http://" />
-      <property name="bookmarks.xml" location="${build.root}/bookmarks.xml" />
-      <concat destfile="${bookmarks.xml}">
-        <header filtering="false">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;bookmarks&gt;
-</header>
-        <union>
-          <sort>
-            <tokens>
-              <file file="${bookmarks.tmp}" />
-              <linetokenizer includedelims="true" />
-            </tokens>
-          </sort>
-        </union>
-        <filterchain>
-          <linecontains>
-            <contains value="http://" />
-          </linecontains>
-        </filterchain>
-        <footer filtering="false">&lt;/bookmarks&gt;
-			</footer>
-      </concat>
-      <delete file="${bookmarks.tmp}" />
     </sequential>
   </macrodef>
 
@@ -476,15 +437,6 @@
           </not>
           <then>
             <generate.index />
-          </then>
-        </if>
-
-        <if>
-          <not>
-            <equals arg1="${skip.generate.bookmarks}" arg2="true" />
-          </not>
-          <then>
-            <generate.bookmarks />
           </then>
         </if>
 

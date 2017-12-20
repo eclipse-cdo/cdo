@@ -118,7 +118,7 @@
       <echo message="" />
       <echo message="Generating dependency bookmarks" />
       <property name="bookmarks.tmp" location="${build.root}/bookmarks.tmp" />
-      <xslt style="xsl/bom2bookmarks.xsl" in="${releng.dir}/org.eclipse.emf.cdo.releng.target" out="${bookmarks.tmp}" />
+      <xslt style="xsl/bom2bookmarks.xsl" in="${releng}/org.eclipse.emf.cdo.releng.target" out="${bookmarks.tmp}" />
       <property name="bookmarks.xml" location="${build.root}/bookmarks.xml" />
       <concat destfile="${bookmarks.xml}">
         <header filtering="false">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;

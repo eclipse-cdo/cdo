@@ -193,8 +193,6 @@
       <requirement
           name="org.eclipse.emf.cdo.all.feature.group"/>
       <requirement
-          name="org.eclipse.emf.cdo.releng"/>
-      <requirement
           name="org.eclipse.emf.cdo.examples.client"/>
       <requirement
           name="org.eclipse.emf.cdo.examples.client.offline"/>
@@ -202,6 +200,12 @@
           name="org.eclipse.emf.cdo.examples.master"/>
       <requirement
           name="org.eclipse.emf.cdo.examples.clone"/>
+      <requirement
+          name="org.eclipse.emf.cdo.releng"/>
+      <requirement
+          name="org.eclipse.emf.cdo.releng.parent.plain.project"/>
+      <requirement
+          name="org.eclipse.emf.cdo.releng.site.plain.project"/>
       <requirement
           name="org.eclipse.platform.feature.group"/>
       <requirement

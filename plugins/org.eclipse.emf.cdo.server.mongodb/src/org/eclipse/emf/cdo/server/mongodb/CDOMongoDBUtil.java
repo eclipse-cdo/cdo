@@ -24,6 +24,7 @@ import com.mongodb.MongoURI;
  *
  * @author Eike Stepper
  */
+@SuppressWarnings("deprecation")
 public final class CDOMongoDBUtil
 {
   private CDOMongoDBUtil()

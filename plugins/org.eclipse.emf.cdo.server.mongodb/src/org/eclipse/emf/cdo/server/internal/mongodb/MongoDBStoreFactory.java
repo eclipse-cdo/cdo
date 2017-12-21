@@ -29,6 +29,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
+@SuppressWarnings("deprecation")
 public class MongoDBStoreFactory implements IStoreFactory
 {
   public MongoDBStoreFactory()

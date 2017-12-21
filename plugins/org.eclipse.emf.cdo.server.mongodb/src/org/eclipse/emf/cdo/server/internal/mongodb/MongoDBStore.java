@@ -64,6 +64,7 @@ import java.util.Set;
  *
  * @author Eike Stepper
  */
+@SuppressWarnings("deprecation")
 public class MongoDBStore extends Store implements IMongoDBStore, //
     NoQueryXRefs, NoLargeObjects, NoFeatureMaps, NoHandleRevisions, NoRawAccess
 {

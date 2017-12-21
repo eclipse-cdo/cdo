@@ -24,6 +24,7 @@ import com.mongodb.MongoURI;
 /**
  * @author Eike Stepper
  */
+@SuppressWarnings("deprecation")
 public class MongoDBConfig extends RepositoryConfig
 {
   public static final String STORE_NAME = "MongoDB";

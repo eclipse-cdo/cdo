@@ -29,8 +29,8 @@ Eike Stepper - initial API and implementation
   <packaging>pom</packaging>
 
   <modules>
-    <module>../../../features/org.eclipse.emf.cdo.all-feature</module>
     <module>../../../features/org.eclipse.emf.cdo-feature</module>
+    <module>../../../features/org.eclipse.emf.cdo.all-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.compare-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.dawn-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.doc-feature</module>

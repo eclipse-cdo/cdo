@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.gastro.inventory.edit;singleton:=true
-Bundle-Version: 4.0.500.qualifier
+Bundle-Version: 4.0.600.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.gastro.inventory.provider.InventoryEditPlugin$Implementation
 Bundle-Vendor: %providerName
@@ -13,3 +13,4 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.emf.cdo.edit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.gastro.inventory;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.gastro.inventory.edit

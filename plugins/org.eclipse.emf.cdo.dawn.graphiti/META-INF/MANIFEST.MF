@@ -27,3 +27,4 @@ Export-Package: org.eclipse.emf.cdo.dawn.graphiti;version="2.1.400",
  org.eclipse.emf.cdo.dawn.graphiti.util;version="2.1.400",
  org.eclipse.emf.cdo.dawn.graphiti.wizards;version="2.1.400"
 Bundle-Localization: plugin
+Automatic-Module-Name: org.eclipse.emf.cdo.dawn.graphiti

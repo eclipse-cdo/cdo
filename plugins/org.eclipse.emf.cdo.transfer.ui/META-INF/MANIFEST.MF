@@ -23,3 +23,4 @@ Export-Package: org.eclipse.emf.cdo.transfer.internal.ui;version="4.2.500";x-int
  org.eclipse.wb.swt;version="4.2.100";x-internal:=true
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.emf.cdo.transfer.internal.ui.bundle.OM$Activator
+Automatic-Module-Name: org.eclipse.emf.cdo.transfer.ui

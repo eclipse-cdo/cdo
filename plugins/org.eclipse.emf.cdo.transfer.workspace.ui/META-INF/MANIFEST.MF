@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.transfer.workspace.ui;singleton:=true
-Bundle-Version: 4.2.200.qualifier
+Bundle-Version: 4.2.300.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -15,3 +15,4 @@ Export-Package: org.eclipse.emf.cdo.transfer.internal.workspace;version="4.2.0";
  org.eclipse.emf.cdo.transfer.internal.workspace.bundle;version="4.2.0";x-internal:=true
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.emf.cdo.transfer.internal.workspace.bundle.OM$Activator
+Automatic-Module-Name: org.eclipse.emf.cdo.transfer.workspace.ui

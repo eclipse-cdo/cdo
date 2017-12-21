@@ -30,3 +30,4 @@ Export-Package: org.eclipse.emf.cdo.dawn;version="2.0.600",
  org.eclipse.emf.cdo.dawn.transaction;version="2.0.600",
  org.eclipse.emf.cdo.internal.dawn.bundle;version="2.0.600"
 Bundle-Vendor: %providerName
+Automatic-Module-Name: org.eclipse.emf.cdo.dawn

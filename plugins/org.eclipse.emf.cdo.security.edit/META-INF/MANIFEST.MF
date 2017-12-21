@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.security.edit;singleton:=true
-Bundle-Version: 4.4.0.qualifier
+Bundle-Version: 4.4.100.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.emf.cdo.security.provider.SecurityEditPlugin$Implementation
 Bundle-Vendor: %providerName
@@ -13,3 +13,4 @@ Require-Bundle: org.eclipse.emf.cdo.edit;bundle-version="[4.1.0,5.0.0)";visibili
  org.eclipse.emf.cdo.security;bundle-version="[4.1.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.expressions.edit;bundle-version="[4.3.0,5.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emf.cdo.security.edit

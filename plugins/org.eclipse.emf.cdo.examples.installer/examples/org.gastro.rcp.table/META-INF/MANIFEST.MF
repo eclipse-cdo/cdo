@@ -10,3 +10,4 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: com.swtdesigner;version="4.0.500";x-internal:=true,
  org.gastro.rcp.internal.table;version="4.0.500";x-internal:=true
+Automatic-Module-Name: org.gastro.rcp.table

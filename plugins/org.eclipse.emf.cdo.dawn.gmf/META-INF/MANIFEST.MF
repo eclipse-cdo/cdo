@@ -35,3 +35,4 @@ Export-Package: org.eclipse.emf.cdo.dawn.gmf;version="2.1.500",
  org.eclipse.emf.cdo.dawn.gmf.util;version="2.1.500",
  org.eclipse.emf.cdo.dawn.transaction;version="2.1.0"
 Bundle-Localization: plugin
+Automatic-Module-Name: org.eclipse.emf.cdo.dawn.gmf

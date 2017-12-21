@@ -17,3 +17,4 @@ Import-Package: com.google.common.base;version="[15.0.0,22.0.0)",
  com.google.common.collect;version="[15.0.0,22.0.0)",
  com.google.common.cache;version="[15.0.0,22.0.0)",
  com.google.common.util.concurrent;version="[15.0.0,22.0.0)"
+Automatic-Module-Name: org.eclipse.emf.cdo.compare

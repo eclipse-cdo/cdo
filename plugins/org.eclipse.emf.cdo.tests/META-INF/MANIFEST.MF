@@ -71,3 +71,4 @@ Export-Package: base;version="4.0.200",
    org.eclipse.emf.cdo.tests.mongodb",
  reference.util;version="4.0.200"
 Eclipse-BuddyPolicy: dependent
+Automatic-Module-Name: org.eclipse.emf.cdo.tests

@@ -23,3 +23,4 @@ Import-Package: com.google.common.base;version="[15.0.0,22.0.0)",
 Export-Package: org.eclipse.emf.cdo.ui.compare;version="4.4.200",
  org.eclipse.emf.cdo.ui.internal.compare;version="4.4.200";x-friends:="org.eclipse.emf.cdo.explorer.ui",
  org.eclipse.emf.cdo.ui.internal.compare.bundle;version="4.4.200";x-internal:=true
+Automatic-Module-Name: org.eclipse.emf.cdo.ui.compare

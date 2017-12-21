@@ -21,3 +21,4 @@ Import-Package: com.mongodb;version="[3.0.0,4.0.0)",
  org.bson.io;version="[3.0.0,4.0.0)",
  org.bson.types;version="[3.0.0,4.0.0)",
  org.bson.util;version="[3.0.0,4.0.0)"
+Automatic-Module-Name: org.eclipse.emf.cdo.server.mongodb

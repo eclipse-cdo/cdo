@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.security.editor;singleton:=true
-Bundle-Version: 4.2.400.qualifier
+Bundle-Version: 4.2.500.qualifier
 Bundle-Localization: plugin
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
@@ -16,3 +16,4 @@ Require-Bundle: org.eclipse.core.resources;bundle-version="[3.5.0,4.0.0)";visibi
  org.eclipse.emf.ecore.edit;bundle-version="[2.5.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.security.edit;bundle-version="[4.1.0,5.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.emf.cdo.security.editor

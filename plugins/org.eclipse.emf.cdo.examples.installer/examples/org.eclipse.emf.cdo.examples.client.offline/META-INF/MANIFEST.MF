@@ -26,3 +26,4 @@ Bundle-ClassPath: .
 Export-Package: org.eclipse.emf.cdo.examples.client.offline;version="4.2.500";x-internal:=true,
  org.eclipse.emf.cdo.examples.client.offline.nodes;version="4.2.500";x-internal:=true,
  org.eclipse.wb.swt;version="4.2.100";x-internal:=true
+Automatic-Module-Name: org.eclipse.emf.cdo.examples.client.offline

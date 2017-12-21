@@ -7,16 +7,6 @@
     xsi:schemaLocation="http://www.eclipse.org/CDO/releng/setup/1.0 ../../plugin/org.eclipse.oomph.base/model/legacy/setup.ecore"
     setup:toolVersion="8">
   <dependencies
-      id="org.eclipse.emf.cdo.all.feature.group"/>
-  <dependencies
-      id="org.eclipse.emf.cdo.examples.client"/>
-  <dependencies
-      id="org.eclipse.emf.cdo.examples.client.offline"/>
-  <dependencies
-      id="org.eclipse.emf.cdo.examples.master"/>
-  <dependencies
-      id="org.eclipse.emf.cdo.examples.clone"/>
-  <dependencies
       id="org.eclipse.platform.feature.group"/>
   <dependencies
       id="org.eclipse.jdt.feature.group"/>

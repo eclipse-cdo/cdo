@@ -45,7 +45,7 @@ public class Coll
     DBObject index = new BasicDBObject();
     index.put(element + "." + field, asc ? 1 : -1);
 
-    collection.ensureIndex(index);
+    collection.createIndex(index);
   }
 
   public void ensureIndex(String element, String... fields)
@@ -57,7 +57,7 @@ public class Coll
 
     }
 
-    collection.ensureIndex(index);
+    collection.createIndex(index);
   }
 
   /**

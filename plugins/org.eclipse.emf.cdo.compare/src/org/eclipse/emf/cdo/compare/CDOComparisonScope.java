@@ -45,6 +45,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOView;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterators;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -68,12 +69,12 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
 
   public Iterator<? extends Resource> getCoveredResources(ResourceSet resourceSet)
   {
-    return Iterators.emptyIterator();
+    return Collections.<Resource> emptyList().iterator();
   }
 
   public Iterator<? extends EObject> getCoveredEObjects(Resource resource)
   {
-    return Iterators.emptyIterator();
+    return Collections.<EObject> emptyList().iterator();
   }
 
   public final boolean isResolveProxies()

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.tests.mongodb;singleton:=true
-Bundle-Version: 4.0.500.qualifier
+Bundle-Version: 4.0.600.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -12,13 +12,12 @@ Bundle-ClassPath: .
 Require-Bundle: org.eclipse.emf.cdo.tests;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.server.mongodb;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
 Eclipse-BuddyPolicy: dependent
-Import-Package: com.mongodb;version="[2.0.0,3.0.0)",
- com.mongodb.gridfs;version="[2.0.0,3.0.0)",
- com.mongodb.io;version="[2.0.0,3.0.0)",
- com.mongodb.util;version="[2.0.0,3.0.0)",
- org.bson;version="[2.0.0,3.0.0)",
- org.bson.io;version="[2.0.0,3.0.0)",
- org.bson.types;version="[2.0.0,3.0.0)",
- org.bson.util;version="[2.0.0,3.0.0)"
-Export-Package: org.eclipse.emf.cdo.tests.mongodb;version="4.0.500";x-internal:=true,
- org.eclipse.emf.cdo.tests.mongodb.bundle;version="4.0.500";x-internal:=true
+Import-Package: com.mongodb;version="[3.0.0,4.0.0)",
+ com.mongodb.gridfs;version="[3.0.0,4.0.0)",
+ com.mongodb.util;version="[3.0.0,4.0.0)",
+ org.bson;version="[3.0.0,4.0.0)",
+ org.bson.io;version="[3.0.0,4.0.0)",
+ org.bson.types;version="[3.0.0,4.0.0)",
+ org.bson.util;version="[3.0.0,4.0.0)"
+Export-Package: org.eclipse.emf.cdo.tests.mongodb;version="4.0.600";x-internal:=true,
+ org.eclipse.emf.cdo.tests.mongodb.bundle;version="4.0.600";x-internal:=true

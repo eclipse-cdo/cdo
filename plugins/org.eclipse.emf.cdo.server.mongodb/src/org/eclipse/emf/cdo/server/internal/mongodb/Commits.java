@@ -138,7 +138,7 @@ public class Commits extends Coll
       index.put(COMMITS_BRANCH, 1);
       index.put(REVISIONS + "." + REVISIONS_VERSION, 1);
 
-      collection.ensureIndex(index);
+      collection.createIndex(index);
     }
     else
     {

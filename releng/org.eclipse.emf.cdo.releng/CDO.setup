@@ -572,6 +572,12 @@
             xsi:type="predicates:NamePredicate"
             pattern="org\.eclipse\.emf\.cdo\.releng.*"/>
         <operand
+            xsi:type="predicates:NotPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org\.eclipse\.emf\.cdo\.releng\.promotion.*"/>
+        </operand>
+        <operand
             xsi:type="workingsets:ExclusionPredicate"
             excludedWorkingSet="//@setupTasks.15/@workingSets.7"/>
       </predicate>

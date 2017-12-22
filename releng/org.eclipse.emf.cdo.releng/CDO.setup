@@ -167,7 +167,7 @@
           source="http:/www.eclipse.org/oomph/targlets/TargetDefinitionGenerator">
         <detail
             key="location">
-          <value>${cdo.git.clone.location/releng/org.eclipse.emf.cdo.releng/org.eclipse.emf.cdo.releng.target}</value>
+          <value>${cdo.git.clone.location/releng/org.eclipse.emf.cdo.releng.parent/tp//org.eclipse.emf.cdo.releng.tp.target}</value>
         </detail>
         <detail
             key="extraUnits">

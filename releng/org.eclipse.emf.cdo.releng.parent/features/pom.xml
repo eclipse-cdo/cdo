@@ -90,7 +90,7 @@ Eike Stepper - initial API and implementation
                   <goal>source-feature</goal>
                 </goals>
                 <configuration>
-                <labelSuffix>${sourceFeatureLabelSuffix}</labelSuffix>
+                <labelSuffix xml:space="preserve"> Source</labelSuffix>
                   <excludes>
                     <feature id="org.eclipse.emf.cdo.doc"/>
                     <feature id="org.eclipse.emf.cdo.epp"/>

@@ -203,6 +203,8 @@
       <requirement
           name="org.eclipse.emf.cdo.releng"/>
       <requirement
+          name="org.eclipse.emf.cdo.releng.apireports"/>
+      <requirement
           name="org.eclipse.emf.cdo.releng.parent.plain.project"/>
       <requirement
           name="org.eclipse.emf.cdo.releng.site.plain.project"/>

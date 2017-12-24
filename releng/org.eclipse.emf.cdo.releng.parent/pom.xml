@@ -214,6 +214,7 @@ Eike Stepper - initial API and implementation
         <module>plugins</module>
         <module>tp</module>
 		    <module>../org.eclipse.emf.cdo.releng</module>
+		    <module>../org.eclipse.emf.cdo.releng.apireports</module>
 		    <module>../org.eclipse.emf.cdo.releng.help</module>
         <module>../org.eclipse.emf.cdo.releng.site</module>
       </modules>

@@ -50,12 +50,17 @@
     <requirement
         name="org.eclipse.emf.ecoretools.sdk.feature.group"
         optional="true"/>
+    <requirement
+        name="org.eclipse.emf.cdo.releng.apireports"
+        optional="true"/>
     <repository
         url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
     <repository
         url="http://download.eclipse.org/egit/updates-stable-nightly"/>
     <repository
         url="http://download.eclipse.org/oomph/updates"/>
+    <repository
+        url="http://download.eclipse.org/modeling/emf/cdo/updates/integration"/>
   </setupTask>
   <setupTask
       xsi:type="setup:EclipseIniTask"

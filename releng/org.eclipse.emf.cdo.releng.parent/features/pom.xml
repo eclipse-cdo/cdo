@@ -107,6 +107,7 @@ Eike Stepper - initial API and implementation
                     <plugin id="org.eclipse.emf.cdo.doc"/>
                     <plugin id="org.eclipse.emf.cdo.examples.installer"/>
                     <plugin id="org.eclipse.emf.cdo.releng.help"/>
+                    <plugin id="org.eclipse.emf.cdo.releng.apireports"/>
                     <plugin id="org.eclipse.nebula.widgets.gallery"/>
                     <plugin id="org.eclipse.nebula.widgets.pshelf"/>
                     <plugin id="org.eclipse.net4j.db.doc"/>

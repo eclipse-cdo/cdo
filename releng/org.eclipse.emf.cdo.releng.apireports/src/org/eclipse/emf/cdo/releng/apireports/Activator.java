@@ -10,7 +10,9 @@
  */
 package org.eclipse.emf.cdo.releng.apireports;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
 
 import org.osgi.framework.BundleContext;
 
@@ -44,5 +46,25 @@ public class Activator extends Plugin
   public static Activator getDefault()
   {
     return plugin;
+  }
+
+  public static IStatus errorStatus(String message)
+  {
+    return new Status(IStatus.ERROR, PLUGIN_ID, message);
+  }
+
+  public static Status errorStatus(Throwable ex)
+  {
+    return new Status(IStatus.ERROR, PLUGIN_ID, ex.getMessage(), ex);
+  }
+
+  public static void log(Throwable ex)
+  {
+    log(errorStatus(ex));
+  }
+
+  public static void log(IStatus status)
+  {
+    getDefault().getLog().log(status);
   }
 }

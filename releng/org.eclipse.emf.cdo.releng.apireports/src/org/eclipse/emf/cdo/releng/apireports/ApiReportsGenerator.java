@@ -29,7 +29,6 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.pde.api.tools.internal.ApiBaselineManager;
 import org.eclipse.pde.api.tools.internal.comparator.DeltaXmlVisitor;
-import org.eclipse.pde.api.tools.internal.provisional.ApiPlugin;
 import org.eclipse.pde.api.tools.internal.provisional.Factory;
 import org.eclipse.pde.api.tools.internal.provisional.IApiAnnotations;
 import org.eclipse.pde.api.tools.internal.provisional.IApiDescription;
@@ -75,7 +74,7 @@ public final class ApiReportsGenerator
 
       if (baselineName == null || baselineName.length() == 0)
       {
-        return new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Baseline name not specified");
+        return Activator.errorStatus("Baseline name not specified");
       }
     }
 
@@ -109,7 +108,7 @@ public final class ApiReportsGenerator
             File parent = reportFile.getParentFile();
             if (!parent.exists() && !parent.mkdirs())
             {
-              return new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Failed to create report directory structure");
+              return Activator.errorStatus("Failed to create report directory structure");
             }
           }
 
@@ -120,7 +119,7 @@ public final class ApiReportsGenerator
           IApiBaseline baseline = ApiBaselineManager.getManager().getApiBaseline(baselineName);
           if (baseline == null)
           {
-            return new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Baseline not found: " + baselineName);
+            return Activator.errorStatus("Baseline not found: " + baselineName);
           }
 
           IDelta delta = ApiComparator.compare(scope, baseline, VisibilityModifiers.API, false, true, monitor);
@@ -138,13 +137,13 @@ public final class ApiReportsGenerator
             progress.worked(25);
           }
         }
-        catch (IOException e)
-        {
-          ApiPlugin.log(e);
-        }
         catch (CoreException e)
         {
-          ApiPlugin.log(e);
+          Activator.log(e.getStatus());
+        }
+        catch (Throwable e)
+        {
+          Activator.log(e);
         }
         finally
         {
@@ -310,13 +309,13 @@ public final class ApiReportsGenerator
             break;
           }
         }
-        catch (JavaModelException e)
-        {
-          ApiPlugin.log(e);
-        }
         catch (CoreException e)
         {
-          ApiPlugin.log(e);
+          Activator.log(e.getStatus());
+        }
+        catch (Throwable e)
+        {
+          Activator.log(e);
         }
       }
     }
@@ -378,7 +377,11 @@ public final class ApiReportsGenerator
     }
     catch (CoreException e)
     {
-      ApiPlugin.log(e);
+      Activator.log(e.getStatus());
+    }
+    catch (Throwable e)
+    {
+      Activator.log(e);
     }
   }
 
@@ -398,7 +401,11 @@ public final class ApiReportsGenerator
       }
       catch (CoreException e)
       {
-        ApiPlugin.log(e);
+        Activator.log(e.getStatus());
+      }
+      catch (Throwable e)
+      {
+        Activator.log(e);
       }
     }
   }

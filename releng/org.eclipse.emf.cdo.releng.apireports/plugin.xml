@@ -21,5 +21,43 @@
          <run class="org.eclipse.emf.cdo.releng.apireports.ApiReportsApplication"/>
       </application>
    </extension>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.emf.cdo.releng.apireports.ApiReportsHandler"
+            id="org.eclipse.emf.cdo.releng.apireports.ApiReportsGenerator"
+            name="API Reports Generator">
+      </command>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="org.eclipse.emf.cdo.releng.apireports.ApiReportsGenerator"
+               icon="icons/report.gif"
+               label="Generate API Report"
+               style="push"
+               tooltip="Generate API Report">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                      <adapt type="org.eclipse.core.resources.IFile">
+                         <test property="org.eclipse.core.resources.name" value="api.properties" />
+                      </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
    
 </plugin>

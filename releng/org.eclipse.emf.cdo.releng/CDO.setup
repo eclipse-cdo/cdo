@@ -68,12 +68,6 @@
       value="4g"
       vm="true"/>
   <setupTask
-      xsi:type="setup:EclipseIniTask"
-      disabled="true"
-      option="-Doomph.targlets.iu.filter"
-      value="=.*cdo.*"
-      vm="true"/>
-  <setupTask
       xsi:type="setup:ResourceCreationTask"
       excludedTriggers="STARTUP MANUAL"
       content="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;section name=&quot;Workbench&quot;>&#xD;&#xA;&#x9;&lt;section name=&quot;org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart&quot;>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;true&quot; key=&quot;group_libraries&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;false&quot; key=&quot;linkWithEditor&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;2&quot; key=&quot;layout&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;2&quot; key=&quot;rootMode&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;packageExplorer configured=&amp;quot;true&amp;quot; group_libraries=&amp;quot;1&amp;quot; layout=&amp;quot;2&amp;quot; linkWithEditor=&amp;quot;0&amp;quot; rootMode=&amp;quot;2&amp;quot; sortWorkingSets=&amp;quot;false&amp;quot; workingSetName=&amp;quot;&amp;quot;&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;localWorkingSetManager&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;workingSet editPageId=&amp;quot;org.eclipse.jdt.internal.ui.OthersWorkingSet&amp;quot; factoryID=&amp;quot;org.eclipse.ui.internal.WorkingSetFactory&amp;quot; id=&amp;quot;1382792884467_1&amp;quot; label=&amp;quot;Other Projects&amp;quot; name=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;/localWorkingSetManager&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;activeWorkingSet workingSetName=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;allWorkingSets workingSetName=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;/packageExplorer&amp;gt;&quot; key=&quot;memento&quot;/>&#xD;&#xA;&#x9;&lt;/section>&#xD;&#xA;&lt;/section>&#xD;&#xA;"
@@ -290,21 +284,27 @@
         includeSources="false"
         includeBinaryEquivalents="false">
       <requirement
-          name="org.gastro.feature.group"/>
+          name="org.eclipse.emf.cdo.dawn.category"/>
       <requirement
-          name="org.eclipse.emf.cdo.license.feature.group"/>
+          name="org.eclipse.emf.cdo.category"/>
+      <requirement
+          name="org.eclipse.emf.cdo.server.category"/>
+      <requirement
+          name="org.eclipse.emf.cdo.server.hibernate.category"/>
+      <requirement
+          name="org.eclipse.net4j.db.category"/>
+      <requirement
+          name="org.eclipse.net4j.category"/>
+      <requirement
+          name="org.eclipse.net4j.util.category"/>
+      <requirement
+          name="org.eclipse.emf.cdo.releng.hidden.category"/>
       <requirement
           name="org.eclipse.emf.cdo.feature.group"/>
       <requirement
           name="org.eclipse.emf.cdo.compare.feature.group"/>
       <requirement
-          name="org.eclipse.emf.cdo.doc.feature.group"/>
-      <requirement
           name="org.eclipse.emf.cdo.epp.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.examples.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.examples.installer.feature.group"/>
       <requirement
           name="org.eclipse.emf.cdo.explorer.feature.group"/>
       <requirement
@@ -326,13 +326,11 @@
       <requirement
           name="org.eclipse.emf.cdo.server.objectivity.feature.group"/>
       <requirement
-          name="org.eclipse.emf.cdo.tests.feature.group"/>
+          name="org.eclipse.emf.cdo.dawn.feature.group"/>
       <requirement
           name="org.eclipse.net4j.db.feature.group"/>
       <requirement
           name="org.eclipse.net4j.db.derby.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.db.doc.feature.group"/>
       <requirement
           name="org.eclipse.net4j.db.h2.feature.group"/>
       <requirement
@@ -346,21 +344,11 @@
       <requirement
           name="org.eclipse.net4j.feature.group"/>
       <requirement
-          name="org.eclipse.net4j.doc.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.examples.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.examples.installer.feature.group"/>
-      <requirement
           name="org.eclipse.net4j.sdk.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.tests.feature.group"/>
       <requirement
           name="org.eclipse.net4j.ui.feature.group"/>
       <requirement
           name="org.eclipse.net4j.util.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.util.doc.feature.group"/>
       <requirement
           name="org.eclipse.net4j.util.ui.feature.group"/>
       <requirement
@@ -416,34 +404,6 @@
     </targlet>
   </setupTask>
   <setupTask
-      xsi:type="setup.targlets:TargletTask"
-      disabled="true"
-      targetName="Baseline Target"
-      activateTarget="false">
-    <targlet
-        name="CDO Dawn"
-        activeRepositoryList="${cdo.baseline.version}">
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.codegen.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.codegen.emf.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.codegen.gmf.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.ecore.editor.dawn.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.examples.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.sdk.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.tests.feature.group"/>
-    </targlet>
-  </setupTask>
-  <setupTask
       xsi:type="setup.workingsets:WorkingSetTask">
     <workingSet
         name="CDO"
@@ -461,7 +421,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets.1 //@setupTasks.15/@workingSets.2 //@setupTasks.15/@workingSets.3 //@setupTasks.15/@workingSets.7 //@setupTasks.15/@workingSets.8"/>
+            excludedWorkingSet="//@setupTasks.13/@workingSets.1 //@setupTasks.13/@workingSets.2 //@setupTasks.13/@workingSets.3 //@setupTasks.13/@workingSets.7 //@setupTasks.13/@workingSets.8"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -474,7 +434,7 @@
             pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.13/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -493,7 +453,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.13/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -506,7 +466,7 @@
             pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.13/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -519,7 +479,7 @@
             pattern="org\.eclipse\.net4j.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets.5 //@setupTasks.15/@workingSets.6 //@setupTasks.15/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.13/@workingSets.5 //@setupTasks.13/@workingSets.6 //@setupTasks.13/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -532,7 +492,7 @@
             pattern="org\.eclipse\.net4j\.db.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.13/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -554,7 +514,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.13/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -586,7 +546,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.13/@workingSets.7"/>
       </predicate>
     </workingSet>
   </setupTask>

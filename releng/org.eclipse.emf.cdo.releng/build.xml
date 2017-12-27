@@ -180,34 +180,24 @@
 
   <!-- ============ -->
   <!-- Generate API -->
-  <!-- ============ 
+  <!-- ============ -->
 
   <macrodef name="generate.apireports">
     <sequential>
       <echo message="" />
       <echo message="Generating API reports" />
-      <buckminster command="perform">
-        <cmdargs>
-          <arg value="-D" />
-          <arg value="api.report=${build.root}/api.xml" />
-          <arg value="org.eclipse.emf.cdo.releng#generate.apireports" />
-        </cmdargs>
-      </buckminster>
-      <echo message="Converting to HTML" />
+    	<copy file="${releng}/api/api.xml" todir="${build.root}" overwrite="true" />
+      <copy file="${releng}/api/api.css" todir="${build.root}" overwrite="true" />
       <java classname="org.eclipse.emf.cdo.releng.Api2Html">
         <classpath>
-          <pathelement location="${releng}/bin/" />
+          <pathelement location="${releng}/target/classes/" />
           <pathelement location="/opt/public/common/apache-ant-1.7.1/lib/xercesImpl.jar" />
         </classpath>
         <arg value="${build.root}" />
         <arg value="${build.qualifier}" />
-        <arg value="${plugins.dir}" />
-        <arg value="${tp}/plugins" />
       </java>
-      <copy file="${releng}/hudson/api.css" todir="${build.root}" overwrite="true" />
     </sequential>
   </macrodef>
-  -->
 
   <!-- ==================== -->
   <!-- Check Commit Message -->
@@ -483,7 +473,6 @@
           </then>
         </if>
 
-      	<!--
         <if>
           <not>
             <equals arg1="${skip.generate.apireports}" arg2="true" />
@@ -492,7 +481,6 @@
             <generate.apireports />
           </then>
         </if>
-        -->
       </else>
     </if>
   </target>

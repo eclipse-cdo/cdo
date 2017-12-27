@@ -286,25 +286,40 @@ public class Api2Html extends DefaultHandler
   private ClassLoader createClassLoader() throws MalformedURLException
   {
     List<URL> urls = new ArrayList<URL>();
-    for (File plugin : pluginsFolder.listFiles())
+
+    if (pluginsFolder != null)
     {
-      if (plugin.isDirectory())
+      File[] plugins = pluginsFolder.listFiles();
+      if (plugins != null)
       {
-        File bin = new File(plugin, "bin");
-        if (bin.isDirectory())
+        for (File plugin : plugins)
         {
-          urls.add(bin.toURI().toURL());
+          if (plugin.isDirectory())
+          {
+            File bin = new File(plugin, "bin");
+            if (bin.isDirectory())
+            {
+              urls.add(bin.toURI().toURL());
+            }
+          }
+          else if (plugin.getName().endsWith(".jar"))
+          {
+            urls.add(plugin.toURI().toURL());
+          }
         }
-      }
-      else if (plugin.getName().endsWith(".jar"))
-      {
-        urls.add(plugin.toURI().toURL());
       }
     }
 
-    for (File plugin : tpFolder.listFiles())
+    if (tpFolder != null)
     {
-      urls.add(plugin.toURI().toURL());
+      File[] tp = tpFolder.listFiles();
+      if (tp != null)
+      {
+        for (File plugin : tp)
+        {
+          urls.add(plugin.toURI().toURL());
+        }
+      }
     }
 
     return new URLClassLoader(urls.toArray(new URL[urls.size()]));
@@ -380,7 +395,7 @@ public class Api2Html extends DefaultHandler
       args = new String[] { "/develop", "R20120918-0947", "/develop/git/cdo/plugins", "/develop/ws/cdo/.buckminster/tp/plugins" };
     }
 
-    new Api2Html(new File(args[0]), args[1], new File(args[2]), new File(args[3]));
+    new Api2Html(new File(args[0]), args[1], args.length > 2 ? new File(args[2]) : null, args.length > 3 ? new File(args[3]) : null);
   }
 
   /**

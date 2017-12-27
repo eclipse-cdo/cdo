@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?>
-<target name="CDO Target" sequenceNumber="0">
-	<locations>
-		<location path="${workspace_loc}/../tp" type="Directory"/>
-	</locations>
-</target>

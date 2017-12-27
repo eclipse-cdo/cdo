@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?>
-<target name="CDO Baseline" sequenceNumber="0">
-	<locations>
-		<location path="/opt/public/modeling/emf/cdo/api_baseline" type="Directory"/>
-	</locations>
-</target>

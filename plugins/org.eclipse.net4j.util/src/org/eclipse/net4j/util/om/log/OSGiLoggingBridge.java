@@ -20,8 +20,10 @@ import org.osgi.service.log.LogService;
 /**
  * A {@link OMLogHandler log handler} that appends log events to the OSGi {@link LogService log service}.
  *
+ * @deprecated As of 4.7 use {@link OSGiLogHandler}.
  * @author Eike Stepper
  */
+@Deprecated
 public class OSGiLoggingBridge implements OMLogHandler
 {
   // @Singleton

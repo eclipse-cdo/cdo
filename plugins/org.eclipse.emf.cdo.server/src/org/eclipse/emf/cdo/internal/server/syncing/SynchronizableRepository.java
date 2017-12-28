@@ -549,8 +549,14 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   {
     if (beforeCommit && commitContext.getNewPackageUnits().length != 0)
     {
-      throw new IllegalStateException(
-          "Synchronizable repositories don't support dynamic addition of new packages. Use IRepository.setInitialPackages() instead.");
+      for (InternalCDOPackageUnit packageUnit : commitContext.getNewPackageUnits())
+      {
+        if (!packageUnit.isSystem())
+        {
+          throw new IllegalStateException(
+              "Synchronizable repositories don't support dynamic addition of new packages. Use IRepository.setInitialPackages() instead.");
+        }
+      }
     }
 
     super.notifyWriteAccessHandlers(transaction, commitContext, beforeCommit, monitor);

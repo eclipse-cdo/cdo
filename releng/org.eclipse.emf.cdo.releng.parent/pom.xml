@@ -24,8 +24,7 @@ Eike Stepper - initial API and implementation
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tycho.scmUrl>scm:git:https://git.eclipse.org/r/p/cdo/cdo.git</tycho.scmUrl>
-    <tycho-version>0.24.0</tycho-version>
-    <maven-compiler-version>3.0</maven-compiler-version>
+    <tycho-version>1.0.0</tycho-version>
     <jarsigner-version>1.1.3</jarsigner-version>
     <os-jvm-flags/>
   </properties>

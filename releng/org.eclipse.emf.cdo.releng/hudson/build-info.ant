@@ -56,6 +56,11 @@
       </else>
     </if>
 
+    <!-- build.sign -->
+    <condition property="build.sign" value="false" else="true">
+      <equals arg1="${build.type}" arg2="N" />
+    </condition>
+
     <!-- build.qualifier -->
     <property name="build.timestamp" value="${env.BUILD_ID}" /> 
     <tempfile property="tmp.build.qualifier"
@@ -97,6 +102,7 @@
     <echo message="branch = ${branch}" />
     <echo message="train = ${train}" />
     <echo message="build.type = ${build.type}" />
+    <echo message="build.sign = ${build.sign}" />
     <echo message="build.trigger = ${build.trigger}" />
     <echo message="build.timestamp = ${build.timestamp}" />
     <echo message="build.qualifier = ${build.qualifier}" />

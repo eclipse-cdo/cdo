@@ -180,7 +180,7 @@ Eike Stepper - initial API and implementation
       <id>pack-and-sign</id>
       <activation>
         <property>
-          <name>PACK_AND_SIGN</name>
+          <name>build.sign</name>
           <value>true</value>
         </property>
       </activation>

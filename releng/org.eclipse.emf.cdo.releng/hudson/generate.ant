@@ -74,6 +74,9 @@
       <fileset dir="${releng.site}/target/repository">
         <include name="**" />
       </fileset>
+      <fileset dir="${releng}/hudson">
+        <include name="p2.index" />
+      </fileset>
     </copy>
   	
     <!-- Adjust content.jar -->
@@ -114,8 +117,8 @@
   <target name="generate-index" depends="clean">
     <unzip src="${build.root}/content.jar" dest="${build.root}" />
     <property name="content.xml" location="${build.root}/content.xml" />
-    <xslt style="xsl/content2html.xsl" in="${content.xml}" out="${build.root}/index.html" />
-    <xslt style="xsl/content2xml.xsl" in="${content.xml}" out="${build.root}/index.xml" />
+    <xslt style="hudson/xsl/content2html.xsl" in="${content.xml}" out="${build.root}/index.html" />
+    <xslt style="hudson/xsl/content2xml.xsl" in="${content.xml}" out="${build.root}/index.xml" />
     <delete file="${content.xml}" />
   </target>
 
@@ -125,7 +128,11 @@
 
   <target name="generate-bookmarks" depends="clean">
     <property name="bookmarks.tmp" location="${build.root}/bookmarks.tmp" />
-    <xslt style="xsl/bom2bookmarks.xsl" in="${releng.dir}/org.eclipse.emf.cdo.releng.parent/tp/org.eclipse.emf.cdo.releng.tp.target" out="${bookmarks.tmp}" />
+    <xslt
+    	style="hudson/xsl/target2bookmarks.xsl" 
+    	in="${releng.dir}/org.eclipse.emf.cdo.releng.parent/tp/org.eclipse.emf.cdo.releng.tp.target" 
+    	out="${bookmarks.tmp}" />
+    		
     <property name="bookmarks.xml" location="${build.root}/bookmarks.xml" />
     <concat destfile="${bookmarks.xml}">
       <header filtering="false">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;

@@ -138,10 +138,9 @@ Eike Stepper - initial API and implementation
     <profile>
       <id>pack-and-sign</id>
       <activation>
-        <property>
-          <name>build.sign</name>
-          <value>true</value>
-        </property>
+	      <file>
+	        <exists>${SIGNING_MARKER}</exists>
+	      </file>
       </activation>
       <build>
         <plugins>

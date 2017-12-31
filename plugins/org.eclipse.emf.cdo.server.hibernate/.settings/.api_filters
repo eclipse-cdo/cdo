@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.server.hibernate" version="2">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.server.embedded.CDOSession">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSession"/>
+                <message_argument value="org.eclipse.emf.cdo.server.hibernate_4.2.400"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration"/>
+                <message_argument value="org.eclipse.emf.cdo.server.hibernate_4.2.400"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/CDOHibernateBranchPointImpl.java" type="org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateBranchPointImpl">
         <filter comment="Need to implement own version of branch point to store commit information" id="574619656">
             <message_arguments>

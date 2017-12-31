@@ -185,16 +185,6 @@ public final class CDOServerUtil
 
   /**
    * @since 3.0
-   * @deprecated Not yet supported.
-   */
-  @Deprecated
-  public static org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration createSessionConfiguration()
-  {
-    return new org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionConfiguration();
-  }
-
-  /**
-   * @since 3.0
    */
   public static ISessionManager createSessionManager()
   {

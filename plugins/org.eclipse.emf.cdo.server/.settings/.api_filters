@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.server" version="2">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.server.embedded.CDOSession">
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSession"/>
+                <message_argument value="org.eclipse.emf.cdo.server_4.6.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration"/>
+                <message_argument value="org.eclipse.emf.cdo.server_4.6.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/LockingManager.java" type="org.eclipse.emf.cdo.internal.server.LockingManager$DurableView">
         <filter id="574619656">
             <message_arguments>
@@ -192,38 +208,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/internal/server/embedded/EmbeddedClientSessionConfiguration.java" type="org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionConfiguration$RepositoryInfo">
-        <filter id="574619656">
-            <message_arguments>
-                <message_argument value="CDORepositoryInfo"/>
-                <message_argument value="RepositoryInfo"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/internal/server/embedded/EmbeddedClientSessionProtocol.java" type="org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionProtocol">
-        <filter id="574619656">
-            <message_arguments>
-                <message_argument value="CDOSessionProtocol"/>
-                <message_argument value="EmbeddedClientSessionProtocol"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/internal/server/embedded/EmbeddedServerSessionProtocol.java" type="org.eclipse.emf.cdo.internal.server.embedded.EmbeddedServerSessionProtocol">
-        <filter id="574660632">
-            <message_arguments>
-                <message_argument value="ISessionProtocol"/>
-                <message_argument value="CDOProtocol"/>
-                <message_argument value="EmbeddedServerSessionProtocol"/>
-            </message_arguments>
-        </filter>
-        <filter id="574668824">
-            <message_arguments>
-                <message_argument value="ISessionProtocol"/>
-                <message_argument value="EmbeddedServerSessionProtocol"/>
-                <message_argument value="CDOProtocol"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/mem/MEMStoreAccessor.java" type="org.eclipse.emf.cdo.internal.server.mem.MEMStoreAccessor">
         <filter id="574660632">
             <message_arguments>
@@ -276,6 +260,14 @@
             <message_arguments>
                 <message_argument value="XMLConstants"/>
                 <message_argument value="XML"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/CDOServerUtil.java" type="org.eclipse.emf.cdo.server.CDOServerUtil">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.CDOServerUtil"/>
+                <message_argument value="createSessionConfiguration()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -348,22 +340,6 @@
             <message_arguments>
                 <message_argument value="CDOCommonView"/>
                 <message_argument value="IView"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/server/embedded/CDOSession.java" type="org.eclipse.emf.cdo.server.embedded.CDOSession">
-        <filter id="571473929">
-            <message_arguments>
-                <message_argument value="CDOSession"/>
-                <message_argument value="CDOSession"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/server/embedded/CDOSessionConfiguration.java" type="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
-        <filter id="571473929">
-            <message_arguments>
-                <message_argument value="CDOSessionConfiguration"/>
-                <message_argument value="CDOSessionConfiguration"/>
             </message_arguments>
         </filter>
     </resource>

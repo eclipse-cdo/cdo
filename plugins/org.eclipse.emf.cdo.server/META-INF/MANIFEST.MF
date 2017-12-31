@@ -18,12 +18,10 @@ Export-Package: org.eclipse.emf.cdo.internal.server;version="4.6.100";
    org.eclipse.emf.cdo.server.hibernate,
    org.eclipse.emf.cdo.server.embedded",
  org.eclipse.emf.cdo.internal.server.bundle;version="4.6.100";x-internal:=true,
- org.eclipse.emf.cdo.internal.server.embedded;version="4.6.100";x-friends:="org.eclipse.emf.cdo.tests",
  org.eclipse.emf.cdo.internal.server.mem;version="4.6.100";x-friends:="org.eclipse.emf.cdo.tests",
  org.eclipse.emf.cdo.internal.server.messages;version="4.6.100";x-internal:=true,
  org.eclipse.emf.cdo.internal.server.syncing;version="4.6.100";x-friends:="org.eclipse.emf.cdo.tests",
  org.eclipse.emf.cdo.server;version="4.6.100",
- org.eclipse.emf.cdo.server.embedded;version="4.6.100",
  org.eclipse.emf.cdo.server.mem;version="4.6.100",
  org.eclipse.emf.cdo.spi.server;version="4.6.100"
 Automatic-Module-Name: org.eclipse.emf.cdo.server

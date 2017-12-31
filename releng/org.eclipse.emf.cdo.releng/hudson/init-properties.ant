@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!--
+	Copyright (c) 2017 Eike Stepper (Berlin, Germany) and others.
+	All rights reserved. This program and the accompanying materials
+	are made available under the terms of the Eclipse Public License v1.0
+	which accompanies this distribution, and is available at
+	http://www.eclipse.org/legal/epl-v10.html
+
+	Contributors:
+	  Eike Stepper - initial API and implementation
+-->
+<project name="init-properties" default="init-properties">
+
+  <property file="build.properties" />
+  <property environment="env" />
+
+  <taskdef resource="net/sf/antcontrib/antlib.xml">
+    <classpath>
+      <pathelement location="${ant.contrib}" />
+    </classpath>
+  </taskdef>
+
+  <target name="init-properties" if="env.HUDSON_URL">
+    <property name="build.root" value="${env.WORKSPACE}" />
+    <property name="git.clone" location="${build.root}/git" />
+    <property name="features.dir" location="${git.clone}/features" />
+    <property name="plugins.dir" location="${git.clone}/plugins" />
+    <property name="releng.dir" location="${git.clone}/releng" />
+    <property name="releng" location="${releng.dir}/org.eclipse.emf.cdo.releng" />
+    <property name="releng.help" location="${releng.dir}/org.eclipse.emf.cdo.releng.help" />
+    <property name="releng.site" location="${releng.dir}/org.eclipse.emf.cdo.releng.site" />
+    <property name="test.report" location="${build.root}/test-report.xml" />
+    <property name="zips" location="${build.root}/zips" />
+
+    <!-- build.trigger -->
+    <if>
+      <not>
+        <isset property="build.trigger" />
+      </not>
+      <then>
+        <xmlproperty keeproot="false">
+          <url url="${env.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
+        </xmlproperty>
+        <loadresource property="build.trigger">
+          <propertyresource name="action.cause.shortDescription" />
+          <filterchain>
+            <replaceregex pattern="^Triggered by " replace="" />
+            <replaceregex pattern="^Gerrit: .*" replace="gerrit" />
+            <replaceregex pattern="^Started by " replace="" />
+            <replaceregex pattern="^Gestartet durch " replace="" />
+            <replaceregex pattern="Benutzer" replace="user" />
+          </filterchain>
+        </loadresource>
+      </then>
+    </if>
+
+    <!-- build.type -->
+    <if>
+      <equals arg1="${env.BUILD_TYPE}" arg2="&lt;default&gt;" />
+      <then>
+        <condition property="build.type" value="${weekly}" else="N">
+          <equals arg1="${build.trigger}" arg2="timer" />
+        </condition>
+      </then>
+      <else>
+        <property name="build.type" value="${env.BUILD_TYPE}" />
+      </else>
+    </if>
+
+    <!-- build.qualifier -->
+    <property name="build.timestamp" value="${env.BUILD_ID}" /> 
+    <tempfile property="tmp.build.qualifier"
+              destdir="${java.io.tmpdir}"
+              prefix="build-qualifier-"
+              suffix=".tmp"
+              deleteonexit="true" />
+    <echo message="build.qualifier.date=${build.timestamp}" file="${tmp.build.qualifier}" />
+    <replaceregexp file="${tmp.build.qualifier}">
+      <regexp pattern="([0-9]*)-([0-9]*)-([0-9]*)_([0-9]*)-([0-9]*)-([0-9]*)" />
+      <substitution expression="\1\2\3-\4\5" />
+    </replaceregexp >
+    <property file="${tmp.build.qualifier}" />
+  	<property name="build.qualifier" value="${build.type}${build.qualifier.date}" />
+  	<property name="build.version" value="v${build.qualifier.date}" />
+
+    <!-- build-info.xml -->
+    <echoxml file="${env.WORKSPACE}/build-info.xml">
+      <build stream="${stream}"
+             branch="${branch}"
+             train="${train}"
+             eclipse="${eclipse}"
+             emf="${emf}"
+             type="${build.type}"
+             timestamp="${build.timestamp}"
+             qualifier="${build.qualifier}"
+             trigger="${build.trigger}"
+             hudson="${env.HUDSON_URL}"
+             revision="${env.GIT_COMMIT}"
+             job="${env.JOB_NAME}"
+             number="${env.BUILD_NUMBER}" />
+    </echoxml>
+
+    <!-- build-info.properties -->
+  	<echoproperties prefix="build." destfile="${env.WORKSPACE}/build-info.properties" />
+  	
+    <!-- Echo -->
+    <echo message="stream = ${stream}" />
+    <echo message="branch = ${branch}" />
+    <echo message="train = ${train}" />
+    <echo message="build.type = ${build.type}" />
+    <echo message="build.trigger = ${build.trigger}" />
+    <echo message="build.timestamp = ${build.timestamp}" />
+    <echo message="build.qualifier = ${build.qualifier}" />
+  </target>
+
+</project>

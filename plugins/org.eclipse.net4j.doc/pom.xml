@@ -39,7 +39,16 @@
           </excludes>
         </configuration>
       </plugin>
-     </plugins>
+    </plugins>
+    <resources>
+      <resource>
+        <directory>.</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>about.mappings</include>
+        </includes>
+      </resource>
+    </resources>
   </build>
 
 </project>

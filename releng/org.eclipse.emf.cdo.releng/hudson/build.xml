@@ -1,0 +1,483 @@
+<?xml version="1.0"?>
+<!--
+	Copyright (c) 2011-2016 Eike Stepper (Berlin, Germany) and others.
+	All rights reserved. This program and the accompanying materials
+	are made available under the terms of the Eclipse Public License v1.0
+	which accompanies this distribution, and is available at
+	http://www.eclipse.org/legal/epl-v10.html
+
+	Contributors:
+	  Eike Stepper - initial API and implementation
+-->
+<project name="CDO" default="all">
+
+  <property file="local.properties" />
+  <property file="build.properties" />
+  <property environment="env" />
+
+  <taskdef resource="net/sf/antcontrib/antlib.xml">
+    <classpath>
+      <pathelement location="${ant.contrib}" />
+    </classpath>
+  </taskdef>
+
+  <!-- ========= -->
+  <!-- Clean Dir -->
+  <!-- ========= -->
+
+  <macrodef name="cleandir">
+    <attribute name="dir" />
+    <attribute name="mkdir" default="true" />
+    <sequential>
+      <delete includeemptydirs="true" failonerror="false" verbose="false">
+        <fileset dir="@{dir}" defaultexcludes="false">
+          <include name="**" />
+        </fileset>
+      </delete>
+      <if>
+        <equals arg1="@{mkdir}" arg2="true" />
+        <then>
+          <mkdir dir="@{dir}" />
+        </then>
+      </if>
+    </sequential>
+  </macrodef>
+
+  <!-- ============= -->
+  <!-- Generate Site -->
+  <!-- ============= -->
+
+  <macrodef name="generate.site">
+    <attribute name="site" />
+    <attribute name="todir" default="${build.root}" />
+    <sequential>
+      <echo message="Generating site" />
+
+      <!-- Clean -->
+      <delete includeemptydirs="true" failonerror="false">
+        <fileset dir="@{todir}" defaultexcludes="false">
+          <include name="binary/**" />
+          <include name="features/**" />
+          <include name="plugins/**" />
+          <include name="artifacts.jar" />
+          <include name="content.jar" />
+        </fileset>
+      </delete>
+
+      <!-- Copy site contents -->
+      <copy todir="@{todir}" overwrite="true" includeemptydirs="true" preservelastmodified="true" failonerror="true">
+        <fileset dir="@{site}">
+          <include name="**" />
+        </fileset>
+      </copy>
+    	
+      <unzip src="${build.root}/content.jar" dest="${build.root}" />
+      <replaceregexp file="${build.root}/content.xml" match="Build Local" replace="${build.qualifier}" />
+      <delete file="${build.root}/content.jar" />
+    	<zip destfile="${build.root}/content.jar" basedir="${build.root}" file="content.xml" />
+      <delete file="${build.root}/content.xml" />
+        
+      <unzip src="${build.root}/artifacts.jar" dest="${build.root}" />
+      <replaceregexp file="${build.root}/artifacts.xml" match="Build Local" replace="${build.qualifier}" />
+      <delete file="${build.root}/artifacts.jar" />
+    	<zip destfile="${build.root}/artifacts.jar" basedir="${build.root}" file="artifacts.xml" />
+      <delete file="${build.root}/artifacts.xml" />
+    </sequential>
+  </macrodef>
+
+  <!-- ============= -->
+  <!-- Generate Help -->
+  <!-- ============= -->
+
+  <macrodef name="generate.help">
+    <sequential>
+      <echo message="" />
+      <echo message="Generating help center" />
+      <cleandir dir="${build.root}/help" mkdir="true" />
+      <copy todir="${build.root}/help">
+        <fileset dir="${releng.help}/html">
+          <include name="**" />
+        </fileset>
+        <fileset dir="${releng.help}">
+          <include name="docs.txt" />
+        </fileset>
+      </copy>
+    </sequential>
+  </macrodef>
+
+  <!-- ============== -->
+  <!-- Generate Index -->
+  <!-- ============== -->
+
+  <macrodef name="generate.index">
+    <sequential>
+      <echo message="" />
+      <echo message="Generating repository index" />
+      <unzip src="${build.root}/content.jar" dest="${build.root}" />
+      <property name="content.xml" location="${build.root}/content.xml" />
+      <xslt style="xsl/content2html.xsl" in="${content.xml}" out="${build.root}/index.html" />
+      <xslt style="xsl/content2xml.xsl" in="${content.xml}" out="${build.root}/index.xml" />
+      <delete file="${content.xml}" />
+    </sequential>
+  </macrodef>
+
+  <!-- =================== -->
+  <!-- Generate Booksmarks -->
+  <!-- =================== -->
+
+  <macrodef name="generate.bookmarks">
+    <sequential>
+      <echo message="" />
+      <echo message="Generating dependency bookmarks" />
+      <property name="bookmarks.tmp" location="${build.root}/bookmarks.tmp" />
+      <xslt style="xsl/bom2bookmarks.xsl" in="${releng.dir}/org.eclipse.emf.cdo.releng.parent/tp/org.eclipse.emf.cdo.releng.tp.target" out="${bookmarks.tmp}" />
+      <property name="bookmarks.xml" location="${build.root}/bookmarks.xml" />
+      <concat destfile="${bookmarks.xml}">
+        <header filtering="false">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;bookmarks&gt;
+</header>
+        <union>
+          <sort>
+            <tokens>
+              <file file="${bookmarks.tmp}" />
+              <linetokenizer includedelims="true" />
+            </tokens>
+          </sort>
+        </union>
+        <filterchain>
+          <linecontains>
+            <contains value="http://" />
+          </linecontains>
+        </filterchain>
+        <footer filtering="false">&lt;/bookmarks&gt;
+			</footer>
+      </concat>
+      <delete file="${bookmarks.tmp}" />
+    </sequential>
+  </macrodef>
+
+  <!-- ================ -->
+  <!-- Generate Dropins -->
+  <!-- ================ -->
+
+  <macrodef name="generate.dropins">
+    <sequential>
+      <echo message="" />
+      <echo message="Generating dropin archives" />
+    	
+      <mkdir dir="${zips}" />
+      <zip destfile="${zips}/emf-cdo-${build.qualifier}-Dropins.zip">
+        <fileset dir="${releng.site}/target/repository">
+          <exclude name="**/*.pack.gz" />
+          <include name="features/*.jar" />
+          <include name="plugins/*.jar" />
+        </fileset>
+      </zip>
+      <echo message=" for use with a &lt;a href=&quot;http://help.eclipse.org/oxygen/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/misc/p2_dropins_format.html&quot;&gt;dropins&lt;/a&gt; folder."
+            file="${zips}/emf-cdo-${build.qualifier}-Dropins.properties" />
+    </sequential>
+  </macrodef>
+
+  <!-- ============ -->
+  <!-- Generate API -->
+  <!-- ============ -->
+
+  <macrodef name="generate.apireports">
+    <sequential>
+      <echo message="" />
+      <echo message="Generating API reports" />
+    	<copy file="${releng}/api/api.xml" todir="${build.root}" overwrite="true" />
+      <copy file="${releng}/api/api.css" todir="${build.root}" overwrite="true" />
+      <java classname="org.eclipse.emf.cdo.releng.Api2Html">
+        <classpath>
+          <pathelement location="${releng}/target/classes/" />
+          <pathelement location="/opt/public/common/apache-ant-1.7.1/lib/xercesImpl.jar" />
+        </classpath>
+        <arg value="${build.root}" />
+        <arg value="${build.qualifier}" />
+      </java>
+    </sequential>
+  </macrodef>
+
+  <!-- =========== -->
+  <!-- Init Hudson -->
+  <!-- =========== -->
+
+  <target name="init.hudson" if="env.HUDSON_URL">
+    <property name="build.root" value="${env.WORKSPACE}" />
+    <property name="build.location" value="hudson" />
+    <property name="build.timestamp" value="${env.BUILD_ID}" />
+    <property name="loglevel" value="${env.LOG_LEVEL}" />
+    <property name="skip.test" value="${env.SKIP_TEST}" />
+
+    <!-- build.trigger -->
+    <if>
+      <not>
+        <isset property="build.trigger" />
+      </not>
+      <then>
+        <xmlproperty keeproot="false">
+          <url url="${env.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
+        </xmlproperty>
+        <loadresource property="build.trigger">
+          <propertyresource name="action.cause.shortDescription" />
+          <filterchain>
+            <replaceregex pattern="^Triggered by " replace="" />
+            <replaceregex pattern="^Gerrit: .*" replace="gerrit" />
+            <replaceregex pattern="^Started by " replace="" />
+            <replaceregex pattern="^Gestartet durch " replace="" />
+            <replaceregex pattern="Benutzer" replace="user" />
+          </filterchain>
+        </loadresource>
+      </then>
+    </if>
+
+    <!-- build.type -->
+    <if>
+      <equals arg1="${env.BUILD_TYPE}" arg2="&lt;default&gt;" />
+      <then>
+        <condition property="build.type" value="${weekly}" else="N">
+          <equals arg1="${build.trigger}" arg2="timer" />
+        </condition>
+      </then>
+      <else>
+        <property name="build.type" value="${env.BUILD_TYPE}" />
+      </else>
+    </if>
+  </target>
+
+  <!-- ========== -->
+  <!-- Init Local -->
+  <!-- ========== -->
+
+  <target name="init.local" unless="env.HUDSON_URL">
+    <fail unless="build.root" message="The property 'build.root' must be defined in a 'local.properties' file" />
+
+    <property name="build.location" value="local" />
+    <property name="build.trigger" value="manual" />
+    <property name="git.clone" value="${build.root}/git" />
+
+    <!-- build.timestamp -->
+    <tstamp>
+      <format property="build.timestamp" pattern="yyyy-MM-dd_HH-mm-ss" />
+    </tstamp>
+
+    <!-- git.clone -->
+    <if>
+      <and>
+        <equals arg1="${keep.git}" arg2="true" />
+        <available file="${git.clone}" type="dir" />
+      </and>
+      <then>
+        <echo message="Keeping Git clone" />
+      </then>
+      <else>
+        <echo message="Copying Git clone from ${original.git.dir}" />
+        <cleandir dir="${git.clone}" />
+        <copy todir="${git.clone}">
+          <fileset dir="${original.git.dir}" defaultexcludes="false">
+            <exclude name="**/*.class" />
+          </fileset>
+        </copy>
+      </else>
+    </if>
+  </target>
+
+  <!-- =============== -->
+  <!-- Init Properties -->
+  <!-- =============== -->
+
+  <target name="init.properties" depends="init.hudson,init.local">
+    <condition property="no.proxy" value="${env.no_proxy}, dev.eclipse.org" else="dev.eclipse.org">
+      <isset property="env.no_proxy" />
+    </condition>
+
+    <property name="git.clone" location="${build.root}/git" />
+    <property name="features.dir" location="${git.clone}/features" />
+    <property name="plugins.dir" location="${git.clone}/plugins" />
+    <property name="releng.dir" location="${git.clone}/releng" />
+    <property name="releng" location="${releng.dir}/org.eclipse.emf.cdo.releng" />
+    <property name="releng.help" location="${releng.dir}/org.eclipse.emf.cdo.releng.help" />
+    <property name="releng.site" location="${releng.dir}/org.eclipse.emf.cdo.releng.site" />
+    <property name="test.report" location="${build.root}/test-report.xml" />
+    <property name="zips" location="${build.root}/zips" />
+
+    <!-- build.qualifier -->
+    <tempfile property="build.qualifier.tmp"
+              destdir="${java.io.tmpdir}"
+              prefix="build-qualifier-"
+              suffix=".tmp"
+              deleteonexit="true" />
+    <echo message="build.qualifier.date=${build.timestamp}" file="${build.qualifier.tmp}" />
+    <replaceregexp file="${build.qualifier.tmp}">
+      <regexp pattern="([0-9]*)-([0-9]*)-([0-9]*)_([0-9]*)-([0-9]*)-([0-9]*)" />
+      <substitution expression="\1\2\3-\4\5" />
+    </replaceregexp >
+    <property file="${build.qualifier.tmp}" />
+  	<property name="build.qualifier" value="${build.type}${build.qualifier.date}" />
+  	<property name="build.version" value="v${build.qualifier.date}" />
+
+    <!-- build-info.xml -->
+    <echoxml file="${build.root}/build-info.xml">
+      <build stream="${stream}"
+             branch="${branch}"
+             train="${train}"
+             eclipse="${eclipse}"
+             emf="${emf}"
+             type="${build.type}"
+             timestamp="${build.timestamp}"
+             qualifier="${build.qualifier}"
+             trigger="${build.trigger}"
+             hudson="${env.HUDSON_URL}"
+             revision="${env.GIT_COMMIT}"
+             job="${env.JOB_NAME}"
+             number="${env.BUILD_NUMBER}" />
+    </echoxml>
+
+    <!-- Echo -->
+    <echo message="stream = ${stream}" />
+    <echo message="branch = ${branch}" />
+    <echo message="train = ${train}" />
+    <echo message="build.type = ${build.type}" />
+    <echo message="build.location = ${build.location}" />
+    <echo message="build.trigger = ${build.trigger}" />
+    <echo message="build.timestamp = ${build.timestamp}" />
+    <echo message="build.qualifier = ${build.qualifier}" />
+  </target>
+
+  <!-- ===== -->
+  <!-- Clean -->
+  <!-- ===== -->
+
+  <target name="clean" depends="init.properties" description="Imports projects and binaries">
+    <if>
+      <not>
+        <equals arg1="${skip.clean}" arg2="true" />
+      </not>
+      <then>
+        <!-- Cleanup build.root -->
+        <delete failonerror="false" includeemptydirs="true">
+          <fileset dir="${build.root}" defaultexcludes="false">
+            <include name="zips/**" />
+            <include name="*.css" />
+            <include name="*.html" />
+            <include name="*.xml" />
+            <include name="*.log" />
+            <include name="*.txt" />
+            <exclude name="build-info.xml" />
+          </fileset>
+        </delete>
+
+        <!-- Cleanup doc plugins -->
+        <delete failonerror="false" includeemptydirs="true">
+          <fileset dir="${plugins.dir}">
+            <include name="*.doc/bin/**" />
+            <include name="*.help/bin/**" />
+          </fileset>
+        </delete>
+
+        <!-- Initialize test report -->
+        <copy file="${releng}/hudson/test-report-empty.xml" tofile="${test.report}" overwrite="true" verbose="true" />
+      </then>
+    </if>
+  </target>
+
+  <!-- ==== -->
+  <!-- Test -->
+  <!-- ==== -->
+
+  <target name="test" depends="clean" description="Runs the tests">
+    <if>
+      <equals arg1="${skip.test}" arg2="true" />
+      <then>
+        <echo message="Skipping test" />
+      </then>
+      <else>
+        <condition property="launch.config"
+                   value="org.eclipse.emf.cdo.tests.all/CDO GerritTests"
+                   else="org.eclipse.emf.cdo.tests.db/CDO AllTests (H2 ALL)">
+          <isset property="GERRIT_CHANGE_ID" />
+        </condition>
+        <echo message="Running ${launch.config}" />
+      </else>
+    </if>
+  </target>
+
+  <!-- ======== -->
+  <!-- Generate -->
+  <!-- ======== -->
+
+  <target name="generate" depends="clean" description="Generates the site and other artifacts">
+    <if>
+      <or>
+        <isset property="GERRIT_CHANGE_ID" />
+        <equals arg1="${skip.generate}" arg2="true" />
+      </or>
+      <then>
+        <echo message="Skipping generate" />
+      </then>
+      <else>
+        <if>
+          <not>
+            <equals arg1="${skip.generate.site}" arg2="true" />
+          </not>
+          <then>
+            <generate.site site="${releng.site}/target/repository" />
+          </then>
+        </if>
+
+        <if>
+          <not>
+            <equals arg1="${skip.generate.help}" arg2="true" />
+          </not>
+          <then>
+            <generate.help />
+          </then>
+        </if>
+
+        <if>
+          <not>
+            <equals arg1="${skip.generate.index}" arg2="true" />
+          </not>
+          <then>
+            <generate.index />
+          </then>
+        </if>
+
+        <if>
+          <not>
+            <equals arg1="${skip.generate.bookmarks}" arg2="true" />
+          </not>
+          <then>
+            <generate.bookmarks />
+          </then>
+        </if>
+
+        <if>
+          <not>
+            <equals arg1="${skip.generate.dropins}" arg2="true" />
+          </not>
+          <then>
+            <generate.dropins />
+          </then>
+        </if>
+
+        <if>
+          <not>
+            <equals arg1="${skip.generate.apireports}" arg2="true" />
+          </not>
+          <then>
+            <generate.apireports />
+          </then>
+        </if>
+      </else>
+    </if>
+  </target>
+
+  <!-- === -->
+  <!-- All -->
+  <!-- === -->
+
+  <target name="all" depends="test,generate" description="Runs the tests and generates the site and other artifacts" />
+
+</project>

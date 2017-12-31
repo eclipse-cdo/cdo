@@ -1,171 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <deltas>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.net4j(4.1.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration has been removed from org.eclipse.emf.cdo.server.net4j_4.1.400" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration"/>
+            <message_argument value="org.eclipse.emf.cdo.server.net4j_4.1.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.transfer_4.2.400" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.transfer_4.2.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.admin(4.2.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration has been removed from org.eclipse.emf.cdo.server.admin_4.2.300" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration"/>
+            <message_argument value="org.eclipse.emf.cdo.server.admin_4.2.300"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.4.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.edit_4.4.100" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.edit_4.4.100"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.expressions.editor(4.3.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.expressions.editor_4.3.300" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory">
         <message_arguments>
             <message_argument value="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory"/>
             <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.3.300"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model3(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model3_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.workspace(4.2.200)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSession" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSession has been removed from org.eclipse.emf.cdo.workspace_4.2.200" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSession">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model3_3.0.600"/>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSession"/>
+            <message_argument value="org.eclipse.emf.cdo.workspace_4.2.200"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.transfer_4.2.400" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.expressions.editor(4.3.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.expressions.editor_4.3.300" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.transfer_4.2.400"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.4.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.edit_4.4.100" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory"/>
-            <message_argument value="org.eclipse.emf.cdo.edit_4.4.100"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.compare(4.3.200)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.compare.merge.IDiffRelationshipComputer" kind="ADDED" message="The re-exported type org.eclipse.emf.compare.merge.IDiffRelationshipComputer has been added to org.eclipse.emf.cdo.compare_4.3.200" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.compare.merge.IDiffRelationshipComputer">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.compare.merge.IDiffRelationshipComputer"/>
-            <message_argument value="org.eclipse.emf.cdo.compare_4.3.200"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model4(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model4_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model4_3.0.600"/>
+            <message_argument value="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.3.300"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model6(4.0.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model6_4.0.400" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
         <message_arguments>
             <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model6_4.0.400"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.tasklist.TaskList" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.tasklist.TaskList has been removed from org.eclipse.emf.cdo.security.editor_4.2.400" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.tasklist.TaskList">
-        <message_arguments>
-            <message_argument value="org.eclipse.ui.views.tasklist.TaskList"/>
-            <message_argument value="org.eclipse.emf.cdo.security.editor_4.2.400"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model4(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model4_3.0.600" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model4_3.0.600"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.om.log.OSGiLogHandler" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.om.log.OSGiLogHandler has been added to org.eclipse.emf.cdo.common_4.6.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.om.log.OSGiLogHandler">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.om.log.OSGiLogHandler"/>
-            <message_argument value="org.eclipse.emf.cdo.common_4.6.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.4.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.edit_4.4.100" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.edit_4.4.100"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.4.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.edit_4.4.100" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory"/>
-            <message_argument value="org.eclipse.emf.cdo.edit_4.4.100"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model6(4.0.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model6_4.0.400" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model6_4.0.400"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.security.editor(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.security.editor_4.2.400" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory"/>
-            <message_argument value="org.eclipse.emf.cdo.security.editor_4.2.400"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.8.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.net4j.util" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.net4j.util (from version 3.7.0 to 3.8.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util"/>
-            <message_argument value="3.7.0"/>
-            <message_argument value="3.8.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.compare(4.3.200)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.compare.merge.DiffRelationshipComputer" kind="ADDED" message="The re-exported type org.eclipse.emf.compare.merge.DiffRelationshipComputer has been added to org.eclipse.emf.cdo.compare_4.3.200" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.compare.merge.DiffRelationshipComputer">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.compare.merge.DiffRelationshipComputer"/>
-            <message_argument value="org.eclipse.emf.cdo.compare_4.3.200"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.om.log.OSGiLogHandler" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.om.log.OSGiLogHandler has been added to org.eclipse.emf.cdo.transfer_4.2.400" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.om.log.OSGiLogHandler">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.om.log.OSGiLogHandler"/>
-            <message_argument value="org.eclipse.emf.cdo.transfer_4.2.400"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model4(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model4_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model4_3.0.600"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.gastro.inventory(4.0.500)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.gastro.inventory_4.0.500" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
-            <message_argument value="org.gastro.inventory_4.0.500"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model3(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model3_3.0.600" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model3_3.0.600"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model3(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model3_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model3_3.0.600"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model4interfaces(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model4interfaces_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model4interfaces_3.0.600"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model2(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model2_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model2_3.0.600"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model4(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model4_3.0.600" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model4_3.0.600"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.8.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.om.log.OSGiLogHandler" kind="ADDED" message="The type org.eclipse.net4j.util.om.log.OSGiLogHandler has been added to org.eclipse.net4j.util_3.8.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.om.log.OSGiLogHandler">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.om.log.OSGiLogHandler"/>
-            <message_argument value="org.eclipse.net4j.util_3.8.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.3.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.tasklist.TaskList" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.tasklist.TaskList has been removed from org.eclipse.emf.cdo.expressions.editor_4.3.300" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.tasklist.TaskList">
-        <message_arguments>
-            <message_argument value="org.eclipse.ui.views.tasklist.TaskList"/>
-            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.3.300"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.transfer_4.2.400" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.transfer_4.2.400"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model6(4.0.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model6_4.0.400" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
             <message_argument value="org.eclipse.emf.cdo.tests.model6_4.0.400"/>
         </message_arguments>
     </delta>
@@ -175,9 +54,496 @@
             <message_argument value="org.eclipse.emf.cdo.transfer_4.2.400"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.admin(4.2.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.server.admin_4.2.300" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.server.admin_4.2.300"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.ui_4.6.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.ui_4.6.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model4(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model4_3.0.600" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model4_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model4(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model4_3.0.600" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model4_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server(4.6.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration" kind="REMOVED" message="The type org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration has been removed from org.eclipse.emf.cdo.server_4.6.100" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration"/>
+            <message_argument value="org.eclipse.emf.cdo.server_4.6.100"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model2(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model2_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model2_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.4.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.edit_4.4.100" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.edit_4.4.100"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model6(4.0.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model6_4.0.400" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model6_4.0.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.common_4.6.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.common_4.6.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model4(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model4_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model4_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.4.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.edit_4.4.100" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.edit_4.4.100"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.hibernate(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSession" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSession has been removed from org.eclipse.emf.cdo.server.hibernate_4.2.400" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSession">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSession"/>
+            <message_argument value="org.eclipse.emf.cdo.server.hibernate_4.2.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.lissome(4.2.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSession" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSession has been removed from org.eclipse.emf.cdo.server.lissome_4.2.300" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSession">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSession"/>
+            <message_argument value="org.eclipse.emf.cdo.server.lissome_4.2.300"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model6(4.0.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model6_4.0.400" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model6_4.0.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.tests(4.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration has been removed from org.eclipse.emf.cdo.tests_4.0.600" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration"/>
+            <message_argument value="org.eclipse.emf.cdo.tests_4.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.transfer_4.2.400" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.transfer_4.2.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.gastro.inventory(4.0.500)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.gastro.inventory_4.0.500" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
+            <message_argument value="org.gastro.inventory_4.0.500"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.lissome(4.2.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration has been removed from org.eclipse.emf.cdo.server.lissome_4.2.300" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration"/>
+            <message_argument value="org.eclipse.emf.cdo.server.lissome_4.2.300"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.gastro.server(4.0.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSession" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSession has been removed from org.gastro.server_4.0.400" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSession">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSession"/>
+            <message_argument value="org.gastro.server_4.0.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.6.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.om.log.OSGiLogHandler" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.om.log.OSGiLogHandler has been added to org.eclipse.net4j.util.ui_3.6.100" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.om.log.OSGiLogHandler">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.om.log.OSGiLogHandler"/>
+            <message_argument value="org.eclipse.net4j.util.ui_3.6.100"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model4interfaces(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model4interfaces_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model4interfaces_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server(4.6.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.server.embedded.CDOSession" kind="REMOVED" message="The type org.eclipse.emf.cdo.server.embedded.CDOSession has been removed from org.eclipse.emf.cdo.server_4.6.100" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSession">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSession"/>
+            <message_argument value="org.eclipse.emf.cdo.server_4.6.100"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.gastro.server(4.0.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration has been removed from org.gastro.server_4.0.400" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration"/>
+            <message_argument value="org.gastro.server_4.0.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.ui_4.6.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.ui_4.6.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.admin(4.2.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.server.admin_4.2.300" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.server.admin_4.2.300"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.db4o(4.0.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSession" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSession has been removed from org.eclipse.emf.cdo.server.db4o_4.0.400" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSession">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSession"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db4o_4.0.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.doc(4.1.500)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSession" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSession has been removed from org.eclipse.emf.cdo.doc_4.1.500" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSession">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSession"/>
+            <message_argument value="org.eclipse.emf.cdo.doc_4.1.500"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.4.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.edit_4.4.100" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.edit_4.4.100"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.net4j(4.1.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSession" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSession has been removed from org.eclipse.emf.cdo.server.net4j_4.1.400" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSession">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSession"/>
+            <message_argument value="org.eclipse.emf.cdo.server.net4j_4.1.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.common_4.6.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.common_4.6.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.mango(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.tests.mango_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.mango_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.admin(4.2.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.server.admin_4.2.300" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.server.admin_4.2.300"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.common_4.6.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.common_4.6.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.om.log.OSGiLogHandler" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.om.log.OSGiLogHandler has been added to org.eclipse.emf.cdo.transfer_4.2.400" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.om.log.OSGiLogHandler">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.om.log.OSGiLogHandler"/>
+            <message_argument value="org.eclipse.emf.cdo.transfer_4.2.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.om.log.OSGiLogHandler" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.om.log.OSGiLogHandler has been added to org.eclipse.net4j_4.6.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.om.log.OSGiLogHandler">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.om.log.OSGiLogHandler"/>
+            <message_argument value="org.eclipse.net4j_4.6.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model2(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model2_3.0.600" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model2_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.om.log.OSGiLogHandler" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.om.log.OSGiLogHandler has been added to org.eclipse.net4j.db_4.6.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.om.log.OSGiLogHandler">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.om.log.OSGiLogHandler"/>
+            <message_argument value="org.eclipse.net4j.db_4.6.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.security.editor(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.security.editor_4.2.400" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.2.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model2(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model2_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model2_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.om.log.OSGiLogHandler" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.om.log.OSGiLogHandler has been added to org.eclipse.emf.cdo.common_4.6.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.om.log.OSGiLogHandler">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.om.log.OSGiLogHandler"/>
+            <message_argument value="org.eclipse.emf.cdo.common_4.6.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model3(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model3_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model3_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.4.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.edit_4.4.100" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.edit_4.4.100"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model4(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model4_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model4_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model4interfaces(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model4interfaces_3.0.600" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model4interfaces_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.8.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.net4j.util" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.net4j.util (from version 3.7.0 to 3.8.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util"/>
+            <message_argument value="3.7.0"/>
+            <message_argument value="3.8.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.transfer_4.2.400" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.transfer_4.2.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.hibernate(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration has been removed from org.eclipse.emf.cdo.server.hibernate_4.2.400" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration"/>
+            <message_argument value="org.eclipse.emf.cdo.server.hibernate_4.2.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model2(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model2_3.0.600" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model2_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.compare(4.3.200)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.compare.merge.DiffRelationshipComputer" kind="ADDED" message="The re-exported type org.eclipse.emf.compare.merge.DiffRelationshipComputer has been added to org.eclipse.emf.cdo.compare_4.3.200" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.compare.merge.DiffRelationshipComputer">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.compare.merge.DiffRelationshipComputer"/>
+            <message_argument value="org.eclipse.emf.cdo.compare_4.3.200"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.gastro.inventory(4.0.500)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.gastro.inventory_4.0.500" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
+            <message_argument value="org.gastro.inventory_4.0.500"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.admin(4.2.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.server.admin_4.2.300" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.server.admin_4.2.300"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.expressions.editor(4.3.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.expressions.editor_4.3.300" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.3.300"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.ui_4.6.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.ui_4.6.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.8.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.om.log.OSGiLogHandler" kind="ADDED" message="The type org.eclipse.net4j.util.om.log.OSGiLogHandler has been added to org.eclipse.net4j.util_3.8.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.om.log.OSGiLogHandler">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.om.log.OSGiLogHandler"/>
+            <message_argument value="org.eclipse.net4j.util_3.8.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.db(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSession" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSession has been removed from org.eclipse.emf.cdo.server.db_4.5.0" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSession">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSession"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.objectivity(4.0.500)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration has been removed from org.eclipse.emf.cdo.server.objectivity_4.0.500" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration"/>
+            <message_argument value="org.eclipse.emf.cdo.server.objectivity_4.0.500"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.db4o(4.0.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration has been removed from org.eclipse.emf.cdo.server.db4o_4.0.400" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db4o_4.0.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.gastro.inventory(4.0.500)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.gastro.inventory_4.0.500" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
+            <message_argument value="org.gastro.inventory_4.0.500"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.4.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.edit_4.4.100" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.edit_4.4.100"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model3(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model3_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model3_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.gastro.inventory(4.0.500)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.gastro.inventory_4.0.500" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
+            <message_argument value="org.gastro.inventory_4.0.500"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.mango(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.tests.mango_3.0.600" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.mango_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.4.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.edit_4.4.100" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.edit_4.4.100"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.compare(4.3.200)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.compare.merge.CachingDiffRelationshipComputer" kind="ADDED" message="The re-exported type org.eclipse.emf.compare.merge.CachingDiffRelationshipComputer has been added to org.eclipse.emf.cdo.compare_4.3.200" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.compare.merge.CachingDiffRelationshipComputer">
         <message_arguments>
             <message_argument value="org.eclipse.emf.compare.merge.CachingDiffRelationshipComputer"/>
+            <message_argument value="org.eclipse.emf.cdo.compare_4.3.200"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.objectivity(4.0.500)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSession" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSession has been removed from org.eclipse.emf.cdo.server.objectivity_4.0.500" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSession">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSession"/>
+            <message_argument value="org.eclipse.emf.cdo.server.objectivity_4.0.500"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model3(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model3_3.0.600" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model3_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.tasklist.TaskList" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.tasklist.TaskList has been removed from org.eclipse.emf.cdo.security.editor_4.2.400" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.tasklist.TaskList">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.tasklist.TaskList"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.2.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.common_4.6.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.common_4.6.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.db(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration has been removed from org.eclipse.emf.cdo.server.db_4.5.0" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.security.editor(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.security.editor_4.2.400" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.2.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.tests(4.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSession" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSession has been removed from org.eclipse.emf.cdo.tests_4.0.600" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSession">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSession"/>
+            <message_argument value="org.eclipse.emf.cdo.tests_4.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.mango(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.tests.mango_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.mango_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.doc(4.1.500)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration has been removed from org.eclipse.emf.cdo.doc_4.1.500" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration"/>
+            <message_argument value="org.eclipse.emf.cdo.doc_4.1.500"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.admin(4.2.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSession" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSession has been removed from org.eclipse.emf.cdo.server.admin_4.2.300" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSession">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSession"/>
+            <message_argument value="org.eclipse.emf.cdo.server.admin_4.2.300"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.3.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.tasklist.TaskList" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.tasklist.TaskList has been removed from org.eclipse.emf.cdo.expressions.editor_4.3.300" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.tasklist.TaskList">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.tasklist.TaskList"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.3.300"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server(4.6.100)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="createSessionConfiguration()Lorg/eclipse/emf/cdo/server/embedded/CDOSessionConfiguration;" kind="REMOVED" message="The method org.eclipse.emf.cdo.server.CDOServerUtil.createSessionConfiguration() has been removed" newModifiers="0" oldModifiers="1048585" restrictions="2" type_name="org.eclipse.emf.cdo.server.CDOServerUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.CDOServerUtil"/>
+            <message_argument value="createSessionConfiguration()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.security.editor(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.security.editor_4.2.400" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.2.400"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.mongodb(4.0.500)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration has been removed from org.eclipse.emf.cdo.server.mongodb_4.0.500" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration"/>
+            <message_argument value="org.eclipse.emf.cdo.server.mongodb_4.0.500"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model4interfaces(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model4interfaces_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model4interfaces_3.0.600"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.doc(4.1.500)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.om.log.OSGiLogHandler" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.om.log.OSGiLogHandler has been added to org.eclipse.net4j.util.doc_4.1.500" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.om.log.OSGiLogHandler">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.om.log.OSGiLogHandler"/>
+            <message_argument value="org.eclipse.net4j.util.doc_4.1.500"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.workspace(4.2.200)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration has been removed from org.eclipse.emf.cdo.workspace_4.2.200" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration"/>
+            <message_argument value="org.eclipse.emf.cdo.workspace_4.2.200"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.compare(4.3.200)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.compare.merge.IDiffRelationshipComputer" kind="ADDED" message="The re-exported type org.eclipse.emf.compare.merge.IDiffRelationshipComputer has been added to org.eclipse.emf.cdo.compare_4.3.200" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.compare.merge.IDiffRelationshipComputer">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.compare.merge.IDiffRelationshipComputer"/>
             <message_argument value="org.eclipse.emf.cdo.compare_4.3.200"/>
         </message_arguments>
     </delta>
@@ -193,28 +559,10 @@
             <message_argument value="org.eclipse.net4j.buddies.ui_4.0.500"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model4interfaces(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model4interfaces_3.0.600" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.mongodb(4.0.500)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.embedded.CDOSession" kind="REMOVED" message="The re-exported type org.eclipse.emf.cdo.server.embedded.CDOSession has been removed from org.eclipse.emf.cdo.server.mongodb_4.0.500" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.emf.cdo.server.embedded.CDOSession">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model4interfaces_3.0.600"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.4.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.edit_4.4.100" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory"/>
-            <message_argument value="org.eclipse.emf.cdo.edit_4.4.100"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model6(4.0.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model6_4.0.400" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model6_4.0.400"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.gastro.inventory(4.0.500)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.gastro.inventory_4.0.500" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
-            <message_argument value="org.gastro.inventory_4.0.500"/>
+            <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSession"/>
+            <message_argument value="org.eclipse.emf.cdo.server.mongodb_4.0.500"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.mango(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.tests.mango_3.0.600" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
@@ -223,207 +571,21 @@
             <message_argument value="org.eclipse.emf.cdo.tests.mango_3.0.600"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.om.log.OSGiLogHandler" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.om.log.OSGiLogHandler has been added to org.eclipse.net4j_4.6.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.om.log.OSGiLogHandler">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model4interfaces(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model4interfaces_3.0.600" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.om.log.OSGiLogHandler"/>
-            <message_argument value="org.eclipse.net4j_4.6.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model2(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model2_3.0.600" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model2_3.0.600"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model2(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model2_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model2_3.0.600"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.6.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.om.log.OSGiLogHandler" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.om.log.OSGiLogHandler has been added to org.eclipse.net4j.util.ui_3.6.100" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.om.log.OSGiLogHandler">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.om.log.OSGiLogHandler"/>
-            <message_argument value="org.eclipse.net4j.util.ui_3.6.100"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.mango(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.tests.mango_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.mango_3.0.600"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model4interfaces(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model4interfaces_3.0.600" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
+            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
             <message_argument value="org.eclipse.emf.cdo.tests.model4interfaces_3.0.600"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.4.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.edit_4.4.100" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model6(4.0.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model6_4.0.400" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
         <message_arguments>
             <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.edit_4.4.100"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.gastro.inventory(4.0.500)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.gastro.inventory_4.0.500" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
-            <message_argument value="org.gastro.inventory_4.0.500"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.security.editor(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.security.editor_4.2.400" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory"/>
-            <message_argument value="org.eclipse.emf.cdo.security.editor_4.2.400"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.admin(4.2.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.server.admin_4.2.300" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.server.admin_4.2.300"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.db(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.om.log.OSGiLogHandler" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.om.log.OSGiLogHandler has been added to org.eclipse.net4j.db_4.6.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.om.log.OSGiLogHandler">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.om.log.OSGiLogHandler"/>
-            <message_argument value="org.eclipse.net4j.db_4.6.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.common_4.6.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.common_4.6.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.security.editor(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.security.editor_4.2.400" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory"/>
-            <message_argument value="org.eclipse.emf.cdo.security.editor_4.2.400"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.4.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.edit_4.4.100" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.edit_4.4.100"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.admin(4.2.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.server.admin_4.2.300" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.server.admin_4.2.300"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.common_4.6.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.common_4.6.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.admin(4.2.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.server.admin_4.2.300" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.server.admin_4.2.300"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.common_4.6.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.common_4.6.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.EcoreAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.EcoreAnnotationValidator has been added to org.eclipse.emf.cdo.common_4.6.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.EcoreAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.EcoreAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.common_4.6.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.ui_4.6.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.provider.annotation.ExtendedMetaDataAnnotationItemProviderAdapterFactory"/>
-            <message_argument value="org.eclipse.emf.cdo.ui_4.6.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.expressions.editor(4.3.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.expressions.editor_4.3.300" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory"/>
-            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.3.300"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.mango(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.tests.mango_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.mango_3.0.600"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.mango(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.EAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.EAnnotationValidator has been added to org.eclipse.emf.cdo.tests.mango_3.0.600" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.EAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.EAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.mango_3.0.600"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model4interfaces(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model4interfaces_3.0.600" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model4interfaces_3.0.600"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.ui_4.6.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory"/>
-            <message_argument value="org.eclipse.emf.cdo.ui_4.6.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util.doc(4.1.500)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.om.log.OSGiLogHandler" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.om.log.OSGiLogHandler has been added to org.eclipse.net4j.util.doc_4.1.500" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.om.log.OSGiLogHandler">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.om.log.OSGiLogHandler"/>
-            <message_argument value="org.eclipse.net4j.util.doc_4.1.500"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.ui_4.6.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory"/>
-            <message_argument value="org.eclipse.emf.cdo.ui_4.6.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.admin(4.2.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.server.admin_4.2.300" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.server.admin_4.2.300"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.expressions.editor(4.3.300)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory has been added to org.eclipse.emf.cdo.expressions.editor_4.3.300" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.provider.annotation.EcoreAnnotationItemProviderAdapterFactory"/>
-            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.3.300"/>
+            <message_argument value="org.eclipse.emf.cdo.tests.model6_4.0.400"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.util(3.8.0)" element_type="CLASS_ELEMENT_TYPE" flags="72" key="org.eclipse.net4j.util.om.log.OSGiLoggingBridge" kind="ADDED" message="The deprecation modifiers has been added to org.eclipse.net4j.util.om.log.OSGiLoggingBridge" newModifiers="1048609" oldModifiers="33" restrictions="0" type_name="org.eclipse.net4j.util.om.log.OSGiLoggingBridge">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.om.log.OSGiLoggingBridge"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.2.400)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.transfer_4.2.400" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.transfer_4.2.400"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.gastro.inventory(4.0.500)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.gastro.inventory_4.0.500" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
-            <message_argument value="org.gastro.inventory_4.0.500"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.4.100)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator has been added to org.eclipse.emf.cdo.edit_4.4.100" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.ExtendedMetaDataAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.edit_4.4.100"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.tests.model2(3.0.600)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.ecore.util.BasicEAnnotationValidator" kind="ADDED" message="The re-exported type org.eclipse.emf.ecore.util.BasicEAnnotationValidator has been added to org.eclipse.emf.cdo.tests.model2_3.0.600" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.ecore.util.BasicEAnnotationValidator">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.ecore.util.BasicEAnnotationValidator"/>
-            <message_argument value="org.eclipse.emf.cdo.tests.model2_3.0.600"/>
         </message_arguments>
     </delta>
 </deltas>

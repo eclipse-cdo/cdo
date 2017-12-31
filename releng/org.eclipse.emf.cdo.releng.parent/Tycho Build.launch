@@ -5,6 +5,6 @@
 </listAttribute>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LAUNCH_CONFIGURATION_BUILD_SCOPE" value="${none}"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${maven.root}\bin\mvn.bat"/>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-DGENERATE_SOURCE=true&#13;&#10;-DskipTests=true&#13;&#10;-Dtycho.debug.resolver=true&#13;&#10;-DX&#13;&#10;--fail-at-end&#13;&#10;clean&#13;&#10;verify"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-DskipTests=true&#13;&#10;-Dtycho.debug.resolver=true&#13;&#10;-DX&#13;&#10;--fail-at-end&#13;&#10;clean&#13;&#10;verify"/>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${git.clone.cdo}"/>
 </launchConfiguration>

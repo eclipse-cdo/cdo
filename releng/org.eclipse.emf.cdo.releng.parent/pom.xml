@@ -56,6 +56,16 @@ Eike Stepper - initial API and implementation
     -->
   </pluginRepositories>
 
+  <modules>
+    <module>features</module>
+    <module>plugins</module>
+    <module>tp</module>
+    <module>../org.eclipse.emf.cdo.releng</module>
+    <module>../org.eclipse.emf.cdo.releng.apireports</module>
+    <module>../org.eclipse.emf.cdo.releng.help</module>
+    <module>../org.eclipse.emf.cdo.releng.site</module>
+  </modules>
+
   <build>
     <plugins>
       <plugin>
@@ -154,15 +164,6 @@ Eike Stepper - initial API and implementation
                   <arch>x86</arch>
                 </environment>
               </environments>
-              <dependency-resolution>
-                <extraRequirements>
-                  <requirement>
-                    <type>p2-installable-unit</type>
-                    <id>org.eclipse.jdt.feature.group</id>
-                    <versionRange>0.0.0</versionRange>
-                  </requirement>
-                </extraRequirements>
-              </dependency-resolution>
             </configuration>
           </plugin>
         <plugin>
@@ -198,39 +199,5 @@ Eike Stepper - initial API and implementation
       </plugins>
     </pluginManagement>
   </build>
-
-  <profiles>
-    <profile>
-      <id>modules</id>
-      <activation>
-        <property>
-          <name>MAVEN_BUILD</name>
-          <value>!false</value>
-        </property>
-      </activation>
-      <modules>
-        <module>features</module>
-        <module>plugins</module>
-        <module>tp</module>
-		    <module>../org.eclipse.emf.cdo.releng</module>
-		    <module>../org.eclipse.emf.cdo.releng.apireports</module>
-		    <module>../org.eclipse.emf.cdo.releng.help</module>
-        <module>../org.eclipse.emf.cdo.releng.site</module>
-      </modules>
-    </profile>
-    <!-- 
-    <profile>
-      <id>macosx-jvm-flags</id>
-      <activation>
-        <os>
-          <family>mac</family>
-        </os>
-      </activation>
-      <properties>
-        <os-jvm-flags>-XstartOnFirstThread</os-jvm-flags>
-      </properties>
-    </profile>
-     -->
-  </profiles>
 
 </project>

@@ -21,6 +21,7 @@
   </taskdef>
 
   <target name="init-properties" if="env.HUDSON_URL">
+  	<!--
     <property name="build.root" value="${env.WORKSPACE}" />
     <property name="git.clone" location="${build.root}/git" />
     <property name="features.dir" location="${git.clone}/features" />
@@ -31,7 +32,8 @@
     <property name="releng.site" location="${releng.dir}/org.eclipse.emf.cdo.releng.site" />
     <property name="test.report" location="${build.root}/test-report.xml" />
     <property name="zips" location="${build.root}/zips" />
-
+    -->
+  	
     <!-- build.trigger -->
     <if>
       <not>
@@ -44,11 +46,11 @@
         <loadresource property="build.trigger">
           <propertyresource name="action.cause.shortDescription" />
           <filterchain>
-            <replaceregex pattern="^Triggered by " replace="" />
-            <replaceregex pattern="^Gerrit: .*" replace="gerrit" />
+            <replaceregex pattern="^Triggered by an " replace="" />
+            <replaceregex pattern="^Triggered by " replace="" /> 
+            <replaceregex pattern="^Started by an " replace="" />
             <replaceregex pattern="^Started by " replace="" />
-            <replaceregex pattern="^Gestartet durch " replace="" />
-            <replaceregex pattern="Benutzer" replace="user" />
+            <replaceregex pattern="^Gerrit: .*" replace="gerrit" />
           </filterchain>
         </loadresource>
       </then>

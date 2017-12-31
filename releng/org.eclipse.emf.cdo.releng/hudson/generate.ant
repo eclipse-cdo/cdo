@@ -39,11 +39,17 @@
   <target name="clean" depends="init">
     <delete failonerror="false" includeemptydirs="true">
       <fileset dir="${build.root}" defaultexcludes="false">
+        <include name="features/**" />
+        <include name="plugins/**" />
+        <include name="binary/**" />
         <include name="zips/**" />
         <include name="help/**" />
+        <include name="*.jar" />
         <include name="*.css" />
         <include name="*.html" />
+        <include name="*.index" />
         <include name="*.xml" />
+        <include name="*.xz" />
         <include name="*.log" />
         <include name="*.txt" />
         <exclude name="build-info.properties" />
@@ -63,17 +69,6 @@
   <!-- ============= -->
 
   <target name="generate-site" depends="clean">
-    <!-- Clean -->
-    <delete includeemptydirs="true" failonerror="false">
-      <fileset dir="${build.root}" defaultexcludes="false">
-        <include name="binary/**" />
-        <include name="features/**" />
-        <include name="plugins/**" />
-        <include name="artifacts.jar" />
-        <include name="content.jar" />
-      </fileset>
-    </delete>
-
     <!-- Copy site contents -->
     <copy todir="${build.root}" overwrite="true" includeemptydirs="true" preservelastmodified="true" failonerror="true">
       <fileset dir="${releng.site}/target/repository">

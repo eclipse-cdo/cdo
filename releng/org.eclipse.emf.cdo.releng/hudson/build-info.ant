@@ -9,9 +9,9 @@
 	Contributors:
 	  Eike Stepper - initial API and implementation
 -->
-<project name="init-properties" default="init-properties">
+<project name="build-info" default="build-info">
 
-  <property file="build.properties" />
+  <property file="ant.properties" />
   <property environment="env" />
 
   <taskdef resource="net/sf/antcontrib/antlib.xml">
@@ -20,7 +20,7 @@
     </classpath>
   </taskdef>
 
-  <target name="init-properties" if="env.HUDSON_URL">
+  <target name="build-info" if="env.HUDSON_URL">
     <!-- build.trigger -->
     <if>
       <not>

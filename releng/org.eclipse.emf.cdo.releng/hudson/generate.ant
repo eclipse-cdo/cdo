@@ -28,7 +28,7 @@
     <property name="test.report" location="${build.root}/test-report.xml" />
     <property name="zips" location="${build.root}/zips" />
 
-    <property file="build.properties" />
+    <property file="ant.properties" />
     <property file="${build.root}/build-info.properties" />
   </target>
 
@@ -62,7 +62,7 @@
   <!-- Generate Site -->
   <!-- ============= -->
 
-  <target name="generate.site" depends="clean">
+  <target name="generate-site" depends="clean">
     <!-- Clean -->
     <delete includeemptydirs="true" failonerror="false">
       <fileset dir="${build.root}" defaultexcludes="false">
@@ -100,7 +100,7 @@
   <!-- Generate Help -->
   <!-- ============= -->
 
-  <target name="generate.help" depends="clean">
+  <target name="generate-help" depends="clean">
     <mkdir dir="${build.root}/help" />
     <copy todir="${build.root}/help">
       <fileset dir="${releng.help}/html">
@@ -116,7 +116,7 @@
   <!-- Generate Index -->
   <!-- ============== -->
 
-  <target name="generate.index" depends="clean">
+  <target name="generate-index" depends="clean">
     <unzip src="${build.root}/content.jar" dest="${build.root}" />
     <property name="content.xml" location="${build.root}/content.xml" />
     <xslt style="xsl/content2html.xsl" in="${content.xml}" out="${build.root}/index.html" />
@@ -128,7 +128,7 @@
   <!-- Generate Booksmarks -->
   <!-- =================== -->
 
-  <target name="generate.bookmarks" depends="clean">
+  <target name="generate-bookmarks" depends="clean">
     <property name="bookmarks.tmp" location="${build.root}/bookmarks.tmp" />
     <xslt style="xsl/bom2bookmarks.xsl" in="${releng.dir}/org.eclipse.emf.cdo.releng.parent/tp/org.eclipse.emf.cdo.releng.tp.target" out="${bookmarks.tmp}" />
     <property name="bookmarks.xml" location="${build.root}/bookmarks.xml" />
@@ -159,7 +159,7 @@
   <!-- Generate Dropins -->
   <!-- ================ -->
 
-  <target name="generate.dropins" depends="clean">
+  <target name="generate-dropins" depends="clean">
     <mkdir dir="${zips}" />
     <zip destfile="${zips}/emf-cdo-${build.qualifier}-Dropins.zip">
       <fileset dir="${releng.site}/target/repository">
@@ -176,7 +176,7 @@
   <!-- Generate API -->
   <!-- ============ -->
 
-  <target name="generate.apireports" depends="clean">
+  <target name="generate-apireports" depends="clean">
   	<copy file="${releng}/api/api.xml" todir="${build.root}" overwrite="true" />
     <copy file="${releng}/api/api.css" todir="${build.root}" overwrite="true" />
     <java classname="org.eclipse.emf.cdo.releng.Api2Html">
@@ -193,6 +193,6 @@
   <!-- Generate -->
   <!-- ======== -->
 
-  <target name="generate" depends="generate.site,generate.help,generate.index,generate.bookmarks,generate.dropins,generate.apireports" />
+  <target name="generate" depends="generate-site,generate-help,generate-index,generate-bookmarks,generate-dropins,generate-apireports" />
 
 </project>

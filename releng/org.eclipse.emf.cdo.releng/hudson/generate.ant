@@ -52,6 +52,7 @@
         <include name="*.xz" />
         <include name="*.log" />
         <include name="*.txt" />
+        <include name="signing.marker" />
         <exclude name="build-info.properties" />
         <exclude name="build-info.xml" />
       </fileset>

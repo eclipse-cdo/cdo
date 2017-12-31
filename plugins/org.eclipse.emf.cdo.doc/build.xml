@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright (c) 2006-2016 Eike Stepper (Berlin, Germany) and others.
+  Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
@@ -92,7 +92,7 @@
              windowtitle="${javadoc.name}"
              doctitle="&lt;h1>${javadoc.name}&lt;/h1>"
              overview="${project.path}/overview.html"
-             bottom="&lt;i class=&quot;copyright&quot;>Copyright (c) 2006-2016 Eike Stepper (Berlin, Germany) and others.&lt;br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html&lt;/i>">
+             bottom="&lt;i class=&quot;copyright&quot;>Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.&lt;br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html&lt;/i>">
 
       <fileset dir="${plugins.dir}" defaultexcludes="yes">
 				<include name="org.eclipse.emf.cdo.admin/src/org/eclipse/emf/cdo/admin/*.java" />
@@ -141,6 +141,7 @@
 				<include name="org.eclipse.emf.cdo.server.db/src/org/eclipse/emf/cdo/server/db/*.java" />
 				<include name="org.eclipse.emf.cdo.server.db/src/org/eclipse/emf/cdo/server/db/mapping/*.java" />
 				<include name="org.eclipse.emf.cdo.server.db4o/src/org/eclipse/emf/cdo/server/db4o/*.java" />
+				<include name="org.eclipse.emf.cdo.server.embedded/src/org/eclipse/emf/cdo/server/embedded/*.java" />
 				<include name="org.eclipse.emf.cdo.server.hibernate/src/org/eclipse/emf/cdo/server/hibernate/*.java" />
 				<include name="org.eclipse.emf.cdo.server.lissome/src/org/eclipse/emf/cdo/server/lissome/*.java" />
 				<include name="org.eclipse.emf.cdo.server.mongodb/src/org/eclipse/emf/cdo/server/mongodb/*.java" />
@@ -150,7 +151,6 @@
 				<include name="org.eclipse.emf.cdo.server.security/src/org/eclipse/emf/cdo/server/security/*.java" />
 				<include name="org.eclipse.emf.cdo.server.security/src/org/eclipse/emf/cdo/server/spi/security/*.java" />
 				<include name="org.eclipse.emf.cdo.server/src/org/eclipse/emf/cdo/server/*.java" />
-				<include name="org.eclipse.emf.cdo.server/src/org/eclipse/emf/cdo/server/embedded/*.java" />
 				<include name="org.eclipse.emf.cdo.server/src/org/eclipse/emf/cdo/server/mem/*.java" />
 				<include name="org.eclipse.emf.cdo.server/src/org/eclipse/emf/cdo/spi/server/*.java" />
 				<include name="org.eclipse.emf.cdo.transfer.repository/src/org/eclipse/emf/cdo/transfer/spi/repository/*.java" />
@@ -273,7 +273,6 @@
 			</group>
 			<group title="CDO Model Repository Server">
 				<package name="org.eclipse.emf.cdo.server" />
-				<package name="org.eclipse.emf.cdo.server.embedded" />
 				<package name="org.eclipse.emf.cdo.server.mem" />
 				<package name="org.eclipse.emf.cdo.spi.server" />
 			</group>
@@ -287,6 +286,9 @@
 			</group>
 			<group title="CDO Model Repository Server DB4O">
 				<package name="org.eclipse.emf.cdo.server.db4o" />
+			</group>
+			<group title="CDO Model Repository Server Embedded Support">
+				<package name="org.eclipse.emf.cdo.server.embedded" />
 			</group>
 			<group title="CDO Model Repository Server Hibernate">
 				<package name="org.eclipse.emf.cdo.server.hibernate" />

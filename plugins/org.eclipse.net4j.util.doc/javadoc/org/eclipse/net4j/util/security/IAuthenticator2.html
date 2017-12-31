@@ -133,22 +133,22 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.h
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator2.html#isAdministrator-java.lang.String-">isAdministrator</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator2.html#isAdministrator-java.lang.String-">isAdministrator</a></span>(java.lang.String&nbsp;userID)</code>
 <div class="block">Queries whether a given user has administrative privileges.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator2.html#resetPassword-java.lang.String-char:A-java.lang.String-char:A-">resetPassword</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;adminID,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator2.html#resetPassword-java.lang.String-char:A-java.lang.String-char:A-">resetPassword</a></span>(java.lang.String&nbsp;adminID,
              char[]&nbsp;adminPassword,
-             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
+             java.lang.String&nbsp;userID,
              char[]&nbsp;newPassword)</code>
 <div class="block">Performs an administrative resets of the password <em>stored</em> for the user identified by <code>userID</code>.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator2.html#updatePassword-java.lang.String-char:A-char:A-">updatePassword</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator2.html#updatePassword-java.lang.String-char:A-char:A-">updatePassword</a></span>(java.lang.String&nbsp;userID,
               char[]&nbsp;oldPassword,
               char[]&nbsp;newPassword)</code>
 <div class="block">Updates the password <em>stored</em> for the user identified by <code>userID</code>.</div>
@@ -182,7 +182,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.h
 <ul class="blockList">
 <li class="blockList">
 <h4>updatePassword</h4>
-<pre>void&nbsp;updatePassword(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
+<pre>void&nbsp;updatePassword(java.lang.String&nbsp;userID,
                     char[]&nbsp;oldPassword,
                     char[]&nbsp;newPassword)</pre>
 <div class="block">Updates the password <em>stored</em> for the user identified by <code>userID</code>.  The <code>oldPassword</code> is authenticated
@@ -194,7 +194,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.h
 <dd><code>oldPassword</code> - the user's current password attempt to verify against the <em>stored</em> password</dd>
 <dd><code>newPassword</code> - the new password to replace the <code>oldPassword</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></code> - on any failure to authenticate the <code>oldPassword</code> or validate and/or set the <code>newPassword</code></dd>
+<dd><code>java.lang.SecurityException</code> - on any failure to authenticate the <code>oldPassword</code> or validate and/or set the <code>newPassword</code></dd>
 </dl>
 </li>
 </ul>
@@ -204,9 +204,9 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.h
 <ul class="blockList">
 <li class="blockList">
 <h4>resetPassword</h4>
-<pre>void&nbsp;resetPassword(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;adminID,
+<pre>void&nbsp;resetPassword(java.lang.String&nbsp;adminID,
                    char[]&nbsp;adminPassword,
-                   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
+                   java.lang.String&nbsp;userID,
                    char[]&nbsp;newPassword)</pre>
 <div class="block">Performs an administrative resets of the password <em>stored</em> for the user identified by <code>userID</code>.
  The <code>adminID</code> and <code>adminPassword</code> must <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html#authenticate-java.lang.String-char:A-">authenticate</a>
@@ -218,7 +218,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.h
 <dd><code>userID</code> - the ID of the user whose password is to be reset</dd>
 <dd><code>newPassword</code> - the new password to replace the user's old password</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></code> - on any failure to authenticate the <code>oldPassword</code> or validate and/or set the <code>newPassword</code></dd>
+<dd><code>java.lang.SecurityException</code> - on any failure to authenticate the <code>oldPassword</code> or validate and/or set the <code>newPassword</code></dd>
 </dl>
 </li>
 </ul>
@@ -228,7 +228,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.h
 <ul class="blockListLast">
 <li class="blockList">
 <h4>isAdministrator</h4>
-<pre>boolean&nbsp;isAdministrator(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID)</pre>
+<pre>boolean&nbsp;isAdministrator(java.lang.String&nbsp;userID)</pre>
 <div class="block">Queries whether a given user has administrative privileges.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

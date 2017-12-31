@@ -225,7 +225,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore-byte:A-long-java.io.InputStream-">rawStore</a></span>(byte[]&nbsp;id,
         long&nbsp;size,
-        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;inputStream)</code>
+        java.io.InputStream&nbsp;inputStream)</code>
 <div class="block">Stores the given <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOBlob.html" title="class in org.eclipse.emf.cdo.common.lob"><code>blob</code></a> in the backend represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store
  accessor</code></a> without going through a regular <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit-org.eclipse.net4j.util.om.monitor.OMMonitor-"><code>commit</code></a>.</div>
 </td>
@@ -234,7 +234,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore-byte:A-long-java.io.Reader-">rawStore</a></span>(byte[]&nbsp;id,
         long&nbsp;size,
-        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io">Reader</a>&nbsp;reader)</code>
+        java.io.Reader&nbsp;reader)</code>
 <div class="block">Stores the given <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOClob.html" title="class in org.eclipse.emf.cdo.common.lob"><code>clob</code></a> in the backend represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store
  accessor</code></a> without going through a regular <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit-org.eclipse.net4j.util.om.monitor.OMMonitor-"><code>commit</code></a>.</div>
 </td>
@@ -244,8 +244,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore-org.eclipse.emf.cdo.common.branch.CDOBranch-long-long-java.lang.String-java.lang.String-org.eclipse.net4j.util.om.monitor.OMMonitor-">rawStore</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
         long&nbsp;timeStamp,
         long&nbsp;previousTimeStamp,
-        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
-        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;comment,
+        java.lang.String&nbsp;userID,
+        java.lang.String&nbsp;comment,
         <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
 <div class="block">Stores the given <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit</code></a> in the backend represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw
  store accessor</code></a> without going through a regular <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit-org.eclipse.net4j.util.om.monitor.OMMonitor-"><code>commit</code></a>.</div>
@@ -322,7 +322,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
                int&nbsp;toBranchID,
                long&nbsp;fromCommitTime,
                long&nbsp;toCommitTime)
-        throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+        throws java.io.IOException</pre>
 <div class="block">Serializes all backend data within the given ranges such that it can be deserialized by the
  <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawImport-org.eclipse.emf.cdo.common.protocol.CDODataInput-int-int-long-long-org.eclipse.net4j.util.om.monitor.OMMonitor-"><code>rawImport()</code></a> method of a different instance of
  the same implementation of <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.
@@ -346,8 +346,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
           <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>, <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit infos</code></a>, <a href="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package units</code></a>,
           etc...) to be exported.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if the <i>stream</i> could not be written to.</dd>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></code> - if this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a> does not support branching.</dd>
+<dd><code>java.io.IOException</code> - if the <i>stream</i> could not be written to.</dd>
+<dd><code>java.lang.UnsupportedOperationException</code> - if this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a> does not support branching.</dd>
 </dl>
 </li>
 </ul>
@@ -363,7 +363,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
                long&nbsp;fromCommitTime,
                long&nbsp;toCommitTime,
                <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)
-        throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+        throws java.io.IOException</pre>
 <div class="block">Deserializes backend data that has been serialized by the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawExport-org.eclipse.emf.cdo.common.protocol.CDODataOutput-int-int-long-long-"><code>rawExport()</code></a> method of a different instance of the same implementation of <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store
  accessor</code></a>.
  <p>
@@ -386,8 +386,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
           <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>, <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit infos</code></a>, <a href="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package units</code></a>,
           etc...) to be imported.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if the <i>stream</i> could not be read from.</dd>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></code> - if this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a> does not support branching.</dd>
+<dd><code>java.io.IOException</code> - if the <i>stream</i> could not be read from.</dd>
+<dd><code>java.lang.UnsupportedOperationException</code> - if this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a> does not support branching.</dd>
 </dl>
 </li>
 </ul>
@@ -456,8 +456,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 <h4>rawStore</h4>
 <pre>void&nbsp;rawStore(byte[]&nbsp;id,
               long&nbsp;size,
-              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;inputStream)
-       throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+              java.io.InputStream&nbsp;inputStream)
+       throws java.io.IOException</pre>
 <div class="block">Stores the given <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOBlob.html" title="class in org.eclipse.emf.cdo.common.lob"><code>blob</code></a> in the backend represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store
  accessor</code></a> without going through a regular <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit-org.eclipse.net4j.util.om.monitor.OMMonitor-"><code>commit</code></a>.
  <p>
@@ -473,7 +473,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 <dd><code>inputStream</code> - the <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOBlob.html#getContents--"><code>contents</code></a> of the blob to be stored in the backend represented by this
           <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit-double-org.eclipse.net4j.util.om.monitor.OMMonitor-"><code>rawCommit(double, OMMonitor)</code></a></dd>
 </dl>
@@ -487,8 +487,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 <h4>rawStore</h4>
 <pre>void&nbsp;rawStore(byte[]&nbsp;id,
               long&nbsp;size,
-              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io">Reader</a>&nbsp;reader)
-       throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+              java.io.Reader&nbsp;reader)
+       throws java.io.IOException</pre>
 <div class="block">Stores the given <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOClob.html" title="class in org.eclipse.emf.cdo.common.lob"><code>clob</code></a> in the backend represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store
  accessor</code></a> without going through a regular <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit-org.eclipse.net4j.util.om.monitor.OMMonitor-"><code>commit</code></a>.
  <p>
@@ -504,7 +504,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 <dd><code>reader</code> - the <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOClob.html#getContents--"><code>contents</code></a> of the clob to be stored in the backend represented by this
           <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit-double-org.eclipse.net4j.util.om.monitor.OMMonitor-"><code>rawCommit(double, OMMonitor)</code></a></dd>
 </dl>
@@ -519,8 +519,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 <pre>void&nbsp;rawStore(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
               long&nbsp;timeStamp,
               long&nbsp;previousTimeStamp,
-              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
-              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;comment,
+              java.lang.String&nbsp;userID,
+              java.lang.String&nbsp;comment,
               <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</pre>
 <div class="block">Stores the given <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit</code></a> in the backend represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw
  store accessor</code></a> without going through a regular <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit-org.eclipse.net4j.util.om.monitor.OMMonitor-"><code>commit</code></a>.

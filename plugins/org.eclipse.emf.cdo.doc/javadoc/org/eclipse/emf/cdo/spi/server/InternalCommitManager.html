@@ -214,7 +214,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>preCommit</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+<pre>@Deprecated
 void&nbsp;preCommit(<a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;commitContext,
                             <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.5 use <a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitManager.html#preCommit-org.eclipse.emf.cdo.spi.server.InternalCommitContext-org.eclipse.emf.cdo.common.protocol.CDODataInput-org.eclipse.net4j.util.om.monitor.OMMonitor-"><code>preCommit(InternalCommitContext, CDODataInput, OMMonitor)</code></a>.</span></div>
@@ -263,13 +263,13 @@ void&nbsp;preCommit(<a href="../../../../../../org/eclipse/emf/cdo/spi/server/In
 <li class="blockList">
 <h4>waitForTermination</h4>
 <pre>void&nbsp;waitForTermination(<a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalTransaction.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTransaction</a>&nbsp;transaction)
-                 throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a>,
-                        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ExecutionException.html?is-external=true" title="class or interface in java.util.concurrent">ExecutionException</a></pre>
+                 throws java.lang.InterruptedException,
+                        java.util.concurrent.ExecutionException</pre>
 <div class="block">Waiting for a commit to be done.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ExecutionException.html?is-external=true" title="class or interface in java.util.concurrent">ExecutionException</a></code></dd>
+<dd><code>java.lang.InterruptedException</code></dd>
+<dd><code>java.util.concurrent.ExecutionException</code></dd>
 </dl>
 </li>
 </ul>

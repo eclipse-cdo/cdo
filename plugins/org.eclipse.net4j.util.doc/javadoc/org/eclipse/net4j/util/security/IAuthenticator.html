@@ -136,7 +136,7 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html#authenticate-java.lang.String-char:A-">authenticate</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html#authenticate-java.lang.String-char:A-">authenticate</a></span>(java.lang.String&nbsp;userID,
             char[]&nbsp;password)</code>
 <div class="block">Authenticates the user with the passed <code>userID</code> by checking whether the supplied <code>password</code>
  matches the password <i>stored</i> for this user.</div>
@@ -163,16 +163,16 @@ var activeTableTab = "activeTableTab";
 <ul class="blockListLast">
 <li class="blockList">
 <h4>authenticate</h4>
-<pre>void&nbsp;authenticate(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
+<pre>void&nbsp;authenticate(java.lang.String&nbsp;userID,
                   char[]&nbsp;password)
-           throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></pre>
+           throws java.lang.SecurityException</pre>
 <div class="block">Authenticates the user with the passed <code>userID</code> by checking whether the supplied <code>password</code>
  matches the password <i>stored</i> for this user.
  <p>
- The implementation is required to throw a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang"><code>SecurityException</code></a> if the passwords do <b>not</b> match.</div>
+ The implementation is required to throw a <code>SecurityException</code> if the passwords do <b>not</b> match.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></code></dd>
+<dd><code>java.lang.SecurityException</code></dd>
 </dl>
 </li>
 </ul>

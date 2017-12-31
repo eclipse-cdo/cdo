@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -96,7 +96,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</a></li>
@@ -167,7 +167,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html
 <th class="colLast" scope="col">Field and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>protected java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#fileName">fileName</a></span></code>&nbsp;</td>
 </tr>
 </table>
@@ -221,30 +221,44 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#doBeforeActivate--">doBeforeActivate</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#getFileName--">getFileName</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#doDeactivate--">doDeactivate</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#load-java.util.Map-">load</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,char[]&gt;&nbsp;users)</code>&nbsp;</td>
+<td class="colFirst"><code>java.io.File</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#getFile--">getFile</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#load-java.util.Map-java.io.InputStream-">load</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,char[]&gt;&nbsp;users,
-    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;stream)</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#getFileName--">getFileName</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#save-java.util.Map-">save</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,char[]&gt;&nbsp;users)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#load-java.util.Map-">load</a></span>(java.util.Map&lt;java.lang.String,char[]&gt;&nbsp;users)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#save-java.util.Map-java.io.FileOutputStream-">save</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,char[]&gt;&nbsp;users,
-    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileOutputStream.html?is-external=true" title="class or interface in java.io">FileOutputStream</a>&nbsp;stream)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#load-java.util.Map-java.io.InputStream-">load</a></span>(java.util.Map&lt;java.lang.String,char[]&gt;&nbsp;users,
+    java.io.InputStream&nbsp;stream)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>protected java.io.File</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#resolveFile-java.lang.String-">resolveFile</a></span>(java.lang.String&nbsp;fileName)</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#save-java.util.Map-">save</a></span>(java.util.Map&lt;java.lang.String,char[]&gt;&nbsp;users)</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#save-java.util.Map-java.io.FileOutputStream-">save</a></span>(java.util.Map&lt;java.lang.String,char[]&gt;&nbsp;users,
+    java.io.FileOutputStream&nbsp;stream)</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#setFileName-java.lang.String-">setFileName</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fileName)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#setFileName-java.lang.String-">setFileName</a></span>(java.lang.String&nbsp;fileName)</code>
+<div class="block">Sets the name of the file to be used by this user manager.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -252,7 +266,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.security.<a href="../../../../../org/eclipse/net4j/util/security/UserManager.html" title="class in org.eclipse.net4j.util.security">UserManager</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/security/UserManager.html#addUser-java.lang.String-char:A-">addUser</a>, <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html#authenticate-java.lang.String-char:A-">authenticate</a>, <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html#doActivate--">doActivate</a>, <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html#doDeactivate--">doDeactivate</a>, <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html#encrypt-java.lang.String-byte:A-java.lang.String-byte:A-int-">encrypt</a>, <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html#getPassword-java.lang.String-">getPassword</a>, <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html#removeUser-java.lang.String-">removeUser</a></code></li>
+<code><a href="../../../../../org/eclipse/net4j/util/security/UserManager.html#addUser-java.lang.String-char:A-">addUser</a>, <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html#authenticate-java.lang.String-char:A-">authenticate</a>, <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html#doActivate--">doActivate</a>, <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html#encrypt-java.lang.String-byte:A-java.lang.String-byte:A-int-">encrypt</a>, <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html#getPassword-java.lang.String-">getPassword</a>, <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html#removeUser-java.lang.String-">removeUser</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
@@ -272,8 +286,8 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
@@ -302,7 +316,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html
 <ul class="blockListLast">
 <li class="blockList">
 <h4>fileName</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> fileName</pre>
+<pre>protected&nbsp;java.lang.String fileName</pre>
 </li>
 </ul>
 </li>
@@ -336,7 +350,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html
 <ul class="blockList">
 <li class="blockList">
 <h4>getFileName</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getFileName()</pre>
+<pre>public&nbsp;java.lang.String&nbsp;getFileName()</pre>
 </li>
 </ul>
 <a name="setFileName-java.lang.String-">
@@ -345,7 +359,49 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html
 <ul class="blockList">
 <li class="blockList">
 <h4>setFileName</h4>
-<pre>public&nbsp;void&nbsp;setFileName(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fileName)</pre>
+<pre>public&nbsp;void&nbsp;setFileName(java.lang.String&nbsp;fileName)</pre>
+<div class="block">Sets the name of the file to be used by this user manager.
+ <p>
+ The <a href="../../../../../org/eclipse/net4j/util/security/FileUserManager.html#getFile--"><code>file</code></a> is resolved in the following order:
+ <ol>
+ <li> If it starts with the path segment &quot;@config&quot; the subsequent path segments are interpreted as relative to the <a href="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#getConfigFolder--"><code>config folder</code></a>.
+ <li> If it is relative it is interpreted as relative to the application's current directory.
+ <li> Otherwise it is interpreted as absolute.
+ </ol>
+ Unless &quot;-Dnet4j.security.FileUserManager.failIfFileDoesNotExist=true&quot; is specified the resolved file is not required to exist when this user manager is activated.
+ In this case it will be created when <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html#addUser-java.lang.String-char:A-"><code>addUser()</code></a> or <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html#removeUser-java.lang.String-"><code>removeUser()</code></a> are called.
+ <p>
+ With &quot;-Dnet4j.security.FileUserManager.fallBackToConfigFolder=true&quot; a relative path is resolved in both the application's current folder
+ and the config folder (in this order).</div>
+</li>
+</ul>
+<a name="getFile--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getFile</h4>
+<pre>public final&nbsp;java.io.File&nbsp;getFile()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.7</dd>
+</dl>
+</li>
+</ul>
+<a name="resolveFile-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>resolveFile</h4>
+<pre>protected&nbsp;java.io.File&nbsp;resolveFile(java.lang.String&nbsp;fileName)
+                            throws java.lang.Exception</pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.Exception</code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.7</dd>
+</dl>
 </li>
 </ul>
 <a name="doBeforeActivate--">
@@ -355,12 +411,28 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html
 <li class="blockList">
 <h4>doBeforeActivate</h4>
 <pre>protected&nbsp;void&nbsp;doBeforeActivate()
-                         throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></pre>
+                         throws java.lang.Exception</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeActivate--">doBeforeActivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code></dd>
+<dd><code>java.lang.Exception</code></dd>
+</dl>
+</li>
+</ul>
+<a name="doDeactivate--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>doDeactivate</h4>
+<pre>protected&nbsp;void&nbsp;doDeactivate()
+                     throws java.lang.Exception</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/security/UserManager.html#doDeactivate--">doDeactivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/security/UserManager.html" title="class in org.eclipse.net4j.util.security">UserManager</a></code></dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.Exception</code></dd>
 </dl>
 </li>
 </ul>
@@ -370,7 +442,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html
 <ul class="blockList">
 <li class="blockList">
 <h4>load</h4>
-<pre>protected&nbsp;void&nbsp;load(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,char[]&gt;&nbsp;users)
+<pre>protected&nbsp;void&nbsp;load(java.util.Map&lt;java.lang.String,char[]&gt;&nbsp;users)
              throws <a href="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
@@ -386,12 +458,12 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html
 <ul class="blockList">
 <li class="blockList">
 <h4>load</h4>
-<pre>protected&nbsp;void&nbsp;load(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,char[]&gt;&nbsp;users,
-                    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;stream)
-             throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>protected&nbsp;void&nbsp;load(java.util.Map&lt;java.lang.String,char[]&gt;&nbsp;users,
+                    java.io.InputStream&nbsp;stream)
+             throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -401,7 +473,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html
 <ul class="blockList">
 <li class="blockList">
 <h4>save</h4>
-<pre>protected&nbsp;void&nbsp;save(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,char[]&gt;&nbsp;users)
+<pre>protected&nbsp;void&nbsp;save(java.util.Map&lt;java.lang.String,char[]&gt;&nbsp;users)
              throws <a href="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
@@ -417,12 +489,12 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/UserManager.html
 <ul class="blockListLast">
 <li class="blockList">
 <h4>save</h4>
-<pre>protected&nbsp;void&nbsp;save(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,char[]&gt;&nbsp;users,
-                    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileOutputStream.html?is-external=true" title="class or interface in java.io">FileOutputStream</a>&nbsp;stream)
-             throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>protected&nbsp;void&nbsp;save(java.util.Map&lt;java.lang.String,char[]&gt;&nbsp;users,
+                    java.io.FileOutputStream&nbsp;stream)
+             throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>

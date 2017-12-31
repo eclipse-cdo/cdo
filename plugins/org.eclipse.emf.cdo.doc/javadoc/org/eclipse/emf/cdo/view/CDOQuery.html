@@ -49,7 +49,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOObjectHandler.html" title="interface in org.eclipse.emf.cdo.view"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/view/CDORevisionPrefetchingPolicy.html" title="interface in org.eclipse.emf.cdo.view"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/view/CDORegistrationHandler.html" title="interface in org.eclipse.emf.cdo.view"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/cdo/view/CDOQuery.html" target="_top">Frames</a></li>
@@ -119,11 +119,11 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 <dd>This interface is not intended to be extended by clients.</dd>
 <dt><span class="simpleTagLabel">Apiviz</span></dt>
 <dt><span class="simpleTagLabel">Apiviz</span></dt>
-<dd><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang"><code>Object</code></a> oneway - - context</dd>
+<dd><code>Object</code> oneway - - context</dd>
 <dt><span class="simpleTagLabel">Apiviz</span></dt>
-<dd><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>List</code></a> - - result, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection"><code>CloseableIterator</code></a> - - resultAsync</dd>
+<dd><code>List</code> - - result, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection"><code>CloseableIterator</code></a> - - resultAsync</dd>
 <dt><span class="simpleTagLabel">Apiviz</span></dt>
-<dd><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util"><code>Map.Entry</code></a> - - parameters</dd>
+<dd><code>Map.Entry</code> - - parameters</dd>
 </dl>
 </li>
 </ul>
@@ -159,15 +159,15 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;</code></td>
+<td class="colFirst"><code>&lt;T&gt;&nbsp;java.util.List&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#getResult--">getResult</a></span>()</code>
 <div class="block">Same as <a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#getResult-java.lang.Class-"><code>getResult(Class)</code></a> but tries to infer the return type from the static context.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#getResult-java.lang.Class-">getResult</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</code>
-<div class="block">Sends this query to the server and returns a typed <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>list</code></a> containing the query result.</div>
+<td class="colFirst"><code>&lt;T&gt;&nbsp;java.util.List&lt;T&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#getResult-java.lang.Class-">getResult</a></span>(java.lang.Class&lt;T&gt;&nbsp;type)</code>
+<div class="block">Sends this query to the server and returns a typed <code>list</code> containing the query result.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -178,7 +178,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#getResultAsync-java.lang.Class-">getResultAsync</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;classObject)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#getResultAsync-java.lang.Class-">getResultAsync</a></span>(java.lang.Class&lt;T&gt;&nbsp;classObject)</code>
 <div class="block">Sends this query to the server and returns a typed <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection"><code>iterator</code></a> over the query result.</div>
 </td>
 </tr>
@@ -188,7 +188,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#getResultValue-java.lang.Class-">getResultValue</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#getResultValue-java.lang.Class-">getResultValue</a></span>(java.lang.Class&lt;T&gt;&nbsp;type)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
@@ -198,7 +198,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view">CDOQuery</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#setContext-java.lang.Object-">setContext</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#setContext-java.lang.Object-">setContext</a></span>(java.lang.Object&nbsp;object)</code>
 <div class="block">Binds an object as the context for this query.</div>
 </td>
 </tr>
@@ -210,14 +210,14 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view">CDOQuery</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#setParameter-java.lang.String-java.lang.Object-">setParameter</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#setParameter-java.lang.String-java.lang.Object-">setParameter</a></span>(java.lang.String&nbsp;name,
+            java.lang.Object&nbsp;value)</code>
 <div class="block">Binds an argument value to a named parameter.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view">CDOQuery</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#unsetParameter-java.lang.String-">unsetParameter</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#unsetParameter-java.lang.String-">unsetParameter</a></span>(java.lang.String&nbsp;name)</code>
 <div class="block">Removes the value of a named parameter.</div>
 </td>
 </tr>
@@ -263,7 +263,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>getResultAsync</h4>
-<pre>&lt;T&gt;&nbsp;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;T&gt;&nbsp;getResultAsync(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;classObject)</pre>
+<pre>&lt;T&gt;&nbsp;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;T&gt;&nbsp;getResultAsync(java.lang.Class&lt;T&gt;&nbsp;classObject)</pre>
 <div class="block">Sends this query to the server and returns a typed <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection"><code>iterator</code></a> over the query result.
  <p>
  As opposed to the <a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#getResult-java.lang.Class-"><code>getResult(Class)</code></a> method, this method <b>asynchronously</b> communicates with the server.
@@ -291,8 +291,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>getResult</h4>
-<pre>&lt;T&gt;&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;getResult(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</pre>
-<div class="block">Sends this query to the server and returns a typed <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><code>list</code></a> containing the query result.
+<pre>&lt;T&gt;&nbsp;java.util.List&lt;T&gt;&nbsp;getResult(java.lang.Class&lt;T&gt;&nbsp;type)</pre>
+<div class="block">Sends this query to the server and returns a typed <code>list</code> containing the query result.
  <p>
  As opposed to the <a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#getResultAsync-java.lang.Class-"><code>getResultAsync(Class)</code></a> method, this method <b>synchronously</b> communicates with the
  server. In other words, the result list is only returned after all result elements have been received by the
@@ -305,7 +305,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>getResult</h4>
-<pre>&lt;T&gt;&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;getResult()</pre>
+<pre>&lt;T&gt;&nbsp;java.util.List&lt;T&gt;&nbsp;getResult()</pre>
 <div class="block">Same as <a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html#getResult-java.lang.Class-"><code>getResult(Class)</code></a> but tries to infer the return type from the static context.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -319,7 +319,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>getResultValue</h4>
-<pre>&lt;T&gt;&nbsp;T&nbsp;getResultValue(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</pre>
+<pre>&lt;T&gt;&nbsp;T&nbsp;getResultValue(java.lang.Class&lt;T&gt;&nbsp;type)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -361,8 +361,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>setParameter</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view">CDOQuery</a>&nbsp;setParameter(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-                      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</pre>
+<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view">CDOQuery</a>&nbsp;setParameter(java.lang.String&nbsp;name,
+                      java.lang.Object&nbsp;value)</pre>
 <div class="block">Binds an argument value to a named parameter.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -371,7 +371,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the same query instance</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if the parameter name does not correspond to a parameter in the query string or if the argument value is
+<dd><code>java.lang.IllegalArgumentException</code> - if the parameter name does not correspond to a parameter in the query string or if the argument value is
            of incorrect type</dd>
 </dl>
 </li>
@@ -382,7 +382,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>unsetParameter</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view">CDOQuery</a>&nbsp;unsetParameter(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view">CDOQuery</a>&nbsp;unsetParameter(java.lang.String&nbsp;name)</pre>
 <div class="block">Removes the value of a named parameter.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -400,7 +400,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 <ul class="blockListLast">
 <li class="blockList">
 <h4>setContext</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view">CDOQuery</a>&nbsp;setContext(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</pre>
+<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view">CDOQuery</a>&nbsp;setContext(java.lang.Object&nbsp;object)</pre>
 <div class="block">Binds an object as the context for this query.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -436,7 +436,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.htm
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOObjectHandler.html" title="interface in org.eclipse.emf.cdo.view"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/view/CDORevisionPrefetchingPolicy.html" title="interface in org.eclipse.emf.cdo.view"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/view/CDORegistrationHandler.html" title="interface in org.eclipse.emf.cdo.view"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/cdo/view/CDOQuery.html" target="_top">Frames</a></li>

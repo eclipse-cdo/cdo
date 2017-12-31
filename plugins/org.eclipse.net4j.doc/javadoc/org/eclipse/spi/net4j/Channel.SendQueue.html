@@ -96,16 +96,16 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">java.util.AbstractCollection</a>&lt;E&gt;</li>
+<li>java.util.AbstractCollection&lt;E&gt;</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractQueue.html?is-external=true" title="class or interface in java.util">java.util.AbstractQueue</a>&lt;E&gt;</li>
+<li>java.util.AbstractQueue&lt;E&gt;</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true" title="class or interface in java.util.concurrent">java.util.concurrent.ConcurrentLinkedQueue</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</li>
+<li>java.util.concurrent.ConcurrentLinkedQueue&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.spi.net4j.Channel.SendQueue</li>
@@ -123,7 +123,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</dd>
+<dd>java.io.Serializable, java.lang.Iterable&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;, java.util.Collection&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;, java.util.Queue&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</dd>
 </dl>
 <dl>
 <dt>Enclosing class:</dt>
@@ -132,7 +132,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>protected class <span class="typeNameLabel">Channel.SendQueue</span>
-extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentLinkedQueue</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</pre>
+extends java.util.concurrent.ConcurrentLinkedQueue&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</pre>
 <div class="block">A queue that holds buffers that shall be sent. This implementation notifies observers of enqueued and dequeued
  buffers. The notification is deliberately not synchronized. It shall only be used by O&amp;M tooling to offer (not 100%
  accurate) statistical insights</div>
@@ -199,57 +199,57 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/conc
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.SendQueue.html#remove-java.lang.Object-">remove</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.SendQueue.html#remove-java.lang.Object-">remove</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.concurrent.ConcurrentLinkedQueue">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.util.concurrent.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentLinkedQueue</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true#addAll-java.util.Collection-" title="class or interface in java.util.concurrent">addAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true#contains-java.lang.Object-" title="class or interface in java.util.concurrent">contains</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true#isEmpty--" title="class or interface in java.util.concurrent">isEmpty</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true#iterator--" title="class or interface in java.util.concurrent">iterator</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true#peek--" title="class or interface in java.util.concurrent">peek</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true#size--" title="class or interface in java.util.concurrent">size</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true#spliterator--" title="class or interface in java.util.concurrent">spliterator</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true#toArray--" title="class or interface in java.util.concurrent">toArray</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true#toArray-T:A-" title="class or interface in java.util.concurrent">toArray</a></code></li>
+<h3>Methods inherited from class&nbsp;java.util.concurrent.ConcurrentLinkedQueue</h3>
+<code>addAll, contains, isEmpty, iterator, peek, size, spliterator, toArray, toArray</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.AbstractQueue">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.util.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractQueue.html?is-external=true" title="class or interface in java.util">AbstractQueue</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractQueue.html?is-external=true#clear--" title="class or interface in java.util">clear</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractQueue.html?is-external=true#element--" title="class or interface in java.util">element</a></code></li>
+<h3>Methods inherited from class&nbsp;java.util.AbstractQueue</h3>
+<code>clear, element</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.AbstractCollection">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.util.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true" title="class or interface in java.util">AbstractCollection</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractCollection.html?is-external=true#toString--" title="class or interface in java.util">toString</a></code></li>
+<h3>Methods inherited from class&nbsp;java.util.AbstractCollection</h3>
+<code>containsAll, removeAll, retainAll, toString</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Queue">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#element--" title="class or interface in java.util">element</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.Queue</h3>
+<code>element</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Collection">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#clear--" title="class or interface in java.util">clear</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#containsAll-java.util.Collection-" title="class or interface in java.util">containsAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#parallelStream--" title="class or interface in java.util">parallelStream</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#removeAll-java.util.Collection-" title="class or interface in java.util">removeAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#removeIf-java.util.function.Predicate-" title="class or interface in java.util">removeIf</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#retainAll-java.util.Collection-" title="class or interface in java.util">retainAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#stream--" title="class or interface in java.util">stream</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.Collection</h3>
+<code>clear, containsAll, equals, hashCode, parallelStream, removeAll, removeIf, retainAll, stream</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Iterable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Iterable.html?is-external=true#forEach-java.util.function.Consumer-" title="class or interface in java.lang">forEach</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
+<code>forEach</code></li>
 </ul>
 </li>
 </ul>
@@ -291,11 +291,11 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/conc
 <pre>public&nbsp;boolean&nbsp;add(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#add-E-" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#add-E-" title="class or interface in java.util">add</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true#add-E-" title="class or interface in java.util.concurrent">add</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentLinkedQueue</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
+<dd><code>add</code>&nbsp;in class&nbsp;<code>java.util.concurrent.ConcurrentLinkedQueue&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -308,9 +308,9 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/conc
 <pre>public&nbsp;boolean&nbsp;offer(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#offer-E-" title="class or interface in java.util">offer</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
+<dd><code>offer</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true#offer-E-" title="class or interface in java.util.concurrent">offer</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentLinkedQueue</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
+<dd><code>offer</code>&nbsp;in class&nbsp;<code>java.util.concurrent.ConcurrentLinkedQueue&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -323,9 +323,9 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/conc
 <pre>public&nbsp;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;poll()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#poll--" title="class or interface in java.util">poll</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
+<dd><code>poll</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true#poll--" title="class or interface in java.util.concurrent">poll</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentLinkedQueue</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
+<dd><code>poll</code>&nbsp;in class&nbsp;<code>java.util.concurrent.ConcurrentLinkedQueue&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -338,9 +338,9 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/conc
 <pre>public&nbsp;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;remove()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true#remove--" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Queue&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractQueue.html?is-external=true#remove--" title="class or interface in java.util">remove</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractQueue.html?is-external=true" title="class or interface in java.util">AbstractQueue</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in class&nbsp;<code>java.util.AbstractQueue&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -350,12 +350,12 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/conc
 <ul class="blockListLast">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;boolean&nbsp;remove(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<pre>public&nbsp;boolean&nbsp;remove(java.lang.Object&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Collection&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util.concurrent">remove</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ConcurrentLinkedQueue.html?is-external=true" title="class or interface in java.util.concurrent">ConcurrentLinkedQueue</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in class&nbsp;<code>java.util.concurrent.ConcurrentLinkedQueue&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>

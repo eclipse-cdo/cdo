@@ -96,7 +96,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.spi.db.DBAdapter</li>
@@ -117,7 +117,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public abstract class <span class="typeNameLabel">DBAdapter</span>
-extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
+extends java.lang.Object
 implements <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></pre>
 <div class="block">A useful base class for implementing custom <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><code>DB adapters</code></a>.</div>
 <dl>
@@ -176,8 +176,8 @@ implements <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#DBAdapter-java.lang.String-java.lang.String-">DBAdapter</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;version)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#DBAdapter-java.lang.String-java.lang.String-">DBAdapter</a></span>(java.lang.String&nbsp;name,
+         java.lang.String&nbsp;version)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -202,98 +202,98 @@ implements <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#addIndex-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String-org.eclipse.net4j.db.ddl.IDBIndex.Type-java.util.List-">addIndex</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#addIndex-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String-org.eclipse.net4j.db.ddl.IDBIndex.Type-java.util.List-">addIndex</a></span>(java.sql.Connection&nbsp;connection,
         <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+        java.lang.String&nbsp;name,
         <a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
-        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a>&gt;&nbsp;fieldInfos)</code>&nbsp;</td>
+        java.util.List&lt;<a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a>&gt;&nbsp;fieldInfos)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#addIndexField-java.lang.StringBuilder-org.eclipse.net4j.db.ddl.IDBField-">addIndexField</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#addIndexField-java.lang.StringBuilder-org.eclipse.net4j.db.ddl.IDBField-">addIndexField</a></span>(java.lang.StringBuilder&nbsp;builder,
              <a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#alterTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">alterTable</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#alterTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">alterTable</a></span>(java.sql.Connection&nbsp;connection,
           <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
           <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldDefs-java.lang.Appendable-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String:A-">appendFieldDefs</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;appendable,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldDefs-java.lang.Appendable-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String:A-">appendFieldDefs</a></span>(java.lang.Appendable&nbsp;appendable,
                <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-               <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;defs)</code>&nbsp;</td>
+               java.lang.String[]&nbsp;defs)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldNames-java.lang.Appendable-org.eclipse.net4j.db.ddl.IDBTable-">appendFieldNames</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;appendable,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldNames-java.lang.Appendable-org.eclipse.net4j.db.ddl.IDBTable-">appendFieldNames</a></span>(java.lang.Appendable&nbsp;appendable,
                 <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#convertString-java.sql.PreparedStatement-int-java.lang.String-">convertString</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;preparedStatement,
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#convertString-java.sql.PreparedStatement-int-java.lang.String-">convertString</a></span>(java.sql.PreparedStatement&nbsp;preparedStatement,
              int&nbsp;parameterIndex,
-             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</code>&nbsp;</td>
+             java.lang.String&nbsp;value)</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#convertString-java.sql.ResultSet-int-java.lang.String-">convertString</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet,
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#convertString-java.sql.ResultSet-int-java.lang.String-">convertString</a></span>(java.sql.ResultSet&nbsp;resultSet,
              int&nbsp;columnIndex,
-             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</code>&nbsp;</td>
+             java.lang.String&nbsp;value)</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#convertString-java.sql.ResultSet-java.lang.String-java.lang.String-">convertString</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet,
-             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;columnLabel,
-             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#convertString-java.sql.ResultSet-java.lang.String-java.lang.String-">convertString</a></span>(java.sql.ResultSet&nbsp;resultSet,
+             java.lang.String&nbsp;columnLabel,
+             java.lang.String&nbsp;value)</code>&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createConnectionProvider-javax.sql.DataSource-">createConnectionProvider</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a>&nbsp;dataSource)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createConnectionProvider-javax.sql.DataSource-">createConnectionProvider</a></span>(javax.sql.DataSource&nbsp;dataSource)</code>&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>protected java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createConstraints-org.eclipse.net4j.db.ddl.IDBTable-">createConstraints</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code>&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createField-java.sql.Connection-java.lang.String-org.eclipse.net4j.db.ddl.IDBField-">createField</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
-           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;tableName,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createField-java.sql.Connection-java.lang.String-org.eclipse.net4j.db.ddl.IDBField-">createField</a></span>(java.sql.Connection&nbsp;connection,
+           java.lang.String&nbsp;tableName,
            <a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code>&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>protected java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createFieldDefinition-org.eclipse.net4j.db.ddl.IDBField-">createFieldDefinition</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code>&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]</code></td>
+<td class="colFirst"><code>protected java.lang.String[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createFieldDefinitions-org.eclipse.net4j.db.ddl.IDBTable-">createFieldDefinitions</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code>&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBIndex-org.eclipse.net4j.db.ddl.delta.IDBIndexDelta-">createIndex</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBIndex-org.eclipse.net4j.db.ddl.delta.IDBIndexDelta-">createIndex</a></span>(java.sql.Connection&nbsp;connection,
            <a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
            <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBIndexDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</a>&nbsp;delta)</code>&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex-org.eclipse.net4j.db.ddl.IDBIndex-java.sql.Statement-int-">createIndex</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Statement.html?is-external=true" title="class or interface in java.sql">Statement</a>&nbsp;statement,
+           java.sql.Statement&nbsp;statement,
            int&nbsp;num)</code>&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex-org.eclipse.net4j.db.ddl.IDBIndex-java.lang.StringBuilder-">createIndex</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder)</code>&nbsp;</td>
+           java.lang.StringBuilder&nbsp;builder)</code>&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndexFields-org.eclipse.net4j.db.ddl.IDBIndex-java.lang.StringBuilder-">createIndexFields</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder)</code>&nbsp;</td>
+                 java.lang.StringBuilder&nbsp;builder)</code>&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a></code></td>
+<td class="colFirst"><code>javax.sql.DataSource</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createJDBCDataSource--">createJDBCDataSource</a></span>()</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
 <div class="block"><span class="deprecationComment">As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).</span></div>
@@ -303,81 +303,81 @@ implements <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createPrimaryKey-org.eclipse.net4j.db.ddl.IDBIndex-java.lang.StringBuilder-">createPrimaryKey</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder)</code>&nbsp;</td>
+                java.lang.StringBuilder&nbsp;builder)</code>&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">createTable</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">createTable</a></span>(java.sql.Connection&nbsp;connection,
            <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
            <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</code>&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTable-org.eclipse.net4j.db.ddl.IDBTable-java.sql.Statement-">createTable</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Statement.html?is-external=true" title="class or interface in java.sql">Statement</a>&nbsp;statement)</code>&nbsp;</td>
+           java.sql.Statement&nbsp;statement)</code>&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTables-java.lang.Iterable-java.sql.Connection-">createTables</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
-            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection)</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Set&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTables-java.lang.Iterable-java.sql.Connection-">createTables</a></span>(java.lang.Iterable&lt;? extends <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
+            java.sql.Connection&nbsp;connection)</code>&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#doCreateTable-org.eclipse.net4j.db.ddl.IDBTable-java.sql.Statement-">doCreateTable</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Statement.html?is-external=true" title="class or interface in java.sql">Statement</a>&nbsp;statement)</code>&nbsp;</td>
+             java.sql.Statement&nbsp;statement)</code>&nbsp;</td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropField-java.sql.Connection-java.lang.String-java.lang.String-">dropField</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
-         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;tableName,
-         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropField-java.sql.Connection-java.lang.String-java.lang.String-">dropField</a></span>(java.sql.Connection&nbsp;connection,
+         java.lang.String&nbsp;tableName,
+         java.lang.String&nbsp;fieldName)</code>&nbsp;</td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropIndex-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBIndex-org.eclipse.net4j.db.ddl.delta.IDBIndexDelta-">dropIndex</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropIndex-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBIndex-org.eclipse.net4j.db.ddl.delta.IDBIndexDelta-">dropIndex</a></span>(java.sql.Connection&nbsp;connection,
          <a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
          <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBIndexDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</a>&nbsp;delta)</code>&nbsp;</td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropIndex-org.eclipse.net4j.db.ddl.IDBIndex-java.lang.StringBuilder-">dropIndex</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder)</code>&nbsp;</td>
+         java.lang.StringBuilder&nbsp;builder)</code>&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropPrimaryKey-org.eclipse.net4j.db.ddl.IDBIndex-java.lang.StringBuilder-">dropPrimaryKey</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder)</code>&nbsp;</td>
+              java.lang.StringBuilder&nbsp;builder)</code>&nbsp;</td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">dropTable</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">dropTable</a></span>(java.sql.Connection&nbsp;connection,
          <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
          <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</code>&nbsp;</td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTable-org.eclipse.net4j.db.ddl.IDBTable-java.sql.Statement-">dropTable</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Statement.html?is-external=true" title="class or interface in java.sql">Statement</a>&nbsp;statement)</code>&nbsp;</td>
+         java.sql.Statement&nbsp;statement)</code>&nbsp;</td>
 </tr>
 <tr id="i30" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTables-java.lang.Iterable-java.sql.Connection-">dropTables</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
-          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection)</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Collection&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTables-java.lang.Iterable-java.sql.Connection-">dropTables</a></span>(java.lang.Iterable&lt;? extends <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
+          java.sql.Connection&nbsp;connection)</code>&nbsp;</td>
 </tr>
 <tr id="i31" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#format-java.sql.PreparedStatement-">format</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;stmt)</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#format-java.sql.PreparedStatement-">format</a></span>(java.sql.PreparedStatement&nbsp;stmt)</code>&nbsp;</td>
 </tr>
 <tr id="i32" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#format-java.sql.ResultSet-">format</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet)</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#format-java.sql.ResultSet-">format</a></span>(java.sql.ResultSet&nbsp;resultSet)</code>&nbsp;</td>
 </tr>
 <tr id="i33" class="rowColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getDefaultDBLength-org.eclipse.net4j.db.DBType-">getDefaultDBLength</a></span>(<a href="../../../../../org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code>&nbsp;</td>
 </tr>
 <tr id="i34" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>protected java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getDropTableSQL-org.eclipse.net4j.db.ddl.IDBTable-">getDropTableSQL</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code>&nbsp;</td>
 </tr>
 <tr id="i35" class="rowColor">
@@ -387,7 +387,7 @@ implements <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="
 </td>
 </tr>
 <tr id="i36" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Driver.html?is-external=true" title="class or interface in java.sql">Driver</a></code></td>
+<td class="colFirst"><code>java.sql.Driver</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getJDBCDriver--">getJDBCDriver</a></span>()</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
 <div class="block"><span class="deprecationComment">As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).</span></div>
@@ -403,46 +403,46 @@ implements <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getMaxTableNameLength--">getMaxTableNameLength</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i39" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getName--">getName</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i40" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]</code></td>
+<td class="colFirst"><code>java.lang.String[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getSQL92ReservedWords--">getSQL92ReservedWords</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i41" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>protected java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getTypeName-org.eclipse.net4j.db.ddl.IDBField-">getTypeName</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code>&nbsp;</td>
 </tr>
 <tr id="i42" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getVersion--">getVersion</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i43" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isColumnNotFoundException-java.sql.SQLException-">isColumnNotFoundException</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a>&nbsp;ex)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isColumnNotFoundException-java.sql.SQLException-">isColumnNotFoundException</a></span>(java.sql.SQLException&nbsp;ex)</code>&nbsp;</td>
 </tr>
 <tr id="i44" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isDuplicateKeyException-java.sql.SQLException-">isDuplicateKeyException</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a>&nbsp;ex)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isDuplicateKeyException-java.sql.SQLException-">isDuplicateKeyException</a></span>(java.sql.SQLException&nbsp;ex)</code>
 <div class="block">Check if an exception indicates a constraint violation (duplicate key)</div>
 </td>
 </tr>
 <tr id="i45" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isPrimaryKeyShadow-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String-org.eclipse.net4j.db.ddl.IDBIndex.Type-org.eclipse.net4j.db.ddl.IDBField:A-">isPrimaryKeyShadow</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isPrimaryKeyShadow-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String-org.eclipse.net4j.db.ddl.IDBIndex.Type-org.eclipse.net4j.db.ddl.IDBField:A-">isPrimaryKeyShadow</a></span>(java.sql.Connection&nbsp;connection,
                   <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                  java.lang.String&nbsp;name,
                   <a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
                   <a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>[]&nbsp;fields)</code>&nbsp;</td>
 </tr>
 <tr id="i46" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isReservedWord-java.lang.String-">isReservedWord</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;word)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isReservedWord-java.lang.String-">isReservedWord</a></span>(java.lang.String&nbsp;word)</code>&nbsp;</td>
 </tr>
 <tr id="i47" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isTableNotFoundException-java.sql.SQLException-">isTableNotFoundException</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a>&nbsp;ex)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isTableNotFoundException-java.sql.SQLException-">isTableNotFoundException</a></span>(java.sql.SQLException&nbsp;ex)</code>&nbsp;</td>
 </tr>
 <tr id="i48" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -455,25 +455,25 @@ implements <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="
 </td>
 </tr>
 <tr id="i50" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#modifyConnection-java.sql.Connection-">modifyConnection</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection)</code>&nbsp;</td>
+<td class="colFirst"><code>java.sql.Connection</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#modifyConnection-java.sql.Connection-">modifyConnection</a></span>(java.sql.Connection&nbsp;connection)</code>&nbsp;</td>
 </tr>
 <tr id="i51" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readFields-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-">readFields</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readFields-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-">readFields</a></span>(java.sql.Connection&nbsp;connection,
           <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code>&nbsp;</td>
 </tr>
 <tr id="i52" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readIndices-java.sql.Connection-java.sql.DatabaseMetaData-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String-">readIndices</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
-           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/DatabaseMetaData.html?is-external=true" title="class or interface in java.sql">DatabaseMetaData</a>&nbsp;metaData,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readIndices-java.sql.Connection-java.sql.DatabaseMetaData-org.eclipse.net4j.db.ddl.IDBTable-java.lang.String-">readIndices</a></span>(java.sql.Connection&nbsp;connection,
+           java.sql.DatabaseMetaData&nbsp;metaData,
            <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;schemaName)</code>&nbsp;</td>
+           java.lang.String&nbsp;schemaName)</code>&nbsp;</td>
 </tr>
 <tr id="i53" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readIndices-java.sql.Connection-java.sql.ResultSet-org.eclipse.net4j.db.ddl.IDBTable-int-int-int-int-">readIndices</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
-           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readIndices-java.sql.Connection-java.sql.ResultSet-org.eclipse.net4j.db.ddl.IDBTable-int-int-int-int-">readIndices</a></span>(java.sql.Connection&nbsp;connection,
+           java.sql.ResultSet&nbsp;resultSet,
            <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
            int&nbsp;indexNameColumn,
            int&nbsp;indexTypeColumn,
@@ -482,57 +482,57 @@ implements <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="
 </tr>
 <tr id="i54" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readSchema-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBSchema-">readSchema</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readSchema-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBSchema-">readSchema</a></span>(java.sql.Connection&nbsp;connection,
           <a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema)</code>&nbsp;</td>
 </tr>
 <tr id="i55" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readSchema-java.sql.Connection-java.lang.String-">readSchema</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
-          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readSchema-java.sql.Connection-java.lang.String-">readSchema</a></span>(java.sql.Connection&nbsp;connection,
+          java.lang.String&nbsp;name)</code>&nbsp;</td>
 </tr>
 <tr id="i56" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readTables-java.sql.Connection-java.sql.DatabaseMetaData-java.lang.String-">readTables</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
-          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/DatabaseMetaData.html?is-external=true" title="class or interface in java.sql">DatabaseMetaData</a>&nbsp;metaData,
-          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;schemaName)</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.sql.ResultSet</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readTables-java.sql.Connection-java.sql.DatabaseMetaData-java.lang.String-">readTables</a></span>(java.sql.Connection&nbsp;connection,
+          java.sql.DatabaseMetaData&nbsp;metaData,
+          java.lang.String&nbsp;schemaName)</code>&nbsp;</td>
 </tr>
 <tr id="i57" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlModifyField-org.eclipse.net4j.db.ddl.IDBField-">sqlModifyField</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code>&nbsp;</td>
 </tr>
 <tr id="i58" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlModifyField-java.lang.String-java.lang.String-java.lang.String-">sqlModifyField</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;tableName,
-              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName,
-              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;definition)</code>&nbsp;</td>
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlModifyField-java.lang.String-java.lang.String-java.lang.String-">sqlModifyField</a></span>(java.lang.String&nbsp;tableName,
+              java.lang.String&nbsp;fieldName,
+              java.lang.String&nbsp;definition)</code>&nbsp;</td>
 </tr>
 <tr id="i59" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlRenameField-org.eclipse.net4j.db.ddl.IDBField-java.lang.String-">sqlRenameField</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
-              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;oldName)</code>&nbsp;</td>
+              java.lang.String&nbsp;oldName)</code>&nbsp;</td>
 </tr>
 <tr id="i60" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i61" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#updateSchema-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBSchema-org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta-">updateSchema</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#updateSchema-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBSchema-org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta-">updateSchema</a></span>(java.sql.Connection&nbsp;connection,
             <a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema,
             <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a>&nbsp;delta)</code>&nbsp;</td>
 </tr>
 <tr id="i62" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#validateTable-org.eclipse.net4j.db.ddl.IDBTable-java.sql.Statement-">validateTable</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Statement.html?is-external=true" title="class or interface in java.sql">Statement</a>&nbsp;statement)</code>&nbsp;</td>
+             java.sql.Statement&nbsp;statement)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.db.IDBAdapter">
@@ -561,8 +561,8 @@ implements <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DBAdapter</h4>
-<pre>public&nbsp;DBAdapter(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;version)</pre>
+<pre>public&nbsp;DBAdapter(java.lang.String&nbsp;name,
+                 java.lang.String&nbsp;version)</pre>
 </li>
 </ul>
 </li>
@@ -579,7 +579,7 @@ implements <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>getName</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getName()</pre>
+<pre>public&nbsp;java.lang.String&nbsp;getName()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#getName--">getName</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
@@ -592,7 +592,7 @@ implements <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>getVersion</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getVersion()</pre>
+<pre>public&nbsp;java.lang.String&nbsp;getVersion()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#getVersion--">getVersion</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
@@ -605,8 +605,8 @@ implements <a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="
 <ul class="blockList">
 <li class="blockList">
 <h4>getJDBCDriver</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
-public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Driver.html?is-external=true" title="class or interface in java.sql">Driver</a>&nbsp;getJDBCDriver()</pre>
+<pre>@Deprecated
+public&nbsp;java.sql.Driver&nbsp;getJDBCDriver()</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -622,8 +622,8 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/D
 <ul class="blockList">
 <li class="blockList">
 <h4>createJDBCDataSource</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
-public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a>&nbsp;createJDBCDataSource()</pre>
+<pre>@Deprecated
+public&nbsp;javax.sql.DataSource&nbsp;createJDBCDataSource()</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -639,7 +639,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>createConnectionProvider</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;createConnectionProvider(<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a>&nbsp;dataSource)</pre>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;createConnectionProvider(javax.sql.DataSource&nbsp;dataSource)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#createConnectionProvider-javax.sql.DataSource-">createConnectionProvider</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
@@ -654,7 +654,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>modifyConnection</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;modifyConnection(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection)</pre>
+<pre>public&nbsp;java.sql.Connection&nbsp;modifyConnection(java.sql.Connection&nbsp;connection)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#modifyConnection-java.sql.Connection-">modifyConnection</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
@@ -669,8 +669,8 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>readSchema</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;readSchema(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
-                            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;readSchema(java.sql.Connection&nbsp;connection,
+                            java.lang.String&nbsp;name)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#readSchema-java.sql.Connection-java.lang.String-">readSchema</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
@@ -685,7 +685,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>readSchema</h4>
-<pre>public&nbsp;void&nbsp;readSchema(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<pre>public&nbsp;void&nbsp;readSchema(java.sql.Connection&nbsp;connection,
                        <a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -701,13 +701,13 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>readTables</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;readTables(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
-                               <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/DatabaseMetaData.html?is-external=true" title="class or interface in java.sql">DatabaseMetaData</a>&nbsp;metaData,
-                               <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;schemaName)
-                        throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+<pre>protected&nbsp;java.sql.ResultSet&nbsp;readTables(java.sql.Connection&nbsp;connection,
+                                        java.sql.DatabaseMetaData&nbsp;metaData,
+                                        java.lang.String&nbsp;schemaName)
+                                 throws java.sql.SQLException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd>
+<dd><code>java.sql.SQLException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 </dl>
@@ -719,12 +719,12 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>readFields</h4>
-<pre>protected&nbsp;void&nbsp;readFields(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<pre>protected&nbsp;void&nbsp;readFields(java.sql.Connection&nbsp;connection,
                           <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)
-                   throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+                   throws java.sql.SQLException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd>
+<dd><code>java.sql.SQLException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
@@ -736,14 +736,14 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>readIndices</h4>
-<pre>protected&nbsp;void&nbsp;readIndices(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
-                           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/DatabaseMetaData.html?is-external=true" title="class or interface in java.sql">DatabaseMetaData</a>&nbsp;metaData,
+<pre>protected&nbsp;void&nbsp;readIndices(java.sql.Connection&nbsp;connection,
+                           java.sql.DatabaseMetaData&nbsp;metaData,
                            <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;schemaName)
-                    throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+                           java.lang.String&nbsp;schemaName)
+                    throws java.sql.SQLException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd>
+<dd><code>java.sql.SQLException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
@@ -755,17 +755,17 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>readIndices</h4>
-<pre>protected&nbsp;void&nbsp;readIndices(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
-                           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet,
+<pre>protected&nbsp;void&nbsp;readIndices(java.sql.Connection&nbsp;connection,
+                           java.sql.ResultSet&nbsp;resultSet,
                            <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
                            int&nbsp;indexNameColumn,
                            int&nbsp;indexTypeColumn,
                            int&nbsp;fieldNameColumn,
                            int&nbsp;fieldPositionColumn)
-                    throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+                    throws java.sql.SQLException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd>
+<dd><code>java.sql.SQLException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
 </dl>
@@ -777,11 +777,11 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>addIndex</h4>
-<pre>protected&nbsp;void&nbsp;addIndex(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<pre>protected&nbsp;void&nbsp;addIndex(java.sql.Connection&nbsp;connection,
                         <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                        java.lang.String&nbsp;name,
                         <a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
-                        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a>&gt;&nbsp;fieldInfos)</pre>
+                        java.util.List&lt;<a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a>&gt;&nbsp;fieldInfos)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -794,9 +794,9 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>isPrimaryKeyShadow</h4>
-<pre>protected&nbsp;boolean&nbsp;isPrimaryKeyShadow(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<pre>protected&nbsp;boolean&nbsp;isPrimaryKeyShadow(java.sql.Connection&nbsp;connection,
                                      <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                                     <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                                     java.lang.String&nbsp;name,
                                      <a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.Type.html" title="enum in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
                                      <a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>[]&nbsp;fields)</pre>
 <dl>
@@ -811,7 +811,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>updateSchema</h4>
-<pre>public&nbsp;void&nbsp;updateSchema(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<pre>public&nbsp;void&nbsp;updateSchema(java.sql.Connection&nbsp;connection,
                          <a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema,
                          <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a>&nbsp;delta)
                   throws <a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
@@ -831,7 +831,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>createTable</h4>
-<pre>protected&nbsp;void&nbsp;createTable(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<pre>protected&nbsp;void&nbsp;createTable(java.sql.Connection&nbsp;connection,
                            <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
                            <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</pre>
 <dl>
@@ -846,7 +846,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>dropTable</h4>
-<pre>protected&nbsp;void&nbsp;dropTable(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<pre>protected&nbsp;void&nbsp;dropTable(java.sql.Connection&nbsp;connection,
                          <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
                          <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</pre>
 <dl>
@@ -861,7 +861,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>alterTable</h4>
-<pre>protected&nbsp;void&nbsp;alterTable(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<pre>protected&nbsp;void&nbsp;alterTable(java.sql.Connection&nbsp;connection,
                           <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
                           <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</pre>
 <dl>
@@ -876,8 +876,8 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>createField</h4>
-<pre>protected&nbsp;void&nbsp;createField(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
-                           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;tableName,
+<pre>protected&nbsp;void&nbsp;createField(java.sql.Connection&nbsp;connection,
+                           java.lang.String&nbsp;tableName,
                            <a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -891,9 +891,9 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>dropField</h4>
-<pre>protected&nbsp;void&nbsp;dropField(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
-                         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;tableName,
-                         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName)</pre>
+<pre>protected&nbsp;void&nbsp;dropField(java.sql.Connection&nbsp;connection,
+                         java.lang.String&nbsp;tableName,
+                         java.lang.String&nbsp;fieldName)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.6</dd>
@@ -906,7 +906,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>createIndex</h4>
-<pre>protected&nbsp;void&nbsp;createIndex(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<pre>protected&nbsp;void&nbsp;createIndex(java.sql.Connection&nbsp;connection,
                            <a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
                            <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBIndexDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</a>&nbsp;delta)</pre>
 <dl>
@@ -922,7 +922,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <li class="blockList">
 <h4>createPrimaryKey</h4>
 <pre>protected&nbsp;void&nbsp;createPrimaryKey(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-                                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder)</pre>
+                                java.lang.StringBuilder&nbsp;builder)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -936,7 +936,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <li class="blockList">
 <h4>createIndex</h4>
 <pre>protected&nbsp;void&nbsp;createIndex(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-                           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder)</pre>
+                           java.lang.StringBuilder&nbsp;builder)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -950,7 +950,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <li class="blockList">
 <h4>createIndexFields</h4>
 <pre>protected&nbsp;void&nbsp;createIndexFields(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-                                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder)</pre>
+                                 java.lang.StringBuilder&nbsp;builder)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -963,7 +963,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>dropIndex</h4>
-<pre>protected&nbsp;void&nbsp;dropIndex(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<pre>protected&nbsp;void&nbsp;dropIndex(java.sql.Connection&nbsp;connection,
                          <a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
                          <a href="../../../../../org/eclipse/net4j/db/ddl/delta/IDBIndexDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</a>&nbsp;delta)</pre>
 <dl>
@@ -979,7 +979,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <li class="blockList">
 <h4>dropPrimaryKey</h4>
 <pre>protected&nbsp;void&nbsp;dropPrimaryKey(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-                              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder)</pre>
+                              java.lang.StringBuilder&nbsp;builder)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -993,7 +993,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <li class="blockList">
 <h4>dropIndex</h4>
 <pre>protected&nbsp;void&nbsp;dropIndex(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-                         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder)</pre>
+                         java.lang.StringBuilder&nbsp;builder)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -1006,9 +1006,9 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>createTables</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;createTables(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
-                                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection)
-                           throws <a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
+<pre>public&nbsp;java.util.Set&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;createTables(java.lang.Iterable&lt;? extends <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
+                                            java.sql.Connection&nbsp;connection)
+                                     throws <a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#createTables-java.lang.Iterable-java.sql.Connection-">createTables</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
@@ -1024,7 +1024,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <li class="blockList">
 <h4>createTable</h4>
 <pre>public&nbsp;boolean&nbsp;createTable(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Statement.html?is-external=true" title="class or interface in java.sql">Statement</a>&nbsp;statement)
+                           java.sql.Statement&nbsp;statement)
                     throws <a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -1040,9 +1040,9 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>dropTables</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;dropTables(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
-                                       <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection)
-                                throws <a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
+<pre>public&nbsp;java.util.Collection&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;dropTables(java.lang.Iterable&lt;? extends <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
+                                                 java.sql.Connection&nbsp;connection)
+                                          throws <a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#dropTables-java.lang.Iterable-java.sql.Connection-">dropTables</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
@@ -1058,7 +1058,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <li class="blockList">
 <h4>dropTable</h4>
 <pre>public&nbsp;boolean&nbsp;dropTable(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Statement.html?is-external=true" title="class or interface in java.sql">Statement</a>&nbsp;statement)</pre>
+                         java.sql.Statement&nbsp;statement)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#dropTable-org.eclipse.net4j.db.ddl.IDBTable-java.sql.Statement-">dropTable</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
@@ -1071,7 +1071,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>getDropTableSQL</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getDropTableSQL(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
+<pre>protected&nbsp;java.lang.String&nbsp;getDropTableSQL(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
 </li>
 </ul>
 <a name="getMaxTableNameLength--">
@@ -1144,10 +1144,10 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
+<pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+<dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 </dl>
 </li>
 </ul>
@@ -1157,9 +1157,9 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>convertString</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;convertString(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;preparedStatement,
-                            int&nbsp;parameterIndex,
-                            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</pre>
+<pre>public&nbsp;java.lang.String&nbsp;convertString(java.sql.PreparedStatement&nbsp;preparedStatement,
+                                      int&nbsp;parameterIndex,
+                                      java.lang.String&nbsp;value)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
@@ -1172,9 +1172,9 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>convertString</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;convertString(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet,
-                            int&nbsp;columnIndex,
-                            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</pre>
+<pre>public&nbsp;java.lang.String&nbsp;convertString(java.sql.ResultSet&nbsp;resultSet,
+                                      int&nbsp;columnIndex,
+                                      java.lang.String&nbsp;value)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
@@ -1187,9 +1187,9 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>convertString</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;convertString(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet,
-                            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;columnLabel,
-                            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</pre>
+<pre>public&nbsp;java.lang.String&nbsp;convertString(java.sql.ResultSet&nbsp;resultSet,
+                                      java.lang.String&nbsp;columnLabel,
+                                      java.lang.String&nbsp;value)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
@@ -1203,11 +1203,11 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <li class="blockList">
 <h4>doCreateTable</h4>
 <pre>protected&nbsp;void&nbsp;doCreateTable(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Statement.html?is-external=true" title="class or interface in java.sql">Statement</a>&nbsp;statement)
-                      throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+                             java.sql.Statement&nbsp;statement)
+                      throws java.sql.SQLException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd>
+<dd><code>java.sql.SQLException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
@@ -1220,12 +1220,12 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <li class="blockList">
 <h4>createIndex</h4>
 <pre>protected&nbsp;void&nbsp;createIndex(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
-                           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Statement.html?is-external=true" title="class or interface in java.sql">Statement</a>&nbsp;statement,
+                           java.sql.Statement&nbsp;statement,
                            int&nbsp;num)
-                    throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+                    throws java.sql.SQLException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd>
+<dd><code>java.sql.SQLException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
 </dl>
@@ -1237,7 +1237,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>addIndexField</h4>
-<pre>protected&nbsp;void&nbsp;addIndexField(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StringBuilder.html?is-external=true" title="class or interface in java.lang">StringBuilder</a>&nbsp;builder,
+<pre>protected&nbsp;void&nbsp;addIndexField(java.lang.StringBuilder&nbsp;builder,
                              <a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
 </li>
 </ul>
@@ -1247,7 +1247,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>createConstraints</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;createConstraints(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
+<pre>protected&nbsp;java.lang.String&nbsp;createConstraints(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -1260,7 +1260,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>createFieldDefinition</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;createFieldDefinition(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
+<pre>protected&nbsp;java.lang.String&nbsp;createFieldDefinition(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -1273,7 +1273,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>getTypeName</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getTypeName(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
+<pre>protected&nbsp;java.lang.String&nbsp;getTypeName(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
 </li>
 </ul>
 <a name="getSQL92ReservedWords--">
@@ -1282,7 +1282,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>getSQL92ReservedWords</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;getSQL92ReservedWords()</pre>
+<pre>public&nbsp;java.lang.String[]&nbsp;getSQL92ReservedWords()</pre>
 </li>
 </ul>
 <a name="isReservedWord-java.lang.String-">
@@ -1291,7 +1291,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>isReservedWord</h4>
-<pre>public&nbsp;boolean&nbsp;isReservedWord(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;word)</pre>
+<pre>public&nbsp;boolean&nbsp;isReservedWord(java.lang.String&nbsp;word)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#isReservedWord-java.lang.String-">isReservedWord</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
@@ -1305,7 +1305,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <li class="blockList">
 <h4>validateTable</h4>
 <pre>protected&nbsp;void&nbsp;validateTable(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Statement.html?is-external=true" title="class or interface in java.sql">Statement</a>&nbsp;statement)
+                             java.sql.Statement&nbsp;statement)
                       throws <a href="../../../../../org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -1321,7 +1321,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>createFieldDefinitions</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;createFieldDefinitions(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
+<pre>protected&nbsp;java.lang.String[]&nbsp;createFieldDefinitions(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -1334,7 +1334,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>appendFieldNames</h4>
-<pre>public&nbsp;void&nbsp;appendFieldNames(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;appendable,
+<pre>public&nbsp;void&nbsp;appendFieldNames(java.lang.Appendable&nbsp;appendable,
                              <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
 </li>
 </ul>
@@ -1344,9 +1344,9 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>appendFieldDefs</h4>
-<pre>protected&nbsp;void&nbsp;appendFieldDefs(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Appendable.html?is-external=true" title="class or interface in java.lang">Appendable</a>&nbsp;appendable,
+<pre>protected&nbsp;void&nbsp;appendFieldDefs(java.lang.Appendable&nbsp;appendable,
                                <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                               <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;defs)</pre>
+                               java.lang.String[]&nbsp;defs)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -1395,7 +1395,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>isDuplicateKeyException</h4>
-<pre>public&nbsp;boolean&nbsp;isDuplicateKeyException(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a>&nbsp;ex)</pre>
+<pre>public&nbsp;boolean&nbsp;isDuplicateKeyException(java.sql.SQLException&nbsp;ex)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#isDuplicateKeyException-java.sql.SQLException-">IDBAdapter</a></code></span></div>
 <div class="block">Check if an exception indicates a constraint violation (duplicate key)</div>
 <dl>
@@ -1412,7 +1412,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>isTableNotFoundException</h4>
-<pre>public&nbsp;boolean&nbsp;isTableNotFoundException(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a>&nbsp;ex)</pre>
+<pre>public&nbsp;boolean&nbsp;isTableNotFoundException(java.sql.SQLException&nbsp;ex)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#isTableNotFoundException-java.sql.SQLException-">isTableNotFoundException</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
@@ -1427,7 +1427,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>isColumnNotFoundException</h4>
-<pre>public&nbsp;boolean&nbsp;isColumnNotFoundException(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a>&nbsp;ex)</pre>
+<pre>public&nbsp;boolean&nbsp;isColumnNotFoundException(java.sql.SQLException&nbsp;ex)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#isColumnNotFoundException-java.sql.SQLException-">isColumnNotFoundException</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
@@ -1442,8 +1442,8 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>sqlRenameField</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sqlRenameField(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
-                             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;oldName)</pre>
+<pre>public&nbsp;java.lang.String&nbsp;sqlRenameField(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
+                                       java.lang.String&nbsp;oldName)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#sqlRenameField-org.eclipse.net4j.db.ddl.IDBField-java.lang.String-">sqlRenameField</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
@@ -1458,7 +1458,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>sqlModifyField</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sqlModifyField(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
+<pre>public&nbsp;java.lang.String&nbsp;sqlModifyField(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#sqlModifyField-org.eclipse.net4j.db.ddl.IDBField-">sqlModifyField</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></dd>
@@ -1473,9 +1473,9 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>sqlModifyField</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sqlModifyField(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;tableName,
-                                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName,
-                                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;definition)</pre>
+<pre>protected&nbsp;java.lang.String&nbsp;sqlModifyField(java.lang.String&nbsp;tableName,
+                                          java.lang.String&nbsp;fieldName,
+                                          java.lang.String&nbsp;definition)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -1488,7 +1488,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>format</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;format(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;stmt)</pre>
+<pre>public&nbsp;java.lang.String&nbsp;format(java.sql.PreparedStatement&nbsp;stmt)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -1501,7 +1501,7 @@ public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/
 <ul class="blockList">
 <li class="blockList">
 <h4>format</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;format(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet)</pre>
+<pre>public&nbsp;java.lang.String&nbsp;format(java.sql.ResultSet&nbsp;resultSet)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>

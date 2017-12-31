@@ -114,7 +114,7 @@
 <tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.server.embedded">org.eclipse.emf.cdo.server.embedded</a></td>
 <td class="colLast">
-<div class="block">Server concepts for dealing with embedded sessions.</div>
+<div class="block">Server concepts for dealing with Net4j-based repositories and fail-over infrastructure.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -375,7 +375,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreChunkReader.Chunk.html#org.eclipse.emf.cdo.server">IStoreChunkReader.Chunk</a>
-<div class="block">Represents a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#subList-int-int-" title="class or interface in java.util"><code>sublist</code></a> of consecutive elements that are subject to <i>partial
+<div class="block">Represents a <code>sublist</code> of consecutive elements that are subject to <i>partial
  collection loading</i>.</div>
 </td>
 </tr>
@@ -402,7 +402,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/StoreThreadLocal.NoSessionRegisteredException.html#org.eclipse.emf.cdo.server">StoreThreadLocal.NoSessionRegisteredException</a>
-<div class="block">An <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang"><code>IllegalStateException</code></a> that can be thrown from <a href="../../../../../org/eclipse/emf/cdo/server/StoreThreadLocal.html#getSession--"><code>StoreThreadLocal.getSession()</code></a>.</div>
+<div class="block">An <code>IllegalStateException</code> that can be thrown from <a href="../../../../../org/eclipse/emf/cdo/server/StoreThreadLocal.html#getSession--"><code>StoreThreadLocal.getSession()</code></a>.</div>
 </td>
 </tr>
 </tbody>
@@ -502,19 +502,25 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreAccessor.CommitContext.html#org.eclipse.emf.cdo.server.db.mapping">IStoreAccessor.CommitContext</a>
+<div class="block">Represents the state of a single, logical commit operation which is driven through multiple calls to several
+ methods on the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>IStoreAccessor</code></a> API.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreAccessor.QueryResourcesContext.html#org.eclipse.emf.cdo.server.db.mapping">IStoreAccessor.QueryResourcesContext</a>
 <div class="block">Represents the query execution state of a <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryResources-org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext-"><code>resources
  query</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreAccessor.QueryXRefsContext.html#org.eclipse.emf.cdo.server.db.mapping">IStoreAccessor.QueryXRefsContext</a>
 <div class="block">Represents the query execution state of a <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryXRefs-org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext-"><code>XRefs query</code></a>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreChunkReader.Chunk.html#org.eclipse.emf.cdo.server.db.mapping">IStoreChunkReader.Chunk</a>
-<div class="block">Represents a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#subList-int-int-" title="class or interface in java.util"><code>sublist</code></a> of consecutive elements that are subject to <i>partial
+<div class="block">Represents a <code>sublist</code> of consecutive elements that are subject to <i>partial
  collection loading</i>.</div>
 </td>
 </tr>
@@ -551,6 +557,12 @@
 <tr class="altColor">
 <td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IRepository.html#org.eclipse.emf.cdo.server.embedded">IRepository</a>
 <div class="block">A CDO repository.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStore.html#org.eclipse.emf.cdo.server.embedded">IStore</a>
+<div class="block">Represents the physical data storage back-end of a CDO <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>, such as a database or a file
+ system folder.</div>
 </td>
 </tr>
 </tbody>
@@ -985,7 +997,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreChunkReader.Chunk.html#org.eclipse.emf.cdo.spi.server">IStoreChunkReader.Chunk</a>
-<div class="block">Represents a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true#subList-int-int-" title="class or interface in java.util"><code>sublist</code></a> of consecutive elements that are subject to <i>partial
+<div class="block">Represents a <code>sublist</code> of consecutive elements that are subject to <i>partial
  collection loading</i>.</div>
 </td>
 </tr>

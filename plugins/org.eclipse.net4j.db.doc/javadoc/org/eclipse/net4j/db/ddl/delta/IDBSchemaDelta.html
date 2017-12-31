@@ -100,7 +100,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBDelta</a>&gt;, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBDelta</a>&gt;, <a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBDelta</a>, <a href="../../../../../../org/eclipse/net4j/db/ddl/IDBElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBElement</a>, <a href="../../../../../../org/eclipse/net4j/db/ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a>, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></dd>
+<dd>java.lang.Comparable&lt;<a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBDelta</a>&gt;, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBDelta</a>&gt;, <a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBDelta</a>, <a href="../../../../../../org/eclipse/net4j/db/ddl/IDBElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBElement</a>, <a href="../../../../../../org/eclipse/net4j/db/ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a>, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></dd>
 </dl>
 <hr>
 <br>
@@ -166,14 +166,14 @@ extends <a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.html"
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html#getTableDelta-java.lang.String-">getTableDelta</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html#getTableDelta-java.lang.String-">getTableDelta</a></span>(java.lang.String&nbsp;name)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html#getTableDeltaCount--">getTableDeltaCount</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,<a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html#getTableDeltas--">getTableDeltas</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
@@ -220,8 +220,8 @@ extends <a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.html"
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Comparable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true#compareTo-T-" title="class or interface in java.lang">compareTo</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Comparable</h3>
+<code>compareTo</code></li>
 </ul>
 </li>
 </ul>
@@ -252,7 +252,7 @@ extends <a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.html"
 <ul class="blockList">
 <li class="blockList">
 <h4>getTableDelta</h4>
-<pre><a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;getTableDelta(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<pre><a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;getTableDelta(java.lang.String&nbsp;name)</pre>
 </li>
 </ul>
 <a name="getTableDeltas--">
@@ -261,7 +261,7 @@ extends <a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBDelta.html"
 <ul class="blockList">
 <li class="blockList">
 <h4>getTableDeltas</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&gt;&nbsp;getTableDeltas()</pre>
+<pre>java.util.Map&lt;java.lang.String,<a href="../../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&gt;&nbsp;getTableDeltas()</pre>
 </li>
 </ul>
 <a name="getTableDeltasSortedByName--">

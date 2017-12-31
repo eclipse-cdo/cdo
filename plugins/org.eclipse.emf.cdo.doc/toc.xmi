@@ -98,7 +98,6 @@
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server" label="CDO Model Repository Server">
     <packages name="org.eclipse.emf.cdo.server"/>
-    <packages name="org.eclipse.emf.cdo.server.embedded"/>
     <packages name="org.eclipse.emf.cdo.server.mem"/>
     <packages name="org.eclipse.emf.cdo.spi.server"/>
     <extensionPoints name="appExtensions"/>
@@ -116,6 +115,9 @@
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.db4o" label="CDO Model Repository Server DB4O">
     <packages name="org.eclipse.emf.cdo.server.db4o"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.server.embedded" label="CDO Model Repository Server Embedded Support">
+    <packages name="org.eclipse.emf.cdo.server.embedded"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.hibernate" label="CDO Model Repository Server Hibernate">
     <packages name="org.eclipse.emf.cdo.server.hibernate"/>

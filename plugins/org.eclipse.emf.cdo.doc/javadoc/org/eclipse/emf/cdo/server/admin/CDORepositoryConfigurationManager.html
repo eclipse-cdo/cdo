@@ -161,8 +161,8 @@ extends <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/admin/CDORepositoryConfigurationManager.html#addRepository-java.lang.String-org.w3c.dom.Document-">addRepository</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-             <a href="http://download.oracle.com/javase/1.5.0/docs/api/org/w3c/dom/Document.html?is-external=true" title="class or interface in org.w3c.dom">Document</a>&nbsp;configuration)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/admin/CDORepositoryConfigurationManager.html#addRepository-java.lang.String-org.w3c.dom.Document-">addRepository</a></span>(java.lang.String&nbsp;name,
+             org.w3c.dom.Document&nbsp;configuration)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -175,7 +175,7 @@ extends <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/admin/CDORepositoryConfigurationManager.html#canRemoveRepository-org.eclipse.emf.cdo.server.IRepository-">canRemoveRepository</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/admin/CDORepositoryConfigurationManager.html#getRepositories--">getRepositories</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
@@ -217,7 +217,7 @@ extends <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>getRepositories</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&gt;&nbsp;getRepositories()</pre>
+<pre>java.util.Map&lt;java.lang.String,<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&gt;&nbsp;getRepositories()</pre>
 </li>
 </ul>
 <a name="addRepository-java.lang.String-org.w3c.dom.Document-">
@@ -226,8 +226,8 @@ extends <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>addRepository</h4>
-<pre><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;addRepository(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-                          <a href="http://download.oracle.com/javase/1.5.0/docs/api/org/w3c/dom/Document.html?is-external=true" title="class or interface in org.w3c.dom">Document</a>&nbsp;configuration)</pre>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;addRepository(java.lang.String&nbsp;name,
+                          org.w3c.dom.Document&nbsp;configuration)</pre>
 </li>
 </ul>
 <a name="removeRepository-org.eclipse.emf.cdo.server.IRepository-">
@@ -255,11 +255,11 @@ extends <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/
 <li class="blockList">
 <h4>authenticateAdministrator</h4>
 <pre>void&nbsp;authenticateAdministrator()
-                        throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></pre>
+                        throws java.lang.SecurityException</pre>
 <div class="block">Authenticates the user as a server administrator, if applicable.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/SecurityException.html?is-external=true" title="class or interface in java.lang">SecurityException</a></code> - if authentication is required and fails</dd>
+<dd><code>java.lang.SecurityException</code> - if authentication is required and fails</dd>
 </dl>
 </li>
 </ul>

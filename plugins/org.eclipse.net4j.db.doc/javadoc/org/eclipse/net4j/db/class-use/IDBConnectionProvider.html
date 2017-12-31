@@ -118,7 +118,7 @@
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider2.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider2</a></span></code>
-<div class="block">Provides a database <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql"><code>connection</code></a>, roughly comparable with a <a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql"><code>data source</code></a>.</div>
+<div class="block">Provides a database <code>connection</code>, roughly comparable with a <code>data source</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -136,11 +136,11 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a></code></td>
-<td class="colLast"><span class="typeNameLabel">DBUtil.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/db/DBUtil.html#createConnectionProvider-javax.sql.DataSource-">createConnectionProvider</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a>&nbsp;dataSource)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">DBUtil.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/db/DBUtil.html#createConnectionProvider-javax.sql.DataSource-">createConnectionProvider</a></span>(javax.sql.DataSource&nbsp;dataSource)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a></code></td>
-<td class="colLast"><span class="typeNameLabel">IDBAdapter.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#createConnectionProvider-javax.sql.DataSource-">createConnectionProvider</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a>&nbsp;dataSource)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">IDBAdapter.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#createConnectionProvider-javax.sql.DataSource-">createConnectionProvider</a></span>(javax.sql.DataSource&nbsp;dataSource)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -160,19 +160,19 @@
 <td class="colFirst"><code>static <a href="../../../../../org/eclipse/net4j/db/IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a></code></td>
 <td class="colLast"><span class="typeNameLabel">DBUtil.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/db/DBUtil.html#openDatabase-org.eclipse.net4j.db.IDBAdapter-org.eclipse.net4j.db.IDBConnectionProvider-java.lang.String-">openDatabase</a></span>(<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
             <a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
-            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;schemaName)</code>&nbsp;</td>
+            java.lang.String&nbsp;schemaName)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../org/eclipse/net4j/db/IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a></code></td>
 <td class="colLast"><span class="typeNameLabel">DBUtil.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/db/DBUtil.html#openDatabase-org.eclipse.net4j.db.IDBAdapter-org.eclipse.net4j.db.IDBConnectionProvider-java.lang.String-boolean-">openDatabase</a></span>(<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
             <a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
-            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;schemaName,
+            java.lang.String&nbsp;schemaName,
             boolean&nbsp;fixNullableIndexColumns)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><span class="typeNameLabel">DBUtil.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/db/DBUtil.html#sqlDump-org.eclipse.net4j.db.IDBConnectionProvider-java.lang.String-">sqlDump</a></span>(<a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
-       <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sql)</code>
+       java.lang.String&nbsp;sql)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
 <div class="block"><span class="deprecationComment">Should only be used when debugging.</span></div>
 </div>
@@ -193,7 +193,7 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Set&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">IDBSchema.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#create-org.eclipse.net4j.db.IDBAdapter-org.eclipse.net4j.db.IDBConnectionProvider-">create</a></span>(<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
       <a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider)</code>&nbsp;</td>
 </tr>
@@ -205,7 +205,7 @@
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">IDBSchema.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#export-org.eclipse.net4j.db.IDBConnectionProvider-java.io.PrintStream-">export</a></span>(<a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
-      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</a>&nbsp;out)</code>&nbsp;</td>
+      java.io.PrintStream&nbsp;out)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -223,7 +223,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a></code></td>
-<td class="colLast"><span class="typeNameLabel">DBAdapter.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createConnectionProvider-javax.sql.DataSource-">createConnectionProvider</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a>&nbsp;dataSource)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">DBAdapter.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createConnectionProvider-javax.sql.DataSource-">createConnectionProvider</a></span>(javax.sql.DataSource&nbsp;dataSource)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -235,7 +235,7 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Set&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">DBSchema.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#create-org.eclipse.net4j.db.IDBAdapter-org.eclipse.net4j.db.IDBConnectionProvider-">create</a></span>(<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
       <a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
@@ -251,7 +251,7 @@
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">DBSchema.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#export-org.eclipse.net4j.db.IDBConnectionProvider-java.io.PrintStream-">export</a></span>(<a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
-      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</a>&nbsp;out)</code>
+      java.io.PrintStream&nbsp;out)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 &nbsp;</td>
 </tr>

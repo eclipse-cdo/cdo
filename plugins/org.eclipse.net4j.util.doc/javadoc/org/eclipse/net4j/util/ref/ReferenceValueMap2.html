@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":6,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":6,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -96,10 +96,10 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">java.util.AbstractMap</a>&lt;K,V&gt;</li>
+<li>java.util.AbstractMap&lt;K,V&gt;</li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.ref.ReferenceValueMap2&lt;K,V&gt;</li>
@@ -113,7 +113,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;K,V&gt;</dd>
+<dd>java.util.Map&lt;K,V&gt;</dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
@@ -122,8 +122,8 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public abstract class <span class="typeNameLabel">ReferenceValueMap2&lt;K,V&gt;</span>
-extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;K,V&gt;</pre>
-<div class="block">A <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><code>Map</code></a> implementation that uses <a href="../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref"><code>KeyedReference</code></a> instances (<a href="../../../../../org/eclipse/net4j/util/ref/KeyedStrongReference.html" title="class in org.eclipse.net4j.util.ref"><code>KeyedStrongReference</code></a>,
+extends java.util.AbstractMap&lt;K,V&gt;</pre>
+<div class="block">A <code>Map</code> implementation that uses <a href="../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref"><code>KeyedReference</code></a> instances (<a href="../../../../../org/eclipse/net4j/util/ref/KeyedStrongReference.html" title="class in org.eclipse.net4j.util.ref"><code>KeyedStrongReference</code></a>,
  <a href="../../../../../org/eclipse/net4j/util/ref/KeyedSoftReference.html" title="class in org.eclipse.net4j.util.ref"><code>KeyedSoftReference</code></a>, <a href="../../../../../org/eclipse/net4j/util/ref/KeyedWeakReference.html" title="class in org.eclipse.net4j.util.ref"><code>KeyedWeakReference</code></a> or <a href="../../../../../org/eclipse/net4j/util/ref/KeyedPhantomReference.html" title="class in org.eclipse.net4j.util.ref"><code>KeyedPhantomReference</code></a>) as its values.
  <p>
  A <code>ReferenceValueMap</code> can be used to cache mappings until the <em>value</em> of the mapping is no longer
@@ -172,15 +172,15 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Abst
 <li class="blockList"><a name="nested.classes.inherited.from.class.java.util.AbstractMap">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from class&nbsp;java.util.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.SimpleEntry.html?is-external=true" title="class or interface in java.util">AbstractMap.SimpleEntry</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.SimpleEntry.html?is-external=true" title="class or interface in java.util">K</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.SimpleEntry.html?is-external=true" title="class or interface in java.util">V</a>&gt;, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.SimpleImmutableEntry.html?is-external=true" title="class or interface in java.util">AbstractMap.SimpleImmutableEntry</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.SimpleImmutableEntry.html?is-external=true" title="class or interface in java.util">K</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.SimpleImmutableEntry.html?is-external=true" title="class or interface in java.util">V</a>&gt;</code></li>
+<h3>Nested classes/interfaces inherited from class&nbsp;java.util.AbstractMap</h3>
+<code>java.util.AbstractMap.SimpleEntry&lt;K,V&gt;, java.util.AbstractMap.SimpleImmutableEntry&lt;K,V&gt;</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="nested.classes.inherited.from.class.java.util.Map">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;java.util.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">K</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">V</a>&gt;</code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;java.util.Map</h3>
+<code>java.util.Map.Entry&lt;K,V&gt;</code></li>
 </ul>
 </li>
 </ul>
@@ -199,7 +199,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Abst
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#ReferenceValueMap2--">ReferenceValueMap2</a></span>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#ReferenceValueMap2-java.util.Map-">ReferenceValueMap2</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&gt;&nbsp;map)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#ReferenceValueMap2-java.util.Map-">ReferenceValueMap2</a></span>(java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&gt;&nbsp;map)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -222,56 +222,60 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Abst
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#containsKey-java.lang.Object-">containsKey</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#containsKey-java.lang.Object-">containsKey</a></span>(java.lang.Object&nbsp;key)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#containsValue-java.lang.Object-">containsValue</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#containsValue-java.lang.Object-">containsValue</a></span>(java.lang.Object&nbsp;value)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/ref/ReferenceQueue.html?is-external=true" title="class or interface in java.lang.ref">ReferenceQueue</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></td>
+<td class="colFirst"><code>protected java.lang.ref.ReferenceQueue&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#createQueue--">createQueue</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#createReference-K-V-java.lang.ref.ReferenceQueue-">createReference</a></span>(<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>&nbsp;key,
                <a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&nbsp;value,
-               <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/ref/ReferenceQueue.html?is-external=true" title="class or interface in java.lang.ref">ReferenceQueue</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&nbsp;queue)</code>&nbsp;</td>
+               java.lang.ref.ReferenceQueue&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&nbsp;queue)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#dereference-org.eclipse.net4j.util.ref.KeyedReference-">dereference</a></span>(<a href="../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&nbsp;ref)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&gt;</code></td>
+<td class="colFirst"><code>java.util.Set&lt;java.util.Map.Entry&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#entrySet--">entrySet</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#get-java.lang.Object-">get</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#get-java.lang.Object-">get</a></span>(java.lang.Object&nbsp;key)</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code>protected int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#internalPurgeQueue--">internalPurgeQueue</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#isEmpty--">isEmpty</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#purged-K-">purged</a></span>(<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>&nbsp;key)</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#purgeQueue--">purgeQueue</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#put-K-V-">put</a></span>(<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>&nbsp;key,
    <a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&nbsp;value)</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#remove-java.lang.Object-">remove</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</code>&nbsp;</td>
-</tr>
 <tr id="i13" class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#remove-java.lang.Object-">remove</a></span>(java.lang.Object&nbsp;key)</code>&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html#size--">size</a></span>()</code>&nbsp;</td>
 </tr>
@@ -280,22 +284,22 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Abst
 <li class="blockList"><a name="methods.inherited.from.class.java.util.AbstractMap">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.util.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true#clone--" title="class or interface in java.util">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.util">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true#hashCode--" title="class or interface in java.util">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true#keySet--" title="class or interface in java.util">keySet</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true#putAll-java.util.Map-" title="class or interface in java.util">putAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true#toString--" title="class or interface in java.util">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true#values--" title="class or interface in java.util">values</a></code></li>
+<h3>Methods inherited from class&nbsp;java.util.AbstractMap</h3>
+<code>clone, equals, hashCode, keySet, putAll, toString, values</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>finalize, getClass, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Map">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#compute-K-java.util.function.BiFunction-" title="class or interface in java.util">compute</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#computeIfAbsent-K-java.util.function.Function-" title="class or interface in java.util">computeIfAbsent</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#computeIfPresent-K-java.util.function.BiFunction-" title="class or interface in java.util">computeIfPresent</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#forEach-java.util.function.BiConsumer-" title="class or interface in java.util">forEach</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#getOrDefault-java.lang.Object-V-" title="class or interface in java.util">getOrDefault</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#merge-K-V-java.util.function.BiFunction-" title="class or interface in java.util">merge</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#putIfAbsent-K-V-" title="class or interface in java.util">putIfAbsent</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#remove-java.lang.Object-java.lang.Object-" title="class or interface in java.util">remove</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#replace-K-V-" title="class or interface in java.util">replace</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#replace-K-V-V-" title="class or interface in java.util">replace</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#replaceAll-java.util.function.BiFunction-" title="class or interface in java.util">replaceAll</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.Map</h3>
+<code>compute, computeIfAbsent, computeIfPresent, forEach, getOrDefault, merge, putIfAbsent, remove, replace, replace, replaceAll</code></li>
 </ul>
 </li>
 </ul>
@@ -326,7 +330,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Abst
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ReferenceValueMap2</h4>
-<pre>public&nbsp;ReferenceValueMap2(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&gt;&nbsp;map)</pre>
+<pre>public&nbsp;ReferenceValueMap2(java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&gt;&nbsp;map)</pre>
 </li>
 </ul>
 </li>
@@ -346,9 +350,9 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Abst
 <pre>public&nbsp;int&nbsp;size()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#size--" title="class or interface in java.util">size</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>size</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true#size--" title="class or interface in java.util">size</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>size</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -361,9 +365,9 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Abst
 <pre>public&nbsp;boolean&nbsp;isEmpty()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>isEmpty</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true#isEmpty--" title="class or interface in java.util">isEmpty</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>isEmpty</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -373,12 +377,12 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Abst
 <ul class="blockList">
 <li class="blockList">
 <h4>containsKey</h4>
-<pre>public&nbsp;boolean&nbsp;containsKey(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<pre>public&nbsp;boolean&nbsp;containsKey(java.lang.Object&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#containsKey-java.lang.Object-" title="class or interface in java.util">containsKey</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>containsKey</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true#containsKey-java.lang.Object-" title="class or interface in java.util">containsKey</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>containsKey</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -388,12 +392,12 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Abst
 <ul class="blockList">
 <li class="blockList">
 <h4>containsValue</h4>
-<pre>public&nbsp;boolean&nbsp;containsValue(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</pre>
+<pre>public&nbsp;boolean&nbsp;containsValue(java.lang.Object&nbsp;value)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#containsValue-java.lang.Object-" title="class or interface in java.util">containsValue</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>containsValue</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true#containsValue-java.lang.Object-" title="class or interface in java.util">containsValue</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>containsValue</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -403,12 +407,12 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Abst
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&nbsp;get(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&nbsp;get(java.lang.Object&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#get-java.lang.Object-" title="class or interface in java.util">get</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>get</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true#get-java.lang.Object-" title="class or interface in java.util">get</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>get</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -424,9 +428,9 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Abst
              <a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&nbsp;value)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#put-K-V-" title="class or interface in java.util">put</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>put</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true#put-K-V-" title="class or interface in java.util">put</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>put</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -436,12 +440,12 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Abst
 <ul class="blockList">
 <li class="blockList">
 <h4>remove</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&nbsp;remove(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key)</pre>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&nbsp;remove(java.lang.Object&nbsp;key)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true#remove-java.lang.Object-" title="class or interface in java.util">remove</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>remove</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -454,9 +458,9 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Abst
 <pre>public&nbsp;void&nbsp;clear()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>clear</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true#clear--" title="class or interface in java.util">clear</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>clear</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -466,12 +470,12 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Abst
 <ul class="blockList">
 <li class="blockList">
 <h4>entrySet</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util">Map.Entry</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&gt;&nbsp;entrySet()</pre>
+<pre>public&nbsp;java.util.Set&lt;java.util.Map.Entry&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&gt;&nbsp;entrySet()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#entrySet--" title="class or interface in java.util">entrySet</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>entrySet</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true#entrySet--" title="class or interface in java.util">entrySet</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/AbstractMap.html?is-external=true" title="class or interface in java.util">AbstractMap</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
+<dd><code>entrySet</code>&nbsp;in class&nbsp;<code>java.util.AbstractMap&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -481,7 +485,20 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Abst
 <ul class="blockList">
 <li class="blockList">
 <h4>createQueue</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/ref/ReferenceQueue.html?is-external=true" title="class or interface in java.lang.ref">ReferenceQueue</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&nbsp;createQueue()</pre>
+<pre>protected&nbsp;java.lang.ref.ReferenceQueue&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&nbsp;createQueue()</pre>
+</li>
+</ul>
+<a name="internalPurgeQueue--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>internalPurgeQueue</h4>
+<pre>protected&nbsp;int&nbsp;internalPurgeQueue()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.7</dd>
+</dl>
 </li>
 </ul>
 <a name="purgeQueue--">
@@ -523,7 +540,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Abst
 <h4>createReference</h4>
 <pre>protected abstract&nbsp;<a href="../../../../../org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>,<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&nbsp;createReference(<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">K</a>&nbsp;key,
                                                        <a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&nbsp;value,
-                                                       <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/ref/ReferenceQueue.html?is-external=true" title="class or interface in java.lang.ref">ReferenceQueue</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&nbsp;queue)</pre>
+                                                       java.lang.ref.ReferenceQueue&lt;<a href="../../../../../org/eclipse/net4j/util/ref/ReferenceValueMap2.html" title="type parameter in ReferenceValueMap2">V</a>&gt;&nbsp;queue)</pre>
 </li>
 </ul>
 </li>

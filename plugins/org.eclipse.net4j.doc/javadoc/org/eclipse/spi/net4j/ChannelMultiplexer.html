@@ -96,7 +96,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</a></li>
@@ -177,7 +177,7 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.buffer.<a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></h3>
-<code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.Introspection.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider.Introspection</a></code></li>
+<code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.Introspection.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider.Introspection</a>, <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.Notification.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider.Notification</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
@@ -260,12 +260,12 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected &lt;INFRA_STRUCTURE&gt;<br><a href="../../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;INFRA_STRUCTURE&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#createProtocol-java.lang.String-INFRA_STRUCTURE-">createProtocol</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;type,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#createProtocol-java.lang.String-INFRA_STRUCTURE-">createProtocol</a></span>(java.lang.String&nbsp;type,
               INFRA_STRUCTURE&nbsp;infraStructure)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/factory/IFactoryKey.html?is-external=true" title="class or interface in org.eclipse.net4j.util.factory">IFactoryKey</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#createProtocolFactoryKey-java.lang.String-">createProtocolFactoryKey</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;type)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#createProtocolFactoryKey-java.lang.String-">createProtocolFactoryKey</a></span>(java.lang.String&nbsp;type)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected abstract void</code></td>
@@ -284,7 +284,7 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#getChannel-short-">getChannel</a></span>(short&nbsp;channelID)</code>&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Collection&lt;<a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#getChannels--">getChannels</a></span>()</code>
 <div class="block">Returns a collection of currently open channels.</div>
 </td>
@@ -315,7 +315,7 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#inverseOpenChannel-short-java.lang.String-">inverseOpenChannel</a></span>(short&nbsp;channelID,
-                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;protocolID)</code>
+                  java.lang.String&nbsp;protocolID)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
 <div class="block"><span class="deprecationComment">Use <a href="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#inverseOpenChannel-short-java.lang.String-int-"><code>inverseOpenChannel(short, String, int)</code></a>.</span></div>
 </div>
@@ -324,7 +324,7 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer
 <tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#inverseOpenChannel-short-java.lang.String-int-">inverseOpenChannel</a></span>(short&nbsp;channelID,
-                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;protocolID,
+                  java.lang.String&nbsp;protocolID,
                   int&nbsp;protocolVersion)</code>&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
@@ -345,8 +345,8 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#openChannel-java.lang.String-java.lang.Object-">openChannel</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;protocolID,
-           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;infraStructure)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#openChannel-java.lang.String-java.lang.Object-">openChannel</a></span>(java.lang.String&nbsp;protocolID,
+           java.lang.Object&nbsp;infraStructure)</code>
 <div class="block">Synchronous request to open a new <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a> with a channel protocol defined by a given protocol identifier.</div>
 </td>
 </tr>
@@ -392,8 +392,8 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.eclipse.spi.net4j.InternalChannelMultiplexer">
@@ -525,7 +525,7 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer
 <ul class="blockList">
 <li class="blockList">
 <h4>getChannels</h4>
-<pre>public final&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&gt;&nbsp;getChannels()</pre>
+<pre>public final&nbsp;java.util.Collection&lt;<a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&gt;&nbsp;getChannels()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#getChannels--">IChannelMultiplexer</a></code></span></div>
 <div class="block">Returns a collection of currently open channels.</div>
 <dl>
@@ -593,8 +593,8 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer
 <ul class="blockList">
 <li class="blockList">
 <h4>openChannel</h4>
-<pre>public&nbsp;<a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;openChannel(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;protocolID,
-                                   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;infraStructure)
+<pre>public&nbsp;<a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;openChannel(java.lang.String&nbsp;protocolID,
+                                   java.lang.Object&nbsp;infraStructure)
                             throws <a href="../../../../org/eclipse/net4j/channel/ChannelException.html" title="class in org.eclipse.net4j.channel">ChannelException</a></pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#openChannel-java.lang.String-java.lang.Object-">IChannelMultiplexer</a></code></span></div>
 <div class="block">Synchronous request to open a new <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a> with a channel protocol defined by a given protocol identifier.
@@ -642,9 +642,9 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer
 <ul class="blockList">
 <li class="blockList">
 <h4>inverseOpenChannel</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+<pre>@Deprecated
 public&nbsp;<a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;inverseOpenChannel(short&nbsp;channelID,
-                                                       <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;protocolID)</pre>
+                                                       java.lang.String&nbsp;protocolID)</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Use <a href="../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#inverseOpenChannel-short-java.lang.String-int-"><code>inverseOpenChannel(short, String, int)</code></a>.</span></div>
 </li>
 </ul>
@@ -655,7 +655,7 @@ public&nbsp;<a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" tit
 <li class="blockList">
 <h4>inverseOpenChannel</h4>
 <pre>public&nbsp;<a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;inverseOpenChannel(short&nbsp;channelID,
-                                          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;protocolID,
+                                          java.lang.String&nbsp;protocolID,
                                           int&nbsp;protocolVersion)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -720,7 +720,7 @@ public&nbsp;<a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" tit
 <ul class="blockList">
 <li class="blockList">
 <h4>createProtocol</h4>
-<pre>protected&nbsp;&lt;INFRA_STRUCTURE&gt;&nbsp;<a href="../../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;INFRA_STRUCTURE&gt;&nbsp;createProtocol(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;type,
+<pre>protected&nbsp;&lt;INFRA_STRUCTURE&gt;&nbsp;<a href="../../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;INFRA_STRUCTURE&gt;&nbsp;createProtocol(java.lang.String&nbsp;type,
                                                                       INFRA_STRUCTURE&nbsp;infraStructure)</pre>
 </li>
 </ul>
@@ -730,7 +730,7 @@ public&nbsp;<a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" tit
 <ul class="blockList">
 <li class="blockList">
 <h4>createProtocolFactoryKey</h4>
-<pre>protected&nbsp;<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/factory/IFactoryKey.html?is-external=true" title="class or interface in org.eclipse.net4j.util.factory">IFactoryKey</a>&nbsp;createProtocolFactoryKey(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;type)</pre>
+<pre>protected&nbsp;<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/factory/IFactoryKey.html?is-external=true" title="class or interface in org.eclipse.net4j.util.factory">IFactoryKey</a>&nbsp;createProtocolFactoryKey(java.lang.String&nbsp;type)</pre>
 </li>
 </ul>
 <a name="doBeforeOpenChannel-org.eclipse.net4j.protocol.IProtocol-">
@@ -749,12 +749,12 @@ public&nbsp;<a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" tit
 <li class="blockList">
 <h4>doDeactivate</h4>
 <pre>protected&nbsp;void&nbsp;doDeactivate()
-                     throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></pre>
+                     throws java.lang.Exception</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doDeactivate--" title="class or interface in org.eclipse.net4j.util.lifecycle">doDeactivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code></dd>
+<dd><code>java.lang.Exception</code></dd>
 </dl>
 </li>
 </ul>

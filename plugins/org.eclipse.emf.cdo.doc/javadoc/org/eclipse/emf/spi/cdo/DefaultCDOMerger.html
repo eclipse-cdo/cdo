@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -96,7 +96,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.emf.spi.cdo.DefaultCDOMerger</li>
@@ -117,7 +117,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">DefaultCDOMerger</span>
-extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
+extends java.lang.Object
 implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a></pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl>
@@ -205,7 +205,14 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#DefaultCDOMerger--">DefaultCDOMerger</a></span>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#DefaultCDOMerger-org.eclipse.emf.cdo.common.CDOCommonRepository.ListOrdering-">DefaultCDOMerger</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.ListOrdering.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.ListOrdering</a>&nbsp;listOrdering)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#DefaultCDOMerger-org.eclipse.emf.spi.cdo.DefaultCDOMerger.ResolutionPreference-">DefaultCDOMerger</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.ResolutionPreference.html" title="enum in org.eclipse.emf.spi.cdo">DefaultCDOMerger.ResolutionPreference</a>&nbsp;resolutionPreference)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#DefaultCDOMerger-org.eclipse.emf.spi.cdo.DefaultCDOMerger.ResolutionPreference-org.eclipse.emf.cdo.common.CDOCommonRepository.ListOrdering-">DefaultCDOMerger</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.ResolutionPreference.html" title="enum in org.eclipse.emf.spi.cdo">DefaultCDOMerger.ResolutionPreference</a>&nbsp;resolutionPreference,
+                <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.ListOrdering.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.ListOrdering</a>&nbsp;listOrdering)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -223,72 +230,76 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colFirst"><code>protected java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#addedInSource-org.eclipse.emf.cdo.common.revision.CDORevision-">addedInSource</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colFirst"><code>protected java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#addedInSourceAndTarget-org.eclipse.emf.cdo.common.revision.CDORevision-org.eclipse.emf.cdo.common.revision.CDORevision-">addedInSourceAndTarget</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetRevision,
                       <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceRevision)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colFirst"><code>protected java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#addedInTarget-org.eclipse.emf.cdo.common.revision.CDORevision-">addedInTarget</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colFirst"><code>protected java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#changedInSource-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-">changedInSource</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colFirst"><code>protected java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#changedInSourceAndDetachedInTarget-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-">changedInSourceAndDetachedInTarget</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;sourceDelta)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colFirst"><code>protected java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#changedInSourceAndTarget-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-">changedInSourceAndTarget</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;targetDelta,
                         <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;sourceDelta)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colFirst"><code>protected java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#changedInTarget-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-">changedInTarget</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colFirst"><code>protected java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#changedInTargetAndDetachedInSource-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-">changedInTargetAndDetachedInSource</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;targetDelta)</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colFirst"><code>protected java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#detachedInSource-org.eclipse.emf.cdo.common.id.CDOID-">detachedInSource</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colFirst"><code>protected java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#detachedInSourceAndTarget-org.eclipse.emf.cdo.common.id.CDOID-">detachedInSourceAndTarget</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colFirst"><code>protected java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#detachedInTarget-org.eclipse.emf.cdo.common.id.CDOID-">detachedInTarget</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.Conflict.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.Conflict</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.Conflict.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.Conflict</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#getConflicts--">getConflicts</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.ListOrdering.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.ListOrdering</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#getListOrdering--">getListOrdering</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.ResolutionPreference.html" title="enum in org.eclipse.emf.spi.cdo">DefaultCDOMerger.ResolutionPreference</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#getResolutionPreference--">getResolutionPreference</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#getResult--">getResult</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>protected java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,java.lang.Object&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#getSourceMap--">getSourceMap</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>protected java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,java.lang.Object&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#getTargetMap--">getTargetMap</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#merge-org.eclipse.emf.cdo.common.commit.CDOChangeSet-org.eclipse.emf.cdo.common.commit.CDOChangeSet-">merge</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;target,
      <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;source)</code>
@@ -296,18 +307,18 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
  set</code></a> and returns the result relative to their common ancestor.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#merge-java.lang.Object-java.lang.Object-">merge</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;targetData,
-     <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;sourceData)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.html#merge-java.lang.Object-java.lang.Object-">merge</a></span>(java.lang.Object&nbsp;targetData,
+     java.lang.Object&nbsp;sourceData)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -332,16 +343,43 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <pre>public&nbsp;DefaultCDOMerger()</pre>
 </li>
 </ul>
+<a name="DefaultCDOMerger-org.eclipse.emf.cdo.common.CDOCommonRepository.ListOrdering-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DefaultCDOMerger</h4>
+<pre>public&nbsp;DefaultCDOMerger(<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.ListOrdering.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.ListOrdering</a>&nbsp;listOrdering)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
 <a name="DefaultCDOMerger-org.eclipse.emf.spi.cdo.DefaultCDOMerger.ResolutionPreference-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>DefaultCDOMerger</h4>
 <pre>public&nbsp;DefaultCDOMerger(<a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.ResolutionPreference.html" title="enum in org.eclipse.emf.spi.cdo">DefaultCDOMerger.ResolutionPreference</a>&nbsp;resolutionPreference)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
+</dl>
+</li>
+</ul>
+<a name="DefaultCDOMerger-org.eclipse.emf.spi.cdo.DefaultCDOMerger.ResolutionPreference-org.eclipse.emf.cdo.common.CDOCommonRepository.ListOrdering-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>DefaultCDOMerger</h4>
+<pre>public&nbsp;DefaultCDOMerger(<a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.ResolutionPreference.html" title="enum in org.eclipse.emf.spi.cdo">DefaultCDOMerger.ResolutionPreference</a>&nbsp;resolutionPreference,
+                        <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.ListOrdering.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.ListOrdering</a>&nbsp;listOrdering)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
 </dl>
 </li>
 </ul>
@@ -366,6 +404,19 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 </dl>
 </li>
 </ul>
+<a name="getListOrdering--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getListOrdering</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.ListOrdering.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.ListOrdering</a>&nbsp;getListOrdering()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
+</li>
+</ul>
 <a name="getResult--">
 <!--   -->
 </a>
@@ -381,7 +432,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>getConflicts</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.Conflict.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.Conflict</a>&gt;&nbsp;getConflicts()</pre>
+<pre>public&nbsp;java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.Conflict.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.Conflict</a>&gt;&nbsp;getConflicts()</pre>
 </li>
 </ul>
 <a name="merge-org.eclipse.emf.cdo.common.commit.CDOChangeSet-org.eclipse.emf.cdo.common.commit.CDOChangeSet-">
@@ -410,8 +461,8 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>merge</h4>
-<pre>protected&nbsp;boolean&nbsp;merge(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;targetData,
-                        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;sourceData)</pre>
+<pre>protected&nbsp;boolean&nbsp;merge(java.lang.Object&nbsp;targetData,
+                        java.lang.Object&nbsp;sourceData)</pre>
 </li>
 </ul>
 <a name="addedInTarget-org.eclipse.emf.cdo.common.revision.CDORevision-">
@@ -420,7 +471,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>addedInTarget</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;addedInTarget(<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</pre>
+<pre>protected&nbsp;java.lang.Object&nbsp;addedInTarget(<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</pre>
 </li>
 </ul>
 <a name="addedInSource-org.eclipse.emf.cdo.common.revision.CDORevision-">
@@ -429,7 +480,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>addedInSource</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;addedInSource(<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</pre>
+<pre>protected&nbsp;java.lang.Object&nbsp;addedInSource(<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</pre>
 </li>
 </ul>
 <a name="addedInSourceAndTarget-org.eclipse.emf.cdo.common.revision.CDORevision-org.eclipse.emf.cdo.common.revision.CDORevision-">
@@ -438,8 +489,8 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>addedInSourceAndTarget</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;addedInSourceAndTarget(<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetRevision,
-                                        <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceRevision)</pre>
+<pre>protected&nbsp;java.lang.Object&nbsp;addedInSourceAndTarget(<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetRevision,
+                                                  <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceRevision)</pre>
 </li>
 </ul>
 <a name="changedInTarget-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-">
@@ -448,7 +499,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>changedInTarget</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;changedInTarget(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</pre>
+<pre>protected&nbsp;java.lang.Object&nbsp;changedInTarget(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</pre>
 </li>
 </ul>
 <a name="detachedInTarget-org.eclipse.emf.cdo.common.id.CDOID-">
@@ -457,7 +508,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>detachedInTarget</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;detachedInTarget(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
+<pre>protected&nbsp;java.lang.Object&nbsp;detachedInTarget(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
 </li>
 </ul>
 <a name="changedInSource-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-">
@@ -466,7 +517,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>changedInSource</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;changedInSource(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</pre>
+<pre>protected&nbsp;java.lang.Object&nbsp;changedInSource(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</pre>
 </li>
 </ul>
 <a name="detachedInSource-org.eclipse.emf.cdo.common.id.CDOID-">
@@ -475,7 +526,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>detachedInSource</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;detachedInSource(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
+<pre>protected&nbsp;java.lang.Object&nbsp;detachedInSource(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
 </li>
 </ul>
 <a name="detachedInSourceAndTarget-org.eclipse.emf.cdo.common.id.CDOID-">
@@ -484,7 +535,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>detachedInSourceAndTarget</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;detachedInSourceAndTarget(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
+<pre>protected&nbsp;java.lang.Object&nbsp;detachedInSourceAndTarget(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
 </li>
 </ul>
 <a name="changedInSourceAndTarget-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-">
@@ -493,8 +544,8 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>changedInSourceAndTarget</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;changedInSourceAndTarget(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;targetDelta,
-                                          <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;sourceDelta)</pre>
+<pre>protected&nbsp;java.lang.Object&nbsp;changedInSourceAndTarget(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;targetDelta,
+                                                    <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;sourceDelta)</pre>
 </li>
 </ul>
 <a name="changedInSourceAndDetachedInTarget-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-">
@@ -503,7 +554,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>changedInSourceAndDetachedInTarget</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;changedInSourceAndDetachedInTarget(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;sourceDelta)</pre>
+<pre>protected&nbsp;java.lang.Object&nbsp;changedInSourceAndDetachedInTarget(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;sourceDelta)</pre>
 </li>
 </ul>
 <a name="changedInTargetAndDetachedInSource-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-">
@@ -512,7 +563,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>changedInTargetAndDetachedInSource</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;changedInTargetAndDetachedInSource(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;targetDelta)</pre>
+<pre>protected&nbsp;java.lang.Object&nbsp;changedInTargetAndDetachedInSource(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;targetDelta)</pre>
 </li>
 </ul>
 <a name="getTargetMap--">
@@ -521,7 +572,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>getTargetMap</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;getTargetMap()</pre>
+<pre>protected&nbsp;java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,java.lang.Object&gt;&nbsp;getTargetMap()</pre>
 </li>
 </ul>
 <a name="getSourceMap--">
@@ -530,7 +581,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.htm
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getSourceMap</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;getSourceMap()</pre>
+<pre>protected&nbsp;java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,java.lang.Object&gt;&nbsp;getSourceMap()</pre>
 </li>
 </ul>
 </li>

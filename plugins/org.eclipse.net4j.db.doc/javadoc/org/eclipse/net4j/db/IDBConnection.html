@@ -100,12 +100,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserAware</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Wrapper.html?is-external=true" title="class or interface in java.sql">Wrapper</a></dd>
+<dd>java.lang.AutoCloseable, java.sql.Connection, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserAware</a>, java.sql.Wrapper</dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">IDBConnection</span>
-extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserAware</a></pre>
+extends java.sql.Connection, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserAware</a></pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -132,8 +132,8 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Conne
 <li class="blockList"><a name="fields.inherited.from.class.java.sql.Connection">
 <!--   -->
 </a>
-<h3>Fields inherited from interface&nbsp;java.sql.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#TRANSACTION_NONE" title="class or interface in java.sql">TRANSACTION_NONE</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#TRANSACTION_READ_COMMITTED" title="class or interface in java.sql">TRANSACTION_READ_COMMITTED</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#TRANSACTION_READ_UNCOMMITTED" title="class or interface in java.sql">TRANSACTION_READ_UNCOMMITTED</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#TRANSACTION_REPEATABLE_READ" title="class or interface in java.sql">TRANSACTION_REPEATABLE_READ</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#TRANSACTION_SERIALIZABLE" title="class or interface in java.sql">TRANSACTION_SERIALIZABLE</a></code></li>
+<h3>Fields inherited from interface&nbsp;java.sql.Connection</h3>
+<code>TRANSACTION_NONE, TRANSACTION_READ_COMMITTED, TRANSACTION_READ_UNCOMMITTED, TRANSACTION_REPEATABLE_READ, TRANSACTION_SERIALIZABLE</code></li>
 </ul>
 </li>
 </ul>
@@ -159,12 +159,12 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Conne
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/net4j/db/IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBConnection.html#prepareStatement-java.lang.String-org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability-">prepareStatement</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sql,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBConnection.html#prepareStatement-java.lang.String-org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability-">prepareStatement</a></span>(java.lang.String&nbsp;sql,
                 <a href="../../../../org/eclipse/net4j/db/IDBPreparedStatement.ReuseProbability.html" title="enum in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBConnection.html#prepareStatement-java.lang.String-int-">prepareStatement</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sql,
+<td class="colFirst"><code>java.sql.PreparedStatement</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBConnection.html#prepareStatement-java.lang.String-int-">prepareStatement</a></span>(java.lang.String&nbsp;sql,
                 int&nbsp;autoGeneratedKeys)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
 <div class="block"><span class="deprecationComment">Not supported.</span></div>
@@ -172,8 +172,8 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Conne
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBConnection.html#prepareStatement-java.lang.String-int:A-">prepareStatement</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sql,
+<td class="colFirst"><code>java.sql.PreparedStatement</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBConnection.html#prepareStatement-java.lang.String-int:A-">prepareStatement</a></span>(java.lang.String&nbsp;sql,
                 int[]&nbsp;columnIndexes)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
 <div class="block"><span class="deprecationComment">Not supported.</span></div>
@@ -182,14 +182,14 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Conne
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/net4j/db/IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBConnection.html#prepareStatement-java.lang.String-int-int-org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability-">prepareStatement</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sql,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBConnection.html#prepareStatement-java.lang.String-int-int-org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability-">prepareStatement</a></span>(java.lang.String&nbsp;sql,
                 int&nbsp;resultSetType,
                 int&nbsp;resultSetConcurrency,
                 <a href="../../../../org/eclipse/net4j/db/IDBPreparedStatement.ReuseProbability.html" title="enum in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBConnection.html#prepareStatement-java.lang.String-int-int-int-">prepareStatement</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sql,
+<td class="colFirst"><code>java.sql.PreparedStatement</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBConnection.html#prepareStatement-java.lang.String-int-int-int-">prepareStatement</a></span>(java.lang.String&nbsp;sql,
                 int&nbsp;resultSetType,
                 int&nbsp;resultSetConcurrency,
                 int&nbsp;resultSetHoldability)</code>
@@ -199,9 +199,9 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Conne
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBConnection.html#prepareStatement-java.lang.String-java.lang.String:A-">prepareStatement</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sql,
-                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;columnNames)</code>
+<td class="colFirst"><code>java.sql.PreparedStatement</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBConnection.html#prepareStatement-java.lang.String-java.lang.String:A-">prepareStatement</a></span>(java.lang.String&nbsp;sql,
+                java.lang.String[]&nbsp;columnNames)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
 <div class="block"><span class="deprecationComment">Not supported.</span></div>
 </div>
@@ -212,15 +212,15 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Conne
 <li class="blockList"><a name="methods.inherited.from.class.java.sql.Connection">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.sql.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#abort-java.util.concurrent.Executor-" title="class or interface in java.sql">abort</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#clearWarnings--" title="class or interface in java.sql">clearWarnings</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#close--" title="class or interface in java.sql">close</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#commit--" title="class or interface in java.sql">commit</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#createArrayOf-java.lang.String-java.lang.Object:A-" title="class or interface in java.sql">createArrayOf</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#createBlob--" title="class or interface in java.sql">createBlob</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#createClob--" title="class or interface in java.sql">createClob</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#createNClob--" title="class or interface in java.sql">createNClob</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#createSQLXML--" title="class or interface in java.sql">createSQLXML</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#createStatement--" title="class or interface in java.sql">createStatement</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#createStatement-int-int-" title="class or interface in java.sql">createStatement</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#createStatement-int-int-int-" title="class or interface in java.sql">createStatement</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#createStruct-java.lang.String-java.lang.Object:A-" title="class or interface in java.sql">createStruct</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#getAutoCommit--" title="class or interface in java.sql">getAutoCommit</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#getCatalog--" title="class or interface in java.sql">getCatalog</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#getClientInfo--" title="class or interface in java.sql">getClientInfo</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#getClientInfo-java.lang.String-" title="class or interface in java.sql">getClientInfo</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#getHoldability--" title="class or interface in java.sql">getHoldability</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#getMetaData--" title="class or interface in java.sql">getMetaData</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#getNetworkTimeout--" title="class or interface in java.sql">getNetworkTimeout</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#getSchema--" title="class or interface in java.sql">getSchema</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#getTransactionIsolation--" title="class or interface in java.sql">getTransactionIsolation</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#getTypeMap--" title="class or interface in java.sql">getTypeMap</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#getWarnings--" title="class or interface in java.sql">getWarnings</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#isClosed--" title="class or interface in java.sql">isClosed</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#isReadOnly--" title="class or interface in java.sql">isReadOnly</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#isValid-int-" title="class or interface in java.sql">isValid</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#nativeSQL-java.lang.String-" title="class or interface in java.sql">nativeSQL</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#prepareCall-java.lang.String-" title="class or interface in java.sql">prepareCall</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#prepareCall-java.lang.String-int-int-" title="class or interface in java.sql">prepareCall</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#prepareCall-java.lang.String-int-int-int-" title="class or interface in java.sql">prepareCall</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#prepareStatement-java.lang.String-" title="class or interface in java.sql">prepareStatement</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#prepareStatement-java.lang.String-int-int-" title="class or interface in java.sql">prepareStatement</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#releaseSavepoint-java.sql.Savepoint-" title="class or interface in java.sql">releaseSavepoint</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#rollback--" title="class or interface in java.sql">rollback</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#rollback-java.sql.Savepoint-" title="class or interface in java.sql">rollback</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#setAutoCommit-boolean-" title="class or interface in java.sql">setAutoCommit</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#setCatalog-java.lang.String-" title="class or interface in java.sql">setCatalog</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#setClientInfo-java.util.Properties-" title="class or interface in java.sql">setClientInfo</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#setClientInfo-java.lang.String-java.lang.String-" title="class or interface in java.sql">setClientInfo</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#setHoldability-int-" title="class or interface in java.sql">setHoldability</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#setNetworkTimeout-java.util.concurrent.Executor-int-" title="class or interface in java.sql">setNetworkTimeout</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#setReadOnly-boolean-" title="class or interface in java.sql">setReadOnly</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#setSavepoint--" title="class or interface in java.sql">setSavepoint</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#setSavepoint-java.lang.String-" title="class or interface in java.sql">setSavepoint</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#setSchema-java.lang.String-" title="class or interface in java.sql">setSchema</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#setTransactionIsolation-int-" title="class or interface in java.sql">setTransactionIsolation</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#setTypeMap-java.util.Map-" title="class or interface in java.sql">setTypeMap</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.sql.Connection</h3>
+<code>abort, clearWarnings, close, commit, createArrayOf, createBlob, createClob, createNClob, createSQLXML, createStatement, createStatement, createStatement, createStruct, getAutoCommit, getCatalog, getClientInfo, getClientInfo, getHoldability, getMetaData, getNetworkTimeout, getSchema, getTransactionIsolation, getTypeMap, getWarnings, isClosed, isReadOnly, isValid, nativeSQL, prepareCall, prepareCall, prepareCall, prepareStatement, prepareStatement, releaseSavepoint, rollback, rollback, setAutoCommit, setCatalog, setClientInfo, setClientInfo, setHoldability, setNetworkTimeout, setReadOnly, setSavepoint, setSavepoint, setSchema, setTransactionIsolation, setTypeMap</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.sql.Wrapper">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.sql.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Wrapper.html?is-external=true" title="class or interface in java.sql">Wrapper</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Wrapper.html?is-external=true#isWrapperFor-java.lang.Class-" title="class or interface in java.sql">isWrapperFor</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Wrapper.html?is-external=true#unwrap-java.lang.Class-" title="class or interface in java.sql">unwrap</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.sql.Wrapper</h3>
+<code>isWrapperFor, unwrap</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.security.IUserAware">
@@ -267,7 +267,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Conne
 <ul class="blockList">
 <li class="blockList">
 <h4>prepareStatement</h4>
-<pre><a href="../../../../org/eclipse/net4j/db/IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a>&nbsp;prepareStatement(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sql,
+<pre><a href="../../../../org/eclipse/net4j/db/IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a>&nbsp;prepareStatement(java.lang.String&nbsp;sql,
                                       <a href="../../../../org/eclipse/net4j/db/IDBPreparedStatement.ReuseProbability.html" title="enum in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</pre>
 </li>
 </ul>
@@ -277,7 +277,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Conne
 <ul class="blockList">
 <li class="blockList">
 <h4>prepareStatement</h4>
-<pre><a href="../../../../org/eclipse/net4j/db/IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a>&nbsp;prepareStatement(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sql,
+<pre><a href="../../../../org/eclipse/net4j/db/IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a>&nbsp;prepareStatement(java.lang.String&nbsp;sql,
                                       int&nbsp;resultSetType,
                                       int&nbsp;resultSetConcurrency,
                                       <a href="../../../../org/eclipse/net4j/db/IDBPreparedStatement.ReuseProbability.html" title="enum in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</pre>
@@ -289,16 +289,16 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Conne
 <ul class="blockList">
 <li class="blockList">
 <h4>prepareStatement</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
-<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;prepareStatement(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sql,
-                                                int&nbsp;autoGeneratedKeys)
-                                         throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+<pre>@Deprecated
+java.sql.PreparedStatement&nbsp;prepareStatement(java.lang.String&nbsp;sql,
+                                                         int&nbsp;autoGeneratedKeys)
+                                                  throws java.sql.SQLException</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Not supported.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#prepareStatement-java.lang.String-int-" title="class or interface in java.sql">prepareStatement</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a></code></dd>
+<dd><code>prepareStatement</code>&nbsp;in interface&nbsp;<code>java.sql.Connection</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd>
+<dd><code>java.sql.SQLException</code></dd>
 </dl>
 </li>
 </ul>
@@ -308,18 +308,18 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Conne
 <ul class="blockList">
 <li class="blockList">
 <h4>prepareStatement</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
-<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;prepareStatement(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sql,
-                                                int&nbsp;resultSetType,
-                                                int&nbsp;resultSetConcurrency,
-                                                int&nbsp;resultSetHoldability)
-                                         throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+<pre>@Deprecated
+java.sql.PreparedStatement&nbsp;prepareStatement(java.lang.String&nbsp;sql,
+                                                         int&nbsp;resultSetType,
+                                                         int&nbsp;resultSetConcurrency,
+                                                         int&nbsp;resultSetHoldability)
+                                                  throws java.sql.SQLException</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Not supported.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#prepareStatement-java.lang.String-int-int-int-" title="class or interface in java.sql">prepareStatement</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a></code></dd>
+<dd><code>prepareStatement</code>&nbsp;in interface&nbsp;<code>java.sql.Connection</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd>
+<dd><code>java.sql.SQLException</code></dd>
 </dl>
 </li>
 </ul>
@@ -329,16 +329,16 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Conne
 <ul class="blockList">
 <li class="blockList">
 <h4>prepareStatement</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
-<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;prepareStatement(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sql,
-                                                int[]&nbsp;columnIndexes)
-                                         throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+<pre>@Deprecated
+java.sql.PreparedStatement&nbsp;prepareStatement(java.lang.String&nbsp;sql,
+                                                         int[]&nbsp;columnIndexes)
+                                                  throws java.sql.SQLException</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Not supported.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#prepareStatement-java.lang.String-int:A-" title="class or interface in java.sql">prepareStatement</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a></code></dd>
+<dd><code>prepareStatement</code>&nbsp;in interface&nbsp;<code>java.sql.Connection</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd>
+<dd><code>java.sql.SQLException</code></dd>
 </dl>
 </li>
 </ul>
@@ -348,16 +348,16 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Conne
 <ul class="blockListLast">
 <li class="blockList">
 <h4>prepareStatement</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
-<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;prepareStatement(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sql,
-                                                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;columnNames)
-                                         throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+<pre>@Deprecated
+java.sql.PreparedStatement&nbsp;prepareStatement(java.lang.String&nbsp;sql,
+                                                         java.lang.String[]&nbsp;columnNames)
+                                                  throws java.sql.SQLException</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Not supported.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true#prepareStatement-java.lang.String-java.lang.String:A-" title="class or interface in java.sql">prepareStatement</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a></code></dd>
+<dd><code>prepareStatement</code>&nbsp;in interface&nbsp;<code>java.sql.Connection</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd>
+<dd><code>java.sql.SQLException</code></dd>
 </dl>
 </li>
 </ul>

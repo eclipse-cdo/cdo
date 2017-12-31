@@ -96,7 +96,7 @@
 <tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.server.embedded">org.eclipse.emf.cdo.server.embedded</a></td>
 <td class="colLast">
-<div class="block">Server concepts for dealing with embedded sessions.</div>
+<div class="block">Server concepts for dealing with Net4j-based repositories and fail-over infrastructure.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -154,9 +154,9 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOServerUtil.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createRepository-java.lang.String-org.eclipse.emf.cdo.server.IStore-java.util.Map-">createRepository</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+<td class="colLast"><span class="typeNameLabel">CDOServerUtil.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createRepository-java.lang.String-org.eclipse.emf.cdo.server.IStore-java.util.Map-">createRepository</a></span>(java.lang.String&nbsp;name,
                 <a href="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
-                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;props)</code>&nbsp;</td>
+                java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;props)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
@@ -181,11 +181,11 @@
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
 <td class="colLast"><span class="typeNameLabel">CDOServerUtil.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#getRepository-org.eclipse.net4j.util.container.IManagedContainer-java.lang.String-">getRepository</a></span>(<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
-             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>&nbsp;</td>
+             java.lang.String&nbsp;name)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">IRepositoryProvider.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/IRepositoryProvider.html#getRepository-java.lang.String-">getRepository</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">IRepositoryProvider.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/IRepositoryProvider.html#getRepository-java.lang.String-">getRepository</a></span>(java.lang.String&nbsp;name)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -237,8 +237,8 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDORepositoryConfigurationManager.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/admin/CDORepositoryConfigurationManager.html#addRepository-java.lang.String-org.w3c.dom.Document-">addRepository</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-             <a href="http://download.oracle.com/javase/1.5.0/docs/api/org/w3c/dom/Document.html?is-external=true" title="class or interface in org.w3c.dom">Document</a>&nbsp;configuration)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">CDORepositoryConfigurationManager.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/admin/CDORepositoryConfigurationManager.html#addRepository-java.lang.String-org.w3c.dom.Document-">addRepository</a></span>(java.lang.String&nbsp;name,
+             org.w3c.dom.Document&nbsp;configuration)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -250,7 +250,7 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">CDORepositoryConfigurationManager.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/admin/CDORepositoryConfigurationManager.html#getRepositories--">getRepositories</a></span>()</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -286,9 +286,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOSessionConfiguration.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/embedded/CDOSessionConfiguration.html#getRepository--">getRepository</a></span>()</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
-&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">CDOEmbeddedRepositoryConfig.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/embedded/CDOEmbeddedRepositoryConfig.html#getRepository--">getRepository</a></span>()</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -300,10 +298,41 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOEmbeddedRepositoryConfig.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/embedded/CDOEmbeddedRepositoryConfig.html#activateRepository-org.eclipse.emf.cdo.server.IRepository-">activateRepository</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOSessionConfiguration.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/embedded/CDOSessionConfiguration.html#setRepository-org.eclipse.emf.cdo.server.IRepository-">setRepository</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
-&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">CDOEmbeddedRepositoryConfig.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/embedded/CDOEmbeddedRepositoryConfig.html#afterFirstStart-org.eclipse.emf.cdo.server.IRepository-">afterFirstStart</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code>
+<div class="block">Subclasses may override.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOEmbeddedRepositoryConfig.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/embedded/CDOEmbeddedRepositoryConfig.html#afterReStart-org.eclipse.emf.cdo.server.IRepository-">afterReStart</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code>
+<div class="block">Subclasses may override.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOEmbeddedRepositoryConfig.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/embedded/CDOEmbeddedRepositoryConfig.html#initPackages-org.eclipse.emf.cdo.server.IRepository-java.util.List-">initPackages</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository,
+            java.util.List&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&gt;&nbsp;packages)</code>
+<div class="block">Subclasses may override.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOEmbeddedRepositoryConfig.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/embedded/CDOEmbeddedRepositoryConfig.html#isInitialPackage-org.eclipse.emf.cdo.server.IRepository-java.lang.String-">isInitialPackage</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository,
+                java.lang.String&nbsp;nsURI)</code>
+<div class="block">Subclasses may override.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOEmbeddedRepositoryConfig.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/embedded/CDOEmbeddedRepositoryConfig.html#modifySession-org.eclipse.emf.cdo.server.IRepository-org.eclipse.emf.cdo.net4j.CDONet4jSession-">modifySession</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository,
+             <a href="../../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</a>&nbsp;session)</code>
+<div class="block">Subclasses may override.</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -352,8 +381,8 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOAdminHandler.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/spi/admin/CDOAdminHandler.html#createRepository-java.lang.String-java.util.Map-">createRepository</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;properties)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">CDOAdminHandler.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/spi/admin/CDOAdminHandler.html#createRepository-java.lang.String-java.util.Map-">createRepository</a></span>(java.lang.String&nbsp;name,
+                java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;properties)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -417,15 +446,15 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></td>
-<td class="colLast"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#configure-org.w3c.dom.Document-">configure</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/org/w3c/dom/Document.html?is-external=true" title="class or interface in org.w3c.dom">Document</a>&nbsp;document)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#configure-org.w3c.dom.Document-">configure</a></span>(org.w3c.dom.Document&nbsp;document)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></td>
-<td class="colLast"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#configure-java.io.File-">configure</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;configFile)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#configure-java.io.File-">configure</a></span>(java.io.File&nbsp;configFile)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></td>
-<td class="colLast"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#configure-java.io.Reader-">configure</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io">Reader</a>&nbsp;configReader)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#configure-java.io.Reader-">configure</a></span>(java.io.Reader&nbsp;configReader)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
@@ -434,24 +463,24 @@
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
 <td class="colLast"><span class="typeNameLabel">RepositoryFactory.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryFactory.html#get-org.eclipse.net4j.util.container.IManagedContainer-java.lang.String-">get</a></span>(<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
-   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>&nbsp;</td>
+   java.lang.String&nbsp;name)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getRepository-org.w3c.dom.Element-">getRepository</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/org/w3c/dom/Element.html?is-external=true" title="class or interface in org.w3c.dom">Element</a>&nbsp;repositoryConfig)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getRepository-org.w3c.dom.Element-">getRepository</a></span>(org.w3c.dom.Element&nbsp;repositoryConfig)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
 <td class="colLast"><span class="typeNameLabel">RepositoryUserManager.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.html#getRepository-org.eclipse.net4j.util.container.IManagedContainer-java.lang.String-">getRepository</a></span>(<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
-             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryName)</code>&nbsp;</td>
+             java.lang.String&nbsp;repositoryName)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">ContainerRepositoryProvider.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ContainerRepositoryProvider.html#getRepository-java.lang.String-">getRepository</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">ContainerRepositoryProvider.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ContainerRepositoryProvider.html#getRepository-java.lang.String-">getRepository</a></span>(java.lang.String&nbsp;name)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
-<td class="colLast"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getRepository-java.lang.String-">getRepository</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryType)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getRepository-java.lang.String-">getRepository</a></span>(java.lang.String&nbsp;repositoryType)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -465,7 +494,7 @@
 <tr class="altColor">
 <td class="colFirst"><code>protected abstract char[]</code></td>
 <td class="colLast"><span class="typeNameLabel">RepositoryUserManager.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.html#getPassword-org.eclipse.emf.cdo.server.IRepository-java.lang.String-">getPassword</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository,
-           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID)</code>&nbsp;</td>
+           java.lang.String&nbsp;userID)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>

@@ -96,7 +96,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li><a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">org.eclipse.net4j.util.om.monitor.SubMonitor</a></li>
@@ -132,7 +132,7 @@ extends <a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.
  <p>
  Instances of this class can be created explicitly with the <a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html#convert-org.eclipse.core.runtime.IProgressMonitor-org.eclipse.net4j.util.om.monitor.SubMonitor.ProbingMode-"><code>Progress.progress()</code></a> factory methods
  that take a <a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.ProbingMode.html" title="enum in org.eclipse.net4j.util.om.monitor"><code>SubMonitor.ProbingMode</code></a> argument. Implicit (automatic) instrumentation can be controlled with the "<code>submonitor.probing</code>"
- <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/System.html?is-external=true#setProperty-java.lang.String-java.lang.String-" title="class or interface in java.lang"><code>system property</code></a> as follows:
+ <code>system property</code> as follows:
  <dl>
  <dt> <code>off</code>
  <dd> All <a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor"><code>monitors</code></a> that are not created with an explicit probing mode will <b>not</b> collect any usage information. No extra heap space
@@ -145,8 +145,8 @@ extends <a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.
       The amount of heap space allocated for this information scales with the number of <a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html" title="class in org.eclipse.net4j.util.om.monitor"><code>monitor</code></a> instances that are created over time.
  </dl>
  <p>
- This class registers a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runtime.html?is-external=true#addShutdownHook-java.lang.Thread-" title="class or interface in java.lang"><code>shutdown hook</code></a> that dumps the probing results to the console when the program ends.
- By setting the "<code>submonitor.probing.trace</code>" <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/System.html?is-external=true#setProperty-java.lang.String-java.lang.String-" title="class or interface in java.lang"><code>system property</code></a> to the value "<code>true</code>"
+ This class registers a <code>shutdown hook</code> that dumps the probing results to the console when the program ends.
+ By setting the "<code>submonitor.probing.trace</code>" <code>system property</code> to the value "<code>true</code>"
  probing results are continuously dumped as they become available.
  <p>
  The probing results are formatted as tables per monitored method. Each row of a table corresponds to a call to the <a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html#worked--"><code>SubMonitor.worked()</code></a> or <a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.html#newChild--"><code>SubMonitor.newChild()</code></a>
@@ -162,7 +162,7 @@ extends <a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.
  <p>
  The tables in the two examples above have smooth borders that can only be displayed correctly in consoles with UTF-8 encoding. The console encoding
  can be configured on the <i>Common</i> tab of the launch configuration dialog. In addition the rendering of smooth table borders must be explicitly enabled
- by setting the "<code>submonitor.probing.borders</code>" <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/System.html?is-external=true#setProperty-java.lang.String-java.lang.String-" title="class or interface in java.lang"><code>system property</code></a> to the value "<code>smooth</code>".
+ by setting the "<code>submonitor.probing.borders</code>" <code>system property</code> to the value "<code>smooth</code>".
  Without this setting tables are rendered with "-", "+" and "|" characters that display correctly regardless of the console encoding.
  <p>
  Quick navigation from the table cells to the corresponding code locations is supported by clickable links in the console tables. This way the
@@ -249,7 +249,7 @@ extends <a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/monitor/ProbingSubMonitor.html#resetStatistics--">resetStatistics</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/monitor/ProbingSubMonitor.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
@@ -268,8 +268,8 @@ extends <a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -334,10 +334,10 @@ extends <a href="../../../../../../org/eclipse/net4j/util/om/monitor/SubMonitor.
 <ul class="blockList">
 <li class="blockList">
 <h4>toString</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
+<pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
+<dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 </dl>
 </li>
 </ul>

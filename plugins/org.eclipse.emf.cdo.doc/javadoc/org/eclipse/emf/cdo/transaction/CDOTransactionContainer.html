@@ -104,7 +104,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</a>, <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>, <a href="../../../../../org/eclipse/emf/cdo/server/embedded/CDOSession.html" title="interface in org.eclipse.emf.cdo.server.embedded">CDOSession</a>, <a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a></dd>
+<dd><a href="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</a>, <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>, <a href="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a></dd>
 </dl>
 <hr>
 <br>
@@ -206,7 +206,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html" 
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction-java.lang.String-">openTransaction</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;durableLockingID)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction-java.lang.String-">openTransaction</a></span>(java.lang.String&nbsp;durableLockingID)</code>
 <div class="block">Opens and returns a <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a> by resuming a
  transaction that has previously been made durable by calling <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking-boolean-"><code>CDOTransaction.enableDurableLocking(true)</code></a>.</div>
 </td>
@@ -392,7 +392,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html" 
 <ul class="blockListLast">
 <li class="blockList">
 <h4>openTransaction</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;openTransaction(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;durableLockingID)</pre>
+<pre><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;openTransaction(java.lang.String&nbsp;durableLockingID)</pre>
 <div class="block">Opens and returns a <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a> by resuming a
  transaction that has previously been made durable by calling <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking-boolean-"><code>CDOTransaction.enableDurableLocking(true)</code></a>.
  <p>

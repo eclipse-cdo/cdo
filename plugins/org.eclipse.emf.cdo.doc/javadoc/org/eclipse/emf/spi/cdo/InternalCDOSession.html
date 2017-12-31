@@ -224,7 +224,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" tit
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#endLocalCommit-java.lang.Object-">endLocalCommit</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;token)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#endLocalCommit-java.lang.Object-">endLocalCommit</a></span>(java.lang.Object&nbsp;token)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/protocol/CDOAuthenticator.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOAuthenticator</a></code></td>
@@ -364,7 +364,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" tit
           <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;sender,
           boolean&nbsp;clearResourcePathCache,
           byte&nbsp;securityImpact,
-          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;&nbsp;newPermissions)</code>
+          java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;&nbsp;newPermissions)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
 <div class="block"><span class="deprecationComment">As of 4.6 use <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate-org.eclipse.emf.spi.cdo.InternalCDOSession.InvalidationData-"><code>invalidate(InvalidationData)</code></a>.</span></div>
 </div>
@@ -382,12 +382,12 @@ extends <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" tit
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#processRefreshSessionResult-org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult-org.eclipse.emf.cdo.common.branch.CDOBranch-java.util.List-java.util.Map-">processRefreshSessionResult</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.RefreshSessionResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RefreshSessionResult</a>&nbsp;result,
                            <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-                           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&gt;&nbsp;branchViews,
-                           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&gt;&nbsp;viewedRevisions)</code>&nbsp;</td>
+                           java.util.List&lt;<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&gt;&nbsp;branchViews,
+                           java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&gt;&nbsp;viewedRevisions)</code>&nbsp;</td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#resetCredentials-java.lang.String-">resetCredentials</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#resetCredentials-java.lang.String-">resetCredentials</a></span>(java.lang.String&nbsp;userID)</code>
 <div class="block">Initiates (possibly interactive) reset of credentials for the specified user.</div>
 </td>
 </tr>
@@ -396,7 +396,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" tit
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#resolveAllElementProxies-org.eclipse.emf.cdo.common.revision.CDORevision-">resolveAllElementProxies</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code>&nbsp;</td>
 </tr>
 <tr id="i30" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colFirst"><code>java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#resolveElementProxy-org.eclipse.emf.cdo.common.revision.CDORevision-org.eclipse.emf.ecore.EStructuralFeature-int-int-">resolveElementProxy</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
                    <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
                    int&nbsp;accessIndex,
@@ -473,10 +473,10 @@ extends <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" tit
 </tr>
 <tr id="i47" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#setUserID-java.lang.String-">setUserID</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#setUserID-java.lang.String-">setUserID</a></span>(java.lang.String&nbsp;userID)</code>&nbsp;</td>
 </tr>
 <tr id="i48" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colFirst"><code>java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#startLocalCommit--">startLocalCommit</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i49" class="rowColor">
@@ -659,7 +659,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" tit
 <ul class="blockList">
 <li class="blockList">
 <h4>getAuthenticator</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+<pre>@Deprecated
 <a href="../../../../../org/eclipse/emf/cdo/common/protocol/CDOAuthenticator.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOAuthenticator</a>&nbsp;getAuthenticator()</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2 use <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsProvider.Provider.html?is-external=true#getCredentialsProvider--" title="class or interface in org.eclipse.net4j.util.security"><code>IPasswordCredentialsProvider.Provider.getCredentialsProvider()</code></a></span></div>
 <dl>
@@ -674,7 +674,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" tit
 <ul class="blockList">
 <li class="blockList">
 <h4>setAuthenticator</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+<pre>@Deprecated
 void&nbsp;setAuthenticator(<a href="../../../../../org/eclipse/emf/cdo/common/protocol/CDOAuthenticator.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOAuthenticator</a>&nbsp;authenticator)</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2 use <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#setCredentialsProvider-org.eclipse.net4j.util.security.IPasswordCredentialsProvider-"><code>setCredentialsProvider(IPasswordCredentialsProvider)</code></a></span></div>
 <dl>
@@ -932,7 +932,7 @@ void&nbsp;setAuthenticator(<a href="../../../../../org/eclipse/emf/cdo/common/pr
 <ul class="blockList">
 <li class="blockList">
 <h4>setUserID</h4>
-<pre>void&nbsp;setUserID(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID)</pre>
+<pre>void&nbsp;setUserID(java.lang.String&nbsp;userID)</pre>
 </li>
 </ul>
 <a name="setLastUpdateTime-long-">
@@ -954,14 +954,14 @@ void&nbsp;setAuthenticator(<a href="../../../../../org/eclipse/emf/cdo/common/pr
 <ul class="blockList">
 <li class="blockList">
 <h4>resetCredentials</h4>
-<pre>void&nbsp;resetCredentials(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID)</pre>
+<pre>void&nbsp;resetCredentials(java.lang.String&nbsp;userID)</pre>
 <div class="block">Initiates (possibly interactive) reset of credentials for the specified user.
  This is an optional operation of the session and only available for administrators.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>userID</code> - the ID of the user for which to reset credentials</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></code> - if the session implementation does not permit resetting user credentials</dd>
+<dd><code>java.lang.UnsupportedOperationException</code> - if the session implementation does not permit resetting user credentials</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
@@ -984,10 +984,10 @@ void&nbsp;setAuthenticator(<a href="../../../../../org/eclipse/emf/cdo/common/pr
 <ul class="blockList">
 <li class="blockList">
 <h4>resolveElementProxy</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;resolveElementProxy(<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
-                           <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
-                           int&nbsp;accessIndex,
-                           int&nbsp;serverIndex)</pre>
+<pre>java.lang.Object&nbsp;resolveElementProxy(<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+                                     <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
+                                     int&nbsp;accessIndex,
+                                     int&nbsp;serverIndex)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
@@ -1041,7 +1041,7 @@ void&nbsp;setAuthenticator(<a href="../../../../../org/eclipse/emf/cdo/common/pr
 <ul class="blockList">
 <li class="blockList">
 <h4>handleBranchNotification</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+<pre>@Deprecated
 void&nbsp;handleBranchNotification(<a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch)</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.3 no longer supported.</span></div>
 <dl>
@@ -1056,7 +1056,7 @@ void&nbsp;handleBranchNotification(<a href="../../../../../org/eclipse/emf/cdo/s
 <ul class="blockList">
 <li class="blockList">
 <h4>handleCommitNotification</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+<pre>@Deprecated
 void&nbsp;handleCommitNotification(<a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2 use <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleCommitNotification-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-boolean-"><code>handleCommitNotification(CDOCommitInfo, boolean)</code></a>.</span></div>
 <dl>
@@ -1071,7 +1071,7 @@ void&nbsp;handleCommitNotification(<a href="../../../../../org/eclipse/emf/cdo/c
 <ul class="blockList">
 <li class="blockList">
 <h4>handleCommitNotification</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+<pre>@Deprecated
 void&nbsp;handleCommitNotification(<a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
                                            boolean&nbsp;clearResourcePathCache)</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.3 use <code>#handleCommitNotification(CommitNotificationInfo)</code>.</span></div>
@@ -1114,7 +1114,7 @@ void&nbsp;handleCommitNotification(<a href="../../../../../org/eclipse/emf/cdo/c
 <ul class="blockList">
 <li class="blockList">
 <h4>startLocalCommit</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;startLocalCommit()</pre>
+<pre>java.lang.Object&nbsp;startLocalCommit()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
@@ -1127,7 +1127,7 @@ void&nbsp;handleCommitNotification(<a href="../../../../../org/eclipse/emf/cdo/c
 <ul class="blockList">
 <li class="blockList">
 <h4>endLocalCommit</h4>
-<pre>void&nbsp;endLocalCommit(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;token)</pre>
+<pre>void&nbsp;endLocalCommit(java.lang.Object&nbsp;token)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
@@ -1140,7 +1140,7 @@ void&nbsp;handleCommitNotification(<a href="../../../../../org/eclipse/emf/cdo/c
 <ul class="blockList">
 <li class="blockList">
 <h4>invalidate</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+<pre>@Deprecated
 void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
                              <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;sender)</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2 use <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-org.eclipse.emf.spi.cdo.InternalCDOTransaction-boolean-"><code>invalidate(CDOCommitInfo, InternalCDOTransaction, boolean)</code></a>.</span></div>
@@ -1156,7 +1156,7 @@ void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/commit/C
 <ul class="blockList">
 <li class="blockList">
 <h4>invalidate</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+<pre>@Deprecated
 void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
                              <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;sender,
                              boolean&nbsp;clearResourcePathCache)</pre>
@@ -1173,12 +1173,12 @@ void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/commit/C
 <ul class="blockList">
 <li class="blockList">
 <h4>invalidate</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+<pre>@Deprecated
 void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
                              <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;sender,
                              boolean&nbsp;clearResourcePathCache,
                              byte&nbsp;securityImpact,
-                             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;&nbsp;newPermissions)</pre>
+                             java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;&nbsp;newPermissions)</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.6 use <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate-org.eclipse.emf.spi.cdo.InternalCDOSession.InvalidationData-"><code>invalidate(InvalidationData)</code></a>.</span></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -1207,8 +1207,8 @@ void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/commit/C
 <h4>processRefreshSessionResult</h4>
 <pre>void&nbsp;processRefreshSessionResult(<a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.RefreshSessionResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RefreshSessionResult</a>&nbsp;result,
                                  <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-                                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&gt;&nbsp;branchViews,
-                                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&gt;&nbsp;viewedRevisions)</pre>
+                                 java.util.List&lt;<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&gt;&nbsp;branchViews,
+                                 java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,java.util.Map&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&gt;&nbsp;viewedRevisions)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
@@ -1287,7 +1287,7 @@ void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/commit/C
 <ul class="blockList">
 <li class="blockList">
 <h4>createRevisionAvailabilityInfo</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+<pre>@Deprecated
 <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a>&nbsp;createRevisionAvailabilityInfo(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2 not used anymore.</span></div>
 <dl>
@@ -1302,7 +1302,7 @@ void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/commit/C
 <ul class="blockList">
 <li class="blockList">
 <h4>cacheRevisions</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+<pre>@Deprecated
 void&nbsp;cacheRevisions(<a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a>&nbsp;info)</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2 not used anymore.</span></div>
 <dl>

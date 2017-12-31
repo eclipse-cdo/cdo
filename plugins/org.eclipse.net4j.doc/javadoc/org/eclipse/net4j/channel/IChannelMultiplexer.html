@@ -190,7 +190,7 @@ extends <a href="../../../../org/eclipse/net4j/ILocationAware.html" title="inter
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Collection&lt;<a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#getChannels--">getChannels</a></span>()</code>
 <div class="block">Returns a collection of currently open channels.</div>
 </td>
@@ -213,8 +213,8 @@ extends <a href="../../../../org/eclipse/net4j/ILocationAware.html" title="inter
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#openChannel-java.lang.String-java.lang.Object-">openChannel</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;protocolID,
-           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;infraStructure)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html#openChannel-java.lang.String-java.lang.Object-">openChannel</a></span>(java.lang.String&nbsp;protocolID,
+           java.lang.Object&nbsp;infraStructure)</code>
 <div class="block">Synchronous request to open a new <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a> with a channel protocol defined by a given protocol identifier.</div>
 </td>
 </tr>
@@ -328,8 +328,8 @@ extends <a href="../../../../org/eclipse/net4j/ILocationAware.html" title="inter
 <ul class="blockList">
 <li class="blockList">
 <h4>openChannel</h4>
-<pre><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;openChannel(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;protocolID,
-                     <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;infraStructure)
+<pre><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;openChannel(java.lang.String&nbsp;protocolID,
+                     java.lang.Object&nbsp;infraStructure)
               throws <a href="../../../../org/eclipse/net4j/channel/ChannelException.html" title="class in org.eclipse.net4j.channel">ChannelException</a></pre>
 <div class="block">Synchronous request to open a new <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a> with a channel protocol defined by a given protocol identifier.
  The peer connector will lookup a protocol <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/factory/IFactory.html?is-external=true" title="class or interface in org.eclipse.net4j.util.factory"><code>factory</code></a> with the protocol identifier, create a
@@ -375,7 +375,7 @@ extends <a href="../../../../org/eclipse/net4j/ILocationAware.html" title="inter
 <ul class="blockList">
 <li class="blockList">
 <h4>getChannels</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&gt;&nbsp;getChannels()</pre>
+<pre>java.util.Collection&lt;<a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&gt;&nbsp;getChannels()</pre>
 <div class="block">Returns a collection of currently open channels.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>

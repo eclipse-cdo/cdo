@@ -111,7 +111,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><span class="typeNameLabel">LifecycleUtil.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.html#deactivate-java.lang.Object-org.eclipse.net4j.util.om.log.OMLogger.Level-">deactivate</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
+<td class="colLast"><span class="typeNameLabel">LifecycleUtil.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.html#deactivate-java.lang.Object-org.eclipse.net4j.util.om.log.OMLogger.Level-">deactivate</a></span>(java.lang.Object&nbsp;object,
           <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;logLevel)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -134,7 +134,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a></code></td>
-<td class="colLast"><span class="typeNameLabel">OMLogger.Level.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html#valueOf-java.lang.String-">valueOf</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
+<td class="colLast"><span class="typeNameLabel">OMLogger.Level.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html#valueOf-java.lang.String-">valueOf</a></span>(java.lang.String&nbsp;name)</code>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </td>
 </tr>
@@ -158,8 +158,8 @@ the order they are declared.</div>
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><span class="typeNameLabel">OMLogFilter.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogFilter.html#filter-org.eclipse.net4j.util.om.log.OMLogger-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">filter</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
       <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
-      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
-      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;t)</code>
+      java.lang.String&nbsp;msg,
+      java.lang.Throwable&nbsp;t)</code>
 <div class="block">Prevents the log event represented by the arguments from being passed to
  <a href="../../../../../../../org/eclipse/net4j/util/om/OMPlatform.html#addLogFilter-org.eclipse.net4j.util.om.log.OMLogFilter-"><code>registered</code></a> <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log"><code>log handlers</code></a>, if and only if
  <code>true</code> is returned.</div>
@@ -168,69 +168,87 @@ the order they are declared.</div>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">Logger.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/Logger.html#log-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-">log</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
-   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg)</code>&nbsp;</td>
+   java.lang.String&nbsp;msg)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">OMLogger.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html#log-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-">log</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
-   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg)</code>&nbsp;</td>
+   java.lang.String&nbsp;msg)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">Logger.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/Logger.html#log-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">log</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
-   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
-   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;t)</code>&nbsp;</td>
+   java.lang.String&nbsp;msg,
+   java.lang.Throwable&nbsp;t)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">OMLogger.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html#log-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">log</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
-   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
-   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;t)</code>&nbsp;</td>
+   java.lang.String&nbsp;msg,
+   java.lang.Throwable&nbsp;t)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">Logger.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/Logger.html#log-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.Throwable-">log</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
-   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;t)</code>&nbsp;</td>
+   java.lang.Throwable&nbsp;t)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">OMLogger.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html#log-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.Throwable-">log</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
-   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;t)</code>&nbsp;</td>
+   java.lang.Throwable&nbsp;t)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">OSGiLogHandler.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/OSGiLogHandler.html#logged-org.osgi.framework.BundleContext-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">logged</a></span>(org.osgi.framework.BundleContext&nbsp;bundleContext,
+      <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
+      java.lang.String&nbsp;msg,
+      java.lang.Throwable&nbsp;t)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">OSGiLoggingBridge.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/OSGiLoggingBridge.html#logged-org.osgi.framework.BundleContext-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">logged</a></span>(org.osgi.framework.BundleContext&nbsp;bundleContext,
       <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
-      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
-      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;t)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractLogHandler.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHandler.html#logged-org.eclipse.net4j.util.om.log.OMLogger-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">logged</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
-      <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
-      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
-      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;t)</code>&nbsp;</td>
+      java.lang.String&nbsp;msg,
+      java.lang.Throwable&nbsp;t)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">EclipseLoggingBridge.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/EclipseLoggingBridge.html#logged-org.eclipse.net4j.util.om.log.OMLogger-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">logged</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
+<td class="colLast"><span class="typeNameLabel">AbstractLogHandler.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHandler.html#logged-org.eclipse.net4j.util.om.log.OMLogger-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">logged</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
       <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
-      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
-      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;t)</code>&nbsp;</td>
+      java.lang.String&nbsp;msg,
+      java.lang.Throwable&nbsp;t)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">EclipseLoggingBridge.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/EclipseLoggingBridge.html#logged-org.eclipse.net4j.util.om.log.OMLogger-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">logged</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
+      <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
+      java.lang.String&nbsp;msg,
+      java.lang.Throwable&nbsp;t)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">OMLogHandler.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogHandler.html#logged-org.eclipse.net4j.util.om.log.OMLogger-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">logged</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
       <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
-      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
-      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;t)</code>&nbsp;</td>
+      java.lang.String&nbsp;msg,
+      java.lang.Throwable&nbsp;t)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">OSGiLogHandler.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/OSGiLogHandler.html#logged-org.eclipse.net4j.util.om.log.OMLogger-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">logged</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
+      <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
+      java.lang.String&nbsp;msg,
+      java.lang.Throwable&nbsp;t)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">OSGiLoggingBridge.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/OSGiLoggingBridge.html#logged-org.eclipse.net4j.util.om.log.OMLogger-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">logged</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
       <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
-      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
-      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;t)</code>&nbsp;</td>
+      java.lang.String&nbsp;msg,
+      java.lang.Throwable&nbsp;t)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -241,33 +259,39 @@ the order they are declared.</div>
 <td class="colLast"><span class="typeNameLabel">EclipseLoggingBridge.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/EclipseLoggingBridge.html#toEclipse-org.eclipse.net4j.util.om.log.OMLogger.Level-">toEclipse</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<td class="colLast"><span class="typeNameLabel">OSGiLoggingBridge.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/OSGiLoggingBridge.html#toOSGi-org.eclipse.net4j.util.om.log.OMLogger.Level-">toOSGi</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level)</code>&nbsp;</td>
+<td class="colFirst"><code>static org.osgi.service.log.LogLevel</code></td>
+<td class="colLast"><span class="typeNameLabel">OSGiLogHandler.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/OSGiLogHandler.html#toOSGi-org.eclipse.net4j.util.om.log.OMLogger.Level-">toOSGi</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><span class="typeNameLabel">AbstractLogHandler.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHandler.html#toString-org.eclipse.net4j.util.om.log.OMLogger.Level-">toString</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level)</code>&nbsp;</td>
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><span class="typeNameLabel">OSGiLoggingBridge.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/OSGiLoggingBridge.html#toOSGi-org.eclipse.net4j.util.om.log.OMLogger.Level-">toOSGi</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colLast"><span class="typeNameLabel">AbstractLogHandler.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHandler.html#toString-org.eclipse.net4j.util.om.log.OMLogger.Level-">toString</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>protected abstract void</code></td>
 <td class="colLast"><span class="typeNameLabel">AbstractLogHandler.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHandler.html#writeLog-org.eclipse.net4j.util.om.log.OMLogger-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">writeLog</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
         <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
-        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
-        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;t)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">FileLogHandler.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/FileLogHandler.html#writeLog-org.eclipse.net4j.util.om.log.OMLogger-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">writeLog</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
-        <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
-        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
-        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;t)</code>&nbsp;</td>
+        java.lang.String&nbsp;msg,
+        java.lang.Throwable&nbsp;t)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="typeNameLabel">FileLogHandler.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/FileLogHandler.html#writeLog-org.eclipse.net4j.util.om.log.OMLogger-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">writeLog</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
+        <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
+        java.lang.String&nbsp;msg,
+        java.lang.Throwable&nbsp;t)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><span class="typeNameLabel">PrintLogHandler.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/PrintLogHandler.html#writeLog-org.eclipse.net4j.util.om.log.OMLogger-org.eclipse.net4j.util.om.log.OMLogger.Level-java.lang.String-java.lang.Throwable-">writeLog</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
         <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;level,
-        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;msg,
-        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;t)</code>&nbsp;</td>
+        java.lang.String&nbsp;msg,
+        java.lang.Throwable&nbsp;t)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -281,7 +305,7 @@ the order they are declared.</div>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/AbstractLogHandler.html#AbstractLogHandler-org.eclipse.net4j.util.om.log.OMLogger.Level-">AbstractLogHandler</a></span>(<a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;logLevel)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/FileLogHandler.html#FileLogHandler-java.io.File-org.eclipse.net4j.util.om.log.OMLogger.Level-">FileLogHandler</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;logFile,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/util/om/log/FileLogHandler.html#FileLogHandler-java.io.File-org.eclipse.net4j.util.om.log.OMLogger.Level-">FileLogHandler</a></span>(java.io.File&nbsp;logFile,
               <a href="../../../../../../../org/eclipse/net4j/util/om/log/OMLogger.Level.html" title="enum in org.eclipse.net4j.util.om.log">OMLogger.Level</a>&nbsp;logLevel)</code>&nbsp;</td>
 </tr>
 </tbody>

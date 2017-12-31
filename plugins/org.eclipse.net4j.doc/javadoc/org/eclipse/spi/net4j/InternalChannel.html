@@ -153,7 +153,7 @@ extends <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="int
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.buffer.<a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></h3>
-<code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.Introspection.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider.Introspection</a></code></li>
+<code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.Introspection.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider.Introspection</a>, <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.Notification.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider.Notification</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
@@ -181,11 +181,11 @@ extends <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="int
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#getReceivedBuffers--">getReceivedBuffers</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></td>
+<td class="colFirst"><code>java.util.concurrent.ExecutorService</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#getReceiveExecutor--">getReceiveExecutor</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Queue&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#getSendQueue--">getSendQueue</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -206,11 +206,11 @@ extends <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="int
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#setReceiveExecutor-java.util.concurrent.ExecutorService-">setReceiveExecutor</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;receiveExecutor)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#setReceiveExecutor-java.util.concurrent.ExecutorService-">setReceiveExecutor</a></span>(java.util.concurrent.ExecutorService&nbsp;receiveExecutor)</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#setUserID-java.lang.String-">setUserID</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#setUserID-java.lang.String-">setUserID</a></span>(java.lang.String&nbsp;userID)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -302,7 +302,7 @@ extends <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>setUserID</h4>
-<pre>void&nbsp;setUserID(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID)</pre>
+<pre>void&nbsp;setUserID(java.lang.String&nbsp;userID)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -315,7 +315,7 @@ extends <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>getReceiveExecutor</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;getReceiveExecutor()</pre>
+<pre>java.util.concurrent.ExecutorService&nbsp;getReceiveExecutor()</pre>
 </li>
 </ul>
 <a name="setReceiveExecutor-java.util.concurrent.ExecutorService-">
@@ -324,7 +324,7 @@ extends <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>setReceiveExecutor</h4>
-<pre>void&nbsp;setReceiveExecutor(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;receiveExecutor)</pre>
+<pre>void&nbsp;setReceiveExecutor(java.util.concurrent.ExecutorService&nbsp;receiveExecutor)</pre>
 </li>
 </ul>
 <a name="setMultiplexer-org.eclipse.net4j.channel.IChannelMultiplexer-">
@@ -381,7 +381,7 @@ extends <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="int
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getSendQueue</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;&nbsp;getSendQueue()</pre>
+<pre>java.util.Queue&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;&nbsp;getSendQueue()</pre>
 </li>
 </ul>
 </li>

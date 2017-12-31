@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -96,7 +96,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.io.ExtendedDataInput.Delegating</li>
@@ -108,7 +108,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a>, <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></dd>
+<dd>java.io.Closeable, java.io.DataInput, java.lang.AutoCloseable, <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></dd>
 </dl>
 <dl>
 <dt>Enclosing interface:</dt>
@@ -117,8 +117,8 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public static class <span class="typeNameLabel">ExtendedDataInput.Delegating</span>
-extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</a></pre>
+extends java.lang.Object
+implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>, java.io.Closeable</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -204,11 +204,11 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readDouble--">readDouble</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>&lt;T extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;&gt;<br>T</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readEnum-java.lang.Class-">readEnum</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</code>&nbsp;</td>
+<td class="colFirst"><code>&lt;T extends java.lang.Enum&lt;?&gt;&gt;<br>T</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readEnum-java.lang.Class-">readEnum</a></span>(java.lang.Class&lt;T&gt;&nbsp;type)</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></td>
+<td class="colFirst"><code>java.lang.Throwable</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readException--">readException</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
@@ -230,7 +230,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readInt--">readInt</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readLine--">readLine</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
@@ -238,15 +238,15 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readLong--">readLong</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colFirst"><code>java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readObject--">readObject</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readObject-java.lang.ClassLoader-">readObject</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/ClassLoader.html?is-external=true" title="class or interface in java.lang">ClassLoader</a>&nbsp;classLoader)</code>&nbsp;</td>
+<td class="colFirst"><code>java.lang.Object</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readObject-java.lang.ClassLoader-">readObject</a></span>(java.lang.ClassLoader&nbsp;classLoader)</code>&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colFirst"><code>java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readObject-org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver-">readObject</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedIOUtil.ClassResolver.html" title="interface in org.eclipse.net4j.util.io">ExtendedIOUtil.ClassResolver</a>&nbsp;classResolver)</code>&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
@@ -254,7 +254,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readShort--">readShort</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readString--">readString</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
@@ -266,10 +266,18 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readUnsignedShort--">readUnsignedShort</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readUTF--">readUTF</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readVarInt--">readVarInt</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i24" class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#readVarLong--">readVarLong</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html#skipBytes-int-">skipBytes</a></span>(int&nbsp;n)</code>&nbsp;</td>
 </tr>
@@ -278,8 +286,8 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -328,12 +336,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <li class="blockList">
 <h4>readBoolean</h4>
 <pre>public&nbsp;boolean&nbsp;readBoolean()
-                    throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+                    throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true#readBoolean--" title="class or interface in java.io">readBoolean</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a></code></dd>
+<dd><code>readBoolean</code>&nbsp;in interface&nbsp;<code>java.io.DataInput</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -344,12 +352,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <li class="blockList">
 <h4>readByte</h4>
 <pre>public&nbsp;byte&nbsp;readByte()
-              throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+              throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true#readByte--" title="class or interface in java.io">readByte</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a></code></dd>
+<dd><code>readByte</code>&nbsp;in interface&nbsp;<code>java.io.DataInput</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -360,12 +368,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <li class="blockList">
 <h4>readByteArray</h4>
 <pre>public&nbsp;byte[]&nbsp;readByteArray()
-                     throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+                     throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readByteArray--">readByteArray</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -376,12 +384,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <li class="blockList">
 <h4>readChar</h4>
 <pre>public&nbsp;char&nbsp;readChar()
-              throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+              throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true#readChar--" title="class or interface in java.io">readChar</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a></code></dd>
+<dd><code>readChar</code>&nbsp;in interface&nbsp;<code>java.io.DataInput</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -392,12 +400,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <li class="blockList">
 <h4>readDouble</h4>
 <pre>public&nbsp;double&nbsp;readDouble()
-                  throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+                  throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true#readDouble--" title="class or interface in java.io">readDouble</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a></code></dd>
+<dd><code>readDouble</code>&nbsp;in interface&nbsp;<code>java.io.DataInput</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -408,12 +416,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <li class="blockList">
 <h4>readFloat</h4>
 <pre>public&nbsp;float&nbsp;readFloat()
-                throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+                throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true#readFloat--" title="class or interface in java.io">readFloat</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a></code></dd>
+<dd><code>readFloat</code>&nbsp;in interface&nbsp;<code>java.io.DataInput</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -426,12 +434,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <pre>public&nbsp;void&nbsp;readFully(byte[]&nbsp;b,
                       int&nbsp;off,
                       int&nbsp;len)
-               throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+               throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true#readFully-byte:A-int-int-" title="class or interface in java.io">readFully</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a></code></dd>
+<dd><code>readFully</code>&nbsp;in interface&nbsp;<code>java.io.DataInput</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -442,12 +450,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <li class="blockList">
 <h4>readFully</h4>
 <pre>public&nbsp;void&nbsp;readFully(byte[]&nbsp;b)
-               throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+               throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true#readFully-byte:A-" title="class or interface in java.io">readFully</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a></code></dd>
+<dd><code>readFully</code>&nbsp;in interface&nbsp;<code>java.io.DataInput</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -458,12 +466,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <li class="blockList">
 <h4>readInt</h4>
 <pre>public&nbsp;int&nbsp;readInt()
-            throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+            throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true#readInt--" title="class or interface in java.io">readInt</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a></code></dd>
+<dd><code>readInt</code>&nbsp;in interface&nbsp;<code>java.io.DataInput</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -473,13 +481,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <ul class="blockList">
 <li class="blockList">
 <h4>readLine</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;readLine()
-                throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>public&nbsp;java.lang.String&nbsp;readLine()
+                          throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true#readLine--" title="class or interface in java.io">readLine</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a></code></dd>
+<dd><code>readLine</code>&nbsp;in interface&nbsp;<code>java.io.DataInput</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -490,12 +498,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <li class="blockList">
 <h4>readLong</h4>
 <pre>public&nbsp;long&nbsp;readLong()
-              throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+              throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true#readLong--" title="class or interface in java.io">readLong</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a></code></dd>
+<dd><code>readLong</code>&nbsp;in interface&nbsp;<code>java.io.DataInput</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -505,13 +513,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <ul class="blockList">
 <li class="blockList">
 <h4>readObject</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;readObject()
-                  throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>public&nbsp;java.lang.Object&nbsp;readObject()
+                            throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readObject--">readObject</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -521,13 +529,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <ul class="blockList">
 <li class="blockList">
 <h4>readObject</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;readObject(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/ClassLoader.html?is-external=true" title="class or interface in java.lang">ClassLoader</a>&nbsp;classLoader)
-                  throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>public&nbsp;java.lang.Object&nbsp;readObject(java.lang.ClassLoader&nbsp;classLoader)
+                            throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readObject-java.lang.ClassLoader-">readObject</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -537,13 +545,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <ul class="blockList">
 <li class="blockList">
 <h4>readObject</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;readObject(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedIOUtil.ClassResolver.html" title="interface in org.eclipse.net4j.util.io">ExtendedIOUtil.ClassResolver</a>&nbsp;classResolver)
-                  throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>public&nbsp;java.lang.Object&nbsp;readObject(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedIOUtil.ClassResolver.html" title="interface in org.eclipse.net4j.util.io">ExtendedIOUtil.ClassResolver</a>&nbsp;classResolver)
+                            throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readObject-org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver-">readObject</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -554,12 +562,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <li class="blockList">
 <h4>readShort</h4>
 <pre>public&nbsp;short&nbsp;readShort()
-                throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+                throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true#readShort--" title="class or interface in java.io">readShort</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a></code></dd>
+<dd><code>readShort</code>&nbsp;in interface&nbsp;<code>java.io.DataInput</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -569,13 +577,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <ul class="blockList">
 <li class="blockList">
 <h4>readString</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;readString()
-                  throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>public&nbsp;java.lang.String&nbsp;readString()
+                            throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readString--">readString</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -585,13 +593,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <ul class="blockList">
 <li class="blockList">
 <h4>readEnum</h4>
-<pre>public&nbsp;&lt;T extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;&gt;&nbsp;T&nbsp;readEnum(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)
-                               throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>public&nbsp;&lt;T extends java.lang.Enum&lt;?&gt;&gt;&nbsp;T&nbsp;readEnum(java.lang.Class&lt;T&gt;&nbsp;type)
+                                         throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readEnum-java.lang.Class-">readEnum</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
@@ -603,13 +611,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <ul class="blockList">
 <li class="blockList">
 <h4>readException</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;readException()
-                        throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>public&nbsp;java.lang.Throwable&nbsp;readException()
+                                  throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readException--">readException</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.4</dd>
 </dl>
@@ -622,12 +630,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <li class="blockList">
 <h4>readUnsignedByte</h4>
 <pre>public&nbsp;int&nbsp;readUnsignedByte()
-                     throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+                     throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true#readUnsignedByte--" title="class or interface in java.io">readUnsignedByte</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a></code></dd>
+<dd><code>readUnsignedByte</code>&nbsp;in interface&nbsp;<code>java.io.DataInput</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -638,12 +646,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <li class="blockList">
 <h4>readUnsignedShort</h4>
 <pre>public&nbsp;int&nbsp;readUnsignedShort()
-                      throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+                      throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true#readUnsignedShort--" title="class or interface in java.io">readUnsignedShort</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a></code></dd>
+<dd><code>readUnsignedShort</code>&nbsp;in interface&nbsp;<code>java.io.DataInput</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -653,13 +661,49 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <ul class="blockList">
 <li class="blockList">
 <h4>readUTF</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;readUTF()
-               throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<pre>public&nbsp;java.lang.String&nbsp;readUTF()
+                         throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true#readUTF--" title="class or interface in java.io">readUTF</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a></code></dd>
+<dd><code>readUTF</code>&nbsp;in interface&nbsp;<code>java.io.DataInput</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
+</dl>
+</li>
+</ul>
+<a name="readVarInt--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>readVarInt</h4>
+<pre>public&nbsp;int&nbsp;readVarInt()
+               throws java.io.IOException</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readVarInt--">readVarInt</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.io.IOException</code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.7</dd>
+</dl>
+</li>
+</ul>
+<a name="readVarLong--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>readVarLong</h4>
+<pre>public&nbsp;long&nbsp;readVarLong()
+                 throws java.io.IOException</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html#readVarLong--">readVarLong</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a></code></dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.io.IOException</code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.7</dd>
 </dl>
 </li>
 </ul>
@@ -670,12 +714,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <li class="blockList">
 <h4>skipBytes</h4>
 <pre>public&nbsp;int&nbsp;skipBytes(int&nbsp;n)
-              throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+              throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true#skipBytes-int-" title="class or interface in java.io">skipBytes</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInput.html?is-external=true" title="class or interface in java.io">DataInput</a></code></dd>
+<dd><code>skipBytes</code>&nbsp;in interface&nbsp;<code>java.io.DataInput</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 </dl>
 </li>
 </ul>
@@ -686,14 +730,14 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.h
 <li class="blockList">
 <h4>close</h4>
 <pre>public&nbsp;void&nbsp;close()
-           throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+           throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Closeable.html?is-external=true#close--" title="class or interface in java.io">close</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</a></code></dd>
+<dd><code>close</code>&nbsp;in interface&nbsp;<code>java.io.Closeable</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/AutoCloseable.html?is-external=true#close--" title="class or interface in java.lang">close</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></code></dd>
+<dd><code>close</code>&nbsp;in interface&nbsp;<code>java.lang.AutoCloseable</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.6</dd>
 </dl>

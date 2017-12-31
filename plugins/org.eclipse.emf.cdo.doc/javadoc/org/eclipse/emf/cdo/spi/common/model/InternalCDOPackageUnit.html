@@ -100,7 +100,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>&gt;</dd>
+<dd><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>, java.lang.Comparable&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>&gt;</dd>
 </dl>
 <hr>
 <br>
@@ -160,7 +160,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#getPackageInfo-java.lang.String-">getPackageInfo</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;packageURI)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#getPackageInfo-java.lang.String-">getPackageInfo</a></span>(java.lang.String&nbsp;packageURI)</code>
 <div class="block">Returns the <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package</code></a> with the given
  namespace URI, or <code>null</code> if this package unit does not contain a package with this URI.</div>
 </td>
@@ -240,8 +240,8 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Comparable">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true#compareTo-T-" title="class or interface in java.lang">compareTo</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.lang.Comparable</h3>
+<code>compareTo</code></li>
 </ul>
 </li>
 </ul>
@@ -330,7 +330,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <ul class="blockList">
 <li class="blockList">
 <h4>getPackageInfo</h4>
-<pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>&nbsp;getPackageInfo(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;packageURI)</pre>
+<pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>&nbsp;getPackageInfo(java.lang.String&nbsp;packageURI)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html#getPackageInfo-java.lang.String-">CDOPackageUnit</a></code></span></div>
 <div class="block">Returns the <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package</code></a> with the given
  namespace URI, or <code>null</code> if this package unit does not contain a package with this URI.</div>
@@ -400,10 +400,10 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <h4>write</h4>
 <pre>void&nbsp;write(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
            boolean&nbsp;withPackages)
-    throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+    throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
@@ -417,10 +417,10 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <h4>read</h4>
 <pre>void&nbsp;read(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
           <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)
-   throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+   throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>

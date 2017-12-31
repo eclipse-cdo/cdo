@@ -101,7 +101,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">ITCPSelector</span></pre>
-<div class="block">Encapsulates a Java <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/Selector.html?is-external=true" title="class or interface in java.nio.channels"><code>socket selector</code></a> and orchestrates a number of <a href="../../../../org/eclipse/net4j/tcp/ITCPActiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp"><code>active</code></a> and <a href="../../../../org/eclipse/net4j/tcp/ITCPPassiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp"><code>passive</code></a> consumers, usually <a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connectors</code></a> and
+<div class="block">Encapsulates a Java <code>socket selector</code> and orchestrates a number of <a href="../../../../org/eclipse/net4j/tcp/ITCPActiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp"><code>active</code></a> and <a href="../../../../org/eclipse/net4j/tcp/ITCPPassiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp"><code>passive</code></a> consumers, usually <a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connectors</code></a> and
  <a href="../../../../org/eclipse/net4j/acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptors</code></a> that compete for the socket selector's I/O time.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
@@ -130,35 +130,35 @@ var activeTableTab = "activeTableTab";
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/Selector.html?is-external=true" title="class or interface in java.nio.channels">Selector</a></code></td>
+<td class="colFirst"><code>java.nio.channels.Selector</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/tcp/ITCPSelector.html#getSocketSelector--">getSocketSelector</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/tcp/ITCPSelector.html#orderConnectInterest-java.nio.channels.SelectionKey-boolean-boolean-">orderConnectInterest</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SelectionKey.html?is-external=true" title="class or interface in java.nio.channels">SelectionKey</a>&nbsp;selectionKey,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/tcp/ITCPSelector.html#orderConnectInterest-java.nio.channels.SelectionKey-boolean-boolean-">orderConnectInterest</a></span>(java.nio.channels.SelectionKey&nbsp;selectionKey,
                     boolean&nbsp;client,
                     boolean&nbsp;on)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/tcp/ITCPSelector.html#orderReadInterest-java.nio.channels.SelectionKey-boolean-boolean-">orderReadInterest</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SelectionKey.html?is-external=true" title="class or interface in java.nio.channels">SelectionKey</a>&nbsp;selectionKey,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/tcp/ITCPSelector.html#orderReadInterest-java.nio.channels.SelectionKey-boolean-boolean-">orderReadInterest</a></span>(java.nio.channels.SelectionKey&nbsp;selectionKey,
                  boolean&nbsp;client,
                  boolean&nbsp;on)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/tcp/ITCPSelector.html#orderRegistration-java.nio.channels.ServerSocketChannel-org.eclipse.net4j.tcp.ITCPPassiveSelectorListener-">orderRegistration</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/ServerSocketChannel.html?is-external=true" title="class or interface in java.nio.channels">ServerSocketChannel</a>&nbsp;channel,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/tcp/ITCPSelector.html#orderRegistration-java.nio.channels.ServerSocketChannel-org.eclipse.net4j.tcp.ITCPPassiveSelectorListener-">orderRegistration</a></span>(java.nio.channels.ServerSocketChannel&nbsp;channel,
                  <a href="../../../../org/eclipse/net4j/tcp/ITCPPassiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp">ITCPPassiveSelectorListener</a>&nbsp;listener)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/tcp/ITCPSelector.html#orderRegistration-java.nio.channels.SocketChannel-boolean-org.eclipse.net4j.tcp.ITCPActiveSelectorListener-">orderRegistration</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels">SocketChannel</a>&nbsp;channel,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/tcp/ITCPSelector.html#orderRegistration-java.nio.channels.SocketChannel-boolean-org.eclipse.net4j.tcp.ITCPActiveSelectorListener-">orderRegistration</a></span>(java.nio.channels.SocketChannel&nbsp;channel,
                  boolean&nbsp;client,
                  <a href="../../../../org/eclipse/net4j/tcp/ITCPActiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp">ITCPActiveSelectorListener</a>&nbsp;listener)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/tcp/ITCPSelector.html#orderWriteInterest-java.nio.channels.SelectionKey-boolean-boolean-">orderWriteInterest</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SelectionKey.html?is-external=true" title="class or interface in java.nio.channels">SelectionKey</a>&nbsp;selectionKey,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/tcp/ITCPSelector.html#orderWriteInterest-java.nio.channels.SelectionKey-boolean-boolean-">orderWriteInterest</a></span>(java.nio.channels.SelectionKey&nbsp;selectionKey,
                   boolean&nbsp;client,
                   boolean&nbsp;on)</code>&nbsp;</td>
 </tr>
@@ -183,7 +183,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>getSocketSelector</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/Selector.html?is-external=true" title="class or interface in java.nio.channels">Selector</a>&nbsp;getSocketSelector()</pre>
+<pre>java.nio.channels.Selector&nbsp;getSocketSelector()</pre>
 </li>
 </ul>
 <a name="orderRegistration-java.nio.channels.ServerSocketChannel-org.eclipse.net4j.tcp.ITCPPassiveSelectorListener-">
@@ -192,7 +192,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>orderRegistration</h4>
-<pre>void&nbsp;orderRegistration(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/ServerSocketChannel.html?is-external=true" title="class or interface in java.nio.channels">ServerSocketChannel</a>&nbsp;channel,
+<pre>void&nbsp;orderRegistration(java.nio.channels.ServerSocketChannel&nbsp;channel,
                        <a href="../../../../org/eclipse/net4j/tcp/ITCPPassiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp">ITCPPassiveSelectorListener</a>&nbsp;listener)</pre>
 </li>
 </ul>
@@ -202,7 +202,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>orderRegistration</h4>
-<pre>void&nbsp;orderRegistration(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels">SocketChannel</a>&nbsp;channel,
+<pre>void&nbsp;orderRegistration(java.nio.channels.SocketChannel&nbsp;channel,
                        boolean&nbsp;client,
                        <a href="../../../../org/eclipse/net4j/tcp/ITCPActiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp">ITCPActiveSelectorListener</a>&nbsp;listener)</pre>
 </li>
@@ -213,7 +213,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>orderConnectInterest</h4>
-<pre>void&nbsp;orderConnectInterest(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SelectionKey.html?is-external=true" title="class or interface in java.nio.channels">SelectionKey</a>&nbsp;selectionKey,
+<pre>void&nbsp;orderConnectInterest(java.nio.channels.SelectionKey&nbsp;selectionKey,
                           boolean&nbsp;client,
                           boolean&nbsp;on)</pre>
 </li>
@@ -224,7 +224,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>orderReadInterest</h4>
-<pre>void&nbsp;orderReadInterest(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SelectionKey.html?is-external=true" title="class or interface in java.nio.channels">SelectionKey</a>&nbsp;selectionKey,
+<pre>void&nbsp;orderReadInterest(java.nio.channels.SelectionKey&nbsp;selectionKey,
                        boolean&nbsp;client,
                        boolean&nbsp;on)</pre>
 </li>
@@ -235,7 +235,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockListLast">
 <li class="blockList">
 <h4>orderWriteInterest</h4>
-<pre>void&nbsp;orderWriteInterest(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SelectionKey.html?is-external=true" title="class or interface in java.nio.channels">SelectionKey</a>&nbsp;selectionKey,
+<pre>void&nbsp;orderWriteInterest(java.nio.channels.SelectionKey&nbsp;selectionKey,
                         boolean&nbsp;client,
                         boolean&nbsp;on)</pre>
 </li>

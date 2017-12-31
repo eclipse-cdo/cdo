@@ -194,7 +194,7 @@ var activeTableTab = "activeTableTab";
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html#lock-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-CONTEXT-java.util.Collection-long-">lock</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
     <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="type parameter in IRWLockManager">CONTEXT</a>&nbsp;context,
-    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="type parameter in IRWLockManager">OBJECT</a>&gt;&nbsp;objectsToLock,
+    java.util.Collection&lt;? extends <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="type parameter in IRWLockManager">OBJECT</a>&gt;&nbsp;objectsToLock,
     long&nbsp;timeout)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -214,7 +214,7 @@ var activeTableTab = "activeTableTab";
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html#unlock-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-CONTEXT-java.util.Collection-">unlock</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
       <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="type parameter in IRWLockManager">CONTEXT</a>&nbsp;context,
-      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="type parameter in IRWLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</code>
+      java.util.Collection&lt;? extends <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="type parameter in IRWLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</code>
 <div class="block">Attempts to release for a given locktype, context and objects.</div>
 </td>
 </tr>
@@ -277,12 +277,12 @@ var activeTableTab = "activeTableTab";
 <h4>lock</h4>
 <pre>void&nbsp;lock(<a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
           <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="type parameter in IRWLockManager">CONTEXT</a>&nbsp;context,
-          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="type parameter in IRWLockManager">OBJECT</a>&gt;&nbsp;objectsToLock,
+          java.util.Collection&lt;? extends <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="type parameter in IRWLockManager">OBJECT</a>&gt;&nbsp;objectsToLock,
           long&nbsp;timeout)
-   throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+   throws java.lang.InterruptedException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code>java.lang.InterruptedException</code></dd>
 </dl>
 </li>
 </ul>
@@ -298,10 +298,10 @@ var activeTableTab = "activeTableTab";
           <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="type parameter in IRWLockManager">CONTEXT</a>&nbsp;context,
           <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="type parameter in IRWLockManager">OBJECT</a>&nbsp;objectToLock,
           long&nbsp;timeout)
-   throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
+   throws java.lang.InterruptedException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code></dd>
+<dd><code>java.lang.InterruptedException</code></dd>
 </dl>
 </li>
 </ul>
@@ -315,11 +315,11 @@ var activeTableTab = "activeTableTab";
 <h4>unlock</h4>
 <pre>void&nbsp;unlock(<a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
             <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="type parameter in IRWLockManager">CONTEXT</a>&nbsp;context,
-            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="type parameter in IRWLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</pre>
+            java.util.Collection&lt;? extends <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="type parameter in IRWLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</pre>
 <div class="block">Attempts to release for a given locktype, context and objects.</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalMonitorStateException.html?is-external=true" title="class or interface in java.lang">IllegalMonitorStateException</a></code> - Unlocking objects without lock.</dd>
+<dd><code>java.lang.IllegalMonitorStateException</code> - Unlocking objects without lock.</dd>
 </dl>
 </li>
 </ul>

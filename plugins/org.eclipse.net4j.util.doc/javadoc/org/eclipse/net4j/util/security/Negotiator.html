@@ -92,11 +92,11 @@ var activeTableTab = "activeTableTab";
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">org.eclipse.net4j.util.security</div>
-<h2 title="Class Negotiator" class="title">Class Negotiator&lt;STATE extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;,EVENT extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;&gt;</h2>
+<h2 title="Class Negotiator" class="title">Class Negotiator&lt;STATE extends java.lang.Enum&lt;?&gt;,EVENT extends java.lang.Enum&lt;?&gt;&gt;</h2>
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</a></li>
@@ -131,7 +131,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre>public abstract class <span class="typeNameLabel">Negotiator&lt;STATE extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;,EVENT extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;&gt;</span>
+<pre>public abstract class <span class="typeNameLabel">Negotiator&lt;STATE extends java.lang.Enum&lt;?&gt;,EVENT extends java.lang.Enum&lt;?&gt;&gt;</span>
 extends <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine</a>&lt;STATE,EVENT,<a href="../../../../../org/eclipse/net4j/util/security/INegotiationContext.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext</a>&gt;
 implements <a href="../../../../../org/eclipse/net4j/util/security/INegotiator.html" title="interface in org.eclipse.net4j.util.security">INegotiator</a>, <a href="../../../../../org/eclipse/net4j/util/security/INegotiationContext.Receiver.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext.Receiver</a></pre>
 <dl>
@@ -200,8 +200,8 @@ implements <a href="../../../../../org/eclipse/net4j/util/security/INegotiator.h
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html#Negotiator-java.lang.Class-java.lang.Class-STATE-STATE-STATE-EVENT-EVENT-boolean-">Negotiator</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="type parameter in Negotiator">STATE</a>&gt;&nbsp;stateEnum,
-          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="type parameter in Negotiator">EVENT</a>&gt;&nbsp;eventEnum,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html#Negotiator-java.lang.Class-java.lang.Class-STATE-STATE-STATE-EVENT-EVENT-boolean-">Negotiator</a></span>(java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="type parameter in Negotiator">STATE</a>&gt;&nbsp;stateEnum,
+          java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="type parameter in Negotiator">EVENT</a>&gt;&nbsp;eventEnum,
           <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="type parameter in Negotiator">STATE</a>&nbsp;initialState,
           <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="type parameter in Negotiator">STATE</a>&nbsp;successState,
           <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="type parameter in Negotiator">STATE</a>&nbsp;failureState,
@@ -267,7 +267,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/security/INegotiator.h
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html#receiveBuffer-org.eclipse.net4j.util.security.INegotiationContext-java.nio.ByteBuffer-">receiveBuffer</a></span>(<a href="../../../../../org/eclipse/net4j/util/security/INegotiationContext.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext</a>&nbsp;context,
-             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;buffer)</code>&nbsp;</td>
+             java.nio.ByteBuffer&nbsp;buffer)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -295,8 +295,8 @@ implements <a href="../../../../../org/eclipse/net4j/util/security/INegotiator.h
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
@@ -327,8 +327,8 @@ implements <a href="../../../../../org/eclipse/net4j/util/security/INegotiator.h
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Negotiator</h4>
-<pre>public&nbsp;Negotiator(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="type parameter in Negotiator">STATE</a>&gt;&nbsp;stateEnum,
-                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="type parameter in Negotiator">EVENT</a>&gt;&nbsp;eventEnum,
+<pre>public&nbsp;Negotiator(java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="type parameter in Negotiator">STATE</a>&gt;&nbsp;stateEnum,
+                  java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="type parameter in Negotiator">EVENT</a>&gt;&nbsp;eventEnum,
                   <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="type parameter in Negotiator">STATE</a>&nbsp;initialState,
                   <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="type parameter in Negotiator">STATE</a>&nbsp;successState,
                   <a href="../../../../../org/eclipse/net4j/util/security/Negotiator.html" title="type parameter in Negotiator">STATE</a>&nbsp;failureState,
@@ -423,7 +423,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/security/INegotiator.h
 <li class="blockList">
 <h4>receiveBuffer</h4>
 <pre>public&nbsp;void&nbsp;receiveBuffer(<a href="../../../../../org/eclipse/net4j/util/security/INegotiationContext.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext</a>&nbsp;context,
-                          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;buffer)</pre>
+                          java.nio.ByteBuffer&nbsp;buffer)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/security/INegotiationContext.Receiver.html#receiveBuffer-org.eclipse.net4j.util.security.INegotiationContext-java.nio.ByteBuffer-">receiveBuffer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/security/INegotiationContext.Receiver.html" title="interface in org.eclipse.net4j.util.security">INegotiationContext.Receiver</a></code></dd>

@@ -93,6 +93,12 @@
 <div class="block">Client concepts for dealing with Net4j-based sessions to remote repositories.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><a href="#org.eclipse.emf.cdo.server.embedded">org.eclipse.emf.cdo.server.embedded</a></td>
+<td class="colLast">
+<div class="block">Server concepts for dealing with Net4j-based repositories and fail-over infrastructure.</div>
+</td>
+</tr>
 </tbody>
 </table>
 </li>
@@ -172,9 +178,31 @@
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a></code></td>
 <td class="colLast"><span class="typeNameLabel">CDONet4jViewProvider.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getNet4jSessionConfiguration-org.eclipse.net4j.connector.IConnector-java.lang.String-java.lang.String-java.lang.String-">getNet4jSessionConfiguration</a></span>(<a href="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector,
-                            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userName,
-                            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;passWord,
-                            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryName)</code>&nbsp;</td>
+                            java.lang.String&nbsp;userName,
+                            java.lang.String&nbsp;passWord,
+                            java.lang.String&nbsp;repositoryName)</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.eclipse.emf.cdo.server.embedded">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a> in <a href="../../../../../../org/eclipse/emf/cdo/server/embedded/package-summary.html">org.eclipse.emf.cdo.server.embedded</a></h3>
+<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../../org/eclipse/emf/cdo/server/embedded/package-summary.html">org.eclipse.emf.cdo.server.embedded</a> that return <a href="../../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOEmbeddedRepositoryConfig.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/embedded/CDOEmbeddedRepositoryConfig.html#createSessionConfiguration-org.eclipse.net4j.connector.IConnector-org.eclipse.emf.cdo.common.branch.CDOBranchManager-org.eclipse.emf.cdo.common.revision.CDORevisionManager-">createSessionConfiguration</a></span>(<a href="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector,
+                          <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManager,
+                          <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>&nbsp;revisionManager)</code>
+<div class="block">Subclasses may override.</div>
+</td>
 </tr>
 </tbody>
 </table>

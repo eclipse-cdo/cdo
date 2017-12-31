@@ -96,10 +96,10 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">java.lang.Enum</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a>&gt;</li>
+<li>java.lang.Enum&lt;<a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a>&gt;</li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.buffer.BufferState</li>
@@ -113,12 +113,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a>&gt;</dd>
+<dd>java.io.Serializable, java.lang.Comparable&lt;<a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a>&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public enum <span class="typeNameLabel">BufferState</span>
-extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a>&gt;</pre>
+extends java.lang.Enum&lt;<a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a>&gt;</pre>
 <div class="block">Enumerates the internal states of an <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
@@ -150,7 +150,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/BufferState.html#GETTING">GETTING</a></span></code>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> can provide a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><code>ByteBuffer</code></a> that can be used for getting data.</div>
+<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> can provide a <code>ByteBuffer</code> that can be used for getting data.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -161,17 +161,17 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING">PUTTING</a></span></code>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> can provide a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><code>ByteBuffer</code></a> that can be used for putting data.</div>
+<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> can provide a <code>ByteBuffer</code> that can be used for putting data.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_BODY">READING_BODY</a></span></code>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> is currently reading its body from a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a>.</div>
+<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> is currently reading its body from a <code>SocketChannel</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_HEADER">READING_HEADER</a></span></code>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> is currently reading its header from a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a>.</div>
+<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> is currently reading its header from a <code>SocketChannel</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -181,7 +181,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/BufferState.html#WRITING">WRITING</a></span></code>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> is currently writing its data to a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a>.</div>
+<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> is currently writing its data to a <code>SocketChannel</code>.</div>
 </td>
 </tr>
 </table>
@@ -201,7 +201,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/BufferState.html#valueOf-java.lang.String-">valueOf</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/BufferState.html#valueOf-java.lang.String-">valueOf</a></span>(java.lang.String&nbsp;name)</code>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </td>
 </tr>
@@ -217,15 +217,15 @@ the order they are declared.</div>
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Enum">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true#compareTo-E-" title="class or interface in java.lang">compareTo</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true#getDeclaringClass--" title="class or interface in java.lang">getDeclaringClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true#name--" title="class or interface in java.lang">name</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true#ordinal--" title="class or interface in java.lang">ordinal</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true#valueOf-java.lang.Class-java.lang.String-" title="class or interface in java.lang">valueOf</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Enum</h3>
+<code>clone, compareTo, equals, finalize, getDeclaringClass, hashCode, name, ordinal, toString, valueOf</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>getClass, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -254,10 +254,10 @@ the order they are declared.</div>
  A transition to <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>PUTTING</code></a> can be triggered by calling <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#startPutting-short-"><code>IBuffer.startPutting(short)</code></a> once. If the
  buffer is intended to be passed to an <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a> later the
  <a href="../../../../org/eclipse/net4j/channel/IChannel.html#getID--"><code>channel index</code></a> of that Channel has to be passed because it is
- part of the buffer's header. A <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><code>ByteBuffer</code></a> is returned that can be used for putting data.
+ part of the buffer's header. A <code>ByteBuffer</code> is returned that can be used for putting data.
  <p>
  A transition to <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#GETTING"><code>GETTING</code></a> can be triggered by calling <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#startGetting-java.nio.channels.SocketChannel-"><code>IBuffer.startGetting(SocketChannel)</code></a> repeatedly
- until it finally returns a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><code>ByteBuffer</code></a> that can be used for getting data.</div>
+ until it finally returns a <code>ByteBuffer</code> that can be used for getting data.</div>
 </li>
 </ul>
 <a name="PUTTING">
@@ -267,7 +267,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>PUTTING</h4>
 <pre>public static final&nbsp;<a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a> PUTTING</pre>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> can provide a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><code>ByteBuffer</code></a> that can be used for putting data.
+<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> can provide a <code>ByteBuffer</code> that can be used for putting data.
  <p>
  A transition to <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#WRITING"><code>WRITING</code></a> can be triggered by calling <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#write-java.nio.channels.SocketChannel-"><code>IBuffer.write(SocketChannel)</code></a>.
  <p>
@@ -283,7 +283,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>WRITING</h4>
 <pre>public static final&nbsp;<a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a> WRITING</pre>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> is currently writing its data to a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a>.
+<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> is currently writing its data to a <code>SocketChannel</code>.
  <p>
  Self transitions to <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#WRITING"><code>WRITING</code></a> can be triggered by repeatedly calling <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#write-java.nio.channels.SocketChannel-"><code>IBuffer.write(SocketChannel)</code></a>
  until it returns <code>true</code>.
@@ -298,10 +298,10 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>READING_HEADER</h4>
 <pre>public static final&nbsp;<a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a> READING_HEADER</pre>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> is currently reading its header from a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a>.
+<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> is currently reading its header from a <code>SocketChannel</code>.
  <p>
  Transitions to <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_HEADER"><code>READING_HEADER</code></a>, <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_BODY"><code>READING_BODY</code></a> or <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#GETTING"><code>GETTING</code></a> can be triggered by repeatedly
- calling <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#startGetting-java.nio.channels.SocketChannel-"><code>IBuffer.startGetting(SocketChannel)</code></a> until it returns a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><code>ByteBuffer</code></a> that can be used for
+ calling <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#startGetting-java.nio.channels.SocketChannel-"><code>IBuffer.startGetting(SocketChannel)</code></a> until it returns a <code>ByteBuffer</code> that can be used for
  getting data.
  <p>
  A transition to <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#INITIAL"><code>INITIAL</code></a> can be triggered by calling <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#clear--"><code>IBuffer.clear()</code></a>.</div>
@@ -314,10 +314,10 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>READING_BODY</h4>
 <pre>public static final&nbsp;<a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a> READING_BODY</pre>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> is currently reading its body from a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a>.
+<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> is currently reading its body from a <code>SocketChannel</code>.
  <p>
  Transitions to <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#READING_BODY"><code>READING_BODY</code></a> or <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#GETTING"><code>GETTING</code></a> can be triggered by repeatedly calling
- <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#startGetting-java.nio.channels.SocketChannel-"><code>IBuffer.startGetting(SocketChannel)</code></a> until it returns a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><code>ByteBuffer</code></a> that can be used for getting
+ <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#startGetting-java.nio.channels.SocketChannel-"><code>IBuffer.startGetting(SocketChannel)</code></a> until it returns a <code>ByteBuffer</code> that can be used for getting
  data.
  <p>
  A transition to <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#INITIAL"><code>INITIAL</code></a> can be triggered by calling <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#clear--"><code>IBuffer.clear()</code></a>.</div>
@@ -330,7 +330,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>GETTING</h4>
 <pre>public static final&nbsp;<a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a> GETTING</pre>
-<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> can provide a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio"><code>ByteBuffer</code></a> that can be used for getting data.
+<div class="block">Indicates that the <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> can provide a <code>ByteBuffer</code> that can be used for getting data.
  <p>
  A transition to <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#INITIAL"><code>INITIAL</code></a> can be triggered by calling <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#clear--"><code>IBuffer.clear()</code></a>.</div>
 </li>
@@ -397,7 +397,7 @@ for (BufferState c : BufferState.values())
 <ul class="blockListLast">
 <li class="blockList">
 <h4>valueOf</h4>
-<pre>public static&nbsp;<a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a>&nbsp;valueOf(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<pre>public static&nbsp;<a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a>&nbsp;valueOf(java.lang.String&nbsp;name)</pre>
 <div class="block">Returns the enum constant of this type with the specified name.
 The string must match <i>exactly</i> an identifier used to declare an
 enum constant in this type.  (Extraneous whitespace characters are 
@@ -408,8 +408,8 @@ not permitted.)</div>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the enum constant with the specified name</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - if this enum type has no constant with the specified name</dd>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/NullPointerException.html?is-external=true" title="class or interface in java.lang">NullPointerException</a></code> - if the argument is null</dd>
+<dd><code>java.lang.IllegalArgumentException</code> - if this enum type has no constant with the specified name</dd>
+<dd><code>java.lang.NullPointerException</code> - if the argument is null</dd>
 </dl>
 </li>
 </ul>

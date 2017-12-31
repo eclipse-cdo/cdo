@@ -211,7 +211,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getFeatureDelta-org.eclipse.emf.ecore.EStructuralFeature-">getFeatureDelta</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.List&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getFeatureDeltas--">getFeatureDeltas</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
@@ -270,7 +270,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
 <h4>DETACHED</h4>
 <pre>static final&nbsp;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a> DETACHED</pre>
 <div class="block">This constant is only passed into conflict resolvers to indicate that a conflict was caused by remote detachment of
- an object. Calling any method on this marker instance will result in an <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationException</code></a> being
+ an object. Calling any method on this marker instance will result in an <code>UnsupportedOperationException</code> being
  thrown.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -370,7 +370,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
 <ul class="blockList">
 <li class="blockList">
 <h4>getFeatureDeltas</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&gt;&nbsp;getFeatureDeltas()</pre>
+<pre>java.util.List&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&gt;&nbsp;getFeatureDeltas()</pre>
 </li>
 </ul>
 <a name="apply-org.eclipse.emf.cdo.common.revision.CDORevision-">
@@ -379,7 +379,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
 <ul class="blockList">
 <li class="blockList">
 <h4>apply</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+<pre>@Deprecated
 void&nbsp;apply(<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.3 use <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#applyTo-org.eclipse.emf.cdo.common.revision.CDORevision-"><code>applyTo(CDORevision)</code></a>.</span></div>
 </li>

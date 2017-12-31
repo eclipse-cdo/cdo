@@ -159,7 +159,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionH
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.Handler.html#handleBranch-int-java.lang.String-long-int-">handleBranch</a></span>(int&nbsp;id,
-            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+            java.lang.String&nbsp;name,
             long&nbsp;time,
             int&nbsp;parentID)</code>&nbsp;</td>
 </tr>
@@ -168,8 +168,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionH
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.Handler.html#handleCommitInfo-long-long-int-java.lang.String-java.lang.String-">handleCommitInfo</a></span>(long&nbsp;time,
                 long&nbsp;previous,
                 int&nbsp;branch,
-                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;user,
-                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;comment)</code>&nbsp;</td>
+                java.lang.String&nbsp;user,
+                java.lang.String&nbsp;comment)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</a></code></td>
@@ -177,19 +177,19 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionH
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.Handler.html#handlePackageInfo-java.lang.String-">handlePackageInfo</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;packageURI)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.Handler.html#handlePackageInfo-java.lang.String-">handlePackageInfo</a></span>(java.lang.String&nbsp;packageURI)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.Handler.html#handlePackageUnit-java.lang.String-org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type-long-java.lang.String-">handlePackageUnit</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;id,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.Handler.html#handlePackageUnit-java.lang.String-org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type-long-java.lang.String-">handlePackageUnit</a></span>(java.lang.String&nbsp;id,
                  <a href="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.Type.html" title="enum in org.eclipse.emf.cdo.common.model">CDOPackageUnit.Type</a>&nbsp;type,
                  long&nbsp;time,
-                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;data)</code>&nbsp;</td>
+                 java.lang.String&nbsp;data)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.Handler.html#handleRepository-java.lang.String-java.lang.String-org.eclipse.emf.cdo.common.id.CDOID-long-long-">handleRepository</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;uuid,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.Handler.html#handleRepository-java.lang.String-java.lang.String-org.eclipse.emf.cdo.common.id.CDOID-long-long-">handleRepository</a></span>(java.lang.String&nbsp;name,
+                java.lang.String&nbsp;uuid,
                 <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;root,
                 long&nbsp;created,
                 long&nbsp;committed)</code>&nbsp;</td>
@@ -229,8 +229,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionH
 <ul class="blockList">
 <li class="blockList">
 <h4>handleRepository</h4>
-<pre>void&nbsp;handleRepository(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-                      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;uuid,
+<pre>void&nbsp;handleRepository(java.lang.String&nbsp;name,
+                      java.lang.String&nbsp;uuid,
                       <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;root,
                       long&nbsp;created,
                       long&nbsp;committed)</pre>
@@ -242,10 +242,10 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionH
 <ul class="blockList">
 <li class="blockList">
 <h4>handlePackageUnit</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;handlePackageUnit(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;id,
+<pre><a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;handlePackageUnit(java.lang.String&nbsp;id,
                                          <a href="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.Type.html" title="enum in org.eclipse.emf.cdo.common.model">CDOPackageUnit.Type</a>&nbsp;type,
                                          long&nbsp;time,
-                                         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;data)</pre>
+                                         java.lang.String&nbsp;data)</pre>
 </li>
 </ul>
 <a name="handlePackageInfo-java.lang.String-">
@@ -254,7 +254,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionH
 <ul class="blockList">
 <li class="blockList">
 <h4>handlePackageInfo</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>&nbsp;handlePackageInfo(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;packageURI)</pre>
+<pre><a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>&nbsp;handlePackageInfo(java.lang.String&nbsp;packageURI)</pre>
 </li>
 </ul>
 <a name="handleModels--">
@@ -273,7 +273,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionH
 <li class="blockList">
 <h4>handleBranch</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;handleBranch(int&nbsp;id,
-                               <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                               java.lang.String&nbsp;name,
                                long&nbsp;time,
                                int&nbsp;parentID)</pre>
 </li>
@@ -287,8 +287,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionH
 <pre>void&nbsp;handleCommitInfo(long&nbsp;time,
                       long&nbsp;previous,
                       int&nbsp;branch,
-                      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;user,
-                      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;comment)</pre>
+                      java.lang.String&nbsp;user,
+                      java.lang.String&nbsp;comment)</pre>
 </li>
 </ul>
 <a name="flush--">

@@ -92,11 +92,11 @@ var activeTableTab = "activeTableTab";
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">org.eclipse.net4j.util.fsm</div>
-<h2 title="Class FiniteStateMachine" class="title">Class FiniteStateMachine&lt;STATE extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;,EVENT extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;,SUBJECT&gt;</h2>
+<h2 title="Class FiniteStateMachine" class="title">Class FiniteStateMachine&lt;STATE extends java.lang.Enum&lt;?&gt;,EVENT extends java.lang.Enum&lt;?&gt;,SUBJECT&gt;</h2>
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
 <li><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</a></li>
@@ -126,7 +126,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre>public abstract class <span class="typeNameLabel">FiniteStateMachine&lt;STATE extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;,EVENT extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;,SUBJECT&gt;</span>
+<pre>public abstract class <span class="typeNameLabel">FiniteStateMachine&lt;STATE extends java.lang.Enum&lt;?&gt;,EVENT extends java.lang.Enum&lt;?&gt;,SUBJECT&gt;</span>
 extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></pre>
 <div class="block">A <a href="http://en.wikipedia.org/wiki/Finite-state_machine">finite state machine</a> that is based on a matrix of
  <a href="../../../../../org/eclipse/net4j/util/fsm/ITransition.html" title="interface in org.eclipse.net4j.util.fsm"><code>transitions</code></a>.
@@ -240,12 +240,12 @@ extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html"
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#FiniteStateMachine-java.lang.Class-java.lang.Class-">FiniteStateMachine</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&gt;&nbsp;stateEnum,
-                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&gt;&nbsp;eventEnum)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#FiniteStateMachine-java.lang.Class-java.lang.Class-">FiniteStateMachine</a></span>(java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&gt;&nbsp;stateEnum,
+                  java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&gt;&nbsp;eventEnum)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#FiniteStateMachine-java.lang.Class-java.lang.Class-org.eclipse.net4j.util.fsm.ITransition-">FiniteStateMachine</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&gt;&nbsp;stateEnum,
-                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&gt;&nbsp;eventEnum,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#FiniteStateMachine-java.lang.Class-java.lang.Class-org.eclipse.net4j.util.fsm.ITransition-">FiniteStateMachine</a></span>(java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&gt;&nbsp;stateEnum,
+                  java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&gt;&nbsp;eventEnum,
                   <a href="../../../../../org/eclipse/net4j/util/fsm/ITransition.html" title="interface in org.eclipse.net4j.util.fsm">ITransition</a>&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>,<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>,<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">SUBJECT</a>,?&gt;&nbsp;defaultTransition)</code>&nbsp;</td>
 </tr>
 </table>
@@ -279,25 +279,25 @@ extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html"
                       <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&nbsp;event)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>protected java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#formatFailMessage-SUBJECT-STATE-EVENT-java.lang.Object-">formatFailMessage</a></span>(<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">SUBJECT</a>&nbsp;subject,
                  <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&nbsp;state,
                  <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&nbsp;event,
-                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;data)</code>&nbsp;</td>
+                 java.lang.Object&nbsp;data)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>protected java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#formatIgnoreMessage-SUBJECT-STATE-EVENT-java.lang.Object-">formatIgnoreMessage</a></span>(<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">SUBJECT</a>&nbsp;subject,
                    <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&nbsp;state,
                    <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&nbsp;event,
-                   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;data)</code>&nbsp;</td>
+                   java.lang.Object&nbsp;data)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colFirst"><code>protected java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#formatProcessMessage-SUBJECT-STATE-EVENT-java.lang.Object-">formatProcessMessage</a></span>(<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">SUBJECT</a>&nbsp;subject,
                     <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&nbsp;state,
                     <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&nbsp;event,
-                    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;data)</code>&nbsp;</td>
+                    java.lang.Object&nbsp;data)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>[]</code></td>
@@ -386,8 +386,8 @@ extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html"
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
@@ -442,8 +442,8 @@ extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html"
 <ul class="blockList">
 <li class="blockList">
 <h4>FiniteStateMachine</h4>
-<pre>public&nbsp;FiniteStateMachine(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&gt;&nbsp;stateEnum,
-                          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&gt;&nbsp;eventEnum,
+<pre>public&nbsp;FiniteStateMachine(java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&gt;&nbsp;stateEnum,
+                          java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&gt;&nbsp;eventEnum,
                           <a href="../../../../../org/eclipse/net4j/util/fsm/ITransition.html" title="interface in org.eclipse.net4j.util.fsm">ITransition</a>&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>,<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>,<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">SUBJECT</a>,?&gt;&nbsp;defaultTransition)</pre>
 </li>
 </ul>
@@ -453,8 +453,8 @@ extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html"
 <ul class="blockListLast">
 <li class="blockList">
 <h4>FiniteStateMachine</h4>
-<pre>public&nbsp;FiniteStateMachine(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&gt;&nbsp;stateEnum,
-                          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&gt;&nbsp;eventEnum)</pre>
+<pre>public&nbsp;FiniteStateMachine(java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&gt;&nbsp;stateEnum,
+                          java.lang.Class&lt;<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&gt;&nbsp;eventEnum)</pre>
 </li>
 </ul>
 </li>
@@ -634,10 +634,10 @@ extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html"
 <ul class="blockList">
 <li class="blockList">
 <h4>formatProcessMessage</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;formatProcessMessage(<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">SUBJECT</a>&nbsp;subject,
-                                      <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&nbsp;state,
-                                      <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&nbsp;event,
-                                      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;data)</pre>
+<pre>protected&nbsp;java.lang.String&nbsp;formatProcessMessage(<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">SUBJECT</a>&nbsp;subject,
+                                                <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&nbsp;state,
+                                                <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&nbsp;event,
+                                                java.lang.Object&nbsp;data)</pre>
 </li>
 </ul>
 <a name="formatIgnoreMessage-java.lang.Object-java.lang.Enum-java.lang.Enum-java.lang.Object-">
@@ -648,10 +648,10 @@ extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html"
 <ul class="blockList">
 <li class="blockList">
 <h4>formatIgnoreMessage</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;formatIgnoreMessage(<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">SUBJECT</a>&nbsp;subject,
-                                     <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&nbsp;state,
-                                     <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&nbsp;event,
-                                     <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;data)</pre>
+<pre>protected&nbsp;java.lang.String&nbsp;formatIgnoreMessage(<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">SUBJECT</a>&nbsp;subject,
+                                               <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&nbsp;state,
+                                               <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&nbsp;event,
+                                               java.lang.Object&nbsp;data)</pre>
 </li>
 </ul>
 <a name="formatFailMessage-java.lang.Object-java.lang.Enum-java.lang.Enum-java.lang.Object-">
@@ -662,10 +662,10 @@ extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html"
 <ul class="blockList">
 <li class="blockList">
 <h4>formatFailMessage</h4>
-<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;formatFailMessage(<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">SUBJECT</a>&nbsp;subject,
-                                   <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&nbsp;state,
-                                   <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&nbsp;event,
-                                   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;data)</pre>
+<pre>protected&nbsp;java.lang.String&nbsp;formatFailMessage(<a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">SUBJECT</a>&nbsp;subject,
+                                             <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">STATE</a>&nbsp;state,
+                                             <a href="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="type parameter in FiniteStateMachine">EVENT</a>&nbsp;event,
+                                             java.lang.Object&nbsp;data)</pre>
 </li>
 </ul>
 <a name="getState-java.lang.Object-">

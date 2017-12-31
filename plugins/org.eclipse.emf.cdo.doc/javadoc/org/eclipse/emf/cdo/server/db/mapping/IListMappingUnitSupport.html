@@ -132,7 +132,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ILis
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a></code></td>
+<td class="colFirst"><code>java.sql.ResultSet</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMappingUnitSupport.html#queryUnitEntries-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.cdo.server.db.IIDHandler-long-org.eclipse.emf.cdo.common.id.CDOID-">queryUnitEntries</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
                 <a href="../../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html" title="interface in org.eclipse.emf.cdo.server.db">IIDHandler</a>&nbsp;idHandler,
                 long&nbsp;timeStamp,
@@ -140,10 +140,10 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ILis
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMappingUnitSupport.html#readUnitEntries-java.sql.ResultSet-org.eclipse.emf.cdo.server.db.IIDHandler-org.eclipse.emf.cdo.common.id.CDOID-org.eclipse.net4j.util.collection.MoveableList-">readUnitEntries</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMappingUnitSupport.html#readUnitEntries-java.sql.ResultSet-org.eclipse.emf.cdo.server.db.IIDHandler-org.eclipse.emf.cdo.common.id.CDOID-org.eclipse.net4j.util.collection.MoveableList-">readUnitEntries</a></span>(java.sql.ResultSet&nbsp;resultSet,
                <a href="../../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html" title="interface in org.eclipse.emf.cdo.server.db">IIDHandler</a>&nbsp;idHandler,
                <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
-               <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/MoveableList.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">MoveableList</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;list)</code>&nbsp;</td>
+               <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/MoveableList.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">MoveableList</a>&lt;java.lang.Object&gt;&nbsp;list)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -173,14 +173,14 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ILis
 <ul class="blockList">
 <li class="blockList">
 <h4>queryUnitEntries</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;queryUnitEntries(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-                           <a href="../../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html" title="interface in org.eclipse.emf.cdo.server.db">IIDHandler</a>&nbsp;idHandler,
-                           long&nbsp;timeStamp,
-                           <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootID)
-                    throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+<pre>java.sql.ResultSet&nbsp;queryUnitEntries(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+                                    <a href="../../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html" title="interface in org.eclipse.emf.cdo.server.db">IIDHandler</a>&nbsp;idHandler,
+                                    long&nbsp;timeStamp,
+                                    <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootID)
+                             throws java.sql.SQLException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd>
+<dd><code>java.sql.SQLException</code></dd>
 </dl>
 </li>
 </ul>
@@ -190,14 +190,14 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ILis
 <ul class="blockListLast">
 <li class="blockList">
 <h4>readUnitEntries</h4>
-<pre>void&nbsp;readUnitEntries(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet,
+<pre>void&nbsp;readUnitEntries(java.sql.ResultSet&nbsp;resultSet,
                      <a href="../../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html" title="interface in org.eclipse.emf.cdo.server.db">IIDHandler</a>&nbsp;idHandler,
                      <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
-                     <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/MoveableList.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">MoveableList</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;list)
-              throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></pre>
+                     <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/MoveableList.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">MoveableList</a>&lt;java.lang.Object&gt;&nbsp;list)
+              throws java.sql.SQLException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</a></code></dd>
+<dd><code>java.sql.SQLException</code></dd>
 </dl>
 </li>
 </ul>

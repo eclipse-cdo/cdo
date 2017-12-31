@@ -103,7 +103,7 @@ var activeTableTab = "activeTableTab";
 <div class="block"><span class="deprecationComment">As of 4.2 use <a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBConnection.html?is-external=true" title="class or interface in org.eclipse.net4j.db"><code>IDBConnection</code></a>.</span></div>
 </div>
 <br>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+<pre>@Deprecated
 public interface <span class="typeNameLabel">IPreparedStatementCache</span></pre>
 <div class="block">Caches JDBC <a href="../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBPreparedStatement.html?is-external=true" title="class or interface in org.eclipse.net4j.db"><code>statements</code></a> according to given <a href="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.ReuseProbability.html" title="enum in org.eclipse.emf.cdo.server.db"><code>reuse probabilities</code></a>.</div>
 <dl>
@@ -157,21 +157,21 @@ public interface <span class="typeNameLabel">IPreparedStatementCache</span></pre
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html#getPreparedStatement-java.lang.String-org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability-">getPreparedStatement</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sql,
+<td class="colFirst"><code>java.sql.PreparedStatement</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html#getPreparedStatement-java.lang.String-org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability-">getPreparedStatement</a></span>(java.lang.String&nbsp;sql,
                     <a href="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.ReuseProbability.html" title="enum in org.eclipse.emf.cdo.server.db">IPreparedStatementCache.ReuseProbability</a>&nbsp;reuseProbability)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 &nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html#releasePreparedStatement-java.sql.PreparedStatement-">releasePreparedStatement</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;ps)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html#releasePreparedStatement-java.sql.PreparedStatement-">releasePreparedStatement</a></span>(java.sql.PreparedStatement&nbsp;ps)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 &nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html#setConnection-java.sql.Connection-">setConnection</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.html#setConnection-java.sql.Connection-">setConnection</a></span>(java.sql.Connection&nbsp;connection)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 &nbsp;</td>
 </tr>
@@ -196,7 +196,7 @@ public interface <span class="typeNameLabel">IPreparedStatementCache</span></pre
 <ul class="blockList">
 <li class="blockList">
 <h4>setConnection</h4>
-<pre>void&nbsp;setConnection(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection)</pre>
+<pre>void&nbsp;setConnection(java.sql.Connection&nbsp;connection)</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>
@@ -206,8 +206,8 @@ public interface <span class="typeNameLabel">IPreparedStatementCache</span></pre
 <ul class="blockList">
 <li class="blockList">
 <h4>getPreparedStatement</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;getPreparedStatement(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;sql,
-                                       <a href="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.ReuseProbability.html" title="enum in org.eclipse.emf.cdo.server.db">IPreparedStatementCache.ReuseProbability</a>&nbsp;reuseProbability)</pre>
+<pre>java.sql.PreparedStatement&nbsp;getPreparedStatement(java.lang.String&nbsp;sql,
+                                                <a href="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.ReuseProbability.html" title="enum in org.eclipse.emf.cdo.server.db">IPreparedStatementCache.ReuseProbability</a>&nbsp;reuseProbability)</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>
@@ -217,7 +217,7 @@ public interface <span class="typeNameLabel">IPreparedStatementCache</span></pre
 <ul class="blockListLast">
 <li class="blockList">
 <h4>releasePreparedStatement</h4>
-<pre>void&nbsp;releasePreparedStatement(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;ps)</pre>
+<pre>void&nbsp;releasePreparedStatement(java.sql.PreparedStatement&nbsp;ps)</pre>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>

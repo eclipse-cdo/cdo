@@ -287,7 +287,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#loadLob-byte:A-java.io.OutputStream-">loadLob</a></span>(byte[]&nbsp;id,
-       <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;out)</code>
+       java.io.OutputStream&nbsp;out)</code>
 <div class="block">Serializes the content of the large object identified by the given <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getID--"><code>ID</code></a> to the given
  <i>stream</i>.</div>
 </td>
@@ -300,7 +300,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryLobs-java.util.List-">queryLobs</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;byte[]&gt;&nbsp;ids)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryLobs-java.util.List-">queryLobs</a></span>(java.util.List&lt;byte[]&gt;&nbsp;ids)</code>
 <div class="block">Determines which of the large objects identified by the given <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getID--"><code>IDs</code></a> are known in the backend
  represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>IStoreAccessor</code></a> by removing the unknown IDs from the passed collection.</div>
 </td>
@@ -314,20 +314,20 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryXRefs-org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext-">queryXRefs</a></span>(<a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a>&nbsp;context)</code>&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Set&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readChangeSet-org.eclipse.net4j.util.om.monitor.OMMonitor-org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment...-">readChangeSet</a></span>(<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor,
              <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>...&nbsp;segments)</code>
 <div class="block">Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Collection&lt;<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readPackageUnits--">readPackageUnits</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readResourceID-org.eclipse.emf.cdo.common.id.CDOID-java.lang.String-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">readResourceID</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;folderID,
-              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+              java.lang.String&nbsp;name,
               <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code>
 <div class="block">Returns the <code>CDOID</code> of the resource node with the given folderID and name if a resource with this
  folderID and name exists in the store, <code>null</code> otherwise.</div>
@@ -484,7 +484,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <ul class="blockList">
 <li class="blockList">
 <h4>readPackageUnits</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&gt;&nbsp;readPackageUnits()</pre>
+<pre>java.util.Collection&lt;<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&gt;&nbsp;readPackageUnits()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -578,8 +578,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <ul class="blockList">
 <li class="blockList">
 <h4>readChangeSet</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;readChangeSet(<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor,
-                         <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>...&nbsp;segments)</pre>
+<pre>java.util.Set&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;readChangeSet(<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor,
+                                   <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>...&nbsp;segments)</pre>
 <div class="block">Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.
  DetachedCDORevisions must also be considered!</div>
 <dl>
@@ -595,7 +595,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <li class="blockList">
 <h4>readResourceID</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;readResourceID(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;folderID,
-                     <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+                     java.lang.String&nbsp;name,
                      <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</pre>
 <div class="block">Returns the <code>CDOID</code> of the resource node with the given folderID and name if a resource with this
  folderID and name exists in the store, <code>null</code> otherwise.</div>
@@ -637,7 +637,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <ul class="blockList">
 <li class="blockList">
 <h4>queryLobs</h4>
-<pre>void&nbsp;queryLobs(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;byte[]&gt;&nbsp;ids)</pre>
+<pre>void&nbsp;queryLobs(java.util.List&lt;byte[]&gt;&nbsp;ids)</pre>
 <div class="block">Determines which of the large objects identified by the given <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getID--"><code>IDs</code></a> are known in the backend
  represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>IStoreAccessor</code></a> by removing the unknown IDs from the passed collection.
  <p>
@@ -660,8 +660,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <li class="blockList">
 <h4>loadLob</h4>
 <pre>void&nbsp;loadLob(byte[]&nbsp;id,
-             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;out)
-      throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+             java.io.OutputStream&nbsp;out)
+      throws java.io.IOException</pre>
 <div class="block">Serializes the content of the large object identified by the given <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getID--"><code>ID</code></a> to the given
  <i>stream</i>.
  <p>
@@ -670,7 +670,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>id</code> - the ID of the large object whose content is to be written to the <i>stream</i>.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if the <i>stream</i> could not be written to.</dd>
+<dd><code>java.io.IOException</code> - if the <i>stream</i> could not be written to.</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>
@@ -685,10 +685,10 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <pre>void&nbsp;handleLobs(long&nbsp;fromTime,
                 long&nbsp;toTime,
                 <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLobHandler.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobHandler</a>&nbsp;handler)
-         throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+         throws java.io.IOException</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+<dd><code>java.io.IOException</code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
 </dl>

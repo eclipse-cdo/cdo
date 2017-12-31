@@ -88,24 +88,18 @@
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server.embedded">org.eclipse.emf.cdo.server.embedded</a></td>
-<td class="colLast">
-<div class="block">Server concepts for dealing with embedded sessions.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.server.net4j">org.eclipse.emf.cdo.server.net4j</a></td>
 <td class="colLast">
 <div class="block">Server concepts for dealing with Net4j-based repositories and fail-over infrastructure.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.session">org.eclipse.emf.cdo.session</a></td>
 <td class="colLast">
 <div class="block">Client concepts for dealing with sessions to CDO repositories.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></td>
 <td class="colLast">
 <div class="block">Client service provider interfaces and useful base implementations.</div>
@@ -135,45 +129,31 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionConfiguration</a></span></code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Use <a href="../../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><code>CDONet4jSessionConfiguration</code></a>.</span></div>
+</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>interface&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/net4j/FailoverCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">FailoverCDOSessionConfiguration</a></span></code>
 <div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/net4j/RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><code>session configuration</code></a> that recovers from network problems by failing over
  to backup repositories as directed by a fail-over monitor.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/net4j/ReconnectingCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">ReconnectingCDOSessionConfiguration</a></span></code>
 <div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/net4j/RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><code>session configuration</code></a> that recovers from network problems by attempting
  to reconnect to the same repository in specific intervals.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/net4j/RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">RecoveringCDOSessionConfiguration</a></span></code>
 <div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><code>session configuration</code></a> that uses a <a href="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/signal/heartbeat/HeartBeatProtocol.html?is-external=true" title="class or interface in org.eclipse.net4j.signal.heartbeat"><code>heart beat
  protocol</code></a> to detect network problems.</div>
-</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.server.embedded">
-<!--   -->
-</a>
-<h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</a> in <a href="../../../../../../org/eclipse/emf/cdo/server/embedded/package-summary.html">org.eclipse.emf.cdo.server.embedded</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</a> in <a href="../../../../../../org/eclipse/emf/cdo/server/embedded/package-summary.html">org.eclipse.emf.cdo.server.embedded</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/embedded/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.server.embedded">CDOSessionConfiguration</a></span></code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">Not yet supported.</span></div>
-</div>
 </td>
 </tr>
 </tbody>
@@ -196,8 +176,8 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="../../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</a></code></td>
-<td class="colLast"><span class="typeNameLabel">FailoverAgent.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverAgent.html#createSessionConfiguration-java.lang.String-java.lang.String-">createSessionConfiguration</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;connectorDescription,
-                          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryName)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">FailoverAgent.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/net4j/FailoverAgent.html#createSessionConfiguration-java.lang.String-java.lang.String-">createSessionConfiguration</a></span>(java.lang.String&nbsp;connectorDescription,
+                          java.lang.String&nbsp;repositoryName)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>

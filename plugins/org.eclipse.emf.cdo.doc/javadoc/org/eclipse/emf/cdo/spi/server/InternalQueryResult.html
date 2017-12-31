@@ -100,12 +100,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/common/util/BlockingCloseableIterator.html" title="interface in org.eclipse.emf.cdo.common.util">BlockingCloseableIterator</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</a>, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</dd>
+<dd><a href="../../../../../../org/eclipse/emf/cdo/common/util/BlockingCloseableIterator.html" title="interface in org.eclipse.emf.cdo.common.util">BlockingCloseableIterator</a>&lt;java.lang.Object&gt;, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</a>, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;java.lang.Object&gt;, java.util.Iterator&lt;java.lang.Object&gt;</dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">InternalQueryResult</span>
-extends <a href="../../../../../../org/eclipse/emf/cdo/common/util/BlockingCloseableIterator.html" title="interface in org.eclipse.emf.cdo.common.util">BlockingCloseableIterator</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</pre>
+extends <a href="../../../../../../org/eclipse/emf/cdo/common/util/BlockingCloseableIterator.html" title="interface in org.eclipse.emf.cdo.common.util">BlockingCloseableIterator</a>&lt;java.lang.Object&gt;</pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -144,7 +144,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/util/BlockingClose
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalQueryResult.html#getQueryInfo--">getQueryInfo</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryQueue.html" title="class in org.eclipse.emf.cdo.common.util">CDOQueryQueue</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryQueue.html" title="class in org.eclipse.emf.cdo.common.util">CDOQueryQueue</a>&lt;java.lang.Object&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalQueryResult.html#getQueue--">getQueue</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -163,8 +163,8 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/util/BlockingClose
 <li class="blockList"><a name="methods.inherited.from.class.java.util.Iterator">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;java.util.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true#forEachRemaining-java.util.function.Consumer-" title="class or interface in java.util">forEachRemaining</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true#hasNext--" title="class or interface in java.util">hasNext</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true#next--" title="class or interface in java.util">next</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true#remove--" title="class or interface in java.util">remove</a></code></li>
+<h3>Methods inherited from interface&nbsp;java.util.Iterator</h3>
+<code>forEachRemaining, hasNext, next, remove</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.collection.Closeable">
@@ -220,7 +220,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/util/BlockingClose
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getQueue</h4>
-<pre><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryQueue.html" title="class in org.eclipse.emf.cdo.common.util">CDOQueryQueue</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;getQueue()</pre>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryQueue.html" title="class in org.eclipse.emf.cdo.common.util">CDOQueryQueue</a>&lt;java.lang.Object&gt;&nbsp;getQueue()</pre>
 </li>
 </ul>
 </li>

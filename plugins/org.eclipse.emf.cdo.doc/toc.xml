@@ -124,7 +124,6 @@
       </topic>
       <topic label="CDO Model Repository Server" href="javadoc/org/eclipse/emf/cdo/server/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.server" href="javadoc/org/eclipse/emf/cdo/server/package-summary.html" icon="package" />
-        <topic label="org.eclipse.emf.cdo.server.embedded" href="javadoc/org/eclipse/emf/cdo/server/embedded/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.server.mem" href="javadoc/org/eclipse/emf/cdo/server/mem/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.spi.server" href="javadoc/org/eclipse/emf/cdo/spi/server/package-summary.html" icon="package" />
       </topic>
@@ -138,6 +137,9 @@
       </topic>
       <topic label="CDO Model Repository Server DB4O" href="javadoc/org/eclipse/emf/cdo/server/db4o/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.server.db4o" href="javadoc/org/eclipse/emf/cdo/server/db4o/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Server Embedded Support" href="javadoc/org/eclipse/emf/cdo/server/embedded/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.server.embedded" href="javadoc/org/eclipse/emf/cdo/server/embedded/package-summary.html" icon="package" />
       </topic>
       <topic label="CDO Model Repository Server Hibernate" href="javadoc/org/eclipse/emf/cdo/server/hibernate/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.server.hibernate" href="javadoc/org/eclipse/emf/cdo/server/hibernate/package-summary.html" icon="package" />

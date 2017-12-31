@@ -96,10 +96,10 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">java.io.InputStream</a></li>
+<li>java.io.InputStream</li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.net4j.util.io.DelegatingInputStream</li>
@@ -113,7 +113,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></dd>
+<dd>java.io.Closeable, java.lang.AutoCloseable</dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
@@ -122,15 +122,15 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">DelegatingInputStream</span>
-extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></pre>
+extends java.io.InputStream</pre>
 <div class="block">A <code>DelegatingInputStream</code> contains some other input stream, which it uses as its basic source of data,
  possibly transforming the data along the way or providing additional functionality. The class
  <code>DelegatingInputStream</code> itself simply overrides all (see note below) methods of <code>InputStream</code>
  with versions that pass all requests to the contained input stream. Subclasses of <code>DelegatingInputStream</code>
  may further override some of these methods and may also provide additional methods and fields.
  <p>
- <b>Note:</b> The only difference to <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FilterInputStream.html?is-external=true" title="class or interface in java.io"><code>FilterInputStream</code></a> is that <code>DelegatingInputStream</code> does
- <b>not</b> override <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#read-byte:A-" title="class or interface in java.io"><code>InputStream.read(byte[])</code></a> or <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#read-byte:A-int-int-" title="class or interface in java.io"><code>InputStream.read(byte[], int, int)</code></a> but rather exposes the original
+ <b>Note:</b> The only difference to <code>FilterInputStream</code> is that <code>DelegatingInputStream</code> does
+ <b>not</b> override <code>InputStream.read(byte[])</code> or <code>InputStream.read(byte[], int, int)</code> but rather exposes the original
  implementations of <code>InputStream</code> which call <a href="../../../../../org/eclipse/net4j/util/io/DelegatingInputStream.html#read--"><code>read()</code></a> instead of their delegate counterparts.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
@@ -155,7 +155,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
 <th class="colLast" scope="col">Field and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></code></td>
+<td class="colFirst"><code>protected java.io.InputStream</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/DelegatingInputStream.html#in">in</a></span></code>
 <div class="block">The input stream to be filtered.</div>
 </td>
@@ -177,7 +177,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/DelegatingInputStream.html#DelegatingInputStream-java.io.InputStream-">DelegatingInputStream</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;in)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/DelegatingInputStream.html#DelegatingInputStream-java.io.InputStream-">DelegatingInputStream</a></span>(java.io.InputStream&nbsp;in)</code>
 <div class="block">Creates a <code>DelegatingInputStream</code> by assigning the argument <code>in</code> to the field
  <code>this.in</code> so as to remember it for later use.</div>
 </td>
@@ -210,7 +210,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></code></td>
+<td class="colFirst"><code>java.io.InputStream</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/DelegatingInputStream.html#getDelegate--">getDelegate</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -249,15 +249,15 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
 <li class="blockList"><a name="methods.inherited.from.class.java.io.InputStream">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.io.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#read-byte:A-" title="class or interface in java.io">read</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#read-byte:A-int-int-" title="class or interface in java.io">read</a></code></li>
+<h3>Methods inherited from class&nbsp;java.io.InputStream</h3>
+<code>read, read</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -279,7 +279,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
 <ul class="blockListLast">
 <li class="blockList">
 <h4>in</h4>
-<pre>protected volatile&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a> in</pre>
+<pre>protected volatile&nbsp;java.io.InputStream in</pre>
 <div class="block">The input stream to be filtered.</div>
 </li>
 </ul>
@@ -297,7 +297,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DelegatingInputStream</h4>
-<pre>protected&nbsp;DelegatingInputStream(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;in)</pre>
+<pre>protected&nbsp;DelegatingInputStream(java.io.InputStream&nbsp;in)</pre>
 <div class="block">Creates a <code>DelegatingInputStream</code> by assigning the argument <code>in</code> to the field
  <code>this.in</code> so as to remember it for later use.</div>
 <dl>
@@ -321,7 +321,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
 <ul class="blockList">
 <li class="blockList">
 <h4>getDelegate</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;getDelegate()</pre>
+<pre>public&nbsp;java.io.InputStream&nbsp;getDelegate()</pre>
 </li>
 </ul>
 <a name="read--">
@@ -331,7 +331,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
 <li class="blockList">
 <h4>read</h4>
 <pre>public&nbsp;int&nbsp;read()
-         throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+         throws java.io.IOException</pre>
 <div class="block">Reads the next byte of data from this input stream. The value byte is returned as an <code>int</code> in the range
  <code>0</code> to <code>255</code>. If no byte is available because the end of the stream has been reached, the
  value <code>-1</code> is returned. This method blocks until input data is available, the end of the stream is
@@ -340,11 +340,11 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
  This method simply performs <code>in.read()</code> and returns the result.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#read--" title="class or interface in java.io">read</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></code></dd>
+<dd><code>read</code>&nbsp;in class&nbsp;<code>java.io.InputStream</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the next byte of data, or <code>-1</code> if the end of the stream is reached.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an I/O error occurs.</dd>
+<dd><code>java.io.IOException</code> - if an I/O error occurs.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../org/eclipse/net4j/util/io/DelegatingInputStream.html#in"><code>in</code></a></dd>
 </dl>
@@ -357,7 +357,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
 <li class="blockList">
 <h4>skip</h4>
 <pre>public&nbsp;long&nbsp;skip(long&nbsp;n)
-          throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+          throws java.io.IOException</pre>
 <div class="block">Skips over and discards <code>n</code> bytes of data from the input stream. The <code>skip</code> method may, for a
  variety of reasons, end up skipping over some smaller number of bytes, possibly <code>0</code>. The actual number
  of bytes skipped is returned.
@@ -365,13 +365,13 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
  This method simply performs <code>in.skip(n)</code>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#skip-long-" title="class or interface in java.io">skip</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></code></dd>
+<dd><code>skip</code>&nbsp;in class&nbsp;<code>java.io.InputStream</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>n</code> - the number of bytes to be skipped.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the actual number of bytes skipped.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an I/O error occurs.</dd>
+<dd><code>java.io.IOException</code> - if an I/O error occurs.</dd>
 </dl>
 </li>
 </ul>
@@ -382,17 +382,17 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
 <li class="blockList">
 <h4>available</h4>
 <pre>public&nbsp;int&nbsp;available()
-              throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+              throws java.io.IOException</pre>
 <div class="block">Returns the number of bytes that can be read from this input stream without blocking.
  <p>
  This method simply performs <code>in.available()</code> and returns the result.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#available--" title="class or interface in java.io">available</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></code></dd>
+<dd><code>available</code>&nbsp;in class&nbsp;<code>java.io.InputStream</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the number of bytes that can be read from the input stream without blocking.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an I/O error occurs.</dd>
+<dd><code>java.io.IOException</code> - if an I/O error occurs.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../org/eclipse/net4j/util/io/DelegatingInputStream.html#in"><code>in</code></a></dd>
 </dl>
@@ -405,18 +405,18 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
 <li class="blockList">
 <h4>close</h4>
 <pre>public&nbsp;void&nbsp;close()
-           throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+           throws java.io.IOException</pre>
 <div class="block">Closes this input stream and releases any system resources associated with the stream. This method simply performs
  <code>in.close()</code>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Closeable.html?is-external=true#close--" title="class or interface in java.io">close</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</a></code></dd>
+<dd><code>close</code>&nbsp;in interface&nbsp;<code>java.io.Closeable</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/AutoCloseable.html?is-external=true#close--" title="class or interface in java.lang">close</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/AutoCloseable.html?is-external=true" title="class or interface in java.lang">AutoCloseable</a></code></dd>
+<dd><code>close</code>&nbsp;in interface&nbsp;<code>java.lang.AutoCloseable</code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#close--" title="class or interface in java.io">close</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></code></dd>
+<dd><code>close</code>&nbsp;in class&nbsp;<code>java.io.InputStream</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if an I/O error occurs.</dd>
+<dd><code>java.io.IOException</code> - if an I/O error occurs.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../org/eclipse/net4j/util/io/DelegatingInputStream.html#in"><code>in</code></a></dd>
 </dl>
@@ -438,7 +438,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
  This method simply performs <code>in.mark(readlimit)</code>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#mark-int-" title="class or interface in java.io">mark</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></code></dd>
+<dd><code>mark</code>&nbsp;in class&nbsp;<code>java.io.InputStream</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>readlimit</code> - the maximum limit of bytes that can be read before the mark position becomes invalid.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
@@ -454,7 +454,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
 <li class="blockList">
 <h4>reset</h4>
 <pre>public&nbsp;void&nbsp;reset()
-           throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+           throws java.io.IOException</pre>
 <div class="block">Repositions this stream to the position at the time the <code>mark</code> method was last called on this input
  stream.
  <p>
@@ -466,9 +466,9 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
  fails. If this happens within readlimit bytes, it allows the outer code to reset the stream and try another parser.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#reset--" title="class or interface in java.io">reset</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></code></dd>
+<dd><code>reset</code>&nbsp;in class&nbsp;<code>java.io.InputStream</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if the stream has not been marked or if the mark has been invalidated.</dd>
+<dd><code>java.io.IOException</code> - if the stream has not been marked or if the mark has been invalidated.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../org/eclipse/net4j/util/io/DelegatingInputStream.html#in"><code>in</code></a>, 
 <a href="../../../../../org/eclipse/net4j/util/io/DelegatingInputStream.html#mark-int-"><code>mark(int)</code></a></dd>
@@ -486,14 +486,14 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputS
  performs <code>in.markSupported()</code>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#markSupported--" title="class or interface in java.io">markSupported</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></code></dd>
+<dd><code>markSupported</code>&nbsp;in class&nbsp;<code>java.io.InputStream</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>true</code> if this stream type supports the <code>mark</code> and <code>reset</code> method;
          <code>false</code> otherwise.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../org/eclipse/net4j/util/io/DelegatingInputStream.html#in"><code>in</code></a>, 
-<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#mark-int-" title="class or interface in java.io"><code>InputStream.mark(int)</code></a>, 
-<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#reset--" title="class or interface in java.io"><code>InputStream.reset()</code></a></dd>
+<code>InputStream.mark(int)</code>, 
+<code>InputStream.reset()</code></dd>
 </dl>
 </li>
 </ul>

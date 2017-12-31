@@ -119,7 +119,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a></code></td>
-<td class="colLast"><span class="typeNameLabel">IDBSchemaDelta.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html#getTableDelta-java.lang.String-">getTableDelta</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">IDBSchemaDelta.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html#getTableDelta-java.lang.String-">getTableDelta</a></span>(java.lang.String&nbsp;name)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>[]</code></td>
@@ -135,7 +135,7 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="../../../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,<a href="../../../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">IDBSchemaDelta.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html#getTableDeltas--">getTableDeltas</a></span>()</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -203,19 +203,19 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">DBAdapter.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#alterTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">alterTable</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><span class="typeNameLabel">DBAdapter.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#alterTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">alterTable</a></span>(java.sql.Connection&nbsp;connection,
           <a href="../../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
           <a href="../../../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">DBAdapter.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">createTable</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><span class="typeNameLabel">DBAdapter.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">createTable</a></span>(java.sql.Connection&nbsp;connection,
            <a href="../../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
            <a href="../../../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">DBAdapter.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">dropTable</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><span class="typeNameLabel">DBAdapter.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTable-java.sql.Connection-org.eclipse.net4j.db.ddl.IDBTable-org.eclipse.net4j.db.ddl.delta.IDBTableDelta-">dropTable</a></span>(java.sql.Connection&nbsp;connection,
          <a href="../../../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
          <a href="../../../../../../../org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</code>&nbsp;</td>
 </tr>

@@ -200,4 +200,37 @@ Eike Stepper - initial API and implementation
     </pluginManagement>
   </build>
 
+  <profiles>
+    <profile>
+      <id>build-info-properties</id>
+      <activation>
+        <property>
+          <name>BUILD_INFO_PROPERTIES</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+		      <plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>properties-maven-plugin</artifactId>
+		        <version>1.0.0</version>
+		       <executions>
+		         <execution>
+		           <phase>initialize</phase>
+		           <goals>
+		             <goal>read-project-properties</goal>
+		           </goals>
+		           <configuration>
+		             <files>
+		               <file>${BUILD_INFO_PROPERTIES}</file>
+		             </files>
+		           </configuration>
+		         </execution>
+		       </executions>
+		      </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
 </project>

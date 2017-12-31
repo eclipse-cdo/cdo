@@ -21,19 +21,6 @@
   </taskdef>
 
   <target name="init-properties" if="env.HUDSON_URL">
-  	<!--
-    <property name="build.root" value="${env.WORKSPACE}" />
-    <property name="git.clone" location="${build.root}/git" />
-    <property name="features.dir" location="${git.clone}/features" />
-    <property name="plugins.dir" location="${git.clone}/plugins" />
-    <property name="releng.dir" location="${git.clone}/releng" />
-    <property name="releng" location="${releng.dir}/org.eclipse.emf.cdo.releng" />
-    <property name="releng.help" location="${releng.dir}/org.eclipse.emf.cdo.releng.help" />
-    <property name="releng.site" location="${releng.dir}/org.eclipse.emf.cdo.releng.site" />
-    <property name="test.report" location="${build.root}/test-report.xml" />
-    <property name="zips" location="${build.root}/zips" />
-    -->
-  	
     <!-- build.trigger -->
     <if>
       <not>

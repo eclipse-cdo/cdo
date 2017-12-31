@@ -81,15 +81,17 @@
   	
     <!-- Adjust content.jar -->
     <unzip src="${build.root}/content.jar" dest="${build.root}" />
-    <replaceregexp file="${build.root}/content.xml" match="Build Local" replace="${build.qualifier}" />
     <delete file="${build.root}/content.jar" />
+    <replaceregexp file="${build.root}/content.xml" match="Build Local" replace="${build.qualifier}" />
   	<zip destfile="${build.root}/content.jar" basedir="${build.root}" includes="content.xml" />
+    <xslt style="xsl/content2html.xsl" in="${build.root}/content.xml" out="${build.root}/index.html" />
+    <xslt style="xsl/content2xml.xsl" in="${build.root}/content.xml" out="${build.root}/index.xml" />
     <delete file="${build.root}/content.xml" />
       
     <!-- Adjust artifacts.jar -->
     <unzip src="${build.root}/artifacts.jar" dest="${build.root}" />
-    <replaceregexp file="${build.root}/artifacts.xml" match="Build Local" replace="${build.qualifier}" />
     <delete file="${build.root}/artifacts.jar" />
+    <replaceregexp file="${build.root}/artifacts.xml" match="Build Local" replace="${build.qualifier}" />
   	<zip destfile="${build.root}/artifacts.jar" basedir="${build.root}" includes="artifacts.xml" />
     <delete file="${build.root}/artifacts.xml" />
   </target>
@@ -110,18 +112,6 @@
     </copy>
   </target>
 
-  <!-- ============== -->
-  <!-- Generate Index -->
-  <!-- ============== -->
-
-  <target name="generate-index" depends="clean">
-    <unzip src="${build.root}/content.jar" dest="${build.root}" />
-    <property name="content.xml" location="${build.root}/content.xml" />
-    <xslt style="hudson/xsl/content2html.xsl" in="${content.xml}" out="${build.root}/index.html" />
-    <xslt style="hudson/xsl/content2xml.xsl" in="${content.xml}" out="${build.root}/index.xml" />
-    <delete file="${content.xml}" />
-  </target>
-
   <!-- =================== -->
   <!-- Generate Booksmarks -->
   <!-- =================== -->
@@ -129,7 +119,7 @@
   <target name="generate-bookmarks" depends="clean">
     <property name="bookmarks.tmp" location="${build.root}/bookmarks.tmp" />
     <xslt
-    	style="hudson/xsl/target2bookmarks.xsl" 
+    	style="xsl/target2bookmarks.xsl" 
     	in="${releng.dir}/org.eclipse.emf.cdo.releng.parent/tp/org.eclipse.emf.cdo.releng.tp.target" 
     	out="${bookmarks.tmp}" />
     		
@@ -195,6 +185,6 @@
   <!-- Generate -->
   <!-- ======== -->
 
-  <target name="generate" depends="generate-site,generate-help,generate-index,generate-bookmarks,generate-dropins,generate-apireports" />
+  <target name="generate" depends="generate-site,generate-help,generate-bookmarks,generate-dropins,generate-apireports" />
 
 </project>

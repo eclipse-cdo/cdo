@@ -61,11 +61,11 @@
       <equals arg1="${build.type}" arg2="N" />
       <then>
         <property name="build.sign" value="false" />
-        <delete file="${build.root}/signing.marker" failonerror="false" />
+        <delete file="${env.WORKSPACE}/signing.marker" failonerror="false" />
       </then>
       <else>
         <property name="build.sign" value="true" />
-        <touch file="${build.root}/signing.marker" />
+        <touch file="${env.WORKSPACE}/signing.marker" />
       </else>
     </if>
 

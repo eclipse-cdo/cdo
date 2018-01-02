@@ -196,6 +196,11 @@ Eike Stepper - initial API and implementation
           <artifactId>tycho-source-feature-plugin</artifactId>
           <version>${tycho-version}</version>
         </plugin>
+        <plugin>
+	        <groupId>org.eclipse.tycho</groupId>
+	        <artifactId>tycho-surefire-plugin</artifactId>
+	        <version>${tycho-version}</version>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>

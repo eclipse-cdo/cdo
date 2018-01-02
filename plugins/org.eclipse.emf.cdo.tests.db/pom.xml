@@ -26,6 +26,48 @@
   <groupId>org.eclipse.emf.cdo</groupId>
   <artifactId>org.eclipse.emf.cdo.tests.db</artifactId>
   <version>4.0.700-SNAPSHOT</version>
-  <packaging>eclipse-plugin</packaging>
+  <packaging>eclipse-test-plugin</packaging>
+
+  <profiles>
+    <profile>
+      <id>cdo-tests</id>
+      <activation>
+        <property>
+          <name>CDO_TEST_CLASS</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>tycho-surefire-plugin</artifactId>
+            <configuration>
+              <testClass>${CDO_TEST_CLASS}</testClass>
+              <testFailureIgnore>true</testFailureIgnore>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>no-cdo-tests</id>
+      <activation>
+        <property>
+          <name>!CDO_TEST_CLASS</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>tycho-surefire-plugin</artifactId>
+            <configuration>
+              <skipTests>true</skipTests>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>

@@ -33,7 +33,7 @@ public class AllTestsDBH2Audit extends DBConfigs
     suite.addScenario(parent, new H2Config().supportingAudits(true).idGenerationLocation(idGenerationLocation), JVM, NATIVE);
 
     // With ranges
-    suite.addScenario(parent, new H2Config().supportingAudits(true).idGenerationLocation(idGenerationLocation).copyOnBranch(true), JVM, NATIVE);
+    suite.addScenario(parent, new H2Config().supportingAudits(true).idGenerationLocation(idGenerationLocation).withRanges(true), JVM, NATIVE);
   }
 
   @Override

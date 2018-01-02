@@ -29,14 +29,9 @@ public class AllTestsDBH2All extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenarios(parent, IDGenerationLocation.STORE);
-    addScenarios(parent, IDGenerationLocation.CLIENT);
-  }
-
-  private void addScenarios(TestSuite parent, IDGenerationLocation idGenerationLocation)
-  {
-    AllTestsDBH2NonAudit.initConfigSuites(this, parent, idGenerationLocation);
-    AllTestsDBH2Audit.initConfigSuites(this, parent, idGenerationLocation);
-    AllTestsDBH2Branching.initConfigSuites(this, parent, idGenerationLocation);
+    addScenario(parent, new H2Config(), JVM, NATIVE);
+    addScenario(parent, new H2Config().supportingAudits(true).withRanges(true), JVM, NATIVE);
+    addScenario(parent, new H2Config().supportingBranches(true).withRanges(true), JVM, NATIVE);
+    addScenario(parent, new H2Config().supportingBranches(true).withRanges(true).idGenerationLocation(IDGenerationLocation.CLIENT), JVM, NATIVE);
   }
 }

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMBundle;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
@@ -37,6 +38,8 @@ import junit.framework.TestSuite;
  */
 public abstract class ConfigTestSuite implements IConstants
 {
+  private static final boolean DISABLE_MAIN_SUITE_FINISHED = OMPlatform.INSTANCE.isProperty("disable.main.suite.finished");
+
   private final List<IScenario> scenarios = new ArrayList<IScenario>();
 
   public ConfigTestSuite()
@@ -129,15 +132,18 @@ public abstract class ConfigTestSuite implements IConstants
 
   protected void mainSuiteFinished()
   {
-    for (IScenario scenario : scenarios)
+    if (!DISABLE_MAIN_SUITE_FINISHED)
     {
-      try
+      for (IScenario scenario : scenarios)
       {
-        scenario.mainSuiteFinished();
-      }
-      catch (Exception ex)
-      {
-        IOUtil.print(ex);
+        try
+        {
+          scenario.mainSuiteFinished();
+        }
+        catch (Exception ex)
+        {
+          IOUtil.print(ex);
+        }
       }
     }
   }

@@ -9,7 +9,7 @@
 	Contributors:
 	  Eike Stepper - initial API and implementation
 -->
-<project name="CDO" default="generate">
+<project name="generate" default="generate">
 
   <!-- ==== -->
   <!-- Init -->
@@ -19,14 +19,9 @@
     <property environment="env" />
     <property name="build.root" value="${env.WORKSPACE}" />
     <property name="git.clone" location="${build.root}/git" />
-    <property name="features.dir" location="${git.clone}/features" />
-    <property name="plugins.dir" location="${git.clone}/plugins" />
     <property name="releng.dir" location="${git.clone}/releng" />
     <property name="releng" location="${releng.dir}/org.eclipse.emf.cdo.releng" />
-    <property name="releng.help" location="${releng.dir}/org.eclipse.emf.cdo.releng.help" />
     <property name="releng.site" location="${releng.dir}/org.eclipse.emf.cdo.releng.site" />
-    <property name="test.report" location="${build.root}/test-report.xml" />
-    <property name="zips" location="${build.root}/zips" />
 
     <property file="ant.properties" />
     <property file="${build.root}/build-info.properties" />
@@ -43,6 +38,7 @@
         <include name="plugins/**" />
         <include name="binary/**" />
         <include name="zips/**" />
+        <include name="tests/**" />
         <include name="help/**" />
         <include name="*.jar" />
         <include name="*.css" />
@@ -58,11 +54,13 @@
       </fileset>
     </delete>
     
+  	<!--
     <echoxml file="${test.report}">
       <testsuite name="CDO AllTests" tests="1" errors="0" failures="0" ignored="0">
         <testcase name="noTestHasBeenExecuted" classname="org.eclipse.emf.cdo.tests.NoTest" time="0.00"/>
       </testsuite>
     </echoxml>
+    -->
   </target>
 
   <!-- ============= -->
@@ -102,6 +100,7 @@
   <!-- ============= -->
 
   <target name="generate-help" depends="clean">
+    <property name="releng.help" location="${releng.dir}/org.eclipse.emf.cdo.releng.help" />
     <mkdir dir="${build.root}/help" />
     <copy todir="${build.root}/help">
       <fileset dir="${releng.help}/html">
@@ -153,6 +152,7 @@
   <!-- ================ -->
 
   <target name="generate-dropins" depends="clean">
+    <property name="zips" location="${build.root}/zips" />
     <mkdir dir="${zips}" />
     <zip destfile="${zips}/emf-cdo-${build.qualifier}-Dropins.zip">
       <fileset dir="${releng.site}/target/repository">
@@ -165,9 +165,9 @@
           file="${zips}/emf-cdo-${build.qualifier}-Dropins.properties" />
   </target>
 
-  <!-- ============ -->
-  <!-- Generate API -->
-  <!-- ============ -->
+  <!-- ==================== -->
+  <!-- Generate API Reports -->
+  <!-- ==================== -->
 
   <target name="generate-apireports" depends="clean">
   	<copy file="${releng}/api/api.xml" todir="${build.root}" overwrite="true" />
@@ -182,10 +182,45 @@
     </java>
   </target>
 
+  <!-- ==================== -->
+  <!-- Generate Test Reports -->
+  <!-- ==================== -->
+
+  <target name="generate-testreports" depends="clean">
+    <property name="tests" location="${build.root}/tests" />
+    <mkdir dir="${tests}" />
+    <copy todir="${tests}/tmp" flatten="true">
+      <fileset dir="${build.root}">
+        <include name="**/target/surefire-reports/TEST-*.xml" />
+      </fileset>
+    </copy>
+    <java classname="org.eclipse.emf.cdo.releng.FixTestReportNesting">
+      <classpath>
+        <pathelement location="${releng}/target/classes/" />
+      </classpath>
+      <arg value="${tests}/tmp" />
+    </java>
+    <junitreport todir="${tests}">
+      <fileset dir="${tests}/tmp/singles">
+        <include name="TEST-*.xml" />
+      </fileset>
+      <report format="frames" todir="${tests}">
+        <param name="TITLE" expression="CDO ${build.qualifier} Test Results" />
+      </report>
+    </junitreport>
+    <delete includeemptydirs="true">
+      <fileset dir="${tests}">
+        <include name="tmp/**" />
+      </fileset>
+    </delete>
+    <replace dir="${tests}" includes="**/package-summary.html" token="&lt;h3&gt;Package " value="&lt;h3&gt;Scenario " />
+    <replace dir="${tests}" includes="overview-*.html" token="&lt;h2&gt;Packages&lt;/h2&gt;" value="&lt;h2&gt;Scenarios&lt;/h2&gt;" />
+  </target>
+
   <!-- ======== -->
   <!-- Generate -->
   <!-- ======== -->
 
-  <target name="generate" depends="generate-site,generate-help,generate-bookmarks,generate-dropins,generate-apireports" />
+  <target name="generate" depends="generate-site,generate-help,generate-bookmarks,generate-dropins,generate-apireports,generate-testreports" />
 
 </project>

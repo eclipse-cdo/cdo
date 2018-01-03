@@ -91,10 +91,10 @@ public class H2Config extends DBConfig
     // defaultDataSource = null;
     // }
 
-    // if (reusableFolder != null)
-    // {
-    // IOUtil.delete(reusableFolder);
-    // reusableFolder = null;
-    // }
+    if (reusableFolder != null)
+    {
+      IOUtil.delete(reusableFolder);
+      reusableFolder = null;
+    }
   }
 }

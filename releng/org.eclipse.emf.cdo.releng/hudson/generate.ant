@@ -215,6 +215,7 @@
     </delete>
     <replace dir="${tests}" includes="**/package-summary.html" token="&lt;h3&gt;Package " value="&lt;h3&gt;Scenario " />
     <replace dir="${tests}" includes="overview-*.html" token="&lt;h2&gt;Packages&lt;/h2&gt;" value="&lt;h2&gt;Scenarios&lt;/h2&gt;" />
+  	<rename src="${tests}/TESTS-TestSuites.xml" dest="${tests}/test-report.xml" />
   </target>
 
   <!-- ======== -->

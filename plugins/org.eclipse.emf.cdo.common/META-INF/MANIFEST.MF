@@ -101,3 +101,4 @@ Export-Package: org.eclipse.emf.cdo.common;version="4.6.100",
  org.eclipse.emf.cdo.spi.common.protocol;version="4.6.100",
  org.eclipse.emf.cdo.spi.common.revision;version="4.6.100"
 Automatic-Module-Name: org.eclipse.emf.cdo.common
+Eclipse-RegisterBuddy: org.eclipse.net4j.util

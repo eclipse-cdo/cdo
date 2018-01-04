@@ -41,11 +41,16 @@ public abstract class DBConfigs extends AllConfigs
     testClasses.add(SQLQueryTest.class);
     testClasses.add(Bugzilla_351068_Test.class);
     testClasses.add(Bugzilla_396743_Test.class);
+    testClasses.add(Bugzilla_527002_Test.class);
 
     super.initTestClasses(testClasses, scenario);
     testClasses.remove(MEMStoreQueryTest.class);
 
-    if (!scenario.getRepositoryConfig().supportingBranches())
+    if (scenario.getRepositoryConfig().supportingBranches())
+    {
+      testClasses.remove(Bugzilla_527002_Test.class);
+    }
+    else
     {
       testClasses.remove(BranchingTest.class);
       testClasses.remove(BranchingSameSessionTest.class);
@@ -53,7 +58,11 @@ public abstract class DBConfigs extends AllConfigs
       testClasses.remove(Bugzilla_303807_Test.class);
     }
 
-    if (!scenario.getRepositoryConfig().supportingAudits())
+    if (scenario.getRepositoryConfig().supportingAudits())
+    {
+      testClasses.remove(Bugzilla_527002_Test.class);
+    }
+    else
     {
       // non-audit mode - remove audit tests
       testClasses.remove(AuditTest.class);

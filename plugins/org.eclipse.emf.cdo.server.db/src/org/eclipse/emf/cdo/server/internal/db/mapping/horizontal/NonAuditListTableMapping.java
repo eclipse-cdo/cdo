@@ -311,6 +311,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     }
 
     @Override
+    protected boolean isZeroBasedIndex()
+    {
+      return ((HorizontalNonAuditMappingStrategy)getMappingStrategy()).shallForceZeroBasedIndex();
+    }
+
+    @Override
     protected ITypeMapping getTypeMapping()
     {
       return NonAuditListTableMapping.this.getTypeMapping();

@@ -103,8 +103,8 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
     }
 
     // Obtain or create and register package
-    MangoPackageImpl theMangoPackage = (MangoPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof MangoPackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new MangoPackageImpl());
+    Object registeredMangoPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+    MangoPackageImpl theMangoPackage = registeredMangoPackage instanceof MangoPackageImpl ? (MangoPackageImpl)registeredMangoPackage : new MangoPackageImpl();
 
     isInited = true;
 

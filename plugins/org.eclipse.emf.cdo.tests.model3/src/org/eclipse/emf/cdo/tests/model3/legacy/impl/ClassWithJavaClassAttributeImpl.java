@@ -168,7 +168,7 @@ public class ClassWithJavaClassAttributeImpl extends EObjectImpl implements Clas
       return super.toString();
     }
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (javaClass: ");
     result.append(javaClass);
     result.append(')');

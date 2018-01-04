@@ -215,8 +215,9 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     }
 
     // Obtain or create and register package
-    Model3PackageImpl theModel3Package = (Model3PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model3PackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new Model3PackageImpl());
+    Object registeredModel3Package = EPackage.Registry.INSTANCE.get(eNS_URI);
+    Model3PackageImpl theModel3Package = registeredModel3Package instanceof Model3PackageImpl ? (Model3PackageImpl)registeredModel3Package
+        : new Model3PackageImpl();
 
     isInited = true;
 
@@ -225,9 +226,9 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     EtypesPackage.eINSTANCE.eClass();
 
     // Obtain or create and register interdependencies
-    SubpackagePackageImpl theSubpackagePackage = (SubpackagePackageImpl)(EPackage.Registry.INSTANCE
-        .getEPackage(SubpackagePackage.eNS_URI) instanceof SubpackagePackageImpl ? EPackage.Registry.INSTANCE.getEPackage(SubpackagePackage.eNS_URI)
-            : SubpackagePackage.eINSTANCE);
+    Object registeredPackage = EPackage.Registry.INSTANCE.getEPackage(SubpackagePackage.eNS_URI);
+    SubpackagePackageImpl theSubpackagePackage = (SubpackagePackageImpl)(registeredPackage instanceof SubpackagePackageImpl ? registeredPackage
+        : SubpackagePackage.eINSTANCE);
 
     // Create package meta-data objects
     theModel3Package.createPackageContents();

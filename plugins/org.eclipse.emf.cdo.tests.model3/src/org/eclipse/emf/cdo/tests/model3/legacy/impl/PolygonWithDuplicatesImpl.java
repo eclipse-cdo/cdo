@@ -153,7 +153,7 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
       return super.toString();
     }
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (points: ");
     result.append(points);
     result.append(')');

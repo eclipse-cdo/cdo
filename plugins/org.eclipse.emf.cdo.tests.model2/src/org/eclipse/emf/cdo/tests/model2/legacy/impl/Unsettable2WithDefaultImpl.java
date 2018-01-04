@@ -1121,7 +1121,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
       return super.toString();
     }
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (unsettableBoolean: ");
     if (unsettableBooleanESet)
     {

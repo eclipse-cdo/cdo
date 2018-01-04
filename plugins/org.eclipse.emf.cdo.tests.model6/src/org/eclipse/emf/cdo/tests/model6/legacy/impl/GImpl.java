@@ -386,7 +386,7 @@ public class GImpl extends EObjectImpl implements G
       return super.toString();
     }
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (dummy: ");
     result.append(dummy);
     result.append(')');

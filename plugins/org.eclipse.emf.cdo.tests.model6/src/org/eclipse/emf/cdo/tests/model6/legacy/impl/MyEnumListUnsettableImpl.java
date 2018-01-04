@@ -186,7 +186,7 @@ public class MyEnumListUnsettableImpl extends EObjectImpl implements MyEnumListU
       return super.toString();
     }
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (myEnum: ");
     result.append(myEnum);
     result.append(')');

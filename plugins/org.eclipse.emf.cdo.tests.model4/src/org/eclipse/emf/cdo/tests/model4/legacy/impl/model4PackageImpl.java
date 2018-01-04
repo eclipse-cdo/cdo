@@ -316,8 +316,9 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
     }
 
     // Obtain or create and register package
-    model4PackageImpl themodel4Package = (model4PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof model4PackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new model4PackageImpl());
+    Object registeredmodel4Package = EPackage.Registry.INSTANCE.get(eNS_URI);
+    model4PackageImpl themodel4Package = registeredmodel4Package instanceof model4PackageImpl ? (model4PackageImpl)registeredmodel4Package
+        : new model4PackageImpl();
 
     isInited = true;
 

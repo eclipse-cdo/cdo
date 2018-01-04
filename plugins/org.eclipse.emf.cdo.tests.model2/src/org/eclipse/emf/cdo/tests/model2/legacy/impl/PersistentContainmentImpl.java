@@ -298,7 +298,7 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
       return super.toString();
     }
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (attrBefore: ");
     result.append(attrBefore);
     result.append(", attrAfter: ");

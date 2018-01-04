@@ -247,7 +247,7 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
       return super.toString();
     }
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (people: ");
     result.append(people);
     result.append(')');

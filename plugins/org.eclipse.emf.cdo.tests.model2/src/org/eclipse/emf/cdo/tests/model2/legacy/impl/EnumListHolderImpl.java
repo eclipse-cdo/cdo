@@ -153,7 +153,7 @@ public class EnumListHolderImpl extends EObjectImpl implements EnumListHolder
       return super.toString();
     }
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (enumList: ");
     result.append(enumList);
     result.append(')');

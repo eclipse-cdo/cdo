@@ -226,7 +226,7 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
       return super.toString();
     }
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (key: ");
     result.append(key);
     result.append(", value: ");

@@ -206,8 +206,9 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
     }
 
     // Obtain or create and register package
-    Model5PackageImpl theModel5Package = (Model5PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model5PackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new Model5PackageImpl());
+    Object registeredModel5Package = EPackage.Registry.INSTANCE.get(eNS_URI);
+    Model5PackageImpl theModel5Package = registeredModel5Package instanceof Model5PackageImpl ? (Model5PackageImpl)registeredModel5Package
+        : new Model5PackageImpl();
 
     isInited = true;
 

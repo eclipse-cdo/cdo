@@ -178,7 +178,7 @@ public class EmptyStringDefaultImpl extends EObjectImpl implements EmptyStringDe
       return super.toString();
     }
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (attribute: ");
     result.append(attribute);
     result.append(')');

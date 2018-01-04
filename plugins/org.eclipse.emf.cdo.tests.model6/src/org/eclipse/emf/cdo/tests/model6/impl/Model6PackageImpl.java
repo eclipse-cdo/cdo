@@ -270,8 +270,9 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     }
 
     // Obtain or create and register package
-    Model6PackageImpl theModel6Package = (Model6PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model6PackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new Model6PackageImpl());
+    Object registeredModel6Package = EPackage.Registry.INSTANCE.get(eNS_URI);
+    Model6PackageImpl theModel6Package = registeredModel6Package instanceof Model6PackageImpl ? (Model6PackageImpl)registeredModel6Package
+        : new Model6PackageImpl();
 
     isInited = true;
 

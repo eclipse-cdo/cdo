@@ -342,7 +342,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
       return super.toString();
     }
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (attrBefore: ");
     result.append(attrBefore);
     result.append(", attrAfter: ");

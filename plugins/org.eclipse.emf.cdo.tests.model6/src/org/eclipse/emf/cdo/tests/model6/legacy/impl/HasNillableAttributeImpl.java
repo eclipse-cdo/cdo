@@ -216,7 +216,7 @@ public class HasNillableAttributeImpl extends EObjectImpl implements HasNillable
       return super.toString();
     }
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (nillable: ");
     if (nillableESet)
     {

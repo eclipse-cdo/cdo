@@ -218,7 +218,7 @@ public class EmptyStringDefaultUnsettableImpl extends EObjectImpl implements Emp
       return super.toString();
     }
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (attribute: ");
     if (attributeESet)
     {

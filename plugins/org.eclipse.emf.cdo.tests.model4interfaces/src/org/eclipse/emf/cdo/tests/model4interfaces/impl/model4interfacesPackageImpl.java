@@ -167,8 +167,10 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
     }
 
     // Obtain or create and register package
-    model4interfacesPackageImpl themodel4interfacesPackage = (model4interfacesPackageImpl)(EPackage.Registry.INSTANCE
-        .get(eNS_URI) instanceof model4interfacesPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new model4interfacesPackageImpl());
+    Object registeredmodel4interfacesPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+    model4interfacesPackageImpl themodel4interfacesPackage = registeredmodel4interfacesPackage instanceof model4interfacesPackageImpl
+        ? (model4interfacesPackageImpl)registeredmodel4interfacesPackage
+        : new model4interfacesPackageImpl();
 
     isInited = true;
 

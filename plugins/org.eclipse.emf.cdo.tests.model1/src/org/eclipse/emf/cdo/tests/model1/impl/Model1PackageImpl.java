@@ -161,8 +161,9 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     }
 
     // Obtain or create and register package
-    Model1PackageImpl theModel1Package = (Model1PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model1PackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new Model1PackageImpl());
+    Object registeredModel1Package = EPackage.Registry.INSTANCE.get(eNS_URI);
+    Model1PackageImpl theModel1Package = registeredModel1Package instanceof Model1PackageImpl ? (Model1PackageImpl)registeredModel1Package
+        : new Model1PackageImpl();
 
     isInited = true;
 

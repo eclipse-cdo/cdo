@@ -28,16 +28,4 @@
   <version>4.5.200-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
-  <build>
-    <resources>
-      <resource>
-        <directory>.</directory>
-        <filtering>true</filtering>
-        <includes>
-          <include>about.mappings</include>
-        </includes>
-      </resource>
-    </resources>
-  </build>
-
 </project>

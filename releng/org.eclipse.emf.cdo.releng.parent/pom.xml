@@ -99,16 +99,6 @@ Eike Stepper - initial API and implementation
             <timestampProvider>jgit</timestampProvider>
             <jgit.ignore>pom.xml</jgit.ignore>
             <jgit.dirtyWorkingTree>warning</jgit.dirtyWorkingTree>
-            <!-- 
-            <additionalFileSets>
-              <fileSet>
-                <directory>${project.build.outputDirectory}</directory>
-                <includes>
-                  <include>about.mappings</include>
-                </includes>
-              </fileSet>
-            </additionalFileSets>
-             -->
           </configuration>
           <dependencies>
             <dependency>
@@ -234,6 +224,25 @@ Eike Stepper - initial API and implementation
 		       </executions>
 		      </plugin>
         </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>about-mappings</id>
+      <activation>
+        <file>
+          <exists>about.mappings</exists>
+        </file>
+      </activation>
+      <build>
+        <resources>
+          <resource>
+            <directory>.</directory>
+            <filtering>true</filtering>
+            <includes>
+              <include>about.mappings</include>
+            </includes>
+          </resource>
+        </resources>
       </build>
     </profile>
   </profiles>

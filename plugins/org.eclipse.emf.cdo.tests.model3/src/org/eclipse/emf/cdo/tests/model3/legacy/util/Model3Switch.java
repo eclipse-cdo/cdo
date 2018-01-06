@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaObjectAttribute;
+import org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment;
 import org.eclipse.emf.cdo.tests.model3.Diagram;
 import org.eclipse.emf.cdo.tests.model3.Edge;
 import org.eclipse.emf.cdo.tests.model3.EdgeTarget;
@@ -251,6 +252,16 @@ public class Model3Switch<T>
     {
       ClassWithJavaObjectAttribute classWithJavaObjectAttribute = (ClassWithJavaObjectAttribute)theEObject;
       T result = caseClassWithJavaObjectAttribute(classWithJavaObjectAttribute);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case Model3Package.CLASS_WITH_TRANSIENT_CONTAINMENT:
+    {
+      ClassWithTransientContainment classWithTransientContainment = (ClassWithTransientContainment)theEObject;
+      T result = caseClassWithTransientContainment(classWithTransientContainment);
       if (result == null)
       {
         result = defaultCase(theEObject);
@@ -526,6 +537,22 @@ public class Model3Switch<T>
    * @generated
    */
   public T caseClassWithJavaObjectAttribute(ClassWithJavaObjectAttribute object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Class With Transient Containment</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Class With Transient Containment</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseClassWithTransientContainment(ClassWithTransientContainment object)
   {
     return null;
   }

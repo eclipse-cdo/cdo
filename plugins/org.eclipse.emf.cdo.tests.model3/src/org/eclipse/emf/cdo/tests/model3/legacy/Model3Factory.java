@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaObjectAttribute;
+import org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment;
 import org.eclipse.emf.cdo.tests.model3.Diagram;
 import org.eclipse.emf.cdo.tests.model3.Edge;
 import org.eclipse.emf.cdo.tests.model3.EdgeTarget;
@@ -162,6 +163,15 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    * @generated
    */
   ClassWithJavaObjectAttribute createClassWithJavaObjectAttribute();
+
+  /**
+   * Returns a new object of class '<em>Class With Transient Containment</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Class With Transient Containment</em>'.
+   * @generated
+   */
+  ClassWithTransientContainment createClassWithTransientContainment();
 
   /**
    * Returns a new object of class '<em>Edge Target</em>'.

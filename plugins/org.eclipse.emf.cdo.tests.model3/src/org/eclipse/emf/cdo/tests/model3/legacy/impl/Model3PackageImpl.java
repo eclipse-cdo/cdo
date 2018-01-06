@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaObjectAttribute;
+import org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment;
 import org.eclipse.emf.cdo.tests.model3.Diagram;
 import org.eclipse.emf.cdo.tests.model3.Edge;
 import org.eclipse.emf.cdo.tests.model3.EdgeTarget;
@@ -136,6 +137,13 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * @generated
    */
   private EClass classWithJavaObjectAttributeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass classWithTransientContainmentEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -682,6 +690,66 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getClassWithTransientContainment()
+  {
+    return classWithTransientContainmentEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getClassWithTransientContainment_Name()
+  {
+    return (EAttribute)classWithTransientContainmentEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getClassWithTransientContainment_TransientChild()
+  {
+    return (EReference)classWithTransientContainmentEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getClassWithTransientContainment_TransientChildren()
+  {
+    return (EReference)classWithTransientContainmentEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getClassWithTransientContainment_PersistentChild()
+  {
+    return (EReference)classWithTransientContainmentEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getClassWithTransientContainment_PersistentChildren()
+  {
+    return (EReference)classWithTransientContainmentEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getEdgeTarget()
   {
     return edgeTargetEClass;
@@ -877,6 +945,13 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     classWithJavaObjectAttributeEClass = createEClass(CLASS_WITH_JAVA_OBJECT_ATTRIBUTE);
     createEAttribute(classWithJavaObjectAttributeEClass, CLASS_WITH_JAVA_OBJECT_ATTRIBUTE__JAVA_OBJECT);
 
+    classWithTransientContainmentEClass = createEClass(CLASS_WITH_TRANSIENT_CONTAINMENT);
+    createEAttribute(classWithTransientContainmentEClass, CLASS_WITH_TRANSIENT_CONTAINMENT__NAME);
+    createEReference(classWithTransientContainmentEClass, CLASS_WITH_TRANSIENT_CONTAINMENT__TRANSIENT_CHILD);
+    createEReference(classWithTransientContainmentEClass, CLASS_WITH_TRANSIENT_CONTAINMENT__TRANSIENT_CHILDREN);
+    createEReference(classWithTransientContainmentEClass, CLASS_WITH_TRANSIENT_CONTAINMENT__PERSISTENT_CHILD);
+    createEReference(classWithTransientContainmentEClass, CLASS_WITH_TRANSIENT_CONTAINMENT__PERSISTENT_CHILDREN);
+
     edgeTargetEClass = createEClass(EDGE_TARGET);
     createEReference(edgeTargetEClass, EDGE_TARGET__OUTGOING_EDGES);
     createEReference(edgeTargetEClass, EDGE_TARGET__INCOMING_EDGES);
@@ -1034,6 +1109,23 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getClassWithJavaObjectAttribute_JavaObject(), theEcorePackage.getEJavaObject(), "javaObject", null, 0, 1, ClassWithJavaObjectAttribute.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(classWithTransientContainmentEClass, ClassWithTransientContainment.class, "ClassWithTransientContainment", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getClassWithTransientContainment_Name(), theEcorePackage.getEString(), "name", null, 0, 1, ClassWithTransientContainment.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClassWithTransientContainment_TransientChild(), getClassWithTransientContainment(), null, "transientChild", null, 0, 1,
+        ClassWithTransientContainment.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getClassWithTransientContainment_TransientChildren(), getClassWithTransientContainment(), null, "transientChildren", null, 0, -1,
+        ClassWithTransientContainment.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getClassWithTransientContainment_PersistentChild(), getClassWithTransientContainment(), null, "persistentChild", null, 0, 1,
+        ClassWithTransientContainment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getClassWithTransientContainment_PersistentChildren(), getClassWithTransientContainment(), null, "persistentChildren", null, 0, -1,
+        ClassWithTransientContainment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(edgeTargetEClass, EdgeTarget.class, "EdgeTarget", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEdgeTarget_OutgoingEdges(), getEdge(), getEdge_SourceNode(), "outgoingEdges", null, 0, -1, EdgeTarget.class, !IS_TRANSIENT, !IS_VOLATILE,

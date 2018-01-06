@@ -143,6 +143,15 @@ public interface Model3Factory extends EFactory
   ClassWithJavaObjectAttribute createClassWithJavaObjectAttribute();
 
   /**
+   * Returns a new object of class '<em>Class With Transient Containment</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Class With Transient Containment</em>'.
+   * @generated
+   */
+  ClassWithTransientContainment createClassWithTransientContainment();
+
+  /**
    * Returns a new object of class '<em>Edge Target</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

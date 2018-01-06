@@ -73,6 +73,13 @@
     <genClasses ecoreClass="model3.ecore#//ClassWithJavaObjectAttribute">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model3.ecore#//ClassWithJavaObjectAttribute/javaObject"/>
     </genClasses>
+    <genClasses ecoreClass="model3.ecore#//ClassWithTransientContainment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model3.ecore#//ClassWithTransientContainment/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model3.ecore#//ClassWithTransientContainment/transientChild"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model3.ecore#//ClassWithTransientContainment/transientChildren"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model3.ecore#//ClassWithTransientContainment/persistentChild"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model3.ecore#//ClassWithTransientContainment/persistentChildren"/>
+    </genClasses>
     <genClasses ecoreClass="model3.ecore#//EdgeTarget">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model3.ecore#//EdgeTarget/outgoingEdges"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model3.ecore#//EdgeTarget/incomingEdges"/>

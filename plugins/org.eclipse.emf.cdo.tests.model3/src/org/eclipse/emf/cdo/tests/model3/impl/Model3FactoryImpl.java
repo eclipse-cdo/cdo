@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaObjectAttribute;
+import org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment;
 import org.eclipse.emf.cdo.tests.model3.Diagram;
 import org.eclipse.emf.cdo.tests.model3.Edge;
 import org.eclipse.emf.cdo.tests.model3.EdgeTarget;
@@ -115,6 +116,8 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
       return createClassWithJavaClassAttribute();
     case Model3Package.CLASS_WITH_JAVA_OBJECT_ATTRIBUTE:
       return createClassWithJavaObjectAttribute();
+    case Model3Package.CLASS_WITH_TRANSIENT_CONTAINMENT:
+      return createClassWithTransientContainment();
     case Model3Package.EDGE_TARGET:
       return createEdgeTarget();
     case Model3Package.NODE_F:
@@ -301,6 +304,17 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
   {
     ClassWithJavaObjectAttributeImpl classWithJavaObjectAttribute = new ClassWithJavaObjectAttributeImpl();
     return classWithJavaObjectAttribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ClassWithTransientContainment createClassWithTransientContainment()
+  {
+    ClassWithTransientContainmentImpl classWithTransientContainment = new ClassWithTransientContainmentImpl();
+    return classWithTransientContainment;
   }
 
   /**

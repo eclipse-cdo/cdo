@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.tests.model3.Class1;
 import org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute;
 import org.eclipse.emf.cdo.tests.model3.ClassWithJavaObjectAttribute;
+import org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment;
 import org.eclipse.emf.cdo.tests.model3.Diagram;
 import org.eclipse.emf.cdo.tests.model3.Edge;
 import org.eclipse.emf.cdo.tests.model3.EdgeTarget;
@@ -180,6 +181,12 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
     public Adapter caseClassWithJavaObjectAttribute(ClassWithJavaObjectAttribute object)
     {
       return createClassWithJavaObjectAttributeAdapter();
+    }
+
+    @Override
+    public Adapter caseClassWithTransientContainment(ClassWithTransientContainment object)
+    {
+      return createClassWithTransientContainmentAdapter();
     }
 
     @Override
@@ -433,6 +440,21 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createClassWithJavaObjectAttributeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment <em>Class With Transient Containment</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment
+   * @generated
+   */
+  public Adapter createClassWithTransientContainmentAdapter()
   {
     return null;
   }

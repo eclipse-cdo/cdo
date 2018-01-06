@@ -90,6 +90,17 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="javaObject" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"
         iD="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClassWithTransientContainment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transientChild" eType="#//ClassWithTransientContainment"
+        transient="true" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transientChildren" upperBound="-1"
+        eType="#//ClassWithTransientContainment" transient="true" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="persistentChild" eType="#//ClassWithTransientContainment"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="persistentChildren" upperBound="-1"
+        eType="#//ClassWithTransientContainment" containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EdgeTarget">
     <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingEdges" upperBound="-1"
         eType="#//Edge" eOpposite="#//Edge/sourceNode"/>

@@ -768,19 +768,26 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public final NotificationChain eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID, NotificationChain msgs)
   {
-    boolean isResource = this instanceof CDOResource;
-    boolean isRootResource = isResource && ((CDOResource)this).isRoot();
-
     InternalEObject oldContainer = eInternalContainer();
     Resource.Internal oldResource = eDirectResource();
     Resource.Internal newResource = null;
+    EReference newContainmentFeature = null;
+
     if (oldResource != null)
     {
-      if (newContainer != null && !eContainmentFeature(this, newContainer, newContainerFeatureID).isResolveProxies())
+      if (newContainer != null)
       {
-        msgs = ((InternalEList<?>)oldResource.getContents()).basicRemove(this, msgs);
-        eSetDirectResource(null);
-        newResource = newContainer.eInternalResource();
+        newContainmentFeature = eContainmentFeature(this, newContainer, newContainerFeatureID);
+        if (!newContainmentFeature.isResolveProxies())
+        {
+          msgs = ((InternalEList<?>)oldResource.getContents()).basicRemove(this, msgs);
+          eSetDirectResource(null);
+          newResource = newContainer.eInternalResource();
+        }
+        else
+        {
+          oldResource = null;
+        }
       }
       else
       {
@@ -801,20 +808,62 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     }
 
     CDOView oldView = viewAndState.view;
-    CDOView newView = newResource != null && newResource instanceof CDOResource ? ((CDOResource)newResource).cdoView() : null;
+    CDOView newView = newResource instanceof CDOResource ? ((CDOResource)newResource).cdoView() : null;
+    boolean movedWithinView = oldView != null && oldView == newView;
 
-    boolean moved = oldView != null && oldView == newView;
-    if (!moved && oldResource != null && oldResource != newResource && !isRootResource)
+    boolean oldAttached = viewAndState.state != CDOState.TRANSIENT;
+    boolean newAttached = newContainer != null && newView != null ? FSMUtil.adapt(newContainer, newView).cdoState() != CDOState.TRANSIENT : true;
+
+    if (newAttached)
     {
-      oldResource.detached(this);
+      if (newContainmentFeature == null && newContainer != null)
+      {
+        newContainmentFeature = eContainmentFeature(this, newContainer, newContainerFeatureID);
+      }
+
+      if (newContainmentFeature != null && newContainmentFeature.isTransient())
+      {
+        newAttached = false;
+      }
+    }
+
+    if (newAttached != oldAttached)
+    {
+      movedWithinView = false;
+    }
+
+    if (oldResource != null)
+    {
+      if (oldResource instanceof CDOResource)
+      {
+        if (oldAttached && !movedWithinView && !isRootResource())
+        {
+          oldResource.detached(this);
+        }
+      }
+      else if (oldResource != newResource)
+      {
+        // Non-CDO resources may always expect the detached() call.
+        oldResource.detached(this);
+      }
     }
 
     int oldContainerFeatureID = eContainerFeatureID();
     eBasicSetContainer(newContainer, newContainerFeatureID);
 
-    if (!moved && newResource != null && newResource != oldResource)
+    if (newResource != null)
     {
-      newResource.attached(this);
+      if (newResource instanceof CDOResource)
+      {
+        if (newAttached && !movedWithinView)
+        {
+          newResource.attached(this);
+        }
+      }
+      else if (oldResource != newResource)
+      {
+        newResource.attached(this);
+      }
     }
 
     if (newContainer != null && newContainer != oldContainer && this instanceof CDOResourceNodeImpl)
@@ -856,7 +905,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   /**
-   * Code took from {@link BasicEObjectImpl#eSetResource} and modify it to detect when object are moved in the same
+   * Code taken from {@link BasicEObjectImpl#eSetResource} and modified to detect when objects are moved in the same
    * context.
    *
    * @since 2.0
@@ -1219,6 +1268,11 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     // Answer from Christian Damus:
     // Java ensures that string constants are interned, so == is actually more efficient than equals() and it's correct
     return eStructuralFeature.getEType().getInstanceClassName() == "java.util.Map$Entry"; //$NON-NLS-1$
+  }
+
+  private boolean isRootResource()
+  {
+    return this instanceof CDOResource && ((CDOResource)this).isRoot();
   }
 
   private void initClassInfo(EClass eClass)

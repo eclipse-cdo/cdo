@@ -330,7 +330,6 @@ public class CrossReferenceTest extends AbstractCDOTest
   @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testDetachXRefExternal() throws Exception
   {
-
     Customer customer = getModel1Factory().createCustomer();
     customer.setName("customer");
 

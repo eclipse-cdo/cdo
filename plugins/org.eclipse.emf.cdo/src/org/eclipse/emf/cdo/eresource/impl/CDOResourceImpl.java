@@ -52,8 +52,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIConverter;
-import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.ContentTreeIterator;
@@ -111,19 +109,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getTimeStamp <em>Time Stamp</em>}</li>
  * </ul>
  *
- * @generated
+ * @generated not
  */
-@SuppressWarnings("unused")
-public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource, InternalCDOResource
+public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOResource
 {
   private static final EReference CDO_RESOURCE_CONTENTS = EresourcePackage.eINSTANCE.getCDOResource_Contents();
-
-  /**
-   * The default URI converter when there is no resource set.
-   *
-   * @ADDED
-   */
-  private static URIConverter defaultURIConverter;
 
   /**
    * @ADDED
@@ -1293,36 +1283,6 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
       // // }
       // }
     }
-  }
-
-  /**
-   * Returns the URI converter. This typically gets the {@link ResourceSet#getURIConverter converter} from the
-   * {@link #getResourceSet containing} resource set, but it calls {@link #getDefaultURIConverter} when there is no
-   * containing resource set.
-   *
-   * @return the URI converter.
-   * @ADDED
-   */
-  private URIConverter getURIConverter()
-  {
-    return getResourceSet() == null ? getDefaultURIConverter() : getResourceSet().getURIConverter();
-  }
-
-  /**
-   * Returns the default URI converter that's used when there is no resource set.
-   *
-   * @return the default URI converter.
-   * @see #getURIConverter
-   * @ADDED
-   */
-  private static synchronized URIConverter getDefaultURIConverter()
-  {
-    if (defaultURIConverter == null)
-    {
-      defaultURIConverter = new ExtensibleURIConverterImpl();
-    }
-
-    return defaultURIConverter;
   }
 
   /**

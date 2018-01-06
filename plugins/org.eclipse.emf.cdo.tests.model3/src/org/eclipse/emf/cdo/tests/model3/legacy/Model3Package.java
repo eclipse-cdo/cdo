@@ -581,6 +581,70 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
   int CLASS_WITH_JAVA_OBJECT_ATTRIBUTE_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.ClassWithTransientContainmentImpl <em>Class With Transient Containment</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model3.legacy.impl.ClassWithTransientContainmentImpl
+   * @see org.eclipse.emf.cdo.tests.model3.legacy.impl.Model3PackageImpl#getClassWithTransientContainment()
+   * @generated
+   */
+  int CLASS_WITH_TRANSIENT_CONTAINMENT = 14;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASS_WITH_TRANSIENT_CONTAINMENT__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Transient Child</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASS_WITH_TRANSIENT_CONTAINMENT__TRANSIENT_CHILD = 1;
+
+  /**
+   * The feature id for the '<em><b>Transient Children</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASS_WITH_TRANSIENT_CONTAINMENT__TRANSIENT_CHILDREN = 2;
+
+  /**
+   * The feature id for the '<em><b>Persistent Child</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASS_WITH_TRANSIENT_CONTAINMENT__PERSISTENT_CHILD = 3;
+
+  /**
+   * The feature id for the '<em><b>Persistent Children</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASS_WITH_TRANSIENT_CONTAINMENT__PERSISTENT_CHILDREN = 4;
+
+  /**
+   * The number of structural features of the '<em>Class With Transient Containment</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASS_WITH_TRANSIENT_CONTAINMENT_FEATURE_COUNT = 5;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.EdgeTargetImpl <em>Edge Target</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -588,7 +652,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model3.legacy.impl.Model3PackageImpl#getEdgeTarget()
    * @generated
    */
-  int EDGE_TARGET = 14;
+  int EDGE_TARGET = 15;
 
   /**
    * The feature id for the '<em><b>Outgoing Edges</b></em>' reference list.
@@ -625,7 +689,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model3.legacy.impl.Model3PackageImpl#getNodeF()
    * @generated
    */
-  int NODE_F = 15;
+  int NODE_F = 16;
 
   /**
    * The feature id for the '<em><b>Outgoing Edges</b></em>' reference list.
@@ -662,7 +726,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model3.legacy.impl.Model3PackageImpl#getEdge()
    * @generated
    */
-  int EDGE = 16;
+  int EDGE = 17;
 
   /**
    * The feature id for the '<em><b>Source Node</b></em>' reference.
@@ -699,7 +763,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model3.legacy.impl.Model3PackageImpl#getDiagram()
    * @generated
    */
-  int DIAGRAM = 17;
+  int DIAGRAM = 18;
 
   /**
    * The feature id for the '<em><b>Edges</b></em>' containment reference list.
@@ -735,7 +799,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @see org.eclipse.emf.cdo.tests.model3.legacy.impl.Model3PackageImpl#getPoint()
    * @generated
    */
-  int POINT = 18;
+  int POINT = 19;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.Class1 <em>Class1</em>}'. <!--
@@ -1221,6 +1285,71 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    * @generated
    */
   EAttribute getClassWithJavaObjectAttribute_JavaObject();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment <em>Class With Transient Containment</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Class With Transient Containment</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment
+   * @generated
+   */
+  EClass getClassWithTransientContainment();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment#getName()
+   * @see #getClassWithTransientContainment()
+   * @generated
+   */
+  EAttribute getClassWithTransientContainment_Name();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment#getTransientChild <em>Transient Child</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Transient Child</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment#getTransientChild()
+   * @see #getClassWithTransientContainment()
+   * @generated
+   */
+  EReference getClassWithTransientContainment_TransientChild();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment#getTransientChildren <em>Transient Children</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Transient Children</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment#getTransientChildren()
+   * @see #getClassWithTransientContainment()
+   * @generated
+   */
+  EReference getClassWithTransientContainment_TransientChildren();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment#getPersistentChild <em>Persistent Child</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Persistent Child</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment#getPersistentChild()
+   * @see #getClassWithTransientContainment()
+   * @generated
+   */
+  EReference getClassWithTransientContainment_PersistentChild();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment#getPersistentChildren <em>Persistent Children</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Persistent Children</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment#getPersistentChildren()
+   * @see #getClassWithTransientContainment()
+   * @generated
+   */
+  EReference getClassWithTransientContainment_PersistentChildren();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.EdgeTarget <em>Edge Target</em>}'.

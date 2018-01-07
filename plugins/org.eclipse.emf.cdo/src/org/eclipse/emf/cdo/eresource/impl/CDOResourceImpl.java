@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -1571,6 +1572,28 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
           if (!FSMUtil.isTransient(cdoObject))
           {
             // Bug 352204
+            return;
+          }
+
+          // Do not attach if container itself is transient.
+          // This guard is needed here just for legacy objects.
+          // For native objects it is already in CDOObjectImpl.eBasicSetContainer().
+          EObject container = cdoObject.eContainer();
+          if (container != null)
+          {
+            CDOObject cdoContainer = FSMUtil.adapt(container, transaction);
+            if (FSMUtil.isTransient(cdoContainer))
+            {
+              return;
+            }
+          }
+
+          // Do not attach if containment reference is transient.
+          // This guard is needed here just for legacy objects.
+          // For native objects it is already in CDOObjectImpl.eBasicSetContainer().
+          EReference containmentFeature = object.eContainmentFeature();
+          if (containmentFeature != null && !EMFUtil.isPersistent(containmentFeature))
+          {
             return;
           }
         }

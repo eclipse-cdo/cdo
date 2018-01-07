@@ -32,7 +32,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class Bugzilla_528129_Test extends AbstractCDOTest
 {
-  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testTransientContainment() throws Exception
   {
     CDOSession session = openSession();

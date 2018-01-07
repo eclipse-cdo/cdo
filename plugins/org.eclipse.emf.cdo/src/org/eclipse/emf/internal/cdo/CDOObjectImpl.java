@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -821,7 +822,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         newContainmentFeature = eContainmentFeature(this, newContainer, newContainerFeatureID);
       }
 
-      if (newContainmentFeature != null && newContainmentFeature.isTransient())
+      if (newContainmentFeature != null && !EMFUtil.isPersistent(newContainmentFeature))
       {
         newAttached = false;
       }

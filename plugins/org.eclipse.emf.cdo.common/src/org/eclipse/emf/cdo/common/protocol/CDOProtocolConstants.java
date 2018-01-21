@@ -32,8 +32,9 @@ public interface CDOProtocolConstants
    * @since 4.2
    * @noreference This field is not intended to be referenced by clients.
    */
-  public static final int PROTOCOL_VERSION = 34; // CDOSessionProtocol.loadMergeData2()
+  public static final int PROTOCOL_VERSION = 35; // DiffieHellman.Server.Challenge.getSecretAlgorithmKeyLen()
 
+  // public static final int PROTOCOL_VERSION = 34; // CDOSessionProtocol.loadMergeData2()
   // public static final int PROTOCOL_VERSION = 33; // CDOCommitInfo.getMergeSource()
   // public static final int PROTOCOL_VERSION = 32; // ROLLBACK_REASON_UNIT_INTEGRITY
   // public static final int PROTOCOL_VERSION = 31; // CDOCommonRepository.isSupportingUnits()

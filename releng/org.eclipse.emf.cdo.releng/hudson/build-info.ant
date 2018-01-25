@@ -114,6 +114,9 @@
     <echo message="build.trigger = ${build.trigger}" />
     <echo message="build.timestamp = ${build.timestamp}" />
     <echo message="build.qualifier = ${build.qualifier}" />
+  	
+    <echo message="test" file="${env.WORKSPACE}/test.txt" />
+  	
   </target>
 
 </project>

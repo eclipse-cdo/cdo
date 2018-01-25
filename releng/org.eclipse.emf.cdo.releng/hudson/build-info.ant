@@ -13,7 +13,7 @@
 
   <property file="ant.properties" />
   <property environment="env" />
-  <echoproperties prefix="env" />
+	<property name="env.HUDSON_URL" value="https://hudson.eclipse.org/cdo" />
 
 	<delete>
   	<fileset dir="${env.WORKSPACE}">
@@ -36,7 +36,7 @@
       </not>
       <then>
         <xmlproperty keeproot="false">
-          <url url="${env.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
+          <url url="${env.HUDSON_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/api/xml?tree=actions[causes[shortDescription]]" />
         </xmlproperty>
         <loadresource property="build.trigger">
           <propertyresource name="action.cause.shortDescription" />

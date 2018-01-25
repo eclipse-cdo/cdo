@@ -109,7 +109,6 @@
     <echo message="build.type = ${build.type}" />
     <echo message="build.sign = ${build.sign}" />
     <echo message="build.trigger = ${build.trigger}" />
-    <echo message="build.timestamp = ${build.timestamp}" />
     <echo message="build.qualifier = ${build.qualifier}" />
   </target>
 

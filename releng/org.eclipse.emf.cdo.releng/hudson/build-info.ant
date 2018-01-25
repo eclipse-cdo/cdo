@@ -13,10 +13,10 @@
 
   <property file="ant.properties" />
   <property environment="env" />
+  <echoproperties prefix="env" />
 
 	<delete>
   	<fileset dir="${env.WORKSPACE}">
-  	    <include name="env.properties"/>
   	    <include name="build-info.properties"/>
   	    <include name="build-info.xml"/>
   	</fileset>

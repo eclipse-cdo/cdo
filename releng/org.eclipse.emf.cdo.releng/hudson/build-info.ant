@@ -13,6 +13,7 @@
 
   <property file="ant.properties" />
   <property environment="env" />
+  <echoproperties prefix="env" destfile="${env.WORKSPACE}/env.properties" />
 
   <taskdef resource="net/sf/antcontrib/antlib.xml">
     <classpath>
@@ -21,6 +22,7 @@
   </taskdef>
 
   <target name="build-info" if="env.HUDSON_URL">
+    <echo message="Build Infos:" />
     <!-- build.trigger -->
     <if>
       <not>
@@ -114,9 +116,6 @@
     <echo message="build.trigger = ${build.trigger}" />
     <echo message="build.timestamp = ${build.timestamp}" />
     <echo message="build.qualifier = ${build.qualifier}" />
-  	
-    <echo message="test" file="${env.WORKSPACE}/test.txt" />
-  	
   </target>
 
 </project>

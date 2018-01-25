@@ -78,18 +78,7 @@
     </if>
 
     <!-- build.qualifier -->
-    <property name="build.timestamp" value="${env.BUILD_ID}" /> 
-    <tempfile property="tmp.build.qualifier"
-              destdir="${java.io.tmpdir}"
-              prefix="build-qualifier-"
-              suffix=".tmp"
-              deleteonexit="true" />
-    <echo message="build.qualifier.date=${build.timestamp}" file="${tmp.build.qualifier}" />
-    <replaceregexp file="${tmp.build.qualifier}">
-      <regexp pattern="([0-9]*)-([0-9]*)-([0-9]*)_([0-9]*)-([0-9]*)-([0-9]*)" />
-      <substitution expression="\1\2\3-\4\5" />
-    </replaceregexp >
-    <property file="${tmp.build.qualifier}" />
+    <property name="build.qualifier.date" value="${env.BUILD_TIMESTAMP}" /> 
   	<property name="build.qualifier" value="${build.type}${build.qualifier.date}" />
   	<property name="build.version" value="v${build.qualifier.date}" />
 
@@ -101,7 +90,7 @@
              eclipse="${eclipse}"
              emf="${emf}"
              type="${build.type}"
-             timestamp="${build.timestamp}"
+             timestamp="${build.qualifier.date}"
              qualifier="${build.qualifier}"
              trigger="${build.trigger}"
              hudson="${env.HUDSON_URL}"

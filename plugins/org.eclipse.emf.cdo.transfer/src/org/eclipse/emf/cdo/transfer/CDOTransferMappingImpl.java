@@ -46,7 +46,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     this.transfer = transfer;
     this.source = source;
     this.parent = (CDOTransferMappingImpl)parent;
-    relativePath = new Path(source.getName());
+    relativePath = transfer.getPathProvider().getPath(source);
 
     CDOTransferType transferType = transfer.getTransferType(source);
     this.transferType = transferType;

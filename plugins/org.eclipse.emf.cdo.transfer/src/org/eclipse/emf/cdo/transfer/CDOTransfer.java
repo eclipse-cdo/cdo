@@ -78,6 +78,8 @@ public class CDOTransfer implements INotifier
 
   private ModelTransferContext modelTransferContext = createModelTransferContext();
 
+  private PathProvider pathProvider = PathProvider.DEFAULT;
+
   public CDOTransfer(CDOTransferSystem sourceSystem, CDOTransferSystem targetSystem)
   {
     this.sourceSystem = sourceSystem;
@@ -112,6 +114,22 @@ public class CDOTransfer implements INotifier
   public final CDOTransferSystem getTargetSystem()
   {
     return targetSystem;
+  }
+
+  /**
+   * @since 4.3
+   */
+  public final PathProvider getPathProvider()
+  {
+    return pathProvider;
+  }
+
+  /**
+   * @since 4.3
+   */
+  public final void setPathProvider(PathProvider pathProvider)
+  {
+    this.pathProvider = pathProvider;
   }
 
   public ModelTransferContext getModelTransferContext()
@@ -413,6 +431,25 @@ public class CDOTransfer implements INotifier
     {
       notifier.fireEvent(new TransferTypeChangedEvent(mapping, oldType, newType), listeners);
     }
+  }
+
+  /**
+   * Provides the path of a transfer element relative to its parent.
+   *
+   * @author Eike Stepper
+   * @since 4.3
+   */
+  public interface PathProvider
+  {
+    public static final PathProvider DEFAULT = new PathProvider()
+    {
+      public IPath getPath(CDOTransferElement element)
+      {
+        return new Path(element.getName());
+      }
+    };
+
+    public IPath getPath(CDOTransferElement element);
   }
 
   /**

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -321,6 +322,7 @@ public class StateMachineTest extends AbstractCDOTest
     assertTransient(p3);
   }
 
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void test_REATTACH() throws Exception
   {
     CDOSession session = openSession();

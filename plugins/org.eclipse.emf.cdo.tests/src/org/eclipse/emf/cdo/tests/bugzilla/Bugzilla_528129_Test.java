@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment;
 import org.eclipse.emf.cdo.tests.model3.Model3Factory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -107,7 +106,6 @@ public class Bugzilla_528129_Test extends AbstractCDOTest
     }
   }
 
-  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testMoveToTransientContainment() throws Exception
   {
     CDOSession session = openSession();
@@ -126,7 +124,6 @@ public class Bugzilla_528129_Test extends AbstractCDOTest
     assertTransient(child);
   }
 
-  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testMoveToPersistentContainment() throws Exception
   {
     CDOSession session = openSession();
@@ -166,7 +163,18 @@ public class Bugzilla_528129_Test extends AbstractCDOTest
     StateChangeDetector detector = new StateChangeDetector(transaction, child);
     root2.getPersistentChildren().add(child);
     assertNew(child, transaction);
-    assertFalse(detector.isStateChanged());
+
+    if (isConfig(LEGACY))
+    {
+      // NEW --> TRANSIENT
+      // TRANSIENT --> PREPARED
+      // PREPARED --> NEW
+      assertEquals(3, detector.getStateChanges());
+    }
+    else
+    {
+      assertEquals(0, detector.getStateChanges());
+    }
   }
 
   private ClassWithTransientContainment createObject(String name)
@@ -183,7 +191,7 @@ public class Bugzilla_528129_Test extends AbstractCDOTest
   {
     private final CDOObject object;
 
-    private boolean stateChanged;
+    private int stateChanges;
 
     public StateChangeDetector(CDOView view, EObject object)
     {
@@ -191,16 +199,17 @@ public class Bugzilla_528129_Test extends AbstractCDOTest
       view.addObjectHandler(this);
     }
 
-    public boolean isStateChanged()
+    public int getStateChanges()
     {
-      return stateChanged;
+      return stateChanges;
     }
 
     public void objectStateChanged(CDOView view, CDOObject object, CDOState oldState, CDOState newState)
     {
       if (object == this.object)
       {
-        stateChanged = true;
+        System.out.println(object + ": " + oldState + " --> " + newState);
+        ++stateChanges;
       }
     }
   }

@@ -42,8 +42,10 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.object.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
 
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
@@ -65,7 +67,9 @@ import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
+import org.eclipse.emf.spi.cdo.InternalCDOView.ViewAndState;
 
+import java.lang.reflect.Field;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -85,6 +89,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   static final ThreadLocal<Boolean> SWITCHING_TARGET = new InheritableThreadLocal<Boolean>();
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_STATEMACHINE, CDOStateMachine.class);
+
+  private static final Field NATIVE_VIEW_AND_STATE_FIELD = ReflectUtil.getAccessibleField(CDOObjectImpl.class, "viewAndState");
+
+  private static final Field LEGACY_VIEW_AND_STATE_FIELD = ReflectUtil.getAccessibleField(CDOLegacyWrapper.class, "viewAndState");
 
   private InternalCDOObject lastTracedObject;
 
@@ -299,15 +307,15 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         // If we have an error, we will keep the graph exactly like it was before.
         process(object, CDOEvent.DETACH, objectsToDetach);
 
-        // postDetach requires the object to be TRANSIENT
+        // postDetach() requires the object to be TRANSIENT
         for (InternalCDOObject content : objectsToDetach)
         {
-          CDOState oldState = content.cdoInternalSetState(CDOState.TRANSIENT);
+          CDOState oldState = setStateQuietely(content, CDOState.TRANSIENT);
           content.cdoInternalPostDetach(false);
-          content.cdoInternalSetState(oldState);
+          setStateQuietely(content, oldState);
         }
 
-        // detachObject needs to know the state before we change the object to TRANSIENT
+        // detachObject() needs to know the state before we change the object to TRANSIENT
         for (InternalCDOObject content : objectsToDetach)
         {
           transaction.detachObject(content);
@@ -608,6 +616,35 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   protected void setState(InternalCDOObject object, CDOState state)
   {
     object.cdoInternalSetState(state);
+  }
+
+  private CDOState setStateQuietely(InternalCDOObject object, CDOState state)
+  {
+    Field viewAndStateField;
+    if (object instanceof CDOObjectImpl)
+    {
+      viewAndStateField = NATIVE_VIEW_AND_STATE_FIELD;
+    }
+    else if (object instanceof CDOLegacyWrapper)
+    {
+      viewAndStateField = LEGACY_VIEW_AND_STATE_FIELD;
+    }
+    else
+    {
+      return object.cdoInternalSetState(state);
+    }
+
+    try
+    {
+      ViewAndState viewAndState = (ViewAndState)viewAndStateField.get(object);
+      CDOState oldState = viewAndState.state;
+      ReflectUtil.setValue(viewAndStateField, object, viewAndState.getViewAndState(state));
+      return oldState;
+    }
+    catch (Exception ex)
+    {
+      return object.cdoInternalSetState(state);
+    }
   }
 
   private Lock getLock(InternalCDOObject object)

@@ -143,6 +143,16 @@ public final class ReflectUtil
     }
   }
 
+  /**
+   * @since 3.8
+   */
+  public static Field getAccessibleField(Class<?> c, String fieldName)
+  {
+    Field field = getField(c, fieldName);
+    field.setAccessible(true);
+    return field;
+  }
+
   public static void collectFields(Class<?> c, List<Field> fields)
   {
     if (c == ROOT_CLASS)

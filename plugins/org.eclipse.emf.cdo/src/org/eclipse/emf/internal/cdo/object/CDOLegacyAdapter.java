@@ -14,11 +14,14 @@
 package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDONotification;
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -29,8 +32,11 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Internal.DynamicValueHolder;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.spi.cdo.CDOStore;
 import org.eclipse.emf.spi.cdo.FSMUtil;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.List;
@@ -77,6 +83,8 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
     return type == CDOLegacyAdapter.class;
   }
 
+  public static boolean extendedLegacyAttachmentChecks = true;
+
   public void notifyChanged(Notification msg)
   {
     if (msg.isTouch() || msg instanceof CDONotification)
@@ -85,13 +93,20 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
     }
 
     EStructuralFeature feature = (EStructuralFeature)msg.getFeature();
-    if (viewAndState.view == null || feature == null || !(viewAndState.view instanceof CDOTransaction))
+    if (feature == null)
+    {
+      return;
+    }
+
+    if (viewAndState.view == null || !(viewAndState.view instanceof CDOTransaction))
     {
       return;
     }
 
     int featureID = eClass().getFeatureID(feature);
-    if (cdoClassInfo().isPersistent(featureID))
+    boolean persistent = cdoClassInfo().isPersistent(featureID);
+
+    if (persistent || extendedLegacyAttachmentChecks)
     {
       int eventType = msg.getEventType();
       int position = msg.getPosition();
@@ -101,27 +116,27 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
       switch (eventType)
       {
       case Notification.SET:
-        notifySet(feature, position, oldValue, newValue);
+        notifySet(feature, persistent, position, oldValue, newValue);
         break;
 
       case Notification.UNSET:
-        notifyUnset(feature, oldValue);
+        notifyUnset(feature, persistent, oldValue);
         break;
 
       case Notification.MOVE:
-        notifyMove(feature, position, oldValue);
+        notifyMove(feature, persistent, position, oldValue);
         break;
 
       case Notification.ADD:
-        notifyAdd(feature, position, newValue);
+        notifyAdd(feature, persistent, position, newValue);
         break;
 
       case Notification.ADD_MANY:
-        notifyAddMany(feature, position, newValue);
+        notifyAddMany(feature, persistent, position, newValue);
         break;
 
       case Notification.REMOVE:
-        notifyRemove(feature, position);
+        notifyRemove(feature, persistent, position, oldValue);
         break;
 
       case Notification.REMOVE_MANY:
@@ -132,7 +147,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
           throw new IllegalArgumentException("New value of REMOVE_MANY notification is not an array of indices.");
         }
 
-        notifyRemoveMany(feature, (int[])newValue);
+        notifyRemoveMany(feature, persistent, (int[])newValue);
         break;
       }
 
@@ -141,20 +156,23 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
     }
   }
 
-  protected void notifySet(EStructuralFeature feature, int position, Object oldValue, Object newValue)
+  protected void notifySet(EStructuralFeature feature, boolean persistent, int position, Object oldValue, Object newValue)
   {
     CDOStore store = viewAndState.view.getStore();
 
-    // bug 405257: handle unsettable features set explicitly to null.
-    // Note that an unsettable list feature doesn't allow individual
-    // positions to be set/unset
-    if (newValue == null && feature.isUnsettable() && position == Notification.NO_INDEX)
+    if (persistent)
     {
-      store.set(instance, feature, position, DynamicValueHolder.NIL);
-    }
-    else
-    {
-      store.set(instance, feature, position, newValue);
+      // bug 405257: handle unsettable features set explicitly to null.
+      // Note that an unsettable list feature doesn't allow individual
+      // positions to be set/unset
+      if (newValue == null && feature.isUnsettable() && position == Notification.NO_INDEX)
+      {
+        store.set(instance, feature, position, DynamicValueHolder.NIL);
+      }
+      else
+      {
+        store.set(instance, feature, position, newValue);
+      }
     }
 
     if (feature instanceof EReference)
@@ -165,19 +183,19 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
         if (oldValue != null)
         {
           InternalEObject oldChild = (InternalEObject)oldValue;
-          setContainer(store, oldChild, null, InternalEObject.EOPPOSITE_FEATURE_BASE);
+          setContainer(store, oldChild, null, InternalEObject.EOPPOSITE_FEATURE_BASE, persistent);
         }
 
         if (newValue != null)
         {
           InternalEObject newChild = (InternalEObject)newValue;
-          setContainer(store, newChild, this, newChild.eContainerFeatureID());
+          setContainer(store, newChild, this, newChild.eContainerFeatureID(), persistent);
         }
       }
     }
   }
 
-  protected void notifyUnset(EStructuralFeature feature, Object oldValue)
+  protected void notifyUnset(EStructuralFeature feature, boolean persistent, Object oldValue)
   {
     CDOStore store = viewAndState.view.getStore();
     if (feature instanceof EReference)
@@ -191,62 +209,88 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
         {
           if (child != null)
           {
-            setContainer(store, (InternalEObject)child, null, InternalEObject.EOPPOSITE_FEATURE_BASE);
+            setContainer(store, (InternalEObject)child, null, InternalEObject.EOPPOSITE_FEATURE_BASE, persistent);
           }
         }
       }
     }
 
-    store.unset(instance, feature);
+    if (persistent)
+    {
+      store.unset(instance, feature);
+    }
   }
 
-  protected void notifyMove(EStructuralFeature feature, int position, Object oldValue)
+  protected void notifyMove(EStructuralFeature feature, boolean persistent, int position, Object oldValue)
   {
-    CDOStore store = viewAndState.view.getStore();
-    store.move(instance, feature, position, (Integer)oldValue);
+    if (persistent)
+    {
+      CDOStore store = viewAndState.view.getStore();
+      store.move(instance, feature, position, (Integer)oldValue);
+    }
   }
 
-  protected void notifyAdd(EStructuralFeature feature, int position, Object newValue)
+  protected void notifyAdd(EStructuralFeature feature, boolean persistent, int position, Object newValue)
   {
     CDOStore store = viewAndState.view.getStore();
-    store.add(instance, feature, position, newValue);
+
+    if (persistent)
+    {
+      store.add(instance, feature, position, newValue);
+    }
+
     if (newValue != null && feature instanceof EReference)
     {
       EReference reference = (EReference)feature;
       if (reference.isContainment())
       {
         InternalEObject newChild = (InternalEObject)newValue;
-        setContainer(store, newChild, this, newChild.eContainerFeatureID());
+        setContainer(store, newChild, this, newChild.eContainerFeatureID(), persistent);
       }
     }
   }
 
-  protected void notifyAddMany(EStructuralFeature feature, int position, Object newValue)
+  protected void notifyAddMany(EStructuralFeature feature, boolean persistent, int position, Object newValue)
   {
     CDOStore store = viewAndState.view.getStore();
     int pos = position;
+
     @SuppressWarnings("unchecked")
     List<Object> list = (List<Object>)newValue;
+
     for (Object object : list)
     {
-      store.add(instance, feature, pos++, object);
+      if (persistent)
+      {
+        store.add(instance, feature, pos++, object);
+      }
+
       if (object != null && feature instanceof EReference)
       {
         EReference reference = (EReference)feature;
         if (reference.isContainment())
         {
           InternalEObject newChild = (InternalEObject)object;
-          setContainer(store, newChild, this, newChild.eContainerFeatureID());
+          setContainer(store, newChild, this, newChild.eContainerFeatureID(), persistent);
         }
       }
     }
   }
 
-  protected void notifyRemove(EStructuralFeature feature, int position)
+  protected void notifyRemove(EStructuralFeature feature, boolean persistent, int position, Object oldValue)
   {
     CDOStore store = viewAndState.view.getStore();
 
-    Object oldChild = store.remove(instance, feature, position);
+    Object oldChild = null;
+    if (persistent)
+    {
+      oldChild = store.remove(instance, feature, position);
+    }
+    else
+    {
+      oldChild = oldValue;
+    }
+
     if (oldChild instanceof InternalEObject)
     {
       if (feature instanceof EReference)
@@ -255,13 +299,13 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
         if (reference.isContainment())
         {
           InternalEObject oldChildEObject = (InternalEObject)oldChild;
-          setContainer(store, oldChildEObject, null, InternalEObject.EOPPOSITE_FEATURE_BASE);
+          setContainer(store, oldChildEObject, null, InternalEObject.EOPPOSITE_FEATURE_BASE, persistent);
         }
       }
     }
   }
 
-  protected void notifyRemoveMany(EStructuralFeature feature, int[] positions)
+  protected void notifyRemoveMany(EStructuralFeature feature, boolean persistent, int[] positions)
   {
     CDOStore store = viewAndState.view.getStore();
 
@@ -269,7 +313,12 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
     {
       // The list was cleared
       Object[] oldChildren = store.toArray(instance, feature);
-      store.clear(instance, feature);
+
+      if (persistent)
+      {
+        store.clear(instance, feature);
+      }
+
       if (feature instanceof EReference)
       {
         EReference reference = (EReference)feature;
@@ -280,7 +329,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
             Object oldChild = oldChildren[i];
             if (oldChild instanceof InternalEObject)
             {
-              setContainer(store, (InternalEObject)oldChild, null, InternalEObject.EOPPOSITE_FEATURE_BASE);
+              setContainer(store, (InternalEObject)oldChild, null, InternalEObject.EOPPOSITE_FEATURE_BASE, persistent);
             }
           }
         }
@@ -288,10 +337,25 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
     }
     else
     {
+      Object[] oldChildren = null;
+      if (!persistent)
+      {
+        oldChildren = store.toArray(instance, feature);
+      }
+
       // Select indices were removed from the list
       for (int i = positions.length - 1; i >= 0; --i)
       {
-        Object oldChild = store.remove(instance, feature, positions[i]);
+        Object oldChild = null;
+        if (persistent)
+        {
+          oldChild = store.remove(instance, feature, positions[i]);
+        }
+        else
+        {
+          oldChild = oldChildren[i];
+        }
+
         if (oldChild instanceof InternalEObject)
         {
           if (feature instanceof EReference)
@@ -300,7 +364,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
             if (reference.isContainment())
             {
               InternalEObject oldChildEObject = (InternalEObject)oldChild;
-              setContainer(store, oldChildEObject, null, InternalEObject.EOPPOSITE_FEATURE_BASE);
+              setContainer(store, oldChildEObject, null, InternalEObject.EOPPOSITE_FEATURE_BASE, persistent);
             }
           }
         }
@@ -308,7 +372,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
     }
   }
 
-  private void setContainer(CDOStore store, InternalEObject object, InternalEObject container, int containingFeatureID)
+  private void setContainer(CDOStore store, InternalEObject object, InternalEObject container, int containingFeatureID, boolean featurePersistent)
   {
     if (object instanceof CDOObjectImpl)
     {
@@ -316,7 +380,52 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
       return;
     }
 
-    if (FSMUtil.isTransient(CDOUtil.getCDOObject(object)))
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    boolean objectPersistent = !FSMUtil.isTransient(cdoObject);
+
+    if (extendedLegacyAttachmentChecks)
+    {
+      Resource.Internal directResource = object.eDirectResource();
+
+      if (container == null)
+      {
+        if (!(directResource instanceof CDOResource))
+        {
+          if (objectPersistent)
+          {
+            CDOStateMachine.INSTANCE.detach((InternalCDOObject)cdoObject);
+            objectPersistent = false;
+          }
+        }
+      }
+      else
+      {
+        if (directResource == null || directResource instanceof CDOResource)
+        {
+          CDOObject cdoContainer = CDOUtil.getCDOObject(container);
+          if (featurePersistent)
+          {
+            boolean containerPersistent = !FSMUtil.isTransient(cdoContainer);
+            if (!containerPersistent)
+            {
+              featurePersistent = false;
+            }
+          }
+
+          if (featurePersistent)
+          {
+            if (!objectPersistent)
+            {
+              InternalCDOTransaction transaction = (InternalCDOTransaction)cdoContainer.cdoView();
+              CDOStateMachine.INSTANCE.attach((InternalCDOObject)cdoObject, transaction);
+              objectPersistent = true;
+            }
+          }
+        }
+      }
+    }
+
+    if (!objectPersistent)
     {
       // Don't touch transient objects
       return;

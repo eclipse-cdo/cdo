@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011-2018 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
+ *    Maxime Porhel - maintenance
  */
 package org.eclipse.emf.internal.cdo.view;
 
@@ -1258,6 +1259,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
                 cleanRevisions.remove(object);
                 revisionDeltas.remove(id);
                 lastSavepoint.getDirtyObjects().remove(id);
+
+                if (lastSavepoint.getReattachedObjects().remove(id) != null)
+                {
+                  lastSavepoint.getDetachedObjects().remove(id);
+                }
 
                 object.cdoInternalSetRevision(cleanRevision);
                 changeState(object, CDOState.CLEAN);

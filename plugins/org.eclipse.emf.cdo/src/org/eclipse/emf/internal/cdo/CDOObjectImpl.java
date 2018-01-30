@@ -767,7 +767,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    * @since 2.0
    */
   @Override
-  public final NotificationChain eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID, NotificationChain msgs)
+  public NotificationChain eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID, NotificationChain msgs)
   {
     InternalEObject oldContainer = eInternalContainer();
     Resource.Internal oldResource = eDirectResource();
@@ -975,7 +975,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   @Override
-  protected final void eSetDirectResource(Internal resource)
+  protected void eSetDirectResource(Internal resource)
   {
     if (FSMUtil.isTransient(this))
     {

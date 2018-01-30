@@ -636,7 +636,7 @@
       name="Mylyn Builds">
     <setupTask
         xsi:type="mylyn:MylynBuildsTask"
-        serverURL="https://hudson.eclipse.org/cdo"
+        serverURL="https://ci.eclipse.org/cdo"
         userID="${bugzilla.id}"
         password="${eclipse.user.password}">
       <buildPlan

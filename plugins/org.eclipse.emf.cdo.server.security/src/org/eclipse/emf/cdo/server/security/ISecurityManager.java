@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.security;
 
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.SecurityItemContainer;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -44,6 +45,11 @@ public interface ISecurityManager extends SecurityItemContainer
    * @since 4.2
    */
   public void modify(RealmOperation operation, boolean waitUntilReadable);
+
+  /**
+   * @since 4.4
+   */
+  public CDOCommitInfo modifyWithInfo(RealmOperation operation, boolean waitUntilReadable);
 
   /**
    * Modifies a security {@link Realm realm} in a safe transaction.

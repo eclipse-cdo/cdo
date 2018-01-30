@@ -398,6 +398,11 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   public void modify(RealmOperation operation, boolean waitUntilReadable)
   {
+    modifyWithInfo(operation, waitUntilReadable);
+  }
+
+  public CDOCommitInfo modifyWithInfo(RealmOperation operation, boolean waitUntilReadable)
+  {
     checkReady();
     CDOTransaction transaction = systemSession.openTransaction();
 
@@ -405,15 +410,17 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     {
       Realm transactionRealm = transaction.getObject(realm);
       operation.execute(transactionRealm);
-      CDOCommitInfo commit = transaction.commit();
+      CDOCommitInfo info = transaction.commit();
 
       if (waitUntilReadable)
       {
-        if (!systemView.waitForUpdate(commit.getTimeStamp(), 10000))
+        if (!systemView.waitForUpdate(info.getTimeStamp(), 10000))
         {
           throw new TimeoutRuntimeException();
         }
       }
+
+      return info;
     }
     catch (CommitException ex)
     {

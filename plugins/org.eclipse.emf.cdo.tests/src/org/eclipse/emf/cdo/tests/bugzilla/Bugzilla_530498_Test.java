@@ -78,14 +78,14 @@ public class Bugzilla_530498_Test extends AbstractCDOTest
     // cancellation of the "Remove" step will do nothing).
     company1.getCustomers().add(customer);
 
-    assertFalse(transaction.getDirtyObjects().containsKey(customerID));
+    assertEquals(isConfig(LEGACY), transaction.getDirtyObjects().containsKey(customerID));
     assertFalse(transaction.getDirtyObjects().containsKey(company1ID));
     assertFalse(transaction.getDirtyObjects().containsKey(company2ID));
 
     assertFalse(transaction.getDetachedObjects().containsKey(customerID));
     assertFalse(transaction.getLastSavepoint().getAllDetachedObjects().containsKey(customerID));
-    assertFalse(transaction.getLastSavepoint().getDetachedObjects().containsKey(customerID));
-    assertFalse(transaction.getLastSavepoint().getReattachedObjects().containsKey(customerID));
+    assertEquals(isConfig(LEGACY), transaction.getLastSavepoint().getDetachedObjects().containsKey(customerID));
+    assertEquals(isConfig(LEGACY), transaction.getLastSavepoint().getReattachedObjects().containsKey(customerID));
 
     // Rollback the transaction
     transaction.rollback();

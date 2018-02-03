@@ -2,7 +2,8 @@
 <setup:Configuration
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
-    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0">
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    label="CDO Development Environment">
   <installation
       name="cdo.development.environment.installation"
       label="CDO Development Environment Installation">
@@ -17,4 +18,5 @@
         href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']/@projects[name='cdo']/@streams[name='master']"/>
     <description>The CDO Development Environment workspace contains all features and plugins from the CDO Git repository.</description>
   </workspace>
+  <description>The CDO Development Environment configuration provides a full development environment for working on CDO.</description>
 </setup:Configuration>

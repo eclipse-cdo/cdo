@@ -82,7 +82,9 @@ import java.util.Map;
  * @author Stefan Winkler
  * @author Lothar Werzinger
  * @since 3.0
+ * @deprecated As 4.5 feature maps are no longer supported.
  */
+@Deprecated
 public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicListTableMapping implements IListMappingDeltaSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, BranchingFeatureMapTableMappingWithRanges.class);

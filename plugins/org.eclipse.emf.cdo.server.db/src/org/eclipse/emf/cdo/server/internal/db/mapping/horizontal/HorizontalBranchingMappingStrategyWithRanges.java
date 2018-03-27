@@ -77,6 +77,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     return new BranchingListTableMappingWithRanges(this, containingClass, feature);
   }
 
+  @Deprecated
   @Override
   public IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature)
   {

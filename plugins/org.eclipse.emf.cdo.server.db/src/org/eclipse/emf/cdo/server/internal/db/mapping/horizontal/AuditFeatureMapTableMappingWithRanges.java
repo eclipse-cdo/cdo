@@ -84,7 +84,9 @@ import java.util.Map;
  * @author Stefan Winkler
  * @author Lothar Werzinger
  * @since 3.0
+ * @deprecated As 4.5 feature maps are no longer supported.
  */
+@Deprecated
 public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTableMapping implements IListMappingDeltaSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AuditFeatureMapTableMappingWithRanges.class);
@@ -690,8 +692,8 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     CDOBranch main = getMappingStrategy().getStore().getRepository().getBranchManager().getMainBranch();
 
     // get revision from cache to find out version number
-    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id, main.getHead(),
-        /* chunksize = */0, CDORevision.DEPTH_NONE, true);
+    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id, main.getHead(), /* chunksize = */0,
+        CDORevision.DEPTH_NONE, true);
 
     // set cdo_revision_removed for all list items (so we have no NULL values)
     clearList(accessor, id, revision.getVersion(), FINAL_VERSION);

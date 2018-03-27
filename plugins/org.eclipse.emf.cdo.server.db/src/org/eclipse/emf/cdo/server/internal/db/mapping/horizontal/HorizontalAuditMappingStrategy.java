@@ -54,6 +54,7 @@ public class HorizontalAuditMappingStrategy extends AbstractHorizontalMappingStr
     return new AuditListTableMapping(this, containingClass, feature);
   }
 
+  @Deprecated
   @Override
   public IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature)
   {

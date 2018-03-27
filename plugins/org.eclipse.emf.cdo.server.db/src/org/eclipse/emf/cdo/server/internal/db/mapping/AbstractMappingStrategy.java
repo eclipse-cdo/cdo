@@ -812,6 +812,10 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public abstract IListMapping doCreateListMapping(EClass containingClass, EStructuralFeature feature);
 
+  /**
+   * @deprecated As 4.5 feature maps are no longer supported.
+   */
+  @Deprecated
   public abstract IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature);
 
   @Override

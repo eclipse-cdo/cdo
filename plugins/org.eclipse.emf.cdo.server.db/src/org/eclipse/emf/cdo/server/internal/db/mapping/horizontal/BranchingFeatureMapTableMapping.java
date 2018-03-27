@@ -38,7 +38,9 @@ import java.util.List;
  * @author Eike Stepper
  * @author Stefan Winkler
  * @since 3.0
+ * @deprecated As 4.5 feature maps are no longer supported.
  */
+@Deprecated
 public class BranchingFeatureMapTableMapping extends AbstractFeatureMapTableMapping
 {
   private String sqlClear;

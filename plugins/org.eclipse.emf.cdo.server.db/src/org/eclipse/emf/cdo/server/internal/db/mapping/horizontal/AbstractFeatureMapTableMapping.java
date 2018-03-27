@@ -65,7 +65,9 @@ import java.util.Map;
  *
  * @author Eike Stepper
  * @since 3.0
+ * @deprecated As 4.5 feature maps are no longer supported.
  */
+@Deprecated
 public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTableMapping
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractFeatureMapTableMapping.class);
@@ -581,8 +583,7 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
   public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere, QueryXRefsContext context, String idString)
   {
     /*
-     * must never be called (a feature map is not associated with an EReference feature, so XRefs are nor supported
-     * here)
+     * must never be called (a feature map is not associated with an EReference feature, so XRefs are nor supported here)
      */
     throw new ImplementationError("Should never be called!");
   }

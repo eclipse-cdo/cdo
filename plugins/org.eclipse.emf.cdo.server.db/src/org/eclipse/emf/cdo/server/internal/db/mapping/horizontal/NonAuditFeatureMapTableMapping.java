@@ -53,7 +53,9 @@ import java.util.List;
  *
  * @author Eike Stepper
  * @since 3.0
+ * @deprecated As 4.5 feature maps are no longer supported.
  */
+@Deprecated
 public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMapping implements IListMappingDeltaSupport
 {
   private static final int TEMP_INDEX = -1;

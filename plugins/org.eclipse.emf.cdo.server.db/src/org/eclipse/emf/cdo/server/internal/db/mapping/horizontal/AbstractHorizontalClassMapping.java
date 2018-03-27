@@ -24,6 +24,11 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
+import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
@@ -41,6 +46,7 @@ import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
@@ -53,6 +59,7 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.lifecycle.IDeactivateable;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -1087,6 +1094,53 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       {
         builder.append(", ?"); //$NON-NLS-1$
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  protected abstract class AbstractFeatureDeltaWriter implements CDOFeatureDeltaVisitor
+  {
+    protected IDBStoreAccessor accessor;
+
+    protected long created;
+
+    protected CDOID id;
+
+    public final void process(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created)
+    {
+      this.accessor = accessor;
+      this.created = created;
+      id = delta.getID();
+
+      doProcess(delta);
+    }
+
+    protected abstract void doProcess(InternalCDORevisionDelta delta);
+
+    @Deprecated
+    public final void visit(CDOAddFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+    }
+
+    @Deprecated
+    public final void visit(CDORemoveFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+    }
+
+    @Deprecated
+    public final void visit(CDOMoveFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+    }
+
+    @Deprecated
+    public final void visit(CDOClearFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
     }
   }
 }

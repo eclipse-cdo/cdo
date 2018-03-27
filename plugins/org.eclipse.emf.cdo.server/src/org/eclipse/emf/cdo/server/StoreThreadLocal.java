@@ -109,6 +109,14 @@ public final class StoreThreadLocal
     return accessor;
   }
 
+  /**
+   * @since 4.7
+   */
+  public static boolean hasAccessor()
+  {
+    return ACCESSOR.get() != null;
+  }
+
   public static void setCommitContext(IStoreAccessor.CommitContext commitContext)
   {
     if (commitContext == null)
@@ -124,6 +132,14 @@ public final class StoreThreadLocal
   public static IStoreAccessor.CommitContext getCommitContext()
   {
     return COMMIT_CONTEXT.get();
+  }
+
+  /**
+   * @since 4.7
+   */
+  public static boolean hasCommitContext()
+  {
+    return COMMIT_CONTEXT.get() != null;
   }
 
   /**

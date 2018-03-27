@@ -21,13 +21,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
-import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
@@ -103,15 +98,6 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
   private String sqlReviseAttributes;
 
   private String sqlRawDeleteAttributes;
-
-  private ThreadLocal<FeatureDeltaWriter> deltaWriter = new ThreadLocal<FeatureDeltaWriter>()
-  {
-    @Override
-    protected FeatureDeltaWriter initialValue()
-    {
-      return new FeatureDeltaWriter();
-    }
-  };
 
   public HorizontalAuditClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
@@ -626,7 +612,8 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       try
       {
         async = monitor.forkAsync();
-        FeatureDeltaWriter writer = deltaWriter.get();
+
+        FeatureDeltaWriter writer = new FeatureDeltaWriter();
         writer.process(accessor, delta, created);
       }
       finally
@@ -903,25 +890,17 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
   /**
    * @author Stefan Winkler
    */
-  private class FeatureDeltaWriter implements CDOFeatureDeltaVisitor
+  private final class FeatureDeltaWriter extends AbstractFeatureDeltaWriter
   {
-    private IDBStoreAccessor accessor;
-
-    private long created;
-
-    private CDOID id;
-
     private int oldVersion;
 
     private InternalCDORevision newRevision;
 
     private int branchId;
 
-    public void process(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created)
+    @Override
+    protected void doProcess(InternalCDORevisionDelta delta)
     {
-      this.accessor = accessor;
-      this.created = created;
-      id = delta.getID();
       branchId = delta.getBranch().getID();
       oldVersion = delta.getVersion();
 
@@ -947,21 +926,6 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       writeValues(accessor, newRevision);
     }
 
-    public void visit(CDOMoveFeatureDelta delta)
-    {
-      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
-    }
-
-    public void visit(CDOAddFeatureDelta delta)
-    {
-      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
-    }
-
-    public void visit(CDORemoveFeatureDelta delta)
-    {
-      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
-    }
-
     public void visit(CDOSetFeatureDelta delta)
     {
       delta.applyTo(newRevision);
@@ -975,13 +939,9 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     public void visit(CDOListFeatureDelta delta)
     {
       delta.applyTo(newRevision);
+
       IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(delta.getFeature());
       listMapping.processDelta(accessor, id, branchId, oldVersion, oldVersion + 1, created, delta);
-    }
-
-    public void visit(CDOClearFeatureDelta delta)
-    {
-      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
     }
 
     public void visit(CDOContainerFeatureDelta delta)

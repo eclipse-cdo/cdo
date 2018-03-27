@@ -23,13 +23,8 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
-import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
@@ -78,98 +73,6 @@ import java.util.Set;
  */
 public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapping implements IClassMappingAuditSupport, IClassMappingDeltaSupport
 {
-  /**
-   * @author Stefan Winkler
-   */
-  private class FeatureDeltaWriter implements CDOFeatureDeltaVisitor
-  {
-    private IDBStoreAccessor accessor;
-
-    private long created;
-
-    private CDOID id;
-
-    private CDOBranch targetBranch;
-
-    private int oldVersion;
-
-    private int newVersion;
-
-    private InternalCDORevision newRevision;
-
-    public void process(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created)
-    {
-      this.accessor = accessor;
-      this.created = created;
-      id = delta.getID();
-      oldVersion = delta.getVersion();
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("FeatureDeltaWriter: old version: {0}, new version: {1}", oldVersion, oldVersion + 1); //$NON-NLS-1$
-      }
-
-      InternalCDORevision originalRevision = (InternalCDORevision)accessor.getTransaction().getRevision(id);
-      newRevision = originalRevision.copy();
-      targetBranch = accessor.getTransaction().getBranch();
-      newRevision.adjustForCommit(targetBranch, created);
-
-      newVersion = newRevision.getVersion();
-
-      // process revision delta tree
-      delta.accept(this);
-
-      if (newVersion != CDORevision.FIRST_VERSION)
-      {
-        reviseOldRevision(accessor, id, delta.getBranch(), newRevision.getTimeStamp() - 1);
-      }
-
-      writeValues(accessor, newRevision);
-    }
-
-    public void visit(CDOMoveFeatureDelta delta)
-    {
-      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
-    }
-
-    public void visit(CDOAddFeatureDelta delta)
-    {
-      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
-    }
-
-    public void visit(CDORemoveFeatureDelta delta)
-    {
-      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
-    }
-
-    public void visit(CDOSetFeatureDelta delta)
-    {
-      delta.applyTo(newRevision);
-    }
-
-    public void visit(CDOUnsetFeatureDelta delta)
-    {
-      delta.applyTo(newRevision);
-    }
-
-    public void visit(CDOListFeatureDelta delta)
-    {
-      delta.applyTo(newRevision);
-      IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(delta.getFeature());
-      listMapping.processDelta(accessor, id, targetBranch.getID(), oldVersion, newVersion, created, delta);
-    }
-
-    public void visit(CDOClearFeatureDelta delta)
-    {
-      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
-    }
-
-    public void visit(CDOContainerFeatureDelta delta)
-    {
-      delta.applyTo(newRevision);
-    }
-  }
-
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalBranchingClassMapping.class);
 
   private String sqlInsertAttributes;
@@ -189,15 +92,6 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   private String sqlSelectForChangeSet;
 
   private String sqlRawDeleteAttributes;
-
-  private ThreadLocal<FeatureDeltaWriter> deltaWriter = new ThreadLocal<FeatureDeltaWriter>()
-  {
-    @Override
-    protected FeatureDeltaWriter initialValue()
-    {
-      return new FeatureDeltaWriter();
-    }
-  };
 
   public HorizontalBranchingClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
@@ -1016,7 +910,8 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       try
       {
         async = monitor.forkAsync();
-        FeatureDeltaWriter writer = deltaWriter.get();
+
+        FeatureDeltaWriter writer = new FeatureDeltaWriter();
         writer.process(accessor, delta, created);
       }
       finally
@@ -1058,6 +953,71 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     finally
     {
       monitor.done();
+    }
+  }
+
+  /**
+   * @author Stefan Winkler
+   */
+  private final class FeatureDeltaWriter extends AbstractFeatureDeltaWriter
+  {
+    private CDOBranch targetBranch;
+
+    private int oldVersion;
+
+    private int newVersion;
+
+    private InternalCDORevision newRevision;
+
+    @Override
+    protected void doProcess(InternalCDORevisionDelta delta)
+    {
+      oldVersion = delta.getVersion();
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("FeatureDeltaWriter: old version: {0}, new version: {1}", oldVersion, oldVersion + 1); //$NON-NLS-1$
+      }
+
+      InternalCDORevision originalRevision = (InternalCDORevision)accessor.getTransaction().getRevision(id);
+      newRevision = originalRevision.copy();
+      targetBranch = accessor.getTransaction().getBranch();
+      newRevision.adjustForCommit(targetBranch, created);
+
+      newVersion = newRevision.getVersion();
+
+      // process revision delta tree
+      delta.accept(this);
+
+      if (newVersion != CDORevision.FIRST_VERSION)
+      {
+        reviseOldRevision(accessor, id, delta.getBranch(), newRevision.getTimeStamp() - 1);
+      }
+
+      writeValues(accessor, newRevision);
+    }
+
+    public void visit(CDOSetFeatureDelta delta)
+    {
+      delta.applyTo(newRevision);
+    }
+
+    public void visit(CDOUnsetFeatureDelta delta)
+    {
+      delta.applyTo(newRevision);
+    }
+
+    public void visit(CDOListFeatureDelta delta)
+    {
+      delta.applyTo(newRevision);
+
+      IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(delta.getFeature());
+      listMapping.processDelta(accessor, id, targetBranch.getID(), oldVersion, newVersion, created, delta);
+    }
+
+    public void visit(CDOContainerFeatureDelta delta)
+    {
+      delta.applyTo(newRevision);
     }
   }
 }

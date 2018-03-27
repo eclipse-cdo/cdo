@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBAnnotation;
 import org.eclipse.emf.cdo.server.internal.db.ObjectIDIterator;
+import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -824,7 +825,11 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   {
     for (IClassMapping classMapping : classMappings.values())
     {
-      LifecycleUtil.deactivate(classMapping);
+      Exception exception = LifecycleUtil.deactivate(classMapping);
+      if (exception != null)
+      {
+        OM.LOG.warn(exception);
+      }
     }
   }
 

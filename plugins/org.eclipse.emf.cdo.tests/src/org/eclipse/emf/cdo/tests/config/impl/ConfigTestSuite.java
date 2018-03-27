@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Set;
 
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestResult;
 import junit.framework.TestSuite;
 
@@ -177,7 +178,40 @@ public abstract class ConfigTestSuite implements IConstants
     {
       // super(testClass, testClass.getName()); // Important for the UI to set the *qualified* class name!
       this.scenario = scenario;
-      addTestsFromTestCase(testClass, suite);
+
+      List<Test> tests = new ArrayList<Test>();
+      addTestsFromTestCase(testClass, suite, tests);
+
+      Collections.sort(tests, new Comparator<Test>()
+      {
+        public int compare(Test t1, Test t2)
+        {
+          String n1 = getName(t1);
+          String n2 = getName(t2);
+          return n1.compareTo(n2);
+        }
+
+        private String getName(Test test)
+        {
+          if (test instanceof TestCase)
+          {
+            return ((TestCase)test).getName();
+          }
+
+          if (test instanceof TestSuite)
+          {
+            return ((TestSuite)test).getName();
+          }
+
+          return "";
+        }
+      });
+
+      for (Test test : tests)
+      {
+        // System.err.println(test);
+        addTest(test);
+      }
     }
 
     @Override
@@ -201,7 +235,7 @@ public abstract class ConfigTestSuite implements IConstants
       }
     }
 
-    private void addTestsFromTestCase(final Class<?> theClass, ConfigTestSuite suite) throws ConstraintsViolatedException
+    private void addTestsFromTestCase(final Class<?> theClass, ConfigTestSuite suite, List<Test> tests) throws ConstraintsViolatedException
     {
       setName(theClass.getName());
 
@@ -211,13 +245,13 @@ public abstract class ConfigTestSuite implements IConstants
       }
       catch (NoSuchMethodException e)
       {
-        addTest(warning("Class " + theClass.getName() + " has no public constructor TestCase(String name) or TestCase()"));
+        tests.add(warning("Class " + theClass.getName() + " has no public constructor TestCase(String name) or TestCase()"));
         return;
       }
 
       if (!Modifier.isPublic(theClass.getModifiers()))
       {
-        addTest(warning("Class " + theClass.getName() + " is not public"));
+        tests.add(warning("Class " + theClass.getName() + " is not public"));
         return;
       }
 
@@ -243,7 +277,7 @@ public abstract class ConfigTestSuite implements IConstants
         {
           if (validateConstraints(method, capabilities))
           {
-            addTestMethod(method, names, theClass, suite);
+            addTestMethod(method, names, theClass, suite, tests);
           }
         }
 
@@ -280,7 +314,7 @@ public abstract class ConfigTestSuite implements IConstants
       return true;
     }
 
-    private void addTestMethod(Method m, List<String> names, Class<?> theClass, ConfigTestSuite suite)
+    private void addTestMethod(Method m, List<String> names, Class<?> theClass, ConfigTestSuite suite, List<Test> tests)
     {
       String name = m.getName();
       if (names.contains(name))
@@ -292,7 +326,7 @@ public abstract class ConfigTestSuite implements IConstants
       {
         if (isTestMethod(m))
         {
-          addTest(warning("Test method isn't public: " + m.getName() + "(" + theClass.getCanonicalName() + ")"));
+          tests.add(warning("Test method isn't public: " + name + "(" + theClass.getCanonicalName() + ")"));
         }
 
         return;
@@ -306,7 +340,7 @@ public abstract class ConfigTestSuite implements IConstants
         suite.prepareTest(configTest);
       }
 
-      addTest(test);
+      tests.add(test);
     }
 
     private boolean isPublicTestMethod(Method m)

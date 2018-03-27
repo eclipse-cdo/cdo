@@ -90,6 +90,8 @@ import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
+import org.junit.Assert;
+
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.lang.annotation.Annotation;
@@ -529,6 +531,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   @Override
   public void setUp() throws Exception
   {
+    StoreThreadLocal.release();
+
     super.setUp();
 
     if (isOptimizing() && needsCleanRepos() && repositories != null && !repositories.isEmpty())
@@ -542,7 +546,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     if (repositories == null)
     {
-      StoreThreadLocal.release();
       repositories = new HashMap<String, InternalRepository>();
     }
 
@@ -567,7 +570,23 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   @Override
   public void tearDown() throws Exception
   {
+    if (StoreThreadLocal.hasSession())
+    {
+      Assert.fail("Test case has left a session in StoreThreadLocal: " + getCurrentTest());
+    }
+
+    if (StoreThreadLocal.hasAccessor())
+    {
+      Assert.fail("Test case has left an accessor in StoreThreadLocal: " + getCurrentTest());
+    }
+
+    if (StoreThreadLocal.hasCommitContext())
+    {
+      Assert.fail("Test case has left a commit context in StoreThreadLocal: " + getCurrentTest());
+    }
+
     deactivateServerBrowser();
+
     if (repositories != null)
     {
       if (!isOptimizing() || mustLeaveCleanRepos())
@@ -600,6 +619,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   protected void deactivateRepositories()
   {
+    StoreThreadLocal.release();
+
     for (InternalRepository repository : getRepositories())
     {
       LifecycleUtil.deactivate(repository);
@@ -610,8 +631,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       repositories.clear();
       repositories = null;
     }
-
-    StoreThreadLocal.release();
 
     if (serverContainer != null)
     {

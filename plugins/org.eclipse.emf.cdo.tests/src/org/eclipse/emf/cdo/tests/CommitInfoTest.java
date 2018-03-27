@@ -139,18 +139,25 @@ public class CommitInfoTest extends AbstractCDOTest
     InternalSession serverSession = getRepository().getSessionManager().getSession(session.getSessionID());
     StoreThreadLocal.setSession(serverSession);
 
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
-    resource.getContents().add(getModel1Factory().createProduct1());
+    try
+    {
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+      resource.getContents().add(getModel1Factory().createProduct1());
 
-    CDOCommitInfo commitInfo = transaction.commit();
+      CDOCommitInfo commitInfo = transaction.commit();
 
-    Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
-    List<CDOCommitInfo> infos = handler.getInfos();
+      Handler handler = new Handler();
+      getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
+      List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getTimeStamp(), infos.get(0).getTimeStamp());
+      assertEquals(2, infos.size()); // Initial root resource commit + 1
+      assertEquals(commitInfo.getTimeStamp(), infos.get(0).getTimeStamp());
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @Skips("MongoDB")
@@ -160,19 +167,26 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
-    resource.getContents().add(getModel1Factory().createProduct1());
+    try
+    {
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+      resource.getContents().add(getModel1Factory().createProduct1());
 
-    CDOCommitInfo commitInfo = transaction.commit();
+      CDOCommitInfo commitInfo = transaction.commit();
 
-    Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
+      Handler handler = new Handler();
+      getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
 
-    List<CDOCommitInfo> infos = handler.getInfos();
+      List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
+      assertEquals(2, infos.size()); // Initial root resource commit + 1
+      assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -182,19 +196,26 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
-    CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
-    CDOTransaction transaction = session.openTransaction(branch);
-    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
-    resource.getContents().add(getModel1Factory().createProduct1());
+    try
+    {
+      CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
+      CDOTransaction transaction = session.openTransaction(branch);
+      CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+      resource.getContents().add(getModel1Factory().createProduct1());
 
-    CDOCommitInfo commitInfo = transaction.commit();
+      CDOCommitInfo commitInfo = transaction.commit();
 
-    Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
-    List<CDOCommitInfo> infos = handler.getInfos();
+      Handler handler = new Handler();
+      getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
+      List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
+      assertEquals(2, infos.size()); // Initial root resource commit + 1
+      assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @Skips("MongoDB")
@@ -214,18 +235,25 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession(REPO_NAME);
     StoreThreadLocal.setSession(getRepository(REPO_NAME).getSessionManager().getSession(session.getSessionID()));
 
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
-    resource.getContents().add(getModel1Factory().createProduct1());
+    try
+    {
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+      resource.getContents().add(getModel1Factory().createProduct1());
 
-    CDOCommitInfo commitInfo = transaction.commit();
+      CDOCommitInfo commitInfo = transaction.commit();
 
-    Handler handler = new Handler();
-    getRepository(REPO_NAME).getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
-    List<CDOCommitInfo> infos = handler.getInfos();
+      Handler handler = new Handler();
+      getRepository(REPO_NAME).getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
+      List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getUserID(), infos.get(0).getUserID());
+      assertEquals(2, infos.size()); // Initial root resource commit + 1
+      assertEquals(commitInfo.getUserID(), infos.get(0).getUserID());
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @Skips("MongoDB")
@@ -236,21 +264,28 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
-    resource.getContents().add(getModel1Factory().createProduct1());
+    try
+    {
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+      resource.getContents().add(getModel1Factory().createProduct1());
 
-    String comment = "Andre";
-    transaction.setCommitComment(comment);
+      String comment = "Andre";
+      transaction.setCommitComment(comment);
 
-    CDOCommitInfo commitInfo = transaction.commit();
+      CDOCommitInfo commitInfo = transaction.commit();
 
-    Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
-    List<CDOCommitInfo> infos = handler.getInfos();
+      Handler handler = new Handler();
+      getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
+      List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getComment(), infos.get(0).getComment());
+      assertEquals(2, infos.size()); // Initial root resource commit + 1
+      assertEquals(commitInfo.getComment(), infos.get(0).getComment());
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @Skips("MongoDB")
@@ -261,19 +296,26 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
-    resource.getContents().add(getModel1Factory().createProduct1());
+    try
+    {
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+      resource.getContents().add(getModel1Factory().createProduct1());
 
-    CDOCommitInfo commitInfo = transaction.commit();
+      CDOCommitInfo commitInfo = transaction.commit();
 
-    Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(getRepository().getBranchManager().getBranch(transaction.getBranch().getID()),
-        CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
-    List<CDOCommitInfo> infos = handler.getInfos();
+      Handler handler = new Handler();
+      getRepository().getCommitInfoManager().getCommitInfos(getRepository().getBranchManager().getBranch(transaction.getBranch().getID()),
+          CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
+      List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getTimeStamp(), infos.get(0).getTimeStamp());
+      assertEquals(2, infos.size()); // Initial root resource commit + 1
+      assertEquals(commitInfo.getTimeStamp(), infos.get(0).getTimeStamp());
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @Skips("MongoDB")
@@ -284,19 +326,26 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
-    resource.getContents().add(getModel1Factory().createProduct1());
+    try
+    {
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+      resource.getContents().add(getModel1Factory().createProduct1());
 
-    CDOCommitInfo commitInfo = transaction.commit();
+      CDOCommitInfo commitInfo = transaction.commit();
 
-    Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(getRepository().getBranchManager().getBranch(transaction.getBranch().getID()),
-        CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
-    List<CDOCommitInfo> infos = handler.getInfos();
+      Handler handler = new Handler();
+      getRepository().getCommitInfoManager().getCommitInfos(getRepository().getBranchManager().getBranch(transaction.getBranch().getID()),
+          CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
+      List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
+      assertEquals(2, infos.size()); // Initial root resource commit + 1
+      assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -305,20 +354,27 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
-    CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
-    CDOTransaction transaction = session.openTransaction(branch);
-    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
-    resource.getContents().add(getModel1Factory().createProduct1());
+    try
+    {
+      CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
+      CDOTransaction transaction = session.openTransaction(branch);
+      CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+      resource.getContents().add(getModel1Factory().createProduct1());
 
-    CDOCommitInfo commitInfo = transaction.commit();
+      CDOCommitInfo commitInfo = transaction.commit();
 
-    Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(getRepository().getBranchManager().getBranch(transaction.getBranch().getID()),
-        CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
-    List<CDOCommitInfo> infos = handler.getInfos();
+      Handler handler = new Handler();
+      getRepository().getCommitInfoManager().getCommitInfos(getRepository().getBranchManager().getBranch(transaction.getBranch().getID()),
+          CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
+      List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(1, infos.size());
-    assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
+      assertEquals(1, infos.size());
+      assertEquals(commitInfo.getBranch().getID(), infos.get(0).getBranch().getID());
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @Skips("MongoDB")
@@ -338,19 +394,26 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession(REPO_NAME);
     StoreThreadLocal.setSession(getRepository(REPO_NAME).getSessionManager().getSession(session.getSessionID()));
 
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
-    resource.getContents().add(getModel1Factory().createProduct1());
+    try
+    {
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+      resource.getContents().add(getModel1Factory().createProduct1());
 
-    CDOCommitInfo commitInfo = transaction.commit();
+      CDOCommitInfo commitInfo = transaction.commit();
 
-    Handler handler = new Handler();
-    getRepository(REPO_NAME).getCommitInfoManager().getCommitInfos(getRepository(REPO_NAME).getBranchManager().getBranch(transaction.getBranch().getID()),
-        CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
-    List<CDOCommitInfo> infos = handler.getInfos();
+      Handler handler = new Handler();
+      getRepository(REPO_NAME).getCommitInfoManager().getCommitInfos(getRepository(REPO_NAME).getBranchManager().getBranch(transaction.getBranch().getID()),
+          CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
+      List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getUserID(), infos.get(0).getUserID());
+      assertEquals(2, infos.size()); // Initial root resource commit + 1
+      assertEquals(commitInfo.getUserID(), infos.get(0).getUserID());
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @Skips("MongoDB")
@@ -361,22 +424,29 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
-    resource.getContents().add(getModel1Factory().createProduct1());
+    try
+    {
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+      resource.getContents().add(getModel1Factory().createProduct1());
 
-    String comment = "Andre";
-    transaction.setCommitComment(comment);
+      String comment = "Andre";
+      transaction.setCommitComment(comment);
 
-    CDOCommitInfo commitInfo = transaction.commit();
+      CDOCommitInfo commitInfo = transaction.commit();
 
-    Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(getRepository().getBranchManager().getBranch(transaction.getBranch().getID()),
-        CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
-    List<CDOCommitInfo> infos = handler.getInfos();
+      Handler handler = new Handler();
+      getRepository().getCommitInfoManager().getCommitInfos(getRepository().getBranchManager().getBranch(transaction.getBranch().getID()),
+          CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
+      List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(2, infos.size()); // Initial root resource commit + 1
-    assertEquals(commitInfo.getComment(), infos.get(0).getComment());
+      assertEquals(2, infos.size()); // Initial root resource commit + 1
+      assertEquals(commitInfo.getComment(), infos.get(0).getComment());
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -385,18 +455,25 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
-    CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
-    resource.getContents().add(getModel1Factory().createProduct1());
+    try
+    {
+      CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+      resource.getContents().add(getModel1Factory().createProduct1());
 
-    transaction.commit();
+      transaction.commit();
 
-    Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
-    List<CDOCommitInfo> infos = handler.getInfos();
+      Handler handler = new Handler();
+      getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
+      List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(0, infos.size());
+      assertEquals(0, infos.size());
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -405,18 +482,25 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
-    CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
-    resource.getContents().add(getModel1Factory().createProduct1());
+    try
+    {
+      CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+      resource.getContents().add(getModel1Factory().createProduct1());
 
-    transaction.commit();
+      transaction.commit();
 
-    Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
-    List<CDOCommitInfo> infos = handler.getInfos();
+      Handler handler = new Handler();
+      getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
+      List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(0, infos.size());
+      assertEquals(0, infos.size());
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -425,19 +509,26 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
-    CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
-    CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
-    CDOTransaction transaction = session.openTransaction(branch);
-    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
-    resource.getContents().add(getModel1Factory().createProduct1());
+    try
+    {
+      CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
+      CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
+      CDOTransaction transaction = session.openTransaction(branch);
+      CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+      resource.getContents().add(getModel1Factory().createProduct1());
 
-    transaction.commit();
+      transaction.commit();
 
-    Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
-    List<CDOCommitInfo> infos = handler.getInfos();
+      Handler handler = new Handler();
+      getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
+      List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(0, infos.size());
+      assertEquals(0, infos.size());
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -455,18 +546,25 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession(REPO_NAME);
     StoreThreadLocal.setSession(getRepository(REPO_NAME).getSessionManager().getSession(session.getSessionID()));
 
-    CDOBranch wrong = getRepository(REPO_NAME).getBranchManager().getMainBranch().createBranch("wrong");
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
-    resource.getContents().add(getModel1Factory().createProduct1());
+    try
+    {
+      CDOBranch wrong = getRepository(REPO_NAME).getBranchManager().getMainBranch().createBranch("wrong");
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+      resource.getContents().add(getModel1Factory().createProduct1());
 
-    transaction.commit();
+      transaction.commit();
 
-    Handler handler = new Handler();
-    getRepository(REPO_NAME).getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
-    List<CDOCommitInfo> infos = handler.getInfos();
+      Handler handler = new Handler();
+      getRepository(REPO_NAME).getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
+      List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(0, infos.size());
+      assertEquals(0, infos.size());
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -475,21 +573,28 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
-    CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
-    resource.getContents().add(getModel1Factory().createProduct1());
+    try
+    {
+      CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
+      resource.getContents().add(getModel1Factory().createProduct1());
 
-    String comment = "Andre";
-    transaction.setCommitComment(comment);
+      String comment = "Andre";
+      transaction.setCommitComment(comment);
 
-    transaction.commit();
+      transaction.commit();
 
-    Handler handler = new Handler();
-    getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
-    List<CDOCommitInfo> infos = handler.getInfos();
+      Handler handler = new Handler();
+      getRepository().getCommitInfoManager().getCommitInfos(wrong, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
+      List<CDOCommitInfo> infos = handler.getInfos();
 
-    assertEquals(0, infos.size());
+      assertEquals(0, infos.size());
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   @CleanRepositoriesBefore(reason = "Commit info counting")

@@ -330,7 +330,7 @@ public abstract class AbstractOMTest extends TestCase
         }
         catch (SkipTestException ex)
         {
-          OM.LOG.info("Skipped " + this); //$NON-NLS-1$
+          OM.LOG.info("Skipped " + this + "\n");
         }
         catch (Throwable t)
         {
@@ -348,6 +348,12 @@ public abstract class AbstractOMTest extends TestCase
           throw t;
         }
       }
+
+      @Override
+      public String toString()
+      {
+        return getCurrrentTest().toString();
+      }
     });
   }
 
@@ -360,7 +366,7 @@ public abstract class AbstractOMTest extends TestCase
     }
     catch (SkipTestException ex)
     {
-      OM.LOG.info("Skipped " + this); //$NON-NLS-1$
+      OM.LOG.info("Skipped " + this + "\n");
     }
     catch (RuntimeException ex)
     {
@@ -854,7 +860,7 @@ public abstract class AbstractOMTest extends TestCase
   /**
    * @author Eike Stepper
    */
-  private static final class SkipTestException extends RuntimeException
+  public static final class SkipTestException extends RuntimeException
   {
     private static final long serialVersionUID = 1L;
   }

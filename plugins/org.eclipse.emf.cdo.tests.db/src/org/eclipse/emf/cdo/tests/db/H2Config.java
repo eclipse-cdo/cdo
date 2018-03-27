@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.tests.db.bundle.OM;
+
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -20,6 +22,10 @@ import org.h2.jdbcx.JdbcDataSource;
 import javax.sql.DataSource;
 
 import java.io.File;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -30,9 +36,17 @@ public class H2Config extends DBConfig
 
   private static final long serialVersionUID = 1L;
 
+  private static final Boolean disableRepositoryRecreationOptimization = Boolean
+      .getBoolean("org.eclipse.emf.cdo.tests.db.H2Config.disableRepositoryRecreationOptimization");
+
   private static File reusableFolder;
 
   private static JdbcDataSource defaultDataSource;
+
+  /**
+   * @see #optimizeRepositoryRecreation(String, JdbcDataSource)
+   */
+  private final transient Map<String, Connection> leakyConnections = new HashMap<String, Connection>();
 
   public H2Config()
   {
@@ -49,6 +63,11 @@ public class H2Config extends DBConfig
   protected IDBAdapter createDBAdapter()
   {
     return new H2Adapter();
+  }
+
+  protected File createDBFolder()
+  {
+    return TMPUtil.createTempFolder("h2_", "_test");
   }
 
   @Override
@@ -72,17 +91,50 @@ public class H2Config extends DBConfig
 
     JdbcDataSource dataSource = new JdbcDataSource();
     dataSource.setURL(url + ";SCHEMA=" + repoName);
+
+    if (!disableRepositoryRecreationOptimization)
+    {
+      optimizeRepositoryRecreation(repoName, dataSource);
+    }
+
     return dataSource;
   }
 
-  protected File createDBFolder()
+  /**
+   * This method implements kind of an evil performance optimization hack!
+   *
+   * As it turned out, a leaked JDBC connection leads to a cached H2 Database object
+   * in org.h2.engine.Engine.DATABASES, which, in turn, speeds up the recreation of
+   * CDO repositories as requested by RepositoryConfig.needsCleanRepos().
+   * A standard H2 test suite with 1555 test cases executes ~3.3 times faster then.
+   */
+  private void optimizeRepositoryRecreation(String repoName, JdbcDataSource dataSource)
   {
-    return TMPUtil.createTempFolder("h2_", "_test");
+    Connection leakyConnection = leakyConnections.get(repoName);
+    if (leakyConnection == null)
+    {
+      try
+      {
+        leakyConnection = dataSource.getConnection();
+        leakyConnections.put(repoName, leakyConnection);
+      }
+      catch (SQLException ex)
+      {
+        OM.LOG.info(ex);
+      }
+    }
   }
 
   @Override
   public void mainSuiteFinished() throws Exception
   {
+    for (Connection leakyConnection : leakyConnections.values())
+    {
+      leakyConnection.close();
+    }
+
+    leakyConnections.clear();
+
     deactivateRepositories();
 
     // if (defaultDataSource != null)

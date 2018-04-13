@@ -24,13 +24,13 @@ import java.io.File;
  */
 public class MigrateModelTask extends CDOTask
 {
-  private File location;
+  private File modelLocation;
 
   private boolean dynamicFeatureDelegation;
 
-  public void setLocation(File location)
+  public void setModelLocation(File modelLocation)
   {
-    this.location = location;
+    this.modelLocation = modelLocation;
   }
 
   public void setDynamicFeatureDelegation(boolean dynamicFeatureDelegation)
@@ -41,14 +41,14 @@ public class MigrateModelTask extends CDOTask
   @Override
   protected void checkAttributes() throws BuildException
   {
-    assertTrue("'location' must be specified.", location != null);
-    assertTrue("'location' must be point to an existing file.", location.isFile());
+    assertTrue("'modelLocation' must be specified.", modelLocation != null);
+    assertTrue("'modelLocation' must be point to an existing file.", modelLocation.isFile());
   }
 
   @Override
   protected void doExecute() throws Exception
   {
-    GenModel genModel = CDOMigratorUtil.getGenModel(location.getAbsolutePath());
+    GenModel genModel = CDOMigratorUtil.getGenModel(modelLocation.getAbsolutePath());
     GenDelegationKind featureDelegation = dynamicFeatureDelegation ? GenDelegationKind.DYNAMIC_LITERAL : GenDelegationKind.REFLECTIVE_LITERAL;
 
     String result = CDOMigratorUtil.adjustGenModel(genModel, featureDelegation);

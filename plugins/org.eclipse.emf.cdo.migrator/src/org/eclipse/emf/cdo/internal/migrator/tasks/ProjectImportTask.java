@@ -27,24 +27,24 @@ public class ProjectImportTask extends CDOTask
 {
   private String projectName;
 
-  private File location;
+  private File fromLocation;
 
   public void setProjectName(String projectName)
   {
     this.projectName = projectName;
   }
 
-  public void setLocation(File location)
+  public void setFromLocation(File fromLocation)
   {
-    this.location = location;
+    this.fromLocation = fromLocation;
   }
 
   @Override
   protected void checkAttributes() throws BuildException
   {
     assertTrue("'projectName' must be specified.", projectName != null && projectName.length() != 0);
-    assertTrue("'location' must be specified.", location != null);
-    assertTrue("'location' must be point to an existing directory.", location.isDirectory());
+    assertTrue("'fromLocation' must be specified.", fromLocation != null);
+    assertTrue("'fromLocation' must be point to an existing directory.", fromLocation.isDirectory());
   }
 
   @Override
@@ -54,17 +54,17 @@ public class ProjectImportTask extends CDOTask
     if (project.exists())
     {
       File existingLocation = new File(project.getLocation().toOSString()).getCanonicalFile();
-      if (!existingLocation.equals(location))
+      if (!existingLocation.equals(fromLocation))
       {
         throw new BuildException("Project " + projectName + " exists in different location: " + existingLocation);
       }
 
-      System.out.println("Project " + location + " is already imported.");
+      System.out.println("Project " + fromLocation + " is already imported.");
       return;
     }
 
-    System.out.println("Importing project " + location + " ...");
-    IPath locationPath = new Path(location.getAbsolutePath());
+    System.out.println("Importing project " + fromLocation + " ...");
+    IPath locationPath = new Path(fromLocation.getAbsolutePath());
 
     IProjectDescription projectDescription = workspace.newProjectDescription(projectName);
     projectDescription.setLocation(locationPath);

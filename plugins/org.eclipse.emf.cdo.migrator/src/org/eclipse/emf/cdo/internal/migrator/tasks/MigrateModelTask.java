@@ -17,20 +17,18 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 
 import org.apache.tools.ant.BuildException;
 
-import java.io.File;
-
 /**
  * @author Eike Stepper
  */
 public class MigrateModelTask extends CDOTask
 {
-  private File modelLocation;
+  private String modelPath;
 
   private boolean dynamicFeatureDelegation;
 
-  public void setModelLocation(File modelLocation)
+  public void setModelPath(String modelPath)
   {
-    this.modelLocation = modelLocation;
+    this.modelPath = modelPath;
   }
 
   public void setDynamicFeatureDelegation(boolean dynamicFeatureDelegation)
@@ -41,14 +39,13 @@ public class MigrateModelTask extends CDOTask
   @Override
   protected void checkAttributes() throws BuildException
   {
-    assertTrue("'modelLocation' must be specified.", modelLocation != null);
-    assertTrue("'modelLocation' must be point to an existing file.", modelLocation.isFile());
+    assertTrue("'modelPath' must be specified.", modelPath != null && modelPath.length() != 0);
   }
 
   @Override
   protected void doExecute() throws Exception
   {
-    GenModel genModel = CDOMigratorUtil.getGenModel(modelLocation.getAbsolutePath());
+    GenModel genModel = CDOMigratorUtil.getGenModel(modelPath);
     GenDelegationKind featureDelegation = dynamicFeatureDelegation ? GenDelegationKind.DYNAMIC_LITERAL : GenDelegationKind.REFLECTIVE_LITERAL;
 
     String result = CDOMigratorUtil.adjustGenModel(genModel, featureDelegation);

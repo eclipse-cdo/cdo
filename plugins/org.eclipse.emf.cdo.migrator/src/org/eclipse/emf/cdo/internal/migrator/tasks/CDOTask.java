@@ -25,9 +25,9 @@ import org.apache.tools.ant.Task;
  */
 public abstract class CDOTask extends Task
 {
-  protected IWorkspace workspace;
+  protected final IWorkspace workspace = ResourcesPlugin.getWorkspace();
 
-  protected IWorkspaceRoot root;
+  protected final IWorkspaceRoot root = workspace.getRoot();
 
   @Override
   public final void execute() throws BuildException
@@ -36,8 +36,6 @@ public abstract class CDOTask extends Task
 
     try
     {
-      workspace = ResourcesPlugin.getWorkspace();
-      root = workspace.getRoot();
 
       doExecute();
     }

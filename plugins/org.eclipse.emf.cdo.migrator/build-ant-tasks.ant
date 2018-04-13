@@ -11,18 +11,21 @@
 -->
 <project name="build-ant-tasks" default="build-ant-tasks" basedir=".">
 
-	<property name="jar.name" value="cdo.ant.tasks"/>
+	<property name="jar.name" value="cdo.ant.tasks" />
 
 	<target name="build-ant-tasks">
 		<jar destfile="ant_tasks/${jar.name}.jar">
-			<fileset dir="bin.tasks">
-				<include name="**/*.class"/>
+			<fileset dir="bin">
+				<include name="**/*.class" />
+				<exclude name="**/actions/*.class" />
+				<exclude name="**/wizards/*.class" />
+				<exclude name="**/CDOImporter*.class" />
 			</fileset>
 		</jar>
 	</target>
 
 	<target name="clean.jars">
-		<delete file="ant_tasks/${jar.name}.jar" failonerror="false"/>
+		<delete file="ant_tasks/${jar.name}.jar" failonerror="false" />
 	</target>
 
 </project>

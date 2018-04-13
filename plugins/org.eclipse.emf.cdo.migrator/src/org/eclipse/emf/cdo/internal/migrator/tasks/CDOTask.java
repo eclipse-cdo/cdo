@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.migrator.tasks;
+package org.eclipse.emf.cdo.internal.migrator.tasks;
 
 import org.eclipse.ant.core.AntCorePlugin;
 import org.eclipse.core.resources.IWorkspace;

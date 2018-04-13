@@ -8,9 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.migrator.tasks;
+package org.eclipse.emf.cdo.internal.migrator.tasks;
 
-import org.eclipse.emf.cdo.migrator.util.CDOMigratorUtil;
+import org.eclipse.emf.cdo.internal.migrator.CDOMigratorUtil;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenDelegationKind;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;

@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.internal.migrator;
 
 import org.eclipse.emf.cdo.internal.messages.Messages;
-import org.eclipse.emf.cdo.migrator.util.CDOMigratorUtil;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;

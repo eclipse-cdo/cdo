@@ -53,13 +53,13 @@ public abstract class CDOMigratorUtil
   public static GenModel getGenModel(String path)
   {
     ResourceSet resourceSet = new ResourceSetImpl();
-  
+
     Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
     map.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
-  
+
     URI uri = URI.createPlatformResourceURI(path, false);
     Resource resource = resourceSet.getResource(uri, true);
-  
+
     EList<EObject> contents = resource.getContents();
     if (!contents.isEmpty())
     {
@@ -69,7 +69,7 @@ public abstract class CDOMigratorUtil
         return (GenModel)object;
       }
     }
-  
+
     return null;
   }
 
@@ -89,6 +89,27 @@ public abstract class CDOMigratorUtil
       builder.append(" "); //$NON-NLS-1$
       builder.append(featureDelegation);
       builder.append("\n"); //$NON-NLS-1$
+    }
+
+    if (genModel.getBooleanFlagsField() != null)
+    {
+      genModel.setBooleanFlagsField(null);
+      builder.append(Messages.getString("CDOMigratorUtil.1")); //$NON-NLS-1$
+      builder.append(" null\n"); //$NON-NLS-1$
+    }
+
+    if (genModel.getBooleanFlagsReservedBits() != -1)
+    {
+      genModel.setBooleanFlagsReservedBits(-1);
+      builder.append(Messages.getString("CDOMigratorUtil.2")); //$NON-NLS-1$
+      builder.append(" -1\n"); //$NON-NLS-1$
+    }
+
+    if (genModel.isPackedEnums())
+    {
+      genModel.setPackedEnums(false);
+      builder.append(Messages.getString("CDOMigratorUtil.3")); //$NON-NLS-1$
+      builder.append(" false\n"); //$NON-NLS-1$
     }
 
     if (!ROOT_EXTENDS_CLASS.equals(genModel.getRootExtendsClass()))

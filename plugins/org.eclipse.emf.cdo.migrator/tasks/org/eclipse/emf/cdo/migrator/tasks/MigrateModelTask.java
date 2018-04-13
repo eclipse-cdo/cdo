@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.migrator.tasks;
 
-import org.eclipse.emf.cdo.migrator.tasks.util.CDOMigratorUtil;
+import org.eclipse.emf.cdo.migrator.util.CDOMigratorUtil;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenDelegationKind;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;

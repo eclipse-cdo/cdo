@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.migrator.tasks.util;
+package org.eclipse.emf.cdo.migrator.util;
 
 import org.eclipse.emf.cdo.internal.messages.Messages;
 

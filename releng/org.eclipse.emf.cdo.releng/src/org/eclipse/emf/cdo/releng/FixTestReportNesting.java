@@ -52,12 +52,16 @@ public class FixTestReportNesting
   {
     folder = new File(args[0]);
 
-    for (File file : folder.listFiles())
+    File[] files = folder.listFiles();
+    if (files != null)
     {
-      String name = file.getName();
-      if (name.startsWith("TEST-") && name.endsWith(".xml"))
+      for (File file : files)
       {
-        fix(file);
+        String name = file.getName();
+        if (name.startsWith("TEST-") && name.endsWith(".xml"))
+        {
+          fix(file);
+        }
       }
     }
   }

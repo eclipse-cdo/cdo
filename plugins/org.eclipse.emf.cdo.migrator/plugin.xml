@@ -61,6 +61,7 @@
   <extension point="org.eclipse.ant.core.antTasks">
     <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.ProjectImport" headless="true" class="org.eclipse.emf.cdo.migrator.tasks.ProjectImportTask" />
     <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.ProjectDelete" headless="true" class="org.eclipse.emf.cdo.migrator.tasks.ProjectDeleteTask" />
+    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.MigrateModel" headless="true" class="org.eclipse.emf.cdo.migrator.tasks.MigrateModelTask" />
   </extension>
 
 </plugin>

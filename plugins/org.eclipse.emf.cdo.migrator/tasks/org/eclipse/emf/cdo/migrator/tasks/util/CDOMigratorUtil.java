@@ -8,14 +8,20 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.migrator;
+package org.eclipse.emf.cdo.migrator.tasks.util;
 
 import org.eclipse.emf.cdo.internal.messages.Messages;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenDelegationKind;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -24,6 +30,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -40,6 +48,29 @@ public abstract class CDOMigratorUtil
 
   private CDOMigratorUtil()
   {
+  }
+
+  public static GenModel getGenModel(String path)
+  {
+    ResourceSet resourceSet = new ResourceSetImpl();
+  
+    Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+    map.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
+  
+    URI uri = URI.createPlatformResourceURI(path, false);
+    Resource resource = resourceSet.getResource(uri, true);
+  
+    EList<EObject> contents = resource.getContents();
+    if (!contents.isEmpty())
+    {
+      EObject object = contents.get(0);
+      if (object instanceof GenModel)
+      {
+        return (GenModel)object;
+      }
+    }
+  
+    return null;
   }
 
   public static String adjustGenModel(GenModel genModel)

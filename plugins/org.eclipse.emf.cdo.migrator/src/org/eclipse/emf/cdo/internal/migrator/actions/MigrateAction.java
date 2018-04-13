@@ -11,19 +11,12 @@
 package org.eclipse.emf.cdo.internal.migrator.actions;
 
 import org.eclipse.emf.cdo.internal.messages.Messages;
-import org.eclipse.emf.cdo.internal.migrator.CDOMigratorUtil;
+import org.eclipse.emf.cdo.migrator.tasks.util.CDOMigratorUtil;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenDelegationKind;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -38,8 +31,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
-
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -134,25 +125,8 @@ public class MigrateAction implements IObjectActionDelegate
 
   protected GenModel getGenModel(IFile file)
   {
-    ResourceSet resourceSet = new ResourceSetImpl();
-
-    Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
-    map.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
-
-    URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), false);
-    Resource resource = resourceSet.getResource(uri, true);
-
-    EList<EObject> contents = resource.getContents();
-    if (!contents.isEmpty())
-    {
-      EObject object = contents.get(0);
-      if (object instanceof GenModel)
-      {
-        return (GenModel)object;
-      }
-    }
-
-    return null;
+    String path = file.getFullPath().toString();
+    return CDOMigratorUtil.getGenModel(path);
   }
 
   protected void showMessage(final String msg, final boolean error)

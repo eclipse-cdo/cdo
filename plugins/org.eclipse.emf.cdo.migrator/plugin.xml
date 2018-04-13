@@ -54,4 +54,13 @@
      </objectContribution>
   </extension>
 
+  <extension point="org.eclipse.ant.core.extraClasspathEntries">
+    <extraClasspathEntry library="ant_tasks/cdo.ant.tasks.jar" />
+  </extension>
+
+  <extension point="org.eclipse.ant.core.antTasks">
+    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.ProjectImport" headless="true" class="org.eclipse.emf.cdo.migrator.tasks.ProjectImportTask" />
+    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.ProjectDelete" headless="true" class="org.eclipse.emf.cdo.migrator.tasks.ProjectDeleteTask" />
+  </extension>
+
 </plugin>

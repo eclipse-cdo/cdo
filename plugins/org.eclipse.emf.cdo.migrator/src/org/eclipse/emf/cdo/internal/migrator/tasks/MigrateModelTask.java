@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.migrator.tasks;
 
+import org.eclipse.emf.cdo.internal.messages.Messages;
 import org.eclipse.emf.cdo.internal.migrator.CDOMigratorUtil;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenDelegationKind;
@@ -48,7 +49,15 @@ public class MigrateModelTask extends CDOTask
     GenModel genModel = CDOMigratorUtil.getGenModel(modelPath);
     GenDelegationKind featureDelegation = dynamicFeatureDelegation ? GenDelegationKind.DYNAMIC_LITERAL : GenDelegationKind.REFLECTIVE_LITERAL;
 
-    String result = CDOMigratorUtil.adjustGenModel(genModel, featureDelegation);
-    System.out.println(result);
+    String msg = CDOMigratorUtil.adjustGenModel(genModel, featureDelegation);
+    if (msg == null)
+    {
+      System.out.println(Messages.getString("MigrateAction_3"));
+    }
+    else
+    {
+      genModel.eResource().save(null);
+      System.out.println(Messages.getString("MigrateAction_4") + msg);
+    }
   }
 }

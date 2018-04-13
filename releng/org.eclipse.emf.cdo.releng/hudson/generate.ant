@@ -11,6 +11,10 @@
 -->
 <project name="generate" default="generate">
 
+	<condition property="skip.tests.condition">
+		<equals arg1="${skip.tests}" arg2="true"/>
+	</condition>
+	
   <!-- ==== -->
   <!-- Init -->
   <!-- ==== -->
@@ -186,7 +190,7 @@
   <!-- Generate Test Reports -->
   <!-- ==================== -->
 
-  <target name="generate-testreports" depends="clean">
+  <target name="generate-testreports" depends="clean" unless="skip.tests.condition">
     <property name="tests" location="${build.root}/tests" />
     <mkdir dir="${tests}" />
     <copy todir="${tests}/tmp" flatten="true">

@@ -18,9 +18,11 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import org.eclipse.core.resources.IFolder;
@@ -30,8 +32,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -53,12 +53,17 @@ public abstract class CDOMigratorUtil
   public static GenModel getGenModel(String path)
   {
     ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getURIConverter().getURIMap().putAll(EcorePlugin.computePlatformURIMap(true));
 
-    Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
-    map.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
+    Resource.Factory factory = new XMIResourceFactoryImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", factory); //$NON-NLS-1$
+    resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("*", factory); //$NON-NLS-1$
+    resourceSet.getResourceFactoryRegistry().getContentTypeToFactoryMap().put("*", factory); //$NON-NLS-1$
 
     URI uri = URI.createPlatformResourceURI(path, false);
     Resource resource = resourceSet.getResource(uri, true);
+
+    EcoreUtil.resolveAll(resourceSet);
 
     EList<EObject> contents = resource.getContents();
     if (!contents.isEmpty())

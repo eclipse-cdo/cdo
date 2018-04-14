@@ -39,14 +39,16 @@ public abstract class CDOTask extends Task
 
       doExecute();
     }
-    catch (Exception e)
+    catch (Exception ex)
     {
-      if (e instanceof BuildException)
+      ex.printStackTrace();
+
+      if (ex instanceof BuildException)
       {
-        throw (BuildException)e;
+        throw (BuildException)ex;
       }
 
-      throw new BuildException(e);
+      throw new BuildException(ex);
     }
   }
 

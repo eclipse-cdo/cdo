@@ -52,12 +52,12 @@ public class MigrateModelTask extends CDOTask
     String msg = CDOMigratorUtil.adjustGenModel(genModel, featureDelegation);
     if (msg == null)
     {
-      System.out.println(Messages.getString("MigrateAction_3"));
+      log(Messages.getString("MigrateAction_3"));
     }
     else
     {
       genModel.eResource().save(null);
-      System.out.println(Messages.getString("MigrateAction_4") + msg);
+      log(Messages.getString("MigrateAction_4") + msg);
     }
   }
 }

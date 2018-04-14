@@ -20,14 +20,37 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.CharArrayReader;
+import java.io.CharArrayWriter;
+import java.io.Closeable;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+
 /**
  * @author Eike Stepper
  */
 public abstract class CDOTask extends Task
 {
+  public static final String NL = System.getProperty("line.separator");
+
+  public static final int EOF = -1;
+
   protected final IWorkspace workspace = ResourcesPlugin.getWorkspace();
 
   protected final IWorkspaceRoot root = workspace.getRoot();
+
+  protected boolean verbose = true;
+
+  public void setVerbose(boolean verbose)
+  {
+    this.verbose = verbose;
+  }
 
   @Override
   public final void execute() throws BuildException
@@ -62,6 +85,14 @@ public abstract class CDOTask extends Task
 
   protected abstract void doExecute() throws Exception;
 
+  protected final void log(Object object)
+  {
+    if (verbose)
+    {
+      System.out.println(object);
+    }
+  }
+
   protected final IProgressMonitor getProgressMonitor()
   {
     try
@@ -89,5 +120,77 @@ public abstract class CDOTask extends Task
     {
       throw new BuildException(message);
     }
+  }
+
+  public static String readTextFile(File file) throws IOException
+  {
+    Reader input = new FileReader(file);
+
+    try
+    {
+      CharArrayWriter output = new CharArrayWriter();
+      copyCharacter(input, output);
+      return output.toString();
+    }
+    finally
+    {
+      closeSilent(input);
+    }
+  }
+
+  public static void writeTextFile(File file, String content) throws IOException
+  {
+    Writer output = new FileWriter(file);
+
+    try
+    {
+      CharArrayReader input = new CharArrayReader(content.toCharArray());
+      copyCharacter(input, output);
+    }
+    finally
+    {
+      closeSilent(output);
+    }
+  }
+
+  private static Exception closeSilent(Closeable closeable)
+  {
+    try
+    {
+      if (closeable != null)
+      {
+        closeable.close();
+      }
+
+      return null;
+    }
+    catch (Exception ex)
+    {
+      return ex;
+    }
+  }
+
+  private static long copyCharacter(Reader reader, Writer writer) throws IOException
+  {
+    if (!(reader instanceof BufferedReader) && !(reader instanceof CharArrayReader))
+    {
+      reader = new BufferedReader(reader);
+    }
+
+    if (!(writer instanceof BufferedWriter) && !(writer instanceof CharArrayWriter))
+    {
+      writer = new BufferedWriter(writer);
+    }
+
+    long size = 0;
+    int c;
+    while ((c = reader.read()) != EOF)
+    {
+      writer.write(c);
+      ++size;
+    }
+
+    writer.flush();
+    return size;
   }
 }

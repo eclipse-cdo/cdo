@@ -19,6 +19,9 @@ import org.eclipse.emf.codegen.ecore.genmodel.generator.GenBaseGeneratorAdapter;
 import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil;
 import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.Monitor;
+
+import org.eclipse.core.runtime.NullProgressMonitor;
 
 import org.apache.tools.ant.BuildException;
 
@@ -54,8 +57,9 @@ public class GenerateModelTask extends CDOTask
       throw new BuildException(diagnostic.getException());
     }
 
+    Monitor monitor = verbose ? new BasicMonitor.Printing(System.out) : BasicMonitor.toMonitor(new NullProgressMonitor());
+
     Generator generator = GenModelUtil.createGenerator(genModel);
-    generator.generate(genModel, GenBaseGeneratorAdapter.MODEL_PROJECT_TYPE, CodeGenEcorePlugin.INSTANCE.getString("_UI_ModelProject_name"),
-        new BasicMonitor.Printing(System.out));
+    generator.generate(genModel, GenBaseGeneratorAdapter.MODEL_PROJECT_TYPE, CodeGenEcorePlugin.INSTANCE.getString("_UI_ModelProject_name"), monitor);
   }
 }

@@ -18,7 +18,7 @@ import org.apache.tools.ant.BuildException;
 /**
  * @author Eike Stepper
  */
-public class ProjectDeleteTask extends CDOTask
+public class DeleteProjectTask extends CDOTask
 {
   private String projectName;
 
@@ -46,11 +46,11 @@ public class ProjectDeleteTask extends CDOTask
     IProject project = root.getProject(projectName);
     if (!project.exists())
     {
-      System.out.println("Project " + projectName + " does not exist.");
+      log("Project " + projectName + " does not exist.");
       return;
     }
 
-    System.out.println("Deleting project " + projectName + " ...");
+    log("Deleting project " + projectName + " ...");
     project.delete(deleteContent, true, new NullProgressMonitor());
   }
 }

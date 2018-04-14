@@ -23,7 +23,7 @@ import java.io.File;
 /**
  * @author Eike Stepper
  */
-public class ProjectImportTask extends CDOTask
+public class ImportProjectTask extends CDOTask
 {
   private String projectName;
 
@@ -59,11 +59,11 @@ public class ProjectImportTask extends CDOTask
         throw new BuildException("Project " + projectName + " exists in different location: " + existingLocation);
       }
 
-      System.out.println("Project " + fromLocation + " is already imported.");
+      log("Project " + fromLocation + " is already imported.");
       return;
     }
 
-    System.out.println("Importing project " + fromLocation + " ...");
+    log("Importing project " + fromLocation + " ...");
     IPath locationPath = new Path(fromLocation.getAbsolutePath());
 
     IProjectDescription projectDescription = workspace.newProjectDescription(projectName);

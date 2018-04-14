@@ -59,11 +59,11 @@ public class ImportProjectTask extends CDOTask
         throw new BuildException("Project " + projectName + " exists in different location: " + existingLocation);
       }
 
-      log("Project " + fromLocation + " is already imported.");
+      verbose("Project " + fromLocation + " is already imported.");
       return;
     }
 
-    log("Importing project " + fromLocation + " ...");
+    verbose("Importing project " + fromLocation + " ...");
     IPath locationPath = new Path(fromLocation.getAbsolutePath());
 
     IProjectDescription projectDescription = workspace.newProjectDescription(projectName);

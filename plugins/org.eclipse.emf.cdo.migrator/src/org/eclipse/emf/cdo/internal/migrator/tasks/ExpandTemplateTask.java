@@ -1,3 +1,13 @@
+/*
+ * Copyright (c) 2018 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
 package org.eclipse.emf.cdo.internal.migrator.tasks;
 
 import org.apache.tools.ant.BuildException;
@@ -13,7 +23,7 @@ import java.util.Map;
  */
 public class ExpandTemplateTask extends CDOTask
 {
-  private final List<Property> properties = new ArrayList<Property>();
+  private final List<TemplateProperty> templateProperties = new ArrayList<TemplateProperty>();
 
   private File template;
 
@@ -23,11 +33,11 @@ public class ExpandTemplateTask extends CDOTask
 
   private String placeholderSuffix = "%%";
 
-  public Property createProperty()
+  public TemplateProperty createTemplateProperty()
   {
-    Property property = new Property();
-    properties.add(property);
-    return property;
+    TemplateProperty templateProperty = new TemplateProperty();
+    templateProperties.add(templateProperty);
+    return templateProperty;
   }
 
   public void setTemplate(File template)
@@ -59,9 +69,9 @@ public class ExpandTemplateTask extends CDOTask
     assertTrue("'placeholderPrefix' must be specified.", placeholderPrefix != null && placeholderPrefix.length() != 0);
     assertTrue("'placeholderSuffix' must be specified.", placeholderSuffix != null && placeholderSuffix.length() != 0);
 
-    for (Property property : properties)
+    for (TemplateProperty templateProperty : templateProperties)
     {
-      String name = property.getName();
+      String name = templateProperty.getName();
       assertTrue("'name' of property must be specified.", name != null && name.length() != 0);
     }
   }
@@ -69,6 +79,8 @@ public class ExpandTemplateTask extends CDOTask
   @Override
   protected void doExecute() throws Exception
   {
+    verbose("Expanding template " + template + " to target " + target);
+
     String content = readTextFile(template);
     Map<String, String> properties = getProperties();
 
@@ -101,6 +113,7 @@ public class ExpandTemplateTask extends CDOTask
           break;
         }
 
+        verbose("Expanding template property '" + entry.getKey() + "' at position " + pos);
         result.replace(pos, pos + placeholderLength, value);
         start = pos + valueLength;
       }
@@ -118,9 +131,9 @@ public class ExpandTemplateTask extends CDOTask
   {
     Map<String, String> result = new LinkedHashMap<String, String>();
 
-    for (Property property : properties)
+    for (TemplateProperty templateProperty : templateProperties)
     {
-      result.put(property.getName(), property.getValue());
+      result.put(templateProperty.getName(), templateProperty.getValue());
     }
 
     return result;
@@ -129,13 +142,13 @@ public class ExpandTemplateTask extends CDOTask
   /**
    * @author Eike Stepper
    */
-  public static final class Property
+  public static final class TemplateProperty
   {
     private String name;
 
     private String value;
 
-    public Property()
+    public TemplateProperty()
     {
     }
 

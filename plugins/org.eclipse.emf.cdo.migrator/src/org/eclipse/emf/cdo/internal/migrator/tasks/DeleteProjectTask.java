@@ -46,11 +46,11 @@ public class DeleteProjectTask extends CDOTask
     IProject project = root.getProject(projectName);
     if (!project.exists())
     {
-      log("Project " + projectName + " does not exist.");
+      verbose("Project " + projectName + " does not exist.");
       return;
     }
 
-    log("Deleting project " + projectName + " ...");
+    verbose("Deleting project " + projectName + " ...");
     project.delete(deleteContent, true, new NullProgressMonitor());
   }
 }

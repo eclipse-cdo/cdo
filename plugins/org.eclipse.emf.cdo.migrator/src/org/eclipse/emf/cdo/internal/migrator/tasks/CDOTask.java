@@ -85,11 +85,11 @@ public abstract class CDOTask extends Task
 
   protected abstract void doExecute() throws Exception;
 
-  protected final void log(Object object)
+  protected final void verbose(Object object)
   {
     if (verbose)
     {
-      System.out.println(object);
+      log(String.valueOf(object));
     }
   }
 

@@ -59,12 +59,19 @@
   </extension>
 
   <extension point="org.eclipse.ant.core.antTasks">
-    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.ImportProject" headless="true" class="org.eclipse.emf.cdo.internal.migrator.tasks.ImportProjectTask" />
-    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.DeleteProject" headless="true" class="org.eclipse.emf.cdo.internal.migrator.tasks.DeleteProjectTask" />
-    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.MigrateModel" headless="true" class="org.eclipse.emf.cdo.internal.migrator.tasks.MigrateModelTask" />
-    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.GenerateModel" headless="true" class="org.eclipse.emf.cdo.internal.migrator.tasks.GenerateModelTask" />
-    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.ExpandTemplate" headless="true" class="org.eclipse.emf.cdo.internal.migrator.tasks.ExpandTemplateTask" />
-    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.TransferMembers" headless="true" class="org.eclipse.emf.cdo.internal.migrator.tasks.TransferMembersTask" />
+    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.importProject" class="org.eclipse.emf.cdo.internal.migrator.tasks.ImportProjectTask" />
+    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.deleteProject" class="org.eclipse.emf.cdo.internal.migrator.tasks.DeleteProjectTask" />
+    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.migrateModel" class="org.eclipse.emf.cdo.internal.migrator.tasks.MigrateModelTask" />
+    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.generateModel" class="org.eclipse.emf.cdo.internal.migrator.tasks.GenerateModelTask" />
+    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.expandTemplate" class="org.eclipse.emf.cdo.internal.migrator.tasks.ExpandTemplateTask" />
+    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.transferMembers" class="org.eclipse.emf.cdo.internal.migrator.tasks.TransferMembersTask" />
+  </extension>
+  
+  <extension point="org.eclipse.ant.core.antTypes">
+     <antType library="ant_tasks/cdo.ant.tasks.jar" name="templateproperty" class="org.eclipse.emf.cdo.internal.migrator.tasks.ExpandTemplateTask$TemplateProperty" />
+     <antType library="ant_tasks/cdo.ant.tasks.jar" name="sourceclass" class="org.eclipse.emf.cdo.internal.migrator.tasks.TransferMembersTask$SourceClass" />
+     <antType library="ant_tasks/cdo.ant.tasks.jar" name="sourcefield" class="org.eclipse.emf.cdo.internal.migrator.tasks.TransferMembersTask$SourceClass$SourceField" />
+     <antType library="ant_tasks/cdo.ant.tasks.jar" name="sourcemethod" class="org.eclipse.emf.cdo.internal.migrator.tasks.TransferMembersTask$SourceClass$SourceMethod" />
   </extension>
 
 </plugin>

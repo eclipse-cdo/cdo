@@ -61,6 +61,7 @@
   <extension point="org.eclipse.ant.core.antTasks">
     <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.importProject" class="org.eclipse.emf.cdo.internal.migrator.tasks.ImportProjectTask" />
     <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.deleteProject" class="org.eclipse.emf.cdo.internal.migrator.tasks.DeleteProjectTask" />
+    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.cleanupProject" class="org.eclipse.emf.cdo.internal.migrator.tasks.CleanupProjectTask" />
     <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.migrateModel" class="org.eclipse.emf.cdo.internal.migrator.tasks.MigrateModelTask" />
     <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.generateModel" class="org.eclipse.emf.cdo.internal.migrator.tasks.GenerateModelTask" />
     <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.expandTemplate" class="org.eclipse.emf.cdo.internal.migrator.tasks.ExpandTemplateTask" />

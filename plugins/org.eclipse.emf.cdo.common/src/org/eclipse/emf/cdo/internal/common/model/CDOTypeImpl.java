@@ -243,13 +243,26 @@ public abstract class CDOTypeImpl implements CDOType
       }
       else
       {
-        out.writeCDOID((CDOID)value);
+        if (value == CDORevisionData.NIL)
+        {
+          out.writeCDOID(CDOID.NIL);
+        }
+        else
+        {
+          out.writeCDOID((CDOID)value);
+        }
       }
     }
 
-    public CDOID readValue(CDODataInput in) throws IOException
+    public Object readValue(CDODataInput in) throws IOException
     {
-      return in.readCDOID();
+      CDOID id = in.readCDOID();
+      if (id == CDOID.NIL)
+      {
+        return CDORevisionData.NIL;
+      }
+
+      return id;
     }
 
     @Override

@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.WithIndex;
@@ -85,7 +86,7 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
       out.writeXInt(featureID);
     }
 
-    if (valueToWrite != null && feature instanceof EReference)
+    if (valueToWrite != null && valueToWrite != CDORevisionData.NIL && feature instanceof EReference)
     {
       valueToWrite = out.getIDProvider().provideCDOID(value);
     }

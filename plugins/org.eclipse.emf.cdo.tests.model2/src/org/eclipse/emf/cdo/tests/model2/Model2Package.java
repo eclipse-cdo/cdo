@@ -298,13 +298,22 @@ public interface Model2Package extends EPackage
   int UNSETTABLE1__UNSETTABLE_VAT = 10;
 
   /**
+   * The feature id for the '<em><b>Unsettable Element</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNSETTABLE1__UNSETTABLE_ELEMENT = 11;
+
+  /**
    * The number of structural features of the '<em>Unsettable1</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
    *
    * @generated
    * @ordered
    */
-  int UNSETTABLE1_FEATURE_COUNT = 11;
+  int UNSETTABLE1_FEATURE_COUNT = 12;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable2WithDefaultImpl <em>Unsettable2 With Default</em>}' class.
@@ -1370,6 +1379,17 @@ public interface Model2Package extends EPackage
    * @generated
    */
   EAttribute getUnsettable1_UnsettableVAT();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableElement <em>Unsettable Element</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Unsettable Element</em>'.
+   * @see org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableElement()
+   * @see #getUnsettable1()
+   * @generated
+   */
+  EReference getUnsettable1_UnsettableElement();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault <em>Unsettable2 With Default</em>}'.

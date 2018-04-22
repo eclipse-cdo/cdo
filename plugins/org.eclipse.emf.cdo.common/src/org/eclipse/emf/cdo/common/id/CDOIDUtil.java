@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
@@ -108,6 +109,11 @@ public final class CDOIDUtil
     if (object == null)
     {
       return CDOID.NULL;
+    }
+
+    if (object == CDORevisionData.NIL)
+    {
+      return CDOID.NIL;
     }
 
     if (object instanceof CDOID)
@@ -389,6 +395,9 @@ public final class CDOIDUtil
     case NULL:
       return CDOID.NULL;
 
+    case NIL:
+      return CDOID.NIL;
+
     case TEMP_OBJECT:
       return CDOIDTempObjectImpl.create(Integer.valueOf(fragment));
 
@@ -500,6 +509,9 @@ public final class CDOIDUtil
     {
     case NULL:
       return CDOID.NULL;
+
+    case NIL:
+      return CDOID.NIL;
 
     case TEMP_OBJECT:
       return CDOIDTempObjectImpl.create(in.readXInt());

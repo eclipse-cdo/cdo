@@ -40,6 +40,8 @@
         unsettable="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableVAT" eType="ecore:EEnum ../../org.eclipse.emf.cdo.tests.model1/model/model1.ecore#//VAT"
         unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="unsettableElement" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        unsettable="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Unsettable2WithDefault">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableBoolean" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"

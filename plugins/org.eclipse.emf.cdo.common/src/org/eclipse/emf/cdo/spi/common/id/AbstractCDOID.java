@@ -43,6 +43,14 @@ public abstract class AbstractCDOID implements CDOID
   }
 
   /**
+   * @since 4.6
+   */
+  public boolean isNil()
+  {
+    return false;
+  }
+
+  /**
    * @since 4.2
    */
   @Deprecated

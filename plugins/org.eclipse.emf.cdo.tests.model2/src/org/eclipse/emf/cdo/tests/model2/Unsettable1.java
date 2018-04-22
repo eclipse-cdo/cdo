@@ -34,6 +34,7 @@ import java.util.Date;
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableShort <em>Unsettable Short</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableString <em>Unsettable String</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableVAT <em>Unsettable VAT</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableElement <em>Unsettable Element</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable1()
@@ -594,5 +595,58 @@ public interface Unsettable1 extends EObject
    * @generated
    */
   boolean isSetUnsettableVAT();
+
+  /**
+   * Returns the value of the '<em><b>Unsettable Element</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Unsettable Element</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Unsettable Element</em>' reference.
+   * @see #isSetUnsettableElement()
+   * @see #unsetUnsettableElement()
+   * @see #setUnsettableElement(EObject)
+   * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getUnsettable1_UnsettableElement()
+   * @model unsettable="true"
+   * @generated
+   */
+  EObject getUnsettableElement();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableElement <em>Unsettable Element</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Unsettable Element</em>' reference.
+   * @see #isSetUnsettableElement()
+   * @see #unsetUnsettableElement()
+   * @see #getUnsettableElement()
+   * @generated
+   */
+  void setUnsettableElement(EObject value);
+
+  /**
+   * Unsets the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableElement <em>Unsettable Element</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isSetUnsettableElement()
+   * @see #getUnsettableElement()
+   * @see #setUnsettableElement(EObject)
+   * @generated
+   */
+  void unsetUnsettableElement();
+
+  /**
+   * Returns whether the value of the '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableElement <em>Unsettable Element</em>}' reference is set.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return whether the value of the '<em>Unsettable Element</em>' reference is set.
+   * @see #unsetUnsettableElement()
+   * @see #getUnsettableElement()
+   * @see #setUnsettableElement(EObject)
+   * @generated
+   */
+  boolean isSetUnsettableElement();
 
 } // Unsettable1

@@ -21,6 +21,9 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.StubCDORevision;
 
+import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -32,6 +35,9 @@ import org.eclipse.emf.ecore.impl.EClassImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,6 +50,8 @@ import java.util.List;
 public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Internal
 {
   private static final PersistenceFilter[] NO_FILTERS = {};
+
+  private static final boolean DEBUG = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.internal.common.model.CDOClassInfoImpl.DEBUG");
 
   private final InternalCDORevision revisionWithoutID = new RevisionWithoutID(this);
 
@@ -65,6 +73,9 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
 
   private int settingsFeatureCount;
 
+  /**
+   * The eSettings slots of all many-valued and/or transient features.
+   */
   private int[] settingsFeatureIndices;
 
   /**
@@ -370,10 +381,48 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
     return getPersistentFeatureIndex(featureID);
   }
 
+  public String getDump()
+  {
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    try
+    {
+      dump(new PrintStream(out, true, "UTF-8"));
+      return new String(out.toByteArray(), "UTF-8");
+    }
+    catch (UnsupportedEncodingException ex)
+    {
+      ex.printStackTrace();
+      return ex.getMessage();
+    }
+  }
+
+  public void dump()
+  {
+    dump(IOUtil.OUT());
+  }
+
+  public void dump(PrintStream out)
+  {
+    out.println(eClass.getName());
+
+    out.println("\t\t\tallPersistentFeatures");
+    for (EStructuralFeature feature : getAllPersistentFeatures())
+    {
+      out.println("\t" + eClass.getFeatureID(feature) + "\t" + feature.getName() + "\t" + (feature.isTransient() ? "transient" : "persistent"));
+    }
+
+    out.println("\t\t\tsettingsFeatureIndices\tpersistentFeatureIndices\ttransientFeatureIndices");
+    for (int featureID = 0; featureID < settingsFeatureIndices.length; featureID++)
+    {
+      out.println("\t" + featureID + "\t" + eClass.getEStructuralFeature(featureID).getName() + "\t" + settingsFeatureIndices[featureID] + "\t"
+          + persistentFeatureIndices[featureID] + "\t" + transientFeatureIndices[featureID]);
+    }
+  }
+
   @Override
   public String toString()
   {
-    return eClass.toString();
+    return DEBUG ? getDump() : eClass.toString();
   }
 
   /**

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.model2.Unsettable1;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 
 import java.util.Date;
 
@@ -37,6 +38,7 @@ import java.util.Date;
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableShort <em>Unsettable Short</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableString <em>Unsettable String</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableVAT <em>Unsettable VAT</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.Unsettable1Impl#getUnsettableElement <em>Unsettable Element</em>}</li>
  * </ul>
  *
  * @generated
@@ -466,6 +468,46 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
   public boolean isSetUnsettableVAT()
   {
     return eIsSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableVAT());
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EObject getUnsettableElement()
+  {
+    return (EObject)eGet(Model2Package.eINSTANCE.getUnsettable1_UnsettableElement(), true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setUnsettableElement(EObject newUnsettableElement)
+  {
+    eSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableElement(), newUnsettableElement);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void unsetUnsettableElement()
+  {
+    eUnset(Model2Package.eINSTANCE.getUnsettable1_UnsettableElement());
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isSetUnsettableElement()
+  {
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableElement());
   }
 
 } // Unsettable1Impl

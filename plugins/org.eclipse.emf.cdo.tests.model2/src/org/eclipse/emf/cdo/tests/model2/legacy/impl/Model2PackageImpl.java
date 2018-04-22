@@ -416,6 +416,16 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getUnsettable1_UnsettableElement()
+  {
+    return (EReference)unsettable1EClass.getEStructuralFeatures().get(11);
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -1216,6 +1226,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
     createEAttribute(unsettable1EClass, UNSETTABLE1__UNSETTABLE_SHORT);
     createEAttribute(unsettable1EClass, UNSETTABLE1__UNSETTABLE_STRING);
     createEAttribute(unsettable1EClass, UNSETTABLE1__UNSETTABLE_VAT);
+    createEReference(unsettable1EClass, UNSETTABLE1__UNSETTABLE_ELEMENT);
 
     unsettable2WithDefaultEClass = createEClass(UNSETTABLE2_WITH_DEFAULT);
     createEAttribute(unsettable2WithDefaultEClass, UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BOOLEAN);
@@ -1394,6 +1405,8 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
         IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getUnsettable1_UnsettableVAT(), theModel1Package.getVAT(), "unsettableVAT", null, 0, 1, Unsettable1.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getUnsettable1_UnsettableElement(), ecorePackage.getEObject(), null, "unsettableElement", null, 0, 1, Unsettable1.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(unsettable2WithDefaultEClass, Unsettable2WithDefault.class, "Unsettable2WithDefault", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getUnsettable2WithDefault_UnsettableBoolean(), ecorePackage.getEBoolean(), "unsettableBoolean", "true", 0, 1, Unsettable2WithDefault.class,

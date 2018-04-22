@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.tests.model2.legacy.Model2Package;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
@@ -38,6 +40,7 @@ import java.util.Date;
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.Unsettable1Impl#getUnsettableShort <em>Unsettable Short</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.Unsettable1Impl#getUnsettableString <em>Unsettable String</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.Unsettable1Impl#getUnsettableVAT <em>Unsettable VAT</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.Unsettable1Impl#getUnsettableElement <em>Unsettable Element</em>}</li>
  * </ul>
  *
  * @generated
@@ -351,6 +354,25 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * @ordered
    */
   protected boolean unsettableVATESet;
+
+  /**
+   * The cached value of the '{@link #getUnsettableElement() <em>Unsettable Element</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getUnsettableElement()
+   * @generated
+   * @ordered
+   */
+  protected EObject unsettableElement;
+
+  /**
+   * This is true if the Unsettable Element reference has been set.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  protected boolean unsettableElementESet;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -942,6 +964,84 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EObject getUnsettableElement()
+  {
+    if (unsettableElement != null && unsettableElement.eIsProxy())
+    {
+      InternalEObject oldUnsettableElement = (InternalEObject)unsettableElement;
+      unsettableElement = eResolveProxy(oldUnsettableElement);
+      if (unsettableElement != oldUnsettableElement)
+      {
+        if (eNotificationRequired())
+        {
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model2Package.UNSETTABLE1__UNSETTABLE_ELEMENT, oldUnsettableElement, unsettableElement));
+        }
+      }
+    }
+    return unsettableElement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EObject basicGetUnsettableElement()
+  {
+    return unsettableElement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setUnsettableElement(EObject newUnsettableElement)
+  {
+    EObject oldUnsettableElement = unsettableElement;
+    unsettableElement = newUnsettableElement;
+    boolean oldUnsettableElementESet = unsettableElementESet;
+    unsettableElementESet = true;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.UNSETTABLE1__UNSETTABLE_ELEMENT, oldUnsettableElement, unsettableElement,
+          !oldUnsettableElementESet));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void unsetUnsettableElement()
+  {
+    EObject oldUnsettableElement = unsettableElement;
+    boolean oldUnsettableElementESet = unsettableElementESet;
+    unsettableElement = null;
+    unsettableElementESet = false;
+    if (eNotificationRequired())
+    {
+      eNotify(
+          new ENotificationImpl(this, Notification.UNSET, Model2Package.UNSETTABLE1__UNSETTABLE_ELEMENT, oldUnsettableElement, null, oldUnsettableElementESet));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isSetUnsettableElement()
+  {
+    return unsettableElementESet;
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -972,6 +1072,12 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
       return getUnsettableString();
     case Model2Package.UNSETTABLE1__UNSETTABLE_VAT:
       return getUnsettableVAT();
+    case Model2Package.UNSETTABLE1__UNSETTABLE_ELEMENT:
+      if (resolve)
+      {
+        return getUnsettableElement();
+      }
+      return basicGetUnsettableElement();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -1017,6 +1123,9 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
       return;
     case Model2Package.UNSETTABLE1__UNSETTABLE_VAT:
       setUnsettableVAT((VAT)newValue);
+      return;
+    case Model2Package.UNSETTABLE1__UNSETTABLE_ELEMENT:
+      setUnsettableElement((EObject)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -1064,6 +1173,9 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
     case Model2Package.UNSETTABLE1__UNSETTABLE_VAT:
       unsetUnsettableVAT();
       return;
+    case Model2Package.UNSETTABLE1__UNSETTABLE_ELEMENT:
+      unsetUnsettableElement();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -1099,6 +1211,8 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
       return isSetUnsettableString();
     case Model2Package.UNSETTABLE1__UNSETTABLE_VAT:
       return isSetUnsettableVAT();
+    case Model2Package.UNSETTABLE1__UNSETTABLE_ELEMENT:
+      return isSetUnsettableElement();
     }
     return super.eIsSet(featureID);
   }

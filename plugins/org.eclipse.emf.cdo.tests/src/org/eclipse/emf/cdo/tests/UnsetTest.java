@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.tests.model2.Unsettable1;
@@ -508,6 +509,36 @@ public class UnsetTest extends AbstractCDOTest
       view.close();
       session.close();
     }
+  }
+
+  public void testUnsettableObject() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+
+    Unsettable1 unsettable = getModel2Factory().createUnsettable1();
+    resource.getContents().add(unsettable);
+    assertEquals(false, unsettable.isSetUnsettableElement());
+    transaction.commit();
+    assertEquals(false, unsettable.isSetUnsettableElement());
+
+    unsettable.setUnsettableElement(null);
+    assertEquals(true, unsettable.isSetUnsettableElement());
+    transaction.commit();
+    assertEquals(true, unsettable.isSetUnsettableElement());
+
+    unsettable.unsetUnsettableElement();
+    assertEquals(false, unsettable.isSetUnsettableElement());
+    transaction.commit();
+    assertEquals(false, unsettable.isSetUnsettableElement());
+
+    Company company = getModel1Factory().createCompany();
+    unsettable.eResource().getContents().add(company);
+    unsettable.setUnsettableElement(company);
+    assertEquals(true, unsettable.isSetUnsettableElement());
+    transaction.commit();
+    assertEquals(true, unsettable.isSetUnsettableElement());
   }
 
   @Override

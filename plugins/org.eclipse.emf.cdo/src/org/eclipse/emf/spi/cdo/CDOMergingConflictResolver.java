@@ -317,10 +317,13 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
       public void visit(CDOClearFeatureDelta delta)
       {
         // TODO Only for reference features?
-        CDOList list = newCleanRevision.getList(delta.getFeature());
-        for (Object id : list)
+        CDOList list = newCleanRevision.getListOrNull(delta.getFeature());
+        if (list != null)
         {
-          recurse(detachedObjectsUpdater, (CDOID)id);
+          for (Object id : list)
+          {
+            recurse(detachedObjectsUpdater, (CDOID)id);
+          }
         }
       }
 

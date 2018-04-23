@@ -33,7 +33,7 @@ public interface CDOID extends Comparable<CDOID>, Serializable
   public static final CDOID NULL = org.eclipse.emf.cdo.internal.common.id.CDOIDNullImpl.INSTANCE;
 
   /**
-   * @since 4.6
+   * @since 4.7
    */
   public static final CDOID NIL = org.eclipse.emf.cdo.internal.common.id.CDOIDNilImpl.INSTANCE;
 
@@ -42,7 +42,7 @@ public interface CDOID extends Comparable<CDOID>, Serializable
   public boolean isNull();
 
   /**
-   * @since 4.6
+   * @since 4.7
    */
   public boolean isNil();
 
@@ -77,7 +77,7 @@ public interface CDOID extends Comparable<CDOID>, Serializable
     NULL('N'), //
 
     /**
-     * @since 4.6
+     * @since 4.7
      */
     NIL('I'), //
 

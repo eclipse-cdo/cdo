@@ -455,7 +455,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
 
             private void checkNoProxies(EList<?> list, CDORevision revision)
             {
-              if (!((InternalCDORevision)revision).isUnchunked())
+              if (list != null && !((InternalCDORevision)revision).isUnchunked())
               {
                 for (Object element : list)
                 {
@@ -468,8 +468,17 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
             }
           };
 
-          CDOList originList = originRevision.getList(feature);
-          CDOList dirtyList = dirtyRevision.getList(feature);
+          CDOList originList = originRevision.getListOrNull(feature);
+          if (originList == null)
+          {
+            originList = new CDOListImpl(0, 0);
+          }
+
+          CDOList dirtyList = dirtyRevision.getListOrNull(feature);
+          if (dirtyList == null)
+          {
+            dirtyList = new CDOListImpl(0, 0);
+          }
 
           analyzer.analyzeLists(originList, dirtyList, new NOOPList());
           if (!changes.isEmpty())

@@ -273,6 +273,16 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getClass1_AdditionalValue()
+  {
+    return (EAttribute)class1EClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -886,6 +896,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     // Create classes and their features
     class1EClass = createEClass(CLASS1);
     createEReference(class1EClass, CLASS1__CLASS2);
+    createEAttribute(class1EClass, CLASS1__ADDITIONAL_VALUE);
 
     metaRefEClass = createEClass(META_REF);
     createEReference(metaRefEClass, META_REF__EPACKAGE_REF);
@@ -1014,6 +1025,8 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     initEClass(class1EClass, Class1.class, "Class1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getClass1_Class2(), theSubpackagePackage.getClass2(), theSubpackagePackage.getClass2_Class1(), "class2", null, 0, -1, Class1.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClass1_AdditionalValue(), ecorePackage.getEString(), "additionalValue", null, 0, 1, Class1.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(metaRefEClass, MetaRef.class, "MetaRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getMetaRef_EPackageRef(), theEcorePackage.getEPackage(), null, "ePackageRef", null, 0, 1, MetaRef.class, !IS_TRANSIENT, !IS_VOLATILE,

@@ -120,7 +120,7 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     EStructuralFeature feature = getFeature();
 
     InternalCDORevision internalRevision = (InternalCDORevision)revision;
-    CDOList list = internalRevision.getList(feature);
+    CDOList list = internalRevision.getListOrNull(feature);
 
     if (oldPosition < 0)
     {

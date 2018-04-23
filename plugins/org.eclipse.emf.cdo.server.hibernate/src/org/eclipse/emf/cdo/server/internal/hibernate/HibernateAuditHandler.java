@@ -155,7 +155,7 @@ public class HibernateAuditHandler
       {
         for (Object value : (Collection<?>)auditEntry.eGet(sourceEFeature))
         {
-          cdoRevision.getList(targetEFeature).add(convertValue(targetEFeature, value));
+          cdoRevision.getOrCreateList(targetEFeature).add(convertValue(targetEFeature, value));
         }
       }
       else

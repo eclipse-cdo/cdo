@@ -41,6 +41,11 @@ import java.util.List;
 public interface InternalCDORevision extends CDORevision, CDORevisionData, CDOReferenceAdjustable, CDOBranchAdjustable
 {
   /**
+   * @since 4.7
+   */
+  public static final int DO_NOT_CREATE_LIST = -1;
+
+  /**
    * @since 4.2
    */
   public InternalCDOClassInfo getClassInfo();
@@ -103,14 +108,47 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
 
   public void setList(EStructuralFeature feature, InternalCDOList list);
 
+  /**
+   * @deprecated As of 4.7 use either {@link #getListOrNull(EStructuralFeature)} or {@link #getOrCreateList(EStructuralFeature)}.
+   */
+  @Deprecated
   public CDOList getList(EStructuralFeature feature);
 
   /**
+   * @deprecated As of 4.7 use either {@link #getListOrNull(EStructuralFeature)} or {@link #getOrCreateList(EStructuralFeature, int)}.
+   */
+  @Deprecated
+  public CDOList getList(EStructuralFeature feature, int initialCapacity);
+
+  /**
+   * @since 4.7
+   */
+  public CDOList getListOrNull(EStructuralFeature feature);
+
+  /**
+   * Same as {@link #getOrCreateList(EStructuralFeature, int) getOrCreateList(feature, 0)}.
+   * <p>
+   * <b>Warning</b>: Must be used with caution because list creation for an {@link EStructuralFeature#isUnsettable() unsettable}
+   * feature implies a transition from UNSET to SET!
+   *
+   * @since 4.7
+   */
+  public CDOList getOrCreateList(EStructuralFeature feature);
+
+  /**
+   * Returns the list that represents the passed feature, possibly creates it if needed.
+   * <p>
+   * <b>Warning</b>: Must be used with caution because list creation for an {@link EStructuralFeature#isUnsettable() unsettable}
+   * feature implies a transition from UNSET to SET!
+   *
    * @param initialCapacity
    *          the initialCapacity of a new list to be created if this revision has no list so far (its size will always
    *          be 0), or -1 to skip list creation and return <code>null</code> in this case.
+   *
+   * @see #DO_NOT_CREATE_LIST
+   * @since 4.7
    */
-  public CDOList getList(EStructuralFeature feature, int initialCapacity);
+  public CDOList getOrCreateList(EStructuralFeature feature, int initialCapacity);
 
   /**
    * @since 3.0

@@ -228,18 +228,19 @@ public final class CDOStoreImpl implements CDOStore
         }
 
         InternalCDORevision revision = readRevision(cdoObject);
+        if (feature.isUnsettable())
+        {
+          Object value = revision.getValue(feature);
+          return value != null;
+        }
+
         if (feature.isMany())
         {
-          CDOList list = revision.getList(feature);
+          CDOList list = revision.getListOrNull(feature);
           return list != null && !list.isEmpty();
         }
 
         Object value = revision.getValue(feature);
-        if (feature.isUnsettable())
-        {
-          return value != null;
-        }
-
         if (value == null)
         {
           return false;
@@ -603,12 +604,15 @@ public final class CDOStoreImpl implements CDOStore
             List<?> list = (List<?>)object;
             list.clear();
           }
+
+          if (!feature.isUnsettable())
+          {
+            return;
+          }
         }
-        else
-        {
-          CDOFeatureDelta delta = new CDOUnsetFeatureDeltaImpl(feature);
-          writeRevision(cdoObject, delta);
-        }
+
+        CDOFeatureDelta delta = new CDOUnsetFeatureDeltaImpl(feature);
+        writeRevision(cdoObject, delta);
       }
       finally
       {
@@ -842,7 +846,7 @@ public final class CDOStoreImpl implements CDOStore
             if (value instanceof CDOID)
             {
               CDOID id = (CDOID)value;
-              CDOList list = revision.getList(feature);
+              CDOList list = revision.getOrCreateList(feature);
               CDORevisionPrefetchingPolicy policy = view.options().getRevisionPrefetchingPolicy();
               InternalCDORevisionManager revisionManager = view.getSession().getRevisionManager();
               List<CDOID> listOfIDs = policy.loadAhead(revisionManager, view, eObject, feature, list, index, id);
@@ -939,8 +943,8 @@ public final class CDOStoreImpl implements CDOStore
 
     // Bug 293283 / Bug 314387
     InternalCDORevision revision = readRevision(cdoObject);
-    CDOList list = revision.getList(feature);
-    int size = list.size();
+    CDOList list = revision.getListOrNull(feature);
+    int size = list == null ? 0 : list.size();
     if (index < 0 || size <= index)
     {
       throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);

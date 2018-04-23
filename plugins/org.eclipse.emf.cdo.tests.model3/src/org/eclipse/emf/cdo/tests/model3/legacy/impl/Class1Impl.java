@@ -15,10 +15,12 @@ import org.eclipse.emf.cdo.tests.model3.legacy.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.tests.model3.subpackage.legacy.SubpackagePackage;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -32,6 +34,7 @@ import java.util.Collection;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.Class1Impl#getClass2 <em>Class2</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.Class1Impl#getAdditionalValue <em>Additional Value</em>}</li>
  * </ul>
  *
  * @generated
@@ -47,6 +50,26 @@ public class Class1Impl extends EObjectImpl implements Class1
    * @ordered
    */
   protected EList<Class2> class2;
+
+  /**
+   * The default value of the '{@link #getAdditionalValue() <em>Additional Value</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAdditionalValue()
+   * @generated
+   * @ordered
+   */
+  protected static final String ADDITIONAL_VALUE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getAdditionalValue() <em>Additional Value</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAdditionalValue()
+   * @generated
+   * @ordered
+   */
+  protected String additionalValue = ADDITIONAL_VALUE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -103,6 +126,31 @@ public class Class1Impl extends EObjectImpl implements Class1
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getAdditionalValue()
+  {
+    return additionalValue;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setAdditionalValue(String newAdditionalValue)
+  {
+    String oldAdditionalValue = additionalValue;
+    additionalValue = newAdditionalValue;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.CLASS1__ADDITIONAL_VALUE, oldAdditionalValue, additionalValue));
+    }
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -144,6 +192,8 @@ public class Class1Impl extends EObjectImpl implements Class1
     {
     case Model3Package.CLASS1__CLASS2:
       return getClass2();
+    case Model3Package.CLASS1__ADDITIONAL_VALUE:
+      return getAdditionalValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -162,6 +212,9 @@ public class Class1Impl extends EObjectImpl implements Class1
       getClass2().clear();
       getClass2().addAll((Collection<? extends Class2>)newValue);
       return;
+    case Model3Package.CLASS1__ADDITIONAL_VALUE:
+      setAdditionalValue((String)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -178,6 +231,9 @@ public class Class1Impl extends EObjectImpl implements Class1
     case Model3Package.CLASS1__CLASS2:
       unsetClass2();
       return;
+    case Model3Package.CLASS1__ADDITIONAL_VALUE:
+      setAdditionalValue(ADDITIONAL_VALUE_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -193,8 +249,30 @@ public class Class1Impl extends EObjectImpl implements Class1
     {
     case Model3Package.CLASS1__CLASS2:
       return isSetClass2();
+    case Model3Package.CLASS1__ADDITIONAL_VALUE:
+      return ADDITIONAL_VALUE_EDEFAULT == null ? additionalValue != null : !ADDITIONAL_VALUE_EDEFAULT.equals(additionalValue);
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy())
+    {
+      return super.toString();
+    }
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (additionalValue: ");
+    result.append(additionalValue);
+    result.append(')');
+    return result.toString();
   }
 
 } // Class1Impl

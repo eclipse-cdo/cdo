@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EClass;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.Class1Impl#getClass2 <em>Class2</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.Class1Impl#getAdditionalValue <em>Additional Value</em>}</li>
  * </ul>
  *
  * @generated
@@ -87,6 +88,26 @@ public class Class1Impl extends CDOObjectImpl implements Class1
   public boolean isSetClass2()
   {
     return eIsSet(Model3Package.eINSTANCE.getClass1_Class2());
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getAdditionalValue()
+  {
+    return (String)eGet(Model3Package.eINSTANCE.getClass1_AdditionalValue(), true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setAdditionalValue(String newAdditionalValue)
+  {
+    eSet(Model3Package.eINSTANCE.getClass1_AdditionalValue(), newAdditionalValue);
   }
 
 } // Class1Impl

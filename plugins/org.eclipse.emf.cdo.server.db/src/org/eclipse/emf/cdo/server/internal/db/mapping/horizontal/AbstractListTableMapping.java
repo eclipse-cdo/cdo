@@ -233,9 +233,14 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
 
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
-    MoveableList<Object> list = revision.getList(getFeature());
+    if (listChunk == 0)
+    {
+      // Nothing to read. Take shortcut.
+      return;
+    }
 
-    if (listChunk == 0 || list.size() == 0)
+    MoveableList<Object> list = revision.getListOrNull(getFeature());
+    if (list == null || list.size() == 0)
     {
       // Nothing to read. Take shortcut.
       return;
@@ -391,12 +396,14 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
 
   public void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
-    CDOList values = revision.getList(getFeature());
-
-    int idx = 0;
-    for (Object element : values)
+    CDOList values = revision.getListOrNull(getFeature());
+    if (values != null)
     {
-      writeValue(accessor, revision, idx++, element);
+      int idx = 0;
+      for (Object element : values)
+      {
+        writeValue(accessor, revision, idx++, element);
+      }
     }
   }
 

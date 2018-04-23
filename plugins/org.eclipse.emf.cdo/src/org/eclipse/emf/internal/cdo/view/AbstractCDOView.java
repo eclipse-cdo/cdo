@@ -1213,7 +1213,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
         try
         {
-          list = folderRevision.getList(nodesFeature);
+          list = folderRevision.getListOrNull(nodesFeature);
         }
         finally
         {
@@ -1221,7 +1221,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         }
 
         CDOStore store = getStore();
-        int size = list.size();
+        int size = list == null ? 0 : list.size();
         for (int i = 0; i < size; i++)
         {
           Object value = list.get(i);

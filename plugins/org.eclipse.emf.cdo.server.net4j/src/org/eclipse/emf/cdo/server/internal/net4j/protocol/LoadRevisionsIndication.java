@@ -238,24 +238,27 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
     {
       if (feature.isMany())
       {
-        MoveableList<Object> list = revision.getList(feature);
-        int toIndex = Math.min(loadRevisionCollectionChunkSize, list.size()) - 1;
-        for (int i = 0; i <= toIndex; i++)
+        MoveableList<Object> list = revision.getListOrNull(feature);
+        if (list != null)
         {
-          Object value = list.get(i);
-          if (value instanceof CDOID)
+          int toIndex = Math.min(loadRevisionCollectionChunkSize, list.size()) - 1;
+          for (int i = 0; i <= toIndex; i++)
           {
-            CDOID id = (CDOID)value;
-            if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
+            Object value = list.get(i);
+            if (value instanceof CDOID)
             {
-              RevisionInfo info = getRevisionInfo(id);
-              InternalCDORevision containedRevision = info.getResult();
-              if (containedRevision != null)
+              CDOID id = (CDOID)value;
+              if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
               {
-                additionalRevisionInfos.add(info);
-                revisions.add(containedRevision.getID());
-                additionalRevisions.add(containedRevision);
-                collectRevisions(containedRevision, revisions, additionalRevisionInfos, additionalRevisions, visitedFetchRules);
+                RevisionInfo info = getRevisionInfo(id);
+                InternalCDORevision containedRevision = info.getResult();
+                if (containedRevision != null)
+                {
+                  additionalRevisionInfos.add(info);
+                  revisions.add(containedRevision.getID());
+                  additionalRevisions.add(containedRevision);
+                  collectRevisions(containedRevision, revisions, additionalRevisionInfos, additionalRevisions, visitedFetchRules);
+                }
               }
             }
           }

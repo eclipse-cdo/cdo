@@ -71,7 +71,12 @@ public class CDORemoveFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl im
     int index = getIndex();
 
     InternalCDORevision internalRevision = (InternalCDORevision)revision;
-    CDOList list = internalRevision.getList(feature);
+    CDOList list = internalRevision.getListOrNull(feature);
+    if (list == null)
+    {
+      return null;
+    }
+
     return list.remove(index);
   }
 

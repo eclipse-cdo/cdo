@@ -46,7 +46,7 @@ public class H2Config extends DBConfig
   /**
    * @see #optimizeRepositoryRecreation(String, JdbcDataSource)
    */
-  private final transient Map<String, Connection> leakyConnections = new HashMap<String, Connection>();
+  private static final Map<String, Connection> leakyConnections = new HashMap<String, Connection>();
 
   public H2Config()
   {

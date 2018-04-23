@@ -972,10 +972,13 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     {
       if (feature.isMany())
       {
-        CDOList list = revision.getList(feature);
-        for (Object object : list)
+        CDOList list = revision.getListOrNull(feature);
+        if (list != null)
         {
-          determineChildRevision(loadedRevisions, missingIDs, view, revisionCache, object);
+          for (Object object : list)
+          {
+            determineChildRevision(loadedRevisions, missingIDs, view, revisionCache, object);
+          }
         }
       }
       else

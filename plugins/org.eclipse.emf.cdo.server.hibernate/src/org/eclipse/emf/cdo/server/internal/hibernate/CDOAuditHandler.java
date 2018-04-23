@@ -145,7 +145,7 @@ public class CDOAuditHandler extends AuditHandler
         {
           if (sourceEFeature.isMany())
           {
-            for (Object value : (Collection<?>)source.getList(sourceEFeature))
+            for (Object value : (Collection<?>)source.getOrCreateList(sourceEFeature))
             {
               final String idAsString = entityToIdString(session, value);
               ((Collection<Object>)auditEntry.eGet(targetEFeature)).add(idAsString);
@@ -167,7 +167,7 @@ public class CDOAuditHandler extends AuditHandler
             }
             else
             {
-              for (Object value : (Collection<?>)source.getList(sourceEFeature))
+              for (Object value : (Collection<?>)source.getOrCreateList(sourceEFeature))
               {
                 ((Collection<Object>)auditEntry.eGet(targetEFeature)).add(convertValue(sourceEFeature, targetEFeature, value));
               }
@@ -204,7 +204,7 @@ public class CDOAuditHandler extends AuditHandler
   protected void convertFeatureMap(Session session, InternalCDORevision source, EStructuralFeature sourceEFeature, TeneoAuditEntry auditEntry,
       EStructuralFeature targetEFeature)
   {
-    super.convertFeatureMap(session, source.getList(sourceEFeature), sourceEFeature, auditEntry, targetEFeature);
+    super.convertFeatureMap(session, source.getOrCreateList(sourceEFeature), sourceEFeature, auditEntry, targetEFeature);
   }
 
   @Override

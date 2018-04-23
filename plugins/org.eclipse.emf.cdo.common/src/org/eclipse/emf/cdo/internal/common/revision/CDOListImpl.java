@@ -208,4 +208,22 @@ public class CDOListImpl extends BasicEList<Object> implements InternalCDOList.C
       flags &= ~USE_EQUALS_FLAG;
     }
   }
+
+  /**
+   * An IndexOutOfBoundsException that constructs a message from the argument data.
+   * <p>
+   * Having this avoids having the byte code that computes the message repeated/in-lined at the creation site.
+   *
+   * @author Eike Stepper
+   * @since 4.7
+   */
+  public static class IndexOutOfBoundsException extends BasicIndexOutOfBoundsException
+  {
+    private static final long serialVersionUID = 1L;
+
+    public IndexOutOfBoundsException(int index, int size)
+    {
+      super(index, size);
+    }
+  }
 }

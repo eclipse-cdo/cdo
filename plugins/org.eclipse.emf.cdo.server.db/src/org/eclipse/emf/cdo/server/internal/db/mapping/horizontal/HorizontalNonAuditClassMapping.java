@@ -240,8 +240,9 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
         for (EStructuralFeature feature : listSizeFields.keySet())
         {
-          CDOList list = revision.getList(feature);
-          stmt.setInt(column++, list.size());
+          CDOList list = revision.getListOrNull(feature);
+          int size = list == null ? UNSET_LIST : list.size();
+          stmt.setInt(column++, size);
         }
       }
 

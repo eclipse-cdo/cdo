@@ -109,7 +109,7 @@ public class LoadChunkRequest extends CDOClientRequest<Object>
   {
     CDOType type = CDOModelUtil.getType(feature);
     Object accessID = null;
-    InternalCDOList list = (InternalCDOList)revision.getList(feature);
+    InternalCDOList list = (InternalCDOList)revision.getListOrNull(feature);
     for (int i = fromIndex; i <= toIndex; i++)
     {
       Object value = type.readValue(in);

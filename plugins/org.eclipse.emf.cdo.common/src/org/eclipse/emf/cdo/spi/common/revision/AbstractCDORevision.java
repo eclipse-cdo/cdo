@@ -192,11 +192,14 @@ public abstract class AbstractCDORevision implements InternalCDORevision
       {
         if (feature.isMany())
         {
-          int index = 0;
-          CDOList list = getList(feature);
-          for (Object value : list)
+          CDOList list = getListOrNull(feature);
+          if (list != null)
           {
-            visitor.visit(feature, value, index++);
+            int index = 0;
+            for (Object value : list)
+            {
+              visitor.visit(feature, value, index++);
+            }
           }
         }
         else
@@ -279,6 +282,18 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     }
 
     return string;
+  }
+
+  @Deprecated
+  public CDOList getList(EStructuralFeature feature)
+  {
+    return getOrCreateList(feature);
+  }
+
+  @Deprecated
+  public CDOList getList(EStructuralFeature feature, int initialCapacity)
+  {
+    return getOrCreateList(feature, initialCapacity);
   }
 
   /**

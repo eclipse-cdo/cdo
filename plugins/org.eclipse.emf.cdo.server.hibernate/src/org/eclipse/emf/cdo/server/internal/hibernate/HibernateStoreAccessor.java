@@ -737,7 +737,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
             {
               // note this takes performance for sure as the list is read,
               // consider not supporting sourceIndex, or doing it differently
-              final WrappedHibernateList cdoList = (WrappedHibernateList)sourceRevision.getList(eref);
+              final WrappedHibernateList cdoList = (WrappedHibernateList)sourceRevision.getOrCreateList(eref);
               sourceIndex = cdoList.getDelegate().indexOf(revision);
             }
 

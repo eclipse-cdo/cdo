@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -1232,22 +1233,6 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     return new CDOStoreFeatureMap(eStructuralFeature);
   }
 
-  /**
-   * @since 4.1
-   */
-  protected final CDOStoreEcoreEMap createMap(EStructuralFeature eStructuralFeature)
-  {
-    return new CDOStoreEcoreEMap(eStructuralFeature);
-  }
-
-  /**
-   * @since 4.1
-   */
-  protected final CDOStoreUnorderedEList<Object> createUnorderedList(EStructuralFeature eStructuralFeature)
-  {
-    return new CDOStoreUnorderedEList<Object>(eStructuralFeature);
-  }
-
   @Override
   protected EList<?> createList(EStructuralFeature eStructuralFeature)
   {
@@ -1264,10 +1249,25 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     return super.createList(eStructuralFeature);
   }
 
+  /**
+   * @since 4.1
+   */
+  protected final CDOStoreUnorderedEList<Object> createUnorderedList(EStructuralFeature eStructuralFeature)
+  {
+    return new CDOStoreUnorderedEList<Object>(eStructuralFeature);
+  }
+
+  /**
+   * @since 4.1
+   */
+  protected final CDOStoreEcoreEMap createMap(EStructuralFeature eStructuralFeature)
+  {
+    return new CDOStoreEcoreEMap(eStructuralFeature);
+  }
+
   private boolean isMap(EStructuralFeature eStructuralFeature)
   {
-    // Answer from Christian Damus:
-    // Java ensures that string constants are interned, so == is actually more efficient than equals() and it's correct
+    // Java ensures that string constants are interned, so == is actually more efficient than equals().
     return eStructuralFeature.getEType().getInstanceClassName() == "java.util.Map$Entry"; //$NON-NLS-1$
   }
 
@@ -1360,13 +1360,34 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       if (setting != null)
       {
-        int index = 0;
         @SuppressWarnings("unchecked")
-        EList<Object> list = (EList<Object>)setting;
-        for (Object value : list)
+        EList<Object> instanceList = (EList<Object>)setting;
+        int size = instanceList.size();
+
+        if (feature.isUnsettable())
+        {
+          if (!object.eIsSet(feature))
+          {
+            // Avoid list creation for unset lists.
+            return;
+          }
+        }
+        else
+        {
+          if (size == 0)
+          {
+            // Avoid list creation for empty lists that can't be unset.
+            return;
+          }
+        }
+
+        // Get (and possibly create) the list here in order to support unsettable empty lists.
+        CDOList revisionList = revision.getOrCreateList(feature, size);
+
+        for (Object value : instanceList)
         {
           Object cdoValue = cdoStore.convertToCDO(object, feature, value);
-          revision.add(feature, index++, cdoValue);
+          revisionList.add(cdoValue);
         }
       }
     }
@@ -1399,8 +1420,8 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       int size = cdoStore.size(instance, eFeature);
       for (int index = 0; index < size; index++)
       {
-        // Do not trigger events
-        // Do not trigger inverse updates
+        // Do not trigger events.
+        // Do not trigger inverse updates.
         Object opposite = cdoStore.get(instance, eFeature, index);
         eStore.add(instance, eFeature, index, opposite);
         if (oppositeReference != null)
@@ -1693,6 +1714,10 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       {
         private static final long serialVersionUID = 1L;
 
+        // {
+        // ensureEntryDataExists();
+        // }
+
         @Override
         public void unset()
         {
@@ -1723,6 +1748,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         protected void didClear(int size, Object[] oldObjects)
         {
           CDOStoreEcoreEMap.this.doClear();
+          // ensureEntryDataExists();
         }
 
         @Override

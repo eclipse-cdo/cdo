@@ -91,7 +91,7 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
 
       try
       {
-        list = revision.getList(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES);
+        list = revision.getListOrNull(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES);
       }
       finally
       {

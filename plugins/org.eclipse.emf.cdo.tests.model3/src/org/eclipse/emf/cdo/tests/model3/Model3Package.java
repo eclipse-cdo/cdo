@@ -78,12 +78,21 @@ public interface Model3Package extends EPackage
   int CLASS1__CLASS2 = 0;
 
   /**
+   * The feature id for the '<em><b>Additional Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASS1__ADDITIONAL_VALUE = 1;
+
+  /**
    * The number of structural features of the '<em>Class1</em>' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CLASS1_FEATURE_COUNT = 1;
+  int CLASS1_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.MetaRefImpl <em>Meta Ref</em>}' class.
@@ -827,6 +836,17 @@ public interface Model3Package extends EPackage
    * @generated
    */
   EReference getClass1_Class2();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.Class1#getAdditionalValue <em>Additional Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Additional Value</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.Class1#getAdditionalValue()
+   * @see #getClass1()
+   * @generated
+   */
+  EAttribute getClass1_AdditionalValue();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.MetaRef <em>Meta Ref</em>}'. <!--

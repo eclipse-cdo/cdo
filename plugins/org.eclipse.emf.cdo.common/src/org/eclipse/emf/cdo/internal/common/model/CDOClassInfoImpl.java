@@ -405,12 +405,14 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
   {
     out.println(eClass.getName());
 
+    out.println();
     out.println("\t\t\tallPersistentFeatures");
     for (EStructuralFeature feature : getAllPersistentFeatures())
     {
       out.println("\t" + eClass.getFeatureID(feature) + "\t" + feature.getName() + "\t" + (feature.isTransient() ? "transient" : "persistent"));
     }
 
+    out.println();
     out.println("\t\t\tsettingsFeatureIndices\tpersistentFeatureIndices\ttransientFeatureIndices");
     for (int featureID = 0; featureID < settingsFeatureIndices.length; featureID++)
     {

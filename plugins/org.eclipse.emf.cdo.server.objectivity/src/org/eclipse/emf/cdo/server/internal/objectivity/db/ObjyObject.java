@@ -609,7 +609,7 @@ public class ObjyObject
         {
           // Object newValue = revision.getValue(feature);
           // --- TEMP solution to fix one of the tests...
-          CDOList list = revision.getList(feature);
+          CDOList list = revision.getOrCreateList(feature);
           Object[] values = new Object[list.size()];
           // we need to pass a list of ooId objects.
           // TODO - This need some work!!!!
@@ -849,7 +849,7 @@ public class ObjyObject
             // objects.length, 0);
             // TODO - use the following line instead of creating the cdoList
             // above.
-            MoveableList<Object> list = revision.getList(feature);
+            MoveableList<Object> list = revision.getOrCreateList(feature);
 
             // size = Math.min(size, 0);
             for (int i = 0; i < chunkSize; i++)

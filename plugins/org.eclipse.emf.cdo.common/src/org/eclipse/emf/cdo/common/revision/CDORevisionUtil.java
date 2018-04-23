@@ -454,7 +454,7 @@ public final class CDORevisionUtil
       {
         if (feature.isMany())
         {
-          CDOList list = revisionData.getList(feature);
+          CDOList list = revisionData.getListOrNull(feature);
           if (list != null)
           {
             for (Object value : list)

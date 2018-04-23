@@ -70,8 +70,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
-import org.eclipse.core.runtime.Assert;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -91,6 +89,8 @@ import java.util.Set;
  */
 public abstract class AbstractHorizontalClassMapping implements IClassMapping, IMappingConstants, IDeactivateable
 {
+  protected static final int UNSET_LIST = -1;
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractHorizontalClassMapping.class);
 
   private EClass eClass;
@@ -455,19 +455,19 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
           {
             EStructuralFeature feature = listSizeEntry.getKey();
             IDBField field = listSizeEntry.getValue();
+
             int size = resultSet.getInt(field.getName());
+            if (size == UNSET_LIST)
+            {
+              // Leave the list slot in the revision null.
+              continue;
+            }
 
-            // ensure the listSize (TODO: remove assertion)
-            CDOList list = revision.getList(feature, size);
-
+            // Ensure the list size.
+            CDOList list = revision.getOrCreateList(feature, size);
             for (int i = 0; i < size; i++)
             {
               list.add(InternalCDOList.UNINITIALIZED);
-            }
-
-            if (list.size() != size)
-            {
-              Assert.isTrue(false);
             }
           }
         }

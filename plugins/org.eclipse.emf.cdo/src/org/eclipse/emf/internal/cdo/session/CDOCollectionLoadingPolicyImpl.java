@@ -84,7 +84,12 @@ public class CDOCollectionLoadingPolicyImpl implements CDOCollectionLoadingPolic
     InternalCDORevision revision = (InternalCDORevision)rev;
     int fetchIndex = serverIndex;
 
-    MoveableList<Object> list = revision.getList(feature);
+    MoveableList<Object> list = revision.getListOrNull(feature);
+    if (list == null)
+    {
+      return null;
+    }
+
     int size = list.size();
     int fromIndex = accessIndex;
     int toIndex = accessIndex;

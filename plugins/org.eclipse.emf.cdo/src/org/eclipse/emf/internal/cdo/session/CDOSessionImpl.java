@@ -899,14 +899,17 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       {
         if (reference.isMany())
         {
-          CDOList list = internalRevision.getList(reference);
-          for (Iterator<Object> it = list.iterator(); it.hasNext();)
+          CDOList list = internalRevision.getListOrNull(reference);
+          if (list != null)
           {
-            Object element = it.next();
-            if (element instanceof CDOElementProxy)
+            for (Iterator<Object> it = list.iterator(); it.hasNext();)
             {
-              policy.resolveAllProxies(internalRevision, reference);
-              break;
+              Object element = it.next();
+              if (element instanceof CDOElementProxy)
+              {
+                policy.resolveAllProxies(internalRevision, reference);
+                break;
+              }
             }
           }
         }

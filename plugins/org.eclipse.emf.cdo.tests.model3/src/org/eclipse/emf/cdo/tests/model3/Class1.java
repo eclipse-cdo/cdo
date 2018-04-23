@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.Class1#getClass2 <em>Class2</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.Class1#getAdditionalValue <em>Additional Value</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getClass1()
@@ -69,5 +70,31 @@ public interface Class1 extends EObject
    * @generated
    */
   boolean isSetClass2();
+
+  /**
+   * Returns the value of the '<em><b>Additional Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Additional Value</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Additional Value</em>' attribute.
+   * @see #setAdditionalValue(String)
+   * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getClass1_AdditionalValue()
+   * @model
+   * @generated
+   */
+  String getAdditionalValue();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model3.Class1#getAdditionalValue <em>Additional Value</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Additional Value</em>' attribute.
+   * @see #getAdditionalValue()
+   * @generated
+   */
+  void setAdditionalValue(String value);
 
 } // Class1

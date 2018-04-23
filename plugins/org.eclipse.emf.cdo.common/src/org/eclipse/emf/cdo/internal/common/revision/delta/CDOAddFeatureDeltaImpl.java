@@ -52,7 +52,7 @@ public class CDOAddFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl imple
     Object value = getValue();
 
     InternalCDORevision internalRevision = (InternalCDORevision)revision;
-    CDOList list = internalRevision.getList(feature);
+    CDOList list = internalRevision.getOrCreateList(feature);
 
     if (index < 0)
     {

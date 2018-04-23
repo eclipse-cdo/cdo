@@ -832,7 +832,7 @@ public class Commits extends Coll
         if (value != null)
         {
           List<?> list = (List<?>)value;
-          CDOList revisionList = revision.getList(feature, list.size());
+          CDOList revisionList = revision.getOrCreateList(feature, list.size());
           for (Object element : list)
           {
             element = valueHandler.fromMongo(element);

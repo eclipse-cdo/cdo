@@ -2295,8 +2295,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
       }
 
-      CDOList list = cleanRevision.getList(feature);
-      final int originSize = list.size();
+      CDOList list = cleanRevision.getListOrNull(feature);
+      final int originSize = list == null ? 0 : list.size();
 
       return new CDOOriginSizeProvider()
       {
@@ -2344,13 +2344,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         if (object.cdoState() == CDOState.NEW)
         {
           // Register Delta for new objects only if objectA doesn't belong to this savepoint
-          if (getLastSavepoint().getPreviousSavepoint() == null || featureDelta == null)
+          if (lastSavepoint.getPreviousSavepoint() == null || featureDelta == null)
           {
             needToSaveFeatureDelta = false;
           }
           else
           {
-            Map<CDOID, CDOObject> map = getLastSavepoint().getNewObjects();
+            Map<CDOID, CDOObject> map = lastSavepoint.getNewObjects();
             needToSaveFeatureDelta = !map.containsKey(id);
           }
         }
@@ -2978,7 +2978,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         InternalCDORevision revision = (InternalCDORevision)rootResource.cdoRevision();
         if (revision != null)
         {
-          list = revision.getList(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS);
+          list = revision.getListOrNull(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS);
         }
       }
     }
@@ -2995,7 +2995,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         InternalCDORevision revision = (InternalCDORevision)folder.cdoRevision();
         if (revision != null)
         {
-          list = revision.getList(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES);
+          list = revision.getListOrNull(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES);
         }
       }
     }
@@ -3341,13 +3341,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         {
           if (reference.isMany())
           {
-            CDOList list = revision.getList(reference);
-            int index = 0;
-
-            for (Object value : list)
+            CDOList list = revision.getListOrNull(reference);
+            if (list != null)
             {
-              refs = addXRefLocal(refs, targetIDs, object, reference, index, value);
-              ++index;
+              int index = 0;
+              for (Object value : list)
+              {
+                refs = addXRefLocal(refs, targetIDs, object, reference, index, value);
+                ++index;
+              }
             }
           }
           else
@@ -3682,7 +3684,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
             if (reference.isMany())
             {
-              CDOList list = cleanRevision.getList(reference);
+              CDOList list = cleanRevision.getListOrNull(reference);
               if (list != null)
               {
                 for (Object value : list)

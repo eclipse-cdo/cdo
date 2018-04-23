@@ -487,8 +487,9 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
         for (EStructuralFeature feature : listSizeFields.keySet())
         {
-          CDOList list = revision.getList(feature);
-          stmt.setInt(column++, list.size());
+          CDOList list = revision.getListOrNull(feature);
+          int size = list == null ? UNSET_LIST : list.size();
+          stmt.setInt(column++, size);
         }
       }
 
@@ -867,16 +868,19 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
         IListMappingUnitSupport listMapping = listMappings[i];
         EStructuralFeature feature = listMapping.getFeature();
 
-        MoveableList<Object> list = revision.getList(feature);
-        int size = list.size();
-        if (size != 0)
+        MoveableList<Object> list = revision.getListOrNull(feature);
+        if (list != null)
         {
-          if (resultSets[i] == null)
+          int size = list.size();
+          if (size != 0)
           {
-            resultSets[i] = listMapping.queryUnitEntries(accessor, idHandler, timeStamp, rootID);
-          }
+            if (resultSets[i] == null)
+            {
+              resultSets[i] = listMapping.queryUnitEntries(accessor, idHandler, timeStamp, rootID);
+            }
 
-          listMapping.readUnitEntries(resultSets[i], idHandler, id, list);
+            listMapping.readUnitEntries(resultSets[i], idHandler, id, list);
+          }
         }
       }
 

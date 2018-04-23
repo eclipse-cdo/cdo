@@ -58,6 +58,19 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
     {
       if (feature.isMany())
       {
+        if (feature.isUnsettable())
+        {
+          if (cleanValue == null)
+          {
+            return currentValue == null;
+          }
+
+          if (currentValue == null)
+          {
+            return false;
+          }
+        }
+
         List<?> cleanList = (List<?>)cleanValue;
         List<?> currentList = (List<?>)currentValue;
 

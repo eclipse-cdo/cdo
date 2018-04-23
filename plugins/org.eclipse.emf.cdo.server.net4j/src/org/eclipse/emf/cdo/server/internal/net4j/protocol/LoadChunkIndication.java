@@ -99,11 +99,14 @@ public class LoadChunkIndication extends CDOServerReadIndication
     repository.ensureChunk(revision, feature, fromIndex, toIndex + 1);
 
     CDOType type = CDOModelUtil.getType(feature);
-    MoveableList<Object> list = revision.getList(feature);
-    for (int i = fromIndex; i <= toIndex; i++)
+    MoveableList<Object> list = revision.getListOrNull(feature);
+    if (list != null)
     {
-      Object value = list.get(i);
-      type.writeValue(out, value);
+      for (int i = fromIndex; i <= toIndex; i++)
+      {
+        Object value = list.get(i);
+        type.writeValue(out, value);
+      }
     }
   }
 }

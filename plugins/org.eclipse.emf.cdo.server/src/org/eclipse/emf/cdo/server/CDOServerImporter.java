@@ -462,7 +462,7 @@ public abstract class CDOServerImporter
 
           if (feature.isMany())
           {
-            CDOList list = revision.getList(feature);
+            CDOList list = revision.getOrCreateList(feature);
             list.add(value);
           }
           else

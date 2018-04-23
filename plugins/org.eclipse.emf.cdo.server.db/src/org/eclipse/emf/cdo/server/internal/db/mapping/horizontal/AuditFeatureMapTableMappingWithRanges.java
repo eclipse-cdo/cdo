@@ -389,10 +389,16 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
 
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
-    MoveableList<Object> list = revision.getList(getFeature());
+    MoveableList<Object> list = revision.getListOrNull(getFeature());
+    if (list == null)
+    {
+      // Nothing to read take shortcut.
+      return;
+    }
+
     if (listChunk == 0 || list.size() == 0)
     {
-      // nothing to read take shortcut
+      // Nothing to read take shortcut.
       return;
     }
 
@@ -553,17 +559,19 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
 
   public void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
-    CDOList values = revision.getList(getFeature());
-
-    int idx = 0;
-    for (Object element : values)
+    CDOList values = revision.getListOrNull(getFeature());
+    if (values != null)
     {
-      writeValue(accessor, revision, idx++, element);
-    }
+      int idx = 0;
+      for (Object element : values)
+      {
+        writeValue(accessor, revision, idx++, element);
+      }
 
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing done"); //$NON-NLS-1$
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Writing done"); //$NON-NLS-1$
+      }
     }
   }
 
@@ -712,7 +720,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     InternalCDORevision originalRevision = (InternalCDORevision)repo.getRevisionManager().getRevision(id, repo.getBranchManager().getMainBranch().getHead(),
         /* chunksize = */0, CDORevision.DEPTH_NONE, true);
 
-    int oldListSize = originalRevision.getList(getFeature()).size();
+    int oldListSize = originalRevision.size(getFeature());
 
     if (TRACER.isEnabled())
     {
@@ -757,7 +765,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
       id = this.originalRevision.getID();
       this.oldVersion = oldVersion;
       this.newVersion = newVersion;
-      lastIndex = originalRevision.getList(getFeature()).size() - 1;
+      lastIndex = originalRevision.size(getFeature()) - 1;
       this.timestamp = timestamp;
     }
 

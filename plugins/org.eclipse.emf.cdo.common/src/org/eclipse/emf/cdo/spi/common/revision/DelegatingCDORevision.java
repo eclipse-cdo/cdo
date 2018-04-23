@@ -327,14 +327,31 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
     getDelegate().setList(feature, list);
   }
 
+  @Deprecated
   public CDOList getList(EStructuralFeature feature)
   {
     return getDelegate().getList(feature);
   }
 
-  public CDOList getList(EStructuralFeature feature, int size)
+  @Deprecated
+  public CDOList getList(EStructuralFeature feature, int initialCapacity)
   {
-    return getDelegate().getList(feature, size);
+    return getDelegate().getList(feature, initialCapacity);
+  }
+
+  public CDOList getListOrNull(EStructuralFeature feature)
+  {
+    return getDelegate().getListOrNull(feature);
+  }
+
+  public CDOList getOrCreateList(EStructuralFeature feature)
+  {
+    return getDelegate().getOrCreateList(feature);
+  }
+
+  public CDOList getOrCreateList(EStructuralFeature feature, int size)
+  {
+    return getDelegate().getOrCreateList(feature, size);
   }
 
   public void read(CDODataInput in) throws IOException

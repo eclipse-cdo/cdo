@@ -56,7 +56,7 @@ public class CDOManyAttributeGetter extends CDOPropertyGetter
     }
 
     InternalCDORevision revision = (InternalCDORevision)target;
-    CDOList list = revision.getList(getEStructuralFeature(), 10);
+    CDOList list = revision.getOrCreateList(getEStructuralFeature(), 10);
 
     if (list instanceof WrappedHibernateList)
     {

@@ -204,10 +204,12 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
     assertEquals("Incorrect number of expected notifications: ", unsettable ? 2 : 1, notifications.size());
   }
 
-  private static class NotificationAsserter extends EContentAdapter
+  /**
+   * @author Eike Stepper
+   */
+  private static final class NotificationAsserter extends EContentAdapter
   {
-
-    private List<Notification> notifications = new ArrayList<Notification>();
+    private final List<Notification> notifications = new ArrayList<Notification>();
 
     @Override
     public void notifyChanged(Notification notification)

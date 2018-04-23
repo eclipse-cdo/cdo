@@ -134,12 +134,17 @@ public class StubCDORevision extends AbstractCDORevision
     throw new UnsupportedOperationException(getExceptionMessage());
   }
 
-  public CDOList getList(EStructuralFeature feature)
+  public CDOList getListOrNull(EStructuralFeature feature)
   {
     throw new UnsupportedOperationException(getExceptionMessage());
   }
 
-  public CDOList getList(EStructuralFeature feature, int size)
+  public CDOList getOrCreateList(EStructuralFeature feature)
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
+  public CDOList getOrCreateList(EStructuralFeature feature, int size)
   {
     throw new UnsupportedOperationException(getExceptionMessage());
   }

@@ -563,6 +563,18 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     {
       listChanges.add(featureDelta);
     }
+
+    if (featureDelta.getType() != CDOFeatureDelta.Type.UNSET)
+    {
+      EStructuralFeature feature = featureDelta.getFeature();
+      if (feature.isMany() && feature.isUnsettable())
+      {
+        if (listChanges.isEmpty())
+        {
+          listChanges.add(new CDOClearFeatureDeltaImpl(feature));
+        }
+      }
+    }
   }
 
   public Object applyTo(CDORevision revision)

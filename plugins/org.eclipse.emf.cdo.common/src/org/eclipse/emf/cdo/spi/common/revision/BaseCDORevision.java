@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
+import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -57,6 +58,7 @@ import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.MessageFormat;
 import java.util.Map;
 
@@ -98,6 +100,8 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   private static final byte LIST_PRESERVING_FLAG = 1 << 5; // 32;
 
   private static final byte PERMISSION_MASK = READ_PERMISSION_FLAG | WRITE_PERMISSION_FLAG; // 3
+
+  private static final Object[] EMPTY_ARRAY = {};
 
   private CDOID id;
 
@@ -663,7 +667,12 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   {
     if (feature.isMany())
     {
-      CDOList list = getList(feature);
+      CDOList list = getListOrNull(feature);
+      if (list == null)
+      {
+        throw new CDOListImpl.IndexOutOfBoundsException(index, 0);
+      }
+
       return list.get(index);
     }
 
@@ -672,32 +681,32 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public boolean contains(EStructuralFeature feature, Object value)
   {
-    CDOList list = getList(feature);
-    return list.contains(value);
+    CDOList list = getListOrNull(feature);
+    return list != null && list.contains(value);
   }
 
   public int indexOf(EStructuralFeature feature, Object value)
   {
-    CDOList list = getList(feature);
-    return list.indexOf(value);
+    CDOList list = getListOrNull(feature);
+    return list == null ? -1 : list.indexOf(value);
   }
 
   public int lastIndexOf(EStructuralFeature feature, Object value)
   {
-    CDOList list = getList(feature);
-    return list.lastIndexOf(value);
+    CDOList list = getListOrNull(feature);
+    return list == null ? -1 : list.lastIndexOf(value);
   }
 
   public boolean isEmpty(EStructuralFeature feature)
   {
-    CDOList list = getList(feature);
-    return list.isEmpty();
+    CDOList list = getListOrNull(feature);
+    return list == null || list.isEmpty();
   }
 
   public int size(EStructuralFeature feature)
   {
-    CDOList list = getList(feature);
-    return list.size();
+    CDOList list = getListOrNull(feature);
+    return list == null ? 0 : list.size();
   }
 
   public Object[] toArray(EStructuralFeature feature)
@@ -707,8 +716,8 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       throw new IllegalStateException("!feature.isMany()");
     }
 
-    CDOList list = getList(feature);
-    return list.toArray();
+    CDOList list = getListOrNull(feature);
+    return list == null ? EMPTY_ARRAY : list.toArray();
   }
 
   public <T> T[] toArray(EStructuralFeature feature, T[] array)
@@ -718,21 +727,33 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       throw new IllegalStateException("!feature.isMany()");
     }
 
-    CDOList list = getList(feature);
+    CDOList list = getListOrNull(feature);
+    if (list == null)
+    {
+      if (array.length != 0)
+      {
+        @SuppressWarnings("unchecked")
+        T[] emptyArray = (T[])Array.newInstance(array.getClass().getComponentType(), 0);
+        return emptyArray;
+      }
+
+      return array;
+    }
+
     return list.toArray(array);
   }
 
   public void add(EStructuralFeature feature, int index, Object value)
   {
-    CDOList list = getList(feature);
+    CDOList list = getOrCreateList(feature);
     list.add(index, value);
   }
 
   public void clear(EStructuralFeature feature)
   {
-    if (feature.isMany() && isListPreserving())
+    if (feature.isMany() && feature.isUnsettable())
     {
-      getList(feature).clear();
+      getOrCreateList(feature).clear();
     }
     else
     {
@@ -742,13 +763,23 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public Object move(EStructuralFeature feature, int targetIndex, int sourceIndex)
   {
-    CDOList list = getList(feature);
+    CDOList list = getListOrNull(feature);
+    if (list == null)
+    {
+      throw new CDOListImpl.IndexOutOfBoundsException(sourceIndex, 0);
+    }
+
     return list.move(targetIndex, sourceIndex);
   }
 
   public Object remove(EStructuralFeature feature, int index)
   {
-    CDOList list = getList(feature);
+    CDOList list = getListOrNull(feature);
+    if (list == null)
+    {
+      throw new CDOListImpl.IndexOutOfBoundsException(index, 0);
+    }
+
     return list.remove(index);
   }
 
@@ -756,7 +787,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   {
     if (feature.isMany())
     {
-      CDOList list = getList(feature);
+      CDOList list = getOrCreateList(feature);
       return list.set(index, value);
     }
 
@@ -767,7 +798,9 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   {
     if (feature.isMany() && isListPreserving())
     {
-      getList(feature).clear();
+      // isListPreserving() is always false except for HibernateStoreAccessor.
+      // For performance reasons this Hibernate-specific feature should probably be implemented via a custom revision factory.
+      getOrCreateList(feature).clear();
     }
     else
     {
@@ -872,19 +905,32 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
   }
 
-  public CDOList getList(EStructuralFeature feature)
+  /**
+   * @since 4.7
+   */
+  public CDOList getListOrNull(EStructuralFeature feature)
   {
-    return getList(feature, 0);
+    return getOrCreateList(feature, DO_NOT_CREATE_LIST);
   }
 
-  public CDOList getList(EStructuralFeature feature, int size)
+  public CDOList getOrCreateList(EStructuralFeature feature)
+  {
+    return getOrCreateList(feature, 0);
+  }
+
+  public CDOList getOrCreateList(EStructuralFeature feature, int size)
   {
     checkReadable(feature);
 
     int featureIndex = getFeatureIndex(feature);
     InternalCDOList list = (InternalCDOList)getValue(featureIndex);
-    if (list == null && size != -1)
+    if (list == null)
     {
+      if (size == DO_NOT_CREATE_LIST)
+      {
+        return null;
+      }
+
       list = (InternalCDOList)CDOListFactory.DEFAULT.createList(size, 0, 0);
       if (feature instanceof EReference && list instanceof ConfigurableEquality)
       {

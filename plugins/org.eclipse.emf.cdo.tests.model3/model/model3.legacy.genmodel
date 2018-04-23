@@ -13,6 +13,7 @@
     <genDataTypes ecoreDataType="model3.ecore#//Point"/>
     <genClasses ecoreClass="model3.ecore#//Class1">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model3.ecore#//Class1/class2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model3.ecore#//Class1/additionalValue"/>
     </genClasses>
     <genClasses ecoreClass="model3.ecore#//MetaRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model3.ecore#//MetaRef/ePackageRef"/>

@@ -252,10 +252,9 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
 
     public void visit(CDOUnsetFeatureDelta delta)
     {
-      // TODO Shouldn't that be "!unsettable"?!
-      if (delta.getFeature().isUnsettable())
+      if (!delta.getFeature().isUnsettable())
       {
-        throw new IllegalArgumentException("Feature is unsettable: " + delta);
+        throw new IllegalArgumentException("Feature is not unsettable: " + delta);
       }
 
       if (TRACER.isEnabled())

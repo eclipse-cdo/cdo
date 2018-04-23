@@ -444,7 +444,7 @@ public class CommitIntegrityCheck
       {
         if (reference.isMany())
         {
-          EList<?> list = cleanRev.getList(reference);
+          EList<?> list = cleanRev.getListOrNull(reference);
           if (list != null)
           {
             for (Object element : list)

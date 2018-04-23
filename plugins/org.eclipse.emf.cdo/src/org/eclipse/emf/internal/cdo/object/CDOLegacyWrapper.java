@@ -591,11 +591,16 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    */
   protected void revisionToInstanceFeature(EStructuralFeature feature)
   {
-    if (feature.isUnsettable() && !viewAndState.view.getStore().isSet(this, feature))
+    boolean isSet = true;
+    if (feature.isUnsettable())
     {
-      // Clarify if this is sufficient for bidirectional references
-      instance.eUnset(feature);
-      return;
+      isSet = viewAndState.view.getStore().isSet(this, feature);
+      if (!isSet)
+      {
+        // Clarify if this is sufficient for bidirectional references
+        instance.eUnset(feature);
+        return;
+      }
     }
 
     if (feature.isMany())
@@ -615,6 +620,14 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         InternalEList<Object> list = (InternalEList<Object>)instance.eGet(feature);
 
         clearEList(list);
+
+        if (size == 0 && feature.isUnsettable() && isSet)
+        {
+          // In clearEList() no removes took place because the list is already empty.
+          // Now call clear() in order to set isSet=true.
+          list.clear();
+        }
+
         for (int i = 0; i < size; i++)
         {
           Object object = getValueFromRevision(feature, i);

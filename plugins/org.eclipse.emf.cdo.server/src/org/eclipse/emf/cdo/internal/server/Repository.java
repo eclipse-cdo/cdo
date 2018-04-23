@@ -764,15 +764,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   @Deprecated
   protected void ensureChunks(InternalCDORevision revision, int referenceChunk, IStoreAccessor accessor)
   {
-    for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
-    {
-      if (feature.isMany())
-      {
-        MoveableList<Object> list = revision.getList(feature);
-        int chunkEnd = Math.min(referenceChunk, list.size());
-        accessor = ensureChunk(revision, feature, accessor, list, 0, chunkEnd);
-      }
-    }
+    throw new UnsupportedOperationException();
   }
 
   public void ensureChunks(InternalCDORevision revision)
@@ -793,27 +785,30 @@ public class Repository extends Container<Object> implements InternalRepository,
     {
       if (feature.isMany())
       {
-        MoveableList<Object> list = revision.getList(feature);
-        int size = list.size();
-        if (size != 0)
+        MoveableList<Object> list = revision.getListOrNull(feature);
+        if (list != null)
         {
-          int chunkSizeToUse = chunkSize;
-          if (chunkSizeToUse == UNCHUNKED)
+          int size = list.size();
+          if (size != 0)
           {
-            chunkSizeToUse = size;
-          }
-
-          int chunkEnd = Math.min(chunkSizeToUse, size);
-          accessor = ensureChunk(revision, feature, accessor, list, 0, chunkEnd);
-
-          if (unchunked)
-          {
-            for (int i = chunkEnd + 1; i < size; i++)
+            int chunkSizeToUse = chunkSize;
+            if (chunkSizeToUse == UNCHUNKED)
             {
-              if (list.get(i) == InternalCDOList.UNINITIALIZED)
+              chunkSizeToUse = size;
+            }
+
+            int chunkEnd = Math.min(chunkSizeToUse, size);
+            accessor = ensureChunk(revision, feature, accessor, list, 0, chunkEnd);
+
+            if (unchunked)
+            {
+              for (int i = chunkEnd + 1; i < size; i++)
               {
-                unchunked = false;
-                break;
+                if (list.get(i) == InternalCDOList.UNINITIALIZED)
+                {
+                  unchunked = false;
+                  break;
+                }
               }
             }
           }
@@ -831,7 +826,12 @@ public class Repository extends Container<Object> implements InternalRepository,
   {
     if (!revision.isUnchunked())
     {
-      MoveableList<Object> list = revision.getList(feature);
+      MoveableList<Object> list = revision.getListOrNull(feature);
+      if (list == null)
+      {
+        return null;
+      }
+
       chunkEnd = Math.min(chunkEnd, list.size());
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
       ensureChunk(revision, feature, accessor, list, chunkStart, chunkEnd);
@@ -854,13 +854,16 @@ public class Repository extends Container<Object> implements InternalRepository,
     {
       if (feature.isMany())
       {
-        MoveableList<Object> list = revision.getList(feature);
-        int size = list.size();
-        for (int i = 0; i < size; i++)
+        MoveableList<Object> list = revision.getListOrNull(feature);
+        if (list != null)
         {
-          if (list.get(i) == InternalCDOList.UNINITIALIZED)
+          int size = list.size();
+          for (int i = 0; i < size; i++)
           {
-            return false;
+            if (list.get(i) == InternalCDOList.UNINITIALIZED)
+            {
+              return false;
+            }
           }
         }
       }

@@ -314,13 +314,13 @@ public class SecurityTest extends AbstractCDOTest
       {
         if (CDOIDUtil.isNull((CDOID)revision.getContainerID()))
         {
-          return revision.getList(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS, 0);
+          return revision.getOrCreateList(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS, 0);
         }
 
         return null;
       }
 
-      return revision.getList(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES, 0);
+      return revision.getOrCreateList(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES, 0);
     }
   }
 

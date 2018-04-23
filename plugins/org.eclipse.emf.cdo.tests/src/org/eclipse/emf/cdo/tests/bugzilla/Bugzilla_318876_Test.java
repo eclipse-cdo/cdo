@@ -60,9 +60,6 @@ public class Bugzilla_318876_Test extends AbstractCDOTest
 
     CDOState state = CDOUtil.getCDOObject(purchaseOrder).cdoState();
     assertEquals(CDOState.INVALID_CONFLICT, state);
-
-    transaction.close();
-    session.close();
   }
 
   private void doSecondSession() throws CommitException
@@ -76,6 +73,5 @@ public class Bugzilla_318876_Test extends AbstractCDOTest
     EcoreUtil.delete(purchaseOrder);
 
     transaction.commit();
-    session.close();
   }
 }

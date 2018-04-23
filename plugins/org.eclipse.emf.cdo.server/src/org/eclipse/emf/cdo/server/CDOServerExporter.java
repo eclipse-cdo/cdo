@@ -336,6 +336,11 @@ public abstract class CDOServerExporter<OUT>
 
     public static final String FEATURE_VALUE = "value";
 
+    /**
+     * @since 4.7
+     */
+    public static final String FEATURE_ISSET = "isset";
+
     public static final String FEATURE_ID = "id";
 
     public static final String FEATURE_SIZE = "size";
@@ -524,12 +529,18 @@ public abstract class CDOServerExporter<OUT>
         {
           @SuppressWarnings("unchecked")
           List<Object> list = (List<Object>)rev.getValue(feature);
-          if (list != null)
+          if (list != null && !list.isEmpty())
           {
             for (Object value : list)
             {
               exportFeature(out, feature, value);
             }
+          }
+          else if (feature.isUnsettable())
+          {
+            out.element(FEATURE);
+            out.attribute(FEATURE_NAME, feature.getName());
+            out.attribute(FEATURE_ISSET, list != null);
           }
         }
         else

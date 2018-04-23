@@ -451,8 +451,6 @@ public abstract class CDOServerImporter
         else if (FEATURE.equals(qName))
         {
           String name = attributes.getValue(FEATURE_NAME);
-          Object value = value(attributes);
-
           EClass eClass = revision.getEClass();
           EStructuralFeature feature = eClass.getEStructuralFeature(name);
           if (feature == null)
@@ -460,16 +458,36 @@ public abstract class CDOServerImporter
             throw new IllegalStateException("Feature " + name + " not found in class " + eClass.getName());
           }
 
-          if (feature.isMany())
+          String isSetString = attributes.getValue(FEATURE_ISSET);
+          if (isSetString != null)
           {
-            CDOList list = revision.getOrCreateList(feature);
-            list.add(value);
+            // This must be an empty or an unset list.
+            boolean isSet = Boolean.parseBoolean(isSetString);
+            if (isSet)
+            {
+              // Create an empty list.
+              revision.getOrCreateList(feature);
+            }
+            else
+            {
+              // Leave the list unset.
+            }
           }
           else
           {
-            if (value != null)
+            Object value = value(attributes);
+
+            if (feature.isMany())
             {
-              revision.setValue(feature, value);
+              CDOList list = revision.getOrCreateList(feature);
+              list.add(value);
+            }
+            else
+            {
+              if (value != null)
+              {
+                revision.setValue(feature, value);
+              }
             }
           }
         }

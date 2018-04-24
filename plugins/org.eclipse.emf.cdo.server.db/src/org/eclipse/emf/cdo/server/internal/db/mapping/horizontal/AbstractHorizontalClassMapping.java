@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBIndexAnnotation;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
@@ -609,6 +610,25 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
   public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean mapType, boolean revise, OMMonitor monitor)
   {
+    CDOID id = revision.getID();
+    InternalCDOBranch branch = revision.getBranch();
+    long timeStamp = revision.getTimeStamp();
+
+    // A DetachedCDORevision can only come from DBStoreAccessor.rawStore().
+    if (revision instanceof DetachedCDORevision)
+    {
+      int version = revision.getVersion();
+      detachAttributes(accessor, id, version, branch, timeStamp, monitor);
+
+      long revised = revision.getRevised();
+      if (revised != CDOBranchPoint.UNSPECIFIED_DATE)
+      {
+        reviseOldRevision(accessor, id, branch, revised);
+      }
+
+      return;
+    }
+
     // If the repository's root resource ID is not yet set, then this must be the initial initRootResource()
     // commit. The duplicate check is certainly not needed in this case, and it appears that Mysql has problems
     // with it (Table definition has changed, please retry transaction), see bug 482886.
@@ -622,16 +642,14 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       try
       {
         async = monitor.forkAsync();
-        CDOID id = revision.getID();
         if (mapType)
         {
-          long timeStamp = revision.getTimeStamp();
           mappingStrategy.putObjectType(accessor, timeStamp, id, eClass);
         }
         else if (revise)
         {
-          long revised = revision.getTimeStamp() - 1;
-          reviseOldRevision(accessor, id, revision.getBranch(), revised);
+          long revised = timeStamp - 1;
+          reviseOldRevision(accessor, id, branch, revised);
           for (IListMapping mapping : getListMappings())
           {
             mapping.objectDetached(accessor, id, revised);

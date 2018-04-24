@@ -1300,13 +1300,14 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   public void rawStore(InternalCDORevision revision, OMMonitor monitor)
   {
     CDOID id = revision.getID();
+    EClass eClass = revision.getEClass();
 
-    CDOClassifierRef classifierRef = getStore().getMappingStrategy().readObjectType(this, id);
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    CDOClassifierRef classifierRef = mappingStrategy.readObjectType(this, id);
+
     boolean isFirstRevision = classifierRef == null;
-
     if (!isFirstRevision)
     {
-      EClass eClass = revision.getEClass();
       boolean namesMatch = classifierRef.getClassifierName().equals(eClass.getName());
       boolean packagesMatch = classifierRef.getPackageURI().equals(eClass.getEPackage().getNsURI());
       if (!namesMatch || !packagesMatch)

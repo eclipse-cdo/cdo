@@ -576,6 +576,25 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean mapType, boolean revise, OMMonitor monitor)
   {
+    CDOID id = revision.getID();
+    int version = revision.getVersion();
+    InternalCDOBranch branch = revision.getBranch();
+    long timeStamp = revision.getTimeStamp();
+
+    // A DetachedCDORevision can only come from DBStoreAccessor.rawStore().
+    if (revision instanceof DetachedCDORevision)
+    {
+      detachAttributes(accessor, id, version, branch, timeStamp, monitor);
+
+      long revised = revision.getRevised();
+      if (revised != CDOBranchPoint.UNSPECIFIED_DATE)
+      {
+        reviseOldRevision(accessor, id, branch, revised);
+      }
+
+      return;
+    }
+
     Async async = null;
     monitor.begin(10);
 
@@ -584,11 +603,9 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       try
       {
         async = monitor.forkAsync();
-        CDOID id = revision.getID();
         if (mapType)
         {
           // Put new objects into objectTypeMapper
-          long timeStamp = revision.getTimeStamp();
           EClass eClass = getEClass();
 
           AbstractHorizontalMappingStrategy mappingStrategy = (AbstractHorizontalMappingStrategy)getMappingStrategy();
@@ -598,11 +615,10 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
           }
         }
 
-        if (!mapType && revise && revision.getVersion() > CDOBranchVersion.FIRST_VERSION)
+        if (!mapType && revise && version > CDOBranchVersion.FIRST_VERSION)
         {
           // If revision is not the first one, revise the old revision
-          long revised = revision.getTimeStamp() - 1;
-          InternalCDOBranch branch = revision.getBranch();
+          long revised = timeStamp - 1;
 
           reviseOldRevision(accessor, id, branch, revised);
           for (IListMapping mapping : getListMappings())

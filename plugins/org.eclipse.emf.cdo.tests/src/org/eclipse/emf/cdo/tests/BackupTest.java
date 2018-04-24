@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.CDOServerExporter;
 import org.eclipse.emf.cdo.server.CDOServerImporter;
@@ -21,6 +22,8 @@ import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
+import org.eclipse.emf.cdo.tests.model2.Model2Package;
+import org.eclipse.emf.cdo.tests.model2.Unsettable1;
 import org.eclipse.emf.cdo.tests.model3.File;
 import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.tests.model3.Point;
@@ -29,6 +32,7 @@ import org.eclipse.emf.cdo.tests.model5.Doctor;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 import org.eclipse.emf.cdo.tests.model6.UnsettableAttributes;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -182,6 +186,26 @@ public class BackupTest extends AbstractCDOTest
     exporter.exportRepository(baos);
   }
 
+  public void testExportNIL() throws Exception
+  {
+    Unsettable1 object = getModel2Factory().createUnsettable1();
+    object.setUnsettableString(null);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+    resource.getContents().add(object);
+    transaction.commit();
+
+    assertEquals(CDORevisionData.NIL, CDOUtil.getCDOObject(object).cdoRevision().data().get(Model2Package.eINSTANCE.getUnsettable1_UnsettableString(), 0));
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+  }
+
   public void testExportCustomDataType() throws Exception
   {
     CDOSession session = openSession();
@@ -248,7 +272,8 @@ public class BackupTest extends AbstractCDOTest
     TreeIterator<EObject> iter = transaction2.getRootResource().getAllContents();
     while (iter.hasNext())
     {
-      iter.next();
+      EObject eObject = iter.next();
+      System.out.println(eObject);
     }
 
     // Add content from a new package
@@ -422,6 +447,35 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
     importer.importRepository(bais);
+  }
+
+  @CleanRepositoriesBefore(reason = "Inactive repository required")
+  public void testImportNIL() throws Exception
+  {
+    Unsettable1 object = getModel2Factory().createUnsettable1();
+    object.setUnsettableString(null);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+    resource.getContents().add(object);
+    transaction.commit();
+
+    assertEquals(CDORevisionData.NIL, CDOUtil.getCDOObject(object).cdoRevision().data().get(Model2Package.eINSTANCE.getUnsettable1_UnsettableString(), 0));
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+
+    InternalRepository repo2 = getRepository("repo2", false);
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
+    importer.importRepository(bais);
+
+    useAfterImport("repo2");
   }
 
   @CleanRepositoriesBefore(reason = "Inactive repository required")

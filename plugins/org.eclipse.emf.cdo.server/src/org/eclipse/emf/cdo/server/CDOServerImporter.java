@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil.ExtResourceSet;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -638,6 +639,22 @@ public abstract class CDOServerImporter
       protected Object value(Attributes attributes)
       {
         String type = attributes.getValue(FEATURE_TYPE);
+
+        if (type == null)
+        {
+          String isNullString = attributes.getValue(FEATURE_ISNULL);
+          if (isNullString != null)
+          {
+            // This must be an explicit single-valued null.
+            boolean isNull = Boolean.parseBoolean(isNullString);
+            if (isNull)
+            {
+              return CDORevisionData.NIL;
+            }
+
+            throw new IllegalArgumentException("Invalid attribute: isnull=false");
+          }
+        }
 
         if (TYPE_BLOB.equals(type))
         {

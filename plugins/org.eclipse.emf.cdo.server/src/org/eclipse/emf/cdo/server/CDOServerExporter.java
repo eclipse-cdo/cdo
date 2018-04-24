@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -341,6 +342,11 @@ public abstract class CDOServerExporter<OUT>
      */
     public static final String FEATURE_ISSET = "isset";
 
+    /**
+     * @since 4.7
+     */
+    public static final String FEATURE_ISNULL = "isnull";
+
     public static final String FEATURE_ID = "id";
 
     public static final String FEATURE_SIZE = "size";
@@ -610,6 +616,10 @@ public abstract class CDOServerExporter<OUT>
         byte[] array = (byte[])value;
         out.attribute(featureType, TYPE_BYTE_ARRAY);
         out.attribute(FEATURE_VALUE, HexUtil.bytesToHex(array));
+      }
+      else if (value == CDORevisionData.NIL)
+      {
+        out.attribute(FEATURE_ISNULL, true);
       }
       else
       {

@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model5.Doctor;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
+import org.eclipse.emf.cdo.tests.model6.UnsettableAttributes;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -155,6 +156,24 @@ public class BackupTest extends AbstractCDOTest
     {
       IOUtil.close(clobStream);
     }
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+  }
+
+  public void testExportByteArray() throws Exception
+  {
+    UnsettableAttributes object = getModel6Factory().createUnsettableAttributes();
+    object.setAttrByteArray(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -2, -3, -128, 127 });
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+    resource.getContents().add(object);
+    transaction.commit();
 
     InternalRepository repo1 = getRepository();
 
@@ -366,6 +385,31 @@ public class BackupTest extends AbstractCDOTest
     {
       IOUtil.close(clobStream);
     }
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+
+    InternalRepository repo2 = getRepository("repo2", false);
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
+    importer.importRepository(bais);
+  }
+
+  @CleanRepositoriesBefore(reason = "Inactive repository required")
+  public void testImportByteArray() throws Exception
+  {
+    UnsettableAttributes object = getModel6Factory().createUnsettableAttributes();
+    object.setAttrByteArray(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -2, -3, -128, 127 });
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+    resource.getContents().add(object);
+    transaction.commit();
 
     InternalRepository repo1 = getRepository();
 

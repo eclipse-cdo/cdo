@@ -349,6 +349,11 @@ public abstract class CDOServerExporter<OUT>
 
     public static final String TYPE_CLOB = "Clob";
 
+    /**
+     * @since 4.7
+     */
+    public static final String TYPE_BYTE_ARRAY = "ByteArray";
+
     public static final String TYPE_FEATURE_MAP = "FeatureMap";
 
     public static final String LOBS = "lobs";
@@ -599,6 +604,12 @@ public abstract class CDOServerExporter<OUT>
         out.attribute(featureType, TYPE_FEATURE_MAP);
         out.attribute(FEATURE_INNER_FEATURE, innerFeature.getName());
         exportFeature(out, innerFeature, FEATURE_INNER_TYPE, innerValue);
+      }
+      else if (value instanceof byte[])
+      {
+        byte[] array = (byte[])value;
+        out.attribute(featureType, TYPE_BYTE_ARRAY);
+        out.attribute(FEATURE_VALUE, HexUtil.bytesToHex(array));
       }
       else
       {

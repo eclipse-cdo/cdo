@@ -740,6 +740,11 @@ public abstract class CDOServerImporter
           return new BigInteger(str);
         }
 
+        if (TYPE_BYTE_ARRAY.equals(type))
+        {
+          return HexUtil.hexToBytes(str);
+        }
+
         throw new IllegalArgumentException("Invalid type: " + type);
       }
     }

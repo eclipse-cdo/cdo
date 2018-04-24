@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
-import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model2.Unsettable1;
 import org.eclipse.emf.cdo.tests.model3.File;
 import org.eclipse.emf.cdo.tests.model3.Image;
@@ -202,7 +201,7 @@ public class BackupTest extends AbstractCDOTest
     resource.getContents().add(object);
     transaction.commit();
 
-    assertEquals(CDORevisionData.NIL, CDOUtil.getCDOObject(object).cdoRevision().data().get(Model2Package.eINSTANCE.getUnsettable1_UnsettableString(), 0));
+    assertEquals(CDORevisionData.NIL, CDOUtil.getCDOObject(object).cdoRevision().data().get(getModel2Package().getUnsettable1_UnsettableString(), 0));
 
     InternalRepository repo1 = getRepository();
 
@@ -466,7 +465,7 @@ public class BackupTest extends AbstractCDOTest
     resource.getContents().add(object);
     transaction.commit();
 
-    assertEquals(CDORevisionData.NIL, CDOUtil.getCDOObject(object).cdoRevision().data().get(Model2Package.eINSTANCE.getUnsettable1_UnsettableString(), 0));
+    assertEquals(CDORevisionData.NIL, CDOUtil.getCDOObject(object).cdoRevision().data().get(getModel2Package().getUnsettable1_UnsettableString(), 0));
 
     InternalRepository repo1 = getRepository();
 

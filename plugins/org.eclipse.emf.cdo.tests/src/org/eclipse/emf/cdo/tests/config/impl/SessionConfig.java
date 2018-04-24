@@ -128,6 +128,8 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   protected IManagedContainer createClientContainer()
   {
     IManagedContainer container = ContainerUtil.createContainer();
+    container.setName("client");
+
     Net4jUtil.prepareContainer(container);
 
     container.registerFactory(new ExecutorServiceFactory()

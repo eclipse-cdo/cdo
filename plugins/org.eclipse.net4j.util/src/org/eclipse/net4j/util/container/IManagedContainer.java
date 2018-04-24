@@ -35,6 +35,20 @@ import java.util.Set;
  */
 public interface IManagedContainer extends IContainer<Object>, ILifecycle
 {
+  /**
+   * Returns the name of this container, or <code>null</code> if no name has been set.
+   *
+   * @since 3.8
+   */
+  public String getName();
+
+  /**
+   * Sets the name of this container before it is activated.
+   *
+   * @since 3.8
+   */
+  public void setName(String name);
+
   public IRegistry<IFactoryKey, IFactory> getFactoryRegistry();
 
   public IManagedContainer registerFactory(IFactory factory);

@@ -35,8 +35,11 @@ public class PluginContainer extends ManagedContainer implements IPluginContaine
   {
   }
 
+  /**
+   * @since 3.8
+   */
   @Override
-  public String toString()
+  protected String getTypeName()
   {
     return "PluginContainer"; //$NON-NLS-1$
   }
@@ -67,6 +70,7 @@ public class PluginContainer extends ManagedContainer implements IPluginContaine
     if (instance == null)
     {
       PluginContainer container = new PluginContainer();
+      container.setName("INSTANCE");
       container.activate();
 
       instance = container; // Leave instance==null in case of a Throwable in activate()

@@ -53,6 +53,8 @@ import java.util.Set;
  */
 public class ManagedContainer extends Lifecycle implements IManagedContainer
 {
+  private String name;
+
   private IRegistry<IFactoryKey, IFactory> factoryRegistry;
 
   private List<IElementProcessor> postProcessors;
@@ -83,6 +85,23 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public ManagedContainer()
   {
+  }
+
+  /**
+   * @since 3.8
+   */
+  public String getName()
+  {
+    return name;
+  }
+
+  /**
+   * @since 3.8
+   */
+  public void setName(String name)
+  {
+    checkInactive();
+    this.name = name;
   }
 
   public synchronized IRegistry<IFactoryKey, IFactory> getFactoryRegistry()
@@ -514,6 +533,19 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   @Override
   public String toString()
+  {
+    if (name != null)
+    {
+      return getTypeName() + "[" + name + "]";
+    }
+
+    return getTypeName();
+  }
+
+  /**
+   * @since 3.8
+   */
+  protected String getTypeName()
   {
     return "ManagedContainer"; //$NON-NLS-1$
   }

@@ -338,6 +338,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   protected IManagedContainer createServerContainer()
   {
     IManagedContainer container = ContainerUtil.createContainer();
+    container.setName("server");
+
     Net4jUtil.prepareContainer(container);
     CDONet4jServerUtil.prepareContainer(container);
 

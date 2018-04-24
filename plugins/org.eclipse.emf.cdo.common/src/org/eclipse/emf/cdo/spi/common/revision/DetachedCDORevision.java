@@ -40,6 +40,12 @@ public class DetachedCDORevision extends SyntheticCDORevision
   public DetachedCDORevision(EClass eClass, CDOID id, CDOBranch branch, int version, long timeStamp, long revised)
   {
     super(eClass, id, branch);
+
+    if (version < 0)
+    {
+      throw new IllegalArgumentException("Version is negative: " + version);
+    }
+
     this.version = version;
     this.timeStamp = timeStamp;
     this.revised = revised;

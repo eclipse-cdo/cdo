@@ -105,8 +105,11 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     initSQLStrings();
   }
 
-  private void initSQLStrings()
+  @Override
+  protected void initSQLStrings()
   {
+    super.initSQLStrings();
+
     // ----------- Select Revision ---------------------------
     String[] strings = buildSQLSelects(false);
     String sqlSelectAttributesPrefix = strings[0];
@@ -185,6 +188,15 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     builder.append(ATTRIBUTES_VERSION);
     builder.append("=?"); //$NON-NLS-1$
     sqlRawDeleteAttributes = builder.toString();
+  }
+
+  @Override
+  protected void appendSelectForHandleFields(StringBuilder builder)
+  {
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_CREATED);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_REVISED);
   }
 
   private String[] buildSQLSelects(boolean forUnits)

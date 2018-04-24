@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
@@ -421,32 +422,41 @@ public abstract class CDOServerImporter
         {
           CDOClassifierRef classifierRef = new CDOClassifierRef(attributes.getValue(REVISION_CLASS));
           EClass eClass = (EClass)classifierRef.resolve(packageRegistry);
-          revision = (InternalCDORevision)CDORevisionFactory.DEFAULT.createRevision(eClass);
-          revision.setID(id(attributes.getValue(REVISION_ID)));
-          revision.setBranchPoint(branch.getPoint(Long.parseLong(attributes.getValue(REVISION_TIME))));
-          revision.setVersion(Integer.parseInt(attributes.getValue(REVISION_VERSION)));
-          String revised = attributes.getValue(REVISION_REVISED);
-          if (revised != null)
-          {
-            revision.setRevised(Long.parseLong(revised));
-          }
 
-          String resourceID = attributes.getValue(REVISION_RESOURCE);
-          if (resourceID != null)
+          CDOID id = id(attributes.getValue(REVISION_ID));
+          int version = Integer.parseInt(attributes.getValue(REVISION_VERSION));
+          long created = timeStamp(attributes.getValue(REVISION_TIME));
+          long revised = timeStamp(attributes.getValue(REVISION_REVISED));
+          boolean detached = "true".equals(attributes.getValue(REVISION_DETACHED));
+          if (detached)
           {
-            revision.setResourceID(id(resourceID));
+            revision = new DetachedCDORevision(eClass, id, branch, version, created, revised);
           }
-
-          String containerID = attributes.getValue(REVISION_CONTAINER);
-          if (containerID != null)
+          else
           {
-            revision.setContainerID(id(containerID));
-          }
+            revision = (InternalCDORevision)CDORevisionFactory.DEFAULT.createRevision(eClass);
+            revision.setID(id);
+            revision.setBranchPoint(branch.getPoint(created));
+            revision.setVersion(version);
+            revision.setRevised(revised);
 
-          String featureID = attributes.getValue(REVISION_FEATURE);
-          if (featureID != null)
-          {
-            revision.setContainingFeatureID(Integer.parseInt(featureID));
+            String resourceID = attributes.getValue(REVISION_RESOURCE);
+            if (resourceID != null)
+            {
+              revision.setResourceID(id(resourceID));
+            }
+
+            String containerID = attributes.getValue(REVISION_CONTAINER);
+            if (containerID != null)
+            {
+              revision.setContainerID(id(containerID));
+            }
+
+            String featureID = attributes.getValue(REVISION_FEATURE);
+            if (featureID != null)
+            {
+              revision.setContainingFeatureID(Integer.parseInt(featureID));
+            }
           }
         }
         else if (FEATURE.equals(qName))
@@ -634,6 +644,16 @@ public abstract class CDOServerImporter
       protected final CDOID id(String str)
       {
         return CDOIDUtil.read(str);
+      }
+
+      protected final long timeStamp(String str)
+      {
+        if (str == null)
+        {
+          return CDOBranchPoint.UNSPECIFIED_DATE;
+        }
+
+        return Long.parseLong(str);
       }
 
       protected Object value(Attributes attributes)

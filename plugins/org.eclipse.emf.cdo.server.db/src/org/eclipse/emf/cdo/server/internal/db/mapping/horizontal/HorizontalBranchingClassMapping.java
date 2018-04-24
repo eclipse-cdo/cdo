@@ -87,10 +87,6 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
   private String sqlReviseAttributes;
 
-  private String sqlSelectForHandle;
-
-  private String sqlSelectForChangeSet;
-
   private String sqlRawDeleteAttributes;
 
   public HorizontalBranchingClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
@@ -105,8 +101,11 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     return table.addField(ATTRIBUTES_BRANCH, DBType.INTEGER, true);
   }
 
-  private void initSQLStrings()
+  @Override
+  protected void initSQLStrings()
   {
+    super.initSQLStrings();
+
     // ----------- Select Revision ---------------------------
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
@@ -205,25 +204,6 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append("=0"); //$NON-NLS-1$
     sqlSelectAllObjectIDs = builder.toString();
 
-    // ----------- Select all revisions (for handleRevision) ---
-    builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_BRANCH);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable());
-    sqlSelectForHandle = builder.toString();
-
-    // ----------- Select all revisions (for handleRevision) ---
-    builder = new StringBuilder("SELECT DISTINCT "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable());
-    builder.append(" WHERE "); //$NON-NLS-1$
-    sqlSelectForChangeSet = builder.toString();
-
     // ----------- Raw delete one specific revision ------
     builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
     builder.append(getTable());
@@ -235,6 +215,17 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append(ATTRIBUTES_VERSION);
     builder.append("=?"); //$NON-NLS-1$
     sqlRawDeleteAttributes = builder.toString();
+  }
+
+  @Override
+  protected void appendSelectForHandleFields(StringBuilder builder)
+  {
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_BRANCH);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_CREATED);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_REVISED);
   }
 
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
@@ -684,7 +675,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
-    StringBuilder builder = new StringBuilder(sqlSelectForHandle);
+    StringBuilder builder = new StringBuilder(getSQLSelectForHandle());
     boolean whereAppend = false;
 
     if (branch != null)
@@ -757,11 +748,11 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       {
         CDOID id = idHandler.getCDOID(resultSet, 1);
         int version = resultSet.getInt(2);
+        CDOBranch revisionBranch = branchManager.getBranch(resultSet.getInt(3));
 
         if (version >= CDOBranchVersion.FIRST_VERSION)
         {
-          int branchID = resultSet.getInt(3);
-          CDOBranchVersion branchVersion = branchManager.getBranch(branchID).getVersion(Math.abs(version));
+          CDOBranchVersion branchVersion = revisionBranch.getVersion(version);
           InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchVersion, CDORevision.UNCHUNKED, true);
 
           if (!handler.handleRevision(revision))
@@ -771,13 +762,16 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         }
         else
         {
+          EClass eClass = getEClass();
+          long created = resultSet.getLong(4);
+          long revised = resultSet.getLong(5);
+
           // Tell handler about detached IDs
-          InternalCDORevision revision = new DetachedCDORevision(null, id, null, version, 0);
+          InternalCDORevision revision = new DetachedCDORevision(eClass, id, revisionBranch, -version, created, revised);
           if (!handler.handleRevision(revision))
           {
             break;
           }
-
         }
       }
     }
@@ -795,7 +789,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, CDOChangeSetSegment[] segments)
   {
-    StringBuilder builder = new StringBuilder(sqlSelectForChangeSet);
+    StringBuilder builder = new StringBuilder(getSQLSelectForChangeSet());
     boolean isFirst = true;
 
     for (int i = 0; i < segments.length; i++)

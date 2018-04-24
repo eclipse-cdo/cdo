@@ -89,8 +89,11 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     hasLists = !getListMappings().isEmpty();
   }
 
-  private void initSQLStrings()
+  @Override
+  protected void initSQLStrings()
   {
+    super.initSQLStrings();
+
     // ----------- Select Revision ---------------------------
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$

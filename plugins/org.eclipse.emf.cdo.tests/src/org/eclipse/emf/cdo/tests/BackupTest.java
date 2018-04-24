@@ -10,15 +10,19 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.CDOServerExporter;
 import org.eclipse.emf.cdo.server.CDOServerImporter;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.bundle.OM;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
@@ -40,6 +44,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -565,6 +570,46 @@ public class BackupTest extends AbstractCDOTest
     SalesOrder salesOrder2 = (SalesOrder)resource2.getContents().get(0);
     Customer customer2 = salesOrder2.getCustomer();
     System.out.println(customer2);
+  }
+
+  @CleanRepositoriesBefore(reason = "Inactive repository required")
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+  public void testImportDetachedRevision() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+    PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
+    purchaseOrder.setDate(new Date(1234567));
+    resource.getContents().add(purchaseOrder);
+    transaction.commit();
+    resource.getContents().clear();
+    transaction.commit();
+    session.close();
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+
+    InternalRepository repo2 = getRepository("repo2", false);
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
+    importer.importRepository(bais);
+
+    EClass eClass = getModel1Package().getPurchaseOrder();
+    CDOSession session2 = openSession("repo2");
+    CDOBranch branch = session2.getBranchManager().getMainBranch();
+    session2.getRevisionManager().handleRevisions(eClass, branch, true, 0, false, new CDORevisionHandler()
+    {
+      public boolean handleRevision(CDORevision revision)
+      {
+        fail("No PurchaseOrder revision should be visible by now.");
+        return true;
+      }
+    });
   }
 
   private Customer initExtResource(ResourceSet resourceSet)

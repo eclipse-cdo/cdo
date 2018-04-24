@@ -332,13 +332,14 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
   }
 
-  private void initSQLStrings()
+  protected void initSQLStrings()
   {
     // ----------- Select all revisions (for handleRevisions) ---
     StringBuilder builder = new StringBuilder("SELECT "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_ID);
     builder.append(", "); //$NON-NLS-1$
     builder.append(ATTRIBUTES_VERSION);
+    appendSelectForHandleFields(builder);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(table);
     sqlSelectForHandle = builder.toString();
@@ -350,6 +351,21 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
     sqlSelectForChangeSet = builder.toString();
+  }
+
+  protected void appendSelectForHandleFields(StringBuilder builder)
+  {
+    // Do nothing.
+  }
+
+  protected String getSQLSelectForHandle()
+  {
+    return sqlSelectForHandle;
+  }
+
+  protected String getSQLSelectForChangeSet()
+  {
+    return sqlSelectForChangeSet;
   }
 
   protected IDBField addContainerField(IDBTable table, DBType idType, int idLength)
@@ -697,6 +713,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     IRepository repository = accessor.getStore().getRepository();
     CDORevisionManager revisionManager = repository.getRevisionManager();
     CDOBranchManager branchManager = repository.getBranchManager();
+    CDOBranch mainBranch = branchManager.getMainBranch();
 
     // TODO: test for timeStamp == INVALID_TIME and encode revision.isValid() as WHERE instead of fetching all revisions
     // in order to increase performance
@@ -757,8 +774,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
         if (version >= CDOBranchVersion.FIRST_VERSION)
         {
-          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchManager.getMainBranch().getVersion(version),
-              CDORevision.UNCHUNKED, true);
+          CDOBranchVersion branchVersion = mainBranch.getVersion(version);
+          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchVersion, CDORevision.UNCHUNKED, true);
 
           if (!handler.handleRevision(revision))
           {
@@ -767,8 +784,12 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         }
         else
         {
+          EClass eClass = getEClass();
+          long created = resultSet.getLong(3);
+          long revised = resultSet.getLong(4);
+
           // Tell handler about detached IDs
-          InternalCDORevision revision = new DetachedCDORevision(null, id, null, version, 0);
+          InternalCDORevision revision = new DetachedCDORevision(eClass, id, mainBranch, -version, created, revised);
           if (!handler.handleRevision(revision))
           {
             break;

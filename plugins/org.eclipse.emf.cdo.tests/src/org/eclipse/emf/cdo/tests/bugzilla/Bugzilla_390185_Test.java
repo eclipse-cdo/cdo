@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * Bug 390185: Deadlock on multiple concurrent transactions.
@@ -49,10 +47,7 @@ public class Bugzilla_390185_Test extends AbstractCDOTest
       actors.add(actor);
     }
 
-    if (!latch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS))
-    {
-      throw new TimeoutException("Not all actors finished in time");
-    }
+    await(latch);
   }
 
   /**

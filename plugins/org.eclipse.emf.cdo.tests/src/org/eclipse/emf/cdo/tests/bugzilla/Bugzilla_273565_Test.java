@@ -70,7 +70,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
 
         try
         {
-          start.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+          await(start);
           while (!done[0])
           {
             while (orderDetail.getPrice() != 1 && !done[0])
@@ -123,7 +123,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
       {
         try
         {
-          start.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+          await(start);
           for (int i = 0; i < 50 && exception[0] == null; i++)
           {
             try
@@ -211,7 +211,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
 
         try
         {
-          start.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+          await(start);
           for (int i = 0; i < 5000 && exception[0] == null; i++)
           {
             CDOUtil.getCDOObject(orderDetail).cdoWriteLock().lock(DEFAULT_TIMEOUT);

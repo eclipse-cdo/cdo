@@ -25,8 +25,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.db.IDBPreparedStatement;
-import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -34,7 +32,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Bug 396743: [DB] List size column mismatching the row entries.
@@ -65,17 +62,7 @@ public class Bugzilla_396743_Test extends AbstractCDOTest
       return;
     }
 
-    try
-    {
-      if (!readValueLatch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS))
-      {
-        throw new TimeoutRuntimeException();
-      }
-    }
-    catch (InterruptedException ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
+    await(readValueLatch);
   }
 
   public void testWrongListSizeAdditions() throws Exception
@@ -148,7 +135,7 @@ public class Bugzilla_396743_Test extends AbstractCDOTest
     };
 
     readerClient.start();
-    commitLatch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+    await(commitLatch);
 
     company1.getCategories().add(getModel1Factory().createCategory());
 

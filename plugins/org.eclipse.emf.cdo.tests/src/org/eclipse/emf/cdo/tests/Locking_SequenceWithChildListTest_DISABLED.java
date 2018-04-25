@@ -27,7 +27,6 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -89,8 +88,8 @@ public class Locking_SequenceWithChildListTest_DISABLED extends AbstractLockingT
     // A maximum of USERS x ADDITIONS x RETRIES calls to .lock() : should not last more than USERS x ADDITIONS x
     // RETRIES x LOCK_TIMEOUT milliseconds...
     // Let's leave them twice as long, just to be sure!
-    long TIMEOUT = 2 * USERS * ADDITIONS * RETRIES * LOCK_TIMEOUT;
-    latch.await(TIMEOUT, TimeUnit.MILLISECONDS);
+    long timeout = 2 * USERS * ADDITIONS * RETRIES * LOCK_TIMEOUT;
+    await(latch, timeout);
 
     IOUtil.OUT().println("FINISHED");
 

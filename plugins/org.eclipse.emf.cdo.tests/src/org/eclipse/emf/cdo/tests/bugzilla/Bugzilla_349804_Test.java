@@ -28,7 +28,6 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -99,7 +98,7 @@ public class Bugzilla_349804_Test extends AbstractCDOTest
     // Invalidation shall fail, because it will use lastUpdateTime from TimeStampAuthority for commit result
     transaction.commit();
 
-    invalidationLatch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+    await(invalidationLatch);
     assertEquals("Invalidation was not delivered", 0, invalidationLatch.getCount());
   }
 

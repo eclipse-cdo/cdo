@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -72,7 +71,7 @@ public class LockingSequenceTest extends AbstractLockingTest
       users[userID].start();
     }
 
-    latch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+    await(latch);
     IOUtil.OUT().println("FINISHED");
 
     Exception exception = null;

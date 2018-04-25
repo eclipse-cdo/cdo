@@ -51,7 +51,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
@@ -281,8 +280,7 @@ public class InvalidationTest extends AbstractCDOTest
     category1A.setName("CHANGED NAME");
     transaction.commit();
 
-    boolean notified = latch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
-    assertEquals(true, notified);
+    await(latch);
   }
 
   public void testConflictSameSession() throws Exception, IOException

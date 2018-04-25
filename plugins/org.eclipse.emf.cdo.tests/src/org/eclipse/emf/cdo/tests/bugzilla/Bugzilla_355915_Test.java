@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 import java.util.Collections;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Martin Fluegge
@@ -89,7 +88,7 @@ public class Bugzilla_355915_Test extends AbstractCDOTest
     thread.start();
     thread.join();
 
-    latch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+    await(latch);
     assertEquals(true, adapter.notified());
     assertEquals(true, adapter.assertCorrectNotification());
   }
@@ -140,7 +139,7 @@ public class Bugzilla_355915_Test extends AbstractCDOTest
     thread.start();
     thread.join();
 
-    latch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+    await(latch);
     assertEquals(true, adapter.notified());
     assertEquals(true, adapter.assertCorrectNotification());
   }

@@ -381,7 +381,7 @@ public class TransactionTest extends AbstractCDOTest
     category1.setName("session1");
     transaction1.commit();
 
-    rollback.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+    await(rollback);
     category2.setName("session2");
     transaction2.commit();
   }

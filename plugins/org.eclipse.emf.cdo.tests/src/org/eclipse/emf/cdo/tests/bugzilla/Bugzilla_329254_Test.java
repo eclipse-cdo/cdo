@@ -31,7 +31,6 @@ import org.eclipse.net4j.util.io.IOUtil;
 
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * LastCommitTimeStamp updated even when a serverSide Error occurred.
@@ -84,14 +83,7 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
                 // block until it has left again.
                 enterLatch.countDown();
 
-                try
-                {
-                  leaveLatch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
-                }
-                catch (InterruptedException ex)
-                {
-                  ex.printStackTrace();
-                }
+                await(leaveLatch);
               }
 
               super.adjustForCommit();
@@ -243,15 +235,8 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
       {
         try
         {
-          try
-          {
-            // wait until session 2 has entered write.
-            enterLatch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
-          }
-          catch (InterruptedException ex)
-          {
-            ex.printStackTrace();
-          }
+          // wait until session 2 has entered write.
+          await(enterLatch);
 
           transaction3.commit();
         }
@@ -341,15 +326,8 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
       {
         try
         {
-          try
-          {
-            // wait until session 2 has entered write.
-            enterLatch.await();
-          }
-          catch (InterruptedException ex)
-          {
-            ex.printStackTrace();
-          }
+          // wait until session 2 has entered write.
+          await(enterLatch);
 
           transaction3.commit();
         }

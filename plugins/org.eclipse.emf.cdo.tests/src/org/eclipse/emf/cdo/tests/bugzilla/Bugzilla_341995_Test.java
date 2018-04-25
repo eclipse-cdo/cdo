@@ -53,7 +53,7 @@ public class Bugzilla_341995_Test extends AbstractCDOTest
     try
     {
       doSecondSessionAsync();
-      sessionManager.getDelayLatch().await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS); // Wait until the delay commences
+      await(sessionManager.getDelayLatch()); // Wait until the delay commences
 
       long time1 = System.currentTimeMillis();
 

@@ -43,7 +43,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Bug 486458 - Provide support for optimized loading and notifying of object units
@@ -77,15 +76,7 @@ public class Bugzilla_486458c_Test extends AbstractCDOTest
         CDOTransaction transaction = session.openTransaction();
         CDOResource resource = transaction.getResource(getResourcePath("test"));
 
-        try
-        {
-          createStarted.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
-        }
-        catch (InterruptedException ex)
-        {
-          ex.printStackTrace();
-          return;
-        }
+        await(createStarted);
 
         CDOUnit unit = transaction.getUnitManager().createUnit(resource, true, null);
         secondCreated[0] = unit.getElements();

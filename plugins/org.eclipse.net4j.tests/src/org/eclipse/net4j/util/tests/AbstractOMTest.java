@@ -13,7 +13,9 @@ package org.eclipse.net4j.util.tests;
 import org.eclipse.net4j.internal.util.test.TestExecuter;
 import org.eclipse.net4j.tests.bundle.OM;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.concurrent.TrackableTimerTask;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
@@ -857,11 +859,23 @@ public abstract class AbstractOMTest extends TestCase
     });
   }
 
-  public static final void await(CountDownLatch latch) throws InterruptedException, TimeoutException
+  public static void await(CountDownLatch latch) throws TimeoutRuntimeException
   {
-    if (!latch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS))
+    await(latch, DEFAULT_TIMEOUT);
+  }
+
+  public static void await(CountDownLatch latch, long millis) throws TimeoutRuntimeException
+  {
+    try
     {
-      throw new TimeoutException("Latch timed out: " + latch);
+      if (!latch.await(millis, TimeUnit.MILLISECONDS))
+      {
+        throw new TimeoutRuntimeException("Latch timed out: " + latch);
+      }
+    }
+    catch (InterruptedException ex)
+    {
+      throw WrappedException.wrap(ex);
     }
   }
 

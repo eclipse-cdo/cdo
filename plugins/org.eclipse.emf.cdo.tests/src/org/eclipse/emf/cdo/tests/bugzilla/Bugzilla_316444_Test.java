@@ -252,8 +252,8 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       sleepIfNeeded();
       threadB.start();
 
-      threadA.done.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
-      threadB.done.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+      await(threadA.done);
+      await(threadB.done);
       // threadA.join(DEFAULT_TIMEOUT);
       // threadB.join(DEFAULT_TIMEOUT);
 
@@ -327,8 +327,8 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       sleepIfNeeded();
       threadX.start();
 
-      threadA.done.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
-      threadX.done.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+      await(threadA.done);
+      await(threadX.done);
       // threadX.join(DEFAULT_TIMEOUT);
       // threadA.join(DEFAULT_TIMEOUT);
 

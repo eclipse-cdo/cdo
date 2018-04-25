@@ -50,7 +50,6 @@ import org.eclipse.emf.transaction.impl.TransactionChangeRecorder;
 import org.eclipse.emf.transaction.impl.TransactionalEditingDomainImpl;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Bug 417483 - [Security] Issues in invalidation when missing write Permission.
@@ -183,8 +182,7 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
     transaction.commit();
 
     // User without write permission should be able to integrate changes without permission issues
-    boolean notified = latch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
-    assertEquals("Timeout: User should have been notified of changes", true, notified);
+    await(latch);
 
     assertEquals("User should not have write permission on resource", false, isWritable(resourceReadOnly));
     assertEquals("User should not have write permission on element", false, isWritable(categoryReadOnly));

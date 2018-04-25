@@ -27,7 +27,6 @@ import org.eclipse.core.runtime.Path;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * @author Eike Stepper
@@ -112,10 +111,7 @@ public class Bugzilla_353448_Test extends AbstractCDOTest
       }.start();
     }
 
-    if (!latch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS))
-    {
-      throw new TimeoutException();
-    }
+    await(latch);
 
     if (exception[0] != null)
     {

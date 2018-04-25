@@ -35,7 +35,6 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
@@ -63,7 +62,7 @@ public class ReconnectingSessionTest extends AbstractCDOTest
     transaction.commit();
 
     ITCPAcceptor acceptor = null;
-    CDONet4jSession session2 = null;
+    CDONet4jSession reconnectingSession = null;
 
     try
     {
@@ -80,12 +79,12 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       ReconnectingCDOSessionConfiguration configuration = CDONet4jUtil.createReconnectingSessionConfiguration(ADDRESS2, repositoryName, clientContainer);
       configuration.setHeartBeatEnabled(true);
 
-      session2 = (CDONet4jSession)openSession(configuration);
-      dumpEvents(session2);
+      reconnectingSession = (CDONet4jSession)openSession(configuration);
+      dumpEvents(reconnectingSession);
 
       final CountDownLatch recoveryStarted = new CountDownLatch(1);
       final CountDownLatch recoveryFinished = new CountDownLatch(1);
-      session2.addListener(new IListener()
+      reconnectingSession.addListener(new IListener()
       {
         public void notifyEvent(final IEvent event)
         {
@@ -105,10 +104,10 @@ public class ReconnectingSessionTest extends AbstractCDOTest
         }
       });
 
-      IConnector connector2 = (IConnector)session2.options().getNet4jProtocol().getChannel().getMultiplexer();
-      dumpEvents(connector2);
+      IConnector connector = (IConnector)reconnectingSession.options().getNet4jProtocol().getChannel().getMultiplexer();
+      dumpEvents(connector);
 
-      CDOView view = session2.openView();
+      CDOView view = reconnectingSession.openView();
       CDOResource resource2 = view.getResource(getResourcePath("res1"));
       assertEquals(1, resource2.getContents().size());
 
@@ -119,13 +118,13 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       IOUtil.OUT().println();
       IOUtil.OUT().println("Deactivating acceptor...");
       LifecycleUtil.deactivate(acceptor);
-      recoveryStarted.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+      await(recoveryStarted);
 
       IOUtil.OUT().println();
       IOUtil.OUT().println("Reactivating acceptor...");
       acceptor = TCPUtil.getAcceptor(serverContainer, ADDRESS2);
       dumpEvents(acceptor);
-      recoveryFinished.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+      await(recoveryFinished);
 
       IOUtil.OUT().println();
       IOUtil.OUT().println("Committing...");
@@ -135,7 +134,117 @@ public class ReconnectingSessionTest extends AbstractCDOTest
     }
     finally
     {
-      LifecycleUtil.deactivate(session2);
+      LifecycleUtil.deactivate(reconnectingSession);
+      LifecycleUtil.deactivate(acceptor);
+    }
+  }
+
+  public void testReconnectTwice() throws Exception
+  {
+    disableConsole();
+
+    CDOSession session1 = openSession();
+    CDOTransaction transaction = session1.openTransaction();
+    CDOResource[] resource1 = { transaction.createResource(getResourcePath("res0")), transaction.createResource(getResourcePath("res1")) };
+    resource1[0].getContents().add(getModel1Factory().createCategory());
+    resource1[1].getContents().add(getModel1Factory().createCategory());
+    transaction.commit();
+
+    ITCPAcceptor acceptor = null;
+    CDONet4jSession reconnectingSession = null;
+
+    try
+    {
+      IManagedContainer serverContainer = getServerContainer();
+      dumpEvents(serverContainer);
+
+      acceptor = TCPUtil.getAcceptor(serverContainer, ADDRESS2);
+      dumpEvents(acceptor);
+
+      String repositoryName = session1.getRepositoryInfo().getName();
+      IManagedContainer clientContainer = getClientContainer();
+      dumpEvents(clientContainer);
+
+      ReconnectingCDOSessionConfiguration configuration = CDONet4jUtil.createReconnectingSessionConfiguration(ADDRESS2, repositoryName, clientContainer);
+      configuration.setHeartBeatEnabled(true);
+
+      reconnectingSession = (CDONet4jSession)openSession(configuration);
+      dumpEvents(reconnectingSession);
+
+      for (int i = 0; i < 2; i++)
+      {
+        IOUtil.OUT().println();
+        IOUtil.OUT().println("=================================================================");
+        IOUtil.OUT().println("                          Run " + (i + 1));
+        IOUtil.OUT().println("=================================================================");
+        IOUtil.OUT().println();
+
+        if (i == 1)
+        {
+          System.out.println();
+        }
+
+        final CountDownLatch recoveryStarted = new CountDownLatch(1);
+        final CountDownLatch recoveryFinished = new CountDownLatch(1);
+        reconnectingSession.addListener(new IListener()
+        {
+          public void notifyEvent(final IEvent event)
+          {
+            if (event instanceof CDOSessionRecoveryEvent)
+            {
+              CDOSessionRecoveryEvent recoveryEvent = (CDOSessionRecoveryEvent)event;
+              switch (recoveryEvent.getType())
+              {
+              case STARTED:
+                recoveryStarted.countDown();
+                break;
+              case FINISHED:
+                recoveryFinished.countDown();
+                break;
+              }
+            }
+          }
+        });
+
+        IConnector connector2 = (IConnector)reconnectingSession.options().getNet4jProtocol().getChannel().getMultiplexer();
+        dumpEvents(connector2);
+
+        CDOView view = reconnectingSession.openView();
+        CDOResource resource = view.getResource(getResourcePath("res" + i));
+        assertEquals(1, resource.getContents().size());
+
+        resource1[i].getContents().add(getModel1Factory().createCategory());
+        commitAndSync(transaction, view);
+        assertEquals(2, resource.getContents().size());
+
+        IOUtil.OUT().println();
+        IOUtil.OUT().println("Deactivating acceptor...");
+        LifecycleUtil.deactivate(acceptor);
+        await(recoveryStarted);
+
+        IOUtil.OUT().println();
+        IOUtil.OUT().println("Reactivating acceptor...");
+        acceptor = TCPUtil.getAcceptor(serverContainer, ADDRESS2);
+        dumpEvents(acceptor);
+        await(recoveryFinished);
+
+        IOUtil.OUT().println();
+        IOUtil.OUT().println("Committing...");
+        resource1[i].getContents().add(getModel1Factory().createCategory());
+        commitAndSync(transaction, view);
+        assertEquals(3, resource.getContents().size());
+      }
+    }
+    catch (Exception ex)
+    {
+      ex.printStackTrace();
+      throw ex;
+    }
+    finally
+    {
+      IOUtil.OUT().println();
+      IOUtil.OUT().println("Finally...");
+      LifecycleUtil.deactivate(reconnectingSession);
       LifecycleUtil.deactivate(acceptor);
     }
   }
@@ -207,7 +316,7 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       IOUtil.OUT().println();
       IOUtil.OUT().println("Deactivating acceptor...");
       LifecycleUtil.deactivate(acceptor);
-      recoveryStarted.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+      await(recoveryStarted);
 
       IOUtil.OUT().println();
       IOUtil.OUT().println("Committing...");
@@ -218,7 +327,7 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       IOUtil.OUT().println("Reactivating acceptor...");
       acceptor = TCPUtil.getAcceptor(serverContainer, ADDRESS2);
       dumpEvents(acceptor);
-      recoveryFinished.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+      await(recoveryFinished);
 
       assertEquals(3, resource2.getContents().size());
     }

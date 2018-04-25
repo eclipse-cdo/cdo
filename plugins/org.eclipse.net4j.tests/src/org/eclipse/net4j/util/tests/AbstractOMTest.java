@@ -857,6 +857,14 @@ public abstract class AbstractOMTest extends TestCase
     });
   }
 
+  public static final void await(CountDownLatch latch) throws InterruptedException, TimeoutException
+  {
+    if (!latch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS))
+    {
+      throw new TimeoutException("Latch timed out: " + latch);
+    }
+  }
+
   /**
    * @author Eike Stepper
    */

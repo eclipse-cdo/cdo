@@ -21,6 +21,8 @@ import junit.framework.TestSuite;
  */
 public class AllTestsDBH2All extends DBConfigs
 {
+  private static final boolean ALL_SCENARIOS = false;
+
   public static Test suite()
   {
     return new AllTestsDBH2All().getTestSuite();
@@ -29,8 +31,29 @@ public class AllTestsDBH2All extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
+    // OMPlatform.INSTANCE.setDebugging(true);
+    // org.eclipse.emf.cdo.server.internal.db.bundle.OM.BUNDLE.getDebugSupport().setDebugging(true);
+    // org.eclipse.emf.cdo.server.internal.db.bundle.OM.DEBUG.setEnabled(true);
+    // org.eclipse.emf.cdo.server.internal.db.bundle.OM.DEBUG_UNITS.setEnabled(true);
+
     addScenario(parent, new H2Config(), JVM, NATIVE);
+
+    if (ALL_SCENARIOS)
+    {
+      addScenario(parent, new H2Config().idGenerationLocation(IDGenerationLocation.CLIENT), JVM, NATIVE);
+      addScenario(parent, new H2Config().supportingAudits(true), JVM, NATIVE);
+      addScenario(parent, new H2Config().supportingAudits(true).idGenerationLocation(IDGenerationLocation.CLIENT), JVM, NATIVE);
+    }
+
     addScenario(parent, new H2Config().supportingAudits(true).withRanges(true), JVM, NATIVE);
+
+    if (ALL_SCENARIOS)
+    {
+      addScenario(parent, new H2Config().supportingAudits(true).withRanges(true).idGenerationLocation(IDGenerationLocation.CLIENT), JVM, NATIVE);
+      addScenario(parent, new H2Config().supportingBranches(true), JVM, NATIVE);
+      addScenario(parent, new H2Config().supportingBranches(true).idGenerationLocation(IDGenerationLocation.CLIENT), JVM, NATIVE);
+    }
+
     addScenario(parent, new H2Config().supportingBranches(true).withRanges(true), JVM, NATIVE);
     addScenario(parent, new H2Config().supportingBranches(true).withRanges(true).idGenerationLocation(IDGenerationLocation.CLIENT), JVM, NATIVE);
   }

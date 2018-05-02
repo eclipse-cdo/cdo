@@ -35,7 +35,7 @@ public final class LegacyUtil
   {
     if (commandLineArgs == UNINITIALIZED)
     {
-      throw new IllegalStateException("Command line argumentshave not been set");
+      throw new IllegalStateException("Command line arguments have not been set");
     }
 
     return commandLineArgs;

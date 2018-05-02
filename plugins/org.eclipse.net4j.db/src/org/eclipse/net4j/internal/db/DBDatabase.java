@@ -38,8 +38,7 @@ import java.util.LinkedList;
  */
 public final class DBDatabase extends SetContainer<IDBConnection> implements IDBDatabase
 {
-  private static final long TIMEOUT_SCHEMA_ACCESS = Long
-      .parseLong(OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.internal.db.DBDatabase.TIMEOUT_SCHEMA_ACCESS", "15000"));
+  private static final long TIMEOUT_SCHEMA_ACCESS = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.internal.db.DBDatabase.TIMEOUT_SCHEMA_ACCESS", 15000L);
 
   private static final boolean DEBUG_SCHEMA_ACCESS = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.internal.db.DBDatabase.DEBUG_SCHEMA_ACCESS");
 

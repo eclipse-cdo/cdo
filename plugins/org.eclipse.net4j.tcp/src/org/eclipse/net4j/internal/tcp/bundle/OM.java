@@ -45,20 +45,7 @@ public abstract class OM
 
   public static int getDefaultPort()
   {
-    try
-    {
-      String property = BUNDLE.getPlatform().getProperty(DEFAULT_PORT_PROPERTY);
-      if (property != null)
-      {
-        return Integer.valueOf(property);
-      }
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-    }
-
-    return DEFAULT_PORT;
+    return BUNDLE.getPlatform().getProperty(DEFAULT_PORT_PROPERTY, DEFAULT_PORT);
   }
 
   /**

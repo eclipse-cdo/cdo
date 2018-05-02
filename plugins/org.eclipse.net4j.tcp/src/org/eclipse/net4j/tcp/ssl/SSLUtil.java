@@ -187,8 +187,7 @@ public class SSLUtil
 
     KeyManager[] keyManagers = null;
     TrustManager[] trustManagers = null;
-    String checkValidity = OMPlatform.INSTANCE.getProperty(SSLProperties.CHECK_VALIDITY_CERTIFICATE);
-    boolean checkValidtyStatus = checkValidity == null || Boolean.valueOf(checkValidity);
+    boolean checkValidtyStatus = OMPlatform.INSTANCE.isProperty(SSLProperties.CHECK_VALIDITY_CERTIFICATE, true);
     if (client)
     {
       // Initial key material(private key) for the client.

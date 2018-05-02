@@ -86,6 +86,26 @@ public interface OMPlatform
   public String getProperty(String key, String defaultValue);
 
   /**
+   * @since 3.8
+   */
+  public int getProperty(String key, int defaultValue);
+
+  /**
+   * @since 3.8
+   */
+  public long getProperty(String key, long defaultValue);
+
+  /**
+   * @since 3.8
+   */
+  public <T extends Enum<T>> T getProperty(String key, Class<T> enumType);
+
+  /**
+   * @since 3.8
+   */
+  public <T extends Enum<T>> T getProperty(String key, T defaultValue);
+
+  /**
    * @since 3.7
    */
   public boolean isProperty(String key);

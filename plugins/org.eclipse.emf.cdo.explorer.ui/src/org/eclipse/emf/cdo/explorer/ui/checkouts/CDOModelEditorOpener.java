@@ -44,8 +44,7 @@ import org.eclipse.ui.IWorkbenchPart;
  */
 public class CDOModelEditorOpener extends CDOEditorOpener.Default
 {
-  private static final boolean INTERACTIVE_CONFLICT_RESOLUTION = !"false"
-      .equalsIgnoreCase(OMPlatform.INSTANCE.getProperty("cdo.interactive.conflict.resolution"));
+  private static final boolean INTERACTIVE_CONFLICT_RESOLUTION = OMPlatform.INSTANCE.isProperty("cdo.interactive.conflict.resolution", true);
 
   public CDOModelEditorOpener()
   {

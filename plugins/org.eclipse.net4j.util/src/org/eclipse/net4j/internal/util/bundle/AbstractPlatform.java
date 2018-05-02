@@ -340,6 +340,56 @@ public abstract class AbstractPlatform implements OMPlatform
     return System.getProperty(key, defaultValue);
   }
 
+  public int getProperty(String key, int defaultValue)
+  {
+    String property = getProperty(key);
+    if (property == null)
+    {
+      return defaultValue;
+    }
+
+    return Integer.parseInt(property);
+  }
+
+  public long getProperty(String key, long defaultValue)
+  {
+    String property = getProperty(key);
+    if (property == null)
+    {
+      return defaultValue;
+    }
+
+    return Long.parseLong(property);
+  }
+
+  public <T extends Enum<T>> T getProperty(String key, Class<T> enumType)
+  {
+    String property = getProperty(key);
+    if (property != null)
+    {
+      for (T enumValue : enumType.getEnumConstants())
+      {
+        if (enumValue.name().equalsIgnoreCase(property))
+        {
+          return enumValue;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  public <T extends Enum<T>> T getProperty(String key, T defaultValue)
+  {
+    T result = getProperty(key, defaultValue.getDeclaringClass());
+    if (result != null)
+    {
+      return result;
+    }
+
+    return defaultValue;
+  }
+
   public boolean isProperty(String key)
   {
     return isProperty(key, false);

@@ -124,6 +124,15 @@ public class CDOCommandProvider implements CommandProvider
 
         CDOServerExporter.XML exporter = new CDOServerExporter.XML(repository);
         exporter.exportRepository(out);
+
+        if (args.length > 1)
+        {
+          if ("withSystemPackages".equalsIgnoreCase(args[1]))
+          {
+            exporter.setExportSystemPackages(true);
+          }
+        }
+
         println("Repository exported");
       }
       finally

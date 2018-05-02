@@ -84,8 +84,7 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
 
   public IDBSchemaTransaction openSchemaTransaction()
   {
-    DBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
-    schemaTransaction.setConnection(this);
+    DBSchemaTransaction schemaTransaction = database.openSchemaTransaction(this);
     return schemaTransaction;
   }
 

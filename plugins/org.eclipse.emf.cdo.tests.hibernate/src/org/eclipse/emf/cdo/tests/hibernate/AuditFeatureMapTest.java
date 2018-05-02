@@ -37,11 +37,12 @@ import java.util.Map;
  * @Author Martin Taal
  */
 @Requires(IRepositoryConfig.CAPABILITY_AUDITING)
+@Deprecated
 public class AuditFeatureMapTest extends AbstractCDOTest
 {
 
   @Skips("Postgresql")
-  public void testFeatureMaps() throws Exception
+  public void _testFeatureMaps() throws Exception
   {
     skipStoreWithoutFeatureMaps();
 

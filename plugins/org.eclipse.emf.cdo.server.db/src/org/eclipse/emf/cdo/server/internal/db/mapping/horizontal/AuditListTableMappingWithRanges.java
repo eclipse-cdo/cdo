@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
@@ -51,7 +52,9 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.collection.MoveableList;
@@ -123,11 +126,17 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   public AuditListTableMappingWithRanges(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
     super(mappingStrategy, eClass, feature);
-    initTable();
-    initSQLStrings();
+
+    IDBStoreAccessor accessor = null;
+    if (AbstractHorizontalMappingStrategy.isEagerTableCreation(mappingStrategy))
+    {
+      accessor = (IDBStoreAccessor)StoreThreadLocal.getAccessor();
+    }
+
+    initTable(accessor);
   }
 
-  private void initTable()
+  private void initTable(IDBStoreAccessor accessor)
   {
     String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
     typeMapping = getMappingStrategy().createValueMapping(getFeature());
@@ -140,20 +149,40 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     table = database.getSchema().getTable(tableName);
     if (table == null)
     {
-      table = database.getSchemaTransaction().getWorkingCopy().addTable(tableName);
-      table.addField(LIST_REVISION_ID, idType, idLength, true);
-      table.addField(LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
-      table.addField(LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
-      table.addField(LIST_IDX, DBType.INTEGER, true);
+      if (accessor != null)
+      {
+        IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
 
-      // TODO think about indexes
-      table.addIndex(Type.NON_UNIQUE, LIST_REVISION_ID, LIST_REVISION_VERSION_ADDED, LIST_REVISION_VERSION_REMOVED, LIST_IDX);
+        try
+        {
+          IDBSchema workingCopy = schemaTransaction.getWorkingCopy();
+          IDBTable table = workingCopy.addTable(tableName);
 
-      typeMapping.createDBField(table, LIST_VALUE);
+          table.addField(LIST_REVISION_ID, idType, idLength, true);
+          table.addField(LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
+          table.addField(LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
+          table.addField(LIST_IDX, DBType.INTEGER, true);
+
+          // TODO think about indexes
+          table.addIndex(Type.NON_UNIQUE, LIST_REVISION_ID, LIST_REVISION_VERSION_ADDED, LIST_REVISION_VERSION_REMOVED, LIST_IDX);
+
+          typeMapping.createDBField(table, LIST_VALUE);
+
+          schemaTransaction.commit();
+        }
+        finally
+        {
+          schemaTransaction.close();
+        }
+
+        initTable(null);
+        accessor.tableCreated(table);
+      }
     }
     else
     {
       typeMapping.setDBField(table, LIST_VALUE);
+      initSQLStrings();
     }
   }
 
@@ -278,10 +307,11 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   @Override
   public void setClassMapping(IClassMapping classMapping)
   {
-    InternalRepository repository = (InternalRepository)getMappingStrategy().getStore().getRepository();
+    IMappingStrategy mappingStrategy = getMappingStrategy();
+    InternalRepository repository = (InternalRepository)mappingStrategy.getStore().getRepository();
     if (repository.isSupportingUnits())
     {
-      String listTableName = getTable().getName();
+      String listTableName = mappingStrategy.getTableName(getContainingClass(), getFeature());
       String attributesTableName = classMapping.getDBTables().get(0).getName();
 
       sqlSelectUnitEntries = "SELECT " + (CHECK_UNIT_ENTRIES ? ATTRIBUTES_ID + ", " : "") + "cdo_list." + LIST_VALUE + //
@@ -314,6 +344,12 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
 
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
+    if (table == null)
+    {
+      // Nothing to read. Take shortcut.
+      return;
+    }
+
     MoveableList<Object> list = revision.getListOrNull(getFeature());
     if (list == null)
     {
@@ -470,8 +506,13 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   public void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
     CDOList values = revision.getListOrNull(getFeature());
-    if (values != null)
+    if (values != null && !values.isEmpty())
     {
+      if (table == null)
+      {
+        initTable(accessor);
+      }
+
       int idx = 0;
       for (Object element : values)
       {
@@ -545,6 +586,11 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
 
   public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
   {
+    if (table == null)
+    {
+      initTable(accessor);
+    }
+
     if (TRACER.isEnabled())
     {
       TRACER.format("objectRevised {0}: {1}", id, revised); //$NON-NLS-1$
@@ -745,6 +791,11 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
 
   public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere, QueryXRefsContext context, String idString)
   {
+    if (table == null)
+    {
+      // Nothing to read. Take shortcut.
+      return true;
+    }
 
     String tableName = getTable().getName();
     String listJoin = getMappingStrategy().getListJoin("a_t", "l_t");
@@ -821,6 +872,19 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion, final int newVersion, long created,
       CDOListFeatureDelta delta)
   {
+    List<CDOFeatureDelta> listChanges = delta.getListChanges();
+    int size = listChanges.size();
+    if (size == 0)
+    {
+      // nothing to do.
+      return;
+    }
+
+    if (table == null)
+    {
+      initTable(accessor);
+    }
+
     IRepository repo = accessor.getStore().getRepository();
     InternalCDORevision originalRevision = (InternalCDORevision)repo.getRevisionManager().getRevision(id, repo.getBranchManager().getMainBranch().getHead(),
         /* chunksize = */0, CDORevision.DEPTH_NONE, true);
@@ -841,7 +905,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       TRACER.format("Processing deltas..."); //$NON-NLS-1$
     }
 
-    for (CDOFeatureDelta listDelta : delta.getListChanges())
+    for (CDOFeatureDelta listDelta : listChanges)
     {
       listDelta.accept(visitor);
     }

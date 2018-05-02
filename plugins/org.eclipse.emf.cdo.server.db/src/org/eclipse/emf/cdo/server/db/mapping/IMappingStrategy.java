@@ -33,6 +33,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.ENamedElement;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
@@ -431,5 +432,12 @@ public interface IMappingStrategy
      * Name of a String property that specifies the name of a {@link ColumnTypeModifier column type modifier}.
      */
     public static final String COLUMN_TYPE_MODIFIER = "columnTypeModifier"; //$NON-NLS-1$
+
+    /**
+     * Name of a boolean property that configures whether all tables for a {@link EPackage package} are created eagerly.
+     *
+     * @since 4.6
+     */
+    public static final String EAGER_TABLE_CREATION = "eagerTableCreation"; //$NON-NLS-1$
   }
 }

@@ -22,8 +22,11 @@ import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
 import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.SetContainer;
 import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.security.IUserAware;
 
 import java.sql.Connection;
@@ -35,6 +38,11 @@ import java.util.LinkedList;
  */
 public final class DBDatabase extends SetContainer<IDBConnection> implements IDBDatabase
 {
+  private static final long TIMEOUT_SCHEMA_ACCESS = Long
+      .parseLong(OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.internal.db.DBDatabase.TIMEOUT_SCHEMA_ACCESS", "15000"));
+
+  private static final boolean DEBUG_SCHEMA_ACCESS = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.internal.db.DBDatabase.DEBUG_SCHEMA_ACCESS");
+
   private DBAdapter adapter;
 
   private IDBConnectionProvider connectionProvider;
@@ -43,9 +51,9 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
   private IDBSchema schema;
 
-  private DBSchemaTransaction schemaTransaction;
-
   private final LinkedList<SchemaAccess> schemaAccessQueue = new LinkedList<SchemaAccess>();
+
+  private int schemaWriters;
 
   public DBDatabase(final DBAdapter adapter, IDBConnectionProvider connectionProvider, final String schemaName, final boolean fixNullableIndexColumns)
   {
@@ -87,13 +95,23 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
   public DBSchemaTransaction openSchemaTransaction()
   {
+    return openSchemaTransaction(null);
+  }
+
+  public DBSchemaTransaction openSchemaTransaction(IDBConnection connection)
+  {
     DBSchemaTransaction schemaTransaction = new DBSchemaTransaction(this);
-    this.schemaTransaction = schemaTransaction;
+    schemaTransaction.setConnection((DBConnection)connection);
     return schemaTransaction;
   }
 
   public void closeSchemaTransaction(DBSchemaDelta delta)
   {
+    if (delta == null || delta.isEmpty())
+    {
+      return;
+    }
+
     try
     {
       beginSchemaAccess(true);
@@ -103,18 +121,18 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
         ((DBConnection)transaction).invalidateStatementCache();
       }
 
-      fireEvent(new SchemaChangedEventImpl(delta));
+      fireEvent(new SchemaChangedEventImpl(this, delta));
     }
     finally
     {
-      schemaTransaction = null;
       endSchemaAccess();
     }
   }
 
+  @Deprecated
   public DBSchemaTransaction getSchemaTransaction()
   {
-    return schemaTransaction;
+    throw new UnsupportedOperationException();
   }
 
   public void updateSchema(RunnableWithSchema runnable)
@@ -191,6 +209,18 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
   public void beginSchemaAccess(boolean write)
   {
+    if (DEBUG_SCHEMA_ACCESS)
+    {
+      try
+      {
+        throw new Exception("Begin " + (write ? "write" : "read") + " schema access: " + schema.getName());
+      }
+      catch (Exception ex)
+      {
+        ex.printStackTrace(IOUtil.OUT());
+      }
+    }
+
     SchemaAccess schemaAccess = null;
     synchronized (schemaAccessQueue)
     {
@@ -198,10 +228,11 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
       {
         schemaAccess = new WriteSchemaAccess();
         schemaAccessQueue.addLast(schemaAccess);
+        ++schemaWriters;
       }
       else
       {
-        if (!schemaAccessQueue.isEmpty())
+        if (schemaWriters == 0 && !schemaAccessQueue.isEmpty())
         {
           schemaAccess = schemaAccessQueue.getFirst();
           if (schemaAccess instanceof ReadSchemaAccess)
@@ -223,29 +254,52 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
       }
     }
 
-    for (;;)
+    long end = System.currentTimeMillis() + TIMEOUT_SCHEMA_ACCESS;
+
+    do
     {
       synchronized (schemaAccessQueue)
       {
         if (schemaAccessQueue.getFirst() == schemaAccess)
         {
+          if (write)
+          {
+            --schemaWriters;
+          }
+
           return;
         }
 
         try
         {
-          schemaAccessQueue.wait();
+          schemaAccessQueue.wait(1000L);
         }
         catch (InterruptedException ex)
         {
+          Thread.currentThread().interrupt();
           throw WrappedException.wrap(ex);
         }
       }
-    }
+    } while (System.currentTimeMillis() < end);
+
+    throw new TimeoutRuntimeException(
+        "Schema " + schema.getName() + " could not be locked for " + (write ? "write" : "read") + " access within " + TIMEOUT_SCHEMA_ACCESS + " milliseconds");
   }
 
   public void endSchemaAccess()
   {
+    if (DEBUG_SCHEMA_ACCESS)
+    {
+      try
+      {
+        throw new Exception("End schema access: " + schema.getName());
+      }
+      catch (Exception ex)
+      {
+        ex.printStackTrace(IOUtil.OUT());
+      }
+    }
+
     synchronized (schemaAccessQueue)
     {
       SchemaAccess schemaAccess = schemaAccessQueue.getFirst();
@@ -288,7 +342,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
   /**
    * @author Eike Stepper
    */
-  private final class ReadSchemaAccess implements SchemaAccess
+  private static final class ReadSchemaAccess implements SchemaAccess
   {
     private int readers = 1;
 
@@ -312,7 +366,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
   /**
    * @author Eike Stepper
    */
-  private final class WriteSchemaAccess implements SchemaAccess
+  private static final class WriteSchemaAccess implements SchemaAccess
   {
     @Override
     public String toString()
@@ -324,15 +378,15 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
   /**
    * @author Eike Stepper
    */
-  private final class SchemaChangedEventImpl extends Event implements SchemaChangedEvent
+  private static final class SchemaChangedEventImpl extends Event implements SchemaChangedEvent
   {
     private static final long serialVersionUID = 1L;
 
     private final IDBSchemaDelta schemaDelta;
 
-    public SchemaChangedEventImpl(IDBSchemaDelta schemaDelta)
+    public SchemaChangedEventImpl(DBDatabase database, IDBSchemaDelta schemaDelta)
     {
-      super(DBDatabase.this);
+      super(database);
       this.schemaDelta = schemaDelta;
     }
 

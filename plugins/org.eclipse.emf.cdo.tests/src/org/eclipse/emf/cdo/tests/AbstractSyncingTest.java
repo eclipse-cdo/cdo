@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -195,17 +196,30 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
 
   protected static void waitForOnline(CDOCommonRepository repository)
   {
+    String what = repository.getName() + " becoming online";
+
     while (repository.getState() != CDOCommonRepository.State.ONLINE)
     {
-      waitFor("ONLINE");
+      waitFor(what);
+    }
+
+    if (VERBOSE_WAIT)
+    {
+      IOUtil.OUT().println(repository.getName() + " is online.");
     }
   }
 
   protected static void waitForOffline(CDOCommonRepository repository)
   {
+    String what = repository.getName() + " becoming offline";
     while (repository.getState() == CDOCommonRepository.State.ONLINE)
     {
-      waitFor("OFFLINE");
+      waitFor(what);
+    }
+
+    if (VERBOSE_WAIT)
+    {
+      IOUtil.OUT().println(repository.getName() + " is offline.");
     }
   }
 
@@ -251,7 +265,7 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
   {
     if (VERBOSE_WAIT)
     {
-      System.out.println("Waiting for " + what + "...");
+      IOUtil.OUT().println("Waiting for " + what + "...");
       sleep(SLEEP_MILLIS);
     }
     else

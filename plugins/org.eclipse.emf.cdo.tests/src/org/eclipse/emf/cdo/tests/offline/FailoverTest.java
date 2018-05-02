@@ -158,17 +158,19 @@ public class FailoverTest extends AbstractSyncingTest
 
   public void testClientCommitsToBackupForbidden() throws Exception
   {
-    InternalRepository backup = getRepository();
-
     InternalRepository master = getRepository("master");
 
-    TestListener listener = new TestListener();
     CDOSession masterSession = openSession(master.getName());
+    waitForOnline(masterSession.getRepositoryInfo());
+
+    TestListener listener = new TestListener();
     masterSession.addListener(listener);
+    dumpEvents(masterSession);
 
     Company company = getModel1Factory().createCompany();
     company.setName("Test");
 
+    InternalRepository backup = getRepository();
     CDOSession backupSession = openSession(backup.getName());
     waitForOnline(backupSession.getRepositoryInfo());
 

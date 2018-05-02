@@ -51,6 +51,7 @@ import org.eclipse.emf.cdo.common.util.CurrentTimeProvider;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryHandler;
@@ -96,8 +97,6 @@ import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
-import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
-import org.eclipse.emf.internal.cdo.util.IPackageClosure;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -2138,28 +2137,35 @@ public class Repository extends Container<Object> implements InternalRepository,
 
   public void initSystemPackages(final boolean firstStart)
   {
+    final List<InternalCDOPackageUnit> list = new ArrayList<InternalCDOPackageUnit>();
     IStoreAccessor writer = store.getWriter(null);
     StoreThreadLocal.setAccessor(writer);
 
     try
     {
-      List<InternalCDOPackageUnit> list = new ArrayList<InternalCDOPackageUnit>();
-      boolean nonSystemPackages = false;
+      long timeStamp;
+      if (firstStart)
+      {
+        timeStamp = store.getCreationTime();
+        list.add(initPackage(timeStamp, EcorePackage.eINSTANCE));
+        list.add(initPackage(timeStamp, EresourcePackage.eINSTANCE));
+        list.add(initPackage(timeStamp, EtypesPackage.eINSTANCE));
+      }
+      else
+      {
+        timeStamp = getTimeStamp();
+      }
+
       if (initialPackages != null)
       {
         for (EPackage initialPackage : initialPackages)
         {
           if (!packageRegistry.containsKey(initialPackage.getNsURI()))
           {
-            list.add(initPackage(initialPackage));
-            nonSystemPackages = true;
+            InternalCDOPackageUnit packageUnit = initPackage(timeStamp, initialPackage);
+            list.add(packageUnit);
           }
         }
-      }
-
-      if (nonSystemPackages && !firstStart)
-      {
-        OM.LOG.info("Initial packages are about to be pre-registered. They may not become part of replications.");
       }
 
       if (!list.isEmpty())
@@ -2185,16 +2191,21 @@ public class Repository extends Container<Object> implements InternalRepository,
       {
         return firstStart;
       }
+
+      public List<InternalCDOPackageUnit> getPackageUnits()
+      {
+        return Collections.unmodifiableList(list);
+      }
     });
   }
 
-  protected InternalCDOPackageUnit initPackage(EPackage ePackage)
+  protected InternalCDOPackageUnit initPackage(long timeStamp, EPackage ePackage)
   {
     EMFUtil.registerPackage(ePackage, packageRegistry);
     InternalCDOPackageInfo packageInfo = packageRegistry.getPackageInfo(ePackage);
 
     InternalCDOPackageUnit packageUnit = packageInfo.getPackageUnit();
-    packageUnit.setTimeStamp(store.getCreationTime());
+    packageUnit.setTimeStamp(timeStamp);
     packageUnit.setState(CDOPackageUnit.State.LOADED);
     return packageUnit;
   }
@@ -2244,7 +2255,6 @@ public class Repository extends Container<Object> implements InternalRepository,
     };
 
     commitContext.setNewObjects(new InternalCDORevision[] { rootResource });
-    commitContext.setNewPackageUnits(getNewPackageUnitsForRootResource(commitContext.getPackageRegistry()));
     commitContext.preWrite();
 
     commitContext.write(new Monitor());
@@ -2260,23 +2270,6 @@ public class Repository extends Container<Object> implements InternalRepository,
 
     commitContext.postCommit(true);
     session.close();
-  }
-
-  private InternalCDOPackageUnit[] getNewPackageUnitsForRootResource(InternalCDOPackageRegistry commitContextPackageRegistry)
-  {
-    Collection<InternalCDOPackageUnit> newPackageUnitsForRootResource = new ArrayList<InternalCDOPackageUnit>();
-    IPackageClosure closure = new CompletePackageClosure();
-    Set<EPackage> ePackages = closure.calculate(Collections.<EPackage> singletonList(EresourcePackage.eINSTANCE));
-    for (EPackage ePackage : ePackages)
-    {
-      InternalCDOPackageUnit packageUnit = commitContextPackageRegistry.getPackageUnit(ePackage);
-      if (packageUnit != null)
-      {
-        newPackageUnitsForRootResource.add(packageUnit);
-      }
-    }
-
-    return newPackageUnitsForRootResource.toArray(new InternalCDOPackageUnit[0]);
   }
 
   protected CDOID createRootResourceID()

@@ -206,7 +206,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
         localRepository.setRootResourceID(rootResourceID);
 
         InternalCDOPackageRegistry localPackageRegistry = localRepository.getPackageRegistry(false);
-        InternalCDOPackageUnit[] remotePackageUnits = remoteSession.getPackageRegistry().getPackageUnits(true);
+        InternalCDOPackageUnit[] remotePackageUnits = remoteSession.getPackageRegistry().getPackageUnits(false);
         for (InternalCDOPackageUnit remotePackageUnit : remotePackageUnits)
         {
           InternalCDOPackageUnit localPackageUnit = remotePackageUnit.copy();

@@ -443,6 +443,11 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
     IIDHandler idHandler = getStore().getIDHandler();
     PreparedStatement stmt = classMapping.createResourceQueryStatement(accessor, folderID, name, exactMatch, context);
+    if (stmt == null)
+    {
+      return true;
+    }
+
     ResultSet resultSet = null;
 
     try

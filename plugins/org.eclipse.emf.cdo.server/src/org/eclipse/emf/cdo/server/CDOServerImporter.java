@@ -399,15 +399,21 @@ public abstract class CDOServerImporter
         else if (PACKAGE_UNIT.equals(qName))
         {
           String id = attributes.getValue(PACKAGE_UNIT_ID);
-          Type type = CDOPackageUnit.Type.valueOf(attributes.getValue(PACKAGE_UNIT_TYPE));
-          long time = Long.parseLong(attributes.getValue(PACKAGE_UNIT_TIME));
-          String data = attributes.getValue(PACKAGE_UNIT_DATA);
-          handler.handlePackageUnit(id, type, time, data);
+          if (!CDOModelUtil.isSystemPackageURI(id))
+          {
+            Type type = CDOPackageUnit.Type.valueOf(attributes.getValue(PACKAGE_UNIT_TYPE));
+            long time = Long.parseLong(attributes.getValue(PACKAGE_UNIT_TIME));
+            String data = attributes.getValue(PACKAGE_UNIT_DATA);
+            handler.handlePackageUnit(id, type, time, data);
+          }
         }
         else if (PACKAGE_INFO.equals(qName))
         {
           String packageURI = attributes.getValue(PACKAGE_INFO_URI);
-          handler.handlePackageInfo(packageURI);
+          if (!CDOModelUtil.isSystemPackageURI(packageURI))
+          {
+            handler.handlePackageInfo(packageURI);
+          }
         }
         else if (BRANCH.equals(qName))
         {

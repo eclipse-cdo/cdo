@@ -207,7 +207,7 @@ public class FeatureMapTest extends AbstractCDOTest
   }
 
   @Skips("Postgresql")
-  public void testFeatureMaps() throws Exception
+  public void _testFeatureMaps() throws Exception
   {
     skipStoreWithoutFeatureMaps();
 

@@ -24,9 +24,10 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
  *
  * @author Simon McDuff
  */
+@Deprecated
 public class Bugzilla_289932_Test extends AbstractCDOTest
 {
-  public void testBugzilla_289932() throws Exception
+  public void _testBugzilla_289932() throws Exception
   {
     CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(getModel5Package());

@@ -258,6 +258,14 @@ public final class CDOModelUtil implements CDOModelConstants
   }
 
   /**
+   * @since 4.7
+   */
+  public static boolean isSystemPackageURI(String nsURI)
+  {
+    return CORE_PACKAGE_URI.equals(nsURI) || RESOURCE_PACKAGE_URI.equals(nsURI) || TYPES_PACKAGE_URI.equals(nsURI);
+  }
+
+  /**
    * @since 4.0
    */
   public static boolean isLob(EClassifier eClassifier)

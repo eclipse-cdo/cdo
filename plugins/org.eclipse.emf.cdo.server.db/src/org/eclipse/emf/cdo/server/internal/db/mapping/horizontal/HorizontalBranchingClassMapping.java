@@ -92,7 +92,6 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   public HorizontalBranchingClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
     super(mappingStrategy, eClass);
-    initSQLStrings();
   }
 
   @Override
@@ -311,6 +310,11 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name, boolean exactMatch,
       CDOBranchPoint branchPoint)
   {
+    if (getTable() == null)
+    {
+      return null;
+    }
+
     EStructuralFeature nameFeature = EresourcePackage.eINSTANCE.getCDOResourceNode_Name();
 
     ITypeMapping nameValueMapping = getValueMapping(nameFeature);
@@ -576,6 +580,11 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean mapType, boolean revise, OMMonitor monitor)
   {
+    if (getTable() == null)
+    {
+      initTable(accessor);
+    }
+
     CDOID id = revision.getID();
     int version = revision.getVersion();
     InternalCDOBranch branch = revision.getBranch();
@@ -691,6 +700,11 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
+    if (getTable() == null)
+    {
+      return;
+    }
+
     StringBuilder builder = new StringBuilder(getSQLSelectForHandle());
     boolean whereAppend = false;
 
@@ -805,6 +819,12 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, CDOChangeSetSegment[] segments)
   {
+    Set<CDOID> result = new HashSet<CDOID>();
+    if (getTable() == null)
+    {
+      return result;
+    }
+
     StringBuilder builder = new StringBuilder(getSQLSelectForChangeSet());
     boolean isFirst = true;
 
@@ -836,7 +856,6 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
     ResultSet resultSet = null;
-    Set<CDOID> result = new HashSet<CDOID>();
 
     try
     {

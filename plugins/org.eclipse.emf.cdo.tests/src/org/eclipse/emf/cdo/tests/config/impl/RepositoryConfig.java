@@ -1099,7 +1099,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
           if (event instanceof ThrowableEvent)
           {
             ThrowableEvent e = (ThrowableEvent)event;
-            IOUtil.print(e.getThrowable());
+            throw new RuntimeException(e.getThrowable());
           }
         }
       });

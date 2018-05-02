@@ -85,13 +85,13 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   public HorizontalNonAuditClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
     super(mappingStrategy, eClass);
-    initSQLStrings();
-    hasLists = !getListMappings().isEmpty();
   }
 
   @Override
   protected void initSQLStrings()
   {
+    hasLists = !getListMappings().isEmpty();
+
     super.initSQLStrings();
 
     // ----------- Select Revision ---------------------------
@@ -274,6 +274,11 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name, boolean exactMatch,
       CDOBranchPoint branchPoint)
   {
+    if (getTable() == null)
+    {
+      return null;
+    }
+
     long timeStamp = branchPoint.getTimeStamp();
     if (timeStamp != CDORevision.UNSPECIFIED_DATE)
     {

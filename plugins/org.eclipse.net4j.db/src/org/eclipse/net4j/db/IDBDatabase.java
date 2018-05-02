@@ -32,6 +32,15 @@ public interface IDBDatabase extends IContainer<IDBConnection>, IDBConnectionPro
 
   public IDBSchemaTransaction openSchemaTransaction();
 
+  /**
+   * @since 4.7
+   */
+  public IDBSchemaTransaction openSchemaTransaction(IDBConnection connection);
+
+  /**
+   * @deprecated As of 4.7 no longer supported in favor of support for multiple schema transactions.
+   */
+  @Deprecated
   public IDBSchemaTransaction getSchemaTransaction();
 
   public void updateSchema(RunnableWithSchema runnable);

@@ -47,11 +47,13 @@ public class BranchingListTableMapping extends AbstractListTableMapping
   public BranchingListTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
     super(mappingStrategy, eClass, feature);
-    initSQLStrings();
   }
 
-  private void initSQLStrings()
+  @Override
+  protected void initSQLStrings()
   {
+    super.initSQLStrings();
+
     IDBTable table = getTable();
 
     // ----------- clear list -------------------------
@@ -92,6 +94,11 @@ public class BranchingListTableMapping extends AbstractListTableMapping
   @Override
   public void rawDeleted(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version)
   {
+    if (getTable() == null)
+    {
+      initTable(accessor);
+    }
+
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlClear, ReuseProbability.HIGH);
 

@@ -226,7 +226,8 @@ public class BackupTest extends AbstractCDOTest
     exporter.exportRepository(baos);
   }
 
-  public void testExportFeatureMap() throws Exception
+  @Deprecated
+  public void _testExportFeatureMap() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
@@ -506,7 +507,8 @@ public class BackupTest extends AbstractCDOTest
   }
 
   @CleanRepositoriesBefore(reason = "Inactive repository required")
-  public void testImportFeatureMap() throws Exception
+  @Deprecated
+  public void _testImportFeatureMap() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();

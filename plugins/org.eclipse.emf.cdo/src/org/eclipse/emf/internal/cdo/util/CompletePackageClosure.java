@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
-import org.eclipse.emf.ecore.EcorePackage;
 
 import java.text.MessageFormat;
 import java.util.HashSet;
@@ -39,53 +38,43 @@ public class CompletePackageClosure extends PackageClosure
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_MODEL, CompletePackageClosure.class);
 
-  private boolean excludeEcore;
-
   public CompletePackageClosure()
   {
-  }
-
-  public CompletePackageClosure(boolean excludeEcore)
-  {
-    this.excludeEcore = excludeEcore;
   }
 
   @Override
   protected void handleEPackage(EPackage ePackage, Set<EPackage> visitedPackages)
   {
-    if (ePackage != null && visitedPackages.add(ePackage))
+    if (ePackage != null)
     {
-      if (excludeEcore && // Optimize EPackage comparison
-          (EcorePackage.eINSTANCE == ePackage || EcorePackage.eNS_URI.equals(ePackage.getNsURI())))
+      if (visitedPackages.add(ePackage))
       {
-        return;
-      }
-
-      Set<Object> visited = new HashSet<Object>();
-      for (EClassifier classifier : ePackage.getEClassifiers())
-      {
-        handleEClassifier(classifier, visitedPackages, visited);
-      }
-
-      for (Object object : visited)
-      {
-        if (object instanceof EClassifier)
+        Set<Object> visited = new HashSet<Object>();
+        for (EClassifier classifier : ePackage.getEClassifiers())
         {
-          EClassifier classifier = (EClassifier)object;
-          final EPackage p = classifier.getEPackage();
-          if (p != null)
+          handleEClassifier(classifier, visitedPackages, visited);
+        }
+
+        for (Object object : visited)
+        {
+          if (object instanceof EClassifier)
           {
-            if (visitedPackages.add(p))
+            EClassifier classifier = (EClassifier)object;
+            final EPackage p = classifier.getEPackage();
+            if (p != null)
             {
-              if (TRACER.isEnabled())
+              if (visitedPackages.add(p))
               {
-                TRACER.trace("Found package " + p.getNsURI()); //$NON-NLS-1$
+                if (TRACER.isEnabled())
+                {
+                  TRACER.trace("Found package " + p.getNsURI()); //$NON-NLS-1$
+                }
               }
             }
-          }
-          else
-          {
-            OM.LOG.warn(MessageFormat.format(Messages.getString("CompletePackageClosure.0"), classifier.getName())); //$NON-NLS-1$
+            else
+            {
+              OM.LOG.warn(MessageFormat.format(Messages.getString("CompletePackageClosure.0"), classifier.getName())); //$NON-NLS-1$
+            }
           }
         }
       }

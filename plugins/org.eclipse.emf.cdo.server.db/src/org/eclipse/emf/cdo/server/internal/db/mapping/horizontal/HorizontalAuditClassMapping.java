@@ -102,7 +102,6 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
   public HorizontalAuditClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
     super(mappingStrategy, eClass);
-    initSQLStrings();
   }
 
   @Override
@@ -361,6 +360,11 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
   public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name, boolean exactMatch,
       CDOBranchPoint branchPoint)
   {
+    if (getTable() == null)
+    {
+      return null;
+    }
+
     EStructuralFeature nameFeature = EresourcePackage.eINSTANCE.getCDOResourceNode_Name();
     long timeStamp = branchPoint.getTimeStamp();
 

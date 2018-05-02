@@ -2,4 +2,3 @@
 
 org.eclipse.emf.cdo.server.db/debug = true
 org.eclipse.emf.cdo.server.db/debug.units = true
-org.eclipse.emf.cdo.server.db/debug.units.perf = false

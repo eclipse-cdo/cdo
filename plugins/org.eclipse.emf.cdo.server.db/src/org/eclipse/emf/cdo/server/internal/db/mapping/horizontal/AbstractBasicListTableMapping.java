@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOFeatureType;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
@@ -28,7 +30,9 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping3;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.internal.db.DBIndexAnnotation;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -45,6 +49,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 /**
  * @author Stefan Winkler
@@ -101,6 +106,33 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
   }
 
   public abstract void rawDeleted(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version);
+
+  protected final boolean needsIndexOnValueField(EStructuralFeature feature)
+  {
+    IMappingStrategy mappingStrategy = getMappingStrategy();
+    Set<CDOFeatureType> forceIndexes = AbstractMappingStrategy.getForceIndexes(mappingStrategy);
+
+    if (CDOFeatureType.matchesCombination(feature, forceIndexes))
+    {
+      return true;
+    }
+
+    EClass eClass = getContainingClass();
+    EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getClassInfo(eClass).getAllPersistentFeatures();
+
+    for (List<EStructuralFeature> features : DBIndexAnnotation.getIndices(eClass, allPersistentFeatures))
+    {
+      if (features.size() == 1)
+      {
+        if (features.get(0) == feature)
+        {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
 
   /**
    * @author Eike Stepper

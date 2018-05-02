@@ -69,6 +69,8 @@ public abstract class CDOServerExporter<OUT>
 {
   private InternalRepository repository;
 
+  private boolean exportSystemPackages;
+
   public CDOServerExporter(IRepository repository)
   {
     this.repository = (InternalRepository)repository;
@@ -77,6 +79,22 @@ public abstract class CDOServerExporter<OUT>
   public final IRepository getRepository()
   {
     return repository;
+  }
+
+  /**
+   * @since 4.7
+   */
+  public boolean isExportSystemPackages()
+  {
+    return exportSystemPackages;
+  }
+
+  /**
+   * @since 4.7
+   */
+  public void setExportSystemPackages(boolean exportSystemPackages)
+  {
+    this.exportSystemPackages = exportSystemPackages;
   }
 
   public final void exportRepository(OutputStream out) throws Exception
@@ -130,6 +148,11 @@ public abstract class CDOServerExporter<OUT>
     InternalCDOPackageUnit[] packageUnits = packageRegistry.getPackageUnits(true);
     for (InternalCDOPackageUnit packageUnit : packageUnits)
     {
+      if (packageUnit.isSystem() && !exportSystemPackages)
+      {
+        continue;
+      }
+
       String id = packageUnit.getID();
       CDOPackageUnit.Type type = packageUnit.getOriginalType();
       long time = packageUnit.getTimeStamp();

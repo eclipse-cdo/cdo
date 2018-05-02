@@ -56,6 +56,9 @@
         name="org.eclipse.emf.ecoretools.sdk.feature.group"
         optional="true"/>
     <requirement
+        name="org.eclipse.emf.cdo.migrator.feature.group"
+        optional="true"/>
+    <requirement
         name="org.eclipse.emf.cdo.releng.apireports"
         optional="true"/>
     <repository
@@ -220,6 +223,8 @@
           name="org.eclipse.pde.feature.group"/>
       <requirement
           name="org.eclipse.equinox.executable.feature.group"/>
+      <requirement
+          name="org.eclipse.emf.sdk.feature.group"/>
       <sourceLocator
           rootFolder="${cdo.git.clone.location}"/>
       <repositoryList

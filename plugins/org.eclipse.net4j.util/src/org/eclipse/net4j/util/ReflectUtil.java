@@ -226,6 +226,28 @@ public final class ReflectUtil
     }
   }
 
+  /**
+   * @since 3.8
+   */
+  public static String dumpThread()
+  {
+    StringBuilder builder = new StringBuilder();
+
+    Thread thread = Thread.currentThread();
+    builder.append(thread);
+    builder.append(StringUtil.NL);
+
+    StackTraceElement[] stackTrace = thread.getStackTrace();
+    for (int i = 2; i < stackTrace.length; i++)
+    {
+      StackTraceElement stackTraceElement = stackTrace[i];
+      builder.append("\tat " + stackTraceElement); //$NON-NLS-1$
+      builder.append(StringUtil.NL);
+    }
+
+    return builder.toString();
+  }
+
   public static void printStackTrace(PrintStream out, StackTraceElement[] stackTrace)
   {
     for (int i = 2; i < stackTrace.length; i++)

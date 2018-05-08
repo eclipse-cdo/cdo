@@ -77,6 +77,11 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   {
   }
 
+  public IObjectTypeMapper getObjectTypeMapper()
+  {
+    return objectTypeMapper;
+  }
+
   public CDOClassifierRef readObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     return objectTypeMapper.getObjectType(accessor, id);

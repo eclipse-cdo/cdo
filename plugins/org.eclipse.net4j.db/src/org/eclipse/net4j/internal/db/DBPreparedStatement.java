@@ -30,6 +30,8 @@ public class DBPreparedStatement extends DelegatingPreparedStatement implements 
 
   private int touch;
 
+  private DBPreparedStatement nextCached;
+
   public DBPreparedStatement(DBConnection transaction, String sql, ReuseProbability reuseProbability, PreparedStatement delegate)
   {
     super(delegate, transaction);
@@ -69,6 +71,16 @@ public class DBPreparedStatement extends DelegatingPreparedStatement implements 
   public void setTouch(int touch)
   {
     this.touch = touch;
+  }
+
+  public DBPreparedStatement getNextCached()
+  {
+    return nextCached;
+  }
+
+  public void setNextCached(DBPreparedStatement nextCached)
+  {
+    this.nextCached = nextCached;
   }
 
   public int compareTo(IDBPreparedStatement o)

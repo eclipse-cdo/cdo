@@ -37,7 +37,7 @@ public class Bugzilla_534438_Test extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 100; i++)
     {
       CDOResource resource = transaction.createResource(getResourcePath("resource-" + i + "-fill.transformation"));
       resource.getContents().add(getModel1Factory().createSupplier());

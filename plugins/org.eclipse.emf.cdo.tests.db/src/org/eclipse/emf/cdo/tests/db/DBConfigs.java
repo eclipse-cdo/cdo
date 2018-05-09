@@ -23,6 +23,8 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_303807_Test;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
+import org.eclipse.emf.cdo.tests.db.bugzilla.Bugzilla_527002_Test;
+import org.eclipse.emf.cdo.tests.db.bundle.OM;
 
 import java.util.List;
 
@@ -32,6 +34,14 @@ import java.util.List;
 public abstract class DBConfigs extends AllConfigs
 {
   @Override
+  public List<Class<? extends ConfigTest>> getBugzillaTests()
+  {
+    List<Class<? extends ConfigTest>> tests = super.getBugzillaTests();
+    tests.addAll(getTestClasses(OM.BUNDLE, "org.eclipse.emf.cdo.tests.db.bugzilla"));
+    return tests;
+  }
+
+  @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     testClasses.add(Net4jDBTest.class);
@@ -39,9 +49,6 @@ public abstract class DBConfigs extends AllConfigs
     testClasses.add(DBStoreTest.class);
     testClasses.add(CustomTypeMappingTest.class);
     testClasses.add(SQLQueryTest.class);
-    testClasses.add(Bugzilla_351068_Test.class);
-    testClasses.add(Bugzilla_396743_Test.class);
-    testClasses.add(Bugzilla_527002_Test.class);
 
     super.initTestClasses(testClasses, scenario);
     testClasses.remove(MEMStoreQueryTest.class);

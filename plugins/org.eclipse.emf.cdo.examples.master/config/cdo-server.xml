@@ -30,6 +30,10 @@
 		  <securityManager type="default" description="/security:annotation:home(/home)"/>
     -->
 
+    <!-- Example http://bugs.eclipse.org/418454
+      <adminRepository configurationManager="default" catalogPath="/catalog"/>
+    -->
+
     <!-- Example http://bugs.eclipse.org/302775
 			<authenticator type="file" description="@config/repo1.users"/>
     -->

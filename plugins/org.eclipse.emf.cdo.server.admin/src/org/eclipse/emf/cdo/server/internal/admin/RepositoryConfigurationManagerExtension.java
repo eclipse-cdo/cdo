@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -42,6 +43,8 @@ public class RepositoryConfigurationManagerExtension implements IAppExtension
 {
   private static final String DEFAULT_CATALOG_PATH = "/catalog";
 
+  private CDORepositoryConfigurationManager repositoryConfigurationManager;
+
   public RepositoryConfigurationManagerExtension()
   {
   }
@@ -57,8 +60,10 @@ public class RepositoryConfigurationManagerExtension implements IAppExtension
     for (int i = 0; i < repositoryConfigs.getLength(); i++)
     {
       Element repositoryConfig = (Element)repositoryConfigs.item(i);
-      if (configureAdminRepository(container, repositoryConfig))
+      CDORepositoryConfigurationManager repositoryConfigurationManager = configureAdminRepository(container, repositoryConfig);
+      if (repositoryConfigurationManager != null)
       {
+        this.repositoryConfigurationManager = repositoryConfigurationManager;
         break;
       }
     }
@@ -69,6 +74,7 @@ public class RepositoryConfigurationManagerExtension implements IAppExtension
   public void stop() throws Exception
   {
     OM.LOG.info("Repository configuration manager extension stopping");
+    LifecycleUtil.deactivate(repositoryConfigurationManager);
     OM.LOG.info("Repository configuration manager extension stopped");
   }
 
@@ -79,21 +85,21 @@ public class RepositoryConfigurationManagerExtension implements IAppExtension
     return builder.parse(configFile);
   }
 
-  protected boolean configureAdminRepository(IManagedContainer container, Element repositoryConfig)
+  protected CDORepositoryConfigurationManager configureAdminRepository(IManagedContainer container, Element repositoryConfig)
   {
     String name = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
     InternalRepository repository = (InternalRepository)RepositoryFactory.get(container, name);
     if (repository == null)
     {
       OM.LOG.warn("Repository not registered with container: " + name); //$NON-NLS-1$
-      return false;
+      return null;
     }
 
     NodeList adminRepositories = repositoryConfig.getElementsByTagName("adminRepository"); //$NON-NLS-1$
     if (adminRepositories.getLength() > 1)
     {
       OM.LOG.warn("A maximum of one administration catalog can be configured in repository " + repository); //$NON-NLS-1$
-      return false;
+      return null;
     }
 
     if (adminRepositories.getLength() == 1)
@@ -103,7 +109,7 @@ public class RepositoryConfigurationManagerExtension implements IAppExtension
       if (type == null || type.length() == 0)
       {
         OM.LOG.warn("Repository configuration manager type not specified for repository " + repository); //$NON-NLS-1$
-        return false;
+        return null;
       }
 
       String description = adminRepositoryElement.getAttribute("description"); //$NON-NLS-1$
@@ -122,9 +128,9 @@ public class RepositoryConfigurationManagerExtension implements IAppExtension
           .getElement(CDORepositoryConfigurationManager.Factory.PRODUCT_GROUP, type, description);
       repoManager.setAdminRepository(repository);
 
-      return true;
+      return repoManager;
     }
 
-    return false;
+    return null;
   }
 }

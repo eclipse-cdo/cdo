@@ -104,7 +104,11 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
     @Override
     protected void onDeactivated(ILifecycle lifecycle)
     {
-      DefaultCDORepositoryConfigurationManager.this.deactivate();
+      Exception exception = DefaultCDORepositoryConfigurationManager.this.deactivate();
+      if (exception != null)
+      {
+        OM.LOG.error(exception);
+      }
     }
   };
 
@@ -230,7 +234,7 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
   }
 
   @Override
-  protected void doDeactivate() throws Exception
+  protected void doBeforeDeactivate() throws Exception
   {
     if (TRACER.isEnabled())
     {
@@ -249,7 +253,11 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
         OM.LOG.error(e);
       }
     }
+  }
 
+  @Override
+  protected void doDeactivate() throws Exception
+  {
     catalog = null;
   }
 

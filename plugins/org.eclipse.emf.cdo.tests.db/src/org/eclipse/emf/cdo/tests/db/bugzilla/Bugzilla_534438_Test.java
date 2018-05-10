@@ -11,8 +11,11 @@
 package org.eclipse.emf.cdo.tests.db.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
+import org.eclipse.emf.cdo.server.internal.db.IObjectTypeMapper;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractHorizontalMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalMappingStrategy;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
@@ -49,9 +52,15 @@ public class Bugzilla_534438_Test extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     // Clear object type cache to force ObjectTypeTable to be used.
-    AbstractHorizontalMappingStrategy mappingStrategy = (AbstractHorizontalMappingStrategy)((DBStore)getRepository().getStore()).getMappingStrategy();
-    LifecycleUtil.deactivate(mappingStrategy.getObjectTypeMapper());
-    LifecycleUtil.activate(mappingStrategy.getObjectTypeMapper());
+    IMappingStrategy mappingStrategy = ((DBStore)getRepository().getStore()).getMappingStrategy();
+    if (mappingStrategy instanceof HorizontalMappingStrategy)
+    {
+      mappingStrategy = ((HorizontalMappingStrategy)mappingStrategy).getDelegate();
+    }
+
+    IObjectTypeMapper objectTypeMapper = ((AbstractHorizontalMappingStrategy)mappingStrategy).getObjectTypeMapper();
+    LifecycleUtil.deactivate(objectTypeMapper);
+    LifecycleUtil.activate(objectTypeMapper);
 
     CDOQuery query = transaction.createQuery("ocl", "Supplier.allInstances()->select( o | o.oclAsType(ecore::EObject).eResource()."
         + "oclAsType(eresource::CDOResource).name.endsWith('-fill.transformation'))", getModel1Package().getSupplier());

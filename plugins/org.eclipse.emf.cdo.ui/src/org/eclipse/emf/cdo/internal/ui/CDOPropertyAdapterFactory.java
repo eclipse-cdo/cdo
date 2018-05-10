@@ -11,7 +11,9 @@
 package org.eclipse.emf.cdo.internal.ui;
 
 import org.eclipse.emf.cdo.CDOElement;
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.edit.CDOItemProviderAdapter.CDOPropertyDescriptor;
+import org.eclipse.emf.cdo.internal.common.RepositoryProperties;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -54,6 +56,8 @@ import java.util.Map;
  */
 public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
 {
+  private static final IActionFilter REPOSITORY_ACTION_FILTER = new DefaultActionFilter<CDOCommonRepository>(RepositoryProperties.INSTANCE);
+
   private static final IActionFilter SESSION_ACTION_FILTER = new DefaultActionFilter<CDOSession>(SessionProperties.INSTANCE);
 
   private static final IActionFilter VIEW_ACTION_FILTER = new DefaultActionFilter<CDOView>(ViewProperties.INSTANCE);
@@ -69,6 +73,11 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
   {
     try
     {
+      if (object instanceof CDOCommonRepository)
+      {
+        return new DefaultPropertySource<CDOCommonRepository>((CDOCommonRepository)object, RepositoryProperties.INSTANCE);
+      }
+
       if (object instanceof CDOSession)
       {
         return new DefaultPropertySource<CDOSession>((CDOSession)object, SessionProperties.INSTANCE);
@@ -202,6 +211,11 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
   @Override
   protected IActionFilter createActionFilter(Object object)
   {
+    if (object instanceof CDOCommonRepository)
+    {
+      return REPOSITORY_ACTION_FILTER;
+    }
+
     if (object instanceof CDOSession)
     {
       return SESSION_ACTION_FILTER;

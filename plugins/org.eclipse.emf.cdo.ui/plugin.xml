@@ -171,6 +171,12 @@
   <extension
         point="org.eclipse.core.runtime.adapters">
      <factory
+           adaptableType="org.eclipse.emf.cdo.common.CDOCommonRepository"
+           class="org.eclipse.emf.cdo.internal.ui.CDOPropertyAdapterFactory">
+        <adapter type="org.eclipse.ui.views.properties.IPropertySourceProvider"/>
+        <adapter type="org.eclipse.ui.IActionFilter"/>
+     </factory>
+     <factory
            adaptableType="org.eclipse.emf.cdo.session.CDOSession"
            class="org.eclipse.emf.cdo.internal.ui.CDOPropertyAdapterFactory">
         <adapter type="org.eclipse.ui.views.properties.IPropertySourceProvider"/>

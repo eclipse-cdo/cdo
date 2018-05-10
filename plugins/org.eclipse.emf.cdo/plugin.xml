@@ -49,11 +49,11 @@
    </extension>
 
    <extension point="org.eclipse.core.expressions.propertyTesters">
-      <propertyTester
+     <propertyTester
          id="org.eclipse.emf.cdo.session.properties"
          type="org.eclipse.emf.cdo.session.CDOSession"
          namespace="org.eclipse.emf.cdo.session"
-         properties="open,sessionID,userID,passiveUpdateEnabled,lastUpdateTime,passiveUpdateMode,repositoryName,repositoryUUID,repositoryType,repositoryState,repositoryCreationTime,supportingAudits,supportingBranches,serializeCommits,ensureReferentialIntegrity,idGenerationLocation,storeType,objectIDTypes,userAuthenticated"
+         properties="open,sessionID,userID,passiveUpdateEnabled,lastUpdateTime,passiveUpdateMode,repositoryName,repositoryUUID,repositoryType,repositoryState,repositoryCreationTime,authenticating,supportingAudits,supportingBranches,supportingUnits,serializeCommits,ensureReferentialIntegrity,idGenerationLocation,commitInfoStorage,storeType,objectIDTypes,userAuthenticated"
          class="org.eclipse.emf.internal.cdo.session.SessionProperties$Tester"/>
       <propertyTester
          id="org.eclipse.emf.cdo.view.properties"

@@ -21,7 +21,7 @@
 
   <!-- CDO Models -->
   <category-def name="org.eclipse.emf.cdo.models.category" label="CDO Models"/>
-  <plugin id="org.eclipse.emf.cdo.gmf.notation" version="0.0.0"><category name="org.eclipse.emf.cdo.models.category"/></plugin>
+  <plugin id="org.eclipse.emf.cdo.ecore" version="0.0.0"><category name="org.eclipse.emf.cdo.models.category"/></plugin>
 
   <!-- Net4j Signalling Platform -->
   <category-def name="org.eclipse.net4j.category" label="Net4j Signalling Platform"/>

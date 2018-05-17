@@ -1,0 +1,249 @@
+<?xml version="1.0"?>
+<!--
+	Copyright (c) 2018 Eike Stepper (Berlin, Germany) and others.
+	All rights reserved. This program and the accompanying materials
+	are made available under the terms of the Eclipse Public License v1.0
+	which accompanies this distribution, and is available at
+	http://www.eclipse.org/legal/epl-v10.html
+
+	Contributors:
+	  Eike Stepper - initial API and implementation
+-->
+<project name="migrate" default="migrate">
+
+	<!--
+	  The migration of the GMF Notation model to CDO is completely automated.
+	  The following preconditions must be met before executing the 'migrate.ant' script:
+	 
+	  1. The 'org.eclipse.emf.cdo.migrator' plugin must be installed into the Eclipse IDE.
+	 
+	  2. CDO's Git repository must be cloned from ssh://git.eclipse.org:29418/cdo/cdo
+	     to the local disk. It's disk location must then be registered under
+	     Preferences | Run/Debug | String Substitution -> variable 'git.clone.cdo'.
+	 
+	  3. GMF Notation's Git repository must be cloned from 
+	     ssh://git.eclipse.org:29418/gmf-notation/org.eclipse.gmf.notation
+	     to the local disk. It's disk location must then be passed into this script
+	     through the 'git.clone.gmf' property. The 'Migrate GMF Notation' launch config
+	     assumes that the GMF Notation clone is colocated with the CDO clone.
+	    
+    Then execute the following tasks:
+  -->
+	<target name="migrate">
+
+		<!--
+		  Ensure that GMF Notation's Git clone exists and is reachable.
+	  -->
+		<fail unless="git.clone.gmf" message="Property 'git.clone.gmf' is undefined!" />
+		<property name="notation" location="${git.clone.gmf}/org.eclipse.gmf.runtime.notation" />
+		<fail message="The directory '${notation}' does not exist!">
+			<condition>
+				<not>
+					<available file="${notation}" type="dir" />
+				</not>
+			</condition>
+		</fail>
+
+		<property name="project.name" value="org.eclipse.gmf.runtime.notation" />
+		<property name="notation.tmp" location="${basedir}/target/${project.name}" />
+		<echo message="Migrating in ${notation.tmp} ..." />
+
+		<!--
+		  Copy the entire 'org.eclipse.gmf.runtime.notation' project from the GMF clone
+		  into the 'target' folder of the 'org.eclipse.emf.cdo.gmf.notation' plugin to avoid
+		  changes in the GMF clone.
+		  
+		  Remove all 'NOT_CDO' markers from the source code to cause regeneration of a 
+		  few methods that must be handwritten in pure GMF only.
+		-->
+		<delete failonerror="true" includeemptydirs="true">
+			<fileset dir="${notation.tmp}">
+				<include name="**" />
+			</fileset>
+		</delete>
+		<copy todir="${notation.tmp}" verbose="false" failonerror="true" overwrite="true" includeemptydirs="false">
+			<fileset dir="${notation}" defaultexcludes="true">
+				<include name="**/*" />
+				<exclude name="**/*.class" />
+				<exclude name="**/*.html" />
+			</fileset>
+			<filterchain>
+				<replacestring from="@generated NOT_CDO" to="@generated" />
+			</filterchain>
+		</copy>
+
+		<!--
+		  Import the 'org.eclipse.gmf.runtime.notation' project from the 'target' folder 
+		  of the 'org.eclipse.emf.cdo.gmf.notation' plugin into the workspace, so that
+		  workspace-relative references can be resolved.
+		-->
+		<cdo.deleteProject projectname="${project.name}" />
+		<cdo.importProject projectname="${project.name}" fromlocation="${notation.tmp}" />
+
+		<!--
+		  Migrate the 'notation.genmodel' to CDO and regenerate the model within the
+		  imported 'org.eclipse.gmf.runtime.notation' project.
+		-->
+		<property name="model.path" value="/${project.name}/model/notation.genmodel" />
+		<cdo.migrateModel modelpath="${model.path}" dynamicfeaturedelegation="true" />
+		<cdo.generateModel modelpath="${model.path}" />
+
+		<!--
+		  Copy all Java files from the generated 'impl' folder to the 'impl' folder of the
+		  'org.eclipse.emf.cdo.gmf.notation' project. Apply the following refactorings:
+		  
+		  1. Rename the Java package to 'org.eclipse.emf.cdo.gmf.notation.impl'.
+		  2. Replace EMF's EModelElementImpl base class with CDO's variant of that class.
+		  3. Replace the eAnnotations field accesses that the generator has left in some
+		     eIsSet() methods with calls to the getEAnnotations() method.  
+		  4. Decrease the generated ESTATIC_FEATURE_COUNT from 1 to 0 because the inherited
+		     EModelElement.eAnnotations feature is implemented dynamically, too.
+		-->
+		<property name="impl" location="${basedir}/src/org/eclipse/emf/cdo/gmf/notation/impl" />
+		<delete>
+			<fileset dir="${impl}">
+				<include name="*.java" />
+			</fileset>
+		</delete>
+		<copy todir="${impl}">
+			<fileset dir="${notation.tmp}/src/org/eclipse/gmf/runtime/notation/impl">
+				<include name="*.java" />
+			</fileset>
+			<filterchain>
+				<replacestring from="org.eclipse.gmf.runtime.notation.impl" to="org.eclipse.emf.cdo.gmf.notation.impl" />
+				<replacestring from="extends EModelElementImpl" to="extends org.eclipse.emf.cdo.ecore.impl.EModelElementImpl" />
+				<replacestring from="eAnnotations != null &amp;&amp; !eAnnotations.isEmpty()" to="!getEAnnotations().isEmpty()" />
+				<replacestring from="ESTATIC_FEATURE_COUNT = 1" to="ESTATIC_FEATURE_COUNT = 0" />
+			</filterchain>
+		</copy>
+
+		<!--
+		  The temporary 'org.eclipse.gmf.runtime.notation' project is no longer needed.
+		  Delete it from the workspace.
+		-->
+		<cdo.deleteProject projectname="${project.name}" />
+
+		<!--
+		  GMF's BasicDecorationNodeImpl class is completely handwritten, just to spare the 
+		  Java fields of the following six structural features:
+		  
+		  1. Source Edges          (from ViewImpl)
+      2. Target Edges          (from ViewImpl)
+      3. Persisted Children    (from ViewImpl)
+      4. Transient Children    (from ViewImpl)
+      5. Styles                (from ViewImpl)
+      6. Layout Constraint     (from NodeImpl)
+
+      This was achieved by changing the super class of BasicDecorationNodeImpl from NodeIml
+      (which extends ViewImpl) to EModelElementImpl. As a result none of the required members
+      from ViewImpl and NodeImpl are available through class inheritance. For a complete analysis
+      of the effects of these optimizations refer to the HandWrittenClasses.rtf document.
+      
+      Copy the implementations of the above six features from the 'BasicDecorationNodeImpl.java' 
+      file in the 'templates' folder of the 'org.eclipse.emf.cdo.gmf.notation' project.
+      
+      Copy the remaining required fields and methods from ViewImpl.	   
+		-->
+		<cdo.transferMembers template="${basedir}\templates\BasicDecorationNodeImpl.java" target="${impl}/BasicDecorationNodeImpl.java">
+			<sourceclass file="${impl}\ViewImpl.java">
+				<sourcefield match=".*_EDEFAULT" />
+				<sourcefield match="ESTATIC_FEATURE_COUNT" />
+				<sourcefield match="childrenFeatures" />
+				<sourcemethod match=".*Visible" />
+				<sourcemethod match=".*Type" />
+				<sourcemethod match=".*TypeGen" />
+				<sourcemethod match=".*Mutable" />
+				<sourcemethod match=".*Element" />
+				<sourcemethod match=".*ElementGen" />
+				<sourcemethod match=".*Diagram" />
+				<sourcemethod match="createStyle" />
+				<sourcemethod match=".*StyleGen" />
+				<sourcemethod match=".*Child" />
+				<sourcemethod match=".*ChildAt" />
+				<sourcemethod match="persist" />
+				<sourcemethod match="persistChildren" />
+				<sourcemethod match="getVisibleChildren" />
+			</sourceclass>
+		</cdo.transferMembers>
+
+		<!--
+		  GMF's DecorationNodeImpl (which extends the handwritten BasicDecorationNodeImpl) reestablishes 
+		  the default behavior of the following four structural features:
+
+      1. Persisted Children    (from ViewImpl)
+      2. Transient Children    (from ViewImpl)
+      3. Styles                (from ViewImpl)
+      4. Layout Constraint     (from NodeImpl)
+      
+      Copy the implementations of the above four features from ViewImpl and NodeImpl.    
+		-->
+		<cdo.transferMembers template="${basedir}\templates\DecorationNodeImpl.java" target="${impl}/DecorationNodeImpl.java">
+			<sourceclass file="${impl}\ViewImpl.java">
+				<sourcemethod match="getChildren" />
+				<sourcemethod match="getPersistedChildren" />
+				<sourcemethod match="getTransientChildren" />
+				<sourcemethod match="getStyles" />
+			</sourceclass>
+			<sourceclass file="${impl}\NodeImpl.java">
+				<sourcemethod match="getLayoutConstraint" />
+				<sourcemethod match="basicSetLayoutConstraint" />
+				<sourcemethod match="setLayoutConstraint" />
+			</sourceclass>
+		</cdo.transferMembers>
+
+		<!--
+      GMF's BasicSemanticCompartmentImpl (which extends the handwritten BasicDecorationNodeImpl) 
+      reestablishes the default behavior of the following structural feature:
+
+      1. Layout Constraint     (from NodeImpl)
+      
+      Replace the existing hand-written implementations of the above feature with their
+      counter parts from NodeImpl.    
+		-->
+		<property name="dynamic.template" location="${notation.tmp}/template-BasicSemanticCompartmentImpl.java" />
+		<copy file="${impl}/BasicSemanticCompartmentImpl.java" tofile="${dynamic.template}" verbose="true" />
+		<replaceregexp file="${dynamic.template}" flags="gs" byline="false">
+			<regexp pattern="[ \t]*protected LayoutConstraint layoutConstraint;[\r\n]*" />
+			<substitution expression="" />
+		</replaceregexp>
+		<replaceregexp file="${dynamic.template}" flags="gs" byline="false">
+			<regexp pattern="[ \t]*public void setLayoutConstraint\(LayoutConstraint newLayoutConstraint\).*\} //BasicSemanticCompartmentImpl" />
+			<substitution expression="%%METHODS%%${line.separator}${line.separator}} //BasicSemanticCompartmentImpl" />
+		</replaceregexp>
+		<cdo.transferMembers template="${dynamic.template}" target="${impl}/BasicSemanticCompartmentImpl.java">
+			<sourceclass file="${impl}\NodeImpl.java" imports="false">
+				<sourcemethod match="getLayoutConstraint" />
+				<sourcemethod match="basicSetLayoutConstraint" />
+				<sourcemethod match="setLayoutConstraint" />
+			</sourceclass>
+		</cdo.transferMembers>
+
+		<!--
+		  A number of GMF classes contain handwritten eFlags fields. Remove them.
+		-->
+		<replaceregexp flags="gs" byline="false">
+			<fileset dir="${impl}">
+				<include name="*.java" />
+			</fileset>
+			<regexp pattern="\s*[ \t]+/\*\*.*?int eFlags[^;]*;[\r\n]*" />
+			<substitution expression="" />
+		</replaceregexp>
+
+		<!--
+		  GMF's handwritten ListValueStyleImpl.getRawValuesList() method reuses the generated 
+		  rawValuesList field to cache an additional wrapper list. As this rawValuesList field
+		  disappears when generating for CDO, reinsert it manually. 
+		-->
+		<replaceregexp file="${impl}/ListValueStyleImpl.java" flags="gs" byline="false">
+			<regexp pattern="(implements ListValueStyle \{)" />
+			<substitution expression="\1${line.separator}  private EList rawValuesList;${line.separator}" />
+		</replaceregexp>
+
+		<!--
+		  Apply source cleanup to the 'org.eclipse.emf.cdo.gmf.notation' project.
+		  This ensures that only relevant changes appear in the Git history.
+		-->
+		<cdo.cleanupProject projectname="org.eclipse.emf.cdo.gmf.notation" />
+	</target>
+
+</project>

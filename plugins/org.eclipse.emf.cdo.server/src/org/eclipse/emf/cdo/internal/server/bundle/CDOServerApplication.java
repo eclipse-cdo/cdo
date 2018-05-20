@@ -36,6 +36,10 @@ public class CDOServerApplication extends OSGiApplication
 {
   public static final String ID = OM.BUNDLE_ID + ".app"; //$NON-NLS-1$
 
+  public static final String PROP_CONFIGURATOR_TYPE = "org.eclipse.emf.cdo.server.repositoryConfiguratorType";
+
+  public static final String PROP_CONFIGURATOR_DESCRIPTION = "org.eclipse.emf.cdo.server.repositoryConfiguratorDescription";
+
   public static final String PROP_BROWSER_PORT = "org.eclipse.emf.cdo.server.browser.port"; //$NON-NLS-1$
 
   private IRepository[] repositories;
@@ -45,6 +49,13 @@ public class CDOServerApplication extends OSGiApplication
   public CDOServerApplication()
   {
     super(ID);
+  }
+
+  protected RepositoryConfigurator getConfigurator(IManagedContainer container)
+  {
+    String type = OMPlatform.INSTANCE.getProperty(PROP_CONFIGURATOR_TYPE, RepositoryConfigurator.Factory.Default.TYPE);
+    String description = OMPlatform.INSTANCE.getProperty(PROP_CONFIGURATOR_DESCRIPTION);
+    return (RepositoryConfigurator)container.getElement(RepositoryConfigurator.Factory.PRODUCT_GROUP, type, description);
   }
 
   @Override
@@ -57,7 +68,8 @@ public class CDOServerApplication extends OSGiApplication
     File configFile = OMPlatform.INSTANCE.getConfigFile("cdo-server.xml"); //$NON-NLS-1$
     if (configFile != null && configFile.exists())
     {
-      RepositoryConfigurator repositoryConfigurator = new RepositoryConfigurator(container);
+      RepositoryConfigurator repositoryConfigurator = getConfigurator(container);
+
       repositories = repositoryConfigurator.configure(configFile);
       if (repositories == null || repositories.length == 0)
       {

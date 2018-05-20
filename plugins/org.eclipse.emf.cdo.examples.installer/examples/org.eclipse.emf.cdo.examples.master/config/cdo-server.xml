@@ -42,6 +42,13 @@
 			<initialPackage nsURI="http://www.eclipse.org/emf/CDO/examples/company/1.0.0"/>
     -->
 
+    <!-- Example http://bugs.eclipse.org/534898
+			<activityLog type="rolling">
+        <property name="file" value="/develop/cdo-master/repo1-activities"/>
+        <property name="size" value="100000000"/>
+			</activityLog>
+    -->
+
     <store type="db">
 
       <!-- Example http://bugs.eclipse.org/396379 (if idGenerationLocation == CLIENT)

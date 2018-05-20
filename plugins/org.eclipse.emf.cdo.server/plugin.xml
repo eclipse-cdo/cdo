@@ -19,6 +19,14 @@
 
 		<extension point="org.eclipse.net4j.util.factories">
       	<factory
+            productGroup="org.eclipse.emf.cdo.server.repositoryConfigurators"
+            type="default"
+            class="org.eclipse.emf.cdo.spi.server.RepositoryConfigurator$Factory$Default"/>
+      	<factory
+            productGroup="org.eclipse.emf.cdo.server.repositoryActivityLogs"
+            type="rolling"
+            class="org.eclipse.emf.cdo.spi.server.RepositoryActivityLog$Rolling$Factory"/>
+      	<factory
             productGroup="org.eclipse.net4j.Negotiators"
             type="challenge"
             class="org.eclipse.net4j.util.security.ChallengeNegotiatorFactory"/>

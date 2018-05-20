@@ -44,7 +44,7 @@ public abstract class RunnableWithName implements Runnable
       }
       else
       {
-        thread.setName(name);
+        ConcurrencyUtil.setThreadName(thread, name);
       }
     }
 
@@ -56,7 +56,7 @@ public abstract class RunnableWithName implements Runnable
     {
       if (thread != null)
       {
-        thread.setName(oldName);
+        ConcurrencyUtil.setThreadName(thread, oldName);
       }
     }
   }

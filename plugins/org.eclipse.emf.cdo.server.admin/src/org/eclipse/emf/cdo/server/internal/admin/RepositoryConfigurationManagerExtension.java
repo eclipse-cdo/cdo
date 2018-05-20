@@ -128,6 +128,7 @@ public class RepositoryConfigurationManagerExtension implements IAppExtension
           .getElement(CDORepositoryConfigurationManager.Factory.PRODUCT_GROUP, type, description);
       repoManager.setAdminRepository(repository);
 
+      OM.LOG.info("Admin repository: " + repository.getName());
       return repoManager;
     }
 

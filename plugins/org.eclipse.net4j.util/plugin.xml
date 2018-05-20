@@ -42,8 +42,7 @@
       <factory
             productGroup="org.eclipse.net4j.util.confirmationProviders"
             type="default"
-            class="org.eclipse.net4j.util.confirmation.IConfirmationProvider.Factory.Default">
-      </factory>
+            class="org.eclipse.net4j.util.confirmation.IConfirmationProvider.Factory.Default"/>
    </extension>
 
 </plugin>

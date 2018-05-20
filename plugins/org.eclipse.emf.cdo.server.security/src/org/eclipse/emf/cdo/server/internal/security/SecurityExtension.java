@@ -128,7 +128,10 @@ public class SecurityExtension implements IAppExtension2
       }
 
       String qualifiedDescription = String.format("%s:%s", name, description); //$NON-NLS-1$
-      container.getElement(SecurityManagerFactory.PRODUCT_GROUP, type, qualifiedDescription);
+      if (container.getElement(SecurityManagerFactory.PRODUCT_GROUP, type, qualifiedDescription) != null)
+      {
+        OM.LOG.info("Security manager for repository " + repository.getName() + ": " + qualifiedDescription);
+      }
     }
   }
 

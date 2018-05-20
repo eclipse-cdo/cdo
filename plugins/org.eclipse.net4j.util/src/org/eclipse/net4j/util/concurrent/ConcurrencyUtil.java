@@ -115,4 +115,12 @@ public final class ConcurrencyUtil
     thread.setDaemon(true);
     thread.start();
   }
+
+  /**
+   * @since 3.8
+   */
+  public static void setThreadName(Thread thread, String name)
+  {
+    thread.setName(name);
+  }
 }

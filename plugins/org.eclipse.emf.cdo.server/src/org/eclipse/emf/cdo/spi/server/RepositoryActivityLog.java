@@ -225,14 +225,14 @@ public abstract class RepositoryActivityLog extends LifecycleHook<IRepository> i
   {
     private final RollingLog rollingLog;
 
-    public Rolling(String logFile, long logSize)
+    public Rolling(String logFile, long logSize, boolean append)
     {
-      rollingLog = new RollingLog(logFile, logSize);
+      rollingLog = new RollingLog(logFile, logSize, append);
     }
 
-    public void log(String line)
+    public void log(String message)
     {
-      rollingLog.log(line);
+      rollingLog.log(message);
     }
 
     @Override
@@ -286,7 +286,13 @@ public abstract class RepositoryActivityLog extends LifecycleHook<IRepository> i
           size = "100000000";
         }
 
-        return new RepositoryActivityLog.Rolling(file, Long.parseLong(size));
+        String append = properties.get("append"); //$NON-NLS-1$
+        if (StringUtil.isEmpty(append))
+        {
+          append = Boolean.TRUE.toString();
+        }
+
+        return new RepositoryActivityLog.Rolling(file, Long.parseLong(size), Boolean.parseBoolean(append));
       }
     }
   }

@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.om.log;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.AbstractIterator;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.concurrent.Worker;
@@ -47,10 +48,11 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
 
   private List<LogLine> queue = new ArrayList<LogLine>();
 
-  public RollingLog(String logFile, long logSize)
+  public RollingLog(String logFile, long logSize, boolean append)
   {
     this.logFile = logFile;
     this.logSize = logSize;
+    fileAppend = append;
 
     setDaemon(true);
   }
@@ -65,9 +67,9 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
     return logSize;
   }
 
-  public final void log(String line)
+  public final void log(String message)
   {
-    LogLine logLine = createLogLine(line);
+    LogLine logLine = createLogLine(message);
 
     synchronized (this)
     {
@@ -104,12 +106,12 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
     writeLogLines(logLines);
   }
 
-  protected LogLine createLogLine(String line)
+  protected LogLine createLogLine(String message)
   {
     long millis = System.currentTimeMillis();
     String thread = getThreadInfo();
 
-    return new LogLine(millis, thread, line);
+    return new LogLine(millis, thread, message);
   }
 
   protected void writeLogLines(List<LogLine> logLines)
@@ -120,21 +122,7 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
 
       try
       {
-        File file;
-
-        for (;;)
-        {
-          file = getFile(logFile, fileNumber);
-
-          if (fileAppend && file.length() > logSize)
-          {
-            fileNumber++;
-            fileAppend = false;
-            continue;
-          }
-
-          break;
-        }
+        File file = getFile();
 
         out = new PrintStream(new FileOutputStream(file, fileAppend));
         writeLogLines(logLines, out);
@@ -174,6 +162,75 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
     return Thread.currentThread().getName();
   }
 
+  @Override
+  protected void doActivate() throws Exception
+  {
+    if (fileAppend)
+    {
+      int number = getLastFileNumber();
+      if (number == -1)
+      {
+        fileAppend = false;
+      }
+      else
+      {
+        long lastID = 0;
+
+        for (LogIterator iterator = new LogIterator(logFile, number); iterator.hasNext();)
+        {
+          LogLine logLine = iterator.next();
+          lastID = logLine.getID();
+        }
+
+        logLineCounter.set(lastID);
+      }
+    }
+
+    super.doActivate();
+  }
+
+  private int getLastFileNumber()
+  {
+    int lastFileNumber = -1;
+    for (int i = 0; i < Integer.MAX_VALUE; i++)
+    {
+      File file = getFile(logFile, i);
+      if (!file.isFile())
+      {
+        break;
+      }
+
+      lastFileNumber = i;
+    }
+
+    return lastFileNumber;
+  }
+
+  private File getFile()
+  {
+    File file;
+
+    for (;;)
+    {
+      file = getFile(logFile, fileNumber);
+
+      if (fileAppend && file.length() > logSize)
+      {
+        fileNumber++;
+        fileAppend = false;
+        continue;
+      }
+
+      break;
+    }
+    return file;
+  }
+
+  private static File getFile(String logFile, int fileNumber)
+  {
+    return new File(logFile + String.format("-%04d", fileNumber) + ".txt");
+  }
+
   public final CloseableIterator<LogLine> iterator()
   {
     return iterator(logFile);
@@ -181,12 +238,7 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
 
   public static CloseableIterator<LogLine> iterator(String logFile)
   {
-    return new LogIterator(logFile);
-  }
-
-  private static File getFile(String logFile, int fileNumber)
-  {
-    return new File(logFile + String.format("-%04d", fileNumber) + ".txt");
+    return new LogIterator(logFile, 0);
   }
 
   /**
@@ -202,9 +254,10 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
 
     private BufferedReader reader;
 
-    public LogIterator(String logFile)
+    public LogIterator(String logFile, int fileNumber)
     {
       this.logFile = logFile;
+      this.fileNumber = fileNumber;
     }
 
     @Override
@@ -273,7 +326,11 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
    */
   public static final class LogLine
   {
+    private static final String NL = "\n\r";
+
     private static final String TAB = "\t";
+
+    private static final String TABNL = TAB + NL;
 
     private long id;
 
@@ -281,13 +338,13 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
 
     private final String thread;
 
-    private final String line;
+    private final String message;
 
-    public LogLine(long millis, String thread, String line)
+    public LogLine(long millis, String thread, String message)
     {
       this.millis = millis;
-      this.thread = thread;
-      this.line = line;
+      this.thread = StringUtil.translate(thread, TABNL, "   ");
+      this.message = StringUtil.translate(message, NL, "  ");
     }
 
     public LogLine(String string)
@@ -296,7 +353,7 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
       id = Long.parseLong(tokenizer.nextToken());
       millis = Long.parseLong(tokenizer.nextToken());
       thread = tokenizer.nextToken();
-      line = tokenizer.nextToken("").substring(1);
+      message = tokenizer.nextToken("").substring(1);
     }
 
     public long getID()
@@ -314,15 +371,15 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
       return thread;
     }
 
-    public String getLine()
+    public String getMessage()
     {
-      return line;
+      return message;
     }
 
     @Override
     public String toString()
     {
-      return id + TAB + millis + TAB + thread + TAB + line;
+      return id + TAB + millis + TAB + thread + TAB + message;
     }
   }
 }

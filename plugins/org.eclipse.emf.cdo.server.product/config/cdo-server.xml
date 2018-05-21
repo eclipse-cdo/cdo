@@ -46,6 +46,7 @@
 			<activityLog type="rolling">
         <property name="file" value="/develop/cdo-master/repo1-activities"/>
         <property name="size" value="100000000"/>
+        <property name="append" value="true"/>
 			</activityLog>
     -->
 

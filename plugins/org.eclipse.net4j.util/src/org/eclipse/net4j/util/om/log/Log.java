@@ -16,5 +16,5 @@ package org.eclipse.net4j.util.om.log;
  */
 public interface Log
 {
-  public void log(String line);
+  public void log(String message);
 }

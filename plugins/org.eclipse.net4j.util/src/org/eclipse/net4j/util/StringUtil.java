@@ -291,6 +291,57 @@ public final class StringUtil
     return count;
   }
 
+  /**
+   * @since 3.8
+   */
+  public static String translate(String str, String from, String to)
+  {
+    int length = str == null ? 0 : str.length();
+    if (length == 0)
+    {
+      return str;
+    }
+
+    int fromLength = from.length();
+    int toLength = to.length();
+
+    if (fromLength == 0)
+    {
+      return str;
+    }
+
+    if (fromLength > toLength)
+    {
+      throw new IllegalArgumentException("'from' is longer than 'to'");
+    }
+
+    StringBuilder builder = null;
+    for (int i = 0; i < length; i++)
+    {
+      char c = str.charAt(i);
+
+      int pos = from.indexOf(c);
+      if (pos != -1)
+      {
+        c = to.charAt(pos);
+
+        if (builder == null)
+        {
+          builder = new StringBuilder(str);
+        }
+
+        builder.setCharAt(i, c);
+      }
+    }
+
+    if (builder == null)
+    {
+      return str;
+    }
+
+    return builder.toString();
+  }
+
   public static boolean isEmpty(String str)
   {
     return ObjectUtil.isEmpty(str);

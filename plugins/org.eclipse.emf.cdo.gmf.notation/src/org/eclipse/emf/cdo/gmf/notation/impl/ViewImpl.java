@@ -721,7 +721,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
     boolean persistedChildrenSet = eIsSet(NotationPackage.VIEW__PERSISTED_CHILDREN);
     boolean transientChildrenSet = eIsSet(NotationPackage.VIEW__TRANSIENT_CHILDREN);
 
-    if (persistedChildrenSet && transientChildrenSet)
+    if (!persistedChildrenSet && !transientChildrenSet)
     {
       return ECollections.EMPTY_ELIST;
     }

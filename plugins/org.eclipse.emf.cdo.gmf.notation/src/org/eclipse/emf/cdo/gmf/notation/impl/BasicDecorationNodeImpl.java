@@ -499,7 +499,7 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     boolean persistedChildrenSet = eIsSet(NotationPackage.VIEW__PERSISTED_CHILDREN);
     boolean transientChildrenSet = eIsSet(NotationPackage.VIEW__TRANSIENT_CHILDREN);
 
-    if (persistedChildrenSet && transientChildrenSet)
+    if (!persistedChildrenSet && !transientChildrenSet)
     {
       return ECollections.EMPTY_ELIST;
     }

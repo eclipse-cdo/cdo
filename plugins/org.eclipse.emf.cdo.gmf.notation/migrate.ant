@@ -56,7 +56,7 @@
 		  Remove all 'NOT_CDO' markers from the source code to cause regeneration of a 
 		  few methods that must be handwritten in pure GMF only.
 		-->
-		<delete failonerror="true" includeemptydirs="true">
+		<delete failonerror="false" includeemptydirs="true">
 			<fileset dir="${notation.tmp}">
 				<include name="**" />
 			</fileset>

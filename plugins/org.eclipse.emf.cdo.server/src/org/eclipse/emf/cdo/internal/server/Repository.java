@@ -801,7 +801,7 @@ public class Repository extends Container<Object> implements InternalRepository,
 
             if (unchunked)
             {
-              for (int i = chunkEnd + 1; i < size; i++)
+              for (int i = chunkEnd; i < size; i++)
               {
                 if (list.get(i) == InternalCDOList.UNINITIALIZED)
                 {

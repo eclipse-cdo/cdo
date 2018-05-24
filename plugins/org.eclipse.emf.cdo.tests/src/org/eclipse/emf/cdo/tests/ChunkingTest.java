@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Bernd Fuhrmann - testEnsureChunk for bug 502932
  */
 package org.eclipse.emf.cdo.tests;
 
@@ -409,5 +410,46 @@ public class ChunkingTest extends AbstractCDOTest
     category.setName(name);
     company.getCategories().add(category);
     return category;
+  }
+
+  /**
+   * Bug 502932.
+   */
+  @Requires("DB")
+  public void testEnsureChunk() throws Exception
+  {
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+      Company company1 = getModel1Factory().createCompany();
+      company1.setName("company1");
+      resource.getContents().add(company1);
+
+      Company company2 = getModel1Factory().createCompany();
+      company2.setName("company2");
+      resource.getContents().add(company2);
+      for (int i = 0; i < 3000; i++)
+      {
+        Customer customer = getModel1Factory().createCustomer();
+        customer.setName("customer" + i);
+        company2.getCustomers().add(customer);
+      }
+
+      transaction.commit();
+      session.close();
+    }
+
+    clearCache(getRepository().getRevisionManager());
+
+    CDOSession session = openSession();
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(1, 10));
+    CDOView view = session.openView();
+    CDOResource resource = view.getResource(getResourcePath("/test1"));
+
+    Company company1 = (Company)resource.getContents().get(0);
+    Company company2 = (Company)resource.getContents().get(1);
+    company1.getCustomers();
+    company2.getCustomers().get(1);
   }
 }

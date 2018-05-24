@@ -729,7 +729,7 @@ public final class EMFUtil
 
     private boolean demandLoading;
 
-    ExtResourceSet(boolean delegating, boolean demandLoading)
+    public ExtResourceSet(boolean delegating, boolean demandLoading)
     {
       this.delegating = delegating;
       this.demandLoading = demandLoading;

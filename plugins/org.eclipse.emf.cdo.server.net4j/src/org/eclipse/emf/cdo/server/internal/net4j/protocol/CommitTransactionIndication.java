@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.model.EMFUtil.ExtResourceSet;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
@@ -51,7 +52,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
 import java.io.IOException;
@@ -474,16 +474,9 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
 
   private ResourceSet createResourceSet(InternalCDOPackageRegistry packageRegistry)
   {
-    ResourceSet resourceSet = new ResourceSetImpl()
-    {
-      @Override
-      protected void demandLoad(Resource resource) throws IOException
-      {
-        // Do nothing: we don't want this ResourceSet to attempt demand-loads.
-      }
-    };
-
     Resource.Factory resourceFactory = new EcoreResourceFactoryImpl();
+
+    ResourceSet resourceSet = new ExtResourceSet(true, false);
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory); //$NON-NLS-1$
     resourceSet.setPackageRegistry(packageRegistry);
     return resourceSet;

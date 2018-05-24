@@ -1,10 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.net4j" version="2">
+    <resource path="src/org/eclipse/internal/net4j/TransportConfig.java" type="org.eclipse.internal.net4j.TransportConfig">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="ITransportConfig"/>
+                <message_argument value="TransportConfig"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/internal/net4j/buffer/Buffer.java" type="org.eclipse.internal.net4j.buffer.Buffer">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="InternalBuffer"/>
+                <message_argument value="Buffer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/internal/net4j/buffer/BufferProvider.java" type="org.eclipse.internal.net4j.buffer.BufferProvider$BufferProviderEvent$Provided">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="BufferProvidedEvent"/>
+                <message_argument value="Provided"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/internal/net4j/buffer/BufferProvider.java" type="org.eclipse.internal.net4j.buffer.BufferProvider$BufferProviderEvent$Retaining">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="BufferRetainingEvent"/>
+                <message_argument value="Retaining"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/connector/IConnector.java" type="org.eclipse.net4j.connector.IConnector">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="IChannelMultiplexer"/>
+                <message_argument value="IConnector"/>
+            </message_arguments>
+        </filter>
         <filter id="576778288">
             <message_arguments>
                 <message_argument value="IChannelMultiplexer"/>
                 <message_argument value="IConnector"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/connector/IConnectorStateEvent.java" type="org.eclipse.net4j.connector.IConnectorStateEvent">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="IConnectorEvent"/>
+                <message_argument value="IConnectorStateEvent"/>
             </message_arguments>
         </filter>
     </resource>
@@ -13,6 +59,89 @@
             <message_arguments>
                 <message_argument value="IConnector"/>
                 <message_argument value="IServerConnector"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/signal/SignalProtocol.java" type="org.eclipse.net4j.signal.SignalProtocol">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.signal.SignalProtocol"/>
+                <message_argument value="COMPRESSED_STRINGS_ACKNOWLEDGE_TIMEOUT"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.signal.SignalProtocol"/>
+                <message_argument value="SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/spi/net4j/Acceptor.java" type="org.eclipse.spi.net4j.Acceptor">
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="InternalAcceptor"/>
+                <message_argument value="Acceptor"/>
+                <message_argument value="IAcceptor"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/spi/net4j/Channel.java" type="org.eclipse.spi.net4j.Channel">
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="InternalChannel"/>
+                <message_argument value="Channel"/>
+                <message_argument value="IChannel"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/spi/net4j/Channel.java" type="org.eclipse.spi.net4j.Channel$SendQueue">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.spi.net4j.Channel.SendQueue"/>
+                <message_argument value="add(IBuffer)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.spi.net4j.Channel.SendQueue"/>
+                <message_argument value="remove()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/spi/net4j/Channel.java" type="org.eclipse.spi.net4j.Channel$SendQueueEventImpl">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="SendQueueEvent"/>
+                <message_argument value="SendQueueEventImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/spi/net4j/ChannelMultiplexer.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/spi/net4j/ChannelMultiplexer.java" type="org.eclipse.spi.net4j.ChannelMultiplexer">
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="InternalChannelMultiplexer"/>
+                <message_argument value="ChannelMultiplexer"/>
+                <message_argument value="IChannelMultiplexer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/spi/net4j/Connector.java" type="org.eclipse.spi.net4j.Connector">
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="InternalConnector"/>
+                <message_argument value="Connector"/>
+                <message_argument value="IConnector"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/spi/net4j/Connector.java" type="org.eclipse.spi.net4j.Connector$ConnectorStateEvent">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="IConnectorStateEvent"/>
+                <message_argument value="ConnectorStateEvent"/>
             </message_arguments>
         </filter>
     </resource>
@@ -25,6 +154,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/spi/net4j/InternalBuffer.java" type="org.eclipse.spi.net4j.InternalBuffer">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="IBuffer"/>
+                <message_argument value="InternalBuffer"/>
+            </message_arguments>
+        </filter>
         <filter id="576778288">
             <message_arguments>
                 <message_argument value="IBuffer"/>
@@ -33,6 +168,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/spi/net4j/InternalChannel.java" type="org.eclipse.spi.net4j.InternalChannel">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="IChannel"/>
+                <message_argument value="InternalChannel"/>
+            </message_arguments>
+        </filter>
         <filter id="576778288">
             <message_arguments>
                 <message_argument value="IChannel"/>
@@ -51,6 +192,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.spi.net4j.InternalChannelMultiplexer"/>
                 <message_argument value="CONTEXT_MULTIPLEXER"/>
+            </message_arguments>
+        </filter>
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="IChannelMultiplexer"/>
+                <message_argument value="InternalChannelMultiplexer"/>
             </message_arguments>
         </filter>
         <filter id="576778288">

@@ -34,6 +34,7 @@ import org.eclipse.net4j.signal.security.AuthenticationRequest;
 import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
@@ -49,11 +50,14 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CDOServerProtocol.class);
 
+  private static final boolean COMPRESS_PACKAGE_URIS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.protocol.compressPackageURIs",
+      !StringCompressor.BYPASS);
+
+  private StringIO packageURICompressor = COMPRESS_PACKAGE_URIS ? new StringCompressor(false) : StringIO.DIRECT;
+
   private long negotiationTimeout = DEFAULT_NEGOTIATION_TIMEOUT;
 
   private IRepositoryProvider repositoryProvider;
-
-  private StringIO packageURICompressor = StringCompressor.BYPASS ? StringIO.DIRECT : new StringCompressor(false);
 
   public CDOServerProtocol(IRepositoryProvider repositoryProvider)
   {
@@ -222,6 +226,17 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     {
       TRACER.trace("Session channel is inactive: " + this); //$NON-NLS-1$
     }
+  }
+
+  @Override
+  protected StringCompressor getStringCompressor()
+  {
+    if (COMPRESS_PACKAGE_URIS)
+    {
+      return (StringCompressor)packageURICompressor;
+    }
+
+    return super.getStringCompressor();
   }
 
   @Override

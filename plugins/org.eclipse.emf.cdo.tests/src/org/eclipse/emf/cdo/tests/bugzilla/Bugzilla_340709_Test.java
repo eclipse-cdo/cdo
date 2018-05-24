@@ -27,7 +27,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class Bugzilla_340709_Test extends AbstractCDOTest
 {
-  CountDownLatch latch = new CountDownLatch(1);
+  private transient CountDownLatch latch = new CountDownLatch(1);
 
   public void test() throws Exception
   {

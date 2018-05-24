@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.net4j.signal.AcknowledgeCompressedStringsIndication;
+import org.eclipse.net4j.signal.AcknowledgeCompressedStringsRequest;
 import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.IndicationWithMonitoring;
 import org.eclipse.net4j.signal.MonitorProgressIndication;
@@ -72,19 +74,14 @@ public class Bugzilla_441136_Test extends AbstractCDOTest
     Company company = getModel1Factory().createCompany();
     resource.getContents().add(company);
     transaction.commit(useMonitor ? new NullProgressMonitor() : null);
-    String assertMessage = " differents kinds of requests should have been sent, QueryRequest, QueryCancel, LoadRevisionsRequest and CommitTransactionRequest";
+
+    signalCounter.removeCountFor(AcknowledgeCompressedStringsRequest.class);
+    signalCounter.removeCountFor(AcknowledgeCompressedStringsIndication.class);
+
     int nbExpectedCalls;
-    if (!useMonitor)
-    {
-      // QueryRequest, QueryCancel are used to get the resourcePath
-      nbExpectedCalls = 4;
-      assertEquals(nbExpectedCalls + assertMessage, nbExpectedCalls, signalCounter.getCountForSignalTypes());
-      assertNotSame(0, signalCounter.getCountFor(QueryRequest.class));
-      assertNotSame(0, signalCounter.getCountFor(QueryCancelRequest.class));
-      assertNotSame(0, signalCounter.getCountFor(LoadRevisionsRequest.class));
-      assertNotSame(0, signalCounter.getCountFor(CommitTransactionRequest.class));
-    }
-    else
+    String assertMessage = " differents kinds of requests should have been sent, QueryRequest, QueryCancel, LoadRevisionsRequest and CommitTransactionRequest";
+
+    if (useMonitor)
     {
       nbExpectedCalls = 5;
       assertMessage += " and MonitorProgressIndications should have been received";
@@ -96,6 +93,16 @@ public class Bugzilla_441136_Test extends AbstractCDOTest
       assertNotSame(0, signalCounter.getCountFor(LoadRevisionsRequest.class));
       assertNotSame(0, signalCounter.getCountFor(CommitTransactionRequest.class));
       assertNotSame(0, signalCounter.getCountFor(MonitorProgressIndication.class));
+    }
+    else
+    {
+      // QueryRequest, QueryCancel are used to get the resourcePath
+      nbExpectedCalls = 4;
+      assertEquals(nbExpectedCalls + assertMessage, nbExpectedCalls, signalCounter.getCountForSignalTypes());
+      assertNotSame(0, signalCounter.getCountFor(QueryRequest.class));
+      assertNotSame(0, signalCounter.getCountFor(QueryCancelRequest.class));
+      assertNotSame(0, signalCounter.getCountFor(LoadRevisionsRequest.class));
+      assertNotSame(0, signalCounter.getCountFor(CommitTransactionRequest.class));
     }
 
     protocol.removeListener(signalCounter);

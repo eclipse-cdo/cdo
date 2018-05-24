@@ -11,12 +11,13 @@
 package org.eclipse.net4j.util.io;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -28,7 +29,7 @@ public class StringCompressor implements StringIO
   /**
    * @since 3.0
    */
-  public static boolean BYPASS = false;
+  public static boolean BYPASS = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.util.io.StringCompressor.BYPASS");
 
   private static final int NULL_ID = 0;
 
@@ -56,7 +57,9 @@ public class StringCompressor implements StringIO
 
   private Map<Integer, String> idToString = new HashMap<Integer, String>();
 
-  private List<Integer> pendingAcknowledgements = new ArrayList<Integer>();
+  private Collection<Integer> pendingAcknowledgements = createAcknowledgementCollection();
+
+  private long lastAcknowledgementCheck;
 
   /**
    * Creates a StringCompressor instance.
@@ -88,8 +91,9 @@ public class StringCompressor implements StringIO
     }
 
     ID id;
-    List<Integer> acknowledgements = null;
+    Collection<Integer> acknowledgements = null;
     boolean stringFollows = false;
+
     synchronized (this)
     {
       id = stringToID.get(string);
@@ -107,10 +111,11 @@ public class StringCompressor implements StringIO
         stringFollows = true;
       }
 
+      lastAcknowledgementCheck = System.currentTimeMillis();
       if (!pendingAcknowledgements.isEmpty())
       {
         acknowledgements = pendingAcknowledgements;
-        pendingAcknowledgements = new ArrayList<Integer>();
+        pendingAcknowledgements = createAcknowledgementCollection();
       }
     }
 
@@ -125,16 +130,7 @@ public class StringCompressor implements StringIO
         writeString(out, string);
       }
 
-      if (acknowledgements != null)
-      {
-        for (int ack : acknowledgements)
-        {
-          writeByte(out, ACK_FOLLOWS);
-          writeInt(out, ack);
-        }
-      }
-
-      writeByte(out, NOTHING_FOLLOWS);
+      writeAcknowledgements(out, acknowledgements);
     }
     else
     {
@@ -156,7 +152,7 @@ public class StringCompressor implements StringIO
     }
 
     String string = null;
-    List<Integer> acks = null;
+    Collection<Integer> acks = null;
     if (id == INFO_FOLLOWS)
     {
       id = readInt(in);
@@ -178,7 +174,7 @@ public class StringCompressor implements StringIO
         case ACK_FOLLOWS:
           if (acks == null)
           {
-            acks = new ArrayList<Integer>();
+            acks = createAcknowledgementCollection();
           }
 
           acks.add(readInt(in));
@@ -192,7 +188,8 @@ public class StringCompressor implements StringIO
 
     synchronized (this)
     {
-      acknowledge(acks);
+      processAcknowledgements(acks);
+
       if (string != null)
       {
         stringToID.put(string, new ID(id));
@@ -212,29 +209,90 @@ public class StringCompressor implements StringIO
     return string;
   }
 
-  @Override
-  public String toString()
+  /**
+   * @since 3.8
+   */
+  public Collection<Integer> getPendingAcknowledgements(long timeout)
   {
-    return MessageFormat.format("StringCompressor[client={0}]", client); //$NON-NLS-1$
+    Collection<Integer> acknowledgements = null;
+
+    synchronized (this)
+    {
+      long now = System.currentTimeMillis();
+      if (lastAcknowledgementCheck + timeout < now)
+      {
+        lastAcknowledgementCheck = now;
+        if (!pendingAcknowledgements.isEmpty())
+        {
+          acknowledgements = pendingAcknowledgements;
+          pendingAcknowledgements = createAcknowledgementCollection();
+        }
+      }
+    }
+
+    return acknowledgements;
   }
 
-  private void acknowledge(List<Integer> acks)
+  /**
+   * @since 3.8
+   */
+  public void writeAcknowledgements(ExtendedDataOutput out, Collection<Integer> acknowledgements) throws IOException
   {
-    if (acks != null)
+    if (acknowledgements != null)
     {
-      for (int value : acks)
+      for (int ack : acknowledgements)
       {
-        String string = idToString.get(value);
-        if (string != null)
+        writeByte(out, ACK_FOLLOWS);
+        writeInt(out, ack);
+      }
+    }
+
+    writeByte(out, NOTHING_FOLLOWS);
+  }
+
+  /**
+   * @since 3.8
+   */
+  public Collection<Integer> readAcknowledgements(ExtendedDataInput in) throws IOException
+  {
+    Collection<Integer> acknowledgements = createAcknowledgementCollection();
+    while (in.readByte() == ACK_FOLLOWS)
+    {
+      acknowledgements.add(in.readInt());
+    }
+
+    return acknowledgements;
+  }
+
+  /**
+   * @since 3.8
+   */
+  public void processAcknowledgements(Collection<Integer> acknowledgements)
+  {
+    if (acknowledgements != null)
+    {
+      synchronized (this)
+      {
+        for (int value : acknowledgements)
         {
-          ID id = stringToID.get(string);
-          if (id != null)
+          String string = idToString.get(value);
+          if (string != null)
           {
-            id.setAcknowledged();
+            ID id = stringToID.get(string);
+            if (id != null)
+            {
+              id.setAcknowledged();
+            }
           }
         }
       }
     }
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("StringCompressor[client={0}]", client); //$NON-NLS-1$
   }
 
   private void writeByte(ExtendedDataOutput out, byte value) throws IOException
@@ -373,6 +431,11 @@ public class StringCompressor implements StringIO
     }
 
     IOUtil.OUT().println(msg);
+  }
+
+  private static Collection<Integer> createAcknowledgementCollection()
+  {
+    return new HashSet<Integer>();
   }
 
   /**

@@ -24,7 +24,9 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 import org.eclipse.net4j.util.io.StreamWrapperChain;
+import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -37,6 +39,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,6 +54,12 @@ import java.util.Map;
  */
 public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> implements ISignalProtocol<INFRA_STRUCTURE>
 {
+  /**
+   * @since 4.7
+   */
+  public static final long COMPRESSED_STRINGS_ACKNOWLEDGE_TIMEOUT = OMPlatform.INSTANCE
+      .getProperty("org.eclipse.net4j.signal.COMPRESSED_STRINGS_ACKNOWLEDGE_TIMEOUT", 5000L);
+
   /**
    * @since 2.0
    */
@@ -70,6 +79,11 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
    * @since 4.1
    */
   public static final short SIGNAL_SET_TIMEOUT = -4;
+
+  /**
+   * @since 4.7
+   */
+  public static final short SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS = -5;
 
   private static final int MIN_CORRELATION_ID = 1;
 
@@ -359,7 +373,12 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     case SIGNAL_SET_TIMEOUT:
       return new SetTimeoutIndication(this);
 
+    case SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS:
+      return new AcknowledgeCompressedStringsIndication(this);
+
     default:
+      checkStringCompressorAcknowledgements();
+
       SignalReactor signal = createSignalReactor(signalID);
       if (signal == null)
       {
@@ -387,6 +406,14 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   protected boolean isSendingTimeoutChanges()
   {
     return true;
+  }
+
+  /**
+   * @since 4.7
+   */
+  protected StringCompressor getStringCompressor()
+  {
+    return null;
   }
 
   synchronized int getNextCorrelationID()
@@ -463,6 +490,8 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
     fireSignalScheduledEvent(signalActor);
     signalActor.runSync();
+
+    checkStringCompressorAcknowledgements();
   }
 
   void stopSignal(Signal signal, Exception exception)
@@ -543,6 +572,27 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
       }
     }
     return timeoutSent;
+  }
+
+  private void checkStringCompressorAcknowledgements()
+  {
+    StringCompressor compressor = getStringCompressor();
+    if (compressor != null)
+    {
+      Collection<Integer> acknowledgements = compressor.getPendingAcknowledgements(COMPRESSED_STRINGS_ACKNOWLEDGE_TIMEOUT);
+
+      if (acknowledgements != null)
+      {
+        try
+        {
+          new AcknowledgeCompressedStringsRequest(this, acknowledgements).sendAsync();
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
+    }
   }
 
   private void fireSignalScheduledEvent(Signal signal)

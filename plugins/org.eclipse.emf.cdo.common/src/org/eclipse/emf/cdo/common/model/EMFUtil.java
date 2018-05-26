@@ -729,6 +729,9 @@ public final class EMFUtil
 
     private boolean demandLoading;
 
+    /**
+     * @since 4.7
+     */
     public ExtResourceSet(boolean delegating, boolean demandLoading)
     {
       this.delegating = delegating;

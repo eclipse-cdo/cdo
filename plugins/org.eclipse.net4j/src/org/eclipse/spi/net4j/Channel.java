@@ -86,17 +86,17 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
 
   public Location getLocation()
   {
-    return channelMultiplexer.getLocation();
+    return channelMultiplexer == null ? null : channelMultiplexer.getLocation();
   }
 
   public boolean isClient()
   {
-    return channelMultiplexer.isClient();
+    return channelMultiplexer == null ? false : channelMultiplexer.isClient();
   }
 
   public boolean isServer()
   {
-    return channelMultiplexer.isServer();
+    return channelMultiplexer == null ? false : channelMultiplexer.isServer();
   }
 
   public IChannelMultiplexer getMultiplexer()
@@ -441,18 +441,10 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
     }
 
     @Override
-    public boolean add(IBuffer o)
-    {
-      super.add(o);
-      added();
-      return true;
-    }
-
-    @Override
     public boolean offer(IBuffer o)
     {
       super.offer(o);
-      added();
+      added(o);
       return true;
     }
 
@@ -462,19 +454,7 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
       IBuffer result = super.poll();
       if (result != null)
       {
-        removed();
-      }
-
-      return result;
-    }
-
-    @Override
-    public IBuffer remove()
-    {
-      IBuffer result = super.remove();
-      if (result != null)
-      {
-        removed();
+        removed(result);
       }
 
       return result;
@@ -486,29 +466,29 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
       boolean result = super.remove(o);
       if (result)
       {
-        removed();
+        removed((IBuffer)o);
       }
 
       return result;
     }
 
-    private void added()
+    private void added(IBuffer buffer)
     {
       int queueSize = size.incrementAndGet();
       IListener[] listeners = getListeners();
       if (listeners != null)
       {
-        fireEvent(new SendQueueEventImpl(Type.ENQUEUED, queueSize), listeners);
+        fireEvent(new SendQueueEventImpl(Channel.this, Type.ENQUEUED, queueSize), listeners);
       }
     }
 
-    private void removed()
+    private void removed(IBuffer buffer)
     {
       int queueSize = size.decrementAndGet();
       IListener[] listeners = getListeners();
       if (listeners != null)
       {
-        fireEvent(new SendQueueEventImpl(Type.DEQUEUED, queueSize), listeners);
+        fireEvent(new SendQueueEventImpl(Channel.this, Type.DEQUEUED, queueSize), listeners);
       }
     }
   }
@@ -516,17 +496,17 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   /**
    * @author Eike Stepper
    */
-  private final class SendQueueEventImpl extends Event implements SendQueueEvent
+  private static final class SendQueueEventImpl extends Event implements SendQueueEvent
   {
     private static final long serialVersionUID = 1L;
 
-    private Type type;
+    private final Type type;
 
     private final int queueSize;
 
-    private SendQueueEventImpl(Type type, int queueSize)
+    private SendQueueEventImpl(Channel channel, Type type, int queueSize)
     {
-      super(Channel.this);
+      super(channel);
       this.type = type;
       this.queueSize = queueSize;
     }

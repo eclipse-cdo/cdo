@@ -143,6 +143,7 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.net4j.sdk</module>
     <module>../../../plugins/org.eclipse.net4j.tcp</module>
     <module>../../../plugins/org.eclipse.net4j.tests</module>
+    <module>../../../plugins/org.eclipse.net4j.trace</module>
     <module>../../../plugins/org.eclipse.net4j.ui</module>
     <module>../../../plugins/org.eclipse.net4j.ui.shared</module>
     <module>../../../plugins/org.eclipse.net4j.util</module>

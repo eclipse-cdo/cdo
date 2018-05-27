@@ -71,18 +71,16 @@ public class SSLBuffer extends Buffer
       buf.flip();
 
       int limit = buf.limit();
-      ByteBuffer byteBuffer = getByteBuffer();
-
-      int capacity = byteBuffer.capacity();
+      int capacity = getCapacity();
       limit = limit > capacity ? capacity : limit;
 
-      byteBuffer.put(buf.array(), 0, limit);
+      put(buf.array(), 0, limit);
       buf.position(limit);
       buf.compact();
-      byteBuffer.flip();
+      flip();
 
-      setChannelID(byteBuffer.getShort());
-      short payloadSize = byteBuffer.getShort();
+      setChannelID(getShort());
+      short payloadSize = getShort();
 
       if (payloadSize < 0)
       {
@@ -92,17 +90,17 @@ public class SSLBuffer extends Buffer
 
       payloadSize -= MAKE_PAYLOAD_SIZE_NON_ZERO;
 
-      byteBuffer.position(IBuffer.HEADER_SIZE);
+      setPosition(IBuffer.HEADER_SIZE);
       setState(BufferState.READING_HEADER);
 
-      byteBuffer.compact();
-      byteBuffer.limit(payloadSize);
+      compact();
+      setLimit(payloadSize);
       setState(BufferState.READING_BODY);
 
-      byteBuffer.flip();
+      flip();
       setState(BufferState.GETTING);
 
-      return byteBuffer;
+      return getByteBuffer();
     }
     else if (readSize < 0)
     {
@@ -141,7 +139,6 @@ public class SSLBuffer extends Buffer
         throw new IllegalStateException(toString());
       }
 
-      ByteBuffer byteBuffer = getByteBuffer();
       if (state == BufferState.PUTTING)
       {
         if (getChannelID() == NO_CHANNEL)
@@ -149,7 +146,7 @@ public class SSLBuffer extends Buffer
           throw new IllegalStateException("channelID == NO_CHANNEL"); //$NON-NLS-1$
         }
 
-        int payloadSize = byteBuffer.position() - IBuffer.HEADER_SIZE + MAKE_PAYLOAD_SIZE_NON_ZERO;
+        int payloadSize = getPosition() - IBuffer.HEADER_SIZE + MAKE_PAYLOAD_SIZE_NON_ZERO;
         if (isEOS())
         {
           payloadSize = -payloadSize;
@@ -161,14 +158,14 @@ public class SSLBuffer extends Buffer
               + (isEOS() ? " (EOS)" : "") + StringUtil.NL + formatContent(false)); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
-        byteBuffer.flip();
-        byteBuffer.putShort(getChannelID());
-        byteBuffer.putShort((short)payloadSize);
-        byteBuffer.position(0);
+        flip();
+        putShort(getChannelID());
+        putShort((short)payloadSize);
+        setPosition(0);
         setState(BufferState.WRITING);
       }
 
-      sslEngineManager.getAppSendBuf().put(byteBuffer);
+      sslEngineManager.getAppSendBuf().put(getByteBuffer());
       sslEngineManager.write(socketChannel);
 
       if (sslEngineManager.getPacketSendBuf().position() > 0)

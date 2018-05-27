@@ -8,11 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.util;
+package org.eclipse.net4j.util.tests;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import java.util.ArrayList;
 import java.util.List;

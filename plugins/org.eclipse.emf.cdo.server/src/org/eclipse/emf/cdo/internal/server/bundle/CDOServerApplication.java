@@ -58,11 +58,16 @@ public class CDOServerApplication extends OSGiApplication
     return (RepositoryConfigurator)container.getElement(RepositoryConfigurator.Factory.PRODUCT_GROUP, type, description);
   }
 
+  protected IManagedContainer getApplicationContainer()
+  {
+    return getContainer();
+  }
+
   @Override
   protected void doStart() throws Exception
   {
     super.doStart();
-    IManagedContainer container = getContainer();
+    IManagedContainer container = getApplicationContainer();
 
     OM.LOG.info(Messages.getString("CDOServerApplication.1")); //$NON-NLS-1$
     File configFile = OMPlatform.INSTANCE.getConfigFile("cdo-server.xml"); //$NON-NLS-1$
@@ -115,6 +120,9 @@ public class CDOServerApplication extends OSGiApplication
         LifecycleUtil.deactivate(repository);
       }
     }
+
+    IManagedContainer container = getApplicationContainer();
+    container.deactivate();
 
     OM.LOG.info(Messages.getString("CDOServerApplication.8")); //$NON-NLS-1$
     super.doStop();

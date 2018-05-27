@@ -17,7 +17,7 @@ import org.eclipse.net4j.util.tests.ExecutorWorkSerializerTest;
 import org.eclipse.net4j.util.tests.ExpectedIOTest;
 import org.eclipse.net4j.util.tests.ExtendedIOTest;
 import org.eclipse.net4j.util.tests.MultiMapTest;
-import org.eclipse.net4j.util.tests.ReferenceValueMapTest;
+import org.eclipse.net4j.util.tests.RollingLogTest;
 import org.eclipse.net4j.util.tests.SecurityTest;
 import org.eclipse.net4j.util.tests.SortedFileMapTest;
 import org.eclipse.net4j.util.tests.StringCompressorTest;
@@ -39,7 +39,6 @@ public class AllTests
     suite.addTestSuite(MultiMapTest.class);
     suite.addTestSuite(SortedFileMapTest.class);
     suite.addTestSuite(SynchronizingCorrelatorTest.class);
-    suite.addTestSuite(ReferenceValueMapTest.class);
     suite.addTestSuite(BufferPoolTest.class);
     suite.addTestSuite(ExtendedIOTest.class);
     suite.addTestSuite(StringCompressorTest.class);
@@ -54,6 +53,7 @@ public class AllTests
     suite.addTestSuite(SecurityTest.class);
     suite.addTestSuite(ExecutorWorkSerializerTest.class);
     suite.addTestSuite(ExpectedIOTest.class);
+    suite.addTestSuite(RollingLogTest.class);
 
     // Bugzillas
     suite.addTestSuite(Bugzilla_241463_Test.JVM.class);

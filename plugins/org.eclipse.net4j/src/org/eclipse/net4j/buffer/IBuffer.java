@@ -281,4 +281,74 @@ public interface IBuffer
    * @since 2.0
    */
   public void setErrorHandler(IErrorHandler errorHandler);
+
+  /**
+   * @since 4.7
+   */
+  public void compact();
+
+  /**
+   * @since 4.7
+   */
+  public int getPosition();
+
+  /**
+   * @since 4.7
+   */
+  public void setPosition(int position);
+
+  /**
+   * @since 4.7
+   */
+  public int getLimit();
+
+  /**
+   * @since 4.7
+   */
+  public void setLimit(int limit);
+
+  /**
+   * @since 4.7
+   */
+  public boolean hasRemaining();
+
+  /**
+   * @since 4.7
+   */
+  public byte get();
+
+  /**
+   * @since 4.7
+   */
+  public void get(byte[] dst);
+
+  /**
+   * @since 4.7
+   */
+  public short getShort();
+
+  /**
+   * @since 4.7
+   */
+  public int getInt();
+
+  /**
+   * @since 4.7
+   */
+  public String getString();
+
+  /**
+   * @since 4.7
+   */
+  public void put(byte b);
+
+  /**
+   * @since 4.7
+   */
+  public void put(byte[] src, int offset, int length);
+
+  /**
+   * @since 4.7
+   */
+  public void putShort(short value);
 }

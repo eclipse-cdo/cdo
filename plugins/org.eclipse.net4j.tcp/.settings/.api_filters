@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.net4j.tcp" version="2">
+    <resource path="src/org/eclipse/net4j/internal/tcp/ControlChannel.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/ControlChannel.java" type="org.eclipse.net4j.internal.tcp.ControlChannel">
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="TCPConnector"/>
+                <message_argument value="ControlChannel"/>
+                <message_argument value="getConnector()"/>
+            </message_arguments>
+        </filter>
+        <filter id="643850349">
+            <message_arguments>
+                <message_argument value="TCPConnector"/>
+                <message_argument value="ControlChannel"/>
+                <message_argument value="ControlChannel(TCPConnector)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/TCPAcceptor.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/TCPAcceptor.java" type="org.eclipse.net4j.internal.tcp.TCPAcceptor">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="ITCPAcceptor"/>
+                <message_argument value="TCPAcceptor"/>
+            </message_arguments>
+        </filter>
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="ITCPPassiveSelectorListener"/>
+                <message_argument value="TCPAcceptor"/>
+            </message_arguments>
+        </filter>
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="TCPSelector"/>
+                <message_argument value="TCPAcceptor"/>
+                <message_argument value="getSelector()"/>
+            </message_arguments>
+        </filter>
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="TCPSelector"/>
+                <message_argument value="TCPAcceptor"/>
+                <message_argument value="setSelector(TCPSelector)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/TCPAcceptorFactory.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/TCPAcceptorFactory.java" type="org.eclipse.net4j.internal.tcp.TCPAcceptorFactory">
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="TCPAcceptor"/>
+                <message_argument value="TCPAcceptorFactory"/>
+                <message_argument value="create(String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/TCPConnector.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/TCPConnector.java" type="org.eclipse.net4j.internal.tcp.TCPConnector">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="ITCPActiveSelectorListener"/>
+                <message_argument value="TCPConnector"/>
+            </message_arguments>
+        </filter>
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="ITCPConnector"/>
+                <message_argument value="TCPConnector"/>
+            </message_arguments>
+        </filter>
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="ControlChannel"/>
+                <message_argument value="TCPConnector"/>
+                <message_argument value="getControlChannel()"/>
+            </message_arguments>
+        </filter>
+        <filter id="643846161">
+            <message_arguments>
+                <message_argument value="ControlChannel"/>
+                <message_argument value="TCPConnector"/>
+                <message_argument value="setControlChannel(ControlChannel)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/TCPConnector.java" type="org.eclipse.net4j.internal.tcp.TCPConnector$TCPNegotiationContext">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="ITCPNegotiationContext"/>
+                <message_argument value="TCPNegotiationContext"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/TCPConnectorFactory.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/TCPConnectorFactory.java" type="org.eclipse.net4j.internal.tcp.TCPConnectorFactory">
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="TCPConnector"/>
+                <message_argument value="TCPConnectorFactory"/>
+                <message_argument value="create(String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/TCPSelector.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/TCPSelector.java" type="org.eclipse.net4j.internal.tcp.TCPSelector">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="ITCPSelector"/>
+                <message_argument value="TCPSelector"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/TCPSelectorFactory.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/TCPSelectorFactory.java" type="org.eclipse.net4j.internal.tcp.TCPSelectorFactory">
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="TCPSelector"/>
+                <message_argument value="TCPSelectorFactory"/>
+                <message_argument value="create(String)"/>
+            </message_arguments>
+        </filter>
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="TCPSelector"/>
+                <message_argument value="TCPSelectorFactory"/>
+                <message_argument value="get(IManagedContainer, String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/TCPServerConnector.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/TCPServerConnector.java" type="org.eclipse.net4j.internal.tcp.TCPServerConnector">
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="TCPAcceptor"/>
+                <message_argument value="TCPServerConnector"/>
+                <message_argument value="getAcceptor()"/>
+            </message_arguments>
+        </filter>
+        <filter id="643850349">
+            <message_arguments>
+                <message_argument value="TCPAcceptor"/>
+                <message_argument value="TCPServerConnector"/>
+                <message_argument value="TCPServerConnector(TCPAcceptor)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/ssl/SSLBuffer.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/ssl/SSLBuffer.java" type="org.eclipse.net4j.internal.tcp.ssl.SSLBuffer">
+        <filter id="643850349">
+            <message_arguments>
+                <message_argument value="SSLEngineManager"/>
+                <message_argument value="SSLBuffer"/>
+                <message_argument value="SSLBuffer(IBufferProvider, short, SSLEngineManager)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/ssl/SSLBufferFactory.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/ssl/SSLBufferFactory.java" type="org.eclipse.net4j.internal.tcp.ssl.SSLBufferFactory">
+        <filter id="643850349">
+            <message_arguments>
+                <message_argument value="SSLEngineManager"/>
+                <message_argument value="SSLBufferFactory"/>
+                <message_argument value="SSLBufferFactory(SSLEngineManager)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/ssl/SSLServerConnector.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/net4j/internal/tcp/ssl/SSLServerConnector.java" type="org.eclipse.net4j.internal.tcp.ssl.SSLServerConnector">
+        <filter id="643842064">
+            <message_arguments>
+                <message_argument value="SSLAcceptor"/>
+                <message_argument value="SSLServerConnector"/>
+                <message_argument value="getAcceptor()"/>
+            </message_arguments>
+        </filter>
+        <filter id="643850349">
+            <message_arguments>
+                <message_argument value="SSLAcceptor"/>
+                <message_argument value="SSLServerConnector"/>
+                <message_argument value="SSLServerConnector(SSLAcceptor)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

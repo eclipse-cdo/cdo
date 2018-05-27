@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.util;
+package org.eclipse.net4j.util.tests;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.event.IEvent;

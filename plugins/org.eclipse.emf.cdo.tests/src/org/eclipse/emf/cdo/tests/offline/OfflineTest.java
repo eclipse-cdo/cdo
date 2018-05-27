@@ -31,13 +31,13 @@ import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model3.File;
 import org.eclipse.emf.cdo.tests.model3.Image;
-import org.eclipse.emf.cdo.tests.util.TestListener;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.monitor.NotifyingMonitor.ProgressEvent;
+import org.eclipse.net4j.util.tests.TestListener;
 
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 

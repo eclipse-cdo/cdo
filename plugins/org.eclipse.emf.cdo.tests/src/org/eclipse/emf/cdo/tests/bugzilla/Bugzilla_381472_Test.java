@@ -29,8 +29,6 @@ import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
-import org.eclipse.emf.cdo.tests.util.TestListener;
-import org.eclipse.emf.cdo.tests.util.TestListener.EventAssertion;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.IContainerDelta;
@@ -39,6 +37,8 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.tests.TestListener;
+import org.eclipse.net4j.util.tests.TestListener.EventAssertion;
 
 import java.util.Collections;
 import java.util.HashMap;

@@ -22,7 +22,6 @@ import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
 
 /**
  * An {@link OutputStream output stream} that fragments the written byte sequence into fixed-sized {@link IBuffer
@@ -114,8 +113,7 @@ public class BufferOutputStream extends OutputStream
           + (b >= 32 ? " " + Character.toString((char)b) : "")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    ByteBuffer buffer = currentBuffer.getByteBuffer();
-    buffer.put((byte)b);
+    currentBuffer.put((byte)b);
   }
 
   /**
@@ -140,7 +138,7 @@ public class BufferOutputStream extends OutputStream
    */
   private void flushIfFilled() throws IOException
   {
-    if (currentBuffer != null && !currentBuffer.getByteBuffer().hasRemaining())
+    if (currentBuffer != null && !currentBuffer.hasRemaining())
     {
       flushPrivate();
     }

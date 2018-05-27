@@ -30,6 +30,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
 import java.text.MessageFormat;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Eike Stepper
@@ -45,9 +46,9 @@ public class Buffer implements InternalBuffer
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_BUFFER, Buffer.class);
 
-  private static int lastID;
+  private static AtomicInteger lastID = new AtomicInteger();
 
-  private int id = ++lastID;
+  private int id = lastID.incrementAndGet();
 
   private IErrorHandler errorHandler;
 
@@ -65,6 +66,11 @@ public class Buffer implements InternalBuffer
   {
     bufferProvider = provider;
     byteBuffer = ByteBuffer.allocateDirect(capacity);
+  }
+
+  public final int getID()
+  {
+    return id;
   }
 
   public boolean isEOS()
@@ -223,16 +229,16 @@ public class Buffer implements InternalBuffer
         {
           if (payloadSize < 0)
           {
-            throw new IllegalArgumentException("New limit " + payloadSize + " is < 0" + (isEOS() ? " (EOS)" : ""), ex);
+            throw new IllegalArgumentException(toString() + ": New limit " + payloadSize + " is < 0" + (isEOS() ? " (EOS)" : ""), ex);
           }
 
           int capacity = byteBuffer.capacity();
           if (payloadSize > capacity)
           {
-            throw new IllegalArgumentException("New limit " + payloadSize + " is > " + capacity + (isEOS() ? " (EOS)" : ""), ex);
+            throw new IllegalArgumentException(toString() + ": New limit " + payloadSize + " is > " + capacity + (isEOS() ? " (EOS)" : ""), ex);
           }
 
-          throw ex;
+          throw new IllegalArgumentException(toString() + ": " + ex.getMessage(), ex);
         }
 
         state = BufferState.READING_BODY;
@@ -279,12 +285,12 @@ public class Buffer implements InternalBuffer
       {
         if (channelID != this.channelID)
         {
-          throw new IllegalArgumentException("channelID != this.channelID"); //$NON-NLS-1$
+          throw new IllegalArgumentException(toString() + ": channelID != this.channelID"); //$NON-NLS-1$
         }
       }
       else if (state != BufferState.INITIAL)
       {
-        throw new IllegalStateException("state: " + state); //$NON-NLS-1$
+        throw new IllegalStateException(toString());
       }
       else
       {
@@ -331,7 +337,7 @@ public class Buffer implements InternalBuffer
       {
         if (channelID == NO_CHANNEL)
         {
-          throw new IllegalStateException("channelID == NO_CHANNEL"); //$NON-NLS-1$
+          throw new IllegalStateException(toString() + ": channelID == NO_CHANNEL"); //$NON-NLS-1$
         }
 
         int payloadSize = byteBuffer.position() - IBuffer.HEADER_SIZE + MAKE_PAYLOAD_SIZE_NON_ZERO;
@@ -358,7 +364,7 @@ public class Buffer implements InternalBuffer
       int numBytes = socketChannel.write(byteBuffer);
       if (numBytes == -1)
       {
-        throw new IOException("Channel closed"); //$NON-NLS-1$
+        throw new IOException(toString() + ": Channel closed"); //$NON-NLS-1$
       }
 
       if (byteBuffer.hasRemaining())
@@ -409,6 +415,76 @@ public class Buffer implements InternalBuffer
       handleError(ex);
       throw ex;
     }
+  }
+
+  public void compact()
+  {
+    byteBuffer.compact();
+  }
+
+  public int getPosition()
+  {
+    return byteBuffer.position();
+  }
+
+  public void setPosition(int position)
+  {
+    byteBuffer.position(position);
+  }
+
+  public int getLimit()
+  {
+    return byteBuffer.limit();
+  }
+
+  public void setLimit(int limit)
+  {
+    byteBuffer.limit(limit);
+  }
+
+  public boolean hasRemaining()
+  {
+    return byteBuffer.hasRemaining();
+  }
+
+  public byte get()
+  {
+    return byteBuffer.get();
+  }
+
+  public void get(byte[] dst)
+  {
+    byteBuffer.get(dst);
+  }
+
+  public short getShort()
+  {
+    return byteBuffer.getShort();
+  }
+
+  public int getInt()
+  {
+    return byteBuffer.getInt();
+  }
+
+  public String getString()
+  {
+    return BufferUtil.getString(byteBuffer);
+  }
+
+  public void put(byte b)
+  {
+    byteBuffer.put(b);
+  }
+
+  public void put(byte[] src, int offset, int length)
+  {
+    byteBuffer.put(src, offset, length);
+  }
+
+  public void putShort(short value)
+  {
+    byteBuffer.putShort(value);
   }
 
   @Override
@@ -481,13 +557,13 @@ public class Buffer implements InternalBuffer
     }
   }
 
-  private static void readChannel(SocketChannel socketChannel, ByteBuffer buffer) throws ClosedChannelException
+  private void readChannel(SocketChannel socketChannel, ByteBuffer buffer) throws ClosedChannelException
   {
     try
     {
       if (socketChannel.read(buffer) == -1)
       {
-        throw new IOException("Channel has reached end-of-stream");
+        throw new IOException(toString() + ": Channel has reached end-of-stream");
       }
     }
     catch (ClosedChannelException ex)

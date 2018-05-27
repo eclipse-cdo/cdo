@@ -19,13 +19,13 @@ import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.session.CDOSessionLocksChangedEvent;
 import org.eclipse.emf.cdo.tests.AbstractSyncingTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.util.TestListener2;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.tests.TestListener2;
 
 /**
  * @author Caspar De Groot

@@ -18,8 +18,9 @@ import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.VAT;
-import org.eclipse.emf.cdo.tests.util.Timer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
+import org.eclipse.net4j.util.tests.Timer;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;

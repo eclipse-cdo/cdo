@@ -498,10 +498,9 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
       super.write(out);
 
       buffer.flip();
-      ByteBuffer byteBuffer = buffer.getByteBuffer();
-      byteBuffer.position(IBuffer.HEADER_SIZE);
+      buffer.setPosition(IBuffer.HEADER_SIZE);
 
-      int length = byteBuffer.limit() - byteBuffer.position();
+      int length = buffer.getLimit() - IBuffer.HEADER_SIZE;
       out.writeShort(length);
       if (TRACER.isEnabled())
       {
@@ -510,7 +509,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
 
       for (int i = 0; i < length; i++)
       {
-        byte b = byteBuffer.get();
+        byte b = buffer.get();
         out.writeByte(b);
       }
 

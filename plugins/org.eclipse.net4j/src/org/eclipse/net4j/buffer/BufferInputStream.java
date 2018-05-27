@@ -21,7 +21,6 @@ import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -142,21 +141,20 @@ public class BufferInputStream extends InputStream implements IBufferHandler
       }
     }
 
-    ByteBuffer byteBuffer = currentBuffer.getByteBuffer();
-    if (!byteBuffer.hasRemaining())
+    if (!currentBuffer.hasRemaining())
     {
       // End of stream
       return IOUtil.EOF;
     }
 
-    final int result = byteBuffer.get() & 0xFF;
+    final int result = currentBuffer.get() & 0xFF;
     if (tracerEnabled)
     {
       TRACER.trace("<-- " + HexUtil.formatByte(result) //$NON-NLS-1$
           + (result >= 32 ? " " + Character.toString((char)result) : "")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    if (!byteBuffer.hasRemaining())
+    if (!currentBuffer.hasRemaining())
     {
       currentBuffer.release();
       currentBuffer = null;

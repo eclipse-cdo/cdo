@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
-import org.eclipse.emf.cdo.tests.util.TestListener;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -35,6 +34,7 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.tests.TestListener;
 
 import org.eclipse.emf.ecore.EObject;
 

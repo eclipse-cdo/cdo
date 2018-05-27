@@ -13,6 +13,7 @@ package org.eclipse.net4j.signal;
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IOTimeoutException;
@@ -150,13 +151,15 @@ public abstract class Signal implements Runnable
   public final void run()
   {
     String threadName = null;
+    Thread currentThread = null;
 
     try
     {
       if (OM.SET_SIGNAL_THREAD_NAME)
       {
         threadName = getClass().getSimpleName();
-        Thread.currentThread().setName(threadName);
+        currentThread = Thread.currentThread();
+        ConcurrencyUtil.setThreadName(currentThread, threadName);
       }
 
       runSync();
@@ -172,7 +175,7 @@ public abstract class Signal implements Runnable
     {
       if (threadName != null)
       {
-        Thread.currentThread().setName(threadName + "(FINISHED)"); //$NON-NLS-1$
+        ConcurrencyUtil.setThreadName(currentThread, threadName + "(FINISHED)"); //$NON-NLS-1$
       }
     }
   }

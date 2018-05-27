@@ -128,8 +128,7 @@ public class ControlChannel extends Channel
   {
     try
     {
-      ByteBuffer byteBuffer = buffer.getByteBuffer();
-      byte opcode = byteBuffer.get();
+      byte opcode = buffer.get();
       switch (opcode)
       {
       case OPCODE_NEGOTIATION:
@@ -143,7 +142,7 @@ public class ControlChannel extends Channel
         }
 
         Receiver receiver = negotiationContext.getReceiver();
-        receiver.receiveBuffer(negotiationContext, byteBuffer);
+        receiver.receiveBuffer(negotiationContext, buffer.getByteBuffer());
         break;
       }
 
@@ -155,14 +154,14 @@ public class ControlChannel extends Channel
       case OPCODE_REGISTRATION_VERSIONED:
       {
         assertConnected();
-        short channelID = byteBuffer.getShort();
+        short channelID = buffer.getShort();
         assertValidChannelID(channelID);
         String error = null;
 
         try
         {
-          int protocolVersion = byteBuffer.getInt();
-          String protocolID = BufferUtil.getString(byteBuffer);
+          int protocolVersion = buffer.getInt();
+          String protocolID = buffer.getString();
 
           InternalChannel channel = getConnector().inverseOpenChannel(channelID, protocolID, protocolVersion);
           if (channel == null)
@@ -186,7 +185,7 @@ public class ControlChannel extends Channel
       case OPCODE_DEREGISTRATION:
       {
         assertConnected();
-        short channelID = byteBuffer.getShort();
+        short channelID = buffer.getShort();
         if (channelID == CONTROL_CHANNEL_INDEX)
         {
           throw new ImplementationError();
@@ -210,8 +209,8 @@ public class ControlChannel extends Channel
       case OPCODE_REGISTRATION_ACK:
       {
         assertConnected();
-        short channelID = byteBuffer.getShort();
-        String error = BufferUtil.getString(byteBuffer);
+        short channelID = buffer.getShort();
+        String error = buffer.getString();
         if (error == null)
         {
           error = SUCCESS;

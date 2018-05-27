@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2018 Eike Stepper (Berlin, Germany) and others.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+
+  Contributors:
+    Eike Stepper - initial API and implementation
+-->
+<project name="build-aop-lib" default="build-aop-lib" basedir=".">
+
+	<property name="jar.path" value="aop_libs/aop.jar" />
+	<property name="aspect.path" value="org/eclipse/net4j/internal/trace/Aspect.class" />
+	<available property="aspect.exists" file="bin-aop/${aspect.path}" />
+
+	<target name="build-aop-lib" if="aspect.exists">
+		<jar destfile="${jar.path}" update="false">
+			<fileset dir="bin-aop">
+				<include name="${aspect.path}" />
+			</fileset>
+		</jar>
+	</target>
+
+</project>

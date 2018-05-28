@@ -8,8 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.internal.trace;
+package org.eclipse.net4j.trace.aspectj;
 
+import org.eclipse.net4j.internal.trace.BufferTracer;
 import org.eclipse.net4j.internal.trace.BufferTracer.Call;
 
 import java.util.Stack;
@@ -19,7 +20,7 @@ import java.util.Stack;
  */
 public aspect Aspect
 {
-  pointcut objectMethods() : 
+  pointcut objectMethods() :
     execution(public * *.getClass()) ||
     execution(public * *.toString()) ||
     execution(public * *.equals(Object)) ||
@@ -31,8 +32,8 @@ public aspect Aspect
     execution(public * *.wait(long)) ||
     execution(* *.clone()) ||
     execution(* *.finalize());
-  
-  pointcut unwantedMethods() : 
+
+  pointcut unwantedMethods() :
     execution(* org.eclipse.internal.net4j.buffer.BufferPool.createBufferRef()) ||
     execution(* org.eclipse.internal.net4j.buffer.Buffer.getCapacity()) ||
     execution(* org.eclipse.internal.net4j.buffer.Buffer.getLimit()) ||
@@ -43,7 +44,7 @@ public aspect Aspect
     execution(* org.eclipse.net4j.buffer.BufferOutputStream.ensureBufferPrivate()) ||
     execution(* org.eclipse.net4j.buffer.BufferOutputStream.throwExceptionOnError()) ||
     execution(* org.eclipse.net4j.buffer.BufferOutputStream.flushIfFilled());
-  
+
   pointcut relevantMethods(Object target) : target(target) &&
     !objectMethods() &&
     !unwantedMethods() &&
@@ -87,8 +88,8 @@ public aspect Aspect
       BufferTracer.execution(target, what, callStack);
     }
   }
-  
-  before(Thread thread, String name) : 
+
+  before(Thread thread, String name) :
     execution(public static void org.eclipse.net4j.util.concurrent.ConcurrencyUtil.setThreadName(..)) &&
     args(thread, name)
   {

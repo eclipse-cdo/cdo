@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aspectj>
     <aspects>
-        <aspect name="org.eclipse.net4j.internal.trace.Aspect" />
+        <aspect name="org.eclipse.net4j.trace.aspectj.Aspect" />
     </aspects>
 </aspectj>

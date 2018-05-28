@@ -12,12 +12,12 @@
 <project name="build-aop-lib" default="build-aop-lib" basedir=".">
 
 	<property name="jar.path" value="aop_libs/aop.jar" />
-	<property name="aspect.path" value="org/eclipse/net4j/internal/trace/Aspect.class" />
-	<available property="aspect.exists" file="bin-aop/${aspect.path}" />
+	<property name="aspect.path" value="org/eclipse/net4j/trace/aspectj/Aspect.class" />
+	<available property="aspect.exists" file="bin/${aspect.path}" />
 
 	<target name="build-aop-lib" if="aspect.exists">
 		<jar destfile="${jar.path}" update="false">
-			<fileset dir="bin-aop">
+			<fileset dir="bin">
 				<include name="${aspect.path}" />
 			</fileset>
 		</jar>

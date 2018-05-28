@@ -1,6 +1,7 @@
 Add the following plugins:
 
   org.eclipse.net4j.trace
+  org.eclipse.net4j.trace.aspectj
   org.aspectj.runtime
   org.aspectj.weaver
   org.eclipse.equinox.weaving.hook

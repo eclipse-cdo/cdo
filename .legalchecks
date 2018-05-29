@@ -8,7 +8,6 @@ ignored.message.nouns = copyright,\
 ignored.paths = target,\
                 resourcemanager.java,\
                 menucardtemplate.java,\
-                org.eclipse.oomph.version.tests/tests,\
                 org.eclipse.net4j.jms.api/src,\
                 org/eclipse/net4j/util/ui/proposals,\
                 org.eclipse.emf.cdo.examples.installer/examples,\
@@ -27,8 +26,6 @@ check.files = *.java,\
               about.properties,\
               build.properties,\
               messages.properties,\
-              about.ini,\
-              about.mappings,\
               pom.xml,\
               copyright.txt,\
               org.eclipse.jdt.ui.prefs

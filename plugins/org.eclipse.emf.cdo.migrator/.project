@@ -11,6 +11,19 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
+			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
+			<arguments>
+				<dictionary>
+					<key>LaunchConfigHandle</key>
+					<value>&lt;project&gt;/.externalToolBuilders/org.eclipse.emf.cdo.migrator.build-ant-tasks.launch</value>
+				</dictionary>
+				<dictionary>
+					<key>incclean</key>
+					<value>true</value>
+				</dictionary>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
 			<name>org.eclipse.pde.ManifestBuilder</name>
 			<arguments>
 			</arguments>
@@ -34,19 +47,6 @@
 				<dictionary>
 					<key>release.path</key>
 					<value>/org.eclipse.emf.cdo.releng/versions/release.xml</value>
-				</dictionary>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
-			<arguments>
-				<dictionary>
-					<key>LaunchConfigHandle</key>
-					<value>&lt;project&gt;/.externalToolBuilders/org.eclipse.emf.cdo.migrator.build-ant-tasks.launch</value>
-				</dictionary>
-				<dictionary>
-					<key>incclean</key>
-					<value>true</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>

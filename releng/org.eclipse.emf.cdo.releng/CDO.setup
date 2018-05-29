@@ -665,7 +665,7 @@
       xsi:type="setup:VariableTask"
       type="URI"
       name="aspectj.repository"
-      value="http://download.eclipse.org/tools/ajdt/47_aj9/dev/update"/>
+      value="http://download.eclipse.org/tools/ajdt/48/dev/update"/>
   <setupTask
       xsi:type="setup:VariableTask"
       name="INSTALL_AJDT"

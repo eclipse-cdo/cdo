@@ -16,11 +16,8 @@ import org.eclipse.net4j.trace.Element;
 import org.eclipse.net4j.trace.Element.BufferElement;
 import org.eclipse.net4j.trace.Element.ThreadElement;
 import org.eclipse.net4j.trace.Listener;
-import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
-import org.eclipse.net4j.util.om.log.RollingLog;
-import org.eclipse.net4j.util.om.log.RollingLog.LogLine;
 
 import java.util.Stack;
 
@@ -49,15 +46,6 @@ public class BufferTracer
     {
       ThreadElement threadElement = (ThreadElement)element;
       threadElement.setName(name);
-    }
-  }
-
-  public static void main(String[] args)
-  {
-    for (CloseableIterator<LogLine> it = RollingLog.iterator("C:\\Develop\\cdo-master\\trace"); it.hasNext();)
-    {
-      LogLine logLine = it.next();
-      System.out.println(logLine);
     }
   }
 

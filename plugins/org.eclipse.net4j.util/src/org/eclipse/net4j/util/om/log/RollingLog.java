@@ -451,6 +451,15 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
     return new LogIterator(logFile, 0);
   }
 
+  public static void main(String[] args)
+  {
+    for (CloseableIterator<LogLine> it = iterator(args[0]); it.hasNext();)
+    {
+      LogLine logLine = it.next();
+      System.out.println(logLine);
+    }
+  }
+
   private static File getFile(String logFile, int fileNumber)
   {
     return new File(logFile + String.format("-%04d", fileNumber) + ".txt");
@@ -462,19 +471,19 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
   private static final class LogIterator extends AbstractIterator<LogLine> implements CloseableIterator<LogLine>
   {
     private static final int CLOSED = -1;
-  
+
     private final String logFile;
-  
+
     private int fileNumber;
-  
+
     private BufferedReader reader;
-  
+
     public LogIterator(String logFile, int fileNumber)
     {
       this.logFile = logFile;
       this.fileNumber = fileNumber;
     }
-  
+
     @Override
     protected Object computeNextElement()
     {
@@ -482,7 +491,7 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
       {
         return END_OF_DATA;
       }
-  
+
       if (reader == null)
       {
         File file = getFile(logFile, fileNumber++);
@@ -503,7 +512,7 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
           return END_OF_DATA;
         }
       }
-  
+
       try
       {
         String string = reader.readLine();
@@ -513,7 +522,7 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
           reader = null;
           return computeNextElement();
         }
-  
+
         return new LogLine(string);
       }
       catch (IOException ex)
@@ -522,14 +531,14 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
         return END_OF_DATA;
       }
     }
-  
+
     public void close()
     {
       IOUtil.close(reader);
       reader = null;
       fileNumber = CLOSED;
     }
-  
+
     public boolean isClosed()
     {
       return fileNumber == CLOSED;
@@ -542,26 +551,26 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
   public static final class LogLine
   {
     private static final String NL = "\n\r";
-  
+
     private static final String TAB = "\t";
-  
+
     private static final String TABNL = TAB + NL;
-  
+
     private long id;
-  
+
     private final long millis;
-  
+
     private final String thread;
-  
+
     private final String message;
-  
+
     public LogLine(long millis, String thread, String message)
     {
       this.millis = millis;
       this.thread = StringUtil.translate(thread, TABNL, "   ");
       this.message = StringUtil.translate(message, NL, "  ");
     }
-  
+
     public LogLine(String string)
     {
       StringTokenizer tokenizer = new StringTokenizer(string, TAB);
@@ -570,27 +579,27 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
       thread = tokenizer.nextToken();
       message = tokenizer.nextToken("").substring(1);
     }
-  
+
     public long getID()
     {
       return id;
     }
-  
+
     public long getMillis()
     {
       return millis;
     }
-  
+
     public String getThread()
     {
       return thread;
     }
-  
+
     public String getMessage()
     {
       return message;
     }
-  
+
     @Override
     public String toString()
     {

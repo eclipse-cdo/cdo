@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6,"i20":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -231,41 +231,53 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryTypes-java.lang.String-">getFactoryTypes</a></span>(java.lang.String&nbsp;productGroup)</code>&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getName--">getName</a></span>()</code>
+<div class="block">Returns the name of this container, or <code>null</code> if no name has been set.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../../../../../org/eclipse/net4j/util/container/IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getPostProcessors--">getPostProcessors</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getProductGroups--">getProductGroups</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#loadElements-java.io.InputStream-">loadElements</a></span>(java.io.InputStream&nbsp;stream)</code>&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#putElement-java.lang.String-java.lang.String-java.lang.String-java.lang.Object-">putElement</a></span>(java.lang.String&nbsp;productGroup,
           java.lang.String&nbsp;factoryType,
           java.lang.String&nbsp;description,
           java.lang.Object&nbsp;element)</code>&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#registerFactory-org.eclipse.net4j.util.factory.IFactory-">registerFactory</a></span>(<a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</code>&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#removeElement-java.lang.String-java.lang.String-java.lang.String-">removeElement</a></span>(java.lang.String&nbsp;productGroup,
              java.lang.String&nbsp;factoryType,
              java.lang.String&nbsp;description)</code>&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#removePostProcessor-org.eclipse.net4j.util.container.IElementProcessor-">removePostProcessor</a></span>(<a href="../../../../../org/eclipse/net4j/util/container/IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor)</code>&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#saveElements-java.io.OutputStream-">saveElements</a></span>(java.io.OutputStream&nbsp;stream)</code>&nbsp;</td>
+</tr>
+<tr id="i20" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#setName-java.lang.String-">setName</a></span>(java.lang.String&nbsp;name)</code>
+<div class="block">Sets the name of this container before it is activated.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -303,6 +315,34 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="getName--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getName</h4>
+<pre>java.lang.String&nbsp;getName()</pre>
+<div class="block">Returns the name of this container, or <code>null</code> if no name has been set.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.8</dd>
+</dl>
+</li>
+</ul>
+<a name="setName-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setName</h4>
+<pre>void&nbsp;setName(java.lang.String&nbsp;name)</pre>
+<div class="block">Sets the name of this container before it is activated.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.8</dd>
+</dl>
+</li>
+</ul>
 <a name="getFactoryRegistry--">
 <!--   -->
 </a>
@@ -590,6 +630,6 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

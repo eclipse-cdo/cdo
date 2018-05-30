@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -208,27 +208,44 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/StringIO.html" titl
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>java.util.Collection&lt;java.lang.Integer&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/StringCompressor.html#getPendingAcknowledgements-long-">getPendingAcknowledgements</a></span>(long&nbsp;timeout)</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/StringCompressor.html#isClient--">isClient</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/StringCompressor.html#read-org.eclipse.net4j.util.io.ExtendedDataInput-">read</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>&nbsp;in)</code>&nbsp;</td>
-</tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/StringCompressor.html#readString-org.eclipse.net4j.util.io.ExtendedDataInput-">readString</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>&nbsp;in)</code>&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/StringCompressor.html#processAcknowledgements-java.util.Collection-">processAcknowledgements</a></span>(java.util.Collection&lt;java.lang.Integer&gt;&nbsp;acknowledgements)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/StringCompressor.html#toString--">toString</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/StringCompressor.html#read-org.eclipse.net4j.util.io.ExtendedDataInput-">read</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>&nbsp;in)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>java.util.Collection&lt;java.lang.Integer&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/StringCompressor.html#readAcknowledgements-org.eclipse.net4j.util.io.ExtendedDataInput-">readAcknowledgements</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>&nbsp;in)</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/StringCompressor.html#readString-org.eclipse.net4j.util.io.ExtendedDataInput-">readString</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>&nbsp;in)</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/StringCompressor.html#toString--">toString</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/StringCompressor.html#write-org.eclipse.net4j.util.io.ExtendedDataOutput-java.lang.String-">write</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
      java.lang.String&nbsp;string)</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/StringCompressor.html#writeAcknowledgements-org.eclipse.net4j.util.io.ExtendedDataOutput-java.util.Collection-">writeAcknowledgements</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
+                     java.util.Collection&lt;java.lang.Integer&gt;&nbsp;acknowledgements)</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/io/StringCompressor.html#writeString-org.eclipse.net4j.util.io.ExtendedDataOutput-java.lang.String-">writeString</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
            java.lang.String&nbsp;value)</code>&nbsp;</td>
@@ -337,6 +354,65 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/StringIO.html" titl
 <dd><code><a href="../../../../../org/eclipse/net4j/util/io/StringIO.html#read-org.eclipse.net4j.util.io.ExtendedDataInput-">read</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/io/StringIO.html" title="interface in org.eclipse.net4j.util.io">StringIO</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
+</dl>
+</li>
+</ul>
+<a name="getPendingAcknowledgements-long-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPendingAcknowledgements</h4>
+<pre>public&nbsp;java.util.Collection&lt;java.lang.Integer&gt;&nbsp;getPendingAcknowledgements(long&nbsp;timeout)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.8</dd>
+</dl>
+</li>
+</ul>
+<a name="writeAcknowledgements-org.eclipse.net4j.util.io.ExtendedDataOutput-java.util.Collection-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>writeAcknowledgements</h4>
+<pre>public&nbsp;void&nbsp;writeAcknowledgements(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out,
+                                  java.util.Collection&lt;java.lang.Integer&gt;&nbsp;acknowledgements)
+                           throws java.io.IOException</pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.io.IOException</code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.8</dd>
+</dl>
+</li>
+</ul>
+<a name="readAcknowledgements-org.eclipse.net4j.util.io.ExtendedDataInput-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>readAcknowledgements</h4>
+<pre>public&nbsp;java.util.Collection&lt;java.lang.Integer&gt;&nbsp;readAcknowledgements(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>&nbsp;in)
+                                                             throws java.io.IOException</pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.io.IOException</code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.8</dd>
+</dl>
+</li>
+</ul>
+<a name="processAcknowledgements-java.util.Collection-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>processAcknowledgements</h4>
+<pre>public&nbsp;void&nbsp;processAcknowledgements(java.util.Collection&lt;java.lang.Integer&gt;&nbsp;acknowledgements)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.8</dd>
 </dl>
 </li>
 </ul>
@@ -454,6 +530,6 @@ implements <a href="../../../../../org/eclipse/net4j/util/io/StringIO.html" titl
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

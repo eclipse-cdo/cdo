@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -198,6 +198,14 @@ implements <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 <th class="colLast" scope="col">Field and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static long</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#COMPRESSED_STRINGS_ACKNOWLEDGE_TIMEOUT">COMPRESSED_STRINGS_ACKNOWLEDGE_TIMEOUT</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static short</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS">SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static short</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_MONITOR_CANCELED">SIGNAL_MONITOR_CANCELED</a></span></code>&nbsp;</td>
 </tr>
@@ -294,55 +302,59 @@ implements <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#getStreamWrapper--">getStreamWrapper</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>protected <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/StringCompressor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">StringCompressor</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#getStringCompressor--">getStringCompressor</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#getTimeout--">getTimeout</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#handleBuffer-org.eclipse.net4j.buffer.IBuffer-">handleBuffer</a></span>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
 <div class="block">Handles a given (incoming) buffer.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#handleChannelDeactivation--">handleChannelDeactivation</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#isSendingTimeoutChanges--">isSendingTimeoutChanges</a></span>()</code>
 <div class="block">Returns <code>true</code> by default, override to change this behavior.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#open-org.eclipse.net4j.connector.IConnector-">open</a></span>(<a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector)</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../org/eclipse/net4j/signal/SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#provideSignalReactor-short-">provideSignalReactor</a></span>(short&nbsp;signalID)</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#setStreamWrapper-org.eclipse.net4j.util.io.IStreamWrapper-">setStreamWrapper</a></span>(<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/IStreamWrapper.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">IStreamWrapper</a>&nbsp;streamWrapper)</code>&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#setTimeout-long-">setTimeout</a></span>(long&nbsp;timeout)</code>
 <div class="block">Equivalent to calling SignalProtocol.setTimeout(timeout, false).</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#setTimeout-long-boolean-">setTimeout</a></span>(long&nbsp;timeout,
           boolean&nbsp;useOldTimeoutToSendNewOne)</code>
 <div class="block">Update the timeout used for signal end of stream waiting time.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#waitForSignals-long-">waitForSignals</a></span>(long&nbsp;timeout)</code>&nbsp;</td>
 </tr>
@@ -417,6 +429,19 @@ implements <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 <!--   -->
 </a>
 <h3>Field Detail</h3>
+<a name="COMPRESSED_STRINGS_ACKNOWLEDGE_TIMEOUT">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>COMPRESSED_STRINGS_ACKNOWLEDGE_TIMEOUT</h4>
+<pre>public static final&nbsp;long COMPRESSED_STRINGS_ACKNOWLEDGE_TIMEOUT</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
+</li>
+</ul>
 <a name="SIGNAL_REMOTE_EXCEPTION">
 <!--   -->
 </a>
@@ -465,7 +490,7 @@ implements <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 <a name="SIGNAL_SET_TIMEOUT">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>SIGNAL_SET_TIMEOUT</h4>
 <pre>public static final&nbsp;short SIGNAL_SET_TIMEOUT</pre>
@@ -474,6 +499,21 @@ implements <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 <dd>4.1</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../constant-values.html#org.eclipse.net4j.signal.SignalProtocol.SIGNAL_SET_TIMEOUT">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS</h4>
+<pre>public static final&nbsp;short SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../constant-values.html#org.eclipse.net4j.signal.SignalProtocol.SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -735,7 +775,7 @@ implements <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 <a name="isSendingTimeoutChanges--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>isSendingTimeoutChanges</h4>
 <pre>protected&nbsp;boolean&nbsp;isSendingTimeoutChanges()</pre>
@@ -743,6 +783,19 @@ implements <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
+</dl>
+</li>
+</ul>
+<a name="getStringCompressor--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getStringCompressor</h4>
+<pre>protected&nbsp;<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/StringCompressor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">StringCompressor</a>&nbsp;getStringCompressor()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
 </dl>
 </li>
 </ul>
@@ -814,6 +867,6 @@ implements <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

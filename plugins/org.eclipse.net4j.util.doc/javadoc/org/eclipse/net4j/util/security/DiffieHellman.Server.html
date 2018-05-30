@@ -158,11 +158,19 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.html#DEFAULT_CYPHER_TRANSFORMATION">DEFAULT_CYPHER_TRANSFORMATION</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.html#DEFAULT_CYPHER_TRANSFORMATION">DEFAULT_CYPHER_TRANSFORMATION</a></span></code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 3.8 the default cipher transformation is "AES/CBC/PKCS5Padding".</span></div>
+</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.html#DEFAULT_SECRET_ALGORITHM">DEFAULT_SECRET_ALGORITHM</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.html#DEFAULT_SECRET_ALGORITHM">DEFAULT_SECRET_ALGORITHM</a></span></code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 3.8 the default secret algorithm is "AES".</span></div>
+</div>
+</td>
 </tr>
 </table>
 </li>
@@ -186,10 +194,41 @@ extends java.lang.Object</pre>
       javax.crypto.spec.DHParameterSpec&nbsp;dhParamSpec)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.html#Server-java.lang.String-javax.crypto.spec.DHParameterSpec-int-java.lang.String-java.lang.String-">Server</a></span>(java.lang.String&nbsp;realm,
+      javax.crypto.spec.DHParameterSpec&nbsp;dhParamSpec,
+      int&nbsp;secretAlgorithmKeyLen,
+      java.lang.String&nbsp;secretAlgorithm,
+      java.lang.String&nbsp;cipherTransformation)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.html#Server-java.lang.String-javax.crypto.spec.DHParameterSpec-java.lang.String-java.lang.String-">Server</a></span>(java.lang.String&nbsp;realm,
       javax.crypto.spec.DHParameterSpec&nbsp;dhParamSpec,
       java.lang.String&nbsp;secretAlgorithm,
-      java.lang.String&nbsp;cypherTransformation)</code>&nbsp;</td>
+      java.lang.String&nbsp;cipherTransformation)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.html#Server-java.lang.String-int-">Server</a></span>(java.lang.String&nbsp;realm,
+      int&nbsp;diffieHellmanKeySize)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.html#Server-java.lang.String-int-int-java.lang.String-java.lang.String-">Server</a></span>(java.lang.String&nbsp;realm,
+      int&nbsp;diffieHellmanKeySize,
+      int&nbsp;secretAlgorithmKeyLen,
+      java.lang.String&nbsp;secretAlgorithm,
+      java.lang.String&nbsp;cipherTransformation)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.html#Server-java.lang.String-int-java.lang.String-java.lang.String-">Server</a></span>(java.lang.String&nbsp;realm,
+      int&nbsp;diffieHellmanKeySize,
+      java.lang.String&nbsp;secretAlgorithm,
+      java.lang.String&nbsp;cipherTransformation)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.html#Server-java.lang.String-java.security.KeyPairGenerator-int-java.lang.String-java.lang.String-">Server</a></span>(java.lang.String&nbsp;realm,
+      java.security.KeyPairGenerator&nbsp;keyPairGenerator,
+      int&nbsp;secretAlgorithmKeyLen,
+      java.lang.String&nbsp;secretAlgorithm,
+      java.lang.String&nbsp;cipherTransformation)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -246,7 +285,9 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>DEFAULT_SECRET_ALGORITHM</h4>
-<pre>public static final&nbsp;java.lang.String DEFAULT_SECRET_ALGORITHM</pre>
+<pre>@Deprecated
+public static final&nbsp;java.lang.String DEFAULT_SECRET_ALGORITHM</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 3.8 the default secret algorithm is "AES".</span></div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../constant-values.html#org.eclipse.net4j.util.security.DiffieHellman.Server.DEFAULT_SECRET_ALGORITHM">Constant Field Values</a></dd>
@@ -259,7 +300,9 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DEFAULT_CYPHER_TRANSFORMATION</h4>
-<pre>public static final&nbsp;java.lang.String DEFAULT_CYPHER_TRANSFORMATION</pre>
+<pre>@Deprecated
+public static final&nbsp;java.lang.String DEFAULT_CYPHER_TRANSFORMATION</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 3.8 the default cipher transformation is "AES/CBC/PKCS5Padding".</span></div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../constant-values.html#org.eclipse.net4j.util.security.DiffieHellman.Server.DEFAULT_CYPHER_TRANSFORMATION">Constant Field Values</a></dd>
@@ -274,6 +317,96 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
+<a name="Server-java.lang.String-java.security.KeyPairGenerator-int-java.lang.String-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Server</h4>
+<pre>public&nbsp;Server(java.lang.String&nbsp;realm,
+              java.security.KeyPairGenerator&nbsp;keyPairGenerator,
+              int&nbsp;secretAlgorithmKeyLen,
+              java.lang.String&nbsp;secretAlgorithm,
+              java.lang.String&nbsp;cipherTransformation)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.8</dd>
+</dl>
+</li>
+</ul>
+<a name="Server-java.lang.String-int-int-java.lang.String-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Server</h4>
+<pre>public&nbsp;Server(java.lang.String&nbsp;realm,
+              int&nbsp;diffieHellmanKeySize,
+              int&nbsp;secretAlgorithmKeyLen,
+              java.lang.String&nbsp;secretAlgorithm,
+              java.lang.String&nbsp;cipherTransformation)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.8</dd>
+</dl>
+</li>
+</ul>
+<a name="Server-java.lang.String-int-java.lang.String-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Server</h4>
+<pre>public&nbsp;Server(java.lang.String&nbsp;realm,
+              int&nbsp;diffieHellmanKeySize,
+              java.lang.String&nbsp;secretAlgorithm,
+              java.lang.String&nbsp;cipherTransformation)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.8</dd>
+</dl>
+</li>
+</ul>
+<a name="Server-java.lang.String-int-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Server</h4>
+<pre>public&nbsp;Server(java.lang.String&nbsp;realm,
+              int&nbsp;diffieHellmanKeySize)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.8</dd>
+</dl>
+</li>
+</ul>
+<a name="Server-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Server</h4>
+<pre>public&nbsp;Server(java.lang.String&nbsp;realm)</pre>
+</li>
+</ul>
+<a name="Server-java.lang.String-javax.crypto.spec.DHParameterSpec-int-java.lang.String-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Server</h4>
+<pre>public&nbsp;Server(java.lang.String&nbsp;realm,
+              javax.crypto.spec.DHParameterSpec&nbsp;dhParamSpec,
+              int&nbsp;secretAlgorithmKeyLen,
+              java.lang.String&nbsp;secretAlgorithm,
+              java.lang.String&nbsp;cipherTransformation)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.8</dd>
+</dl>
+</li>
+</ul>
 <a name="Server-java.lang.String-javax.crypto.spec.DHParameterSpec-java.lang.String-java.lang.String-">
 <!--   -->
 </a>
@@ -283,26 +416,17 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;Server(java.lang.String&nbsp;realm,
               javax.crypto.spec.DHParameterSpec&nbsp;dhParamSpec,
               java.lang.String&nbsp;secretAlgorithm,
-              java.lang.String&nbsp;cypherTransformation)</pre>
+              java.lang.String&nbsp;cipherTransformation)</pre>
 </li>
 </ul>
 <a name="Server-java.lang.String-javax.crypto.spec.DHParameterSpec-">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>Server</h4>
 <pre>public&nbsp;Server(java.lang.String&nbsp;realm,
               javax.crypto.spec.DHParameterSpec&nbsp;dhParamSpec)</pre>
-</li>
-</ul>
-<a name="Server-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>Server</h4>
-<pre>public&nbsp;Server(java.lang.String&nbsp;realm)</pre>
 </li>
 </ul>
 </li>
@@ -408,6 +532,6 @@ extends java.lang.Object</pre>
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

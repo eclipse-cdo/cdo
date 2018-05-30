@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":6,"i2":10,"i3":6,"i4":42,"i5":10,"i6":42,"i7":42,"i8":10,"i9":6,"i10":42};
+var methods = {"i0":10,"i1":6,"i2":10,"i3":6,"i4":42,"i5":10,"i6":10,"i7":42,"i8":42,"i9":10,"i10":6,"i11":42};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -158,7 +158,7 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.htm
 <!--   -->
 </a>
 <h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.common.id.<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></h3>
-<code><a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html#NULL">NULL</a></code></li>
+<code><a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html#NIL">NIL</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html#NULL">NULL</a></code></li>
 </ul>
 </li>
 </ul>
@@ -217,9 +217,13 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.htm
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html#isNull--">isNull</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html#isNil--">isNil</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html#isNull--">isNull</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html#read-org.eclipse.net4j.util.io.ExtendedDataInput-">read</a></span>(<a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/ExtendedDataInput.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">ExtendedDataInput</a>&nbsp;in)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
@@ -227,7 +231,7 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.htm
 </div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html#read-java.lang.String-">read</a></span>(java.lang.String&nbsp;fragmentPart)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
@@ -235,15 +239,15 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.htm
 </div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>abstract void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html#write-org.eclipse.emf.cdo.common.protocol.CDODataOutput-">write</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out)</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html#write-org.eclipse.net4j.util.io.ExtendedDataOutput-">write</a></span>(<a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/ExtendedDataOutput.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
@@ -309,6 +313,21 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.htm
 <dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html#isNull--">isNull</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
+</dl>
+</li>
+</ul>
+<a name="isNil--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isNil</h4>
+<pre>public&nbsp;boolean&nbsp;isNil()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html#isNil--">isNil</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
 </dl>
 </li>
 </ul>
@@ -522,6 +541,6 @@ public&nbsp;void&nbsp;write(<a href="../../../../../../../../../org.eclipse.net4
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

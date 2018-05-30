@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10,"i58":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -142,6 +142,13 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/Ab
 <!--   -->
 </a>
 <h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision">
+<!--   -->
+</a>
+<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.spi.common.revision.<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></h3>
+<code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#DO_NOT_CREATE_LIST">DO_NOT_CREATE_LIST</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevision">
 <!--   -->
@@ -287,129 +294,137 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/Ab
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#getList-org.eclipse.emf.ecore.EStructuralFeature-">getList</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#getListOrNull-org.eclipse.emf.ecore.EStructuralFeature-">getListOrNull</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#getList-org.eclipse.emf.ecore.EStructuralFeature-int-">getList</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
-       int&nbsp;size)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#getOrCreateList-org.eclipse.emf.ecore.EStructuralFeature-">getOrCreateList</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>
+<div class="block">Same as <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#getOrCreateList-org.eclipse.emf.ecore.EStructuralFeature-int-"><code>getOrCreateList(feature, 0)</code></a>.</div>
+</td>
 </tr>
 <tr id="i19" class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#getOrCreateList-org.eclipse.emf.ecore.EStructuralFeature-int-">getOrCreateList</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
+               int&nbsp;size)</code>
+<div class="block">Returns the list that represents the passed feature, possibly creates it if needed.</div>
+</td>
+</tr>
+<tr id="i20" class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#getPermission--">getPermission</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#getResourceID--">getResourceID</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#getResourceNodeName--">getResourceNodeName</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#getRevised--">getRevised</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#getTimeStamp--">getTimeStamp</a></span>()</code>
 <div class="block">Returns the time stamp of this branch point, or the fixed special time stamp <i>
  <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>unspecified</code></a></i> if this branch point marks the <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getHead--"><code>head</code></a> of a branch.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#getValue-org.eclipse.emf.ecore.EStructuralFeature-">getValue</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>
 <div class="block">Should never return <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionData.html#NIL"><code>CDORevisionData.NIL</code></a></div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#getVersion--">getVersion</a></span>()</code>
 <div class="block">Returns the version number of this branch version.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#hashCode-org.eclipse.emf.ecore.EStructuralFeature-">hashCode</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>&nbsp;</td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#indexOf-org.eclipse.emf.ecore.EStructuralFeature-java.lang.Object-">indexOf</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
        java.lang.Object&nbsp;value)</code>&nbsp;</td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#isEmpty-org.eclipse.emf.ecore.EStructuralFeature-">isEmpty</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>&nbsp;</td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#isFrozen--">isFrozen</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#isListPreserving--">isListPreserving</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#isUnchunked--">isUnchunked</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#lastIndexOf-org.eclipse.emf.ecore.EStructuralFeature-java.lang.Object-">lastIndexOf</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
            java.lang.Object&nbsp;value)</code>&nbsp;</td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#merge-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-">merge</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</code>&nbsp;</td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#move-org.eclipse.emf.ecore.EStructuralFeature-int-int-">move</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
     int&nbsp;targetIndex,
     int&nbsp;sourceIndex)</code>&nbsp;</td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#read-org.eclipse.emf.cdo.common.protocol.CDODataInput-">read</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in)</code>&nbsp;</td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#readValues-org.eclipse.emf.cdo.common.protocol.CDODataInput-">readValues</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in)</code>&nbsp;</td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#remove-org.eclipse.emf.ecore.EStructuralFeature-int-">remove</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
       int&nbsp;index)</code>&nbsp;</td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#set-org.eclipse.emf.ecore.EStructuralFeature-int-java.lang.Object-">set</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
    int&nbsp;index,
    java.lang.Object&nbsp;value)</code>&nbsp;</td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#setBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">setBranchPoint</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code>&nbsp;</td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#setContainerID-java.lang.Object-">setContainerID</a></span>(java.lang.Object&nbsp;containerID)</code>&nbsp;</td>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#setContainingFeatureID-int-">setContainingFeatureID</a></span>(int&nbsp;containingFeatureID)</code>&nbsp;</td>
 </tr>
-<tr id="i42" class="altColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#setID-org.eclipse.emf.cdo.common.id.CDOID-">setID</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#setList-org.eclipse.emf.ecore.EStructuralFeature-org.eclipse.emf.cdo.spi.common.revision.InternalCDOList-">setList</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
        <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList</a>&nbsp;list)</code>&nbsp;</td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#setListPreserving--">setListPreserving</a></span>()</code>
 <div class="block">The default behavior of a revision for calls to the <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#clear-org.eclipse.emf.ecore.EStructuralFeature-"><code>InternalCDORevision.clear(EStructuralFeature)</code></a> and
@@ -417,60 +432,60 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/Ab
  value itself, a List).</div>
 </td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#setPermission-org.eclipse.emf.cdo.common.security.CDOPermission-">setPermission</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;permission)</code>&nbsp;</td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#setResourceID-org.eclipse.emf.cdo.common.id.CDOID-">setResourceID</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;resourceID)</code>&nbsp;</td>
 </tr>
-<tr id="i47" class="rowColor">
+<tr id="i48" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#setRevised-long-">setRevised</a></span>(long&nbsp;revised)</code>&nbsp;</td>
 </tr>
-<tr id="i48" class="altColor">
+<tr id="i49" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#setUnchunked--">setUnchunked</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i49" class="rowColor">
+<tr id="i50" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#setValue-org.eclipse.emf.ecore.EStructuralFeature-java.lang.Object-">setValue</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
         java.lang.Object&nbsp;value)</code>&nbsp;</td>
 </tr>
-<tr id="i50" class="altColor">
+<tr id="i51" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#setVersion-int-">setVersion</a></span>(int&nbsp;version)</code>&nbsp;</td>
 </tr>
-<tr id="i51" class="rowColor">
+<tr id="i52" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#size-org.eclipse.emf.ecore.EStructuralFeature-">size</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>&nbsp;</td>
 </tr>
-<tr id="i52" class="altColor">
+<tr id="i53" class="rowColor">
 <td class="colFirst"><code>java.lang.Object[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#toArray-org.eclipse.emf.ecore.EStructuralFeature-">toArray</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>&nbsp;</td>
 </tr>
-<tr id="i53" class="rowColor">
+<tr id="i54" class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#toArray-org.eclipse.emf.ecore.EStructuralFeature-T:A-">toArray</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
        T[]&nbsp;array)</code>&nbsp;</td>
 </tr>
-<tr id="i54" class="altColor">
+<tr id="i55" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#unset-org.eclipse.emf.ecore.EStructuralFeature-">unset</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>&nbsp;</td>
 </tr>
-<tr id="i55" class="rowColor">
+<tr id="i56" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#write-org.eclipse.emf.cdo.common.protocol.CDODataOutput-int-">write</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
      int&nbsp;referenceChunk)</code>&nbsp;</td>
 </tr>
-<tr id="i56" class="altColor">
+<tr id="i57" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#write-org.eclipse.emf.cdo.common.protocol.CDODataOutput-int-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">write</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
      int&nbsp;referenceChunk,
      <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code>&nbsp;</td>
 </tr>
-<tr id="i57" class="rowColor">
+<tr id="i58" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html#writeValues-org.eclipse.emf.cdo.common.protocol.CDODataOutput-int-">writeValues</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
            int&nbsp;referenceChunk)</code>&nbsp;</td>
@@ -481,7 +496,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/Ab
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.emf.cdo.spi.common.revision.<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">AbstractCDORevision</a></h3>
-<code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#accept-org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor-">accept</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#accept-org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor-org.eclipse.net4j.util.Predicate-">accept</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#adjustForCommit-org.eclipse.emf.cdo.common.branch.CDOBranch-long-">adjustForCommit</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#data--">data</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#equals-java.lang.Object-">equals</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getAllPersistentFeatures--">getAllPersistentFeatures</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getClassInfo--">getClassInfo</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getEClass--">getEClass</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getFeatureIndex-org.eclipse.emf.ecore.EStructuralFeature-">getFeatureIndex</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getProperRevision--">getProperRevision</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getRevisionForID-org.eclipse.emf.cdo.common.id.CDOID-">getRevisionForID</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#hashCode--">hashCode</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#initClassInfo-org.eclipse.emf.ecore.EClass-">initClassInfo</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isHistorical--">isHistorical</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isReadable--">isReadable</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isResource--">isResource</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isResourceFolder--">isResourceFolder</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isResourceNode--">isResourceNode</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isValid-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">isValid</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isValid-long-">isValid</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isWritable--">isWritable</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#revision--">revision</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#toString--">toString</a></code></li>
+<code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#accept-org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor-">accept</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#accept-org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor-org.eclipse.net4j.util.Predicate-">accept</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#adjustForCommit-org.eclipse.emf.cdo.common.branch.CDOBranch-long-">adjustForCommit</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#data--">data</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#equals-java.lang.Object-">equals</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getAllPersistentFeatures--">getAllPersistentFeatures</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getClassInfo--">getClassInfo</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getEClass--">getEClass</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getFeatureIndex-org.eclipse.emf.ecore.EStructuralFeature-">getFeatureIndex</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getList-org.eclipse.emf.ecore.EStructuralFeature-">getList</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getList-org.eclipse.emf.ecore.EStructuralFeature-int-">getList</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getProperRevision--">getProperRevision</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#getRevisionForID-org.eclipse.emf.cdo.common.id.CDOID-">getRevisionForID</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#hashCode--">hashCode</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#initClassInfo-org.eclipse.emf.ecore.EClass-">initClassInfo</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isHistorical--">isHistorical</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isReadable--">isReadable</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isResource--">isResource</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isResourceFolder--">isResourceFolder</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isResourceNode--">isResourceNode</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isValid-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">isValid</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isValid-long-">isValid</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#isWritable--">isWritable</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#revision--">revision</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.html#toString--">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -698,26 +713,47 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/Ab
                     <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList</a>&nbsp;list)</pre>
 </li>
 </ul>
-<a name="getList-org.eclipse.emf.ecore.EStructuralFeature-">
+<a name="getListOrNull-org.eclipse.emf.ecore.EStructuralFeature-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getList</h4>
-<pre>public&nbsp;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a>&nbsp;getList(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</pre>
+<h4>getListOrNull</h4>
+<pre>public&nbsp;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a>&nbsp;getListOrNull(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</pre>
 </li>
 </ul>
-<a name="getList-org.eclipse.emf.ecore.EStructuralFeature-int-">
+<a name="getOrCreateList-org.eclipse.emf.ecore.EStructuralFeature-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getList</h4>
-<pre>public&nbsp;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a>&nbsp;getList(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
-                       int&nbsp;size)</pre>
+<h4>getOrCreateList</h4>
+<pre>public&nbsp;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a>&nbsp;getOrCreateList(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#getOrCreateList-org.eclipse.emf.ecore.EStructuralFeature-">InternalCDORevision</a></code></span></div>
+<div class="block">Same as <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#getOrCreateList-org.eclipse.emf.ecore.EStructuralFeature-int-"><code>getOrCreateList(feature, 0)</code></a>.
+ <p>
+ <b>Warning</b>: Must be used with caution because list creation for an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true#isUnsettable--" title="class or interface in org.eclipse.emf.ecore"><code>unsettable</code></a>
+ feature implies a transition from UNSET to SET!</div>
+</li>
+</ul>
+<a name="getOrCreateList-org.eclipse.emf.ecore.EStructuralFeature-int-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getOrCreateList</h4>
+<pre>public&nbsp;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a>&nbsp;getOrCreateList(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
+                               int&nbsp;size)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#getOrCreateList-org.eclipse.emf.ecore.EStructuralFeature-int-">InternalCDORevision</a></code></span></div>
+<div class="block">Returns the list that represents the passed feature, possibly creates it if needed.
+ <p>
+ <b>Warning</b>: Must be used with caution because list creation for an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true#isUnsettable--" title="class or interface in org.eclipse.emf.ecore"><code>unsettable</code></a>
+ feature implies a transition from UNSET to SET!</div>
 <dl>
 <dd><code>size</code> - the initialCapacity of a new list to be created if this revision has no list so far (its size will always
           be 0), or -1 to skip list creation and return <code>null</code> in this case.</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html#DO_NOT_CREATE_LIST"><code>InternalCDORevision.DO_NOT_CREATE_LIST</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -1276,6 +1312,6 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/Ab
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

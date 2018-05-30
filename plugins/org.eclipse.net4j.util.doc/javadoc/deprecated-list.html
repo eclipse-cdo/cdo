@@ -76,6 +76,7 @@
 <li><a href="#class">Deprecated Classes</a></li>
 <li><a href="#field">Deprecated Fields</a></li>
 <li><a href="#method">Deprecated Methods</a></li>
+<li><a href="#constructor">Deprecated Constructors</a></li>
 </ul>
 </div>
 <div class="contentContainer"><a name="interface">
@@ -206,6 +207,16 @@
 <div class="block"><span class="deprecationComment">As of 3.4 use <a href="org/eclipse/net4j/util/io/ZIPUtil.html#DEFAULT_BUFFER_SIZE"><code>ZIPUtil.DEFAULT_BUFFER_SIZE</code></a>.</span></div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colOne"><a href="org/eclipse/net4j/util/security/DiffieHellman.Server.html#DEFAULT_CYPHER_TRANSFORMATION">org.eclipse.net4j.util.security.DiffieHellman.Server.DEFAULT_CYPHER_TRANSFORMATION</a>
+<div class="block"><span class="deprecationComment">As of 3.8 the default cipher transformation is "AES/CBC/PKCS5Padding".</span></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="org/eclipse/net4j/util/security/DiffieHellman.Server.html#DEFAULT_SECRET_ALGORITHM">org.eclipse.net4j.util.security.DiffieHellman.Server.DEFAULT_SECRET_ALGORITHM</a>
+<div class="block"><span class="deprecationComment">As of 3.8 the default secret algorithm is "AES".</span></div>
+</td>
+</tr>
 </tbody>
 </table>
 </li>
@@ -231,48 +242,73 @@
 <td class="colOne"><a href="org/eclipse/net4j/util/HexUtil.html#formatBytes-byte:A-">org.eclipse.net4j.util.HexUtil.formatBytes(byte[])</a></td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><a href="org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html#getCypherTransformation--">org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge.getCypherTransformation()</a>
+<div class="block"><span class="deprecationComment">As of 3.8 use <a href="org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html#getCipherTransformation--"><code>DiffieHellman.Server.Challenge.getCipherTransformation()</code></a>.</span></div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><a href="org/eclipse/net4j/util/ui/actions/LongRunningAction.html#getTotalWork--">org.eclipse.net4j.util.ui.actions.LongRunningAction.getTotalWork()</a>
 <div class="block"><span class="deprecationComment">Not supported anymore.</span></div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="org/eclipse/net4j/util/ui/actions/LongRunningActionDelegate.html#getTotalWork--">org.eclipse.net4j.util.ui.actions.LongRunningActionDelegate.getTotalWork()</a>
 <div class="block"><span class="deprecationComment">Not supported anymore.</span></div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="org/eclipse/net4j/util/ui/handlers/LongRunningHandler.html#getTotalWork--">org.eclipse.net4j.util.ui.handlers.LongRunningHandler.getTotalWork()</a>
 <div class="block"><span class="deprecationComment">Not supported anymore.</span></div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="org/eclipse/net4j/util/ui/StructuredContentProvider.html#refreshSynced-java.lang.Object-boolean-">org.eclipse.net4j.util.ui.StructuredContentProvider.refreshSynced(Object, boolean)</a>
 <div class="block"><span class="deprecationComment">Use <a href="org/eclipse/net4j/util/ui/StructuredContentProvider.html#refreshElement-java.lang.Object-boolean-"><code>StructuredContentProvider.refreshElement(Object, boolean)</code></a></span></div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="org/eclipse/net4j/util/om/OMBundle.html#setBundleContext-java.lang.Object-">org.eclipse.net4j.util.om.OMBundle.setBundleContext(Object)</a>
 <div class="block"><span class="deprecationComment">For internal use only.</span></div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="org/eclipse/net4j/util/ui/container/ElementWizardComposite.html#setDefaultDescription-java.lang.String-java.lang.String-">org.eclipse.net4j.util.ui.container.ElementWizardComposite.setDefaultDescription(String, String)</a>
 <div class="block"><span class="deprecationComment">Override <a href="org/eclipse/net4j/util/ui/container/ElementWizardComposite.html#getDefaultDescription-java.lang.String-"><code>ElementWizardComposite.getDefaultDescription(String)</code></a> instead.</span></div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="org/eclipse/net4j/util/ui/actions/LongRunningAction.html#setTotalWork-int-">org.eclipse.net4j.util.ui.actions.LongRunningAction.setTotalWork(int)</a>
 <div class="block"><span class="deprecationComment">Not supported anymore.</span></div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="org/eclipse/net4j/util/ui/actions/LongRunningActionDelegate.html#setTotalWork-int-">org.eclipse.net4j.util.ui.actions.LongRunningActionDelegate.setTotalWork(int)</a>
 <div class="block"><span class="deprecationComment">Not supported anymore.</span></div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="org/eclipse/net4j/util/ui/handlers/LongRunningHandler.html#setTotalWork-int-">org.eclipse.net4j.util.ui.handlers.LongRunningHandler.setTotalWork(int)</a>
 <div class="block"><span class="deprecationComment">Not supported anymore.</span></div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<a name="constructor">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<table class="deprecatedSummary" border="0" cellpadding="3" cellspacing="0" summary="Deprecated Constructors table, listing deprecated constructors, and an explanation">
+<caption><span>Deprecated Constructors</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colOne" scope="col">Constructor and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colOne"><a href="org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html#Challenge-java.lang.String-java.lang.String-java.lang.String-byte:A-">org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge(String, String, String, byte[])</a>
+<div class="block"><span class="deprecationComment">As of 3.8 public construction is no longer supported.</span></div>
 </td>
 </tr>
 </tbody>
@@ -326,6 +362,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

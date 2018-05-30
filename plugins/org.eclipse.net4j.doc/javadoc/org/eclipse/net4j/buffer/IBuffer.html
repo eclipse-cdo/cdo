@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6,"i20":6,"i21":6,"i22":6,"i23":6,"i24":6,"i25":6,"i26":6,"i27":6,"i28":6,"i29":6,"i30":6,"i31":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -220,96 +220,154 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#compact--">compact</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#flip--">flip</a></span>()</code>
 <div class="block">Turns the state of this buffer from <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>PUTTING</code></a> into <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#GETTING"><code>GETTING</code></a>.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#formatContent-boolean-">formatContent</a></span>(boolean&nbsp;showHeader)</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>byte</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#get--">get</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#get-byte:A-">get</a></span>(byte[]&nbsp;dst)</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getBufferProvider--">getBufferProvider</a></span>()</code>
 <div class="block">Returns the <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a> that has provided this buffer and that this buffer will be returned to when its
  <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#release--"><code>release()</code></a> method is called.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.nio.ByteBuffer</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getByteBuffer--">getByteBuffer</a></span>()</code>
 <div class="block">Returns the <code>ByteBuffer</code> that can be used for putting or getting data.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>short</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getCapacity--">getCapacity</a></span>()</code>
 <div class="block">Returns the capacity of this buffer.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>short</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getChannelID--">getChannelID</a></span>()</code>
 <div class="block">Returns the channel index value stored in the header of this buffer.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/IErrorHandler.html?is-external=true" title="class or interface in org.eclipse.net4j.util">IErrorHandler</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getErrorHandler--">getErrorHandler</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getInt--">getInt</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getLimit--">getLimit</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getPosition--">getPosition</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
+<td class="colFirst"><code>short</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getShort--">getShort</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/net4j/buffer/BufferState.html" title="enum in org.eclipse.net4j.buffer">BufferState</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getState--">getState</a></span>()</code>
 <div class="block">Returns the internal state of this buffer.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getString--">getString</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#hasRemaining--">hasRemaining</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#isCCAM--">isCCAM</a></span>()</code>
 <div class="block">Returns the <em>Close Channel After Me</em> flag.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#isEOS--">isEOS</a></span>()</code>
 <div class="block">Returns the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream (typically a signal) of buffers.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i20" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#put-byte-">put</a></span>(byte&nbsp;b)</code>&nbsp;</td>
+</tr>
+<tr id="i21" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#put-byte:A-int-int-">put</a></span>(byte[]&nbsp;src,
+   int&nbsp;offset,
+   int&nbsp;length)</code>&nbsp;</td>
+</tr>
+<tr id="i22" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#putShort-short-">putShort</a></span>(short&nbsp;value)</code>&nbsp;</td>
+</tr>
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#release--">release</a></span>()</code>
 <div class="block">Releases this buffer to its original <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#setCCAM-boolean-">setCCAM</a></span>(boolean&nbsp;ccam)</code>
 <div class="block">Sets the <em>Close Channel After Me</em> flag.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#setEOS-boolean-">setEOS</a></span>(boolean&nbsp;eos)</code>
 <div class="block">Sets the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream (typically a signal) of buffers.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#setErrorHandler-org.eclipse.net4j.util.IErrorHandler-">setErrorHandler</a></span>(<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/IErrorHandler.html?is-external=true" title="class or interface in org.eclipse.net4j.util">IErrorHandler</a>&nbsp;errorHandler)</code>&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i27" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#setLimit-int-">setLimit</a></span>(int&nbsp;limit)</code>&nbsp;</td>
+</tr>
+<tr id="i28" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#setPosition-int-">setPosition</a></span>(int&nbsp;position)</code>&nbsp;</td>
+</tr>
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.nio.ByteBuffer</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#startGetting-java.nio.channels.SocketChannel-">startGetting</a></span>(java.nio.channels.SocketChannel&nbsp;socketChannel)</code>
 <div class="block">Tries to read a <code>ByteBuffer</code> from a <code>SocketChannel</code> that can be used for getting data.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>java.nio.ByteBuffer</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#startPutting-short-">startPutting</a></span>(short&nbsp;channelID)</code>
 <div class="block">Returns a <code>ByteBuffer</code> that can be used for putting data.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#write-java.nio.channels.SocketChannel-">write</a></span>(java.nio.channels.SocketChannel&nbsp;socketChannel)</code>
 <div class="block">Tries to write the data of this buffer to a <code>SocketChannel</code>.</div>
@@ -692,13 +750,197 @@ var activeTableTab = "activeTableTab";
 <a name="setErrorHandler-org.eclipse.net4j.util.IErrorHandler-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setErrorHandler</h4>
 <pre>void&nbsp;setErrorHandler(<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/IErrorHandler.html?is-external=true" title="class or interface in org.eclipse.net4j.util">IErrorHandler</a>&nbsp;errorHandler)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
+</dl>
+</li>
+</ul>
+<a name="compact--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>compact</h4>
+<pre>void&nbsp;compact()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
+</li>
+</ul>
+<a name="getPosition--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPosition</h4>
+<pre>int&nbsp;getPosition()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
+</li>
+</ul>
+<a name="setPosition-int-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setPosition</h4>
+<pre>void&nbsp;setPosition(int&nbsp;position)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
+</li>
+</ul>
+<a name="getLimit--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLimit</h4>
+<pre>int&nbsp;getLimit()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
+</li>
+</ul>
+<a name="setLimit-int-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setLimit</h4>
+<pre>void&nbsp;setLimit(int&nbsp;limit)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
+</li>
+</ul>
+<a name="hasRemaining--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hasRemaining</h4>
+<pre>boolean&nbsp;hasRemaining()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
+</li>
+</ul>
+<a name="get--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre>byte&nbsp;get()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
+</li>
+</ul>
+<a name="get-byte:A-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre>void&nbsp;get(byte[]&nbsp;dst)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
+</li>
+</ul>
+<a name="getShort--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getShort</h4>
+<pre>short&nbsp;getShort()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
+</li>
+</ul>
+<a name="getInt--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getInt</h4>
+<pre>int&nbsp;getInt()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
+</li>
+</ul>
+<a name="getString--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getString</h4>
+<pre>java.lang.String&nbsp;getString()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
+</li>
+</ul>
+<a name="put-byte-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>put</h4>
+<pre>void&nbsp;put(byte&nbsp;b)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
+</li>
+</ul>
+<a name="put-byte:A-int-int-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>put</h4>
+<pre>void&nbsp;put(byte[]&nbsp;src,
+         int&nbsp;offset,
+         int&nbsp;length)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
+</li>
+</ul>
+<a name="putShort-short-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>putShort</h4>
+<pre>void&nbsp;putShort(short&nbsp;value)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
 </dl>
 </li>
 </ul>
@@ -770,6 +1012,6 @@ var activeTableTab = "activeTableTab";
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

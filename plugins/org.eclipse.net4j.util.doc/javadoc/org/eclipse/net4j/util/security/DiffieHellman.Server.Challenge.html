@@ -18,8 +18,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var methods = {"i0":10,"i1":42,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -141,8 +141,12 @@ extends java.lang.Object</pre>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html#Challenge-java.lang.String-java.lang.String-java.lang.String-byte:A-">Challenge</a></span>(java.lang.String&nbsp;serverRealm,
          java.lang.String&nbsp;secretAlgorithm,
-         java.lang.String&nbsp;cypherTransformation,
-         byte[]&nbsp;serverPubKeyEnc)</code>&nbsp;</td>
+         java.lang.String&nbsp;cipherTransformation,
+         byte[]&nbsp;serverPubKeyEnc)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 3.8 public construction is no longer supported.</span></div>
+</div>
+</td>
 </tr>
 </table>
 </li>
@@ -154,28 +158,40 @@ extends java.lang.Object</pre>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html#getCypherTransformation--">getCypherTransformation</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html#getCipherTransformation--">getCipherTransformation</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html#getSecretAlgorithm--">getSecretAlgorithm</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html#getCypherTransformation--">getCypherTransformation</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 3.8 use <a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html#getCipherTransformation--"><code>getCipherTransformation()</code></a>.</span></div>
+</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html#getSecretAlgorithm--">getSecretAlgorithm</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html#getSecretAlgorithmKeyLen--">getSecretAlgorithmKeyLen</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>byte[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html#getServerPubKeyEnc--">getServerPubKeyEnc</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html#getServerRealm--">getServerRealm</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html#write-org.eclipse.net4j.util.io.ExtendedDataOutput-">write</a></span>(<a href="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</a>&nbsp;out)</code>&nbsp;</td>
 </tr>
@@ -207,10 +223,12 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>Challenge</h4>
-<pre>public&nbsp;Challenge(java.lang.String&nbsp;serverRealm,
-                 java.lang.String&nbsp;secretAlgorithm,
-                 java.lang.String&nbsp;cypherTransformation,
-                 byte[]&nbsp;serverPubKeyEnc)</pre>
+<pre>@Deprecated
+public&nbsp;Challenge(java.lang.String&nbsp;serverRealm,
+                              java.lang.String&nbsp;secretAlgorithm,
+                              java.lang.String&nbsp;cipherTransformation,
+                              byte[]&nbsp;serverPubKeyEnc)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 3.8 public construction is no longer supported.</span></div>
 </li>
 </ul>
 <a name="Challenge-org.eclipse.net4j.util.io.ExtendedDataInput-">
@@ -258,6 +276,19 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;java.lang.String&nbsp;getServerRealm()</pre>
 </li>
 </ul>
+<a name="getSecretAlgorithmKeyLen--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSecretAlgorithmKeyLen</h4>
+<pre>public&nbsp;int&nbsp;getSecretAlgorithmKeyLen()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.8</dd>
+</dl>
+</li>
+</ul>
 <a name="getSecretAlgorithm--">
 <!--   -->
 </a>
@@ -267,13 +298,28 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;java.lang.String&nbsp;getSecretAlgorithm()</pre>
 </li>
 </ul>
+<a name="getCipherTransformation--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCipherTransformation</h4>
+<pre>public&nbsp;java.lang.String&nbsp;getCipherTransformation()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.8</dd>
+</dl>
+</li>
+</ul>
 <a name="getCypherTransformation--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCypherTransformation</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getCypherTransformation()</pre>
+<pre>@Deprecated
+public&nbsp;java.lang.String&nbsp;getCypherTransformation()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 3.8 use <a href="../../../../../org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html#getCipherTransformation--"><code>getCipherTransformation()</code></a>.</span></div>
 </li>
 </ul>
 <a name="getServerPubKeyEnc--">
@@ -353,6 +399,6 @@ extends java.lang.Object</pre>
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

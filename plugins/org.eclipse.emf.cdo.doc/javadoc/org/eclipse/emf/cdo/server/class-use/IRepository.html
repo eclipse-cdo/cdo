@@ -466,19 +466,23 @@
    java.lang.String&nbsp;name)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
+<td class="colLast"><span class="typeNameLabel">RepositoryActivityLog.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.html#getRepository--">getRepository</a></span>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
 <td class="colLast"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getRepository-org.w3c.dom.Element-">getRepository</a></span>(org.w3c.dom.Element&nbsp;repositoryConfig)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
 <td class="colLast"><span class="typeNameLabel">RepositoryUserManager.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.html#getRepository-org.eclipse.net4j.util.container.IManagedContainer-java.lang.String-">getRepository</a></span>(<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
              java.lang.String&nbsp;repositoryName)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
 <td class="colLast"><span class="typeNameLabel">ContainerRepositoryProvider.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ContainerRepositoryProvider.html#getRepository-java.lang.String-">getRepository</a></span>(java.lang.String&nbsp;name)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
 <td class="colLast"><span class="typeNameLabel">RepositoryConfigurator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#getRepository-java.lang.String-">getRepository</a></span>(java.lang.String&nbsp;repositoryType)</code>&nbsp;</td>
 </tr>
@@ -492,9 +496,18 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="typeNameLabel">RepositoryActivityLog.Rolling.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.Rolling.html#delegateChanged-org.eclipse.emf.cdo.server.IRepository-org.eclipse.emf.cdo.server.IRepository-">delegateChanged</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;oldRepository,
+               <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;newRepository)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>protected abstract char[]</code></td>
 <td class="colLast"><span class="typeNameLabel">RepositoryUserManager.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryUserManager.html#getPassword-org.eclipse.emf.cdo.server.IRepository-java.lang.String-">getPassword</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository,
            java.lang.String&nbsp;userID)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="typeNameLabel">RepositoryActivityLog.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.html#hookDelegate-org.eclipse.emf.cdo.server.IRepository-">hookDelegate</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -502,7 +515,15 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">RepositoryActivityLog.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.html#setRepository-org.eclipse.emf.cdo.server.IRepository-">setRepository</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">Store.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#setRepository-org.eclipse.emf.cdo.server.IRepository-">setRepository</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="typeNameLabel">RepositoryActivityLog.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.html#unhookDelegate-org.eclipse.emf.cdo.server.IRepository-">unhookDelegate</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -557,6 +578,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

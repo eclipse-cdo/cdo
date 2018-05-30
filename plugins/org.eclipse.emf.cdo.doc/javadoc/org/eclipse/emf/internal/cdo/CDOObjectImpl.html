@@ -569,7 +569,7 @@ implements <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.htm
 <td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/NotificationChain.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">NotificationChain</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/internal/cdo/CDOObjectImpl.html#eSetResource-org.eclipse.emf.ecore.resource.Resource.Internal-org.eclipse.emf.common.notify.NotificationChain-">eSetResource</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/Resource.Internal.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">Resource.Internal</a>&nbsp;resource,
             <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/NotificationChain.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">NotificationChain</a>&nbsp;notifications)</code>
-<div class="block">Code took from <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eSetResource-org.eclipse.emf.ecore.resource.Resource.Internal-org.eclipse.emf.common.notify.NotificationChain-" title="class or interface in org.eclipse.emf.ecore.impl"><code>BasicEObjectImpl.eSetResource(org.eclipse.emf.ecore.resource.Resource.Internal, org.eclipse.emf.common.notify.NotificationChain)</code></a> and modify it to detect when object are moved in the same
+<div class="block">Code taken from <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eSetResource-org.eclipse.emf.ecore.resource.Resource.Internal-org.eclipse.emf.common.notify.NotificationChain-" title="class or interface in org.eclipse.emf.ecore.impl"><code>BasicEObjectImpl.eSetResource(org.eclipse.emf.ecore.resource.Resource.Internal, org.eclipse.emf.common.notify.NotificationChain)</code></a> and modified to detect when objects are moved in the same
  context.</div>
 </td>
 </tr>
@@ -1430,9 +1430,9 @@ public final&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/
 <ul class="blockList">
 <li class="blockList">
 <h4>eBasicSetContainer</h4>
-<pre>public final&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/NotificationChain.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">NotificationChain</a>&nbsp;eBasicSetContainer(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">InternalEObject</a>&nbsp;newContainer,
-                                                  int&nbsp;newContainerFeatureID,
-                                                  <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/NotificationChain.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">NotificationChain</a>&nbsp;msgs)</pre>
+<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/NotificationChain.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">NotificationChain</a>&nbsp;eBasicSetContainer(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">InternalEObject</a>&nbsp;newContainer,
+                                            int&nbsp;newContainerFeatureID,
+                                            <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/NotificationChain.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">NotificationChain</a>&nbsp;msgs)</pre>
 <div class="block">Code taken from <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eBasicSetContainer-org.eclipse.emf.ecore.InternalEObject-int-" title="class or interface in org.eclipse.emf.ecore.impl"><code>BasicEObjectImpl.eBasicSetContainer(org.eclipse.emf.ecore.InternalEObject, int)</code></a> and modified to detect whether the object is moved in the
  same context. (E.g.: An object is moved from resA to resB. resA and resB belongs to the same CDORepositoryInfo.
  Without this special handling, a detach and newObject will be generated for the object moved)</div>
@@ -1454,7 +1454,7 @@ public final&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/
 <h4>eSetResource</h4>
 <pre>public final&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/NotificationChain.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">NotificationChain</a>&nbsp;eSetResource(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/Resource.Internal.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">Resource.Internal</a>&nbsp;resource,
                                             <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/NotificationChain.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">NotificationChain</a>&nbsp;notifications)</pre>
-<div class="block">Code took from <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eSetResource-org.eclipse.emf.ecore.resource.Resource.Internal-org.eclipse.emf.common.notify.NotificationChain-" title="class or interface in org.eclipse.emf.ecore.impl"><code>BasicEObjectImpl.eSetResource(org.eclipse.emf.ecore.resource.Resource.Internal, org.eclipse.emf.common.notify.NotificationChain)</code></a> and modify it to detect when object are moved in the same
+<div class="block">Code taken from <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/impl/BasicEObjectImpl.html?is-external=true#eSetResource-org.eclipse.emf.ecore.resource.Resource.Internal-org.eclipse.emf.common.notify.NotificationChain-" title="class or interface in org.eclipse.emf.ecore.impl"><code>BasicEObjectImpl.eSetResource(org.eclipse.emf.ecore.resource.Resource.Internal, org.eclipse.emf.common.notify.NotificationChain)</code></a> and modified to detect when objects are moved in the same
  context.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -1472,7 +1472,7 @@ public final&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/
 <ul class="blockList">
 <li class="blockList">
 <h4>eSetDirectResource</h4>
-<pre>protected final&nbsp;void&nbsp;eSetDirectResource(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/Resource.Internal.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">Resource.Internal</a>&nbsp;resource)</pre>
+<pre>protected&nbsp;void&nbsp;eSetDirectResource(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/Resource.Internal.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">Resource.Internal</a>&nbsp;resource)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true#eSetDirectResource-org.eclipse.emf.ecore.resource.Resource.Internal-" title="class or interface in org.eclipse.emf.ecore.impl">eSetDirectResource</a></code>&nbsp;in class&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/impl/MinimalEObjectImpl.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.impl">MinimalEObjectImpl</a></code></dd>
@@ -1716,16 +1716,16 @@ public final&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/
 </dl>
 </li>
 </ul>
-<a name="createMap-org.eclipse.emf.ecore.EStructuralFeature-">
+<a name="createList-org.eclipse.emf.ecore.EStructuralFeature-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>createMap</h4>
-<pre>protected final&nbsp;org.eclipse.emf.internal.cdo.CDOObjectImpl.CDOStoreEcoreEMap&nbsp;createMap(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;eStructuralFeature)</pre>
+<h4>createList</h4>
+<pre>protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</a>&lt;?&gt;&nbsp;createList(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;eStructuralFeature)</pre>
 <dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
-<dd>4.1</dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/impl/MinimalEStoreEObjectImpl.html?is-external=true#createList-org.eclipse.emf.ecore.EStructuralFeature-" title="class or interface in org.eclipse.emf.ecore.impl">createList</a></code>&nbsp;in class&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/impl/MinimalEStoreEObjectImpl.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.impl">MinimalEStoreEObjectImpl</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -1742,16 +1742,16 @@ public final&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/
 </dl>
 </li>
 </ul>
-<a name="createList-org.eclipse.emf.ecore.EStructuralFeature-">
+<a name="createMap-org.eclipse.emf.ecore.EStructuralFeature-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>createList</h4>
-<pre>protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</a>&lt;?&gt;&nbsp;createList(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;eStructuralFeature)</pre>
+<h4>createMap</h4>
+<pre>protected final&nbsp;org.eclipse.emf.internal.cdo.CDOObjectImpl.CDOStoreEcoreEMap&nbsp;createMap(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;eStructuralFeature)</pre>
 <dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/impl/MinimalEStoreEObjectImpl.html?is-external=true#createList-org.eclipse.emf.ecore.EStructuralFeature-" title="class or interface in org.eclipse.emf.ecore.impl">createList</a></code>&nbsp;in class&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/impl/MinimalEStoreEObjectImpl.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.impl">MinimalEStoreEObjectImpl</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.1</dd>
 </dl>
 </li>
 </ul>
@@ -1881,6 +1881,6 @@ public final&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

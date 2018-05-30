@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":10,"i3":10,"i4":10,"i5":6,"i6":10,"i7":10,"i8":6,"i9":10,"i10":10,"i11":6,"i12":10,"i13":10,"i14":6,"i15":6,"i16":6};
+var methods = {"i0":6,"i1":6,"i2":10,"i3":10,"i4":10,"i5":6,"i6":10,"i7":10,"i8":6,"i9":10,"i10":10,"i11":6,"i12":10,"i13":10,"i14":10,"i15":10,"i16":6,"i17":6,"i18":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -248,18 +248,26 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#getRepository--">getRepository</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#isExportSystemPackages--">isExportSystemPackages</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#setExportSystemPackages-boolean-">setExportSystemPackages</a></span>(boolean&nbsp;exportSystemPackages)</code>&nbsp;</td>
+</tr>
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>protected abstract java.io.OutputStream</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#startBlob-OUT-byte:A-long-">startBlob</a></span>(<a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="type parameter in CDOServerExporter">OUT</a>&nbsp;out,
          byte[]&nbsp;id,
          long&nbsp;size)</code>&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>protected abstract java.io.Writer</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#startClob-OUT-byte:A-long-">startClob</a></span>(<a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="type parameter in CDOServerExporter">OUT</a>&nbsp;out,
          byte[]&nbsp;id,
          long&nbsp;size)</code>&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>protected abstract void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#startPackageUnit-OUT-java.lang.String-org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type-long-java.lang.String-">startPackageUnit</a></span>(<a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="type parameter in CDOServerExporter">OUT</a>&nbsp;out,
                 java.lang.String&nbsp;id,
@@ -313,6 +321,32 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getRepository</h4>
 <pre>public final&nbsp;<a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;getRepository()</pre>
+</li>
+</ul>
+<a name="isExportSystemPackages--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isExportSystemPackages</h4>
+<pre>public&nbsp;boolean&nbsp;isExportSystemPackages()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
+</li>
+</ul>
+<a name="setExportSystemPackages-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setExportSystemPackages</h4>
+<pre>public&nbsp;void&nbsp;setExportSystemPackages(boolean&nbsp;exportSystemPackages)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
 </li>
 </ul>
 <a name="exportRepository-java.io.OutputStream-">
@@ -648,6 +682,6 @@ extends java.lang.Object</pre>
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

@@ -241,10 +241,6 @@
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a></code></td>
 <td class="colLast"><span class="typeNameLabel">Connector.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/Connector.html#provideBuffer--">provideBuffer</a></span>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a></code></td>
-<td class="colLast"><span class="typeNameLabel">Channel.SendQueue.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/Channel.SendQueue.html#remove--">remove</a></span>()</code>&nbsp;</td>
-</tr>
 </tbody>
 </table>
 <table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
@@ -272,42 +268,38 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="typeNameLabel">Channel.SendQueue.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/Channel.SendQueue.html#add-org.eclipse.net4j.buffer.IBuffer-">add</a></span>(<a href="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;o)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j">Channel.ReceiverWork</a></code></td>
 <td class="colLast"><span class="typeNameLabel">Channel.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/Channel.html#createReceiverWork-org.eclipse.net4j.buffer.IBuffer-">createReceiverWork</a></span>(<a href="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">Channel.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/Channel.html#handleBuffer-org.eclipse.net4j.buffer.IBuffer-">handleBuffer</a></span>(<a href="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
 <div class="block">Handles the given buffer.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">Channel.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/Channel.html#handleBufferFromMultiplexer-org.eclipse.net4j.buffer.IBuffer-">handleBufferFromMultiplexer</a></span>(<a href="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
 <div class="block">Handles a buffer sent by the multiplexer.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">InternalChannel.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/InternalChannel.html#handleBufferFromMultiplexer-org.eclipse.net4j.buffer.IBuffer-">handleBufferFromMultiplexer</a></span>(<a href="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><span class="typeNameLabel">Channel.SendQueue.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/Channel.SendQueue.html#offer-org.eclipse.net4j.buffer.IBuffer-">offer</a></span>(<a href="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;o)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">Channel.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/Channel.html#retainBuffer-org.eclipse.net4j.buffer.IBuffer-">retainBuffer</a></span>(<a href="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">Connector.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/Connector.html#retainBuffer-org.eclipse.net4j.buffer.IBuffer-">retainBuffer</a></span>(<a href="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">Channel.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/spi/net4j/Channel.html#sendBuffer-org.eclipse.net4j.buffer.IBuffer-">sendBuffer</a></span>(<a href="../../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>&nbsp;</td>
 </tr>
@@ -375,6 +367,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

@@ -18,8 +18,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":38,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -178,7 +178,7 @@ extends <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclips
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -203,7 +203,11 @@ extends <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclips
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBDatabase.html#getSchemaTransaction--">getSchemaTransaction</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBDatabase.html#getSchemaTransaction--">getSchemaTransaction</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 4.7 no longer supported in favor of support for multiple schema transactions.</span></div>
+</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -214,10 +218,14 @@ extends <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclips
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBDatabase.html#openSchemaTransaction--">openSchemaTransaction</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBDatabase.html#openSchemaTransaction-org.eclipse.net4j.db.IDBConnection-">openSchemaTransaction</a></span>(<a href="../../../../org/eclipse/net4j/db/IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a>&nbsp;connection)</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBDatabase.html#setStatementCacheCapacity-int-">setStatementCacheCapacity</a></span>(int&nbsp;statementCacheCapacity)</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/db/IDBDatabase.html#updateSchema-org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema-">updateSchema</a></span>(<a href="../../../../org/eclipse/net4j/db/IDBDatabase.RunnableWithSchema.html" title="interface in org.eclipse.net4j.db">IDBDatabase.RunnableWithSchema</a>&nbsp;runnable)</code>&nbsp;</td>
 </tr>
@@ -312,13 +320,28 @@ extends <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclips
 <pre><a href="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a>&nbsp;openSchemaTransaction()</pre>
 </li>
 </ul>
+<a name="openSchemaTransaction-org.eclipse.net4j.db.IDBConnection-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>openSchemaTransaction</h4>
+<pre><a href="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a>&nbsp;openSchemaTransaction(<a href="../../../../org/eclipse/net4j/db/IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a>&nbsp;connection)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.7</dd>
+</dl>
+</li>
+</ul>
 <a name="getSchemaTransaction--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getSchemaTransaction</h4>
-<pre><a href="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a>&nbsp;getSchemaTransaction()</pre>
+<pre>@Deprecated
+<a href="../../../../org/eclipse/net4j/db/IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a>&nbsp;getSchemaTransaction()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.7 no longer supported in favor of support for multiple schema transactions.</span></div>
 </li>
 </ul>
 <a name="updateSchema-org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema-">
@@ -440,6 +463,6 @@ extends <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclips
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

@@ -301,10 +301,14 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<td class="colLast"><span class="typeNameLabel">RepositoryActivityLog.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.html#formatView-org.eclipse.emf.cdo.server.IView-">formatView</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">InternalLockManager.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#getLocks-org.eclipse.emf.cdo.server.IView-">getLocks</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected abstract <a href="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorPool.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorPool</a></code></td>
 <td class="colLast"><span class="typeNameLabel">Store.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getWriterPool-org.eclipse.emf.cdo.server.IView-boolean-">getWriterPool</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
              boolean&nbsp;forReleasing)</code>
@@ -312,7 +316,7 @@
  the given session.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">InternalLockManager.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#lock-boolean-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-org.eclipse.emf.cdo.server.IView-java.util.Collection-long-">lock</a></span>(boolean&nbsp;explicit,
     <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
@@ -322,7 +326,7 @@
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;java.lang.Object,<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">InternalLockManager.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#lock2-boolean-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-org.eclipse.emf.cdo.server.IView-java.util.Collection-boolean-long-">lock2</a></span>(boolean&nbsp;explicit,
      <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
@@ -331,7 +335,7 @@
      boolean&nbsp;recursive,
      long&nbsp;timeout)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">InternalLockManager.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock-boolean-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-org.eclipse.emf.cdo.server.IView-java.util.Collection-">unlock</a></span>(boolean&nbsp;explicit,
       <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
@@ -340,14 +344,14 @@
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">InternalLockManager.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock-boolean-org.eclipse.emf.cdo.server.IView-">unlock</a></span>(boolean&nbsp;explicit,
       <a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;context)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;java.lang.Object,<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">InternalLockManager.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock2-boolean-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-org.eclipse.emf.cdo.server.IView-java.util.Collection-boolean-">unlock2</a></span>(boolean&nbsp;explicit,
        <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
@@ -355,10 +359,21 @@
        java.util.Collection&lt;? extends java.lang.Object&gt;&nbsp;objects,
        boolean&nbsp;recursive)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;java.lang.Object,<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">InternalLockManager.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock2-boolean-org.eclipse.emf.cdo.server.IView-">unlock2</a></span>(boolean&nbsp;explicit,
        <a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;context)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="typeNameLabel">RepositoryActivityLog.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.html#viewClosed-org.eclipse.emf.cdo.server.IView-int-">viewClosed</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+          int&nbsp;concurrentViews)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="typeNameLabel">RepositoryActivityLog.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.html#viewOpened-org.eclipse.emf.cdo.server.IView-int-int-">viewOpened</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+          int&nbsp;concurrentViews,
+          int&nbsp;views)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -427,6 +442,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

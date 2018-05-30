@@ -118,48 +118,54 @@
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a href="#org.eclipse.net4j.util.om.log">org.eclipse.net4j.util.om.log</a></td>
+<td class="colLast">
+<div class="block">Interfaces and classes for platform-independent logging.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.util.om.monitor">org.eclipse.net4j.util.om.monitor</a></td>
 <td class="colLast">
 <div class="block">Interfaces and classes for platform-independent progress monitoring.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.util.om.pref">org.eclipse.net4j.util.om.pref</a></td>
 <td class="colLast">
 <div class="block">Interfaces and classes for platform-independent preference management.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.util.options">org.eclipse.net4j.util.options</a></td>
 <td class="colLast">
 <div class="block">A framework for option containers that fire change events.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.util.ui">org.eclipse.net4j.util.ui</a></td>
 <td class="colLast">
 <div class="block">Reusable UI components.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.util.ui.actions">org.eclipse.net4j.util.ui.actions</a></td>
 <td class="colLast">
 <div class="block">Reusable actions and action delegates.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.util.ui.container">org.eclipse.net4j.util.ui.container</a></td>
 <td class="colLast">
 <div class="block">An element wizard framework for managed containers.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.util.ui.views">org.eclipse.net4j.util.ui.views</a></td>
 <td class="colLast">
 <div class="block">Helpers for Eclipse view parts.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.util.ui.widgets">org.eclipse.net4j.util.ui.widgets</a></td>
 <td class="colLast">
 <div class="block">A library with reusable widgets.</div>
@@ -433,12 +439,47 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="typeNameLabel">LifecycleHook.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/lifecycle/LifecycleHook.html#delegateEvent-T-org.eclipse.net4j.util.event.IEvent-">delegateEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/lifecycle/LifecycleHook.html" title="type parameter in LifecycleHook">T</a>&nbsp;delegate,
+             <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">LifecycleEventAdapter.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/lifecycle/LifecycleEventAdapter.html#notifyEvent-org.eclipse.net4j.util.event.IEvent-">notifyEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><span class="typeNameLabel">LifecycleEventAdapter.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/lifecycle/LifecycleEventAdapter.html#notifyOtherEvent-org.eclipse.net4j.util.event.IEvent-">notifyOtherEvent</a></span>(<a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.om.log">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a> in <a href="../../../../../../org/eclipse/net4j/util/om/log/package-summary.html">org.eclipse.net4j.util.om.log</a></h3>
+<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
+<caption><span>Classes in <a href="../../../../../../org/eclipse/net4j/util/om/log/package-summary.html">org.eclipse.net4j.util.om.log</a> that implement <a href="../../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event">IEvent</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Class and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.PropertiesEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.PropertiesEvent</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.RecoveryEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.RecoveryEvent</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.RollingLogEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.RollingLogEvent</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/log/RollingLog.SplitEvent.html" title="class in org.eclipse.net4j.util.om.log">RollingLog.SplitEvent</a></span></code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -665,6 +706,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

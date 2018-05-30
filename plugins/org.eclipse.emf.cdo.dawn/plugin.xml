@@ -11,25 +11,25 @@
 	  Martin Fluegge - initial API and implementation
 -->
 <plugin>
-   <extension-point id="org.eclipse.emf.cdo.dawn.listeners" name="DawnListeners" schema="schema/org.eclipse.emf.cdo.dawn.listeners.exsd"/>
-   <extension-point id="org.eclipse.emf.cdo.dawn.editpartstylizers" name="Dawn EditPart Stylizers" schema="schema/org.eclipse.emf.cdo.dawn.editpartstylizers.exsd"/>
-   <extension-point id="org.eclipse.emf.cdo.dawn.elementstylizerfactory" name="DawnElementStylizerFactory" schema="schema/org.eclipse.emf.cdo.dawn.elementstylizerfactory.exsd"/>
-   <extension
-         point="org.eclipse.emf.ecore.extension_parser">
+   <extension-point id="listeners" name="DawnListeners" schema="schema/org.eclipse.emf.cdo.dawn.listeners.exsd"/>
+   <extension-point id="editpartstylizers" name="Dawn EditPart Stylizers" schema="schema/org.eclipse.emf.cdo.dawn.editpartstylizers.exsd"/>
+   <extension-point id="elementstylizerfactory" name="Dawn Element Stylizer Factory" schema="schema/org.eclipse.emf.cdo.dawn.elementstylizerfactory.exsd"/>
+   
+   <extension point="org.eclipse.emf.ecore.extension_parser">
       <parser
             class="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl"
             type="org.eclipse.emf.cdo.dawn.dawnresourceparser">
       </parser>
    </extension>
-   <extension
-         point="org.eclipse.emf.ecore.protocol_parser">
+   
+   <extension point="org.eclipse.emf.ecore.protocol_parser">
       <parser
             class="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl"
             protocolName="dawn">
       </parser>
    </extension>
- <extension
-          point="org.eclipse.ui.views">
+   
+   <extension point="org.eclipse.ui.views">
        <category
              id="org.eclipse.emf.cdo.dawn.ui"
              name="Dawn">
@@ -84,8 +84,8 @@
           </action>
        </objectContribution>
 	</extension>-->
-    <extension
-          point="org.eclipse.ui.preferencePages">
+	
+    <extension point="org.eclipse.ui.preferencePages">
        <page
              category="org.eclipse.emf.cdo.ui.CDOPreferencePage"
              class="org.eclipse.emf.cdo.dawn.preferences.DawnRemotePreferencePage"
@@ -93,14 +93,14 @@
              name="Dawn Remote Preferences">
        </page>
     </extension>
-    <extension
-          point="org.eclipse.core.runtime.preferences">
+    
+    <extension point="org.eclipse.core.runtime.preferences">
        <initializer
              class="org.eclipse.emf.cdo.dawn.preferences.PreferenceInitializer">
        </initializer>
     </extension>
-   <!-- <extension
-          point="org.eclipse.ui.commands">
+    
+   <!-- <extension point="org.eclipse.ui.commands">
        <command
              id="org.eclipse.emf.cdo.dawn.handleConflict"
              name="HandleConflict">
@@ -114,4 +114,5 @@
              name="UnlockObjects">
        </command>
     </extension>-->
+    
 </plugin>

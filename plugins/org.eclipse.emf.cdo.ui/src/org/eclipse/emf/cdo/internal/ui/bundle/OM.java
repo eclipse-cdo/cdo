@@ -44,8 +44,6 @@ public abstract class OM
 
   public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
 
-  public static final OMTracer TEST = BUNDLE.tracer("test"); //$NON-NLS-1$
-
   public static final OMLogger LOG = BUNDLE.logger();
 
   public static final OMPreferences PREFS = BUNDLE.preferences();

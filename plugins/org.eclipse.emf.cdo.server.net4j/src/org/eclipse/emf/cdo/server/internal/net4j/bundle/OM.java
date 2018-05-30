@@ -31,8 +31,6 @@ public abstract class OM
 
   public static final OMTracer DEBUG_PROTOCOL = DEBUG.tracer("protocol"); //$NON-NLS-1$
 
-  public static final OMTracer DEBUG_SESSION = DEBUG.tracer("session"); //$NON-NLS-1$
-
   public static final OMLogger LOG = BUNDLE.logger();
 
   /**

@@ -26,6 +26,10 @@ public abstract class OM
 
   public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
 
+  /**
+   * @deprecated
+   */
+  @Deprecated
   public static final OMTracer DEBUG_OBJECT = DEBUG.tracer("object"); //$NON-NLS-1$
 
   public static final OMLogger LOG = BUNDLE.logger();

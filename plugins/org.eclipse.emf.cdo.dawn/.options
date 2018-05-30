@@ -1,17 +1,3 @@
 # Debugging and tracing options
 
 org.eclipse.emf.cdo.dawn/debug = true
-
-org.eclipse.emf.cdo.dawn/debug.session = true
-org.eclipse.emf.cdo.dawn/debug.session.model = true
-org.eclipse.emf.cdo.dawn/debug.session.revision = true
-
-org.eclipse.emf.cdo.dawn/debug.view = true
-org.eclipse.emf.cdo.dawn/debug.view.transaction = true
-org.eclipse.emf.cdo.dawn/debug.view.audit = true
-
-org.eclipse.emf.cdo.dawn/debug.object = true
-org.eclipse.emf.cdo.dawn/debug.object.statemachine = true
-org.eclipse.emf.cdo.dawn/debug.object.store = true
-
-org.eclipse.emf.cdo.dawn/load.resource.before.notification = true

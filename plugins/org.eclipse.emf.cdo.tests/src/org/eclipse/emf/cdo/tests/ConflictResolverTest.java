@@ -191,7 +191,7 @@ public class ConflictResolverTest extends AbstractCDOTest
     transaction1.options().addConflictResolver(createConflictResolver());
     CDOResource resource1 = transaction1.getOrCreateResource(getResourcePath("/res1"));
     EList<EObject> contents1 = resource1.getContents();
-    // transaction1.commit();
+    transaction1.commit();
     contents1.add(getModel1Factory().createAddress());
     contents1.add(getModel1Factory().createAddress());
 

@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.model1.Address;
@@ -180,6 +181,42 @@ public class ConflictResolverTest extends AbstractCDOTest
     // Resolver should be triggered.
     commitAndSync(transaction2, transaction1);
     commitAndSync(transaction1, transaction2);
+  }
+
+  public void testMergeLocalChangesPerFeature_Bug3() throws Exception
+  {
+    CDOSession session = openSession();
+
+    CDOTransaction transaction1 = session.openTransaction();
+    transaction1.options().addConflictResolver(createConflictResolver());
+    CDOResource resource1 = transaction1.getOrCreateResource(getResourcePath("/res1"));
+    EList<EObject> contents1 = resource1.getContents();
+    // transaction1.commit();
+    contents1.add(getModel1Factory().createAddress());
+    contents1.add(getModel1Factory().createAddress());
+
+    // ----------------------------
+
+    CDOTransaction transaction2 = session.openTransaction();
+    transaction2.options().addConflictResolver(createConflictResolver());
+    CDOResource resource2 = transaction2.getOrCreateResource(getResourcePath("/res1"));
+    EList<EObject> contents2 = resource2.getContents();
+    contents2.add(getModel1Factory().createAddress());
+    contents2.remove(0);
+
+    // ----------------------------
+
+    CDOTransaction transaction3 = session.openTransaction();
+    transaction3.options().addConflictResolver(createConflictResolver());
+    CDOResource resource3 = transaction3.getOrCreateResource(getResourcePath("/res1"));
+    EList<EObject> contents3 = resource3.getContents();
+    contents3.add(getModel1Factory().createAddress());
+    contents3.add(getModel1Factory().createAddress());
+
+    // Resolvers should be triggered.
+    commitAndSync(transaction3, transaction2, transaction1);
+    commitAndSync(transaction2, transaction1, transaction3);
+    commitAndSync(transaction1, transaction2, transaction3);
   }
 
   public void testMerge_ManyValue() throws Exception

@@ -232,6 +232,25 @@
       <sourceLocator
           rootFolder="${cdo.git.clone.location}"/>
       <repositoryList
+          name="2018-09">
+        <repository
+            url="http://download.eclipse.org/releases/photon/201806271001"/>
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.8"/>
+        <repository
+            url="http://download.eclipse.org/tools/orbit/downloads/latest-S"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="http://download.eclipse.org/nebula/releases/latest"/>
+        <repository
+            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+        <repository
+            url="http://www.elver.org/eclipse/2.1.0/update"/>
+        <repository
+            url="${aspectj.repository}"/>
+      </repositoryList>
+      <repositoryList
           name="Photon">
         <repository
             url="http://download.eclipse.org/releases/photon"/>
@@ -300,73 +319,7 @@
         includeSources="false"
         includeBinaryEquivalents="false">
       <requirement
-          name="org.eclipse.emf.cdo.dawn.category"/>
-      <requirement
-          name="org.eclipse.emf.cdo.category"/>
-      <requirement
-          name="org.eclipse.emf.cdo.server.category"/>
-      <requirement
-          name="org.eclipse.emf.cdo.server.hibernate.category"/>
-      <requirement
-          name="org.eclipse.net4j.db.category"/>
-      <requirement
-          name="org.eclipse.net4j.category"/>
-      <requirement
-          name="org.eclipse.net4j.util.category"/>
-      <requirement
-          name="org.eclipse.emf.cdo.releng.hidden.category"/>
-      <requirement
-          name="org.eclipse.emf.cdo.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.compare.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.epp.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.explorer.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.migrator.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.sdk.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.server.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.server.db.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.server.db4o.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.server.hibernate.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.server.lissome.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.server.mongodb.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.server.objectivity.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.db.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.db.derby.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.db.h2.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.db.hsqldb.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.db.mysql.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.db.oracle.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.db.postgresql.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.sdk.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.ui.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.util.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.util.ui.feature.group"/>
+          name="org.eclipse.emf.cdo.all.feature.group"/>
       <requirement
           name="org.eclipse.platform.feature.group"/>
       <requirement
@@ -375,6 +328,27 @@
           name="org.eclipse.pde.feature.group"/>
       <requirement
           name="org.eclipse.equinox.executable.feature.group"/>
+      <repositoryList
+          name="4.7">
+        <repository
+            url="http://download.eclipse.org/modeling/emf/cdo/drops/R20180613-0111"/>
+        <repository
+            url="http://download.eclipse.org/releases/photon/201806271001"/>
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.8"/>
+        <repository
+            url="http://download.eclipse.org/modeling/mdt/uml2/updates/5.4"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="http://download.eclipse.org/nebula/releases/1.4.0"/>
+        <repository
+            url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
+        <repository
+            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+        <repository
+            url="http://www.elver.org/eclipse/2.1.0/update"/>
+      </repositoryList>
       <repositoryList
           name="4.6">
         <repository
@@ -687,7 +661,71 @@
         url="${aspectj.repository}"/>
   </setupTask>
   <stream name="master"
-      label="4.7 Integration (Photon)">
+      label="4.8 Integration (2018-09)">
+    <setupTask
+        xsi:type="setup.p2:P2Task">
+      <requirement
+          name="org.eclipse.emf.sdk.feature.group"/>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:RedirectionTask"
+        disabled="true"
+        sourceURL="http://download.eclipse.org/eclipse/updates/4.9-I-builds"
+        targetURL="http://download.eclipse.org/eclipse/updates/4.9milestones"/>
+    <setupTask
+        xsi:type="setup:EclipseIniTask"
+        option="-Doomph.redirection.cdosetup"
+        value="=https://git.eclipse.org/c/cdo/cdo.git/plain/releng/org.eclipse.emf.cdo.releng/CDO.setup->${cdo.git.clone.location|uri}/releng/org.eclipse.emf.cdo.releng/CDO.setup"
+        vm="true"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="cdo.git.branch"
+        value="master"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="cdo.target.platform"
+        value="2018-09"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="cdo.bugzilla.version"
+        value="4.8"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="cdo.baseline.version"
+        value="4.7"/>
+    <setupTask
+        xsi:type="jdt:JRETask"
+        version="JavaSE-1.8"
+        location="${jre.location-1.8}"/>
+    <setupTask
+        xsi:type="pde:APIBaselineFromTargetTask"
+        name="CDO 4.7"
+        targetName="Baseline Target"/>
+    <setupTask
+        xsi:type="setup.workingsets:WorkingSetTask">
+      <workingSet
+          name="Infrastructure"
+          id="CDO Infrastructure">
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="org\.eclipse\.emf\.cdo\.releng\.promotion.*"/>
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="org\.eclipse\.emf\.cdo\.releng\.doc\.supplemental.*"/>
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="cdo\.www.*"/>
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="org\.eclipse\.simrel\.build.*"/>
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="com\.ibm\.db2\.jcc.*"/>
+      </workingSet>
+    </setupTask>
+  </stream>
+  <stream name="4.7-maintenance"
+      label="4.7 Maintenance (Photon)">
     <setupTask
         xsi:type="setup.p2:P2Task">
       <requirement
@@ -697,11 +735,6 @@
         xsi:type="setup:RedirectionTask"
         sourceURL="http://download.eclipse.org/eclipse/updates/4.8-I-builds"
         targetURL="http://download.eclipse.org/eclipse/updates/4.8milestones"/>
-    <setupTask
-        xsi:type="setup:EclipseIniTask"
-        option="-Doomph.redirection.cdosetup"
-        value="=https://git.eclipse.org/c/cdo/cdo.git/plain/releng/org.eclipse.emf.cdo.releng/CDO.setup->${cdo.git.clone.location|uri}/releng/org.eclipse.emf.cdo.releng/CDO.setup"
-        vm="true"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.git.branch"

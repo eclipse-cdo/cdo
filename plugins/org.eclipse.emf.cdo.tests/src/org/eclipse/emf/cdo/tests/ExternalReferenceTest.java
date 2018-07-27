@@ -55,6 +55,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -395,7 +396,8 @@ public class ExternalReferenceTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction(resourceSet);
 
     Supplier supplier = getModel1Factory().createSupplier();
-    supplier.getPurchaseOrders().add(externalObject);
+    EList<PurchaseOrder> purchaseOrders = supplier.getPurchaseOrders();
+    purchaseOrders.add(externalObject);
 
     CDOResource resource = transaction.createResource(getResourcePath("/internal"));
     resource.getContents().add(supplier);
@@ -404,6 +406,12 @@ public class ExternalReferenceTest extends AbstractCDOTest
     CDORevision salesOrderRevision = CDOUtil.getCDOObject(supplier).cdoRevision();
     Object externalReference = salesOrderRevision.data().get(getModel1Package().getSupplier_PurchaseOrders(), 0);
     assertInstanceOf(CDOIDExternal.class, externalReference);
+
+    assertEquals(externalObject, purchaseOrders.get(0));
+    assertEquals(0, purchaseOrders.indexOf(externalObject));
+    assertEquals(0, purchaseOrders.lastIndexOf(externalObject));
+    assertTrue(purchaseOrders.contains(externalObject));
+    assertTrue(purchaseOrders.containsAll(Collections.singleton(externalObject))); // Bug 537081.
   }
 
   public void testWithXMLAndPrefetching() throws Exception

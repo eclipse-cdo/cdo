@@ -329,18 +329,39 @@ public final class CDOStoreImpl implements CDOStore
           TRACER.format("contains({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
         }
 
-        Object convertedValue = convertToCDO(cdoObject, feature, value);
+        // Don't use CDORevision.contains() for EReference features because
+        // CDOIDExternal isn't converted to an EObject and, hence, fails to compare
+        // properly to an external EObject.
 
         InternalCDORevision revision = readRevision(cdoObject);
-        boolean result = revision.contains(feature, convertedValue);
+        int size = revision.size(feature);
 
-        // Special handling of detached (TRANSIENT) objects, see bug 354395
-        if (!result && value != convertedValue && value instanceof EObject)
+        if (value == null)
         {
-          result = revision.contains(feature, value);
+          for (int i = 0; i < size; i++)
+          {
+            Object element = revision.get(feature, i);
+            Object emfElement = convertToEMF(eObject, revision, feature, i, element);
+            if (emfElement == null)
+            {
+              return true;
+            }
+          }
+        }
+        else
+        {
+          for (int i = 0; i < size; i++)
+          {
+            Object element = revision.get(feature, i);
+            Object emfElement = convertToEMF(eObject, revision, feature, i, element);
+            if (value.equals(emfElement))
+            {
+              return true;
+            }
+          }
         }
 
-        return result;
+        return false;
       }
       finally
       {
@@ -753,26 +774,26 @@ public final class CDOStoreImpl implements CDOStore
    */
   public Object resolveProxy(InternalCDORevision revision, EStructuralFeature feature, int index, Object value)
   {
-    synchronized (view.getViewMonitor())
+    if (value instanceof CDOElementProxy)
     {
-      view.lockView();
-
-      try
+      synchronized (view.getViewMonitor())
       {
-        if (value instanceof CDOElementProxy)
+        view.lockView();
+
+        try
         {
           // Resolve proxy
           CDOElementProxy proxy = (CDOElementProxy)value;
           value = view.getSession().resolveElementProxy(revision, feature, index, proxy.getIndex());
         }
-
-        return value;
-      }
-      finally
-      {
-        view.unlockView();
+        finally
+        {
+          view.unlockView();
+        }
       }
     }
+
+    return value;
   }
 
   /**

@@ -79,6 +79,7 @@ import java.util.Collections;
  *
  * @author Christian W. Damus (CEA LIST)
  */
+@SuppressWarnings("unchecked")
 public abstract class TableSection<T extends EObject> extends AbstractSectionPart<Directory>
 {
   private final Class<T> elementType;
@@ -186,7 +187,6 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
     globalAction.install(viewer);
   }
 
-  @SuppressWarnings("unchecked")
   protected IAction createAddNewAction()
   {
     Command dummy = createCreateNewCommand();

@@ -77,7 +77,7 @@ public class SSLBuffer extends Buffer
       put(buf.array(), 0, limit);
       buf.position(limit);
       buf.compact();
-      flip();
+      getByteBuffer().flip();
 
       setChannelID(getShort());
       short payloadSize = getShort();
@@ -97,7 +97,7 @@ public class SSLBuffer extends Buffer
       setLimit(payloadSize);
       setState(BufferState.READING_BODY);
 
-      flip();
+      getByteBuffer().flip();
       setState(BufferState.GETTING);
 
       return getByteBuffer();
@@ -158,7 +158,7 @@ public class SSLBuffer extends Buffer
               + (isEOS() ? " (EOS)" : "") + StringUtil.NL + formatContent(false)); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
-        flip();
+        getByteBuffer().flip();
         putShort(getChannelID());
         putShort((short)payloadSize);
         setPosition(0);

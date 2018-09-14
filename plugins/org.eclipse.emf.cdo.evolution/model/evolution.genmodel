@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.evolution/src" creationIcons="false"
+    modelPluginID="org.eclipse.emf.cdo.evolution" modelName="Evolution" modelPluginClass="org.eclipse.emf.cdo.evolution.impl.EvolutionPlugin"
+    rootExtendsInterface="org.eclipse.emf.cdo.CDOObject" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl"
+    testsDirectory="" importerID="org.eclipse.emf.importer.cdo" featureDelegation="Dynamic"
+    complianceLevel="5.0" copyrightFields="false" optimizedHasChildren="true" colorProviders="true"
+    fontProviders="true" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
+    operationReflection="true" importOrganizing="true" decoration="Live" styleProviders="true"
+    cleanup="true" autoResizeProperties="true" findAction="true" collapseAllAction="true">
+  <foreignModel>evolution.ecore</foreignModel>
+  <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
+  <genPackages prefix="Evolution" basePackage="org.eclipse.emf.cdo" disposableProviderFactory="true"
+      dataTypeConverters="true" multipleEditorPages="false" extensibleProviderFactory="true"
+      childCreationExtenders="true" ecorePackage="evolution.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="evolution.ecore#//ChangeKind">
+      <genEnumLiterals ecoreEnumLiteral="evolution.ecore#//ChangeKind/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="evolution.ecore#//ChangeKind/CHANGED"/>
+      <genEnumLiterals ecoreEnumLiteral="evolution.ecore#//ChangeKind/REMOVED"/>
+      <genEnumLiterals ecoreEnumLiteral="evolution.ecore#//ChangeKind/ADDED"/>
+      <genEnumLiterals ecoreEnumLiteral="evolution.ecore#//ChangeKind/COPIED"/>
+      <genEnumLiterals ecoreEnumLiteral="evolution.ecore#//ChangeKind/MOVED"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="evolution.ecore#//URI"/>
+    <genClasses image="false" ecoreClass="evolution.ecore#//ModelSet">
+      <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//ModelSet/change"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference evolution.ecore#//ModelSet/migrations"/>
+      <genOperations ecoreOperation="evolution.ecore#//ModelSet/getEvolution"/>
+      <genOperations ecoreOperation="evolution.ecore#//ModelSet/getVersion"/>
+      <genOperations ecoreOperation="evolution.ecore#//ModelSet/getPreviousRelease"/>
+      <genOperations ecoreOperation="evolution.ecore#//ModelSet/getRootPackages"/>
+      <genOperations ecoreOperation="evolution.ecore#//ModelSet/getAllPackages"/>
+      <genOperations ecoreOperation="evolution.ecore#//ModelSet/containsElement">
+        <genParameters ecoreParameter="evolution.ecore#//ModelSet/containsElement/modelElement"/>
+      </genOperations>
+      <genOperations ecoreOperation="evolution.ecore#//ModelSet/getElement">
+        <genParameters ecoreParameter="evolution.ecore#//ModelSet/getElement/id"/>
+        <genTypeParameters ecoreTypeParameter="evolution.ecore#//ModelSet/getElement/T"/>
+      </genOperations>
+      <genOperations ecoreOperation="evolution.ecore#//ModelSet/getElementID">
+        <genParameters ecoreParameter="evolution.ecore#//ModelSet/getElementID/modelElement"/>
+      </genOperations>
+      <genOperations ecoreOperation="evolution.ecore#//ModelSet/getElementID.1">
+        <genParameters ecoreParameter="evolution.ecore#//ModelSet/getElementID.1/modelElement"/>
+        <genParameters ecoreParameter="evolution.ecore#//ModelSet/getElementID.1/considerOldIDs"/>
+      </genOperations>
+      <genOperations ecoreOperation="evolution.ecore#//ModelSet/compare">
+        <genParameters ecoreParameter="evolution.ecore#//ModelSet/compare/other"/>
+      </genOperations>
+      <genOperations ecoreOperation="evolution.ecore#//ModelSet/getMigration">
+        <genParameters ecoreParameter="evolution.ecore#//ModelSet/getMigration/diagnosticID"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="evolution.ecore#//Model">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Model/evolution"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evolution.ecore#//Model/uRI"/>
+      <genFeatures property="Readonly" children="true" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Model/rootPackage"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Model/allPackages"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Model/referencedPackages"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Model/missingPackages"/>
+    </genClasses>
+    <genClasses ecoreClass="evolution.ecore#//Evolution">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evolution.ecore#//Evolution/useEcorePackage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evolution.ecore#//Evolution/useEresourcePackage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evolution.ecore#//Evolution/useEtypesPackage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evolution.ecore#//Evolution/uniqueNamespaces"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference evolution.ecore#//Evolution/models"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Evolution/rootPackages"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Evolution/allPackages"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Evolution/missingPackages"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Evolution/releases"/>
+      <genFeatures property="Readonly" children="true" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Evolution/orderedReleases"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Evolution/latestRelease"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute evolution.ecore#//Evolution/nextReleaseVersion"/>
+      <genOperations ecoreOperation="evolution.ecore#//Evolution/getRelease">
+        <genParameters ecoreParameter="evolution.ecore#//Evolution/getRelease/version"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="evolution.ecore#//Release">
+      <genFeatures property="None" notify="false" createChild="false" propertySortChoices="true"
+          ecoreFeature="ecore:EReference evolution.ecore#//Release/evolution"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evolution.ecore#//Release/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evolution.ecore#//Release/date"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Release/nextRelease"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Release/previousRelease"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference evolution.ecore#//Release/rootPackages"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Release/allPackages"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="evolution.ecore#//Change">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Change/parent"/>
+      <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Change/children"/>
+      <genOperations ecoreOperation="evolution.ecore#//Change/getModelSetChange"/>
+      <genOperations ecoreOperation="evolution.ecore#//Change/getOldElementFor">
+        <genParameters ecoreParameter="evolution.ecore#//Change/getOldElementFor/newElement"/>
+      </genOperations>
+      <genOperations ecoreOperation="evolution.ecore#//Change/getNewElementsFor">
+        <genParameters ecoreParameter="evolution.ecore#//Change/getNewElementsFor/oldElement"/>
+      </genOperations>
+      <genOperations ecoreOperation="evolution.ecore#//Change/getOldModelSet"/>
+      <genOperations ecoreOperation="evolution.ecore#//Change/getNewModelSet"/>
+    </genClasses>
+    <genClasses ecoreClass="evolution.ecore#//ModelSetChange">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evolution.ecore#//ModelSetChange/oldModelSet"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evolution.ecore#//ModelSetChange/newModelSet"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="evolution.ecore#//ElementChange">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evolution.ecore#//ElementChange/oldElement"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evolution.ecore#//ElementChange/newElement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evolution.ecore#//ElementChange/kind"/>
+      <genOperations ecoreOperation="evolution.ecore#//ElementChange/getElement"/>
+    </genClasses>
+    <genClasses ecoreClass="evolution.ecore#//PropertyChange">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evolution.ecore#//PropertyChange/feature"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evolution.ecore#//PropertyChange/oldValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evolution.ecore#//PropertyChange/newValue"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute evolution.ecore#//PropertyChange/kind"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="evolution.ecore#//Migration">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Migration/modelSet"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute evolution.ecore#//Migration/diagnosticID"/>
+    </genClasses>
+    <genClasses ecoreClass="evolution.ecore#//FeaturePathMigration">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evolution.ecore#//FeaturePathMigration/fromClass"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evolution.ecore#//FeaturePathMigration/toClass"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference evolution.ecore#//FeaturePathMigration/featurePath"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

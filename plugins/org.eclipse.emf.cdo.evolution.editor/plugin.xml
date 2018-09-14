@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.net4j.util.factories">
+      <factory
+            productGroup="org.eclipse.emf.cdo.evolution.diagnosticResolutionGenerators"
+            type="default"
+            class="org.eclipse.emf.cdo.evolution.presentation.quickfix.DefaultDiagnosticResolutionGenerator$Factory"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated evolution -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="org.eclipse.emf.cdo.evolution.presentation.EvolutionModelWizardID"
+            name="%_UI_EvolutionModelWizard_label"
+            class="org.eclipse.emf.cdo.evolution.presentation.EvolutionModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/EvolutionModelFile.gif">
+         <description>%_UI_EvolutionModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated evolution -->
+      <editor
+            id="org.eclipse.emf.cdo.evolution.presentation.EvolutionEditorID"
+            name="%_UI_EvolutionEditor_label"
+            icon="icons/full/obj16/EvolutionModelFile.gif"
+            extensions="evolution"
+            class="org.eclipse.emf.cdo.evolution.presentation.EvolutionEditor"
+            contributorClass="org.eclipse.emf.cdo.evolution.presentation.EvolutionActionBarContributor">
+      </editor>
+   </extension>
+   
+</plugin>

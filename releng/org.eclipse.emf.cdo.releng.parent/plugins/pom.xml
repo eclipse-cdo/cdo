@@ -43,6 +43,7 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.emf.cdo.doc</module>
     <module>../../../plugins/org.eclipse.emf.cdo.ecore</module>
     <module>../../../plugins/org.eclipse.emf.cdo.edit</module>
+    <module>../../../plugins/org.eclipse.emf.cdo.evolution</module>
     <module>../../../plugins/org.eclipse.emf.cdo.examples</module>
     <module>../../../plugins/org.eclipse.emf.cdo.examples.client</module>
     <module>../../../plugins/org.eclipse.emf.cdo.examples.client.offline</module>

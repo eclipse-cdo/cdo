@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated evolution -->
+      <factory
+            uri="http://www.eclipse.org/emf/CDO/evolution/1.0.0"
+            class="org.eclipse.emf.cdo.evolution.provider.EvolutionItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource
+               org.eclipse.emf.edit.provider.IItemColorProvider
+               org.eclipse.emf.edit.provider.IItemFontProvider
+               org.eclipse.emf.edit.provider.IItemStyledLabelProvider"/>
+   </extension>
+
+</plugin>

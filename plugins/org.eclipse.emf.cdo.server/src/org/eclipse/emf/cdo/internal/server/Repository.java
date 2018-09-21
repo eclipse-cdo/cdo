@@ -2154,6 +2154,9 @@ public class Repository extends Container<Object> implements InternalRepository,
       else
       {
         timeStamp = getTimeStamp();
+        initPackage(timeStamp, EcorePackage.eINSTANCE);
+        initPackage(timeStamp, EresourcePackage.eINSTANCE);
+        initPackage(timeStamp, EtypesPackage.eINSTANCE);
       }
 
       if (initialPackages != null)
@@ -2455,8 +2458,8 @@ public class Repository extends Container<Object> implements InternalRepository,
       }
       else
       {
-        readPackageUnits();
         initSystemPackages(false);
+        readPackageUnits();
 
         readRootResource();
       }

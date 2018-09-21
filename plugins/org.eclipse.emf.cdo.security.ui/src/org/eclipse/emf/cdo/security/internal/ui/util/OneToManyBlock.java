@@ -149,7 +149,6 @@ public class OneToManyBlock
     editorActionBars = actionBars;
   }
 
-  @SuppressWarnings("unchecked")
   public void createControl(Composite parent, FormToolkit toolkit)
   {
     final EReference reference = getConfiguration().getModelReference();

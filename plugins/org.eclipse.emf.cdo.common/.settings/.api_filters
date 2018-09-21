@@ -262,6 +262,12 @@
                 <message_argument value="CDORawReplicationContext"/>
             </message_arguments>
         </filter>
+        <filter id="576782386">
+            <message_arguments>
+                <message_argument value="CDOReplicationInfo"/>
+                <message_argument value="CDORawReplicationContext"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/common/admin/AbstractCDOAdmin.java" type="org.eclipse.emf.cdo.spi.common.admin.AbstractCDOAdmin">
         <filter id="576725006">
@@ -377,6 +383,12 @@
     </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.java" type="org.eclipse.emf.cdo.spi.common.revision.InternalCDOList">
         <filter id="576778288">
+            <message_arguments>
+                <message_argument value="CDOList"/>
+                <message_argument value="InternalCDOList"/>
+            </message_arguments>
+        </filter>
+        <filter id="576782386">
             <message_arguments>
                 <message_argument value="CDOList"/>
                 <message_argument value="InternalCDOList"/>

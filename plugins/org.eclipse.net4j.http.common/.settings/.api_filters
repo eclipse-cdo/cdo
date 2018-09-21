@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.net4j.http.common" version="2">
+    <resource path="src/org/eclipse/net4j/http/common/IHTTPConnector.java" type="org.eclipse.net4j.http.common.IHTTPConnector">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="IConnector"/>
+                <message_argument value="IHTTPConnector"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

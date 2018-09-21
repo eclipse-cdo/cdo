@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.trace.aspectj;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.0.100.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -20,4 +20,4 @@ Eclipse-SupplementBundle: org.eclipse.net4j,
  org.eclipse.net4j.jvm,
  org.eclipse.net4j.tcp,
  org.eclipse.net4j.util
-Export-Package: org.eclipse.net4j.trace.aspectj;version="1.0.0";x-internal:=true
+Export-Package: org.eclipse.net4j.trace.aspectj;version="1.0.100";x-internal:=true

@@ -99,7 +99,6 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
     }
   }
 
-  @SuppressWarnings("unchecked")
   protected Text text(Composite parent, FormToolkit toolkit, String label, EAttribute attribute)
   {
     toolkit.createLabel(parent, label);
@@ -257,7 +256,6 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
     return result;
   }
 
-  @SuppressWarnings("unchecked")
   protected Button checkbox(Composite parent, FormToolkit toolkit, String label, EAttribute attribute)
   {
     Button result = toolkit.createButton(createDecorationComposite(parent, toolkit, layoutData(parent, SWT.LEFT, false, 2)), label, SWT.CHECK);
@@ -269,7 +267,6 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
     return result;
   }
 
-  @SuppressWarnings("unchecked")
   protected Button button(Composite parent, FormToolkit toolkit, String label, SelectionListener selectionListener)
   {
     Button result = toolkit.createButton(parent, label, SWT.PUSH);
@@ -281,7 +278,6 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
     return result;
   }
 
-  @SuppressWarnings("unchecked")
   protected ComboViewer combo(Composite parent, FormToolkit toolkit, String label, EAttribute attribute)
   {
     toolkit.createLabel(parent, label);

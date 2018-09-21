@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.view.CDOView;
  *
  * @author Caspar De Groot
  * @since 4.1
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOSessionLocksChangedEvent extends CDOSessionEvent, CDOLockChangeInfo
 {

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.net4j.jvm" version="2">
-    <resource path="src/org/eclipse/net4j/internal/jvm/JVMAcceptor.java">
-        <filter id="0"/>
-    </resource>
     <resource path="src/org/eclipse/net4j/internal/jvm/JVMAcceptor.java" type="org.eclipse.net4j.internal.jvm.JVMAcceptor">
         <filter id="574619656">
             <message_arguments>
@@ -25,9 +22,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/net4j/internal/jvm/JVMAcceptorFactory.java">
-        <filter id="0"/>
-    </resource>
     <resource path="src/org/eclipse/net4j/internal/jvm/JVMAcceptorFactory.java" type="org.eclipse.net4j.internal.jvm.JVMAcceptorFactory">
         <filter id="643842064">
             <message_arguments>
@@ -43,9 +37,6 @@
                 <message_argument value="get(IManagedContainer, String)"/>
             </message_arguments>
         </filter>
-    </resource>
-    <resource path="src/org/eclipse/net4j/internal/jvm/JVMAcceptorManager.java">
-        <filter id="0"/>
     </resource>
     <resource path="src/org/eclipse/net4j/internal/jvm/JVMAcceptorManager.java" type="org.eclipse.net4j.internal.jvm.JVMAcceptorManager">
         <filter id="574619656">
@@ -76,9 +67,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/net4j/internal/jvm/JVMClientConnector.java">
-        <filter id="0"/>
-    </resource>
     <resource path="src/org/eclipse/net4j/internal/jvm/JVMClientConnector.java" type="org.eclipse.net4j.internal.jvm.JVMClientConnector">
         <filter id="643842064">
             <message_arguments>
@@ -88,9 +76,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/net4j/internal/jvm/JVMConnector.java">
-        <filter id="0"/>
-    </resource>
     <resource path="src/org/eclipse/net4j/internal/jvm/JVMConnector.java" type="org.eclipse.net4j.internal.jvm.JVMConnector">
         <filter id="574619656">
             <message_arguments>
@@ -98,9 +83,6 @@
                 <message_argument value="JVMConnector"/>
             </message_arguments>
         </filter>
-    </resource>
-    <resource path="src/org/eclipse/net4j/internal/jvm/JVMConnectorFactory.java">
-        <filter id="0"/>
     </resource>
     <resource path="src/org/eclipse/net4j/internal/jvm/JVMConnectorFactory.java" type="org.eclipse.net4j.internal.jvm.JVMConnectorFactory">
         <filter id="643842064">
@@ -117,9 +99,6 @@
                 <message_argument value="get(IManagedContainer, String)"/>
             </message_arguments>
         </filter>
-    </resource>
-    <resource path="src/org/eclipse/net4j/internal/jvm/JVMServerConnector.java">
-        <filter id="0"/>
     </resource>
     <resource path="src/org/eclipse/net4j/internal/jvm/JVMServerConnector.java" type="org.eclipse.net4j.internal.jvm.JVMServerConnector">
         <filter id="643842064">
@@ -144,14 +123,19 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/net4j/jvm/IJVMChannel.java">
-        <filter id="0"/>
-    </resource>
     <resource path="src/org/eclipse/net4j/jvm/IJVMChannel.java" type="org.eclipse.net4j.jvm.IJVMChannel">
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="IChannel"/>
                 <message_argument value="IJVMChannel"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/jvm/IJVMConnector.java" type="org.eclipse.net4j.jvm.IJVMConnector">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="IConnector"/>
+                <message_argument value="IJVMConnector"/>
             </message_arguments>
         </filter>
     </resource>

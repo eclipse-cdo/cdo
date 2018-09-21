@@ -22,7 +22,6 @@ import org.eclipse.core.databinding.conversion.Converter;
  *
  * @author Christian W. Damus (CEA LIST)
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
 public class ObjectExistsConverter extends Converter
 {
   public ObjectExistsConverter()

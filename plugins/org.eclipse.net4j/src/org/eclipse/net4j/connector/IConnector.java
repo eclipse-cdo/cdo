@@ -29,6 +29,7 @@ import org.eclipse.net4j.util.security.IUserAware;
  * connection types have to implement org.eclipse.internal.net4j.connector.InternalConnector.
  *
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IConnector extends IChannelMultiplexer, IUserAware, Closeable

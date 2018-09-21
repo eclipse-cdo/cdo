@@ -78,6 +78,8 @@ public interface CDOCommitHistory extends IContainer<CDOCommitInfo>, CDOBranchPr
    * the history is not {@link CDOCommitHistory#isFull() fully} loaded, yet.
    *
    * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface TriggerLoadElement extends CDOCommitInfo
   {

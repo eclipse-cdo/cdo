@@ -19,15 +19,19 @@ import org.eclipse.emf.cdo.evolution.impl.EvolutionPlugin;
 import org.eclipse.net4j.util.collection.CollectionUtil;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
@@ -35,6 +39,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil.EqualityHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -431,6 +436,41 @@ public class EvolutionValidator extends EObjectValidator
                   }
 
                   return super.haveEqualFeature(eObject1, eObject2, feature);
+                }
+
+                @Override
+                protected boolean haveEqualReference(EObject eObject, EObject releasedObject, EReference reference)
+                {
+                  boolean result = super.haveEqualReference(eObject, releasedObject, reference);
+                  if (!result && reference == EcorePackage.Literals.EANNOTATION__DETAILS)
+                  {
+                    // As part of the release process (quick fix) the old values of ID annotations are deleted.
+                    // Adjust the comparison to ignore this fact.
+                    EMap<String, String> releasedDetails = ((EAnnotation)releasedObject).getDetails();
+                    if (releasedDetails.containsKey(IDAnnotation.OLD_VALUE_KEY))
+                    {
+                      EList<Map.Entry<String, String>> replacementList = new BasicEList<Map.Entry<String, String>>(releasedDetails);
+                      for (Iterator<Map.Entry<String, String>> it = replacementList.iterator(); it.hasNext();)
+                      {
+                        Map.Entry<String, String> entry = it.next();
+                        if (IDAnnotation.OLD_VALUE_KEY.equals(entry.getKey()))
+                        {
+                          it.remove();
+
+                          @SuppressWarnings("unchecked")
+                          List<EObject> list1 = (List<EObject>)(Object)((EAnnotation)eObject).getDetails();
+
+                          @SuppressWarnings("unchecked")
+                          List<EObject> list2 = (List<EObject>)(Object)replacementList;
+
+                          result = equals(list1, list2);
+                          break;
+                        }
+                      }
+                    }
+                  }
+
+                  return result;
                 }
               };
 

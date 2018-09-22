@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
-import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
@@ -98,21 +97,6 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     {
       return views.toArray(new CDOView[views.size()]);
     }
-  }
-
-  public CDOSession[] getSessions()
-  {
-    Set<CDOSession> sessions = new HashSet<CDOSession>();
-
-    synchronized (views)
-    {
-      for (CDOView view : views)
-      {
-        sessions.add(view.getSession());
-      }
-    }
-
-    return sessions.toArray(new CDOSession[sessions.size()]);
   }
 
   /**

@@ -353,8 +353,6 @@ public class DefaultDiagnosticResolutionGenerator extends BasicDiagnosticResolut
         Collection<EPackage> rootPackages = EcoreUtil.copyAll(evolution.getRootPackages());
         release.getRootPackages().addAll(rootPackages);
 
-        // Prepare for new development...
-
         for (EPackage rootPackage : evolution.getRootPackages())
         {
           ElementHandler.execute(rootPackage, new ElementRunnable()
@@ -365,8 +363,6 @@ public class DefaultDiagnosticResolutionGenerator extends BasicDiagnosticResolut
             }
           });
         }
-
-        evolution.getMigrations().clear();
 
         ModelSetChangeImpl change = (ModelSetChangeImpl)evolution.getChange();
         if (change != null)

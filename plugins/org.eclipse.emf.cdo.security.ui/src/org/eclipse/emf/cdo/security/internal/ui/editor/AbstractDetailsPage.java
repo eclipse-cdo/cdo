@@ -61,6 +61,7 @@ import org.eclipse.ui.forms.widgets.TableWrapData;
  *
  * @author Christian W. Damus (CEA LIST)
  */
+@SuppressWarnings("unchecked")
 public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSectionPart<T> implements IDetailsPage
 {
   public AbstractDetailsPage(Class<T> elementType, EClass elementEClass, EditingDomain domain, AdapterFactory adapterFactory)

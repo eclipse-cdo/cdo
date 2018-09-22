@@ -91,6 +91,7 @@ import java.util.List;
  *
  * @author Christian W. Damus (CEA LIST)
  */
+@SuppressWarnings("unchecked")
 public class OneToManyBlock
 {
   private final EditingDomain domain;
@@ -380,7 +381,6 @@ public class OneToManyBlock
     new ActionBarsHelper(editorActionBars).addGlobalAction(ActionFactory.DELETE.getId(), removeAction).install(viewer);
   }
 
-  @SuppressWarnings("unchecked")
   public void setInput(IObservableValue<Object> input)
   {
     if (input != null)
@@ -536,7 +536,6 @@ public class OneToManyBlock
     {
       observableList.addChangeListener(new IChangeListener()
       {
-        @SuppressWarnings("unchecked")
         public void handleChange(ChangeEvent event)
         {
           checkUnsupportedModelContent((IObservableList<Object>)event.getObservable());

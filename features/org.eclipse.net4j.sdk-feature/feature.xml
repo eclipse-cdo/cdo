@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.net4j.sdk"
       label="%featureName"
-      version="4.7.100.qualifier"
+      version="4.8.0.qualifier"
       provider-name="%providerName"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.cdo.license"

@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.view;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
+import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
@@ -48,6 +49,11 @@ public interface CDOViewSet extends Notifier
   public CDOView resolveView(URI viewURI);
 
   public CDOView[] getViews();
+
+  /**
+   * @since 4.7
+   */
+  public CDOSession[] getSessions();
 
   public CDOResourceFactory getResourceFactory();
 

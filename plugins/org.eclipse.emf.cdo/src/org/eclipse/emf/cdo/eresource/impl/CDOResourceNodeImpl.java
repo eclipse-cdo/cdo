@@ -12,7 +12,9 @@
  */
 package org.eclipse.emf.cdo.eresource.impl;
 
+import org.eclipse.emf.cdo.common.util.CDODuplicateResourceException;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.common.util.CDOResourceNodeNotFoundException;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
@@ -120,7 +122,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
         String name = getName();
         if (name != null)
         {
-          String newPath = (newFolder == null ? "" : newFolder.getPath()) + CDOURIUtil.SEGMENT_SEPARATOR + name; //$NON-NLS-1$
+          String newPath = (newFolder == null ? "" : newFolder.getPath()) + CDOURIUtil.SEGMENT_SEPARATOR + name; // $NON-NLS-1$
           checkDuplicates(newPath);
         }
       }
@@ -177,7 +179,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
         CDOResourceFolder parent = getFolder();
         if (parent != null)
         {
-          String newPath = parent.getPath() + CDOURIUtil.SEGMENT_SEPARATOR + getName();
+          String newPath = parent.getPath() + CDOURIUtil.SEGMENT_SEPARATOR + newName;
           checkDuplicates(newPath);
         }
       }
@@ -223,7 +225,8 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
     String oldPath = getPath();
     if (!ObjectUtil.equals(oldPath, newPath))
     {
-      // TODO check for duplicates
+      checkDuplicates(newPath);
+
       List<String> names = CDOURIUtil.analyzePath(newPath);
       if (names.isEmpty())
       {
@@ -295,17 +298,22 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   /**
    * @ADDED
    */
-  private void checkDuplicates(String newPath)
+  private void checkDuplicates(String newPath) throws CDODuplicateResourceException
   {
-    try
+    InternalCDOView view = cdoView();
+    if (view != null)
     {
-      InternalCDOView view = cdoView();
       view.clearResourcePathCacheIfNecessary(null);
-      view.getResourceNodeID(newPath);
-    }
-    catch (Exception ex)
-    {
-      throw new CDOException(MessageFormat.format(Messages.getString("CDOResourceNodeImpl.5"), newPath)); //$NON-NLS-1$
+
+      try
+      {
+        view.getResourceNodeID(newPath);
+        throw new CDODuplicateResourceException(MessageFormat.format(Messages.getString("CDOResourceNodeImpl.5"), newPath)); //$NON-NLS-1$
+      }
+      catch (CDOResourceNodeNotFoundException success)
+      {
+        //$FALL-THROUGH$
+      }
     }
   }
 

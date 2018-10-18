@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
+import org.eclipse.emf.cdo.common.util.CDODuplicateResourceException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -548,6 +549,89 @@ public class ResourceTest extends AbstractCDOTest
     session.close();
   }
 
+  public void testSetPathConflict() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource0 = transaction.createResource(getResourcePath("/my/resource0"));
+    CDOResource resource1 = transaction.createResource(getResourcePath("/my/resource1"));
+    transaction.commit();
+
+    try
+    {
+      resource0.setPath(resource1.getPath());
+      fail("CDODuplicateResourceException expected");
+    }
+    catch (CDODuplicateResourceException expected)
+    {
+      // SUCCESS
+    }
+  }
+
+  public void testSetFolder() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("res"));
+    CDOResourceFolder folder = transaction.createResourceFolder(getResourcePath("folder"));
+    transaction.commit();
+
+    resource.setFolder(folder);
+    transaction.commit();
+  }
+
+  public void testSetFolderConflict() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("res"));
+    CDOResourceFolder folder = transaction.createResourceFolder(getResourcePath("folder"));
+    transaction.createResource(getResourcePath("folder/res"));
+    transaction.commit();
+
+    try
+    {
+      resource.setFolder(folder);
+      fail("CDODuplicateResourceException expected");
+    }
+    catch (CDODuplicateResourceException expected)
+    {
+      // SUCCESS
+    }
+  }
+
+  public void testMove() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("res"));
+    CDOResourceFolder folder = transaction.createResourceFolder(getResourcePath("folder"));
+    transaction.commit();
+
+    folder.getNodes().add(resource);
+    transaction.commit();
+  }
+
+  public void testMoveConflict() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("res"));
+    CDOResourceFolder folder = transaction.createResourceFolder(getResourcePath("folder"));
+    transaction.createResource(getResourcePath("folder/res"));
+    transaction.commit();
+
+    try
+    {
+      folder.getNodes().add(resource);
+      fail("CDODuplicateResourceException expected");
+    }
+    catch (CDODuplicateResourceException expected)
+    {
+      // SUCCESS
+    }
+  }
+
   @CleanRepositoriesBefore(reason = "Root resource access")
   @CleanRepositoriesAfter(reason = "Root resource access")
   public void testMoveToRoot() throws Exception
@@ -592,30 +676,6 @@ public class ResourceTest extends AbstractCDOTest
     data = resource.cdoRevision().data();
     assertEquals(resourceFolder.cdoID(), data.getContainerID());
     assertEquals(true, CDOIDUtil.isNull(data.getResourceID()));
-  }
-
-  public void testDuplicatePath() throws Exception
-  {
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    transaction.createResource(getResourcePath("/my/resource"));
-    transaction.commit();
-
-    transaction.createResource(getResourcePath("/my/resource"));
-
-    try
-    {
-      transaction.commit();
-      fail("CommitException expected");
-    }
-    catch (CommitException expected)
-    {
-      // Success
-    }
-    finally
-    {
-      session.close();
-    }
   }
 
   public void testDuplicatePathAfterDetach() throws Exception

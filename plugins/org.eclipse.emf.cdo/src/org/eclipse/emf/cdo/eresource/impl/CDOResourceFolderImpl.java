@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.eresource.impl;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.util.CDODuplicateResourceException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -21,15 +22,21 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
+import org.eclipse.emf.internal.cdo.messages.Messages;
+
 import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -118,6 +125,37 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
         }
       }
     }
+  }
+
+  @Override
+  protected EList<?> createList(EStructuralFeature eStructuralFeature) throws CDODuplicateResourceException
+  {
+    if (eStructuralFeature == EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES)
+    {
+      return new EStoreEObjectImpl.BasicEStoreEList<CDOResourceNode>(this, eStructuralFeature)
+      {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        protected CDOResourceNode validate(int index, CDOResourceNode newNode)
+        {
+          String newName = newNode.getName();
+
+          for (Iterator<CDOResourceNode> it = iterator(); it.hasNext();)
+          {
+            CDOResourceNode existingNode = it.next();
+            if (ObjectUtil.equals(existingNode.getName(), newName))
+            {
+              throw new CDODuplicateResourceException(MessageFormat.format(Messages.getString("CDOResourceNodeImpl.5"), existingNode.getPath())); //$NON-NLS-1$
+            }
+          }
+
+          return super.validate(index, newNode);
+        }
+      };
+    }
+
+    return super.createList(eStructuralFeature);
   }
 
   /**

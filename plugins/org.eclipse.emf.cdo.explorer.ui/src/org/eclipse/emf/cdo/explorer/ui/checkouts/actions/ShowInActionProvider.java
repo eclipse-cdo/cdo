@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
 import org.eclipse.emf.cdo.internal.ui.views.CDOTimeMachineView;
 import org.eclipse.emf.cdo.server.CDOServerBrowser;
-import org.eclipse.emf.cdo.server.internal.db.DBBrowserPage;
+import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
@@ -367,7 +367,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
     public void run()
     {
       container.registerFactory(new CDOServerBrowser.ContainerBased.Factory(container));
-      container.registerFactory(new DBBrowserPage.Factory());
+      CDODBUtil.prepareContainer(container);
 
       String description = element.getType() + "-checkout-" + element.getID();
 

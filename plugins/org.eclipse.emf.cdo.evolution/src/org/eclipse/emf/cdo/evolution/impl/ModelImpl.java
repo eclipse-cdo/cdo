@@ -7,10 +7,16 @@ import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.evolution.Evolution;
 import org.eclipse.emf.cdo.evolution.EvolutionPackage;
 import org.eclipse.emf.cdo.evolution.Model;
+import org.eclipse.emf.cdo.evolution.util.ElementHandler;
+import org.eclipse.emf.cdo.evolution.util.ElementRunnable;
+import org.eclipse.emf.cdo.evolution.util.IDAnnotation;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
+
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -18,6 +24,7 @@ import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -27,6 +34,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreEList;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.Set;
 
@@ -102,6 +111,16 @@ public class ModelImpl extends CDOObjectImpl implements Model
   public Evolution getEvolution()
   {
     return (Evolution)eDynamicGet(EvolutionPackage.MODEL__EVOLUTION, EvolutionPackage.Literals.MODEL__EVOLUTION, true, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Evolution basicGetEvolution()
+  {
+    return (Evolution)eDynamicGet(EvolutionPackage.MODEL__EVOLUTION, EvolutionPackage.Literals.MODEL__EVOLUTION, false, true);
   }
 
   /**
@@ -414,6 +433,64 @@ public class ModelImpl extends CDOObjectImpl implements Model
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public boolean ensureIDs()
+  {
+    final boolean[] modified = { false };
+
+    ElementHandler.execute(getRootPackage(), new ElementRunnable()
+    {
+      public void run(EModelElement modelElement)
+      {
+        if (IDAnnotation.ensureValue(modelElement) != null)
+        {
+          modified[0] = true;
+        }
+      }
+    });
+
+    return modified[0];
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public EPackage getPackage(String nsURI)
+  {
+    for (EPackage ePackage : getAllPackages())
+    {
+      if (ObjectUtil.equals(ePackage.getNsURI(), nsURI))
+      {
+        return ePackage;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public void save()
+  {
+    try
+    {
+      eResource().save(null);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -474,7 +551,11 @@ public class ModelImpl extends CDOObjectImpl implements Model
     switch (featureID)
     {
     case EvolutionPackage.MODEL__EVOLUTION:
-      return getEvolution();
+      if (resolve)
+      {
+        return getEvolution();
+      }
+      return basicGetEvolution();
     case EvolutionPackage.MODEL__URI:
       return getURI();
     case EvolutionPackage.MODEL__ROOT_PACKAGE:
@@ -544,7 +625,7 @@ public class ModelImpl extends CDOObjectImpl implements Model
     switch (featureID)
     {
     case EvolutionPackage.MODEL__EVOLUTION:
-      return getEvolution() != null;
+      return basicGetEvolution() != null;
     case EvolutionPackage.MODEL__URI:
       return URI_EDEFAULT == null ? getURI() != null : !URI_EDEFAULT.equals(getURI());
     case EvolutionPackage.MODEL__ROOT_PACKAGE:
@@ -557,6 +638,27 @@ public class ModelImpl extends CDOObjectImpl implements Model
       return !getMissingPackages().isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
+  {
+    switch (operationID)
+    {
+    case EvolutionPackage.MODEL___ENSURE_IDS:
+      return ensureIDs();
+    case EvolutionPackage.MODEL___GET_PACKAGE__STRING:
+      return getPackage((String)arguments.get(0));
+    case EvolutionPackage.MODEL___SAVE:
+      save();
+      return null;
+    }
+    return super.eInvoke(operationID, arguments);
   }
 
   public ModelStatus getStatus()

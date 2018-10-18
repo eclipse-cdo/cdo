@@ -1042,7 +1042,10 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       delta.applyTo(newRevision);
 
       IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(delta.getFeature());
-      listMapping.processDelta(accessor, id, targetBranch.getID(), oldVersion, newVersion, created, delta);
+      if (listMapping != null)
+      {
+        listMapping.processDelta(accessor, id, targetBranch.getID(), oldVersion, newVersion, created, delta);
+      }
     }
 
     public void visit(CDOContainerFeatureDelta delta)

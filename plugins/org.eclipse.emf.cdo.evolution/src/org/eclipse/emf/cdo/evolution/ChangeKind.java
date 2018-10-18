@@ -327,4 +327,17 @@ public enum ChangeKind implements Enumerator
     return literal;
   }
 
+  public int indexWithin(ChangeKind... changeKinds)
+  {
+    for (int i = 0; i < changeKinds.length; i++)
+    {
+      if (changeKinds[i] == this)
+      {
+        return i;
+      }
+    }
+
+    return -1;
+  }
+
 } // ChangeKind

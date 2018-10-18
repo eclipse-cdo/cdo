@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
@@ -40,6 +41,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -51,6 +53,7 @@ import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.collection.MoveableList;
@@ -137,7 +140,14 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
   {
     super(mappingStrategy, eClass, feature);
     initDBTypes();
-    initTable();
+
+    IDBStoreAccessor accessor = null;
+    if (AbstractMappingStrategy.isEagerTableCreation(mappingStrategy))
+    {
+      accessor = (IDBStoreAccessor)StoreThreadLocal.getAccessor();
+    }
+
+    initTable(accessor);
     initSQLStrings();
   }
 
@@ -148,18 +158,24 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
     dbTypes = new ArrayList<DBType>(registry.getDefaultFeatureMapDBTypes());
   }
 
-  private void initTable()
+  public void setTable(IDBTable table)
+  {
+    this.table = table;
+  }
+
+  public void initTable(IDBStoreAccessor accessor)
   {
     String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
     IDBStore store = getMappingStrategy().getStore();
     DBType idType = store.getIDHandler().getDBType();
     int idLength = store.getIDColumnLength();
 
-    IDBDatabase database = getMappingStrategy().getStore().getDatabase();
+    IDBDatabase database = store.getDatabase();
     table = database.getSchema().getTable(tableName);
     if (table == null)
     {
-      table = database.getSchemaTransaction().getWorkingCopy().addTable(tableName);
+      IDBSchema workingCopy = database.getSchemaTransaction().getWorkingCopy();
+      table = workingCopy.addTable(tableName);
       table.addField(FEATUREMAP_REVISION_ID, idType, idLength);
       table.addField(LIST_REVISION_BRANCH, DBType.INTEGER);
       table.addField(FEATUREMAP_VERSION_ADDED, DBType.INTEGER);
@@ -184,6 +200,11 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
     {
       initTypeColumns(false);
     }
+  }
+
+  public IDBTable createTable(IDBSchema schema, String tableName)
+  {
+    throw new UnsupportedOperationException();
   }
 
   private void initTypeColumns(boolean create)
@@ -372,7 +393,8 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
     return dbTypes;
   }
 
-  protected final IDBTable getTable()
+  @Override
+  public final IDBTable getTable()
   {
     return table;
   }

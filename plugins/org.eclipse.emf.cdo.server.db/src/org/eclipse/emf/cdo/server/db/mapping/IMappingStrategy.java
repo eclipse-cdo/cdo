@@ -171,7 +171,7 @@ public interface IMappingStrategy
    * Should only be called by mapping classes.
    *
    * @param containingClass
-   *          the class containeng the feature.
+   *          the class containing the feature.
    * @param feature
    *          the feature for which the table name should be created.
    * @return the created table name. It is guaranteed that the table name is compatible with the chosen database.
@@ -372,7 +372,7 @@ public interface IMappingStrategy
   public String getListJoin(String attrTable, String listTable);
 
   /**
-   * Contains symbolic constants that specifiy valid keys of {@link IMappingStrategy#getProperties() mapping strategy properties}.
+   * Contains symbolic constants that specify valid keys of {@link IMappingStrategy#getProperties() mapping strategy properties}.
    *
    * @author Eike Stepper
    * @since 4.4

@@ -66,7 +66,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
   }
 
   @Override
-  protected IClassMapping doCreateClassMapping(EClass eClass)
+  public IClassMapping createClassMapping(EClass eClass)
   {
     return new HorizontalBranchingClassMapping(this, eClass);
   }

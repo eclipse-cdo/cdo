@@ -15,13 +15,19 @@
 
    <extension-point id="mappingStrategies" name="%extension-point.name" schema="schema/mappingStrategies.exsd"/>
    
-   <extension
-         point="org.eclipse.net4j.util.factories">
+   <extension point="org.eclipse.net4j.util.factories">
       <factory
-            class="org.eclipse.emf.cdo.server.internal.db.DBBrowserPage$Factory"
             productGroup="org.eclipse.emf.cdo.server.browserPages"
-            type="db">
-      </factory>
+            type="dbmappings"
+            class="org.eclipse.emf.cdo.server.internal.db.DBMappingsPage$Factory"/>
+      <factory
+            productGroup="org.eclipse.emf.cdo.server.browserPages"
+            type="dbschema"
+            class="org.eclipse.emf.cdo.server.internal.db.DBSchemaPage$Factory"/>
+      <factory
+            productGroup="org.eclipse.emf.cdo.server.browserPages"
+            type="dbtables"
+            class="org.eclipse.emf.cdo.server.internal.db.DBTablesPage$Factory"/>
    </extension>
 
    <extension
@@ -32,8 +38,7 @@
       </storeFactory>
    </extension>
 
-   <extension
-         point="org.eclipse.emf.cdo.server.db.mappingStrategies">
+   <extension point="org.eclipse.emf.cdo.server.db.mappingStrategies">
       <mappingStrategy
             class="org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalMappingStrategy"
             type="horizontal"/>

@@ -1181,6 +1181,11 @@ public abstract class DBAdapter implements IDBAdapter
     return "ALTER TABLE " + tableName + " ALTER COLUMN " + fieldName + " " + definition;
   }
 
+  public String sqlRenameTable(String newName, String oldName)
+  {
+    return "ALTER TABLE " + oldName + " RENAME TO " + newName;
+  }
+
   /**
    * @since 4.2
    */

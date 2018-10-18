@@ -150,6 +150,30 @@ public interface Model extends CDOObject
    */
   EList<EPackage> getMissingPackages();
 
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  boolean ensureIDs();
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  EPackage getPackage(String nsURI);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  void save();
+
   public ModelStatus getStatus();
 
   /**

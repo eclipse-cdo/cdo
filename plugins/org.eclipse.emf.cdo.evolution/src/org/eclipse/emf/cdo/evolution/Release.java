@@ -153,7 +153,7 @@ public interface Release extends ModelSet, Comparable<Release>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Root Packages</em>' containment reference list.
    * @see org.eclipse.emf.cdo.evolution.EvolutionPackage#getRelease_RootPackages()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   EList<EPackage> getRootPackages();

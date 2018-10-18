@@ -22,6 +22,7 @@ import org.eclipse.net4j.db.ddl.SchemaElementNotFoundException;
 import org.eclipse.net4j.spi.db.ddl.InternalDBField;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.spi.db.ddl.InternalDBTable;
+import org.eclipse.net4j.util.ObjectUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -135,6 +136,19 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
     }
 
     resetElements();
+  }
+
+  public boolean renameField(IDBField field, String newName)
+  {
+    assertUnlocked();
+    newName = name(newName);
+
+    if (getField(newName) != null)
+    {
+      return false;
+    }
+
+    return true;
   }
 
   public IDBField getFieldSafe(String name) throws SchemaElementNotFoundException
@@ -308,6 +322,21 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
   public String getFullName()
   {
     return getName();
+  }
+
+  public boolean rename(String newName)
+  {
+    String oldName = getName();
+    if (!ObjectUtil.equals(newName, oldName))
+    {
+      if (((InternalDBSchema)schema).renameTable(this, newName))
+      {
+        setName(newName);
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public void remove()

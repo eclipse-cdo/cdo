@@ -23,8 +23,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.ddl.IDBTable;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -35,15 +33,8 @@ import java.util.List;
  * @author Stefan Winkler
  * @since 2.0
  */
-public interface IListMapping
+public interface IListMapping extends IFeatureMapping
 {
-  /**
-   * Return the mapped feature.
-   *
-   * @return the mapped feature.
-   */
-  public EStructuralFeature getFeature();
-
   /**
    * Returns all DB tables which are used by this feature.
    *

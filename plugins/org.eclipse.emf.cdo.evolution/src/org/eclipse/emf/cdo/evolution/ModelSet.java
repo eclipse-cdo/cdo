@@ -3,10 +3,13 @@
 package org.eclipse.emf.cdo.evolution;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * <!-- begin-user-doc -->
@@ -67,7 +70,7 @@ public interface ModelSet extends CDOObject
    * @return the value of the '<em>Migrations</em>' containment reference list.
    * @see org.eclipse.emf.cdo.evolution.EvolutionPackage#getModelSet_Migrations()
    * @see org.eclipse.emf.cdo.evolution.Migration#getModelSet
-   * @model opposite="modelSet" containment="true"
+   * @model opposite="modelSet" containment="true" resolveProxies="true"
    * @generated
    */
   EList<Migration> getMigrations();
@@ -118,6 +121,14 @@ public interface ModelSet extends CDOObject
    * @model
    * @generated
    */
+  EPackage getPackage(String nsURI);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
   boolean containsElement(EModelElement modelElement);
 
   /**
@@ -159,5 +170,11 @@ public interface ModelSet extends CDOObject
    * @generated
    */
   Migration getMigration(String diagnosticID);
+
+  EList<ElementChange> getElementChanges(EClass elementType, ChangeKind... changeKinds);
+
+  EList<PropertyChange> getPropertyChanges(EStructuralFeature feature, ChangeKind... changeKinds);
+
+  CDOPackageRegistry createPackageRegistry();
 
 } // ModelSet

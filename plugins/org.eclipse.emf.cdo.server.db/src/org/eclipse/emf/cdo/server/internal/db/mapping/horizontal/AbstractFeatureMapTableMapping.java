@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
@@ -30,6 +31,7 @@ import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
@@ -41,6 +43,7 @@ import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.collection.MoveableList;
@@ -107,7 +110,14 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
   {
     super(mappingStrategy, eClass, feature);
     initDBTypes();
-    initTable();
+
+    IDBStoreAccessor accessor = null;
+    if (AbstractMappingStrategy.isEagerTableCreation(mappingStrategy))
+    {
+      accessor = (IDBStoreAccessor)StoreThreadLocal.getAccessor();
+    }
+
+    initTable(accessor);
     initSQLStrings();
   }
 
@@ -123,41 +133,53 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
     return ITypeMapping.Registry.INSTANCE;
   }
 
-  private void initTable()
+  public void setTable(IDBTable table)
+  {
+    this.table = table;
+  }
+
+  public void initTable(IDBStoreAccessor accessor)
   {
     String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
-    DBType idType = getMappingStrategy().getStore().getIDHandler().getDBType();
-    int idLength = getMappingStrategy().getStore().getIDColumnLength();
 
     IDBDatabase database = getMappingStrategy().getStore().getDatabase();
     table = database.getSchema().getTable(tableName);
     if (table == null)
     {
-      table = database.getSchemaTransaction().getWorkingCopy().addTable(tableName);
-
-      IDBIndex index = table.addIndexEmpty(Type.NON_UNIQUE);
-      for (FieldInfo fieldInfo : getKeyFields())
-      {
-        IDBField field = table.addField(fieldInfo.getName(), fieldInfo.getType(), fieldInfo.getPrecision());
-        index.addIndexField(field);
-      }
-
-      // Add field for list index
-      table.addField(FEATUREMAP_IDX, DBType.INTEGER);
-
-      // Add field for FeatureMap tag (MetaID for Feature in CDO registry)
-      table.addField(FEATUREMAP_TAG, idType, idLength);
-
-      // Create columns for all DBTypes
-      initTypeColumns(true);
-
-      table.addIndex(Type.NON_UNIQUE, FEATUREMAP_IDX);
-      table.addIndex(Type.NON_UNIQUE, FEATUREMAP_TAG);
+      IDBSchema workingCopy = database.getSchemaTransaction().getWorkingCopy();
+      table = createTable(workingCopy, tableName);
     }
     else
     {
       initTypeColumns(false);
     }
+  }
+
+  public IDBTable createTable(IDBSchema schema, String tableName)
+  {
+    IDBTable table = schema.addTable(tableName);
+
+    IDBIndex index = table.addIndexEmpty(Type.NON_UNIQUE);
+    for (FieldInfo fieldInfo : getKeyFields())
+    {
+      IDBField field = table.addField(fieldInfo.getName(), fieldInfo.getType(), fieldInfo.getPrecision());
+      index.addIndexField(field);
+    }
+
+    // Add field for list index
+    table.addField(FEATUREMAP_IDX, DBType.INTEGER);
+
+    // Add field for FeatureMap tag (MetaID for Feature in CDO registry)
+    DBType idType = getMappingStrategy().getStore().getIDHandler().getDBType();
+    int idLength = getMappingStrategy().getStore().getIDColumnLength();
+    table.addField(FEATUREMAP_TAG, idType, idLength);
+
+    // Create columns for all DBTypes
+    initTypeColumns(true);
+
+    table.addIndex(Type.NON_UNIQUE, FEATUREMAP_IDX);
+    table.addIndex(Type.NON_UNIQUE, FEATUREMAP_TAG);
+    return table;
   }
 
   private void initTypeColumns(boolean create)
@@ -284,7 +306,8 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
     return dbTypes;
   }
 
-  protected final IDBTable getTable()
+  @Override
+  public final IDBTable getTable()
   {
     return table;
   }
@@ -591,7 +614,8 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
   public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere, QueryXRefsContext context, String idString)
   {
     /*
-     * must never be called (a feature map is not associated with an EReference feature, so XRefs are nor supported here)
+     * must never be called (a feature map is not associated with an EReference feature, so XRefs are nor supported
+     * here)
      */
     throw new ImplementationError("Should never be called!");
   }

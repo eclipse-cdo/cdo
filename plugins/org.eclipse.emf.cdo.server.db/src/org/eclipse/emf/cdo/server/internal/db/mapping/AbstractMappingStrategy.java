@@ -17,20 +17,19 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOFeatureType;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
-import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
-import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy3;
+import org.eclipse.emf.cdo.server.db.mapping.INamingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBAnnotation;
 import org.eclipse.emf.cdo.server.internal.db.ObjectIDIterator;
@@ -45,8 +44,6 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -55,20 +52,19 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -81,31 +77,15 @@ import java.util.concurrent.ConcurrentMap;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractMappingStrategy extends Lifecycle implements IMappingStrategy
+public abstract class AbstractMappingStrategy extends Lifecycle implements IMappingStrategy3
 {
-  // --------- database name generation strings --------------
-  protected static final String NAME_SEPARATOR = "_"; //$NON-NLS-1$
-
-  protected static final String TYPE_PREFIX_FEATURE = "F"; //$NON-NLS-1$
-
-  protected static final String TYPE_PREFIX_CLASS = "C"; //$NON-NLS-1$
-
-  protected static final String TYPE_PREFIX_PACKAGE = "P"; //$NON-NLS-1$
-
-  protected static final String GENERAL_PREFIX = "X"; //$NON-NLS-1$
-
-  protected static final String GENERAL_SUFFIX = "0"; //$NON-NLS-1$
-
-  /**
-   * Prefix for unsettable feature helper columns
-   */
-  protected static final String CDO_SET_PREFIX = "cdo_set_"; //$NON-NLS-1$
-
-  protected static final String FEATURE_TABLE_SUFFIX = "_list"; //$NON-NLS-1$
+  private static final ThreadLocal<Boolean> SKIP_MAPPING_INITIALIZATION = new ThreadLocal<Boolean>();
 
   private IDBStore store;
 
   private Map<String, String> properties;
+
+  private INamingStrategy namingStrategy;
 
   private ConcurrentMap<EClass, IClassMapping> classMappings;
 
@@ -135,34 +115,15 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     this.properties = properties;
   }
 
-  public int getMaxTableNameLength()
+  public INamingStrategy getNamingStrategy()
   {
-    String value = getProperties().get(Props.MAX_TABLE_NAME_LENGTH);
-    return value == null ? store.getDBAdapter().getMaxTableNameLength() : Integer.valueOf(value);
+    return namingStrategy;
   }
 
-  public int getMaxFieldNameLength()
+  public void setNamingStrategy(INamingStrategy namingStrategy)
   {
-    String value = getProperties().get(Props.MAX_FIELD_NAME_LENGTH);
-    return value == null ? store.getDBAdapter().getMaxFieldNameLength() : Integer.valueOf(value);
-  }
-
-  public boolean isQualifiedNames()
-  {
-    String value = getProperties().get(Props.QUALIFIED_NAMES);
-    return value == null ? false : Boolean.valueOf(value);
-  }
-
-  public boolean isForceNamesWithID()
-  {
-    String value = getProperties().get(Props.FORCE_NAMES_WITH_ID);
-    return value == null ? false : Boolean.valueOf(value);
-  }
-
-  public String getTableNamePrefix()
-  {
-    String value = getProperties().get(Props.TABLE_NAME_PREFIX);
-    return StringUtil.safe(value);
+    checkInactive();
+    this.namingStrategy = namingStrategy;
   }
 
   public Set<CDOFeatureType> getForceIndexes()
@@ -297,167 +258,24 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   protected abstract Collection<EClass> getClassesWithObjectInfo();
 
-  // -- database name demangling methods ---------------------------------
-
-  private String getTableNamePrefix(EModelElement element)
-  {
-    String prefix = StringUtil.safe(DBAnnotation.TABLE_NAME_PREFIX.getValue(element));
-    if (prefix.length() != 0 && !prefix.endsWith(NAME_SEPARATOR))
-    {
-      prefix += NAME_SEPARATOR;
-    }
-
-    EObject eContainer = element.eContainer();
-    if (eContainer instanceof EModelElement)
-    {
-      EModelElement parent = (EModelElement)eContainer;
-      prefix = getTableNamePrefix(parent) + prefix;
-    }
-
-    return prefix;
-  }
-
   public String getTableName(ENamedElement element)
   {
-    String name = null;
-    String typePrefix = null;
-
-    if (element instanceof EClass)
-    {
-      typePrefix = TYPE_PREFIX_CLASS;
-      name = DBAnnotation.TABLE_NAME.getValue(element);
-      if (name == null)
-      {
-        name = isQualifiedNames() ? EMFUtil.getQualifiedName((EClass)element, NAME_SEPARATOR) : element.getName();
-      }
-    }
-    else if (element instanceof EPackage)
-    {
-      typePrefix = TYPE_PREFIX_PACKAGE;
-      name = DBAnnotation.TABLE_NAME.getValue(element);
-      if (name == null)
-      {
-        name = isQualifiedNames() ? EMFUtil.getQualifiedName((EPackage)element, NAME_SEPARATOR) : element.getName();
-      }
-    }
-    else
-    {
-      throw new ImplementationError("Unknown element: " + element); //$NON-NLS-1$
-    }
-
-    String prefix = getTableNamePrefix();
-    if (prefix.length() != 0 && !prefix.endsWith(NAME_SEPARATOR))
-    {
-      prefix += NAME_SEPARATOR;
-    }
-
-    prefix += getTableNamePrefix(element);
-
-    String suffix = typePrefix + getUniqueID(element);
-    int maxTableNameLength = getMaxTableNameLength();
-
-    return getName(prefix + name, suffix, maxTableNameLength);
+    return namingStrategy.getTableName(element);
   }
 
-  public String getTableName(EClass eClass, EStructuralFeature feature)
+  public String getTableName(EClass containingClass, EStructuralFeature feature)
   {
-    String name = DBAnnotation.TABLE_NAME.getValue(eClass);
-    if (name == null)
-    {
-      name = isQualifiedNames() ? EMFUtil.getQualifiedName(eClass, NAME_SEPARATOR) : eClass.getName();
-    }
-
-    name += NAME_SEPARATOR;
-    name += feature.getName();
-    name += FEATURE_TABLE_SUFFIX;
-
-    String prefix = getTableNamePrefix();
-    if (prefix.length() != 0 && !prefix.endsWith(NAME_SEPARATOR))
-    {
-      prefix += NAME_SEPARATOR;
-    }
-
-    prefix += getTableNamePrefix(feature);
-
-    String suffix = TYPE_PREFIX_FEATURE + getUniqueID(feature);
-    int maxTableNameLength = getMaxTableNameLength();
-
-    return getName(prefix + name, suffix, maxTableNameLength);
+    return namingStrategy.getTableName(containingClass, feature);
   }
 
   public String getFieldName(EStructuralFeature feature)
   {
-    String name = DBAnnotation.COLUMN_NAME.getValue(feature);
-    if (name == null)
-    {
-      name = getName(feature.getName(), TYPE_PREFIX_FEATURE + getUniqueID(feature), getMaxFieldNameLength());
-    }
-
-    return name;
+    return namingStrategy.getFieldName(feature);
   }
 
   public String getUnsettableFieldName(EStructuralFeature feature)
   {
-    String name = DBAnnotation.COLUMN_NAME.getValue(feature);
-    if (name != null)
-    {
-      return CDO_SET_PREFIX + name;
-    }
-
-    return getName(CDO_SET_PREFIX + feature.getName(), TYPE_PREFIX_FEATURE + getUniqueID(feature), getMaxFieldNameLength());
-  }
-
-  private String getName(String name, String suffix, int maxLength)
-  {
-    if (!store.getDBAdapter().isValidFirstChar(name.charAt(0)))
-    {
-      name = GENERAL_PREFIX + name;
-    }
-
-    boolean forceNamesWithID = isForceNamesWithID();
-    if (!forceNamesWithID && store.getDBAdapter().isReservedWord(name))
-    {
-      name = name + GENERAL_SUFFIX;
-    }
-
-    if (name.length() > maxLength || forceNamesWithID)
-    {
-      suffix = NAME_SEPARATOR + suffix.replace('-', 'S');
-      int length = Math.min(name.length(), maxLength - suffix.length());
-      if (length < 0)
-      {
-        // Most likely CDOIDs are client side-assigned, i.e., meta IDs are extrefs. See getUniqueID()
-        throw new IllegalStateException("Suffix is too long: " + suffix);
-      }
-
-      name = name.substring(0, length) + suffix;
-    }
-
-    return name;
-  }
-
-  private String getUniqueID(ENamedElement element)
-  {
-    long timeStamp;
-    CommitContext commitContext = StoreThreadLocal.getCommitContext();
-    if (commitContext != null)
-    {
-      timeStamp = commitContext.getBranchPoint().getTimeStamp();
-    }
-    else
-    {
-      // This happens outside a commit, i.e. at system init time.
-      // Ensure that resulting ext refs are not replicated!
-      timeStamp = CDOBranchPoint.INVALID_DATE;
-      // timeStamp = getStore().getRepository().getTimeStamp();
-    }
-
-    IMetaDataManager metaDataManager = getMetaDataManager();
-    CDOID result = metaDataManager.getMetaID(element, timeStamp);
-
-    StringBuilder builder = new StringBuilder();
-    CDOIDUtil.write(builder, result);
-    return builder.toString();
+    return namingStrategy.getUnsettableFieldName(feature);
   }
 
   public void createMapping(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
@@ -471,7 +289,11 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       {
         async = monitor.forkAsync();
 
-        mapPackageUnits(packageUnits, connection, false);
+        for (EClass eClass : getMappedClasses(packageUnits))
+        {
+          IClassMapping classMapping = createClassMapping(eClass);
+          addClassMapping(classMapping);
+        }
       }
     }
     finally
@@ -487,87 +309,72 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public void removeMapping(Connection connection, InternalCDOPackageUnit[] packageUnits)
   {
-    mapPackageUnits(packageUnits, connection, true);
+    for (EClass eClass : getMappedClasses(packageUnits))
+    {
+      removeClassMapping(eClass);
+    }
   }
 
-  protected Set<IClassMapping> mapPackageUnits(InternalCDOPackageUnit[] packageUnits, Connection connection, boolean unmap)
+  public boolean isMapped(EClass eClass)
   {
-    Set<IClassMapping> classMappings = new HashSet<IClassMapping>();
+    String mappingAnnotation = DBAnnotation.TABLE_MAPPING.getValue(eClass);
+    return mappingAnnotation == null || mappingAnnotation.equalsIgnoreCase(DBAnnotation.TABLE_MAPPING_NONE);
+  }
+
+  public List<EClass> getMappedClasses(CDOPackageUnit[] packageUnits)
+  {
+    List<EClass> result = new ArrayList<EClass>();
 
     if (packageUnits != null && packageUnits.length != 0)
     {
-      for (InternalCDOPackageUnit packageUnit : packageUnits)
+      for (CDOPackageUnit packageUnit : packageUnits)
       {
-        InternalCDOPackageInfo[] packageInfos = packageUnit.getPackageInfos();
-        mapPackageInfos(packageInfos, connection, unmap, classMappings);
-      }
-    }
-
-    return classMappings;
-  }
-
-  private void mapPackageInfos(InternalCDOPackageInfo[] packageInfos, Connection connection, boolean unmap, Set<IClassMapping> classMappings)
-  {
-    for (InternalCDOPackageInfo packageInfo : packageInfos)
-    {
-      EPackage ePackage = packageInfo.getEPackage();
-      EClass[] persistentClasses = EMFUtil.getPersistentClasses(ePackage);
-      mapClasses(connection, unmap, persistentClasses, classMappings);
-    }
-  }
-
-  private void mapClasses(Connection connection, boolean unmap, EClass[] eClasses, Set<IClassMapping> classMappings)
-  {
-    for (EClass eClass : eClasses)
-    {
-      if (!(eClass.isInterface() || eClass.isAbstract()))
-      {
-        String mappingAnnotation = DBAnnotation.TABLE_MAPPING.getValue(eClass);
-
-        // TODO Maybe we should explicitly report unknown values of the annotation
-        if (mappingAnnotation != null && mappingAnnotation.equalsIgnoreCase(DBAnnotation.TABLE_MAPPING_NONE))
+        for (CDOPackageInfo packageInfo : packageUnit.getPackageInfos())
         {
-          continue;
-        }
-
-        IClassMapping classMapping = unmap ? removeClassMapping(eClass) : createClassMapping(eClass);
-        if (classMapping != null)
-        {
-          classMappings.add(classMapping);
+          for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())
+          {
+            if (classifier instanceof EClass)
+            {
+              EClass eClass = (EClass)classifier;
+              if (isMapped(eClass))
+              {
+                result.add(eClass);
+              }
+            }
+          }
         }
       }
     }
+
+    return result;
   }
 
-  private IClassMapping createClassMapping(EClass eClass)
+  private void addClassMapping(IClassMapping classMapping)
   {
-    IClassMapping classMapping = doCreateClassMapping(eClass);
     if (classMapping != null)
     {
+      EClass eClass = classMapping.getEClass();
       classMappings.put(eClass, classMapping);
     }
-
-    return classMapping;
   }
 
   private IClassMapping removeClassMapping(EClass eClass)
   {
-    IClassMapping classMapping = classMappings.get(eClass);
+    IClassMapping classMapping = classMappings.remove(eClass);
     if (classMapping != null)
     {
       IDBSchema schema = getStore().getDBSchema();
       for (IDBTable table : classMapping.getDBTables())
       {
-        schema.removeTable(table.getName());
+        if (table != null)
+        {
+          schema.removeTable(table.getName());
+        }
       }
-
-      classMappings.remove(eClass);
     }
 
     return classMapping;
   }
-
-  protected abstract IClassMapping doCreateClassMapping(EClass eClass);
 
   public final IClassMapping getClassMapping(EClass eClass)
   {
@@ -591,6 +398,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
         if (result == null)
         {
           result = createClassMapping(eClass);
+          addClassMapping(result);
         }
       }
     }
@@ -605,18 +413,13 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public final Map<EClass, IClassMapping> getClassMappings(boolean createOnDemand)
   {
-    return doGetClassMappings(createOnDemand);
-  }
-
-  public final Map<EClass, IClassMapping> doGetClassMappings(boolean createOnDemand)
-  {
     if (createOnDemand)
     {
       synchronized (classMappings)
       {
         if (!allClassMappingsCreated)
         {
-          createAllClassMappings();
+          ensureAllClassMappings();
           allClassMappingsCreated = true;
         }
       }
@@ -625,7 +428,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     return classMappings;
   }
 
-  private void createAllClassMappings()
+  private void ensureAllClassMappings()
   {
     InternalRepository repository = (InternalRepository)getStore().getRepository();
     InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
@@ -645,7 +448,14 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     }
   }
 
-  protected abstract boolean isMapped(EClass eClass);
+  public void clearClassMappings()
+  {
+    synchronized (classMappings)
+    {
+      classMappings.clear();
+      allClassMappingsCreated = false;
+    }
+  }
 
   public ITypeMapping createValueMapping(EStructuralFeature feature)
   {
@@ -679,8 +489,23 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   public abstract IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature);
 
   @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+
+    if (namingStrategy == null)
+    {
+      namingStrategy = new DefaultNamingStrategy();
+    }
+
+    namingStrategy.initialize(this);
+    LifecycleUtil.activate(namingStrategy);
+  }
+
+  @Override
   protected void doDeactivate() throws Exception
   {
+    LifecycleUtil.deactivate(namingStrategy);
     deactivateClassMappings();
     super.doDeactivate();
   }
@@ -716,5 +541,29 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   {
     String value = mappingStrategy.getProperties().get(Props.EAGER_TABLE_CREATION);
     return value == null ? false : Boolean.valueOf(value);
+  }
+
+  public static boolean isSkipMappingInitialization()
+  {
+    return SKIP_MAPPING_INITIALIZATION.get() == Boolean.TRUE;
+  }
+
+  public static boolean setSkipMappingInitialization(boolean value)
+  {
+    boolean oldValue = isSkipMappingInitialization();
+
+    if (value != oldValue)
+    {
+      if (value)
+      {
+        SKIP_MAPPING_INITIALIZATION.set(Boolean.TRUE);
+      }
+      else
+      {
+        SKIP_MAPPING_INITIALIZATION.remove();
+      }
+    }
+
+    return oldValue;
   }
 }

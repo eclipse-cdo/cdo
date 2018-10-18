@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -25,6 +26,8 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy3;
+import org.eclipse.emf.cdo.server.db.mapping.INamingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -42,13 +45,14 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public class HorizontalMappingStrategy extends Lifecycle implements IMappingStrategy
+public class HorizontalMappingStrategy extends Lifecycle implements IMappingStrategy3
 {
   private Map<String, String> properties;
 
@@ -228,6 +232,41 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
   public String getListJoin(String attrTable, String listTable)
   {
     return delegate.getListJoin(attrTable, listTable);
+  }
+
+  public INamingStrategy getNamingStrategy()
+  {
+    return ((IMappingStrategy3)delegate).getNamingStrategy();
+  }
+
+  public void setNamingStrategy(INamingStrategy namingStrategy)
+  {
+    ((IMappingStrategy3)delegate).setNamingStrategy(namingStrategy);
+  }
+
+  public String getUnsettableFieldName(EStructuralFeature feature)
+  {
+    return ((IMappingStrategy3)delegate).getUnsettableFieldName(feature);
+  }
+
+  public boolean isMapped(EClass eClass)
+  {
+    return ((IMappingStrategy3)delegate).isMapped(eClass);
+  }
+
+  public List<EClass> getMappedClasses(CDOPackageUnit[] packageUnits)
+  {
+    return ((IMappingStrategy3)delegate).getMappedClasses(packageUnits);
+  }
+
+  public IClassMapping createClassMapping(EClass eClass)
+  {
+    return ((IMappingStrategy3)delegate).createClassMapping(eClass);
+  }
+
+  public void clearClassMappings()
+  {
+    ((IMappingStrategy3)delegate).clearClassMappings();
   }
 
   @Override

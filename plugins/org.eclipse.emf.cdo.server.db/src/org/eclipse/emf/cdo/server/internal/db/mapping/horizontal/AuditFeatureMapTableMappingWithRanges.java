@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
@@ -44,6 +45,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
@@ -53,6 +55,7 @@ import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.collection.MoveableList;
@@ -141,7 +144,14 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
   {
     super(mappingStrategy, eClass, feature);
     initDBTypes();
-    initTable();
+
+    IDBStoreAccessor accessor = null;
+    if (AbstractMappingStrategy.isEagerTableCreation(mappingStrategy))
+    {
+      accessor = (IDBStoreAccessor)StoreThreadLocal.getAccessor();
+    }
+
+    initTable(accessor);
     initSQLStrings();
   }
 
@@ -152,7 +162,12 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     dbTypes = new ArrayList<DBType>(registry.getDefaultFeatureMapDBTypes());
   }
 
-  private void initTable()
+  public void setTable(IDBTable table)
+  {
+    this.table = table;
+  }
+
+  public void initTable(IDBStoreAccessor accessor)
   {
     String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
     IDBStore store = getMappingStrategy().getStore();
@@ -183,6 +198,11 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     {
       initTypeColumns(false);
     }
+  }
+
+  public IDBTable createTable(IDBSchema schema, String tableName)
+  {
+    throw new UnsupportedOperationException();
   }
 
   private void initTypeColumns(boolean create)
@@ -367,7 +387,8 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     return Collections.singleton(table);
   }
 
-  protected final IDBTable getTable()
+  @Override
+  public final IDBTable getTable()
   {
     return table;
   }
@@ -700,8 +721,8 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     CDOBranch main = getMappingStrategy().getStore().getRepository().getBranchManager().getMainBranch();
 
     // get revision from cache to find out version number
-    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id, main.getHead(), /* chunksize = */0,
-        CDORevision.DEPTH_NONE, true);
+    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id, main.getHead(),
+        /* chunksize = */0, CDORevision.DEPTH_NONE, true);
 
     // set cdo_revision_removed for all list items (so we have no NULL values)
     clearList(accessor, id, revision.getVersion(), FINAL_VERSION);

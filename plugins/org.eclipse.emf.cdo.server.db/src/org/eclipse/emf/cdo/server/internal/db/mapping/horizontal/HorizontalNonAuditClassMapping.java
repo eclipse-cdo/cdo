@@ -592,7 +592,10 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       try
       {
         IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(feature);
-        listMapping.processDelta(accessor, id, branchId, oldVersion, oldVersion + 1, created, delta);
+        if (listMapping != null)
+        {
+          listMapping.processDelta(accessor, id, branchId, oldVersion, oldVersion + 1, created, delta);
+        }
       }
       catch (NewListSizeResult result)
       {

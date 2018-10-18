@@ -286,7 +286,7 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getModelSet__ContainsElement__EModelElement()
+  public EOperation getModelSet__GetPackage__String()
   {
     return modelSetEClass.getEOperations().get(5);
   }
@@ -296,7 +296,7 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getModelSet__GetElement__String()
+  public EOperation getModelSet__ContainsElement__EModelElement()
   {
     return modelSetEClass.getEOperations().get(6);
   }
@@ -306,7 +306,7 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getModelSet__GetElementID__EModelElement()
+  public EOperation getModelSet__GetElement__String()
   {
     return modelSetEClass.getEOperations().get(7);
   }
@@ -316,7 +316,7 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getModelSet__GetElementID__EModelElement_boolean()
+  public EOperation getModelSet__GetElementID__EModelElement()
   {
     return modelSetEClass.getEOperations().get(8);
   }
@@ -326,7 +326,7 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getModelSet__Compare__ModelSet()
+  public EOperation getModelSet__GetElementID__EModelElement_boolean()
   {
     return modelSetEClass.getEOperations().get(9);
   }
@@ -336,9 +336,19 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getModelSet__GetMigration__String()
+  public EOperation getModelSet__Compare__ModelSet()
   {
     return modelSetEClass.getEOperations().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getModelSet__GetMigration__String()
+  {
+    return modelSetEClass.getEOperations().get(11);
   }
 
   /**
@@ -409,6 +419,36 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
   public EReference getModel_MissingPackages()
   {
     return (EReference)modelEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getModel__EnsureIDs()
+  {
+    return modelEClass.getEOperations().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getModel__GetPackage__String()
+  {
+    return modelEClass.getEOperations().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getModel__Save()
+  {
+    return modelEClass.getEOperations().get(2);
   }
 
   /**
@@ -516,7 +556,7 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getEvolution_LatestRelease()
+  public EReference getEvolution_InitialRelease()
   {
     return (EReference)evolutionEClass.getEStructuralFeatures().get(10);
   }
@@ -526,9 +566,49 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getEvolution_LatestRelease()
+  {
+    return (EReference)evolutionEClass.getEStructuralFeatures().get(11);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EAttribute getEvolution_NextReleaseVersion()
   {
-    return (EAttribute)evolutionEClass.getEStructuralFeatures().get(11);
+    return (EAttribute)evolutionEClass.getEStructuralFeatures().get(12);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getEvolution__EnsureIDs()
+  {
+    return evolutionEClass.getEOperations().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getEvolution__GetModel__String()
+  {
+    return evolutionEClass.getEOperations().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getEvolution__AddModel__URI()
+  {
+    return evolutionEClass.getEOperations().get(2);
   }
 
   /**
@@ -548,7 +628,27 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
    */
   public EOperation getEvolution__GetRelease__int()
   {
-    return evolutionEClass.getEOperations().get(0);
+    return evolutionEClass.getEOperations().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getEvolution__CreateRelease()
+  {
+    return evolutionEClass.getEOperations().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getEvolution__Save()
+  {
+    return evolutionEClass.getEOperations().get(5);
   }
 
   /**
@@ -972,6 +1072,7 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
     createEOperation(modelSetEClass, MODEL_SET___GET_PREVIOUS_RELEASE);
     createEOperation(modelSetEClass, MODEL_SET___GET_ROOT_PACKAGES);
     createEOperation(modelSetEClass, MODEL_SET___GET_ALL_PACKAGES);
+    createEOperation(modelSetEClass, MODEL_SET___GET_PACKAGE__STRING);
     createEOperation(modelSetEClass, MODEL_SET___CONTAINS_ELEMENT__EMODELELEMENT);
     createEOperation(modelSetEClass, MODEL_SET___GET_ELEMENT__STRING);
     createEOperation(modelSetEClass, MODEL_SET___GET_ELEMENT_ID__EMODELELEMENT);
@@ -986,6 +1087,9 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
     createEReference(modelEClass, MODEL__ALL_PACKAGES);
     createEReference(modelEClass, MODEL__REFERENCED_PACKAGES);
     createEReference(modelEClass, MODEL__MISSING_PACKAGES);
+    createEOperation(modelEClass, MODEL___ENSURE_IDS);
+    createEOperation(modelEClass, MODEL___GET_PACKAGE__STRING);
+    createEOperation(modelEClass, MODEL___SAVE);
 
     evolutionEClass = createEClass(EVOLUTION);
     createEAttribute(evolutionEClass, EVOLUTION__USE_ECORE_PACKAGE);
@@ -998,9 +1102,15 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
     createEReference(evolutionEClass, EVOLUTION__MISSING_PACKAGES);
     createEReference(evolutionEClass, EVOLUTION__RELEASES);
     createEReference(evolutionEClass, EVOLUTION__ORDERED_RELEASES);
+    createEReference(evolutionEClass, EVOLUTION__INITIAL_RELEASE);
     createEReference(evolutionEClass, EVOLUTION__LATEST_RELEASE);
     createEAttribute(evolutionEClass, EVOLUTION__NEXT_RELEASE_VERSION);
+    createEOperation(evolutionEClass, EVOLUTION___ENSURE_IDS);
+    createEOperation(evolutionEClass, EVOLUTION___GET_MODEL__STRING);
+    createEOperation(evolutionEClass, EVOLUTION___ADD_MODEL__URI);
     createEOperation(evolutionEClass, EVOLUTION___GET_RELEASE__INT);
+    createEOperation(evolutionEClass, EVOLUTION___CREATE_RELEASE);
+    createEOperation(evolutionEClass, EVOLUTION___SAVE);
 
     releaseEClass = createEClass(RELEASE);
     createEReference(releaseEClass, RELEASE__EVOLUTION);
@@ -1099,7 +1209,7 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
     initEReference(getModelSet_Change(), getModelSetChange(), null, "change", null, 0, 1, ModelSet.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         IS_COMPOSITE, !IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEReference(getModelSet_Migrations(), getMigration(), getMigration_ModelSet(), "migrations", null, 0, -1, ModelSet.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEOperation(getModelSet__GetEvolution(), getEvolution(), "getEvolution", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -1111,8 +1221,10 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
 
     initEOperation(getModelSet__GetAllPackages(), ecorePackage.getEPackage(), "getAllPackages", 0, -1, IS_UNIQUE, IS_ORDERED);
 
-    EOperation op = initEOperation(getModelSet__ContainsElement__EModelElement(), theEcorePackage.getEBoolean(), "containsElement", 0, 1, IS_UNIQUE,
-        IS_ORDERED);
+    EOperation op = initEOperation(getModelSet__GetPackage__String(), theEcorePackage.getEPackage(), "getPackage", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, theEcorePackage.getEString(), "nsURI", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    op = initEOperation(getModelSet__ContainsElement__EModelElement(), theEcorePackage.getEBoolean(), "containsElement", 0, 1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, theEcorePackage.getEModelElement(), "modelElement", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     op = initEOperation(getModelSet__GetElement__String(), null, "getElement", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1138,7 +1250,7 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
 
     initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getModel_Evolution(), getEvolution(), getEvolution_Models(), "evolution", null, 1, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getModel_URI(), getURI(), "uRI", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
     initEReference(getModel_RootPackage(), theEcorePackage.getEPackage(), null, "rootPackage", null, 0, 1, Model.class, IS_TRANSIENT, IS_VOLATILE,
@@ -1150,6 +1262,13 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
     initEReference(getModel_MissingPackages(), theEcorePackage.getEPackage(), null, "missingPackages", null, 0, -1, Model.class, IS_TRANSIENT, IS_VOLATILE,
         !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
+    initEOperation(getModel__EnsureIDs(), ecorePackage.getEBoolean(), "ensureIDs", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    op = initEOperation(getModel__GetPackage__String(), theEcorePackage.getEPackage(), "getPackage", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, theEcorePackage.getEString(), "nsURI", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    initEOperation(getModel__Save(), null, "save", 0, 1, IS_UNIQUE, IS_ORDERED);
+
     initEClass(evolutionEClass, Evolution.class, "Evolution", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getEvolution_UseEcorePackage(), ecorePackage.getEBoolean(), "useEcorePackage", "true", 0, 1, Evolution.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1160,7 +1279,7 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
     initEAttribute(getEvolution_UniqueNamespaces(), ecorePackage.getEBoolean(), "uniqueNamespaces", "true", 0, 1, Evolution.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEvolution_Models(), getModel(), getModel_Evolution(), "models", null, 0, -1, Evolution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEvolution_RootPackages(), theEcorePackage.getEPackage(), null, "rootPackages", null, 0, -1, Evolution.class, IS_TRANSIENT, IS_VOLATILE,
         !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEReference(getEvolution_AllPackages(), theEcorePackage.getEPackage(), null, "allPackages", null, 0, -1, Evolution.class, IS_TRANSIENT, IS_VOLATILE,
@@ -1168,20 +1287,34 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
     initEReference(getEvolution_MissingPackages(), theEcorePackage.getEPackage(), null, "missingPackages", null, 0, -1, Evolution.class, IS_TRANSIENT,
         IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEReference(getEvolution_Releases(), getRelease(), getRelease_Evolution(), "releases", null, 0, -1, Evolution.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEvolution_OrderedReleases(), getRelease(), null, "orderedReleases", null, 0, -1, Evolution.class, IS_TRANSIENT, IS_VOLATILE,
         !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEReference(getEvolution_InitialRelease(), getRelease(), null, "initialRelease", null, 0, 1, Evolution.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE,
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEReference(getEvolution_LatestRelease(), getRelease(), null, "latestRelease", null, 0, 1, Evolution.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE,
         !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEAttribute(getEvolution_NextReleaseVersion(), theEcorePackage.getEInt(), "nextReleaseVersion", null, 0, 1, Evolution.class, IS_TRANSIENT, IS_VOLATILE,
         !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
+    initEOperation(getEvolution__EnsureIDs(), ecorePackage.getEBoolean(), "ensureIDs", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    op = initEOperation(getEvolution__GetModel__String(), getModel(), "getModel", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, theEcorePackage.getEString(), "nsURI", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    op = initEOperation(getEvolution__AddModel__URI(), getModel(), "addModel", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, getURI(), "uri", 0, 1, IS_UNIQUE, IS_ORDERED);
+
     op = initEOperation(getEvolution__GetRelease__int(), getRelease(), "getRelease", 0, 1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, theEcorePackage.getEInt(), "version", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+    initEOperation(getEvolution__CreateRelease(), getRelease(), "createRelease", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    initEOperation(getEvolution__Save(), null, "save", 0, 1, IS_UNIQUE, IS_ORDERED);
+
     initEClass(releaseEClass, Release.class, "Release", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getRelease_Evolution(), getEvolution(), getEvolution_Releases(), "evolution", null, 1, 1, Release.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getRelease_Version(), ecorePackage.getEInt(), "version", null, 1, 1, Release.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getRelease_Date(), ecorePackage.getEDate(), "date", null, 1, 1, Release.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
@@ -1191,7 +1324,7 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
     initEReference(getRelease_PreviousRelease(), getRelease(), null, "previousRelease", null, 0, 1, Release.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE,
         !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEReference(getRelease_RootPackages(), theEcorePackage.getEPackage(), null, "rootPackages", null, 0, -1, Release.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getRelease_AllPackages(), theEcorePackage.getEPackage(), null, "allPackages", null, 0, -1, Release.class, IS_TRANSIENT, IS_VOLATILE,
         !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
@@ -1241,7 +1374,7 @@ public class EvolutionPackageImpl extends EPackageImpl implements EvolutionPacka
 
     initEClass(migrationEClass, Migration.class, "Migration", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getMigration_ModelSet(), getModelSet(), getModelSet_Migrations(), "modelSet", null, 0, 1, Migration.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getMigration_DiagnosticID(), ecorePackage.getEString(), "diagnosticID", null, 0, 1, Migration.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

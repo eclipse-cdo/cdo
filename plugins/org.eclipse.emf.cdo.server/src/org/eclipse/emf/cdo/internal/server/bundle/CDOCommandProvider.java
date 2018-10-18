@@ -171,10 +171,26 @@ public class CDOCommandProvider implements CommandProvider
     }
   };
 
-  private static final CDOCommand branches = new CDOCommand.WithRepository("branches", "dump the branches of a repository")
+  private static final CDOCommand properties = new CDOCommand.WithRepository("properties", "dump the persistent properties of a repository")
   {
     @Override
     public void execute(InternalRepository repository, String[] args) throws Exception
+    {
+      Map<String, String> properties = repository.getStore().getPersistentProperties(null);
+      List<String> keys = new ArrayList<String>(properties.keySet());
+      Collections.sort(keys);
+
+      for (String key : keys)
+      {
+        println(key + " = " + properties.get(key));
+      }
+    }
+  };
+
+  private static final CDOCommand branches = new CDOCommand.WithAccessor("branches", "dump the branches of a repository")
+  {
+    @Override
+    public void execute(InternalRepository repository, IStoreAccessor accessor, String[] args) throws Exception
     {
       branches(repository.getBranchManager().getMainBranch(), "");
     }
@@ -247,7 +263,7 @@ public class CDOCommandProvider implements CommandProvider
     }
   };
 
-  private static final CDOCommand deletelocks = new CDOCommand.WithAccessor("deletelocks", "delete a durable locking area of a repository",
+  private static final CDOCommand deleteLocks = new CDOCommand.WithAccessor("deletelocks", "delete a durable locking area of a repository",
       CDOCommand.parameter("area-id"))
   {
     @Override
@@ -348,11 +364,12 @@ public class CDOCommandProvider implements CommandProvider
     addCommand(commands, stop);
     addCommand(commands, exportXML);
     addCommand(commands, importXML);
+    addCommand(commands, properties);
     addCommand(commands, branches);
-    addCommand(commands, deletelocks);
-    addCommand(commands, locks);
     addCommand(commands, packages);
     addCommand(commands, sessions);
+    addCommand(commands, locks);
+    addCommand(commands, deleteLocks);
 
     try
     {

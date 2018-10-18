@@ -19,6 +19,7 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.spi.db.ddl.InternalDBField;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.spi.db.ddl.InternalDBTable;
+import org.eclipse.net4j.util.ObjectUtil;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -220,6 +221,21 @@ public class DBField extends DBSchemaElement implements InternalDBField
   public String getFullName()
   {
     return table.getName() + "." + getName(); //$NON-NLS-1$
+  }
+
+  public boolean rename(String newName)
+  {
+    String oldName = getName();
+    if (!ObjectUtil.equals(newName, oldName))
+    {
+      if (((InternalDBTable)table).renameField(this, newName))
+      {
+        setName(newName);
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public void remove()

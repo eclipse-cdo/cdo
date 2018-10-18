@@ -85,6 +85,16 @@ public abstract class MigrationImpl extends CDOObjectImpl implements Migration
    * <!-- end-user-doc -->
    * @generated
    */
+  public ModelSet basicGetModelSet()
+  {
+    return (ModelSet)eDynamicGet(EvolutionPackage.MIGRATION__MODEL_SET, EvolutionPackage.Literals.MIGRATION__MODEL_SET, false, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public NotificationChain basicSetModelSet(ModelSet newModelSet, NotificationChain msgs)
   {
     msgs = eBasicSetContainer((InternalEObject)newModelSet, EvolutionPackage.MIGRATION__MODEL_SET, msgs);
@@ -184,7 +194,11 @@ public abstract class MigrationImpl extends CDOObjectImpl implements Migration
     switch (featureID)
     {
     case EvolutionPackage.MIGRATION__MODEL_SET:
-      return getModelSet();
+      if (resolve)
+      {
+        return getModelSet();
+      }
+      return basicGetModelSet();
     case EvolutionPackage.MIGRATION__DIAGNOSTIC_ID:
       return getDiagnosticID();
     }
@@ -242,7 +256,7 @@ public abstract class MigrationImpl extends CDOObjectImpl implements Migration
     switch (featureID)
     {
     case EvolutionPackage.MIGRATION__MODEL_SET:
-      return getModelSet() != null;
+      return basicGetModelSet() != null;
     case EvolutionPackage.MIGRATION__DIAGNOSTIC_ID:
       return DIAGNOSTIC_ID_EDEFAULT == null ? getDiagnosticID() != null : !DIAGNOSTIC_ID_EDEFAULT.equals(getDiagnosticID());
     }

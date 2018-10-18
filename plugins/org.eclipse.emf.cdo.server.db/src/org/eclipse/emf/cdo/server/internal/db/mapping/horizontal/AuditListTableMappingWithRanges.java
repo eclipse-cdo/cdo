@@ -43,6 +43,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
@@ -128,7 +129,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     super(mappingStrategy, eClass, feature);
 
     IDBStoreAccessor accessor = null;
-    if (AbstractHorizontalMappingStrategy.isEagerTableCreation(mappingStrategy))
+    if (AbstractMappingStrategy.isEagerTableCreation(mappingStrategy))
     {
       accessor = (IDBStoreAccessor)StoreThreadLocal.getAccessor();
     }
@@ -136,14 +137,14 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     initTable(accessor);
   }
 
-  private void initTable(IDBStoreAccessor accessor)
+  public void setTable(IDBTable table)
+  {
+    this.table = table;
+  }
+
+  public void initTable(IDBStoreAccessor accessor)
   {
     String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
-    typeMapping = getMappingStrategy().createValueMapping(getFeature());
-
-    IDBStore store = getMappingStrategy().getStore();
-    DBType idType = store.getIDHandler().getDBType();
-    int idLength = store.getIDColumnLength();
 
     IDBDatabase database = getMappingStrategy().getStore().getDatabase();
     table = database.getSchema().getTable(tableName);
@@ -155,19 +156,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
 
         try
         {
-          IDBSchema workingCopy = schemaTransaction.getWorkingCopy();
-          IDBTable table = workingCopy.addTable(tableName);
-
-          table.addField(LIST_REVISION_ID, idType, idLength, true);
-          table.addField(LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
-          table.addField(LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
-          table.addField(LIST_IDX, DBType.INTEGER, true);
-
-          // TODO think about indexes
-          table.addIndex(Type.NON_UNIQUE, LIST_REVISION_ID, LIST_REVISION_VERSION_ADDED, LIST_REVISION_VERSION_REMOVED, LIST_IDX);
-
-          typeMapping.createDBField(table, LIST_VALUE);
-
+          table = createTable(schemaTransaction.getWorkingCopy(), tableName);
           schemaTransaction.commit();
         }
         finally
@@ -181,9 +170,30 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     }
     else
     {
+      typeMapping = getMappingStrategy().createValueMapping(getFeature());
       typeMapping.setDBField(table, LIST_VALUE);
       initSQLStrings();
     }
+  }
+
+  public IDBTable createTable(IDBSchema schema, String tableName)
+  {
+    IDBStore store = getMappingStrategy().getStore();
+    DBType idType = store.getIDHandler().getDBType();
+    int idLength = store.getIDColumnLength();
+
+    IDBTable table = schema.addTable(tableName);
+    table.addField(LIST_REVISION_ID, idType, idLength, true);
+    table.addField(LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
+    table.addField(LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
+    table.addField(LIST_IDX, DBType.INTEGER, true);
+
+    // TODO think about indexes
+    table.addIndex(Type.NON_UNIQUE, LIST_REVISION_ID, LIST_REVISION_VERSION_ADDED, LIST_REVISION_VERSION_REMOVED, LIST_IDX);
+
+    typeMapping = getMappingStrategy().createValueMapping(getFeature());
+    typeMapping.createDBField(table, LIST_VALUE);
+    return table;
   }
 
   private void initSQLStrings()
@@ -332,7 +342,8 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     return Collections.singleton(table);
   }
 
-  protected final IDBTable getTable()
+  @Override
+  public final IDBTable getTable()
   {
     return table;
   }
@@ -599,8 +610,8 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     CDOBranch main = getMappingStrategy().getStore().getRepository().getBranchManager().getMainBranch();
 
     // get revision from cache to find out version number
-    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id, main.getHead(), /* chunksize = */0,
-        CDORevision.DEPTH_NONE, true);
+    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id, main.getHead(),
+        /* chunksize = */0, CDORevision.DEPTH_NONE, true);
 
     // set cdo_revision_removed for all list items (so we have no NULL values)
     clearList(accessor, id, revision.getVersion(), FINAL_VERSION);

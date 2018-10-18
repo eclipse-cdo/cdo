@@ -52,4 +52,9 @@ public interface IDBField extends IDBSchemaElement, PositionProvider
   public String formatPrecision();
 
   public String formatPrecisionAndScale();
+
+  /**
+   * @since 4.8
+   */
+  public boolean rename(String newName);
 }

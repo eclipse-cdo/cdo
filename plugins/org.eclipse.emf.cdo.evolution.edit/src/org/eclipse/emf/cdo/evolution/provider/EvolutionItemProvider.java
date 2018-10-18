@@ -58,6 +58,7 @@ public class EvolutionItemProvider extends ModelSetItemProvider
       addAllPackagesPropertyDescriptor(object);
       addMissingPackagesPropertyDescriptor(object);
       addOrderedReleasesPropertyDescriptor(object);
+      addInitialReleasePropertyDescriptor(object);
       addLatestReleasePropertyDescriptor(object);
       addNextReleaseVersionPropertyDescriptor(object);
     }
@@ -160,6 +161,20 @@ public class EvolutionItemProvider extends ModelSetItemProvider
         getString("_UI_Evolution_orderedReleases_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_Evolution_orderedReleases_feature", "_UI_Evolution_type"),
         EvolutionPackage.Literals.EVOLUTION__ORDERED_RELEASES, false, false, false, null, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Initial Release feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addInitialReleasePropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Evolution_initialRelease_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Evolution_initialRelease_feature", "_UI_Evolution_type"),
+        EvolutionPackage.Literals.EVOLUTION__INITIAL_RELEASE, false, false, false, null, null, null));
   }
 
   /**

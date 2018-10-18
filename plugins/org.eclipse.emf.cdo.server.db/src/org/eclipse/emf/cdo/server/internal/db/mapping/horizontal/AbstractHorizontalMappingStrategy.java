@@ -359,9 +359,9 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   }
 
   @Override
-  protected boolean isMapped(EClass eClass)
+  public boolean isMapped(EClass eClass)
   {
-    return !eClass.isAbstract() && !eClass.isInterface();
+    return !eClass.isAbstract() && !eClass.isInterface() && super.isMapped(eClass);
   }
 
   @Override

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import java.io.PrintStream;
@@ -31,11 +32,15 @@ import java.util.List;
  * @author Eike Stepper
  * @since 4.0
  */
-public class DBBrowserPage extends AbstractPage
+public class DBTablesPage extends AbstractPage
 {
-  public DBBrowserPage()
+  private static final String PARAM_TABLE = "table";
+
+  private static final String NAME = "tables";
+
+  public DBTablesPage()
   {
-    super("tables", "DB Tables");
+    super(NAME, "DB Tables");
   }
 
   public boolean canDisplay(InternalRepository repository)
@@ -84,7 +89,7 @@ public class DBBrowserPage extends AbstractPage
    */
   protected String showTables(CDOServerBrowser browser, PrintStream pout, Connection connection, String repo)
   {
-    String table = browser.getParam("table");
+    String table = browser.getParam(PARAM_TABLE);
     boolean used = browser.isParam("used");
     boolean schema = browser.isParam("schema");
 
@@ -126,7 +131,7 @@ public class DBBrowserPage extends AbstractPage
       }
       else
       {
-        pout.print(browser.href(label, getName(), "table", tableName, "order", null, "direction", null));
+        pout.print(browser.href(label, getName(), PARAM_TABLE, tableName, "order", null, "direction", null));
       }
 
       if (rowCount > 0)
@@ -235,21 +240,32 @@ public class DBBrowserPage extends AbstractPage
     }
   }
 
+  public static String tableHRef(CDOServerBrowser browser, IDBTable table)
+  {
+    if (table == null)
+    {
+      return "&nbsp;";
+    }
+
+    String tableName = table.getName();
+    return browser.href(tableName, NAME, PARAM_TABLE, tableName);
+  }
+
   /**
    * @author Eike Stepper
    */
   public static class Factory extends org.eclipse.net4j.util.factory.Factory
   {
-    public static final String TYPE = "db";
+    public static final String TYPE = "dbtables";
 
     public Factory()
     {
       super(PRODUCT_GROUP, TYPE);
     }
 
-    public DBBrowserPage create(String description) throws ProductCreationException
+    public DBTablesPage create(String description) throws ProductCreationException
     {
-      return new DBBrowserPage();
+      return new DBTablesPage();
     }
   }
 }

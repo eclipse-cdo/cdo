@@ -42,8 +42,7 @@ public class HorizontalAuditMappingStrategy extends AbstractHorizontalMappingStr
     return false;
   }
 
-  @Override
-  protected IClassMapping doCreateClassMapping(EClass eClass)
+  public IClassMapping createClassMapping(EClass eClass)
   {
     return new HorizontalAuditClassMapping(this, eClass);
   }

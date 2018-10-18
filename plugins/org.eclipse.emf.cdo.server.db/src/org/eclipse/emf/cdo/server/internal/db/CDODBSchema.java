@@ -70,7 +70,7 @@ public class CDODBSchema
       PACKAGE_UNITS.addField("time_stamp", DBType.BIGINT); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_UNITS_PACKAGE_DATA = //
-      PACKAGE_UNITS.addField("package_data", DBType.BLOB); //$NON-NLS-1$
+      PACKAGE_UNITS.addField("package_data", MetaDataManager.ZIP_PACKAGE_BYTES ? DBType.BLOB : DBType.CLOB); //$NON-NLS-1$
 
   public static final IDBIndex INDEX_PACKAGE_UNITS_PK = //
       PACKAGE_UNITS.addIndex(IDBIndex.Type.PRIMARY_KEY, PACKAGE_UNITS_ID);

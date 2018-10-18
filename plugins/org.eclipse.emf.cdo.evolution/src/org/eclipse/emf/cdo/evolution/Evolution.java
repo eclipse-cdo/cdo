@@ -3,6 +3,7 @@
 package org.eclipse.emf.cdo.evolution;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 
 import java.util.Map;
@@ -27,6 +28,7 @@ import java.util.Set;
  *   <li>{@link org.eclipse.emf.cdo.evolution.Evolution#getMissingPackages <em>Missing Packages</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.evolution.Evolution#getReleases <em>Releases</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.evolution.Evolution#getOrderedReleases <em>Ordered Releases</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.evolution.Evolution#getInitialRelease <em>Initial Release</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.evolution.Evolution#getLatestRelease <em>Latest Release</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.evolution.Evolution#getNextReleaseVersion <em>Next Release Version</em>}</li>
  * </ul>
@@ -50,7 +52,7 @@ public interface Evolution extends ModelSet
    * @return the value of the '<em>Models</em>' containment reference list.
    * @see org.eclipse.emf.cdo.evolution.EvolutionPackage#getEvolution_Models()
    * @see org.eclipse.emf.cdo.evolution.Model#getEvolution
-   * @model opposite="evolution" containment="true"
+   * @model opposite="evolution" containment="true" resolveProxies="true"
    * @generated
    */
   EList<Model> getModels();
@@ -208,7 +210,7 @@ public interface Evolution extends ModelSet
    * @return the value of the '<em>Releases</em>' containment reference list.
    * @see org.eclipse.emf.cdo.evolution.EvolutionPackage#getEvolution_Releases()
    * @see org.eclipse.emf.cdo.evolution.Release#getEvolution
-   * @model opposite="evolution" containment="true"
+   * @model opposite="evolution" containment="true" resolveProxies="true"
    * @generated
    */
   EList<Release> getReleases();
@@ -228,6 +230,21 @@ public interface Evolution extends ModelSet
    * @generated
    */
   EList<Release> getOrderedReleases();
+
+  /**
+   * Returns the value of the '<em><b>Initial Release</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Initial Release</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Initial Release</em>' reference.
+   * @see org.eclipse.emf.cdo.evolution.EvolutionPackage#getEvolution_InitialRelease()
+   * @model transient="true" changeable="false" volatile="true" derived="true"
+   * @generated
+   */
+  Release getInitialRelease();
 
   /**
    * Returns the value of the '<em><b>Latest Release</b></em>' reference.
@@ -260,6 +277,30 @@ public interface Evolution extends ModelSet
   int getNextReleaseVersion();
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  boolean ensureIDs();
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  Model getModel(String nsURI);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model uriDataType="org.eclipse.emf.cdo.evolution.URI"
+   * @generated
+   */
+  Model addModel(URI uri);
+
+  /**
    * Returns the value of the '<em><b>Missing Packages</b></em>' reference list.
    * The list contents are of type {@link org.eclipse.emf.ecore.EPackage}.
    * <!-- begin-user-doc -->
@@ -282,5 +323,21 @@ public interface Evolution extends ModelSet
    * @generated
    */
   Release getRelease(int version);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  Release createRelease();
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  void save();
 
 } // Evolution

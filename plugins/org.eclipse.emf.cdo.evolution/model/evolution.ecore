@@ -8,6 +8,9 @@
     <eOperations name="getPreviousRelease" eType="#//Release"/>
     <eOperations name="getRootPackages" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
     <eOperations name="getAllPackages" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+    <eOperations name="getPackage" eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage">
+      <eParameters name="nsURI" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    </eOperations>
     <eOperations name="containsElement" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean">
       <eParameters name="modelElement" eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EModelElement"/>
     </eOperations>
@@ -45,6 +48,11 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
       <details key="constraints" value="ModelLoaded IDs_Exist NamespaceReflectsChange"/>
     </eAnnotations>
+    <eOperations name="ensureIDs" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="getPackage" eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage">
+      <eParameters name="nsURI" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    </eOperations>
+    <eOperations name="save"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="evolution" lowerBound="1"
         eType="#//Evolution" eOpposite="#//Evolution/models"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uRI" eType="#//URI">
@@ -69,9 +77,18 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
       <details key="constraints" value="NotEmpty PackagesUnique NoMissingPackages IDsUnique"/>
     </eAnnotations>
+    <eOperations name="ensureIDs" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="getModel" eType="#//Model">
+      <eParameters name="nsURI" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    </eOperations>
+    <eOperations name="addModel" eType="#//Model">
+      <eParameters name="uri" eType="#//URI"/>
+    </eOperations>
     <eOperations name="getRelease" eType="#//Release">
       <eParameters name="version" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
     </eOperations>
+    <eOperations name="createRelease" eType="#//Release"/>
+    <eOperations name="save"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="useEcorePackage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="useEresourcePackage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -93,6 +110,8 @@
         eType="#//Release" containment="true" eOpposite="#//Release/evolution"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="orderedReleases" upperBound="-1"
         eType="#//Release" changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="initialRelease" eType="#//Release"
+        changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="latestRelease" eType="#//Release"
         changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nextReleaseVersion" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"

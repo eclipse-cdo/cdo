@@ -110,4 +110,9 @@ public interface IDBTable extends IDBSchemaElement
   public IDBIndex getPrimaryKeyIndex();
 
   public String sqlInsert();
+
+  /**
+   * @since 4.8
+   */
+  public boolean rename(String newName);
 }

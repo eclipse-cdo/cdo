@@ -31,4 +31,9 @@ public interface InternalDBTable extends IDBTable, InternalDBSchemaElement
   public void removeField(IDBField fieldToRemove);
 
   public void removeIndex(IDBIndex indexToRemove);
+
+  /**
+   * @since 4.8
+   */
+  public boolean renameField(IDBField field, String newName);
 }

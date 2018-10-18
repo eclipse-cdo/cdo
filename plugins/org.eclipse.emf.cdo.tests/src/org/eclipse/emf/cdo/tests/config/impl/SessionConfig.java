@@ -53,6 +53,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import java.io.File;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
@@ -194,12 +195,24 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     return session;
   }
 
+  public CDOSession getLatestSession()
+  {
+    CDOSession latestSession = null;
+
+    for (CDOSession session : sessions)
+    {
+      latestSession = session;
+    }
+
+    return latestSession;
+  }
+
   @Override
   public void setUp() throws Exception
   {
     super.setUp();
 
-    sessions = new HashSet<CDOSession>();
+    sessions = new LinkedHashSet<CDOSession>();
     sessionListener = new LifecycleEventAdapter()
     {
       @Override

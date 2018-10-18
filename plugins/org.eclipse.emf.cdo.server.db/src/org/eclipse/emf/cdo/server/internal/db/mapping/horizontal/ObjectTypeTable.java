@@ -13,6 +13,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
@@ -20,6 +21,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
@@ -54,6 +56,8 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
   private String sqlDelete;
 
   private String sqlInsert;
+
+  private String sqlUpdate;
 
   private String sqlSelect;
 
@@ -134,6 +138,35 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
         return false;
       }
 
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+    }
+  }
+
+  public int changeObjectType(IDBStoreAccessor accessor, EClass oldType, EClass newType)
+  {
+    IDBStore store = getMappingStrategy().getStore();
+    IIDHandler idHandler = store.getIDHandler();
+    IMetaDataManager metaDataManager = getMetaDataManager();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdate, ReuseProbability.HIGH);
+
+    try
+    {
+      idHandler.setCDOID(stmt, 1, metaDataManager.getMetaID(newType, CDOBranchPoint.UNSPECIFIED_DATE));
+      idHandler.setCDOID(stmt, 2, metaDataManager.getMetaID(oldType, CDOBranchPoint.UNSPECIFIED_DATE));
+
+      if (DBUtil.isTracerEnabled())
+      {
+        DBUtil.trace(stmt.toString());
+      }
+
+      return stmt.executeUpdate();
+    }
+    catch (SQLException ex)
+    {
       throw new DBException(ex);
     }
     finally
@@ -242,6 +275,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
 
     sqlSelect = "SELECT " + ATTRIBUTES_CLASS + " FROM " + table + " WHERE " + ATTRIBUTES_ID + "=?";
     sqlInsert = "INSERT INTO " + table + "(" + ATTRIBUTES_ID + "," + ATTRIBUTES_CLASS + "," + ATTRIBUTES_CREATED + ") VALUES (?, ?, ?)";
+    sqlUpdate = "UPDATE " + table + " SET " + ATTRIBUTES_CLASS + "=? WHERE " + ATTRIBUTES_CLASS + "=?";
     sqlDelete = "DELETE FROM " + table + " WHERE " + ATTRIBUTES_ID + "=?";
   }
 

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.db;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.UnitSupport;
+import org.eclipse.emf.cdo.server.spi.evolution.EvolutionSupport;
 
 import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.ddl.IDBTable;
@@ -28,7 +29,7 @@ import java.sql.Connection;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBStoreAccessor extends IStoreAccessor.Raw2, UnitSupport
+public interface IDBStoreAccessor extends IStoreAccessor.Raw2, UnitSupport, EvolutionSupport
 {
   public IDBStore getStore();
 

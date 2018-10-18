@@ -37,6 +37,8 @@ public interface IObjectTypeMapper
 
   public boolean removeObjectType(IDBStoreAccessor accessor, CDOID id);
 
+  public int changeObjectType(IDBStoreAccessor accessor, EClass oldType, EClass newType);
+
   /**
    * Return the maximum object id managed by this cache.
    *

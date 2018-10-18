@@ -2,6 +2,8 @@
  */
 package org.eclipse.emf.cdo.evolution.impl;
 
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.evolution.Change;
 import org.eclipse.emf.cdo.evolution.ChangeKind;
 import org.eclipse.emf.cdo.evolution.ElementChange;
@@ -16,9 +18,12 @@ import org.eclipse.emf.cdo.evolution.Release;
 import org.eclipse.emf.cdo.evolution.util.ElementHandler;
 import org.eclipse.emf.cdo.evolution.util.ElementRunnable;
 import org.eclipse.emf.cdo.evolution.util.IDAnnotation;
+import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
+import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.CollectionUtil;
 
@@ -269,6 +274,24 @@ public abstract class ModelSetImpl extends CDOObjectImpl implements ModelSet
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  public EPackage getPackage(String nsURI)
+  {
+    for (EPackage ePackage : getAllPackages())
+    {
+      if (ObjectUtil.equals(ePackage.getNsURI(), nsURI))
+      {
+        return ePackage;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
   public abstract boolean containsElement(EModelElement modelElement);
 
   /**
@@ -370,6 +393,87 @@ public abstract class ModelSetImpl extends CDOObjectImpl implements ModelSet
     }
 
     return null;
+  }
+
+  public EList<ElementChange> getElementChanges(EClass elementType, ChangeKind... changeKinds)
+  {
+    ModelSetChange modelSetChange = getChange();
+
+    EList<ElementChange> result = new BasicEList<ElementChange>();
+    collectElementChanges(result, modelSetChange, elementType, changeKinds);
+    return result;
+  }
+
+  private void collectElementChanges(EList<ElementChange> result, Change change, EClass elementType, ChangeKind... changeKinds)
+  {
+    if (change instanceof ElementChange)
+    {
+      ElementChange elementChange = (ElementChange)change;
+
+      if (elementType == null || elementType.isSuperTypeOf(elementChange.getElement().eClass()))
+      {
+        if (changeKinds.length == 0 || elementChange.getKind().indexWithin(changeKinds) != -1)
+        {
+          result.add(elementChange);
+        }
+      }
+    }
+
+    for (Change child : change.getChildren())
+    {
+      collectElementChanges(result, child, elementType, changeKinds);
+    }
+  }
+
+  public EList<PropertyChange> getPropertyChanges(EStructuralFeature feature, ChangeKind... changeKinds)
+  {
+    ModelSetChange modelSetChange = getChange();
+
+    EList<PropertyChange> result = new BasicEList<PropertyChange>();
+    collectPropertyChanges(result, modelSetChange, feature, changeKinds);
+    return result;
+  }
+
+  private void collectPropertyChanges(EList<PropertyChange> result, Change change, EStructuralFeature feature, ChangeKind... changeKinds)
+  {
+    if (change instanceof PropertyChange)
+    {
+      PropertyChange propertyChange = (PropertyChange)change;
+
+      if (feature == null || feature == propertyChange.getFeature())
+      {
+        if (changeKinds.length == 0 || propertyChange.getKind().indexWithin(changeKinds) != -1)
+        {
+          result.add(propertyChange);
+        }
+      }
+    }
+
+    for (Change child : change.getChildren())
+    {
+      collectPropertyChanges(result, child, feature, changeKinds);
+    }
+  }
+
+  public CDOPackageRegistry createPackageRegistry()
+  {
+    CDOPackageRegistryImpl packageRegistry = new CDOPackageRegistryImpl();
+    packageRegistry.setPackageLoader(new PackageLoader()
+    {
+      public EPackage[] loadPackages(CDOPackageUnit packageUnit)
+      {
+        throw new ImplementationError("All package units should be fully initialized -- no loading required");
+      }
+    });
+
+    packageRegistry.activate();
+
+    for (EPackage rootPackage : getRootPackages())
+    {
+      packageRegistry.putEPackage(rootPackage);
+    }
+
+    return packageRegistry;
   }
 
   /**
@@ -505,6 +609,8 @@ public abstract class ModelSetImpl extends CDOObjectImpl implements ModelSet
       return getRootPackages();
     case EvolutionPackage.MODEL_SET___GET_ALL_PACKAGES:
       return getAllPackages();
+    case EvolutionPackage.MODEL_SET___GET_PACKAGE__STRING:
+      return getPackage((String)arguments.get(0));
     case EvolutionPackage.MODEL_SET___CONTAINS_ELEMENT__EMODELELEMENT:
       return containsElement((EModelElement)arguments.get(0));
     case EvolutionPackage.MODEL_SET___GET_ELEMENT__STRING:
@@ -620,7 +726,7 @@ public abstract class ModelSetImpl extends CDOObjectImpl implements ModelSet
             System.out.println(kind + " " + getLabel(oldElement) + " --> " + getLabel(newElement));
           }
 
-          ElementChange elementChange = getElementChange(newElement, oldElement, kind, previousElementChanges);
+          ElementChange elementChange = getElementChange(oldElement, newElement, kind, previousElementChanges);
           getParentChange(elementChange, result).getChildren().add(elementChange);
           result.getElementChanges().put(oldElement, elementChange);
           result.getElementChanges().put(newElement, elementChange);
@@ -853,7 +959,7 @@ public abstract class ModelSetImpl extends CDOObjectImpl implements ModelSet
     return modelSetChange;
   }
 
-  private static ElementChange getElementChange(EModelElement newElement, EModelElement oldElement, ChangeKind kind,
+  private static ElementChange getElementChange(EModelElement oldElement, EModelElement newElement, ChangeKind kind,
       Map<EModelElement, ElementChange> previousElementChanges)
   {
     if (previousElementChanges != null)

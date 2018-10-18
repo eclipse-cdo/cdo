@@ -10,12 +10,14 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.internal.db.IObjectTypeMapper;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -71,6 +73,16 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
     return delegate.putObjectType(accessor, timeStamp, id, type);
   }
 
+  public int changeObjectType(IDBStoreAccessor accessor, EClass oldType, EClass newType)
+  {
+    IMetaDataManager metaDataManager = getMetaDataManager();
+    CDOID oldClassID = metaDataManager.getMetaID(oldType, CDOBranchPoint.UNSPECIFIED_DATE);
+    CDOID newClassID = metaDataManager.getMetaID(newType, CDOBranchPoint.UNSPECIFIED_DATE);
+    doChangeObjectType(accessor, oldClassID, newClassID);
+
+    return delegate.changeObjectType(accessor, oldType, newType);
+  }
+
   public boolean removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     doRemoveObjectType(accessor, id);
@@ -124,6 +136,8 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
   protected abstract CDOID doGetObjectType(IDBStoreAccessor accessor, CDOID id);
 
   protected abstract boolean doPutObjectType(IDBStoreAccessor accessor, CDOID id, CDOID type);
+
+  protected abstract void doChangeObjectType(IDBStoreAccessor accessor, CDOID oldType, CDOID newType);
 
   protected abstract boolean doRemoveObjectType(IDBStoreAccessor accessor, CDOID id);
 }

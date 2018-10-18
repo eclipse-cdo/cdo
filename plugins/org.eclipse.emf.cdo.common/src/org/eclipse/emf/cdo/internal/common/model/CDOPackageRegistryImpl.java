@@ -55,13 +55,13 @@ import java.util.Set;
  */
 public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements InternalCDOPackageRegistry
 {
-  public static final EModelElement[] SYSTEM_ELEMENTS = new EModelElement[10];
-
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOPackageRegistryImpl.class);
 
-  private static final long serialVersionUID = 1L;
+  public static final EModelElement[] SYSTEM_ELEMENTS = new EModelElement[10];
 
-  private static final boolean eagerInternalCaches = false;
+  private static final boolean EAGER_INTERNAL_CACHES = false;
+
+  private static final long serialVersionUID = 1L;
 
   private boolean replacingDescriptors;
 
@@ -637,7 +637,8 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     packageInfos = null;
     packageUnits = null;
     subTypes = null;
-    if (eagerInternalCaches)
+
+    if (EAGER_INTERNAL_CACHES)
     {
       getPackageInfos();
       getPackageUnits();

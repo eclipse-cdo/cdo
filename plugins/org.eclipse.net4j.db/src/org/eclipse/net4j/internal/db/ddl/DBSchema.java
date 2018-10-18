@@ -214,6 +214,21 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
     return table;
   }
 
+  public boolean renameTable(IDBTable table, String newName)
+  {
+    assertUnlocked();
+    newName = name(newName);
+
+    if (tables.containsKey(newName))
+    {
+      return false;
+    }
+
+    tables.remove(table.getName());
+    tables.put(newName, table);
+    return true;
+  }
+
   /**
    * @since 4.2
    */

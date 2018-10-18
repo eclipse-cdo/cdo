@@ -49,6 +49,12 @@ public class ObjectTypeCache extends DelegatingObjectTypeMapper
   }
 
   @Override
+  protected void doChangeObjectType(IDBStoreAccessor accessor, CDOID oldType, CDOID newType)
+  {
+    memoryCache.clear();
+  }
+
+  @Override
   protected boolean doRemoveObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     return memoryCache.remove(id) != null;

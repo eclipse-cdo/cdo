@@ -37,13 +37,8 @@ import java.util.Collection;
  * @author Stefan Winkler
  * @since 2.0
  */
-public interface ITypeMapping
+public interface ITypeMapping extends IFeatureMapping
 {
-  /**
-   * @return The feature which is associated with this mapping.
-   */
-  public EStructuralFeature getFeature();
-
   /**
    * @return The db field which is associated with this mapping.
    */

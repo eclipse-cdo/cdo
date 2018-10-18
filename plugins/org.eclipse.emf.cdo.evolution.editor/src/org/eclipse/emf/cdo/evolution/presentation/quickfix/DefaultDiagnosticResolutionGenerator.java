@@ -16,14 +16,11 @@ import org.eclipse.emf.cdo.evolution.Evolution;
 import org.eclipse.emf.cdo.evolution.EvolutionFactory;
 import org.eclipse.emf.cdo.evolution.FeaturePathMigration;
 import org.eclipse.emf.cdo.evolution.Model;
-import org.eclipse.emf.cdo.evolution.Release;
 import org.eclipse.emf.cdo.evolution.impl.EvolutionImpl;
-import org.eclipse.emf.cdo.evolution.impl.ModelSetChangeImpl;
 import org.eclipse.emf.cdo.evolution.presentation.quickfix.DiagnosticResolution.Generator;
 import org.eclipse.emf.cdo.evolution.util.DiagnosticID;
 import org.eclipse.emf.cdo.evolution.util.DiagnosticType;
 import org.eclipse.emf.cdo.evolution.util.ElementHandler;
-import org.eclipse.emf.cdo.evolution.util.ElementRunnable;
 import org.eclipse.emf.cdo.evolution.util.EvolutionValidator;
 import org.eclipse.emf.cdo.evolution.util.IDAnnotation;
 
@@ -35,7 +32,6 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -44,8 +40,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.FilteredResourcesSelectionDialog;
 
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -145,9 +139,7 @@ public class DefaultDiagnosticResolutionGenerator extends BasicDiagnosticResolut
           if (object instanceof IFile)
           {
             IFile file = (IFile)object;
-
-            Model model = EvolutionFactory.eINSTANCE.createModel(URI.createPlatformResourceURI(file.getFullPath().toString(), true));
-            evolution.getModels().add(model);
+            evolution.addModel(URI.createPlatformResourceURI(file.getFullPath().toString(), true));
           }
         }
       }
@@ -195,10 +187,8 @@ public class DefaultDiagnosticResolutionGenerator extends BasicDiagnosticResolut
           @Override
           public void run(Diagnostic diagnostic)
           {
-            Model model = EvolutionFactory.eINSTANCE.createModel(uri);
-
             Evolution evolution = (Evolution)data.get(0);
-            evolution.getModels().add(model);
+            evolution.addModel(uri);
           }
         });
       }
@@ -344,36 +334,7 @@ public class DefaultDiagnosticResolutionGenerator extends BasicDiagnosticResolut
       @Override
       public void run(Diagnostic diagnostic)
       {
-        Release release = EvolutionFactory.eINSTANCE.createRelease();
-        release.setDate(new Date());
-        release.setVersion(nextVersion);
-
-        evolution.getReleases().add(release);
-
-        Collection<EPackage> rootPackages = EcoreUtil.copyAll(evolution.getRootPackages());
-        release.getRootPackages().addAll(rootPackages);
-
-        // Prepare for new development...
-
-        for (EPackage rootPackage : evolution.getRootPackages())
-        {
-          ElementHandler.execute(rootPackage, new ElementRunnable()
-          {
-            public void run(EModelElement modelElement)
-            {
-              IDAnnotation.setOldValue(modelElement, null);
-            }
-          });
-        }
-
-        evolution.getMigrations().clear();
-
-        ModelSetChangeImpl change = (ModelSetChangeImpl)evolution.getChange();
-        if (change != null)
-        {
-          change.reset();
-          evolution.setChange(null);
-        }
+        evolution.createRelease();
       }
     });
   }

@@ -63,8 +63,7 @@ public class HorizontalNonAuditMappingStrategy extends AbstractHorizontalMapping
     return new NonAuditFeatureMapTableMapping(this, containingClass, feature);
   }
 
-  @Override
-  protected IClassMapping doCreateClassMapping(EClass eClass)
+  public IClassMapping createClassMapping(EClass eClass)
   {
     return new HorizontalNonAuditClassMapping(this, eClass);
   }

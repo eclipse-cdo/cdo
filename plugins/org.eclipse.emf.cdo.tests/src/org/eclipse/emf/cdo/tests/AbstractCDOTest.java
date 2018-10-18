@@ -50,12 +50,16 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 
 import java.util.List;
@@ -449,6 +453,86 @@ public abstract class AbstractCDOTest extends ConfigTest
           view.removeListener(listener);
         }
       }
+    }
+  }
+
+  protected static void eSet(EObject object, String featureName, Object value)
+  {
+    EStructuralFeature feature = object.eClass().getEStructuralFeature(featureName);
+    object.eSet(feature, value);
+  }
+
+  @SuppressWarnings("unchecked")
+  protected static <T> T eGet(EObject object, String featureName)
+  {
+    EStructuralFeature feature = object.eClass().getEStructuralFeature(featureName);
+    return (T)object.eGet(feature);
+  }
+
+  @SuppressWarnings("unchecked")
+  protected static <T> T eGet(EObject object, String featureName, int index)
+  {
+    EList<Object> list = eList(object, featureName);
+    return (T)list.get(index);
+  }
+
+  @SuppressWarnings("unchecked")
+  protected static <T> EList<T> eList(EObject object, String featureName)
+  {
+    return (EList<T>)eGet(object, featureName);
+  }
+
+  protected static void eAdd(EObject object, String featureName, int index, Object value)
+  {
+    EList<Object> list = eList(object, featureName);
+    list.add(index, value);
+  }
+
+  protected static void eAdd(EObject object, String featureName, Object value)
+  {
+    EList<Object> list = eList(object, featureName);
+    list.add(value);
+  }
+
+  protected static void eRemove(EObject object, String featureName, int index)
+  {
+    EList<Object> list = eList(object, featureName);
+    list.remove(index);
+  }
+
+  protected static void eRemove(EObject object, String featureName, Object value)
+  {
+    EList<Object> list = eList(object, featureName);
+    list.remove(value);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  protected class SessionPackage
+  {
+    private final EPackage ePackage;
+
+    public SessionPackage(String nsURI, CDOSession session)
+    {
+      ePackage = session.getPackageRegistry().getEPackage(nsURI);
+    }
+
+    public SessionPackage(String nsURI)
+    {
+      this(nsURI, getLatestSession());
+    }
+
+    public EPackage getEPackage()
+    {
+      return ePackage;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends EObject> T create(String className)
+    {
+      EClass eClass = (EClass)ePackage.getEClassifier(className);
+      return (T)EcoreUtil.create(eClass);
     }
   }
 }

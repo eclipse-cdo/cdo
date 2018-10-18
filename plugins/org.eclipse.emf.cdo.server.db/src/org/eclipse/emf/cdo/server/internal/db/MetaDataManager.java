@@ -38,6 +38,7 @@ import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -65,9 +66,9 @@ import java.util.Map.Entry;
  */
 public class MetaDataManager extends Lifecycle implements IMetaDataManager
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, MetaDataManager.class);
+  public static final boolean ZIP_PACKAGE_BYTES = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.server.db.zipPackageBytes", true);
 
-  private static final boolean ZIP_PACKAGE_BYTES = true;
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, MetaDataManager.class);
 
   private IDBStore store;
 
@@ -123,7 +124,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   {
     String where = CDODBSchema.PACKAGE_UNITS_ID.getName() + "='" + packageUnit.getID() + "'"; //$NON-NLS-1$ //$NON-NLS-2$
     Object[] values = DBUtil.select(connection, where, CDODBSchema.PACKAGE_UNITS_PACKAGE_DATA);
-    byte[] bytes = (byte[])values[0];
+    byte[] bytes = ZIP_PACKAGE_BYTES ? (byte[])values[0] : ((String)values[0]).getBytes();
     EPackage ePackage = createEPackage(packageUnit, bytes);
     return EMFUtil.getAllPackages(ePackage);
   }
@@ -131,221 +132,6 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   public Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection)
   {
     return readPackageUnits(connection, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, new Monitor());
-  }
-
-  public final void writePackageUnits(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
-  {
-    try
-    {
-      monitor.begin(2);
-      fillSystemTables((IDBConnection)connection, packageUnits, monitor.fork());
-    }
-    finally
-    {
-      monitor.done();
-    }
-  }
-
-  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
-  {
-    // Export package units
-    String where = " WHERE p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.CORE_PACKAGE_URI + //
-        "' AND p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.RESOURCE_PACKAGE_URI + //
-        "' AND p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.TYPES_PACKAGE_URI + //
-        "' AND p_u." + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
-    DBUtil.serializeTable(out, connection, CDODBSchema.PACKAGE_UNITS, "p_u", where);
-
-    // Export package infos
-    String join = ", " + CDODBSchema.PACKAGE_UNITS + " p_u" + where + " AND p_i." + CDODBSchema.PACKAGE_INFOS_UNIT + "=p_u." + CDODBSchema.PACKAGE_UNITS_ID;
-    DBUtil.serializeTable(out, connection, CDODBSchema.PACKAGE_INFOS, "p_i", join);
-  }
-
-  public Collection<InternalCDOPackageUnit> rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor)
-      throws IOException
-  {
-    monitor.begin(3);
-
-    try
-    {
-      DBUtil.deserializeTable(in, connection, CDODBSchema.PACKAGE_UNITS, monitor.fork());
-      DBUtil.deserializeTable(in, connection, CDODBSchema.PACKAGE_INFOS, monitor.fork());
-      return readPackageUnits(connection, fromCommitTime, toCommitTime, monitor.fork());
-    }
-    finally
-    {
-      monitor.done();
-    }
-  }
-
-  protected IDBStore getStore()
-  {
-    return store;
-  }
-
-  @Override
-  protected void doBeforeActivate() throws Exception
-  {
-    checkState(store, "Store is not set"); //$NON-NLS-1$
-  }
-
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    clearMetaIDMappings();
-    super.doDeactivate();
-  }
-
-  protected InternalCDOPackageInfo createPackageInfo()
-  {
-    return (InternalCDOPackageInfo)CDOModelUtil.createPackageInfo();
-  }
-
-  protected InternalCDOPackageUnit createPackageUnit()
-  {
-    return (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
-  }
-
-  private InternalCDOPackageRegistry getPackageRegistry()
-  {
-    return (InternalCDOPackageRegistry)store.getRepository().getPackageRegistry();
-  }
-
-  private EPackage createEPackage(InternalCDOPackageUnit packageUnit, byte[] bytes)
-  {
-    ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(getPackageRegistry());
-    return EMFUtil.createEPackage(packageUnit.getID(), bytes, ZIP_PACKAGE_BYTES, resourceSet, false);
-  }
-
-  private byte[] getEPackageBytes(InternalCDOPackageUnit packageUnit)
-  {
-    EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
-    return EMFUtil.getEPackageBytes(ePackage, ZIP_PACKAGE_BYTES, getPackageRegistry());
-  }
-
-  private void fillSystemTables(IDBConnection connection, InternalCDOPackageUnit packageUnit, OMMonitor monitor)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing package unit: {0}", packageUnit); //$NON-NLS-1$
-    }
-
-    InternalCDOPackageInfo[] packageInfos = packageUnit.getPackageInfos();
-    Async async = null;
-    monitor.begin(1 + packageInfos.length);
-
-    try
-    {
-      String sql = "INSERT INTO " + CDODBSchema.PACKAGE_UNITS + " (" + CDODBSchema.PACKAGE_UNITS_ID + ", " //$NON-NLS-1$ //$NON-NLS-2$
-          + CDODBSchema.PACKAGE_UNITS_ORIGINAL_TYPE + ", " + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + ", " + CDODBSchema.PACKAGE_UNITS_PACKAGE_DATA
-          + ") VALUES (?, ?, ?, ?)";
-      DBUtil.trace(sql);
-
-      IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
-
-      try
-      {
-        async = monitor.forkAsync();
-        stmt.setString(1, packageUnit.getID());
-        stmt.setInt(2, packageUnit.getOriginalType().ordinal());
-        stmt.setLong(3, packageUnit.getTimeStamp());
-        stmt.setBytes(4, getEPackageBytes(packageUnit));
-
-        if (stmt.execute())
-        {
-          throw new DBException("No result set expected"); //$NON-NLS-1$
-        }
-
-        if (stmt.getUpdateCount() == 0)
-        {
-          throw new DBException("No row inserted into table " + CDODBSchema.PACKAGE_UNITS); //$NON-NLS-1$
-        }
-      }
-      catch (SQLException ex)
-      {
-        throw new DBException(ex);
-      }
-      finally
-      {
-        DBUtil.close(stmt);
-        if (async != null)
-        {
-          async.stop();
-        }
-      }
-
-      for (InternalCDOPackageInfo packageInfo : packageInfos)
-      {
-        fillSystemTables(connection, packageInfo, monitor); // Don't fork monitor
-      }
-    }
-    finally
-    {
-      monitor.done();
-    }
-  }
-
-  private void fillSystemTables(IDBConnection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
-  {
-    try
-    {
-      monitor.begin(packageUnits.length);
-      for (InternalCDOPackageUnit packageUnit : packageUnits)
-      {
-        fillSystemTables(connection, packageUnit, monitor.fork());
-      }
-    }
-    finally
-    {
-      monitor.done();
-    }
-  }
-
-  private void fillSystemTables(IDBConnection connection, InternalCDOPackageInfo packageInfo, OMMonitor monitor)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing package info: {0}", packageInfo); //$NON-NLS-1$
-    }
-
-    String packageURI = packageInfo.getPackageURI();
-    String parentURI = packageInfo.getParentURI();
-    String unitID = packageInfo.getPackageUnit().getID();
-
-    String sql = "INSERT INTO " + CDODBSchema.PACKAGE_INFOS + " (" + CDODBSchema.PACKAGE_INFOS_URI + ", " //$NON-NLS-1$ //$NON-NLS-2$
-        + CDODBSchema.PACKAGE_INFOS_PARENT + ", " + CDODBSchema.PACKAGE_INFOS_UNIT + ") VALUES (?, ?, ?)";
-    DBUtil.trace(sql);
-
-    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
-    Async async = monitor.forkAsync();
-
-    try
-    {
-      stmt.setString(1, packageURI);
-      stmt.setString(2, parentURI);
-      stmt.setString(3, unitID);
-
-      if (stmt.execute())
-      {
-        throw new DBException("No result set expected"); //$NON-NLS-1$
-      }
-
-      if (stmt.getUpdateCount() == 0)
-      {
-        throw new DBException("No row inserted into table " + CDODBSchema.PACKAGE_INFOS); //$NON-NLS-1$
-      }
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(stmt);
-      if (async != null)
-      {
-        async.stop();
-      }
-    }
   }
 
   private Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection, long fromCommitTime, long toCommitTime, OMMonitor monitor)
@@ -424,6 +210,330 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     }
 
     return packageUnits.values();
+  }
+
+  public final void writePackageUnits(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
+  {
+    try
+    {
+      monitor.begin(packageUnits.length);
+      for (InternalCDOPackageUnit packageUnit : packageUnits)
+      {
+        writePackageUnit((IDBConnection)connection, packageUnit, monitor.fork());
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  private void writePackageUnit(IDBConnection connection, InternalCDOPackageUnit packageUnit, OMMonitor monitor)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Writing package unit: {0}", packageUnit); //$NON-NLS-1$
+    }
+
+    InternalCDOPackageInfo[] packageInfos = packageUnit.getPackageInfos();
+    monitor.begin(1 + packageInfos.length);
+
+    try
+    {
+      String sql = "INSERT INTO " + CDODBSchema.PACKAGE_UNITS + " (" + CDODBSchema.PACKAGE_UNITS_ID + ", " //$NON-NLS-1$ //$NON-NLS-2$
+          + CDODBSchema.PACKAGE_UNITS_ORIGINAL_TYPE + ", " + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + ", " + CDODBSchema.PACKAGE_UNITS_PACKAGE_DATA
+          + ") VALUES (?, ?, ?, ?)";
+      DBUtil.trace(sql);
+
+      IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
+      Async async = null;
+
+      try
+      {
+        async = monitor.forkAsync();
+        stmt.setString(1, packageUnit.getID());
+        stmt.setInt(2, packageUnit.getOriginalType().ordinal());
+        stmt.setLong(3, packageUnit.getTimeStamp());
+
+        if (ZIP_PACKAGE_BYTES)
+        {
+          stmt.setBytes(4, getEPackageBytes(packageUnit));
+        }
+        else
+        {
+          stmt.setString(4, new String(getEPackageBytes(packageUnit)));
+        }
+
+        if (stmt.execute())
+        {
+          throw new DBException("No result set expected"); //$NON-NLS-1$
+        }
+
+        if (stmt.getUpdateCount() == 0)
+        {
+          throw new DBException("No row inserted into table " + CDODBSchema.PACKAGE_UNITS); //$NON-NLS-1$
+        }
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      finally
+      {
+        DBUtil.close(stmt);
+        if (async != null)
+        {
+          async.stop();
+        }
+      }
+
+      for (InternalCDOPackageInfo packageInfo : packageInfos)
+      {
+        writePackageInfo(connection, packageInfo, monitor); // Don't fork monitor
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  private void writePackageInfo(IDBConnection connection, InternalCDOPackageInfo packageInfo, OMMonitor monitor)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Writing package info: {0}", packageInfo); //$NON-NLS-1$
+    }
+
+    String packageURI = packageInfo.getPackageURI();
+    String parentURI = packageInfo.getParentURI();
+    String unitID = packageInfo.getPackageUnit().getID();
+
+    String sql = "INSERT INTO " + CDODBSchema.PACKAGE_INFOS + " (" + CDODBSchema.PACKAGE_INFOS_URI + ", " //$NON-NLS-1$ //$NON-NLS-2$
+        + CDODBSchema.PACKAGE_INFOS_PARENT + ", " + CDODBSchema.PACKAGE_INFOS_UNIT + ") VALUES (?, ?, ?)";
+    DBUtil.trace(sql);
+
+    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
+    Async async = monitor.forkAsync();
+
+    try
+    {
+      stmt.setString(1, packageURI);
+      stmt.setString(2, parentURI);
+      stmt.setString(3, unitID);
+
+      if (stmt.execute())
+      {
+        throw new DBException("No result set expected"); //$NON-NLS-1$
+      }
+
+      if (stmt.getUpdateCount() == 0)
+      {
+        throw new DBException("No row inserted into table " + CDODBSchema.PACKAGE_INFOS); //$NON-NLS-1$
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+      if (async != null)
+      {
+        async.stop();
+      }
+    }
+  }
+
+  public final void deletePackageUnits(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
+  {
+    try
+    {
+      monitor.begin(packageUnits.length);
+      for (InternalCDOPackageUnit packageUnit : packageUnits)
+      {
+        deletePackageUnit((IDBConnection)connection, packageUnit, monitor.fork());
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  private void deletePackageUnit(IDBConnection connection, InternalCDOPackageUnit packageUnit, OMMonitor monitor)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Deleting package unit: {0}", packageUnit); //$NON-NLS-1$
+    }
+
+    InternalCDOPackageInfo[] packageInfos = packageUnit.getPackageInfos();
+    monitor.begin(1 + packageInfos.length);
+
+    try
+    {
+      String sql = "DELETE FROM " + CDODBSchema.PACKAGE_UNITS + " WHERE " + CDODBSchema.PACKAGE_UNITS_ID + "=?";
+      DBUtil.trace(sql);
+
+      IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.LOW);
+      Async async = null;
+
+      try
+      {
+        async = monitor.forkAsync();
+        stmt.setString(1, packageUnit.getID());
+
+        if (stmt.execute())
+        {
+          throw new DBException("No result set expected"); //$NON-NLS-1$
+        }
+
+        if (stmt.getUpdateCount() == 0)
+        {
+          throw new DBException("No row deleted from table " + CDODBSchema.PACKAGE_UNITS); //$NON-NLS-1$
+        }
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      finally
+      {
+        DBUtil.close(stmt);
+        if (async != null)
+        {
+          async.stop();
+        }
+      }
+
+      for (InternalCDOPackageInfo packageInfo : packageInfos)
+      {
+        deletePackageInfo(connection, packageInfo, monitor); // Don't fork monitor
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  private void deletePackageInfo(IDBConnection connection, InternalCDOPackageInfo packageInfo, OMMonitor monitor)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Deleting package info: {0}", packageInfo); //$NON-NLS-1$
+    }
+
+    String sql = "DELETE FROM " + CDODBSchema.PACKAGE_INFOS + " WHERE " + CDODBSchema.PACKAGE_INFOS_URI + "=?";
+    DBUtil.trace(sql);
+
+    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.LOW);
+    Async async = monitor.forkAsync();
+
+    try
+    {
+      stmt.setString(1, packageInfo.getPackageURI());
+
+      if (stmt.execute())
+      {
+        throw new DBException("No result set expected"); //$NON-NLS-1$
+      }
+
+      if (stmt.getUpdateCount() == 0)
+      {
+        throw new DBException("No row deleted from table " + CDODBSchema.PACKAGE_INFOS); //$NON-NLS-1$
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+      if (async != null)
+      {
+        async.stop();
+      }
+    }
+  }
+
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
+  {
+    // Export package units
+    String where = " WHERE p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.CORE_PACKAGE_URI + //
+        "' AND p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.RESOURCE_PACKAGE_URI + //
+        "' AND p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.TYPES_PACKAGE_URI + //
+        "' AND p_u." + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+    DBUtil.serializeTable(out, connection, CDODBSchema.PACKAGE_UNITS, "p_u", where);
+
+    // Export package infos
+    String join = ", " + CDODBSchema.PACKAGE_UNITS + " p_u" + where + " AND p_i." + CDODBSchema.PACKAGE_INFOS_UNIT + "=p_u." + CDODBSchema.PACKAGE_UNITS_ID;
+    DBUtil.serializeTable(out, connection, CDODBSchema.PACKAGE_INFOS, "p_i", join);
+  }
+
+  public Collection<InternalCDOPackageUnit> rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor)
+      throws IOException
+  {
+    monitor.begin(3);
+
+    try
+    {
+      DBUtil.deserializeTable(in, connection, CDODBSchema.PACKAGE_UNITS, monitor.fork());
+      DBUtil.deserializeTable(in, connection, CDODBSchema.PACKAGE_INFOS, monitor.fork());
+      return readPackageUnits(connection, fromCommitTime, toCommitTime, monitor.fork());
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  protected IDBStore getStore()
+  {
+    return store;
+  }
+
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    checkState(store, "Store is not set"); //$NON-NLS-1$
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    clearMetaIDMappings();
+    super.doDeactivate();
+  }
+
+  protected InternalCDOPackageInfo createPackageInfo()
+  {
+    return (InternalCDOPackageInfo)CDOModelUtil.createPackageInfo();
+  }
+
+  protected InternalCDOPackageUnit createPackageUnit()
+  {
+    return (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
+  }
+
+  private InternalCDOPackageRegistry getPackageRegistry()
+  {
+    return (InternalCDOPackageRegistry)store.getRepository().getPackageRegistry();
+  }
+
+  private EPackage createEPackage(InternalCDOPackageUnit packageUnit, byte[] bytes)
+  {
+    ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(getPackageRegistry());
+    return EMFUtil.createEPackage(packageUnit.getID(), bytes, ZIP_PACKAGE_BYTES, resourceSet, false);
+  }
+
+  private byte[] getEPackageBytes(InternalCDOPackageUnit packageUnit)
+  {
+    EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
+    return EMFUtil.getEPackageBytes(ePackage, ZIP_PACKAGE_BYTES, getPackageRegistry());
   }
 
   private void cacheMetaIDMapping(EModelElement modelElement, CDOID metaID)

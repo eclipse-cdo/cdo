@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
@@ -88,22 +89,29 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
   {
     super(mappingStrategy, eClass, feature);
 
-    IDBStoreAccessor accessor = null;
-    if (AbstractHorizontalMappingStrategy.isEagerTableCreation(mappingStrategy))
+    if (!AbstractMappingStrategy.isSkipMappingInitialization())
     {
-      accessor = (IDBStoreAccessor)StoreThreadLocal.getAccessor();
-    }
+      IDBStoreAccessor accessor = null;
+      if (AbstractMappingStrategy.isEagerTableCreation(mappingStrategy))
+      {
+        accessor = (IDBStoreAccessor)StoreThreadLocal.getAccessor();
+      }
 
-    initTable(accessor);
+      initTable(accessor);
+    }
   }
 
-  protected void initTable(IDBStoreAccessor accessor)
+  public void setTable(IDBTable table)
+  {
+    this.table = table;
+  }
+
+  public void initTable(IDBStoreAccessor accessor)
   {
     IMappingStrategy mappingStrategy = getMappingStrategy();
     EStructuralFeature feature = getFeature();
 
     String tableName = mappingStrategy.getTableName(getContainingClass(), feature);
-    typeMapping = mappingStrategy.createValueMapping(feature);
 
     IDBDatabase database = mappingStrategy.getStore().getDatabase();
     table = database.getSchema().getTable(tableName);
@@ -116,32 +124,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
         try
         {
           IDBSchema workingCopy = schemaTransaction.getWorkingCopy();
-          IDBTable table = workingCopy.addTable(tableName);
-
-          IDBIndex primaryKey = table.addIndexEmpty(Type.PRIMARY_KEY);
-          for (FieldInfo info : getKeyFields())
-          {
-            IDBField field = table.addField(info.getName(), info.getType(), info.getPrecision(), true);
-            primaryKey.addIndexField(field);
-          }
-
-          // Add field for list index.
-          IDBField listIndexField = table.addField(LIST_IDX, DBType.INTEGER, true);
-          primaryKey.addIndexField(listIndexField);
-
-          // Add field for value.
-          typeMapping.createDBField(table, LIST_VALUE);
-
-          if (needsIndexOnValueField(feature))
-          {
-            IDBField field = table.getField(LIST_VALUE);
-
-            if (!table.hasIndexFor(field))
-            {
-              IDBIndex index = table.addIndex(IDBIndex.Type.NON_UNIQUE, field);
-              DBUtil.setOptional(index, true); // Creation might fail for unsupported column type!
-            }
-          }
+          createTable(workingCopy, tableName);
 
           schemaTransaction.commit();
         }
@@ -156,9 +139,44 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     }
     else
     {
+      typeMapping = mappingStrategy.createValueMapping(feature);
       typeMapping.setDBField(table, LIST_VALUE);
       initSQLStrings();
     }
+  }
+
+  public IDBTable createTable(IDBSchema schema, String tableName)
+  {
+    IDBTable table = schema.addTable(tableName);
+
+    IDBIndex primaryKey = table.addIndexEmpty(Type.PRIMARY_KEY);
+    for (FieldInfo info : getKeyFields())
+    {
+      IDBField field = table.addField(info.getName(), info.getType(), info.getPrecision(), true);
+      primaryKey.addIndexField(field);
+    }
+
+    // Add field for list index.
+    IDBField listIndexField = table.addField(LIST_IDX, DBType.INTEGER, true);
+    primaryKey.addIndexField(listIndexField);
+
+    // Add field for value.
+    EStructuralFeature feature = getFeature();
+    typeMapping = getMappingStrategy().createValueMapping(feature);
+    typeMapping.createDBField(table, LIST_VALUE);
+
+    if (needsIndexOnValueField(feature))
+    {
+      IDBField field = table.getField(LIST_VALUE);
+
+      if (!table.hasIndexFor(field))
+      {
+        IDBIndex index = table.addIndex(IDBIndex.Type.NON_UNIQUE, field);
+        DBUtil.setOptional(index, true); // Creation might fail for unsupported column type!
+      }
+    }
+
+    return table;
   }
 
   protected void initSQLStrings()
@@ -245,12 +263,13 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     return Collections.singleton(table);
   }
 
-  protected final IDBTable getTable()
+  @Override
+  public final IDBTable getTable()
   {
     return table;
   }
 
-  protected final ITypeMapping getTypeMapping()
+  public final ITypeMapping getTypeMapping()
   {
     return typeMapping;
   }

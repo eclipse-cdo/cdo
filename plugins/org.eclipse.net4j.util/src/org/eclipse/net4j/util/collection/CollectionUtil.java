@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.collection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -28,6 +29,20 @@ public final class CollectionUtil
 {
   private CollectionUtil()
   {
+  }
+
+  /**
+   * @since 3.9
+   */
+  public static <T> Set<T> setOf(T... elements)
+  {
+    Set<T> set = new HashSet<T>();
+    for (T element : elements)
+    {
+      set.add(element);
+    }
+
+    return set;
   }
 
   /**

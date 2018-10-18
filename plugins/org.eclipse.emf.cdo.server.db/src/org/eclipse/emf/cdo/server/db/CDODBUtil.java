@@ -13,8 +13,10 @@
 package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.server.internal.db.DBBrowserPage;
+import org.eclipse.emf.cdo.server.internal.db.DBMappingsPage;
+import org.eclipse.emf.cdo.server.internal.db.DBSchemaPage;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
+import org.eclipse.emf.cdo.server.internal.db.DBTablesPage;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategyWithRanges;
@@ -78,7 +80,9 @@ public final class CDODBUtil
    */
   public static void prepareContainer(IManagedContainer container)
   {
-    container.registerFactory(new DBBrowserPage.Factory());
+    container.registerFactory(new DBMappingsPage.Factory());
+    container.registerFactory(new DBSchemaPage.Factory());
+    container.registerFactory(new DBTablesPage.Factory());
   }
 
   /**

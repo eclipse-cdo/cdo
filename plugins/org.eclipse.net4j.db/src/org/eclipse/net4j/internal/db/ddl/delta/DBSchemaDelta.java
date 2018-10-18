@@ -188,7 +188,10 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
     public void removed(IDBFieldDelta delta)
     {
       IDBField field = delta.getSchemaElement(schema);
-      field.remove();
+      if (field != null)
+      {
+        field.remove();
+      }
     }
 
     @Override
@@ -212,7 +215,10 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
     public void removed(IDBIndexDelta delta)
     {
       IDBIndex index = delta.getSchemaElement(schema);
-      index.remove();
+      if (index != null)
+      {
+        index.remove();
+      }
     }
 
     @Override
@@ -237,7 +243,10 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
     public void removed(IDBIndexFieldDelta delta)
     {
       IDBIndexField indexField = delta.getSchemaElement(schema);
-      indexField.remove();
+      if (indexField != null)
+      {
+        indexField.remove();
+      }
     }
 
     @Override

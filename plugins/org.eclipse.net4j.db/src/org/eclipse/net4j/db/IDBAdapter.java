@@ -154,4 +154,9 @@ public interface IDBAdapter
    * @since 4.2
    */
   public String sqlModifyField(IDBField field);
+
+  /**
+   * @since 4.8
+   */
+  public String sqlRenameTable(String newName, String oldName);
 }

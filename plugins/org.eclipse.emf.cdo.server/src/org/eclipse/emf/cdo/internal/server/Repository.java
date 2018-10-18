@@ -2308,22 +2308,30 @@ public class Repository extends Container<Object> implements InternalRepository,
 
     try
     {
-      Collection<InternalCDOPackageUnit> packageUnits = reader.readPackageUnits();
-      for (InternalCDOPackageUnit packageUnit : packageUnits)
-      {
-        packageRegistry.putPackageUnit(packageUnit);
-
-        // Bug 521029: Initialize EPackages early from the main thread to avoid multi-threading issues.
-        // This could be made optional at some point.
-        for (InternalCDOPackageInfo packageInfo : packageUnit.getPackageInfos())
-        {
-          packageInfo.getEPackage(true); // Trigger initialization.
-        }
-      }
+      readPackageUnits(reader, packageRegistry);
     }
     finally
     {
       StoreThreadLocal.release();
+    }
+  }
+
+  public static void readPackageUnits(IStoreAccessor reader, InternalCDOPackageRegistry packageRegistry)
+  {
+    Collection<InternalCDOPackageUnit> packageUnits = reader.readPackageUnits();
+    for (InternalCDOPackageUnit packageUnit : packageUnits)
+    {
+      packageRegistry.putPackageUnit(packageUnit);
+    }
+
+    // Bug 521029: Initialize EPackages early from the main thread to avoid multi-threading issues.
+    // This could be made optional at some point.
+    for (InternalCDOPackageUnit packageUnit : packageUnits)
+    {
+      for (InternalCDOPackageInfo packageInfo : packageUnit.getPackageInfos())
+      {
+        packageInfo.getEPackage(true); // Trigger initialization.
+      }
     }
   }
 

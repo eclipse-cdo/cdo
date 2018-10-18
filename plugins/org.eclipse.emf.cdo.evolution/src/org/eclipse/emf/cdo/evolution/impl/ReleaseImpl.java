@@ -207,6 +207,16 @@ public class ReleaseImpl extends ModelSetImpl implements Release
    * <!-- end-user-doc -->
    * @generated
    */
+  public Evolution basicGetEvolution()
+  {
+    return (Evolution)eDynamicGet(EvolutionPackage.RELEASE__EVOLUTION, EvolutionPackage.Literals.RELEASE__EVOLUTION, false, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public NotificationChain basicSetEvolution(Evolution newEvolution, NotificationChain msgs)
   {
     msgs = eBasicSetContainer((InternalEObject)newEvolution, EvolutionPackage.RELEASE__EVOLUTION, msgs);
@@ -315,7 +325,11 @@ public class ReleaseImpl extends ModelSetImpl implements Release
     switch (featureID)
     {
     case EvolutionPackage.RELEASE__EVOLUTION:
-      return getEvolution();
+      if (resolve)
+      {
+        return getEvolution();
+      }
+      return basicGetEvolution();
     case EvolutionPackage.RELEASE__VERSION:
       return getVersion();
     case EvolutionPackage.RELEASE__DATE:
@@ -405,7 +419,7 @@ public class ReleaseImpl extends ModelSetImpl implements Release
     switch (featureID)
     {
     case EvolutionPackage.RELEASE__EVOLUTION:
-      return getEvolution() != null;
+      return basicGetEvolution() != null;
     case EvolutionPackage.RELEASE__VERSION:
       return getVersion() != VERSION_EDEFAULT;
     case EvolutionPackage.RELEASE__DATE:

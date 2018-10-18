@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<evolution:Evolution xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:evolution="http://www.eclipse.org/emf/CDO/evolution/1.0.0">
+  <models uRI="platform:/resource/org.eclipse.emf.cdo.examples.company/model/company.ecore"/>
+  <models uRI="platform:/resource/org.eclipse.emf.cdo.examples.company/model/extended.ecore"/>
+  <releases version="1" date="2018-08-17T16:09:03.828+0200">
+    <rootPackages name="extended" nsURI="http://www.eclipse.org/emf/CDO/examples/extended/1.0.0" nsPrefix="extended">
+      <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+        <details key="value" value="_DWfmEKImEeiVxYbQv5gQdw"/>
+      </eAnnotations>
+      <eClassifiers xsi:type="ecore:EClass" name="ExtendedCompany" eSuperTypes="//@releases.0/@rootPackages.1/Company">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_DWfmEaImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="employees" upperBound="-1" eType="//@releases.0/@rootPackages.0/Employee" containment="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_DWfmEqImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Employee" eSuperTypes="//@releases.0/@rootPackages.1/Addressable">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_DWfmE6ImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="salary">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_DWgNIKImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </rootPackages>
+    <rootPackages name="company" nsURI="http://www.eclipse.org/emf/CDO/examples/company/1.0.0" nsPrefix="company">
+      <eAnnotations source="teneo.jpa">
+        <details key="value" value="@hbGenericGenerators({@GenericGenerator(name=&quot;system-uuid&quot;, strategy = &quot;org.eclipse.emf.cdo.examples.hibernate.server.CDOExampleUUIDHexGenerator&quot;)})"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+        <details key="value" value="_IEatwKImEeiVxYbQv5gQdw"/>
+      </eAnnotations>
+      <eClassifiers xsi:type="ecore:EClass" name="Addressable" abstract="true">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEatwaImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="name">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEatwqImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="street">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEatw6ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="city">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEatxKImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Company" eSuperTypes="//@releases.0/@rootPackages.1/Addressable">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEatxaImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1" eType="//@releases.0/@rootPackages.1/Category" containment="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEatxqImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="suppliers" upperBound="-1" eType="//@releases.0/@rootPackages.1/Supplier" containment="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEatx6ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="customers" upperBound="-1" eType="//@releases.0/@rootPackages.1/Customer" containment="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEatyKImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="purchaseOrders" upperBound="-1" eType="//@releases.0/@rootPackages.1/PurchaseOrder" containment="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEatyaImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="salesOrders" upperBound="-1" eType="//@releases.0/@rootPackages.1/SalesOrder" containment="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU0KImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Supplier" eSuperTypes="//@releases.0/@rootPackages.1/Addressable">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU0aImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="purchaseOrders" upperBound="-1" eType="//@releases.0/@rootPackages.1/PurchaseOrder" eOpposite="//@releases.0/@rootPackages.1/PurchaseOrder/supplier">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU0qImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="preferred" defaultValueLiteral="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU06ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Customer" eSuperTypes="//@releases.0/@rootPackages.1/Addressable">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU1KImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="salesOrders" upperBound="-1" eType="//@releases.0/@rootPackages.1/SalesOrder" eOpposite="//@releases.0/@rootPackages.1/SalesOrder/customer">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU1aImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Order">
+        <eAnnotations source="teneo.jpa">
+          <details key="value" value="@Entity(name=&quot;BaseOrder&quot;)"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU1qImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="orderDetails" upperBound="-1" eType="//@releases.0/@rootPackages.1/OrderDetail" containment="true" eOpposite="//@releases.0/@rootPackages.1/OrderDetail/order">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU16ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="OrderDetail">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU2KImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="order" lowerBound="1" eType="//@releases.0/@rootPackages.1/Order" eOpposite="//@releases.0/@rootPackages.1/Order/orderDetails">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU2aImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="product" eType="//@releases.0/@rootPackages.1/Product" eOpposite="//@releases.0/@rootPackages.1/Product/orderDetails">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU2qImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="price">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU26ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="PurchaseOrder" eSuperTypes="//@releases.0/@rootPackages.1/Order">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU3KImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="date">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU3aImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="supplier" lowerBound="1" eType="//@releases.0/@rootPackages.1/Supplier" eOpposite="//@releases.0/@rootPackages.1/Supplier/purchaseOrders">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU3qImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="SalesOrder" eSuperTypes="//@releases.0/@rootPackages.1/Order">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU36ImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="id">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU4KImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="customer" lowerBound="1" eType="//@releases.0/@rootPackages.1/Customer" eOpposite="//@releases.0/@rootPackages.1/Customer/salesOrders">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU4aImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Category">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU4qImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="name">
+          <eAnnotations source="teneo.jpa">
+            <details key="value" value="@Id @GeneratedValue(generator=&quot;system-uuid&quot;)"/>
+          </eAnnotations>
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU46ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1" eType="//@releases.0/@rootPackages.1/Category" containment="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU5KImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="products" upperBound="-1" eType="//@releases.0/@rootPackages.1/Product" containment="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU5aImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Product">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU5qImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="name">
+          <eAnnotations source="teneo.jpa">
+            <details key="value" value="@Id"/>
+          </eAnnotations>
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU56ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="orderDetails" upperBound="-1" eType="//@releases.0/@rootPackages.1/OrderDetail" eOpposite="//@releases.0/@rootPackages.1/OrderDetail/product">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU6KImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="vat" eType="//@releases.0/@rootPackages.1/VAT" defaultValueLiteral="vat15">
+          <eAnnotations source="teneo.jpa">
+            <details key="value" value="@Basic(optional=false)&#xA;@Column(nullable=false)"/>
+          </eAnnotations>
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU6aImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" transient="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU6qImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="price">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU66ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EEnum" name="VAT">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU7KImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eLiterals name="vat0">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU7aImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eLiterals>
+        <eLiterals name="vat7" value="7">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU7qImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eLiterals>
+        <eLiterals name="vat15" value="15">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU76ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eLiterals>
+      </eClassifiers>
+    </rootPackages>
+  </releases>
+  <releases version="2" date="2018-09-16T11:38:02.913+0200">
+    <rootPackages name="company" nsURI="http://www.eclipse.org/emf/CDO/examples/company/1.0.0" nsPrefix="company">
+      <eAnnotations source="teneo.jpa">
+        <details key="value" value="@hbGenericGenerators({@GenericGenerator(name=&quot;system-uuid&quot;, strategy = &quot;org.eclipse.emf.cdo.examples.hibernate.server.CDOExampleUUIDHexGenerator&quot;)})"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+        <details key="value" value="_IEatwKImEeiVxYbQv5gQdw"/>
+      </eAnnotations>
+      <eClassifiers xsi:type="ecore:EClass" name="Addressable" abstract="true">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEatwaImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="name">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEatwqImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="street">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEatw6ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="city">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEatxKImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Company" eSuperTypes="//@releases.1/@rootPackages.0/Addressable">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEatxaImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1" eType="//@releases.1/@rootPackages.0/Category" containment="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEatxqImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="suppliers" upperBound="-1" eType="//@releases.1/@rootPackages.0/Supplier" containment="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEatx6ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="customers" upperBound="-1" eType="//@releases.1/@rootPackages.0/Customer" containment="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEatyKImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="purchaseOrders" upperBound="-1" eType="//@releases.1/@rootPackages.0/PurchaseOrder" containment="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEatyaImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="salesOrders" upperBound="-1" eType="//@releases.1/@rootPackages.0/SalesOrder" containment="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU0KImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Supplier" eSuperTypes="//@releases.1/@rootPackages.0/Addressable">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU0aImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="purchaseOrders" upperBound="-1" eType="//@releases.1/@rootPackages.0/PurchaseOrder" eOpposite="//@releases.1/@rootPackages.0/PurchaseOrder/supplier">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU0qImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="preferred" defaultValueLiteral="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU06ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Customer" eSuperTypes="//@releases.1/@rootPackages.0/Addressable">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU1KImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="salesOrders" upperBound="-1" eType="//@releases.1/@rootPackages.0/SalesOrder" eOpposite="//@releases.1/@rootPackages.0/SalesOrder/customer">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU1aImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Order">
+        <eAnnotations source="teneo.jpa">
+          <details key="value" value="@Entity(name=&quot;BaseOrder&quot;)"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU1qImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="orderDetails" upperBound="-1" eType="//@releases.1/@rootPackages.0/OrderDetail" containment="true" eOpposite="//@releases.1/@rootPackages.0/OrderDetail/order">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU16ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="OrderDetail">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU2KImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="order" lowerBound="1" eType="//@releases.1/@rootPackages.0/Order" eOpposite="//@releases.1/@rootPackages.0/Order/orderDetails">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU2aImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="product" eType="//@releases.1/@rootPackages.0/Product" eOpposite="//@releases.1/@rootPackages.0/Product/orderDetails">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU2qImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="price">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU26ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="PurchaseOrder" eSuperTypes="//@releases.1/@rootPackages.0/Order">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU3KImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="date">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU3aImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="supplier" lowerBound="1" eType="//@releases.1/@rootPackages.0/Supplier" eOpposite="//@releases.1/@rootPackages.0/Supplier/purchaseOrders">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU3qImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="SalesOrder" eSuperTypes="//@releases.1/@rootPackages.0/Order">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU36ImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="id">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU4KImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="customer" lowerBound="1" eType="//@releases.1/@rootPackages.0/Customer" eOpposite="//@releases.1/@rootPackages.0/Customer/salesOrders">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU4aImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Category">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU4qImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="name">
+          <eAnnotations source="teneo.jpa">
+            <details key="value" value="@Id @GeneratedValue(generator=&quot;system-uuid&quot;)"/>
+          </eAnnotations>
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU46ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1" eType="//@releases.1/@rootPackages.0/Category" containment="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU5KImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="products" upperBound="-1" eType="//@releases.1/@rootPackages.0/Product" containment="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU5aImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Product">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU5qImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="name">
+          <eAnnotations source="teneo.jpa">
+            <details key="value" value="@Id"/>
+          </eAnnotations>
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU56ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="orderDetails" upperBound="-1" eType="//@releases.1/@rootPackages.0/OrderDetail" eOpposite="//@releases.1/@rootPackages.0/OrderDetail/product">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU6KImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="vat" eType="//@releases.1/@rootPackages.0/VAT" defaultValueLiteral="vat15">
+          <eAnnotations source="teneo.jpa">
+            <details key="value" value="@Basic(optional=false)&#xA;@Column(nullable=false)"/>
+          </eAnnotations>
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU6aImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" transient="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU6qImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="price">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU66ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EEnum" name="VAT">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_IEbU7KImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eLiterals name="vat0">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU7aImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eLiterals>
+        <eLiterals name="vat7" value="7">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU7qImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eLiterals>
+        <eLiterals name="vat15" value="15">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_IEbU76ImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eLiterals>
+      </eClassifiers>
+    </rootPackages>
+    <rootPackages name="extended" nsURI="http://www.eclipse.org/emf/CDO/examples/extended/1.0.0/v2" nsPrefix="extended">
+      <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+        <details key="value" value="_DWfmEKImEeiVxYbQv5gQdw"/>
+      </eAnnotations>
+      <eClassifiers xsi:type="ecore:EClass" name="CompanyWithEmployees" eSuperTypes="//@releases.1/@rootPackages.0/Company">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_DWfmEaImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="employees" upperBound="-1" eType="//@releases.1/@rootPackages.1/Employee" containment="true">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_DWfmEqImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="code">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_c13uAKInEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EByte"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="salary">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="oldValue" value="_DWgNIKImEeiVxYbQv5gQdw"/>
+            <details key="value" value="_uqFJUKUCEeiGSu5PVxFtGQ"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xsi:type="ecore:EClass" name="Employee" eSuperTypes="//@releases.1/@rootPackages.0/Addressable">
+        <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+          <details key="value" value="_DWfmE6ImEeiVxYbQv5gQdw"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="salary">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="value" value="_DWgNIKImEeiVxYbQv5gQdw"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xsi:type="ecore:EAttribute" name="salary2">
+          <eAnnotations source="http://www.eclipse.org/CDO/evolution/ID">
+            <details key="oldValue" value="_DWgNIKImEeiVxYbQv5gQdw"/>
+            <details key="value" value="_D1TTgKRLEeiiEtXzDT3l2w"/>
+          </eAnnotations>
+          <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+    </rootPackages>
+  </releases>
+</evolution:Evolution>

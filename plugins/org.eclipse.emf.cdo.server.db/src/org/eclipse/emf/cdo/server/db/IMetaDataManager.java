@@ -100,6 +100,19 @@ public interface IMetaDataManager
   public void writePackageUnits(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor);
 
   /**
+   * Delete package units from the database.
+   *
+   * @param connection
+   *          the DB connection to write to.
+   * @param packageUnits
+   *          the package units to delete.
+   * @param monitor
+   *          the monitor to indicate progress.
+   * @since 4.7
+   */
+  public void deletePackageUnits(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor);
+
+  /**
    * @since 3.0
    */
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException;

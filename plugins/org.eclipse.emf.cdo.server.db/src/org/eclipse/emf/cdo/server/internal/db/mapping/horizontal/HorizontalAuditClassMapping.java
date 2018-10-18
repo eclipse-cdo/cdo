@@ -961,7 +961,10 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       delta.applyTo(newRevision);
 
       IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(delta.getFeature());
-      listMapping.processDelta(accessor, id, branchId, oldVersion, oldVersion + 1, created, delta);
+      if (listMapping != null)
+      {
+        listMapping.processDelta(accessor, id, branchId, oldVersion, oldVersion + 1, created, delta);
+      }
     }
 
     public void visit(CDOContainerFeatureDelta delta)

@@ -56,8 +56,7 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
     return false;
   }
 
-  @Override
-  protected IClassMapping doCreateClassMapping(EClass eClass)
+  public IClassMapping createClassMapping(EClass eClass)
   {
     return new HorizontalBranchingClassMapping(this, eClass);
   }

@@ -4,8 +4,8 @@
     modelPluginID="org.eclipse.emf.cdo.evolution" modelName="Evolution" modelPluginClass="org.eclipse.emf.cdo.evolution.impl.EvolutionPlugin"
     rootExtendsInterface="org.eclipse.emf.cdo.CDOObject" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl"
     testsDirectory="" importerID="org.eclipse.emf.importer.cdo" featureDelegation="Dynamic"
-    complianceLevel="5.0" copyrightFields="false" optimizedHasChildren="true" colorProviders="true"
-    fontProviders="true" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
+    containmentProxies="true" complianceLevel="5.0" copyrightFields="false" optimizedHasChildren="true"
+    colorProviders="true" fontProviders="true" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
     operationReflection="true" importOrganizing="true" decoration="Live" styleProviders="true"
     cleanup="true" autoResizeProperties="true" findAction="true" collapseAllAction="true">
   <foreignModel>evolution.ecore</foreignModel>
@@ -30,6 +30,9 @@
       <genOperations ecoreOperation="evolution.ecore#//ModelSet/getPreviousRelease"/>
       <genOperations ecoreOperation="evolution.ecore#//ModelSet/getRootPackages"/>
       <genOperations ecoreOperation="evolution.ecore#//ModelSet/getAllPackages"/>
+      <genOperations ecoreOperation="evolution.ecore#//ModelSet/getPackage">
+        <genParameters ecoreParameter="evolution.ecore#//ModelSet/getPackage/nsURI"/>
+      </genOperations>
       <genOperations ecoreOperation="evolution.ecore#//ModelSet/containsElement">
         <genParameters ecoreParameter="evolution.ecore#//ModelSet/containsElement/modelElement"/>
       </genOperations>
@@ -58,6 +61,11 @@
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Model/allPackages"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Model/referencedPackages"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Model/missingPackages"/>
+      <genOperations ecoreOperation="evolution.ecore#//Model/ensureIDs"/>
+      <genOperations ecoreOperation="evolution.ecore#//Model/getPackage">
+        <genParameters ecoreParameter="evolution.ecore#//Model/getPackage/nsURI"/>
+      </genOperations>
+      <genOperations ecoreOperation="evolution.ecore#//Model/save"/>
     </genClasses>
     <genClasses ecoreClass="evolution.ecore#//Evolution">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute evolution.ecore#//Evolution/useEcorePackage"/>
@@ -70,11 +78,21 @@
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Evolution/missingPackages"/>
       <genFeatures property="None" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Evolution/releases"/>
       <genFeatures property="Readonly" children="true" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Evolution/orderedReleases"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Evolution/initialRelease"/>
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference evolution.ecore#//Evolution/latestRelease"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute evolution.ecore#//Evolution/nextReleaseVersion"/>
+      <genOperations ecoreOperation="evolution.ecore#//Evolution/ensureIDs"/>
+      <genOperations ecoreOperation="evolution.ecore#//Evolution/getModel">
+        <genParameters ecoreParameter="evolution.ecore#//Evolution/getModel/nsURI"/>
+      </genOperations>
+      <genOperations ecoreOperation="evolution.ecore#//Evolution/addModel">
+        <genParameters ecoreParameter="evolution.ecore#//Evolution/addModel/uri"/>
+      </genOperations>
       <genOperations ecoreOperation="evolution.ecore#//Evolution/getRelease">
         <genParameters ecoreParameter="evolution.ecore#//Evolution/getRelease/version"/>
       </genOperations>
+      <genOperations ecoreOperation="evolution.ecore#//Evolution/createRelease"/>
+      <genOperations ecoreOperation="evolution.ecore#//Evolution/save"/>
     </genClasses>
     <genClasses ecoreClass="evolution.ecore#//Release">
       <genFeatures property="None" notify="false" createChild="false" propertySortChoices="true"

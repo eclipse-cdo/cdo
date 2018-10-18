@@ -143,13 +143,22 @@ public interface EvolutionPackage extends EPackage
   int MODEL_SET___GET_ALL_PACKAGES = 4;
 
   /**
+   * The operation id for the '<em>Get Package</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODEL_SET___GET_PACKAGE__STRING = 5;
+
+  /**
    * The operation id for the '<em>Contains Element</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODEL_SET___CONTAINS_ELEMENT__EMODELELEMENT = 5;
+  int MODEL_SET___CONTAINS_ELEMENT__EMODELELEMENT = 6;
 
   /**
    * The operation id for the '<em>Get Element</em>' operation.
@@ -158,7 +167,7 @@ public interface EvolutionPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODEL_SET___GET_ELEMENT__STRING = 6;
+  int MODEL_SET___GET_ELEMENT__STRING = 7;
 
   /**
    * The operation id for the '<em>Get Element ID</em>' operation.
@@ -167,7 +176,7 @@ public interface EvolutionPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODEL_SET___GET_ELEMENT_ID__EMODELELEMENT = 7;
+  int MODEL_SET___GET_ELEMENT_ID__EMODELELEMENT = 8;
 
   /**
    * The operation id for the '<em>Get Element ID</em>' operation.
@@ -176,7 +185,7 @@ public interface EvolutionPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODEL_SET___GET_ELEMENT_ID__EMODELELEMENT_BOOLEAN = 8;
+  int MODEL_SET___GET_ELEMENT_ID__EMODELELEMENT_BOOLEAN = 9;
 
   /**
    * The operation id for the '<em>Compare</em>' operation.
@@ -185,7 +194,7 @@ public interface EvolutionPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODEL_SET___COMPARE__MODELSET = 9;
+  int MODEL_SET___COMPARE__MODELSET = 10;
 
   /**
    * The operation id for the '<em>Get Migration</em>' operation.
@@ -194,7 +203,7 @@ public interface EvolutionPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODEL_SET___GET_MIGRATION__STRING = 10;
+  int MODEL_SET___GET_MIGRATION__STRING = 11;
 
   /**
    * The number of operations of the '<em>Model Set</em>' class.
@@ -203,7 +212,7 @@ public interface EvolutionPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODEL_SET_OPERATION_COUNT = 11;
+  int MODEL_SET_OPERATION_COUNT = 12;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.evolution.impl.ModelImpl <em>Model</em>}' class.
@@ -289,13 +298,40 @@ public interface EvolutionPackage extends EPackage
   int MODEL_FEATURE_COUNT = 6;
 
   /**
+   * The operation id for the '<em>Ensure IDs</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODEL___ENSURE_IDS = 0;
+
+  /**
+   * The operation id for the '<em>Get Package</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODEL___GET_PACKAGE__STRING = 1;
+
+  /**
+   * The operation id for the '<em>Save</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODEL___SAVE = 2;
+
+  /**
    * The number of operations of the '<em>Model</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODEL_OPERATION_COUNT = 0;
+  int MODEL_OPERATION_COUNT = 3;
 
   /**
    * The feature id for the '<em><b>Change</b></em>' containment reference.
@@ -406,13 +442,22 @@ public interface EvolutionPackage extends EPackage
   int EVOLUTION__ORDERED_RELEASES = MODEL_SET_FEATURE_COUNT + 9;
 
   /**
+   * The feature id for the '<em><b>Initial Release</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVOLUTION__INITIAL_RELEASE = MODEL_SET_FEATURE_COUNT + 10;
+
+  /**
    * The feature id for the '<em><b>Latest Release</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EVOLUTION__LATEST_RELEASE = MODEL_SET_FEATURE_COUNT + 10;
+  int EVOLUTION__LATEST_RELEASE = MODEL_SET_FEATURE_COUNT + 11;
 
   /**
    * The feature id for the '<em><b>Next Release Version</b></em>' attribute.
@@ -421,7 +466,7 @@ public interface EvolutionPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EVOLUTION__NEXT_RELEASE_VERSION = MODEL_SET_FEATURE_COUNT + 11;
+  int EVOLUTION__NEXT_RELEASE_VERSION = MODEL_SET_FEATURE_COUNT + 12;
 
   /**
    * The number of structural features of the '<em>Evolution</em>' class.
@@ -430,7 +475,7 @@ public interface EvolutionPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EVOLUTION_FEATURE_COUNT = MODEL_SET_FEATURE_COUNT + 12;
+  int EVOLUTION_FEATURE_COUNT = MODEL_SET_FEATURE_COUNT + 13;
 
   /**
    * The operation id for the '<em>Get Evolution</em>' operation.
@@ -476,6 +521,15 @@ public interface EvolutionPackage extends EPackage
    * @ordered
    */
   int EVOLUTION___GET_ALL_PACKAGES = MODEL_SET___GET_ALL_PACKAGES;
+
+  /**
+   * The operation id for the '<em>Get Package</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVOLUTION___GET_PACKAGE__STRING = MODEL_SET___GET_PACKAGE__STRING;
 
   /**
    * The operation id for the '<em>Contains Element</em>' operation.
@@ -532,13 +586,58 @@ public interface EvolutionPackage extends EPackage
   int EVOLUTION___GET_MIGRATION__STRING = MODEL_SET___GET_MIGRATION__STRING;
 
   /**
+   * The operation id for the '<em>Ensure IDs</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVOLUTION___ENSURE_IDS = MODEL_SET_OPERATION_COUNT + 0;
+
+  /**
+   * The operation id for the '<em>Get Model</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVOLUTION___GET_MODEL__STRING = MODEL_SET_OPERATION_COUNT + 1;
+
+  /**
+   * The operation id for the '<em>Add Model</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVOLUTION___ADD_MODEL__URI = MODEL_SET_OPERATION_COUNT + 2;
+
+  /**
    * The operation id for the '<em>Get Release</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EVOLUTION___GET_RELEASE__INT = MODEL_SET_OPERATION_COUNT + 0;
+  int EVOLUTION___GET_RELEASE__INT = MODEL_SET_OPERATION_COUNT + 3;
+
+  /**
+   * The operation id for the '<em>Create Release</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVOLUTION___CREATE_RELEASE = MODEL_SET_OPERATION_COUNT + 4;
+
+  /**
+   * The operation id for the '<em>Save</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EVOLUTION___SAVE = MODEL_SET_OPERATION_COUNT + 5;
 
   /**
    * The number of operations of the '<em>Evolution</em>' class.
@@ -547,7 +646,7 @@ public interface EvolutionPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EVOLUTION_OPERATION_COUNT = MODEL_SET_OPERATION_COUNT + 1;
+  int EVOLUTION_OPERATION_COUNT = MODEL_SET_OPERATION_COUNT + 6;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.evolution.impl.ReleaseImpl <em>Release</em>}' class.
@@ -693,6 +792,15 @@ public interface EvolutionPackage extends EPackage
    * @ordered
    */
   int RELEASE___GET_ALL_PACKAGES = MODEL_SET___GET_ALL_PACKAGES;
+
+  /**
+   * The operation id for the '<em>Get Package</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELEASE___GET_PACKAGE__STRING = MODEL_SET___GET_PACKAGE__STRING;
 
   /**
    * The operation id for the '<em>Contains Element</em>' operation.
@@ -1433,6 +1541,16 @@ public interface EvolutionPackage extends EPackage
   EOperation getModelSet__GetAllPackages();
 
   /**
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.evolution.ModelSet#getPackage(java.lang.String) <em>Get Package</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Get Package</em>' operation.
+   * @see org.eclipse.emf.cdo.evolution.ModelSet#getPackage(java.lang.String)
+   * @generated
+   */
+  EOperation getModelSet__GetPackage__String();
+
+  /**
    * Returns the meta object for the '{@link org.eclipse.emf.cdo.evolution.ModelSet#containsElement(org.eclipse.emf.ecore.EModelElement) <em>Contains Element</em>}' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1569,6 +1687,36 @@ public interface EvolutionPackage extends EPackage
   EReference getModel_MissingPackages();
 
   /**
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.evolution.Model#ensureIDs() <em>Ensure IDs</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Ensure IDs</em>' operation.
+   * @see org.eclipse.emf.cdo.evolution.Model#ensureIDs()
+   * @generated
+   */
+  EOperation getModel__EnsureIDs();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.evolution.Model#getPackage(java.lang.String) <em>Get Package</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Get Package</em>' operation.
+   * @see org.eclipse.emf.cdo.evolution.Model#getPackage(java.lang.String)
+   * @generated
+   */
+  EOperation getModel__GetPackage__String();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.evolution.Model#save() <em>Save</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Save</em>' operation.
+   * @see org.eclipse.emf.cdo.evolution.Model#save()
+   * @generated
+   */
+  EOperation getModel__Save();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.evolution.Evolution <em>Evolution</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1678,6 +1826,17 @@ public interface EvolutionPackage extends EPackage
   EReference getEvolution_OrderedReleases();
 
   /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.evolution.Evolution#getInitialRelease <em>Initial Release</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Initial Release</em>'.
+   * @see org.eclipse.emf.cdo.evolution.Evolution#getInitialRelease()
+   * @see #getEvolution()
+   * @generated
+   */
+  EReference getEvolution_InitialRelease();
+
+  /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.evolution.Evolution#getLatestRelease <em>Latest Release</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1700,6 +1859,36 @@ public interface EvolutionPackage extends EPackage
   EAttribute getEvolution_NextReleaseVersion();
 
   /**
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.evolution.Evolution#ensureIDs() <em>Ensure IDs</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Ensure IDs</em>' operation.
+   * @see org.eclipse.emf.cdo.evolution.Evolution#ensureIDs()
+   * @generated
+   */
+  EOperation getEvolution__EnsureIDs();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.evolution.Evolution#getModel(java.lang.String) <em>Get Model</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Get Model</em>' operation.
+   * @see org.eclipse.emf.cdo.evolution.Evolution#getModel(java.lang.String)
+   * @generated
+   */
+  EOperation getEvolution__GetModel__String();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.evolution.Evolution#addModel(org.eclipse.emf.common.util.URI) <em>Add Model</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Add Model</em>' operation.
+   * @see org.eclipse.emf.cdo.evolution.Evolution#addModel(org.eclipse.emf.common.util.URI)
+   * @generated
+   */
+  EOperation getEvolution__AddModel__URI();
+
+  /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.evolution.Evolution#getMissingPackages <em>Missing Packages</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1719,6 +1908,26 @@ public interface EvolutionPackage extends EPackage
    * @generated
    */
   EOperation getEvolution__GetRelease__int();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.evolution.Evolution#createRelease() <em>Create Release</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Create Release</em>' operation.
+   * @see org.eclipse.emf.cdo.evolution.Evolution#createRelease()
+   * @generated
+   */
+  EOperation getEvolution__CreateRelease();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.evolution.Evolution#save() <em>Save</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Save</em>' operation.
+   * @see org.eclipse.emf.cdo.evolution.Evolution#save()
+   * @generated
+   */
+  EOperation getEvolution__Save();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.evolution.Release <em>Release</em>}'.
@@ -2215,6 +2424,14 @@ public interface EvolutionPackage extends EPackage
     EOperation MODEL_SET___GET_ALL_PACKAGES = eINSTANCE.getModelSet__GetAllPackages();
 
     /**
+     * The meta object literal for the '<em><b>Get Package</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation MODEL_SET___GET_PACKAGE__STRING = eINSTANCE.getModelSet__GetPackage__String();
+
+    /**
      * The meta object literal for the '<em><b>Contains Element</b></em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2321,6 +2538,30 @@ public interface EvolutionPackage extends EPackage
     EReference MODEL__MISSING_PACKAGES = eINSTANCE.getModel_MissingPackages();
 
     /**
+     * The meta object literal for the '<em><b>Ensure IDs</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation MODEL___ENSURE_IDS = eINSTANCE.getModel__EnsureIDs();
+
+    /**
+     * The meta object literal for the '<em><b>Get Package</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation MODEL___GET_PACKAGE__STRING = eINSTANCE.getModel__GetPackage__String();
+
+    /**
+     * The meta object literal for the '<em><b>Save</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation MODEL___SAVE = eINSTANCE.getModel__Save();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.evolution.impl.EvolutionImpl <em>Evolution</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2403,6 +2644,14 @@ public interface EvolutionPackage extends EPackage
     EReference EVOLUTION__ORDERED_RELEASES = eINSTANCE.getEvolution_OrderedReleases();
 
     /**
+     * The meta object literal for the '<em><b>Initial Release</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EVOLUTION__INITIAL_RELEASE = eINSTANCE.getEvolution_InitialRelease();
+
+    /**
      * The meta object literal for the '<em><b>Latest Release</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2419,6 +2668,30 @@ public interface EvolutionPackage extends EPackage
     EAttribute EVOLUTION__NEXT_RELEASE_VERSION = eINSTANCE.getEvolution_NextReleaseVersion();
 
     /**
+     * The meta object literal for the '<em><b>Ensure IDs</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation EVOLUTION___ENSURE_IDS = eINSTANCE.getEvolution__EnsureIDs();
+
+    /**
+     * The meta object literal for the '<em><b>Get Model</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation EVOLUTION___GET_MODEL__STRING = eINSTANCE.getEvolution__GetModel__String();
+
+    /**
+     * The meta object literal for the '<em><b>Add Model</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation EVOLUTION___ADD_MODEL__URI = eINSTANCE.getEvolution__AddModel__URI();
+
+    /**
      * The meta object literal for the '<em><b>Missing Packages</b></em>' reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2433,6 +2706,22 @@ public interface EvolutionPackage extends EPackage
      * @generated
      */
     EOperation EVOLUTION___GET_RELEASE__INT = eINSTANCE.getEvolution__GetRelease__int();
+
+    /**
+     * The meta object literal for the '<em><b>Create Release</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation EVOLUTION___CREATE_RELEASE = eINSTANCE.getEvolution__CreateRelease();
+
+    /**
+     * The meta object literal for the '<em><b>Save</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation EVOLUTION___SAVE = eINSTANCE.getEvolution__Save();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.evolution.impl.ReleaseImpl <em>Release</em>}' class.

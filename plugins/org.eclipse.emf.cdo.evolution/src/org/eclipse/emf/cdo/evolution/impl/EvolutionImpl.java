@@ -3,16 +3,22 @@
 package org.eclipse.emf.cdo.evolution.impl;
 
 import org.eclipse.emf.cdo.evolution.Evolution;
+import org.eclipse.emf.cdo.evolution.EvolutionFactory;
 import org.eclipse.emf.cdo.evolution.EvolutionPackage;
 import org.eclipse.emf.cdo.evolution.Model;
 import org.eclipse.emf.cdo.evolution.Release;
+import org.eclipse.emf.cdo.evolution.util.ElementHandler;
+import org.eclipse.emf.cdo.evolution.util.ElementRunnable;
+import org.eclipse.emf.cdo.evolution.util.IDAnnotation;
 
 import org.eclipse.net4j.util.collection.CollectionUtil;
+import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
@@ -24,8 +30,10 @@ import org.eclipse.emf.ecore.util.EcoreEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -49,6 +57,7 @@ import java.util.Set;
  *   <li>{@link org.eclipse.emf.cdo.evolution.impl.EvolutionImpl#getMissingPackages <em>Missing Packages</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.evolution.impl.EvolutionImpl#getReleases <em>Releases</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.evolution.impl.EvolutionImpl#getOrderedReleases <em>Ordered Releases</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.evolution.impl.EvolutionImpl#getInitialRelease <em>Initial Release</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.evolution.impl.EvolutionImpl#getLatestRelease <em>Latest Release</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.evolution.impl.EvolutionImpl#getNextReleaseVersion <em>Next Release Version</em>}</li>
  * </ul>
@@ -328,6 +337,72 @@ public class EvolutionImpl extends ModelSetImpl implements Evolution
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public Release createRelease()
+  {
+    final EvolutionImpl evolution = (EvolutionImpl)getEvolution();
+    final int nextVersion = evolution.getNextReleaseVersion();
+
+    Release release = EvolutionFactory.eINSTANCE.createRelease();
+    release.setDate(new Date());
+    release.setVersion(nextVersion);
+
+    evolution.getReleases().add(release);
+
+    Collection<EPackage> rootPackages = EcoreUtil.copyAll(evolution.getRootPackages());
+    release.getRootPackages().addAll(rootPackages);
+
+    // Prepare for new development...
+
+    for (EPackage rootPackage : evolution.getRootPackages())
+    {
+      ElementHandler.execute(rootPackage, new ElementRunnable()
+      {
+        public void run(EModelElement modelElement)
+        {
+          IDAnnotation.setOldValue(modelElement, null);
+        }
+      });
+    }
+
+    evolution.getMigrations().clear();
+
+    ModelSetChangeImpl change = (ModelSetChangeImpl)evolution.getChange();
+    if (change != null)
+    {
+      change.reset();
+      evolution.setChange(null);
+    }
+
+    return release;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public void save()
+  {
+    try
+    {
+      eResource().save(null);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+
+    for (Model model : getModels())
+    {
+      model.save();
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -357,6 +432,33 @@ public class EvolutionImpl extends ModelSetImpl implements Evolution
     list.addAll(getReleases());
     ECollections.sort(list);
     return list;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Release getInitialRelease()
+  {
+    Release initialRelease = basicGetInitialRelease();
+    return initialRelease != null && ((EObject)initialRelease).eIsProxy() ? (Release)eResolveProxy((InternalEObject)initialRelease) : initialRelease;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public Release basicGetInitialRelease()
+  {
+    EList<Release> orderedReleases = getOrderedReleases();
+    if (orderedReleases.isEmpty())
+    {
+      return null;
+    }
+
+    return orderedReleases.get(orderedReleases.size() - 1);
   }
 
   /**
@@ -395,6 +497,54 @@ public class EvolutionImpl extends ModelSetImpl implements Evolution
   {
     Release latestRelease = getLatestRelease();
     return latestRelease == null ? 1 : latestRelease.getVersion() + 1;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public boolean ensureIDs()
+  {
+    boolean modified = false;
+
+    for (Model model : getModels())
+    {
+      modified |= model.ensureIDs();
+    }
+
+    return modified;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public Model getModel(String nsURI)
+  {
+    for (Model model : getModels())
+    {
+      EPackage ePackage = model.getPackage(nsURI);
+      if (ePackage != null)
+      {
+        return model;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public Model addModel(URI uri)
+  {
+    Model model = EvolutionFactory.eINSTANCE.createModel(uri);
+    getModels().add(model);
+    return model;
   }
 
   /**
@@ -464,6 +614,12 @@ public class EvolutionImpl extends ModelSetImpl implements Evolution
       return getReleases();
     case EvolutionPackage.EVOLUTION__ORDERED_RELEASES:
       return getOrderedReleases();
+    case EvolutionPackage.EVOLUTION__INITIAL_RELEASE:
+      if (resolve)
+      {
+        return getInitialRelease();
+      }
+      return basicGetInitialRelease();
     case EvolutionPackage.EVOLUTION__LATEST_RELEASE:
       if (resolve)
       {
@@ -573,6 +729,8 @@ public class EvolutionImpl extends ModelSetImpl implements Evolution
       return !getReleases().isEmpty();
     case EvolutionPackage.EVOLUTION__ORDERED_RELEASES:
       return !getOrderedReleases().isEmpty();
+    case EvolutionPackage.EVOLUTION__INITIAL_RELEASE:
+      return basicGetInitialRelease() != null;
     case EvolutionPackage.EVOLUTION__LATEST_RELEASE:
       return basicGetLatestRelease() != null;
     case EvolutionPackage.EVOLUTION__NEXT_RELEASE_VERSION:
@@ -591,8 +749,19 @@ public class EvolutionImpl extends ModelSetImpl implements Evolution
   {
     switch (operationID)
     {
+    case EvolutionPackage.EVOLUTION___ENSURE_IDS:
+      return ensureIDs();
+    case EvolutionPackage.EVOLUTION___GET_MODEL__STRING:
+      return getModel((String)arguments.get(0));
+    case EvolutionPackage.EVOLUTION___ADD_MODEL__URI:
+      return addModel((URI)arguments.get(0));
     case EvolutionPackage.EVOLUTION___GET_RELEASE__INT:
       return getRelease((Integer)arguments.get(0));
+    case EvolutionPackage.EVOLUTION___CREATE_RELEASE:
+      return createRelease();
+    case EvolutionPackage.EVOLUTION___SAVE:
+      save();
+      return null;
     }
     return super.eInvoke(operationID, arguments);
   }

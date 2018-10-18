@@ -39,4 +39,9 @@ public interface InternalDBSchema extends IDBSchema, InternalDBSchemaElement
   public boolean unlock();
 
   public void assertUnlocked() throws DBException;
+
+  /**
+   * @since 4.8
+   */
+  public boolean renameTable(IDBTable table, String newName);
 }

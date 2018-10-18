@@ -411,6 +411,16 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     return openSession();
   }
 
+  /**
+   * @category Session
+   */
+  public CDOSession getLatestSession()
+  {
+    determineCodeLink();
+    ISessionConfig sessionConfig = getSessionConfig();
+    return sessionConfig.getLatestSession();
+  }
+
   // /////////////////////////////////////////////////////////////////////////
   // //////////////////////// Model //////////////////////////////////////////
 

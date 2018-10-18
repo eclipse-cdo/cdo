@@ -168,14 +168,29 @@ public abstract class DBSchemaElement extends DBNamedElement implements Internal
     int level = schemaElementType.getLevel();
     for (int i = 0; i < level; i++)
     {
-      writer.append("  ");
+      if (writer instanceof DumpFormat)
+      {
+        writer.append(((DumpFormat)writer).getIndent());
+      }
+      else
+      {
+        writer.append("  ");
+      }
     }
 
     writer.append(schemaElementType.toString());
     writer.append(" ");
     writer.append(getName());
     dumpAdditionalProperties(writer);
-    writer.append(StringUtil.NL);
+
+    if (writer instanceof DumpFormat)
+    {
+      writer.append(((DumpFormat)writer).getNewline());
+    }
+    else
+    {
+      writer.append(StringUtil.NL);
+    }
 
     for (IDBSchemaElement element : getElements())
     {

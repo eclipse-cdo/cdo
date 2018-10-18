@@ -27,7 +27,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
-import org.eclipse.emf.cdo.server.db.mapping.IListMapping3;
+import org.eclipse.emf.cdo.server.db.mapping.IListMapping4;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBIndexAnnotation;
@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -46,6 +47,7 @@ import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -54,7 +56,7 @@ import java.util.Set;
 /**
  * @author Stefan Winkler
  */
-public abstract class AbstractBasicListTableMapping implements IListMapping3, IMappingConstants
+public abstract class AbstractBasicListTableMapping implements IListMapping4, IMappingConstants
 {
   private IMappingStrategy mappingStrategy;
 
@@ -82,6 +84,17 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
   public final EStructuralFeature getFeature()
   {
     return feature;
+  }
+
+  public IDBTable getTable()
+  {
+    Iterator<IDBTable> iterator = getDBTables().iterator();
+    if (iterator.hasNext())
+    {
+      return iterator.next();
+    }
+
+    return null;
   }
 
   public void addSimpleChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int index)
@@ -444,12 +457,12 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
     private void optimizeListIndexes()
     {
       /*
-       * This is an optimization which reduces the amount of modifications on the database to maintain list indexes. For the
-       * optimization, we let go of the assumption that indexes are zero-based. Instead, we work with an offset at the
-       * database level which can change with every change to the list (e.g. if the second element is removed from a list with
-       * 1000 elements, instead of shifting down indexes 2 to 1000 by 1, we shift up index 0 by 1 and have now a list with
-       * indexes starting at 1 instead of 0. This optimization is applied by modifying the list of Manipulations, which can be
-       * seen as the database modification plan.
+       * This is an optimization which reduces the amount of modifications on the database to maintain list indexes. For
+       * the optimization, we let go of the assumption that indexes are zero-based. Instead, we work with an offset at
+       * the database level which can change with every change to the list (e.g. if the second element is removed from a
+       * list with 1000 elements, instead of shifting down indexes 2 to 1000 by 1, we shift up index 0 by 1 and have now
+       * a list with indexes starting at 1 instead of 0. This optimization is applied by modifying the list of
+       * Manipulations, which can be seen as the database modification plan.
        */
 
       // First, get the current offset.
@@ -613,8 +626,8 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
         if (manipulation.is(MOVE))
         {
           /*
-           * Step 2: MOVE all elements e (by e.srcIndex) which have e.is(MOVE) to tmpIndex (-1, -2, -3, -4, ...) and store
-           * tmpIndex in e.tempIndex
+           * Step 2: MOVE all elements e (by e.srcIndex) which have e.is(MOVE) to tmpIndex (-1, -2, -3, -4, ...) and
+           * store tmpIndex in e.tempIndex
            */
           manipulation.tmpIndex = getNextTmpIndex();
           dbMove(idHandler, manipulation.srcIndex, manipulation.tmpIndex, manipulation.srcIndex);
@@ -634,8 +647,8 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
         if (manipulation.is(MOVE))
         {
           /*
-           * Step 4: MOVE all elements e have e.is(MOVE) from e.tempIdx to e.dstIndex (because we have moved them before, moveStmt
-           * is always initialized
+           * Step 4: MOVE all elements e have e.is(MOVE) from e.tempIdx to e.dstIndex (because we have moved them
+           * before, moveStmt is always initialized
            */
           dbMove(idHandler, manipulation.tmpIndex, manipulation.dstIndex, manipulation.srcIndex);
 
@@ -682,16 +695,16 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
     protected void writeShifts(IIDHandler idHandler) throws SQLException
     {
       /*
-       * Step 3: shift all elements which have to be shifted up or down because of add, remove or move of other elements to
-       * their proper position. This has to be done in two phases to avoid collisions, as the index has to be unique and shift
-       * up operations have to be executed in top to bottom order.
+       * Step 3: shift all elements which have to be shifted up or down because of add, remove or move of other elements
+       * to their proper position. This has to be done in two phases to avoid collisions, as the index has to be unique
+       * and shift up operations have to be executed in top to bottom order.
        */
       LinkedList<Shift> shiftOperations = new LinkedList<Shift>();
 
       /*
-       * If a necessary shift is detected (source and destination indices differ), firstIndex is set to the current index and
-       * currentOffset is set to the offset of the shift operation. When a new offset is detected or the range is interrupted,
-       * we record the range and start a new one if needed.
+       * If a necessary shift is detected (source and destination indices differ), firstIndex is set to the current
+       * index and currentOffset is set to the offset of the shift operation. When a new offset is detected or the range
+       * is interrupted, we record the range and start a new one if needed.
        */
       int rangeStartIndex = NO_INDEX;
       int rangeOffset = 0;
@@ -701,15 +714,16 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
       for (Manipulation manipulation : manipulations)
       {
         /*
-         * Shift applies only to elements which are not moved, inserted or deleted (i.e. only plain SET and NONE are affected)
+         * Shift applies only to elements which are not moved, inserted or deleted (i.e. only plain SET and NONE are
+         * affected)
          */
         if (manipulation.types == NONE || manipulation.types == SET)
         {
           int elementOffset = manipulation.dstIndex - manipulation.srcIndex;
 
           /*
-           * First make sure if we have to close a previous range. This is the case, if the current element's offset differs from
-           * the rangeOffset and a range is open.
+           * First make sure if we have to close a previous range. This is the case, if the current element's offset
+           * differs from the rangeOffset and a range is open.
            */
           if (elementOffset != rangeOffset && rangeStartIndex != NO_INDEX)
           {
@@ -722,8 +736,9 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
           }
 
           /*
-           * At this point, either a range is open, which means that the current element also fits in the range (i.e. the offsets
-           * match) or no range is open. In the latter case, we have to open one if the current element's offset is not 0.
+           * At this point, either a range is open, which means that the current element also fits in the range (i.e.
+           * the offsets match) or no range is open. In the latter case, we have to open one if the current element's
+           * offset is not 0.
            */
           if (elementOffset != 0 && rangeStartIndex == NO_INDEX)
           {
@@ -755,8 +770,8 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
       }
 
       /*
-       * Now process the operations. Move down operations can be performed directly, move up operations need to be performed
-       * later in the reverse direction
+       * Now process the operations. Move down operations can be performed directly, move up operations need to be
+       * performed later in the reverse direction
        */
       ListIterator<Shift> operationIt = shiftOperations.listIterator();
       writeShiftsDown(idHandler, operationIt);

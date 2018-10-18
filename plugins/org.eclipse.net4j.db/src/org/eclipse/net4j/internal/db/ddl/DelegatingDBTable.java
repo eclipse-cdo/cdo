@@ -69,6 +69,11 @@ public final class DelegatingDBTable extends DelegatingDBSchemaElement implement
     return wrap(getDelegate().getParent());
   }
 
+  public boolean rename(String newName)
+  {
+    return getDelegate().rename(newName);
+  }
+
   public IDBField addField(String name, DBType type)
   {
     return wrap(getDelegate().addField(name, type));
@@ -79,19 +84,9 @@ public final class DelegatingDBTable extends DelegatingDBSchemaElement implement
     return wrap(getDelegate().addField(name, type, notNull));
   }
 
-  public void removeField(IDBField fieldToRemove)
-  {
-    getDelegate().removeField(unwrap(fieldToRemove));
-  }
-
   public IDBField addField(String name, DBType type, int precision)
   {
     return wrap(getDelegate().addField(name, type, precision));
-  }
-
-  public void removeIndex(IDBIndex indexToRemove)
-  {
-    getDelegate().removeIndex(unwrap(indexToRemove));
   }
 
   public IDBField addField(String name, DBType type, int precision, boolean notNull)
@@ -107,6 +102,16 @@ public final class DelegatingDBTable extends DelegatingDBSchemaElement implement
   public IDBField addField(String name, DBType type, int precision, int scale, boolean notNull)
   {
     return wrap(getDelegate().addField(name, type, precision, scale, notNull));
+  }
+
+  public void removeField(IDBField fieldToRemove)
+  {
+    getDelegate().removeField(unwrap(fieldToRemove));
+  }
+
+  public boolean renameField(IDBField field, String newName)
+  {
+    return getDelegate().renameField(unwrap(field), newName);
   }
 
   public IDBField getFieldSafe(String name) throws SchemaElementNotFoundException
@@ -172,6 +177,11 @@ public final class DelegatingDBTable extends DelegatingDBSchemaElement implement
   public IDBIndex addIndexEmpty(Type type)
   {
     return wrap(getDelegate().addIndexEmpty(type));
+  }
+
+  public void removeIndex(IDBIndex indexToRemove)
+  {
+    getDelegate().removeIndex(unwrap(indexToRemove));
   }
 
   public IDBIndex getIndexSafe(String name) throws SchemaElementNotFoundException

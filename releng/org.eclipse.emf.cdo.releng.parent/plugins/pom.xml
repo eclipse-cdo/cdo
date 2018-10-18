@@ -73,6 +73,7 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.emf.cdo.server.db</module>
     <module>../../../plugins/org.eclipse.emf.cdo.server.db4o</module>
     <module>../../../plugins/org.eclipse.emf.cdo.server.embedded</module>
+    <module>../../../plugins/org.eclipse.emf.cdo.server.evolution</module>
     <module>../../../plugins/org.eclipse.emf.cdo.server.hibernate</module>
     <module>../../../plugins/org.eclipse.emf.cdo.server.hibernate.teneo</module>
     <module>../../../plugins/org.eclipse.emf.cdo.server.lissome</module>

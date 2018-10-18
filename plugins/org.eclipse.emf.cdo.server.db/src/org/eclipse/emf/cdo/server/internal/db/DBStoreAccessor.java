@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.evolution.Release;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
@@ -52,6 +53,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy2;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractHorizontalClassMapping;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.UnitMappingTable;
+import org.eclipse.emf.cdo.server.spi.evolution.MigrationContext;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
@@ -76,6 +78,7 @@ import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.ddl.DBField;
 import org.eclipse.net4j.util.HexUtil;
@@ -812,12 +815,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       {
         IDBDatabase database = store.getDatabase();
         IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
+        IDBSchema schema = schemaTransaction.getWorkingCopy();
 
         try
         {
           for (IDBTable table : createdTables)
           {
-            table.remove();
+            schema.removeTable(table.getName());
           }
 
           schemaTransaction.commit();
@@ -1506,6 +1510,12 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   {
     UnitMappingTable unitMappingTable = getStore().getUnitMappingTable();
     unitMappingTable.writeUnitMappings(this, unitMappings, timeStamp);
+  }
+
+  public void migrateTo(Release release, MigrationContext context, OMMonitor monitor)
+  {
+    DBStoreMigrator migrator = new DBStoreMigrator(this, context, release);
+    migrator.migrate(monitor);
   }
 
   public void tableCreated(IDBTable table)

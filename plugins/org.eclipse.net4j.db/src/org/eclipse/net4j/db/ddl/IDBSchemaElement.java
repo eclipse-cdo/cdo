@@ -13,7 +13,7 @@ package org.eclipse.net4j.db.ddl;
 import org.eclipse.net4j.util.container.IContainer;
 
 /**
- * Specifies a hierachical namespace for elements in a {@link IDBSchema DB schema}.
+ * Specifies a hierarchical namespace for elements in a {@link IDBSchema DB schema}.
  *
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.

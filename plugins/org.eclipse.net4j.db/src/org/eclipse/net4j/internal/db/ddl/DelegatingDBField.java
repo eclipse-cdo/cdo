@@ -36,6 +36,11 @@ public final class DelegatingDBField extends DelegatingDBSchemaElement implement
     return this;
   }
 
+  public boolean rename(String newName)
+  {
+    return getDelegate().rename(newName);
+  }
+
   public int getPosition()
   {
     return getDelegate().getPosition();

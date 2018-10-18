@@ -80,6 +80,11 @@ public final class DelegatingDBSchema extends DelegatingDBSchemaElement implemen
     return wrap(getDelegate().removeTable(name));
   }
 
+  public boolean renameTable(IDBTable table, String newName)
+  {
+    return getDelegate().renameTable(unwrap(table), newName);
+  }
+
   public String createIndexName(IDBTable table, Type type, IDBField[] fields, int position)
   {
     return getDelegate().createIndexName(unwrap(table), type, fields, position);

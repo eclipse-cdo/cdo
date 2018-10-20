@@ -56,5 +56,10 @@ public interface IDBField extends IDBSchemaElement, PositionProvider
   /**
    * @since 4.8
    */
+  public boolean isAssignableFrom(IDBField other);
+
+  /**
+   * @since 4.8
+   */
   public boolean rename(String newName);
 }

@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.mapping.AbstractFeatureMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping4;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -36,6 +37,7 @@ import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -56,34 +58,22 @@ import java.util.Set;
 /**
  * @author Stefan Winkler
  */
-public abstract class AbstractBasicListTableMapping implements IListMapping4, IMappingConstants
+public abstract class AbstractBasicListTableMapping extends AbstractFeatureMapping implements IListMapping4, IMappingConstants
 {
-  private IMappingStrategy mappingStrategy;
-
   private EClass containingClass;
 
-  private EStructuralFeature feature;
+  private IDBField listSizeField;
 
   public AbstractBasicListTableMapping(IMappingStrategy mappingStrategy, EClass containingClass, EStructuralFeature feature)
   {
-    this.mappingStrategy = mappingStrategy;
+    setMappingStrategy(mappingStrategy);
+    setFeature(feature);
     this.containingClass = containingClass;
-    this.feature = feature;
-  }
-
-  public final IMappingStrategy getMappingStrategy()
-  {
-    return mappingStrategy;
   }
 
   public final EClass getContainingClass()
   {
     return containingClass;
-  }
-
-  public final EStructuralFeature getFeature()
-  {
-    return feature;
   }
 
   public IDBTable getTable()
@@ -95,6 +85,16 @@ public abstract class AbstractBasicListTableMapping implements IListMapping4, IM
     }
 
     return null;
+  }
+
+  public IDBField getField()
+  {
+    return listSizeField;
+  }
+
+  public void setField(IDBField field)
+  {
+    listSizeField = field;
   }
 
   public void addSimpleChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int index)

@@ -20,11 +20,13 @@ import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
+import org.eclipse.emf.cdo.server.db.mapping.AbstractFeatureMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping2;
 import org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping4;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy.Props;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy3;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.evolution.Renamer;
@@ -44,7 +46,6 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
-import org.eclipse.net4j.spi.db.ddl.InternalDBNamedElement;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.Pair;
@@ -85,7 +86,9 @@ public class DBStoreMigrator
 
   private final IDBStore store;
 
-  private final IDBAdapter dbAdapter;
+  private final IDBAdapter adapter;
+
+  private final IDBConnection connection;
 
   private final IMappingStrategy3 mappingStrategy;
 
@@ -99,6 +102,8 @@ public class DBStoreMigrator
 
   private final Map<EModelElement, EModelElement> repositoryToOldElements = new HashMap<EModelElement, EModelElement>();
 
+  private final Map<IDBTable, ColumnRenamer> columnRenamers = new HashMap<IDBTable, ColumnRenamer>();
+
   public DBStoreMigrator(IDBStoreAccessor accessor, MigrationContext context, Release release)
   {
     this.accessor = accessor;
@@ -106,18 +111,428 @@ public class DBStoreMigrator
     this.release = release;
 
     store = accessor.getStore();
-    dbAdapter = store.getDBAdapter();
+    adapter = store.getDBAdapter();
+    connection = accessor.getDBConnection();
     mappingStrategy = (IMappingStrategy3)store.getMappingStrategy();
     metaDataManager = store.getMetaDataManager();
 
     repository = (InternalRepository)store.getRepository();
     repositoryPackageRegistry = repository.getPackageRegistry();
-
-    ////////////////////////////////////////////////////////////////////////////////////////
-    // Build bidirectional mappings between repository and previous release classifiers.
-    ////////////////////////////////////////////////////////////////////////////////////////
-
     oldRelease = release.getPreviousRelease();
+
+    mapRepositoryAndOldElements();
+    createAllRepositoryClassMappings();
+  }
+
+  public void migrate(OMMonitor monitor)
+  {
+    Statement statement = null;
+
+    try
+    {
+      statement = connection.createStatement();
+      migrate(statement, monitor);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(statement);
+    }
+  }
+
+  private void migrate(Statement statement, OMMonitor monitor) throws SQLException
+  {
+    InternalCDOPackageRegistry newPackageRegistry = (InternalCDOPackageRegistry)release.createPackageRegistry();
+    InternalCDOPackageUnit[] newPackageUnits = newPackageRegistry.getPackageUnits();
+    Map<EModelElement, EModelElement> newToOldElements = release.getChange().getNewToOldElements();
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    // Compute all new class mappings in a temporary schema.
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    Map<EClass, IClassMapping2> newClassMappings = new HashMap<EClass, IClassMapping2>();
+    boolean oldSkipMappingInitialization = AbstractMappingStrategy.setSkipMappingInitialization(true);
+
+    try
+    {
+      IDBSchema schema = DBUtil.createSchema("v" + release.getVersion());
+
+      for (EClass newClass : mappingStrategy.getMappedClasses(newPackageUnits))
+      {
+        IClassMapping2 newClassMapping = (IClassMapping2)mappingStrategy.createClassMapping(newClass);
+        IDBTable newTable = newClassMapping.createTable(schema, mappingStrategy.getTableName(newClass));
+        newClassMapping.setTable(newTable);
+        newClassMappings.put(newClass, newClassMapping);
+
+        for (IListMapping listMapping : newClassMapping.getListMappings())
+        {
+          IDBTable listTable = ((IListMapping4)listMapping).createTable(schema, mappingStrategy.getTableName(newClass, listMapping.getFeature()));
+          ((IListMapping4)listMapping).setTable(listTable);
+          monitor.checkCanceled();
+        }
+
+        monitor.checkCanceled();
+      }
+
+      // context.log("Computing " + DBUtil.dumpToString(schema));
+    }
+    finally
+    {
+      AbstractMappingStrategy.setSkipMappingInitialization(oldSkipMappingInitialization);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    // Create renaming rules for the tables that become obsolete after the migration.
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    Renamer tableRenamer = new TableRenamer(connection);
+    Set<IDBTable> tablesToRemove = new HashSet<IDBTable>();
+
+    for (ElementChange elementChange : release.getElementChanges(EcorePackage.Literals.ECLASS, ChangeKind.REMOVED))
+    {
+      EClass oldClass = (EClass)elementChange.getOldElement();
+      EClass repositoryClass = (EClass)oldToRepositoryElements.get(oldClass);
+      IClassMapping repositoryClassMapping = mappingStrategy.getClassMapping(repositoryClass);
+
+      for (IDBTable table : repositoryClassMapping.getDBTables())
+      {
+        if (table != null)
+        {
+          tableRenamer.addName(table.getName());
+          tablesToRemove.add(table);
+        }
+
+        monitor.checkCanceled();
+      }
+
+      monitor.checkCanceled();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    // Create renaming rules for the mapped tables of renamed classes and features.
+    // Create renaming rules for the columns that become obsolete after the migration.
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    Set<IClassMapping2> addedClassMappings = new HashSet<IClassMapping2>();
+    Map<CDOID, Pair<CDOID, ? extends EModelElement>> oldToNewMetaIDs = new HashMap<CDOID, Pair<CDOID, ? extends EModelElement>>();
+    List<IDBField> fieldsToRemove = new ArrayList<IDBField>();
+
+    for (IClassMapping2 newClassMapping : newClassMappings.values())
+    {
+      EClass newClass = newClassMapping.getEClass();
+      EClass oldClass = (EClass)newToOldElements.get(newClass);
+
+      IClassMapping2 oldClassMapping = oldClass == null ? null : (IClassMapping2)mappingStrategy.getClassMapping(oldClass);
+      IDBTable table = oldClassMapping == null ? null : oldClassMapping.getTable();
+
+      String oldTableName = table == null ? null : mappingStrategy.getTableName(oldClass);
+      String newTableName = mappingStrategy.getTableName(newClass);
+
+      if (!newTableName.equals(oldTableName))
+      {
+        tableRenamer.addNames(oldTableName, newTableName);
+      }
+
+      if (oldClass != null)
+      {
+        if (newClass != null)
+        {
+          if (table != null)
+          {
+            for (ITypeMapping newValueMapping : newClassMapping.getValueMappings())
+            {
+              EStructuralFeature newFeature = newValueMapping.getFeature();
+              EStructuralFeature oldFeature = (EStructuralFeature)newToOldElements.get(newFeature);
+
+              String oldFieldName = oldFeature == null ? null : mappingStrategy.getFieldName(oldFeature);
+              String newFieldName = mappingStrategy.getFieldName(newFeature);
+
+              if (!newFieldName.equals(oldFieldName))
+              {
+                ColumnRenamer columnRenamer = getColumnRenamer(table);
+                columnRenamer.addNames(oldFieldName, newFieldName);
+              }
+              else
+              {
+                renameChangedColumn(oldClass, oldFeature, newClassMapping, newValueMapping, table, fieldsToRemove);
+              }
+
+              monitor.checkCanceled();
+            }
+          }
+
+          for (IListMapping newListMapping : newClassMapping.getListMappings())
+          {
+            EStructuralFeature newFeature = newListMapping.getFeature();
+            EStructuralFeature oldFeature = (EStructuralFeature)newToOldElements.get(newFeature);
+
+            IListMapping4 oldListMapping = oldFeature == null ? null : (IListMapping4)oldClassMapping.getListMapping(oldFeature);
+            IDBTable listTable = oldListMapping == null ? null : oldListMapping.getTable();
+
+            oldTableName = listTable == null ? null : mappingStrategy.getTableName(oldClass, oldFeature);
+            newTableName = mappingStrategy.getTableName(newClass, newFeature);
+
+            if (!newTableName.equals(oldTableName))
+            {
+              tableRenamer.addNames(oldTableName, newTableName);
+            }
+
+            if (table != null)
+            {
+              String oldListSizeFieldName = oldFeature == null ? null : mappingStrategy.getFieldName(oldFeature);
+              String newListSizeFieldName = mappingStrategy.getFieldName(newFeature);
+
+              if (!newListSizeFieldName.equals(oldListSizeFieldName))
+              {
+                ColumnRenamer columnRenamer = getColumnRenamer(table);
+                columnRenamer.addNames(oldListSizeFieldName, newListSizeFieldName);
+              }
+              else
+              {
+                renameChangedColumn(oldClass, oldFeature, newClassMapping, newListMapping, table, fieldsToRemove);
+              }
+            }
+
+            monitor.checkCanceled();
+          }
+
+          runColumnRenamer(table);
+
+          CDOID oldMetaID = metaDataManager.getMetaID(oldClass, CDOBranchPoint.UNSPECIFIED_DATE);
+          CDOID newMetaID = metaDataManager.getMetaID(newClass, CDOBranchPoint.UNSPECIFIED_DATE);
+          if (!ObjectUtil.equals(oldMetaID, newMetaID))
+          {
+            oldToNewMetaIDs.put(oldMetaID, Pair.create(newMetaID, newClass));
+
+            if (mappingStrategy instanceof AbstractHorizontalMappingStrategy)
+            {
+              AbstractHorizontalMappingStrategy horizontalMappingStrategy = (AbstractHorizontalMappingStrategy)mappingStrategy;
+
+              int count = horizontalMappingStrategy.getObjectTypeMapper().changeObjectType(accessor, oldClass, newClass);
+              if (count > 0)
+              {
+                context.log("Changed type of " + count + " objects from " + oldMetaID + " to " + newMetaID //
+                    + " (" + ElementHandler.getLabel(oldClass) + " --> " + ElementHandler.getLabel(newClass) + ")");
+              }
+            }
+          }
+        }
+      }
+      else
+      {
+        addedClassMappings.add(newClassMapping);
+      }
+
+      monitor.checkCanceled();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    tableRenamer.run();
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    // Create table columns for features added to existing classes, i.e.:
+    // 1. A value column for a new single-valued feature
+    // 2. A list size column for a new many-valued feature
+    // 3. A boolean column for a new unsettable feature
+    //
+    // Create table columns for existing features that map to a different column type.
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    IDBSchemaTransaction schemaTransaction = null;
+
+    try
+    {
+      for (IClassMapping2 newClassMapping : newClassMappings.values())
+      {
+        EClass newClass = newClassMapping.getEClass();
+        EClass oldClass = (EClass)newToOldElements.get(newClass);
+        if (oldClass != null)
+        {
+          EClass repositoryClass = (EClass)oldToRepositoryElements.get(oldClass);
+
+          IClassMapping2 repositoryClassMapping = (IClassMapping2)mappingStrategy.getClassMapping(repositoryClass);
+          if (repositoryClassMapping != null)
+          {
+            IDBTable table = repositoryClassMapping.getTable();
+            if (table != null)
+            {
+              for (IFeatureMapping newFeatureMapping : newClassMapping.getFeatureMappings())
+              {
+                EStructuralFeature newFeature = newFeatureMapping.getFeature();
+                EStructuralFeature oldFeature = (EStructuralFeature)newToOldElements.get(newFeature);
+                if (oldFeature == null)
+                {
+                  // Create table column for the added feature.
+                  if (schemaTransaction == null)
+                  {
+                    schemaTransaction = store.getDatabase().openSchemaTransaction(connection);
+                  }
+
+                  IDBTable workingTable = schemaTransaction.getWorkingCopy().getTable(table.getName());
+                  IFeatureMapping featureMapping = repositoryClassMapping.createFeatureMappings(workingTable, false, newFeature)[0];
+
+                  IDBField field = AbstractFeatureMapping.getField(repositoryClassMapping, featureMapping);
+                  context.log("Creating column for new feature " + newClass.getName() + "." + newFeature.getName() + " --> " + field.getFullName());
+                }
+                else
+                {
+                  EStructuralFeature repositoryFeature = (EStructuralFeature)oldToRepositoryElements.get(oldFeature);
+                  IFeatureMapping repositoryFeatureMapping = repositoryClassMapping.getFeatureMapping(repositoryFeature);
+
+                  IDBField repositoryField = AbstractFeatureMapping.getField(repositoryClassMapping, repositoryFeatureMapping);
+                  IDBField newField = AbstractFeatureMapping.getField(newClassMapping, newFeatureMapping);
+
+                  if (!newField.isAssignableFrom(repositoryField))
+                  {
+                    // Create table column for the changed feature.
+                    if (schemaTransaction == null)
+                    {
+                      schemaTransaction = store.getDatabase().openSchemaTransaction(connection);
+                    }
+
+                    IDBTable workingTable = schemaTransaction.getWorkingCopy().getTable(table.getName());
+                    IFeatureMapping featureMapping = repositoryClassMapping.createFeatureMappings(workingTable, false, newFeature)[0];
+
+                    IDBField field = AbstractFeatureMapping.getField(repositoryClassMapping, featureMapping);
+                    context.log("Creating column for changed feature " + newClass.getName() + "." + newFeature.getName() + " --> " + field.getFullName());
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      if (schemaTransaction != null)
+      {
+        IDBSchemaDelta schemaDelta = schemaTransaction.getSchemaDelta();
+        context.log(DBUtil.dumpToString(schemaDelta));
+
+        schemaTransaction.commit();
+      }
+    }
+    finally
+    {
+      IOUtil.close(schemaTransaction);
+      schemaTransaction = null;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    context.log("######################");
+    context.log("Migrating instances...");
+    context.log("######################");
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    if (!tablesToRemove.isEmpty())
+    {
+      context.log("Dropping obsolete tables:");
+
+      for (IDBTable table : tablesToRemove)
+      {
+        context.log("   " + table);
+        adapter.dropTable(table, statement);
+        monitor.checkCanceled();
+      }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    if (!fieldsToRemove.isEmpty())
+    {
+      context.log("Dropping obsolete columns:");
+      schemaTransaction = store.getDatabase().openSchemaTransaction(connection);
+      IDBSchema workingSchema = schemaTransaction.getWorkingCopy();
+
+      try
+      {
+        for (IDBField field : fieldsToRemove)
+        {
+          context.log("   " + field.getFullName());
+
+          IDBTable workingTable = workingSchema.getTableSafe(field.getTable().getName());
+          IDBField workingField = workingTable.getFieldSafe(field.getName());
+          workingField.remove();
+          monitor.checkCanceled();
+        }
+
+        IDBSchemaDelta schemaDelta = schemaTransaction.getSchemaDelta();
+        context.log(DBUtil.dumpToString(schemaDelta));
+
+        schemaTransaction.commit();
+      }
+      finally
+      {
+        IOUtil.close(schemaTransaction);
+        schemaTransaction = null;
+      }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    if (oldRelease != null)
+    {
+      context.log("Removing old package units from system tables:");
+      List<InternalCDOPackageUnit> repositoryPackageUnits = new ArrayList<InternalCDOPackageUnit>();
+
+      for (EPackage oldRootPackage : oldRelease.getRootPackages())
+      {
+        EPackage repositoryRootPackage = (EPackage)oldToRepositoryElements.get(oldRootPackage);
+        InternalCDOPackageUnit repositoryPackageUnit = repositoryPackageRegistry.getPackageUnit(repositoryRootPackage);
+        repositoryPackageUnits.add(repositoryPackageUnit);
+        context.log("   " + repositoryPackageUnit.getID());
+      }
+
+      InternalCDOPackageUnit[] packageUnits = repositoryPackageUnits.toArray(new InternalCDOPackageUnit[repositoryPackageUnits.size()]);
+      metaDataManager.deletePackageUnits(connection, packageUnits, monitor);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    context.log("Adding new package units to system tables:");
+    for (InternalCDOPackageUnit newPackageUnit : newPackageUnits)
+    {
+      context.log("   " + newPackageUnit.getID());
+    }
+
+    metaDataManager.writePackageUnits(accessor.getConnection(), newPackageUnits, monitor);
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    context.log("Committing migration results");
+    connection.commit();
+
+    context.log("Reinitializing package registry");
+    LifecycleUtil.deactivate(repositoryPackageRegistry);
+    LifecycleUtil.activate(repositoryPackageRegistry);
+    Repository.readPackageUnits(accessor, repositoryPackageRegistry);
+
+    context.log("Resetting metadata manager");
+    metaDataManager.clearMetaIDMappings();
+
+    context.log("Recomputing class mappings");
+    mappingStrategy.clearClassMappings();
+    mappingStrategy.getClassMappings(true);
+
+  }
+
+  /**
+   * Build bidirectional mappings between repository and previous release classifiers.
+   */
+  private void mapRepositoryAndOldElements()
+  {
     if (oldRelease != null)
     {
       for (EPackage oldPackage : oldRelease.getAllPackages())
@@ -173,347 +588,63 @@ public class DBStoreMigrator
     }
   }
 
-  public void migrate(OMMonitor monitor)
+  private void createAllRepositoryClassMappings()
   {
-    IDBConnection connection = accessor.getDBConnection();
-    Statement statement = null;
+    Map<String, String> mappingStrategyProperties = mappingStrategy.getProperties();
+    String oldEagerTableCreation = mappingStrategyProperties.put(Props.EAGER_TABLE_CREATION, String.valueOf(Boolean.FALSE));
 
     try
     {
-      statement = connection.createStatement();
-      migrate(connection, statement, monitor);
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
+      mappingStrategy.getClassMappings(true);
     }
     finally
     {
-      DBUtil.close(statement);
+      mappingStrategyProperties.put(Props.EAGER_TABLE_CREATION, oldEagerTableCreation);
     }
   }
 
-  public void migrate(IDBConnection connection, Statement statement, OMMonitor monitor) throws SQLException
+  private ColumnRenamer getColumnRenamer(IDBTable table)
   {
-    InternalCDOPackageRegistry newPackageRegistry = (InternalCDOPackageRegistry)release.createPackageRegistry();
-    InternalCDOPackageUnit[] newPackageUnits = newPackageRegistry.getPackageUnits();
-    Map<EModelElement, EModelElement> newToOldElements = release.getChange().getNewToOldElements();
-
-    ////////////////////////////////////////////////////////////////////////////////////////
-    // Compute all new class mappings in a temporary schema.
-    ////////////////////////////////////////////////////////////////////////////////////////
-
-    Map<EClass, IClassMapping2> newClassMappings = new HashMap<EClass, IClassMapping2>();
-    boolean oldSkipMappingInitialization = AbstractMappingStrategy.setSkipMappingInitialization(true);
-
-    try
+    ColumnRenamer columnRenamer = columnRenamers.get(table);
+    if (columnRenamer == null)
     {
-      IDBSchema schema = DBUtil.createSchema("v" + release.getVersion());
-
-      for (EClass newClass : mappingStrategy.getMappedClasses(newPackageUnits))
-      {
-        IClassMapping2 newClassMapping = (IClassMapping2)mappingStrategy.createClassMapping(newClass);
-        IDBTable newTable = newClassMapping.createTable(schema, mappingStrategy.getTableName(newClass));
-        newClassMapping.setTable(newTable);
-        newClassMappings.put(newClass, newClassMapping);
-
-        for (IListMapping listMapping : newClassMapping.getListMappings())
-        {
-          IDBTable listTable = ((IListMapping4)listMapping).createTable(schema, mappingStrategy.getTableName(newClass, listMapping.getFeature()));
-          ((IListMapping4)listMapping).setTable(listTable);
-          monitor.checkCanceled();
-        }
-
-        monitor.checkCanceled();
-      }
-
-      // context.log("Computing " + DBUtil.dumpToString(schema));
-    }
-    finally
-    {
-      AbstractMappingStrategy.setSkipMappingInitialization(oldSkipMappingInitialization);
+      columnRenamer = new ColumnRenamer(connection, table);
+      columnRenamers.put(table, columnRenamer);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////
-    // Create renaming rules for the tables that become obsolete after the migration.
-    ////////////////////////////////////////////////////////////////////////////////////////
+    return columnRenamer;
+  }
 
-    Renamer tableRenamer = new TableRenamer(connection);
-    Set<IDBTable> tablesToRemove = new HashSet<IDBTable>();
-
-    int counter = 0;
-    for (ElementChange elementChange : release.getElementChanges(EcorePackage.Literals.ECLASS, ChangeKind.REMOVED))
+  private ColumnRenamer runColumnRenamer(IDBTable table)
+  {
+    ColumnRenamer columnRenamer = columnRenamers.get(table);
+    if (columnRenamer != null)
     {
-      EClass oldClass = (EClass)elementChange.getOldElement();
-      EClass repositoryClass = (EClass)oldToRepositoryElements.get(oldClass);
-      IClassMapping repositoryClassMapping = mappingStrategy.getClassMapping(repositoryClass);
-
-      for (IDBTable table : repositoryClassMapping.getDBTables())
-      {
-        if (table != null)
-        {
-          String tempName = "CDO_OLD_" + (++counter);
-          tableRenamer.addNames(table.getName(), tempName);
-          ((InternalDBNamedElement)table).setName(tempName); // TODO Remap in schema?
-          tablesToRemove.add(table);
-        }
-
-        monitor.checkCanceled();
-      }
-
-      monitor.checkCanceled();
+      columnRenamer.run();
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////
-    // Create renaming rules for the mapped tables of renamed classes and features.
-    ////////////////////////////////////////////////////////////////////////////////////////
+    return columnRenamer;
+  }
 
-    Set<IClassMapping2> addedClassMappings = new HashSet<IClassMapping2>();
-    Map<CDOID, Pair<CDOID, ? extends EModelElement>> oldToNewMetaIDs = new HashMap<CDOID, Pair<CDOID, ? extends EModelElement>>();
+  private void renameChangedColumn(EClass oldClass, EStructuralFeature oldFeature, IClassMapping2 newClassMapping, IFeatureMapping newFeatureMapping,
+      IDBTable table, List<IDBField> columnsToDelete)
+  {
+    EClass repositoryClass = (EClass)oldToRepositoryElements.get(oldClass);
+    IClassMapping2 repositoryClassMapping = (IClassMapping2)mappingStrategy.getClassMapping(repositoryClass);
 
-    for (IClassMapping2 newClassMapping : newClassMappings.values())
+    EStructuralFeature repositoryFeature = (EStructuralFeature)oldToRepositoryElements.get(oldFeature);
+    IFeatureMapping repositoryFeatureMapping = repositoryClassMapping.getFeatureMapping(repositoryFeature);
+
+    IDBField repositoryField = AbstractFeatureMapping.getField(repositoryClassMapping, repositoryFeatureMapping);
+    IDBField newField = AbstractFeatureMapping.getField(newClassMapping, newFeatureMapping);
+
+    if (!newField.isAssignableFrom(repositoryField))
     {
-      EClass newClass = newClassMapping.getEClass();
-      EClass oldClass = (EClass)newToOldElements.get(newClass);
+      ColumnRenamer columnRenamer = getColumnRenamer(table);
+      columnRenamer.addName(repositoryField.getName());
 
-      IClassMapping2 oldClassMapping = oldClass == null ? null : (IClassMapping2)mappingStrategy.getClassMapping(oldClass);
-      IDBTable table = oldClassMapping == null ? null : oldClassMapping.getDBTables().get(0);
-
-      String oldTableName = table == null ? null : mappingStrategy.getTableName(oldClass);
-      String newTableName = mappingStrategy.getTableName(newClass);
-
-      if (!newTableName.equals(oldTableName))
-      {
-        tableRenamer.addNames(oldTableName, newTableName);
-      }
-
-      if (oldClass != null)
-      {
-        if (newClass != null)
-        {
-          ColumnRenamer columnRenamer = null;
-
-          if (table != null)
-          {
-            for (ITypeMapping newValueMapping : newClassMapping.getValueMappings())
-            {
-              EStructuralFeature newFeature = newValueMapping.getFeature();
-              EStructuralFeature oldFeature = (EStructuralFeature)newToOldElements.get(newFeature);
-
-              String oldFieldName = oldFeature == null ? null : mappingStrategy.getFieldName(oldFeature);
-              String newFieldName = mappingStrategy.getFieldName(newFeature);
-
-              if (!newFieldName.equals(oldFieldName))
-              {
-                if (columnRenamer == null)
-                {
-                  columnRenamer = new ColumnRenamer(connection, table);
-                }
-
-                columnRenamer.addNames(oldFieldName, newFieldName);
-              }
-
-              monitor.checkCanceled();
-            }
-          }
-
-          for (IListMapping newListMapping : newClassMapping.getListMappings())
-          {
-            EStructuralFeature newFeature = newListMapping.getFeature();
-            EStructuralFeature oldFeature = (EStructuralFeature)newToOldElements.get(newFeature);
-
-            IListMapping4 oldListMapping = oldFeature == null ? null : (IListMapping4)oldClassMapping.getListMapping(oldFeature);
-            IDBTable listTable = oldListMapping == null ? null : oldListMapping.getTable();
-
-            oldTableName = listTable == null ? null : mappingStrategy.getTableName(oldClass, oldFeature);
-            newTableName = mappingStrategy.getTableName(newClass, newFeature);
-
-            if (!newTableName.equals(oldTableName))
-            {
-              tableRenamer.addNames(oldTableName, newTableName);
-            }
-
-            if (table != null)
-            {
-              String oldListSizeFieldName = oldFeature == null ? null : mappingStrategy.getFieldName(oldFeature);
-              String newListSizeFieldName = mappingStrategy.getFieldName(newFeature);
-
-              if (!newListSizeFieldName.equals(oldListSizeFieldName))
-              {
-                if (columnRenamer == null)
-                {
-                  columnRenamer = new ColumnRenamer(connection, table);
-                }
-
-                columnRenamer.addNames(oldListSizeFieldName, newListSizeFieldName);
-              }
-            }
-
-            monitor.checkCanceled();
-          }
-
-          if (columnRenamer != null)
-          {
-            columnRenamer.run();
-          }
-
-          CDOID oldMetaID = metaDataManager.getMetaID(oldClass, CDOBranchPoint.UNSPECIFIED_DATE);
-          CDOID newMetaID = metaDataManager.getMetaID(newClass, CDOBranchPoint.UNSPECIFIED_DATE);
-          if (!ObjectUtil.equals(oldMetaID, newMetaID))
-          {
-            oldToNewMetaIDs.put(oldMetaID, Pair.create(newMetaID, newClass));
-
-            if (mappingStrategy instanceof AbstractHorizontalMappingStrategy)
-            {
-              AbstractHorizontalMappingStrategy horizontalMappingStrategy = (AbstractHorizontalMappingStrategy)mappingStrategy;
-
-              int count = horizontalMappingStrategy.getObjectTypeMapper().changeObjectType(accessor, oldClass, newClass);
-              if (count > 0)
-              {
-                context.log("Changed type of " + count + " objects from " + oldMetaID + " to " + newMetaID //
-                    + " (" + ElementHandler.getLabel(oldClass) + " --> " + ElementHandler.getLabel(newClass) + ")");
-              }
-            }
-          }
-        }
-      }
-      else
-      {
-        addedClassMappings.add(newClassMapping);
-      }
-
-      monitor.checkCanceled();
+      columnsToDelete.add(repositoryField);
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////
-
-    tableRenamer.run();
-
-    ////////////////////////////////////////////////////////////////////////////////////////
-    // Create table columns for features added to existing classes.
-    ////////////////////////////////////////////////////////////////////////////////////////
-
-    IDBSchemaTransaction schemaTransaction = null;
-
-    try
-    {
-      for (IClassMapping2 newClassMapping : newClassMappings.values())
-      {
-        EClass newClass = newClassMapping.getEClass();
-        EClass oldClass = (EClass)newToOldElements.get(newClass);
-        if (oldClass != null)
-        {
-          EClass repositoryClass = (EClass)oldToRepositoryElements.get(oldClass);
-
-          IClassMapping2 repositoryClassMapping = (IClassMapping2)mappingStrategy.getClassMapping(repositoryClass);
-          if (repositoryClassMapping != null)
-          {
-            IDBTable table = repositoryClassMapping.getDBTables().get(0);
-            if (table != null)
-            {
-              for (IFeatureMapping newFeatureMapping : newClassMapping.getFeatureMappings())
-              {
-                EStructuralFeature newFeature = newFeatureMapping.getFeature();
-                EStructuralFeature oldFeature = (EStructuralFeature)newToOldElements.get(newFeature);
-                if (oldFeature == null)
-                {
-                  context.log("New feature " + newClass.getName() + "." + newFeature.getName());
-
-                  if (schemaTransaction == null)
-                  {
-                    schemaTransaction = store.getDatabase().openSchemaTransaction(connection);
-                  }
-
-                  IDBSchema workingCopy = schemaTransaction.getWorkingCopy();
-                  IDBTable workingTable = workingCopy.getTable(table.getName());
-                  repositoryClassMapping.createFeatureMappings(workingTable, false, newFeature);
-                }
-              }
-            }
-          }
-        }
-      }
-
-      if (schemaTransaction != null)
-      {
-        IDBSchemaDelta schemaDelta = schemaTransaction.getSchemaDelta();
-        context.log(DBUtil.dumpToString(schemaDelta));
-
-        schemaTransaction.commit();
-      }
-    }
-    finally
-    {
-      IOUtil.close(schemaTransaction);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////
-
-    if (!tablesToRemove.isEmpty())
-    {
-      context.log("Dropping obsolete tables:");
-
-      for (IDBTable table : tablesToRemove)
-      {
-        context.log("   " + table);
-        dbAdapter.dropTable(table, statement);
-        monitor.checkCanceled();
-      }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////
-
-    if (oldRelease != null)
-    {
-      context.log("Removing old package units from system tables:");
-      List<InternalCDOPackageUnit> repositoryPackageUnits = new ArrayList<InternalCDOPackageUnit>();
-
-      for (EPackage oldRootPackage : oldRelease.getRootPackages())
-      {
-        EPackage repositoryRootPackage = (EPackage)oldToRepositoryElements.get(oldRootPackage);
-        InternalCDOPackageUnit repositoryPackageUnit = repositoryPackageRegistry.getPackageUnit(repositoryRootPackage);
-        repositoryPackageUnits.add(repositoryPackageUnit);
-        context.log("   " + repositoryPackageUnit.getID());
-      }
-
-      InternalCDOPackageUnit[] packageUnits = repositoryPackageUnits.toArray(new InternalCDOPackageUnit[repositoryPackageUnits.size()]);
-      metaDataManager.deletePackageUnits(connection, packageUnits, monitor);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////
-
-    context.log("Adding new package units to system tables:");
-    for (
-
-    InternalCDOPackageUnit newPackageUnit : newPackageUnits)
-    {
-      context.log("   " + newPackageUnit.getID());
-    }
-
-    metaDataManager.writePackageUnits(accessor.getConnection(), newPackageUnits, monitor);
-
-    ////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////
-
-    context.log("Committing migration results");
-    connection.commit();
-
-    context.log("Reinitializing package registry");
-    LifecycleUtil.deactivate(repositoryPackageRegistry);
-    LifecycleUtil.activate(repositoryPackageRegistry);
-    Repository.readPackageUnits(accessor, repositoryPackageRegistry);
-
-    context.log("Resetting metadata manager");
-    metaDataManager.clearMetaIDMappings();
-
-    context.log("Recomputing class mappings");
-    mappingStrategy.clearClassMappings();
-    mappingStrategy.getClassMappings(true);
-
   }
 
   /**
@@ -645,7 +776,11 @@ public class DBStoreMigrator
     public TableRenamer(IDBConnection connection)
     {
       super(connection, "Renaming tables:");
+    }
 
+    @Override
+    protected void initNames()
+    {
       // Initialize the renamer with all existing table names.
       for (IDBTable table : accessor.getStore().getDBSchema().getTables())
       {
@@ -656,7 +791,7 @@ public class DBStoreMigrator
     @Override
     protected String getSQL(String oldName, String newName)
     {
-      return dbAdapter.sqlRenameTable(newName, oldName);
+      return adapter.sqlRenameTable(newName, oldName);
     }
 
     @Override
@@ -690,7 +825,11 @@ public class DBStoreMigrator
     {
       super(connection, "Renaming columns of table " + table + ":");
       this.table = table;
+    }
 
+    @Override
+    protected void initNames()
+    {
       // Initialize the renamer with all existing column names.
       for (IDBField field : table.getFields())
       {
@@ -708,7 +847,7 @@ public class DBStoreMigrator
 
       try
       {
-        return dbAdapter.sqlRenameField(field, oldName);
+        return adapter.sqlRenameField(field, oldName);
       }
       finally
       {

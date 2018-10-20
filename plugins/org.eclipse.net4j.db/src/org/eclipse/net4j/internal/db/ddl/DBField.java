@@ -243,6 +243,31 @@ public class DBField extends DBSchemaElement implements InternalDBField
     ((InternalDBTable)table).removeField(this);
   }
 
+  public boolean isAssignableFrom(IDBField other)
+  {
+    if (!getType().isAssignableFrom(other.getType()))
+    {
+      return false;
+    }
+
+    if (getPrecision() < other.getPrecision())
+    {
+      return false;
+    }
+
+    if (getScale() < other.getScale())
+    {
+      return false;
+    }
+
+    if (isNotNull() && !other.isNotNull())
+    {
+      return false;
+    }
+
+    return true;
+  }
+
   public String formatPrecision()
   {
     int precision = getPrecision();

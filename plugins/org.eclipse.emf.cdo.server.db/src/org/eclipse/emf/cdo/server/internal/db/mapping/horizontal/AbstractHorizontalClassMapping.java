@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping2;
 import org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping2;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping3;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -162,7 +163,12 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping2, 
           addListMapping(listMapping);
 
           IDBField listSizeField = table.getField(fieldName);
-          addListSizeFiled(feature, listSizeField);
+          addListSizeField(feature, listSizeField);
+
+          if (listMapping instanceof IFeatureMapping2)
+          {
+            ((IFeatureMapping2)listMapping).setField(listSizeField);
+          }
         }
       }
       else
@@ -187,6 +193,12 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping2, 
         String fieldName = mappingStrategy.getUnsettableFieldName(feature);
         IDBField field = table.getField(fieldName);
         unsettableFields.put(feature, field);
+
+        IFeatureMapping featureMapping = getFeatureMapping(feature);
+        if (featureMapping instanceof IFeatureMapping2)
+        {
+          ((IFeatureMapping2)featureMapping).setUnsettableField(field);
+        }
       }
     }
 
@@ -281,10 +293,14 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping2, 
 
           // Add field for list sizes.
           IDBField listSizeField = table.addField(fieldName, DBType.INTEGER);
-
           if (updateClassMapping)
           {
-            addListSizeFiled(feature, listSizeField);
+            addListSizeField(feature, listSizeField);
+          }
+
+          if (listMapping instanceof IFeatureMapping2)
+          {
+            ((IFeatureMapping2)listMapping).setField(listSizeField);
           }
         }
       }
@@ -324,7 +340,13 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping2, 
       for (EStructuralFeature feature : unsettableFields.keySet())
       {
         String fieldName = mappingStrategy.getUnsettableFieldName(feature);
-        table.addField(fieldName, DBType.BOOLEAN);
+        IDBField field = table.addField(fieldName, DBType.BOOLEAN);
+
+        IFeatureMapping featureMapping = getFeatureMapping(feature);
+        if (featureMapping instanceof IFeatureMapping2)
+        {
+          ((IFeatureMapping2)featureMapping).setUnsettableField(field);
+        }
       }
 
       if (updateClassMapping)
@@ -420,7 +442,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping2, 
     listMappings.add(mapping);
   }
 
-  private void addListSizeFiled(EStructuralFeature feature, IDBField field)
+  private void addListSizeField(EStructuralFeature feature, IDBField field)
   {
     if (listSizeFields == null)
     {
@@ -687,7 +709,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping2, 
     return null;
   }
 
-  protected final IDBTable getTable()
+  public final IDBTable getTable()
   {
     return table;
   }

@@ -107,6 +107,11 @@ public final class DelegatingDBField extends DelegatingDBSchemaElement implement
     getDelegate().setNotNull(notNull);
   }
 
+  public boolean isAssignableFrom(IDBField other)
+  {
+    return getDelegate().isAssignableFrom(unwrap(other));
+  }
+
   public String formatPrecision()
   {
     return getDelegate().formatPrecision();

@@ -27,6 +27,10 @@ public abstract class Renamer implements Runnable
 
   private final Map<String, String> newNames = new HashMap<String, String>();
 
+  private boolean initialized;
+
+  private int counter;
+
   public Renamer()
   {
   }
@@ -43,6 +47,12 @@ public abstract class Renamer implements Runnable
 
   public void addNames(String oldName, String newName)
   {
+    if (!initialized)
+    {
+      initialized = true;
+      initNames();
+    }
+
     if (oldName != null)
     {
       oldNames.put(oldName, newName);
@@ -54,10 +64,17 @@ public abstract class Renamer implements Runnable
     }
   }
 
+  public String addName(String oldName)
+  {
+    String newName = createUniqueName(++counter);
+    addNames(oldName, newName);
+    return newName;
+  }
+
   public void run()
   {
     List<String> colliding = new ArrayList<String>();
-    Set<String> newNames = new HashSet<String>();
+    Set<String> names = new HashSet<String>();
 
     for (Map.Entry<String, String> entry : oldNames.entrySet())
     {
@@ -80,21 +97,21 @@ public abstract class Renamer implements Runnable
           doRename(oldName, newName);
         }
 
-        newNames.add(newName);
+        names.add(newName);
       }
     }
 
     Map<String, String> tempNames = new LinkedHashMap<String, String>();
-    int tempCounter = 0;
+    int tmpCounter = 0;
 
     while (!colliding.isEmpty())
     {
       String oldName = colliding.remove(0);
       String newName = oldNames.get(oldName);
 
-      if (newNames.contains(newName) || colliding.contains(newName))
+      if (names.contains(newName) || colliding.contains(newName))
       {
-        String tempName = createTempName(++tempCounter);
+        String tempName = createTmpName(++tmpCounter);
         tempNames.put(tempName, newName);
 
         doRename(oldName, tempName);
@@ -111,18 +128,36 @@ public abstract class Renamer implements Runnable
       String newName = entry.getValue();
       doRename(tempName, newName);
     }
+
+    oldNames.clear();
+    newNames.clear();
+    initialized = false;
+  }
+
+  protected void initNames()
+  {
   }
 
   protected abstract void doRename(String oldName, String newName);
 
-  protected String createTempName(int id)
+  protected String createTmpName(int id)
   {
-    return getTempPrefix() + id;
+    return getTmpPrefix() + id;
   }
 
-  protected String getTempPrefix()
+  protected String getTmpPrefix()
   {
     return "CDO_TMP_";
+  }
+
+  protected String createUniqueName(int id)
+  {
+    return getUniquePrefix() + id;
+  }
+
+  protected String getUniquePrefix()
+  {
+    return "CDO_OLD_";
   }
 
   // public static void main(String[] args)

@@ -596,6 +596,56 @@ public class EvolutionTest extends AbstractCDOTest
     assertEquals(3, eList(customer2, "sites").size());
   }
 
+  public void testChangeAttributeType_SingleValued() throws Exception
+  {
+    // InternalRepository repository = getRepository();
+    // IDBStore store = (IDBStore)repository.getStore();
+    // IDBSchema schema = store.getDatabase().getSchema();
+    // IMappingStrategy mappingStrategy = store.getMappingStrategy();
+
+    Model model = createEvolution("evolution/model1.ecore");
+    String nsURI = model.getRootPackage().getNsURI();
+    Evolution evolution = model.getEvolution();
+
+    Release v1 = evolution.createRelease();
+    migrate(v1);
+
+    CDOSession session0 = openSession();
+    CDOTransaction transaction0 = session0.openTransaction();
+    CDOResource resource0 = transaction0.getOrCreateResource(getResourcePath("res"));
+    EObject customer0 = new SessionPackage(nsURI).create("Customer");
+    resource0.getContents().add(customer0);
+    transaction0.commit();
+    session0.close();
+
+    EPackage ePackage = model.getRootPackage();
+    EClass addressClass = (EClass)ePackage.getEClassifier("Address");
+    addressClass.getEStructuralFeature("city").setEType(EcorePackage.Literals.EINT);
+
+    Release v2 = evolution.createRelease();
+    migrate(v2);
+
+    CDOSession session = openSession();
+
+    CDOPackageUnit packageUnit = session.getPackageRegistry().getPackageUnit(nsURI);
+    assertNotNull(packageUnit);
+
+    EObject customer = new SessionPackage(nsURI).create("Customer");
+    eSet(customer, "city", 32584);
+
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("res"));
+    resource.getContents().add(customer);
+    transaction.commit();
+    CDOID customerID = CDOUtil.getCDOObject(customer).cdoID();
+    session.close();
+
+    CDOSession session2 = openSession();
+    CDOTransaction transaction2 = session2.openTransaction();
+    EObject customer2 = transaction2.getObject(customerID);
+    assertEquals(32584, eGet(customer2, "city"));
+  }
+
   public void _testNewPackageVersionWithSameNSURI() throws Exception
   {
     throw new UnsupportedOperationException();
@@ -612,6 +662,36 @@ public class EvolutionTest extends AbstractCDOTest
   }
 
   public void _testRenameUnsettableFeature() throws Exception
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void _testChangeAttributeToSingleValued() throws Exception
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void _testChangeAttributeToManyValued() throws Exception
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void _testChangeReferenceToSingleValued() throws Exception
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void _testChangeReferenceToManyValued() throws Exception
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void _testChangeAttributeToReference() throws Exception
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void _testChangeReferenceToAttribute() throws Exception
   {
     throw new UnsupportedOperationException();
   }

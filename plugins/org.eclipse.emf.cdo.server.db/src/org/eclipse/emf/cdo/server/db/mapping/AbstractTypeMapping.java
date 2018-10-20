@@ -39,7 +39,7 @@ import java.sql.SQLException;
 import java.text.MessageFormat;
 
 /**
- * This is a default implementation for the {@link ITypeMapping} interface which provides default behavor for all common
+ * This is a default implementation for the {@link ITypeMapping} interface which provides default behavior for all common
  * types. Implementors should provide a constructor which the factory (see below) can use and implement
  * {@link #getResultSetValue(ResultSet)}. If needed, {@link #doSetValue(PreparedStatement, int, Object)} can also be
  * overridden as a counterpart to {@link #getResultSetValue(ResultSet)}. Finally, an implementor should also implement a
@@ -51,13 +51,9 @@ import java.text.MessageFormat;
  * @author Stefan Winkler
  * @since 4.0
  */
-public abstract class AbstractTypeMapping implements ITypeMapping
+public abstract class AbstractTypeMapping extends AbstractFeatureMapping implements ITypeMapping
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractTypeMapping.class);
-
-  private IMappingStrategy mappingStrategy;
-
-  private EStructuralFeature feature;
 
   private DBType dbType;
 
@@ -70,34 +66,14 @@ public abstract class AbstractTypeMapping implements ITypeMapping
   {
   }
 
-  public final IMappingStrategy getMappingStrategy()
+  public DBType getDBType()
   {
-    return mappingStrategy;
-  }
-
-  public final void setMappingStrategy(IMappingStrategy mappingStrategy)
-  {
-    this.mappingStrategy = mappingStrategy;
-  }
-
-  public final EStructuralFeature getFeature()
-  {
-    return feature;
-  }
-
-  public final void setFeature(EStructuralFeature feature)
-  {
-    this.feature = feature;
+    return dbType;
   }
 
   public final void setDBType(DBType dbType)
   {
     this.dbType = dbType;
-  }
-
-  public DBType getDBType()
-  {
-    return dbType;
   }
 
   public final void setValueFromRevision(PreparedStatement stmt, int index, InternalCDORevision revision) throws SQLException
@@ -116,13 +92,15 @@ public abstract class AbstractTypeMapping implements ITypeMapping
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("TypeMapping for {0}: converting Revision.NIL to DB-null", feature.getName()); //$NON-NLS-1$
+        TRACER.format("TypeMapping for {0}: converting Revision.NIL to DB-null", getFeature().getName()); //$NON-NLS-1$
       }
 
       stmt.setNull(index, getSqlType());
     }
     else if (value == null)
     {
+      EStructuralFeature feature = getFeature();
+
       if (feature.isMany() || getDefaultValue() == null)
       {
         if (TRACER.isEnabled())
@@ -151,7 +129,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
   @Deprecated
   public final void createDBField(IDBTable table)
   {
-    createDBField(table, mappingStrategy.getFieldName(feature));
+    createDBField(table, getMappingStrategy().getFieldName(getFeature()));
   }
 
   public final void createDBField(IDBTable table, String fieldName)
@@ -164,6 +142,14 @@ public abstract class AbstractTypeMapping implements ITypeMapping
   public final IDBField getField()
   {
     return field;
+  }
+
+  /**
+   * @since 4.7
+   */
+  public final void setField(IDBField field)
+  {
+    this.field = field;
   }
 
   public final void setDBField(IDBTable table, String fieldName)
@@ -182,11 +168,11 @@ public abstract class AbstractTypeMapping implements ITypeMapping
     Object value = getResultSetValue(resultSet);
     if (resultSet.wasNull())
     {
-      if (feature.isMany())
+      if (getFeature().isMany())
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("TypeMapping for {0}: read db.null - setting Revision.null", feature.getName()); //$NON-NLS-1$
+          TRACER.format("TypeMapping for {0}: read db.null - setting Revision.null", getFeature().getName()); //$NON-NLS-1$
         }
 
         value = null;
@@ -198,7 +184,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
           if (TRACER.isEnabled())
           {
             TRACER.format("TypeMapping for {0}: read db.null - setting Revision.null, because of default", //$NON-NLS-1$
-                feature.getName());
+                getFeature().getName());
           }
 
           value = null;
@@ -207,7 +193,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
         {
           if (TRACER.isEnabled())
           {
-            TRACER.format("TypeMapping for {0}: read db.null - setting Revision.NIL", feature.getName()); //$NON-NLS-1$
+            TRACER.format("TypeMapping for {0}: read db.null - setting Revision.NIL", getFeature().getName()); //$NON-NLS-1$
           }
 
           value = CDORevisionData.NIL;
@@ -223,12 +209,12 @@ public abstract class AbstractTypeMapping implements ITypeMapping
   {
     Object mappedElement = field != null ? field : dbType;
     return MessageFormat.format("{0}[{1}.{2} --> {3}]", getClass().getSimpleName(), //$NON-NLS-1$
-        feature.getEContainingClass().getName(), feature.getName(), mappedElement);
+        getFeature().getEContainingClass().getName(), getFeature().getName(), mappedElement);
   }
 
   protected Object getDefaultValue()
   {
-    return feature.getDefaultValue();
+    return getFeature().getDefaultValue();
   }
 
   protected final Object getRevisionValue(InternalCDORevision revision)
@@ -256,7 +242,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
    * Returns the SQL type of this TypeMapping. The default implementation considers the type map held by the
    * {@link MetaDataManager meta-data manager}. Subclasses may override.
    *
-   * @return The sql type of this TypeMapping.
+   * @return The SQL type of this TypeMapping.
    */
   protected int getSqlType()
   {
@@ -265,6 +251,8 @@ public abstract class AbstractTypeMapping implements ITypeMapping
 
   protected int getDBLength(DBType type)
   {
+    EStructuralFeature feature = getFeature();
+
     String value = DBAnnotation.COLUMN_LENGTH.getValue(feature);
     if (value != null)
     {
@@ -278,7 +266,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
       }
     }
 
-    IDBAdapter adapter = mappingStrategy.getStore().getDBAdapter();
+    IDBAdapter adapter = getMappingStrategy().getStore().getDBAdapter();
     return adapter.getFieldLength(type);
   }
 

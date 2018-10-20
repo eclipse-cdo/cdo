@@ -790,6 +790,14 @@ public enum DBType
   }
 
   /**
+   * @since 4.8
+   */
+  public boolean isAssignableFrom(DBType other)
+  {
+    return equals(other);
+  }
+
+  /**
    * @since 3.0
    */
   public void writeValue(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException

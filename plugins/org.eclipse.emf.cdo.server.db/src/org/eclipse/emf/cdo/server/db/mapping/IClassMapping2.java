@@ -28,6 +28,8 @@ import java.util.Map;
  */
 public interface IClassMapping2 extends IClassMapping
 {
+  public IDBTable getTable();
+
   public void setTable(IDBTable table);
 
   public void initTable(IDBStoreAccessor accessor);

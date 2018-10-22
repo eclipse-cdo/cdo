@@ -1180,7 +1180,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
-  protected CDOID getResourceNodeID(CDOID folderID, String name)
+  protected CDOID getResourceNodeID(CDOID folderID, String name) throws CDOResourceNodeNotFoundException
   {
     synchronized (getViewMonitor())
     {

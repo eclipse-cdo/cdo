@@ -43,6 +43,7 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBNamedElement;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
@@ -411,7 +412,7 @@ public class DBStoreMigrator
       if (schemaTransaction != null)
       {
         IDBSchemaDelta schemaDelta = schemaTransaction.getSchemaDelta();
-        context.log(DBUtil.dumpToString(schemaDelta));
+        log(schemaDelta);
 
         schemaTransaction.commit();
       }
@@ -425,9 +426,10 @@ public class DBStoreMigrator
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    context.log("######################");
-    context.log("Migrating instances...");
-    context.log("######################");
+    if (oldRelease != null)
+    {
+      context.log("Migrating instances...");
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////
@@ -466,7 +468,7 @@ public class DBStoreMigrator
         }
 
         IDBSchemaDelta schemaDelta = schemaTransaction.getSchemaDelta();
-        context.log(DBUtil.dumpToString(schemaDelta));
+        log(schemaDelta);
 
         schemaTransaction.commit();
       }
@@ -645,6 +647,17 @@ public class DBStoreMigrator
 
       columnsToDelete.add(repositoryField);
     }
+  }
+
+  private void log(IDBNamedElement element)
+  {
+    StringBuilder builder = new StringBuilder(DBUtil.dumpToString(element));
+    while (Character.isWhitespace(builder.charAt(builder.length() - 1)))
+    {
+      builder.setLength(builder.length() - 1);
+    }
+
+    context.log(builder);
   }
 
   /**

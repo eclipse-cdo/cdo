@@ -137,6 +137,7 @@ public abstract class AbstractMigrationContext implements MigrationContext
       {
         int toVersion = toRelease.getVersion();
         String msg = repositoryName + (oldVersion == 0 ? "" : " from release v" + oldVersion) + " to release v" + toVersion;
+        log("===============================================");
         log("Migrating " + msg);
 
         evolutionSupport.migrateTo(toRelease, this, monitor.fork());
@@ -144,6 +145,7 @@ public abstract class AbstractMigrationContext implements MigrationContext
 
         writeReleaseVersion(evolutionSupport, toVersion);
         log("Migrated " + msg);
+        log("===============================================");
         log("");
 
         oldVersion = toVersion;

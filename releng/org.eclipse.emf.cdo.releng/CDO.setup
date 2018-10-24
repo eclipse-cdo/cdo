@@ -411,7 +411,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.1 //@setupTasks.14/@workingSets.2 //@setupTasks.14/@workingSets.3 //@setupTasks.14/@workingSets.7 //@setupTasks.14/@workingSets.8"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.1 //@setupTasks.14/@workingSets.2 //@setupTasks.14/@workingSets.3 //@setupTasks.14/@workingSets.4 //@setupTasks.14/@workingSets.5"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -424,7 +424,7 @@
             pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.4"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -443,7 +443,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.4"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -456,7 +456,36 @@
             pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.4"/>
+      </predicate>
+    </workingSet>
+    <workingSet
+        name="CDO Features"
+        id="CDO CDO Features">
+      <predicate
+          xsi:type="predicates:NamePredicate"
+          pattern="org\.eclipse\.emf\.cdo.*-feature"/>
+      <predicate
+          xsi:type="predicates:NamePredicate"
+          pattern="org\.gastro.*-feature"/>
+    </workingSet>
+    <workingSet
+        name="CDO Releng"
+        id="CDO Releng">
+      <predicate
+          xsi:type="predicates:AndPredicate">
+        <operand
+            xsi:type="predicates:NamePredicate"
+            pattern="org\.eclipse\.emf\.cdo\.releng.*"/>
+        <operand
+            xsi:type="predicates:NotPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="org\.eclipse\.emf\.cdo\.releng\.promotion.*"/>
+        </operand>
+        <operand
+            xsi:type="workingsets:ExclusionPredicate"
+            excludedWorkingSet="//@setupTasks.14/@workingSets.4"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -469,7 +498,7 @@
             pattern="org\.eclipse\.net4j.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.5 //@setupTasks.14/@workingSets.6 //@setupTasks.14/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.7 //@setupTasks.14/@workingSets.8 //@setupTasks.14/@workingSets.4"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -482,7 +511,7 @@
             pattern="org\.eclipse\.net4j\.db.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.4"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -504,12 +533,12 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.4"/>
       </predicate>
     </workingSet>
     <workingSet
-        name="Features"
-        id="CDO Features">
+        name="Net4j Features"
+        id="CDO Net4j Features">
       <predicate
           xsi:type="predicates:NamePredicate"
           pattern="org\.eclipse\.emf\.cdo.*-feature"/>
@@ -519,25 +548,6 @@
       <predicate
           xsi:type="predicates:NamePredicate"
           pattern="org\.gastro.*-feature"/>
-    </workingSet>
-    <workingSet
-        name="Releng"
-        id="CDO Releng">
-      <predicate
-          xsi:type="predicates:AndPredicate">
-        <operand
-            xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.emf\.cdo\.releng.*"/>
-        <operand
-            xsi:type="predicates:NotPredicate">
-          <operand
-              xsi:type="predicates:NamePredicate"
-              pattern="org\.eclipse\.emf\.cdo\.releng\.promotion.*"/>
-        </operand>
-        <operand
-            xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.7"/>
-      </predicate>
     </workingSet>
   </setupTask>
   <setupTask

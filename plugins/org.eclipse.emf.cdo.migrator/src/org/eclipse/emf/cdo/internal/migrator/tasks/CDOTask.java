@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.internal.migrator.tasks;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import org.eclipse.ant.core.AntCorePlugin;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -37,6 +39,10 @@ import java.io.Writer;
  */
 public abstract class CDOTask extends Task
 {
+  public static final String FALSE = Boolean.FALSE.toString();
+
+  public static final String TRUE = Boolean.TRUE.toString();
+
   public static final String NL = System.getProperty("line.separator");
 
   public static final int EOF = -1;
@@ -112,6 +118,11 @@ public abstract class CDOTask extends Task
     }
 
     return new NullProgressMonitor();
+  }
+
+  public static boolean isSet(String str)
+  {
+    return !StringUtil.isEmpty(str);
   }
 
   public static void assertTrue(String message, boolean expression) throws BuildException

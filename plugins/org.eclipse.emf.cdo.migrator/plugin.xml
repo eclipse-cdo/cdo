@@ -59,6 +59,7 @@
   </extension>
 
   <extension point="org.eclipse.ant.core.antTasks">
+    <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.automaticBuild" class="org.eclipse.emf.cdo.internal.migrator.tasks.AutomaticBuildTask" />
     <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.importProject" class="org.eclipse.emf.cdo.internal.migrator.tasks.ImportProjectTask" />
     <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.deleteProject" class="org.eclipse.emf.cdo.internal.migrator.tasks.DeleteProjectTask" />
     <antTask library="ant_tasks/cdo.ant.tasks.jar" name="cdo.cleanupProject" class="org.eclipse.emf.cdo.internal.migrator.tasks.CleanupProjectTask" />

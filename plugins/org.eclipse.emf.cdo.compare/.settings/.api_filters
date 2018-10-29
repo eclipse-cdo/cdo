@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.compare" version="2">
+    <resource path="src/org/eclipse/emf/cdo/compare/CDOCompare.java" type="org.eclipse.emf.cdo.compare.CDOCompare$CDOIDFunction">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.compare.CDOCompare.CDOIDFunction"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/compare/CDOComparisonScope.java" type="org.eclipse.emf.cdo.compare.CDOComparisonScope$Minimal">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.compare.CDOComparisonScope.Minimal"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

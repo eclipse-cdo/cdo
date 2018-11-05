@@ -257,6 +257,11 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
+  public void cdoInternalPreAttach()
+  {
+    // Do nothing
+  }
+
   public void cdoInternalPostAttach()
   {
     instanceToRevision();

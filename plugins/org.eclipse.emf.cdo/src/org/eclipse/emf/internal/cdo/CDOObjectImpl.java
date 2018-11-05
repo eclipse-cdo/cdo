@@ -38,6 +38,7 @@ import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -101,6 +102,8 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   };
 
   private static final EObservableAdapterList.Listener[] ADAPTERS_LISTENERS = { ADAPTERS_LISTENER };
+
+  private static final boolean EMF_TO_STRING = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.internal.cdo.CDOObjectImpl.emfToString");
 
   /**
    * Optimized storage of {@link CDOObject#cdoView()} and {@link CDOObject#cdoState()}.
@@ -429,6 +432,14 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   public final void cdoInternalPostInvalidate()
   {
     cdoInternalSetRevision(null);
+  }
+
+  /**
+   * @since 4.7
+   */
+  public void cdoInternalPreAttach()
+  {
+    // Do nothing
   }
 
   public final void cdoInternalPostAttach()
@@ -1210,6 +1221,11 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public String toString()
   {
+    if (EMF_TO_STRING)
+    {
+      return super.toString();
+    }
+
     String str = eClass().getName();
 
     CDOID id = cdoID();

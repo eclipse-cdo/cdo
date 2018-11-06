@@ -15,7 +15,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * @author Stepper
+ * @author Eike Stepper
  * @since 3.9
  */
 public class RoundRobinIterator<T> implements Iterator<T>

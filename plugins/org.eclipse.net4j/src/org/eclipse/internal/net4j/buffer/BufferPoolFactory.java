@@ -14,19 +14,22 @@ import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.Factory;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 /**
  * @author Eike Stepper
  */
-public class BufferProviderFactory extends Factory
+public class BufferPoolFactory extends Factory
 {
   public static final String PRODUCT_GROUP = "org.eclipse.net4j.bufferProviders"; //$NON-NLS-1$
 
-  public static final String TYPE = "default"; //$NON-NLS-1$
+  public static final String TYPE = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.buffer.BufferPoolFactory.type", "default"); //$NON-NLS-1$
+
+  public static final String DESCRIPTION = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.buffer.BufferPoolFactory.description");
 
   public static final short BUFFER_CAPACITY = 4096;
 
-  public BufferProviderFactory()
+  public BufferPoolFactory()
   {
     super(PRODUCT_GROUP, TYPE);
   }
@@ -38,6 +41,6 @@ public class BufferProviderFactory extends Factory
 
   public static IBufferProvider get(IManagedContainer container)
   {
-    return (IBufferProvider)container.getElement(PRODUCT_GROUP, TYPE, null);
+    return (IBufferProvider)container.getElement(PRODUCT_GROUP, TYPE, DESCRIPTION);
   }
 }

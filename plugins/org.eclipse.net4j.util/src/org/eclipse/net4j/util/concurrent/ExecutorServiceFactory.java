@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.util.concurrent.ExecutorService;
 
@@ -29,7 +30,9 @@ public class ExecutorServiceFactory extends Factory
 {
   public static final String PRODUCT_GROUP = "org.eclipse.net4j.executorServices"; //$NON-NLS-1$
 
-  public static final String TYPE = "default"; //$NON-NLS-1$
+  public static final String TYPE = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.util.concurrent.ExecutorServiceFactory.type", "default"); //$NON-NLS-1$
+
+  public static final String DESCRIPTION = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.util.concurrent.ExecutorServiceFactory.description");
 
   public static final String DEFAULT_THREAD_GROUP_NAME = "net4j"; //$NON-NLS-1$
 
@@ -105,6 +108,6 @@ public class ExecutorServiceFactory extends Factory
 
   public static ExecutorService get(IManagedContainer container)
   {
-    return (ExecutorService)container.getElement(PRODUCT_GROUP, TYPE, null);
+    return (ExecutorService)container.getElement(PRODUCT_GROUP, TYPE, DESCRIPTION);
   }
 }

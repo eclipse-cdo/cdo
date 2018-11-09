@@ -28,7 +28,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.internal.net4j.TransportConfig;
 import org.eclipse.internal.net4j.buffer.BufferFactory;
 import org.eclipse.internal.net4j.buffer.BufferPool;
-import org.eclipse.internal.net4j.buffer.BufferProviderFactory;
+import org.eclipse.internal.net4j.buffer.BufferPoolFactory;
 
 import org.eclipse.spi.net4j.AcceptorFactory;
 import org.eclipse.spi.net4j.ConnectorFactory;
@@ -53,7 +53,7 @@ public final class Net4jUtil
   public static void prepareContainer(IManagedContainer container)
   {
     ContainerUtil.prepareContainer(container);
-    container.registerFactory(new BufferProviderFactory());
+    container.registerFactory(new BufferPoolFactory());
     container.registerFactory(new GZIPStreamWrapper.Factory());
     container.registerFactory(new HeartBeatProtocol.Server.Factory());
     container.addPostProcessor(new TransportInjector());
@@ -67,7 +67,7 @@ public final class Net4jUtil
 
   public static IBufferProvider getBufferProvider(IManagedContainer container)
   {
-    return BufferProviderFactory.get(container);
+    return BufferPoolFactory.get(container);
   }
 
   public static IAcceptor getAcceptor(IManagedContainer container, String type, String description)

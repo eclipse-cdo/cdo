@@ -17,7 +17,7 @@ import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
-import org.eclipse.internal.net4j.buffer.BufferProviderFactory;
+import org.eclipse.internal.net4j.buffer.BufferPoolFactory;
 
 import org.eclipse.spi.net4j.InternalAcceptor;
 import org.eclipse.spi.net4j.InternalConnector;
@@ -96,7 +96,7 @@ public class TransportInjector implements IElementProcessor
    */
   protected IBufferProvider getBufferProvider(IManagedContainer container)
   {
-    return (IBufferProvider)container.getElement(BufferProviderFactory.PRODUCT_GROUP, BufferProviderFactory.TYPE, null);
+    return (IBufferProvider)container.getElement(BufferPoolFactory.PRODUCT_GROUP, BufferPoolFactory.TYPE, null);
   }
 
   protected ExecutorService getExecutorService(IManagedContainer container)

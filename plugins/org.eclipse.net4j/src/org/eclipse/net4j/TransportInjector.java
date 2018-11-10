@@ -96,11 +96,11 @@ public class TransportInjector implements IElementProcessor
    */
   protected IBufferProvider getBufferProvider(IManagedContainer container)
   {
-    return (IBufferProvider)container.getElement(BufferPoolFactory.PRODUCT_GROUP, BufferPoolFactory.TYPE, null);
+    return BufferPoolFactory.get(container);
   }
 
   protected ExecutorService getExecutorService(IManagedContainer container)
   {
-    return (ExecutorService)container.getElement(ExecutorServiceFactory.PRODUCT_GROUP, ExecutorServiceFactory.TYPE, null);
+    return ExecutorServiceFactory.get(container);
   }
 }

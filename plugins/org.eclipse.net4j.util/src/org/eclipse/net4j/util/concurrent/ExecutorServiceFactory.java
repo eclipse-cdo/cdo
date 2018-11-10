@@ -28,17 +28,23 @@ import java.util.concurrent.ExecutorService;
  */
 public class ExecutorServiceFactory extends Factory
 {
+  public static final String DEFAULT_THREAD_GROUP_NAME = "net4j"; //$NON-NLS-1$
+
   public static final String PRODUCT_GROUP = "org.eclipse.net4j.executorServices"; //$NON-NLS-1$
 
-  public static final String TYPE = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.util.concurrent.ExecutorServiceFactory.type", "default"); //$NON-NLS-1$
+  /**
+   * @deprecated As of 4.8 the value of the system property "org.eclipse.net4j.util.concurrent.ExecutorServiceFactory.type" is used.
+   */
+  @Deprecated
+  public static final String TYPE = "default"; //$NON-NLS-1$
 
-  public static final String DESCRIPTION = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.util.concurrent.ExecutorServiceFactory.description");
+  private static final String DEFAULT_TYPE = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.util.concurrent.ExecutorServiceFactory.type", "default"); //$NON-NLS-1$
 
-  public static final String DEFAULT_THREAD_GROUP_NAME = "net4j"; //$NON-NLS-1$
+  private static final String DEFAULT_DESCRIPTION = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.util.concurrent.ExecutorServiceFactory.description");
 
   public ExecutorServiceFactory()
   {
-    super(PRODUCT_GROUP, TYPE);
+    super(PRODUCT_GROUP, DEFAULT_TYPE);
   }
 
   public ExecutorService create(String description)
@@ -108,6 +114,6 @@ public class ExecutorServiceFactory extends Factory
 
   public static ExecutorService get(IManagedContainer container)
   {
-    return (ExecutorService)container.getElement(PRODUCT_GROUP, TYPE, DESCRIPTION);
+    return (ExecutorService)container.getElement(PRODUCT_GROUP, DEFAULT_TYPE, DEFAULT_DESCRIPTION);
   }
 }

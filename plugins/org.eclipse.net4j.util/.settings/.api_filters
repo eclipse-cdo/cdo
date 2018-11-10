@@ -76,6 +76,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/concurrent/ExecutorServiceFactory.java" type="org.eclipse.net4j.util.concurrent.ExecutorServiceFactory">
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.concurrent.ExecutorServiceFactory"/>
+                <message_argument value="TYPE"/>
+                <message_argument value="default"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/util/container/ContainerEvent.java" type="org.eclipse.net4j.util.container.ContainerEvent">
         <filter id="576725006">
             <message_arguments>

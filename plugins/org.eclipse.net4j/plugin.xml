@@ -15,7 +15,7 @@
 
    <extension point="org.eclipse.net4j.util.factories">
       <factory
-            class="org.eclipse.internal.net4j.buffer.BufferProviderFactory"
+            class="org.eclipse.internal.net4j.buffer.BufferPoolFactory"
             productGroup="org.eclipse.net4j.bufferProviders"
             type="default"/>
       <factory

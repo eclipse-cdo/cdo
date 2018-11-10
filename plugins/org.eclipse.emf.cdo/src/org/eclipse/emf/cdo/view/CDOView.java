@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.common.util.CDOResourceNodeNotFoundException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOFileResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -262,24 +263,24 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   /**
    * @see ResourceSet#getResource(URI, boolean)
    */
-  public CDOResource getResource(String path, boolean loadOnDemand);
+  public CDOResource getResource(String path, boolean loadOnDemand) throws CDOResourceNodeNotFoundException;
 
   /**
    * Same as {@link #getResource(String, boolean) getResource(String, true)}.
    *
    * @see ResourceSet#getResource(URI, boolean)
    */
-  public CDOResource getResource(String path);
+  public CDOResource getResource(String path) throws CDOResourceNodeNotFoundException;
 
   /**
    * @since 4.2
    */
-  public CDOTextResource getTextResource(String path);
+  public CDOTextResource getTextResource(String path) throws CDOResourceNodeNotFoundException;
 
   /**
    * @since 4.2
    */
-  public CDOBinaryResource getBinaryResource(String path);
+  public CDOBinaryResource getBinaryResource(String path) throws CDOResourceNodeNotFoundException;
 
   /**
    * Returns the resource node with the given path.
@@ -288,12 +289,12 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
    * @throws CDOException
    *           if no such resource node exists.
    */
-  public CDOResourceNode getResourceNode(String path) throws CDOException;
+  public CDOResourceNode getResourceNode(String path) throws CDOResourceNodeNotFoundException;
 
   /**
    * @since 4.2
    */
-  public CDOResourceFolder getResourceFolder(String path);
+  public CDOResourceFolder getResourceFolder(String path) throws CDOResourceNodeNotFoundException;
 
   /**
    * Returns the root resource of the repository.

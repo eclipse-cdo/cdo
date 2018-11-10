@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetDataProvider;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.util.CDOResourceNodeNotFoundException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -121,7 +122,7 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
   /**
    * @since 4.0
    */
-  public CDOResourceFolder createResourceFolder(String path);
+  public CDOResourceFolder createResourceFolder(String path) throws CDOResourceNodeNotFoundException;
 
   /**
    * @since 4.0

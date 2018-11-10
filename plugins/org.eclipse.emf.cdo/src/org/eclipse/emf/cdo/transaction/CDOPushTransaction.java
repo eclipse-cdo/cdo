@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.util.CDOResourceNodeNotFoundException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -521,17 +522,17 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.getOrCreateResourceFolder(path);
   }
 
-  public CDOResource getResource(String path, boolean loadOnDemand)
+  public CDOResource getResource(String path, boolean loadOnDemand) throws CDOResourceNodeNotFoundException
   {
     return delegate.getResource(path, loadOnDemand);
   }
 
-  public CDOResource getResource(String path)
+  public CDOResource getResource(String path) throws CDOResourceNodeNotFoundException
   {
     return delegate.getResource(path);
   }
 
-  public CDOResourceNode getResourceNode(String path)
+  public CDOResourceNode getResourceNode(String path) throws CDOResourceNodeNotFoundException
   {
     return delegate.getResourceNode(path);
   }
@@ -571,7 +572,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   /**
    * @since 4.2
    */
-  public CDOTextResource getTextResource(String path)
+  public CDOTextResource getTextResource(String path) throws CDOResourceNodeNotFoundException
   {
     return delegate.getTextResource(path);
   }
@@ -579,7 +580,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   /**
    * @since 4.2
    */
-  public CDOBinaryResource getBinaryResource(String path)
+  public CDOBinaryResource getBinaryResource(String path) throws CDOResourceNodeNotFoundException
   {
     return delegate.getBinaryResource(path);
   }
@@ -587,7 +588,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   /**
    * @since 4.2
    */
-  public CDOResourceFolder getResourceFolder(String path)
+  public CDOResourceFolder getResourceFolder(String path) throws CDOResourceNodeNotFoundException
   {
     return delegate.getResourceFolder(path);
   }

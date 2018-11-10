@@ -987,7 +987,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return idGenerator.generateCDOID(object);
   }
 
-  public CDOResourceFolder createResourceFolder(String path)
+  public CDOResourceFolder createResourceFolder(String path) throws CDOResourceNodeNotFoundException
   {
     synchronized (getViewMonitor())
     {
@@ -1445,7 +1445,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * @since 2.0
    */
   @Override
-  protected CDOID getRootOrTopLevelResourceNodeID(String name)
+  protected CDOID getRootOrTopLevelResourceNodeID(String name) throws CDOResourceNodeNotFoundException
   {
     synchronized (getViewMonitor())
     {

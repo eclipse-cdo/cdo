@@ -978,7 +978,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
-  public CDOResourceNode getResourceNode(String path)
+  public CDOResourceNode getResourceNode(String path) throws CDOResourceNodeNotFoundException
   {
     synchronized (getViewMonitor())
     {
@@ -1140,7 +1140,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   /**
    * @return never <code>null</code>
    */
-  private CDOID getResourceNodeIDChecked(CDOID folderID, String name)
+  private CDOID getResourceNodeIDChecked(CDOID folderID, String name) throws CDOResourceNodeNotFoundException
   {
     CDOID id = getResourceNodeID(folderID, name);
     if (id == null)
@@ -1154,7 +1154,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   /**
    * @return never <code>null</code>
    */
-  protected CDOResourceNode getResourceNode(CDOID folderID, String name)
+  protected CDOResourceNode getResourceNode(CDOID folderID, String name) throws CDOResourceNodeNotFoundException
   {
     synchronized (getViewMonitor())
     {
@@ -1245,7 +1245,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
-  protected CDOID getRootOrTopLevelResourceNodeID(String name)
+  protected CDOID getRootOrTopLevelResourceNodeID(String name) throws CDOResourceNodeNotFoundException
   {
     if (name == null)
     {
@@ -1355,12 +1355,12 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
-  public CDOResource getResource(String path)
+  public CDOResource getResource(String path) throws CDOResourceNodeNotFoundException
   {
     return getResource(path, true);
   }
 
-  public CDOResource getResource(String path, boolean loadOnDemand)
+  public CDOResource getResource(String path, boolean loadOnDemand) throws CDOResourceNodeNotFoundException
   {
     checkActive();
     synchronized (getViewMonitor())
@@ -1400,17 +1400,17 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
-  public CDOTextResource getTextResource(String path)
+  public CDOTextResource getTextResource(String path) throws CDOResourceNodeNotFoundException
   {
     return (CDOTextResource)getResourceNode(path);
   }
 
-  public CDOBinaryResource getBinaryResource(String path)
+  public CDOBinaryResource getBinaryResource(String path) throws CDOResourceNodeNotFoundException
   {
     return (CDOBinaryResource)getResourceNode(path);
   }
 
-  public CDOResourceFolder getResourceFolder(String path)
+  public CDOResourceFolder getResourceFolder(String path) throws CDOResourceNodeNotFoundException
   {
     return (CDOResourceFolder)getResourceNode(path);
   }

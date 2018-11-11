@@ -12,6 +12,7 @@
 package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOLock;
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.util.LockTimeoutException;
@@ -46,6 +47,11 @@ public class CDOLockImpl implements CDOLock
     this.object = object;
     this.type = type;
     owner = CDOLockUtil.createLockOwner(object.cdoView());
+  }
+
+  public InternalCDOObject getObject()
+  {
+    return object;
   }
 
   public LockType getType()
@@ -163,6 +169,16 @@ public class CDOLockImpl implements CDOLock
     {
     }
 
+    public CDOObject getObject()
+    {
+      return null;
+    }
+
+    public LockType getType()
+    {
+      return null;
+    }
+
     public boolean isLocked()
     {
       return false;
@@ -219,11 +235,6 @@ public class CDOLockImpl implements CDOLock
     public void unlock()
     {
       throw new UnsupportedOperationException();
-    }
-
-    public LockType getType()
-    {
-      return null;
     }
   }
 }

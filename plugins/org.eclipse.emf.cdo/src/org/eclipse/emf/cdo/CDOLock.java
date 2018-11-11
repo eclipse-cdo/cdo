@@ -36,6 +36,11 @@ public interface CDOLock extends Lock
   public static final int NO_WAIT = IRWLockManager.NO_WAIT;
 
   /**
+   * @since 4.7
+   */
+  public CDOObject getObject();
+
+  /**
    * @since 3.0
    */
   public LockType getType();

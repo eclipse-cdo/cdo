@@ -999,7 +999,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
   }
 
-  protected CDOLockState[] getLockStates(Collection<CDOID> ids, boolean loadOnDemand)
+  public CDOLockState[] getLockStates(Collection<CDOID> ids, boolean loadOnDemand)
   {
     synchronized (getViewMonitor())
     {
@@ -2677,6 +2677,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     {
       Set<CDOID> ids = new HashSet<CDOID>();
       CDOLockStateLoadingPolicy lockStateLoadingPolicy = options().getLockStateLoadingPolicy();
+
       for (CDORevision revision : revisionsLoadedEvent.getPrimaryLoadedRevisions())
       {
         // Bug 466721 : Check null if it is a about a DetachedRevision
@@ -2753,7 +2754,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       {
         if (view != CDOViewImpl.this && view.getBranch() == getBranch())
         {
-          updateLockStates(lockStates, loadOnDemand);
+          ((CDOViewImpl)view).updateLockStates(lockStates, loadOnDemand);
         }
       }
     }

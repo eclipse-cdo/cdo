@@ -79,7 +79,7 @@ public class H2Config extends DBConfig
       IOUtil.delete(reusableFolder);
     }
 
-    String url = "jdbc:h2:" + reusableFolder.getAbsolutePath() + "/h2test;MVCC=true;LOCK_TIMEOUT=10000;TRACE_LEVEL_FILE=0";
+    String url = "jdbc:h2:" + reusableFolder.getAbsolutePath() + "/h2test;LOCK_TIMEOUT=10000;TRACE_LEVEL_FILE=0";
 
     if (defaultDataSource == null)
     {
@@ -90,7 +90,7 @@ public class H2Config extends DBConfig
     H2Adapter.createSchema(defaultDataSource, repoName, !isRestarting());
 
     JdbcDataSource dataSource = new JdbcDataSource();
-    dataSource.setURL(url + ";MVCC=true;SCHEMA=" + repoName);
+    dataSource.setURL(url + ";SCHEMA=" + repoName);
 
     if (!disableRepositoryRecreationOptimization)
     {

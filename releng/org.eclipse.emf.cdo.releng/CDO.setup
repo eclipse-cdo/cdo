@@ -485,7 +485,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.4"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.4 //@setupTasks.14/@workingSets.9"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -498,7 +498,7 @@
             pattern="org\.eclipse\.net4j.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.7 //@setupTasks.14/@workingSets.8 //@setupTasks.14/@workingSets.4"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.7 //@setupTasks.14/@workingSets.8 //@setupTasks.14/@workingSets.9"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -511,7 +511,7 @@
             pattern="org\.eclipse\.net4j\.db.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.4"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.9"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -533,7 +533,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.4"/>
+            excludedWorkingSet="//@setupTasks.14/@workingSets.9"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -541,13 +541,7 @@
         id="CDO Net4j Features">
       <predicate
           xsi:type="predicates:NamePredicate"
-          pattern="org\.eclipse\.emf\.cdo.*-feature"/>
-      <predicate
-          xsi:type="predicates:NamePredicate"
           pattern="org\.eclipse\.net4j.*-feature"/>
-      <predicate
-          xsi:type="predicates:NamePredicate"
-          pattern="org\.gastro.*-feature"/>
     </workingSet>
   </setupTask>
   <setupTask

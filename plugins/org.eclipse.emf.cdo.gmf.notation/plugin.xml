@@ -16,7 +16,8 @@
   <extension point="org.eclipse.emf.ecore.factory_override">
     <factory
       uri="http://www.eclipse.org/gmf/runtime/1.0.2/notation"
-      class="org.eclipse.emf.cdo.gmf.notation.impl.NotationFactoryImpl" />
+      class="org.eclipse.emf.cdo.gmf.notation.impl.NotationFactoryImpl"
+      predecessor="org.eclipse.papyrus.infra.gmfdiag.css.factory.CSSNotationFactory" />
   </extension>
 
 </plugin>

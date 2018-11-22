@@ -154,6 +154,8 @@ public class Repository extends Container<Object> implements InternalRepository,
 
   private static final int NONE = CDORevision.DEPTH_NONE;
 
+  private static final String PROP_UUID = "org.eclipse.emf.cdo.server.repositoryUUID"; //$NON-NLS-1$
+
   private String name;
 
   private String uuid;
@@ -248,19 +250,6 @@ public class Repository extends Container<Object> implements InternalRepository,
 
   public String getUUID()
   {
-    if (uuid == null)
-    {
-      uuid = getProperties().get(Props.OVERRIDE_UUID);
-      if (uuid == null)
-      {
-        uuid = UUID.randomUUID().toString();
-      }
-      else if (uuid.length() == 0)
-      {
-        uuid = getName();
-      }
-    }
-
     return uuid;
   }
 
@@ -2049,6 +2038,13 @@ public class Repository extends Container<Object> implements InternalRepository,
 
   protected void initProperties()
   {
+    // OVERRIDE_UUID
+    uuid = properties.get(Props.OVERRIDE_UUID);
+    if (uuid != null && uuid.length() == 0)
+    {
+      uuid = getName();
+    }
+
     // SUPPORTING_AUDITS
     String valueAudits = properties.get(Props.SUPPORTING_AUDITS);
     if (valueAudits != null)
@@ -2428,6 +2424,28 @@ public class Repository extends Container<Object> implements InternalRepository,
     revisionManager.setSupportingBranches(supportingBranches);
 
     LifecycleUtil.activate(store);
+
+    Map<String, String> persistentProperties = store.getPersistentProperties(Collections.singleton(PROP_UUID));
+    String persistentUUID = persistentProperties.get(PROP_UUID);
+
+    if (uuid == null)
+    {
+      if (persistentUUID == null)
+      {
+        uuid = UUID.randomUUID().toString();
+      }
+      else
+      {
+        uuid = persistentUUID;
+      }
+    }
+
+    if (persistentUUID == null || !persistentUUID.equals(uuid))
+    {
+      persistentProperties.put(PROP_UUID, uuid);
+      store.setPersistentProperties(persistentProperties);
+    }
+
     LifecycleUtil.activate(packageRegistry);
     LifecycleUtil.activate(sessionManager);
     LifecycleUtil.activate(revisionManager);
@@ -2460,7 +2478,6 @@ public class Repository extends Container<Object> implements InternalRepository,
       {
         initSystemPackages(false);
         readPackageUnits();
-
         readRootResource();
       }
     }

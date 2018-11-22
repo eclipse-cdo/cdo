@@ -365,7 +365,12 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       for (Entry<String, Object> entry : testProperties.entrySet())
       {
-        if (entry.getValue() instanceof String)
+        Object value = entry.getValue();
+        if (value == null)
+        {
+          repositoryProperties.remove(entry.getKey());
+        }
+        else if (value instanceof String)
         {
           repositoryProperties.put(entry.getKey(), (String)entry.getValue());
         }

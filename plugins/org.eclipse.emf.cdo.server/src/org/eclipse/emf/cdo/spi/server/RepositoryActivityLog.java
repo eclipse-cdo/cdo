@@ -186,6 +186,24 @@ public abstract class RepositoryActivityLog extends LifecycleHook<IRepository> i
     return (view instanceof ITransaction ? "Transaction " : "View ") + view.getSessionID() + ":" + view.getViewID();
   }
 
+  /**
+   * @since 4.8
+   */
+  @Override
+  protected void delegateActivated(IRepository delegate)
+  {
+    log("Repository activated");
+  }
+
+  /**
+   * @since 4.8
+   */
+  @Override
+  protected void delegateAboutToDeactivate(IRepository delegate)
+  {
+    log("Repository deactivated");
+  }
+
   @Override
   protected void hookDelegate(IRepository repository)
   {

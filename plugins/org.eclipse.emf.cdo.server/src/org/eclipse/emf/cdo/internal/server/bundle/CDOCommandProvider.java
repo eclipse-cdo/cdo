@@ -110,7 +110,7 @@ public class CDOCommandProvider implements CommandProvider
   };
 
   private static final CDOCommand exportXML = new CDOCommand.WithRepository("export", "export the contents of a repository to an XML file",
-      CDOCommand.parameter("export-file"))
+      CDOCommand.parameter("export-file"), CDOCommand.optional("branch-path"), CDOCommand.optional("time-stamp"))
   {
     @Override
     public void execute(InternalRepository repository, String[] args) throws Exception
@@ -123,6 +123,8 @@ public class CDOCommandProvider implements CommandProvider
         out = new FileOutputStream(exportFile);
 
         CDOServerExporter.XML exporter = new CDOServerExporter.XML(repository);
+        processArgument(exporter, args[1]);
+        processArgument(exporter, args[2]);
         exporter.exportRepository(out);
 
         if (args.length > 1)
@@ -138,6 +140,23 @@ public class CDOCommandProvider implements CommandProvider
       finally
       {
         IOUtil.close(out);
+      }
+    }
+
+    private void processArgument(CDOServerExporter.XML exporter, String arg)
+    {
+      if (arg == null)
+      {
+        return;
+      }
+
+      if (arg.startsWith("/"))
+      {
+        exporter.setBranchPath(arg);
+      }
+      else
+      {
+        exporter.setTimeStamp(Long.valueOf(arg));
       }
     }
   };

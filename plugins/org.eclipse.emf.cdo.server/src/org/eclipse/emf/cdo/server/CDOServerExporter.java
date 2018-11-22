@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -71,6 +72,10 @@ public abstract class CDOServerExporter<OUT>
 
   private boolean exportSystemPackages;
 
+  private String branchPath;
+
+  private long timeStamp = CDOBranchPoint.INVALID_DATE;
+
   public CDOServerExporter(IRepository repository)
   {
     this.repository = (InternalRepository)repository;
@@ -95,6 +100,38 @@ public abstract class CDOServerExporter<OUT>
   public void setExportSystemPackages(boolean exportSystemPackages)
   {
     this.exportSystemPackages = exportSystemPackages;
+  }
+
+  /**
+   * @since 4.8
+   */
+  public String getBranchPath()
+  {
+    return branchPath;
+  }
+
+  /**
+   * @since 4.8
+   */
+  public void setBranchPath(String branchPath)
+  {
+    this.branchPath = branchPath;
+  }
+
+  /**
+   * @since 4.8
+   */
+  public long getTimeStamp()
+  {
+    return timeStamp;
+  }
+
+  /**
+   * @since 4.8
+   */
+  public void setTimeStamp(long timeStamp)
+  {
+    this.timeStamp = timeStamp;
   }
 
   public final void exportRepository(OutputStream out) throws Exception
@@ -180,24 +217,38 @@ public abstract class CDOServerExporter<OUT>
   protected void exportBranches(final OUT out) throws Exception
   {
     InternalCDOBranchManager branchManager = repository.getBranchManager();
-    exportBranch(out, branchManager.getMainBranch());
 
-    if (repository.isSupportingBranches())
+    if (branchPath != null)
     {
-      branchManager.getBranches(0, 0, new CDOBranchHandler()
+      InternalCDOBranch branch = branchManager.getBranch(branchPath);
+      if (branch == null)
       {
-        public void handleBranch(CDOBranch branch)
+        throw new IllegalStateException("Branch '" + branchPath + "' does not exist");
+      }
+
+      exportBranch(out, branch);
+    }
+    else
+    {
+      exportBranch(out, branchManager.getMainBranch());
+
+      if (repository.isSupportingBranches())
+      {
+        branchManager.getBranches(0, 0, new CDOBranchHandler()
         {
-          try
+          public void handleBranch(CDOBranch branch)
           {
-            exportBranch(out, branch);
+            try
+            {
+              exportBranch(out, branch);
+            }
+            catch (Exception ex)
+            {
+              throw WrappedException.wrap(ex);
+            }
           }
-          catch (Exception ex)
-          {
-            throw WrappedException.wrap(ex);
-          }
-        }
-      });
+        });
+      }
     }
   }
 
@@ -208,7 +259,7 @@ public abstract class CDOServerExporter<OUT>
 
   protected void exportRevisions(final OUT out, CDOBranch branch) throws Exception
   {
-    repository.handleRevisions(null, branch, true, CDOBranchPoint.INVALID_DATE, false, new CDORevisionHandler()
+    repository.handleRevisions(null, branch, true, timeStamp, false, new CDORevisionHandler()
     {
       public boolean handleRevision(CDORevision revision)
       {

@@ -32,6 +32,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/buffer/IBuffer.java" type="org.eclipse.net4j.buffer.IBuffer">
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.buffer.IBuffer"/>
+                <message_argument value="HEADER_SIZE"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/connector/IConnector.java" type="org.eclipse.net4j.connector.IConnector">
         <filter id="571473929">
             <message_arguments>

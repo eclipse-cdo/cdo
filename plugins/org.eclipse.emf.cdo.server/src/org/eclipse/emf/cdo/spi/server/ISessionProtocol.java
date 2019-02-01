@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 
+import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 
 /**
@@ -31,7 +32,7 @@ import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface ISessionProtocol extends CDOProtocol, IAuthenticationProtocol
+public interface ISessionProtocol extends CDOProtocol, IAuthenticationProtocol, INotifier
 {
   /**
    * @since 4.0

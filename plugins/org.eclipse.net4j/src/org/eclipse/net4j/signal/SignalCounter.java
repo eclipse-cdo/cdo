@@ -14,6 +14,11 @@ import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
+import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Provides {@link Signal signal} execution counts  when
  * {@link SignalProtocol#addListener(IListener) attached} to a {@link ISignalProtocol signal protocol}.
@@ -23,6 +28,8 @@ import org.eclipse.net4j.util.event.IListener;
  */
 public final class SignalCounter implements IListener
 {
+  private static final boolean fullyQualifiedNames = Boolean.getBoolean("org.eclipse.net4j.signal.SignalCounter.fullyQualifiedNames");
+
   private HashBag<Class<? extends Signal>> signals = new HashBag<Class<? extends Signal>>();
 
   private final ISignalProtocol<?> protocol;
@@ -82,6 +89,37 @@ public final class SignalCounter implements IListener
     synchronized (signals)
     {
       signals.clear();
+    }
+  }
+
+  /**
+   * @since 4.8
+   */
+  public void dump(PrintStream out, boolean clearCountsWhenDone)
+  {
+    synchronized (signals)
+    {
+      Map<String, Class<? extends Signal>> signalTypes = new HashMap<String, Class<? extends Signal>>();
+
+      for (Class<? extends Signal> signalType : signals)
+      {
+        String name = fullyQualifiedNames ? signalType.getName() : signalType.getSimpleName();
+        signalTypes.put(name, signalType);
+      }
+
+      String[] names = signalTypes.keySet().toArray(new String[signalTypes.size()]);
+      Arrays.sort(names);
+
+      for (String name : names)
+      {
+        Class<? extends Signal> signalType = signalTypes.get(name);
+        out.println(name + " = " + signals.getCounterFor(signalType));
+      }
+
+      if (clearCountsWhenDone)
+      {
+        clearCounts();
+      }
     }
   }
 

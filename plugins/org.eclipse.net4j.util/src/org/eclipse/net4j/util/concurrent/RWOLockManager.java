@@ -42,7 +42,9 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
   private static final ThreadLocal<Boolean> UNLOCK_ALL = new ThreadLocal<Boolean>();
 
-  private final List<LockState<OBJECT, CONTEXT>> EMPTY_RESULT = Collections.emptyList();
+  private static final LockType[] ALL_LOCK_TYPES = LockType.values();
+
+  private final List<LockState<OBJECT, CONTEXT>> emptyResult = Collections.emptyList();
 
   private final Map<OBJECT, LockState<OBJECT, CONTEXT>> objectToLockStateMap = createObjectToLocksMap();
 
@@ -63,9 +65,10 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
   public List<LockState<OBJECT, CONTEXT>> lock2(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout)
       throws InterruptedException
   {
-    if (objectsToLock.isEmpty())
+    int count = objectsToLock.size();
+    if (count == 0)
     {
-      return EMPTY_RESULT;
+      return emptyResult;
     }
 
     if (TRACER.isEnabled())
@@ -79,8 +82,6 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     // Do not synchronize the entire method as it would corrupt the timeout!
     synchronized (this)
     {
-      int count = objectsToLock.size();
-
       for (;;)
       {
         ArrayList<LockState<OBJECT, CONTEXT>> lockStates = getLockStatesForContext(type, context, objectsToLock);
@@ -112,12 +113,12 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     unlock2(type, context, objectsToUnlock);
   }
 
-  public synchronized List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
+  public List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
   {
-    return unlock2(LockType.values(), context, objectsToUnlock);
+    return unlock2(ALL_LOCK_TYPES, context, objectsToUnlock);
   }
 
-  public synchronized List<LockState<OBJECT, CONTEXT>> unlock2(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
+  public List<LockState<OBJECT, CONTEXT>> unlock2(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
   {
     return unlock2(new LockType[] { type }, context, objectsToUnlock);
   }
@@ -126,7 +127,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
   {
     if (objectsToUnlock.isEmpty())
     {
-      return EMPTY_RESULT;
+      return emptyResult;
     }
 
     if (TRACER.isEnabled())
@@ -135,42 +136,46 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     }
 
     Set<LockState<OBJECT, CONTEXT>> result = new HashSet<LockState<OBJECT, CONTEXT>>();
+    boolean unlockAll = UNLOCK_ALL.get() == Boolean.TRUE;
 
-    for (OBJECT o : objectsToUnlock)
+    synchronized (this)
     {
-      LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(o);
-      if (lockState != null)
+      for (OBJECT o : objectsToUnlock)
       {
-        for (LockType type : types)
+        LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(o);
+        if (lockState != null)
         {
-          while (lockState.canUnlock(type, context))
+          for (LockType type : types)
           {
-            lockState.unlock(type, context);
-            result.add(lockState);
-
-            if (UNLOCK_ALL.get() != Boolean.TRUE)
+            while (lockState.canUnlock(type, context))
             {
-              break;
+              lockState.unlock(type, context);
+              result.add(lockState);
+
+              if (!unlockAll)
+              {
+                break;
+              }
             }
           }
         }
       }
-    }
 
-    for (LockState<OBJECT, CONTEXT> lockState : result)
-    {
-      if (!lockState.hasLocks(context))
+      for (LockState<OBJECT, CONTEXT> lockState : result)
       {
-        removeLockStateForContext(context, lockState);
+        if (!lockState.hasLocks(context))
+        {
+          removeLockStateForContext(context, lockState);
+        }
+
+        if (lockState.hasNoLocks())
+        {
+          objectToLockStateMap.remove(lockState.getLockedObject());
+        }
       }
 
-      if (lockState.hasNoLocks())
-      {
-        objectToLockStateMap.remove(lockState.getLockedObject());
-      }
+      notifyAll();
     }
-
-    notifyAll();
 
     return new LinkedList<RWOLockManager.LockState<OBJECT, CONTEXT>>(result);
   }
@@ -185,7 +190,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
     if (lockStates == null)
     {
-      return EMPTY_RESULT;
+      return emptyResult;
     }
 
     if (TRACER.isEnabled())
@@ -197,7 +202,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     for (LockState<OBJECT, CONTEXT> lockState : lockStates)
     {
-      for (LockType type : LockType.values())
+      for (LockType type : ALL_LOCK_TYPES)
       {
         while (lockState.hasLock(type, context, false))
         {
@@ -223,23 +228,6 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     notifyAll();
 
     return toList(lockStates);
-  }
-
-  @SuppressWarnings("unchecked")
-  private List<LockState<OBJECT, CONTEXT>> toList(Set<LockState<OBJECT, CONTEXT>> lockStates)
-  {
-    if (lockStates instanceof List)
-    {
-      return (List<LockState<OBJECT, CONTEXT>>)lockStates;
-    }
-
-    List<LockState<OBJECT, CONTEXT>> list = new LinkedList<LockState<OBJECT, CONTEXT>>();
-    for (LockState<OBJECT, CONTEXT> lockState : lockStates)
-    {
-      list.add(lockState);
-    }
-
-    return list;
   }
 
   public synchronized boolean hasLock(LockType type, CONTEXT context, OBJECT objectToLock)
@@ -348,9 +336,12 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
   private ArrayList<LockState<OBJECT, CONTEXT>> getLockStatesForContext(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock)
   {
-    ArrayList<LockState<OBJECT, CONTEXT>> lockStates = new ArrayList<LockState<OBJECT, CONTEXT>>(objectsToLock.size());
+    int count = objectsToLock.size();
+    ArrayList<LockState<OBJECT, CONTEXT>> lockStates = new ArrayList<LockState<OBJECT, CONTEXT>>(count);
+
     Iterator<? extends OBJECT> it = objectsToLock.iterator();
-    for (int i = 0; i < objectsToLock.size(); i++)
+
+    for (int i = 0; i < count; i++)
     {
       OBJECT o = it.next();
       LockState<OBJECT, CONTEXT> lockState = getOrCreateLockState(o);
@@ -380,7 +371,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
   /**
    * Removes a lockState from the set of all lockStates that the given context is involved in. If the lockState being
    * removed is the last one for the given context, then the set becomes empty, and is therefore removed from the
-   * contextToLockStates mp.
+   * contextToLockStates map.
    */
   private void removeLockStateForContext(CONTEXT context, LockState<OBJECT, CONTEXT> lockState)
   {
@@ -409,7 +400,23 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
       wait(waitTime);
     }
+  }
 
+  @SuppressWarnings("unchecked")
+  private static <OBJECT, CONTEXT> List<LockState<OBJECT, CONTEXT>> toList(Set<LockState<OBJECT, CONTEXT>> lockStates)
+  {
+    if (lockStates instanceof List)
+    {
+      return (List<LockState<OBJECT, CONTEXT>>)lockStates;
+    }
+
+    List<LockState<OBJECT, CONTEXT>> list = new LinkedList<LockState<OBJECT, CONTEXT>>();
+    for (LockState<OBJECT, CONTEXT> lockState : lockStates)
+    {
+      list.add(lockState);
+    }
+
+    return list;
   }
 
   /**

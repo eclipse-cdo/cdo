@@ -12,7 +12,9 @@ package org.eclipse.net4j.util.concurrent;
 
 /**
  * @author Eike Stepper
+ * @deprecated As of 3.9 use an executor such as {@link SerializingExecutor}.
  */
+@Deprecated
 public interface IWorkSerializer
 {
   public boolean addWork(Runnable work);

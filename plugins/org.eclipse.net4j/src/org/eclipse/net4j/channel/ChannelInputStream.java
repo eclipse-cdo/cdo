@@ -14,8 +14,6 @@ import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
-import org.eclipse.spi.net4j.InternalChannel;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.ExecutorService;
@@ -79,7 +77,7 @@ public class ChannelInputStream extends BufferInputStream
   {
     if (isCCAM())
     {
-      ExecutorService executorService = ((InternalChannel)channel).getReceiveExecutor();
+      ExecutorService executorService = ConcurrencyUtil.getExecutorService(channel);
       executorService.submit(new Runnable()
       {
         public void run()

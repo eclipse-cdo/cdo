@@ -115,7 +115,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
   public void handleBuffer(IBuffer buffer)
   {
-    // Stream has been closed - ignore the new buffer
+    // If stream has been closed - ignore the new buffer.
     if (buffers != null)
     {
       buffers.add(buffer);

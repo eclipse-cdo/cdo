@@ -10,15 +10,20 @@
  */
 package org.eclipse.net4j.util.concurrent;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.lang.reflect.Method;
 import java.util.AbstractQueue;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -40,18 +45,154 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
 
   private static final Class<?> LINKED_BLOCKING_DEQUE_CLASS;
 
-  private static final Method ADD_FIRST_METHOD;
+  private static final Method OFFER_LAST_METHOD;
+
+  private static final int NO_DEADLOCK_DETECTION = 0;
+
+  private static final int deadlockDetectionInterval = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.util.concurrent.ThreadPool.deadlockDetectionInterval",
+      NO_DEADLOCK_DETECTION);
+
+  private final AtomicInteger runningTasks = new AtomicInteger();
+
+  private final AtomicInteger runTasks = new AtomicInteger();
+
+  private int lastRunTasks = -1;
+
+  private RejectedExecutionHandler userHandler;
 
   public ThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveTime, ThreadFactory threadFactory)
   {
     super(corePoolSize, maximumPoolSize, keepAliveTime, TimeUnit.SECONDS, createWorkQueue(), threadFactory);
     ((WorkQueue)getQueue()).setThreadPool(this);
-    setRejectedExecutionHandler(this);
+
+    // Call super setter because the setter in this class is overridden to set the userHandler field.
+    super.setRejectedExecutionHandler(this);
+
+    if (deadlockDetectionInterval != NO_DEADLOCK_DETECTION)
+    {
+      DeadlockDetector.INSTANCE.register(this);
+    }
   }
 
-  public void rejectedExecution(Runnable runnable, ThreadPoolExecutor executor)
+  @Override
+  public void setRejectedExecutionHandler(RejectedExecutionHandler handler)
   {
-    ((WorkQueue)getQueue()).addFirst(runnable);
+    userHandler = handler;
+  }
+
+  @Override
+  public RejectedExecutionHandler getRejectedExecutionHandler()
+  {
+    return userHandler;
+  }
+
+  public void rejectedExecution(Runnable task, ThreadPoolExecutor executor)
+  {
+    WorkQueue queue = (WorkQueue)getQueue();
+    if (!queue.offerLast(task))
+    {
+      if (userHandler != null)
+      {
+        userHandler.rejectedExecution(task, this);
+      }
+      else
+      {
+        OM.LOG.error("Thread pool has rejected the task " + task);
+      }
+    }
+  }
+
+  @Override
+  public int getActiveCount()
+  {
+    return runningTasks.get();
+  }
+
+  @Override
+  protected void beforeExecute(Thread worker, Runnable task)
+  {
+    runningTasks.incrementAndGet();
+    incrementRunTasks();
+  }
+
+  @Override
+  protected void afterExecute(Runnable task, Throwable ex)
+  {
+    runningTasks.decrementAndGet();
+  }
+
+  /**
+   * @since 3.9
+   */
+  protected void potentialDeadlockDetected()
+  {
+    BlockingQueue<Runnable> queue = getQueue();
+    int size = queue.size();
+    if (size > 0)
+    {
+      String poolName = toString();
+
+      ExecutorService executor = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 100L, TimeUnit.MICROSECONDS, new SynchronousQueue<Runnable>());
+      Runnable task;
+      boolean first = true;
+
+      while ((task = queue.poll()) != null)
+      {
+        if (first)
+        {
+          OM.LOG.warn("Potential deadlock detected in " + poolName + ". Executing " + size + " tasks...");
+          first = false;
+        }
+
+        incrementRunTasks();
+        executor.execute(task);
+      }
+    }
+  }
+
+  private void incrementRunTasks()
+  {
+    int current;
+    int next;
+
+    do
+    {
+      current = runTasks.get();
+      next = current == Integer.MAX_VALUE ? 0 : current + 1;
+    } while (!runTasks.compareAndSet(current, next));
+  }
+
+  /**
+   * This method decides whether a new task will be added to the {@link WorkQueue} (and eventually picked up by
+   * an existing worker), or assigned to a new worker.
+   * <p>
+   * It is called from {@link WorkQueue#offer(Runnable)}, which, in turn, is called from {@link #execute(Runnable)}.
+   * When this method is called the core workers are already created, i.e., {@link #getPoolSize() pool size} >=
+   * {@link #getCorePoolSize() core pool size}.
+   * <p>
+   * Note that, due to the unsynchronized calls to the various metric-providing methods,
+   * it can happen that the thread pool will not be able to actually create a new worker at the time it is supposed
+   * to do it. In this case the {@link #rejectedExecution(Runnable, ThreadPoolExecutor) rejectedExecution()} method
+   * will be called, which, as a last resort, adds the new task to the work queue (even though here
+   * it was decided not to do so).
+   */
+  private boolean shallEnqueue()
+  {
+    int poolSize = getPoolSize();
+    if (getQueue().size() < poolSize - getActiveCount())
+    {
+      // More inactive workers exist than there are tasks in the queue; the task should be enqueued.
+      return true;
+    }
+
+    if (poolSize >= getMaximumPoolSize())
+    {
+      // Pool is full; the task should be enqueued.
+      return true;
+    }
+
+    // A new worker should be created.
+    return false;
   }
 
   public static ThreadPool create()
@@ -132,9 +273,9 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     {
       private final AtomicInteger num = new AtomicInteger();
 
-      public Thread newThread(Runnable r)
+      public Thread newThread(Runnable task)
       {
-        Thread thread = new Thread(threadGroup, r, threadGroup.getName() + "-thread-" + num.incrementAndGet());
+        Thread thread = new Thread(threadGroup, task, threadGroup.getName() + "-thread-" + num.incrementAndGet());
         thread.setDaemon(true);
         return thread;
       }
@@ -168,7 +309,7 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     try
     {
       c = Class.forName("java.util.concurrent.LinkedBlockingDeque");
-      m = c.getMethod("addFirst", Object.class);
+      m = c.getMethod("offerLast", Object.class);
     }
     catch (Throwable ex)
     {
@@ -177,7 +318,7 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     }
 
     LINKED_BLOCKING_DEQUE_CLASS = c;
-    ADD_FIRST_METHOD = m;
+    OFFER_LAST_METHOD = m;
   }
 
   /**
@@ -187,7 +328,8 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
   {
     public void setThreadPool(ThreadPool threadPool);
 
-    public void addFirst(Runnable runnable);
+    public boolean offerLast(Runnable task);
+
   }
 
   /**
@@ -208,23 +350,21 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
       this.threadPool = threadPool;
     }
 
-    public void addFirst(Runnable runnable)
+    public boolean offerLast(Runnable task)
     {
-      super.offer(runnable);
+      // Call the super method because the method in this class is overridden.
+      return super.offer(task);
     }
 
     @Override
-    public boolean offer(Runnable runnable)
+    public boolean offer(Runnable task)
     {
-      int poolSize = threadPool.getPoolSize();
-      if (poolSize < threadPool.getMaximumPoolSize() && poolSize == threadPool.getActiveCount())
+      if (threadPool.shallEnqueue())
       {
-        // Do not enqueue the new runnable command if we can create a new worker thread and there's currently no idle
-        // thread.
-        return false;
+        return super.offer(task);
       }
 
-      return super.offer(runnable);
+      return false;
     }
   }
 
@@ -246,37 +386,49 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
       this.threadPool = threadPool;
     }
 
-    public void addFirst(Runnable runnable)
+    public boolean offerLast(Runnable task)
     {
       try
       {
-        ADD_FIRST_METHOD.invoke(delegate, runnable);
+        // Call the LinkedBlockingDeque.offerLast() method because it does NOT call
+        // the overridden offer() method in this class.
+        return (Boolean)OFFER_LAST_METHOD.invoke(delegate, task);
       }
       catch (Throwable ex)
       {
-        //$FALL-THROUGH$
-      }
-
-      delegate.offer(runnable);
-    }
-
-    public boolean offer(Runnable r)
-    {
-      int poolSize = threadPool.getPoolSize();
-      if (poolSize < threadPool.getMaximumPoolSize() && poolSize == threadPool.getActiveCount())
-      {
-        // Do not enqueue the new runnable command if we can create a new worker thread and there's currently no idle
-        // thread.
         return false;
       }
+    }
 
-      return delegate.offer(r);
+    public boolean offer(Runnable task)
+    {
+      if (threadPool.shallEnqueue())
+      {
+        return delegate.offer(task);
+      }
+
+      return false;
+    }
+
+    public boolean offer(Runnable taske, long timeout, TimeUnit unit) throws InterruptedException
+    {
+      return delegate.offer(taske, timeout, unit);
     }
 
     @Override
     public int size()
     {
       return delegate.size();
+    }
+
+    public Runnable take() throws InterruptedException
+    {
+      return delegate.take();
+    }
+
+    public Runnable poll(long timeout, TimeUnit unit) throws InterruptedException
+    {
+      return delegate.poll(timeout, unit);
     }
 
     public Runnable poll()
@@ -295,24 +447,9 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
       return delegate.peek();
     }
 
-    public void put(Runnable e) throws InterruptedException
+    public void put(Runnable task) throws InterruptedException
     {
-      delegate.put(e);
-    }
-
-    public boolean offer(Runnable e, long timeout, TimeUnit unit) throws InterruptedException
-    {
-      return delegate.offer(e, timeout, unit);
-    }
-
-    public Runnable take() throws InterruptedException
-    {
-      return delegate.take();
-    }
-
-    public Runnable poll(long timeout, TimeUnit unit) throws InterruptedException
-    {
-      return delegate.poll(timeout, unit);
+      delegate.put(task);
     }
 
     public int remainingCapacity()
@@ -343,6 +480,79 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
       }
 
       return new LinkedBlockingQueue<Runnable>();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class DeadlockDetector extends Worker
+  {
+    public static final DeadlockDetector INSTANCE = new DeadlockDetector();
+
+    private volatile ArrayList<ThreadPool> pools = new ArrayList<ThreadPool>();
+
+    private DeadlockDetector()
+    {
+      setDaemon(true);
+      activate();
+    }
+
+    public void register(ThreadPool pool)
+    {
+      ArrayList<ThreadPool> newList = new ArrayList<ThreadPool>(pools);
+      newList.add(pool);
+      pools = newList;
+    }
+
+    private void unregister(ThreadPool pool)
+    {
+      ArrayList<ThreadPool> newList = new ArrayList<ThreadPool>(pools);
+      newList.remove(pool);
+      pools = newList;
+    }
+
+    @Override
+    protected String getThreadName()
+    {
+      return DeadlockDetector.class.getSimpleName();
+    }
+
+    @Override
+    protected void work(WorkContext context) throws Exception
+    {
+      ArrayList<ThreadPool> list = pools;
+      int size = list.size();
+
+      for (int i = 0; i < size; i++)
+      {
+        ThreadPool pool = list.get(i);
+        if (pool.isShutdown())
+        {
+          unregister(pool);
+          continue;
+        }
+
+        work(pool);
+      }
+
+      context.nextWork(deadlockDetectionInterval);
+    }
+
+    private void work(ThreadPool pool)
+    {
+      int lastRunTasks = pool.runTasks.get();
+      if (lastRunTasks != pool.lastRunTasks)
+      {
+        pool.lastRunTasks = lastRunTasks;
+      }
+      else
+      {
+        if (pool.getPoolSize() == pool.getMaximumPoolSize())
+        {
+          pool.potentialDeadlockDetected();
+        }
+      }
     }
   }
 }

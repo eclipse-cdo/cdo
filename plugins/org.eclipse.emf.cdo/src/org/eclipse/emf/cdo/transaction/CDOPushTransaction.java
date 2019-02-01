@@ -470,10 +470,20 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
 
   /**
    * @since 4.0
+   * @deprecated
    */
+  @Deprecated
   public boolean isInvalidationRunnerActive()
   {
-    return delegate.isInvalidationRunnerActive();
+    return isInvalidating();
+  }
+
+  /**
+   * @since 4.7
+   */
+  public boolean isInvalidating()
+  {
+    return delegate.isInvalidating();
   }
 
   public Map<CDOID, CDOObject> getNewObjects()

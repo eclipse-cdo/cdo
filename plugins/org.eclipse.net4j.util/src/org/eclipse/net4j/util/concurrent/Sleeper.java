@@ -12,7 +12,9 @@ package org.eclipse.net4j.util.concurrent;
 
 /**
  * @author Eike Stepper
+ * @deprecated As of 3.9 subject to future removal.
  */
+@Deprecated
 public class Sleeper
 {
   private static final int DEFAULT_INTERVAL = 10;

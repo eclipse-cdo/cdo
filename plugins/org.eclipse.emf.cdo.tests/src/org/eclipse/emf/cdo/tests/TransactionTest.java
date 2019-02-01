@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.util.TestAdapter;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOPushTransaction;
@@ -30,8 +32,10 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler2;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.signal.SignalCounter;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -45,8 +49,10 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * See bug 213782, bug 201366
@@ -227,6 +233,156 @@ public class TransactionTest extends AbstractCDOTest
     else
     {
       assertEquals(0, exceptions.size());
+    }
+  }
+
+  public void testCommitManyTransactionsMultiThread() throws Exception
+  {
+    final int RUNS = 1;
+    final int THREADS = 1000;
+    final int TIMEOUT = 10; // Minutes.
+    final boolean pessimistic = true;
+
+    CDOSession session = openSession();
+
+    CDOTransaction initialTransaction = session.openTransaction();
+    CDOResource resource = initialTransaction.createResource(getResourcePath("myResource"));
+
+    final Company initialCompany = getModel1Factory().createCompany();
+    resource.getContents().add(initialCompany);
+    initialTransaction.commit();
+
+    SignalCounter signalCounter = new SignalCounter(((CDONet4jSession)session).options().getNet4jProtocol());
+
+    for (int run = 1; run <= RUNS; run++)
+    {
+      System.out.println("RUN " + run);
+
+      AtomicInteger concurrentAccessExceptions = new AtomicInteger();
+      CountDownLatch latch = new CountDownLatch(THREADS);
+      List<Thread> threadList = new ArrayList<Thread>();
+
+      for (int thread = 0; thread < THREADS; thread++)
+      {
+        final CDOTransaction transaction = session.openTransaction();
+        // transaction.options().setCommitInfoTimeout(1000000);
+
+        final Company company = transaction.getObject(initialCompany);
+        final Customer newCustomer = Model1Factory.eINSTANCE.createCustomer();
+
+        threadList.add(new Committer(transaction, concurrentAccessExceptions, latch, new Callable<Boolean>()
+        {
+          public Boolean call() throws Exception
+          {
+            if (pessimistic)
+            {
+              CDOUtil.getCDOObject(company).cdoWriteLock().lock(TIMEOUT, TimeUnit.MINUTES);
+            }
+
+            company.getCustomers().add(newCustomer);
+            return true;
+          }
+        }));
+      }
+
+      for (Thread thread : threadList)
+      {
+        thread.start();
+      }
+
+      if (!latch.await(TIMEOUT, TimeUnit.MINUTES))
+      {
+        fail("Timeout after " + TIMEOUT + " seconds");
+      }
+
+      System.out.println("ConcurrentAccessExceptions: " + concurrentAccessExceptions.get());
+      signalCounter.dump(IOUtil.OUT(), true);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class Committer extends Thread
+  {
+    private static final ThreadGroup THREAD_GROUP = new ThreadGroup("COMMITTERS");
+
+    private static final int ATTEMPTS = 200;
+
+    private final CDOTransaction transaction;
+
+    private final AtomicInteger concurrentAccessExceptions;
+
+    private final CountDownLatch latch;
+
+    private final Callable<Boolean> operation;
+
+    private Callable<Boolean> callable = new Callable<Boolean>()
+    {
+      private int attempt;
+
+      public Boolean call() throws Exception
+      {
+        ++attempt;
+        operation.call();
+
+        try
+        {
+          transaction.commit();
+        }
+        catch (ConcurrentAccessException ex)
+        {
+          concurrentAccessExceptions.incrementAndGet();
+
+          if (attempt < ATTEMPTS)
+          {
+            transaction.rollback();
+            return true;
+          }
+        }
+        catch (Exception ex)
+        {
+          throw ex;
+        }
+
+        return false;
+      }
+    };
+
+    public Committer(CDOTransaction transaction, AtomicInteger concurrentAccessExceptions, CountDownLatch latch, Callable<Boolean> operation)
+    {
+      super(THREAD_GROUP, "Committer-" + transaction.getViewID());
+      this.transaction = transaction;
+      this.concurrentAccessExceptions = concurrentAccessExceptions;
+      this.latch = latch;
+      this.operation = operation;
+    }
+
+    @Override
+    public void run()
+    {
+      try
+      {
+        while (transaction.syncExec(callable))
+        {
+          // Do nothing.
+        }
+      }
+      catch (Exception ex)
+      {
+        System.out.println(ex.getClass().getName() + " --> " + ex.getMessage());
+      }
+      finally
+      {
+        try
+        {
+          transaction.close();
+        }
+        finally
+        {
+          latch.countDown();
+        }
+      }
     }
   }
 
@@ -641,4 +797,20 @@ public class TransactionTest extends AbstractCDOTest
     company.setName("ABC");
     transaction.commit();
   }
+  //
+  // public static <V> V syncCommit(CDOTransaction transaction, int commitAttempts, EObject object, Transactional<V>
+  // transactional)
+  // throws ConcurrentAccessException, CommitException
+  // {
+  // int xxx;
+  // return null;
+  // }
+  //
+  // /**
+  // * @author Eike Stepper
+  // */
+  // public interface Transactional<S>
+  // {
+  //
+  // }
 }

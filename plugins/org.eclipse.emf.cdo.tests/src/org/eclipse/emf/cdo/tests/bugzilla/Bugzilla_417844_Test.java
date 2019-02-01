@@ -19,6 +19,7 @@ import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
  * Bug 417844 - InvalidationRunner can die if invalidations come too early.
@@ -53,7 +54,7 @@ public class Bugzilla_417844_Test extends AbstractCDOTest
     {
       CDOViewImpl view = (CDOViewImpl)session.openView();
       assertEquals(true, view.isActive());
-      assertEquals(true, view.getInvalidationRunner().isActive());
+      assertEquals(true, LifecycleUtil.isActive(view.getInvalidator()));
     }
     finally
     {

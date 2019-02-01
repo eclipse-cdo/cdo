@@ -11,7 +11,7 @@
  */
 package org.eclipse.net4j.util.tests;
 
-import org.eclipse.net4j.util.concurrent.ExecutorWorkSerializer;
+import org.eclipse.net4j.util.concurrent.SerializingExecutor;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.util.Random;
@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * A test for {@link ExecutorWorkSerializer}.
+ * A test for {@link SerializingExecutor}.
  *
  * @author Andre Dietisheim
  */
@@ -46,8 +46,8 @@ public class ExecutorWorkSerializerTest extends AbstractOMTest
   /** The thread pool to execute the work unit producers in. */
   private ExecutorService threadPool;
 
-  /** The queue worker to submit the work units to. */
-  private ExecutorWorkSerializer queueWorker;
+  /** The executor to submit the work units to. */
+  private SerializingExecutor serializer;
 
   @Override
   public void setUp()
@@ -56,14 +56,14 @@ public class ExecutorWorkSerializerTest extends AbstractOMTest
     workConsumedLatch = new CountDownLatch(NUM_WORK);
 
     threadPool = Executors.newFixedThreadPool(NUM_WORKPRODUCER_THREADS);
-    queueWorker = new ExecutorWorkSerializer(threadPool);
-    queueWorker.activate();
+    serializer = new SerializingExecutor(threadPool);
+    serializer.activate();
   }
 
   @Override
   public void tearDown()
   {
-    queueWorker.dispose();
+    serializer.deactivate();
     threadPool.shutdown();
   }
 
@@ -165,7 +165,7 @@ public class ExecutorWorkSerializerTest extends AbstractOMTest
         int currentWorkProduced;
         while ((currentWorkProduced = workProduced.getAndIncrement()) < NUM_WORK)
         {
-          queueWorker.addWork(createWork(currentWorkProduced));
+          serializer.execute(createWork(currentWorkProduced));
           Thread.sleep(random.nextInt(1000));
         }
 

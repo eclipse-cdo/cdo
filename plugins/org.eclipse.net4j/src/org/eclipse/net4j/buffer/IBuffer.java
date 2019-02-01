@@ -87,7 +87,17 @@ public interface IBuffer
    */
   public static final short MAX_CHANNEL = Short.MAX_VALUE;
 
-  public static final short HEADER_SIZE = 4;
+  /**
+   * @since 4.8
+   */
+  public static final int CHANNEL_ID_BYTES = Short.BYTES;
+
+  /**
+   * @since 4.8
+   */
+  public static final int PAYLOAD_SIZE_BYTES = Short.BYTES;
+
+  public static final short HEADER_SIZE = CHANNEL_ID_BYTES + PAYLOAD_SIZE_BYTES;
 
   /**
    * Returns the {@link IBufferProvider} that has provided this buffer and that this buffer will be returned to when its

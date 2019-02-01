@@ -21,7 +21,9 @@ import java.util.concurrent.Executor;
 /**
  * @author Eike Stepper
  * @since 3.6
+ * @deprecated As of 3.9 use an executor such as {@link SerializingExecutor}.
  */
+@Deprecated
 public class ExecutorWorkSerializer extends Lifecycle implements IWorkSerializer
 {
   private final Queue<Runnable> workQueue = new LinkedList<Runnable>();

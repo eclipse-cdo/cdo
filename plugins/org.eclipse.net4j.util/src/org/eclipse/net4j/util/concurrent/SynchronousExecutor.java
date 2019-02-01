@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2004-2018 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,30 +10,30 @@
  */
 package org.eclipse.net4j.util.concurrent;
 
+import java.util.concurrent.Executor;
+
 /**
  * @author Eike Stepper
- * @deprecated As of 3.9 use an executor such as {@link SynchronousExecutor}.
+ * @since 3.9
  */
-@Deprecated
-public class SynchronousWorkSerializer implements IWorkSerializer
+public final class SynchronousExecutor implements Executor
 {
-  public SynchronousWorkSerializer()
+  public static final Executor INSTANCE = new SynchronousExecutor();
+
+  private static final String NAME = SynchronousExecutor.class.getSimpleName() + ".INSTANCE";
+
+  private SynchronousExecutor()
   {
   }
 
-  public boolean addWork(Runnable work)
+  public void execute(Runnable work)
   {
     work.run();
-    return true;
-  }
-
-  public void dispose()
-  {
   }
 
   @Override
   public String toString()
   {
-    return SynchronousWorkSerializer.class.getSimpleName();
+    return NAME;
   }
 }

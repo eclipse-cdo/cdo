@@ -32,7 +32,7 @@ import java.util.Set;
  *
  * @author Simon McDuff
  * @since 2.0
- * @deprecated Use {@link RWOLockManager}
+ * @deprecated As of 3.2 use {@link RWOLockManager}.
  */
 @Deprecated
 public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLockManager<OBJECT, CONTEXT>

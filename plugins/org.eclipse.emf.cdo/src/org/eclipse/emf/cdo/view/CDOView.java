@@ -222,8 +222,15 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   public boolean setTimeStamp(long timeStamp, IProgressMonitor monitor);
 
   /**
-   * @since 4.0
+   * @since 4.7
    */
+  public boolean isInvalidating();
+
+  /**
+   * @since 4.0
+   * @deprecated As of 4.7 use {@link #isInvalidating()}.
+   */
+  @Deprecated
   public boolean isInvalidationRunnerActive();
 
   /**

@@ -37,8 +37,16 @@ public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle
    */
   public void setUserID(String userID);
 
+  /**
+   * @deprecated As of 4.8 no longer supported.
+   */
+  @Deprecated
   public ExecutorService getReceiveExecutor();
 
+  /**
+   * @deprecated As of 4.8 no longer supported.
+   */
+  @Deprecated
   public void setReceiveExecutor(ExecutorService receiveExecutor);
 
   /**

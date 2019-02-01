@@ -74,6 +74,7 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.DelegatingExecutorService;
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
+import org.eclipse.net4j.util.concurrent.ThreadPool;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -134,11 +135,15 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   private static final boolean LOG_MULTI_VIEW_COMMIT = false;
 
-  private static final Boolean enableServerBrowser = Boolean.getBoolean("org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser");
+  private static final boolean enableServerBrowser = Boolean.getBoolean("org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser");
+
+  private static final boolean useGlobalThreadPool = Boolean.getBoolean("org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.useGlobalThreadPool");
 
   private static final long serialVersionUID = 1L;
 
   protected static IManagedContainer serverContainer;
+
+  protected static ExecutorService serverThreadPool = useGlobalThreadPool ? executorService : ThreadPool.create("server", 10, MAX_THREADS_PER_POOL, 10);
 
   protected static Map<String, InternalRepository> repositories;
 
@@ -348,7 +353,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       @Override
       public ExecutorService create(String threadGroupName)
       {
-        return new DelegatingExecutorService(executorService);
+        return new DelegatingExecutorService(serverThreadPool);
       }
     });
 

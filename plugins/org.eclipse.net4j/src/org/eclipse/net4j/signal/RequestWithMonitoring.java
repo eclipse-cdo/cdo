@@ -14,6 +14,7 @@ import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.concurrent.RunnableWithName;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.monitor.Monitor;
@@ -32,6 +33,8 @@ import java.util.concurrent.Future;
  */
 public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmation<RESULT>
 {
+  private static final String MAIN_MONITOR_NAME = RequestWithMonitoring.class.getSimpleName() + "-MainMonitor";
+
   /**
    * @since 2.0
    */
@@ -47,7 +50,7 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
    */
   public static final int DEFAULT_MONITOR_TIMEOUT_SECONDS = 10;
 
-  private OMMonitor mainMonitor;
+  private volatile OMMonitor mainMonitor;
 
   private OMMonitor remoteMonitor;
 
@@ -137,18 +140,29 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
     ExecutorService executorService = getCancelationExecutorService();
     if (executorService != null)
     {
-      executorService.execute(new Runnable()
+      executorService.execute(new RunnableWithName()
       {
-        public void run()
+        @Override
+        public String getName()
         {
+          return MAIN_MONITOR_NAME;
+        }
+
+        @Override
+        protected void doRun()
+        {
+          SignalProtocol<?> protocol = getProtocol();
+          int correlationID = getCorrelationID();
+          long cancelationPollInterval = getCancelationPollInterval();
+
           while (mainMonitor != null)
           {
-            ConcurrencyUtil.sleep(getCancelationPollInterval());
+            ConcurrencyUtil.sleep(cancelationPollInterval);
             if (mainMonitor != null && mainMonitor.isCanceled())
             {
               try
               {
-                new MonitorCanceledRequest(getProtocol(), getCorrelationID()).sendAsync();
+                new MonitorCanceledRequest(protocol, correlationID).sendAsync();
               }
               catch (Exception ex)
               {

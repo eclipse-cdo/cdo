@@ -19,11 +19,11 @@ import org.eclipse.net4j.util.om.OMPlatform;
  */
 public abstract class RunnableWithName implements Runnable
 {
-  private static final boolean DISABLE_RUNNABLE_NAMES = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.util.concurrent.DISABLE_RUNNABLE_NAMES");
+  private static final boolean ENABLE_RUNNABLE_NAMES = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.util.concurrent.ENABLE_RUNNABLE_NAMES");
 
   public final void run()
   {
-    if (DISABLE_RUNNABLE_NAMES)
+    if (!ENABLE_RUNNABLE_NAMES)
     {
       doRun();
       return;

@@ -111,6 +111,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private static final InternalCDORevision DETACHED = new StubCDORevision(null);
 
+  private static final LockType[] ALL_LOCK_TYPES = LockType.values();
+
   private final InternalTransaction transaction;
 
   private final CDOBranch branch;
@@ -1100,7 +1102,7 @@ public class TransactionCommitContext implements InternalCommitContext
           long timeout = repository.getOptimisticLockingTimeout();
 
           // First lock all objects (incl. possible ref targets).
-          // This is a transient operation, it does not check for existance!
+          // This is a transient operation, it does not check for existence!
           lockManager.lock2(LockType.WRITE, transaction, lockedObjects, timeout);
         }
         catch (Exception ex)
@@ -1449,7 +1451,7 @@ public class TransactionCommitContext implements InternalCommitContext
       }
 
       LockState<Object, IView> postCommitLockState = null;
-      for (LockType type : LockType.values())
+      for (LockType type : ALL_LOCK_TYPES)
       {
         if (lockState.isLocked(type, owner, false))
         {

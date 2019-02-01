@@ -14,6 +14,7 @@ import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.protocol.IProtocol2;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -141,7 +142,7 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
       if (channel != null)
       {
         channel.addListener(channelListener);
-        executorService = ((InternalChannel)channel).getReceiveExecutor();
+        executorService = ConcurrencyUtil.getExecutorService(channel);
         bufferProvider = (InternalChannel)channel;
       }
     }

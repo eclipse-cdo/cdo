@@ -16,6 +16,7 @@ import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.session.SessionUtil;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
  * Bug 417825 - Invalidator can die if CDOSession can not be activated within 100ms.
@@ -39,7 +40,7 @@ public class Bugzilla_417825_Test extends AbstractCDOTest
     {
       CDOSessionImpl session2 = (CDOSessionImpl)openSession();
       assertEquals(true, session2.isActive());
-      assertEquals(true, session2.getInvalidator().isActive());
+      assertEquals(true, LifecycleUtil.isActive(session2.getInvalidator()));
     }
     finally
     {

@@ -12,7 +12,6 @@
 package org.eclipse.internal.net4j.buffer;
 
 import org.eclipse.net4j.buffer.BufferState;
-import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.IErrorHandler;
@@ -196,7 +195,7 @@ public class Buffer implements InternalBuffer
 
       if (state == BufferState.INITIAL)
       {
-        byteBuffer.limit(IBuffer.HEADER_SIZE);
+        byteBuffer.limit(HEADER_SIZE);
         state = BufferState.READING_HEADER;
       }
 
@@ -298,7 +297,7 @@ public class Buffer implements InternalBuffer
         this.channelID = channelID;
 
         byteBuffer.clear();
-        byteBuffer.position(IBuffer.HEADER_SIZE);
+        byteBuffer.position(HEADER_SIZE);
       }
 
       return byteBuffer;
@@ -340,7 +339,7 @@ public class Buffer implements InternalBuffer
           throw new IllegalStateException(toString() + ": channelID == NO_CHANNEL"); //$NON-NLS-1$
         }
 
-        int payloadSize = byteBuffer.position() - IBuffer.HEADER_SIZE + MAKE_PAYLOAD_SIZE_NON_ZERO;
+        int payloadSize = byteBuffer.position() - HEADER_SIZE + MAKE_PAYLOAD_SIZE_NON_ZERO;
 
         boolean eos = isEOS();
         if (eos)
@@ -402,7 +401,7 @@ public class Buffer implements InternalBuffer
       }
 
       byteBuffer.flip();
-      byteBuffer.position(IBuffer.HEADER_SIZE);
+      byteBuffer.position(HEADER_SIZE);
       state = BufferState.GETTING;
     }
     catch (RuntimeException ex)
@@ -508,7 +507,7 @@ public class Buffer implements InternalBuffer
 
       if (state == BufferState.PUTTING && !showHeader)
       {
-        byteBuffer.position(IBuffer.HEADER_SIZE);
+        byteBuffer.position(HEADER_SIZE);
       }
 
       StringBuilder builder = new StringBuilder();

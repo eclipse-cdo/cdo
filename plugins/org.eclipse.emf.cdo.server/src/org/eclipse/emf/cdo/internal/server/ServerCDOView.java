@@ -159,7 +159,13 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     // Do nothing
   }
 
+  @Deprecated
   public boolean isInvalidationRunnerActive()
+  {
+    return isInvalidating();
+  }
+
+  public boolean isInvalidating()
   {
     return false;
   }

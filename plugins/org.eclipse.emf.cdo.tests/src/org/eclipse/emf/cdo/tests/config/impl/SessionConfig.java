@@ -624,6 +624,11 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       public void setUp() throws Exception
       {
         super.setUp();
+        if (!usesServerContainer())
+        {
+          JVMUtil.prepareContainer(getServerContainer());
+        }
+
         JVMUtil.prepareContainer(getClientContainer());
       }
 

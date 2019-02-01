@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.concurrent;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -122,5 +123,21 @@ public final class ConcurrencyUtil
   public static void setThreadName(Thread thread, String name)
   {
     thread.setName(name);
+  }
+
+  /**
+   * @since 3.9
+   */
+  public static void setThreadName(String name)
+  {
+    setThreadName(Thread.currentThread(), name);
+  }
+
+  /**
+   * @since 3.9
+   */
+  public static void log(String msg)
+  {
+    IOUtil.OUT().println(Thread.currentThread().getName() + ": " + msg);
   }
 }

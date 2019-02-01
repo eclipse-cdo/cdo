@@ -75,11 +75,10 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
-import org.eclipse.net4j.util.concurrent.ExecutorWorkSerializer;
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.concurrent.IWorkSerializer;
 import org.eclipse.net4j.util.concurrent.RunnableWithName;
+import org.eclipse.net4j.util.concurrent.SerializingExecutor;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -160,9 +159,9 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
   private Map<CDOObject, CDOLockState> lockStates = new WeakHashMap<CDOObject, CDOLockState>();
 
-  private ExecutorWorkSerializer invalidationRunner = createInvalidationRunner();
+  private ViewInvalidator invalidator = new ViewInvalidator();
 
-  private volatile boolean invalidationRunnerActive;
+  private volatile boolean invalidating;
 
   /**
    * @since 2.0
@@ -1164,8 +1163,8 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   {
     if (invalidationData.isAsync())
     {
-      IWorkSerializer serializer = getInvalidationRunner();
-      serializer.addWork(new InvalidationRunnable(invalidationData));
+      ViewInvalidation work = new ViewInvalidation(invalidationData);
+      invalidator.execute(work);
     }
     else
     {
@@ -1262,29 +1261,20 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
   }
 
-  public ExecutorWorkSerializer getInvalidationRunner()
+  public ViewInvalidator getInvalidator()
   {
-    return invalidationRunner;
+    return invalidator;
   }
 
-  private ExecutorWorkSerializer createInvalidationRunner()
-  {
-    return new ExecutorWorkSerializer()
-    {
-      @Override
-      protected void noWork()
-      {
-        if (isClosed())
-        {
-          dispose();
-        }
-      }
-    };
-  }
-
+  @Deprecated
   public boolean isInvalidationRunnerActive()
   {
-    return invalidationRunnerActive;
+    return isInvalidating();
+  }
+
+  public boolean isInvalidating()
+  {
+    return invalidating;
   }
 
   private void sendInvalidationNotifications(Set<CDOObject> dirtyObjects, Set<CDOObject> detachedObjects)
@@ -1321,7 +1311,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       IListener[] listeners = getListeners();
       if (listeners != null)
       {
-        fireEvent(new InvalidationEvent(timeStamp, revisionDeltas, detachedObjects), listeners);
+        fireEvent(new ViewInvalidationEvent(timeStamp, revisionDeltas, detachedObjects), listeners);
       }
     }
   }
@@ -1609,12 +1599,12 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   {
     super.doAfterActivate();
 
-    ExecutorService executorService = ConcurrencyUtil.getExecutorService(session);
-    invalidationRunner.setExecutor(executorService);
+    ExecutorService executorService = getExecutorService();
+    invalidator.setDelegate(executorService);
 
     try
     {
-      LifecycleUtil.activate(invalidationRunner);
+      LifecycleUtil.activate(invalidator);
     }
     catch (LifecycleException ex)
     {
@@ -1629,7 +1619,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   @Override
   protected void doBeforeDeactivate() throws Exception
   {
-    // Detach viewset from the view
+    // Detach the view set from the view.
     InternalCDOViewSet viewSet = getViewSet();
     viewSet.remove(this);
 
@@ -1645,7 +1635,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     unitManager.deactivate();
 
     CDOViewRegistryImpl.INSTANCE.deregister(this);
-    LifecycleUtil.deactivate(invalidationRunner, OMLogger.Level.WARN);
+    LifecycleUtil.deactivate(invalidator, OMLogger.Level.WARN);
 
     try
     {
@@ -2768,11 +2758,18 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @author Eike Stepper
    */
-  private final class InvalidationRunnable extends RunnableWithName
+  private final class ViewInvalidator extends SerializingExecutor
+  {
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ViewInvalidation extends RunnableWithName
   {
     private final ViewInvalidationData invalidationData;
 
-    public InvalidationRunnable(ViewInvalidationData invalidationData)
+    public ViewInvalidation(ViewInvalidationData invalidationData)
     {
       this.invalidationData = invalidationData;
     }
@@ -2780,7 +2777,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     @Override
     public String getName()
     {
-      return "CDOViewInvalidationRunner-" + CDOViewImpl.this; //$NON-NLS-1$
+      return "Invalidator-" + CDOViewImpl.this; //$NON-NLS-1$
     }
 
     @Override
@@ -2788,7 +2785,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     {
       try
       {
-        invalidationRunnerActive = true;
+        invalidating = true;
         doInvalidate(invalidationData);
       }
       catch (Exception ex)
@@ -2800,7 +2797,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
       finally
       {
-        invalidationRunnerActive = false;
+        invalidating = false;
       }
     }
   }
@@ -2808,7 +2805,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @author Simon McDuff
    */
-  private final class InvalidationEvent extends Event implements CDOViewInvalidationEvent
+  private final class ViewInvalidationEvent extends Event implements CDOViewInvalidationEvent
   {
     private static final long serialVersionUID = 1L;
 
@@ -2818,7 +2815,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
     private Set<CDOObject> detachedObjects;
 
-    public InvalidationEvent(long timeStamp, Map<CDOObject, CDORevisionDelta> revisionDeltas, Set<CDOObject> detachedObjects)
+    public ViewInvalidationEvent(long timeStamp, Map<CDOObject, CDORevisionDelta> revisionDeltas, Set<CDOObject> detachedObjects)
     {
       this.timeStamp = timeStamp;
       this.revisionDeltas = revisionDeltas;

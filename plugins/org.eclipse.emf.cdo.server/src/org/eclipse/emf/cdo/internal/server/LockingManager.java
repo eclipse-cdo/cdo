@@ -71,6 +71,8 @@ import java.util.Set;
  */
 public class LockingManager extends RWOLockManager<Object, IView> implements InternalLockManager
 {
+  private static final LockType[] ALL_LOCK_TYPES = LockType.values();
+
   private InternalRepository repository;
 
   private Map<String, InternalView> openDurableViews = new HashMap<String, InternalView>();
@@ -234,14 +236,13 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   }
 
   @Override
-  public void lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType type, IView context, Collection<? extends Object> objectsToLock, long timeout)
-      throws InterruptedException
+  public void lock(LockType type, IView context, Collection<? extends Object> objectsToLock, long timeout) throws InterruptedException
   {
     lock2(false, type, context, objectsToLock, false, timeout);
   }
 
   @Override
-  public void lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType type, IView context, Object objectToLock, long timeout) throws InterruptedException
+  public void lock(LockType type, IView context, Object objectToLock, long timeout) throws InterruptedException
   {
     Collection<Object> objectsToLock = new LinkedHashSet<Object>();
     objectsToLock.add(objectToLock);
@@ -249,8 +250,8 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   }
 
   @Override
-  public List<org.eclipse.net4j.util.concurrent.RWOLockManager.LockState<Object, IView>> lock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType type,
-      IView context, Collection<? extends Object> objectsToLock, long timeout) throws InterruptedException
+  public List<LockState<Object, IView>> lock2(LockType type, IView context, Collection<? extends Object> objectsToLock, long timeout)
+      throws InterruptedException
   {
     return lock2(false, type, context, objectsToLock, false, timeout);
   }
@@ -342,22 +343,20 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   }
 
   @Override
-  public synchronized List<org.eclipse.net4j.util.concurrent.RWOLockManager.LockState<Object, IView>> unlock2(IView context)
+  public synchronized List<RWOLockManager.LockState<Object, IView>> unlock2(IView context)
   {
     return unlock2(false, context);
   }
 
   @Override
-  public synchronized List<org.eclipse.net4j.util.concurrent.RWOLockManager.LockState<Object, IView>> unlock2(IView context,
-      Collection<? extends Object> objectsToUnlock)
+  public synchronized List<RWOLockManager.LockState<Object, IView>> unlock2(IView context, Collection<? extends Object> objectsToUnlock)
   {
     // If no locktype is specified, use the LockType.WRITE
     return unlock2(false, LockType.WRITE, context, objectsToUnlock, false);
   }
 
   @Override
-  public synchronized List<org.eclipse.net4j.util.concurrent.RWOLockManager.LockState<Object, IView>> unlock2(
-      org.eclipse.net4j.util.concurrent.IRWLockManager.LockType type, IView context, Collection<? extends Object> objectsToUnlock)
+  public synchronized List<RWOLockManager.LockState<Object, IView>> unlock2(LockType type, IView context, Collection<? extends Object> objectsToUnlock)
   {
     return unlock2(false, type, context, objectsToUnlock, false);
   }
@@ -369,7 +368,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   }
 
   @Override
-  public synchronized void unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType type, IView context, Collection<? extends Object> objectsToUnlock)
+  public synchronized void unlock(LockType type, IView context, Collection<? extends Object> objectsToUnlock)
   {
     unlock2(type, context, objectsToUnlock);
   }
@@ -846,7 +845,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     LockGrade grade = LockGrade.NONE;
     if (lockState != null)
     {
-      for (LockType type : LockType.values())
+      for (LockType type : ALL_LOCK_TYPES)
       {
         if (lockState.hasLock(type))
         {

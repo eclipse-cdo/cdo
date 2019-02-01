@@ -66,7 +66,6 @@ public class ControlChannel extends Channel
   {
     setID(CONTROL_CHANNEL_INDEX);
     setMultiplexer(connector);
-    setReceiveExecutor(connector.getConfig().getReceiveExecutor());
     setUserID(connector.getUserID());
   }
 

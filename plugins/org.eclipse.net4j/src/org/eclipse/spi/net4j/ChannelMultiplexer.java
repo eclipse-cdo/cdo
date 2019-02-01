@@ -22,6 +22,8 @@ import org.eclipse.net4j.protocol.IProtocolProvider;
 import org.eclipse.net4j.protocol.ProtocolVersionException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.factory.FactoryKey;
@@ -40,6 +42,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutorService;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -47,7 +50,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class ChannelMultiplexer extends Container<IChannel> implements InternalChannelMultiplexer
+public abstract class ChannelMultiplexer extends Container<IChannel> implements InternalChannelMultiplexer, IExecutorServiceProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CONNECTOR, ChannelMultiplexer.class);
 
@@ -81,6 +84,11 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   {
     checkInactive();
     this.config = Net4jUtil.copyTransportConfig(this, config);
+  }
+
+  public ExecutorService getExecutorService()
+  {
+    return ConcurrencyUtil.getExecutorService(config);
   }
 
   public long getOpenChannelTimeout()
@@ -234,7 +242,6 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   protected void initChannel(InternalChannel channel, IProtocol<?> protocol)
   {
     channel.setMultiplexer(this);
-    channel.setReceiveExecutor(getConfig().getReceiveExecutor());
     if (protocol != null)
     {
       protocol.setChannel(channel);

@@ -85,6 +85,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/concurrent/RWOLockManager.java" type="org.eclipse.net4j.util.concurrent.RWOLockManager">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.concurrent.RWOLockManager"/>
+                <message_argument value="ALL_LOCK_TYPES"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/util/container/ContainerEvent.java" type="org.eclipse.net4j.util.container.ContainerEvent">
         <filter id="576725006">
             <message_arguments>

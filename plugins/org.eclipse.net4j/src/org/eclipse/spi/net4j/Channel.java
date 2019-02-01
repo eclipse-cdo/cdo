@@ -16,11 +16,10 @@ import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.protocol.IProtocol;
-import org.eclipse.net4j.util.concurrent.ExecutorWorkSerializer;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
-import org.eclipse.net4j.util.concurrent.IWorkSerializer;
 import org.eclipse.net4j.util.concurrent.RunnableWithName;
-import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
+import org.eclipse.net4j.util.concurrent.SerializingExecutor;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -55,14 +54,12 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
 
   private short id = IBuffer.NO_CHANNEL;
 
-  private ExecutorService receiveExecutor;
+  private final Executor receiveSerializer = new SerializingExecutor();
 
   /**
    * The external handler for buffers passed from the {@link #connector}.
    */
   private IBufferHandler receiveHandler;
-
-  private IWorkSerializer receiveSerializer;
 
   private transient Queue<IBuffer> sendQueue;
 
@@ -125,17 +122,19 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
    */
   public ExecutorService getExecutorService()
   {
-    return receiveExecutor;
+    return ConcurrencyUtil.getExecutorService(channelMultiplexer);
   }
 
+  @Deprecated
   public ExecutorService getReceiveExecutor()
   {
-    return receiveExecutor;
+    return null;
   }
 
+  @Deprecated
   public void setReceiveExecutor(ExecutorService receiveExecutor)
   {
-    this.receiveExecutor = receiveExecutor;
+    // Do nothing.
   }
 
   public IBufferHandler getReceiveHandler()
@@ -217,8 +216,6 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
    * Handles a buffer sent by the multiplexer. Adds work to the receive queue or releases the buffer.
    *
    * @see InternalChannelMultiplexer#multiplexChannel
-   * @see IWorkSerializer
-   * @see ReceiverWork
    */
   public void handleBufferFromMultiplexer(IBuffer buffer)
   {
@@ -232,7 +229,7 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
       ++receivedBuffers;
 
       ReceiverWork receiverWork = createReceiverWork(buffer);
-      receiveSerializer.addWork(receiverWork);
+      receiveSerializer.execute(receiverWork);
     }
     else
     {
@@ -286,26 +283,14 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   {
     super.doActivate();
     sendQueue = new SendQueue();
-    if (receiveExecutor != null)
-    {
-      receiveSerializer = new ReceiveSerializer2(receiveExecutor);
-      LifecycleUtil.activate(receiveSerializer);
-    }
-    else
-    {
-      receiveSerializer = new SynchronousWorkSerializer();
-    }
+    LifecycleUtil.activate(receiveSerializer);
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
     unregisterFromMultiplexer();
-    if (receiveSerializer != null)
-    {
-      receiveSerializer.dispose();
-      receiveSerializer = null;
-    }
+    LifecycleUtil.deactivate(receiveSerializer);
 
     if (sendQueue != null)
     {
@@ -332,11 +317,9 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
-   *
    * @author Eike Stepper
    * @since 4.1
-   * @deprecated As of 4.4 use {@link ExecutorWorkSerializer}.
+   * @deprecated As of 4.4 scheduled for future removal.
    */
   @Deprecated
   protected class ReceiveSerializer extends org.eclipse.net4j.util.concurrent.QueueWorkerWorkSerializer
@@ -353,29 +336,6 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
       if (isClosed())
       {
         context.terminate();
-      }
-    }
-  }
-
-  /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
-   *
-   * @author Eike Stepper
-   * @since 4.4
-   */
-  private class ReceiveSerializer2 extends ExecutorWorkSerializer
-  {
-    public ReceiveSerializer2(Executor executor)
-    {
-      super(executor);
-    }
-
-    @Override
-    protected void noWork()
-    {
-      if (isClosed())
-      {
-        dispose();
       }
     }
   }
@@ -403,7 +363,7 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
     @Override
     public String getName()
     {
-      return "Net4jReceiveSerializer-" + Channel.this; //$NON-NLS-1$
+      return "Net4jReceiver-" + Channel.this; //$NON-NLS-1$
     }
 
     @Override

@@ -115,6 +115,7 @@ import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.util.DanglingIntegrityException;
 import org.eclipse.emf.cdo.util.DanglingReferenceException;
 import org.eclipse.emf.cdo.util.LocalCommitConflictException;
@@ -137,6 +138,7 @@ import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.Predicate;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.AbstractCloseableIterator;
 import org.eclipse.net4j.util.collection.ByteArrayWrapper;
@@ -186,6 +188,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.SubMonitor;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -1555,7 +1558,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public CDOCommitInfo commit(IProgressMonitor progressMonitor) throws CommitException
+  public CDOCommitInfo commit(IProgressMonitor monitor) throws CommitException
   {
     CDOConflictResolver[] conflictResolvers = options().getConflictResolvers();
     if (conflictResolvers.length != 0)
@@ -1582,7 +1585,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    CDOCommitInfo info = commitSynced(progressMonitor);
+    CDOCommitInfo info = commitSynced(monitor);
     if (info != null)
     {
       long timeStamp = info.getTimeStamp();
@@ -1691,6 +1694,90 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         unlockView();
       }
     }
+  }
+
+  public <T> CommitResult<T> commit(final Callable<T> callable, Predicate<Long> retry, IProgressMonitor monitor)
+      throws ConcurrentAccessException, CommitException, Exception
+  {
+    final Object[] result = { null };
+    final Exception[] exception = { null };
+
+    Runnable runnable = new Runnable()
+    {
+      public void run()
+      {
+        try
+        {
+          result[0] = callable.call();
+        }
+        catch (Exception ex)
+        {
+          exception[0] = ex;
+        }
+      }
+    };
+
+    CDOCommitInfo info = commit(runnable, retry, monitor);
+    if (exception[0] != null)
+    {
+      throw exception[0];
+    }
+
+    if (info == null)
+    {
+      return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    T r = (T)result[0];
+    return new CommitResult<T>(r, info);
+  }
+
+  public <T> CommitResult<T> commit(Callable<T> callable, int attempts, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException, Exception
+  {
+    return commit(callable, new CountedRetryPredicate(attempts), monitor);
+  }
+
+  public CDOCommitInfo commit(Runnable runnable, Predicate<Long> retry, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException
+  {
+    long start = System.currentTimeMillis();
+    SubMonitor subMonitor = SubMonitor.convert(monitor);
+
+    for (;;)
+    {
+      subMonitor.setWorkRemaining(100);
+
+      synchronized (getViewMonitor())
+      {
+        lockView();
+
+        runnable.run();
+
+        try
+        {
+          return commit(subMonitor.split(1));
+        }
+        catch (ConcurrentAccessException ex)
+        {
+          if (retry.apply(System.currentTimeMillis() - start))
+          {
+            rollback();
+            continue;
+          }
+
+          throw ex;
+        }
+        finally
+        {
+          unlockView();
+        }
+      }
+    }
+  }
+
+  public CDOCommitInfo commit(Runnable runnable, int attempts, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException
+  {
+    return commit(runnable, new CountedRetryPredicate(attempts), monitor);
   }
 
   public CommitToken getCommitToken()
@@ -3118,6 +3205,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     return new AbstractCloseableIterator<CDOResourceNode>()
     {
+
       private Iterator<Object> listIterator = finalList == null ? null : finalList.iterator();
 
       @Override
@@ -4763,6 +4851,26 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       return MessageFormat.format("CDOTransactionConflictEvent[source={0}, conflictingObject={1}, firstConflict={2}]", //$NON-NLS-1$
           getSource(), getConflictingObject(), isFirstConflict());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class CountedRetryPredicate implements Predicate<Long>
+  {
+    private final int attempts;
+
+    private int attempt;
+
+    private CountedRetryPredicate(int attempts)
+    {
+      this.attempts = attempts;
+    }
+
+    public boolean apply(Long startMillis)
+    {
+      return ++attempt < attempts;
     }
   }
 

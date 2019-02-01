@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDORegistrationHandler;
@@ -43,6 +44,7 @@ import org.eclipse.emf.cdo.view.CDOViewSet;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.Predicate;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IListener;
@@ -247,7 +249,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return commit(null);
   }
 
-  public CDOCommitInfo commit(IProgressMonitor progressMonitor) throws CommitException
+  public CDOCommitInfo commit(IProgressMonitor monitor) throws CommitException
   {
     OutputStream out = null;
 
@@ -266,6 +268,27 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     {
       IOUtil.close(out);
     }
+  }
+
+  public <T> CommitResult<T> commit(Callable<T> callable, Predicate<Long> retry, IProgressMonitor monitor)
+      throws ConcurrentAccessException, CommitException, Exception
+  {
+    return delegate.commit(callable, retry, monitor);
+  }
+
+  public <T> CommitResult<T> commit(Callable<T> callable, int attempts, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException, Exception
+  {
+    return delegate.commit(callable, attempts, monitor);
+  }
+
+  public CDOCommitInfo commit(Runnable runnable, Predicate<Long> retry, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException
+  {
+    return delegate.commit(runnable, retry, monitor);
+  }
+
+  public CDOCommitInfo commit(Runnable runnable, int attempts, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException
+  {
+    return delegate.commit(runnable, attempts, monitor);
   }
 
   public void rollback()

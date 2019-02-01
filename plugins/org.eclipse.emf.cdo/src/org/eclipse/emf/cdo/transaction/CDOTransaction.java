@@ -31,20 +31,26 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.Predicate;
 import org.eclipse.net4j.util.options.IOptionsEvent;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 /**
  * A read-write view to the <em>current</em> (i.e. latest) state of the object graph in the repository.
@@ -254,6 +260,27 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
    * @since 4.0
    */
   public CDOQuery createQuery(String language, String queryString, Object context, boolean considerDirtyState);
+
+  /**
+   * @since 4.7
+   */
+  public <T> CommitResult<T> commit(Callable<T> callable, Predicate<Long> retry, IProgressMonitor monitor)
+      throws ConcurrentAccessException, CommitException, Exception;
+
+  /**
+   * @since 4.7
+   */
+  public <T> CommitResult<T> commit(Callable<T> callable, int attempts, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException, Exception;
+
+  /**
+  * @since 4.7
+  */
+  public CDOCommitInfo commit(Runnable runnable, Predicate<Long> retry, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException;
+
+  /**
+   * @since 4.7
+   */
+  public CDOCommitInfo commit(Runnable runnable, int attempts, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException;
 
   public Options options();
 
@@ -526,6 +553,33 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
      */
     public interface CommitInfoTimeout extends IOptionsEvent
     {
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.7
+   */
+  public static final class CommitResult<T>
+  {
+    private final T result;
+
+    private final CDOCommitInfo info;
+
+    public CommitResult(T result, CDOCommitInfo info)
+    {
+      this.result = result;
+      this.info = info;
+    }
+
+    public T getResult()
+    {
+      return result;
+    }
+
+    public CDOCommitInfo getInfo()
+    {
+      return info;
     }
   }
 }

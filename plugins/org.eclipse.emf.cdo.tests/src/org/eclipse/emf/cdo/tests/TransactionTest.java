@@ -32,7 +32,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler2;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
-import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.signal.SignalCounter;
@@ -52,7 +51,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * See bug 213782, bug 201366
@@ -239,7 +237,7 @@ public class TransactionTest extends AbstractCDOTest
   public void testCommitManyTransactionsMultiThread() throws Exception
   {
     final int RUNS = 1;
-    final int THREADS = 1000;
+    final int THREADS = 100;
     final int TIMEOUT = 10; // Minutes.
     final boolean pessimistic = true;
 
@@ -258,7 +256,6 @@ public class TransactionTest extends AbstractCDOTest
     {
       System.out.println("RUN " + run);
 
-      AtomicInteger concurrentAccessExceptions = new AtomicInteger();
       CountDownLatch latch = new CountDownLatch(THREADS);
       List<Thread> threadList = new ArrayList<Thread>();
 
@@ -270,7 +267,7 @@ public class TransactionTest extends AbstractCDOTest
         final Company company = transaction.getObject(initialCompany);
         final Customer newCustomer = Model1Factory.eINSTANCE.createCustomer();
 
-        threadList.add(new Committer(transaction, concurrentAccessExceptions, latch, new Callable<Boolean>()
+        threadList.add(new Committer(transaction, latch, new Callable<Boolean>()
         {
           public Boolean call() throws Exception
           {
@@ -295,7 +292,6 @@ public class TransactionTest extends AbstractCDOTest
         fail("Timeout after " + TIMEOUT + " seconds");
       }
 
-      System.out.println("ConcurrentAccessExceptions: " + concurrentAccessExceptions.get());
       signalCounter.dump(IOUtil.OUT(), true);
     }
   }
@@ -307,53 +303,16 @@ public class TransactionTest extends AbstractCDOTest
   {
     private static final ThreadGroup THREAD_GROUP = new ThreadGroup("COMMITTERS");
 
-    private static final int ATTEMPTS = 200;
-
     private final CDOTransaction transaction;
-
-    private final AtomicInteger concurrentAccessExceptions;
 
     private final CountDownLatch latch;
 
     private final Callable<Boolean> operation;
 
-    private Callable<Boolean> callable = new Callable<Boolean>()
-    {
-      private int attempt;
-
-      public Boolean call() throws Exception
-      {
-        ++attempt;
-        operation.call();
-
-        try
-        {
-          transaction.commit();
-        }
-        catch (ConcurrentAccessException ex)
-        {
-          concurrentAccessExceptions.incrementAndGet();
-
-          if (attempt < ATTEMPTS)
-          {
-            transaction.rollback();
-            return true;
-          }
-        }
-        catch (Exception ex)
-        {
-          throw ex;
-        }
-
-        return false;
-      }
-    };
-
-    public Committer(CDOTransaction transaction, AtomicInteger concurrentAccessExceptions, CountDownLatch latch, Callable<Boolean> operation)
+    public Committer(CDOTransaction transaction, CountDownLatch latch, Callable<Boolean> operation)
     {
       super(THREAD_GROUP, "Committer-" + transaction.getViewID());
       this.transaction = transaction;
-      this.concurrentAccessExceptions = concurrentAccessExceptions;
       this.latch = latch;
       this.operation = operation;
     }
@@ -363,10 +322,7 @@ public class TransactionTest extends AbstractCDOTest
     {
       try
       {
-        while (transaction.syncExec(callable))
-        {
-          // Do nothing.
-        }
+        transaction.commit(operation, 200, null);
       }
       catch (Exception ex)
       {

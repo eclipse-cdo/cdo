@@ -298,9 +298,9 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     return commit(null);
   }
 
-  public CDOCommitInfo commit(IProgressMonitor progressMonitor) throws CommitException
+  public CDOCommitInfo commit(IProgressMonitor monitor) throws CommitException
   {
-    commitPrepare(progressMonitor);
+    commitPrepare(monitor);
     int phase = 0;
 
     try
@@ -308,17 +308,17 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       // We need to complete 3 phases
       while (phase <= 2)
       {
-        commitPhase(progressMonitor);
+        commitPhase(monitor);
         ++phase;
       }
     }
     catch (Exception ex)
     {
-      commitException(progressMonitor, phase, ex);
+      commitException(monitor, phase, ex);
     }
     finally
     {
-      commitFinally(progressMonitor);
+      commitFinally(monitor);
     }
 
     return null;

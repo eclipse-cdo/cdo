@@ -867,6 +867,29 @@ public class LockingManagerTest extends AbstractLockingTest
     assertEquals(false, repo.getLockingManager().hasLock(LockType.READ, view, cdoCompany.cdoID()));
   }
 
+  public void testReadLockedByOthers() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
+    res.getContents().add(company);
+    transaction.commit();
+    assertFalse(CDOUtil.getCDOObject(company).cdoReadLock().isLockedByOthers());
+
+    transaction.lockObjects(CDOUtil.getCDOObjects(company), LockType.READ, DEFAULT_TIMEOUT);
+    assertReadLock(true, company);
+    assertWriteLock(false, company);
+    assertFalse(CDOUtil.getCDOObject(company).cdoReadLock().isLockedByOthers());
+
+    CDOView view = session.openView();
+    Company viewCompany = view.getObject(company);
+    assertReadLock(false, viewCompany);
+    assertWriteLock(false, viewCompany);
+    assertTrue(CDOUtil.getCDOObject(viewCompany).cdoReadLock().isLockedByOthers());
+  }
+
   public void testBugzilla_270345() throws Exception
   {
     Company company1 = getModel1Factory().createCompany();

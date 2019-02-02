@@ -32,15 +32,15 @@ public interface CDOUpdatable
   public long getLastUpdateTime();
 
   /**
-   * Blocks the calling thread until a commit operation with the given time stamp (or higher) has occured.
+   * Blocks the calling thread until a commit operation with the given time stamp (or higher) has occurred.
    */
   public void waitForUpdate(long updateTime);
 
   /**
-   * Blocks the calling thread until a commit operation with the given time stamp (or higher) has occured or the given
+   * Blocks the calling thread until a commit operation with the given time stamp (or higher) has occurred or the given
    * timeout has expired.
    *
-   * @return <code>true</code> if the specified commit operation has occured within the given timeout period,
+   * @return <code>true</code> if the specified commit operation has occurred within the given timeout period,
    *         <code>false</code> otherwise.
    */
   public boolean waitForUpdate(long updateTime, long timeoutMillis);

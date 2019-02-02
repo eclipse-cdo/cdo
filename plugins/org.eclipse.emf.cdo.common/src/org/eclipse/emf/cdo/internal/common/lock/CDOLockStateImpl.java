@@ -120,12 +120,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
       return false;
     }
 
-    if (!others)
-    {
-      return readLockOwners.contains(by);
-    }
-
-    return true;
+    return readLockOwners.contains(by) ^ others;
   }
 
   private boolean isWriteLocked(CDOLockOwner by, boolean others)

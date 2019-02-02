@@ -281,16 +281,24 @@ public final class IOUtil
     return openWriter(new File(fileName));
   }
 
-  public static FileWriter openWriter(File file) throws IORuntimeException
+  /**
+   * @since 3.9
+   */
+  public static FileWriter openWriter(File file, boolean append) throws IORuntimeException
   {
     try
     {
-      return new FileWriter(file);
+      return new FileWriter(file, append);
     }
     catch (IOException ex)
     {
       throw new IORuntimeException(ex);
     }
+  }
+
+  public static FileWriter openWriter(File file) throws IORuntimeException
+  {
+    return openWriter(file, false);
   }
 
   public static Exception closeSilent(Closeable closeable)
@@ -811,6 +819,27 @@ public final class IOUtil
     finally
     {
       closeSilent(output);
+    }
+  }
+
+  /**
+   * @since 3.9
+   */
+  public static void writeText(File file, boolean append, String text) throws IORuntimeException
+  {
+    FileWriter writer = openWriter(file, append);
+
+    try
+    {
+      writer.write(text);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+    finally
+    {
+      closeSilent(writer);
     }
   }
 

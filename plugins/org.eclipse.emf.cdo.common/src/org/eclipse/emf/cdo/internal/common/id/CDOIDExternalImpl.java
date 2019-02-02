@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.ref.Interner;
 
 import java.io.IOException;
@@ -31,13 +32,15 @@ public final class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExter
 {
   private static final long serialVersionUID = 1L;
 
+  private static final boolean checkFragment = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.common.id.CDOIDExternal.checkFragment");
+
   private static final StringInterner INTERNER = new StringInterner();
 
   private final String uri;
 
   private CDOIDExternalImpl(String uri)
   {
-    CheckUtil.checkArg(uri, "Null not allowed");
+    checkURI(uri);
     this.uri = uri;
   }
 
@@ -117,6 +120,16 @@ public final class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExter
   private static int getHashCode(String uri)
   {
     return uri.hashCode();
+  }
+
+  static void checkURI(String uri)
+  {
+    CheckUtil.checkArg(uri, "Null not allowed");
+
+    if (checkFragment)
+    {
+      CheckUtil.checkArg(!uri.endsWith("#NNULL"), "Fragment 'NNULL' not allowed");
+    }
   }
 
   public static CDOIDExternalImpl create(String uri)

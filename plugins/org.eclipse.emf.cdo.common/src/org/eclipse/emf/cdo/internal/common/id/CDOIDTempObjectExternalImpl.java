@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 
-import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ref.Interner;
 
 import java.io.IOException;
@@ -38,7 +37,7 @@ public final class CDOIDTempObjectExternalImpl extends AbstractCDOID implements 
 
   private CDOIDTempObjectExternalImpl(String uri)
   {
-    CheckUtil.checkArg(uri, "Null not allowed");
+    CDOIDExternalImpl.checkURI(uri);
     this.uri = uri;
   }
 

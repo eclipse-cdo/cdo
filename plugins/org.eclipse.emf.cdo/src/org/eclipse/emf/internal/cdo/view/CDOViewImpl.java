@@ -1120,6 +1120,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   public void prefetchRevisions(CDOID id, int depth)
   {
     checkArg(depth != CDORevision.DEPTH_NONE, "Prefetch depth must not be zero"); //$NON-NLS-1$
+
     synchronized (getViewMonitor())
     {
       lockView();
@@ -1159,7 +1160,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /*
    * Must not by synchronized on the view!
    */
-  public /* synchronized */ void invalidate(ViewInvalidationData invalidationData)
+  public void invalidate(ViewInvalidationData invalidationData)
   {
     if (invalidationData.isAsync())
     {

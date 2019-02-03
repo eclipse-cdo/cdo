@@ -144,9 +144,29 @@ public interface CDOResourceNode extends CDOObject
 
   /**
    * @ADDED
+   * @since 4.7
+   */
+  public void setExtension(String extension);
+
+  /**
+   * Same as {@link #getBasename()}.
+   *
+   * @ADDED
    * @since 4.4
    */
   public String trimExtension();
+
+  /**
+   * @ADDED
+   * @since 4.7
+   */
+  public String getBasename();
+
+  /**
+   * @ADDED
+   * @since 4.7
+   */
+  public void setBasename(String basename);
 
   /**
    * @ADDED

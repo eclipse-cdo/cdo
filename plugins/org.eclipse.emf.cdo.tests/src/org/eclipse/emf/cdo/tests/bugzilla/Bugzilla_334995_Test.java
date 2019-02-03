@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
+import org.eclipse.emf.ecore.resource.Resource;
+
 import java.util.Map.Entry;
 
 /**
@@ -30,37 +32,55 @@ public class Bugzilla_334995_Test extends AbstractCDOTest
   /**
    * The following test seems obsolete because (as of bug xxxxxx) no local changes can create resource duplicates.
    */
-  public void _test() throws CommitException
+  public void testURIClash() throws CommitException
   {
-    CDOID resourceID = persistResources("/res1")[0];
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resourceA = transaction.createResource(getResourcePath("/resA"));
+    resourceA.getContents().add(getModel1Factory().createCustomer());
+    transaction.commit();
+    System.out.println("Persisted resource: " + resourceA);
 
+    CDOSession session2 = openSession();
+    CDOTransaction transaction2 = session2.openTransaction();
+    CDOResource resourceB2 = transaction2.createResource(getResourcePath("/resB"));
+    resourceB2.getContents().add(getModel1Factory().createSupplier());
+
+    resourceA.setName("resB");
+    commitAndSync(transaction, transaction2);
+
+    System.out.println("newObjects:");
+    for (Entry<CDOID, CDOObject> entry : transaction2.getNewObjects().entrySet())
     {
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-
-      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-      msg("New resource: " + resource);
-      msg("newObjects:");
-
-      for (Entry<CDOID, CDOObject> entry : transaction.getNewObjects().entrySet())
-      {
-        msg(" " + entry + ", state: " + entry.getValue().cdoState());
-        assertNew(entry.getValue(), transaction);
-      }
-
-      // Fetch the persisted resource that has the same URI
-      CDOResource resource1 = (CDOResource)transaction.getObject(resourceID);
-      msg("Persisted resource: " + resource1);
-
-      msg("newObjects:");
-      for (Entry<CDOID, CDOObject> entry : transaction.getNewObjects().entrySet())
-      {
-        msg(" " + entry + ", state: " + entry.getValue().cdoState());
-        assertNew(entry.getValue(), transaction);
-      }
-
-      transaction.commit();
+      System.out.println(" " + entry + ", state: " + entry.getValue().cdoState());
+      assertNew(entry.getValue(), transaction2);
     }
+
+    System.out.println("resources:");
+    for (Resource resource : transaction2.getResourceSet().getResources())
+    {
+      System.out.println(" " + resource);
+    }
+
+    // Fetch the persisted resource that has the same URI
+    CDOResource resourceA2 = (CDOResource)transaction2.getObject(resourceA.cdoID());
+    System.out.println("Remote resource: " + resourceA2);
+    System.out.println("Local resource:  " + resourceB2);
+
+    System.out.println("newObjects:");
+    for (Entry<CDOID, CDOObject> entry : transaction2.getNewObjects().entrySet())
+    {
+      System.out.println(" " + entry + ", state: " + entry.getValue().cdoState());
+      assertNew(entry.getValue(), transaction2);
+    }
+
+    System.out.println("resources:");
+    for (Resource resource : transaction2.getResourceSet().getResources())
+    {
+      System.out.println(" " + resource);
+    }
+
+    transaction2.commit();
   }
 
   public void testRename() throws CommitException

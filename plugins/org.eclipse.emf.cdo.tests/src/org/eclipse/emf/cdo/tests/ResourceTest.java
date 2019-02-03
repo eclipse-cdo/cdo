@@ -2218,6 +2218,88 @@ public class ResourceTest extends AbstractCDOTest
     }
   }
 
+  public void testNameChecks()
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource1 = transaction.createResource(getResourcePath("/my/resource1"));
+
+    assertEquals("resource1", resource1.getName());
+    assertEquals("resource1", resource1.getBasename());
+    assertEquals("", resource1.getExtension());
+
+    try
+    {
+      resource1.setName("/resource1");
+      fail("IllegalArgumentException expected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      // SUCCESS
+    }
+
+    resource1.setExtension("tar.gz");
+    assertEquals("resource1.tar.gz", resource1.getName());
+    assertEquals("resource1", resource1.getBasename());
+    assertEquals("tar.gz", resource1.getExtension());
+
+    resource1.setBasename("model");
+    assertEquals("model.tar.gz", resource1.getName());
+    assertEquals("model", resource1.getBasename());
+    assertEquals("tar.gz", resource1.getExtension());
+
+    try
+    {
+      resource1.setBasename("model.xyz");
+      fail("IllegalArgumentException expected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      // SUCCESS
+    }
+
+    resource1.setExtension("");
+    assertEquals("model", resource1.getName());
+    assertEquals("model", resource1.getBasename());
+    assertEquals("", resource1.getExtension());
+
+    resource1.setExtension("ecore");
+    resource1.setBasename("");
+    assertEquals(".ecore", resource1.getName());
+    assertEquals("", resource1.getBasename());
+    assertEquals("ecore", resource1.getExtension());
+
+    try
+    {
+      resource1.setName(null);
+      fail("IllegalArgumentException expected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      // SUCCESS
+    }
+
+    try
+    {
+      resource1.setName("");
+      fail("IllegalArgumentException expected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      // SUCCESS
+    }
+
+    try
+    {
+      resource1.setName(".");
+      fail("IllegalArgumentException expected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      // SUCCESS
+    }
+  }
+
   /**
    * @author Eike Stepper
    */

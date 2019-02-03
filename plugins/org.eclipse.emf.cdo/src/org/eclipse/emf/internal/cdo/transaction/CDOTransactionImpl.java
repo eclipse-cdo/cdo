@@ -3725,6 +3725,24 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
+  @Override
+  protected Map<String, CDOResourceNode> collectNewResourceNodes()
+  {
+    Map<String, CDOResourceNode> result = new HashMap<String, CDOResourceNode>();
+
+    for (CDOObject object : getNewObjects().values())
+    {
+      if (object instanceof CDOResourceNode)
+      {
+        CDOResourceNode node = (CDOResourceNode)object;
+        String path = node.getPath();
+        result.put(path, node);
+      }
+    }
+
+    return result;
+  }
+
   private Set<CDOObject> getObjects(Collection<? extends CDOIdentifiable> identifiables)
   {
     Set<CDOObject> result = new HashSet<CDOObject>();

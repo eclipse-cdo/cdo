@@ -24,7 +24,10 @@ import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -52,6 +55,12 @@ import java.util.List;
  */
 public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDOResourceNode
 {
+  private static final boolean disableNameChecks = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.CDOResourceNode.disableNameChecks");
+
+  private static final boolean singleExtensions = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.CDOResourceNode.singleExtensions");
+
+  private static final ExtensionFinder EXTENSION_FINDER = singleExtensions ? new ExtensionFinder.Single() : new ExtensionFinder.Multi();
+
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
@@ -171,6 +180,14 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
    */
   public void basicSetName(String newName, boolean checkDuplicates)
   {
+    if (!disableNameChecks)
+    {
+      CheckUtil.checkArg(newName, "Name is null");
+      CheckUtil.checkArg(newName.length() != 0, "Name is empty");
+      CheckUtil.checkArg(!".".equals(newName), "Name is a dot");
+      CheckUtil.checkArg(newName.indexOf(CDOURIUtil.SEGMENT_SEPARATOR_CHAR) == -1, "Name contains a path separator");
+    }
+
     String oldName = getName();
     if (!ObjectUtil.equals(oldName, newName))
     {
@@ -251,14 +268,61 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   public String getExtension()
   {
     String name = getName();
-
-    int lastDot = name.lastIndexOf('.');
-    if (lastDot != -1)
+    if (name != null)
     {
-      return name.substring(lastDot + 1);
+      int dot = EXTENSION_FINDER.findExtension(name);
+      if (dot != -1)
+      {
+        return name.substring(dot + 1);
+      }
     }
 
     return "";
+  }
+
+  /**
+   * @since 4.7
+   */
+  public void setExtension(String extension)
+  {
+    InternalCDOView view = cdoView();
+    if (view != null)
+    {
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          setExtensionSynced(extension);
+        }
+        finally
+        {
+          view.unlockView();
+        }
+      }
+    }
+    else
+    {
+      setExtensionSynced(extension);
+    }
+  }
+
+  private void setExtensionSynced(String extension)
+  {
+    if (StringUtil.isEmpty(extension))
+    {
+      setName(getBasename());
+    }
+    else
+    {
+      if (singleExtensions)
+      {
+        CheckUtil.checkArg(extension.indexOf(ExtensionFinder.DOT) == -1, "Extension contains a dot");
+      }
+
+      setName(getBasename() + ExtensionFinder.DOT + extension);
+    }
   }
 
   /**
@@ -266,15 +330,76 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
    */
   public String trimExtension()
   {
-    String name = getName();
+    return getBasename();
+  }
 
-    int lastDot = name.lastIndexOf('.');
-    if (lastDot != -1)
+  /**
+   * @since 4.7
+   */
+  public String getBasename()
+  {
+    String name = getName();
+    if (name != null)
     {
-      return name.substring(0, lastDot);
+      int dot = EXTENSION_FINDER.findExtension(name);
+      if (dot != -1)
+      {
+        return name.substring(0, dot);
+      }
     }
 
     return name;
+  }
+
+  /**
+   * @since 4.7
+   */
+  public void setBasename(String basename)
+  {
+    InternalCDOView view = cdoView();
+    if (view != null)
+    {
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          setBasenameSynced(basename);
+        }
+        finally
+        {
+          view.unlockView();
+        }
+      }
+    }
+    else
+    {
+      setBasenameSynced(basename);
+    }
+  }
+
+  private void setBasenameSynced(String basename)
+  {
+    if (basename == null)
+    {
+      basename = StringUtil.EMPTY;
+    }
+
+    if (!singleExtensions)
+    {
+      CheckUtil.checkArg(basename.indexOf(ExtensionFinder.DOT) == -1, "Basename contains a dot");
+    }
+
+    String extension = getExtension();
+    if (StringUtil.isEmpty(extension))
+    {
+      setName(basename);
+    }
+    else
+    {
+      setName(basename + ExtensionFinder.DOT + extension);
+    }
   }
 
   /**
@@ -377,4 +502,35 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
     return string;
   }
 
+  /**
+   * @author Eike Stepper
+   */
+  private interface ExtensionFinder
+  {
+    public static final char DOT = '.';
+
+    public int findExtension(String name);
+
+    /**
+     * @author Eike Stepper
+     */
+    public static final class Single implements ExtensionFinder
+    {
+      public int findExtension(String name)
+      {
+        return name.lastIndexOf(DOT);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static final class Multi implements ExtensionFinder
+    {
+      public int findExtension(String name)
+      {
+        return name.indexOf(DOT);
+      }
+    }
+  }
 } // CDOResourceNodeImpl

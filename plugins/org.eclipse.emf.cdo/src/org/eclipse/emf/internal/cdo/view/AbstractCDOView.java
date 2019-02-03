@@ -152,6 +152,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   private static final String REPOSITORY_NAME_KEY = "cdo.repository.name";
 
+  private static final String SAFE_RENAME = "~renamed";
+
   private static final ThreadLocal<Lock> NEXT_VIEW_LOCK = new ThreadLocal<Lock>();
 
   private final ViewAndState[] viewAndStates = ViewAndState.create(this);
@@ -2055,16 +2057,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     URI uri = CDOURIUtil.createResourceURI(this, path);
     ResourceSet resourceSet = getResourceSet();
 
-    // Bug 334995: Check if locally there is already a resource with the same URI
+    // Bug 334995: Check if locally there is already a resource with the same URI.
     CDOResource existingResource = (CDOResource)resourceSet.getResource(uri, false);
     if (existingResource != null && !isReadOnly())
     {
-      // We have no other option than to change the name of the local resource
-      String oldName = existingResource.getName();
-      existingResource.setName(oldName + ".renamed");
-
-      OM.LOG.warn("URI clash: resource being instantiated had same URI as a resource already present " + "locally; local resource was renamed from " + oldName
-          + " to " + existingResource.getName());
+      preventURIClash(existingResource);
     }
 
     return getResource(path, true);
@@ -2660,7 +2657,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   }
 
   /*
-   * Synchronized through InvalidationRunner.run()
+   * Synchronized through CDOViewImpl.ViewInvalidation.run().
    */
   protected Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> invalidate( //
       List<CDORevisionKey> allChangedObjects, //
@@ -2699,6 +2696,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       }
     }
 
+    Map<String, CDOResourceNode> newResourceNodes = null;
     for (CDORevisionKey key : allChangedObjects)
     {
       CDORevisionDelta delta = null;
@@ -2729,6 +2727,25 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         {
           if (delta == null || isResourceNodeContainerOrNameChanged(delta))
           {
+            if (!isReadOnly())
+            {
+              if (newResourceNodes == null)
+              {
+                newResourceNodes = collectNewResourceNodes();
+              }
+
+              CDOResourceNode changedNode = (CDOResourceNode)changedObject;
+              String path = changedNode.getPath();
+
+              CDOResourceNode newResourceNode = newResourceNodes.get(path);
+              if (newResourceNode != null)
+              {
+                preventURIClash(newResourceNode);
+                String oldName = newResourceNode.getBasename();
+                newResourceNode.setBasename(oldName + SAFE_RENAME);
+              }
+            }
+
             ((CDOResourceNodeImpl)changedObject).recacheURIs();
           }
         }
@@ -2762,6 +2779,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
 
     return false;
+  }
+
+  protected Map<String, CDOResourceNode> collectNewResourceNodes()
+  {
+    return Collections.emptyMap();
   }
 
   /**
@@ -3100,6 +3122,18 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
 
     return false;
+  }
+
+  private static void preventURIClash(CDOResourceNode node)
+  {
+    String oldName = node.getName();
+
+    // We have no other option than to change the name of the local resource.
+    String oldBasename = node.getBasename();
+    node.setBasename(oldBasename + SAFE_RENAME);
+
+    OM.LOG.warn("URI clash: resource being instantiated had same URI as a resource already present locally; local resource was renamed from " //
+        + oldName + " to " + node.getName());
   }
 
   /**

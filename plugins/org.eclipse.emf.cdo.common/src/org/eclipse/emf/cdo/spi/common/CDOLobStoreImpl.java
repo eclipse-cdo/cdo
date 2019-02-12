@@ -42,6 +42,8 @@ public class CDOLobStoreImpl implements CDOLobStore
 {
   public static final CDOLobStoreImpl INSTANCE = new CDOLobStoreImpl();
 
+  private long timeout = IOUtil.DEFAULT_TIMEOUT;
+
   private File folder;
 
   private int tempID;
@@ -58,6 +60,22 @@ public class CDOLobStoreImpl implements CDOLobStore
   public CDOLobStoreImpl()
   {
     this(getDefaultFolder());
+  }
+
+  /**
+   * @since 4.8
+   */
+  public long getTimeout()
+  {
+    return timeout;
+  }
+
+  /**
+   * @since 4.8
+   */
+  public void setTimeout(long timeout)
+  {
+    this.timeout = timeout;
   }
 
   public File getFolder()
@@ -80,7 +98,9 @@ public class CDOLobStoreImpl implements CDOLobStore
   {
     File file = getBinaryFile(info.getID());
     long expectedSize = info.getSize();
-    return new ExpectedFileInputStream(file, expectedSize);
+    ExpectedFileInputStream inputStream = new ExpectedFileInputStream(file, expectedSize);
+    inputStream.setTimeout(timeout);
+    return inputStream;
   }
 
   public CDOLobInfo putBinary(InputStream contents) throws IOException
@@ -117,7 +137,9 @@ public class CDOLobStoreImpl implements CDOLobStore
   {
     File file = getCharacterFile(info.getID());
     long expectedSize = info.getSize();
-    return new ExpectedFileReader(file, expectedSize);
+    ExpectedFileReader reader = new ExpectedFileReader(file, expectedSize);
+    reader.setTimeout(timeout);
+    return reader;
 
   }
 

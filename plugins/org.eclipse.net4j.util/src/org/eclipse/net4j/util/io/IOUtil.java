@@ -15,6 +15,7 @@ import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -62,7 +63,7 @@ public final class IOUtil
   /**
    * @since 3.1
    */
-  public static final long DEFAULT_TIMEOUT = 2500;
+  public static final long DEFAULT_TIMEOUT = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.util.io.DEFAULT_TIMEOUT", 2500L);
 
   public static final int DEFAULT_BUFFER_SIZE = 8192;
 

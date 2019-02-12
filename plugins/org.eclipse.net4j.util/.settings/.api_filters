@@ -190,6 +190,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/io/IOUtil.java" type="org.eclipse.net4j.util.io.IOUtil">
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.io.IOUtil"/>
+                <message_argument value="DEFAULT_TIMEOUT"/>
+                <message_argument value="2500"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/util/lifecycle/ILifecycle.java" type="org.eclipse.net4j.util.lifecycle.ILifecycle">
         <filter id="403984517">
             <message_arguments>

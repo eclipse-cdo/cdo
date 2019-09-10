@@ -66,7 +66,7 @@ public class Notifier implements INotifier
 
   public boolean hasListeners()
   {
-    return listeners.get() != null;
+    return !listeners.isEmpty();
   }
 
   public IListener[] getListeners()

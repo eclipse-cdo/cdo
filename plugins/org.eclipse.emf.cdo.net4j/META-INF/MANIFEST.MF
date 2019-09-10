@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.net4j; singleton:=true
-Bundle-Version: 4.1.600.qualifier
+Bundle-Version: 4.1.700.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -10,11 +10,11 @@ Bundle-Activator: org.eclipse.emf.cdo.internal.net4j.bundle.OM$Activator
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.emf.cdo;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.net4j;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
-Export-Package: org.eclipse.emf.cdo.internal.net4j;version="4.1.600";x-friends:="org.eclipse.emf.cdo.tests,org.eclipse.emf.cdo.ui,org.eclipse.emf.cdo.examples",
- org.eclipse.emf.cdo.internal.net4j.bundle;version="4.1.600";x-friends:="org.eclipse.emf.cdo.tests",
- org.eclipse.emf.cdo.internal.net4j.messages;version="4.1.600";x-internal:=true,
- org.eclipse.emf.cdo.internal.net4j.protocol;version="4.1.600";x-friends:="org.eclipse.emf.cdo.tests,org.eclipse.emf.cdo.ui,org.eclipse.emf.cdo.examples",
- org.eclipse.emf.cdo.internal.net4j.testrecorder;version="4.1.600";x-internal:=true,
- org.eclipse.emf.cdo.net4j;version="4.1.600"
+Export-Package: org.eclipse.emf.cdo.internal.net4j;version="4.1.700";x-friends:="org.eclipse.emf.cdo.tests,org.eclipse.emf.cdo.ui,org.eclipse.emf.cdo.examples",
+ org.eclipse.emf.cdo.internal.net4j.bundle;version="4.1.700";x-friends:="org.eclipse.emf.cdo.tests",
+ org.eclipse.emf.cdo.internal.net4j.messages;version="4.1.700";x-internal:=true,
+ org.eclipse.emf.cdo.internal.net4j.protocol;version="4.1.700";x-friends:="org.eclipse.emf.cdo.tests,org.eclipse.emf.cdo.ui,org.eclipse.emf.cdo.examples",
+ org.eclipse.emf.cdo.internal.net4j.testrecorder;version="4.1.700";x-internal:=true,
+ org.eclipse.emf.cdo.net4j;version="4.1.700"
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.eclipse.emf.cdo.net4j

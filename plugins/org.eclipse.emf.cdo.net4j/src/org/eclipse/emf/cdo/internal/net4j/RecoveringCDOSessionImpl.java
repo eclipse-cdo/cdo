@@ -212,12 +212,10 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
     }
     catch (RuntimeException ex)
     {
-      deactivate();
       throw ex;
     }
     catch (Error ex)
     {
-      deactivate();
       throw ex;
     }
   }
@@ -227,9 +225,10 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
   {
     super.setSessionProtocol(sessionProtocol);
 
-    // Bug 534014: The DelegatingSessionProtocol of this session is deactivated by CDOSessionImpl.sessionProtocolListener
-    // when the delegate protocol becomes inactive. The super.setSessionProtocol() method just replaces the delegate
-    // protocol but doesn't reactivate the DelegatingSessionProtocol. Reactivate it now.
+    // Bug 534014: The DelegatingSessionProtocol of this session is deactivated by
+    // CDOSessionImpl.sessionProtocolListener when the delegate protocol becomes inactive.
+    // The super.setSessionProtocol() method just replaces the delegate protocol but
+    // doesn't reactivate the DelegatingSessionProtocol. Reactivate it now.
     LifecycleUtil.activate(getSessionProtocol());
   }
 

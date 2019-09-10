@@ -222,7 +222,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   public boolean setTimeStamp(long timeStamp, IProgressMonitor monitor);
 
   /**
-   * @since 4.7
+   * @since 4.8
    */
   public boolean isInvalidating();
 

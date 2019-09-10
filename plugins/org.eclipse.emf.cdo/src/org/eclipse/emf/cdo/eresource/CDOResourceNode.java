@@ -144,7 +144,7 @@ public interface CDOResourceNode extends CDOObject
 
   /**
    * @ADDED
-   * @since 4.7
+   * @since 4.8
    */
   public void setExtension(String extension);
 
@@ -158,13 +158,13 @@ public interface CDOResourceNode extends CDOObject
 
   /**
    * @ADDED
-   * @since 4.7
+   * @since 4.8
    */
   public String getBasename();
 
   /**
    * @ADDED
-   * @since 4.7
+   * @since 4.8
    */
   public void setBasename(String basename);
 

@@ -1489,7 +1489,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   /**
    * Implements an internal EStore for TRANSIENT objects, where there is no view or {@link CDOStore}.
    * <p>
-   * Feature values are actually stored in {@link CDOObjectImpl#cdoSettings}.
+   * Feature values are actually stored in {@link CDOObjectImpl#eSettings}.
    *
    * @author Simon McDuff
    * @since 2.0

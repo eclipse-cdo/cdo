@@ -48,7 +48,7 @@ public interface InternalCDOObject extends CDOObject, InternalEObject, InternalC
   public InternalCDORevision cdoRevision(boolean loadOnDemand);
 
   /**
-   * @since 4.7
+   * @since 4.8
    */
   public void cdoInternalPreAttach();
 

@@ -2161,9 +2161,9 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
             InternalCDOObject object = (InternalCDOObject)idOrObject;
             if (object.cdoView() != null && FSMUtil.isNew(object))
             {
-              String uri = EcoreUtil.getURI(object.cdoInternalInstance()).toString();
               if (object.cdoID().isTemporary())
               {
+                String uri = EcoreUtil.getURI(object.cdoInternalInstance()).toString();
                 return CDOIDUtil.createTempObjectExternal(uri);
               }
             }

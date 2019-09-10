@@ -18,7 +18,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 /**
  * @author Eike Stepper
- * @since 4.7
+ * @since 4.8
  */
 public class CDOAutoCommitter extends CDOPostEventTransactionHandler.Default
 {

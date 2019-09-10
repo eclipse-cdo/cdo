@@ -262,23 +262,23 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
   public CDOQuery createQuery(String language, String queryString, Object context, boolean considerDirtyState);
 
   /**
-   * @since 4.7
+   * @since 4.8
    */
   public <T> CommitResult<T> commit(Callable<T> callable, Predicate<Long> retry, IProgressMonitor monitor)
       throws ConcurrentAccessException, CommitException, Exception;
 
   /**
-   * @since 4.7
+   * @since 4.8
    */
   public <T> CommitResult<T> commit(Callable<T> callable, int attempts, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException, Exception;
 
   /**
-  * @since 4.7
+  * @since 4.8
   */
   public CDOCommitInfo commit(Runnable runnable, Predicate<Long> retry, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException;
 
   /**
-   * @since 4.7
+   * @since 4.8
    */
   public CDOCommitInfo commit(Runnable runnable, int attempts, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException;
 
@@ -558,7 +558,7 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
 
   /**
    * @author Eike Stepper
-   * @since 4.7
+   * @since 4.8
    */
   public static final class CommitResult<T>
   {

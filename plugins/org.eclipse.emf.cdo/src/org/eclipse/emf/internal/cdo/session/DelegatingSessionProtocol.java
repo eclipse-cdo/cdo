@@ -118,7 +118,6 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
 
     this.delegate = delegate;
-    hookDelegate();
   }
 
   public CDOSession getSession()

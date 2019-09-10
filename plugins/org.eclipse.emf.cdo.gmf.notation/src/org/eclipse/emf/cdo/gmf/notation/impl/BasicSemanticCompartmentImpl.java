@@ -313,6 +313,7 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("null")
   public boolean eIsSetGen(int featureID)
   {
     switch (featureID)

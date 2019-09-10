@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.tests.hibernate;singleton:=true
-Bundle-Version: 4.1.600.qualifier
+Bundle-Version: 4.1.700.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -23,10 +23,10 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  javax.persistence;bundle-version="[2.0.0,3.0.0)",
  org.hibernate;bundle-version="[4.0.0,5.0.0)",
  org.slf4j.api;bundle-version="[1.7.0,2.0.0)"
-Export-Package: org.eclipse.emf.cdo.tests.hibernate;version="4.1.600";x-friends:="org.eclipse.emf.cdo.tests.hudson",
- org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest;version="4.1.600",
- org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl;version="4.1.600",
- org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.util;version="4.1.600"
+Export-Package: org.eclipse.emf.cdo.tests.hibernate;version="4.1.700";x-friends:="org.eclipse.emf.cdo.tests.hudson",
+ org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest;version="4.1.700",
+ org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.impl;version="4.1.700",
+ org.eclipse.emf.cdo.tests.hibernate.model.HibernateTest.util;version="4.1.700"
 Import-Package: org.hibernate.cfg;version="[4.0.0,5.0.0)",
  org.eclipse.emf.teneo;version="[2.0.1,3.0.0)",
  org.eclipse.emf.cdo.server.hibernate;version="[4.0.0,5.0.0)",

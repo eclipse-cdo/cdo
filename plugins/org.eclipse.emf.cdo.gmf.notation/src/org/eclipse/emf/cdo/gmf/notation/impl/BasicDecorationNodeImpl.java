@@ -292,6 +292,7 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     eDynamicUnset(featureID);
   }
 
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSet(int featureID)
   {

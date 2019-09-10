@@ -377,6 +377,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
    * <!-- end-user-doc -->
   * @generated
   */
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSet(int featureID)
   {

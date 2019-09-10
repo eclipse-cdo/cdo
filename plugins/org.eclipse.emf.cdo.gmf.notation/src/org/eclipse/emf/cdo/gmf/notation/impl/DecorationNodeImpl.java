@@ -195,6 +195,7 @@ public class DecorationNodeImpl extends BasicDecorationNodeImpl implements Decor
     eDynamicUnset(featureID);
   }
 
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSet(int featureID)
   {

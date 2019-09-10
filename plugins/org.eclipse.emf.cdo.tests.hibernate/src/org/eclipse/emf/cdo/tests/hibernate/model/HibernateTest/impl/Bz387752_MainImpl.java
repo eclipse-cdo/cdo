@@ -397,6 +397,7 @@ public class Bz387752_MainImpl extends EObjectImpl implements Bz387752_Main
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSet(int featureID)
   {

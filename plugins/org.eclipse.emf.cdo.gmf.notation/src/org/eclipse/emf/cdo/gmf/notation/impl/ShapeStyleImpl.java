@@ -449,6 +449,7 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
    * <!-- end-user-doc -->
   * @generated
   */
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSet(int featureID)
   {

@@ -411,6 +411,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSet(int featureID)
   {
@@ -517,7 +518,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
   /**
    * Persist the view passed in and all its parent views if they are
    * transient.
-   * 
+   *
    * @param view
    *            the view to persist
    */

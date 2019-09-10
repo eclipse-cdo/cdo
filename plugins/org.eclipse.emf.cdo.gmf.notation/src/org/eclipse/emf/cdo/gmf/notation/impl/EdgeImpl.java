@@ -554,6 +554,7 @@ public class EdgeImpl extends ViewImpl implements Edge
    * <!-- end-user-doc -->
   * @generated
   */
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSet(int featureID)
   {

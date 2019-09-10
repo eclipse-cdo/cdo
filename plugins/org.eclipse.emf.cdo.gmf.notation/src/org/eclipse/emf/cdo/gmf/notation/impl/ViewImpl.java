@@ -160,7 +160,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public void setType(String newType)
@@ -245,7 +245,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public EObject getElement()
@@ -597,6 +597,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSet(int featureID)
   {

@@ -781,6 +781,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSet(int featureID)
   {

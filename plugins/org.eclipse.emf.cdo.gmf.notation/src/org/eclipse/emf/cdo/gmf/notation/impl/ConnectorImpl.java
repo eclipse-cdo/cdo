@@ -652,6 +652,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSet(int featureID)
   {

@@ -519,6 +519,7 @@ public class ListCompartmentImpl extends BasicCompartmentImpl implements ListCom
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSetGen(int featureID)
   {

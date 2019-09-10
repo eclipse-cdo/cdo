@@ -53,6 +53,7 @@ public class PostgresqlConfig extends AbstractSetupDBConfig
     return new PostgreSQLAdapter();
   }
 
+  @SuppressWarnings("null")
   @Override
   protected DataSource createDataSourceForDB(String dbName) throws SQLException
   {

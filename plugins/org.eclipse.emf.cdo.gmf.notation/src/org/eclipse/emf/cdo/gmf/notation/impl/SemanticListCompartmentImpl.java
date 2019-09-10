@@ -530,6 +530,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSetGen(int featureID)
   {

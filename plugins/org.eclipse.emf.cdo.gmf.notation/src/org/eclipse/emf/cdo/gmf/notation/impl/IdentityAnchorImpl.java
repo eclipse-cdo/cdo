@@ -153,6 +153,7 @@ public class IdentityAnchorImpl extends CDOObjectImpl implements IdentityAnchor
    * <!-- end-user-doc -->
   * @generated
   */
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSet(int featureID)
   {

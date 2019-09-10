@@ -300,6 +300,7 @@ public class BasicCompartmentImpl extends DecorationNodeImpl implements BasicCom
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("null")
   public boolean eIsSetGen(int featureID)
   {
     switch (featureID)

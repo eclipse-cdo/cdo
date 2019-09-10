@@ -284,6 +284,7 @@ public class NodeImpl extends ViewImpl implements Node
    * <!-- end-user-doc -->
   * @generated
   */
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSet(int featureID)
   {

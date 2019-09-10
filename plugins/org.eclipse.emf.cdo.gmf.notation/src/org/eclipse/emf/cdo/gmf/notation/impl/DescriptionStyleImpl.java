@@ -153,6 +153,7 @@ public class DescriptionStyleImpl extends CDOObjectImpl implements DescriptionSt
    * <!-- end-user-doc -->
   * @generated
   */
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSet(int featureID)
   {

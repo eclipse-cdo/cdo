@@ -239,6 +239,7 @@ public class DiagramStyleImpl extends PageStyleImpl implements DiagramStyle
    * <!-- end-user-doc -->
   * @generated
   */
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSet(int featureID)
   {

@@ -518,6 +518,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("null")
   @Override
   public boolean eIsSet(int featureID)
   {

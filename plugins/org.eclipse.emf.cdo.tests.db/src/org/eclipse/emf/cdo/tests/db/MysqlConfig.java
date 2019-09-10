@@ -58,6 +58,7 @@ public class MysqlConfig extends AbstractSetupDBConfig
     return new MYSQLAdapter();
   }
 
+  @SuppressWarnings("null")
   @Override
   protected DataSource createDataSourceForDB(String dbName) throws SQLException
   {

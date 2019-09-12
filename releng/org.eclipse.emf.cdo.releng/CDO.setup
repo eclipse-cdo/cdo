@@ -232,6 +232,25 @@
       <sourceLocator
           rootFolder="${cdo.git.clone.location}"/>
       <repositoryList
+          name="2019-09">
+        <repository
+            url="http://download.eclipse.org/releases/2019-09"/>
+        <repository
+            url="https://download.eclipse.org/eclipse/updates/4.13milestones"/>
+        <repository
+            url="http://download.eclipse.org/tools/orbit/downloads/2019-09"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="http://download.eclipse.org/nebula/releases/latest"/>
+        <repository
+            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+        <repository
+            url="http://www.elver.org/eclipse/2.1.0/update"/>
+        <repository
+            url="${aspectj.repository}"/>
+      </repositoryList>
+      <repositoryList
           name="2018-09">
         <repository
             url="http://download.eclipse.org/releases/photon/201806271001"/>
@@ -665,7 +684,7 @@
         url="${aspectj.repository}"/>
   </setupTask>
   <stream name="master"
-      label="4.8 Integration (2018-09)">
+      label="4.8 Integration (2019-09)">
     <setupTask
         xsi:type="setup.p2:P2Task">
       <requirement
@@ -688,7 +707,7 @@
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.target.platform"
-        value="2018-09"/>
+        value="2019-09"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.bugzilla.version"

@@ -49,6 +49,7 @@ import org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EObservableAdapterLi
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -76,6 +77,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOView.ViewAndState;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The base class of all <em>native</em> {@link CDOObject objects}.
@@ -1262,7 +1264,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       return createUnorderedList(eStructuralFeature);
     }
 
-    return super.createList(eStructuralFeature);
+    return createOrderedList(eStructuralFeature);
+  }
+
+  /**
+   * @since 4.8
+   */
+  protected final CDOStoreEList createOrderedList(EStructuralFeature eStructuralFeature)
+  {
+    return new CDOStoreEList(this, eStructuralFeature);
   }
 
   /**
@@ -1796,6 +1806,615 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     }
 
     @Override
+    public NotificationChain basicRemove(Object object, NotificationChain notifications)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.basicRemove(object, notifications);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.basicRemove(object, notifications);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public NotificationChain basicAdd(Map.Entry<Object, Object> object, NotificationChain notifications)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.basicAdd(object, notifications);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.basicAdd(object, notifications);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public void addUnique(Map.Entry<Object, Object> object)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        super.addUnique(object);
+        return;
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          super.addUnique(object);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public void addUnique(int index, Map.Entry<Object, Object> object)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        super.addUnique(index, object);
+        return;
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          super.addUnique(index, object);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean addAllUnique(Collection<? extends Map.Entry<Object, Object>> collection)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.addAllUnique(collection);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.addAllUnique(collection);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean addAllUnique(int index, Collection<? extends Map.Entry<Object, Object>> collection)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.addAllUnique(index, collection);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.addAllUnique(index, collection);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public Map.Entry<Object, Object> setUnique(int index, Map.Entry<Object, Object> object)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.setUnique(index, object);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.setUnique(index, object);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public void set(Object value)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        super.set(value);
+        return;
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          super.set(value);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public void unset()
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        super.unset();
+        return;
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          super.unset();
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public Object put(Object key, Object value)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.put(key, value);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.put(key, value);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public Object removeKey(Object key)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.removeKey(key);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.removeKey(key);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public void putAll(Map<? extends Object, ? extends Object> map)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        super.putAll(map);
+        return;
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          super.putAll(map);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public void putAll(EMap<? extends Object, ? extends Object> map)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        super.putAll(map);
+        return;
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          super.putAll(map);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public Map.Entry<Object, Object> set(int index, Map.Entry<Object, Object> object)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.set(index, object);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.set(index, object);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean add(Map.Entry<Object, Object> object)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.add(object);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.add(object);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public void add(int index, Map.Entry<Object, Object> object)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        super.add(index, object);
+        return;
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          super.add(index, object);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends Map.Entry<Object, Object>> collection)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.addAll(collection);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.addAll(collection);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<? extends Map.Entry<Object, Object>> collection)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.addAll(index, collection);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.addAll(index, collection);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean remove(Object object)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.remove(object);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.remove(object);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> collection)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.removeAll(collection);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.removeAll(collection);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public Map.Entry<Object, Object> remove(int index)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.remove(index);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.remove(index);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> collection)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.retainAll(collection);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.retainAll(collection);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public void clear()
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        super.clear();
+        return;
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          super.clear();
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public void move(int index, Map.Entry<Object, Object> object)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        super.move(index, object);
+        return;
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          super.move(index, object);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public Map.Entry<Object, Object> move(int targetIndex, int sourceIndex)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.move(targetIndex, sourceIndex);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.move(targetIndex, sourceIndex);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
     public int size()
     {
       checkListForReading();
@@ -1849,12 +2468,657 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   /**
+   * @author Eike Stepper
+   */
+  private class CDOStoreEList extends EStoreEObjectImpl.BasicEStoreEList<Object>
+  {
+    private static final long serialVersionUID = 1L;
+
+    private CDOStoreEList(InternalEObject owner, EStructuralFeature eStructuralFeature)
+    {
+      super(owner, eStructuralFeature);
+    }
+
+    @Override
+    public void unset()
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        super.unset();
+        return;
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          super.unset();
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public NotificationChain inverseAdd(Object object, NotificationChain notifications)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.inverseAdd(object, notifications);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.inverseAdd(object, notifications);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public NotificationChain inverseRemove(Object object, NotificationChain notifications)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.inverseRemove(object, notifications);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.inverseRemove(object, notifications);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public void set(Object newValue)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        super.set(newValue);
+        return;
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          super.set(newValue);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public void addUnique(Object object)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        super.addUnique(object);
+        return;
+      }
+
+      Object viewMonitor = view.getViewMonitor();
+      synchronized (viewMonitor)
+      {
+        view.lockView();
+
+        try
+        {
+          super.addUnique(object);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public void addUnique(int index, Object object)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        super.addUnique(index, object);
+        return;
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          super.addUnique(index, object);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean addAllUnique(Collection<? extends Object> collection)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.addAllUnique(collection);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.addAllUnique(collection);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean addAllUnique(int index, Collection<? extends Object> collection)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.addAllUnique(index, collection);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.addAllUnique(index, collection);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean addAllUnique(Object[] objects, int start, int end)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.addAllUnique(objects, start, end);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.addAllUnique(objects, start, end);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean addAllUnique(int index, Object[] objects, int start, int end)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.addAllUnique(index, objects, start, end);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.addAllUnique(index, objects, start, end);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public NotificationChain basicAdd(Object object, NotificationChain notifications)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.basicAdd(object, notifications);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.basicAdd(object, notifications);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public Object remove(int index)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.remove(index);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.remove(index);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> collection)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.removeAll(collection);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.removeAll(collection);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public NotificationChain basicRemove(Object object, NotificationChain notifications)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.basicRemove(object, notifications);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.basicRemove(object, notifications);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public void clear()
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        super.clear();
+        return;
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          super.clear();
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public Object setUnique(int index, Object object)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.setUnique(index, object);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.setUnique(index, object);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public NotificationChain basicSet(int index, Object object, NotificationChain notifications)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.basicSet(index, object, notifications);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.basicSet(index, object, notifications);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public Object move(int targetIndex, int sourceIndex)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.move(targetIndex, sourceIndex);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.move(targetIndex, sourceIndex);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean remove(Object object)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.remove(object);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.remove(object);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> collection)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.retainAll(collection);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.retainAll(collection);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public Object set(int index, Object object)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.set(index, object);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.set(index, object);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean add(Object object)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.add(object);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.add(object);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public void add(int index, Object object)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        super.add(index, object);
+        return;
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          super.add(index, object);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends Object> collection)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.addAll(collection);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.addAll(collection);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<? extends Object> collection)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return super.addAll(index, collection);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return super.addAll(index, collection);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    @Override
+    public void move(int index, Object object)
+    {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        super.move(index, object);
+        return;
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          super.move(index, object);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+  }
+
+  /**
    * For internal use only.
    *
    * @author Andras Peteri
    * @since 4.1
    */
-  private final class CDOStoreUnorderedEList<E> extends EStoreEObjectImpl.BasicEStoreEList<E>
+  private final class CDOStoreUnorderedEList<E> extends CDOStoreEList
   {
     private static final long serialVersionUID = 1L;
 
@@ -1866,8 +3130,33 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     @Override
     public E remove(int index)
     {
+      InternalCDOView view = viewAndState.view;
+      if (view == null)
+      {
+        return internalRemove(index);
+      }
+
+      synchronized (view.getViewMonitor())
+      {
+        view.lockView();
+
+        try
+        {
+          return internalRemove(index);
+        }
+        finally
+        {
+          view.lockView();
+        }
+      }
+    }
+
+    private E internalRemove(int index)
+    {
       boolean oldObjectIsLast = index == size() - 1;
-      E oldObject = super.remove(index);
+
+      @SuppressWarnings("unchecked")
+      E oldObject = (E)super.remove(index);
 
       if (!oldObjectIsLast)
       {

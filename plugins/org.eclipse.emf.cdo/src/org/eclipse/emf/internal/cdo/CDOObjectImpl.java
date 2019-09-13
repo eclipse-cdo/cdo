@@ -107,6 +107,8 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
 
   private static final boolean EMF_TO_STRING = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.internal.cdo.CDOObjectImpl.emfToString");
 
+  private static final boolean OPTIMIZE_UNORDERED_LISTS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.internal.cdo.CDOObjectImpl.optimizeUnorderedLists");
+
   /**
    * Optimized storage of {@link CDOObject#cdoView()} and {@link CDOObject#cdoState()}.
    *
@@ -1259,7 +1261,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       return createMap(eStructuralFeature);
     }
 
-    if (!eStructuralFeature.isOrdered())
+    if (OPTIMIZE_UNORDERED_LISTS && !eStructuralFeature.isOrdered())
     {
       return createUnorderedList(eStructuralFeature);
     }

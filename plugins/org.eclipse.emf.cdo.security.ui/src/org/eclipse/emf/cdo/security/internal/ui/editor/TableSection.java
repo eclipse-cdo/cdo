@@ -39,12 +39,12 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
-import org.eclipse.core.databinding.beans.PojoProperties;
+import org.eclipse.core.databinding.beans.typed.PojoProperties;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.ToolBarManager;
-import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -108,7 +108,7 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
     addFilters(viewer);
     forwardSelection(viewer);
 
-    getContext().bindValue(ViewersObservables.observeInput(viewer), getValue());
+    getContext().bindValue(ViewerProperties.<StructuredViewer, Object> input().observe(viewer), getValue());
 
     configureDragSupport(viewer);
     configureDropSupport(viewer);

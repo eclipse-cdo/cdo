@@ -48,6 +48,7 @@ public class UIActivator extends AbstractUIPlugin
   /**
    * @since 3.1
    */
+  @SuppressWarnings("deprecation")
   public ImageDescriptor loadImageDescriptor(String path)
   {
     return imageDescriptorFromPlugin(omBundle.getBundleID(), path);

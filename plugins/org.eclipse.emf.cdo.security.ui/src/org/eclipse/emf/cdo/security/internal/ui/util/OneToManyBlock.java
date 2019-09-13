@@ -50,9 +50,9 @@ import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.IFilter;
@@ -186,7 +186,7 @@ public class OneToManyBlock
       viewer.setLabelProvider(labels);
     }
 
-    viewer.setContentProvider(new ObservableListContentProvider());
+    viewer.setContentProvider(new ObservableListContentProvider<Object>());
     SecurityUIUtil.applySupportedElementFilter(viewer, itemType);
     if (itemType != reference.getEReferenceType())
     {
@@ -226,7 +226,7 @@ public class OneToManyBlock
 
     removeButton = toolkit.createButton(buttons, Messages.OneToManyBlock_2, SWT.PUSH);
 
-    final IObservableValue<?> selection = ViewersObservables.observeSingleSelection(viewer);
+    final IObservableValue<?> selection = ViewerProperties.singleSelection().observe(viewer);
 
     context.bindValue(WidgetProperties.enabled().observe(newButton), input, null, ObjectWritableConverter.createUpdateValueStrategy());
     if (addButton != null)

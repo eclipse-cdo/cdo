@@ -37,6 +37,7 @@ public class FilterTreeSelectionDialog extends ElementTreeSelectionDialog
   @Override
   protected TreeViewer doCreateTreeViewer(Composite parent, int style)
   {
+    @SuppressWarnings("deprecation")
     FilteredTree tree = new FilteredTree(parent, style, filter, true);
     tree.setLayoutData(new GridData(GridData.FILL_BOTH));
     tree.setQuickSelectionMode(false);

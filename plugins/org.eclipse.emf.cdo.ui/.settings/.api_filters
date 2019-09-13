@@ -14,6 +14,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTableTreeEditor">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTableTreeEditor"/>
+                <message_argument value="org.eclipse.emf.cdo.ui_4.6.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.IContributorResourceAdapter">
         <filter id="305422471">
             <message_arguments>

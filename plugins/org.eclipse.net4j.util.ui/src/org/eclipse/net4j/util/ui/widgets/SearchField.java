@@ -159,6 +159,7 @@ public class SearchField extends Composite
   {
     private final PatternFilter patternFilter;
 
+    @SuppressWarnings("deprecation")
     private InternalTree(Composite parent, int treeStyle, PatternFilter filter, boolean useNewLook, PatternFilter patternFilter)
     {
       super(parent, treeStyle, filter, useNewLook);

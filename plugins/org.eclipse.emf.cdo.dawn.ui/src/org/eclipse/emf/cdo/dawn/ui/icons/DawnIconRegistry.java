@@ -76,6 +76,7 @@ public class DawnIconRegistry
 
   private static ImageDescriptor createDescriptor(String key)
   {
+    @SuppressWarnings("deprecation")
     ImageDescriptor descriptor = AbstractUIPlugin.imageDescriptorFromPlugin(OM.BUNDLE_ID, key);
     if (descriptor != null)
     {

@@ -31,8 +31,8 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
-import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -287,7 +287,7 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
     result.setContentProvider(new ArrayContentProvider());
     result.setInput(attribute.getEAttributeType().getInstanceClass().getEnumConstants());
 
-    getContext().bindValue(ViewersObservables.observeSingleSelection(result),
+    getContext().bindValue(ViewerProperties.singleSelection().observe(result),
         EMFEditObservables.observeDetailValue(getRealm(), getEditingDomain(), getValue(), attribute));
     getContext().bindValue(WidgetProperties.enabled().observe(result.getControl()), getValue(), null,
         ObjectWritableConverter.createUpdateValueStrategy(attribute));

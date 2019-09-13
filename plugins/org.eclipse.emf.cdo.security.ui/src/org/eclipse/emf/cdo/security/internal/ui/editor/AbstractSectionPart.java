@@ -21,7 +21,7 @@ import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -172,7 +172,7 @@ public abstract class AbstractSectionPart<T extends EObject> extends AbstractFor
     return value;
   }
 
-  protected ISWTObservableValue observeText(Text text)
+  protected ISWTObservableValue<?> observeText(Text text)
   {
     return WidgetProperties.text(new int[] { SWT.DefaultSelection, SWT.FocusOut }).observe(text);
   }

@@ -8,6 +8,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTableTreeEditor">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.edit.ui.celleditor.AdapterFactoryTableTreeEditor"/>
+                <message_argument value="org.eclipse.emf.cdo.security.editor_4.2.500"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.tasklist.TaskList">
         <filter id="305422471">
             <message_arguments>

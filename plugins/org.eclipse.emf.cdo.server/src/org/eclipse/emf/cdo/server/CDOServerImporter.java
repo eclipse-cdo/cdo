@@ -496,6 +496,11 @@ public abstract class CDOServerImporter
 
             if (feature.isMany())
             {
+              if (value == CDORevisionData.NIL)
+              {
+                value = null;
+              }
+
               CDOList list = revision.getOrCreateList(feature);
               list.add(value);
             }

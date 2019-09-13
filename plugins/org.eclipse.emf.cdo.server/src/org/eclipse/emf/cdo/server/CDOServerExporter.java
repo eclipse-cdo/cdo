@@ -704,7 +704,7 @@ public abstract class CDOServerExporter<OUT>
         out.attribute(featureType, TYPE_BYTE_ARRAY);
         out.attribute(FEATURE_VALUE, HexUtil.bytesToHex(array));
       }
-      else if (value == CDORevisionData.NIL)
+      else if (value == null || value == CDORevisionData.NIL)
       {
         out.attribute(FEATURE_ISNULL, true);
       }

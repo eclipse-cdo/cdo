@@ -31,8 +31,7 @@ import org.eclipse.emf.cdo.tests.model3.File;
 import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.tests.model3.Point;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
-import org.eclipse.emf.cdo.tests.model5.Doctor;
-import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
+import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 import org.eclipse.emf.cdo.tests.model6.UnsettableAttributes;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -75,197 +74,40 @@ public class BackupTest extends AbstractCDOTest
     super.doTearDown();
   }
 
-  public void testExport() throws Exception
+  private Customer initExtResource(ResourceSet resourceSet)
   {
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-    resource.getContents().add(createCustomer("Eike"));
-    transaction.commit();
-    session.close();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
+    Resource extResource = resourceSet.createResource(URI.createURI("ext.xmi"));
 
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
+    Customer customer = getModel1Factory().createCustomer();
+    extResource.getContents().add(customer);
+    return customer;
   }
 
-  public void testExportDate() throws Exception
+  private Customer createCustomer(String name)
   {
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-    PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
-    purchaseOrder.setDate(new Date(1234567));
-    resource.getContents().add(purchaseOrder);
-    transaction.commit();
-    session.close();
-
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
+    Customer customer = getModel1Factory().createCustomer();
+    customer.setName(name);
+    return customer;
   }
 
-  public void testExportBlob() throws Exception
+  private SalesOrder createSalesOrder(Customer customer)
   {
-    InputStream blobStream = null;
-
-    try
-    {
-      blobStream = OM.BUNDLE.getInputStream("uml2/Ecore.uml");
-      CDOBlob blob = new CDOBlob(blobStream);
-
-      Image image = getModel3Factory().createImage();
-      image.setWidth(320);
-      image.setHeight(200);
-      image.setData(blob);
-
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-      resource.getContents().add(image);
-      transaction.commit();
-    }
-    finally
-    {
-      IOUtil.close(blobStream);
-    }
-
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-  }
-
-  public void testExportClob() throws Exception
-  {
-    InputStream clobStream = null;
-
-    try
-    {
-      clobStream = OM.BUNDLE.getInputStream("uml2/Ecore.uml");
-      CDOClob clob = new CDOClob(new InputStreamReader(clobStream));
-
-      File file = getModel3Factory().createFile();
-      file.setName("Ecore.uml");
-      file.setData(clob);
-
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-      resource.getContents().add(file);
-      transaction.commit();
-    }
-    finally
-    {
-      IOUtil.close(clobStream);
-    }
-
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-  }
-
-  public void testExportByteArray() throws Exception
-  {
-    UnsettableAttributes object = getModel6Factory().createUnsettableAttributes();
-    object.setAttrByteArray(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -2, -3, -128, 127 });
-
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-    resource.getContents().add(object);
-    transaction.commit();
-
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-  }
-
-  public void testExportNIL() throws Exception
-  {
-    Unsettable1 object = getModel2Factory().createUnsettable1();
-    object.setUnsettableString(null);
-
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-    resource.getContents().add(object);
-    transaction.commit();
-
-    assertEquals(CDORevisionData.NIL, CDOUtil.getCDOObject(object).cdoRevision().data().get(getModel2Package().getUnsettable1_UnsettableString(), 0));
-
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-  }
-
-  public void testExportCustomDataType() throws Exception
-  {
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-    resource.getContents().add(createPoligon(new Point(1, 2), new Point(3, 1), new Point(4, 5)));
-    transaction.commit();
-    session.close();
-
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-  }
-
-  @Deprecated
-  public void _testExportFeatureMap() throws Exception
-  {
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-
-    addFeatureMap(resource);
-
-    transaction.commit();
-    session.close();
-
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-  }
-
-  public void testExportExternalReference() throws Exception
-  {
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-
-    ResourceSet resourceSet = transaction.getResourceSet();
-    Customer customer = initExtResource(resourceSet);
-
     SalesOrder salesOrder = getModel1Factory().createSalesOrder();
+    salesOrder.setId(4711);
     salesOrder.setCustomer(customer);
-    resource.getContents().add(salesOrder);
+    return salesOrder;
+  }
 
-    transaction.commit();
-    session.close();
+  private Polygon createPoligon(Point... points)
+  {
+    Polygon polygon = getModel3Factory().createPolygon();
+    for (Point point : points)
+    {
+      polygon.getPoints().add(point);
+    }
 
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
+    return polygon;
   }
 
   private void useAfterImport(String repoName) throws CommitException
@@ -507,32 +349,6 @@ public class BackupTest extends AbstractCDOTest
   }
 
   @CleanRepositoriesBefore(reason = "Inactive repository required")
-  @Deprecated
-  public void _testImportFeatureMap() throws Exception
-  {
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
-
-    addFeatureMap(resource);
-
-    transaction.commit();
-    session.close();
-
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-
-    InternalRepository repo2 = getRepository("repo2", false);
-
-    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
-    importer.importRepository(bais);
-  }
-
-  @CleanRepositoriesBefore(reason = "Inactive repository required")
   public void testImportExternalReference() throws Exception
   {
     CDOSession session = openSession();
@@ -613,54 +429,42 @@ public class BackupTest extends AbstractCDOTest
     });
   }
 
-  private Customer initExtResource(ResourceSet resourceSet)
+  @CleanRepositoriesBefore(reason = "Inactive repository required")
+  public void testImportNullListElement() throws Exception
   {
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
-    Resource extResource = resourceSet.createResource(URI.createURI("ext.xmi"));
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
 
-    Customer customer = getModel1Factory().createCustomer();
-    extResource.getContents().add(customer);
-    return customer;
-  }
+    PolygonWithDuplicates polygon = getModel3Factory().createPolygonWithDuplicates();
+    polygon.getPoints().add(new Point(1, 2));
+    polygon.getPoints().add(null);
+    polygon.getPoints().add(new Point(3, 4));
+    resource.getContents().add(polygon);
 
-  private Customer createCustomer(String name)
-  {
-    Customer customer = getModel1Factory().createCustomer();
-    customer.setName(name);
-    return customer;
-  }
+    transaction.commit();
+    session.close();
 
-  private SalesOrder createSalesOrder(Customer customer)
-  {
-    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
-    salesOrder.setId(4711);
-    salesOrder.setCustomer(customer);
-    return salesOrder;
-  }
+    InternalRepository repo1 = getRepository();
 
-  private Polygon createPoligon(Point... points)
-  {
-    Polygon polygon = getModel3Factory().createPolygon();
-    for (Point point : points)
-    {
-      polygon.getPoints().add(point);
-    }
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
 
-    return polygon;
-  }
+    InternalRepository repo2 = getRepository("repo2", false);
 
-  private void addFeatureMap(CDOResource resource)
-  {
-    Doctor doctor1 = getModel5Factory().createDoctor();
-    Doctor doctor2 = getModel5Factory().createDoctor();
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
+    importer.importRepository(bais);
 
-    resource.getContents().add(doctor1);
-    resource.getContents().add(doctor2);
+    useAfterImport("repo2");
 
-    TestFeatureMap featureMap = getModel5Factory().createTestFeatureMap();
-    featureMap.getPeople().add(getModel5Package().getTestFeatureMap_Doctors(), doctor1);
-    featureMap.getPeople().add(getModel5Package().getTestFeatureMap_Doctors(), doctor2);
-
-    resource.getContents().add(featureMap);
+    CDOSession session2 = openSession("repo2");
+    CDOView view2 = session2.openView();
+    CDOResource resource2 = view2.getResource(getResourcePath("/res1"));
+    PolygonWithDuplicates polygon2 = (PolygonWithDuplicates)resource2.getContents().get(0);
+    assertEquals(new Point(1, 2), polygon2.getPoints().get(0));
+    assertEquals(null, polygon2.getPoints().get(1));
+    assertEquals(new Point(3, 4), polygon2.getPoints().get(2));
   }
 }

@@ -41,6 +41,8 @@ public abstract class CDOCommand extends org.eclipse.net4j.util.factory.Factory
 
   private CommandInterpreter interpreter;
 
+  private long start;
+
   public CDOCommand(String name, String description, CommandParameter... parameters)
   {
     super(PRODUCT_GROUP, name);
@@ -97,9 +99,17 @@ public abstract class CDOCommand extends org.eclipse.net4j.util.factory.Factory
         builder.append("[");
       }
 
-      builder.append("<");
+      if (!parameter.isLiteral())
+      {
+        builder.append("<");
+      }
+
       builder.append(parameter.getName());
-      builder.append(">");
+
+      if (!parameter.isLiteral())
+      {
+        builder.append(">");
+      }
 
       if (parameter.isOptional())
       {
@@ -166,7 +176,27 @@ public abstract class CDOCommand extends org.eclipse.net4j.util.factory.Factory
       args[i] = arg;
     }
 
+    start = System.currentTimeMillis();
+
     execute(args);
+  }
+
+  /**
+   * @since 4.8
+   */
+  protected final String duration()
+  {
+    long millis = System.currentTimeMillis() - start;
+    if (millis < 1000L)
+    {
+      return millis + " millis";
+    }
+
+    long duration = millis / 1000;
+    long s = duration % 60;
+    long m = duration / 60 % 60;
+    long h = duration / (60 * 60) % 24;
+    return String.format("%d:%02d:%02d", h, m, s);
   }
 
   public abstract void execute(String[] args) throws Exception;
@@ -315,10 +345,21 @@ public abstract class CDOCommand extends org.eclipse.net4j.util.factory.Factory
 
     private final boolean optional;
 
+    private final boolean literal;
+
     public CommandParameter(String name, boolean optional)
+    {
+      this(name, optional, false);
+    }
+
+    /**
+     * @since 4.8
+     */
+    private CommandParameter(String name, boolean optional, boolean literal)
     {
       this.name = name;
       this.optional = optional;
+      this.literal = literal;
     }
 
     public String getName()
@@ -329,6 +370,22 @@ public abstract class CDOCommand extends org.eclipse.net4j.util.factory.Factory
     public boolean isOptional()
     {
       return optional;
+    }
+
+    /**
+     * @since 4.8
+     */
+    public boolean isLiteral()
+    {
+      return literal;
+    }
+
+    /**
+     * @since 4.8
+     */
+    public CommandParameter literal()
+    {
+      return new CommandParameter(name, optional, true);
     }
   }
 

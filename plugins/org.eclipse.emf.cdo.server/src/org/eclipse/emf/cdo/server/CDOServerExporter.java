@@ -16,30 +16,38 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
+import org.eclipse.net4j.util.Handler;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.XMLOutput;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -50,6 +58,8 @@ import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import org.xml.sax.SAXException;
 
+import java.io.BufferedOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.math.BigDecimal;
@@ -61,20 +71,22 @@ import java.util.List;
  * Exports the complete contents of a {@link IRepository repository} in a format suitable for {@link CDOServerImporter
  * imports} into new repositories.
  * <p>
- * Subtypes specifiy the actual exchange format.
+ * Subtypes specify the actual exchange format.
  *
  * @author Eike Stepper
  * @since 4.0
  */
 public abstract class CDOServerExporter<OUT>
 {
-  private InternalRepository repository;
+  InternalRepository repository;
 
   private boolean exportSystemPackages;
 
   private String branchPath;
 
   private long timeStamp = CDOBranchPoint.INVALID_DATE;
+
+  private final Statistics statistics = new Statistics();
 
   public CDOServerExporter(IRepository repository)
   {
@@ -84,6 +96,14 @@ public abstract class CDOServerExporter<OUT>
   public final IRepository getRepository()
   {
     return repository;
+  }
+
+  /**
+   * @since 4.8
+   */
+  public Statistics getStatistics()
+  {
+    return statistics;
   }
 
   /**
@@ -147,8 +167,14 @@ public abstract class CDOServerExporter<OUT>
 
     try
     {
+      if (!(out instanceof BufferedOutputStream))
+      {
+        out = new BufferedOutputStream(out);
+      }
+
       OUT output = createOutput(out);
       exportAll(output);
+      out.flush();
     }
     finally
     {
@@ -202,9 +228,11 @@ public abstract class CDOServerExporter<OUT>
       {
         String packageURI = packageInfo.getPackageURI();
         exportPackageInfo(out, packageURI);
+        ++statistics.packageInfos;
       }
 
       endPackageUnit(out);
+      ++statistics.packageUnits;
     }
   }
 
@@ -255,6 +283,7 @@ public abstract class CDOServerExporter<OUT>
   protected void exportBranch(OUT out, CDOBranch branch) throws Exception
   {
     exportRevisions(out, branch);
+    ++statistics.branches;
   }
 
   protected void exportRevisions(final OUT out, CDOBranch branch) throws Exception
@@ -266,6 +295,7 @@ public abstract class CDOServerExporter<OUT>
         try
         {
           exportRevision(out, revision);
+          ++statistics.revisions;
           return true;
         }
         catch (Exception ex)
@@ -286,6 +316,7 @@ public abstract class CDOServerExporter<OUT>
       {
         try
         {
+          ++statistics.blobs;
           return startBlob(out, id, size);
         }
         catch (Exception ex)
@@ -298,6 +329,7 @@ public abstract class CDOServerExporter<OUT>
       {
         try
         {
+          ++statistics.clobs;
           return startClob(out, id, size);
         }
         catch (Exception ex)
@@ -322,6 +354,7 @@ public abstract class CDOServerExporter<OUT>
         try
         {
           exportCommit(out, commitInfo);
+          ++statistics.commits;
         }
         catch (Exception ex)
         {
@@ -332,6 +365,38 @@ public abstract class CDOServerExporter<OUT>
   }
 
   protected abstract void exportCommit(OUT out, CDOCommitInfo commitInfo) throws Exception;
+
+  /**
+   * @author Eike Stepper
+   * @since 4.8
+   */
+  public static final class Statistics
+  {
+    public long packageUnits;
+
+    public long packageInfos;
+
+    public long branches;
+
+    public long revisions;
+
+    public long blobs;
+
+    public long clobs;
+
+    public long commits;
+
+    public void dump(Handler<String> handler)
+    {
+      handler.handle("Package Units: " + packageUnits);
+      handler.handle("Package Infos: " + packageInfos);
+      handler.handle("Branches:      " + branches);
+      handler.handle("Revisions:     " + revisions);
+      handler.handle("Blobs:         " + blobs);
+      handler.handle("Clobs:         " + clobs);
+      handler.handle("Commits:       " + commits);
+    }
+  }
 
   /**
    * XML constants being used by both {@link CDOServerExporter exporters} and {@link CDOServerImporter importers}.
@@ -570,7 +635,6 @@ public abstract class CDOServerExporter<OUT>
       out.push();
       super.exportBranch(out, branch);
       out.pop();
-
     }
 
     @Override
@@ -850,6 +914,241 @@ public abstract class CDOServerExporter<OUT>
       }
 
       throw new IllegalArgumentException("Invalid type: " + value.getClass().getName());
+    }
+  }
+
+  /**
+   * Binary constants being used by both {@link CDOServerExporter exporters} and {@link CDOServerImporter importers}.
+   *
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
+   * @author Eike Stepper
+   * @since 4.8
+   */
+  public static interface BinaryConstants
+  {
+    public static final byte REPOSITORY = 0;
+
+    public static final byte PACKAGE_UNIT = 1;
+
+    public static final byte PACKAGE_INFO = 2;
+
+    public static final byte BRANCH = 3;
+
+    public static final byte REVISION = 4;
+
+    public static final byte BLOB = 5;
+
+    public static final byte CLOB = 6;
+
+    public static final byte COMMIT = 7;
+
+    public static final byte EOF = -1;
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.8
+   */
+  public static class Binary extends CDOServerExporter<CDODataOutput> implements BinaryConstants
+  {
+    public Binary(IRepository repository)
+    {
+      super(repository);
+    }
+
+    @Override
+    protected CDODataOutput createOutput(OutputStream out) throws Exception
+    {
+      return new CDODataOutputImpl(new ExtendedDataOutputStream(out))
+      {
+        @Override
+        public CDOPackageRegistry getPackageRegistry()
+        {
+          return ((InternalRepository)getRepository()).getPackageRegistry(false);
+        }
+
+        @Override
+        public CDOIDProvider getIDProvider()
+        {
+          return CDOIDProvider.NOOP;
+        }
+
+        @Override
+        public CDOPermissionProvider getPermissionProvider()
+        {
+          return CDOPermissionProvider.READ;
+        }
+
+        @Override
+        protected boolean isXCompression()
+        {
+          return true;
+        }
+      };
+    }
+
+    @Override
+    protected void exportAll(CDODataOutput out) throws Exception
+    {
+      out.writeByte(REPOSITORY);
+      out.writeString(getRepository().getName());
+      out.writeString(getRepository().getUUID());
+      out.writeCDOID(getRepository().getRootResourceID());
+      out.writeLong(getRepository().getStore().getCreationTime());
+      out.writeLong(getRepository().getLastCommitTimeStamp());
+
+      super.exportAll(out);
+
+      out.writeByte(EOF);
+    }
+
+    @Override
+    protected void startPackageUnit(CDODataOutput out, String id, Type type, long time, String data) throws Exception
+    {
+      out.writeByte(PACKAGE_UNIT);
+      out.writeString(id);
+      out.writeEnum(type);
+      out.writeXLong(time);
+      out.writeString(data);
+    }
+
+    @Override
+    protected void endPackageUnit(CDODataOutput out) throws Exception
+    {
+      // Do nothing.
+    }
+
+    @Override
+    protected void exportPackageInfo(CDODataOutput out, String packageURI) throws Exception
+    {
+      out.writeByte(PACKAGE_INFO);
+      out.writeString(packageURI);
+    }
+
+    @Override
+    protected void exportBranch(CDODataOutput out, CDOBranch branch) throws Exception
+    {
+      out.writeByte(BRANCH);
+      out.writeXInt(branch.getID());
+      out.writeString(branch.getName());
+      out.writeXLong(branch.getBase().getTimeStamp());
+      if (branch.isMainBranch())
+      {
+        out.writeXInt(CDOBranch.MAIN_BRANCH_ID);
+      }
+      else
+      {
+        out.writeXInt(branch.getBase().getBranch().getID());
+      }
+
+      super.exportBranch(out, branch);
+    }
+
+    @Override
+    protected void exportRevision(CDODataOutput out, CDORevision revision) throws Exception
+    {
+      out.writeByte(REVISION);
+      if (revision instanceof DetachedCDORevision)
+      {
+        out.writeBoolean(true);
+        out.writeCDOID(revision.getID());
+        out.writeCDOClassifierRef(revision.getEClass());
+        out.writeCDOBranch(revision.getBranch());
+        out.writeXInt(revision.getVersion());
+        out.writeXLong(revision.getTimeStamp());
+        out.writeXLong(revision.getRevised());
+      }
+      else
+      {
+        out.writeBoolean(false);
+        out.writeCDORevision(revision, CDORevision.UNCHUNKED);
+      }
+    }
+
+    @Override
+    protected OutputStream startBlob(final CDODataOutput out, byte[] id, long size) throws Exception
+    {
+      out.writeByte(BLOB);
+      out.writeByteArray(id);
+      out.writeXLong(size);
+
+      return new OutputStream()
+      {
+        @Override
+        public void write(byte[] b, int off, int len) throws IOException
+        {
+          out.write(b, off, len);
+        }
+
+        @Override
+        public void write(int b) throws IOException
+        {
+          out.write(b);
+        }
+
+        @Override
+        public void close() throws IOException
+        {
+          // Do nothing.
+        }
+      };
+    }
+
+    @Override
+    protected Writer startClob(final CDODataOutput out, byte[] id, long size) throws Exception
+    {
+      out.writeByte(CLOB);
+      out.writeByteArray(id);
+      out.writeXLong(size);
+
+      return new Writer()
+      {
+        @Override
+        public void write(char[] cbuf, int off, int len) throws IOException
+        {
+          for (int i = off; i < len; i++)
+          {
+            char c = cbuf[i];
+            out.writeChar(c);
+          }
+        }
+
+        @Override
+        public void close() throws IOException
+        {
+          // Do nothing.
+        }
+
+        @Override
+        public void flush() throws IOException
+        {
+          // Do nothing.
+        }
+      };
+    }
+
+    @Override
+    protected void exportCommit(CDODataOutput out, CDOCommitInfo commitInfo) throws Exception
+    {
+      out.writeByte(COMMIT);
+      out.writeXLong(commitInfo.getTimeStamp());
+      out.writeXLong(commitInfo.getPreviousTimeStamp());
+      out.writeXInt(commitInfo.getBranch().getID());
+      out.writeString(commitInfo.getUserID());
+      out.writeString(commitInfo.getComment());
+
+      CDOBranchPoint mergeSource = commitInfo.getMergeSource();
+      if (mergeSource != null)
+      {
+        out.writeBoolean(true);
+        out.writeXInt(mergeSource.getBranch().getID());
+        out.writeXLong(mergeSource.getTimeStamp());
+      }
+      else
+      {
+        out.writeBoolean(false);
+      }
     }
   }
 }

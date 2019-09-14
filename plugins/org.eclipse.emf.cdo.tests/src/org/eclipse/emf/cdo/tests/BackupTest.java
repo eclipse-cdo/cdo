@@ -74,6 +74,16 @@ public class BackupTest extends AbstractCDOTest
     super.doTearDown();
   }
 
+  protected CDOServerExporter<?> createExporter(InternalRepository repo1)
+  {
+    return new CDOServerExporter.XML(repo1);
+  }
+
+  protected CDOServerImporter createImporter(InternalRepository repo2)
+  {
+    return new CDOServerImporter.XML(repo2);
+  }
+
   private Customer initExtResource(ResourceSet resourceSet)
   {
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
@@ -131,12 +141,23 @@ public class BackupTest extends AbstractCDOTest
     session2.close();
   }
 
-  /**
-   * TODO
-   * {@link org.eclipse.emf.cdo.server.IStoreAccessor.Raw#rawStore(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, org.eclipse.net4j.util.om.monitor.OMMonitor)
-   * rawStore()} is not adequate with range-based list mappings because they need deltas!
-   */
-  @Skips("DB.ranges")
+  private void doExportImport() throws Exception, CommitException
+  {
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter<?> exporter = createExporter(repo1);
+    exporter.exportRepository(baos);
+
+    InternalRepository repo2 = getRepository("repo2", false);
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    CDOServerImporter importer = createImporter(repo2);
+    importer.importRepository(bais);
+
+    useAfterImport("repo2");
+  }
+
   @CleanRepositoriesBefore(reason = "Inactive repository required")
   public void testImport() throws Exception
   {
@@ -154,19 +175,7 @@ public class BackupTest extends AbstractCDOTest
     transaction.commit();
     session.close();
 
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-
-    InternalRepository repo2 = getRepository("repo2", false);
-
-    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
-    importer.importRepository(bais);
-
-    useAfterImport("repo2");
+    doExportImport();
   }
 
   @CleanRepositoriesBefore(reason = "Inactive repository required")
@@ -181,17 +190,7 @@ public class BackupTest extends AbstractCDOTest
     transaction.commit();
     session.close();
 
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-
-    InternalRepository repo2 = getRepository("repo2", false);
-
-    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
-    importer.importRepository(bais);
+    doExportImport();
   }
 
   @CleanRepositoriesBefore(reason = "Inactive repository required")
@@ -220,17 +219,7 @@ public class BackupTest extends AbstractCDOTest
       IOUtil.close(blobStream);
     }
 
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-
-    InternalRepository repo2 = getRepository("repo2", false);
-
-    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
-    importer.importRepository(bais);
+    doExportImport();
   }
 
   @CleanRepositoriesBefore(reason = "Inactive repository required")
@@ -258,17 +247,7 @@ public class BackupTest extends AbstractCDOTest
       IOUtil.close(clobStream);
     }
 
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-
-    InternalRepository repo2 = getRepository("repo2", false);
-
-    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
-    importer.importRepository(bais);
+    doExportImport();
   }
 
   @CleanRepositoriesBefore(reason = "Inactive repository required")
@@ -283,17 +262,7 @@ public class BackupTest extends AbstractCDOTest
     resource.getContents().add(object);
     transaction.commit();
 
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-
-    InternalRepository repo2 = getRepository("repo2", false);
-
-    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
-    importer.importRepository(bais);
+    doExportImport();
   }
 
   @CleanRepositoriesBefore(reason = "Inactive repository required")
@@ -310,19 +279,7 @@ public class BackupTest extends AbstractCDOTest
 
     assertEquals(CDORevisionData.NIL, CDOUtil.getCDOObject(object).cdoRevision().data().get(getModel2Package().getUnsettable1_UnsettableString(), 0));
 
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-
-    InternalRepository repo2 = getRepository("repo2", false);
-
-    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
-    importer.importRepository(bais);
-
-    useAfterImport("repo2");
+    doExportImport();
   }
 
   @CleanRepositoriesBefore(reason = "Inactive repository required")
@@ -335,17 +292,7 @@ public class BackupTest extends AbstractCDOTest
     transaction.commit();
     session.close();
 
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-
-    InternalRepository repo2 = getRepository("repo2", false);
-
-    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
-    importer.importRepository(bais);
+    doExportImport();
   }
 
   @CleanRepositoriesBefore(reason = "Inactive repository required")
@@ -365,17 +312,7 @@ public class BackupTest extends AbstractCDOTest
     transaction.commit();
     session.close();
 
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-
-    InternalRepository repo2 = getRepository("repo2", false);
-
-    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
-    importer.importRepository(bais);
+    doExportImport();
 
     CDOSession session2 = openSession("repo2");
     CDOView view2 = session2.openView();
@@ -404,17 +341,7 @@ public class BackupTest extends AbstractCDOTest
     transaction.commit();
     session.close();
 
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-
-    InternalRepository repo2 = getRepository("repo2", false);
-
-    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
-    importer.importRepository(bais);
+    doExportImport();
 
     EClass eClass = getModel1Package().getPurchaseOrder();
     CDOSession session2 = openSession("repo2");
@@ -445,19 +372,7 @@ public class BackupTest extends AbstractCDOTest
     transaction.commit();
     session.close();
 
-    InternalRepository repo1 = getRepository();
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
-    exporter.exportRepository(baos);
-
-    InternalRepository repo2 = getRepository("repo2", false);
-
-    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
-    importer.importRepository(bais);
-
-    useAfterImport("repo2");
+    doExportImport();
 
     CDOSession session2 = openSession("repo2");
     CDOView view2 = session2.openView();

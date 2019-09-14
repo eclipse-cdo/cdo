@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
+import org.eclipse.net4j.util.Handler;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -109,65 +110,103 @@ public class CDOCommandProvider implements CommandProvider
     }
   };
 
-  private static final CDOCommand exportXML = new CDOCommand.WithRepository("export", "export the contents of a repository to an XML file",
-      CDOCommand.parameter("export-file"), CDOCommand.optional("branch-path"), CDOCommand.optional("time-stamp"))
+  private static final CDOCommand exportFile = new CDOCommand.WithRepository("export", "export the contents of a repository to a file",
+      CDOCommand.parameter("export-file"), CDOCommand.optional("xml|bin").literal(), CDOCommand.optional("/<branch-path>").literal(),
+      CDOCommand.optional("time-stamp"), CDOCommand.optional("withSystemPackages").literal())
   {
     @Override
     public void execute(InternalRepository repository, String[] args) throws Exception
     {
       String exportFile = args[0];
+      boolean binary = false;
+      boolean withSystemPackages = false;
+      String branchPath = null;
+      Long timeStamp = null;
+
+      for (int i = 1; i < args.length; i++)
+      {
+        String arg = args[i];
+
+        if (arg != null)
+        {
+          if (arg.equalsIgnoreCase("bin"))
+          {
+            binary = true;
+          }
+          else if (arg.equalsIgnoreCase("withSystemPackages"))
+          {
+            withSystemPackages = true;
+          }
+          else if (arg.startsWith("/"))
+          {
+            branchPath = arg;
+          }
+          else
+          {
+            try
+            {
+              timeStamp = Long.valueOf(arg);
+            }
+            catch (NumberFormatException ex)
+            {
+              timeStamp = null;
+            }
+          }
+        }
+      }
+
       OutputStream out = null;
 
       try
       {
         out = new FileOutputStream(exportFile);
 
-        CDOServerExporter.XML exporter = new CDOServerExporter.XML(repository);
-        processArgument(exporter, args[1]);
-        processArgument(exporter, args[2]);
-        exporter.exportRepository(out);
+        CDOServerExporter<?> exporter = binary ? new CDOServerExporter.Binary(repository) : new CDOServerExporter.XML(repository);
 
-        if (args.length > 1)
+        if (branchPath != null)
         {
-          if ("withSystemPackages".equalsIgnoreCase(args[1]))
-          {
-            exporter.setExportSystemPackages(true);
-          }
+          exporter.setBranchPath(branchPath);
         }
 
-        println("Repository exported");
+        if (timeStamp != null)
+        {
+          exporter.setTimeStamp(timeStamp);
+        }
+
+        if (withSystemPackages)
+        {
+          exporter.setExportSystemPackages(true);
+        }
+
+        exporter.exportRepository(out);
+
+        println("Repository exported.");
+        exporter.getStatistics().dump(new Handler<String>()
+        {
+          public void handle(String line)
+          {
+            println(line);
+          }
+        });
+
+        println("Took " + duration());
       }
       finally
       {
         IOUtil.close(out);
       }
     }
-
-    private void processArgument(CDOServerExporter.XML exporter, String arg)
-    {
-      if (arg == null)
-      {
-        return;
-      }
-
-      if (arg.startsWith("/"))
-      {
-        exporter.setBranchPath(arg);
-      }
-      else
-      {
-        exporter.setTimeStamp(Long.valueOf(arg));
-      }
-    }
   };
 
-  private static final CDOCommand importXML = new CDOCommand.WithRepository("import", "import the contents of a repository from an XML file",
-      CDOCommand.parameter("import-file"))
+  private static final CDOCommand importFile = new CDOCommand.WithRepository("import", "import the contents of a repository from a file",
+      CDOCommand.parameter("import-file"), CDOCommand.optional("xml|bin").literal())
   {
     @Override
     public void execute(InternalRepository repository, String[] args) throws Exception
     {
       String importFile = args[0];
+      boolean binary = "bin".equalsIgnoreCase(args[1]);
+
       InputStream in = null;
 
       try
@@ -175,13 +214,22 @@ public class CDOCommandProvider implements CommandProvider
         in = new FileInputStream(importFile);
         LifecycleUtil.deactivate(repository);
 
-        CDOServerImporter.XML importer = new CDOServerImporter.XML(repository);
+        CDOServerImporter importer = binary ? new CDOServerImporter.Binary(repository) : new CDOServerImporter.XML(repository);
         importer.importRepository(in);
 
         IManagedContainer container = CDOServerApplication.getContainer();
         CDOServerUtil.addRepository(container, repository);
 
-        println("Repository imported");
+        println("Repository imported.");
+        importer.getStatistics().dump(new Handler<String>()
+        {
+          public void handle(String line)
+          {
+            println(line);
+          }
+        });
+
+        println("Took " + duration());
       }
       finally
       {
@@ -365,8 +413,8 @@ public class CDOCommandProvider implements CommandProvider
     addCommand(commands, list);
     addCommand(commands, start);
     addCommand(commands, stop);
-    addCommand(commands, exportXML);
-    addCommand(commands, importXML);
+    addCommand(commands, exportFile);
+    addCommand(commands, importFile);
     addCommand(commands, branches);
     addCommand(commands, deletelocks);
     addCommand(commands, locks);

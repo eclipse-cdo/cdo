@@ -271,11 +271,27 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/CDOServerExporter.java" type="org.eclipse.emf.cdo.server.CDOServerExporter$Binary">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="BinaryConstants"/>
+                <message_argument value="Binary"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/CDOServerExporter.java" type="org.eclipse.emf.cdo.server.CDOServerExporter$XML">
         <filter id="576725006">
             <message_arguments>
                 <message_argument value="XMLConstants"/>
                 <message_argument value="XML"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/CDOServerImporter.java" type="org.eclipse.emf.cdo.server.CDOServerImporter$Binary">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="BinaryConstants"/>
+                <message_argument value="Binary"/>
             </message_arguments>
         </filter>
     </resource>

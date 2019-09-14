@@ -11,23 +11,30 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
+import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lob.CDOLobUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil.ExtResourceSet;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.server.CDOServerExporter.Statistics;
 import org.eclipse.emf.cdo.server.IStoreAccessor.Raw2;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
@@ -35,6 +42,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -43,6 +51,7 @@ import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.AsyncOutputStream;
 import org.eclipse.net4j.util.io.AsyncWriter;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
@@ -59,6 +68,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -87,6 +97,8 @@ public abstract class CDOServerImporter
 {
   private InternalRepository repository;
 
+  private final Statistics statistics = new Statistics();
+
   public CDOServerImporter(IRepository repository)
   {
     this.repository = (InternalRepository)repository;
@@ -104,6 +116,14 @@ public abstract class CDOServerImporter
   protected final InternalRepository getRepository()
   {
     return repository;
+  }
+
+  /**
+   * @since 4.8
+   */
+  public Statistics getStatistics()
+  {
+    return statistics;
   }
 
   public void importRepository(InputStream in) throws Exception
@@ -200,6 +220,7 @@ public abstract class CDOServerImporter
 
     public InternalCDOPackageUnit handlePackageUnit(String id, Type type, long time, String data)
     {
+      ++statistics.packageUnits;
       collectPackageInfos();
 
       InternalCDOPackageUnit packageUnit = packageRegistry.createPackageUnit();
@@ -214,6 +235,8 @@ public abstract class CDOServerImporter
 
     public InternalCDOPackageInfo handlePackageInfo(String packageURI)
     {
+      ++statistics.packageInfos;
+
       InternalCDOPackageInfo packageInfo = (InternalCDOPackageInfo)CDOModelUtil.createPackageInfo();
       packageInfo.setPackageURI(packageURI);
       packageInfos.add(packageInfo);
@@ -259,6 +282,8 @@ public abstract class CDOServerImporter
 
     public InternalCDOBranch handleBranch(int id, String name, long time, int parentID)
     {
+      ++statistics.branches;
+
       InternalCDOBranchManager branchManager = repository.getBranchManager();
       if (id == CDOBranch.MAIN_BRANCH_ID)
       {
@@ -271,12 +296,14 @@ public abstract class CDOServerImporter
 
     public boolean handleRevision(CDORevision revision)
     {
+      ++statistics.revisions;
       accessor.rawStore((InternalCDORevision)revision, monitor);
       return true;
     }
 
     public OutputStream handleBlob(final byte[] id, final long size) throws IOException
     {
+      ++statistics.blobs;
       return new AsyncOutputStream()
       {
         @Override
@@ -289,6 +316,7 @@ public abstract class CDOServerImporter
 
     public Writer handleClob(final byte[] id, final long size) throws IOException
     {
+      ++statistics.clobs;
       return new AsyncWriter()
       {
         @Override
@@ -306,6 +334,8 @@ public abstract class CDOServerImporter
 
     public void handleCommitInfo(long time, long previous, int branchID, String user, String comment, int mergeSourceBranchID, long mergeSourceTime)
     {
+      ++statistics.commits;
+
       CDOBranch branch = repository.getBranchManager().getBranch(branchID);
       if (mergeSourceBranchID != 0 && accessor instanceof Raw2)
       {
@@ -795,6 +825,258 @@ public abstract class CDOServerImporter
 
         throw new IllegalArgumentException("Invalid type: " + type);
       }
+    }
+  }
+
+  /**
+   * An {@link CDOServerImporter importer} that reads and interprets XML output created by an
+   * {@link CDOServerExporter.XML XML exporter}.
+   *
+   * @author Eike Stepper
+   * @since 4.8
+   */
+  public static class Binary extends CDOServerImporter implements CDOServerExporter.BinaryConstants
+  {
+    private InternalCDOPackageRegistry packageRegistry;
+
+    public Binary(IRepository repository)
+    {
+      super(repository);
+    }
+
+    @Override
+    protected void importAll(InputStream stream, Handler handler) throws Exception
+    {
+      CDODataInput in = createDataInput(stream);
+
+      for (;;)
+      {
+        byte opcode = in.readByte();
+        switch (opcode)
+        {
+        case REPOSITORY:
+          handleRepository(in, handler);
+          break;
+
+        case PACKAGE_UNIT:
+          handlePackageUnit(in, handler);
+          break;
+
+        case PACKAGE_INFO:
+          handlePackageInfo(in, handler);
+          break;
+
+        case BRANCH:
+          handleBranch(in, handler);
+          break;
+
+        case REVISION:
+          handleRevision(in, handler);
+          break;
+
+        case BLOB:
+          handleBlob(in, handler);
+          break;
+
+        case CLOB:
+          handleClob(in, handler);
+          break;
+
+        case COMMIT:
+          handleCommit(in, handler);
+          break;
+
+        case EOF:
+          return;
+
+        default:
+          throw new IOException("Illegal opcode: " + opcode);
+        }
+      }
+    }
+
+    private CDODataInput createDataInput(InputStream stream)
+    {
+      return new CDODataInputImpl(new ExtendedDataInputStream(new BufferedInputStream(stream)))
+      {
+        public CDOPackageRegistry getPackageRegistry()
+        {
+          return getRepository().getPackageRegistry(false);
+        }
+
+        @Override
+        protected CDOBranchManager getBranchManager()
+        {
+          return getRepository().getBranchManager();
+        }
+
+        @Override
+        protected CDOCommitInfoManager getCommitInfoManager()
+        {
+          return getRepository().getCommitInfoManager();
+        }
+
+        @Override
+        protected CDORevisionFactory getRevisionFactory()
+        {
+          return getRepository().getRevisionManager().getFactory();
+        }
+
+        @Override
+        protected CDOListFactory getListFactory()
+        {
+          return CDOListFactory.DEFAULT;
+        }
+
+        @Override
+        protected CDOLobStore getLobStore()
+        {
+          return null; // Not used on server
+        }
+
+        @Override
+        protected boolean isXCompression()
+        {
+          return true;
+        }
+      };
+    }
+
+    private void handleRepository(CDODataInput in, Handler handler) throws IOException
+    {
+      String name = in.readString();
+      String uuid = in.readString();
+      CDOID root = in.readCDOID();
+      long created = in.readLong();
+      long committed = in.readLong();
+
+      handler.handleRepository(name, uuid, root, created, committed);
+
+    }
+
+    private void handlePackageUnit(CDODataInput in, Handler handler) throws IOException
+    {
+      String id = in.readString();
+      CDOPackageUnit.Type type = in.readEnum(CDOPackageUnit.Type.class);
+      long time = in.readXLong();
+      String data = in.readString();
+
+      if (!CDOModelUtil.isSystemPackageURI(id))
+      {
+        handler.handlePackageUnit(id, type, time, data);
+      }
+    }
+
+    private void handlePackageInfo(CDODataInput in, Handler handler) throws IOException
+    {
+      String packageURI = in.readString();
+      if (!CDOModelUtil.isSystemPackageURI(packageURI))
+      {
+        handler.handlePackageInfo(packageURI);
+      }
+    }
+
+    private void handleBranch(CDODataInput in, Handler handler) throws IOException
+    {
+      if (packageRegistry == null)
+      {
+        packageRegistry = handler.handleModels();
+      }
+
+      int id = in.readXInt();
+      String name = in.readString();
+      long time = in.readXLong();
+      int parentID = in.readXInt();
+      handler.handleBranch(id, name, time, parentID);
+    }
+
+    private void handleRevision(CDODataInput in, Handler handler) throws IOException
+    {
+      CDORevision revision;
+      if (in.readBoolean())
+      {
+        CDOID id = in.readCDOID();
+        CDOClassifierRef classifierRef = in.readCDOClassifierRef();
+        EClass eClass = (EClass)classifierRef.resolve(packageRegistry);
+        CDOBranch branch = in.readCDOBranch();
+        int version = in.readXInt();
+        long created = in.readXLong();
+        long revised = in.readXLong();
+        revision = new DetachedCDORevision(eClass, id, branch, version, created, revised);
+      }
+      else
+      {
+        revision = in.readCDORevision();
+      }
+
+      handler.handleRevision(revision);
+    }
+
+    private void handleBlob(CDODataInput in, Handler handler) throws IOException
+    {
+      byte[] id = in.readByteArray();
+      long size = in.readXLong();
+      OutputStream blob = handler.handleBlob(id, size);
+
+      // TODO Use IOUtil.copyBinary(in, blob, size).
+      try
+      {
+        while (--size >= 0L)
+        {
+          byte b = in.readByte();
+          blob.write(b);
+        }
+      }
+      finally
+      {
+        IOUtil.close(blob);
+      }
+    }
+
+    private void handleClob(CDODataInput in, Handler handler) throws IOException
+    {
+      byte[] id = in.readByteArray();
+      long size = in.readXLong();
+      Writer clob = handler.handleClob(id, size);
+
+      // TODO Use IOUtil.copyCharacter(in, clob, size).
+      try
+      {
+        while (--size >= 0L)
+        {
+          char c = in.readChar();
+          clob.write(c);
+        }
+      }
+      finally
+      {
+        IOUtil.close(clob);
+      }
+    }
+
+    private void handleCommit(CDODataInput in, Handler handler) throws IOException
+    {
+      long time = in.readXLong();
+      long previous = in.readXLong();
+      int branch = in.readXInt();
+      String user = in.readString();
+      String comment = in.readString();
+
+      if (handler instanceof Handler2)
+      {
+        Handler2 handler2 = (Handler2)handler;
+
+        if (in.readBoolean())
+        {
+          int mergeSourceBranch = in.readXInt();
+          long mergeSourceTime = in.readXLong();
+
+          handler2.handleCommitInfo(time, previous, branch, user, comment, mergeSourceBranch, mergeSourceTime);
+          return;
+        }
+      }
+
+      handler.handleCommitInfo(time, previous, branch, user, comment);
     }
   }
 }

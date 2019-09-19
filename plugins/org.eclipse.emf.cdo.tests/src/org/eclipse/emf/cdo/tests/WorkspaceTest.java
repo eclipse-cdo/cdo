@@ -85,7 +85,7 @@ import java.util.Set;
  * @author Eike Stepper
  */
 @Requires({ IRepositoryConfig.CAPABILITY_AUDITING, IRepositoryConfig.CAPABILITY_UUIDS })
-@Skips("DB.ranges")
+@Skips("DB.ranges") // Range-based mappings don't support rawDelete().
 public class WorkspaceTest extends AbstractCDOTest
 {
   private static final String RESOURCE = "/test1";

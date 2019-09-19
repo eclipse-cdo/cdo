@@ -265,6 +265,27 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     }
   }
 
+  public InternalCDORevision getBaseRevision(CDORevision revision, int referenceChunk, boolean loadOnDemand)
+  {
+    CDOID id = revision.getID();
+    CDOBranch branch = revision.getBranch();
+    int version = revision.getVersion();
+
+    if (version == CDOBranchVersion.FIRST_VERSION)
+    {
+      if (branch.isMainBranch())
+      {
+        return null;
+      }
+
+      CDOBranchPoint basePoint = branch.getBase();
+      return getRevision(id, basePoint, referenceChunk, CDORevision.DEPTH_NONE, loadOnDemand);
+    }
+
+    CDOBranchVersion baseVersion = branch.getVersion(version - 1);
+    return getRevisionByVersion(id, baseVersion, referenceChunk, loadOnDemand);
+  }
+
   public CDOBranchPointRange getObjectLifetime(CDOID id, CDOBranchPoint branchPoint)
   {
     if (revisionLoader instanceof RevisionLoader2)

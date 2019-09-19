@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping3;
+import org.eclipse.emf.cdo.server.db.mapping.IListMapping4;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBIndexAnnotation;
@@ -613,15 +614,22 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
   }
 
-  protected void writeLists(IDBStoreAccessor accessor, InternalCDORevision revision)
+  protected void writeLists(IDBStoreAccessor accessor, InternalCDORevision revision, boolean firstRevision, boolean raw)
   {
     for (IListMapping listMapping : listMappings)
     {
-      listMapping.writeValues(accessor, revision);
+      if (listMapping instanceof IListMapping4)
+      {
+        ((IListMapping4)listMapping).writeValues(accessor, revision, firstRevision, raw);
+      }
+      else
+      {
+        listMapping.writeValues(accessor, revision);
+      }
     }
   }
 
-  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean mapType, boolean revise, OMMonitor monitor)
+  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean firstRevision, boolean revise, OMMonitor monitor)
   {
     if (table == null)
     {
@@ -660,7 +668,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       try
       {
         async = monitor.forkAsync();
-        if (mapType)
+        if (firstRevision)
         {
           mappingStrategy.putObjectType(accessor, timeStamp, id, eClass);
         }
@@ -718,7 +726,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         if (listMappings != null)
         {
           async = monitor.forkAsync(7);
-          writeLists(accessor, revision);
+          writeLists(accessor, revision, firstRevision, !revise);
         }
         else
         {
@@ -795,6 +803,11 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         }
       }
     }
+
+    builder.append(" ORDER BY "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_ID);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_VERSION);
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.LOW);

@@ -45,12 +45,6 @@ public class Hibernate_Failure_Test extends AbstractCDOTest
     super.doTearDown();
   }
 
-  /**
-   * TODO
-   * {@link org.eclipse.emf.cdo.server.IStoreAccessor.Raw#rawStore(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, org.eclipse.net4j.util.om.monitor.OMMonitor)
-   * rawStore()} is not adequate with range-based list mappings because they need deltas!
-   */
-  @Skips("DB.ranges")
   public void testImport() throws Exception
   {
     CDOSession session = openSession();

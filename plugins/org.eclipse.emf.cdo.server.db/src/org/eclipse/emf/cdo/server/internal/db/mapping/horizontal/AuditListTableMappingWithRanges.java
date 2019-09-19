@@ -16,9 +16,12 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
@@ -38,12 +41,14 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IListMapping4;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
@@ -74,14 +79,14 @@ import java.util.List;
  * This is a list-table mapping for audit mode. It is optimized for frequent insert operations at the list's end, which
  * causes just 1 DB row to be changed. This is achieved by introducing a version range (columns cdo_version_added and
  * cdo_version_removed) which records for which revisions a particular entry existed. Also, this mapping is mainly
- * optimized for potentially very large lists: the need for having the complete list stored in memopy to do
+ * optimized for potentially very large lists: the need for having the complete list stored in memory to do
  * in-the-middle-moved and inserts is traded in for a few more DB access operations.
  *
  * @author Eike Stepper
  * @author Stefan Winkler
  * @author Lothar Werzinger
  */
-public class AuditListTableMappingWithRanges extends AbstractBasicListTableMapping implements IListMappingDeltaSupport, IListMappingUnitSupport
+public class AuditListTableMappingWithRanges extends AbstractBasicListTableMapping implements IListMappingDeltaSupport, IListMappingUnitSupport, IListMapping4
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AuditListTableMappingWithRanges.class);
 
@@ -503,6 +508,30 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     }
   }
 
+  public void writeValues(IDBStoreAccessor accessor, CDORevision revision, boolean firstRevision, boolean raw)
+  {
+    if (firstRevision || !raw)
+    {
+      writeValues(accessor, (InternalCDORevision)revision);
+    }
+    else
+    {
+      InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)getMappingStrategy().getStore().getRepository().getRevisionManager();
+      InternalCDORevision baseRevision = revisionManager.getBaseRevision(revision, CDORevision.UNCHUNKED, true);
+
+      EStructuralFeature feature = getFeature();
+      CDOListFeatureDelta delta = CDORevisionUtil.compareLists(baseRevision, revision, feature);
+
+      if (delta != null && !delta.getListChanges().isEmpty())
+      {
+        int oldVersion = baseRevision.getVersion();
+        int newVersion = revision.getVersion();
+
+        processDelta(accessor, baseRevision, oldVersion, newVersion, delta.getListChanges());
+      }
+    }
+  }
+
   public void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
     CDOList values = revision.getListOrNull(getFeature());
@@ -596,11 +625,11 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       TRACER.format("objectRevised {0}: {1}", id, revised); //$NON-NLS-1$
     }
 
-    CDOBranch main = getMappingStrategy().getStore().getRepository().getBranchManager().getMainBranch();
+    IRepository repository = getMappingStrategy().getStore().getRepository();
+    CDOBranch main = repository.getBranchManager().getMainBranch();
 
     // get revision from cache to find out version number
-    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id, main.getHead(), /* chunksize = */0,
-        CDORevision.DEPTH_NONE, true);
+    CDORevision revision = repository.getRevisionManager().getRevision(id, main.getHead(), 0, CDORevision.DEPTH_NONE, true);
 
     // set cdo_revision_removed for all list items (so we have no NULL values)
     clearList(accessor, id, revision.getVersion(), FINAL_VERSION);
@@ -869,32 +898,35 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     }
   }
 
-  public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion, final int newVersion, long created,
-      CDOListFeatureDelta delta)
+  public void processDelta(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, long created, CDOListFeatureDelta delta)
   {
     List<CDOFeatureDelta> listChanges = delta.getListChanges();
-    int size = listChanges.size();
-    if (size == 0)
+    if (listChanges.size() == 0)
     {
       // nothing to do.
       return;
     }
 
+    IRepository repository = accessor.getStore().getRepository();
+    CDORevisionManager revisionManager = repository.getRevisionManager();
+    CDOBranchPoint head = repository.getBranchManager().getMainBranch().getHead();
+
+    InternalCDORevision originalRevision = (InternalCDORevision)revisionManager.getRevision(id, head, /* chunksize = */0, CDORevision.DEPTH_NONE, true);
+    processDelta(accessor, originalRevision, oldVersion, newVersion, listChanges);
+  }
+
+  private void processDelta(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int oldVersion, int newVersion, List<CDOFeatureDelta> listChanges)
+  {
+    if (TRACER.isEnabled())
+    {
+      int oldListSize = originalRevision.size(getFeature());
+      TRACER.format("ListTableMapping.processDelta for revision {0} - previous list size: {1}", originalRevision, //$NON-NLS-1$
+          oldListSize);
+    }
+
     if (table == null)
     {
       initTable(accessor);
-    }
-
-    IRepository repo = accessor.getStore().getRepository();
-    InternalCDORevision originalRevision = (InternalCDORevision)repo.getRevisionManager().getRevision(id, repo.getBranchManager().getMainBranch().getHead(),
-        /* chunksize = */0, CDORevision.DEPTH_NONE, true);
-
-    int oldListSize = originalRevision.size(getFeature());
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("ListTableMapping.processDelta for revision {0} - previous list size: {1}", originalRevision, //$NON-NLS-1$
-          oldListSize);
     }
 
     // let the visitor collect the changes

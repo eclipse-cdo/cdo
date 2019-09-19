@@ -10,8 +10,11 @@
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.internal.server.ServerDebugUtil;
 import org.eclipse.emf.cdo.server.CDOServerBrowser;
 import org.eclipse.emf.cdo.server.CDOServerBrowser.AbstractPage;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
@@ -47,10 +50,20 @@ public class DBBrowserPage extends AbstractPage
   {
     IDBConnectionProvider connectionProvider = (IDBConnectionProvider)repository.getStore();
     Connection connection = null;
+    boolean closeConnection = false;
 
     try
     {
-      connection = connectionProvider.getConnection();
+      IStoreAccessor accessor = ServerDebugUtil.getAccessor(repository);
+      if (accessor instanceof IDBStoreAccessor)
+      {
+        connection = ((IDBStoreAccessor)accessor).getConnection();
+      }
+      else
+      {
+        connection = connectionProvider.getConnection();
+        closeConnection = true;
+      }
 
       out.print("<table border=\"0\">\r\n");
       out.print("<tr>\r\n");
@@ -75,7 +88,10 @@ public class DBBrowserPage extends AbstractPage
     }
     finally
     {
-      DBUtil.close(connection);
+      if (closeConnection)
+      {
+        DBUtil.close(connection);
+      }
     }
   }
 

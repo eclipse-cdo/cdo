@@ -607,7 +607,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     throw new UnsupportedOperationException();
   }
 
-  protected void writeRevision(InternalCDORevision revision, boolean mapType, boolean revise, OMMonitor monitor)
+  protected void writeRevision(InternalCDORevision revision, boolean firstRevision, boolean revise, OMMonitor monitor)
   {
     if (TRACER.isEnabled())
     {
@@ -617,7 +617,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     EClass eClass = revision.getEClass();
 
     IClassMapping mapping = getStore().getMappingStrategy().getClassMapping(eClass);
-    mapping.writeRevision(this, revision, mapType, revise, monitor);
+    mapping.writeRevision(this, revision, firstRevision, revise, monitor);
   }
 
   @Override
@@ -1349,8 +1349,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     CDOClassifierRef classifierRef = mappingStrategy.readObjectType(this, id);
 
-    boolean isFirstRevision = classifierRef == null;
-    if (!isFirstRevision)
+    boolean firstRevision = classifierRef == null;
+    if (!firstRevision)
     {
       boolean namesMatch = classifierRef.getClassifierName().equals(eClass.getName());
       boolean packagesMatch = classifierRef.getPackageURI().equals(eClass.getEPackage().getNsURI());
@@ -1360,7 +1360,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       }
     }
 
-    writeRevision(revision, isFirstRevision, false, monitor);
+    writeRevision(revision, firstRevision, false, monitor);
     getStore().getIDHandler().adjustLastObjectID(id);
   }
 

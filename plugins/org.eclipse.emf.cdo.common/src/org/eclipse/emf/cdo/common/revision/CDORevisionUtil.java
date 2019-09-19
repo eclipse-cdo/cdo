@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.id.CDOWithID;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
@@ -594,6 +595,14 @@ public final class CDORevisionUtil
     }
 
     return null;
+  }
+
+  /**
+   * @since 4.8
+   */
+  public static CDOListFeatureDelta compareLists(CDORevision originRevision, CDORevision dirtyRevision, EStructuralFeature feature)
+  {
+    return CDORevisionDeltaImpl.compareLists((InternalCDORevision)originRevision, (InternalCDORevision)dirtyRevision, feature);
   }
 
   /**

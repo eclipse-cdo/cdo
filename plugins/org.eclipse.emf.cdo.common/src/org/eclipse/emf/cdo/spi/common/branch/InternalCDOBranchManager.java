@@ -119,6 +119,11 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
 
     public SubBranchInfo[] loadSubBranches(int branchID);
 
+    /**
+     * @param startID the {@link CDOBranch#getID() id} of the first branch to load.
+     * @param endID the {@link CDOBranch#getID() id} of the last branch to load, or 0 (zero) to load all branches
+     *        after and including the first branch.
+     */
     public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler);
 
     /**

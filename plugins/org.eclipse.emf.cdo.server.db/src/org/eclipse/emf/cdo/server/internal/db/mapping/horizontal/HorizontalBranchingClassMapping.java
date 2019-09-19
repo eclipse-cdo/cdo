@@ -578,7 +578,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   }
 
   @Override
-  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean mapType, boolean revise, OMMonitor monitor)
+  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean firstRevision, boolean revise, OMMonitor monitor)
   {
     if (getTable() == null)
     {
@@ -617,7 +617,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       try
       {
         async = monitor.forkAsync();
-        if (mapType)
+        if (firstRevision)
         {
           // Put new objects into objectTypeMapper
           EClass eClass = getEClass();
@@ -625,11 +625,11 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
           AbstractHorizontalMappingStrategy mappingStrategy = (AbstractHorizontalMappingStrategy)getMappingStrategy();
           if (!mappingStrategy.putObjectType(accessor, timeStamp, id, eClass))
           {
-            mapType = false;
+            firstRevision = false;
           }
         }
 
-        if (!mapType && revise && version > CDOBranchVersion.FIRST_VERSION)
+        if (!firstRevision && revise && version > CDOBranchVersion.FIRST_VERSION)
         {
           // If revision is not the first one, revise the old revision
           long revised = timeStamp - 1;
@@ -685,7 +685,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         async = monitor.forkAsync(7);
         if (getListMappings() != null)
         {
-          writeLists(accessor, revision);
+          writeLists(accessor, revision, firstRevision, !revise);
         }
       }
       finally
@@ -756,6 +756,13 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         }
       }
     }
+
+    builder.append(" ORDER BY "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_ID);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_VERSION);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_BRANCH);
 
     IRepository repository = accessor.getStore().getRepository();
     CDORevisionManager revisionManager = repository.getRevisionManager();

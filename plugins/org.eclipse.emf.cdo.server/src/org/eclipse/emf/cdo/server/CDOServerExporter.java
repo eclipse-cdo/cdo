@@ -419,6 +419,16 @@ public abstract class CDOServerExporter<OUT>
 
     public static final String REPOSITORY_COMMITTED = "committed";
 
+    /**
+     * @since 4.8
+     */
+    public static final String REPOSITORY_EXPORT_BRANCH = "exportBranch";
+
+    /**
+     * @since 4.8
+     */
+    public static final String REPOSITORY_EXPORT_TIME = "exportTime";
+
     public static final String MODELS = "models";
 
     public static final String PACKAGE_UNIT = "packageUnit";
@@ -570,6 +580,18 @@ public abstract class CDOServerExporter<OUT>
       out.attribute(REPOSITORY_ROOT, str(getRepository().getRootResourceID()));
       out.attribute(REPOSITORY_CREATED, getRepository().getStore().getCreationTime());
       out.attribute(REPOSITORY_COMMITTED, getRepository().getLastCommitTimeStamp());
+
+      String branchPath = getBranchPath();
+      if (branchPath != null)
+      {
+        out.attribute(REPOSITORY_EXPORT_BRANCH, branchPath);
+      }
+
+      long timeStamp = getTimeStamp();
+      if (timeStamp != CDOBranchPoint.INVALID_DATE)
+      {
+        out.attribute(REPOSITORY_EXPORT_TIME, timeStamp);
+      }
 
       out.push();
       super.exportAll(out);
@@ -997,6 +1019,8 @@ public abstract class CDOServerExporter<OUT>
       out.writeCDOID(getRepository().getRootResourceID());
       out.writeLong(getRepository().getStore().getCreationTime());
       out.writeLong(getRepository().getLastCommitTimeStamp());
+      out.writeString(getBranchPath());
+      out.writeXLong(getTimeStamp());
 
       super.exportAll(out);
 

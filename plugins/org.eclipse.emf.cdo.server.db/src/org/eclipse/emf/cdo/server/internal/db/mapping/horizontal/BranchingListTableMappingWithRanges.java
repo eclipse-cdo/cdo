@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
@@ -38,6 +39,7 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.mapping.IListMapping4;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
@@ -84,7 +86,7 @@ import java.util.List;
  * @author Stefan Winkler
  * @author Lothar Werzinger
  */
-public class BranchingListTableMappingWithRanges extends AbstractBasicListTableMapping implements IListMappingDeltaSupport
+public class BranchingListTableMappingWithRanges extends AbstractBasicListTableMapping implements IListMappingDeltaSupport, IListMapping4
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, BranchingListTableMappingWithRanges.class);
 
@@ -648,6 +650,31 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
   }
 
+  public void writeValues(IDBStoreAccessor accessor, CDORevision revision, boolean firstRevision, boolean raw)
+  {
+    if (firstRevision || !raw)
+    {
+      writeValues(accessor, (InternalCDORevision)revision);
+    }
+    else
+    {
+      InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)getMappingStrategy().getStore().getRepository().getRevisionManager();
+      InternalCDORevision baseRevision = revisionManager.getBaseRevision(revision, CDORevision.UNCHUNKED, true);
+
+      EStructuralFeature feature = getFeature();
+      CDOListFeatureDelta delta = CDORevisionUtil.compareLists(baseRevision, revision, feature);
+
+      if (delta != null && !delta.getListChanges().isEmpty())
+      {
+        int branchID = revision.getBranch().getID();
+        int oldVersion = baseRevision.getVersion();
+        int newVersion = revision.getVersion();
+
+        processDelta(accessor, baseRevision, branchID, oldVersion, newVersion, delta.getListChanges());
+      }
+    }
+  }
+
   public void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
     CDOList values = revision.getListOrNull(getFeature());
@@ -761,29 +788,32 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     throw new UnsupportedOperationException("Raw deletion does not work in range-based mappings");
   }
 
-  public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, final int oldVersion, final int newVersion, long created,
-      CDOListFeatureDelta delta)
+  public void processDelta(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, long created, CDOListFeatureDelta delta)
   {
     List<CDOFeatureDelta> listChanges = delta.getListChanges();
-    int size = listChanges.size();
-    if (size == 0)
+    if (listChanges.size() == 0)
     {
       // nothing to do.
       return;
     }
 
+    InternalCDORevision originalRevision = (InternalCDORevision)accessor.getTransaction().getRevision(id);
+    processDelta(accessor, originalRevision, branchId, oldVersion, newVersion, listChanges);
+  }
+
+  private void processDelta(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int branchId, int oldVersion, int newVersion,
+      List<CDOFeatureDelta> listChanges)
+  {
+    if (TRACER.isEnabled())
+    {
+      int oldListSize = originalRevision.size(getFeature());
+      TRACER.format("ListTableMapping.processDelta for revision {0} - previous list size: {1}", originalRevision, //$NON-NLS-1$
+          oldListSize);
+    }
+
     if (table == null)
     {
       initTable(accessor);
-    }
-
-    InternalCDORevision originalRevision = (InternalCDORevision)accessor.getTransaction().getRevision(id);
-    int oldListSize = originalRevision.size(getFeature());
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("ListTableMapping.processDelta for revision {0} - previous list size: {1}", originalRevision, //$NON-NLS-1$
-          oldListSize);
     }
 
     // let the visitor collect the changes
@@ -797,7 +827,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     // optimization: it's only necessary to process deltas
     // starting with the last feature delta which clears the list
     // (any operation before the clear is cascaded by it anyway)
-    int index = size - 1;
+    int index = listChanges.size() - 1;
     while (index > 0)
     {
       CDOFeatureDelta listDelta = listChanges.get(index);
@@ -808,7 +838,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
       index--;
     }
-    while (index < size)
+    while (index < listChanges.size())
     {
       listChanges.get(index++).accept(visitor);
     }

@@ -89,6 +89,11 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
   public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk, boolean loadOnDemand);
 
   /**
+   * @since 4.8
+   */
+  public InternalCDORevision getBaseRevision(CDORevision revision, int referenceChunk, boolean loadOnDemand);
+
+  /**
    * If the meaning of this type isn't clear, there really should be more of a description here...
    *
    * @author Eike Stepper

@@ -149,6 +149,8 @@ public class BackupTest extends AbstractCDOTest
     CDOServerExporter<?> exporter = createExporter(repo1);
     exporter.exportRepository(baos);
 
+    System.out.println(baos);
+
     InternalRepository repo2 = getRepository("repo2", false);
 
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());

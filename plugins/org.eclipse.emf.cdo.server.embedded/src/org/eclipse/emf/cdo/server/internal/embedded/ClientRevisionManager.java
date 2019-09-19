@@ -169,6 +169,19 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  public InternalCDORevision getBaseRevision(CDORevision revision, int referenceChunk, boolean loadOnDemand)
+  {
+    try
+    {
+      ServerSession.set(serverSession);
+      return delegate.getBaseRevision(revision, referenceChunk, loadOnDemand);
+    }
+    finally
+    {
+      ServerSession.unset();
+    }
+  }
+
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
       SyntheticCDORevision[] synthetics)
   {

@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
@@ -68,7 +67,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
+public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListComparisonHandler
 {
   private static final boolean WORK_AROUND_BUG_308618 = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.common.revision.delta.WORK_AROUND_BUG_308618");
 
@@ -122,22 +121,21 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     version = sourceRevision.getVersion();
     target = CDORevisionUtil.copyRevisable(targetRevision);
 
-    compare((InternalCDORevision)sourceRevision, (InternalCDORevision)targetRevision);
+    InternalCDORevision internalSourceRevision = (InternalCDORevision)sourceRevision;
+    InternalCDORevision internalTargetRevision = (InternalCDORevision)targetRevision;
+    compare(internalSourceRevision, internalTargetRevision);
 
-    CDORevisionData originData = sourceRevision.data();
-    CDORevisionData dirtyData = targetRevision.data();
-
-    Object dirtyContainerID = dirtyData.getContainerID();
+    Object dirtyContainerID = internalTargetRevision.getContainerID();
     if (dirtyContainerID instanceof CDOWithID)
     {
       dirtyContainerID = ((CDOWithID)dirtyContainerID).cdoID();
     }
 
-    CDOID dirtyResourceID = dirtyData.getResourceID();
-    int dirtyContainingFeatureID = dirtyData.getContainingFeatureID();
-    if (!compareValue(CDOContainerFeatureDelta.CONTAINER_FEATURE, originData.getContainerID(), dirtyContainerID)
-        || !compareValue(null, originData.getContainingFeatureID(), dirtyContainingFeatureID)
-        || !compareValue(CDOContainerFeatureDelta.CONTAINER_FEATURE, originData.getResourceID(), dirtyResourceID))
+    CDOID dirtyResourceID = internalTargetRevision.getResourceID();
+    int dirtyContainingFeatureID = internalTargetRevision.getContainingFeatureID();
+    if (!compareValue(CDOContainerFeatureDelta.CONTAINER_FEATURE, internalSourceRevision.getContainerID(), dirtyContainerID)
+        || !compareValue(null, internalSourceRevision.getContainingFeatureID(), dirtyContainingFeatureID)
+        || !compareValue(CDOContainerFeatureDelta.CONTAINER_FEATURE, internalSourceRevision.getResourceID(), dirtyResourceID))
     {
       CDOFeatureDelta delta = new CDOContainerFeatureDeltaImpl(dirtyResourceID, dirtyContainerID, dirtyContainingFeatureID);
       addFeatureDelta(delta, null);
@@ -366,131 +364,28 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     }
   }
 
-  private void compare(final InternalCDORevision originRevision, final InternalCDORevision dirtyRevision)
+  public void addDelta(CDOListFeatureDelta listFeatureDelta)
   {
-    CDORevisionData originData = originRevision.data();
-    CDORevisionData dirtyData = dirtyRevision.data();
+    featureDeltas.put(listFeatureDelta.getFeature(), listFeatureDelta);
+  }
 
-    for (final EStructuralFeature feature : originRevision.getClassInfo().getAllPersistentFeatures())
+  public void addClearDelta(CDOClearFeatureDelta clearFeatureDelta, CDOOriginSizeProvider originSizeProvider)
+  {
+    addFeatureDelta(clearFeatureDelta, originSizeProvider);
+  }
+
+  private void compare(InternalCDORevision originRevision, InternalCDORevision dirtyRevision)
+  {
+    for (EStructuralFeature feature : originRevision.getClassInfo().getAllPersistentFeatures())
     {
       if (feature.isMany())
       {
-        final int originSize = originData.size(feature);
-        if (originSize > 0 && dirtyData.size(feature) == 0)
-        {
-          addFeatureDelta(new CDOClearFeatureDeltaImpl(feature), new CDOOriginSizeProvider()
-          {
-            public int getOriginSize()
-            {
-              return originSize;
-            }
-          });
-        }
-        else
-        {
-          CDOListFeatureDelta listFeatureDelta = new CDOListFeatureDeltaImpl(feature, originSize);
-          final List<CDOFeatureDelta> changes = listFeatureDelta.getListChanges();
-
-          ListDifferenceAnalyzer analyzer = new ListDifferenceAnalyzer()
-          {
-            @Override
-            public void analyzeLists(EList<Object> oldList, EList<?> newList, EList<ListChange> listChanges)
-            {
-              checkNoProxies(oldList, originRevision);
-              checkNoProxies(newList, dirtyRevision);
-              super.analyzeLists(oldList, newList, listChanges);
-            }
-
-            @Override
-            protected void createAddListChange(EList<Object> oldList, EList<ListChange> listChanges, Object value, int index)
-            {
-              CDOFeatureDelta delta = new CDOAddFeatureDeltaImpl(feature, index, value);
-              changes.add(delta);
-              oldList.add(index, value);
-            }
-
-            @Override
-            protected void createRemoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object value, int index)
-            {
-              CDORemoveFeatureDeltaImpl delta = new CDORemoveFeatureDeltaImpl(feature, index);
-
-              if (WORK_AROUND_BUG_308618)
-              {
-                // Fix until ListDifferenceAnalyzer delivers the correct value (bug 308618).
-                delta.setValue(oldList.get(index));
-              }
-              else
-              {
-                delta.setValue(value);
-              }
-
-              changes.add(delta);
-              oldList.remove(index);
-            }
-
-            @Override
-            protected void createMoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object value, int index, int toIndex)
-            {
-              CDOMoveFeatureDeltaImpl delta = new CDOMoveFeatureDeltaImpl(feature, toIndex, index);
-
-              if (WORK_AROUND_BUG_308618)
-              {
-                // Fix until ListDifferenceAnalyzer delivers the correct value (bug 308618).
-                delta.setValue(oldList.get(index));
-              }
-              else
-              {
-                delta.setValue(value);
-              }
-
-              changes.add(delta);
-              oldList.move(toIndex, index);
-            }
-
-            @Override
-            protected boolean equal(Object originValue, Object dirtyValue)
-            {
-              return compareValue(feature, originValue, dirtyValue);
-            }
-
-            private void checkNoProxies(EList<?> list, CDORevision revision)
-            {
-              if (list != null && !((InternalCDORevision)revision).isUnchunked())
-              {
-                for (Object element : list)
-                {
-                  if (element instanceof CDOElementProxy || element == CDOListImpl.UNINITIALIZED)
-                  {
-                    throw new PartialCollectionLoadingNotSupportedException("List contains proxy elements");
-                  }
-                }
-              }
-            }
-          };
-
-          CDOList originList = originRevision.getListOrNull(feature);
-          if (originList == null)
-          {
-            originList = new CDOListImpl(0, 0);
-          }
-
-          CDOList dirtyList = dirtyRevision.getListOrNull(feature);
-          if (dirtyList == null)
-          {
-            dirtyList = new CDOListImpl(0, 0);
-          }
-
-          analyzer.analyzeLists(originList, dirtyList, new NOOPList());
-          if (!changes.isEmpty())
-          {
-            featureDeltas.put(feature, listFeatureDelta);
-          }
-        }
+        compareLists(originRevision, dirtyRevision, feature, this);
       }
       else
       {
-        Object originValue = originData.get(feature, 0);
-        Object dirtyValue = dirtyData.get(feature, 0);
+        Object originValue = originRevision.get(feature, 0);
+        Object dirtyValue = dirtyRevision.get(feature, 0);
 
         if (!compareValue(feature, originValue, dirtyValue))
         {
@@ -509,7 +404,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     }
   }
 
-  private boolean compareValue(EStructuralFeature feature, Object originValue, Object dirtyValue)
+  private static boolean compareValue(EStructuralFeature feature, Object originValue, Object dirtyValue)
   {
     if (feature != null)
     {
@@ -552,7 +447,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     return originValue.equals(dirtyValue);
   }
 
-  private Object convertEObject(Object value)
+  private static Object convertEObject(Object value)
   {
     CDOID id = CDOIDUtil.getCDOID(value);
     if (id != null)
@@ -563,7 +458,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     return value;
   }
 
-  private Object convertDefaultValue(Object value, Object defaultValue)
+  private static Object convertDefaultValue(Object value, Object defaultValue)
   {
     // if (value == null)
     // {
@@ -571,6 +466,143 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     // }
 
     return value;
+  }
+
+  private static void compareLists(final InternalCDORevision originRevision, final InternalCDORevision dirtyRevision, final EStructuralFeature feature,
+      ListComparisonHandler handler)
+  {
+    final int originSize = originRevision.size(feature);
+    if (originSize > 0 && dirtyRevision.size(feature) == 0)
+    {
+      handler.addClearDelta(new CDOClearFeatureDeltaImpl(feature), new CDOOriginSizeProvider()
+      {
+        public int getOriginSize()
+        {
+          return originSize;
+        }
+      });
+    }
+    else
+    {
+      CDOListFeatureDelta listFeatureDelta = new CDOListFeatureDeltaImpl(feature, originSize);
+      final List<CDOFeatureDelta> changes = listFeatureDelta.getListChanges();
+
+      ListDifferenceAnalyzer analyzer = new ListDifferenceAnalyzer()
+      {
+        @Override
+        public void analyzeLists(EList<Object> oldList, EList<?> newList, EList<ListChange> listChanges)
+        {
+          checkNoProxies(oldList, originRevision);
+          checkNoProxies(newList, dirtyRevision);
+          super.analyzeLists(oldList, newList, listChanges);
+        }
+
+        @Override
+        protected void createAddListChange(EList<Object> oldList, EList<ListChange> listChanges, Object value, int index)
+        {
+          CDOFeatureDelta delta = new CDOAddFeatureDeltaImpl(feature, index, value);
+          changes.add(delta);
+          oldList.add(index, value);
+        }
+
+        @Override
+        protected void createRemoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object value, int index)
+        {
+          CDORemoveFeatureDeltaImpl delta = new CDORemoveFeatureDeltaImpl(feature, index);
+
+          if (WORK_AROUND_BUG_308618)
+          {
+            // Fix until ListDifferenceAnalyzer delivers the correct value (bug 308618).
+            delta.setValue(oldList.get(index));
+          }
+          else
+          {
+            delta.setValue(value);
+          }
+
+          changes.add(delta);
+          oldList.remove(index);
+        }
+
+        @Override
+        protected void createMoveListChange(EList<?> oldList, EList<ListChange> listChanges, Object value, int index, int toIndex)
+        {
+          CDOMoveFeatureDeltaImpl delta = new CDOMoveFeatureDeltaImpl(feature, toIndex, index);
+
+          if (WORK_AROUND_BUG_308618)
+          {
+            // Fix until ListDifferenceAnalyzer delivers the correct value (bug 308618).
+            delta.setValue(oldList.get(index));
+          }
+          else
+          {
+            delta.setValue(value);
+          }
+
+          changes.add(delta);
+          oldList.move(toIndex, index);
+        }
+
+        @Override
+        protected boolean equal(Object originValue, Object dirtyValue)
+        {
+          return compareValue(feature, originValue, dirtyValue);
+        }
+
+        private void checkNoProxies(EList<?> list, CDORevision revision)
+        {
+          if (list != null && !((InternalCDORevision)revision).isUnchunked())
+          {
+            for (Object element : list)
+            {
+              if (element instanceof CDOElementProxy || element == CDOListImpl.UNINITIALIZED)
+              {
+                throw new PartialCollectionLoadingNotSupportedException("List contains proxy elements");
+              }
+            }
+          }
+        }
+      };
+
+      CDOList originList = originRevision.getListOrNull(feature);
+      if (originList == null)
+      {
+        originList = new CDOListImpl(0, 0);
+      }
+
+      CDOList dirtyList = dirtyRevision.getListOrNull(feature);
+      if (dirtyList == null)
+      {
+        dirtyList = new CDOListImpl(0, 0);
+      }
+
+      analyzer.analyzeLists(originList, dirtyList, new NOOPList());
+      if (!changes.isEmpty())
+      {
+        handler.addDelta(listFeatureDelta);
+      }
+    }
+  }
+
+  public static CDOListFeatureDelta compareLists(final InternalCDORevision originRevision, InternalCDORevision dirtyRevision, final EStructuralFeature feature)
+  {
+    final CDOListFeatureDelta[] result = { null };
+    compareLists(originRevision, dirtyRevision, feature, new ListComparisonHandler()
+    {
+      public void addDelta(CDOListFeatureDelta listFeatureDelta)
+      {
+        result[0] = listFeatureDelta;
+      }
+
+      public void addClearDelta(CDOClearFeatureDelta clearFeatureDelta, CDOOriginSizeProvider originSizeProvider)
+      {
+        CDOListFeatureDeltaImpl listFeatureDelta = new CDOListFeatureDeltaImpl(feature, originRevision.size(feature));
+        listFeatureDelta.add(clearFeatureDelta);
+        result[0] = listFeatureDelta;
+      }
+    });
+
+    return result[0];
   }
 
   @Override
@@ -712,4 +744,15 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
       return null;
     }
   }
+}
+
+/**
+ * @author Eike Stepper
+ * @since 4.8
+ */
+interface ListComparisonHandler
+{
+  public void addDelta(CDOListFeatureDelta listFeatureDelta);
+
+  public void addClearDelta(CDOClearFeatureDelta clearFeatureDelta, CDOOriginSizeProvider originSizeProvider);
 }

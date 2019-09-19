@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.internal.server.ServerDebugUtil;
 import org.eclipse.emf.cdo.server.CDOServerExporter.Statistics;
 import org.eclipse.emf.cdo.server.IStoreAccessor.Raw2;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -95,7 +96,13 @@ import java.util.Map;
  */
 public abstract class CDOServerImporter
 {
+  private static final boolean DEBUG_WITH_BROWSER = false;
+
   private InternalRepository repository;
+
+  private String branchPath;
+
+  private long timeStamp = CDOBranchPoint.INVALID_DATE;
 
   private final Statistics statistics = new Statistics();
 
@@ -103,6 +110,38 @@ public abstract class CDOServerImporter
   {
     this.repository = (InternalRepository)repository;
     init();
+  }
+
+  /**
+   * @since 4.8
+   */
+  public final String getBranchPath()
+  {
+    return branchPath;
+  }
+
+  /**
+   * @since 4.8
+   */
+  protected final void setBranchPath(String branchPath)
+  {
+    this.branchPath = branchPath;
+  }
+
+  /**
+   * @since 4.8
+   */
+  public final long getTimeStamp()
+  {
+    return timeStamp;
+  }
+
+  /**
+   * @since 4.8
+   */
+  protected final void setTimeStamp(long timeStamp)
+  {
+    this.timeStamp = timeStamp;
   }
 
   private void init()
@@ -136,6 +175,11 @@ public abstract class CDOServerImporter
     }
     finally
     {
+      if (DEBUG_WITH_BROWSER)
+      {
+        ServerDebugUtil.removeAccessor(repository);
+      }
+
       StoreThreadLocal.release();
       repository = null;
     }
@@ -216,6 +260,11 @@ public abstract class CDOServerImporter
 
       accessor = (IStoreAccessor.Raw)repository.getStore().getWriter(null);
       StoreThreadLocal.setAccessor(accessor);
+
+      if (DEBUG_WITH_BROWSER)
+      {
+        ServerDebugUtil.addAccessor(accessor);
+      }
     }
 
     public InternalCDOPackageUnit handlePackageUnit(String id, Type type, long time, String data)
@@ -383,7 +432,7 @@ public abstract class CDOServerImporter
     @Override
     protected void importAll(InputStream in, final Handler handler) throws Exception
     {
-      DefaultHandler xmlHandler = new XMLHandler(handler);
+      DefaultHandler xmlHandler = new XMLHandler(this, handler);
 
       SAXParserFactory factory = SAXParserFactory.newInstance();
       SAXParser saxParser = factory.newSAXParser();
@@ -395,7 +444,9 @@ public abstract class CDOServerImporter
      */
     private static final class XMLHandler extends DefaultHandler
     {
-      private Handler handler;
+      private final XML xml;
+
+      private final Handler handler;
 
       private InternalCDOPackageRegistry packageRegistry;
 
@@ -409,8 +460,9 @@ public abstract class CDOServerImporter
 
       private Writer clob;
 
-      private XMLHandler(Handler handler)
+      private XMLHandler(XML xml, Handler handler)
       {
+        this.xml = xml;
         this.handler = handler;
       }
 
@@ -424,6 +476,19 @@ public abstract class CDOServerImporter
           CDOID root = id(attributes.getValue(REPOSITORY_ROOT));
           long created = Long.parseLong(attributes.getValue(REPOSITORY_CREATED));
           long committed = Long.parseLong(attributes.getValue(REPOSITORY_COMMITTED));
+
+          String value = attributes.getValue(REPOSITORY_EXPORT_BRANCH);
+          if (value != null)
+          {
+            xml.setBranchPath(value);
+          }
+
+          value = attributes.getValue(REPOSITORY_EXPORT_TIME);
+          if (value != null)
+          {
+            xml.setTimeStamp(Long.parseLong(value));
+          }
+
           handler.handleRepository(name, uuid, root, created, committed);
         }
         else if (PACKAGE_UNIT.equals(qName))
@@ -950,8 +1015,10 @@ public abstract class CDOServerImporter
       long created = in.readLong();
       long committed = in.readLong();
 
-      handler.handleRepository(name, uuid, root, created, committed);
+      setBranchPath(in.readString());
+      setTimeStamp(in.readXLong());
 
+      handler.handleRepository(name, uuid, root, created, committed);
     }
 
     private void handlePackageUnit(CDODataInput in, Handler handler) throws IOException

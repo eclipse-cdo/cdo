@@ -232,13 +232,13 @@
       <sourceLocator
           rootFolder="${cdo.git.clone.location}"/>
       <repositoryList
-          name="2019-09">
+          name="2019-12">
         <repository
-            url="http://download.eclipse.org/releases/2019-09"/>
+            url="http://download.eclipse.org/releases/2019-12"/>
         <repository
-            url="https://download.eclipse.org/eclipse/updates/4.13milestones"/>
+            url="http://download.eclipse.org/eclipse/updates/I-builds"/>
         <repository
-            url="http://download.eclipse.org/tools/orbit/downloads/2019-09"/>
+            url="http://download.eclipse.org/tools/orbit/downloads/latest-I"/>
         <repository
             url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
@@ -684,7 +684,7 @@
         url="${aspectj.repository}"/>
   </setupTask>
   <stream name="master"
-      label="4.8 Integration (2019-09)">
+      label="4.8 Integration (2019-12)">
     <setupTask
         xsi:type="setup.p2:P2Task">
       <requirement
@@ -707,7 +707,7 @@
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.target.platform"
-        value="2019-09"/>
+        value="2019-12"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.bugzilla.version"

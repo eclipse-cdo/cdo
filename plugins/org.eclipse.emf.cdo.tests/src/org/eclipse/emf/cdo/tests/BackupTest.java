@@ -124,6 +124,7 @@ public class BackupTest extends AbstractCDOTest
   {
     CDOSession session2 = openSession(repoName);
     CDOTransaction transaction2 = session2.openTransaction();
+    transaction2.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
 
     // Read all repo contents
     TreeIterator<EObject> iter = transaction2.getRootResource().getAllContents();
@@ -143,6 +144,11 @@ public class BackupTest extends AbstractCDOTest
 
   private void doExportImport() throws Exception, CommitException
   {
+    doExportImport(true);
+  }
+
+  private void doExportImport(boolean useAfterImport) throws Exception, CommitException
+  {
     InternalRepository repo1 = getRepository();
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -157,7 +163,10 @@ public class BackupTest extends AbstractCDOTest
     CDOServerImporter importer = createImporter(repo2);
     importer.importRepository(bais);
 
-    useAfterImport("repo2");
+    if (useAfterImport)
+    {
+      useAfterImport("repo2");
+    }
   }
 
   @CleanRepositoriesBefore(reason = "Inactive repository required")
@@ -314,7 +323,7 @@ public class BackupTest extends AbstractCDOTest
     transaction.commit();
     session.close();
 
-    doExportImport();
+    doExportImport(false);
 
     CDOSession session2 = openSession("repo2");
     CDOView view2 = session2.openView();

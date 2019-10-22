@@ -999,7 +999,7 @@ public abstract class CDOServerExporter<OUT>
         @Override
         public CDOPermissionProvider getPermissionProvider()
         {
-          return CDOPermissionProvider.READ;
+          return CDOPermissionProvider.WRITE;
         }
 
         @Override

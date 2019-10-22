@@ -146,15 +146,4 @@
 
   </repository>
 
-  <!-- Example of a DB4O repo/store:
-  <repository name="repo1">
-    <property name="supportingAudits" value="false"/>
-    <property name="supportingBranches" value="false"/>
-    <store type="db4o">
-      <property name="path" value="/tmp/cdodb4.db4o"/>
-      <property name="port" value="50032"/>
-    </store>
-  </repository>
-  -->
-
 </cdoServer>

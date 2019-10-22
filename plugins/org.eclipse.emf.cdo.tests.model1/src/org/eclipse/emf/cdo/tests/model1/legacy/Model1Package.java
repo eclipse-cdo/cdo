@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EReference;
  * <!-- end-user-doc -->
  * @see org.eclipse.emf.cdo.tests.model1.legacy.Model1Factory
  * @model kind="package"
- *        annotation="teneo.jpa value='@hbGenericGenerators({@GenericGenerator(name=\"system-uuid\", strategy = \"org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOUUIDHexGenerator\")})'"
  * @generated
  */
 public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model1.Model1Package

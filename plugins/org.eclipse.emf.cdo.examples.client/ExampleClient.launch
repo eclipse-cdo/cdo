@@ -159,7 +159,6 @@
 <mapEntry key="org.eclipse.emf.cdo.server.db/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server.db/debug.units" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server.embedded/debug" value="true"/>
-<mapEntry key="org.eclipse.emf.cdo.server.hibernate/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server.lissome/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server.lissome/debug.index" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server.lissome/debug.journal" value="true"/>
@@ -174,7 +173,6 @@
 <mapEntry key="org.eclipse.emf.cdo.server.net4j/debug.store" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server.net4j/debug.transaction" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server.net4j/debug.types" value="true"/>
-<mapEntry key="org.eclipse.emf.cdo.server.objectivity/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server/debug.protocol" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server/debug.repository" value="true"/>
@@ -188,7 +186,6 @@
 <mapEntry key="org.eclipse.emf.cdo.tests.db/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.tests.lissome/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.tests.mongodb/debug" value="true"/>
-<mapEntry key="org.eclipse.emf.cdo.tests.objectivity/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.tests/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.transfer.repository/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.transfer.ui/debug" value="true"/>

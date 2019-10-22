@@ -796,13 +796,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public void unset(EStructuralFeature feature)
   {
-    if (feature.isMany() && isListPreserving())
-    {
-      // isListPreserving() is always false except for HibernateStoreAccessor.
-      // For performance reasons this Hibernate-specific feature should probably be implemented via a custom revision factory.
-      getOrCreateList(feature).clear();
-    }
-    else
+    // if (feature.isMany() && isListPreserving())
+    // {
+    // // isListPreserving() is always false except for HibernateStoreAccessor.
+    // // For performance reasons this Hibernate-specific feature should probably be implemented via a custom revision
+    // factory.
+    // getOrCreateList(feature).clear();
+    // }
+    // else
     {
       setValue(feature, null);
     }

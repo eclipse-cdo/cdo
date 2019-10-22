@@ -326,7 +326,6 @@ public class CrossReferenceTest extends AbstractCDOTest
     transaction.commit();
   }
 
-  @Skips("Hibernate")
   @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testDetachXRefExternal() throws Exception
   {
@@ -392,7 +391,6 @@ public class CrossReferenceTest extends AbstractCDOTest
     assertEquals(false, id.isExternal());
   }
 
-  @Skips("Hibernate")
   @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testNewMakeExternal() throws Exception
   {
@@ -456,7 +454,6 @@ public class CrossReferenceTest extends AbstractCDOTest
     assertEquals(true, id.isExternal());
   }
 
-  @Skips("Hibernate")
   @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testExternalMakeDangling() throws Exception
   {

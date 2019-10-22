@@ -108,9 +108,6 @@
 <mapEntry key="org.eclipse.emf.cdo.examples.spring/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.examples/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server.db/debug" value="true"/>
-<mapEntry key="org.eclipse.emf.cdo.server.hibernate.id/debug" value="true"/>
-<mapEntry key="org.eclipse.emf.cdo.server.hibernate/debug" value="true"/>
-<mapEntry key="org.eclipse.emf.cdo.server/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server/debug.protocol" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server/debug.repository" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server/debug.resource" value="true"/>

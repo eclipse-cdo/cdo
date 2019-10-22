@@ -2,25 +2,22 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.security;singleton:=true
-Bundle-Version: 4.3.300.qualifier
+Bundle-Version: 4.3.400.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.cdo.internal.security;version="4.3.300";
+Export-Package: org.eclipse.emf.cdo.internal.security;version="4.3.400";
   x-friends:="org.eclipse.emf.cdo.security.edit,
    org.eclipse.emf.cdo.security.editor,
    org.eclipse.emf.cdo.server.security,
    org.eclipse.emf.cdo.tests,
    org.eclipse.emf.cdo.tests.db,
-   org.eclipse.emf.cdo.tests.db4o,
-   org.eclipse.emf.cdo.tests.hibernate,
-   org.eclipse.emf.cdo.tests.mongodb,
-   org.eclipse.emf.cdo.tests.objectivity",
- org.eclipse.emf.cdo.internal.security.bundle;version="4.3.300";x-internal:=true,
- org.eclipse.emf.cdo.security;version="4.3.300",
- org.eclipse.emf.cdo.security.impl;version="4.3.300",
- org.eclipse.emf.cdo.security.util;version="4.3.300"
+   org.eclipse.emf.cdo.tests.mongodb",
+ org.eclipse.emf.cdo.internal.security.bundle;version="4.3.400";x-internal:=true,
+ org.eclipse.emf.cdo.security;version="4.3.400",
+ org.eclipse.emf.cdo.security.impl;version="4.3.400",
+ org.eclipse.emf.cdo.security.util;version="4.3.400"
 Require-Bundle: org.eclipse.emf.cdo;bundle-version="[4.1.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.expressions;bundle-version="[4.3.0,5.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy

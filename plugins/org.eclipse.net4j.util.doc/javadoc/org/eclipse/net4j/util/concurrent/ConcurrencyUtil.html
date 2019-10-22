@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -147,14 +147,22 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ConcurrencyUtil.html#setThreadName-java.lang.Thread-java.lang.String-">setThreadName</a></span>(java.lang.Thread&nbsp;thread,
-             java.lang.String&nbsp;name)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ConcurrencyUtil.html#log-java.lang.String-">log</a></span>(java.lang.String&nbsp;msg)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ConcurrencyUtil.html#sleep-long-">sleep</a></span>(long&nbsp;millis)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ConcurrencyUtil.html#setThreadName-java.lang.String-">setThreadName</a></span>(java.lang.String&nbsp;name)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ConcurrencyUtil.html#setThreadName-java.lang.Thread-java.lang.String-">setThreadName</a></span>(java.lang.Thread&nbsp;thread,
+             java.lang.String&nbsp;name)</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ConcurrencyUtil.html#sleep-long-">sleep</a></span>(long&nbsp;millis)</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ConcurrencyUtil.html#sleep-long-int-">sleep</a></span>(long&nbsp;millis,
      int&nbsp;nanos)</code>&nbsp;</td>
@@ -243,7 +251,7 @@ extends java.lang.Object</pre>
 <a name="setThreadName-java.lang.Thread-java.lang.String-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setThreadName</h4>
 <pre>public static&nbsp;void&nbsp;setThreadName(java.lang.Thread&nbsp;thread,
@@ -251,6 +259,32 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.8</dd>
+</dl>
+</li>
+</ul>
+<a name="setThreadName-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setThreadName</h4>
+<pre>public static&nbsp;void&nbsp;setThreadName(java.lang.String&nbsp;name)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.9</dd>
+</dl>
+</li>
+</ul>
+<a name="log-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>log</h4>
+<pre>public static&nbsp;void&nbsp;log(java.lang.String&nbsp;msg)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.9</dd>
 </dl>
 </li>
 </ul>

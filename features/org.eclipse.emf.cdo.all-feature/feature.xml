@@ -52,18 +52,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.server.db4o"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.server.hibernate"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.server.objectivity"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.tests"
          version="0.0.0"/>
 
@@ -98,13 +86,6 @@
    <includes
          id="org.eclipse.net4j.tests"
          version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.tests.objectivity"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
    <plugin
          id="org.eclipse.emf.cdo.examples.server"
@@ -150,13 +131,6 @@
 
    <plugin
          id="org.eclipse.net4j.trace.aspectj"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <fragment
-         id="org.eclipse.emf.cdo.ecore.retrofit"
          download-size="0"
          install-size="0"
          version="0.0.0"

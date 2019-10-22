@@ -12,11 +12,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="eClassRef" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eReferenceRef" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="Point" instanceClassName="org.eclipse.emf.cdo.tests.model3.Point">
-    <eAnnotations source="teneo.jpa">
-      <details key="value" value="@NoAuditing"/>
-    </eAnnotations>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Point" instanceClassName="org.eclipse.emf.cdo.tests.model3.Point"/>
   <eClassifiers xsi:type="ecore:EClass" name="Polygon">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="points" lowerBound="1"
         upperBound="-1" eType="#//Point"/>

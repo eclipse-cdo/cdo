@@ -63,10 +63,7 @@ Export-Package: base;version="4.0.200",
  reference.impl;version="4.0.200";
   x-friends:="org.eclipse.emf.cdo.dawn.tests,
    org.eclipse.emf.cdo.tests.db,
-   org.eclipse.emf.cdo.tests.db4o,
-   org.eclipse.emf.cdo.tests.hibernate,
    org.eclipse.emf.cdo.tests.all,
-   org.eclipse.emf.cdo.tests.objectivity,
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.tests.mongodb",
  reference.util;version="4.0.200"

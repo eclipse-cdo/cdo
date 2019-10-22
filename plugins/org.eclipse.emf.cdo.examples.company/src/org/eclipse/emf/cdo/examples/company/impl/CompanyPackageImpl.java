@@ -146,8 +146,9 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
     }
 
     // Obtain or create and register package
-    CompanyPackageImpl theCompanyPackage = (CompanyPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof CompanyPackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new CompanyPackageImpl());
+    Object registeredCompanyPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+    CompanyPackageImpl theCompanyPackage = registeredCompanyPackage instanceof CompanyPackageImpl ? (CompanyPackageImpl)registeredCompanyPackage
+        : new CompanyPackageImpl();
 
     isInited = true;
 
@@ -717,26 +718,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
     // Create resource
     createResource(eNS_URI);
-
-    // Create annotations
-    // teneo.jpa
-    createTeneoAnnotations();
-  }
-
-  /**
-   * Initializes the annotations for <b>teneo.jpa</b>.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  protected void createTeneoAnnotations()
-  {
-    String source = "teneo.jpa";
-    addAnnotation(this, source, new String[] { "value",
-        "@hbGenericGenerators({@GenericGenerator(name=\"system-uuid\", strategy = \"org.eclipse.emf.cdo.examples.hibernate.server.CDOExampleUUIDHexGenerator\")})" });
-    addAnnotation(orderEClass, source, new String[] { "value", "@Entity(name=\"BaseOrder\")" });
-    addAnnotation(getCategory_Name(), source, new String[] { "value", "@Id @GeneratedValue(generator=\"system-uuid\")" });
-    addAnnotation(getProduct_Name(), source, new String[] { "value", "@Id" });
-    addAnnotation(getProduct_Vat(), source, new String[] { "value", "@Basic(optional=false)\n@Column(nullable=false)" });
   }
 
 } // CompanyPackageImpl

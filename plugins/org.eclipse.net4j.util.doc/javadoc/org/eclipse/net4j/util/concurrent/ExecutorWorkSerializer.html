@@ -18,8 +18,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var methods = {"i0":42,"i1":42,"i2":42,"i3":42,"i4":42,"i5":42,"i6":42,"i7":42,"i8":42,"i9":42};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -121,8 +121,12 @@ var activeTableTab = "activeTableTab";
 <dd><a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerializer.html" title="interface in org.eclipse.net4j.util.concurrent">IWorkSerializer</a>, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></dd>
 </dl>
 <hr>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 3.9 use an executor such as <a href="../../../../../org/eclipse/net4j/util/concurrent/SerializingExecutor.html" title="class in org.eclipse.net4j.util.concurrent"><code>SerializingExecutor</code></a>.</span></div>
+</div>
 <br>
-<pre>public class <span class="typeNameLabel">ExecutorWorkSerializer</span>
+<pre>@Deprecated
+public class <span class="typeNameLabel">ExecutorWorkSerializer</span>
 extends <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a>
 implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerializer.html" title="interface in org.eclipse.net4j.util.concurrent">IWorkSerializer</a></pre>
 <dl>
@@ -179,10 +183,14 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerial
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#ExecutorWorkSerializer--">ExecutorWorkSerializer</a></span>()</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#ExecutorWorkSerializer--">ExecutorWorkSerializer</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#ExecutorWorkSerializer-java.util.concurrent.Executor-">ExecutorWorkSerializer</a></span>(java.util.concurrent.Executor&nbsp;executor)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#ExecutorWorkSerializer-java.util.concurrent.Executor-">ExecutorWorkSerializer</a></span>(java.util.concurrent.Executor&nbsp;executor)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -194,51 +202,71 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerial
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#addWork-java.lang.Runnable-">addWork</a></span>(java.lang.Runnable&nbsp;runnable)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#addWork-java.lang.Runnable-">addWork</a></span>(java.lang.Runnable&nbsp;runnable)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#dispose--">dispose</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#dispose--">dispose</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#doActivate--">doActivate</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#doActivate--">doActivate</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#doBeforeActivate--">doBeforeActivate</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#doBeforeActivate--">doBeforeActivate</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#doDeactivate--">doDeactivate</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#doDeactivate--">doDeactivate</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.util.concurrent.Executor</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#getExecutor--">getExecutor</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#getExecutor--">getExecutor</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#handleException-java.lang.Runnable-java.lang.Throwable-">handleException</a></span>(java.lang.Runnable&nbsp;runnable,
-               java.lang.Throwable&nbsp;ex)</code>&nbsp;</td>
+               java.lang.Throwable&nbsp;ex)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#noWork--">noWork</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#noWork--">noWork</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#setExecutor-java.util.concurrent.Executor-">setExecutor</a></span>(java.util.concurrent.Executor&nbsp;executor)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#setExecutor-java.util.concurrent.Executor-">setExecutor</a></span>(java.util.concurrent.Executor&nbsp;executor)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#toString--">toString</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html#toString--">toString</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -290,6 +318,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerial
 <li class="blockList">
 <h4>ExecutorWorkSerializer</h4>
 <pre>public&nbsp;ExecutorWorkSerializer()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>
 <a name="ExecutorWorkSerializer-java.util.concurrent.Executor-">
@@ -299,6 +328,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerial
 <li class="blockList">
 <h4>ExecutorWorkSerializer</h4>
 <pre>public&nbsp;ExecutorWorkSerializer(java.util.concurrent.Executor&nbsp;executor)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>
 </li>
@@ -316,6 +346,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerial
 <li class="blockList">
 <h4>getExecutor</h4>
 <pre>public&nbsp;java.util.concurrent.Executor&nbsp;getExecutor()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>
 <a name="setExecutor-java.util.concurrent.Executor-">
@@ -325,6 +356,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerial
 <li class="blockList">
 <h4>setExecutor</h4>
 <pre>public&nbsp;void&nbsp;setExecutor(java.util.concurrent.Executor&nbsp;executor)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>
 <a name="addWork-java.lang.Runnable-">
@@ -334,6 +366,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerial
 <li class="blockList">
 <h4>addWork</h4>
 <pre>public&nbsp;boolean&nbsp;addWork(java.lang.Runnable&nbsp;runnable)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerializer.html#addWork-java.lang.Runnable-">addWork</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerializer.html" title="interface in org.eclipse.net4j.util.concurrent">IWorkSerializer</a></code></dd>
@@ -347,6 +380,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerial
 <li class="blockList">
 <h4>dispose</h4>
 <pre>public&nbsp;void&nbsp;dispose()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerializer.html#dispose--">dispose</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerializer.html" title="interface in org.eclipse.net4j.util.concurrent">IWorkSerializer</a></code></dd>
@@ -360,6 +394,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerial
 <li class="blockList">
 <h4>toString</h4>
 <pre>public&nbsp;java.lang.String&nbsp;toString()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#toString--">toString</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
@@ -374,6 +409,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerial
 <h4>handleException</h4>
 <pre>protected&nbsp;void&nbsp;handleException(java.lang.Runnable&nbsp;runnable,
                                java.lang.Throwable&nbsp;ex)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>
 <a name="noWork--">
@@ -383,6 +419,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerial
 <li class="blockList">
 <h4>noWork</h4>
 <pre>protected&nbsp;void&nbsp;noWork()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>
 <a name="doBeforeActivate--">
@@ -393,6 +430,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerial
 <h4>doBeforeActivate</h4>
 <pre>protected&nbsp;void&nbsp;doBeforeActivate()
                          throws java.lang.Exception</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeActivate--">doBeforeActivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
@@ -409,6 +447,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerial
 <h4>doActivate</h4>
 <pre>protected&nbsp;void&nbsp;doActivate()
                    throws java.lang.Exception</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doActivate--">doActivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
@@ -425,6 +464,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerial
 <h4>doDeactivate</h4>
 <pre>protected&nbsp;void&nbsp;doDeactivate()
                      throws java.lang.Exception</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doDeactivate--">doDeactivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>

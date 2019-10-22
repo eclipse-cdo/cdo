@@ -25,7 +25,7 @@
 
   <groupId>org.eclipse.emf.cdo</groupId>
   <artifactId>org.eclipse.emf.cdo.security</artifactId>
-  <version>4.3.300-SNAPSHOT</version>
+  <version>4.3.400-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
 </project>

@@ -1,7 +1,0 @@
-		org.eclipse.emf.cdo
-				deprecated
-				features
-				incubation
-				plugins
-				releng
-				vserver

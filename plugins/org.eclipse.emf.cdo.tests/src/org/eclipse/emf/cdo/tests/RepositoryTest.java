@@ -131,9 +131,6 @@ public class RepositoryTest extends AbstractCDOTest
    * See bug 329254
    */
   @Requires(IRepositoryConfig.CAPABILITY_RESTARTABLE)
-  // hibernate will recreate the systeminfo table at repository
-  // restart (this is due to test settings)
-  @Skips("Hibernate")
   public void testLastCommitTime() throws Exception
   {
     CDOSession session = openSession();

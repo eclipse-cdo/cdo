@@ -68,23 +68,16 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.emf.cdo.server</module>
     <module>../../../plugins/org.eclipse.emf.cdo.server.admin</module>
     <module>../../../plugins/org.eclipse.emf.cdo.server.db</module>
-    <module>../../../plugins/org.eclipse.emf.cdo.server.db4o</module>
     <module>../../../plugins/org.eclipse.emf.cdo.server.embedded</module>
-    <module>../../../plugins/org.eclipse.emf.cdo.server.hibernate</module>
-    <module>../../../plugins/org.eclipse.emf.cdo.server.hibernate.teneo</module>
     <module>../../../plugins/org.eclipse.emf.cdo.server.lissome</module>
     <module>../../../plugins/org.eclipse.emf.cdo.server.mongodb</module>
     <module>../../../plugins/org.eclipse.emf.cdo.server.net4j</module>
-    <module>../../../plugins/org.eclipse.emf.cdo.server.objectivity</module>
-    <module>../../../plugins/org.eclipse.emf.cdo.server.objectivity.stub</module>
     <module>../../../plugins/org.eclipse.emf.cdo.server.ocl</module>
     <module>../../../plugins/org.eclipse.emf.cdo.server.product</module>
     <module>../../../plugins/org.eclipse.emf.cdo.server.security</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests.all</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests.db</module>
-    <module>../../../plugins/org.eclipse.emf.cdo.tests.db4o</module>
-    <module>../../../plugins/org.eclipse.emf.cdo.tests.hibernate</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests.lissome</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests.mango</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests.model1</module>
@@ -95,7 +88,6 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.emf.cdo.tests.model5</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests.model6</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests.mongodb</module>
-    <module>../../../plugins/org.eclipse.emf.cdo.tests.objectivity</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests.uml</module>
     <module>../../../plugins/org.eclipse.emf.cdo.transfer</module>
     <module>../../../plugins/org.eclipse.emf.cdo.transfer.repository</module>

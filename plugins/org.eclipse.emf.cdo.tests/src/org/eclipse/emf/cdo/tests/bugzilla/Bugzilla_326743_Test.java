@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -49,13 +48,6 @@ public class Bugzilla_326743_Test extends AbstractCDOTest
     EDataType customPrimitive = EcoreFactory.eINSTANCE.createEDataType();
     customPrimitive.setInstanceTypeName("boolean");
     customPrimitive.setName("CustomPrimitiveType");
-
-    // added type annotation for teneo test case
-    final EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-    eAnnotation.setSource("teneo.jpa");
-    final String typeAnnotation = "@Type(type=\"org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOCustomTypeUserType\")";
-    eAnnotation.getDetails().put("value", typeAnnotation);
-    customPrimitive.getEAnnotations().add(eAnnotation);
 
     pkg.getEClassifiers().add(customPrimitive);
 

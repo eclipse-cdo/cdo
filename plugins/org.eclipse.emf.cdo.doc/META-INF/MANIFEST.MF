@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.doc; singleton:=true
-Bundle-Version: 4.1.600.qualifier
+Bundle-Version: 4.1.700.qualifier
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
@@ -18,22 +18,19 @@ Require-Bundle: org.eclipse.help;bundle-version="[3.3.0,4.0.0)";resolution:=opti
  org.eclipse.emf.cdo.net4j;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.emf.cdo.server;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.emf.cdo.server.db;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.emf.cdo.server.db4o;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.emf.cdo.server.hibernate;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.emf.cdo.server.mongodb;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.emf.cdo.server.net4j;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.emf.cdo.server.objectivity;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.emf.cdo.server.ocl;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.emf.cdo.ui;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.emf.cdo.explorer;bundle-version="[4.0.0,5.0.0)";resolution:=optional
-Export-Package: org.eclipse.emf.cdo.doc;version="4.1.600",
- org.eclipse.emf.cdo.doc.online;version="4.1.600",
- org.eclipse.emf.cdo.doc.operators;version="4.1.600",
- org.eclipse.emf.cdo.doc.programmers;version="4.1.600",
- org.eclipse.emf.cdo.doc.programmers.client;version="4.1.600",
- org.eclipse.emf.cdo.doc.programmers.server;version="4.1.600",
- org.eclipse.emf.cdo.doc.reference;version="4.1.600",
- org.eclipse.emf.cdo.doc.reference.api;version="4.1.600",
- org.eclipse.emf.cdo.doc.reference.schema;version="4.1.600",
- org.eclipse.emf.cdo.doc.users;version="4.1.600"
+Export-Package: org.eclipse.emf.cdo.doc;version="4.1.700",
+ org.eclipse.emf.cdo.doc.online;version="4.1.700",
+ org.eclipse.emf.cdo.doc.operators;version="4.1.700",
+ org.eclipse.emf.cdo.doc.programmers;version="4.1.700",
+ org.eclipse.emf.cdo.doc.programmers.client;version="4.1.700",
+ org.eclipse.emf.cdo.doc.programmers.server;version="4.1.700",
+ org.eclipse.emf.cdo.doc.reference;version="4.1.700",
+ org.eclipse.emf.cdo.doc.reference.api;version="4.1.700",
+ org.eclipse.emf.cdo.doc.reference.schema;version="4.1.700",
+ org.eclipse.emf.cdo.doc.users;version="4.1.700"
 Automatic-Module-Name: org.eclipse.emf.cdo.doc

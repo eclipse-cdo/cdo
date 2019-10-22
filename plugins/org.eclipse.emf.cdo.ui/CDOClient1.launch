@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
 <setAttribute key="additional_plugins">
-<setEntry value="javax.servlet:3.1.0.v201410161800:default:false"/>
-<setEntry value="org.eclipse.emf.cdo.edit:4.4.200.qualifier:default:true"/>
-<setEntry value="org.eclipse.emf.cdo.examples.company.edit:4.0.600.qualifier:default:true"/>
-<setEntry value="org.eclipse.emf.cdo.expressions.edit:4.3.300.qualifier:default:true"/>
-<setEntry value="org.eclipse.emf.cdo.security.edit:4.4.100.qualifier:default:true"/>
-<setEntry value="org.eclipse.emf.compare.edit:4.3.1.201805161152:default:true"/>
-<setEntry value="org.eclipse.emf.databinding.edit:1.4.0.v20180130-1145:default:true"/>
-<setEntry value="org.eclipse.emf.ecore.edit:2.10.0.v20180421-0731:default:true"/>
-<setEntry value="org.eclipse.emf.ecore.editor:2.14.0.v20180212-1111:default:true"/>
-<setEntry value="org.eclipse.emf.edit:2.13.0.v20180421-1151:default:true"/>
-<setEntry value="org.eclipse.gmf.runtime.notation.edit:1.7.0.201805221301:default:true"/>
+<setEntry value="javax.servlet:3.1.0.v201410161800:default:false:default:default"/>
+<setEntry value="org.eclipse.emf.cdo.edit:4.4.200.qualifier:default:true:default:default"/>
+<setEntry value="org.eclipse.emf.cdo.examples.company.edit:4.0.600.qualifier:default:true:default:default"/>
+<setEntry value="org.eclipse.emf.cdo.expressions.edit:4.3.300.qualifier:default:true:default:default"/>
+<setEntry value="org.eclipse.emf.cdo.security.edit:4.4.100.qualifier:default:true:default:default"/>
+<setEntry value="org.eclipse.emf.compare.edit:4.3.1.201909101346:default:true:default:default"/>
+<setEntry value="org.eclipse.emf.databinding.edit:1.6.0.v20190323-1031:default:true:default:default"/>
+<setEntry value="org.eclipse.emf.ecore.edit:2.13.0.v20190822-1451:default:true:default:default"/>
+<setEntry value="org.eclipse.emf.ecore.editor:2.17.0.v20190528-0725:default:true:default:default"/>
+<setEntry value="org.eclipse.emf.edit:2.16.0.v20190920-0401:default:true:default:default"/>
+<setEntry value="org.eclipse.gmf.runtime.notation.edit:1.7.0.201805221301:default:true:default:default"/>
 </setAttribute>
 <booleanAttribute key="append.args" value="true"/>
 <booleanAttribute key="askclear" value="true"/>
@@ -48,8 +48,6 @@
 <setEntry value="org.eclipse.ecf.core.feature:default"/>
 <setEntry value="org.eclipse.ecf.core.ssl.feature:default"/>
 <setEntry value="org.eclipse.ecf.filetransfer.feature:default"/>
-<setEntry value="org.eclipse.ecf.filetransfer.httpclient4.feature:default"/>
-<setEntry value="org.eclipse.ecf.filetransfer.httpclient4.ssl.feature:default"/>
 <setEntry value="org.eclipse.ecf.filetransfer.ssl.feature:default"/>
 <setEntry value="org.eclipse.emf.cdo.compare:default"/>
 <setEntry value="org.eclipse.emf.cdo.doc:default"/>
@@ -211,7 +209,6 @@
 <mapEntry key="org.eclipse.emf.cdo.server.admin/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server.admin/debug.protocol" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server.db/debug" value="true"/>
-<mapEntry key="org.eclipse.emf.cdo.server.hibernate/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server.lissome/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server.lissome/debug.index" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server.lissome/debug.journal" value="true"/>
@@ -226,7 +223,6 @@
 <mapEntry key="org.eclipse.emf.cdo.server.net4j/debug.store" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server.net4j/debug.transaction" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server.net4j/debug.types" value="true"/>
-<mapEntry key="org.eclipse.emf.cdo.server.objectivity/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server.product/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.server/debug.protocol" value="true"/>
@@ -242,7 +238,6 @@
 <mapEntry key="org.eclipse.emf.cdo.tests.db/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.tests.lissome/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.tests.mongodb/debug" value="true"/>
-<mapEntry key="org.eclipse.emf.cdo.tests.objectivity/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.tests.ui/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.tests/debug" value="true"/>
 <mapEntry key="org.eclipse.emf.cdo.ui.admin/debug" value="true"/>

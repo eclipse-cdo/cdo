@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.EObject;
  *
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getOrder()
  * @model abstract="true"
- *        annotation="teneo.jpa value='@Entity(name=\"BaseOrder\")'"
  * @generated
  */
 public interface Order extends EObject

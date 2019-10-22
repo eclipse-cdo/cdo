@@ -1165,22 +1165,6 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
 
     // Create resource
     createResource(eNS_URI);
-
-    // Create annotations
-    // teneo.jpa
-    createTeneoAnnotations();
-  }
-
-  /**
-   * Initializes the annotations for <b>teneo.jpa</b>.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void createTeneoAnnotations()
-  {
-    String source = "teneo.jpa";
-    addAnnotation(pointEDataType, source, new String[] { "value", "@NoAuditing" });
   }
 
 } // Model3PackageImpl

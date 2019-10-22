@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.tests.model3; singleton:=true
-Bundle-Version: 3.0.700.qualifier
+Bundle-Version: 3.0.800.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -10,16 +10,16 @@ Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.5.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
-Export-Package: org.eclipse.emf.cdo.tests.model3;version="3.0.700",
- org.eclipse.emf.cdo.tests.model3.impl;version="3.0.700",
- org.eclipse.emf.cdo.tests.model3.legacy;version="3.0.700",
- org.eclipse.emf.cdo.tests.model3.legacy.impl;version="3.0.700",
- org.eclipse.emf.cdo.tests.model3.legacy.util;version="3.0.700",
- org.eclipse.emf.cdo.tests.model3.subpackage;version="3.0.700",
- org.eclipse.emf.cdo.tests.model3.subpackage.impl;version="3.0.700",
- org.eclipse.emf.cdo.tests.model3.subpackage.legacy;version="3.0.700",
- org.eclipse.emf.cdo.tests.model3.subpackage.legacy.impl;version="3.0.700",
- org.eclipse.emf.cdo.tests.model3.subpackage.legacy.util;version="3.0.700",
- org.eclipse.emf.cdo.tests.model3.subpackage.util;version="3.0.700",
- org.eclipse.emf.cdo.tests.model3.util;version="3.0.700"
+Export-Package: org.eclipse.emf.cdo.tests.model3;version="3.0.800",
+ org.eclipse.emf.cdo.tests.model3.impl;version="3.0.800",
+ org.eclipse.emf.cdo.tests.model3.legacy;version="3.0.800",
+ org.eclipse.emf.cdo.tests.model3.legacy.impl;version="3.0.800",
+ org.eclipse.emf.cdo.tests.model3.legacy.util;version="3.0.800",
+ org.eclipse.emf.cdo.tests.model3.subpackage;version="3.0.800",
+ org.eclipse.emf.cdo.tests.model3.subpackage.impl;version="3.0.800",
+ org.eclipse.emf.cdo.tests.model3.subpackage.legacy;version="3.0.800",
+ org.eclipse.emf.cdo.tests.model3.subpackage.legacy.impl;version="3.0.800",
+ org.eclipse.emf.cdo.tests.model3.subpackage.legacy.util;version="3.0.800",
+ org.eclipse.emf.cdo.tests.model3.subpackage.util;version="3.0.800",
+ org.eclipse.emf.cdo.tests.model3.util;version="3.0.800"
 Automatic-Module-Name: org.eclipse.emf.cdo.tests.model3

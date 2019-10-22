@@ -24,8 +24,8 @@ Eike Stepper - initial API and implementation
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tycho.scmUrl>scm:git:https://git.eclipse.org/r/p/cdo/cdo.git</tycho.scmUrl>
-    <tycho-version>1.2.0</tycho-version>
-    <jarsigner-version>1.1.5</jarsigner-version>
+    <tycho-version>1.5.0-SNAPSHOT</tycho-version>
+    <jarsigner-version>1.1.7</jarsigner-version>
     <os-jvm-flags/>
   </properties>
 
@@ -33,15 +33,29 @@ Eike Stepper - initial API and implementation
     <pluginRepository>
       <id>eclipse-maven-releases</id>
       <url>https://repo.eclipse.org/content/repositories/releases</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
     </pluginRepository>
     <pluginRepository>
       <id>eclipse-cbi-releases</id>
       <url>https://repo.eclipse.org/content/repositories/cbi-releases</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
     </pluginRepository>
-    <!-- Snapshot Repos
     <pluginRepository>
       <id>eclipse-maven-snapshots</id>
       <url>https://repo.eclipse.org/content/repositories/snapshots</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
@@ -49,11 +63,13 @@ Eike Stepper - initial API and implementation
     <pluginRepository>
       <id>eclipse-cbi-snapshots</id>
       <url>https://repo.eclipse.org/content/repositories/cbi-snapshots</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
     </pluginRepository>
-    -->
   </pluginRepositories>
 
   <modules>
@@ -131,11 +147,6 @@ Eike Stepper - initial API and implementation
                 <environment>
                   <os>win32</os>
                   <ws>win32</ws>
-                  <arch>x86</arch>
-                </environment>
-                <environment>
-                  <os>win32</os>
-                  <ws>win32</ws>
                   <arch>x86_64</arch>
                 </environment>
                 <environment>
@@ -147,11 +158,6 @@ Eike Stepper - initial API and implementation
                   <os>linux</os>
                   <ws>gtk</ws>
                   <arch>x86_64</arch>
-                </environment>
-                <environment>
-                  <os>linux</os>
-                  <ws>gtk</ws>
-                  <arch>x86</arch>
                 </environment>
               </environments>
             </configuration>

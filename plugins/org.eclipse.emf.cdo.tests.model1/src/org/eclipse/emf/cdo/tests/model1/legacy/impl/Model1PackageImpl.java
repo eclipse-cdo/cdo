@@ -825,26 +825,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
     // Create resource
     createResource(eNS_URI);
-
-    // Create annotations
-    // teneo.jpa
-    createTeneoAnnotations();
-  }
-
-  /**
-   * Initializes the annotations for <b>teneo.jpa</b>.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  protected void createTeneoAnnotations()
-  {
-    String source = "teneo.jpa";
-    addAnnotation(this, source, new String[] { "value",
-        "@hbGenericGenerators({@GenericGenerator(name=\"system-uuid\", strategy = \"org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOUUIDHexGenerator\")})" });
-    addAnnotation(orderEClass, source, new String[] { "value", "@Entity(name=\"BaseOrder\")" });
-    addAnnotation(getProduct1_Name(), source, new String[] { "value", "@Id" });
-    addAnnotation(orderAddressEClass, source,
-        new String[] { "value", "@AssociationOverride(name=\"orderDetails\", joinColumns=@JoinColumn(name=\"orderdetails_orderaddressid\"))" });
   }
 
 } // Model1PackageImpl

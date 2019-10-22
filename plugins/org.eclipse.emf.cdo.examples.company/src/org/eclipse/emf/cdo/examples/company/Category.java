@@ -41,7 +41,7 @@ public interface Category extends EObject
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getCategory_Name()
-   * @model annotation="teneo.jpa value='@Id @GeneratedValue(generator=\"system-uuid\")'"
+   * @model
    * @generated
    */
   String getName();

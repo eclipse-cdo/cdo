@@ -13,11 +13,8 @@
   <feature id="org.eclipse.emf.cdo.dawn" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
   <feature id="org.eclipse.emf.cdo.server" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
   <feature id="org.eclipse.emf.cdo.server.db" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
-  <feature id="org.eclipse.emf.cdo.server.db4o" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
-  <feature id="org.eclipse.emf.cdo.server.hibernate" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
   <feature id="org.eclipse.emf.cdo.server.lissome" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
   <feature id="org.eclipse.emf.cdo.server.mongodb" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
-  <feature id="org.eclipse.emf.cdo.server.objectivity" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
 
   <!-- CDO Models -->
   <category-def name="org.eclipse.emf.cdo.models.category" label="CDO Models"/>

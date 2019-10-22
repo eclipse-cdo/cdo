@@ -42,12 +42,9 @@ Eike Stepper - initial API and implementation
     <module>../../../features/org.eclipse.emf.cdo.sdk-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.server-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.server.db-feature</module>
-    <module>../../../features/org.eclipse.emf.cdo.server.db4o-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.server.embedded-feature</module>
-    <module>../../../features/org.eclipse.emf.cdo.server.hibernate-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.server.lissome-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.server.mongodb-feature</module>
-    <module>../../../features/org.eclipse.emf.cdo.server.objectivity-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.tests-feature</module>
     <module>../../../features/org.eclipse.net4j-feature</module>
     <module>../../../features/org.eclipse.net4j.db-feature</module>

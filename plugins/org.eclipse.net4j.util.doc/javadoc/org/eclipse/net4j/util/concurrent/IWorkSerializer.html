@@ -18,8 +18,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":38,"i1":38};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -103,8 +103,12 @@ var activeTableTab = "activeTableTab";
 <dd><a href="../../../../../org/eclipse/net4j/util/concurrent/AsynchronousWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">AsynchronousWorkSerializer</a>, <a href="../../../../../org/eclipse/net4j/util/concurrent/CompletionWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">CompletionWorkSerializer</a>, <a href="../../../../../org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">ExecutorWorkSerializer</a>, <a href="../../../../../org/eclipse/net4j/util/concurrent/QueueWorkerWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">QueueWorkerWorkSerializer</a>, <a href="../../../../../org/eclipse/net4j/util/concurrent/SynchronousWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">SynchronousWorkSerializer</a></dd>
 </dl>
 <hr>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 3.9 use an executor such as <a href="../../../../../org/eclipse/net4j/util/concurrent/SerializingExecutor.html" title="class in org.eclipse.net4j.util.concurrent"><code>SerializingExecutor</code></a>.</span></div>
+</div>
 <br>
-<pre>public interface <span class="typeNameLabel">IWorkSerializer</span></pre>
+<pre>@Deprecated
+public interface <span class="typeNameLabel">IWorkSerializer</span></pre>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -122,18 +126,22 @@ var activeTableTab = "activeTableTab";
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerializer.html#addWork-java.lang.Runnable-">addWork</a></span>(java.lang.Runnable&nbsp;work)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerializer.html#addWork-java.lang.Runnable-">addWork</a></span>(java.lang.Runnable&nbsp;work)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerializer.html#dispose--">dispose</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/IWorkSerializer.html#dispose--">dispose</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -157,6 +165,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>addWork</h4>
 <pre>boolean&nbsp;addWork(java.lang.Runnable&nbsp;work)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>
 <a name="dispose--">
@@ -166,6 +175,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>dispose</h4>
 <pre>void&nbsp;dispose()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>
 </li>

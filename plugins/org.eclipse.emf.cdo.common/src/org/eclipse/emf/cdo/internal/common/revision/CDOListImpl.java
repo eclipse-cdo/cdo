@@ -76,9 +76,6 @@ public class CDOListImpl extends BasicEList<Object> implements InternalCDOList.C
     return super.get(index);
   }
 
-  /**
-   * There's a duplicate of this method in WrappedHibernateList!!!
-   */
   public boolean adjustReferences(CDOReferenceAdjuster revisionAdjuster, EStructuralFeature feature)
   {
     boolean changed = false;

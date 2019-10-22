@@ -43,7 +43,7 @@ public interface Product extends EObject
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getProduct_Name()
-   * @model annotation="teneo.jpa value='@Id'"
+   * @model
    * @generated
    */
   String getName();
@@ -91,7 +91,6 @@ public interface Product extends EObject
    * @see #setVat(VAT)
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getProduct_Vat()
    * @model default="vat15"
-   *        annotation="teneo.jpa value='@Basic(optional=false)\n@Column(nullable=false)'"
    * @generated
    */
   VAT getVat();

@@ -25,7 +25,7 @@
 					<a href="http://wiki.eclipse.org/CDO">wiki</a>.
 					<br/> For information about installing or updating Eclipse software, see the
 					<a
-						href="http://help.eclipse.org/oxygen/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/tasks-124.htm">
+						href="http://help.eclipse.org/2019-09/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/tasks-124.htm">
 						Eclipse Platform Help</a>.
 					<br/> Some plugins require third party software from p2 repositories listed in this
 					<a href="bookmarks.xml">bookmarks.xml</a> file.</em>

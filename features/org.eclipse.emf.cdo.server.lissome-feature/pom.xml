@@ -25,7 +25,7 @@
 
   <groupId>org.eclipse.emf.cdo.features</groupId>
   <artifactId>org.eclipse.emf.cdo.server.lissome</artifactId>
-  <version>4.2.500-SNAPSHOT</version>
+  <version>4.2.600-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 
 </project>

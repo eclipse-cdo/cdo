@@ -25,7 +25,7 @@
 
   <groupId>org.eclipse.emf.cdo</groupId>
   <artifactId>org.eclipse.net4j.db.derby</artifactId>
-  <version>4.1.500-SNAPSHOT</version>
+  <version>4.1.600-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
 </project>

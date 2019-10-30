@@ -179,9 +179,14 @@ public abstract class CDOServerExporter<OUT>
     finally
     {
       StoreThreadLocal.release();
+
       if (!wasActive)
       {
         LifecycleUtil.deactivate(repository);
+      }
+      else
+      {
+        LifecycleUtil.deactivate(session);
       }
 
       repository = null;

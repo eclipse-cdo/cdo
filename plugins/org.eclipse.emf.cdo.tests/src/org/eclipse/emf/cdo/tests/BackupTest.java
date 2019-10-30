@@ -150,12 +150,16 @@ public class BackupTest extends AbstractCDOTest
   private void doExportImport(boolean useAfterImport) throws Exception, CommitException
   {
     InternalRepository repo1 = getRepository();
+    int sessionsBeforeExport = repo1.getSessionManager().getSessions().length;
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter<?> exporter = createExporter(repo1);
     exporter.exportRepository(baos);
 
     System.out.println(baos);
+
+    // Test bug 552512.
+    assertEquals(sessionsBeforeExport, repo1.getSessionManager().getSessions().length);
 
     InternalRepository repo2 = getRepository("repo2", false);
 

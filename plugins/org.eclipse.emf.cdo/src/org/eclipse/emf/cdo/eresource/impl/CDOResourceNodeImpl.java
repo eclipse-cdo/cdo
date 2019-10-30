@@ -422,8 +422,9 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
   /**
    * @ADDED
+   * @since 4.8
    */
-  private void checkDuplicates(String newPath) throws CDODuplicateResourceException
+  protected void checkDuplicates(String newPath) throws CDODuplicateResourceException
   {
     InternalCDOView view = cdoView();
     if (view != null)

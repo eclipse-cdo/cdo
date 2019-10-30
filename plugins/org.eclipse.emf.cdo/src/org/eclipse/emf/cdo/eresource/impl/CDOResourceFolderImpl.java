@@ -22,8 +22,6 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
-import org.eclipse.emf.internal.cdo.messages.Messages;
-
 import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.common.util.EList;
@@ -35,8 +33,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.io.IOException;
-import java.text.MessageFormat;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -139,16 +135,8 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
         @Override
         protected CDOResourceNode validate(int index, CDOResourceNode newNode)
         {
-          String newName = newNode.getName();
-
-          for (Iterator<CDOResourceNode> it = iterator(); it.hasNext();)
-          {
-            CDOResourceNode existingNode = it.next();
-            if (ObjectUtil.equals(existingNode.getName(), newName))
-            {
-              throw new CDODuplicateResourceException(MessageFormat.format(Messages.getString("CDOResourceNodeImpl.5"), existingNode.getPath())); //$NON-NLS-1$
-            }
-          }
+          String newPath = getPath() + CDOURIUtil.SEGMENT_SEPARATOR + newNode.getName();
+          CDOResourceFolderImpl.this.checkDuplicates(newPath);
 
           return super.validate(index, newNode);
         }

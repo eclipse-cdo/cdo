@@ -678,6 +678,52 @@ public class ResourceTest extends AbstractCDOTest
     assertEquals(true, CDOIDUtil.isNull(data.getResourceID()));
   }
 
+  public void testNoUneededResourcesLoadOnMove() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    // Fill folder1
+    transaction.createResource(getResourcePath("folder1/res1"));
+    transaction.createResource(getResourcePath("folder1/res2"));
+
+    // Fill folder2
+    transaction.createResource(getResourcePath("folder2/res3"));
+    transaction.createResource(getResourcePath("folder2/res4"));
+
+    transaction.commit();
+    session.close();
+    session = openSession();
+    transaction = session.openTransaction();
+    assertTrue(transaction.getResourceSet().getResources().isEmpty());
+
+    CDOResourceFolder folder1 = transaction.getResourceFolder(getResourcePath("folder1"));
+    CDOResourceFolder folder2 = transaction.getResourceFolder(getResourcePath("folder2"));
+    assertEquals(0, transaction.getResourceSet().getResources().size());
+
+    // The "no duplicates" validation should not trigger the load of other resources
+    folder1.addResource("res5");
+    assertEquals(1, transaction.getResourceSet().getResources().size());
+
+    // The "commit" operation should not trigger the load of other resources
+    transaction.commit();
+    assertEquals(1, transaction.getResourceSet().getResources().size());
+
+    CDOResource resource1 = transaction.getResource(getResourcePath("folder1/res1"));
+    assertEquals(2, transaction.getResourceSet().getResources().size());
+
+    // The "no duplicates" validation should not trigger the load of other resources
+    resource1.setFolder(folder2);
+    assertEquals(2, transaction.getResourceSet().getResources().size());
+
+    transaction.commit();
+    assertEquals(2, transaction.getResourceSet().getResources().size());
+
+    // The load of sibling resources is expected with an explicit call to getNodes().
+    folder1.getNodes().add(resource1);
+    assertEquals(3, transaction.getResourceSet().getResources().size());
+  }
+
   public void testDuplicatePathAfterDetach() throws Exception
   {
     CDOSession session = openSession();

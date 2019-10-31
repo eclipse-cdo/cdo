@@ -503,11 +503,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   {
     if (remote)
     {
+      assert cdoState() == CDOState.INVALID;
+
       eSetDeliver(false);
       eBasicSetContainer(null, eContainerFeatureID());
       eSetDeliver(true);
       return;
     }
+
+    assert cdoState() == CDOState.TRANSIENT;
 
     if (TRACER.isEnabled())
     {

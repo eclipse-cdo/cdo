@@ -310,7 +310,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         // If we have an error, we will keep the graph exactly like it was before.
         process(object, CDOEvent.DETACH, objectsToDetach);
 
-        // postDetach() requires the object to be TRANSIENT
+        // postDetach() requires the object to be TRANSIENT, but listeners must not be notified at this point!
         for (InternalCDOObject content : objectsToDetach)
         {
           CDOState oldState = setStateQuietely(content, CDOState.TRANSIENT);
@@ -1119,7 +1119,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       if (transaction.getLastSavepoint().isNewObject(object.cdoID()))
       {
+        // postDetach() requires the object to be TRANSIENT, but listeners must not be notified at this point!
+        CDOState oldState = setStateQuietely(object, CDOState.TRANSIENT);
         object.cdoInternalPostDetach(false);
+        setStateQuietely(object, oldState);
+
         changeState(object, CDOState.TRANSIENT);
       }
       else

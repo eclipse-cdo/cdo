@@ -188,7 +188,7 @@ public class BackupTest extends AbstractCDOTest
     salesOrder.getOrderDetails().add(getModel1Factory().createOrderDetail());
     resource.getContents().add(salesOrder);
     transaction.commit();
-    session.close();
+    closeSession(session);
 
     doExportImport();
   }
@@ -203,7 +203,7 @@ public class BackupTest extends AbstractCDOTest
     purchaseOrder.setDate(new Date(1234567));
     resource.getContents().add(purchaseOrder);
     transaction.commit();
-    session.close();
+    closeSession(session);
 
     doExportImport();
   }
@@ -305,7 +305,7 @@ public class BackupTest extends AbstractCDOTest
     CDOResource resource = transaction.createResource(getResourcePath("/res1"));
     resource.getContents().add(createPoligon(new Point(1, 2), new Point(3, 1), new Point(4, 5)));
     transaction.commit();
-    session.close();
+    closeSession(session);
 
     doExportImport();
   }
@@ -325,7 +325,7 @@ public class BackupTest extends AbstractCDOTest
     resource.getContents().add(salesOrder);
 
     transaction.commit();
-    session.close();
+    closeSession(session);
 
     doExportImport(false);
 
@@ -354,7 +354,7 @@ public class BackupTest extends AbstractCDOTest
     transaction.commit();
     resource.getContents().clear();
     transaction.commit();
-    session.close();
+    closeSession(session);
 
     doExportImport();
 
@@ -385,7 +385,7 @@ public class BackupTest extends AbstractCDOTest
     resource.getContents().add(polygon);
 
     transaction.commit();
-    session.close();
+    closeSession(session);
 
     doExportImport();
 

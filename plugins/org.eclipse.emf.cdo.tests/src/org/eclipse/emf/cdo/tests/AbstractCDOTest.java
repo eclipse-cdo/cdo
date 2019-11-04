@@ -90,6 +90,25 @@ public abstract class AbstractCDOTest extends ConfigTest
     super.doTearDown();
   }
 
+  /**
+   * Closes the given session and waits until the server-side session is closed, too.
+   * In TCP scenarios the latter does not happen synchronously, which can confuse tests that count sessions.
+   */
+  public void closeSession(CDOSession session) throws InterruptedException
+  {
+    final int sessionID = session.getSessionID();
+    session.close();
+
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        return getRepository().getSessionManager().getSession(sessionID) == null;
+      }
+    }.assertNoTimeOut();
+  }
+
   public InternalSession serverSession(CDOSession session)
   {
     String repositoryName = session.getRepositoryInfo().getName();

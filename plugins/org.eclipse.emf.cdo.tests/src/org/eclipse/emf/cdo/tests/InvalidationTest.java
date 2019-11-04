@@ -730,13 +730,12 @@ public class InvalidationTest extends AbstractCDOTest
 
     EList<EObject> contents = resourceB.getContents();
     final Category categoryB = (Category)contents.get(0);
-    final TestAdapter testAdapter = new TestAdapter();
-    categoryB.eAdapters().add(testAdapter);
+    final TestAdapter testAdapter = new TestAdapter(categoryB);
 
     // ************************************************************* //
 
     resourceA.getContents().remove(categoryA);
-    assertEquals(0, testAdapter.getNotifications().length);
+    testAdapter.assertNotifications(0);
 
     transaction.commit();
 
@@ -749,14 +748,7 @@ public class InvalidationTest extends AbstractCDOTest
       }
     }.assertNoTimeOut();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return testAdapter.getNotifications().length == 1;
-      }
-    }.assertNoTimeOut();
+    testAdapter.assertNoTimeout(1);
   }
 
   public void testDetachAndPassiveUpdate() throws Exception
@@ -807,13 +799,12 @@ public class InvalidationTest extends AbstractCDOTest
     EList<EObject> contents = resourceB.getContents();
     final Category categoryB = (Category)contents.get(0);
 
-    final TestAdapter testAdapter = new TestAdapter();
-    categoryB.eAdapters().add(testAdapter);
+    final TestAdapter testAdapter = new TestAdapter(categoryB);
 
     // ************************************************************* //
 
     resourceA.getContents().remove(categoryA);
-    assertEquals(0, testAdapter.getNotifications().length);
+    testAdapter.assertNotifications(0);
 
     transaction.commit();
 
@@ -829,7 +820,7 @@ public class InvalidationTest extends AbstractCDOTest
       getRepository().getRevisionManager().getCache().removeRevision(resourceA.cdoID(), resourceA.cdoRevision().getBranch().getVersion(2));
     }
 
-    assertEquals(0, testAdapter.getNotifications().length);
+    testAdapter.assertNotifications(0);
     sessionB.refresh();
 
     new PollingTimeOuter()
@@ -841,14 +832,7 @@ public class InvalidationTest extends AbstractCDOTest
       }
     }.assertNoTimeOut();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return testAdapter.getNotifications().length == 1;
-      }
-    }.assertNoTimeOut();
+    testAdapter.assertNoTimeout(1);
   }
 
   public void testPassiveUpdateMode_CHANGES() throws Exception
@@ -873,13 +857,13 @@ public class InvalidationTest extends AbstractCDOTest
 
     Category categoryB = (Category)resourceB.getContents().get(0);
 
-    final TestAdapter testAdapter = new TestAdapter();
-    categoryB.eAdapters().add(testAdapter);
+    final TestAdapter testAdapter = new TestAdapter(categoryB);
 
     // ************************************************************* //
 
     categoryA.setName("CHANGED");
-    assertEquals(0, testAdapter.getNotifications().length);
+    testAdapter.assertNotifications(0);
+
     transaction.commit();
 
     new PollingTimeOuter()

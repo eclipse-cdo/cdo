@@ -63,8 +63,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     resourceA.getContents().add(companyA);
 
     transaction.commit();
-    final TestAdapter adapter = new TestAdapter();
-    category1A.eAdapters().add(adapter);
+    final TestAdapter adapter = new TestAdapter(category1A);
 
     // ************************************************************* //
 
@@ -72,40 +71,20 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     final Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true));
     category1B.setName("CHANGED NAME");
-    assertEquals(0, adapter.getNotifications().length);
+    adapter.assertNotifications(0);
 
     transaction2.commit();
-
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        // Commit notifications from the same session always have full deltas
-        Notification[] notifications = adapter.getNotifications();
-        return notifications.length == 1;
-      }
-    }.assertNoTimeOut();
+    adapter.assertNoTimeout(1);
 
     // Removing policy
     transaction.options().removeChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     adapter.clearNotifications();
 
     category1B.setName("CHANGED NAME_VERSION 2");
-    assertEquals(0, adapter.getNotifications().length);
+    adapter.assertNotifications(0);
 
     transaction2.commit();
-
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        // Commit notifications from the same session always have full deltas
-        Notification[] notifications = adapter.getNotifications();
-        return notifications.length == 1;
-      }
-    }.assertNoTimeOut();
+    adapter.assertNoTimeout(1);
   }
 
   public void testSameSession_WithoutPolicy() throws Exception
@@ -126,8 +105,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     resourceA.getContents().add(companyA);
 
     transaction.commit();
-    final TestAdapter adapter = new TestAdapter();
-    category1A.eAdapters().add(adapter);
+    final TestAdapter adapter = new TestAdapter(category1A);
 
     // ************************************************************* //
 
@@ -135,40 +113,20 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     final Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true));
     category1B.setName("CHANGED NAME");
-    assertEquals(0, adapter.getNotifications().length);
+    adapter.assertNotifications(0);
 
     transaction2.commit();
-
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        // Commit notifications from the same session always have full deltas
-        Notification[] notifications = adapter.getNotifications();
-        return notifications.length == 1;
-      }
-    }.assertNoTimeOut();
+    adapter.assertNoTimeout(1);
 
     // Adding policy
     transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     adapter.clearNotifications();
 
     category1B.setName("CHANGED NAME_VERSION 2");
-    assertEquals(0, adapter.getNotifications().length);
+    adapter.assertNotifications(0);
 
     transaction2.commit();
-
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        // Commit notifications from the same session always have full deltas
-        Notification[] notifications = adapter.getNotifications();
-        return notifications.length == 1;
-      }
-    }.assertNoTimeOut();
+    adapter.assertNoTimeout(1);
   }
 
   public void testSeparateSession() throws Exception
@@ -187,8 +145,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     resourceA.getContents().add(companyA);
     transaction.commit();
 
-    final TestAdapter adapter = new TestAdapter();
-    category1A.eAdapters().add(adapter);
+    final TestAdapter adapter = new TestAdapter(category1A);
 
     // ************************************************************* //
 
@@ -197,27 +154,17 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true));
     category1B.setName("CHANGED NAME");
-    assertEquals(0, adapter.getNotifications().length);
+    adapter.assertNotifications(0);
 
     transaction2.commit();
-
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        // Change subscription leads to delta nnotification
-        Notification[] notifications = adapter.getNotifications();
-        return notifications.length == 1;
-      }
-    }.assertNoTimeOut();
+    adapter.assertNoTimeout(1);
 
     // Removing policy
     transaction.options().removeChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     adapter.clearNotifications();
 
     category1B.setName("CHANGED NAME_VERSION 2");
-    assertEquals(0, adapter.getNotifications().length);
+    adapter.assertNotifications(0);
 
     transaction2.commit();
 
@@ -248,8 +195,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     resourceA.getContents().add(companyA);
     transaction.commit();
 
-    final TestAdapter adapter = new TestAdapter();
-    category1A.eAdapters().add(adapter);
+    final TestAdapter adapter = new TestAdapter(category1A);
 
     // ************************************************************* //
 
@@ -258,7 +204,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     Category category1B = (Category)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(category1A).cdoID(), true));
     category1B.setName("CHANGED NAME");
-    assertEquals(0, adapter.getNotifications().length);
+    adapter.assertNotifications(0);
 
     transaction2.commit();
 
@@ -278,20 +224,10 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     adapter.clearNotifications();
 
     category1B.setName("CHANGED NAME_VERSION 2");
-    assertEquals(0, adapter.getNotifications().length);
+    adapter.assertNotifications(0);
 
     transaction2.commit();
-
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        // Change subscription leads to delta nnotification
-        Notification[] notifications = adapter.getNotifications();
-        return notifications.length == 1;
-      }
-    }.assertNoTimeOut();
+    adapter.assertNoTimeout(1);
   }
 
   public void testTemporaryObject() throws Exception
@@ -322,8 +258,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     msg("Committing");
 
-    final TestAdapter adapter = new TestAdapter();
-    category1A.eAdapters().add(adapter);
+    final TestAdapter adapter = new TestAdapter(category1A);
 
     transaction.commit();
 
@@ -339,7 +274,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Changing name");
     category1B.setName("CHANGED NAME");
 
-    assertEquals(0, adapter.getNotifications().length);
+    adapter.assertNotifications(0);
 
     msg("Committing");
     transaction2.commit();
@@ -388,12 +323,9 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Committing");
     transaction.commit();
 
-    final TestAdapter adapter = new TestAdapter();
-
     customPolicy.getCdoIDs().add(CDOUtil.getCDOObject(category1A).cdoID());
 
-    category1A.eAdapters().add(adapter);
-    companyA.eAdapters().add(adapter);
+    final TestAdapter adapter = new TestAdapter(category1A, companyA);
 
     // ************************************************************* //
 
@@ -408,20 +340,13 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     category1B.setName("CHANGED NAME");
     company1B.setName("TEST1");
 
-    assertEquals(0, adapter.getNotifications().length);
+    adapter.assertNotifications(0);
 
     msg("Committing");
     transaction2.commit();
 
     msg("Checking after commit");
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return adapter.getNotifications().length == 1;
-      }
-    }.assertNoTimeOut();
+    adapter.assertNoTimeout(1);
 
     // Switching policy to the other
     transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
@@ -432,20 +357,13 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     category1B.setName("CHANGED NAME_VERSION 2");
     company1B.setName("TEST2");
 
-    assertEquals(0, adapter.getNotifications().length);
+    adapter.assertNotifications(0);
 
     msg("Committing");
     transaction2.commit();
 
     msg("Checking after commit");
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return adapter.getNotifications().length == 2;
-      }
-    }.assertNoTimeOut();
+    adapter.assertNoTimeout(2);
   }
 
   public void testNotificationChain() throws Exception
@@ -479,9 +397,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     msg("Committing");
     transaction.commit();
 
-    final TestAdapter adapter = new TestAdapter();
-
-    companyA.eAdapters().add(adapter);
+    final TestAdapter adapter = new TestAdapter(companyA);
 
     // ************************************************************* //
 
@@ -498,26 +414,19 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     final Category category2B = getModel1Factory().createCategory();
     company1B.getCategories().add(category2B);
 
-    assertEquals(0, adapter.getNotifications().length);
+    adapter.assertNotifications(0);
 
     msg("Committing");
     transaction2.commit();
 
     msg("Checking after commit");
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return adapter.getNotifications().length == 3;
-      }
-    }.assertNoTimeOut();
+    Notification[] notifications = adapter.assertNoTimeout(3);
 
     int count = 0;
-    for (Notification notification : adapter.getNotifications())
+    for (Notification notification : notifications)
     {
       CDODeltaNotification cdoNotification = (CDODeltaNotification)notification;
-      if (adapter.getNotifications().length - 1 == count)
+      if (notifications.length - 1 == count)
       {
         assertEquals(false, cdoNotification.hasNext());
       }
@@ -581,8 +490,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     Object[] strongRefs = company2.getCategories().toArray(); // Keep those in memory
     msg(strongRefs);
 
-    final TestAdapter adapter = new TestAdapter();
-    company2.eAdapters().add(adapter);
+    final TestAdapter adapter = new TestAdapter(company2);
 
     company.getCategories().removeAll(categories);
     transaction.commit();
@@ -642,8 +550,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     Object[] strongRefs = company2.getCategories().toArray(); // Keep those in memory
     msg(strongRefs);
 
-    final TestAdapter adapter = new TestAdapter();
-    company2.eAdapters().add(adapter);
+    final TestAdapter adapter = new TestAdapter(company2);
 
     company.getCategories().removeAll(categories);
     transaction.commit();
@@ -710,8 +617,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     Object[] strongRefs = product2.getOrderDetails().toArray(); // Keep those in memory
     msg(strongRefs);
 
-    final TestAdapter adapter = new TestAdapter();
-    product2.eAdapters().add(adapter);
+    final TestAdapter adapter = new TestAdapter(product2);
 
     details.remove(0);
     details.remove(0);
@@ -779,8 +685,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     Object[] strongRefs = product2.getOrderDetails().toArray(); // Keep those in memory
     msg(strongRefs);
 
-    final TestAdapter adapter = new TestAdapter();
-    product2.eAdapters().add(adapter);
+    final TestAdapter adapter = new TestAdapter(product2);
 
     details.remove(0);
     details.remove(0);

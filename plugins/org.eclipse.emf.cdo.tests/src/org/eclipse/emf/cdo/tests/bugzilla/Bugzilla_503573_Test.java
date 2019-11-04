@@ -45,16 +45,13 @@ public class Bugzilla_503573_Test extends AbstractCDOTest
     WithCustomType controlObject = controlView.getObject(object);
     assertEquals(new CustomType(1234), controlObject.getValue());
 
-    TestAdapter adapter = new TestAdapter();
-    controlObject.eAdapters().add(adapter);
+    TestAdapter adapter = new TestAdapter(controlObject);
 
     object.setValue(new CustomType(5678));
     commitAndSync(transaction, controlView);
 
-    Notification[] notifications = adapter.getNotifications();
-    assertEquals(1, notifications.length);
-
-    Object oldValue = notifications[0].getOldValue();
+    Notification notification = adapter.assertNotifications(1)[0];
+    Object oldValue = notification.getOldValue();
     assertEquals(new CustomType(1234), oldValue);
   }
 
@@ -78,16 +75,13 @@ public class Bugzilla_503573_Test extends AbstractCDOTest
     GenListOfIntArray controlObject = controlView.getObject(object);
     assertEquals(3, controlObject.getElements().size());
 
-    TestAdapter adapter = new TestAdapter();
-    controlObject.eAdapters().add(adapter);
+    TestAdapter adapter = new TestAdapter(controlObject);
 
     object.getElements().remove(1);
     commitAndSync(transaction, controlView);
 
-    Notification[] notifications = adapter.getNotifications();
-    assertEquals(1, notifications.length);
-
-    Object oldValue = notifications[0].getOldValue();
+    Notification notification = adapter.assertNotifications(1)[0];
+    Object oldValue = notification.getOldValue();
     assertEquals("Old Name", oldValue);
   }
 }

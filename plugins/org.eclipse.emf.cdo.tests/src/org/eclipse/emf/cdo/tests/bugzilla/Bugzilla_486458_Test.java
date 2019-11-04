@@ -304,10 +304,7 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
 
     CDOUnit unit = transaction.getUnitManager().createUnit(root, true, null);
 
-    TestAdapter adapter = new TestAdapter();
-    root.eAdapters().add(adapter);
-    child.eAdapters().add(adapter);
-    sibling.eAdapters().add(adapter);
+    new TestAdapter(root, child, sibling);
 
     assertEquals(false, ((InternalCDOView)transaction).hasSubscription(CDOUtil.getCDOObject(root).cdoID()));
     assertEquals(false, ((InternalCDOView)transaction).hasSubscription(CDOUtil.getCDOObject(child).cdoID()));

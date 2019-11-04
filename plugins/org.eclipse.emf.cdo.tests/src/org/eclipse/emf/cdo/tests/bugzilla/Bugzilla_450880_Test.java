@@ -50,13 +50,10 @@ public class Bugzilla_450880_Test extends AbstractCDOTest
     CDOTransaction transaction2 = session2.openTransaction();
     CDOResource resource1Bis = transaction2.getResource(getResourcePath(RESOURCE_NAME));
     Product1 product1 = (Product1)resource1Bis.getContents().get(0);
-    TestAdapter testAdapter = new TestAdapter();
-    product1.eAdapters().add(testAdapter);
+    TestAdapter testAdapter = new TestAdapter(product1);
     commitAndSync(transaction1, transaction2);
-    Notification[] notifications = testAdapter.getNotifications();
-    assertNotNull(notifications);
-    assertEquals(1, notifications.length);
-    Notification notification = notifications[0];
+
+    Notification notification = testAdapter.assertNotifications(1)[0];
     assertEquals(getModel1Package().getProduct1_OtherVATs().getDefaultValue(), notification.getOldValue());
     assertEquals(VAT.VAT0, notification.getNewValue());
   }
@@ -76,14 +73,11 @@ public class Bugzilla_450880_Test extends AbstractCDOTest
     Product1 product1 = getModel1Factory().createProduct1();
     resource.getContents().add(product1);
     resource.save(Collections.emptyMap());
-    TestAdapter testAdapter = new TestAdapter();
-    product1.eAdapters().add(testAdapter);
+    TestAdapter testAdapter = new TestAdapter(product1);
     VAT newValue = VAT.VAT0;
     product1.setVat(newValue);
-    Notification[] notifications = testAdapter.getNotifications();
-    assertNotNull(notifications);
-    assertEquals(1, notifications.length);
-    Notification notification = notifications[0];
+
+    Notification notification = testAdapter.assertNotifications(1)[0];
     assertEquals(getModel1Package().getProduct1_OtherVATs().getDefaultValue(), notification.getOldValue());
     assertEquals(newValue, notification.getNewValue());
   }

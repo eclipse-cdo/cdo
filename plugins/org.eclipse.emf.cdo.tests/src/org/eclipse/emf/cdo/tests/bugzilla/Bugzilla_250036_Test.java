@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.tests.util.TestAdapter;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
@@ -73,8 +72,7 @@ public class Bugzilla_250036_Test extends AbstractCDOTest
       assertEquals(CDOUtil.getCDOObject(expectedValue.get(i)).cdoID(), CDOUtil.getCDOObject(object).cdoID());
     }
 
-    final TestAdapter adapter = new TestAdapter();
-    genRefMap.eAdapters().add(adapter);
+    final TestAdapter adapter = new TestAdapter(genRefMap);
     transaction2.options().setInvalidationNotificationEnabled(true);
 
     /********* transaction 1 ***************/
@@ -91,16 +89,8 @@ public class Bugzilla_250036_Test extends AbstractCDOTest
     transaction.commit();
 
     msg("Checking after commit");
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        // 10 delta notifications from local commit (same session) plus 1 invalidation notification
-        Notification[] notifications = adapter.getNotifications();
-        return notifications.length == 1 + counter[0];
-      }
-    }.assertNoTimeOut();
+    // 10 delta notifications from local commit (same session) plus 1 invalidation notification
+    adapter.assertNoTimeout(1 + counter[0]);
 
     /********* transaction 2 ***************/
     EMap<String, EObject> mapOfEObjectAfterCommit = genRefMap.getElements();

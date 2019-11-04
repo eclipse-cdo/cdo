@@ -515,15 +515,11 @@ public class TransactionTest extends AbstractCDOTest
 
     category.setName("name2");
 
-    TestAdapter testAdapter = new TestAdapter();
-    category.eAdapters().add(testAdapter);
+    TestAdapter testAdapter = new TestAdapter(category);
 
     transaction.rollback();
 
-    Notification[] notifications = testAdapter.getNotifications();
-    assertEquals(1, notifications.length);
-
-    Notification notification = notifications[0];
+    Notification notification = testAdapter.assertNotifications(1)[0];
     assertEquals("name2", notification.getOldStringValue());
     assertEquals("name1", notification.getNewStringValue());
   }

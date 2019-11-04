@@ -46,8 +46,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     company.setName("company2");
 
     // add adapter.
-    final TestAdapter testAdapter = new TestAdapter();
-    company.eAdapters().add(testAdapter);
+    final TestAdapter testAdapter = new TestAdapter(company);
 
     // rollback.
     transaction.rollback();
@@ -84,8 +83,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     company.getCustomers().add(getModel1Factory().createCustomer());
 
     // add adapter.
-    final TestAdapter testAdapter = new TestAdapter();
-    company.eAdapters().add(testAdapter);
+    final TestAdapter testAdapter = new TestAdapter(company);
 
     // rollback.
     transaction.rollback();
@@ -123,8 +121,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     company.getCustomers().remove(0);
 
     // add adapter.
-    final TestAdapter testAdapter = new TestAdapter();
-    company.eAdapters().add(testAdapter);
+    final TestAdapter testAdapter = new TestAdapter(company);
 
     // rollback.
     transaction.rollback();
@@ -164,8 +161,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     company.setStreet("street2");
 
     // add adapter.
-    final TestAdapter testAdapter = new TestAdapter();
-    company.eAdapters().add(testAdapter);
+    final TestAdapter testAdapter = new TestAdapter(company);
 
     // rollback.
     transaction.rollback();
@@ -222,8 +218,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     commitAndSync(transaction2, transaction);
 
     // add adapter.
-    final TestAdapter testAdapter = new TestAdapter();
-    company.eAdapters().add(testAdapter);
+    final TestAdapter testAdapter = new TestAdapter(company);
 
     // rollback.
     transaction.rollback();
@@ -272,8 +267,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     commitAndSync(transaction2, transaction);
 
     // add adapter.
-    final TestAdapter testAdapter = new TestAdapter();
-    company.eAdapters().add(testAdapter);
+    final TestAdapter testAdapter = new TestAdapter(company);
 
     // rollback.
     transaction.rollback();

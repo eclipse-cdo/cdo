@@ -46,9 +46,8 @@ public class Bugzilla_251087_Test extends AbstractCDOTest
 
     Company obj2 = getModel1Factory().createCompany();
 
-    TestAdapter testAdapter = new TestAdapter();
+    new TestAdapter(obj2);
 
-    obj2.eAdapters().add(testAdapter);
     res.getContents().add(obj2);
     transaction1.commit();
 
@@ -77,22 +76,15 @@ public class Bugzilla_251087_Test extends AbstractCDOTest
     CDOID companyID = CDOUtil.getCDOObject(obj2).cdoID();
     Company companyB = (Company)CDOUtil.getEObject(transB1.getObject(companyID));
     transB1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
-    final TestAdapter testAdapter = new TestAdapter();
-    companyB.eAdapters().add(testAdapter);
+
+    final TestAdapter testAdapter = new TestAdapter(companyB);
     assertEquals(true, ((InternalCDOTransaction)transB1).hasSubscription(companyID));
 
     res.getContents().remove(obj2);
     transaction1.commit();
 
     msg("Checking after commit");
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return testAdapter.getNotifications().length == 1;
-      }
-    }.assertNoTimeOut();
+    testAdapter.assertNoTimeout(1);
 
     assertEquals(false, ((InternalCDOTransaction)transB1).hasSubscription(companyID));
   }

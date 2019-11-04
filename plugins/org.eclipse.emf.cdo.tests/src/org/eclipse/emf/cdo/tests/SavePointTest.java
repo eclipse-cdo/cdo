@@ -343,11 +343,10 @@ public class SavePointTest extends AbstractCDOTest
 
     company.setCity("CITY2");
 
-    TestAdapter adapter = new TestAdapter();
-    company.eAdapters().add(adapter);
+    TestAdapter adapter = new TestAdapter(company);
 
     savePoint1.rollback();
     assertEquals("CITY1", company.getCity());
-    assertEquals(1, adapter.getNotifications().length);
+    adapter.assertNotifications(1);
   }
 }

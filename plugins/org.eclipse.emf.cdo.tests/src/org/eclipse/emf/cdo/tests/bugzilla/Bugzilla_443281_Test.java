@@ -52,22 +52,22 @@ public class Bugzilla_443281_Test extends AbstractCDOTest
     CDOResource resource1 = tx.createResource(getResourcePath(resourceName));
 
     // Test
-    TestAdapter testAdapter = new TestAdapter();
-    resource1.eAdapters().add(testAdapter);
+    TestAdapter testAdapter = new TestAdapter(resource1);
     URI uri = resource1.getURI();
     String newResourceName = "resource2.model1";
     URI newURI = uri.trimSegments(1).appendSegment(newResourceName);
     resource1.setURI(newURI);
-    assertEquals(2, testAdapter.getNotifications().length);
 
-    Notification notification1 = testAdapter.getNotifications()[0];
+    Notification[] notifications = testAdapter.assertNotifications(2);
+
+    Notification notification1 = notifications[0];
     assertEquals(resource1, notification1.getNotifier());
     assertEquals(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME, notification1.getFeature());
     assertEquals(Notification.SET, notification1.getEventType());
     assertEquals(resourceName, notification1.getOldValue());
     assertEquals(newResourceName, notification1.getNewValue());
 
-    Notification notification2 = testAdapter.getNotifications()[1];
+    Notification notification2 = notifications[1];
     assertEquals(resource1, notification2.getNotifier());
     assertEquals(Resource.RESOURCE__URI, notification2.getFeatureID(null));
     assertEquals(Notification.SET, notification2.getEventType());
@@ -83,13 +83,11 @@ public class Bugzilla_443281_Test extends AbstractCDOTest
     Resource resource1 = resourceSet.createResource(localResourceURI);
 
     // Test
-    TestAdapter testAdapter = new TestAdapter();
-    resource1.eAdapters().add(testAdapter);
+    TestAdapter testAdapter = new TestAdapter(resource1);
     URI uri = resource1.getURI();
     URI newURI = uri.trimSegments(1).appendSegment("resource2.model1");
     resource1.setURI(newURI);
-    assertEquals(1, testAdapter.getNotifications().length);
-    Notification notification = testAdapter.getNotifications()[0];
+    Notification notification = testAdapter.assertNotifications(1)[0];
     assertEquals(resource1, notification.getNotifier());
     assertEquals(Resource.RESOURCE__URI, notification.getFeatureID(null));
     assertEquals(Notification.SET, notification.getEventType());

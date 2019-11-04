@@ -50,17 +50,16 @@ public class Bugzilla_384496_Test extends AbstractCDOTest
     view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     EObject watchedRoot = view.getResource(getResourcePath("res")).getContents().get(0);
 
-    final TestAdapter adapter = new TestAdapter();
-    watchedRoot.eAdapters().add(adapter);
+    final TestAdapter adapter = new TestAdapter(watchedRoot);
 
     // Now modify from another session and checkout the adapter got the right position
     // Root has initially 3 children. Create an additional one and replace the one at index 1
 
     Category replacementChild = getModel1Factory().createCategory();
-    assertEquals(0, adapter.getNotifications().length);
+    adapter.assertNotifications(0);
 
     root.getCategories().set(1, replacementChild);
-    assertEquals(0, adapter.getNotifications().length);
+    adapter.assertNotifications(0);
 
     transaction.commit();
     new PollingTimeOuter()
@@ -74,11 +73,11 @@ public class Bugzilla_384496_Test extends AbstractCDOTest
 
     if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
     {
-      assertEquals(1, adapter.getNotifications().length);
+      adapter.assertNotifications(1);
     }
     else
     {
-      assertEquals(2, adapter.getNotifications().length);
+      adapter.assertNotifications(2);
     }
 
     assertEquals(1, adapter.getNotifications()[0].getPosition());

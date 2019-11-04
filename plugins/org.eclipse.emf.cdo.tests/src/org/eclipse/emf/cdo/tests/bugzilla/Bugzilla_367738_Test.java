@@ -43,8 +43,7 @@ public class Bugzilla_367738_Test extends AbstractCDOTest
     resource.getContents().add(company);
     transaction.commit();
 
-    TestAdapter adapter = new TestAdapter();
-    company.eAdapters().add(adapter);
+    TestAdapter adapter = new TestAdapter(company);
     company.setName(null);
 
     Notification[] notifications = adapter.getNotifications();
@@ -68,8 +67,7 @@ public class Bugzilla_367738_Test extends AbstractCDOTest
     resource.getContents().add(orderDetail);
     transaction.commit();
 
-    TestAdapter adapter = new TestAdapter();
-    orderDetail.eAdapters().add(adapter);
+    TestAdapter adapter = new TestAdapter(orderDetail);
     orderDetail.setProduct(null);
 
     Notification[] notifications = adapter.getNotifications();
@@ -94,8 +92,7 @@ public class Bugzilla_367738_Test extends AbstractCDOTest
     resource.getContents().add(purchaseOrder2);
     transaction.commit();
 
-    TestAdapter adapter = new TestAdapter();
-    purchaseOrder1.eAdapters().add(adapter);
+    TestAdapter adapter = new TestAdapter(purchaseOrder1);
     purchaseOrder2.setShippingAddress(customer);
     assertNull(purchaseOrder1.getShippingAddress());
 
@@ -118,8 +115,7 @@ public class Bugzilla_367738_Test extends AbstractCDOTest
     resource.getContents().add(purchaseOrder);
     transaction.commit();
 
-    TestAdapter adapter = new TestAdapter();
-    purchaseOrder.eAdapters().add(adapter);
+    TestAdapter adapter = new TestAdapter(purchaseOrder);
     purchaseOrder.setShippingAddress(null);
 
     Notification[] notifications = adapter.getNotifications();
@@ -142,12 +138,11 @@ public class Bugzilla_367738_Test extends AbstractCDOTest
     resource.getContents().add(purchaseOrder);
     transaction.commit();
 
-    TestAdapter adapter = new TestAdapter();
-    purchaseOrder.eAdapters().add(adapter);
+    TestAdapter adapter = new TestAdapter(purchaseOrder);
     resource.getContents().add(customer);
 
     // Adding the customer to resource.contents does NOT remove it from the containment ref!
-    assertEquals(0, adapter.getNotifications().length);
+    adapter.assertNotifications(0);
   }
 
   @Skips(IModelConfig.CAPABILITY_LEGACY)
@@ -170,8 +165,7 @@ public class Bugzilla_367738_Test extends AbstractCDOTest
     transaction.commit();
     assertEquals(customer, purchaseOrder.getShippingAddress());
 
-    TestAdapter adapter = new TestAdapter();
-    purchaseOrder.eAdapters().add(adapter);
+    TestAdapter adapter = new TestAdapter(purchaseOrder);
     purchaseOrder.setShippingAddress(null);
 
     Notification[] notifications = adapter.getNotifications();
@@ -196,8 +190,7 @@ public class Bugzilla_367738_Test extends AbstractCDOTest
     transaction.commit();
     assertEquals(customer, purchaseOrder.getShippingAddress());
 
-    TestAdapter adapter = new TestAdapter();
-    purchaseOrder.eAdapters().add(adapter);
+    TestAdapter adapter = new TestAdapter(purchaseOrder);
     purchaseOrder.setShippingAddress(null);
 
     Notification[] notifications = adapter.getNotifications();

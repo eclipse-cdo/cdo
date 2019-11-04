@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.tests.util;
 
 import static org.junit.Assert.assertEquals;
 
+import org.eclipse.net4j.util.tests.AbstractOMTest.PollingTimeOuter;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -28,13 +30,12 @@ public class TestAdapter implements Adapter
 
   private Notifier notifier;
 
-  public TestAdapter()
+  public TestAdapter(Notifier... notifiers)
   {
-  }
-
-  public TestAdapter(Notifier notifier)
-  {
-    notifier.eAdapters().add(this);
+    for (Notifier notifier : notifiers)
+    {
+      notifier.eAdapters().add(this);
+    }
   }
 
   public Notifier getTarget()
@@ -76,11 +77,28 @@ public class TestAdapter implements Adapter
     }
   }
 
-  public void assertNotifications(int expectedSize)
+  public Notification[] assertNotifications(int expectedSize)
   {
     synchronized (notifications)
     {
       assertEquals(expectedSize, notifications.size());
+      return notifications.toArray(new Notification[notifications.size()]);
     }
+  }
+
+  public Notification[] assertNoTimeout(final int expectedSize) throws InterruptedException
+  {
+    final Notification[][] result = { null };
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        result[0] = getNotifications();
+        return result[0].length == expectedSize;
+      }
+    }.assertNoTimeOut();
+
+    return result[0];
   }
 }

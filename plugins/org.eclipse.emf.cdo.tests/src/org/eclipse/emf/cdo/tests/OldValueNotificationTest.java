@@ -25,7 +25,7 @@ import org.eclipse.emf.common.notify.Notification;
 import java.util.Date;
 
 /**
- *
+ * @author Eike Stepper
  */
 public class OldValueNotificationTest extends AbstractCDOTest
 {
@@ -48,19 +48,11 @@ public class OldValueNotificationTest extends AbstractCDOTest
     resourceA.getContents().add(order);
     transaction.commit();
 
-    final TestAdapter adapter = new TestAdapter()
-    {
-      @Override
-      public void notifyChanged(Notification notification)
-      {
-        super.notifyChanged(notification);
-      }
-    };
-
     final CDOView view = session.openView();
     SpecialPurchaseOrder roOrder = view.getObject(order);
     msg(CDOUtil.getCDOObject(roOrder).cdoState());
-    roOrder.eAdapters().add(adapter);
+
+    final TestAdapter adapter = new TestAdapter(roOrder);
 
     Address address2 = getModel1Factory().createAddress();
     address2.setCity("Basel2");
@@ -71,18 +63,7 @@ public class OldValueNotificationTest extends AbstractCDOTest
 
     transaction.commit();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        // Commit notifications from the same session always have full deltas
-        Notification[] notifications = adapter.getNotifications();
-        return notifications.length == 1;
-      }
-    }.assertNoTimeOut();
-
-    Notification[] notifications = adapter.getNotifications();
-    notifications[0].getOldValue();
+    Notification notification = adapter.assertNoTimeout(1)[0];
+    notification.getOldValue();
   }
 }

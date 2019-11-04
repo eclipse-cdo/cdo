@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -51,8 +52,7 @@ public class Bugzilla_254489_Test extends AbstractCDOTest
     transaction2.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     CDOResource res2 = transaction2.getResource(getResourcePath("/res1"));
     Company companyA2 = (Company)res2.getContents().get(0);
-    final TestAdapter companyA2Adapter = new TestAdapter();
-    companyA2.eAdapters().add(companyA2Adapter);
+    final TestAdapter companyA2Adapter = new TestAdapter(companyA2);
 
     final Category category1A = getModel1Factory().createCategory();
     category1A.setName("category1");
@@ -62,16 +62,9 @@ public class Bugzilla_254489_Test extends AbstractCDOTest
     transaction1.commit();
 
     msg("Checking after commit");
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return companyA2Adapter.getNotifications().length == 1;
-      }
-    }.assertNoTimeOut();
+    Notification[] notifications = companyA2Adapter.assertNoTimeout(1);
 
-    Category category2 = (Category)CDOUtil.getEObject((EObject)companyA2Adapter.getNotifications()[0].getNewValue());
+    Category category2 = (Category)CDOUtil.getEObject((EObject)notifications[0].getNewValue());
     assertNotSame(category2, category1A);
     assertSame(transaction2, CDOUtil.getCDOObject(category2).cdoView());
   }

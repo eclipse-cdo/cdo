@@ -43,15 +43,12 @@ public class Bugzilla_503564_Test extends AbstractCDOTest
     Supplier controlObject = controlView.getObject(object);
     assertEquals("Old Name", controlObject.getName());
 
-    TestAdapter adapter = new TestAdapter();
-    controlObject.eAdapters().add(adapter);
+    TestAdapter adapter = new TestAdapter(controlObject);
 
     object.setName("New Name");
     commitAndSync(transaction, controlView);
 
-    Notification[] notifications = adapter.getNotifications();
-    assertEquals(1, notifications.length);
-
+    Notification[] notifications = adapter.assertNotifications(1);
     Object oldValue = notifications[0].getOldValue();
     assertEquals("Old Name", oldValue);
   }
@@ -74,17 +71,14 @@ public class Bugzilla_503564_Test extends AbstractCDOTest
     Supplier controlOldSupplier = controlView.getObject(oldSupplier);
     assertEquals(controlOldSupplier, controlObject.getSupplier());
 
-    TestAdapter adapter = new TestAdapter();
-    controlObject.eAdapters().add(adapter);
+    TestAdapter adapter = new TestAdapter(controlObject);
 
     Supplier newSupplier = getModel1Factory().createSupplier();
     resource.getContents().add(newSupplier);
     object.setSupplier(newSupplier);
     commitAndSync(transaction, controlView);
 
-    Notification[] notifications = adapter.getNotifications();
-    assertEquals(1, notifications.length);
-
+    Notification[] notifications = adapter.assertNotifications(1);
     Object oldValue = notifications[0].getOldValue();
     assertEquals(controlOldSupplier, oldValue);
   }

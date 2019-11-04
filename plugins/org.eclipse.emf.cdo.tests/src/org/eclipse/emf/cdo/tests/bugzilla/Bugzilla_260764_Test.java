@@ -45,8 +45,7 @@ public class Bugzilla_260764_Test extends AbstractCDOTest
     transaction.commit();
 
     transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
-    final TestAdapter adapter = new TestAdapter();
-    orderAddress.eAdapters().add(adapter);
+    final TestAdapter adapter = new TestAdapter(orderAddress);
 
     // ************************************************************* //
 
@@ -59,20 +58,11 @@ public class Bugzilla_260764_Test extends AbstractCDOTest
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     orderAddress2.getOrderDetails().add(orderDetail);
 
-    assertEquals(0, adapter.getNotifications().length);
+    adapter.assertNotifications(0);
     transaction2.commit();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return adapter.getNotifications().length == 1;
-      }
-    }.assertNoTimeOut();
-
-    CDODeltaNotification cdoNotification = (CDODeltaNotification)adapter.getNotifications()[0];
-    assertEquals(false, cdoNotification.hasNext());
-    assertEquals(getModel1Package().getOrder_OrderDetails(), cdoNotification.getFeature());
+    CDODeltaNotification notification = (CDODeltaNotification)adapter.assertNoTimeout(1)[0];
+    assertEquals(false, notification.hasNext());
+    assertEquals(getModel1Package().getOrder_OrderDetails(), notification.getFeature());
   }
 }

@@ -226,8 +226,7 @@ public class ResourceModificationTrackingTest extends AbstractCDOTest
     transaction.commit();
 
     // Add a Listener
-    TestAdapter testAdapter = new TestAdapter();
-    resource.eAdapters().add(testAdapter);
+    TestAdapter testAdapter = new TestAdapter(resource);
     company.setName("foobar");
     assertEquals(Resource.RESOURCE__IS_MODIFIED, testAdapter.getNotifications()[0].getFeatureID(null));
     transaction.commit();

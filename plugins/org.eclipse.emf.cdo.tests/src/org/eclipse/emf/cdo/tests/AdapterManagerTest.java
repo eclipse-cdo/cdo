@@ -21,8 +21,6 @@ import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 
 import org.eclipse.net4j.util.ref.ReferenceType;
 
-import org.eclipse.emf.common.notify.Notification;
-
 import java.lang.ref.WeakReference;
 
 /**
@@ -38,7 +36,6 @@ public class AdapterManagerTest extends AbstractCDOTest
     // ************************************************************* //
 
     Company companyA = getModel1Factory().createCompany();
-    TestAdapter testAdapter = new TestAdapter();
 
     final CDOTransaction transaction = session.openTransaction();
     transaction.options().setCacheReferenceType(ReferenceType.WEAK);
@@ -48,15 +45,14 @@ public class AdapterManagerTest extends AbstractCDOTest
     transaction.commit();
 
     final CDOID id = CDOUtil.getCDOObject(companyA).cdoID();
-    companyA.eAdapters().add(testAdapter);
+    TestAdapter testAdapter = new TestAdapter(companyA);
 
     companyA = null;
     companyA = (Company)CDOUtil.getEObject(transaction.getObject(id));
-    assertEquals(0, testAdapter.getNotifications().length);
+    testAdapter.assertNotifications(0);
 
     companyA.setCity("Ottawa");
-    Notification[] notifications = testAdapter.getNotifications();
-    assertEquals(1, notifications.length); // One EMF notification
+    testAdapter.assertNotifications(1);
   }
 
   public void testStrongReferencePolicy_ALL() throws Exception
@@ -76,8 +72,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     transaction.commit();
     CDOID id = CDOUtil.getCDOObject(companyA).cdoID();
 
-    TestAdapter testAdapter = new TestAdapter();
-    companyA.eAdapters().add(testAdapter);
+    TestAdapter testAdapter = new TestAdapter(companyA);
 
     companyA = null;
     testAdapter.clearNotifications();
@@ -86,10 +81,10 @@ public class AdapterManagerTest extends AbstractCDOTest
     assertEquals(true, transaction.isObjectRegistered(id));
 
     companyA = (Company)CDOUtil.getEObject(transaction.getObject(id));
-    assertEquals(0, testAdapter.getNotifications().length);
+    testAdapter.assertNotifications(0);
 
     companyA.setCity("Ottawa");
-    assertEquals(1, testAdapter.getNotifications().length);
+    testAdapter.assertNotifications(1);
   }
 
   public void testStrongReferencePolicy_ALL_AttachObject() throws Exception
@@ -100,8 +95,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     // ************************************************************* //
 
     Company companyA = getModel1Factory().createCompany();
-    TestAdapter testAdapter = new TestAdapter();
-    companyA.eAdapters().add(testAdapter);
+    TestAdapter testAdapter = new TestAdapter(companyA);
 
     CDOTransaction transaction = session.openTransaction();
     transaction.options().setCacheReferenceType(ReferenceType.WEAK);
@@ -120,9 +114,9 @@ public class AdapterManagerTest extends AbstractCDOTest
 
     companyA = (Company)CDOUtil.getEObject(transaction.getObject(id));
 
-    assertEquals(0, testAdapter.getNotifications().length);
+    testAdapter.assertNotifications(0);
     companyA.setCity("Ottawa");
-    assertEquals(1, testAdapter.getNotifications().length);
+    testAdapter.assertNotifications(1);
   }
 
   public void testStrongReferencePolicy_ALL_DetachObject() throws Exception
@@ -135,8 +129,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     Company companyA = getModel1Factory().createCompany();
     WeakReference<Company> weakCompanyA = new WeakReference<Company>(companyA);
 
-    TestAdapter testAdapter = new TestAdapter();
-    companyA.eAdapters().add(testAdapter);
+    TestAdapter testAdapter = new TestAdapter(companyA);
 
     CDOTransaction transaction = session.openTransaction();
     transaction.options().setCacheReferenceType(ReferenceType.WEAK);

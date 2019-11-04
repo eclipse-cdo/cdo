@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.common.notify.Notification;
+
 /**
  * @author Eike Stepper
  */
@@ -44,24 +46,15 @@ public class Bugzilla_363287_Test extends AbstractCDOTest
 
     CDOResource resource2 = view.getResource(getResourcePath("/test1"));
 
-    final TestAdapter testAdapter = new TestAdapter();
-    resource2.eAdapters().add(testAdapter);
+    final TestAdapter testAdapter = new TestAdapter(resource2);
 
     // ************************************************************* //
 
     resource1.getContents().remove(0);
     transaction.commit();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return testAdapter.getNotifications().length == 1;
-      }
-    }.assertNoTimeOut();
-
-    Object oldValue = testAdapter.getNotifications()[0].getOldValue();
+    Notification notification = testAdapter.assertNoTimeout(1)[0];
+    Object oldValue = notification.getOldValue();
     assertNull(oldValue);
   }
 }

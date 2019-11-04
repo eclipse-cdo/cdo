@@ -37,8 +37,7 @@ public class Bugzilla_266857_Test extends AbstractCDOTest
     transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     CDOResource resource1 = transaction.createResource(getResourcePath("test1"));
-    final TestAdapter testAdapterForResource = new TestAdapter();
-    resource1.eAdapters().add(testAdapterForResource);
+    final TestAdapter testAdapterForResource = new TestAdapter(resource1);
     transaction.commit();
 
     CDOSession session2 = openSession();
@@ -46,17 +45,11 @@ public class Bugzilla_266857_Test extends AbstractCDOTest
     CDOResource resource2 = transaction2.getResource(getResourcePath("test1"));
     Company company2 = getModel1Factory().createCompany();
     resource2.getContents().add(company2);
-    assertEquals(0, testAdapterForResource.getNotifications().length);
+    testAdapterForResource.assertNotifications(0);
+
     transaction2.commit();
 
     msg("Checking after commit");
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return testAdapterForResource.getNotifications().length == 1;
-      }
-    }.assertNoTimeOut();
+    testAdapterForResource.assertNoTimeout(1);
   }
 }

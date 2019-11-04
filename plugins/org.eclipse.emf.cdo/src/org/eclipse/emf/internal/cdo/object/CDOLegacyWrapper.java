@@ -394,6 +394,34 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
+  @Override
+  public void cdoInternalRollback(InternalCDORevision revision)
+  {
+    cdoInternalSetRevision(revision);
+    boolean bypassPermissionChecks = revision.bypassPermissionChecks(true);
+    boolean deliver = instance.eDeliver();
+    if (deliver)
+    {
+      instance.eSetDeliver(false);
+    }
+
+    try
+    {
+      for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
+      {
+        revisionToInstanceFeature(feature);
+      }
+    }
+    finally
+    {
+      revision.bypassPermissionChecks(bypassPermissionChecks);
+      if (deliver)
+      {
+        instance.eSetDeliver(true);
+      }
+    }
+  }
+
   protected void instanceToRevision()
   {
     InternalCDORevision revision = cdoRevision();

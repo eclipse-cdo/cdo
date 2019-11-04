@@ -942,7 +942,20 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
+      // Transfer the EObject values into a CDORevision.
       object.cdoInternalPostAttach();
+
+      // Remember a copy of the new revision that can be used in case of a later rollback to reset the object.
+      Map<CDOID, CDORevision> attachedRevisions = ((InternalCDOTransaction)object.cdoView()).options().getAttachedRevisionsMap();
+      if (attachedRevisions != null)
+      {
+        InternalCDORevision revision = object.cdoRevision().copy();
+
+        // This revision copy contains the container reference AFTER the attachment.
+        // At rollback time it may have to be unset if this object is the root of an attached tree!
+        attachedRevisions.put(revision.getID(), revision);
+      }
+
       changeState(object, CDOState.NEW);
     }
   }
@@ -1117,8 +1130,38 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, InternalCDOTransaction transaction)
     {
-      if (transaction.getLastSavepoint().isNewObject(object.cdoID()))
+      CDOID id = object.cdoID();
+      if (transaction.getLastSavepoint().isNewObject(id))
       {
+        // Map<CDOID, CDORevision> attachedRevisions = transaction.options().getAttachedRevisionsMap();
+        // if (attachedRevisions != null)
+        // {
+        // InternalCDORevision revision = (InternalCDORevision)attachedRevisions.get(id);
+        // if (revision != null)
+        // {
+        // CDOID containerID = transaction.provideCDOID(revision.getContainerID());
+        // if (!CDOIDUtil.isNull(containerID) && !attachedRevisions.containsKey(containerID))
+        // {
+        // revision.setContainerID(null);
+        // revision.setContainingFeatureID(0);
+        // }
+        //
+        // CDOID resourceID = revision.getResourceID();
+        // if (!CDOIDUtil.isNull(resourceID) && !attachedRevisions.containsKey(resourceID))
+        // {
+        // revision.setResourceID(null);
+        // }
+        //
+        // object.cdoInternalSetRevision(revision);
+        //
+        // if (object instanceof CDOLegacyWrapper)
+        // {
+        // CDOLegacyWrapper wrapper = (CDOLegacyWrapper)object;
+        // wrapper.cdoInternalPostLoad();
+        // }
+        // }
+        // }
+
         // postDetach() requires the object to be TRANSIENT, but listeners must not be notified at this point!
         CDOState oldState = setStateQuietely(object, CDOState.TRANSIENT);
         object.cdoInternalPostDetach(false);

@@ -12,6 +12,7 @@ package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
@@ -57,4 +58,6 @@ public abstract class CDOObjectWrapper extends CDOObjectWrapperBase implements I
   {
     return CDOObjectImpl.getLockState(this);
   }
+
+  public abstract void cdoInternalRollback(InternalCDORevision revision);
 }

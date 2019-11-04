@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetDataProvider;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOResourceNodeNotFoundException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
@@ -448,6 +449,24 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
     public void removeAutoReleaseLocksExemptions(boolean recursive, EObject... objects);
 
     /**
+     * Returns a map which, if non-<code>null</code>, stores copies of the initial {@link CDORevision revisions} of newly attached objects.
+     *
+     * @see #setAttachedRevisionsMap(Map)
+     * @since 4.8
+     */
+    public Map<CDOID, CDORevision> getAttachedRevisionsMap();
+
+    /**
+     * Sets a map which, if non-<code>null</code>, stores copies of the initial {@link CDORevision revisions} of newly attached objects,
+     * so that these objects can and will be rolled back to the model values they had at attachment time. If this map is <code>null</code>
+     * newly attached objects will keep the model values they have at rollback time. Note that remembering copies of all newly attached objects
+     * can impose resource problems when many objects are attached, e.g., during larger imports.
+     *
+     * @since 4.8
+     */
+    public void setAttachedRevisionsMap(Map<CDOID, CDORevision> attachedRevisionsMap);
+
+    /**
      * Returns the number of milliseconds to wait for the transaction update when {@link CDOTransaction#commit()} is called.
      * <p>
      * Default value is 10000.
@@ -540,6 +559,19 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
       public interface AutoReleaseLocksExemptionsEvent extends AutoReleaseLocksEvent
       {
       }
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired from transaction {@link CDOTransaction#options() options} when the
+     * {@link Options#setAttachedRevisionsMap(Map) attached revisions map} option has changed.
+     *
+     * @author Eike Stepper
+     * @since 4.8
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     */
+    public interface AttachedRevisionsMap extends IOptionsEvent
+    {
     }
 
     /**

@@ -519,11 +519,16 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     }
 
     InternalCDOClassInfo classInfo = cdoClassInfo();
-
     CDOStore store = cdoStore();
-    super.eSetDirectResource((Resource.Internal)store.getResource(this));
-    eBasicSetContainer(store.getContainer(this));
-    eBasicSetContainerFeatureID(store.getContainingFeatureID(this));
+
+    Resource.Internal resource = (Resource.Internal)store.getResource(this);
+    super.eSetDirectResource(resource);
+
+    InternalEObject container = store.getContainer(this);
+    eBasicSetContainer(container);
+
+    int containingFeatureID = store.getContainingFeatureID(this);
+    eBasicSetContainerFeatureID(containingFeatureID);
 
     if (eSettings != null)
     {

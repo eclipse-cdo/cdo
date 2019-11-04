@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.tests.util;
 
+import static org.junit.Assert.assertEquals;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -22,7 +24,7 @@ import java.util.List;
  */
 public class TestAdapter implements Adapter
 {
-  private List<Notification> notifications = new ArrayList<Notification>();
+  private final List<Notification> notifications = new ArrayList<Notification>();
 
   private Notifier notifier;
 
@@ -30,9 +32,32 @@ public class TestAdapter implements Adapter
   {
   }
 
+  public TestAdapter(Notifier notifier)
+  {
+    notifier.eAdapters().add(this);
+  }
+
   public Notifier getTarget()
   {
     return notifier;
+  }
+
+  public void setTarget(Notifier newTarget)
+  {
+    notifier = newTarget;
+  }
+
+  public boolean isAdapterForType(Object type)
+  {
+    return false;
+  }
+
+  public void notifyChanged(Notification notification)
+  {
+    synchronized (notifications)
+    {
+      notifications.add(notification);
+    }
   }
 
   public Notification[] getNotifications()
@@ -51,21 +76,11 @@ public class TestAdapter implements Adapter
     }
   }
 
-  public boolean isAdapterForType(Object type)
-  {
-    return false;
-  }
-
-  public void notifyChanged(Notification notification)
+  public void assertNotifications(int expectedSize)
   {
     synchronized (notifications)
     {
-      notifications.add(notification);
+      assertEquals(expectedSize, notifications.size());
     }
-  }
-
-  public void setTarget(Notifier newTarget)
-  {
-    notifier = newTarget;
   }
 }

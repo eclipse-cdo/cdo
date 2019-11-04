@@ -1828,238 +1828,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  private Set<CDOID> rollbackCompletely(CDOUserSavepoint savepoint)
-  {
-    Set<CDOID> idsOfNewObjectsWithDeltas = new HashSet<CDOID>();
-    Set<InternalCDOObject> newObjects = new HashSet<InternalCDOObject>();
-
-    // Start from the last savepoint and come back up to the active
-    for (InternalCDOSavepoint itrSavepoint = lastSavepoint; itrSavepoint != null; itrSavepoint = itrSavepoint.getPreviousSavepoint())
-    {
-      Set<Object> toBeDetached = new HashSet<Object>();
-
-      // Rollback new objects attached after the save point
-      Map<CDOID, CDOObject> newObjectsMap = itrSavepoint.getNewObjects();
-      for (CDOID id : newObjectsMap.keySet())
-      {
-        InternalCDOObject object = (InternalCDOObject)newObjectsMap.get(id);
-
-        toBeDetached.add(id);
-        toBeDetached.add(object);
-        toBeDetached.add(object.cdoInternalInstance());
-        removeObject(id, object);
-        newObjects.add(object);
-      }
-
-      // Rollback new objects re-attached after the save point
-      Map<CDOID, CDOObject> reattachedObjectsMap = itrSavepoint.getReattachedObjects();
-      Set<CDOID> detachedIDs = itrSavepoint.getDetachedObjects().keySet();
-      for (CDOObject reattachedObject : reattachedObjectsMap.values())
-      {
-        CDOID id = reattachedObject.cdoID();
-        if (!detachedIDs.contains(id))
-        {
-          InternalCDOObject internal = (InternalCDOObject)reattachedObject;
-
-          toBeDetached.add(id);
-          toBeDetached.add(internal);
-          toBeDetached.add(internal.cdoInternalInstance());
-          removeObject(id, internal);
-
-          internal.cdoInternalSetView(null);
-          internal.cdoInternalSetID(null);
-          internal.cdoInternalSetState(CDOState.TRANSIENT);
-        }
-      }
-
-      for (Object idOrObject : toBeDetached)
-      {
-        if (idOrObject instanceof CDOObjectImpl)
-        {
-          CDOObjectImpl impl = (CDOObjectImpl)idOrObject;
-          InternalCDORevision revision = impl.cdoRevision();
-
-          Resource.Internal directResource = impl.eDirectResource();
-          EObject container = impl.eContainer();
-          if (!toBeDetached.contains(directResource) && !toBeDetached.contains(container))
-          {
-            if (revision != null)
-            {
-              // Unset direct resource and container in the revision.
-              // Later cdoInternalPostDetach() will migrate these values into the EObject.
-              // See CDOStateMachine.RollbackTransition.execute().
-              revision.setResourceID(null);
-              revision.setContainerID(null);
-              revision.setContainingFeatureID(0);
-            }
-            else
-            {
-              // Unset direct resource and eContainer in the EObject.
-              impl.cdoInternalSetResource(null);
-            }
-          }
-        }
-        else if (idOrObject instanceof CDOObjectWrapper)
-        {
-          CDOObjectWrapper wrapper = (CDOObjectWrapper)idOrObject;
-          Resource.Internal directResource = wrapper.eDirectResource();
-          EObject container = wrapper.eContainer();
-          if (!toBeDetached.contains(directResource) && !toBeDetached.contains(container))
-          {
-            wrapper.setInstanceResource(null);
-            wrapper.setInstanceContainer(null, 0);
-          }
-        }
-      }
-
-      Map<CDOID, CDORevisionDelta> revisionDeltas = itrSavepoint.getRevisionDeltas2();
-      if (!revisionDeltas.isEmpty())
-      {
-        for (CDORevisionDelta dirtyObject : revisionDeltas.values())
-        {
-          CDOID id = dirtyObject.getID();
-          if (isObjectNew(id))
-          {
-            idsOfNewObjectsWithDeltas.add(id);
-          }
-        }
-      }
-
-      // Rollback all detached objects
-      Map<CDOID, CDOObject> detachedObjectsMap = itrSavepoint.getDetachedObjects();
-      if (!detachedObjectsMap.isEmpty())
-      {
-        for (Entry<CDOID, CDOObject> detachedObjectEntry : detachedObjectsMap.entrySet())
-        {
-          CDOID id = detachedObjectEntry.getKey();
-          if (isObjectNew(id))
-          {
-            idsOfNewObjectsWithDeltas.add(id);
-          }
-          else
-          {
-            InternalCDOObject detachedObject = (InternalCDOObject)detachedObjectEntry.getValue();
-            InternalCDORevision cleanRev = cleanRevisions.get(detachedObject);
-            cleanObject(detachedObject, cleanRev);
-          }
-        }
-      }
-
-      for (Entry<CDOID, CDOObject> entryDirtyObject : itrSavepoint.getDirtyObjects().entrySet())
-      {
-        CDOID id = entryDirtyObject.getKey();
-        if (!isObjectNew(id))
-        {
-          InternalCDOObject internalDirtyObject = (InternalCDOObject)entryDirtyObject.getValue();
-
-          // Bug 283985 (Re-attachment): Skip objects that were reattached, because
-          // they were already reset to TRANSIENT earlier in this method
-          if (!reattachedObjectsMap.values().contains(internalDirtyObject))
-          {
-            CDOStateMachine.INSTANCE.rollback(internalDirtyObject, this);
-          }
-        }
-      }
-
-      if (savepoint == itrSavepoint)
-      {
-        break;
-      }
-    }
-
-    for (InternalCDOObject internalCDOObject : newObjects)
-    {
-      if (FSMUtil.isNew(internalCDOObject))
-      {
-        CDOStateMachine.INSTANCE.rollback(internalCDOObject, this);
-        internalCDOObject.cdoInternalSetID(null);
-        internalCDOObject.cdoInternalSetView(null);
-      }
-    }
-
-    return idsOfNewObjectsWithDeltas;
-  }
-
-  private void loadSavepoint(CDOSavepoint savepoint, Set<CDOID> idsOfNewObjectWithDeltas)
-  {
-    Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
-    Map<CDOID, CDOObject> newObjMaps = getNewObjects();
-    Map<CDOID, CDORevision> newBaseRevision = getBaseNewObjects();
-    Map<CDOID, CDOObject> detachedObjects = getDetachedObjects();
-
-    // Reload the objects (NEW) with their base.
-    for (CDOID id : idsOfNewObjectWithDeltas)
-    {
-      if (detachedObjects.containsKey(id))
-      {
-        continue;
-      }
-
-      InternalCDOObject object = (InternalCDOObject)newObjMaps.get(id);
-      CDORevision revision = newBaseRevision.get(id);
-      if (revision != null)
-      {
-        object.cdoInternalSetRevision(revision.copy());
-        object.cdoInternalSetView(this);
-        object.cdoInternalSetState(CDOState.NEW);
-
-        // Load the object from revision to EObject
-        object.cdoInternalPostLoad();
-        if (super.getObject(object.cdoID(), false) == null)
-        {
-          registerObject(object);
-        }
-      }
-    }
-
-    // We need to register back new objects that are not removed anymore there.
-    for (Entry<CDOID, CDOObject> entryNewObject : newObjMaps.entrySet())
-    {
-      InternalCDOObject object = (InternalCDOObject)entryNewObject.getValue();
-
-      // Go back to the previous state
-      cleanObject(object, object.cdoRevision());
-      object.cdoInternalSetState(CDOState.NEW);
-    }
-
-    for (Entry<CDOID, CDOObject> entryDirtyObject : dirtyObjects.entrySet())
-    {
-      if (detachedObjects.containsKey(entryDirtyObject.getKey()))
-      {
-        continue;
-      }
-
-      // Rollback every persisted objects
-      InternalCDOObject internalDirtyObject = (InternalCDOObject)entryDirtyObject.getValue();
-      cleanObject(internalDirtyObject, getRevision(entryDirtyObject.getKey(), true));
-    }
-
-    CDOObjectMerger merger = new CDOObjectMerger();
-    for (InternalCDOSavepoint itrSavepoint = firstSavepoint; itrSavepoint != savepoint; itrSavepoint = itrSavepoint.getNextSavepoint())
-    {
-      for (CDORevisionDelta delta : itrSavepoint.getRevisionDeltas2().values())
-      {
-        CDOID id = delta.getID();
-        boolean isNew = isObjectNew(id);
-        if (isNew && !idsOfNewObjectWithDeltas.contains(id) || detachedObjects.containsKey(id))
-        {
-          continue;
-        }
-
-        Map<CDOID, CDOObject> map = isNew ? newObjMaps : dirtyObjects;
-        InternalCDOObject object = (InternalCDOObject)map.get(id);
-
-        // Change state of the objects
-        merger.merge(object, delta);
-
-        // Load the object from revision to EObject
-        object.cdoInternalPostLoad();
-      }
-    }
-
-    dirty = savepoint.wasDirty();
-  }
-
   /**
    * @since 2.0
    */
@@ -2153,17 +1921,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         // Remember current revisions
         Map<CDOObject, CDORevision> oldRevisions = new HashMap<CDOObject, CDORevision>();
-        for (CDOObject object : getDirtyObjects().values())
-        {
-          CDORevision oldRevision = object.cdoRevision();
-          if (oldRevision != null)
-          {
-            oldRevisions.put(object, oldRevision);
-          }
-        }
+        collectRevisions(oldRevisions, getDirtyObjects());
+        collectRevisions(oldRevisions, getNewObjects());
 
         // Rollback objects
-        Set<CDOID> idsOfNewObjectWithDeltas = rollbackCompletely(savepoint);
+        Map<CDOObject, CDORevision> newRevisions = new HashMap<CDOObject, CDORevision>();
+        Set<CDOID> idsOfNewObjectWithDeltas = rollbackCompletely(savepoint, newRevisions);
 
         lastSavepoint = savepoint;
         lastSavepoint.setNextSavepoint(null);
@@ -2182,20 +1945,23 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           }
         }
 
-        // Send notifications
+        // Send notifications.
         for (Entry<CDOObject, CDORevision> entry : oldRevisions.entrySet())
         {
           InternalCDOObject object = (InternalCDOObject)entry.getKey();
-          if (FSMUtil.isTransient(object))
-          {
-            continue;
-          }
-
           InternalCDORevision oldRevision = (InternalCDORevision)entry.getValue();
+
           InternalCDORevision newRevision = object.cdoRevision();
           if (newRevision == null)
           {
-            newRevision = getRevision(oldRevision.getID(), true);
+            newRevision = (InternalCDORevision)newRevisions.get(object);
+          }
+
+          if (newRevision == null && !FSMUtil.isTransient(object))
+          {
+            // This can happen for example for conflicting objects which have been set to PROXY in rollbackCompletely().
+            CDOID id = oldRevision.getID();
+            newRevision = getRevision(id, true);
             object.cdoInternalSetRevision(newRevision);
             object.cdoInternalSetState(CDOState.CLEAN);
           }
@@ -2249,6 +2015,291 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       finally
       {
         unlockView();
+      }
+    }
+  }
+
+  private Set<CDOID> rollbackCompletely(CDOUserSavepoint savepoint, Map<CDOObject, CDORevision> newRevisions)
+  {
+    Set<CDOID> idsOfNewObjectsWithDeltas = new HashSet<CDOID>();
+    Set<InternalCDOObject> newObjects = new HashSet<InternalCDOObject>();
+
+    // Start from the last savepoint and come back up to the active
+    for (InternalCDOSavepoint itrSavepoint = lastSavepoint; itrSavepoint != null; itrSavepoint = itrSavepoint.getPreviousSavepoint())
+    {
+      Set<Object> toBeDetached = new HashSet<Object>();
+
+      // Rollback new objects attached after the save point
+      Map<CDOID, CDOObject> newObjectsMap = itrSavepoint.getNewObjects();
+      for (CDOID id : newObjectsMap.keySet())
+      {
+        InternalCDOObject object = (InternalCDOObject)newObjectsMap.get(id);
+
+        toBeDetached.add(id);
+        toBeDetached.add(object);
+        toBeDetached.add(object.cdoInternalInstance());
+        removeObject(id, object);
+        newObjects.add(object);
+      }
+
+      // Rollback new objects re-attached after the save point
+      Map<CDOID, CDOObject> reattachedObjectsMap = itrSavepoint.getReattachedObjects();
+      Set<CDOID> detachedIDs = itrSavepoint.getDetachedObjects().keySet();
+      for (CDOObject reattachedObject : reattachedObjectsMap.values())
+      {
+        CDOID id = reattachedObject.cdoID();
+        if (!detachedIDs.contains(id))
+        {
+          InternalCDOObject internal = (InternalCDOObject)reattachedObject;
+
+          toBeDetached.add(id);
+          toBeDetached.add(internal);
+          toBeDetached.add(internal.cdoInternalInstance());
+          removeObject(id, internal);
+
+          internal.cdoInternalSetView(null);
+          internal.cdoInternalSetID(null);
+          internal.cdoInternalSetState(CDOState.TRANSIENT);
+        }
+      }
+
+      Map<CDOID, CDORevision> attachedRevisions = options().getAttachedRevisionsMap();
+      for (Object idOrObject : toBeDetached)
+      {
+        InternalCDORevision revision = null;
+
+        if (idOrObject instanceof InternalCDOObject)
+        {
+          InternalCDOObject object = (InternalCDOObject)idOrObject;
+          CDOID id = object.cdoID();
+
+          if (attachedRevisions != null)
+          {
+            revision = (InternalCDORevision)attachedRevisions.get(id);
+          }
+
+          if (revision == null)
+          {
+            revision = object.cdoRevision();
+            if (revision != null)
+            {
+              // Copy the revision, so that the revision modifications below don't apply to the oldRevisions,
+              // which have been remembered in handleRollback() for the computation of delta notifications.
+              revision = revision.copy();
+            }
+          }
+
+          if (revision != null)
+          {
+            newRevisions.put((CDOObject)idOrObject, revision);
+          }
+
+          Resource.Internal directResource = object.eDirectResource();
+          EObject container = object.eContainer();
+          boolean topLevel = !toBeDetached.contains(directResource) && !toBeDetached.contains(container);
+          if (topLevel)
+          {
+            if (revision != null)
+            {
+              // Unset direct resource and container in the revision.
+              // Later cdoInternalPostDetach() will migrate these values into the EObject.
+              // See CDOStateMachine.RollbackTransition.execute().
+              revision.setResourceID(null);
+              revision.setContainerID(null);
+              revision.setContainingFeatureID(0);
+            }
+          }
+
+          if (idOrObject instanceof CDOObjectImpl)
+          {
+            CDOObjectImpl impl = (CDOObjectImpl)idOrObject;
+
+            if (revision != null)
+            {
+              impl.cdoInternalSetRevision(revision);
+            }
+            else if (topLevel)
+            {
+              // Unset direct resource and eContainer in the EObject.
+              impl.cdoInternalSetResource(null);
+            }
+          }
+          else if (idOrObject instanceof CDOObjectWrapper)
+          {
+            CDOObjectWrapper wrapper = (CDOObjectWrapper)idOrObject;
+
+            if (revision != null)
+            {
+              wrapper.cdoInternalRollback(revision);
+            }
+
+            if (topLevel)
+            {
+              wrapper.setInstanceResource(null);
+              wrapper.setInstanceContainer(null, 0);
+            }
+          }
+        }
+      }
+
+      Map<CDOID, CDORevisionDelta> revisionDeltas = itrSavepoint.getRevisionDeltas2();
+      if (!revisionDeltas.isEmpty())
+      {
+        for (CDORevisionDelta dirtyObject : revisionDeltas.values())
+        {
+          CDOID id = dirtyObject.getID();
+          if (isObjectNew(id))
+          {
+            idsOfNewObjectsWithDeltas.add(id);
+          }
+        }
+      }
+
+      // Rollback all detached objects.
+      Map<CDOID, CDOObject> detachedObjectsMap = itrSavepoint.getDetachedObjects();
+      if (!detachedObjectsMap.isEmpty())
+      {
+        for (Entry<CDOID, CDOObject> detachedObjectEntry : detachedObjectsMap.entrySet())
+        {
+          CDOID id = detachedObjectEntry.getKey();
+          if (isObjectNew(id))
+          {
+            idsOfNewObjectsWithDeltas.add(id);
+          }
+          else
+          {
+            InternalCDOObject detachedObject = (InternalCDOObject)detachedObjectEntry.getValue();
+            InternalCDORevision cleanRev = cleanRevisions.get(detachedObject);
+            cleanObject(detachedObject, cleanRev);
+          }
+        }
+      }
+
+      // Rollback dirty objects.
+      for (Entry<CDOID, CDOObject> entryDirtyObject : itrSavepoint.getDirtyObjects().entrySet())
+      {
+        CDOID id = entryDirtyObject.getKey();
+        if (!isObjectNew(id))
+        {
+          InternalCDOObject internalDirtyObject = (InternalCDOObject)entryDirtyObject.getValue();
+
+          // Bug 283985 (Re-attachment): Skip objects that were reattached, because
+          // they were already reset to TRANSIENT earlier in this method
+          if (!reattachedObjectsMap.values().contains(internalDirtyObject))
+          {
+            CDOStateMachine.INSTANCE.rollback(internalDirtyObject, this);
+          }
+        }
+      }
+
+      if (savepoint == itrSavepoint)
+      {
+        break;
+      }
+    }
+
+    // Rollback new objects.
+    for (InternalCDOObject internalCDOObject : newObjects)
+    {
+      if (FSMUtil.isNew(internalCDOObject))
+      {
+        CDOStateMachine.INSTANCE.rollback(internalCDOObject, this);
+        internalCDOObject.cdoInternalSetID(null);
+        internalCDOObject.cdoInternalSetView(null);
+      }
+    }
+
+    return idsOfNewObjectsWithDeltas;
+  }
+
+  private void loadSavepoint(CDOSavepoint savepoint, Set<CDOID> idsOfNewObjectWithDeltas)
+  {
+    Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
+    Map<CDOID, CDOObject> newObjMaps = getNewObjects();
+    Map<CDOID, CDORevision> newBaseRevision = getBaseNewObjects();
+    Map<CDOID, CDOObject> detachedObjects = getDetachedObjects();
+
+    // Reload the objects (NEW) with their base.
+    for (CDOID id : idsOfNewObjectWithDeltas)
+    {
+      if (detachedObjects.containsKey(id))
+      {
+        continue;
+      }
+
+      InternalCDOObject object = (InternalCDOObject)newObjMaps.get(id);
+      CDORevision revision = newBaseRevision.get(id);
+      if (revision != null)
+      {
+        object.cdoInternalSetRevision(revision.copy());
+        object.cdoInternalSetView(this);
+        object.cdoInternalSetState(CDOState.NEW);
+
+        // Load the object from revision to EObject
+        object.cdoInternalPostLoad();
+        if (super.getObject(object.cdoID(), false) == null)
+        {
+          registerObject(object);
+        }
+      }
+    }
+
+    // We need to register back new objects that are not removed anymore there.
+    for (Entry<CDOID, CDOObject> entryNewObject : newObjMaps.entrySet())
+    {
+      InternalCDOObject object = (InternalCDOObject)entryNewObject.getValue();
+
+      // Go back to the previous state
+      cleanObject(object, object.cdoRevision());
+      object.cdoInternalSetState(CDOState.NEW);
+    }
+
+    for (Entry<CDOID, CDOObject> entryDirtyObject : dirtyObjects.entrySet())
+    {
+      if (detachedObjects.containsKey(entryDirtyObject.getKey()))
+      {
+        continue;
+      }
+
+      // Rollback every persisted objects
+      InternalCDOObject internalDirtyObject = (InternalCDOObject)entryDirtyObject.getValue();
+      cleanObject(internalDirtyObject, getRevision(entryDirtyObject.getKey(), true));
+    }
+
+    CDOObjectMerger merger = new CDOObjectMerger();
+    for (InternalCDOSavepoint itrSavepoint = firstSavepoint; itrSavepoint != savepoint; itrSavepoint = itrSavepoint.getNextSavepoint())
+    {
+      for (CDORevisionDelta delta : itrSavepoint.getRevisionDeltas2().values())
+      {
+        CDOID id = delta.getID();
+        boolean isNew = isObjectNew(id);
+        if (isNew && !idsOfNewObjectWithDeltas.contains(id) || detachedObjects.containsKey(id))
+        {
+          continue;
+        }
+
+        Map<CDOID, CDOObject> map = isNew ? newObjMaps : dirtyObjects;
+        InternalCDOObject object = (InternalCDOObject)map.get(id);
+
+        // Change state of the objects
+        merger.merge(object, delta);
+
+        // Load the object from revision to EObject
+        object.cdoInternalPostLoad();
+      }
+    }
+
+    dirty = savepoint.wasDirty();
+  }
+
+  private void collectRevisions(Map<CDOObject, CDORevision> revisions, Map<CDOID, CDOObject> objects)
+  {
+    for (CDOObject object : objects.values())
+    {
+      CDORevision oldRevision = object.cdoRevision();
+      if (oldRevision != null)
+      {
+        revisions.put(object, oldRevision);
       }
     }
   }
@@ -2626,6 +2677,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       firstSavepoint.setNextSavepoint(null);
 
       cleanRevisions.clear();
+
+      Map<CDOID, CDORevision> attachedRevisions = options().getAttachedRevisionsMap();
+      if (attachedRevisions != null)
+      {
+        attachedRevisions.clear();
+      }
+
       dirty = false;
       conflict = 0;
       idGenerator.reset();
@@ -4910,6 +4968,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     private long commitInfoTimeout = DEFAULT_COMMIT_INFO_TIMEOUT;
 
+    private Map<CDOID, CDORevision> attachedRevisionsMap;
+
     public OptionsImpl()
     {
     }
@@ -5304,6 +5364,37 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return effectiveAutoReleaseLock;
     }
 
+    public Map<CDOID, CDORevision> getAttachedRevisionsMap()
+    {
+      return attachedRevisionsMap;
+    }
+
+    public void setAttachedRevisionsMap(Map<CDOID, CDORevision> attachedRevisionsMap)
+    {
+      checkActive();
+
+      IEvent event = null;
+      synchronized (getViewMonitor())
+      {
+        lockView();
+
+        try
+        {
+          if (this.attachedRevisionsMap != attachedRevisionsMap)
+          {
+            this.attachedRevisionsMap = attachedRevisionsMap;
+            event = new AttachedRevisionsMapImpl();
+          }
+        }
+        finally
+        {
+          unlockView();
+        }
+      }
+
+      fireEvent(event);
+    }
+
     public long getCommitInfoTimeout()
     {
       return commitInfoTimeout;
@@ -5395,6 +5486,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       private static final long serialVersionUID = 1L;
 
       public AutoReleaseLocksExemptionsEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class AttachedRevisionsMapImpl extends OptionsEvent implements AttachedRevisionsMap
+    {
+      private static final long serialVersionUID = 1L;
+
+      public AttachedRevisionsMapImpl()
       {
         super(OptionsImpl.this);
       }

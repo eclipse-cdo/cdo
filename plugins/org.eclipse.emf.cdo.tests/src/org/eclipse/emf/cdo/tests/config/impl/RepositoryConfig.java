@@ -52,6 +52,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.server.ICommitConflictResolver;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
@@ -130,6 +131,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public static final String PROP_TEST_SECURITY_MANAGER = "test.repository.SecurityManager";
 
   public static final String PROP_TEST_QUERY_HANDLER_PROVIDER = "test.repository.QueryHandlerProvider";
+
+  public static final String PROP_TEST_COMMIT_CONFLICT_RESOLVER = "test.repository.CommitConflictResolver";
 
   public static final String PROP_TEST_ENABLE_SERVER_BROWSER = "test.repository.EnableServerBrowser";
 
@@ -776,6 +779,12 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       repository.setQueryHandlerProvider(queryHandlerProvider);
     }
 
+    ICommitConflictResolver commitConflictResolver = getTestCommitConflictResolver();
+    if (commitConflictResolver != null)
+    {
+      repository.setCommitConflictResolver(commitConflictResolver);
+    }
+
     return repository;
   }
 
@@ -822,6 +831,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   protected IQueryHandlerProvider getTestQueryHandlerProvider()
   {
     return (IQueryHandlerProvider)getTestProperty(PROP_TEST_QUERY_HANDLER_PROVIDER);
+  }
+
+  protected ICommitConflictResolver getTestCommitConflictResolver()
+  {
+    return (ICommitConflictResolver)getTestProperty(PROP_TEST_COMMIT_CONFLICT_RESOLVER);
   }
 
   protected boolean needsCleanRepos()

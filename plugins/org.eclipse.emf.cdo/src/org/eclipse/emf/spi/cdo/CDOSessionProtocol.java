@@ -1002,6 +1002,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private Map<CDOID, CDOPermission> newPermissions;
 
+    private CommitData newCommitData;
+
     /**
      * @since 4.3
      */
@@ -1251,6 +1253,22 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       }
 
       newPermissions.put(id, permission);
+    }
+
+    /**
+     * @since 4.8
+     */
+    public CommitData getNewCommitData()
+    {
+      return newCommitData;
+    }
+
+    /**
+     * @since 4.8
+     */
+    public void setNewCommitData(CommitData newCommitData)
+    {
+      this.newCommitData = newCommitData;
     }
 
     protected PostCommitReferenceAdjuster createReferenceAdjuster()

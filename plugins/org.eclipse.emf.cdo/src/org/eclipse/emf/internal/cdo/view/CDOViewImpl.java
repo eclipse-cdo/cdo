@@ -2616,7 +2616,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
    */
   private static final class SubscribeEntry
   {
-    private InternalCDOObject object;
+    private final InternalCDOObject object;
 
     private int count;
 

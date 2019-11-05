@@ -114,6 +114,11 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
 
   public InternalCDOCommitInfoManager getCommitInfoManager();
 
+  /**
+   * @since 4.8
+   */
+  public void setCommitConflictResolver(ICommitConflictResolver commitConflictResolver);
+
   public InternalSessionManager getSessionManager();
 
   public void setSessionManager(InternalSessionManager sessionManager);

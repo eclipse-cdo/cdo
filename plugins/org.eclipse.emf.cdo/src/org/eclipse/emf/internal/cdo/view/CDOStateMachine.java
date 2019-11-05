@@ -416,7 +416,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       try
       {
-        return writeWithoutViewLock(object, featureDelta);
+        return writeUnsynced(object, featureDelta);
       }
       finally
       {
@@ -428,7 +428,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
   }
 
-  private Object writeWithoutViewLock(InternalCDOObject object, CDOFeatureDelta featureDelta)
+  public Object writeUnsynced(InternalCDOObject object, CDOFeatureDelta featureDelta)
   {
     if (TRACER.isEnabled())
     {
@@ -1092,7 +1092,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  final private class CommitTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, CommitTransactionResult>
+  private final class CommitTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, CommitTransactionResult>
   {
     public CommitTransition(boolean useDeltas)
     {

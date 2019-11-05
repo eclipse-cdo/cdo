@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.spi.server.ICommitConflictResolver;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -82,6 +83,11 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
    * @since 4.2
    */
   public CDOCommitInfoManager getCommitInfoManager();
+
+  /**
+   * @since 4.8
+   */
+  public ICommitConflictResolver getCommitConflictResolver();
 
   public ISessionManager getSessionManager();
 

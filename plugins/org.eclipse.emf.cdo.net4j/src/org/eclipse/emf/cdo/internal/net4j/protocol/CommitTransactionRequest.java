@@ -31,6 +31,8 @@ import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitData;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -344,6 +346,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     confirmingMappingNewObjects(in, result);
     confirmingNewLockStates(in, result);
     confirmingNewPermissions(in, result);
+    confirmingNewCommitData(in, result);
     return result;
   }
 
@@ -438,6 +441,15 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
         result.addNewPermission(id, permission);
       }
+    }
+  }
+
+  protected void confirmingNewCommitData(CDODataInput in, CommitTransactionResult result) throws IOException
+  {
+    if (in.readBoolean())
+    {
+      CommitData commitData = new CDOProtocol.CommitData(in);
+      result.setNewCommitData(commitData);
     }
   }
 }

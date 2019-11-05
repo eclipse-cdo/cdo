@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.lock.IDurableLockingManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitData;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
@@ -393,6 +394,11 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @since 4.6
      */
     public Map<CDOID, InternalCDORevision> getNewRevisions();
+
+    /**
+     * @since 4.8
+     */
+    public CommitData getOriginalCommmitData();
 
     /**
      * Returns a stream that all {@link CDOLob lobs} can be read from. The format of the data delivered through the

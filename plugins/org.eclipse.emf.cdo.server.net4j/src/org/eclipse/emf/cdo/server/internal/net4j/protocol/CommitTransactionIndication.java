@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil.ExtResourceSet;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitData;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
@@ -344,6 +345,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         respondingMappingNewObjects(out);
         respondingNewLockStates(out);
         respondingNewPermissions(out);
+        respondingNewCommitData(out);
       }
     }
     finally
@@ -435,7 +437,6 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         out.writeXInt(newObjects.length + dirtyObjects.length);
         respondingNewPermissions(out, permissionManager, session, newObjects);
         respondingNewPermissions(out, permissionManager, session, dirtyObjects);
-
         return;
       }
     }
@@ -458,6 +459,20 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         out.writeCDOID(revision.getID());
         out.writeEnum(permission);
       }
+    }
+  }
+
+  protected void respondingNewCommitData(CDODataOutput out) throws Exception
+  {
+    CommitData originalCommmitData = commitContext.getOriginalCommmitData();
+    if (originalCommmitData != null)
+    {
+      out.writeBoolean(true);
+      new CommitData(commitContext.getNewObjects(), commitContext.getDirtyObjectDeltas(), commitContext.getDetachedObjects()).write(out);
+    }
+    else
+    {
+      out.writeBoolean(false);
     }
   }
 

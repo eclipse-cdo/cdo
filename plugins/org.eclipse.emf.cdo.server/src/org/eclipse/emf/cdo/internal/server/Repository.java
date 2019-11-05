@@ -84,6 +84,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider;
+import org.eclipse.emf.cdo.spi.server.ICommitConflictResolver;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalCommitManager;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
@@ -198,6 +199,8 @@ public class Repository extends Container<Object> implements InternalRepository,
   private InternalCDORevisionManager revisionManager;
 
   private InternalCDOCommitInfoManager commitInfoManager;
+
+  private ICommitConflictResolver commitConflictResolver;
 
   private InternalSessionManager sessionManager;
 
@@ -1043,6 +1046,17 @@ public class Repository extends Container<Object> implements InternalRepository,
   {
     checkInactive();
     this.commitInfoManager = commitInfoManager;
+  }
+
+  public ICommitConflictResolver getCommitConflictResolver()
+  {
+    return commitConflictResolver;
+  }
+
+  public void setCommitConflictResolver(ICommitConflictResolver commitConflictResolver)
+  {
+    checkInactive();
+    this.commitConflictResolver = commitConflictResolver;
   }
 
   public InternalCDORevisionManager getRevisionManager()

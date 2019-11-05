@@ -64,6 +64,11 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
 
     commitContext.postCommit(result);
 
+    if (result.getNewCommitData() != null)
+    {
+      return null;
+    }
+
     String rollbackMessage = result.getRollbackMessage();
     if (rollbackMessage != null)
     {

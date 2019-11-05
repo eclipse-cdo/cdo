@@ -960,7 +960,7 @@ public final class DBUtil
   {
     if (isTracerEnabled())
     {
-      trace(stmt.toString());
+      TRACER.trace(stmt.toString());
     }
 
     int result = stmt.executeUpdate();

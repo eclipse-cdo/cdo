@@ -340,7 +340,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     CDOCommonSession sender = info.getSender();
     for (InternalSession session : getSessions())
     {
-      if (session != sender)
+      if (session != sender || info.isModifiedByServer())
       {
         if (session.isOpenOnClientSide())
         {

@@ -97,7 +97,7 @@ public class DBPreparedStatement extends DelegatingPreparedStatement implements 
   @Override
   public String toString()
   {
-    return "PreparedStatement[sql=" + sql + ", probability=" + reuseProbability + ", touch=" + touch + "]";
+    return getDelegate().toString();
   }
 
   @Override

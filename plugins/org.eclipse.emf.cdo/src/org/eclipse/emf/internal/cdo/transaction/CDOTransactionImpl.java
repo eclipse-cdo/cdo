@@ -48,6 +48,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitData;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
@@ -1588,16 +1589,27 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     CDOCommitInfo info = commitSynced(monitor);
     if (info != null)
     {
-      long timeStamp = info.getTimeStamp();
-      long timeout = options().getCommitInfoTimeout();
-
-      if (!waitForUpdate(timeStamp, timeout))
-      {
-        throw new TimeoutRuntimeException("Did not receive an update: " + this);
-      }
+      waitForCommitInfo(info.getTimeStamp());
     }
 
     return info;
+  }
+
+  private void waitForCommitInfo(long timeStamp)
+  {
+    long timeout = options().getCommitInfoTimeout();
+    if (!waitForUpdate(timeStamp, timeout))
+    {
+      throw new TimeoutRuntimeException("Did not receive an update: " + this);
+    }
+  }
+
+  /**
+   * Overridden by Bugzilla_547640_Test to resume the repository's commit notification sending.
+   */
+  protected void waitForBaseline(long timeStamp)
+  {
+    waitForCommitInfo(timeStamp);
   }
 
   private CDOCommitInfo commitSynced(IProgressMonitor progressMonitor) throws DanglingIntegrityException, CommitException
@@ -4610,12 +4622,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         InternalCDOSession session = getSession();
         long timeStamp = result.getTimeStamp();
+        long previousTimeStamp = result.getPreviousTimeStamp();
         boolean clearResourcePathCache = result.isClearResourcePathCache();
 
         if (result.getRollbackMessage() != null)
         {
           InternalCDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
-          CDOCommitInfo commitInfo = new FailureCommitInfo(commitInfoManager, timeStamp, result.getPreviousTimeStamp());
+          CDOCommitInfo commitInfo = new FailureCommitInfo(commitInfoManager, timeStamp, previousTimeStamp);
 
           InvalidationData invalidationData = new InvalidationData();
           invalidationData.setCommitInfo(commitInfo);
@@ -4642,95 +4655,103 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           ((InternalCDOPackageUnit)newPackageUnit).setState(CDOPackageUnit.State.LOADED);
         }
 
-        Map<CDOID, CDOObject> newObjects = getNewObjects();
-        postCommit(newObjects, result);
-
-        Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
-        postCommit(dirtyObjects, result);
-
-        for (CDORevisionDelta delta : getRevisionDeltas().values())
+        CommitData newCommitData = result.getNewCommitData();
+        if (newCommitData != null)
         {
-          ((InternalCDORevisionDelta)delta).adjustReferences(result.getReferenceAdjuster());
+          applyNewCommitData(newCommitData, timeStamp);
         }
-
-        for (CDOID id : getDetachedObjects().keySet())
+        else
         {
-          removeObject(id);
-        }
+          Map<CDOID, CDOObject> newObjects = getNewObjects();
+          postCommit(newObjects, result);
 
-        CDOLockChangeInfo lockChangeInfo = makeUnlockChangeInfo(result);
+          Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
+          postCommit(dirtyObjects, result);
 
-        CDOCommitInfo commitInfo = makeCommitInfo(timeStamp, result.getPreviousTimeStamp());
-        if (!commitInfo.isEmpty())
-        {
-          InvalidationData invalidationData = new InvalidationData();
-          invalidationData.setCommitInfo(commitInfo);
-          invalidationData.setSender(transaction);
-          invalidationData.setClearResourcePathCache(clearResourcePathCache);
-          invalidationData.setSecurityImpact(result.getSecurityImpact());
-          invalidationData.setNewPermissions(result.getNewPermissions());
-          invalidationData.setLockChangeInfo(lockChangeInfo);
-
-          session.invalidate(invalidationData);
-        }
-
-        // Bug 290032 - Sticky views
-        if (session.isSticky())
-        {
-          CDOBranchPoint commitBranchPoint = CDOBranchUtil.copyBranchPoint(result);
-
-          // Note: keyset() does not work because ID mappings are not applied there!
-          for (CDOObject object : newObjects.values())
+          for (CDORevisionDelta delta : getRevisionDeltas().values())
           {
-            session.setCommittedSinceLastRefresh(object.cdoID(), commitBranchPoint);
-          }
-
-          for (CDOID id : dirtyObjects.keySet())
-          {
-            session.setCommittedSinceLastRefresh(id, commitBranchPoint);
+            ((InternalCDORevisionDelta)delta).adjustReferences(result.getReferenceAdjuster());
           }
 
           for (CDOID id : getDetachedObjects().keySet())
           {
-            session.setCommittedSinceLastRefresh(id, commitBranchPoint);
+            removeObject(id);
           }
-        }
 
-        CDOTransactionHandler2[] handlers = getTransactionHandlers2();
-        for (int i = 0; i < handlers.length; i++)
-        {
-          CDOTransactionHandler2 handler = handlers[i];
-          if (handler instanceof CDOTransactionHandler3)
+          CDOLockChangeInfo lockChangeInfo = makeUnlockChangeInfo(result);
+
+          CDOCommitInfo commitInfo = makeCommitInfo(timeStamp, previousTimeStamp);
+          if (!commitInfo.isEmpty())
           {
-            CDOTransactionHandler3 handler3 = (CDOTransactionHandler3)handler;
-            handler3.committedTransaction(transaction, this, commitInfo);
+            InvalidationData invalidationData = new InvalidationData();
+            invalidationData.setCommitInfo(commitInfo);
+            invalidationData.setSender(transaction);
+            invalidationData.setClearResourcePathCache(clearResourcePathCache);
+            invalidationData.setSecurityImpact(result.getSecurityImpact());
+            invalidationData.setNewPermissions(result.getNewPermissions());
+            invalidationData.setLockChangeInfo(lockChangeInfo);
+
+            session.invalidate(invalidationData);
           }
-          else
+
+          // Bug 290032 - Sticky views
+          if (session.isSticky())
           {
-            handler.committedTransaction(transaction, this);
+            CDOBranchPoint commitBranchPoint = CDOBranchUtil.copyBranchPoint(result);
+
+            // Note: keySet() does not work because ID mappings are not applied there!
+            for (CDOObject object : newObjects.values())
+            {
+              session.setCommittedSinceLastRefresh(object.cdoID(), commitBranchPoint);
+            }
+
+            for (CDOID id : dirtyObjects.keySet())
+            {
+              session.setCommittedSinceLastRefresh(id, commitBranchPoint);
+            }
+
+            for (CDOID id : getDetachedObjects().keySet())
+            {
+              session.setCommittedSinceLastRefresh(id, commitBranchPoint);
+            }
           }
-        }
 
-        getChangeSubscriptionManager().committedTransaction(transaction, this);
-        getAdapterManager().committedTransaction(transaction, this);
-
-        cleanUp(this);
-
-        IListener[] listeners = getListeners();
-        if (listeners != null)
-        {
-          if (branchChanged)
+          CDOTransactionHandler2[] handlers = getTransactionHandlers2();
+          for (int i = 0; i < handlers.length; i++)
           {
-            fireViewTargetChangedEvent(oldBranch.getHead(), listeners);
+            CDOTransactionHandler2 handler = handlers[i];
+            if (handler instanceof CDOTransactionHandler3)
+            {
+              CDOTransactionHandler3 handler3 = (CDOTransactionHandler3)handler;
+              handler3.committedTransaction(transaction, this, commitInfo);
+            }
+            else
+            {
+              handler.committedTransaction(transaction, this);
+            }
           }
 
-          Map<CDOID, CDOID> idMappings = result.getIDMappings();
-          fireEvent(new FinishedEvent(idMappings), listeners);
-        }
+          getChangeSubscriptionManager().committedTransaction(transaction, this);
+          getAdapterManager().committedTransaction(transaction, this);
 
-        if (lockChangeInfo != null && isActive())
-        {
-          fireLocksChangedEvent(CDOTransactionImpl.this, lockChangeInfo);
+          cleanUp(this);
+
+          IListener[] listeners = getListeners();
+          if (listeners != null)
+          {
+            if (branchChanged)
+            {
+              fireViewTargetChangedEvent(oldBranch.getHead(), listeners);
+            }
+
+            Map<CDOID, CDOID> idMappings = result.getIDMappings();
+            fireEvent(new FinishedEvent(idMappings), listeners);
+          }
+
+          if (lockChangeInfo != null && isActive())
+          {
+            fireLocksChangedEvent(CDOTransactionImpl.this, lockChangeInfo);
+          }
         }
       }
       catch (RuntimeException ex)
@@ -4816,6 +4837,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         CDOStateMachine.INSTANCE.commit(objects, result);
       }
+    }
+
+    private void applyNewCommitData(CommitData newCommitData, long timeStamp)
+    {
+      getTransactionStrategy().rollback(CDOTransactionImpl.this, firstSavepoint); // Transitions objects to CLEAN.
+      waitForBaseline(timeStamp); // Transitions objects to PROXY.
     }
   }
 

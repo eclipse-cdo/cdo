@@ -116,7 +116,7 @@ public abstract class CDOTransactionContainerImpl extends CDOViewContainerImpl i
    */
   protected InternalCDOTransaction createTransaction(CDOBranch branch)
   {
-    return new CDOTransactionImpl((CDOSession)this, branch);
+    return TransactionCreator.instance.createTransaction((CDOSession)this, branch);
   }
 
   /**
@@ -124,6 +124,36 @@ public abstract class CDOTransactionContainerImpl extends CDOViewContainerImpl i
    */
   protected InternalCDOTransaction createTransaction(String durableLockingID)
   {
-    return new CDOTransactionImpl((CDOSession)this, durableLockingID);
+    return TransactionCreator.instance.createTransaction((CDOSession)this, durableLockingID);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class TransactionCreator
+  {
+    public static final TransactionCreator DEFAULT = new TransactionCreator();
+
+    private static TransactionCreator instance = DEFAULT;
+
+    public static void set(TransactionCreator creator)
+    {
+      instance = creator;
+    }
+
+    public static void reset()
+    {
+      instance = DEFAULT;
+    }
+
+    public InternalCDOTransaction createTransaction(CDOSession session, CDOBranch branch)
+    {
+      return new CDOTransactionImpl(session, branch);
+    }
+
+    public InternalCDOTransaction createTransaction(CDOSession session, String durableLockingID)
+    {
+      return new CDOTransactionImpl(session, durableLockingID);
+    }
   }
 }

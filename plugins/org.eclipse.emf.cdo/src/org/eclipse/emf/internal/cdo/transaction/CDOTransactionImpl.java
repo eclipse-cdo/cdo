@@ -4655,12 +4655,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           ((InternalCDOPackageUnit)newPackageUnit).setState(CDOPackageUnit.State.LOADED);
         }
 
+        CDOLockChangeInfo lockChangeInfo = makeUnlockChangeInfo(result);
+        CDOCommitInfo commitInfo = null;
+
         CommitData newCommitData = result.getNewCommitData();
-        if (newCommitData != null)
-        {
-          applyNewCommitData(newCommitData, timeStamp);
-        }
-        else
+        if (newCommitData == null)
         {
           Map<CDOID, CDOObject> newObjects = getNewObjects();
           postCommit(newObjects, result);
@@ -4678,9 +4677,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             removeObject(id);
           }
 
-          CDOLockChangeInfo lockChangeInfo = makeUnlockChangeInfo(result);
-
-          CDOCommitInfo commitInfo = makeCommitInfo(timeStamp, previousTimeStamp);
+          commitInfo = makeCommitInfo(timeStamp, previousTimeStamp);
           if (!commitInfo.isEmpty())
           {
             InvalidationData invalidationData = new InvalidationData();
@@ -4715,43 +4712,50 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
               session.setCommittedSinceLastRefresh(id, commitBranchPoint);
             }
           }
+        }
+        else
+        {
+          applyNewCommitData(newCommitData, timeStamp);
+        }
 
-          CDOTransactionHandler2[] handlers = getTransactionHandlers2();
-          for (int i = 0; i < handlers.length; i++)
+        CDOTransactionHandler2[] handlers = getTransactionHandlers2();
+        for (int i = 0; i < handlers.length; i++)
+        {
+          CDOTransactionHandler2 handler = handlers[i];
+          if (handler instanceof CDOTransactionHandler3)
           {
-            CDOTransactionHandler2 handler = handlers[i];
-            if (handler instanceof CDOTransactionHandler3)
-            {
-              CDOTransactionHandler3 handler3 = (CDOTransactionHandler3)handler;
-              handler3.committedTransaction(transaction, this, commitInfo);
-            }
-            else
-            {
-              handler.committedTransaction(transaction, this);
-            }
+            CDOTransactionHandler3 handler3 = (CDOTransactionHandler3)handler;
+            handler3.committedTransaction(transaction, this, commitInfo);
           }
+          else
+          {
+            handler.committedTransaction(transaction, this);
+          }
+        }
 
-          getChangeSubscriptionManager().committedTransaction(transaction, this);
-          getAdapterManager().committedTransaction(transaction, this);
+        getChangeSubscriptionManager().committedTransaction(transaction, this);
+        getAdapterManager().committedTransaction(transaction, this);
 
+        if (newCommitData == null)
+        {
           cleanUp(this);
+        }
 
-          IListener[] listeners = getListeners();
-          if (listeners != null)
+        IListener[] listeners = getListeners();
+        if (listeners != null)
+        {
+          if (branchChanged)
           {
-            if (branchChanged)
-            {
-              fireViewTargetChangedEvent(oldBranch.getHead(), listeners);
-            }
-
-            Map<CDOID, CDOID> idMappings = result.getIDMappings();
-            fireEvent(new FinishedEvent(idMappings), listeners);
+            fireViewTargetChangedEvent(oldBranch.getHead(), listeners);
           }
 
-          if (lockChangeInfo != null && isActive())
-          {
-            fireLocksChangedEvent(CDOTransactionImpl.this, lockChangeInfo);
-          }
+          Map<CDOID, CDOID> idMappings = result.getIDMappings();
+          fireEvent(new FinishedEvent(idMappings), listeners);
+        }
+
+        if (lockChangeInfo != null && isActive())
+        {
+          fireLocksChangedEvent(CDOTransactionImpl.this, lockChangeInfo);
         }
       }
       catch (RuntimeException ex)

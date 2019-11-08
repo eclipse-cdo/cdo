@@ -598,9 +598,6 @@
           summary="CDO_4_DB"
           url="${cdo.bugzilla.prefix}&amp;component=cdo.db&amp;component=cdo.net4j.db&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
       <query
-          summary="CDO_5_Hibernate"
-          url="${cdo.bugzilla.prefix}&amp;component=cdo.hibernate&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-      <query
           summary="CDO_6_Legacy"
           url="${cdo.bugzilla.prefix}&amp;component=cdo.legacy&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
       <query
@@ -615,14 +612,6 @@
       <query
           summary="CDO_Complete"
           url="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}"/>
-    </setupTask>
-    <setupTask
-        xsi:type="mylyn:MylynQueriesTask"
-        disabled="true"
-        repositoryURL="${cdo.bugzilla.repository}">
-      <query
-          summary="TaskTable"
-          url="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}&amp;query_format=advanced&amp;resolution=FIXED&amp;resolution=---"/>
     </setupTask>
     <setupTask
         xsi:type="mylyn:MylynQueriesTask"

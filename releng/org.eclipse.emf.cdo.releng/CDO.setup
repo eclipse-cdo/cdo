@@ -645,6 +645,8 @@
           name="emf-cdo-gerrit"/>
       <buildPlan
           name="emf-cdo-integration"/>
+      <buildPlan
+          name="promotion"/>
     </setupTask>
   </setupTask>
   <setupTask

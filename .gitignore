@@ -1,6 +1,7 @@
 bin/
 state/
 target/
+.legalchecks.state
 *.local.launch
 Copy of *.launch
 *~

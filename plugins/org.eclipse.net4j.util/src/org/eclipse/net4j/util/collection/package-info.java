@@ -7,6 +7,5 @@
 
 /**
  * Additional collection-like interfaces and classes.
- * @apiviz.exclude .*
  */
 package org.eclipse.net4j.util.collection;

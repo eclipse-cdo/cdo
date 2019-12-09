@@ -378,7 +378,6 @@ public interface IMappingStrategy
    * @since 4.4
    * @noimplement This interface is not intended to be implemented by clients.
    * @noextend This interface is not intended to be extended by clients.
-   * @apiviz.exclude
    */
   public interface Props
   {

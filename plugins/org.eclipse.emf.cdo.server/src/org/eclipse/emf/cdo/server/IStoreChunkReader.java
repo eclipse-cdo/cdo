@@ -24,7 +24,6 @@ import java.util.List;
  * partially loaded} lists from a physical data storage backend.
  *
  * @author Eike Stepper
- * @apiviz.uses {@link IStoreChunkReader.Chunk} - - reads
  */
 public interface IStoreChunkReader
 {

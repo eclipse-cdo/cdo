@@ -20,7 +20,6 @@ import java.util.Map;
  *
  * @author Eike Stepper
  * @since 3.0
- * @apiviz.exclude
  */
 public interface CDOAllRevisionsProvider
 {

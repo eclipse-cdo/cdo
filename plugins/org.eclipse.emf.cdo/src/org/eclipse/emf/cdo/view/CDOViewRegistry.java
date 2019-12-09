@@ -22,7 +22,6 @@ import org.eclipse.net4j.util.container.IContainer;
  * @since 4.2
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.composedOf {@link org.eclipse.emf.cdo.view.CDOView}
  */
 public interface CDOViewRegistry extends IContainer<Registration>
 {

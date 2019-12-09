@@ -660,7 +660,6 @@ public final class ReflectUtil
    * ReflectUtil.collectFields()} and {@link ReflectUtil#toString(Object) ReflectUtil.toString()}.
    *
    * @author Eike Stepper
-   * @apiviz.exclude
    */
   @Retention(RetentionPolicy.RUNTIME)
   @Target(ElementType.FIELD)

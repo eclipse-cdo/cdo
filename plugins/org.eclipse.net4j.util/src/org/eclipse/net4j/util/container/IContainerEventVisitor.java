@@ -15,7 +15,6 @@ package org.eclipse.net4j.util.container;
  *
  * @see IContainerEvent#accept(IContainerEventVisitor)
  * @author Eike Stepper
- * @apiviz.exclude
  */
 public interface IContainerEventVisitor<E>
 {
@@ -29,7 +28,6 @@ public interface IContainerEventVisitor<E>
    *
    * @see IContainerEvent#accept(IContainerEventVisitor)
    * @author Eike Stepper
-   * @apiviz.exclude
    */
   public interface Filtered<E> extends IContainerEventVisitor<E>
   {

@@ -20,7 +20,6 @@ import org.eclipse.net4j.util.event.IEvent;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement Thi import org.eclipse.net4j.util.event.IEvent; import org.eclipse.net4j.util.event.IEvent; import
  *              org.eclipse.net4j.util.event.IEvent; s interface is not intended to be implemented by clients.
- * @apiviz.has {@link org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind}
  */
 public interface ILifecycleEvent extends IEvent
 {

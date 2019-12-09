@@ -39,17 +39,6 @@ import java.util.Set;
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.has {@link IStore}
- * @apiviz.has {@link java.util.Map} oneway - - properties
- * @apiviz.has {@link org.eclipse.emf.cdo.common.model.CDOPackageRegistry}
- * @apiviz.has {@link org.eclipse.emf.cdo.common.branch.CDOBranchManager}
- * @apiviz.has {@link org.eclipse.emf.cdo.common.revision.CDORevisionManager}
- * @apiviz.has {@link org.eclipse.emf.cdo.common.lock.IDurableLockingManager}
- * @apiviz.has {@link ISessionManager}
- * @apiviz.has {@link IQueryHandlerProvider}
- * @apiviz.composedOf {@link org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler}
- * @apiviz.composedOf {@link IRepository.Handler} - - accessHandlers
  */
 public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider, IContainer<Object>, ILifecycle
 {
@@ -305,7 +294,6 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
    * @author Eike Stepper
    * @noimplement This interface is not intended to be implemented by clients.
    * @noextend This interface is not intended to be extended by clients.
-   * @apiviz.exclude
    */
   public interface Props
   {

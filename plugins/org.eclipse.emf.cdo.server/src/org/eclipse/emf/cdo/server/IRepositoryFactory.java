@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.server;
  * Creates CDO {@link IRepository repositories}.
  *
  * @author Eike Stepper
- * @apiviz.uses {@link IRepository} - - creates
  */
 public interface IRepositoryFactory
 {

@@ -7,14 +7,5 @@
 
 /**
  * Client concepts for dealing with sessions to CDO repositories.
- *
- * @apiviz.exclude .*\.CDOCommonRepository
- * @apiviz.exclude .*\.CDOListResolver
- * @apiviz.exclude .*\.CDOTransactionContainer
- * @apiviz.exclude .*\.CDOCommitInfo
- * @apiviz.exclude .*\.CDOLockChangeInfo
- * @apiviz.exclude .*\.CDOUpdatable
- * @apiviz.exclude .*\.INotifier
- * @apiviz.exclude .*Event
  */
 package org.eclipse.emf.cdo.session;

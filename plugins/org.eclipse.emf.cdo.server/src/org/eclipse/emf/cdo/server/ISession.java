@@ -24,10 +24,6 @@ import org.eclipse.net4j.util.container.IContainer;
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.has {@link org.eclipse.emf.cdo.spi.server.ISessionProtocol}
- * @apiviz.composedOf {@link IView} - - views
- * @apiviz.composedOf {@link ITransaction} - - transactions
  */
 public interface ISession extends CDOCommonSession, IContainer<IView>
 {

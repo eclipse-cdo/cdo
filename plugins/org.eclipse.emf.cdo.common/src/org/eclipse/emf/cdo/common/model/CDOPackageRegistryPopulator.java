@@ -23,9 +23,6 @@ import java.util.Map.Entry;
  *
  * @author Eike Stepper
  * @since 2.0
- * @apiviz.uses {@link CDOPackageRegistryPopulator.Descriptor} - - creates
- * @apiviz.uses {@link CDOPackageRegistry} - - populates
- * @apiviz.uses {@link org.eclipse.emf.ecore.EPackage.Registry} - - polls
  */
 public class CDOPackageRegistryPopulator extends Worker
 {

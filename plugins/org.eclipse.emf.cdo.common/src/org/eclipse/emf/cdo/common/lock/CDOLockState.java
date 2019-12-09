@@ -29,11 +29,6 @@ import java.util.Set;
  * @since 4.1
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.has {@link java.lang.Object} oneway - - lockedObject
- * @apiviz.owns {@link CDOLockOwner} - - readLockOwners
- * @apiviz.has {@link CDOLockOwner} oneway - - writeLockOwner
- * @apiviz.has {@link CDOLockOwner} oneway - - writeOptionOwner
  */
 public interface CDOLockState
 {

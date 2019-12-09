@@ -20,9 +20,6 @@ package org.eclipse.net4j.util.event;
  * Implementors may want to extend {@link Notifier} instead of implementing this interface directly.
  *
  * @author Eike Stepper
- * @apiviz.landmark
- * @apiviz.owns {@link IListener} - - listeners
- * @apiviz.uses {@link IEvent} - - fires
  */
 public interface INotifier
 {

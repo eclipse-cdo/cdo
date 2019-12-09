@@ -7,7 +7,5 @@
 
 /**
  * The generated EMF API of the CDO system data types and native annotations.
- *
- * @apiviz.exclude .*\.EtypesPackage.*
  */
 package org.eclipse.emf.cdo.etypes;

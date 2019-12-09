@@ -7,6 +7,5 @@
 
 /**
  * Utility interfaces and classes commonly useful in concurrent programming.
- * @apiviz.exclude .*
  */
 package org.eclipse.net4j.util.concurrent;

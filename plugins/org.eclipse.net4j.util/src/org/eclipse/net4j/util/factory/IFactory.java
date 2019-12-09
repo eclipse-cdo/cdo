@@ -21,9 +21,6 @@ import org.eclipse.net4j.util.container.IManagedContainerFactory;
  * injects that container into the factory for it to reach back into to obtain dependencies.
  *
  * @author Eike Stepper
- * @apiviz.landmark
- * @apiviz.has {@link IFactoryKey}
- *
  * @see IManagedContainerFactory
  */
 public interface IFactory

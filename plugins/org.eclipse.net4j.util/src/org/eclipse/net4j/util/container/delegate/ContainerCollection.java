@@ -21,7 +21,6 @@ import java.util.Iterator;
  * A default implementation of a {@link IContainerCollection container collection}.
  *
  * @author Eike Stepper
- * @apiviz.exclude
  */
 public class ContainerCollection<E> extends AbstractDelegator<E> implements IContainerCollection<E>
 {

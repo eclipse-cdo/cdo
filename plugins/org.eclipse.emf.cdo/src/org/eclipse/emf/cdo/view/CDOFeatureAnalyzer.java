@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  *
  * @author Simon McDuff
  * @since 2.0
- * @apiviz.exclude
  */
 public interface CDOFeatureAnalyzer
 {

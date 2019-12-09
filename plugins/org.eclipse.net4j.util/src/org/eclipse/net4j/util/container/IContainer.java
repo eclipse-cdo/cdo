@@ -25,9 +25,6 @@ import java.util.Collection;
  * </ul>
  *
  * @author Eike Stepper
- * @apiviz.landmark
- * @apiviz.composedOf {@link java.lang.Object} - - elements
- * @apiviz.uses {@link IContainerEvent} - - fires
  */
 public interface IContainer<E> extends INotifier
 {

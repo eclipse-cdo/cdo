@@ -19,7 +19,6 @@ import java.util.concurrent.ExecutorService;
  *
  * @author Eike Stepper
  * @since 2.0
- * @apiviz.exclude
  */
 @Deprecated
 public class ExecutorServiceNotifier extends Notifier implements IExecutorServiceProvider
@@ -53,7 +52,6 @@ public class ExecutorServiceNotifier extends Notifier implements IExecutorServic
    * Deprecated.
    *
    * @author Eike Stepper
-   * @apiviz.exclude
    */
   @Deprecated
   public static class ThreadPool extends ExecutorServiceNotifier

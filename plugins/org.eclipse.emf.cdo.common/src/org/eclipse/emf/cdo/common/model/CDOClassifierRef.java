@@ -154,7 +154,6 @@ public final class CDOClassifierRef implements Serializable
    *
    * @author Eike Stepper
    * @since 3.0
-   * @apiviz.uses {@link CDOClassifierRef} - - provides
    */
   public interface Provider
   {

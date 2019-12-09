@@ -12,7 +12,6 @@ package org.eclipse.net4j.util.lifecycle;
 
 /**
  * @author Eike Stepper
- * @apiviz.excludeSubtypes
  * @since 3.6
  */
 public interface IDeactivateable

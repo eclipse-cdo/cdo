@@ -85,16 +85,6 @@ import java.util.concurrent.locks.Lock;
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.has {@link CDOView.Options}
- * @apiviz.owns {@link CDOObjectHandler}
- * @apiviz.uses {@link CDOQuery} - - creates
- * @apiviz.uses {@link org.eclipse.emf.cdo.CDOObject} - - manages
- * @apiviz.uses {@link CDOViewAdaptersNotifiedEvent} - - fires
- * @apiviz.uses {@link CDOViewDurabilityChangedEvent} - - fires
- * @apiviz.uses {@link CDOViewInvalidationEvent} - - fires
- * @apiviz.uses {@link CDOViewLocksChangedEvent} - - fires
- * @apiviz.uses {@link CDOViewTargetChangedEvent} - - fires
  */
 public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.Provider<CDOObject, CDOObjectHistory>, IContainer<CDOResourceNode>
 {
@@ -616,20 +606,6 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
    * @author Simon McDuff
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
-   * @apiviz.has {@link org.eclipse.net4j.util.ref.ReferenceType} oneway - - cacheReferences
-   * @apiviz.has {@link org.eclipse.emf.cdo.view.CDOInvalidationPolicy}
-   * @apiviz.composedOf {@link org.eclipse.emf.cdo.view.CDOAdapterPolicy} - - changeSubscriptions
-   * @apiviz.has {@link org.eclipse.emf.cdo.view.CDOAdapterPolicy} oneway - - strongReferences
-   * @apiviz.has {@link org.eclipse.emf.cdo.view.CDOStaleReferencePolicy} oneway - - staleReferences
-   * @apiviz.has {@link org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy}
-   * @apiviz.uses {@link CDOView.Options.CacheReferenceTypeEvent} - - fires
-   * @apiviz.uses {@link CDOView.Options.StrongReferencePolicyEvent} - - fires
-   * @apiviz.uses {@link CDOView.Options.StaleReferencePolicyEvent} - - fires
-   * @apiviz.uses {@link CDOView.Options.ChangeSubscriptionPoliciesEvent} - - fires
-   * @apiviz.uses {@link CDOView.Options.InvalidationPolicyEvent} - - fires
-   * @apiviz.uses {@link CDOView.Options.InvalidationNotificationEvent} - - fires
-   * @apiviz.uses {@link CDOView.Options.RevisionPrefetchingPolicyEvent} - - fires
-   * @apiviz.uses {@link CDOView.Options.FeatureAnalyzerEvent} - - fires
    */
   public interface Options extends org.eclipse.emf.cdo.common.CDOCommonView.Options
   {
@@ -969,7 +945,6 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
      * @deprecated Use {@link StrongReferencePolicyEvent} instead.
-     * @apiviz.exclude
      */
     @Deprecated
     public interface ReferencePolicyEvent extends StrongReferencePolicyEvent

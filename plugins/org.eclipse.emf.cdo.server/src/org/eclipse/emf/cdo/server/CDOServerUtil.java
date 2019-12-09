@@ -59,7 +59,6 @@ import java.util.Map;
  * Various static methods that may help with CDO {@link IRepository repositories} and server-side {@link CDOView views}.
  *
  * @author Eike Stepper
- * @apiviz.exclude
  */
 public final class CDOServerUtil
 {
@@ -321,7 +320,6 @@ public final class CDOServerUtil
    *
    * @author Eike Stepper
    * @since 2.0
-   * @apiviz.exclude
    */
   public static abstract class RepositoryReadAccessValidator implements IRepository.ReadAccessHandler
   {

@@ -23,9 +23,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * @author Simon McDuff
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.has {@link org.eclipse.emf.ecore.EStructuralFeature}
- * @apiviz.has {@link CDOFeatureDelta.Type}
  */
 public interface CDOFeatureDelta
 {

@@ -38,9 +38,6 @@ import java.util.Map;
  *
  * @since 2.0
  * @author Eike Stepper
- * @apiviz.uses {@link CDONet4jSessionConfiguration} - - creates
- * @apiviz.uses {@link ReconnectingCDOSessionConfiguration} - - creates
- * @apiviz.uses {@link FailoverCDOSessionConfiguration} - - creates
  */
 public final class CDONet4jUtil
 {

@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
  *
  * @author Eike Stepper
  * @since 4.0
- * @apiviz.uses {@link CDORevisionDelta} - - provides
  */
 public interface CDORevisionDeltaProvider
 {

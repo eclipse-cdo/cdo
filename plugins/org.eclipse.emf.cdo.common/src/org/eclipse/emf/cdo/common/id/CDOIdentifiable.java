@@ -16,7 +16,6 @@ package org.eclipse.emf.cdo.common.id;
  * @author Eike Stepper
  * @see CDOIDUtil#getCDOID(Object)
  * @since 4.3
- * @apiviz.has {@link CDOID}
  */
 public interface CDOIdentifiable
 {

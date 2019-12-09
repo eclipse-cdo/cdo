@@ -352,7 +352,6 @@ public final class LifecycleUtil
    * {@link LifecycleUtil#activate(Object)}.
    *
    * @author Eike Stepper
-   * @apiviz.exclude
    */
   @Retention(RetentionPolicy.RUNTIME)
   @Target(ElementType.METHOD)
@@ -366,7 +365,6 @@ public final class LifecycleUtil
    * {@link LifecycleUtil#deactivate(Object)}.
    *
    * @author Eike Stepper
-   * @apiviz.exclude
    */
   @Retention(RetentionPolicy.RUNTIME)
   @Target(ElementType.METHOD)
@@ -381,7 +379,6 @@ public final class LifecycleUtil
    *
    * @author Eike Stepper
    * @since 2.0
-   * @apiviz.exclude
    */
   public static final class Delegator<T> implements InvocationHandler
   {

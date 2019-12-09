@@ -31,7 +31,6 @@ import org.eclipse.core.runtime.IExtensionRegistry;
  *
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
- * @apiviz.exclude
  */
 public class FactoryDescriptor extends Factory
 {

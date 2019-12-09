@@ -67,7 +67,6 @@ import java.util.Set;
  * Represents a <i>connection</i> to a physical data storage back-end.
  *
  * @author Eike Stepper
- * @apiviz.uses {@link IStoreChunkReader} - - creates
  */
 public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, CommitInfoLoader
 {
@@ -270,7 +269,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * @since 2.0
    * @noimplement This interface is not intended to be implemented by clients.
    * @noextend This interface is not intended to be extended by clients.
-   * @apiviz.exclude
    */
   public interface CommitContext extends CDORevisionProvider
   {
@@ -494,7 +492,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * @author Eike Stepper
    * @since 2.0
    * @noimplement This interface is not intended to be implemented by clients.
-   * @apiviz.exclude
    */
   public interface QueryResourcesContext extends CDOBranchPoint
   {
@@ -524,7 +521,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      *
      * @author Eike Stepper
      * @since 2.0
-     * @apiviz.exclude
      */
     public interface ExactMatch extends QueryResourcesContext
     {
@@ -538,7 +534,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * @author Eike Stepper
    * @since 3.0
    * @noimplement This interface is not intended to be implemented by clients.
-   * @apiviz.exclude
    */
   public interface QueryXRefsContext extends CDOBranchPoint
   {
@@ -575,7 +570,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    *
    * @author Eike Stepper
    * @since 4.0
-   * @apiviz.exclude
    */
   public interface Raw extends IStoreAccessor
   {
@@ -796,7 +790,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    *
    * @author Eike Stepper
    * @since 4.6
-   * @apiviz.exclude
    */
   public interface Raw2 extends Raw
   {
@@ -838,7 +831,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * @see DurableLocking2
    * @author Eike Stepper
    * @since 4.0
-   * @apiviz.exclude
    */
   public interface DurableLocking extends IDurableLockingManager
   {
@@ -854,7 +846,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    *
    * @author Caspar De Groot
    * @since 4.1
-   * @apiviz.exclude
    */
   public interface DurableLocking2 extends DurableLocking
   {
@@ -868,7 +859,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    *
    * @author Eike Stepper
    * @since 4.5
-   * @apiviz.exclude
    */
   public interface UnitSupport extends IStoreAccessor
   {

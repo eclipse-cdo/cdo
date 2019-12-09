@@ -16,7 +16,6 @@ package org.eclipse.net4j.util.factory;
  *
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
- * @apiviz.exclude
  */
 public class ProductCreationException extends RuntimeException
 {

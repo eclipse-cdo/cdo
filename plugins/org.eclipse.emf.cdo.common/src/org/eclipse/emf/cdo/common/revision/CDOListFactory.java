@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
  *
  * @author Simon McDuff
  * @since 2.0
- * @apiviz.uses {@link CDOList} - - creates
  */
 public interface CDOListFactory
 {

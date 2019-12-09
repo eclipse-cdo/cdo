@@ -27,11 +27,6 @@ import java.util.List;
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.has {@link java.lang.Object} oneway - - context
- * @apiviz.composedOf {@link java.util.Map.Entry} - - parameters
- * @apiviz.uses {@link java.util.List} - - result
- * @apiviz.uses {@link org.eclipse.net4j.util.collection.CloseableIterator} - - resultAsync
  */
 public interface CDOQuery extends CDOQueryInfo
 {

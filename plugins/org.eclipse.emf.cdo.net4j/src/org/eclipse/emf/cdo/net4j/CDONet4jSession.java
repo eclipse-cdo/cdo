@@ -25,8 +25,6 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.has {@link CDONet4jSession.Options}
  */
 public interface CDONet4jSession extends org.eclipse.emf.cdo.session.CDOSession
 {

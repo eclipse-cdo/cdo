@@ -14,7 +14,6 @@ package org.eclipse.net4j.util.event;
  * An event that is fired from a {@link INotifier notifier} and can be handled by {@link IListener listeners}.
  *
  * @author Eike Stepper
- * @apiviz.landmark
  */
 public interface IEvent
 {

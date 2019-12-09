@@ -22,7 +22,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
  * overridden by extenders.
  *
  * @author Eike Stepper
- * @apiviz.exclude
  */
 public class ContainerEventAdapter<E> implements IListener
 {

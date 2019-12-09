@@ -287,7 +287,6 @@ public abstract class OSGiActivator implements BundleActivator
    *
    * @author Eike Stepper
    * @since 3.1
-   * @apiviz.has {@link OSGiActivator.StateHandler} oneway - - stateHandler
    */
   public static abstract class WithState extends OSGiActivator
   {

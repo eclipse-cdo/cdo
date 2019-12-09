@@ -28,11 +28,6 @@ import java.util.Set;
  * system folder.
  *
  * @author Eike Stepper
- * @apiviz.landmark
- * @apiviz.has {@link IStore.ChangeFormat}
- * @apiviz.has {@link IStore.RevisionTemporality}
- * @apiviz.has {@link IStore.RevisionParallelism}
- * @apiviz.uses {@link IStoreAccessor} - - creates
  */
 public interface IStore
 {
@@ -240,7 +235,6 @@ public interface IStore
    *
    * @author Eike Stepper
    * @since 4.1
-   * @apiviz.exclude
    */
   public interface CanHandleClientAssignedIDs
   {

@@ -21,7 +21,6 @@ import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
  * {@link IContainerEvent container events}.
  *
  * @author Eike Stepper
- * @apiviz.exclude
  */
 public class LifecycleEventConverter<E> implements IListener
 {

@@ -8,6 +8,5 @@
 /**
  * The generated EMF implementation of the CDO expressions model.
  *
- * @apiviz.exclude .*
  */
 package org.eclipse.emf.cdo.expressions.impl;

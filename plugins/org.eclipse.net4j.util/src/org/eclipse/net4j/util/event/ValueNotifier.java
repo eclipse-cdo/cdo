@@ -22,8 +22,6 @@ import org.eclipse.net4j.util.ObjectUtil;
  *
  * @author Eike Stepper
  * @since 3.1
- * @apiviz.has {@link java.lang.Object} oneway - - value
- * @apiviz.uses {@link ValueEvent} - - fires
  */
 public class ValueNotifier<VALUE> extends Notifier
 {

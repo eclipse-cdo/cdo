@@ -7,14 +7,5 @@
 
 /**
  * Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.
- *
- * @apiviz.exclude .*\.CDOQueryInfo
- * @apiviz.exclude .*\.CDOLockChangeInfo
- * @apiviz.exclude .*\.CDOUpdatable
- * @apiviz.exclude .*\.CDOFetchRuleManager
- * @apiviz.exclude .*\.IContainer
- * @apiviz.exclude .*\.INotifier
- * @apiviz.exclude .*\.Notifier
- * @apiviz.exclude .*Event
  */
 package org.eclipse.emf.cdo.view;

@@ -7,8 +7,5 @@
 
 /**
  * The generated EMF API of the CDO expressions model.
- *
- * @apiviz.exclude .*\.ExpressionsPackage.*
- * @apiviz.exclude .*\.ExpressionsFactory.*
  */
 package org.eclipse.emf.cdo.expressions;

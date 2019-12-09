@@ -30,7 +30,6 @@ import org.eclipse.emf.ecore.resource.Resource;
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.uses {@link CDOResource} - - creates
  */
 public interface CDOResourceFactory extends Resource.Factory
 {

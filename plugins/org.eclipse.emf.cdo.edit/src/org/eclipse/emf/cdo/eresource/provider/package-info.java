@@ -8,6 +8,5 @@
 /**
  * The generated EMF edit support of the CDO repository file system.
  *
- * @apiviz.exclude .*
  */
 package org.eclipse.emf.cdo.eresource.provider;

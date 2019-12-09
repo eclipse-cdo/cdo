@@ -7,8 +7,5 @@
 
 /**
  * The generated EMF API of the CDO security model.
- *
- * @apiviz.exclude .*\.EresourcePackage.*
- * @apiviz.exclude .*\.EresourceFactory.*
  */
 package org.eclipse.emf.cdo.security;

@@ -17,7 +17,6 @@ import java.util.SortedSet;
  * A default implementation of a {@link IContainerSortedSet container sorted set}.
  *
  * @author Eike Stepper
- * @apiviz.exclude
  */
 public class ContainerSortedSet<E> extends ContainerSet<E> implements IContainerSortedSet<E>
 {

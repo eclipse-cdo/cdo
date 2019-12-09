@@ -14,7 +14,6 @@ package org.eclipse.net4j.util.fsm;
  * Encpsulates the logic to be executed when an <i>event</i> arrives for a <i>subject</i> in a particular <i>state</i>.
  *
  * @author Eike Stepper
- * @apiviz.landmark
  */
 public interface ITransition<STATE extends Enum<?>, EVENT extends Enum<?>, SUBJECT, DATA>
 {

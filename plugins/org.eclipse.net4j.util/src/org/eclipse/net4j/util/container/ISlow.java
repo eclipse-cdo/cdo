@@ -15,7 +15,6 @@ package org.eclipse.net4j.util.container;
  *
  * @author Eike Stepper
  * @since 3.1
- * @apiviz.exclude
  */
 public interface ISlow
 {

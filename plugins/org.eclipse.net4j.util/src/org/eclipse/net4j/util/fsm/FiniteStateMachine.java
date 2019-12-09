@@ -29,9 +29,6 @@ import java.text.MessageFormat;
  * </ul>
  *
  * @author Eike Stepper
- * @apiviz.landmark
- * @apiviz.has {@link ITransition} oneway - - matrix
- * @apiviz.uses {@link FiniteStateMachine.StateChangedEvent} - - fires
  */
 public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends Enum<?>, SUBJECT> extends Lifecycle
 {
@@ -238,7 +235,6 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
    *
    * @author Eike Stepper
    * @deprecated Use {@link FiniteStateMachine#IGNORE}
-   * @apiviz.exclude
    */
   @Deprecated
   public static class IgnoreTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
@@ -260,7 +256,6 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
    *
    * @author Eike Stepper
    * @deprecated Use {@link FiniteStateMachine#FAIL}
-   * @apiviz.exclude
    */
   @Deprecated
   public static class FailTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
@@ -281,7 +276,6 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
    * A {@link ITransition transition} that does nothing.
    *
    * @author Eike Stepper
-   * @apiviz.exclude
    */
   private static class InternalIgnoreTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
   {
@@ -301,7 +295,6 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
    * A {@link ITransition transition} that throws an {@link IllegalStateException}.
    *
    * @author Eike Stepper
-   * @apiviz.exclude
    */
   private static class InternalFailTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
   {

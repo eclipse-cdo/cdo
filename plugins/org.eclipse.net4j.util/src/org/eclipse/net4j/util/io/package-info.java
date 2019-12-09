@@ -7,6 +7,5 @@
 
 /**
  * Interfaces and classes for I/O.
- * @apiviz.exclude .*
  */
 package org.eclipse.net4j.util.io;

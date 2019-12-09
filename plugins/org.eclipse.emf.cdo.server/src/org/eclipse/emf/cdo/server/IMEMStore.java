@@ -18,7 +18,6 @@ package org.eclipse.emf.cdo.server;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  * @deprecated Use {@link org.eclipse.emf.cdo.server.mem.IMEMStore}
- * @apiviz.exclude
  */
 @Deprecated
 public interface IMEMStore extends org.eclipse.emf.cdo.server.mem.IMEMStore

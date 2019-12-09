@@ -20,8 +20,6 @@ import org.eclipse.emf.cdo.common.id.CDOReference;
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.has {@link CDOObject} oneway - - source
- * @apiviz.has {@link CDOObject} oneway - - target
  */
 public interface CDOObjectReference extends CDOReference<CDOObject>
 {

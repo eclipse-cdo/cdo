@@ -7,8 +7,5 @@
 
 /**
  * Client concepts for dealing with Net4j-based sessions to remote repositories.
- *
- * @apiviz.exclude .*Event
- * @apiviz.exclude .*Event\.Type
  */
 package org.eclipse.emf.cdo.net4j;

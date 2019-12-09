@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.common.id.CDOIdentifiable;
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.exclude
  */
 public interface CDOIDAndBranch extends CDOIdentifiable, CDOBranchProvider
 {

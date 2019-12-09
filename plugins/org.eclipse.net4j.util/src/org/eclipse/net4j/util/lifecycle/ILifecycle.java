@@ -22,10 +22,6 @@ import org.eclipse.net4j.util.event.INotifier;
  * </ul>
  *
  * @author Eike Stepper
- * @apiviz.landmark
- * @apiviz.has {@link LifecycleState}
- * @apiviz.uses {@link ILifecycleEvent} - - fires
- * @apiviz.excludeSubtypes
  */
 public interface ILifecycle extends IDeactivateable, INotifier
 {

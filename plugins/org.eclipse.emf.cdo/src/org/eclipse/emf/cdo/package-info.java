@@ -7,7 +7,5 @@
 
 /**
  * Client concepts like {@link org.eclipse.emf.cdo.CDOObject} and {@link org.eclipse.emf.cdo.CDOState}.
- *
- * @apiviz.exclude .*\.CDOWithID
  */
 package org.eclipse.emf.cdo;

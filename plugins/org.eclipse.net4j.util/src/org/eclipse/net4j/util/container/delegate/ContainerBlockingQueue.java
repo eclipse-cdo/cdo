@@ -22,7 +22,6 @@ import java.util.concurrent.TimeUnit;
  * A default implementation of a {@link IContainerBlockingQueue container blocking queue}.
  *
  * @author Eike Stepper
- * @apiviz.exclude
  */
 public class ContainerBlockingQueue<E> extends ContainerQueue<E> implements IContainerBlockingQueue<E>
 {

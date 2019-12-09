@@ -19,7 +19,6 @@ import org.eclipse.net4j.util.factory.IFactoryKey;
  *
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
- * @apiviz.exclude
  */
 public class FactoryNotFoundException extends RuntimeException
 {

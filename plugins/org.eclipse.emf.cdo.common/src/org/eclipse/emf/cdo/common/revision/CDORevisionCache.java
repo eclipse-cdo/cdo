@@ -30,7 +30,6 @@ import java.util.List;
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.composedOf {@link CDORevision}
  */
 public interface CDORevisionCache extends CDORevisionCacheAdder, INotifier
 {

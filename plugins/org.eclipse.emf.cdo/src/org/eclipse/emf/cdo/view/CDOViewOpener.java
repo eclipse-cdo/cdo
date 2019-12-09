@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  *
  * @author Eike Stepper
  * @since 4.4
- * @apiviz.exclude
  */
 public interface CDOViewOpener
 {

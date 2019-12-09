@@ -37,9 +37,6 @@ import org.eclipse.net4j.util.event.INotifier;
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.has {@link CDOBranch} oneway - - mainBranch
- * @apiviz.uses {@link CDOBranchChangedEvent} - - fires
  */
 public interface CDOBranchManager extends INotifier
 {

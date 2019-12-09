@@ -17,7 +17,6 @@ import java.io.PrintStream;
  * overridden by extenders.
  *
  * @author Eike Stepper
- * @apiviz.exclude
  * @since 3.3
  */
 public class ThrowableEventAdapter implements IListener
@@ -56,7 +55,6 @@ public class ThrowableEventAdapter implements IListener
    * Prints the stack traces of throwable {@link ThrowableEvent events} to a {@link PrintStream}.
    *
    * @author Eike Stepper
-   * @apiviz.exclude
    */
   public static class ToPrintStream extends ThrowableEventAdapter
   {

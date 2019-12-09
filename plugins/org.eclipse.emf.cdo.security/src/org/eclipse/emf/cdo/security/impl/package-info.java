@@ -7,7 +7,5 @@
 
 /**
  * The generated EMF implementation of the CDO security model.
- *
- * @apiviz.exclude .*
  */
 package org.eclipse.emf.cdo.security.impl;

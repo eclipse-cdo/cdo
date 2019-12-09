@@ -8,6 +8,5 @@
 /**
  * Common concepts for dealing with durable locks and views.
  *
- * @apiviz.exclude .*Exception
  */
 package org.eclipse.emf.cdo.common.lock;

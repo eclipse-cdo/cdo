@@ -49,7 +49,6 @@ import java.util.Set;
  * A default implementation of a {@link IManagedContainer managed container}.
  *
  * @author Eike Stepper
- * @apiviz.exclude
  */
 public class ManagedContainer extends Lifecycle implements IManagedContainer
 {

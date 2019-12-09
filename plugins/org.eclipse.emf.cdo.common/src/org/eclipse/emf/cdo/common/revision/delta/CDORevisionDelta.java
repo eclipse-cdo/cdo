@@ -34,10 +34,6 @@ import java.util.List;
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.has {@link org.eclipse.emf.ecore.EClass}
- * @apiviz.has {@link org.eclipse.emf.cdo.common.revision.CDORevisable} oneway - - target
- * @apiviz.composedOf {@link CDOFeatureDelta}
  */
 public interface CDORevisionDelta extends CDORevisionKey
 {

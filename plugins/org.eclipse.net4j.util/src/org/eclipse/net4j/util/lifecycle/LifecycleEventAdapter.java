@@ -18,7 +18,6 @@ import org.eclipse.net4j.util.event.IListener;
  * overridden by extenders.
  *
  * @author Eike Stepper
- * @apiviz.exclude
  */
 public class LifecycleEventAdapter implements IListener
 {

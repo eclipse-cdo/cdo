@@ -20,7 +20,6 @@ import java.io.Reader;
  *
  * @author Eike Stepper
  * @since 4.0
- * @apiviz.composedOf {@link CDOLob}
  */
 public interface CDOLobStore
 {

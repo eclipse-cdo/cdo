@@ -28,11 +28,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.composedOf {@link CDOView} - - views
- * @apiviz.has {@link org.eclipse.emf.ecore.EPackage.Registry}
- * @apiviz.has {@link org.eclipse.emf.ecore.resource.ResourceSet}
- * @apiviz.has {@link org.eclipse.emf.cdo.eresource.CDOResourceFactory}
  */
 public interface CDOViewSet extends Notifier
 {

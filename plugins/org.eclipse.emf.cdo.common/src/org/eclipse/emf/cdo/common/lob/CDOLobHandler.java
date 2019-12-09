@@ -19,7 +19,6 @@ import java.io.Writer;
  *
  * @author Eike Stepper
  * @since 4.0
- * @apiviz.uses {@link CDOLob} - - handles
  */
 public interface CDOLobHandler
 {

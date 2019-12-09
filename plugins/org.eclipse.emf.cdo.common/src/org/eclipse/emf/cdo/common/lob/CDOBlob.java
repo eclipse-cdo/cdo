@@ -22,7 +22,6 @@ import java.io.InputStream;
  *
  * @author Eike Stepper
  * @since 4.0
- * @apiviz.landmark
  */
 public final class CDOBlob extends CDOLob<InputStream>
 {

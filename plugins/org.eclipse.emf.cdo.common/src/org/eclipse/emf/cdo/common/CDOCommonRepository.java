@@ -35,12 +35,6 @@ import java.util.Set;
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.has {@link CDOCommonRepository.IDGenerationLocation}
- * @apiviz.has {@link CDOCommonRepository.Type}
- * @apiviz.has {@link CDOCommonRepository.State}
- * @apiviz.uses {@link CDOCommonRepository.TypeChangedEvent} - - fires
- * @apiviz.uses {@link CDOCommonRepository.StateChangedEvent} - - fires
  */
 public interface CDOCommonRepository extends CDOTimeProvider, IAdaptable
 {

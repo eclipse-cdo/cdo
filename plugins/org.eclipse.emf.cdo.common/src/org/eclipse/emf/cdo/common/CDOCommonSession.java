@@ -26,10 +26,6 @@ import org.eclipse.core.runtime.IAdaptable;
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.composedOf {@link CDOCommonView} - - views
- * @apiviz.has {@link CDOCommonSession.Options}
- * @apiviz.uses {@link CDOCommonRepository} - - connectsTo
  */
 public interface CDOCommonSession extends IAdaptable, IUserAware, IOptionsContainer, IPropertiesContainer, Closeable
 {
@@ -50,8 +46,6 @@ public interface CDOCommonSession extends IAdaptable, IUserAware, IOptionsContai
    * @author Simon McDuff
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
-   * @apiviz.has CDOCommonSession.Options.PassiveUpdateMode
-   * @apiviz.has CDOCommonSession.Options.LockNotificationMode
    */
   public interface Options extends IOptions
   {

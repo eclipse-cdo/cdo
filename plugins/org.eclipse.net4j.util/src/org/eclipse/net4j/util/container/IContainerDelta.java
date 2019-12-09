@@ -25,7 +25,6 @@ public interface IContainerDelta<E>
    * Enumerates the possible {@link IContainerDelta container delta} kinds {@link #ADDED} or {@link #REMOVED}.
    *
    * @author Eike Stepper
-   * @apiviz.exclude
    */
   public enum Kind
   {

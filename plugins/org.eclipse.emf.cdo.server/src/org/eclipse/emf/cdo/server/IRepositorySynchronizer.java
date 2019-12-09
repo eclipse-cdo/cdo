@@ -22,8 +22,6 @@ import org.eclipse.net4j.util.container.IContainer;
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.has {@link org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory} oneway - - remote
  */
 public interface IRepositorySynchronizer extends IContainer<CDOSession>
 {

@@ -16,8 +16,6 @@ import org.eclipse.emf.ecore.EFactory;
  * <!-- begin-user-doc --> The <b>Factory</b> for the Etypes model. It provides a create method for each non-abstract
  * class of the model.
  *
- * @apiviz.uses {@link org.eclipse.emf.cdo.common.lob.CDOBlob} - - provides
- * @apiviz.uses {@link org.eclipse.emf.cdo.common.lob.CDOClob} - - provides
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->

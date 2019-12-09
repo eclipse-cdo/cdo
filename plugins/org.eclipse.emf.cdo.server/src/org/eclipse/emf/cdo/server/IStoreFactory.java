@@ -18,7 +18,6 @@ import java.util.Map;
  * Creates {@link IStore stores}.
  *
  * @author Eike Stepper
- * @apiviz.uses {@link IStore} - - creates
  */
 public interface IStoreFactory
 {

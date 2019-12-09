@@ -15,7 +15,6 @@ package org.eclipse.emf.cdo.session;
  *
  * @author Eike Stepper
  * @since 2.0
- * @apiviz.exclude
  */
 public interface CDOSessionProvider
 {

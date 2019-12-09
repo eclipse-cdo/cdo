@@ -27,8 +27,6 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.has {@link CDOBranchPoint} oneway - - start
- * @apiviz.has {@link CDOBranchPoint} oneway - - end
  */
 public interface CDOBranchPointRange
 {

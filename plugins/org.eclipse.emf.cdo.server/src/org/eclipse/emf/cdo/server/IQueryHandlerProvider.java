@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.view.CDOQuery;
  *
  * @author Eike Stepper
  * @since 2.0
- * @apiviz.uses {@link IQueryHandler} - - provides
  */
 public interface IQueryHandlerProvider
 {

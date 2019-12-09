@@ -34,13 +34,6 @@ import java.util.ResourceBundle;
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.has {@link org.eclipse.net4j.util.om.pref.OMPreferences} oneway - - preferences
- * @apiviz.has {@link org.eclipse.net4j.util.om.log.OMLogger} oneway - - logger
- * @apiviz.owns {@link org.eclipse.net4j.util.om.trace.OMTracer} - - tracers
- * @apiviz.has {@link OMBundle.DebugSupport}
- * @apiviz.has {@link OMBundle.TranslationSupport}
- * @apiviz.has {@link java.util.Properties} oneway - - config
  */
 public interface OMBundle
 {

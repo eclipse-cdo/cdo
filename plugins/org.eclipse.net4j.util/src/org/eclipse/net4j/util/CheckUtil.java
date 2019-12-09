@@ -20,7 +20,6 @@ import java.lang.management.RuntimeMXBean;
  * Provides static methods that check object states and invocation arguments.
  *
  * @author Eike Stepper
- * @apiviz.exclude
  */
 public final class CheckUtil
 {

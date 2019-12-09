@@ -75,24 +75,6 @@ import java.util.concurrent.locks.Lock;
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.has {@link org.eclipse.emf.cdo.session.CDORepositoryInfo}
- * @apiviz.has {@link org.eclipse.emf.cdo.common.model.CDOPackageRegistry}
- * @apiviz.has {@link org.eclipse.emf.cdo.common.branch.CDOBranchManager}
- * @apiviz.has {@link org.eclipse.emf.cdo.common.revision.CDORevisionManager}
- * @apiviz.has {@link org.eclipse.emf.cdo.view.CDOFetchRuleManager}
- * @apiviz.has {@link org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager}
- * @apiviz.has {@link org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager}
- * @apiviz.has {@link org.eclipse.emf.cdo.common.id.CDOIDGenerator}
- * @apiviz.has {@link CDOSession.Options}
- * @apiviz.has {@link CDOSession.ExceptionHandler}
- * @apiviz.has {@link CDOSession.ExceptionHandler}
- * @apiviz.composedOf {@link org.eclipse.emf.cdo.view.CDOView} - - views
- * @apiviz.composedOf {@link org.eclipse.emf.cdo.transaction.CDOTransaction} - - transactions
- * @apiviz.uses {@link CDOSessionInvalidationEvent} - - fires
- * @apiviz.uses {@link CDOSessionLocksChangedEvent} - - fires
- * @apiviz.exclude .*\.CDOTransactionContainer
- * @apiviz.exclude .*\.CDOUpdatable
  */
 public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransactionContainer, IPasswordCredentialsProvider.Provider
 {
@@ -225,11 +207,6 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    * @author Simon McDuff
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
-   * @apiviz.has {@link CDOCollectionLoadingPolicy}
-   * @apiviz.has {@link org.eclipse.emf.cdo.common.lob.CDOLobStore} oneway - - lobCache
-   * @apiviz.uses {@link CDOSession.Options.GeneratedPackageEmulationEvent} - - fires
-   * @apiviz.uses {@link CDOSession.Options.CollectionLoadingPolicyEvent} - - fires
-   * @apiviz.uses {@link CDOSession.Options.LobCacheEvent} - - fires
    */
   public interface Options extends CDOCommonSession.Options
   {

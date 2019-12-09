@@ -31,8 +31,6 @@ import java.util.Map;
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.composedOf {@link CDOPackageUnit}
  */
 public interface CDOPackageRegistry extends EPackage.Registry
 {

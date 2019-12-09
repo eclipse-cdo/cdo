@@ -25,8 +25,6 @@ import java.io.IOException;
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.
  * @noinstantiate This class is not intended to be instantiated by clients.
- * @apiviz.has {@link CDOID} oneway - - source
- * @apiviz.has {@link CDOID} oneway - - target
  */
 public class CDOIDReference implements CDOReference<CDOID>
 {

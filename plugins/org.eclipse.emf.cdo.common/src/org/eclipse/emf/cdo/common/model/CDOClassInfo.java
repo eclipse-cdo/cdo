@@ -24,8 +24,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.has {@link org.eclipse.emf.ecore.EClass}
  */
 public interface CDOClassInfo extends Adapter
 {

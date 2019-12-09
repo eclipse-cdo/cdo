@@ -25,11 +25,6 @@ import java.util.Properties;
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.landmark
- * @apiviz.has {@link OMBundle} bundles platform
- * @apiviz.owns {@link org.eclipse.net4j.util.om.log.OMLogHandler} - - logHandlers
- * @apiviz.owns {@link org.eclipse.net4j.util.om.trace.OMTraceHandler} - - traceHandlers
- * @apiviz.has {@link java.io.File} oneway - - stateFolder
  */
 public interface OMPlatform
 {

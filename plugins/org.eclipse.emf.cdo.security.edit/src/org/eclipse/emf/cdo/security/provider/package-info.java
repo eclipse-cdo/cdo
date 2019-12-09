@@ -7,7 +7,5 @@
 
 /**
  * The generated EMF edit support of the CDO security model.
- *
- * @apiviz.exclude .*
  */
 package org.eclipse.emf.cdo.security.provider;

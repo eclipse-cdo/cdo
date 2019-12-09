@@ -225,6 +225,10 @@
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">CDOProtocol.CommitNotificationInfo.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.CommitNotificationInfo.html#write-org.eclipse.emf.cdo.common.protocol.CDODataOutput-">write</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out)</code>&nbsp;</td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOProtocol.CommitData.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.CommitData.html#write-org.eclipse.emf.cdo.common.protocol.CDODataOutput-">write</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out)</code>&nbsp;</td>
+</tr>
 </tbody>
 </table>
 </li>
@@ -277,12 +281,53 @@
 </a>
 <h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a> in <a href="../../../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a></h3>
 <table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a> that return <a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>protected <a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOServerExporter.Binary.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html#createOutput-java.io.OutputStream-">createOutput</a></span>(java.io.OutputStream&nbsp;out)</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
 <caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tbody>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOServerExporter.Binary.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html#endPackageUnit-org.eclipse.emf.cdo.common.protocol.CDODataOutput-">endPackageUnit</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOServerExporter.Binary.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html#exportAll-org.eclipse.emf.cdo.common.protocol.CDODataOutput-">exportAll</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOServerExporter.Binary.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html#exportBranch-org.eclipse.emf.cdo.common.protocol.CDODataOutput-org.eclipse.emf.cdo.common.branch.CDOBranch-">exportBranch</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+            <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOServerExporter.Binary.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html#exportCommit-org.eclipse.emf.cdo.common.protocol.CDODataOutput-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-">exportCommit</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+            <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOServerExporter.Binary.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html#exportPackageInfo-org.eclipse.emf.cdo.common.protocol.CDODataOutput-java.lang.String-">exportPackageInfo</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+                 java.lang.String&nbsp;packageURI)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOServerExporter.Binary.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html#exportRevision-org.eclipse.emf.cdo.common.protocol.CDODataOutput-org.eclipse.emf.cdo.common.revision.CDORevision-">exportRevision</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+              <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code>&nbsp;</td>
+</tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">IStoreAccessor.Raw.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawExport-org.eclipse.emf.cdo.common.protocol.CDODataOutput-int-int-long-long-">rawExport</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
@@ -294,6 +339,26 @@
  <a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawImport-org.eclipse.emf.cdo.common.protocol.CDODataInput-int-int-long-long-org.eclipse.net4j.util.om.monitor.OMMonitor-"><code>rawImport()</code></a> method of a different instance of
  the same implementation of <a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.</div>
 </td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected java.io.OutputStream</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOServerExporter.Binary.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html#startBlob-org.eclipse.emf.cdo.common.protocol.CDODataOutput-byte:A-long-">startBlob</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+         byte[]&nbsp;id,
+         long&nbsp;size)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected java.io.Writer</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOServerExporter.Binary.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html#startClob-org.eclipse.emf.cdo.common.protocol.CDODataOutput-byte:A-long-">startClob</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+         byte[]&nbsp;id,
+         long&nbsp;size)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOServerExporter.Binary.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html#startPackageUnit-org.eclipse.emf.cdo.common.protocol.CDODataOutput-java.lang.String-org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type-long-java.lang.String-">startPackageUnit</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+                java.lang.String&nbsp;id,
+                <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.Type.html" title="enum in org.eclipse.emf.cdo.common.model">CDOPackageUnit.Type</a>&nbsp;type,
+                long&nbsp;time,
+                java.lang.String&nbsp;data)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -674,6 +739,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

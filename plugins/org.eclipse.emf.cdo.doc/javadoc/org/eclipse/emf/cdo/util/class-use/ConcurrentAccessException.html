@@ -103,6 +103,20 @@
 </a>
 <h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util">ConcurrentAccessException</a> in <a href="../../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a></h3>
 <table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a> with parameters of type <a href="../../../../../../org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util">ConcurrentAccessException</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOAutoCommitter.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAutoCommitter.html#handleConcurrentAccessException-org.eclipse.emf.cdo.transaction.CDOTransaction-org.eclipse.emf.cdo.util.ConcurrentAccessException-">handleConcurrentAccessException</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+                               <a href="../../../../../../org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util">ConcurrentAccessException</a>&nbsp;ex)</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
 <caption><span>Methods in <a href="../../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a> that throw <a href="../../../../../../org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="class in org.eclipse.emf.cdo.util">ConcurrentAccessException</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
@@ -116,10 +130,58 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.CommitResult.html" title="class in org.eclipse.emf.cdo.transaction">CDOTransaction.CommitResult</a>&lt;T&gt;</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#commit-java.util.concurrent.Callable-int-org.eclipse.core.runtime.IProgressMonitor-">commit</a></span>(java.util.concurrent.Callable&lt;T&gt;&nbsp;callable,
+      int&nbsp;attempts,
+      <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.CommitResult.html" title="class in org.eclipse.emf.cdo.transaction">CDOTransaction.CommitResult</a>&lt;T&gt;</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#commit-java.util.concurrent.Callable-int-org.eclipse.core.runtime.IProgressMonitor-">commit</a></span>(java.util.concurrent.Callable&lt;T&gt;&nbsp;callable,
+      int&nbsp;attempts,
+      <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.CommitResult.html" title="class in org.eclipse.emf.cdo.transaction">CDOTransaction.CommitResult</a>&lt;T&gt;</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#commit-java.util.concurrent.Callable-org.eclipse.net4j.util.Predicate-org.eclipse.core.runtime.IProgressMonitor-">commit</a></span>(java.util.concurrent.Callable&lt;T&gt;&nbsp;callable,
+      <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/Predicate.html?is-external=true" title="class or interface in org.eclipse.net4j.util">Predicate</a>&lt;java.lang.Long&gt;&nbsp;retry,
+      <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>&lt;T&gt;&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.CommitResult.html" title="class in org.eclipse.emf.cdo.transaction">CDOTransaction.CommitResult</a>&lt;T&gt;</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#commit-java.util.concurrent.Callable-org.eclipse.net4j.util.Predicate-org.eclipse.core.runtime.IProgressMonitor-">commit</a></span>(java.util.concurrent.Callable&lt;T&gt;&nbsp;callable,
+      <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/Predicate.html?is-external=true" title="class or interface in org.eclipse.net4j.util">Predicate</a>&lt;java.lang.Long&gt;&nbsp;retry,
+      <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></td>
-<td class="colLast"><span class="typeNameLabel">CDOUserTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit-org.eclipse.core.runtime.IProgressMonitor-">commit</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;progressMonitor)</code>
+<td class="colLast"><span class="typeNameLabel">CDOUserTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit-org.eclipse.core.runtime.IProgressMonitor-">commit</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</code>
 <div class="block">Commits the modifications of this transaction to the repository and returns a <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info</code></a> object if successful.</div>
 </td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#commit-java.lang.Runnable-int-org.eclipse.core.runtime.IProgressMonitor-">commit</a></span>(java.lang.Runnable&nbsp;runnable,
+      int&nbsp;attempts,
+      <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#commit-java.lang.Runnable-int-org.eclipse.core.runtime.IProgressMonitor-">commit</a></span>(java.lang.Runnable&nbsp;runnable,
+      int&nbsp;attempts,
+      <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#commit-java.lang.Runnable-org.eclipse.net4j.util.Predicate-org.eclipse.core.runtime.IProgressMonitor-">commit</a></span>(java.lang.Runnable&nbsp;runnable,
+      <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/Predicate.html?is-external=true" title="class or interface in org.eclipse.net4j.util">Predicate</a>&lt;java.lang.Long&gt;&nbsp;retry,
+      <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOTransaction.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#commit-java.lang.Runnable-org.eclipse.net4j.util.Predicate-org.eclipse.core.runtime.IProgressMonitor-">commit</a></span>(java.lang.Runnable&nbsp;runnable,
+      <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/Predicate.html?is-external=true" title="class or interface in org.eclipse.net4j.util">Predicate</a>&lt;java.lang.Long&gt;&nbsp;retry,
+      <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -213,6 +275,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

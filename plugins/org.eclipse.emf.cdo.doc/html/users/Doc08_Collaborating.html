@@ -89,13 +89,13 @@ function windowTitle()
  Each time a local transaction is notified of a remote change by the CDO server and local conflicts are detected (see <a href="Doc08_Collaborating.html#Doc_EarlyConflictDetection" title="Chapter in CDO Model Repository Documentation">Early Conflict Detection</a>)
  these conflicts are categorized as being either <i>trivial</i> conflicts or <i>non-trivial</i> conflicts. Trivial conflicts are:
  <ul>
- <li> Changes to multi-valued <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>features</code></a> on both sides (local and remote) of the same model element.
- <li> Changes to different single-valued <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>features</code></a> on both sides (local and remote) of the same model element.
+ <li> Changes to multi-valued <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>features</code></a> on both sides (local and remote) of the same model element.
+ <li> Changes to different single-valued <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>features</code></a> on both sides (local and remote) of the same model element.
  </ul>
  <p>
  Trivial conflicts are merged automatically into the local transaction, i.e., no user interaction is involved.
  <p>
- When non-trivial changes are detected, i.e., changes to the same single-valued <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>feature</code></a> on both sides (local and remote)
+ When non-trivial changes are detected, i.e., changes to the same single-valued <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>feature</code></a> on both sides (local and remote)
  of the same model element, automatic conflict resolution is suspended for all model elements until the next local commit operation.
  During this period all incoming change notifications are accumulated and remembered for possible <a href="Doc08_Collaborating.html#Doc_InteractiveConflictResolution" title="Chapter in CDO Model Repository Documentation">Interactive Conflict Resolution</a>
  at commit time.

@@ -213,7 +213,7 @@
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">IMappingStrategy.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#handleRevisions-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.common.branch.CDOBranch-long-boolean-org.eclipse.emf.cdo.common.revision.CDORevisionHandler-">handleRevisions</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
                <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                long&nbsp;timeStamp,
                boolean&nbsp;exactTime,
@@ -369,7 +369,7 @@
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">IClassMapping.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#writeRevision-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision-boolean-boolean-org.eclipse.net4j.util.om.monitor.OMMonitor-">writeRevision</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
              <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
-             boolean&nbsp;mapType,
+             boolean&nbsp;firstRevision,
              boolean&nbsp;revise,
              <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
 <div class="block">Write the revision data to the database.</div>
@@ -385,6 +385,15 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">IListMapping4.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping4.html#writeValues-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.cdo.common.revision.CDORevision-boolean-boolean-">writeValues</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+           <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+           boolean&nbsp;firstRevision,
+           boolean&nbsp;raw)</code>
+<div class="block">Write a complete list of values to the database.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">IListMapping.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping.html#writeValues-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision-">writeValues</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
            <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</code>
@@ -444,6 +453,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

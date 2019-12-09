@@ -110,7 +110,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public interface <span class="typeNameLabel">CDOPackageUnit</span>
 extends java.lang.Comparable&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>&gt;, <a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></pre>
-<div class="block">Represents a tree structure of nested <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>packages</code></a> that are registered with a <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package registry</code></a> and that can only be serialized as a whole.
+<div class="block">Represents a tree structure of nested <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>packages</code></a> that are registered with a <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package registry</code></a> and that can only be serialized as a whole.
  <p>
  A package unit is the granule of committing or lazy loading packages. It contains some overall information like
  <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.Type.html" title="enum in org.eclipse.emf.cdo.common.model"><code>type</code></a>, <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.State.html" title="enum in org.eclipse.emf.cdo.common.model"><code>state</code></a>, <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html#getTimeStamp--"><code>commit time</code></a> and nested <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package
@@ -124,11 +124,6 @@ extends java.lang.Comparable&lt;<a href="../../../../../../org/eclipse/emf/cdo/c
 <dd>This interface is not intended to be implemented by clients.</dd>
 <dt><span class="simpleTagLabel">No Extend</span></dt>
 <dd>This interface is not intended to be extended by clients.</dd>
-<dt><span class="simpleTagLabel">Apiviz</span></dt>
-<dt><span class="simpleTagLabel">Apiviz</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.Type.html" title="enum in org.eclipse.emf.cdo.common.model"><code>CDOPackageUnit.Type</code></a>, <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.State.html" title="enum in org.eclipse.emf.cdo.common.model"><code>CDOPackageUnit.State</code></a></dd>
-<dt><span class="simpleTagLabel">Apiviz</span></dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>CDOPackageInfo</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -157,7 +152,7 @@ extends java.lang.Comparable&lt;<a href="../../../../../../org/eclipse/emf/cdo/c
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.Type.html" title="enum in org.eclipse.emf.cdo.common.model">CDOPackageUnit.Type</a></span></code>
-<div class="block">Describes the instances of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>classes</code></a> of a <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit</code></a>.</div>
+<div class="block">Describes the instances of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>classes</code></a> of a <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit</code></a>.</div>
 </td>
 </tr>
 </table>
@@ -176,9 +171,9 @@ extends java.lang.Comparable&lt;<a href="../../../../../../org/eclipse/emf/cdo/c
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]</code></td>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html#getEPackages-boolean-">getEPackages</a></span>(boolean&nbsp;loadOnDemand)</code>
-<div class="block">Returns all <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>packages</code></a> of the nested package tree structure described by this package unit in
+<div class="block">Returns all <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>packages</code></a> of the nested package tree structure described by this package unit in
  depth-first traversal order.</div>
 </td>
 </tr>
@@ -197,7 +192,7 @@ extends java.lang.Comparable&lt;<a href="../../../../../../org/eclipse/emf/cdo/c
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html#getPackageInfo-java.lang.String-">getPackageInfo</a></span>(java.lang.String&nbsp;packageURI)</code>
-<div class="block">Returns the <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package</code></a> with the given
+<div class="block">Returns the <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package</code></a> with the given
  namespace URI, or <code>null</code> if this package unit does not contain a package with this URI.</div>
 </td>
 </tr>
@@ -229,7 +224,7 @@ extends java.lang.Comparable&lt;<a href="../../../../../../org/eclipse/emf/cdo/c
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html#getTopLevelPackageInfo--">getTopLevelPackageInfo</a></span>()</code>
-<div class="block">Returns the <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the top level <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package</code></a> of the
+<div class="block">Returns the <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the top level <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package</code></a> of the
  nested package tree structure described by this package unit.</div>
 </td>
 </tr>
@@ -347,7 +342,7 @@ extends java.lang.Comparable&lt;<a href="../../../../../../org/eclipse/emf/cdo/c
 <li class="blockList">
 <h4>getTopLevelPackageInfo</h4>
 <pre><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a>&nbsp;getTopLevelPackageInfo()</pre>
-<div class="block">Returns the <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the top level <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package</code></a> of the
+<div class="block">Returns the <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the top level <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package</code></a> of the
  nested package tree structure described by this package unit.</div>
 </li>
 </ul>
@@ -358,7 +353,7 @@ extends java.lang.Comparable&lt;<a href="../../../../../../org/eclipse/emf/cdo/c
 <li class="blockList">
 <h4>getPackageInfo</h4>
 <pre><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a>&nbsp;getPackageInfo(java.lang.String&nbsp;packageURI)</pre>
-<div class="block">Returns the <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package</code></a> with the given
+<div class="block">Returns the <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package</code></a> with the given
  namespace URI, or <code>null</code> if this package unit does not contain a package with this URI.</div>
 </li>
 </ul>
@@ -379,8 +374,8 @@ extends java.lang.Comparable&lt;<a href="../../../../../../org/eclipse/emf/cdo/c
 <ul class="blockList">
 <li class="blockList">
 <h4>getEPackages</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]&nbsp;getEPackages(boolean&nbsp;loadOnDemand)</pre>
-<div class="block">Returns all <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>packages</code></a> of the nested package tree structure described by this package unit in
+<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]&nbsp;getEPackages(boolean&nbsp;loadOnDemand)</pre>
+<div class="block">Returns all <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>packages</code></a> of the nested package tree structure described by this package unit in
  depth-first traversal order.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -489,6 +484,6 @@ extends java.lang.Comparable&lt;<a href="../../../../../../org/eclipse/emf/cdo/c
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

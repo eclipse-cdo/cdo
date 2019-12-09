@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright (c) 2006-2019 Eike Stepper (Berlin, Germany) and others.
+  Copyright (c) 2018 Eike Stepper (Loehne, Germany) and others.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
@@ -17,8 +17,10 @@
 
   <property file="${user.home}/org.eclipse.oomph.doc_1.0.properties" />
 
+  <property name="legal.date" value="2004-2019" />
+
   <property name="jdk.link" value="http://download.oracle.com/javase/1.5.0/docs/api" />
-  <property name="emf.link" value="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0" />
+  <property name="emf.link" value="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11" />
   <property name="platform.link" value="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api" />
   <property name="platform.api" location="${releng.project}/package-lists/platform" />
 
@@ -79,6 +81,7 @@
              destdir="${javadoc.destdir}"
              encoding="UTF-8"
              classpathref="javadoc.classpath"
+             additionalparam="-Xdoclint:missing"
              maxmemory="1024m"
              source="1.5"
              useexternalfile="true"
@@ -92,7 +95,7 @@
              windowtitle="${javadoc.name}"
              doctitle="&lt;h1>${javadoc.name}&lt;/h1>"
              overview="${project.path}/overview.html"
-             bottom="&lt;i class=&quot;copyright&quot;>Copyright (c) 2006-2019 Eike Stepper (Berlin, Germany) and others.&lt;br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html&lt;/i>">
+             bottom="&lt;i class=&quot;copyright&quot;>Copyright (c) ${legal.date} Eike Stepper (Loehne, Germany) and others.&lt;br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html&lt;/i>">
 
       <fileset dir="${plugins.dir}" defaultexcludes="yes">
 				<include name="org.eclipse.emf.cdo.admin/src/org/eclipse/emf/cdo/admin/*.java" />
@@ -140,13 +143,10 @@
 				<include name="org.eclipse.emf.cdo.server.admin/src/org/eclipse/emf/cdo/server/spi/admin/*.java" />
 				<include name="org.eclipse.emf.cdo.server.db/src/org/eclipse/emf/cdo/server/db/*.java" />
 				<include name="org.eclipse.emf.cdo.server.db/src/org/eclipse/emf/cdo/server/db/mapping/*.java" />
-				<include name="org.eclipse.emf.cdo.server.db4o/src/org/eclipse/emf/cdo/server/db4o/*.java" />
 				<include name="org.eclipse.emf.cdo.server.embedded/src/org/eclipse/emf/cdo/server/embedded/*.java" />
-				<include name="org.eclipse.emf.cdo.server.hibernate/src/org/eclipse/emf/cdo/server/hibernate/*.java" />
 				<include name="org.eclipse.emf.cdo.server.lissome/src/org/eclipse/emf/cdo/server/lissome/*.java" />
 				<include name="org.eclipse.emf.cdo.server.mongodb/src/org/eclipse/emf/cdo/server/mongodb/*.java" />
 				<include name="org.eclipse.emf.cdo.server.net4j/src/org/eclipse/emf/cdo/server/net4j/*.java" />
-				<include name="org.eclipse.emf.cdo.server.objectivity/src/org/eclipse/emf/cdo/server/objectivity/*.java" />
 				<include name="org.eclipse.emf.cdo.server.ocl/src/org/eclipse/emf/cdo/server/ocl/*.java" />
 				<include name="org.eclipse.emf.cdo.server.security/src/org/eclipse/emf/cdo/server/security/*.java" />
 				<include name="org.eclipse.emf.cdo.server.security/src/org/eclipse/emf/cdo/server/spi/security/*.java" />
@@ -284,14 +284,8 @@
 				<package name="org.eclipse.emf.cdo.server.db" />
 				<package name="org.eclipse.emf.cdo.server.db.mapping" />
 			</group>
-			<group title="CDO Model Repository Server DB4O">
-				<package name="org.eclipse.emf.cdo.server.db4o" />
-			</group>
 			<group title="CDO Model Repository Server Embedded Support">
 				<package name="org.eclipse.emf.cdo.server.embedded" />
-			</group>
-			<group title="CDO Model Repository Server Hibernate">
-				<package name="org.eclipse.emf.cdo.server.hibernate" />
 			</group>
 			<group title="CDO Model Repository Server Lissome">
 				<package name="org.eclipse.emf.cdo.server.lissome" />
@@ -304,9 +298,6 @@
 			</group>
 			<group title="CDO Model Repository Server OCL Support">
 				<package name="org.eclipse.emf.cdo.server.ocl" />
-			</group>
-			<group title="CDO Model Repository Server Objectivity">
-				<package name="org.eclipse.emf.cdo.server.objectivity" />
 			</group>
 			<group title="CDO Model Repository Server Security Support">
 				<package name="org.eclipse.emf.cdo.server.security" />
@@ -346,13 +337,7 @@
       <tag name="noextend" description="No Extend" />
       <tag name="noinstantiate" description="No Instantiate" />
       <tag name="noreference" description="No Reference" />
-      <tag name="apiviz.excludeSubtypes" description="Apiviz" />
-      <tag name="apiviz.exclude" description="Apiviz" />
-      <tag name="apiviz.landmark" description="Apiviz" />
-      <tag name="apiviz.has" description="Apiviz" />
-      <tag name="apiviz.owns" description="Apiviz" />
-      <tag name="apiviz.uses" description="Apiviz" />
-      <tag name="apiviz.composedOf" description="Apiviz" />
+      <tag name="apiviz.exclude" description="Exclude from diagram" />
     </javadoc>
 
     <copy todir="${javadoc.destdir}/resources" verbose="true" failonerror="false" overwrite="true">
@@ -410,7 +395,6 @@
 		<pde.convertSchemaToHTML destination="${schemadoc.destdir}" manifest="${plugins.dir}/org.eclipse.emf.cdo/plugin.xml" />
 		<pde.convertSchemaToHTML destination="${schemadoc.destdir}" manifest="${plugins.dir}/org.eclipse.emf.cdo.server/plugin.xml" />
 		<pde.convertSchemaToHTML destination="${schemadoc.destdir}" manifest="${plugins.dir}/org.eclipse.emf.cdo.server.db/plugin.xml" />
-		<pde.convertSchemaToHTML destination="${schemadoc.destdir}" manifest="${plugins.dir}/org.eclipse.emf.cdo.server.hibernate/plugin.xml" />
 		<pde.convertSchemaToHTML destination="${schemadoc.destdir}" manifest="${plugins.dir}/org.eclipse.emf.cdo.ui/plugin.xml" />
 
     <replaceregexp match="\.\./\.\./(.*?)\.css" replace="\1.css" byline="true">
@@ -469,7 +453,6 @@
         <param name="-basefolder" value="${plugins.dir}/.." />
         <param name="-project" value="org.eclipse.emf.cdo.doc" />
         <param name="-externals" value="${jdk.link};${platform.link};${emf.link}" />
-        <!--param name="-modelfolder" value="/develop/MODELS" /-->
 
       </doclet>
 

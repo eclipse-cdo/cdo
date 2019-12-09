@@ -106,21 +106,9 @@
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server.db4o">org.eclipse.emf.cdo.server.db4o</a></td>
-<td class="colLast">
-<div class="block">Server concepts for dealing with DB4O stores and accessors.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.server.embedded">org.eclipse.emf.cdo.server.embedded</a></td>
 <td class="colLast">
 <div class="block">Server concepts for dealing with Net4j-based repositories and fail-over infrastructure.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server.hibernate">org.eclipse.emf.cdo.server.hibernate</a></td>
-<td class="colLast">
-<div class="block">Server concepts for dealing with Hibernate stores and accessors.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -148,48 +136,42 @@
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server.objectivity">org.eclipse.emf.cdo.server.objectivity</a></td>
-<td class="colLast">
-<div class="block">Server concepts for dealing with Objectivity/DB stores and accessors.</div>
-</td>
-</tr>
-<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.server.ocl">org.eclipse.emf.cdo.server.ocl</a></td>
 <td class="colLast">
 <div class="block">Server implementation of a generic OCL query handler.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.server.security">org.eclipse.emf.cdo.server.security</a></td>
 <td class="colLast">
 <div class="block">Server integration of the <a href="../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security"><code>Security</code></a> model.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.server.spi.admin">org.eclipse.emf.cdo.server.spi.admin</a></td>
 <td class="colLast">
 <div class="block">Server provider interfaces (SPI) for the protocol to administer CDO repositories remotely.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.server.spi.security">org.eclipse.emf.cdo.server.spi.security</a></td>
 <td class="colLast">
 <div class="block">Server provider interfaces (SPI) for the server integration of the <a href="../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security"><code>Security</code></a> model.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></td>
 <td class="colLast">
 <div class="block">Server service provider interfaces and useful base implementations.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.spi.workspace">org.eclipse.emf.cdo.spi.workspace</a></td>
 <td class="colLast">
 <div class="block">Server provider interfaces (SPI) for CDO <a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.workspace">org.eclipse.emf.cdo.workspace</a></td>
 <td class="colLast">
 <div class="block">Concepts to checkout, open and further operate CDO <a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
@@ -236,6 +218,14 @@
 <td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/CDOServerExporter.html#org.eclipse.emf.cdo.server">CDOServerExporter</a>
 <div class="block">Exports the complete contents of a <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a> in a format suitable for <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>imports</code></a> into new repositories.</div>
 </td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/CDOServerExporter.BinaryConstants.html#org.eclipse.emf.cdo.server">CDOServerExporter.BinaryConstants</a>
+<div class="block">Binary constants being used by both <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server"><code>exporters</code></a> and <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importers</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/CDOServerExporter.Statistics.html#org.eclipse.emf.cdo.server">CDOServerExporter.Statistics</a>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/CDOServerExporter.XMLConstants.html#org.eclipse.emf.cdo.server">CDOServerExporter.XMLConstants</a>
@@ -527,24 +517,6 @@
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.server.db4o">
-<!--   -->
-</a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a> used by <a href="../../../../../org/eclipse/emf/cdo/server/db4o/package-summary.html">org.eclipse.emf.cdo.server.db4o</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colOne" scope="col">Class and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStore.html#org.eclipse.emf.cdo.server.db4o">IStore</a>
-<div class="block">Represents the physical data storage back-end of a CDO <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>, such as a database or a file
- system folder.</div>
-</td>
-</tr>
-</tbody>
-</table>
-</li>
 <li class="blockList"><a name="org.eclipse.emf.cdo.server.embedded">
 <!--   -->
 </a>
@@ -563,52 +535,6 @@
 <td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStore.html#org.eclipse.emf.cdo.server.embedded">IStore</a>
 <div class="block">Represents the physical data storage back-end of a CDO <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>, such as a database or a file
  system folder.</div>
-</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.server.hibernate">
-<!--   -->
-</a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a> used by <a href="../../../../../org/eclipse/emf/cdo/server/hibernate/package-summary.html">org.eclipse.emf.cdo.server.hibernate</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colOne" scope="col">Class and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IQueryHandlerProvider.html#org.eclipse.emf.cdo.server.hibernate">IQueryHandlerProvider</a>
-<div class="block">Provides the consumer with <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandler.html" title="interface in org.eclipse.emf.cdo.server"><code>query handlers</code></a> that are capable of executing <a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view"><code>queries</code></a> represented by specific <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util"><code>query infos</code></a>.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStore.html#org.eclipse.emf.cdo.server.hibernate">IStore</a>
-<div class="block">Represents the physical data storage back-end of a CDO <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>, such as a database or a file
- system folder.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStore.CanHandleClientAssignedIDs.html#org.eclipse.emf.cdo.server.hibernate">IStore.CanHandleClientAssignedIDs</a>
-<div class="block">A marker interface for <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server"><code>stores</code></a> that can handle <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> assigned by a
- <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html#CLIENT"><code>client</code></a>, typically <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html#UUID"><code>UUIDs</code></a>.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreAccessor.html#org.eclipse.emf.cdo.server.hibernate">IStoreAccessor</a>
-<div class="block">Represents a <i>connection</i> to a physical data storage back-end.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreAccessor.Raw.html#org.eclipse.emf.cdo.server.hibernate">IStoreAccessor.Raw</a>
-<div class="block">An extension interface for <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>raw data access</i> as needed by
- <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server"><code>repository synchronizers</code></a> or <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>server importers</code></a>.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreChunkReader.html#org.eclipse.emf.cdo.server.hibernate">IStoreChunkReader</a>
-<div class="block">Reads <a href="../../../../../org/eclipse/emf/cdo/server/IStoreChunkReader.Chunk.html" title="class in org.eclipse.emf.cdo.server"><code>chunks</code></a> of
- <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setCollectionLoadingPolicy-org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy-"><code>partially loaded</code></a> lists from a physical data storage backend.</div>
 </td>
 </tr>
 </tbody>
@@ -748,46 +674,6 @@
 <tr class="altColor">
 <td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/ISynchronizableRepository.html#org.eclipse.emf.cdo.server.net4j">ISynchronizableRepository</a>
 <div class="block">A repository with the ability to <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server"><code>synchronize</code></a> its content with another repository.</div>
-</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.server.objectivity">
-<!--   -->
-</a>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../org/eclipse/emf/cdo/server/package-summary.html">org.eclipse.emf.cdo.server</a> used by <a href="../../../../../org/eclipse/emf/cdo/server/objectivity/package-summary.html">org.eclipse.emf.cdo.server.objectivity</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colOne" scope="col">Class and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IQueryHandlerProvider.html#org.eclipse.emf.cdo.server.objectivity">IQueryHandlerProvider</a>
-<div class="block">Provides the consumer with <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandler.html" title="interface in org.eclipse.emf.cdo.server"><code>query handlers</code></a> that are capable of executing <a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view"><code>queries</code></a> represented by specific <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util"><code>query infos</code></a>.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStore.html#org.eclipse.emf.cdo.server.objectivity">IStore</a>
-<div class="block">Represents the physical data storage back-end of a CDO <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>, such as a database or a file
- system folder.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreAccessor.html#org.eclipse.emf.cdo.server.objectivity">IStoreAccessor</a>
-<div class="block">Represents a <i>connection</i> to a physical data storage back-end.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreAccessor.Raw.html#org.eclipse.emf.cdo.server.objectivity">IStoreAccessor.Raw</a>
-<div class="block">An extension interface for <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>raw data access</i> as needed by
- <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server"><code>repository synchronizers</code></a> or <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>server importers</code></a>.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../org/eclipse/emf/cdo/server/class-use/IStoreChunkReader.html#org.eclipse.emf.cdo.server.objectivity">IStoreChunkReader</a>
-<div class="block">Reads <a href="../../../../../org/eclipse/emf/cdo/server/IStoreChunkReader.Chunk.html" title="class in org.eclipse.emf.cdo.server"><code>chunks</code></a> of
- <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setCollectionLoadingPolicy-org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy-"><code>partially loaded</code></a> lists from a physical data storage backend.</div>
 </td>
 </tr>
 </tbody>
@@ -1111,6 +997,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

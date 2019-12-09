@@ -18,8 +18,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":42,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":42,"i27":10,"i28":10,"i29":10,"i30":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -160,7 +160,7 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <td class="colFirst"><code>protected class&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.ReceiveSerializer.html" title="class in org.eclipse.spi.net4j">Channel.ReceiveSerializer</a></span></code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">As of 4.4 use <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent"><code>ExecutorWorkSerializer</code></a>.</span></div>
+<div class="block"><span class="deprecationComment">As of 4.4 scheduled for future removal.</span></div>
 </div>
 </td>
 </tr>
@@ -240,7 +240,7 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -299,7 +299,9 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.util.concurrent.ExecutorService</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getReceiveExecutor--">getReceiveExecutor</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getReceiveExecutor--">getReceiveExecutor</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a></code></td>
@@ -375,7 +377,9 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#setReceiveExecutor-java.util.concurrent.ExecutorService-">setReceiveExecutor</a></span>(java.util.concurrent.ExecutorService&nbsp;receiveExecutor)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#setReceiveExecutor-java.util.concurrent.ExecutorService-">setReceiveExecutor</a></span>(java.util.concurrent.ExecutorService&nbsp;receiveExecutor)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -612,7 +616,9 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <ul class="blockList">
 <li class="blockList">
 <h4>getReceiveExecutor</h4>
-<pre>public&nbsp;java.util.concurrent.ExecutorService&nbsp;getReceiveExecutor()</pre>
+<pre>@Deprecated
+public&nbsp;java.util.concurrent.ExecutorService&nbsp;getReceiveExecutor()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#getReceiveExecutor--">getReceiveExecutor</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
@@ -625,7 +631,9 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <ul class="blockList">
 <li class="blockList">
 <h4>setReceiveExecutor</h4>
-<pre>public&nbsp;void&nbsp;setReceiveExecutor(java.util.concurrent.ExecutorService&nbsp;receiveExecutor)</pre>
+<pre>@Deprecated
+public&nbsp;void&nbsp;setReceiveExecutor(java.util.concurrent.ExecutorService&nbsp;receiveExecutor)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#setReceiveExecutor-java.util.concurrent.ExecutorService-">setReceiveExecutor</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
@@ -753,9 +761,7 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#handleBufferFromMultiplexer-org.eclipse.net4j.buffer.IBuffer-">handleBufferFromMultiplexer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer.html#multiplexChannel-org.eclipse.spi.net4j.InternalChannel-"><code>InternalChannelMultiplexer.multiplexChannel(org.eclipse.spi.net4j.InternalChannel)</code></a>, 
-<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IWorkSerializer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent"><code>IWorkSerializer</code></a>, 
-<a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j"><code>Channel.ReceiverWork</code></a></dd>
+<dd><a href="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer.html#multiplexChannel-org.eclipse.spi.net4j.InternalChannel-"><code>InternalChannelMultiplexer.multiplexChannel(org.eclipse.spi.net4j.InternalChannel)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -977,6 +983,6 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

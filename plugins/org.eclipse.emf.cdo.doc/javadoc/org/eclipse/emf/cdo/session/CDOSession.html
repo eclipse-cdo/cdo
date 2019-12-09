@@ -121,7 +121,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
  <li> <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html#getViews--"><code>View management</code></a>
  </ul>
  <p>
- Note that in order to retrieve, access and store <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> is needed. The
+ Note that in order to retrieve, access and store <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> is needed. The
  various <code>openXYZ</code> methods are provided for this purpose.
  <p>
  A session can fire the following events:
@@ -139,15 +139,6 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <dd>This interface is not intended to be implemented by clients.</dd>
 <dt><span class="simpleTagLabel">No Extend</span></dt>
 <dd>This interface is not intended to be extended by clients.</dd>
-<dt><span class="simpleTagLabel">Apiviz</span></dt>
-<dd>.*\.CDOTransactionContainer, .*\.CDOUpdatable</dd>
-<dt><span class="simpleTagLabel">Apiviz</span></dt>
-<dt><span class="simpleTagLabel">Apiviz</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/session/CDORepositoryInfo.html" title="interface in org.eclipse.emf.cdo.session"><code>CDORepositoryInfo</code></a>, <a href="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model"><code>CDOPackageRegistry</code></a>, <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchManager</code></a>, <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>CDORevisionManager</code></a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOFetchRuleManager</code></a>, <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html" title="interface in org.eclipse.emf.cdo.session.remote"><code>CDORemoteSessionManager</code></a>, <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>CDOCommitInfoManager</code></a>, <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOIDGenerator</code></a>, <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSession.Options</code></a>, <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSession.ExceptionHandler</code></a>, <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSession.ExceptionHandler</code></a></dd>
-<dt><span class="simpleTagLabel">Apiviz</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSessionInvalidationEvent</code></a> - - fires, <a href="../../../../../org/eclipse/emf/cdo/session/CDOSessionLocksChangedEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSessionLocksChangedEvent</code></a> - - fires</dd>
-<dt><span class="simpleTagLabel">Apiviz</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> - - views, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOTransaction</code></a> - - transactions</dd>
 </dl>
 </li>
 </ul>
@@ -263,7 +254,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getPackageRegistry--">getPackageRegistry</a></span>()</code>
-<div class="block">Returns the EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package registry</code></a> that is used by all <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> of all
+<div class="block">Returns the EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package registry</code></a> that is used by all <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> of all
  <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> of this session.</div>
 </td>
 </tr>
@@ -443,10 +434,10 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <li class="blockList">
 <h4>getPackageRegistry</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;getPackageRegistry()</pre>
-<div class="block">Returns the EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package registry</code></a> that is used by all <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> of all
+<div class="block">Returns the EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package registry</code></a> that is used by all <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> of all
  <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> of this session.
  <p>
- This registry is managed by the <a href="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit manager</code></a> of this session. All <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>packages</code></a> that are already persisted in the repository of this session are automatically registered with this
+ This registry is managed by the <a href="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit manager</code></a> of this session. All <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>packages</code></a> that are already persisted in the repository of this session are automatically registered with this
  registry. New packages can be locally registered with this registry and are committed to the repository through a
  <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>, if needed.</div>
 </li>
@@ -602,7 +593,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate-long-long-">waitForUpdate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>true</code> if the specified commit operation has occured within the given timeout period,
+<dd><code>true</code> if the specified commit operation has occurred within the given timeout period,
          <code>false</code> otherwise.</dd>
 </dl>
 </li>
@@ -724,6 +715,6 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

@@ -79,9 +79,9 @@ function maximize(id)
 <p class="author">Author: Victor Roldan Betancort</p>
 <p>
  A <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewProvider.html" title="Interface in org.eclipse.emf.cdo.view"><code>view provider</code></a> allows clients to inject custom logic into the <a href="../../../javadoc/org/eclipse/emf/cdo/eresource/CDOResourceFactory.html" title="Interface in org.eclipse.emf.cdo.eresource"><code>resource factory</code></a> mechansim, capable of handling the whole <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>session</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>view</code></a>
- instantiation process. This permits to obtain <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/Resource.html" target="_blank" title="Interface in org.eclipse.emf.ecore.resource"><code>resources</code></a> through the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html" target="_blank" title="Interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>
+ instantiation process. This permits to obtain <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" target="_blank" title="Interface in org.eclipse.emf.ecore.resource"><code>resources</code></a> through the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" target="_blank" title="Interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>
  API transparently, without any prior CDO client API code. The view provider automatically kicks in the middle of the
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html#getResource(org.eclipse.emf.common.util.URI, boolean)" target="_blank" title="Method in org.eclipse.emf.ecore.resource.ResourceSet"><code>ResourceSet.getResource()</code></a> call, forgetting
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html#getResource(org.eclipse.emf.common.util.URI, boolean)" target="_blank" title="Method in org.eclipse.emf.ecore.resource.ResourceSet"><code>ResourceSet.getResource()</code></a> call, forgetting
  about the whole openning session / openning transaction process, which happens behind the scenes.
  <p>
  This is quite useful when integrating CDO with EMF-based frameworks and tools that are not prepared for a CDO
@@ -224,7 +224,7 @@ function maximize(id)
  <p>
  <ul>
  <li>A mandatory <b><code>class</code></b> implementing the <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewProvider.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOViewProvider</code></a> interface.
- <li>A mandatory <b>regular expression</b> string indicating the shape of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html" target="_blank" title="Class in org.eclipse.emf.common.util"><code>URIs</code></a> that should match with the contributed provider.
+ <li>A mandatory <b>regular expression</b> string indicating the shape of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html" target="_blank" title="Class in org.eclipse.emf.common.util"><code>URIs</code></a> that should match with the contributed provider.
  <li>An optional <b><code>priority</code></b> integer value, to indicate preference over other implementations
  matching the same regular expression. A higher value indicates a higher priority, Integer#MAX_VALUE being
  the maximum priority value and Integer#MIN_VALUE the minimum.

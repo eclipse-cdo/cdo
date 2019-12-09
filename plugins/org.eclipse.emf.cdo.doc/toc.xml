@@ -135,14 +135,8 @@
         <topic label="org.eclipse.emf.cdo.server.db" href="javadoc/org/eclipse/emf/cdo/server/db/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.server.db.mapping" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Server DB4O" href="javadoc/org/eclipse/emf/cdo/server/db4o/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.emf.cdo.server.db4o" href="javadoc/org/eclipse/emf/cdo/server/db4o/package-summary.html" icon="package" />
-      </topic>
       <topic label="CDO Model Repository Server Embedded Support" href="javadoc/org/eclipse/emf/cdo/server/embedded/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.server.embedded" href="javadoc/org/eclipse/emf/cdo/server/embedded/package-summary.html" icon="package" />
-      </topic>
-      <topic label="CDO Model Repository Server Hibernate" href="javadoc/org/eclipse/emf/cdo/server/hibernate/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.emf.cdo.server.hibernate" href="javadoc/org/eclipse/emf/cdo/server/hibernate/package-summary.html" icon="package" />
       </topic>
       <topic label="CDO Model Repository Server Lissome" href="javadoc/org/eclipse/emf/cdo/server/lissome/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.server.lissome" href="javadoc/org/eclipse/emf/cdo/server/lissome/package-summary.html" icon="package" />
@@ -155,9 +149,6 @@
       </topic>
       <topic label="CDO Model Repository Server OCL Support" href="javadoc/org/eclipse/emf/cdo/server/ocl/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.server.ocl" href="javadoc/org/eclipse/emf/cdo/server/ocl/package-summary.html" icon="package" />
-      </topic>
-      <topic label="CDO Model Repository Server Objectivity" href="javadoc/org/eclipse/emf/cdo/server/objectivity/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.emf.cdo.server.objectivity" href="javadoc/org/eclipse/emf/cdo/server/objectivity/package-summary.html" icon="package" />
       </topic>
       <topic label="CDO Model Repository Server Security Support" href="javadoc/org/eclipse/emf/cdo/server/security/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.server.security" href="javadoc/org/eclipse/emf/cdo/server/security/package-summary.html" icon="package" />
@@ -193,9 +184,6 @@
       </topic>
       <topic label="CDO Model Repository Server DB" href="schemadoc/org_eclipse_emf_cdo_server_db_mappingStrategies.html" icon="plugin">
         <topic label="mappingStrategies" href="schemadoc/org_eclipse_emf_cdo_server_db_mappingStrategies.html" icon="extpoint" />
-      </topic>
-      <topic label="CDO Model Repository Server Hibernate" href="schemadoc/org_eclipse_emf_cdo_server_hibernate_mappingProviderFactories.html" icon="plugin">
-        <topic label="mappingProviderFactories" href="schemadoc/org_eclipse_emf_cdo_server_hibernate_mappingProviderFactories.html" icon="extpoint" />
       </topic>
     </topic>
     <topic label="Store Feature Matrix" href="html/reference/StoreFeatures.html" />

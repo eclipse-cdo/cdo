@@ -113,15 +113,8 @@
     <packages name="org.eclipse.emf.cdo.server.db.mapping"/>
     <extensionPoints name="mappingStrategies"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.server.db4o" label="CDO Model Repository Server DB4O">
-    <packages name="org.eclipse.emf.cdo.server.db4o"/>
-  </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.embedded" label="CDO Model Repository Server Embedded Support">
     <packages name="org.eclipse.emf.cdo.server.embedded"/>
-  </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.server.hibernate" label="CDO Model Repository Server Hibernate">
-    <packages name="org.eclipse.emf.cdo.server.hibernate"/>
-    <extensionPoints name="mappingProviderFactories"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.lissome" label="CDO Model Repository Server Lissome">
     <packages name="org.eclipse.emf.cdo.server.lissome"/>
@@ -134,9 +127,6 @@
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.ocl" label="CDO Model Repository Server OCL Support">
     <packages name="org.eclipse.emf.cdo.server.ocl"/>
-  </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.server.objectivity" label="CDO Model Repository Server Objectivity">
-    <packages name="org.eclipse.emf.cdo.server.objectivity"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.security" label="CDO Model Repository Server Security Support">
     <packages name="org.eclipse.emf.cdo.server.security"/>

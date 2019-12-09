@@ -41,14 +41,11 @@ org.eclipse.emf.cdo.server
 org.eclipse.emf.cdo.server.admin
 org.eclipse.emf.cdo.server.db
 org.eclipse.emf.cdo.server.db.mapping
-org.eclipse.emf.cdo.server.db4o
 org.eclipse.emf.cdo.server.embedded
-org.eclipse.emf.cdo.server.hibernate
 org.eclipse.emf.cdo.server.lissome
 org.eclipse.emf.cdo.server.mem
 org.eclipse.emf.cdo.server.mongodb
 org.eclipse.emf.cdo.server.net4j
-org.eclipse.emf.cdo.server.objectivity
 org.eclipse.emf.cdo.server.ocl
 org.eclipse.emf.cdo.server.security
 org.eclipse.emf.cdo.server.spi.admin

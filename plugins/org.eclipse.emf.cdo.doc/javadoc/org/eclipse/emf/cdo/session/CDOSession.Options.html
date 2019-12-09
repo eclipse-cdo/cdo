@@ -130,10 +130,6 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Opti
 <dd>This interface is not intended to be implemented by clients.</dd>
 <dt><span class="simpleTagLabel">No Extend</span></dt>
 <dd>This interface is not intended to be extended by clients.</dd>
-<dt><span class="simpleTagLabel">Apiviz</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/session/CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOCollectionLoadingPolicy</code></a>, <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob"><code>CDOLobStore</code></a> oneway - - lobCache</dd>
-<dt><span class="simpleTagLabel">Apiviz</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.GeneratedPackageEmulationEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSession.Options.GeneratedPackageEmulationEvent</code></a> - - fires, <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.CollectionLoadingPolicyEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSession.Options.CollectionLoadingPolicyEvent</code></a> - - fires, <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.LobCacheEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSession.Options.LobCacheEvent</code></a> - - fires</dd>
 </dl>
 </li>
 </ul>
@@ -254,7 +250,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Opti
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setDelegableViewLockEnabled-boolean-">setDelegableViewLockEnabled</a></span>(boolean&nbsp;delegableViewLockEnabled)</code>
-<div class="block">This method is useful, for example, if EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> call <code>Display.syncExec()</code> in response to CDO notifications.</div>
+<div class="block">This method is useful, for example, if EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> call <code>Display.syncExec()</code> in response to CDO notifications.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
@@ -448,7 +444,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Opti
 <li class="blockList">
 <h4>setDelegableViewLockEnabled</h4>
 <pre>void&nbsp;setDelegableViewLockEnabled(boolean&nbsp;delegableViewLockEnabled)</pre>
-<div class="block">This method is useful, for example, if EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> call <code>Display.syncExec()</code> in response to CDO notifications.
+<div class="block">This method is useful, for example, if EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> call <code>Display.syncExec()</code> in response to CDO notifications.
  In these cases a <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent"><code>DelegableReentrantLock</code></a> can be injected into the new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>,
  which does not deadlock when both CDO's invalidation thread and the display thread acquire the view lock.</div>
 <dl>
@@ -527,6 +523,6 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Opti
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

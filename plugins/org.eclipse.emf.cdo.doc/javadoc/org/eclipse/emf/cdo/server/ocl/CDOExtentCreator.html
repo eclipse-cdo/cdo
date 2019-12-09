@@ -121,7 +121,7 @@ extends java.lang.Object
 implements <a href="../../../../../../org/eclipse/emf/cdo/server/ocl/OCLExtentCreator.html" title="interface in org.eclipse.emf.cdo.server.ocl">OCLExtentCreator</a></pre>
 <div class="block">An OCL <a href="../../../../../../org/eclipse/emf/cdo/server/ocl/OCLExtentCreator.html" title="interface in org.eclipse.emf.cdo.server.ocl"><code>extent creator</code></a> implementation for CDO.
  <p>
- The <a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#createExtent-org.eclipse.emf.ecore.EClass-java.util.concurrent.atomic.AtomicBoolean-"><code>extent</code></a> of a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>class</code></a> X is the set of all <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> with <code>object.getEClass() == X</code>.</div>
+ The <a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#createExtent-org.eclipse.emf.ecore.EClass-java.util.concurrent.atomic.AtomicBoolean-"><code>extent</code></a> of a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>class</code></a> X is the set of all <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> with <code>object.getEClass() == X</code>.</div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>Eike Stepper</dd>
@@ -183,13 +183,13 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/server/ocl/OCLExtentCr
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#createExtent-org.eclipse.emf.ecore.EClass-java.util.concurrent.atomic.AtomicBoolean-">createExtent</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<td class="colFirst"><code>java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#createExtent-org.eclipse.emf.ecore.EClass-java.util.concurrent.atomic.AtomicBoolean-">createExtent</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
             java.util.concurrent.atomic.AtomicBoolean&nbsp;canceled)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>protected java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#createExtent-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.server.IStoreAccessor-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.concurrent.atomic.AtomicBoolean-">createExtent</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<td class="colFirst"><code>protected java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#createExtent-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.server.IStoreAccessor-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.concurrent.atomic.AtomicBoolean-">createExtent</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
             <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
             <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
             long&nbsp;timeStamp,
@@ -197,7 +197,7 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/server/ocl/OCLExtentCr
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#createExtent-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.server.IStoreAccessor-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.concurrent.atomic.AtomicBoolean-org.eclipse.emf.cdo.common.revision.CDORevisionHandler-">createExtent</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#createExtent-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.server.IStoreAccessor-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.concurrent.atomic.AtomicBoolean-org.eclipse.emf.cdo.common.revision.CDORevisionHandler-">createExtent</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
             <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
             <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
             long&nbsp;timeStamp,
@@ -209,7 +209,7 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/server/ocl/OCLExtentCr
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#getChangeSetData--">getChangeSetData</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a></code></td>
+<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#getEObject-org.eclipse.emf.cdo.common.id.CDOID-">getEObject</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
@@ -222,7 +222,7 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/server/ocl/OCLExtentCr
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#handleRevisions-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.server.IStoreAccessor-org.eclipse.emf.cdo.common.branch.CDOBranch-long-org.eclipse.emf.cdo.common.revision.CDORevisionHandler-">handleRevisions</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#handleRevisions-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.server.IStoreAccessor-org.eclipse.emf.cdo.common.branch.CDOBranch-long-org.eclipse.emf.cdo.common.revision.CDORevisionHandler-">handleRevisions</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
                <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
                <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                long&nbsp;timeStamp,
@@ -330,7 +330,7 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/server/ocl/OCLExtentCr
 <ul class="blockList">
 <li class="blockList">
 <h4>createExtent</h4>
-<pre>public&nbsp;java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;createExtent(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<pre>public&nbsp;java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;createExtent(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
                                            java.util.concurrent.atomic.AtomicBoolean&nbsp;canceled)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -344,7 +344,7 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/server/ocl/OCLExtentCr
 <ul class="blockList">
 <li class="blockList">
 <h4>createExtent</h4>
-<pre>protected&nbsp;java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;createExtent(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<pre>protected&nbsp;java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;createExtent(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
                                               <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
                                               <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                                               long&nbsp;timeStamp,
@@ -357,7 +357,7 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/server/ocl/OCLExtentCr
 <ul class="blockList">
 <li class="blockList">
 <h4>createExtent</h4>
-<pre>protected&nbsp;void&nbsp;createExtent(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<pre>protected&nbsp;void&nbsp;createExtent(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
                             <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
                             <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                             long&nbsp;timeStamp,
@@ -375,7 +375,7 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/server/ocl/OCLExtentCr
 <ul class="blockList">
 <li class="blockList">
 <h4>handleRevisions</h4>
-<pre>protected&nbsp;void&nbsp;handleRevisions(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<pre>protected&nbsp;void&nbsp;handleRevisions(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
                                <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
                                <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                                long&nbsp;timeStamp,
@@ -401,7 +401,7 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/server/ocl/OCLExtentCr
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getEObject</h4>
-<pre>protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;getEObject(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)
+<pre>protected&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;getEObject(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)
                       throws <a href="../../../../../../org/eclipse/emf/cdo/util/ObjectNotFoundException.html" title="class in org.eclipse.emf.cdo.util">ObjectNotFoundException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -477,6 +477,6 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/server/ocl/OCLExtentCr
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

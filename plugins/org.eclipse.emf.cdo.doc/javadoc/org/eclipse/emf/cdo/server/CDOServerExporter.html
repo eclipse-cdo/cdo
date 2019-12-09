@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":10,"i3":10,"i4":10,"i5":6,"i6":10,"i7":10,"i8":6,"i9":10,"i10":10,"i11":6,"i12":10,"i13":10,"i14":10,"i15":10,"i16":6,"i17":6,"i18":6};
+var methods = {"i0":6,"i1":6,"i2":10,"i3":10,"i4":10,"i5":6,"i6":10,"i7":10,"i8":6,"i9":10,"i10":10,"i11":6,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":6,"i22":6,"i23":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -49,7 +49,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.RevisionsPage.FromStore.html" title="class in org.eclipse.emf.cdo.server"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XML.html" title="class in org.eclipse.emf.cdo.server"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html" title="class in org.eclipse.emf.cdo.server"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/cdo/server/CDOServerExporter.html" target="_top">Frames</a></li>
@@ -108,7 +108,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XML.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.XML</a></dd>
+<dd><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.Binary</a>, <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XML.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.XML</a></dd>
 </dl>
 <hr>
 <br>
@@ -116,7 +116,7 @@ var activeTableTab = "activeTableTab";
 extends java.lang.Object</pre>
 <div class="block">Exports the complete contents of a <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a> in a format suitable for <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>imports</code></a> into new repositories.
  <p>
- Subtypes specifiy the actual exchange format.</div>
+ Subtypes specify the actual exchange format.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
@@ -143,12 +143,26 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.Binary</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.BinaryConstants.html" title="interface in org.eclipse.emf.cdo.server">CDOServerExporter.BinaryConstants</a></span></code>
+<div class="block">Binary constants being used by both <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server"><code>exporters</code></a> and <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importers</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Statistics.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.Statistics</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XML.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.XML</a></span></code>
 <div class="block">An <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server"><code>exporter</code></a> that creates XML output suitable to be interpreted by an
  <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.XML.html" title="class in org.eclipse.emf.cdo.server"><code>XML importer</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XMLConstants.html" title="interface in org.eclipse.emf.cdo.server">CDOServerExporter.XMLConstants</a></span></code>
 <div class="block">XML constants being used by both <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="class in org.eclipse.emf.cdo.server"><code>exporters</code></a> and <a href="../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>importers</code></a>.</div>
@@ -244,30 +258,50 @@ extends java.lang.Object</pre>
                <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code>&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#getBranchPath--">getBranchPath</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#getRepository--">getRepository</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Statistics.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.Statistics</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#getStatistics--">getStatistics</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#getTimeStamp--">getTimeStamp</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#isExportSystemPackages--">isExportSystemPackages</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i18" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#setBranchPath-java.lang.String-">setBranchPath</a></span>(java.lang.String&nbsp;branchPath)</code>&nbsp;</td>
+</tr>
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#setExportSystemPackages-boolean-">setExportSystemPackages</a></span>(boolean&nbsp;exportSystemPackages)</code>&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i20" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#setTimeStamp-long-">setTimeStamp</a></span>(long&nbsp;timeStamp)</code>&nbsp;</td>
+</tr>
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>protected abstract java.io.OutputStream</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#startBlob-OUT-byte:A-long-">startBlob</a></span>(<a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="type parameter in CDOServerExporter">OUT</a>&nbsp;out,
          byte[]&nbsp;id,
          long&nbsp;size)</code>&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>protected abstract java.io.Writer</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#startClob-OUT-byte:A-long-">startClob</a></span>(<a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="type parameter in CDOServerExporter">OUT</a>&nbsp;out,
          byte[]&nbsp;id,
          long&nbsp;size)</code>&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>protected abstract void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html#startPackageUnit-OUT-java.lang.String-org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type-long-java.lang.String-">startPackageUnit</a></span>(<a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.html" title="type parameter in CDOServerExporter">OUT</a>&nbsp;out,
                 java.lang.String&nbsp;id,
@@ -323,6 +357,19 @@ extends java.lang.Object</pre>
 <pre>public final&nbsp;<a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;getRepository()</pre>
 </li>
 </ul>
+<a name="getStatistics--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getStatistics</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Statistics.html" title="class in org.eclipse.emf.cdo.server">CDOServerExporter.Statistics</a>&nbsp;getStatistics()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.8</dd>
+</dl>
+</li>
+</ul>
 <a name="isExportSystemPackages--">
 <!--   -->
 </a>
@@ -346,6 +393,58 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.7</dd>
+</dl>
+</li>
+</ul>
+<a name="getBranchPath--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBranchPath</h4>
+<pre>public&nbsp;java.lang.String&nbsp;getBranchPath()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.8</dd>
+</dl>
+</li>
+</ul>
+<a name="setBranchPath-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setBranchPath</h4>
+<pre>public&nbsp;void&nbsp;setBranchPath(java.lang.String&nbsp;branchPath)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.8</dd>
+</dl>
+</li>
+</ul>
+<a name="getTimeStamp--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getTimeStamp</h4>
+<pre>public&nbsp;long&nbsp;getTimeStamp()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.8</dd>
+</dl>
+</li>
+</ul>
+<a name="setTimeStamp-long-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setTimeStamp</h4>
+<pre>public&nbsp;void&nbsp;setTimeStamp(long&nbsp;timeStamp)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.8</dd>
 </dl>
 </li>
 </ul>
@@ -642,7 +741,7 @@ extends java.lang.Object</pre>
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerBrowser.RevisionsPage.FromStore.html" title="class in org.eclipse.emf.cdo.server"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.XML.html" title="class in org.eclipse.emf.cdo.server"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/server/CDOServerExporter.Binary.html" title="class in org.eclipse.emf.cdo.server"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/cdo/server/CDOServerExporter.html" target="_top">Frames</a></li>
@@ -682,6 +781,6 @@ extends java.lang.Object</pre>
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

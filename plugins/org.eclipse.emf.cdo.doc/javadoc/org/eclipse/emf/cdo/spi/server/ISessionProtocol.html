@@ -100,12 +100,12 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocol</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants</a>, <a href="../../../../../../org/eclipse/emf/cdo/spi/server/IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a></dd>
+<dd><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocol</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants</a>, <a href="../../../../../../org/eclipse/emf/cdo/spi/server/IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a>, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">ISessionProtocol</span>
-extends <a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocol</a>, <a href="../../../../../../org/eclipse/emf/cdo/spi/server/IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a></pre>
+extends <a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocol</a>, <a href="../../../../../../org/eclipse/emf/cdo/spi/server/IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a>, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -134,7 +134,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtoc
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.protocol.<a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocol</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.CommitNotificationInfo.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitNotificationInfo</a></code></li>
+<code><a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.CommitData.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitData</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtocol.CommitNotificationInfo.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitNotificationInfo</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants">
@@ -260,6 +260,13 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDOProtoc
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.spi.server.<a href="../../../../../../org/eclipse/emf/cdo/spi/server/IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a></h3>
 <code><a href="../../../../../../org/eclipse/emf/cdo/spi/server/IAuthenticationProtocol.html#sendAuthenticationChallenge-org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge-">sendAuthenticationChallenge</a>, <a href="../../../../../../org/eclipse/emf/cdo/spi/server/IAuthenticationProtocol.html#sendCredentialsChallenge-org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge-java.lang.String-org.eclipse.net4j.util.security.CredentialsUpdateOperation-">sendCredentialsChallenge</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></h3>
+<code><a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners--" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners--" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
 </ul>
 </li>
 </ul>
@@ -541,6 +548,6 @@ void&nbsp;sendCommitNotification(<a href="../../../../../../org/eclipse/emf/cdo/
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

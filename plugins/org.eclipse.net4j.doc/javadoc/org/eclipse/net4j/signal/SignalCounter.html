@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -170,20 +170,25 @@ implements <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalCounter.html#dispose--">dispose</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalCounter.html#dump-java.io.PrintStream-boolean-">dump</a></span>(java.io.PrintStream&nbsp;out,
+    boolean&nbsp;clearCountsWhenDone)</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalCounter.html#getCountFor-java.lang.Class-">getCountFor</a></span>(java.lang.Class&lt;? extends <a href="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</a>&gt;&nbsp;signal)</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalCounter.html#getCountForSignalTypes--">getCountForSignalTypes</a></span>()</code>
 <div class="block">Get the number of different signal counted.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalCounter.html#notifyEvent-org.eclipse.net4j.util.event.IEvent-">notifyEvent</a></span>(<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalCounter.html#removeCountFor-java.lang.Class-">removeCountFor</a></span>(java.lang.Class&lt;? extends <a href="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</a>&gt;&nbsp;signal)</code>&nbsp;</td>
 </tr>
@@ -284,6 +289,20 @@ implements <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <pre>public&nbsp;void&nbsp;clearCounts()</pre>
 </li>
 </ul>
+<a name="dump-java.io.PrintStream-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>dump</h4>
+<pre>public&nbsp;void&nbsp;dump(java.io.PrintStream&nbsp;out,
+                 boolean&nbsp;clearCountsWhenDone)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.8</dd>
+</dl>
+</li>
+</ul>
 <a name="notifyEvent-org.eclipse.net4j.util.event.IEvent-">
 <!--   -->
 </a>
@@ -378,6 +397,6 @@ implements <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

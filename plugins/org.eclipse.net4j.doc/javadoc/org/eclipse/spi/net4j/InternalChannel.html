@@ -18,8 +18,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":6,"i1":38,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":38,"i8":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -171,7 +171,7 @@ extends <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="int
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -182,7 +182,11 @@ extends <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="int
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.util.concurrent.ExecutorService</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#getReceiveExecutor--">getReceiveExecutor</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#getReceiveExecutor--">getReceiveExecutor</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 4.8 no longer supported.</span></div>
+</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.util.Queue&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></td>
@@ -206,7 +210,11 @@ extends <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="int
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#setReceiveExecutor-java.util.concurrent.ExecutorService-">setReceiveExecutor</a></span>(java.util.concurrent.ExecutorService&nbsp;receiveExecutor)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#setReceiveExecutor-java.util.concurrent.ExecutorService-">setReceiveExecutor</a></span>(java.util.concurrent.ExecutorService&nbsp;receiveExecutor)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 4.8 no longer supported.</span></div>
+</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -315,7 +323,9 @@ extends <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>getReceiveExecutor</h4>
-<pre>java.util.concurrent.ExecutorService&nbsp;getReceiveExecutor()</pre>
+<pre>@Deprecated
+java.util.concurrent.ExecutorService&nbsp;getReceiveExecutor()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.8 no longer supported.</span></div>
 </li>
 </ul>
 <a name="setReceiveExecutor-java.util.concurrent.ExecutorService-">
@@ -324,7 +334,9 @@ extends <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="int
 <ul class="blockList">
 <li class="blockList">
 <h4>setReceiveExecutor</h4>
-<pre>void&nbsp;setReceiveExecutor(java.util.concurrent.ExecutorService&nbsp;receiveExecutor)</pre>
+<pre>@Deprecated
+void&nbsp;setReceiveExecutor(java.util.concurrent.ExecutorService&nbsp;receiveExecutor)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.8 no longer supported.</span></div>
 </li>
 </ul>
 <a name="setMultiplexer-org.eclipse.net4j.channel.IChannelMultiplexer-">
@@ -452,6 +464,6 @@ extends <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="int
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

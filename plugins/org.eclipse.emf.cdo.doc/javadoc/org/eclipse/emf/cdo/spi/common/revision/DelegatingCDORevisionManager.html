@@ -249,7 +249,7 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#getFactory--">getFactory</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a></code></td>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevisionManager.html#getObjectType-org.eclipse.emf.cdo.common.id.CDOID-">getObjectType</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>
 <div class="block">Returns the <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#getEClass--"><code>type</code></a> of an object if a revision for that object is in the revision
  cache, <code>null</code> otherwise.</div>
@@ -383,6 +383,13 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.spi.common.revision.<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></h3>
+<code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getBaseRevision-org.eclipse.emf.cdo.common.revision.CDORevision-int-boolean-">getBaseRevision</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionManager">
@@ -662,7 +669,7 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision
 <ul class="blockList">
 <li class="blockList">
 <h4>getObjectType</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;getObjectType(<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
+<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;getObjectType(<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getObjectType-org.eclipse.emf.cdo.common.id.CDOID-">CDORevisionManager</a></code></span></div>
 <div class="block">Returns the <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#getEClass--"><code>type</code></a> of an object if a revision for that object is in the revision
  cache, <code>null</code> otherwise.
@@ -672,7 +679,7 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getObjectType-org.eclipse.emf.cdo.common.id.CDOID-">getObjectType</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eClass--" title="class or interface in org.eclipse.emf.ecore"><code>EObject.eClass()</code></a>, 
+<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true#eClass--" title="class or interface in org.eclipse.emf.ecore"><code>EObject.eClass()</code></a>, 
 <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getObjectType-org.eclipse.emf.cdo.common.id.CDOID-org.eclipse.emf.cdo.common.branch.CDOBranchManager-"><code>CDORevisionManager.getObjectType(CDOID, CDOBranchManager)</code></a></dd>
 </dl>
 </li>
@@ -958,6 +965,6 @@ implements <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

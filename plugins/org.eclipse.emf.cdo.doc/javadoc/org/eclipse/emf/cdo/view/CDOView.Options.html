@@ -122,12 +122,6 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <dd>This interface is not intended to be implemented by clients.</dd>
 <dt><span class="simpleTagLabel">No Extend</span></dt>
 <dd>This interface is not intended to be extended by clients.</dd>
-<dt><span class="simpleTagLabel">Apiviz</span></dt>
-<dd><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ref"><code>ReferenceType</code></a> oneway - - cacheReferences, <a href="../../../../../org/eclipse/emf/cdo/view/CDOInvalidationPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOInvalidationPolicy</code></a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOAdapterPolicy</code></a> oneway - - strongReferences, <a href="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOStaleReferencePolicy</code></a> oneway - - staleReferences, <a href="../../../../../org/eclipse/emf/cdo/view/CDORevisionPrefetchingPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDORevisionPrefetchingPolicy</code></a></dd>
-<dt><span class="simpleTagLabel">Apiviz</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.CacheReferenceTypeEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView.Options.CacheReferenceTypeEvent</code></a> - - fires, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.StrongReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView.Options.StrongReferencePolicyEvent</code></a> - - fires, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.StaleReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView.Options.StaleReferencePolicyEvent</code></a> - - fires, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.ChangeSubscriptionPoliciesEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView.Options.ChangeSubscriptionPoliciesEvent</code></a> - - fires, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.InvalidationPolicyEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView.Options.InvalidationPolicyEvent</code></a> - - fires, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.InvalidationNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView.Options.InvalidationNotificationEvent</code></a> - - fires, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.RevisionPrefetchingPolicyEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView.Options.RevisionPrefetchingPolicyEvent</code></a> - - fires, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.FeatureAnalyzerEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView.Options.FeatureAnalyzerEvent</code></a> - - fires</dd>
-<dt><span class="simpleTagLabel">Apiviz</span></dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOAdapterPolicy</code></a> - - changeSubscriptions</dd>
 </dl>
 </li>
 </ul>
@@ -334,7 +328,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#isDetachmentNotificationEnabled--">isDetachmentNotificationEnabled</a></span>()</code>
 <div class="block">Returns <code>true</code> if the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>detached</em> (due to
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>detached</em> (due to
  remote changes), <code>false</code> otherwise.</div>
 </td>
 </tr>
@@ -342,7 +336,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#isInvalidationNotificationEnabled--">isInvalidationNotificationEnabled</a></span>()</code>
 <div class="block">Returns <code>true</code> if the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>invalidated</em> (due to
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>invalidated</em> (due to
  remote changes), <code>false</code> otherwise.</div>
 </td>
 </tr>
@@ -350,7 +344,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#isLoadNotificationEnabled--">isLoadNotificationEnabled</a></span>()</code>
 <div class="block">Returns <code>true</code> if the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>loaded</em>,
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>loaded</em>,
  <code>false</code> otherwise.</div>
 </td>
 </tr>
@@ -371,7 +365,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setDetachmentNotificationEnabled-boolean-">setDetachmentNotificationEnabled</a></span>(boolean&nbsp;enabled)</code>
 <div class="block">Specifies whether the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>detached</em> (due to
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>detached</em> (due to
  remote changes) or not.</div>
 </td>
 </tr>
@@ -383,7 +377,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setInvalidationNotificationEnabled-boolean-">setInvalidationNotificationEnabled</a></span>(boolean&nbsp;enabled)</code>
 <div class="block">Specifies whether the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>invalidated</em> (due to
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>invalidated</em> (due to
  remote changes) or not.</div>
 </td>
 </tr>
@@ -395,7 +389,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setLoadNotificationEnabled-boolean-">setLoadNotificationEnabled</a></span>(boolean&nbsp;enabled)</code>
 <div class="block">Specifies whether the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>loaded</em> or not.</div>
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>loaded</em> or not.</div>
 </td>
 </tr>
 <tr id="i20" class="altColor">
@@ -514,7 +508,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <h4>isLoadNotificationEnabled</h4>
 <pre>boolean&nbsp;isLoadNotificationEnabled()</pre>
 <div class="block">Returns <code>true</code> if the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>loaded</em>,
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>loaded</em>,
  <code>false</code> otherwise.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -530,7 +524,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <h4>setLoadNotificationEnabled</h4>
 <pre>void&nbsp;setLoadNotificationEnabled(boolean&nbsp;enabled)</pre>
 <div class="block">Specifies whether the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>loaded</em> or not.</div>
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>loaded</em> or not.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
@@ -545,7 +539,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <h4>isDetachmentNotificationEnabled</h4>
 <pre>boolean&nbsp;isDetachmentNotificationEnabled()</pre>
 <div class="block">Returns <code>true</code> if the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>detached</em> (due to
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>detached</em> (due to
  remote changes), <code>false</code> otherwise.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -563,7 +557,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <h4>setDetachmentNotificationEnabled</h4>
 <pre>void&nbsp;setDetachmentNotificationEnabled(boolean&nbsp;enabled)</pre>
 <div class="block">Specifies whether the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>detached</em> (due to
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>detached</em> (due to
  remote changes) or not.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -581,7 +575,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <h4>isInvalidationNotificationEnabled</h4>
 <pre>boolean&nbsp;isInvalidationNotificationEnabled()</pre>
 <div class="block">Returns <code>true</code> if the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>invalidated</em> (due to
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>invalidated</em> (due to
  remote changes), <code>false</code> otherwise.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
@@ -597,7 +591,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <h4>setInvalidationNotificationEnabled</h4>
 <pre>void&nbsp;setInvalidationNotificationEnabled(boolean&nbsp;enabled)</pre>
 <div class="block">Specifies whether the <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> in this view will notify their
- <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>invalidated</em> (due to
+ <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> about the fact that they are <em>invalidated</em> (due to
  remote changes) or not.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
@@ -961,6 +955,6 @@ void&nbsp;setStaleReferenceBehaviour(<a href="../../../../../org/eclipse/emf/cdo
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

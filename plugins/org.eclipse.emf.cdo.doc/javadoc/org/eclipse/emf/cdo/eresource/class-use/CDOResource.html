@@ -167,7 +167,7 @@
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a></code></td>
 <td class="colLast"><span class="typeNameLabel">CDOObject.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoDirectResource--">cdoDirectResource</a></span>()</code>
 <div class="block">Returns the directly containing <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource</code></a> of this object, or <code>null</code> if this object is
- not an element of the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/Resource.html?is-external=true#getContents--" title="class or interface in org.eclipse.emf.ecore.resource"><code>contents</code></a> list of any CDO resource.</div>
+ not an element of the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html?is-external=true#getContents--" title="class or interface in org.eclipse.emf.ecore.resource"><code>contents</code></a> list of any CDO resource.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -360,7 +360,7 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;</code></td>
+<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">CDOUtil.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#getIntrinsicIDToEObjectMap-org.eclipse.emf.cdo.eresource.CDOResource-">getIntrinsicIDToEObjectMap</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;resource)</code>
 <div class="block">Returns the map used to cache the EObject that is identified by the <a href="../../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html#getEObjectByID-java.lang.String-"><code>value</code></a>
  of its ID feature.</div>
@@ -369,7 +369,7 @@
 <tr class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><span class="typeNameLabel">CDOUtil.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#setIntrinsicIDToEObjectMap-org.eclipse.emf.cdo.eresource.CDOResource-java.util.Map-">setIntrinsicIDToEObjectMap</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;resource,
-                          java.util.Map&lt;java.lang.String,<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;intrinsicIDToEObjectMap)</code>
+                          java.util.Map&lt;java.lang.String,<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;intrinsicIDToEObjectMap)</code>
 <div class="block">Sets the map used to cache the EObject identified by the value of its ID feature.</div>
 </td>
 </tr>
@@ -481,9 +481,9 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOStore.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/spi/cdo/CDOStore.html#setContainer-org.eclipse.emf.ecore.InternalEObject-org.eclipse.emf.cdo.eresource.CDOResource-org.eclipse.emf.ecore.InternalEObject-int-">setContainer</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">InternalEObject</a>&nbsp;eObject,
+<td class="colLast"><span class="typeNameLabel">CDOStore.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/spi/cdo/CDOStore.html#setContainer-org.eclipse.emf.ecore.InternalEObject-org.eclipse.emf.cdo.eresource.CDOResource-org.eclipse.emf.ecore.InternalEObject-int-">setContainer</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">InternalEObject</a>&nbsp;eObject,
             <a href="../../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;newResource,
-            <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/InternalEObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">InternalEObject</a>&nbsp;newEContainer,
+            <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">InternalEObject</a>&nbsp;newEContainer,
             int&nbsp;newContainerFeatureID)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -539,6 +539,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

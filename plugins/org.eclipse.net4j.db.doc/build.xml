@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright (c) 2011-2019 Eike Stepper (Berlin, Germany) and others.
+  Copyright (c) 2018 Eike Stepper (Loehne, Germany) and others.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
@@ -17,8 +17,10 @@
 
   <property file="${user.home}/org.eclipse.oomph.doc_1.0.properties" />
 
+  <property name="legal.date" value="2004-2019" />
+
   <property name="jdk.link" value="http://download.oracle.com/javase/1.5.0/docs/api" />
-  <property name="emf.link" value="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0" />
+  <property name="emf.link" value="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11" />
   <property name="platform.link" value="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api" />
   <property name="platform.api" location="${releng.project}/package-lists/platform" />
 
@@ -79,6 +81,7 @@
              destdir="${javadoc.destdir}"
              encoding="UTF-8"
              classpathref="javadoc.classpath"
+             additionalparam="-Xdoclint:missing"
              maxmemory="1024m"
              source="1.5"
              useexternalfile="true"
@@ -92,7 +95,7 @@
              windowtitle="${javadoc.name}"
              doctitle="&lt;h1>${javadoc.name}&lt;/h1>"
              overview="${project.path}/overview.html"
-             bottom="&lt;i class=&quot;copyright&quot;>Copyright (c) 2011-2019 Eike Stepper (Berlin, Germany) and others.&lt;br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html&lt;/i>">
+             bottom="&lt;i class=&quot;copyright&quot;>Copyright (c) ${legal.date} Eike Stepper (Loehne, Germany) and others.&lt;br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html&lt;/i>">
 
       <fileset dir="${plugins.dir}" defaultexcludes="yes">
 				<include name="org.eclipse.net4j.db.derby/src/org/eclipse/net4j/db/derby/*.java" />
@@ -152,13 +155,7 @@
       <tag name="noextend" description="No Extend" />
       <tag name="noinstantiate" description="No Instantiate" />
       <tag name="noreference" description="No Reference" />
-      <tag name="apiviz.excludeSubtypes" description="Apiviz" />
-      <tag name="apiviz.exclude" description="Apiviz" />
-      <tag name="apiviz.landmark" description="Apiviz" />
-      <tag name="apiviz.has" description="Apiviz" />
-      <tag name="apiviz.owns" description="Apiviz" />
-      <tag name="apiviz.uses" description="Apiviz" />
-      <tag name="apiviz.composedOf" description="Apiviz" />
+      <tag name="apiviz.exclude" description="Exclude from diagram" />
     </javadoc>
 
     <copy todir="${javadoc.destdir}/resources" verbose="true" failonerror="false" overwrite="true">
@@ -271,7 +268,6 @@
         <param name="-basefolder" value="${plugins.dir}/.." />
         <param name="-project" value="org.eclipse.net4j.db.doc" />
         <param name="-externals" value="${jdk.link};${platform.link};${emf.link}" />
-        <!--param name="-modelfolder" value="/develop/MODELS" /-->
 
       </doclet>
 

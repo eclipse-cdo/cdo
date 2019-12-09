@@ -164,12 +164,12 @@ var activeTableTab = "activeTableTab";
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a></code></td>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#getEClass--">getEClass</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#getListMapping-org.eclipse.emf.ecore.EStructuralFeature-">getListMapping</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#getListMapping-org.eclipse.emf.ecore.EStructuralFeature-">getListMapping</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>
 <div class="block">Get the mapping of the many-valued feature.</div>
 </td>
 </tr>
@@ -221,7 +221,7 @@ var activeTableTab = "activeTableTab";
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#writeRevision-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision-boolean-boolean-org.eclipse.net4j.util.om.monitor.OMMonitor-">writeRevision</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
              <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
-             boolean&nbsp;mapType,
+             boolean&nbsp;firstRevision,
              boolean&nbsp;revise,
              <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
 <div class="block">Write the revision data to the database.</div>
@@ -248,7 +248,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>getEClass</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;getEClass()</pre>
+<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;getEClass()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
@@ -277,7 +277,7 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <h4>getListMapping</h4>
-<pre><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a>&nbsp;getListMapping(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</pre>
+<pre><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a>&nbsp;getListMapping(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</pre>
 <div class="block">Get the mapping of the many-valued feature.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -347,7 +347,7 @@ var activeTableTab = "activeTableTab";
 <h4>writeRevision</h4>
 <pre>void&nbsp;writeRevision(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
                    <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
-                   boolean&nbsp;mapType,
+                   boolean&nbsp;firstRevision,
                    boolean&nbsp;revise,
                    <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</pre>
 <div class="block">Write the revision data to the database.</div>
@@ -355,7 +355,7 @@ var activeTableTab = "activeTableTab";
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>accessor</code> - the accessor to use.</dd>
 <dd><code>revision</code> - the revision to write.</dd>
-<dd><code>mapType</code> - <code>true</code> if the type of the object is supposed to be mapped, <code>false</code> otherwise.</dd>
+<dd><code>firstRevision</code> - <code>true</code> if the type of the object is supposed to be mapped, <code>false</code> otherwise.</dd>
 <dd><code>revise</code> - <code>true</code> if the previous revision is supposed to be revised, <code>false</code> otherwise.</dd>
 <dd><code>monitor</code> - the monitor to indicate progress.</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -571,6 +571,6 @@ var activeTableTab = "activeTableTab";
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

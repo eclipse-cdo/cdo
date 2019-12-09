@@ -94,27 +94,15 @@
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server.hibernate">org.eclipse.emf.cdo.server.hibernate</a></td>
-<td class="colLast">
-<div class="block">Server concepts for dealing with Hibernate stores and accessors.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.server.lissome">org.eclipse.emf.cdo.server.lissome</a></td>
 <td class="colLast">
 <div class="block">Server concepts for dealing with DB stores and accessors.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.server.mongodb">org.eclipse.emf.cdo.server.mongodb</a></td>
 <td class="colLast">
 <div class="block">Server concepts for dealing with MongoDB stores and accessors.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.server.objectivity">org.eclipse.emf.cdo.server.objectivity</a></td>
-<td class="colLast">
-<div class="block">Server concepts for dealing with Objectivity/DB stores and accessors.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -230,28 +218,6 @@
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.server.hibernate">
-<!--   -->
-</a>
-<h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a> in <a href="../../../../../../org/eclipse/emf/cdo/server/hibernate/package-summary.html">org.eclipse.emf.cdo.server.hibernate</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a> in <a href="../../../../../../org/eclipse/emf/cdo/server/hibernate/package-summary.html">org.eclipse.emf.cdo.server.hibernate</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/hibernate/IHibernateStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.hibernate">IHibernateStoreAccessor</a></span></code>
-<div class="block">The Hibernate store accessor works with Hibernate <code>Session</code> instances
- to persist changes in the database, it obtains the <code>Session</code> from the
- <a href="../../../../../../org/eclipse/emf/cdo/server/hibernate/IHibernateStore.html" title="interface in org.eclipse.emf.cdo.server.hibernate"><code>IHibernateStore</code></a>.</div>
-</td>
-</tr>
-</tbody>
-</table>
-</li>
 <li class="blockList"><a name="org.eclipse.emf.cdo.server.lissome">
 <!--   -->
 </a>
@@ -292,26 +258,6 @@
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.server.objectivity">
-<!--   -->
-</a>
-<h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a> in <a href="../../../../../../org/eclipse/emf/cdo/server/objectivity/package-summary.html">org.eclipse.emf.cdo.server.objectivity</a></h3>
-<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
-<caption><span>Subinterfaces of <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a> in <a href="../../../../../../org/eclipse/emf/cdo/server/objectivity/package-summary.html">org.eclipse.emf.cdo.server.objectivity</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Interface and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colFirst"><code>interface&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/objectivity/IObjectivityStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.objectivity">IObjectivityStoreAccessor</a></span></code>
-<div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessor</code></a> for CDO's Objecivity back-end integration.</div>
-</td>
-</tr>
-</tbody>
-</table>
-</li>
 <li class="blockList"><a name="org.eclipse.emf.cdo.server.ocl">
 <!--   -->
 </a>
@@ -324,16 +270,16 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>protected java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOExtentCreator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#createExtent-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.server.IStoreAccessor-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.concurrent.atomic.AtomicBoolean-">createExtent</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<td class="colFirst"><code>protected java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOExtentCreator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#createExtent-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.server.IStoreAccessor-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.concurrent.atomic.AtomicBoolean-">createExtent</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
             <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
             <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
             long&nbsp;timeStamp,
             java.util.concurrent.atomic.AtomicBoolean&nbsp;canceled)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOExtentCreator.Lazy.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.Lazy.html#createExtent-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.server.IStoreAccessor-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.concurrent.atomic.AtomicBoolean-">createExtent</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<td class="colFirst"><code>protected java.util.Set&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOExtentCreator.Lazy.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.Lazy.html#createExtent-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.server.IStoreAccessor-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.concurrent.atomic.AtomicBoolean-">createExtent</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
             <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
             <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
             long&nbsp;timeStamp,
@@ -341,7 +287,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOExtentCreator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#createExtent-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.server.IStoreAccessor-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.concurrent.atomic.AtomicBoolean-org.eclipse.emf.cdo.common.revision.CDORevisionHandler-">createExtent</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<td class="colLast"><span class="typeNameLabel">CDOExtentCreator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#createExtent-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.server.IStoreAccessor-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.concurrent.atomic.AtomicBoolean-org.eclipse.emf.cdo.common.revision.CDORevisionHandler-">createExtent</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
             <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
             <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
             long&nbsp;timeStamp,
@@ -350,7 +296,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOExtentCreator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#handleRevisions-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.server.IStoreAccessor-org.eclipse.emf.cdo.common.branch.CDOBranch-long-org.eclipse.emf.cdo.common.revision.CDORevisionHandler-">handleRevisions</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<td class="colLast"><span class="typeNameLabel">CDOExtentCreator.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html#handleRevisions-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.server.IStoreAccessor-org.eclipse.emf.cdo.common.branch.CDOBranch-long-org.eclipse.emf.cdo.common.revision.CDORevisionHandler-">handleRevisions</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
                <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
                <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                long&nbsp;timeStamp,
@@ -412,7 +358,7 @@
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a></code></td>
 <td class="colLast"><span class="typeNameLabel">InternalRepository.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html#ensureChunk-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision-org.eclipse.emf.ecore.EStructuralFeature-int-int-">ensureChunk</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
-           <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
+           <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
            int&nbsp;chunkStart,
            int&nbsp;chunkEnd)</code>&nbsp;</td>
 </tr>
@@ -462,7 +408,7 @@
 <tr class="rowColor">
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/StoreChunkReader.html#StoreChunkReader-org.eclipse.emf.cdo.server.IStoreAccessor-org.eclipse.emf.cdo.common.revision.CDORevision-org.eclipse.emf.ecore.EStructuralFeature-">StoreChunkReader</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a>&nbsp;accessor,
                 <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
-                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>&nbsp;</td>
+                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -517,6 +463,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2019 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

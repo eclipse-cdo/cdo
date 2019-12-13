@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -57,6 +57,7 @@ public class DefaultCDOAdminHandler implements CDOAdminHandler2, ContainerAware
     this.type = type;
   }
 
+  @Override
   public String getType()
   {
     return type;
@@ -67,11 +68,13 @@ public class DefaultCDOAdminHandler implements CDOAdminHandler2, ContainerAware
     return container;
   }
 
+  @Override
   public void setManagedContainer(IManagedContainer container)
   {
     this.container = container;
   }
 
+  @Override
   public IRepository createRepository(String name, Map<String, Object> properties)
   {
     CDORepositoryConfigurationManager configManager = requireConfigurationManager();
@@ -97,6 +100,7 @@ public class DefaultCDOAdminHandler implements CDOAdminHandler2, ContainerAware
     }
   }
 
+  @Override
   public void deleteRepository(IRepository delegate)
   {
     CDORepositoryConfigurationManager configManager = requireConfigurationManager();
@@ -105,12 +109,14 @@ public class DefaultCDOAdminHandler implements CDOAdminHandler2, ContainerAware
     OM.LOG.info("Repository deleted: " + delegate.getName());
   }
 
+  @Override
   public boolean canDelete(IRepository delegate)
   {
     CDORepositoryConfigurationManager configManager = getConfigurationManager();
     return configManager != null && configManager.canRemoveRepository(delegate);
   }
 
+  @Override
   public void authenticateAdministrator() throws SecurityException
   {
     CDORepositoryConfigurationManager configManager = requireConfigurationManager();

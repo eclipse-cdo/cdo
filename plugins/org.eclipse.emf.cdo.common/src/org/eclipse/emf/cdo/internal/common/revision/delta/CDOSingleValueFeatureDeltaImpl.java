@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013, 2016-2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2016-2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -108,6 +108,7 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
     return in.readCDOFeatureValue(feature);
   }
 
+  @Override
   public int getIndex()
   {
     return index;
@@ -133,6 +134,7 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
     setValue(CDOID.NULL);
   }
 
+  @Override
   public void adjustAfterAddition(int index)
   {
     if (index <= this.index)
@@ -141,6 +143,7 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
     }
   }
 
+  @Override
   public void adjustAfterRemoval(int index)
   {
     if (index < this.index && this.index > 0)
@@ -149,6 +152,7 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
     }
   }
 
+  @Override
   public void adjustAfterMove(int oldPosition, int newPosition)
   {
     if (index == oldPosition)

@@ -269,6 +269,7 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
    */
   private class RecoveringExceptionHandler implements ExceptionHandler
   {
+    @Override
     public void handleException(CDOSession session, int attempt, Exception exception) throws Exception
     {
       if (exception instanceof TransportException)
@@ -300,6 +301,7 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
       transaction = view instanceof CDOTransaction;
     }
 
+    @Override
     public void run(CDOSessionProtocol sessionProtocol)
     {
       sessionProtocol.openView(viewID, !transaction, branchPoint);
@@ -311,6 +313,7 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
    */
   private static final class AutoCloser implements IListener
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof IContainerEvent<?>)

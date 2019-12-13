@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -165,6 +165,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public TestFeatureMap createTestFeatureMap()
   {
     TestFeatureMapImpl testFeatureMap = new TestFeatureMapImpl();
@@ -175,6 +176,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Manager createManager()
   {
     ManagerImpl manager = new ManagerImpl();
@@ -185,6 +187,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Doctor createDoctor()
   {
     DoctorImpl doctor = new DoctorImpl();
@@ -195,6 +198,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenListOfString createGenListOfString()
   {
     GenListOfStringImpl genListOfString = new GenListOfStringImpl();
@@ -205,6 +209,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenListOfInt createGenListOfInt()
   {
     GenListOfIntImpl genListOfInt = new GenListOfIntImpl();
@@ -215,6 +220,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenListOfInteger createGenListOfInteger()
   {
     GenListOfIntegerImpl genListOfInteger = new GenListOfIntegerImpl();
@@ -225,6 +231,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenListOfLong createGenListOfLong()
   {
     GenListOfLongImpl genListOfLong = new GenListOfLongImpl();
@@ -235,6 +242,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenListOfBoolean createGenListOfBoolean()
   {
     GenListOfBooleanImpl genListOfBoolean = new GenListOfBooleanImpl();
@@ -245,6 +253,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenListOfShort createGenListOfShort()
   {
     GenListOfShortImpl genListOfShort = new GenListOfShortImpl();
@@ -255,6 +264,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenListOfFloat createGenListOfFloat()
   {
     GenListOfFloatImpl genListOfFloat = new GenListOfFloatImpl();
@@ -265,6 +275,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenListOfDouble createGenListOfDouble()
   {
     GenListOfDoubleImpl genListOfDouble = new GenListOfDoubleImpl();
@@ -275,6 +286,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenListOfDate createGenListOfDate()
   {
     GenListOfDateImpl genListOfDate = new GenListOfDateImpl();
@@ -285,6 +297,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenListOfChar createGenListOfChar()
   {
     GenListOfCharImpl genListOfChar = new GenListOfCharImpl();
@@ -295,6 +308,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenListOfIntArray createGenListOfIntArray()
   {
     GenListOfIntArrayImpl genListOfIntArray = new GenListOfIntArrayImpl();
@@ -306,6 +320,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Parent createParent()
   {
     ParentImpl parent = new ParentImpl();
@@ -317,6 +332,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Child createChild()
   {
     ChildImpl child = new ChildImpl();
@@ -328,6 +344,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public WithCustomType createWithCustomType()
   {
     WithCustomTypeImpl withCustomType = new WithCustomTypeImpl();
@@ -376,6 +393,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Model5Package getModel5Package()
   {
     return (Model5Package)getEPackage();

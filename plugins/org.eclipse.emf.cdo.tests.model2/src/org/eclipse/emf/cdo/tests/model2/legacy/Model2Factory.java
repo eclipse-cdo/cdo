@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -41,6 +41,7 @@ public interface Model2Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Model2Factory eINSTANCE = org.eclipse.emf.cdo.tests.model2.legacy.impl.Model2FactoryImpl.init();
 
+  @Override
   /**
    * Returns a new object of class '<em>Special Purchase Order</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -49,6 +50,7 @@ public interface Model2Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   SpecialPurchaseOrder createSpecialPurchaseOrder();
 
+  @Override
   /**
    * Returns a new object of class '<em>Task Container</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -57,6 +59,7 @@ public interface Model2Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   TaskContainer createTaskContainer();
 
+  @Override
   /**
    * Returns a new object of class '<em>Task</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -65,6 +68,7 @@ public interface Model2Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Task createTask();
 
+  @Override
   /**
    * Returns a new object of class '<em>Unsettable1</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -73,6 +77,7 @@ public interface Model2Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Unsettable1 createUnsettable1();
 
+  @Override
   /**
    * Returns a new object of class '<em>Unsettable2 With Default</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -81,6 +86,7 @@ public interface Model2Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Unsettable2WithDefault createUnsettable2WithDefault();
 
+  @Override
   /**
    * Returns a new object of class '<em>Persistent Containment</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -89,6 +95,7 @@ public interface Model2Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   PersistentContainment createPersistentContainment();
 
+  @Override
   /**
    * Returns a new object of class '<em>Transient Container</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -97,6 +104,7 @@ public interface Model2Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   TransientContainer createTransientContainer();
 
+  @Override
   /**
    * Returns a new object of class '<em>Not Unsettable</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -105,6 +113,7 @@ public interface Model2Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   NotUnsettable createNotUnsettable();
 
+  @Override
   /**
    * Returns a new object of class '<em>Not Unsettable With Default</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -113,6 +122,7 @@ public interface Model2Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   NotUnsettableWithDefault createNotUnsettableWithDefault();
 
+  @Override
   /**
    * Returns a new object of class '<em>Map Holder</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -121,6 +131,7 @@ public interface Model2Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   MapHolder createMapHolder();
 
+  @Override
   /**
    * Returns a new object of class '<em>Enum List Holder</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -129,6 +140,7 @@ public interface Model2Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   EnumListHolder createEnumListHolder();
 
+  @Override
   /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->

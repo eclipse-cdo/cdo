@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -53,16 +53,19 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   {
   }
 
+  @Override
   public InternalCDOSession getLocalSession()
   {
     return localSession;
   }
 
+  @Override
   public void setLocalSession(InternalCDOSession localSession)
   {
     this.localSession = localSession;
   }
 
+  @Override
   public CDORemoteSession[] getRemoteSessions()
   {
     synchronized (this)
@@ -78,11 +81,13 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     }
   }
 
+  @Override
   public CDORemoteSession[] getElements()
   {
     return getRemoteSessions();
   }
 
+  @Override
   public boolean isSubscribed()
   {
     synchronized (this)
@@ -91,6 +96,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     }
   }
 
+  @Override
   public boolean isForceSubscription()
   {
     synchronized (this)
@@ -99,6 +105,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     }
   }
 
+  @Override
   public void setForceSubscription(boolean forceSubscription)
   {
     IEvent[] events = null;
@@ -124,11 +131,13 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     fireEvents(events);
   }
 
+  @Override
   public Set<CDORemoteSession> sendMessage(CDORemoteSessionMessage message, CDORemoteSession... recipients)
   {
     return sendMessage(message, new ArrayIterator<CDORemoteSession>(recipients));
   }
 
+  @Override
   public Set<CDORemoteSession> sendMessage(CDORemoteSessionMessage message, Collection<CDORemoteSession> recipients)
   {
     return sendMessage(message, recipients.iterator());
@@ -164,6 +173,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     return result;
   }
 
+  @Override
   public InternalCDORemoteSession createRemoteSession(int sessionID, String userID, boolean subscribed)
   {
     InternalCDORemoteSession remoteSession = new CDORemoteSessionImpl(this, sessionID, userID);
@@ -171,6 +181,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     return remoteSession;
   }
 
+  @Override
   public void handleRemoteSessionOpened(int sessionID, String userID)
   {
     CDORemoteSession remoteSession = createRemoteSession(sessionID, userID, false);
@@ -182,6 +193,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     fireElementAddedEvent(remoteSession);
   }
 
+  @Override
   public void handleRemoteSessionClosed(int sessionID)
   {
     CDORemoteSession remoteSession = null;
@@ -196,6 +208,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     }
   }
 
+  @Override
   public void handleRemoteSessionSubscribed(int sessionID, boolean subscribed)
   {
     IEvent event = null;
@@ -215,6 +228,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     }
   }
 
+  @Override
   public void handleRemoteSessionMessage(int sessionID, final CDORemoteSessionMessage message)
   {
     IEvent event = null;
@@ -226,16 +240,19 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
       {
         event = new CDORemoteSessionEvent.MessageReceived()
         {
+          @Override
           public CDORemoteSessionManager getSource()
           {
             return source;
           }
 
+          @Override
           public CDORemoteSession getRemoteSession()
           {
             return remoteSession;
           }
 
+          @Override
           public CDORemoteSessionMessage getMessage()
           {
             return message;
@@ -352,6 +369,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
       return (CDORemoteSessionManager)super.getSource();
     }
 
+    @Override
     public boolean isSubscribed()
     {
       return subscribed;
@@ -382,11 +400,13 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
       return (CDORemoteSessionManager)super.getSource();
     }
 
+    @Override
     public CDORemoteSession getRemoteSession()
     {
       return remoteSession;
     }
 
+    @Override
     public boolean isSubscribed()
     {
       return subscribed;

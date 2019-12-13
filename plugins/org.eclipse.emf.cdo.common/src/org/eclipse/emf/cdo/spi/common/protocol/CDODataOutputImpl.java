@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012-2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -91,6 +91,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   /**
    * @since 4.6
    */
+  @Override
   public void writeXInt(int v) throws IOException
   {
     if (isXCompression())
@@ -106,6 +107,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   /**
    * @since 4.6
    */
+  @Override
   public void writeXLong(long v) throws IOException
   {
     if (isXCompression())
@@ -118,11 +120,13 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     }
   }
 
+  @Override
   public void writeCDOPackageUnit(CDOPackageUnit packageUnit, boolean withPackages) throws IOException
   {
     ((InternalCDOPackageUnit)packageUnit).write(this, withPackages);
   }
 
+  @Override
   public void writeCDOPackageUnits(CDOPackageUnit... packageUnits) throws IOException
   {
     int size = packageUnits.length;
@@ -138,53 +142,63 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     }
   }
 
+  @Override
   public void writeCDOPackageUnitType(CDOPackageUnit.Type type) throws IOException
   {
     writeByte(type.ordinal());
   }
 
+  @Override
   public void writeCDOPackageInfo(CDOPackageInfo packageInfo) throws IOException
   {
     ((InternalCDOPackageInfo)packageInfo).write(this);
   }
 
+  @Override
   public void writeCDOClassifierRef(CDOClassifierRef eClassifierRef) throws IOException
   {
     eClassifierRef.write(this);
   }
 
+  @Override
   public void writeCDOClassifierRef(EClassifier eClassifier) throws IOException
   {
     writeCDOClassifierRef(new CDOClassifierRef(eClassifier));
   }
 
+  @Override
   public void writeCDOPackageURI(String uri) throws IOException
   {
     getPackageURICompressor().write(this, uri);
   }
 
+  @Override
   public void writeCDOType(CDOType cdoType) throws IOException
   {
     ((CDOTypeImpl)cdoType).write(this);
   }
 
+  @Override
   public void writeCDOBranch(CDOBranch branch) throws IOException
   {
     writeXInt(branch.getID());
   }
 
+  @Override
   public void writeCDOBranchPoint(CDOBranchPoint branchPoint) throws IOException
   {
     writeCDOBranch(branchPoint.getBranch());
     writeXLong(branchPoint.getTimeStamp());
   }
 
+  @Override
   public void writeCDOBranchVersion(CDOBranchVersion branchVersion) throws IOException
   {
     writeCDOBranch(branchVersion.getBranch());
     writeXInt(branchVersion.getVersion());
   }
 
+  @Override
   public void writeCDOChangeSetData(CDOChangeSetData changeSetData) throws IOException
   {
     Collection<CDOIDAndVersion> newObjects = changeSetData.getNewObjects();
@@ -236,6 +250,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     }
   }
 
+  @Override
   public void writeCDOCommitData(CDOCommitData commitData) throws IOException
   {
     Collection<CDOPackageUnit> newPackageUnits = commitData.getNewPackageUnits();
@@ -248,6 +263,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     writeCDOChangeSetData(commitData);
   }
 
+  @Override
   public void writeCDOCommitInfo(CDOCommitInfo commitInfo) throws IOException
   {
     writeXLong(commitInfo.getTimeStamp());
@@ -270,6 +286,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     }
   }
 
+  @Override
   public void writeCDOLockChangeInfo(CDOLockChangeInfo lockChangeInfo) throws IOException
   {
     if (lockChangeInfo.isInvalidateAll())
@@ -293,6 +310,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     }
   }
 
+  @Override
   public void writeCDOLockArea(LockArea lockArea) throws IOException
   {
     writeString(lockArea.getDurableLockingID());
@@ -309,6 +327,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     }
   }
 
+  @Override
   public void writeCDOLockOwner(CDOLockOwner lockOwner) throws IOException
   {
     writeXInt(lockOwner.getSessionID());
@@ -317,6 +336,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     writeBoolean(lockOwner.isDurableView());
   }
 
+  @Override
   public void writeCDOLockState(CDOLockState lockState) throws IOException
   {
     Object o = lockState.getLockedObject();
@@ -365,33 +385,39 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     }
   }
 
+  @Override
   public void writeCDOLockType(LockType lockType) throws IOException
   {
     writeEnum(lockType);
   }
 
+  @Override
   public void writeCDOID(CDOID id) throws IOException
   {
     CDOIDUtil.write(this, id);
   }
 
+  @Override
   public void writeCDOIDReference(CDOIDReference idReference) throws IOException
   {
     idReference.write(this);
   }
 
+  @Override
   public void writeCDOIDAndVersion(CDOIDAndVersion idAndVersion) throws IOException
   {
     writeCDOID(idAndVersion.getID());
     writeXInt(idAndVersion.getVersion());
   }
 
+  @Override
   public void writeCDOIDAndBranch(CDOIDAndBranch idAndBranch) throws IOException
   {
     writeCDOID(idAndBranch.getID());
     writeCDOBranch(idAndBranch.getBranch());
   }
 
+  @Override
   public void writeCDORevisionKey(CDORevisionKey revisionKey) throws IOException
   {
     writeCDOID(revisionKey.getID());
@@ -399,11 +425,13 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     writeXInt(revisionKey.getVersion());
   }
 
+  @Override
   public void writeCDORevision(CDORevision revision, int referenceChunk) throws IOException
   {
     writeCDORevision(revision, referenceChunk, null);
   }
 
+  @Override
   public void writeCDORevision(CDORevision revision, int referenceChunk, CDOBranchPoint securityContext) throws IOException
   {
     if (revision != null)
@@ -417,6 +445,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     }
   }
 
+  @Override
   public void writeCDORevisable(CDORevisable revisable) throws IOException
   {
     writeCDOBranch(revisable.getBranch());
@@ -425,6 +454,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     writeXLong(revisable.getRevised());
   }
 
+  @Override
   public void writeCDOList(EClass owner, EStructuralFeature feature, CDOList list, int referenceChunk) throws IOException
   {
     // TODO Simon: Could most of this stuff be moved into the list?
@@ -515,22 +545,26 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     }
   }
 
+  @Override
   public void writeCDOFeatureValue(EStructuralFeature feature, Object value) throws IOException
   {
     CDOType type = CDOModelUtil.getType(feature);
     type.writeValue(this, value);
   }
 
+  @Override
   public void writeCDORevisionDelta(CDORevisionDelta revisionDelta) throws IOException
   {
     ((CDORevisionDeltaImpl)revisionDelta).write(this);
   }
 
+  @Override
   public void writeCDOFeatureDelta(EClass owner, CDOFeatureDelta featureDelta) throws IOException
   {
     ((CDOFeatureDeltaImpl)featureDelta).write(this, owner);
   }
 
+  @Override
   public void writeCDORevisionOrPrimitive(Object value) throws IOException
   {
     // Value conversions
@@ -570,6 +604,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     type.writeValue(this, value);
   }
 
+  @Override
   public void writeCDORevisionOrPrimitiveOrClassifier(Object value) throws IOException
   {
     if (value instanceof EClassifier)
@@ -584,16 +619,19 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     }
   }
 
+  @Override
   public CDOPackageRegistry getPackageRegistry()
   {
     return null;
   }
 
+  @Override
   public CDOIDProvider getIDProvider()
   {
     return null;
   }
 
+  @Override
   public CDOPermissionProvider getPermissionProvider()
   {
     return CDORevision.PERMISSION_PROVIDER;
@@ -602,6 +640,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   /**
    * @since 4.3
    */
+  @Override
   public CDORevisionUnchunker getRevisionUnchunker()
   {
     return null;

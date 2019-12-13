@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -58,6 +58,7 @@ public class DawnGraphitiEditorSupport extends DawnAbstractEditorSupport
     dawnGraphitiHandler = new DawnGraphitiHandler(getEditor());
   }
 
+  @Override
   public void close()
   {
     CDOView view = getView();
@@ -104,10 +105,12 @@ public class DawnGraphitiEditorSupport extends DawnAbstractEditorSupport
     });
   }
 
+  @Override
   public void refresh()
   {
     DawnEditorHelper.getDisplay().asyncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         RootEditPart rootEditPart = ((DiagramEditor)getEditor()).getGraphicalViewer().getRootEditPart();
@@ -116,6 +119,7 @@ public class DawnGraphitiEditorSupport extends DawnAbstractEditorSupport
     });
   }
 
+  @Override
   public void lockObject(Object objectToBeLocked)
   {
     if (objectToBeLocked instanceof EditPart)
@@ -144,6 +148,7 @@ public class DawnGraphitiEditorSupport extends DawnAbstractEditorSupport
     refresh();
   }
 
+  @Override
   public void unlockObject(Object objectToBeUnlocked)
   {
     if (objectToBeUnlocked instanceof EditPart)
@@ -176,10 +181,12 @@ public class DawnGraphitiEditorSupport extends DawnAbstractEditorSupport
     refresh();
   }
 
+  @Override
   public void handleRemoteLockChanges(final Map<Object, DawnState> changedObjects)
   {
     DawnEditorHelper.getDisplay().asyncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         for (Object o : changedObjects.keySet())

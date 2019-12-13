@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2014, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2014, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -27,11 +27,13 @@ public class CDODefaultTransactionHandler3 implements CDOTransactionHandler3
   /**
    * This implementation does nothing. Clients may override to provide specialized behavior.
    */
+  @Override
   public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
   {
     // Do nothing
   }
 
+  @Override
   @Deprecated
   public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
   {
@@ -41,6 +43,7 @@ public class CDODefaultTransactionHandler3 implements CDOTransactionHandler3
   /**
    * This implementation does nothing. Clients may override to provide specialized behavior.
    */
+  @Override
   public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext, CDOCommitInfo result)
   {
     // Do nothing
@@ -49,6 +52,7 @@ public class CDODefaultTransactionHandler3 implements CDOTransactionHandler3
   /**
    * This implementation does nothing. Clients may override to provide specialized behavior.
    */
+  @Override
   public void rolledBackTransaction(CDOTransaction transaction)
   {
     // Do nothing

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2012, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2012, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -84,6 +84,7 @@ public abstract class AbstractPlatform implements OMPlatform
     debugging = isProperty("debug"); //$NON-NLS-1$
   }
 
+  @Override
   public synchronized OMBundle bundle(String bundleID, Class<?> accessor)
   {
     AbstractBundle bundle = bundles.get(bundleID);
@@ -103,36 +104,43 @@ public abstract class AbstractPlatform implements OMPlatform
     return bundle;
   }
 
+  @Override
   public void addLogFilter(OMLogFilter logFilter)
   {
     logFilters.add(logFilter);
   }
 
+  @Override
   public void removeLogFilter(OMLogFilter logFilter)
   {
     logFilters.remove(logFilter);
   }
 
+  @Override
   public void addLogHandler(OMLogHandler logHandler)
   {
     logHandlers.add(logHandler);
   }
 
+  @Override
   public void removeLogHandler(OMLogHandler logHandler)
   {
     logHandlers.remove(logHandler);
   }
 
+  @Override
   public void addTraceHandler(OMTraceHandler traceHandler)
   {
     traceHandlers.add(traceHandler);
   }
 
+  @Override
   public void removeTraceHandler(OMTraceHandler traceHandler)
   {
     traceHandlers.remove(traceHandler);
   }
 
+  @Override
   public boolean isExtensionRegistryAvailable()
   {
     try
@@ -145,16 +153,19 @@ public abstract class AbstractPlatform implements OMPlatform
     }
   }
 
+  @Override
   public boolean isDebugging()
   {
     return debugging;
   }
 
+  @Override
   public void setDebugging(boolean debugging)
   {
     this.debugging = debugging;
   }
 
+  @Override
   public File getStateFolder()
   {
     String state = getProperty(SYSTEM_PROPERTY_NET4J_STATE);
@@ -197,6 +208,7 @@ public abstract class AbstractPlatform implements OMPlatform
     return stateFolder;
   }
 
+  @Override
   public File getConfigFolder()
   {
     String config = getProperty(SYSTEM_PROPERTY_NET4J_CONFIG, "config"); //$NON-NLS-1$
@@ -219,6 +231,7 @@ public abstract class AbstractPlatform implements OMPlatform
     return configFolder;
   }
 
+  @Override
   public File getConfigFile(String name)
   {
     File configFolder = getConfigFolder();
@@ -230,6 +243,7 @@ public abstract class AbstractPlatform implements OMPlatform
     return new File(configFolder, name);
   }
 
+  @Override
   public Properties getConfigProperties(String name)
   {
     File configFile = getConfigFile(name);
@@ -330,16 +344,19 @@ public abstract class AbstractPlatform implements OMPlatform
     return bundles;
   }
 
+  @Override
   public String getProperty(String key)
   {
     return System.getProperty(key);
   }
 
+  @Override
   public String getProperty(String key, String defaultValue)
   {
     return System.getProperty(key, defaultValue);
   }
 
+  @Override
   public int getProperty(String key, int defaultValue)
   {
     String property = getProperty(key);
@@ -351,6 +368,7 @@ public abstract class AbstractPlatform implements OMPlatform
     return Integer.parseInt(property);
   }
 
+  @Override
   public long getProperty(String key, long defaultValue)
   {
     String property = getProperty(key);
@@ -362,6 +380,7 @@ public abstract class AbstractPlatform implements OMPlatform
     return Long.parseLong(property);
   }
 
+  @Override
   public <T extends Enum<T>> T getProperty(String key, Class<T> enumType)
   {
     String property = getProperty(key);
@@ -379,6 +398,7 @@ public abstract class AbstractPlatform implements OMPlatform
     return null;
   }
 
+  @Override
   public <T extends Enum<T>> T getProperty(String key, T defaultValue)
   {
     T result = getProperty(key, defaultValue.getDeclaringClass());
@@ -390,11 +410,13 @@ public abstract class AbstractPlatform implements OMPlatform
     return defaultValue;
   }
 
+  @Override
   public boolean isProperty(String key)
   {
     return isProperty(key, false);
   }
 
+  @Override
   public boolean isProperty(String key, boolean defaultValue)
   {
     String property = getProperty(key);

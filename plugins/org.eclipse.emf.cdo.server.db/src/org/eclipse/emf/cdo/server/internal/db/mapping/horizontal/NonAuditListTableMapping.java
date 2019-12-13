@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -194,6 +194,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     idHandler.setCDOID(stmt, 1, revision.getID());
   }
 
+  @Override
   public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
   {
     clearList(accessor, id);
@@ -205,6 +206,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     clearList(accessor, id);
   }
 
+  @Override
   public void processDelta(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, long created, CDOListFeatureDelta delta)
   {
     if (getTable() == null)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -154,6 +154,7 @@ public final class FSMUtil
     {
       private Object next;
 
+      @Override
       public boolean hasNext()
       {
         if (delegate.hasNext())
@@ -165,11 +166,13 @@ public final class FSMUtil
         return false;
       }
 
+      @Override
       public InternalCDOObject next()
       {
         return (InternalCDOObject)next;
       }
 
+      @Override
       public void remove()
       {
         throw new UnsupportedOperationException();

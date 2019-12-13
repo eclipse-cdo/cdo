@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -87,11 +87,13 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     this.randomizer = randomizer;
   }
 
+  @Override
   public INet4jTransportServlet getServlet()
   {
     return servlet;
   }
 
+  @Override
   public void setServlet(INet4jTransportServlet servlet)
   {
     if (this.servlet != null)
@@ -138,6 +140,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     return result.toArray(new IHTTPConnector[result.size()]);
   }
 
+  @Override
   public IHTTPConnector[] handleList(String connectorID)
   {
     if (StringUtil.isEmpty(connectorID))
@@ -148,6 +151,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     return new IHTTPConnector[] { httpConnectors.get(connectorID) };
   }
 
+  @Override
   public IHTTPConnector handleConnect(String userID)
   {
     String connectorID = createConnectorID(userID);
@@ -161,6 +165,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     return connector;
   }
 
+  @Override
   public void handleDisonnect(String connectorID)
   {
     HTTPConnector connector = httpConnectors.get(connectorID);
@@ -172,6 +177,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     connector.deactivate();
   }
 
+  @Override
   public void handleOperations(String connectorID, ExtendedDataInputStream in, ExtendedDataOutputStream out) throws IOException
   {
     HTTPServerConnector connector = httpConnectors.get(connectorID);

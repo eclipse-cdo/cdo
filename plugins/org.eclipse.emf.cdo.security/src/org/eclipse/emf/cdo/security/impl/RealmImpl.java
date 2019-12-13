@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -168,6 +168,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<SecurityItem> getItems()
   {
@@ -179,6 +180,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public EList<User> getAllUsers()
   {
     return allUsers;
@@ -189,6 +191,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public EList<Group> getAllGroups()
   {
     return allGroups;
@@ -199,6 +202,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public EList<Role> getAllRoles()
   {
     return allRoles;
@@ -209,6 +213,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public EList<Permission> getAllPermissions()
   {
     return allPermissions;
@@ -219,6 +224,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(SecurityPackage.Literals.REALM__NAME, true);
@@ -229,6 +235,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(SecurityPackage.Literals.REALM__NAME, newName);
@@ -239,6 +246,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Access getDefaultAccess()
   {
     return (Access)eGet(SecurityPackage.Literals.REALM__DEFAULT_ACCESS, true);
@@ -249,6 +257,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDefaultAccess(Access newDefaultAccess)
   {
     eSet(SecurityPackage.Literals.REALM__DEFAULT_ACCESS, newDefaultAccess);
@@ -260,6 +269,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Directory getDefaultUserDirectory()
   {
     return (Directory)eGet(SecurityPackage.Literals.REALM__DEFAULT_USER_DIRECTORY, true);
@@ -271,6 +281,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDefaultUserDirectory(Directory newDefaultUserDirectory)
   {
     eSet(SecurityPackage.Literals.REALM__DEFAULT_USER_DIRECTORY, newDefaultUserDirectory);
@@ -282,6 +293,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Directory getDefaultGroupDirectory()
   {
     return (Directory)eGet(SecurityPackage.Literals.REALM__DEFAULT_GROUP_DIRECTORY, true);
@@ -293,6 +305,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDefaultGroupDirectory(Directory newDefaultGroupDirectory)
   {
     eSet(SecurityPackage.Literals.REALM__DEFAULT_GROUP_DIRECTORY, newDefaultGroupDirectory);
@@ -304,6 +317,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Directory getDefaultRoleDirectory()
   {
     return (Directory)eGet(SecurityPackage.Literals.REALM__DEFAULT_ROLE_DIRECTORY, true);
@@ -315,6 +329,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDefaultRoleDirectory(Directory newDefaultRoleDirectory)
   {
     eSet(SecurityPackage.Literals.REALM__DEFAULT_ROLE_DIRECTORY, newDefaultRoleDirectory);
@@ -323,6 +338,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   /**
    * @since 4.2
    */
+  @Override
   public Role getRole(String id)
   {
     return RealmUtil.findRole(getItems(), id);
@@ -331,6 +347,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   /**
    * @since 4.2
    */
+  @Override
   public Group getGroup(String id)
   {
     return RealmUtil.findGroup(getItems(), id);
@@ -339,6 +356,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   /**
    * @since 4.2
    */
+  @Override
   public User getUser(String id)
   {
     return RealmUtil.findUser(getItems(), id);
@@ -374,6 +392,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   /**
    * @since 4.2
    */
+  @Override
   public Role addRole(String id)
   {
     Role role = SecurityFactory.eINSTANCE.createRole(id);
@@ -386,6 +405,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   /**
    * @since 4.2
    */
+  @Override
   public Group addGroup(String id)
   {
     Group group = SecurityFactory.eINSTANCE.createGroup(id);
@@ -398,6 +418,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   /**
    * @since 4.2
    */
+  @Override
   public User addUser(String id)
   {
     User user = SecurityFactory.eINSTANCE.createUser(id);
@@ -407,6 +428,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   /**
    * @since 4.2
    */
+  @Override
   public User addUser(String id, String password)
   {
     User user = SecurityFactory.eINSTANCE.createUser(id, password);
@@ -416,6 +438,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   /**
    * @since 4.3
    */
+  @Override
   public User addUser(IPasswordCredentials credentials)
   {
     return addUser(credentials.getUserID(), new String(credentials.getPassword()));
@@ -434,6 +457,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   /**
    * @since 4.3
    */
+  @Override
   public User setPassword(String id, String password)
   {
     UserPassword userPassword = null;
@@ -451,6 +475,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   /**
    * @since 4.2
    */
+  @Override
   public Role removeRole(String id)
   {
     EList<SecurityItem> items = getRoleItems();
@@ -470,6 +495,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   /**
    * @since 4.2
    */
+  @Override
   public Group removeGroup(String id)
   {
     EList<SecurityItem> items = getGroupItems();
@@ -489,6 +515,7 @@ public class RealmImpl extends SecurityElementImpl implements Realm
   /**
    * @since 4.2
    */
+  @Override
   public User removeUser(String id)
   {
     EList<SecurityItem> items = getUserItems();

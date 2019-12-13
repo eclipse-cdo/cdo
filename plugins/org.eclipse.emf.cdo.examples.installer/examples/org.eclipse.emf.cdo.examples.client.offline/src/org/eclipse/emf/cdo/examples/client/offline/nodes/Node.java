@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -60,6 +60,7 @@ public final class Node implements IElement, Comparable<Node>
     return settings.getProperty(NodeType.NAME_PROPERTY);
   }
 
+  @Override
   public Properties getSettings()
   {
     return settings;
@@ -70,16 +71,19 @@ public final class Node implements IElement, Comparable<Node>
     return settings.getProperty(key);
   }
 
+  @Override
   public void showSettings()
   {
     type.showSettings(this);
   }
 
+  @Override
   public Image getImage()
   {
     return type.getInstanceImage();
   }
 
+  @Override
   public Composite getDetailsControl()
   {
     return type.getDetailsControl(this);
@@ -123,6 +127,7 @@ public final class Node implements IElement, Comparable<Node>
     return getName();
   }
 
+  @Override
   public int compareTo(Node o)
   {
     return getName().compareTo(o.getName());

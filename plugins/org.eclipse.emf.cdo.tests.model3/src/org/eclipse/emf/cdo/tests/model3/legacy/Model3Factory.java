@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -49,6 +49,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Model3Factory eINSTANCE = org.eclipse.emf.cdo.tests.model3.legacy.impl.Model3FactoryImpl.init();
 
+  @Override
   /**
    * Returns a new object of class '<em>Class1</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -57,6 +58,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Class1 createClass1();
 
+  @Override
   /**
    * Returns a new object of class '<em>Meta Ref</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -65,6 +67,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   MetaRef createMetaRef();
 
+  @Override
   /**
    * Returns a new object of class '<em>Polygon</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -73,6 +76,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Polygon createPolygon();
 
+  @Override
   /**
    * Returns a new object of class '<em>Polygon With Duplicates</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -81,6 +85,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   PolygonWithDuplicates createPolygonWithDuplicates();
 
+  @Override
   /**
    * Returns a new object of class '<em>Node A</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -89,6 +94,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   NodeA createNodeA();
 
+  @Override
   /**
    * Returns a new object of class '<em>Node B</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -97,6 +103,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   NodeB createNodeB();
 
+  @Override
   /**
    * Returns a new object of class '<em>Node C</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -105,6 +112,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   NodeC createNodeC();
 
+  @Override
   /**
    * Returns a new object of class '<em>Node D</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -113,6 +121,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   NodeD createNodeD();
 
+  @Override
   /**
    * Returns a new object of class '<em>Node E</em>'.
    * <!-- begin-user-doc -->
@@ -122,6 +131,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   NodeE createNodeE();
 
+  @Override
   /**
    * Returns a new object of class '<em>Image</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -130,6 +140,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Image createImage();
 
+  @Override
   /**
    * Returns a new object of class '<em>File</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -138,6 +149,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   File createFile();
 
+  @Override
   /**
    * Returns a new object of class '<em>Class With ID Attribute</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -146,6 +158,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ClassWithIDAttribute createClassWithIDAttribute();
 
+  @Override
   /**
    * Returns a new object of class '<em>Class With Java Class Attribute</em>'.
    * <!-- begin-user-doc -->
@@ -155,6 +168,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ClassWithJavaClassAttribute createClassWithJavaClassAttribute();
 
+  @Override
   /**
    * Returns a new object of class '<em>Class With Java Object Attribute</em>'.
    * <!-- begin-user-doc -->
@@ -164,6 +178,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ClassWithJavaObjectAttribute createClassWithJavaObjectAttribute();
 
+  @Override
   /**
    * Returns a new object of class '<em>Class With Transient Containment</em>'.
    * <!-- begin-user-doc -->
@@ -173,6 +188,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ClassWithTransientContainment createClassWithTransientContainment();
 
+  @Override
   /**
    * Returns a new object of class '<em>Edge Target</em>'.
    * <!-- begin-user-doc -->
@@ -182,6 +198,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   EdgeTarget createEdgeTarget();
 
+  @Override
   /**
    * Returns a new object of class '<em>Node F</em>'.
    * <!-- begin-user-doc -->
@@ -191,6 +208,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   NodeF createNodeF();
 
+  @Override
   /**
    * Returns a new object of class '<em>Edge</em>'.
    * <!-- begin-user-doc -->
@@ -200,6 +218,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Edge createEdge();
 
+  @Override
   /**
    * Returns a new object of class '<em>Diagram</em>'.
    * <!-- begin-user-doc -->
@@ -209,6 +228,7 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Diagram createDiagram();
 
+  @Override
   /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->

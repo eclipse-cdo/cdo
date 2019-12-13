@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -134,6 +134,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     return conflict;
   }
 
+  @Override
   public void resolveConflicts(Set<CDOObject> conflicts)
   {
     CDOChangeSet remoteChangeSet = getRemoteChangeSet();
@@ -357,6 +358,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
           {
             revision.accept(new CDORevisionValueVisitor()
             {
+              @Override
               public void visit(EStructuralFeature feature, Object value, int index)
               {
                 recurse(objectsUpdater, (CDOID)value);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -41,41 +41,49 @@ public abstract class RecoveringCDOSessionConfigurationImpl extends CDONet4jSess
     return container;
   }
 
+  @Override
   public long getConnectorTimeout()
   {
     return connectorTimeout;
   }
 
+  @Override
   public void setConnectorTimeout(long timeout)
   {
     connectorTimeout = timeout;
   }
 
+  @Override
   public boolean isHeartBeatEnabled()
   {
     return heartBeatEnabled;
   }
 
+  @Override
   public void setHeartBeatEnabled(boolean enabled)
   {
     heartBeatEnabled = enabled;
   }
 
+  @Override
   public long getHeartBeatTimeout()
   {
     return heartBeatTimeout;
   }
 
+  @Override
   public void setHeartBeatTimeout(long timeout)
   {
     heartBeatTimeout = timeout;
   }
 
+  @Override
   public long getHeartBeatPeriod()
   {
     return heartBeatPeriod;
   }
 
+  @Override
   public void setHeartBeatPeriod(long period)
   {
     heartBeatPeriod = period;

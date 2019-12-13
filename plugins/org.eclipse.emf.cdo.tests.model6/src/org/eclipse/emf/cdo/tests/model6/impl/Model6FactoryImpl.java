@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -190,6 +190,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Root createRoot()
   {
     RootImpl root = new RootImpl();
@@ -200,6 +201,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public BaseObject createBaseObject()
   {
     BaseObjectImpl baseObject = new BaseObjectImpl();
@@ -210,6 +212,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ReferenceObject createReferenceObject()
   {
     ReferenceObjectImpl referenceObject = new ReferenceObjectImpl();
@@ -220,6 +223,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ContainmentObject createContainmentObject()
   {
     ContainmentObjectImpl containmentObject = new ContainmentObjectImpl();
@@ -230,6 +234,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public UnorderedList createUnorderedList()
   {
     UnorderedListImpl unorderedList = new UnorderedListImpl();
@@ -241,6 +246,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PropertiesMap createPropertiesMap()
   {
     PropertiesMapImpl propertiesMap = new PropertiesMapImpl();
@@ -263,6 +269,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PropertiesMapEntryValue createPropertiesMapEntryValue()
   {
     PropertiesMapEntryValueImpl propertiesMapEntryValue = new PropertiesMapEntryValueImpl();
@@ -273,6 +280,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public A createA()
   {
     AImpl a = new AImpl();
@@ -283,6 +291,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public B createB()
   {
     BImpl b = new BImpl();
@@ -293,6 +302,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public C createC()
   {
     CImpl c = new CImpl();
@@ -303,6 +313,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public D createD()
   {
     DImpl d = new DImpl();
@@ -313,6 +324,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public E createE()
   {
     EImpl e = new EImpl();
@@ -323,6 +335,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public F createF()
   {
     FImpl f = new FImpl();
@@ -334,6 +347,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public G createG()
   {
     GImpl g = new GImpl();
@@ -345,6 +359,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public MyEnumList createMyEnumList()
   {
     MyEnumListImpl myEnumList = new MyEnumListImpl();
@@ -356,6 +371,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public MyEnumListUnsettable createMyEnumListUnsettable()
   {
     MyEnumListUnsettableImpl myEnumListUnsettable = new MyEnumListUnsettableImpl();
@@ -367,6 +383,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Holder createHolder()
   {
     HolderImpl holder = new HolderImpl();
@@ -378,6 +395,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Thing createThing()
   {
     ThingImpl thing = new ThingImpl();
@@ -389,6 +407,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public HasNillableAttribute createHasNillableAttribute()
   {
     HasNillableAttributeImpl hasNillableAttribute = new HasNillableAttributeImpl();
@@ -400,6 +419,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EmptyStringDefault createEmptyStringDefault()
   {
     EmptyStringDefaultImpl emptyStringDefault = new EmptyStringDefaultImpl();
@@ -411,6 +431,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EmptyStringDefaultUnsettable createEmptyStringDefaultUnsettable()
   {
     EmptyStringDefaultUnsettableImpl emptyStringDefaultUnsettable = new EmptyStringDefaultUnsettableImpl();
@@ -422,6 +443,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public UnsettableAttributes createUnsettableAttributes()
   {
     UnsettableAttributesImpl unsettableAttributes = new UnsettableAttributesImpl();
@@ -433,6 +455,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public CanReferenceLegacy createCanReferenceLegacy()
   {
     CanReferenceLegacyImpl canReferenceLegacy = new CanReferenceLegacyImpl();
@@ -488,6 +511,7 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Model6Package getModel6Package()
   {
     return (Model6Package)getEPackage();

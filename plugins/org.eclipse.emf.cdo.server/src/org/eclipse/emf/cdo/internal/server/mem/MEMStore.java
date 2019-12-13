@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -176,6 +176,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     super.ensureLastObjectID(id);
   }
 
+  @Override
   public synchronized Map<String, String> getPersistentProperties(Set<String> names)
   {
     if (names == null || names.isEmpty())
@@ -196,11 +197,13 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     return result;
   }
 
+  @Override
   public synchronized void setPersistentProperties(Map<String, String> properties)
   {
     this.properties.putAll(properties);
   }
 
+  @Override
   public synchronized void removePersistentProperties(Set<String> names)
   {
     for (String name : names)
@@ -209,6 +212,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     }
   }
 
+  @Override
   public synchronized Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     if (branchID == NEW_BRANCH)
@@ -224,11 +228,13 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     return Pair.create(branchID, branchInfo.getBaseTimeStamp());
   }
 
+  @Override
   public synchronized BranchInfo loadBranch(int branchID)
   {
     return branchInfos.get(branchID);
   }
 
+  @Override
   public synchronized SubBranchInfo[] loadSubBranches(int branchID)
   {
     List<SubBranchInfo> result = new ArrayList<SubBranchInfo>();
@@ -245,6 +251,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     return result.toArray(new SubBranchInfo[result.size()]);
   }
 
+  @Override
   public synchronized int loadBranches(int startID, int endID, CDOBranchHandler handler)
   {
     int count = 0;
@@ -264,18 +271,21 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     return count;
   }
 
+  @Override
   @Deprecated
   public void deleteBranch(int branchID)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public void renameBranch(int branchID, String newName)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void renameBranch(int branchID, String oldName, String newName)
   {
     BranchInfo branchInfo = branchInfos.get(branchID);
@@ -460,6 +470,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
   /**
    * @since 2.0
    */
+  @Override
   public int getListLimit()
   {
     return listLimit;
@@ -468,6 +479,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
   /**
    * @since 2.0
    */
+  @Override
   public synchronized void setListLimit(int listLimit)
   {
     if (listLimit != UNLIMITED && this.listLimit != listLimit)
@@ -817,11 +829,13 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     }
   }
 
+  @Override
   public synchronized LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     return createLockArea(null, userID, branchPoint, readOnly, locks);
   }
 
+  @Override
   public synchronized LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     if (durableLockingID != null)
@@ -845,12 +859,14 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     return area;
   }
 
+  @Override
   public synchronized void updateLockArea(LockArea lockArea)
   {
     String durableLockingID = lockArea.getDurableLockingID();
     lockAreas.put(durableLockingID, lockArea);
   }
 
+  @Override
   public synchronized LockArea getLockArea(String durableLockingID) throws LockAreaNotFoundException
   {
     LockArea area = lockAreas.get(durableLockingID);
@@ -862,6 +878,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     return area;
   }
 
+  @Override
   public synchronized void getLockAreas(String userIDPrefix, Handler handler)
   {
     for (LockArea area : lockAreas.values())
@@ -877,11 +894,13 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     }
   }
 
+  @Override
   public synchronized void deleteLockArea(String durableLockingID)
   {
     lockAreas.remove(durableLockingID);
   }
 
+  @Override
   public synchronized void lock(String durableLockingID, LockType type, Collection<? extends Object> objectsToLock)
   {
     LockArea area = getLockArea(durableLockingID);
@@ -905,6 +924,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     }
   }
 
+  @Override
   public synchronized void unlock(String durableLockingID, LockType type, Collection<? extends Object> objectsToUnlock)
   {
     LockArea area = getLockArea(durableLockingID);
@@ -926,6 +946,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     }
   }
 
+  @Override
   public synchronized void unlock(String durableLockingID)
   {
     LockArea area = getLockArea(durableLockingID);
@@ -1044,21 +1065,25 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
   /**
    * @since 2.0
    */
+  @Override
   public long getCreationTime()
   {
     return creationTime;
   }
 
+  @Override
   public void setCreationTime(long creationTime)
   {
     this.creationTime = creationTime;
   }
 
+  @Override
   public boolean isFirstStart()
   {
     return true;
   }
 
+  @Override
   public synchronized Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
     Map<CDOBranch, List<CDORevision>> result = new HashMap<CDOBranch, List<CDORevision>>();
@@ -1084,6 +1109,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     return result;
   }
 
+  @Override
   public synchronized EClass getObjectType(CDOID id)
   {
     return objectTypes.get(id);
@@ -1295,6 +1321,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
       this.timeStamp = timeStamp;
     }
 
+    @Override
     public boolean apply(CDOTimeProvider commitInfo)
     {
       return commitInfo.getTimeStamp() <= timeStamp;
@@ -1313,6 +1340,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
       this.timeStamp = timeStamp;
     }
 
+    @Override
     public boolean apply(CDOTimeProvider commitInfo)
     {
       return commitInfo.getTimeStamp() >= timeStamp;
@@ -1386,11 +1414,13 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
       this.timeStamp = timeStamp;
     }
 
+    @Override
     public long getTimeStamp()
     {
       return timeStamp;
     }
 
+    @Override
     public int compareTo(CommitInfoKey o)
     {
       return CDOCommonUtil.compareTimeStamps(timeStamp, o.timeStamp);

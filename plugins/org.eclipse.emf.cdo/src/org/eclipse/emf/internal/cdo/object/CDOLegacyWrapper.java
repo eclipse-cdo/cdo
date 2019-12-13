@@ -106,11 +106,13 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     viewAndState = ViewAndState.TRANSIENT;
   }
 
+  @Override
   public InternalCDOClassInfo cdoClassInfo()
   {
     return classInfo;
   }
 
+  @Override
   public CDOID cdoID()
   {
     if (idOrRevision == null)
@@ -126,11 +128,13 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     return ((InternalCDORevision)idOrRevision).getID();
   }
 
+  @Override
   public InternalCDOView cdoView()
   {
     return viewAndState.view;
   }
 
+  @Override
   public void cdoInternalSetID(CDOID id)
   {
     if (TRACER.isEnabled())
@@ -144,6 +148,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
+  @Override
   public void cdoInternalSetView(CDOView view)
   {
     if (TRACER.isEnabled())
@@ -162,11 +167,13 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
+  @Override
   public CDOState cdoState()
   {
     return viewAndState.state;
   }
 
+  @Override
   public InternalCDORevision cdoRevision()
   {
     if (idOrRevision instanceof InternalCDORevision)
@@ -177,6 +184,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     return null;
   }
 
+  @Override
   public InternalCDORevision cdoRevision(boolean loadOnDemand)
   {
     if (loadOnDemand)
@@ -187,6 +195,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     return cdoRevision();
   }
 
+  @Override
   public CDOPermission cdoPermission()
   {
     InternalCDORevision revision = cdoRevision(true);
@@ -205,17 +214,20 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     return super.cdoResource();
   }
 
+  @Override
   @Deprecated
   public void cdoReload()
   {
     CDOStateMachine.INSTANCE.reload(this);
   }
 
+  @Override
   public CDOObjectHistory cdoHistory()
   {
     return viewAndState.view.getHistory(this);
   }
 
+  @Override
   public CDOState cdoInternalSetState(CDOState state)
   {
     CDOState oldState = viewAndState.state;
@@ -240,6 +252,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     return null;
   }
 
+  @Override
   public void cdoInternalSetRevision(CDORevision revision)
   {
     if (TRACER.isEnabled())
@@ -257,11 +270,13 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
+  @Override
   public void cdoInternalPreAttach()
   {
     // Do nothing
   }
 
+  @Override
   public void cdoInternalPostAttach()
   {
     instanceToRevision();
@@ -275,6 +290,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
+  @Override
   public void cdoInternalPostDetach(boolean remote)
   {
     if (remote)
@@ -317,6 +333,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   /**
    * @since 3.0
    */
+  @Override
   public void cdoInternalPostRollback()
   {
     CDOStateMachine.INSTANCE.read(this);
@@ -329,6 +346,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    * distinguish whether the feature is set or not. This method must ensure that the value will be set to null if the
    * feature is not set.
    */
+  @Override
   public void cdoInternalPreCommit()
   {
     // We have to set this here because the CDOLegacyAdapter will not be notified when the instance is the target of a
@@ -363,17 +381,20 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
+  @Override
   public void cdoInternalPreLoad()
   {
     // Do nothing
   }
 
+  @Override
   public void cdoInternalPostLoad()
   {
     // TODO Consider not remembering the revision after copying it to the instance (spare 1/2 of the space)
     revisionToInstance();
   }
 
+  @Override
   public void cdoInternalPostInvalidate()
   {
     if (cdoState() != CDOState.PROXY)
@@ -1317,11 +1338,13 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       this.id = id;
     }
 
+    @Override
     public CDOID getID()
     {
       return id;
     }
 
+    @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
     {
       if (method.equals(getIDMethod))

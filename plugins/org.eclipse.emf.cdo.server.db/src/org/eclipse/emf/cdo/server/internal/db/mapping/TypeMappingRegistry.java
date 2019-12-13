@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -231,6 +231,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     return IPluginContainer.INSTANCE;
   }
 
+  @Override
   public void registerTypeMapping(ITypeMapping.Descriptor descriptor)
   {
     if (TRACER.isEnabled())
@@ -268,6 +269,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     typeMappingByTypes.put(sourceTargetPair, descriptor);
   }
 
+  @Override
   public ITypeMapping createTypeMapping(IMappingStrategy mappingStrategy, EStructuralFeature feature)
   {
     ITypeMapping typeMapping = null;
@@ -433,6 +435,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     return descriptor;
   }
 
+  @Override
   public Collection<DBType> getDefaultFeatureMapDBTypes()
   {
     return defaultFeatureMapDBTypes;
@@ -492,6 +495,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
       }
     }
 
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof ContainerEvent<?>)

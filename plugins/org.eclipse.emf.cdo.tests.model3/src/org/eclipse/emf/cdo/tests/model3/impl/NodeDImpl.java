@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -68,6 +68,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<NodeD> getChildren()
   {
@@ -78,6 +79,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NodeD getParent()
   {
     return (NodeD)eGet(Model3Package.eINSTANCE.getNodeD_Parent(), true);
@@ -87,6 +89,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setParent(NodeD newParent)
   {
     eSet(Model3Package.eINSTANCE.getNodeD_Parent(), newParent);
@@ -96,6 +99,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(Model3Package.eINSTANCE.getNodeD_Name(), true);
@@ -105,6 +109,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(Model3Package.eINSTANCE.getNodeD_Name(), newName);
@@ -114,6 +119,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<NodeD> getOtherNodes()
   {
@@ -124,6 +130,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NodeD getOppositeNode()
   {
     return (NodeD)eGet(Model3Package.eINSTANCE.getNodeD_OppositeNode(), true);
@@ -133,6 +140,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setOppositeNode(NodeD newOppositeNode)
   {
     eSet(Model3Package.eINSTANCE.getNodeD_OppositeNode(), newOppositeNode);

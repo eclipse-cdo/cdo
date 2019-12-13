@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -119,11 +119,13 @@ public class EAnnotationImpl extends EModelElementImpl implements EAnnotation
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public String getSource()
   {
     return (String)eDynamicGet(EcorePackage.Literals.EANNOTATION__SOURCE, true);
   }
 
+  @Override
   public void setSource(String newSource)
   {
     setSourceGen(newSource == null ? null : newSource.intern());
@@ -144,6 +146,7 @@ public class EAnnotationImpl extends EModelElementImpl implements EAnnotation
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EMap<String, String> getDetails()
   {
@@ -157,6 +160,7 @@ public class EAnnotationImpl extends EModelElementImpl implements EAnnotation
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public EModelElement getEModelElement()
   {
     return (EModelElement)eDynamicGet(EcorePackage.Literals.EANNOTATION__EMODEL_ELEMENT, true);
@@ -178,6 +182,7 @@ public class EAnnotationImpl extends EModelElementImpl implements EAnnotation
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public void setEModelElement(EModelElement newEModelElement)
   {
     eDynamicSet(EcorePackage.Literals.EANNOTATION__EMODEL_ELEMENT, newEModelElement);
@@ -188,6 +193,7 @@ public class EAnnotationImpl extends EModelElementImpl implements EAnnotation
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<EObject> getContents()
   {
@@ -199,6 +205,7 @@ public class EAnnotationImpl extends EModelElementImpl implements EAnnotation
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<EObject> getReferences()
   {

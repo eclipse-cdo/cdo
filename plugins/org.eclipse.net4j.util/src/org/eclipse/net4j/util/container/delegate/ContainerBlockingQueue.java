@@ -39,6 +39,7 @@ public class ContainerBlockingQueue<E> extends ContainerQueue<E> implements ICon
   /**
    * @category WRITE
    */
+  @Override
   public int drainTo(Collection<? super E> c)
   {
     int drainTo = getDelegate().drainTo(c);
@@ -54,6 +55,7 @@ public class ContainerBlockingQueue<E> extends ContainerQueue<E> implements ICon
   /**
    * @category WRITE
    */
+  @Override
   public int drainTo(Collection<? super E> c, int maxElements)
   {
     int drainTo = getDelegate().drainTo(c, maxElements);
@@ -70,6 +72,7 @@ public class ContainerBlockingQueue<E> extends ContainerQueue<E> implements ICon
   /**
    * @category WRITE
    */
+  @Override
   public boolean offer(E o, long timeout, TimeUnit unit) throws InterruptedException
   {
     boolean modified = getDelegate().offer(o, timeout, unit);
@@ -84,6 +87,7 @@ public class ContainerBlockingQueue<E> extends ContainerQueue<E> implements ICon
   /**
    * @category WRITE
    */
+  @Override
   public E poll(long timeout, TimeUnit unit) throws InterruptedException
   {
     E removed = getDelegate().poll(timeout, unit);
@@ -98,6 +102,7 @@ public class ContainerBlockingQueue<E> extends ContainerQueue<E> implements ICon
   /**
    * @category WRITE
    */
+  @Override
   public void put(E o) throws InterruptedException
   {
     getDelegate().put(o);
@@ -107,6 +112,7 @@ public class ContainerBlockingQueue<E> extends ContainerQueue<E> implements ICon
   /**
    * @category READ
    */
+  @Override
   public int remainingCapacity()
   {
     return getDelegate().remainingCapacity();
@@ -115,6 +121,7 @@ public class ContainerBlockingQueue<E> extends ContainerQueue<E> implements ICon
   /**
    * @category WRITE
    */
+  @Override
   public E take() throws InterruptedException
   {
     E element = getDelegate().take();

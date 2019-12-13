@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -40,16 +40,19 @@ public class Transaction<CONTEXT> implements ITransaction<CONTEXT>
     return undoPhase1OnRollback;
   }
 
+  @Override
   public boolean isActive()
   {
     return operations != null;
   }
 
+  @Override
   public CONTEXT getContext()
   {
     return context;
   }
 
+  @Override
   public void execute(ITransactionalOperation<CONTEXT> operation) throws TransactionException
   {
     if (!isActive())
@@ -74,6 +77,7 @@ public class Transaction<CONTEXT> implements ITransaction<CONTEXT>
     }
   }
 
+  @Override
   public void commit()
   {
     for (ITransactionalOperation<CONTEXT> operation : end())
@@ -82,6 +86,7 @@ public class Transaction<CONTEXT> implements ITransaction<CONTEXT>
     }
   }
 
+  @Override
   public void rollback()
   {
     if (undoPhase1OnRollback)

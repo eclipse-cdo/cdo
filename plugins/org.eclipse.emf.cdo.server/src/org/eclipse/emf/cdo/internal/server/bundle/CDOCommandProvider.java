@@ -183,6 +183,7 @@ public class CDOCommandProvider implements CommandProvider
         println("Repository exported.");
         exporter.getStatistics().dump(new Handler<String>()
         {
+          @Override
           public void handle(String line)
           {
             println(line);
@@ -223,6 +224,7 @@ public class CDOCommandProvider implements CommandProvider
         println("Repository imported.");
         importer.getStatistics().dump(new Handler<String>()
         {
+          @Override
           public void handle(String line)
           {
             println(line);
@@ -300,6 +302,7 @@ public class CDOCommandProvider implements CommandProvider
 
       repository.getLockingManager().getLockAreas(usernamePrefix, new IDurableLockingManager.LockArea.Handler()
       {
+        @Override
         public boolean handleLockArea(IDurableLockingManager.LockArea area)
         {
           println(area.getDurableLockingID());
@@ -366,6 +369,7 @@ public class CDOCommandProvider implements CommandProvider
     return null;
   }
 
+  @Override
   public String getHelp()
   {
     StringBuilder builder = new StringBuilder();
@@ -377,6 +381,7 @@ public class CDOCommandProvider implements CommandProvider
       List<CDOCommand> commands = new ArrayList<CDOCommand>(getCommands().values());
       Collections.sort(commands, new Comparator<CDOCommand>()
       {
+        @Override
         public int compare(CDOCommand o1, CDOCommand o2)
         {
           return o1.getName().compareTo(o2.getName());

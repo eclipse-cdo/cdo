@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -50,21 +50,25 @@ public class ImageButton extends Label implements MouseTrackListener, MouseMoveL
     addMouseListener(this);
   }
 
+  @Override
   public void mouseEnter(MouseEvent e)
   {
     mouseMove(e);
   }
 
+  @Override
   public void mouseExit(MouseEvent e)
   {
     mouseMove(e);
   }
 
+  @Override
   public void mouseHover(MouseEvent e)
   {
     // Do nothing.
   }
 
+  @Override
   public void mouseMove(MouseEvent e)
   {
     Rectangle bounds = getBounds();
@@ -82,16 +86,19 @@ public class ImageButton extends Label implements MouseTrackListener, MouseMoveL
     }
   }
 
+  @Override
   public void mouseDoubleClick(MouseEvent e)
   {
     // Do nothing.
   }
 
+  @Override
   public void mouseDown(MouseEvent e)
   {
     // Do nothing.
   }
 
+  @Override
   public void mouseUp(MouseEvent e)
   {
     if (inImage)

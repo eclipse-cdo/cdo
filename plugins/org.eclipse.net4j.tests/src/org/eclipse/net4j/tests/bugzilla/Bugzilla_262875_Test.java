@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -81,6 +81,7 @@ public class Bugzilla_262875_Test extends AbstractOMTest
     final CountDownLatch latch = new CountDownLatch(1);
     IErrorHandler oldErrorHandler = Worker.setGlobalErrorHandler(new IErrorHandler()
     {
+      @Override
       public void handleError(Throwable t)
       {
         t.printStackTrace();
@@ -201,6 +202,7 @@ public class Bugzilla_262875_Test extends AbstractOMTest
         super(NAME);
       }
 
+      @Override
       public Object create(String description) throws ProductCreationException
       {
         return new TestProtocol();

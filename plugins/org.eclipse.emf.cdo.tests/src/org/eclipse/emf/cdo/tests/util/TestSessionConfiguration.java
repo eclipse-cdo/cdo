@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -26,112 +26,134 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
  */
 public abstract class TestSessionConfiguration extends Notifier implements CDOSessionConfiguration
 {
+  @Override
   public boolean isSessionOpen()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean isActivateOnOpen()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setActivateOnOpen(boolean activateOnOpen)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public String getUserID()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setUserID(String userID)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public IPasswordCredentialsProvider getCredentialsProvider()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean isPassiveUpdateEnabled()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public PassiveUpdateMode getPassiveUpdateMode()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public LockNotificationMode getLockNotificationMode()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setLockNotificationMode(LockNotificationMode mode)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public CDOSession.ExceptionHandler getExceptionHandler()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public CDOIDGenerator getIDGenerator()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setIDGenerator(CDOIDGenerator idGenerator)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public CDOFetchRuleManager getFetchRuleManager()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setFetchRuleManager(CDOFetchRuleManager fetchRuleManager)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public CDOBranchManager getBranchManager()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setBranchManager(CDOBranchManager branchManager)
   {
     throw new UnsupportedOperationException();

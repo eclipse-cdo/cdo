@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -59,6 +59,7 @@ public interface CDORegistrationHandler
     {
       view.syncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           doInitialize(view);
@@ -87,6 +88,7 @@ public interface CDORegistrationHandler
 
         finalView.syncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             doDispose(finalView);
@@ -101,6 +103,7 @@ public interface CDORegistrationHandler
      * Also called during initialization for already loaded objects;
      * {@link #isDisposed()} returns <code>true</code> in these cases.
      */
+    @Override
     public void objectRegistered(CDOView view, CDOObject object)
     {
       // Subclasses may override.
@@ -112,6 +115,7 @@ public interface CDORegistrationHandler
      * Also called during dispose for already loaded objects;
      * {@link #isDisposed()} returns <code>true</code> in these cases.
      */
+    @Override
     public void objectDeregistered(CDOView view, CDOObject object)
     {
       // Subclasses may override.
@@ -120,6 +124,7 @@ public interface CDORegistrationHandler
     /**
      * Called by the view for each garbage-collected object.
      */
+    @Override
     public void objectCollected(CDOView view, CDOID id)
     {
       // Subclasses may override.

@@ -217,6 +217,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       // Make the assignment of permanent IDs predictable
       Arrays.sort(newObjects, new Comparator<InternalCDORevision>()
       {
+        @Override
         public int compare(InternalCDORevision r1, InternalCDORevision r2)
         {
           return r1.getID().compareTo(r2.getID());

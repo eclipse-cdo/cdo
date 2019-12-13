@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -123,6 +123,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
 
   private final IListener checkoutManagerListener = new IListener()
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       CDOCheckoutViewerRefresh viewerRefresh = stateManager.getViewerRefresh();
@@ -210,6 +211,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
           {
             control.getDisplay().asyncExec(new Runnable()
             {
+              @Override
               public void run()
               {
                 if (!control.isDisposed())
@@ -281,6 +283,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
   {
   }
 
+  @Override
   public void init(ICommonContentExtensionSite config)
   {
     viewerID = config.getService().getViewerId();
@@ -288,16 +291,19 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     CHECKOUT_MANAGER.addListener(checkoutManagerListener);
   }
 
+  @Override
   public void saveState(IMemento aMemento)
   {
     // Do nothing.
   }
 
+  @Override
   public void restoreState(IMemento aMemento)
   {
     // Do nothing.
   }
 
+  @Override
   public void dispose()
   {
     CHECKOUT_MANAGER.removeListener(checkoutManagerListener);
@@ -308,6 +314,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
   {
     control.addDisposeListener(new DisposeListener()
     {
+      @Override
       public void widgetDisposed(DisposeEvent e)
       {
         dispose();
@@ -325,6 +332,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     return viewer;
   }
 
+  @Override
   public void inputChanged(Viewer newViewer, Object oldInput, Object newInput)
   {
     TreeViewer newTreeViewer = null;
@@ -357,11 +365,13 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     return input;
   }
 
+  @Override
   public Object[] getElements(Object object)
   {
     return getChildren(object);
   }
 
+  @Override
   public boolean hasChildren(Object object)
   {
     try
@@ -455,6 +465,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     return false;
   }
 
+  @Override
   public Object[] getChildren(Object object)
   {
     try
@@ -598,6 +609,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
               {
                 UIUtil.getDisplay().asyncExec(new Runnable()
                 {
+                  @Override
                   public void run()
                   {
                     try
@@ -621,6 +633,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
             CDOCheckoutViewerRefresh viewerRefresh = stateManager.getViewerRefresh();
             viewerRefresh.addNotification(originalObject, true, true, new Runnable()
             {
+              @Override
               public void run()
               {
                 synchronized (LOADING_OBJECTS)
@@ -741,6 +754,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     return null;
   }
 
+  @Override
   public Object getParent(Object object)
   {
     try
@@ -806,6 +820,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     return null;
   }
 
+  @Override
   public IPropertySource getPropertySource(Object object)
   {
     IPropertySourceProvider contentProvider = stateManager.getContentProvider(object);
@@ -826,6 +841,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
       final Display display = control.getDisplay();
       display.asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           if (control.isDisposed())
@@ -876,6 +892,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     }
   }
 
+  @Override
   public void open(OpenEvent event)
   {
     ISelection selection = event.getSelection();

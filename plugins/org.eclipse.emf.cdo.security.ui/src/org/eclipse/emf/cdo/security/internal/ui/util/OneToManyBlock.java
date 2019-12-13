@@ -536,6 +536,7 @@ public class OneToManyBlock
     {
       observableList.addChangeListener(new IChangeListener()
       {
+        @Override
         public void handleChange(ChangeEvent event)
         {
           checkUnsupportedModelContent((IObservableList<Object>)event.getObservable());
@@ -616,21 +617,25 @@ public class OneToManyBlock
       this.filter = filter;
     }
 
+    @Override
     public IManagedForm getManagedForm()
     {
       return managedForm;
     }
 
+    @Override
     public EReference getModelReference()
     {
       return reference;
     }
 
+    @Override
     public EClass getItemType()
     {
       return itemType;
     }
 
+    @Override
     public IFilter getItemFilter()
     {
       return filter;

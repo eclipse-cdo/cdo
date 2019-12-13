@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -156,6 +156,7 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EMap<Integer, String> getIntegerToStringMap()
   {
     if (integerToStringMap == null)
@@ -170,6 +171,7 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EMap<String, String> getStringToStringMap()
   {
     if (stringToStringMap == null)
@@ -184,6 +186,7 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EMap<String, VAT> getStringToVATMap()
   {
     if (stringToVATMap == null)
@@ -198,6 +201,7 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EMap<String, Address> getStringToAddressContainmentMap()
   {
     if (stringToAddressContainmentMap == null)
@@ -212,6 +216,7 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EMap<String, Address> getStringToAddressReferenceMap()
   {
     if (stringToAddressReferenceMap == null)
@@ -226,6 +231,7 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EMap<EObject, EObject> getEObjectToEObjectMap()
   {
     if (eObjectToEObjectMap == null)
@@ -240,6 +246,7 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EMap<EObject, EObject> getEObjectToEObjectKeyContainedMap()
   {
     if (eObjectToEObjectKeyContainedMap == null)
@@ -254,6 +261,7 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EMap<EObject, EObject> getEObjectToEObjectBothContainedMap()
   {
     if (eObjectToEObjectBothContainedMap == null)
@@ -268,6 +276,7 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EMap<EObject, EObject> getEObjectToEObjectValueContainedMap()
   {
     if (eObjectToEObjectValueContainedMap == null)

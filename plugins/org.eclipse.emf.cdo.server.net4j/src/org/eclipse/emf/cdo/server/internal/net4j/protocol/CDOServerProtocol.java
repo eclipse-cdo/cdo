@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -71,6 +71,7 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     return PROTOCOL_VERSION;
   }
 
+  @Override
   public InternalSession getSession()
   {
     return getInfraStructure();
@@ -96,22 +97,26 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     this.negotiationTimeout = negotiationTimeout;
   }
 
+  @Override
   @Deprecated
   public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken) throws Exception
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public Response sendAuthenticationChallenge(Challenge challenge) throws Exception
   {
     return new AuthenticationRequest(this, CDOProtocolConstants.SIGNAL_AUTHENTICATION, challenge).send(negotiationTimeout, new Monitor());
   }
 
+  @Override
   public Response sendCredentialsChallenge(Challenge challenge, String userID, CredentialsUpdateOperation operation) throws Exception
   {
     return new CredentialsChallengeRequest(this, challenge, userID, operation).send(negotiationTimeout, new Monitor());
   }
 
+  @Override
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType) throws Exception
   {
     if (LifecycleUtil.isActive(getChannel()))
@@ -124,12 +129,14 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     }
   }
 
+  @Override
   @Deprecated
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState) throws Exception
   {
     sendRepositoryStateNotification(oldState, newState, null);
   }
 
+  @Override
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState, CDOID rootResourceID) throws Exception
   {
     if (LifecycleUtil.isActive(getChannel()))
@@ -142,12 +149,14 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     }
   }
 
+  @Override
   @Deprecated
   public void sendBranchNotification(InternalCDOBranch branch) throws Exception
   {
     sendBranchNotification(branch, ChangeKind.CREATED);
   }
 
+  @Override
   public void sendBranchNotification(InternalCDOBranch branch, ChangeKind changeKind) throws Exception
   {
     if (LifecycleUtil.isActive(getChannel()))
@@ -160,18 +169,21 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     }
   }
 
+  @Override
   @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo) throws Exception
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void sendCommitNotification(CommitNotificationInfo info) throws Exception
   {
     if (LifecycleUtil.isActive(getChannel()))
@@ -184,6 +196,7 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     }
   }
 
+  @Override
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception
   {
     if (LifecycleUtil.isActive(getChannel()))
@@ -196,6 +209,7 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     }
   }
 
+  @Override
   public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message) throws Exception
   {
     if (LifecycleUtil.isActive(getChannel()))
@@ -208,6 +222,7 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     }
   }
 
+  @Override
   public void sendLockNotification(CDOLockChangeInfo lockChangeInfo) throws Exception
   {
     if (LifecycleUtil.isActive(getChannel()))

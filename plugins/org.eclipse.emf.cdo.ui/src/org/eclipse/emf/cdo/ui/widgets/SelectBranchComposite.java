@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -93,6 +93,7 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
       branchText.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
       branchText.getCombo().addModifyListener(new ModifyListener()
       {
+        @Override
         public void modifyText(ModifyEvent e)
         {
           setBranchFromPath();
@@ -108,6 +109,7 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
     branchViewer.setInput(session.getBranchManager());
     branchViewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
+      @Override
       public void selectionChanged(SelectionChangedEvent event)
       {
         setBranchFromViewer();
@@ -129,11 +131,13 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
     return branchViewer.getTree().setFocus();
   }
 
+  @Override
   public ValidationContext getValidationContext()
   {
     return validationContext;
   }
 
+  @Override
   public void setValidationContext(ValidationContext validationContext)
   {
     this.validationContext = validationContext;

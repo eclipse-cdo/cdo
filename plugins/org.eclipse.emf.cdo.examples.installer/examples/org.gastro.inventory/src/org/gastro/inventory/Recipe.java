@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -50,6 +50,7 @@ public interface Recipe extends Product
    */
   EList<Ingredient> getIngredients();
 
+  @Override
   /**
    * Returns the value of the '<em><b>Department</b></em>' container reference. It is bidirectional and its opposite is
    * '{@link org.gastro.inventory.Department#getRecipes <em>Recipes</em>}'. <!-- begin-user-doc -->
@@ -79,6 +80,7 @@ public interface Recipe extends Product
    */
   void setDepartment(Department value);
 
+  @Override
   /**
    * Returns the value of the '<em><b>Cost</b></em>' attribute. <!-- begin-user-doc -->
    * <p>

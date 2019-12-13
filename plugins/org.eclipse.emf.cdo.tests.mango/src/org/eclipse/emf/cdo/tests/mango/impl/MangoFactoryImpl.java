@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -119,6 +119,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public MangoValueList createMangoValueList()
   {
     MangoValueListImpl mangoValueList = new MangoValueListImpl();
@@ -129,6 +130,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public MangoValue createMangoValue()
   {
     MangoValueImpl mangoValue = new MangoValueImpl();
@@ -139,6 +141,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public MangoParameter createMangoParameter()
   {
     MangoParameterImpl mangoParameter = new MangoParameterImpl();
@@ -172,6 +175,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public MangoPackage getMangoPackage()
   {
     return (MangoPackage)getEPackage();

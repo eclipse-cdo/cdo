@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -46,11 +46,13 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
   {
   }
 
+  @Override
   public IBuddySession getSession()
   {
     return session;
   }
 
+  @Override
   public State getState()
   {
     return state;
@@ -70,11 +72,13 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
     }
   }
 
+  @Override
   public boolean isFlashing()
   {
     return flashing;
   }
 
+  @Override
   public boolean isConnecting()
   {
     return state == ISessionManager.State.CONNECTING;
@@ -100,6 +104,7 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
     return OM.PREF_AUTO_CONNECT.getValue();
   }
 
+  @Override
   public void connect()
   {
     new Thread("buddies-connector") //$NON-NLS-1$
@@ -147,6 +152,7 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
     }.start();
   }
 
+  @Override
   public void disconnect()
   {
     connecting = false;
@@ -160,6 +166,7 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
     setState(ISessionManager.State.DISCONNECTED);
   }
 
+  @Override
   public void flashMe()
   {
     if (session != null && !flashing)
@@ -187,6 +194,7 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
     }
   }
 
+  @Override
   public void notifyEvent(IEvent event)
   {
     if (event.getSource() == session)
@@ -256,16 +264,19 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
       this.session = session;
     }
 
+    @Override
     public State getOldState()
     {
       return oldState;
     }
 
+    @Override
     public State getNewState()
     {
       return newState;
     }
 
+    @Override
     public IBuddySession getSession()
     {
       return session;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -81,6 +81,7 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
 
     securityManager.modify(new ISecurityManager.RealmOperation()
     {
+      @Override
       public void execute(Realm realm)
       {
         User user = realm.addUser(CREDENTIALS);
@@ -170,6 +171,7 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
     final CountDownLatch latch = new CountDownLatch(1);
     transactionReadOnly.addListener(new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof CDOViewInvalidationEvent)
@@ -220,6 +222,7 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
 
     getSecurityManager().modify(new ISecurityManager.RealmOperation()
     {
+      @Override
       public void execute(Realm realm)
       {
         User user = realm.addUser(credentials);
@@ -258,6 +261,7 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
 
     getSecurityManager().modify(new ISecurityManager.RealmOperation()
     {
+      @Override
       public void execute(Realm realm)
       {
         User user = realm.addUser(credentials);
@@ -296,6 +300,7 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
 
     getSecurityManager().modify(new ISecurityManager.RealmOperation()
     {
+      @Override
       public void execute(Realm realm)
       {
         User user = realm.addUser(credentials);
@@ -328,6 +333,7 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
 
     getSecurityManager().modify(new ISecurityManager.RealmOperation()
     {
+      @Override
       public void execute(Realm realm)
       {
         User user = realm.addUser(credentials);
@@ -362,6 +368,7 @@ public class Bugzilla_417483_Test extends AbstractCDOTest
 
     getSecurityManager().modify(new ISecurityManager.RealmOperation()
     {
+      @Override
       public void execute(Realm realm)
       {
         User user = realm.addUser(credentials);

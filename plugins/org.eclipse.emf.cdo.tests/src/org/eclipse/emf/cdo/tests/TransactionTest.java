@@ -269,6 +269,7 @@ public class TransactionTest extends AbstractCDOTest
 
         threadList.add(new Committer(transaction, latch, new Callable<Boolean>()
         {
+          @Override
           public Boolean call() throws Exception
           {
             if (pessimistic)
@@ -459,6 +460,7 @@ public class TransactionTest extends AbstractCDOTest
     final CDOTransaction transaction2 = session2.openTransaction();
     transaction2.addListener(new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof CDOTransactionConflictEvent)
@@ -471,16 +473,19 @@ public class TransactionTest extends AbstractCDOTest
     final CountDownLatch rollback = new CountDownLatch(1);
     transaction2.addTransactionHandler(new CDOTransactionHandler2()
     {
+      @Override
       public void rolledBackTransaction(CDOTransaction transaction)
       {
         IOUtil.OUT().println("rollback");
         rollback.countDown();
       }
 
+      @Override
       public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
       {
       }
 
+      @Override
       public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
       {
       }
@@ -578,6 +583,7 @@ public class TransactionTest extends AbstractCDOTest
 
     CDOCommitInfoHandler handler = new CDOCommitInfoHandler()
     {
+      @Override
       public void handleCommitInfo(CDOCommitInfo commitInfo)
       {
         sleep(3000L);

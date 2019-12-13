@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2014 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2014, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -142,36 +142,44 @@ public class CDOAutoAttacher extends CDODefaultTransactionHandler1
       this.referrer = referrer;
     }
 
+    @Override
     public void visit(CDOAddFeatureDelta featureChange)
     {
       persist(referrer, featureChange.getValue());
     }
 
+    @Override
     public void visit(CDOClearFeatureDelta featureChange)
     {
     }
 
+    @Override
     public void visit(CDOListFeatureDelta featureChange)
     {
     }
 
+    @Override
     public void visit(CDOMoveFeatureDelta featureChange)
     {
     }
 
+    @Override
     public void visit(CDORemoveFeatureDelta featureChange)
     {
     }
 
+    @Override
     public void visit(CDOSetFeatureDelta featureChange)
     {
       persist(referrer, featureChange.getValue());
     }
 
+    @Override
     public void visit(CDOUnsetFeatureDelta featureChange)
     {
     }
 
+    @Override
     public void visit(CDOContainerFeatureDelta featureChange)
     {
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -37,26 +37,31 @@ public class Membership extends Lifecycle implements IMembership
     activate();
   }
 
+  @Override
   public IBuddy getBuddy()
   {
     return key.getBuddy();
   }
 
+  @Override
   public ICollaboration getCollaboration()
   {
     return key.getCollaboration();
   }
 
+  @Override
   public long getStartTime()
   {
     return startTime;
   }
 
+  @Override
   public Object[] getElements()
   {
     return elements;
   }
 
+  @Override
   public boolean isEmpty()
   {
     return false;
@@ -67,6 +72,7 @@ public class Membership extends Lifecycle implements IMembership
     return key;
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {

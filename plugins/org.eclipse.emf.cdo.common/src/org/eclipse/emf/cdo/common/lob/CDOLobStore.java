@@ -42,31 +42,37 @@ public interface CDOLobStore
    */
   public static abstract class Delegating implements CDOLobStore
   {
+    @Override
     public File getBinaryFile(byte[] id)
     {
       return getDelegate().getBinaryFile(id);
     }
 
+    @Override
     public InputStream getBinary(CDOLobInfo info) throws IOException
     {
       return getDelegate().getBinary(info);
     }
 
+    @Override
     public CDOLobInfo putBinary(InputStream contents) throws IOException
     {
       return getDelegate().putBinary(contents);
     }
 
+    @Override
     public File getCharacterFile(byte[] id)
     {
       return getDelegate().getCharacterFile(id);
     }
 
+    @Override
     public Reader getCharacter(CDOLobInfo info) throws IOException
     {
       return getDelegate().getCharacter(info);
     }
 
+    @Override
     public CDOLobInfo putCharacter(Reader contents) throws IOException
     {
       return getDelegate().putCharacter(contents);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -59,6 +59,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
   {
     runWithClosure(new SingleItemClosure()
     {
+      @Override
       public void test(EditingDomain domain, Collection<OrderDetail> details, Order target)
       {
         for (OrderDetail detail : details)
@@ -75,6 +76,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
   {
     runWithClosure(new MultiItemClosure()
     {
+      @Override
       public void test(EditingDomain domain, Collection<OrderDetail> details, Order target)
       {
         for (OrderDetail detail : details)
@@ -91,6 +93,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
   {
     runWithClosure(new SingleItemClosure()
     {
+      @Override
       public void test(EditingDomain domain, Collection<OrderDetail> details, Order target)
       {
         float location = 0.5f;
@@ -107,6 +110,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
   {
     runWithClosure(new MultiItemClosure()
     {
+      @Override
       public void test(EditingDomain domain, Collection<OrderDetail> details, Order target)
       {
         float location = 0.5f;
@@ -123,6 +127,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
   {
     runWithClosure(new MultiItemMultiParentClosure()
     {
+      @Override
       public void test(EditingDomain domain, Collection<OrderDetail> details, Order target)
       {
         float location = 0.5f;
@@ -139,6 +144,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
   {
     runWithClosure(new SingleItemClosure()
     {
+      @Override
       public void test(EditingDomain domain, Collection<OrderDetail> details, Order target)
       {
         Command dragCmd = RemoveCommand.create(domain, details);
@@ -153,6 +159,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
   {
     runWithClosure(new MultiItemClosure()
     {
+      @Override
       public void test(EditingDomain domain, Collection<OrderDetail> details, Order target)
       {
         Command dragCmd = RemoveCommand.create(domain, details);
@@ -527,6 +534,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
    */
   private static abstract class SingleItemClosure implements IClosure
   {
+    @Override
     public Collection<OrderDetail> pickDetails(OrderDetail[] orderDetails)
     {
       return Collections.singleton(orderDetails[0]);
@@ -538,6 +546,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
    */
   private static abstract class MultiItemClosure implements IClosure
   {
+    @Override
     public Collection<OrderDetail> pickDetails(OrderDetail[] orderDetails)
     {
       List<OrderDetail> details = new LinkedList<OrderDetail>();
@@ -552,6 +561,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
    */
   private static abstract class MultiItemMultiParentClosure implements IClosure
   {
+    @Override
     public Collection<OrderDetail> pickDetails(OrderDetail[] orderDetails)
     {
       List<OrderDetail> details = new LinkedList<OrderDetail>();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -111,6 +111,7 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
     this.writeBulk = writeBulk;
   }
 
+  @Override
   public final void log(String message)
   {
     LogLine logLine = createLogLine(message);
@@ -441,6 +442,7 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
     return "RollingLog[" + logFile + "]";
   }
 
+  @Override
   public final CloseableIterator<LogLine> iterator()
   {
     return iterator(logFile);
@@ -532,6 +534,7 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
       }
     }
 
+    @Override
     public void close()
     {
       IOUtil.close(reader);
@@ -539,6 +542,7 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
       fileNumber = CLOSED;
     }
 
+    @Override
     public boolean isClosed()
     {
       return fileNumber == CLOSED;

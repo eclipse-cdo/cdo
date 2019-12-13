@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -71,31 +71,37 @@ public class CloneCDORepository extends CDORepositoryImpl
   {
   }
 
+  @Override
   public boolean isRemote()
   {
     return false;
   }
 
+  @Override
   public boolean isClone()
   {
     return true;
   }
 
+  @Override
   public boolean isLocal()
   {
     return false;
   }
 
+  @Override
   public final String getConnectorType()
   {
     return "jvm";
   }
 
+  @Override
   public final String getConnectorDescription()
   {
     return "local";
   }
 
+  @Override
   public String getURI()
   {
     return connectorType + "://" + connectorDescription + "/" + getName();
@@ -161,6 +167,7 @@ public class CloneCDORepository extends CDORepositoryImpl
     final IManagedContainer container = getContainer();
     CDOSessionConfigurationFactory remoteSessionConfigurationFactory = new CDOSessionConfigurationFactory()
     {
+      @Override
       public CDOSessionConfiguration createSessionConfiguration()
       {
         IConnector connector = Net4jUtil.getConnector(container, connectorType, connectorDescription);

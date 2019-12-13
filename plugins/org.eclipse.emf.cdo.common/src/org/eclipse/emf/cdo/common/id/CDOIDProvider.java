@@ -22,6 +22,7 @@ public interface CDOIDProvider
    */
   public static final CDOIDProvider NOOP = new CDOIDProvider()
   {
+    @Override
     public CDOID provideCDOID(Object id)
     {
       return (CDOID)id;

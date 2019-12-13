@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,16 +22,19 @@ public class QueueSenderImpl extends MessageProducerImpl implements QueueSender
     super(session, queue);
   }
 
+  @Override
   public QueueImpl getQueue()
   {
     return (QueueImpl)getDestination();
   }
 
+  @Override
   public void send(Queue queue, Message message) throws JMSException
   {
     send(queue, message, getDeliveryMode(), getPriority(), getTimeToLive());
   }
 
+  @Override
   public void send(Queue queue, Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
   {
     super.send(queue, message, deliveryMode, priority, timeToLive);

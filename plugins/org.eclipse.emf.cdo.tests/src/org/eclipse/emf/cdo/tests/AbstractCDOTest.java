@@ -408,6 +408,7 @@ public abstract class AbstractCDOTest extends ConfigTest
     final RuntimeException[] exception = { null };
     IListener listener = new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (exception[0] == null && event instanceof ThrowableEvent)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -156,6 +156,7 @@ public class GroupImpl extends AssigneeImpl implements Group
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<User> getUsers()
   {
@@ -167,6 +168,7 @@ public class GroupImpl extends AssigneeImpl implements Group
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Group> getInheritedGroups()
   {
@@ -178,6 +180,7 @@ public class GroupImpl extends AssigneeImpl implements Group
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Group> getInheritingGroups()
   {
@@ -189,6 +192,7 @@ public class GroupImpl extends AssigneeImpl implements Group
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public EList<Group> getAllInheritingGroups()
   {
     return allInheritingGroups;
@@ -199,6 +203,7 @@ public class GroupImpl extends AssigneeImpl implements Group
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public EList<Group> getAllInheritedGroups()
   {
     return allInheritedGroups;
@@ -209,6 +214,7 @@ public class GroupImpl extends AssigneeImpl implements Group
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public EList<Role> getAllRoles()
   {
     return allRoles;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -59,6 +59,7 @@ public abstract class AssigneeImpl extends SecurityItemImpl implements Assignee
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Role> getRoles()
   {
@@ -70,6 +71,7 @@ public abstract class AssigneeImpl extends SecurityItemImpl implements Assignee
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getId()
   {
     return (String)eGet(SecurityPackage.Literals.ASSIGNEE__ID, true);
@@ -80,6 +82,7 @@ public abstract class AssigneeImpl extends SecurityItemImpl implements Assignee
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setId(String newId)
   {
     eSet(SecurityPackage.Literals.ASSIGNEE__ID, newId);

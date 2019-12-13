@@ -125,21 +125,25 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
   {
   }
 
+  @Override
   public boolean isAllowRequestFromTransactionEnabled()
   {
     return allowRequestFromTransactionEnabled;
   }
 
+  @Override
   public void setAllowRequestFromTransactionEnabled(boolean on)
   {
     allowRequestFromTransactionEnabled = on;
   }
 
+  @Override
   public void add(InternalCDOTransaction transaction)
   {
     transaction.setTransactionStrategy(transactionStrategy);
   }
 
+  @Override
   public void remove(InternalCDOTransaction transaction)
   {
     if (transaction != null)
@@ -148,6 +152,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     }
   }
 
+  @Override
   public synchronized void add(CDOViewSet viewSet)
   {
     CDOXATransaction transSet = CDOUtil.getXATransaction(viewSet);
@@ -164,6 +169,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     }
   }
 
+  @Override
   public synchronized void remove(CDOViewSet viewSet)
   {
     CDOXATransaction transSet = CDOUtil.getXATransaction(viewSet);
@@ -180,6 +186,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     viewSet.eAdapters().remove(internalAdapter);
   }
 
+  @Override
   public void add(InternalCDOTransaction transaction, CDOID object)
   {
     synchronized (requestedCDOIDs)
@@ -201,6 +208,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     return ids.toArray(new CDOID[ids.size()]);
   }
 
+  @Override
   public InternalCDOXACommitContext getCommitContext(CDOTransaction transaction)
   {
     return activeContexts.get(transaction);
@@ -293,11 +301,13 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     return transactions;
   }
 
+  @Override
   public CDOCommitInfo commit() throws CommitException
   {
     return commit(null);
   }
 
+  @Override
   public CDOCommitInfo commit(IProgressMonitor monitor) throws CommitException
   {
     commitPrepare(monitor);
@@ -381,16 +391,19 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     }
   }
 
+  @Override
   public InternalCDOXASavepoint getLastSavepoint()
   {
     return lastSavepoint;
   }
 
+  @Override
   public void rollback()
   {
     rollback(firstSavepoint);
   }
 
+  @Override
   public void rollback(InternalCDOXASavepoint savepoint)
   {
     if (!savepoint.isValid())
@@ -415,6 +428,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     lastSavepoint.setSavepoints(null);
   }
 
+  @Override
   public InternalCDOXASavepoint setSavepoint()
   {
     List<CDOSavepoint> savepoints = getListSavepoints();
@@ -461,30 +475,36 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     {
       return new AbstractExecutorService()
       {
+        @Override
         public void execute(Runnable command)
         {
           command.run();
         }
 
+        @Override
         public List<Runnable> shutdownNow()
         {
           return null;
         }
 
+        @Override
         public void shutdown()
         {
         }
 
+        @Override
         public boolean isTerminated()
         {
           return false;
         }
 
+        @Override
         public boolean isShutdown()
         {
           return false;
         }
 
+        @Override
         public boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedException
         {
           return false;
@@ -526,16 +546,19 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       return xaTransaction;
     }
 
+    @Override
     public Notifier getTarget()
     {
       return null;
     }
 
+    @Override
     public boolean isAdapterForType(Object type)
     {
       return false;
     }
 
+    @Override
     public void notifyChanged(Notification notification)
     {
       switch (notification.getEventType())
@@ -558,6 +581,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       }
     }
 
+    @Override
     public void setTarget(Notifier newTarget)
     {
     }
@@ -575,6 +599,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       this.xaTransaction = xaTransaction;
     }
 
+    @Override
     public void setTarget(InternalCDOTransaction transaction)
     {
       synchronized (transactions)
@@ -583,6 +608,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       }
     }
 
+    @Override
     public void unsetTarget(InternalCDOTransaction transaction)
     {
       synchronized (transactions)
@@ -599,18 +625,21 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       }
     }
 
+    @Override
     public CDOCommitInfo commit(InternalCDOTransaction transactionCommit, IProgressMonitor progressMonitor) throws Exception
     {
       checkAccess();
       return xaTransaction.commit(progressMonitor);
     }
 
+    @Override
     public void rollback(InternalCDOTransaction transaction, InternalCDOUserSavepoint savepoint)
     {
       checkAccess();
       xaTransaction.rollback((InternalCDOXASavepoint)savepoint);
     }
 
+    @Override
     public InternalCDOUserSavepoint setSavepoint(InternalCDOTransaction transaction)
     {
       checkAccess();

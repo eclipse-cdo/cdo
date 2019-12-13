@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2009, 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2009, 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -85,6 +85,7 @@ public class MessageImpl implements Message, Comparable<MessageImpl>
     this.receivingConsumer = receivingConsumer;
   }
 
+  @Override
   public String getJMSCorrelationID()
   {
     if (correlationID == null)
@@ -95,211 +96,253 @@ public class MessageImpl implements Message, Comparable<MessageImpl>
     return new String(correlationID);
   }
 
+  @Override
   public void setJMSCorrelationID(String correlationID)
   {
     this.correlationID = correlationID == null ? null : correlationID.getBytes();
   }
 
+  @Override
   public byte[] getJMSCorrelationIDAsBytes()
   {
     return correlationID;
   }
 
+  @Override
   public void setJMSCorrelationIDAsBytes(byte[] correlationID)
   {
     this.correlationID = correlationID;
   }
 
+  @Override
   public int getJMSDeliveryMode()
   {
     return deliveryMode;
   }
 
+  @Override
   public void setJMSDeliveryMode(int deliveryMode)
   {
     this.deliveryMode = deliveryMode;
   }
 
+  @Override
   public Destination getJMSDestination()
   {
     return destination;
   }
 
+  @Override
   public void setJMSDestination(Destination destination) throws JMSException
   {
     this.destination = DestinationUtil.convert(destination);
   }
 
+  @Override
   public long getJMSExpiration()
   {
     return expiration;
   }
 
+  @Override
   public void setJMSExpiration(long expiration)
   {
     this.expiration = expiration;
   }
 
+  @Override
   public String getJMSMessageID()
   {
     return messageID;
   }
 
+  @Override
   public void setJMSMessageID(String messageID)
   {
     this.messageID = messageID;
   }
 
+  @Override
   public int getJMSPriority()
   {
     return priority;
   }
 
+  @Override
   public void setJMSPriority(int priority)
   {
     this.priority = priority;
   }
 
+  @Override
   public boolean getJMSRedelivered()
   {
     return redelivered;
   }
 
+  @Override
   public void setJMSRedelivered(boolean redelivered)
   {
     this.redelivered = redelivered;
   }
 
+  @Override
   public Destination getJMSReplyTo()
   {
     return replyTo;
   }
 
+  @Override
   public void setJMSReplyTo(Destination replyTo) throws JMSException
   {
     this.replyTo = DestinationUtil.convert(replyTo);
   }
 
+  @Override
   public long getJMSTimestamp()
   {
     return timestamp;
   }
 
+  @Override
   public void setJMSTimestamp(long timestamp)
   {
     this.timestamp = timestamp;
   }
 
+  @Override
   public String getJMSType()
   {
     return type;
   }
 
+  @Override
   public void setJMSType(String type)
   {
     this.type = type;
   }
 
+  @Override
   public void clearProperties()
   {
     properties.clear();
   }
 
+  @Override
   public boolean propertyExists(String name)
   {
     return properties.containsKey(name);
   }
 
+  @Override
   public boolean getBooleanProperty(String name) throws MessageFormatException
   {
     return TypeUtil.getBoolean(properties.get(name));
   }
 
+  @Override
   public byte getByteProperty(String name) throws MessageFormatException
   {
     return TypeUtil.getByte(properties.get(name));
   }
 
+  @Override
   public short getShortProperty(String name) throws MessageFormatException
   {
     return TypeUtil.getShort(properties.get(name));
   }
 
+  @Override
   public int getIntProperty(String name) throws MessageFormatException
   {
     return TypeUtil.getInt(properties.get(name));
   }
 
+  @Override
   public long getLongProperty(String name) throws MessageFormatException
   {
     return TypeUtil.getLong(properties.get(name));
   }
 
+  @Override
   public float getFloatProperty(String name) throws MessageFormatException
   {
     return TypeUtil.getFloat(properties.get(name));
   }
 
+  @Override
   public double getDoubleProperty(String name) throws MessageFormatException
   {
     return TypeUtil.getDouble(properties.get(name));
   }
 
+  @Override
   public String getStringProperty(String name) throws MessageFormatException
   {
     return TypeUtil.getString(properties.get(name));
   }
 
+  @Override
   public Object getObjectProperty(String name)
   {
     return properties.get(name);
   }
 
+  @Override
   public Enumeration<String> getPropertyNames()
   {
     return Collections.enumeration(properties.keySet());
   }
 
+  @Override
   public void setBooleanProperty(String name, boolean value) throws JMSException
   {
     setProperty(name, value);
   }
 
+  @Override
   public void setByteProperty(String name, byte value) throws JMSException
   {
     setProperty(name, value);
   }
 
+  @Override
   public void setShortProperty(String name, short value) throws JMSException
   {
     setProperty(name, value);
   }
 
+  @Override
   public void setIntProperty(String name, int value) throws JMSException
   {
     setProperty(name, value);
   }
 
+  @Override
   public void setLongProperty(String name, long value) throws JMSException
   {
     setProperty(name, value);
   }
 
+  @Override
   public void setFloatProperty(String name, float value) throws JMSException
   {
     setProperty(name, value);
   }
 
+  @Override
   public void setDoubleProperty(String name, double value) throws JMSException
   {
     setProperty(name, value);
   }
 
+  @Override
   public void setStringProperty(String name, String value) throws JMSException
   {
     setProperty(name, value);
   }
 
+  @Override
   public void setObjectProperty(String name, Object value) throws JMSException
   {
     if (value instanceof Boolean || value instanceof Byte || value instanceof Short || value instanceof Integer || value instanceof Long
@@ -350,6 +393,7 @@ public class MessageImpl implements Message, Comparable<MessageImpl>
     properties.put(name, value);
   }
 
+  @Override
   public void acknowledge()
   {
     if (receivingSession == null)
@@ -375,11 +419,13 @@ public class MessageImpl implements Message, Comparable<MessageImpl>
     receivingSession.acknowledgeMessages(receivingConsumer);
   }
 
+  @Override
   public void clearBody()
   {
     throw new NotYetImplementedException();
   }
 
+  @Override
   public int compareTo(MessageImpl obj)
   {
     if (priority < obj.priority)

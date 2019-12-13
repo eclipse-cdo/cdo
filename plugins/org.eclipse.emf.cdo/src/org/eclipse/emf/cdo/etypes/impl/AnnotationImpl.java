@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2014, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2014, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -62,6 +62,7 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getSource()
   {
     return (String)eGet(EtypesPackage.Literals.ANNOTATION__SOURCE, true);
@@ -71,6 +72,7 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setSource(String newSource)
   {
     eSet(EtypesPackage.Literals.ANNOTATION__SOURCE, newSource);
@@ -80,6 +82,7 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EMap<String, String> getDetails()
   {
@@ -90,6 +93,7 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ModelElement getModelElement()
   {
     return (ModelElement)eGet(EtypesPackage.Literals.ANNOTATION__MODEL_ELEMENT, true);
@@ -99,6 +103,7 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setModelElement(ModelElement newModelElement)
   {
     eSet(EtypesPackage.Literals.ANNOTATION__MODEL_ELEMENT, newModelElement);
@@ -108,6 +113,7 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<EObject> getContents()
   {
@@ -118,6 +124,7 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<EObject> getReferences()
   {

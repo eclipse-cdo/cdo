@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2009, 2011, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2006-2009, 2011, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -126,6 +126,7 @@ public class RemoteTraceView extends ViewPart
     menuMgr.setRemoveAllWhenShown(true);
     menuMgr.addMenuListener(new IMenuListener()
     {
+      @Override
       public void menuAboutToShow(IMenuManager manager)
       {
         RemoteTraceView.this.fillContextMenu(manager);
@@ -193,6 +194,7 @@ public class RemoteTraceView extends ViewPart
   {
     viewer.addDoubleClickListener(new IDoubleClickListener()
     {
+      @Override
       public void doubleClick(DoubleClickEvent event)
       {
         doubleClickAction.run();
@@ -219,14 +221,17 @@ public class RemoteTraceView extends ViewPart
    */
   class ViewContentProvider implements IStructuredContentProvider
   {
+    @Override
     public void inputChanged(Viewer v, Object oldInput, Object newInput)
     {
     }
 
+    @Override
     public void dispose()
     {
     }
 
+    @Override
     public Object[] getElements(Object parent)
     {
       return RemoteTraceManager.INSTANCE.getEvents();
@@ -252,6 +257,7 @@ public class RemoteTraceView extends ViewPart
       text = sharedImages.getImage(ISharedImages.IMG_OBJ_FILE);
     }
 
+    @Override
     public String getColumnText(Object obj, int index)
     {
       if (obj instanceof Event)
@@ -289,6 +295,7 @@ public class RemoteTraceView extends ViewPart
       return getText(obj);
     }
 
+    @Override
     public Image getColumnImage(Object obj, int index)
     {
       if (obj instanceof Event)

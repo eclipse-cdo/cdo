@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2014-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2014-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -71,6 +71,7 @@ public final class HashBag<T> implements Set<T>
     return counter.getValue();
   }
 
+  @Override
   public boolean add(T o)
   {
     return add(o, 1);
@@ -93,6 +94,7 @@ public final class HashBag<T> implements Set<T>
     return false;
   }
 
+  @Override
   public boolean addAll(Collection<? extends T> c)
   {
     for (T t : c)
@@ -103,31 +105,37 @@ public final class HashBag<T> implements Set<T>
     return true;
   }
 
+  @Override
   public void clear()
   {
     map.clear();
   }
 
+  @Override
   public boolean contains(Object o)
   {
     return map.containsKey(o);
   }
 
+  @Override
   public boolean containsAll(Collection<?> c)
   {
     return map.keySet().containsAll(c);
   }
 
+  @Override
   public boolean isEmpty()
   {
     return map.isEmpty();
   }
 
+  @Override
   public Iterator<T> iterator()
   {
     return map.keySet().iterator();
   }
 
+  @Override
   public boolean remove(Object o)
   {
     return remove(o, 1);
@@ -152,6 +160,7 @@ public final class HashBag<T> implements Set<T>
     return true;
   }
 
+  @Override
   public boolean removeAll(Collection<?> c)
   {
     boolean changed = false;
@@ -166,21 +175,25 @@ public final class HashBag<T> implements Set<T>
     return changed;
   }
 
+  @Override
   public boolean retainAll(Collection<?> c)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public int size()
   {
     return map.size();
   }
 
+  @Override
   public Object[] toArray()
   {
     return map.keySet().toArray();
   }
 
+  @Override
   @SuppressWarnings("hiding")
   public <T> T[] toArray(T[] a)
   {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -103,11 +103,13 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   /**
    * @since 4.2
    */
+  @Override
   public SchemaElementType getSchemaElementType()
   {
     return SchemaElementType.SCHEMA;
   }
 
+  @Override
   public IDBSchema getSchema()
   {
     return this;
@@ -116,11 +118,13 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   /**
    * @since 4.2
    */
+  @Override
   public final IDBSchemaElement getParent()
   {
     return null;
   }
 
+  @Override
   public String getFullName()
   {
     return getName();
@@ -129,6 +133,7 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   /**
    * @since 4.2
    */
+  @Override
   @SuppressWarnings("unchecked")
   public final <T extends IDBSchemaElement> T findElement(IDBSchemaElement prototype)
   {
@@ -188,6 +193,7 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   /**
    * @since 2.0
    */
+  @Override
   public IDBTable addTable(String name) throws DBException
   {
     assertUnlocked();
@@ -205,6 +211,7 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   /**
    * @since 4.0
    */
+  @Override
   public IDBTable removeTable(String name)
   {
     assertUnlocked();
@@ -217,6 +224,7 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   /**
    * @since 4.2
    */
+  @Override
   public final IDBTable getTableSafe(String name) throws SchemaElementNotFoundException
   {
     IDBTable table = getTable(name);
@@ -231,6 +239,7 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   /**
    * @since 2.0
    */
+  @Override
   public IDBTable getTable(String name)
   {
     name = name(name);
@@ -240,6 +249,7 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   /**
    * @since 2.0
    */
+  @Override
   public IDBTable[] getTables()
   {
     return tables.values().toArray(new IDBTable[tables.size()]);
@@ -248,17 +258,20 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   /**
    * @since 4.2
    */
+  @Override
   public void remove()
   {
     assertUnlocked();
     tables.clear();
   }
 
+  @Override
   public boolean isLocked()
   {
     return locked;
   }
 
+  @Override
   public boolean lock()
   {
     return locked = true;
@@ -267,11 +280,13 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   /**
    * @since 4.2
    */
+  @Override
   public boolean unlock()
   {
     return locked = false;
   }
 
+  @Override
   public void assertUnlocked() throws DBException
   {
     if (locked)
@@ -280,16 +295,19 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
     }
   }
 
+  @Override
   public Set<IDBTable> create(IDBAdapter dbAdapter, Connection connection) throws DBException
   {
     return dbAdapter.createTables(tables.values(), connection);
   }
 
+  @Override
   public Set<IDBTable> create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException
   {
     return create(dbAdapter, dbAdapter.createConnectionProvider(dataSource));
   }
 
+  @Override
   public Set<IDBTable> create(IDBAdapter dbAdapter, IDBConnectionProvider connectionProvider) throws DBException
   {
     Connection connection = null;
@@ -310,16 +328,19 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
     }
   }
 
+  @Override
   public void drop(IDBAdapter dbAdapter, Connection connection) throws DBException
   {
     dbAdapter.dropTables(tables.values(), connection);
   }
 
+  @Override
   public void drop(IDBAdapter dbAdapter, DataSource dataSource) throws DBException
   {
     drop(dbAdapter, dbAdapter.createConnectionProvider(dataSource));
   }
 
+  @Override
   public void drop(IDBAdapter dbAdapter, IDBConnectionProvider connectionProvider) throws DBException
   {
     Connection connection = null;
@@ -335,6 +356,7 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
     }
   }
 
+  @Override
   public void export(Connection connection, PrintStream out) throws DBException
   {
     for (IDBTable table : getTables())
@@ -347,6 +369,7 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   {
     if (DBUtil.select(connection, new IDBRowHandler()
     {
+      @Override
       public boolean handle(int row, Object... values)
       {
         if (row == 0)
@@ -371,11 +394,13 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
     }
   }
 
+  @Override
   public void export(DataSource dataSource, PrintStream out) throws DBException
   {
     export(DBUtil.createConnectionProvider(dataSource), out);
   }
 
+  @Override
   public void export(IDBConnectionProvider connectionProvider, PrintStream out) throws DBException
   {
     Connection connection = null;
@@ -394,6 +419,7 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   /**
    * @since 4.2
    */
+  @Override
   public IDBSchemaDelta compare(IDBSchema oldSchema)
   {
     return new DBSchemaDelta(this, oldSchema);
@@ -402,6 +428,7 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   /**
    * @since 4.2
    */
+  @Override
   public String createIndexName(IDBTable table, IDBIndex.Type type, IDBField[] fields, int position)
   {
     return "I" + System.currentTimeMillis() + "_" + ++indexCounter;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -76,6 +76,7 @@ public class SectionImpl extends CDOObjectImpl implements Section
    *
    * @generated
    */
+  @Override
   public MenuCard getMenuCard()
   {
     return (MenuCard)eGet(InventoryPackage.Literals.SECTION__MENU_CARD, true);
@@ -86,6 +87,7 @@ public class SectionImpl extends CDOObjectImpl implements Section
    *
    * @generated
    */
+  @Override
   public void setMenuCard(MenuCard newMenuCard)
   {
     eSet(InventoryPackage.Literals.SECTION__MENU_CARD, newMenuCard);
@@ -96,6 +98,7 @@ public class SectionImpl extends CDOObjectImpl implements Section
    *
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Offering> getOfferings()
   {
@@ -107,6 +110,7 @@ public class SectionImpl extends CDOObjectImpl implements Section
    *
    * @generated
    */
+  @Override
   public String getTitle()
   {
     return (String)eGet(InventoryPackage.Literals.SECTION__TITLE, true);
@@ -117,6 +121,7 @@ public class SectionImpl extends CDOObjectImpl implements Section
    *
    * @generated
    */
+  @Override
   public void setTitle(String newTitle)
   {
     eSet(InventoryPackage.Literals.SECTION__TITLE, newTitle);
@@ -127,6 +132,7 @@ public class SectionImpl extends CDOObjectImpl implements Section
    *
    * @generated
    */
+  @Override
   public String getText()
   {
     return (String)eGet(InventoryPackage.Literals.SECTION__TEXT, true);
@@ -137,6 +143,7 @@ public class SectionImpl extends CDOObjectImpl implements Section
    *
    * @generated
    */
+  @Override
   public void setText(String newText)
   {
     eSet(InventoryPackage.Literals.SECTION__TEXT, newText);

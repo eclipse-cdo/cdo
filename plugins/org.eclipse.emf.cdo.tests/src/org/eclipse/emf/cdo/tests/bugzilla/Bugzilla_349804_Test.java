@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -82,6 +82,7 @@ public class Bugzilla_349804_Test extends AbstractCDOTest
     final CountDownLatch invalidationLatch = new CountDownLatch(1);
     session.addListener(new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof CDOSessionInvalidationEvent)
@@ -158,11 +159,13 @@ public class Bugzilla_349804_Test extends AbstractCDOTest
    */
   private class Failure implements WriteAccessHandler
   {
+    @Override
     public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
     {
       throw new IllegalArgumentException("Fail on purpose");
     }
 
+    @Override
     public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
     {
       // Do nothing

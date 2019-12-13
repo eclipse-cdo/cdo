@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -115,6 +115,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getBaseClass()
   {
     return baseClassEClass;
@@ -124,6 +125,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getBaseClass_Couter()
   {
     return (EAttribute)baseClassEClass.getEStructuralFeatures().get(0);
@@ -134,6 +136,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getDocument()
   {
     return documentEClass;
@@ -144,6 +147,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
   	 * <!-- end-user-doc -->
   	 * @generated
   	 */
+  @Override
   public EReference getDocument_Root()
   {
     return (EReference)documentEClass.getEStructuralFeatures().get(0);
@@ -154,6 +158,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
   	 * <!-- end-user-doc -->
   	 * @generated
   	 */
+  @Override
   public EClass getElement()
   {
     return elementEClass;
@@ -164,6 +169,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
   	 * <!-- end-user-doc -->
   	 * @generated
   	 */
+  @Override
   public EReference getElement_Subelements()
   {
     return (EReference)elementEClass.getEStructuralFeatures().get(0);
@@ -174,6 +180,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
   	 * <!-- end-user-doc -->
   	 * @generated
   	 */
+  @Override
   public EReference getElement_Parent()
   {
     return (EReference)elementEClass.getEStructuralFeatures().get(1);
@@ -183,6 +190,7 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
   	 * <!-- begin-user-doc --> <!-- end-user-doc -->
   	 * @generated
   	 */
+  @Override
   public BaseFactory getBaseFactory()
   {
     return (BaseFactory)getEFactoryInstance();

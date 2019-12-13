@@ -39,26 +39,31 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
 {
   private LockStrategy<OBJECT, CONTEXT> readLockStrategy = new LockStrategy<OBJECT, CONTEXT>()
   {
+    @Override
     public boolean isLocked(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.isReadLock(context);
     }
 
+    @Override
     public boolean isLockedByOthers(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.isReadLockByOthers(context);
     }
 
+    @Override
     public boolean canObtainLock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.canObtainReadLock(context);
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> lock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.readLock(context);
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> unlock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.readUnlock(context);
@@ -73,26 +78,31 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
 
   private LockStrategy<OBJECT, CONTEXT> writeLockStrategy = new LockStrategy<OBJECT, CONTEXT>()
   {
+    @Override
     public boolean isLocked(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.isWriteLock(context);
     }
 
+    @Override
     public boolean isLockedByOthers(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.isWriteLockByOthers(context);
     }
 
+    @Override
     public boolean canObtainLock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.canObtainWriteLock(context);
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> lock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.writeLock(context);
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> unlock(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context)
     {
       return entry.writeUnlock(context);
@@ -112,6 +122,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   /**
    * @since 3.0
    */
+  @Override
   public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout) throws InterruptedException
   {
     LockStrategy<OBJECT, CONTEXT> lockingStrategy = getLockingStrategy(type);
@@ -121,6 +132,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   /**
    * @since 3.0
    */
+  @Override
   public void lock(LockType type, CONTEXT context, OBJECT objectToLock, long timeout) throws InterruptedException
   {
     List<OBJECT> objectsToLock = Collections.singletonList(objectToLock);
@@ -134,6 +146,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
    *           Unlocking objects without lock.
    * @since 3.0
    */
+  @Override
   public void unlock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
   {
     LockStrategy<OBJECT, CONTEXT> lockingStrategy = getLockingStrategy(type);
@@ -143,6 +156,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   /**
    * Attempts to release all locks(read and write) for a given context.
    */
+  @Override
   public void unlock(CONTEXT context)
   {
     synchronized (lockChanged)
@@ -183,6 +197,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   /**
    * @since 3.0
    */
+  @Override
   public boolean hasLock(LockType type, CONTEXT context, OBJECT objectToLock)
   {
     LockStrategy<OBJECT, CONTEXT> lockingStrategy = getLockingStrategy(type);
@@ -192,6 +207,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   /**
    * @since 3.0
    */
+  @Override
   public boolean hasLockByOthers(LockType type, CONTEXT context, OBJECT objectToLock)
   {
     LockStrategy<OBJECT, CONTEXT> lockingStrategy = getLockingStrategy(type);
@@ -469,21 +485,25 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       contexts.add(context);
     }
 
+    @Override
     public OBJECT getObject()
     {
       return object;
     }
 
+    @Override
     public boolean isReadLock(CONTEXT context)
     {
       return contexts.contains(context);
     }
 
+    @Override
     public boolean isWriteLock(CONTEXT context)
     {
       return false;
     }
 
+    @Override
     public boolean isReadLockByOthers(CONTEXT context)
     {
       if (contexts.isEmpty())
@@ -494,43 +514,51 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       return contexts.size() > (isReadLock(context) ? 1 : 0);
     }
 
+    @Override
     public boolean isWriteLockByOthers(CONTEXT context)
     {
       return false;
     }
 
+    @Override
     public boolean canObtainReadLock(CONTEXT context)
     {
       return true;
     }
 
+    @Override
     public boolean canObtainWriteLock(CONTEXT context)
     {
       return contexts.size() == 1 && contexts.contains(context);
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> readLock(CONTEXT context)
     {
       contexts.add(context);
       return this;
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> writeLock(CONTEXT context)
     {
       return new WriteLockEntry<OBJECT, CONTEXT>(object, context, this);
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> readUnlock(CONTEXT context)
     {
       contexts.remove(context);
       return contexts.isEmpty() ? null : this;
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> writeUnlock(CONTEXT context)
     {
       throw new IllegalMonitorStateException();
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> clearLock(CONTEXT context)
     {
       while (contexts.remove(context))
@@ -540,6 +568,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       return contexts.isEmpty() ? null : this;
     }
 
+    @Override
     public void changeContext(CONTEXT oldContext, CONTEXT newContext)
     {
       if (contexts.remove(oldContext))
@@ -548,6 +577,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       }
     }
 
+    @Override
     public boolean hasContext(CONTEXT context)
     {
       return contexts.contains(context);
@@ -581,41 +611,49 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       this.count = 1;
     }
 
+    @Override
     public OBJECT getObject()
     {
       return object;
     }
 
+    @Override
     public boolean isReadLock(CONTEXT context)
     {
       return readLock != null ? readLock.isReadLock(context) : false;
     }
 
+    @Override
     public boolean isWriteLock(CONTEXT context)
     {
       return ObjectUtil.equals(this.context, context);
     }
 
+    @Override
     public boolean isReadLockByOthers(CONTEXT context)
     {
       return readLock != null ? readLock.isReadLockByOthers(context) : false;
     }
 
+    @Override
     public boolean isWriteLockByOthers(CONTEXT context)
     {
       return context != this.context;
     }
 
+    @Override
     public boolean canObtainWriteLock(CONTEXT context)
     {
       return ObjectUtil.equals(this.context, context);
     }
 
+    @Override
     public boolean canObtainReadLock(CONTEXT context)
     {
       return ObjectUtil.equals(this.context, context);
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> readLock(CONTEXT context)
     {
       ReadLockEntry<OBJECT, CONTEXT> lock = getReadLock();
@@ -623,12 +661,14 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       return this;
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> writeLock(CONTEXT context)
     {
       count++;
       return this;
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> readUnlock(CONTEXT context)
     {
       if (readLock != null)
@@ -644,11 +684,13 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       throw new IllegalMonitorStateException();
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> writeUnlock(CONTEXT context)
     {
       return --count <= 0 ? readLock : this;
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> clearLock(CONTEXT context)
     {
       if (readLock != null)
@@ -662,6 +704,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       return ObjectUtil.equals(this.context, context) ? readLock : this;
     }
 
+    @Override
     public void changeContext(CONTEXT oldContext, CONTEXT newContext)
     {
       if (ObjectUtil.equals(context, oldContext))
@@ -670,6 +713,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       }
     }
 
+    @Override
     public boolean hasContext(CONTEXT context)
     {
       return ObjectUtil.equals(this.context, context);
@@ -704,71 +748,85 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       this.object = objectToLock;
     }
 
+    @Override
     public OBJECT getObject()
     {
       return object;
     }
 
+    @Override
     public boolean isReadLock(CONTEXT context)
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isWriteLock(CONTEXT context)
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isReadLockByOthers(CONTEXT context)
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isWriteLockByOthers(CONTEXT context)
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean canObtainWriteLock(CONTEXT context)
     {
       return true;
     }
 
+    @Override
     public boolean canObtainReadLock(CONTEXT context)
     {
       return true;
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> readLock(CONTEXT context)
     {
       return new ReadLockEntry<OBJECT, CONTEXT>(object, context);
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> writeLock(CONTEXT context)
     {
       return new WriteLockEntry<OBJECT, CONTEXT>(object, context, null);
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> readUnlock(CONTEXT context)
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> writeUnlock(CONTEXT context)
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public LockEntry<OBJECT, CONTEXT> clearLock(CONTEXT context)
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public void changeContext(CONTEXT oldContext, CONTEXT newContext)
     {
       // Do nothing
     }
 
+    @Override
     public boolean hasContext(CONTEXT context)
     {
       return false;

@@ -36,6 +36,7 @@ public class LifecycleEventConverter<E> implements IListener
     return owner;
   }
 
+  @Override
   public void notifyEvent(IEvent event)
   {
     if (event instanceof ILifecycleEvent)

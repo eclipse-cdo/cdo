@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -76,6 +76,7 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Date getDate()
   {
     return (Date)eGet(BusinessPackage.Literals.BUSINESS_DAY__DATE, true);
@@ -85,6 +86,7 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDate(Date newDate)
   {
     eSet(BusinessPackage.Literals.BUSINESS_DAY__DATE, newDate);
@@ -94,6 +96,7 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public MenuCard getMenuCard()
   {
     return (MenuCard)eGet(BusinessPackage.Literals.BUSINESS_DAY__MENU_CARD, true);
@@ -103,6 +106,7 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setMenuCard(MenuCard newMenuCard)
   {
     eSet(BusinessPackage.Literals.BUSINESS_DAY__MENU_CARD, newMenuCard);
@@ -112,6 +116,7 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Order> getOrders()
   {
@@ -122,6 +127,7 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Waiter> getWaiters()
   {
@@ -132,6 +138,7 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isClosed()
   {
     return (Boolean)eGet(BusinessPackage.Literals.BUSINESS_DAY__CLOSED, true);
@@ -141,6 +148,7 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setClosed(boolean newClosed)
   {
     eSet(BusinessPackage.Literals.BUSINESS_DAY__CLOSED, newClosed);

@@ -31,11 +31,13 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
     this.delegate = delegate;
   }
 
+  @Override
   public Collection<E> getDelegate()
   {
     return delegate;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public E[] getElements()
   {
@@ -45,6 +47,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category WRITE
    */
+  @Override
   public boolean add(E o)
   {
     boolean modified = getDelegate().add(o);
@@ -59,6 +62,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category WRITE
    */
+  @Override
   public boolean addAll(Collection<? extends E> c)
   {
     ContainerEvent<E> event = new ContainerEvent<E>(this);
@@ -77,6 +81,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category WRITE
    */
+  @Override
   public void clear()
   {
     if (!isEmpty())
@@ -94,6 +99,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category WRITE
    */
+  @Override
   public boolean remove(Object o)
   {
     boolean modified = getDelegate().remove(o);
@@ -108,6 +114,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category WRITE
    */
+  @Override
   @SuppressWarnings("unchecked")
   public boolean removeAll(Collection<?> c)
   {
@@ -127,6 +134,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category WRITE
    */
+  @Override
   @SuppressWarnings("unchecked")
   public boolean retainAll(Collection<?> c)
   {
@@ -146,6 +154,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category READ
    */
+  @Override
   public boolean contains(Object o)
   {
     return getDelegate().contains(o);
@@ -154,6 +163,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category READ
    */
+  @Override
   public boolean containsAll(Collection<?> c)
   {
     return getDelegate().containsAll(c);
@@ -180,6 +190,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category READ
    */
+  @Override
   public boolean isEmpty()
   {
     return getDelegate().isEmpty();
@@ -188,6 +199,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category READ
    */
+  @Override
   public Iterator<E> iterator()
   {
     return new DelegatingIterator(getDelegate().iterator());
@@ -196,6 +208,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category READ
    */
+  @Override
   public int size()
   {
     return getDelegate().size();
@@ -204,6 +217,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category READ
    */
+  @Override
   public Object[] toArray()
   {
     return getDelegate().toArray();
@@ -212,6 +226,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   /**
    * @category READ
    */
+  @Override
   public <T> T[] toArray(T[] a)
   {
     return getDelegate().toArray(a);

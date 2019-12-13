@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -397,6 +397,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isUnsettableBoolean()
   {
     return unsettableBoolean;
@@ -406,6 +407,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableBoolean(boolean newUnsettableBoolean)
   {
     boolean oldUnsettableBoolean = unsettableBoolean;
@@ -423,6 +425,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableBoolean()
   {
     boolean oldUnsettableBoolean = unsettableBoolean;
@@ -440,6 +443,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableBoolean()
   {
     return unsettableBooleanESet;
@@ -449,6 +453,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public byte getUnsettableByte()
   {
     return unsettableByte;
@@ -458,6 +463,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableByte(byte newUnsettableByte)
   {
     byte oldUnsettableByte = unsettableByte;
@@ -475,6 +481,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableByte()
   {
     byte oldUnsettableByte = unsettableByte;
@@ -492,6 +499,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableByte()
   {
     return unsettableByteESet;
@@ -501,6 +509,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public char getUnsettableChar()
   {
     return unsettableChar;
@@ -510,6 +519,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableChar(char newUnsettableChar)
   {
     char oldUnsettableChar = unsettableChar;
@@ -527,6 +537,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableChar()
   {
     char oldUnsettableChar = unsettableChar;
@@ -544,6 +555,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableChar()
   {
     return unsettableCharESet;
@@ -553,6 +565,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Date getUnsettableDate()
   {
     return unsettableDate;
@@ -562,6 +575,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableDate(Date newUnsettableDate)
   {
     Date oldUnsettableDate = unsettableDate;
@@ -579,6 +593,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableDate()
   {
     Date oldUnsettableDate = unsettableDate;
@@ -596,6 +611,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableDate()
   {
     return unsettableDateESet;
@@ -605,6 +621,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public double getUnsettableDouble()
   {
     return unsettableDouble;
@@ -614,6 +631,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableDouble(double newUnsettableDouble)
   {
     double oldUnsettableDouble = unsettableDouble;
@@ -631,6 +649,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableDouble()
   {
     double oldUnsettableDouble = unsettableDouble;
@@ -648,6 +667,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableDouble()
   {
     return unsettableDoubleESet;
@@ -657,6 +677,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public float getUnsettableFloat()
   {
     return unsettableFloat;
@@ -666,6 +687,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableFloat(float newUnsettableFloat)
   {
     float oldUnsettableFloat = unsettableFloat;
@@ -683,6 +705,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableFloat()
   {
     float oldUnsettableFloat = unsettableFloat;
@@ -700,6 +723,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableFloat()
   {
     return unsettableFloatESet;
@@ -709,6 +733,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getUnsettableInt()
   {
     return unsettableInt;
@@ -718,6 +743,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableInt(int newUnsettableInt)
   {
     int oldUnsettableInt = unsettableInt;
@@ -734,6 +760,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableInt()
   {
     int oldUnsettableInt = unsettableInt;
@@ -751,6 +778,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableInt()
   {
     return unsettableIntESet;
@@ -760,6 +788,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public long getUnsettableLong()
   {
     return unsettableLong;
@@ -769,6 +798,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableLong(long newUnsettableLong)
   {
     long oldUnsettableLong = unsettableLong;
@@ -786,6 +816,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableLong()
   {
     long oldUnsettableLong = unsettableLong;
@@ -803,6 +834,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableLong()
   {
     return unsettableLongESet;
@@ -812,6 +844,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public short getUnsettableShort()
   {
     return unsettableShort;
@@ -821,6 +854,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableShort(short newUnsettableShort)
   {
     short oldUnsettableShort = unsettableShort;
@@ -838,6 +872,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableShort()
   {
     short oldUnsettableShort = unsettableShort;
@@ -855,6 +890,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableShort()
   {
     return unsettableShortESet;
@@ -864,6 +900,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getUnsettableString()
   {
     return unsettableString;
@@ -873,6 +910,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableString(String newUnsettableString)
   {
     String oldUnsettableString = unsettableString;
@@ -890,6 +928,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableString()
   {
     String oldUnsettableString = unsettableString;
@@ -907,6 +946,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableString()
   {
     return unsettableStringESet;
@@ -916,6 +956,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public VAT getUnsettableVAT()
   {
     return unsettableVAT;
@@ -925,6 +966,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableVAT(VAT newUnsettableVAT)
   {
     VAT oldUnsettableVAT = unsettableVAT;
@@ -941,6 +983,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableVAT()
   {
     VAT oldUnsettableVAT = unsettableVAT;
@@ -958,6 +1001,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableVAT()
   {
     return unsettableVATESet;
@@ -968,6 +1012,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EObject getUnsettableElement()
   {
     if (unsettableElement != null && unsettableElement.eIsProxy())
@@ -1000,6 +1045,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableElement(EObject newUnsettableElement)
   {
     EObject oldUnsettableElement = unsettableElement;
@@ -1018,6 +1064,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableElement()
   {
     EObject oldUnsettableElement = unsettableElement;
@@ -1036,6 +1083,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableElement()
   {
     return unsettableElementESet;

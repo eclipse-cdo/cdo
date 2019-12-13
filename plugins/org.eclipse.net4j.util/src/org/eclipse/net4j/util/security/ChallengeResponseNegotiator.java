@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -189,6 +189,7 @@ public abstract class ChallengeResponseNegotiator extends Negotiator<IChallengeR
    */
   protected abstract class Transition implements ITransition<State, Event, INegotiationContext, ByteBuffer>
   {
+    @Override
     public final void execute(INegotiationContext context, State state, Event event, ByteBuffer buffer)
     {
       execute(context, buffer);

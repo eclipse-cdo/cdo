@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -58,6 +58,7 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
 
   private final IListener repositoryManagerListener = new IListener()
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof RepositoryConnectionEvent)
@@ -102,6 +103,7 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
       {
         getDisplay().asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             IStructuredSelection selection = (IStructuredSelection)repositoriesView.getSelection();
@@ -248,6 +250,7 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
 
           UIUtil.getDisplay().asyncExec(new Runnable()
           {
+            @Override
             public void run()
             {
               try
@@ -285,6 +288,7 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
     return super.getText(element);
   }
 
+  @Override
   public String getColumnText(Object element, int columnIndex)
   {
     switch (columnIndex)
@@ -336,6 +340,7 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
     return super.getImage(obj);
   }
 
+  @Override
   public Image getColumnImage(Object element, int columnIndex)
   {
     if (columnIndex == 0)

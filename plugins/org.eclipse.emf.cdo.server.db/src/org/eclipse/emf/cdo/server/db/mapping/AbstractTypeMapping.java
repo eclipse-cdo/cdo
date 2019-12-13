@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -75,41 +75,49 @@ public abstract class AbstractTypeMapping implements ITypeMapping
     return mappingStrategy;
   }
 
+  @Override
   public final void setMappingStrategy(IMappingStrategy mappingStrategy)
   {
     this.mappingStrategy = mappingStrategy;
   }
 
+  @Override
   public final EStructuralFeature getFeature()
   {
     return feature;
   }
 
+  @Override
   public final void setFeature(EStructuralFeature feature)
   {
     this.feature = feature;
   }
 
+  @Override
   public final void setDBType(DBType dbType)
   {
     this.dbType = dbType;
   }
 
+  @Override
   public DBType getDBType()
   {
     return dbType;
   }
 
+  @Override
   public final void setValueFromRevision(PreparedStatement stmt, int index, InternalCDORevision revision) throws SQLException
   {
     setValue(stmt, index, getRevisionValue(revision));
   }
 
+  @Override
   public final void setDefaultValue(PreparedStatement stmt, int index) throws SQLException
   {
     setValue(stmt, index, getDefaultValue());
   }
 
+  @Override
   public final void setValue(PreparedStatement stmt, int index, Object value) throws SQLException
   {
     if (value == CDORevisionData.NIL)
@@ -148,12 +156,14 @@ public abstract class AbstractTypeMapping implements ITypeMapping
     }
   }
 
+  @Override
   @Deprecated
   public final void createDBField(IDBTable table)
   {
     createDBField(table, mappingStrategy.getFieldName(feature));
   }
 
+  @Override
   public final void createDBField(IDBTable table, String fieldName)
   {
     DBType fieldType = getDBType();
@@ -161,22 +171,26 @@ public abstract class AbstractTypeMapping implements ITypeMapping
     field = table.addField(fieldName, fieldType, fieldLength);
   }
 
+  @Override
   public final IDBField getField()
   {
     return field;
   }
 
+  @Override
   public final void setDBField(IDBTable table, String fieldName)
   {
     field = table.getFieldSafe(fieldName);
   }
 
+  @Override
   public final void readValueToRevision(ResultSet resultSet, InternalCDORevision revision) throws SQLException
   {
     Object value = readValue(resultSet);
     revision.setValue(getFeature(), value);
   }
 
+  @Override
   public final Object readValue(ResultSet resultSet) throws SQLException
   {
     Object value = getResultSetValue(resultSet);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -108,14 +108,17 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
     {
     }
 
+    @Override
     public void dispose()
     {
     }
 
+    @Override
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
     {
     }
 
+    @Override
     public Object[] getElements(Object inputElement)
     {
       Set<String> uris = new HashSet<String>(EPackage.Registry.INSTANCE.keySet());
@@ -169,21 +172,25 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
       return null;
     }
 
+    @Override
     public String getColumnText(Object element, int columnIndex)
     {
       return getText(element);
     }
 
+    @Override
     public Image getColumnImage(Object element, int columnIndex)
     {
       return getImage(element);
     }
 
+    @Override
     public Color getBackground(Object element, int columnIndex)
     {
       return null;
     }
 
+    @Override
     public Color getForeground(Object element, int columnIndex)
     {
       if (EcorePackage.eINSTANCE.getNsURI().equals(element))

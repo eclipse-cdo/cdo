@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -45,31 +45,37 @@ public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> imp
     return PROPERTIES_FILE;
   }
 
+  @Override
   public CDORepository getRepository(String id)
   {
     return getElement(id);
   }
 
+  @Override
   public CDORepository getRepository(CDOSession session)
   {
     return sessionMap.get(session);
   }
 
+  @Override
   public CDORepository getRepositoryByLabel(String label)
   {
     return getElementByLabel(label);
   }
 
+  @Override
   public CDORepository[] getRepositories()
   {
     return getElements();
   }
 
+  @Override
   public CDORepository addRepository(Properties properties)
   {
     return addRepository(properties, null);
   }
 
+  @Override
   public CDORepository addRepository(Properties properties, IPasswordCredentials credentials)
   {
     CDORepository repository = newElement(properties);
@@ -159,11 +165,13 @@ public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> imp
       return (CDORepositoryManager)super.getSource();
     }
 
+    @Override
     public CDORepository getRepository()
     {
       return repository;
     }
 
+    @Override
     public boolean isConnected()
     {
       return connected;

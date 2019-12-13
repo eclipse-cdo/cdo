@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2012, 2014, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2012, 2014, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -126,6 +126,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
    * @since 2.0 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public CDOResourceFolder createCDOResourceFolder()
   {
     CDOResourceFolderImpl cdoResourceFolder = new CDOResourceFolderImpl();
@@ -136,6 +137,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public CDOResource createCDOResource()
   {
     CDOResourceImpl cdoResource = new CDOResourceImpl();
@@ -148,6 +150,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
    * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public CDOBinaryResource createCDOBinaryResource()
   {
     CDOBinaryResourceImpl cdoBinaryResource = new CDOBinaryResourceImpl();
@@ -160,6 +163,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
    * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public CDOTextResource createCDOTextResource()
   {
     CDOTextResourceImpl cdoTextResource = new CDOTextResourceImpl();
@@ -190,6 +194,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EresourcePackage getEresourcePackage()
   {
     return (EresourcePackage)getEPackage();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -81,47 +81,56 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
     return (IDBIndex)super.getWrapper();
   }
 
+  @Override
   public SchemaElementType getSchemaElementType()
   {
     return SchemaElementType.INDEX;
   }
 
+  @Override
   public IDBSchema getSchema()
   {
     return table.getSchema();
   }
 
+  @Override
   public IDBTable getTable()
   {
     return table;
   }
 
+  @Override
   public IDBTable getParent()
   {
     return getTable();
   }
 
+  @Override
   public Type getType()
   {
     return type;
   }
 
+  @Override
   public void setType(Type type)
   {
     assertUnlocked();
     this.type = type;
   }
 
+  @Override
   public boolean isOptional()
   {
     return optional;
   }
 
+  @Override
   public void setOptional(boolean optional)
   {
     this.optional = optional;
   }
 
+  @Override
   @Deprecated
   public int getPosition()
   {
@@ -129,6 +138,7 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
     return Arrays.asList(indices).indexOf(this);
   }
 
+  @Override
   public IDBIndexField addIndexField(IDBField field)
   {
     assertUnlocked();
@@ -170,12 +180,14 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
     return indexField;
   }
 
+  @Override
   public IDBIndexField addIndexField(String name) throws SchemaElementNotFoundException
   {
     IDBField field = table.getFieldSafe(name);
     return addIndexField(field);
   }
 
+  @Override
   public void removeIndexField(IDBIndexField indexFieldToRemove)
   {
     assertUnlocked();
@@ -198,6 +210,7 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
     resetElements();
   }
 
+  @Override
   public IDBIndexField getIndexFieldSafe(String name) throws SchemaElementNotFoundException
   {
     IDBIndexField indexField = getIndexField(name);
@@ -209,22 +222,26 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
     return indexField;
   }
 
+  @Override
   public IDBIndexField getIndexField(String name)
   {
     return findElement(getIndexFields(), name);
   }
 
+  @Override
   public IDBIndexField getIndexField(int position)
   {
     return indexFields.get(position);
   }
 
+  @Override
   public IDBField getFieldSafe(String name) throws SchemaElementNotFoundException
   {
     IDBIndexField indexField = getIndexFieldSafe(name);
     return indexField.getField();
   }
 
+  @Override
   public IDBField getField(String name)
   {
     name = name(name);
@@ -239,21 +256,25 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
     return null;
   }
 
+  @Override
   public IDBField getField(int position)
   {
     return indexFields.get(position).getField();
   }
 
+  @Override
   public int getFieldCount()
   {
     return indexFields.size();
   }
 
+  @Override
   public IDBIndexField[] getIndexFields()
   {
     return indexFields.toArray(new IDBIndexField[indexFields.size()]);
   }
 
+  @Override
   public IDBField[] getFields()
   {
     IDBField[] fields = new IDBField[indexFields.size()];
@@ -265,11 +286,13 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
     return fields;
   }
 
+  @Override
   public String getFullName()
   {
     return getName();
   }
 
+  @Override
   public void remove()
   {
     ((InternalDBTable)table).removeIndex(this);

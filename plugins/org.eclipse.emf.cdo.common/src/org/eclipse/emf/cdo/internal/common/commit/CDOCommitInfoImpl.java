@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -72,6 +72,7 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
     this.commitData = commitData;
   }
 
+  @Override
   public InternalCDOCommitInfoManager getCommitInfoManager()
   {
     return commitInfoManager;
@@ -95,31 +96,37 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
   // return parents;
   // }
 
+  @Override
   public long getPreviousTimeStamp()
   {
     return previousTimeStamp;
   }
 
+  @Override
   public CDOCommitInfo getPreviousCommitInfo()
   {
     return previousTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE ? null : commitInfoManager.getCommitInfo(previousTimeStamp);
   }
 
+  @Override
   public String getUserID()
   {
     return userID;
   }
 
+  @Override
   public String getComment()
   {
     return comment;
   }
 
+  @Override
   public CDOBranchPoint getMergeSource()
   {
     return mergeSource;
   }
 
+  @Override
   public CDOCommitInfo getMergedCommitInfo()
   {
     if (mergeSource == null)
@@ -135,64 +142,75 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
     return mergedCommitInfo;
   }
 
+  @Override
   public boolean isInitialCommit()
   {
     return CDOCommonUtil.SYSTEM_USER_ID.equals(userID);
   }
 
+  @Override
   public boolean isEmpty()
   {
     loadCommitDataIfNeeded();
     return commitData.isEmpty();
   }
 
+  @Override
   public CDOChangeSetData copy()
   {
     return commitData == null ? null : commitData.copy();
   }
 
+  @Override
   public void merge(CDOChangeSetData changeSetData)
   {
     loadCommitDataIfNeeded();
     commitData.merge(changeSetData);
   }
 
+  @Override
   public synchronized List<CDOPackageUnit> getNewPackageUnits()
   {
     loadCommitDataIfNeeded();
     return commitData.getNewPackageUnits();
   }
 
+  @Override
   public synchronized List<CDOIDAndVersion> getNewObjects()
   {
     loadCommitDataIfNeeded();
     return commitData.getNewObjects();
   }
 
+  @Override
   public synchronized List<CDORevisionKey> getChangedObjects()
   {
     loadCommitDataIfNeeded();
     return commitData.getChangedObjects();
   }
 
+  @Override
   public synchronized List<CDOIDAndVersion> getDetachedObjects()
   {
     loadCommitDataIfNeeded();
     return commitData.getDetachedObjects();
   }
 
+  @Override
   public Map<CDOID, CDOChangeKind> getChangeKinds()
   {
     loadCommitDataIfNeeded();
     return commitData.getChangeKinds();
   }
 
+  @Override
   public CDOChangeKind getChangeKind(CDOID id)
   {
     loadCommitDataIfNeeded();
     return commitData.getChangeKind(id);
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
@@ -203,6 +221,7 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
       {
         return new CDOBranchCreationContext()
         {
+          @Override
           public CDOBranchPoint getBase()
           {
             return CDOCommitInfoImpl.this;
@@ -274,6 +293,7 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
         commitInfo.getUserID(), commitInfo.getComment(), commitInfo.getMergeSource(), data);
   }
 
+  @Override
   public synchronized boolean isCommitDataLoaded()
   {
     return commitData != null;

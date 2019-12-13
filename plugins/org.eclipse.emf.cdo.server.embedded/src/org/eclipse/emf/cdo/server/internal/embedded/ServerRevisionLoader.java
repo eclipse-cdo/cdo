@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -43,6 +43,7 @@ public final class ServerRevisionLoader implements RevisionLoader2
     return delegate;
   }
 
+  @Override
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
   {
     InternalSession serverSession = ServerSession.get();
@@ -62,6 +63,7 @@ public final class ServerRevisionLoader implements RevisionLoader2
     return delegate.loadRevisions(infos, branchPoint, referenceChunk, prefetchDepth);
   }
 
+  @Override
   public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk)
   {
     InternalSession serverSession = ServerSession.get();
@@ -81,6 +83,7 @@ public final class ServerRevisionLoader implements RevisionLoader2
     return delegate.loadRevisionByVersion(id, branchVersion, referenceChunk);
   }
 
+  @Override
   public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     InternalSession serverSession = ServerSession.get();
@@ -102,6 +105,7 @@ public final class ServerRevisionLoader implements RevisionLoader2
     }
   }
 
+  @Override
   public CDOBranchPointRange loadObjectLifetime(CDOID id, CDOBranchPoint branchPoint)
   {
     InternalSession serverSession = ServerSession.get();

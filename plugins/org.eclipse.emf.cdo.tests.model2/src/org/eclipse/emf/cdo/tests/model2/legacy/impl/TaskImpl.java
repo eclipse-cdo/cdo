@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -98,6 +98,7 @@ public class TaskImpl extends EObjectImpl implements Task
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public TaskContainer getTaskContainer()
   {
     if (eContainerFeatureID() != Model2Package.TASK__TASK_CONTAINER)
@@ -121,6 +122,7 @@ public class TaskImpl extends EObjectImpl implements Task
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setTaskContainer(TaskContainer newTaskContainer)
   {
     if (newTaskContainer != eInternalContainer() || eContainerFeatureID() != Model2Package.TASK__TASK_CONTAINER && newTaskContainer != null)
@@ -154,6 +156,7 @@ public class TaskImpl extends EObjectImpl implements Task
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getDescription()
   {
     return description;
@@ -163,6 +166,7 @@ public class TaskImpl extends EObjectImpl implements Task
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDescription(String newDescription)
   {
     String oldDescription = description;
@@ -177,6 +181,7 @@ public class TaskImpl extends EObjectImpl implements Task
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isDone()
   {
     return done;
@@ -186,6 +191,7 @@ public class TaskImpl extends EObjectImpl implements Task
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDone(boolean newDone)
   {
     boolean oldDone = done;

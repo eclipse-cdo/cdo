@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -61,28 +61,33 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     }
   }
 
+  @Override
   public CDOCommonRepository getRepository()
   {
     return repository;
   }
 
+  @Override
   public void setRepository(CDOCommonRepository repository)
   {
     checkInactive();
     this.repository = repository;
   }
 
+  @Override
   public CommitInfoLoader getCommitInfoLoader()
   {
     return loader;
   }
 
+  @Override
   public void setCommitInfoLoader(CommitInfoLoader commitInfoLoader)
   {
     checkInactive();
     loader = commitInfoLoader;
   }
 
+  @Override
   public CDOCommitInfoHandler[] getCommitInfoHandlers()
   {
     synchronized (handlers)
@@ -94,6 +99,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
   /**
    * @since 4.0
    */
+  @Override
   public void addCommitInfoHandler(CDOCommitInfoHandler handler)
   {
     synchronized (handlers)
@@ -105,6 +111,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
   /**
    * @since 4.0
    */
+  @Override
   public void removeCommitInfoHandler(CDOCommitInfoHandler handler)
   {
     synchronized (handlers)
@@ -113,6 +120,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     }
   }
 
+  @Override
   public void notifyCommitInfoHandlers(CDOCommitInfo commitInfo)
   {
     for (CDOCommitInfoHandler handler : getCommitInfoHandlers())
@@ -128,11 +136,13 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     }
   }
 
+  @Override
   public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOCommitData commitData)
   {
     return createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null, commitData);
   }
 
+  @Override
   public CDOCommitInfo createCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOBranchPoint mergeSource,
       CDOCommitData commitData)
   {
@@ -141,11 +151,13 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     return intern(commitInfo);
   }
 
+  @Override
   public CDOCommitInfo getCommitInfo(long timeStamp)
   {
     return getCommitInfo(timeStamp, true);
   }
 
+  @Override
   public CDOCommitInfo getCommitInfo(long timeStamp, boolean loadOnDemand)
   {
     checkActive();
@@ -168,6 +180,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     {
       getCommitInfos(null, timeStamp, timeStamp, new CDOCommitInfoHandler()
       {
+        @Override
         public void handleCommitInfo(CDOCommitInfo commitInfo)
         {
           result[0] = commitInfo;
@@ -178,6 +191,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     return result[0];
   }
 
+  @Override
   public CDOCommitInfo getCommitInfo(CDOBranch branch, long startTime, boolean up)
   {
     checkActive();
@@ -186,6 +200,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     final CDOCommitInfo[] result = { null };
     getCommitInfos(branch, startTime, null, null, count, new CDOCommitInfoHandler()
     {
+      @Override
       public void handleCommitInfo(CDOCommitInfo commitInfo)
       {
         result[0] = commitInfo;
@@ -195,6 +210,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     return result[0];
   }
 
+  @Override
   public void getCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
     checkActive();
@@ -203,6 +219,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
       final CDOCommitInfoHandler delegate = handler;
       handler = new CDOCommitInfoHandler()
       {
+        @Override
         public void handleCommitInfo(CDOCommitInfo commitInfo)
         {
           delegate.handleCommitInfo(intern(commitInfo));
@@ -213,6 +230,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     loader.loadCommitInfos(branch, startTime, endTime, handler);
   }
 
+  @Override
   public void getCommitInfos(CDOBranch branch, long startTime, String reserved1, String reserved2, int count, CDOCommitInfoHandler handler)
   {
     if (reserved1 != null || reserved2 != null)
@@ -224,6 +242,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     getCommitInfos(branch, startTime, endTime, handler);
   }
 
+  @Override
   public CDOCommitInfo getBaseOfBranch(CDOBranch branch)
   {
     if (branch.isMainBranch())
@@ -242,6 +261,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     return base;
   }
 
+  @Override
   public CDOCommitInfo getFirstOfBranch(CDOBranch branch)
   {
     BranchInfoCache infoCache = getBranchInfoCache(branch, true);
@@ -255,6 +275,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     return first;
   }
 
+  @Override
   public CDOCommitInfo getLastOfBranch(CDOBranch branch)
   {
     BranchInfoCache infoCache = getBranchInfoCache(branch, true);
@@ -268,6 +289,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     return last;
   }
 
+  @Override
   public long getLastCommitOfBranch(CDOBranch branch, boolean loadOnDemand)
   {
     if (branch == null)
@@ -292,6 +314,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     return CDOBranchPoint.UNSPECIFIED_DATE;
   }
 
+  @Override
   public void setLastCommitOfBranch(CDOBranch branch, long lastCommit)
   {
     if (branch != null)
@@ -303,6 +326,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
     setLastCommit(lastCommit);
   }
 
+  @Override
   public long getLastCommit()
   {
     return lastCommit;

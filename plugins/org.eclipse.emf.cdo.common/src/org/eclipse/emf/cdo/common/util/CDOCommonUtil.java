@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -77,6 +77,7 @@ public final class CDOCommonUtil
    */
   public static final Comparator<CDONameProvider> NAME_COMPARATOR = new Comparator<CDONameProvider>()
   {
+    @Override
     public int compare(CDONameProvider o1, CDONameProvider o2)
     {
       String n1 = StringUtil.safe(o1.getName()).toLowerCase();
@@ -90,6 +91,7 @@ public final class CDOCommonUtil
    */
   public static final Comparator<CDOTimeProvider> TIME_COMPARATOR = new Comparator<CDOTimeProvider>()
   {
+    @Override
     public int compare(CDOTimeProvider o1, CDOTimeProvider o2)
     {
       return compareTimeStamps(o1.getTimeStamp(), o2.getTimeStamp());
@@ -109,6 +111,7 @@ public final class CDOCommonUtil
   {
     return new CDODataInputImpl(inputStream)
     {
+      @Override
       public CDOPackageRegistry getPackageRegistry()
       {
         return packageRegistry;
@@ -294,6 +297,7 @@ public final class CDOCommonUtil
         {
           listener = new IListener()
           {
+            @Override
             public void notifyEvent(IEvent event)
             {
               synchronized (this)

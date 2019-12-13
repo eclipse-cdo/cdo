@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2009-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2009-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -44,6 +44,7 @@ public class OSGiBundle extends AbstractBundle
     return (BundleContext)super.getBundleContext();
   }
 
+  @Override
   public URL getBaseURL()
   {
     try
@@ -64,6 +65,7 @@ public class OSGiBundle extends AbstractBundle
     }
   }
 
+  @Override
   public Iterator<Class<?>> getClasses()
   {
     final Queue<String> folders = new LinkedList<String>();
@@ -108,6 +110,7 @@ public class OSGiBundle extends AbstractBundle
     };
   }
 
+  @Override
   public String getStateLocation()
   {
     Bundle bundle = getBundleContext().getBundle();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -64,6 +64,7 @@ public class DImpl extends CDOObjectImpl implements D
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EObject getData()
   {
     return (EObject)eGet(Model6Package.Literals.D__DATA, true);
@@ -73,6 +74,7 @@ public class DImpl extends CDOObjectImpl implements D
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setData(EObject newData)
   {
     eSet(Model6Package.Literals.D__DATA, newData);

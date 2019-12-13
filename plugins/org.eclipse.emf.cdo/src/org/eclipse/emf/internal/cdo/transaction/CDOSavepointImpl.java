@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2016, 2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2016, 2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -176,6 +176,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     }
   }
 
+  @Override
   public void clear()
   {
     synchronized (transaction.getViewMonitor())
@@ -198,104 +199,124 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     }
   }
 
+  @Override
   public boolean wasDirty()
   {
     return wasDirty;
   }
 
+  @Override
   public Map<CDOID, CDOObject> getNewObjects()
   {
     return newObjects;
   }
 
+  @Override
   public Map<CDOID, CDOObject> getDetachedObjects()
   {
     return detachedObjects;
   }
 
   // Bug 283985 (Re-attachment)
+  @Override
   public Map<CDOID, CDOObject> getReattachedObjects()
   {
     return reattachedObjects;
   }
 
+  @Override
   public Map<CDOID, CDOObject> getDirtyObjects()
   {
     return dirtyObjects;
   }
 
+  @Override
   @Deprecated
   public Set<CDOID> getSharedDetachedObjects()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public void recalculateSharedDetachedObjects()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public ConcurrentMap<CDOID, CDORevisionDelta> getRevisionDeltas()
   {
     return new ConcurrentMap<CDOID, CDORevisionDelta>()
     {
+      @Override
       public int size()
       {
         return revisionDeltas.size();
       }
 
+      @Override
       public boolean isEmpty()
       {
         return revisionDeltas.isEmpty();
       }
 
+      @Override
       public boolean containsKey(Object key)
       {
         return revisionDeltas.containsKey(key);
       }
 
+      @Override
       public boolean containsValue(Object value)
       {
         return revisionDeltas.containsValue(value);
       }
 
+      @Override
       public CDORevisionDelta get(Object key)
       {
         return revisionDeltas.get(key);
       }
 
+      @Override
       public CDORevisionDelta put(CDOID key, CDORevisionDelta value)
       {
         return revisionDeltas.put(key, value);
       }
 
+      @Override
       public CDORevisionDelta remove(Object key)
       {
         return revisionDeltas.remove(key);
       }
 
+      @Override
       public void putAll(Map<? extends CDOID, ? extends CDORevisionDelta> m)
       {
         revisionDeltas.putAll(m);
       }
 
+      @Override
       public void clear()
       {
         revisionDeltas.clear();
       }
 
+      @Override
       public Set<CDOID> keySet()
       {
         return revisionDeltas.keySet();
       }
 
+      @Override
       public Collection<CDORevisionDelta> values()
       {
         return revisionDeltas.values();
       }
 
+      @Override
       public Set<java.util.Map.Entry<CDOID, CDORevisionDelta>> entrySet()
       {
         return revisionDeltas.entrySet();
@@ -313,21 +334,25 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
         return revisionDeltas.hashCode();
       }
 
+      @Override
       public CDORevisionDelta putIfAbsent(CDOID key, CDORevisionDelta value)
       {
         return null;
       }
 
+      @Override
       public boolean remove(Object key, Object value)
       {
         return false;
       }
 
+      @Override
       public boolean replace(CDOID key, CDORevisionDelta oldValue, CDORevisionDelta newValue)
       {
         return false;
       }
 
+      @Override
       public CDORevisionDelta replace(CDOID key, CDORevisionDelta value)
       {
         return null;
@@ -335,11 +360,13 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     };
   }
 
+  @Override
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas2()
   {
     return revisionDeltas;
   }
 
+  @Override
   public CDOChangeSetData getChangeSetData()
   {
     synchronized (transaction.getViewMonitor())
@@ -357,6 +384,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     }
   }
 
+  @Override
   public CDOChangeSetData getAllChangeSetData()
   {
     synchronized (transaction.getViewMonitor())
@@ -398,6 +426,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     return new CDOChangeSetDataImpl(newList, changedList, detachedList);
   }
 
+  @Override
   public Map<CDOID, CDORevision> getBaseNewObjects()
   {
     return baseNewObjects;
@@ -406,6 +435,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   /**
    * Return the list of new objects from this point.
    */
+  @Override
   public Map<CDOID, CDOObject> getAllDirtyObjects()
   {
     synchronized (transaction.getViewMonitor())
@@ -437,6 +467,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   /**
    * Return the list of new objects from this point without objects that are removed.
    */
+  @Override
   public Map<CDOID, CDOObject> getAllNewObjects()
   {
     synchronized (transaction.getViewMonitor())
@@ -473,6 +504,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   /**
    * @since 2.0
    */
+  @Override
   public Map<CDOID, CDORevision> getAllBaseNewObjects()
   {
     synchronized (transaction.getViewMonitor())
@@ -504,6 +536,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   /**
    * Return the list of all deltas without objects that are removed.
    */
+  @Override
   public Map<CDOID, CDORevisionDelta> getAllRevisionDeltas()
   {
     synchronized (transaction.getViewMonitor())
@@ -577,6 +610,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     }
   }
 
+  @Override
   public Map<CDOID, CDOObject> getAllDetachedObjects()
   {
     synchronized (transaction.getViewMonitor())
@@ -619,6 +653,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     }
   }
 
+  @Override
   public boolean isNewObject(CDOID id)
   {
     if (id.isTemporary())
@@ -684,6 +719,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   // return isNew;
   // }
 
+  @Override
   public CDOObject getDetachedObject(CDOID id)
   {
     synchronized (transaction.getViewMonitor())
@@ -724,6 +760,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     return null;
   }
 
+  @Override
   public CDOObject getDirtyObject(CDOID id)
   {
     synchronized (transaction.getViewMonitor())
@@ -754,6 +791,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     return null;
   }
 
+  @Override
   public void rollback()
   {
     synchronized (transaction.getViewMonitor())

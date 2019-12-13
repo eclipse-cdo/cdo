@@ -474,6 +474,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.5
      */
+    @Override
     public String getUUID()
     {
       return uuid;
@@ -482,6 +483,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.5
      */
+    @Override
     public String getName()
     {
       return name;
@@ -490,6 +492,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.5
      */
+    @Override
     public Type getType()
     {
       return type;
@@ -498,6 +501,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.5
      */
+    @Override
     public State getState()
     {
       return state;
@@ -506,6 +510,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 3.0
      */
+    @Override
     public String getStoreType()
     {
       return storeType;
@@ -514,6 +519,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 3.0
      */
+    @Override
     public Set<CDOID.ObjectType> getObjectIDTypes()
     {
       return objectIDTypes;
@@ -522,6 +528,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 3.0
      */
+    @Override
     public CDOID getRootResourceID()
     {
       return rootResourceID;
@@ -530,6 +537,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.5
      */
+    @Override
     public long getCreationTime()
     {
       return repositoryCreationTime;
@@ -538,6 +546,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.5
      */
+    @Override
     public boolean isAuthenticating()
     {
       return authenticating;
@@ -546,6 +555,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.5
      */
+    @Override
     public boolean isSupportingAudits()
     {
       return supportingAudits;
@@ -554,6 +564,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.5
      */
+    @Override
     public boolean isSupportingBranches()
     {
       return supportingBranches;
@@ -562,6 +573,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.5
      */
+    @Override
     public boolean isSupportingUnits()
     {
       return supportingUnits;
@@ -571,6 +583,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
      * @since 4.5
      * @deprecated As of 4.2 instances of Ecore are always supported (on demand).
      */
+    @Override
     @Deprecated
     public boolean isSupportingEcore()
     {
@@ -580,6 +593,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.5
      */
+    @Override
     public boolean isSerializingCommits()
     {
       return serializingCommits;
@@ -588,6 +602,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.5
      */
+    @Override
     public boolean isEnsuringReferentialIntegrity()
     {
       return ensuringReferentialIntegrity;
@@ -596,6 +611,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.5
      */
+    @Override
     public IDGenerationLocation getIDGenerationLocation()
     {
       return idGenerationLocation;
@@ -604,6 +620,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.6
      */
+    @Override
     public CommitInfoStorage getCommitInfoStorage()
     {
       return commitInfoStorage;
@@ -635,6 +652,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.5
      */
+    @Override
     public long getTimeStamp()
     {
       throw new UnsupportedOperationException();
@@ -643,6 +661,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.5
      */
+    @Override
     public boolean waitWhileInitial(IProgressMonitor monitor)
     {
       throw new UnsupportedOperationException();
@@ -1056,11 +1075,13 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 3.0
      */
+    @Override
     public CDOBranch getBranch()
     {
       return branchPoint.getBranch();
     }
 
+    @Override
     public long getTimeStamp()
     {
       return branchPoint.getTimeStamp();
@@ -1296,6 +1317,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       /**
        * @since 4.0
        */
+      @Override
       public Object adjustReference(Object id, EStructuralFeature feature, int index)
       {
         if (id == null || id == CDOID.NULL)

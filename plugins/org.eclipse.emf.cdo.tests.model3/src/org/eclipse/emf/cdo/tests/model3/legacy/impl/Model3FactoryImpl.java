@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -167,6 +167,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Class1 createClass1()
   {
     Class1Impl class1 = new Class1Impl();
@@ -177,6 +178,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public MetaRef createMetaRef()
   {
     MetaRefImpl metaRef = new MetaRefImpl();
@@ -187,6 +189,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Polygon createPolygon()
   {
     PolygonImpl polygon = new PolygonImpl();
@@ -197,6 +200,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PolygonWithDuplicates createPolygonWithDuplicates()
   {
     PolygonWithDuplicatesImpl polygonWithDuplicates = new PolygonWithDuplicatesImpl();
@@ -207,6 +211,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NodeA createNodeA()
   {
     NodeAImpl nodeA = new NodeAImpl();
@@ -217,6 +222,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NodeB createNodeB()
   {
     NodeBImpl nodeB = new NodeBImpl();
@@ -227,6 +233,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NodeC createNodeC()
   {
     NodeCImpl nodeC = new NodeCImpl();
@@ -237,6 +244,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NodeD createNodeD()
   {
     NodeDImpl nodeD = new NodeDImpl();
@@ -248,6 +256,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NodeE createNodeE()
   {
     NodeEImpl nodeE = new NodeEImpl();
@@ -258,6 +267,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Image createImage()
   {
     ImageImpl image = new ImageImpl();
@@ -268,6 +278,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public File createFile()
   {
     FileImpl file = new FileImpl();
@@ -278,6 +289,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ClassWithIDAttribute createClassWithIDAttribute()
   {
     ClassWithIDAttributeImpl classWithIDAttribute = new ClassWithIDAttributeImpl();
@@ -289,6 +301,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ClassWithJavaClassAttribute createClassWithJavaClassAttribute()
   {
     ClassWithJavaClassAttributeImpl classWithJavaClassAttribute = new ClassWithJavaClassAttributeImpl();
@@ -300,6 +313,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ClassWithJavaObjectAttribute createClassWithJavaObjectAttribute()
   {
     ClassWithJavaObjectAttributeImpl classWithJavaObjectAttribute = new ClassWithJavaObjectAttributeImpl();
@@ -311,6 +325,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ClassWithTransientContainment createClassWithTransientContainment()
   {
     ClassWithTransientContainmentImpl classWithTransientContainment = new ClassWithTransientContainmentImpl();
@@ -322,6 +337,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EdgeTarget createEdgeTarget()
   {
     EdgeTargetImpl edgeTarget = new EdgeTargetImpl();
@@ -333,6 +349,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NodeF createNodeF()
   {
     NodeFImpl nodeF = new NodeFImpl();
@@ -344,6 +361,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Edge createEdge()
   {
     EdgeImpl edge = new EdgeImpl();
@@ -355,6 +373,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Diagram createDiagram()
   {
     DiagramImpl diagram = new DiagramImpl();
@@ -385,6 +404,7 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Model3Package getModel3Package()
   {
     return (Model3Package)getEPackage();

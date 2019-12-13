@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2009, 2011-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2009, 2011-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -41,11 +41,13 @@ public class DBStoreFactory implements IStoreFactory
   {
   }
 
+  @Override
   public String getStoreType()
   {
     return DBStore.TYPE;
   }
 
+  @Override
   public IStore createStore(String repositoryName, Map<String, String> repositoryProperties, Element storeConfig)
   {
     IMappingStrategy mappingStrategy = getMappingStrategy(repositoryName, repositoryProperties, storeConfig);

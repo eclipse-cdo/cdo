@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -160,6 +160,7 @@ public interface MangoPackage extends EPackage, org.eclipse.emf.cdo.tests.mango.
    */
   int PARAMETER_PASSING = 3;
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.mango.MangoValueList <em>Value List</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -169,6 +170,7 @@ public interface MangoPackage extends EPackage, org.eclipse.emf.cdo.tests.mango.
    */
   EClass getMangoValueList();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.mango.MangoValueList#getName <em>Name</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -179,6 +181,7 @@ public interface MangoPackage extends EPackage, org.eclipse.emf.cdo.tests.mango.
    */
   EAttribute getMangoValueList_Name();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.mango.MangoValueList#getValues <em>Values</em>}'.
    * <!-- begin-user-doc -->
@@ -190,6 +193,7 @@ public interface MangoPackage extends EPackage, org.eclipse.emf.cdo.tests.mango.
    */
   EReference getMangoValueList_Values();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.mango.MangoValue <em>Value</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -200,6 +204,7 @@ public interface MangoPackage extends EPackage, org.eclipse.emf.cdo.tests.mango.
    */
   EClass getMangoValue();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.mango.MangoValue#getName <em>Name</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -210,6 +215,7 @@ public interface MangoPackage extends EPackage, org.eclipse.emf.cdo.tests.mango.
    */
   EAttribute getMangoValue_Name();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.mango.MangoParameter <em>Parameter</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -219,6 +225,7 @@ public interface MangoPackage extends EPackage, org.eclipse.emf.cdo.tests.mango.
    */
   EClass getMangoParameter();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.mango.MangoParameter#getName <em>Name</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -229,6 +236,7 @@ public interface MangoPackage extends EPackage, org.eclipse.emf.cdo.tests.mango.
    */
   EAttribute getMangoParameter_Name();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.mango.MangoParameter#getPassing <em>Passing</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -239,6 +247,7 @@ public interface MangoPackage extends EPackage, org.eclipse.emf.cdo.tests.mango.
    */
   EAttribute getMangoParameter_Passing();
 
+  @Override
   /**
    * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.mango.ParameterPassing <em>Parameter Passing</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -248,6 +257,7 @@ public interface MangoPackage extends EPackage, org.eclipse.emf.cdo.tests.mango.
    */
   EEnum getParameterPassing();
 
+  @Override
   /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc --> <!-- end-user-doc -->

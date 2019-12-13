@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -79,57 +79,68 @@ public interface IDHandler extends Comparator<CDOID>
       this.store = store;
     }
 
+    @Override
     public MongoDBStore getStore()
     {
       return store;
     }
 
+    @Override
     public Set<ObjectType> getObjectIDTypes()
     {
       return LongIDStore.OBJECT_ID_TYPES;
     }
 
+    @Override
     public CDOID getMinCDOID()
     {
       return MIN;
     }
 
+    @Override
     public CDOID getMaxCDOID()
     {
       return MAX;
     }
 
+    @Override
     public int compare(CDOID id1, CDOID id2)
     {
       return id1.compareTo(id2);
     }
 
+    @Override
     public CDOID createCDOID(String val)
     {
       Long id = Long.valueOf(val);
       return create(id);
     }
 
+    @Override
     public synchronized CDOID getLastObjectID()
     {
       return lastObjectID;
     }
 
+    @Override
     public synchronized void setLastObjectID(CDOID lastObjectID)
     {
       this.lastObjectID = lastObjectID;
     }
 
+    @Override
     public synchronized CDOID getNextLocalObjectID()
     {
       return nextLocalObjectID;
     }
 
+    @Override
     public synchronized void setNextLocalObjectID(CDOID nextLocalObjectID)
     {
       this.nextLocalObjectID = nextLocalObjectID;
     }
 
+    @Override
     public synchronized CDOID getNextCDOID(CDORevision revision)
     {
       if (revision.getBranch().isLocal())
@@ -143,6 +154,7 @@ public interface IDHandler extends Comparator<CDOID>
       return lastObjectID;
     }
 
+    @Override
     public boolean isLocalCDOID(CDOID id)
     {
       return compare(id, nextLocalObjectID) > 0;
@@ -158,23 +170,27 @@ public interface IDHandler extends Comparator<CDOID>
       return CDOIDUtil.getLong(id);
     }
 
+    @Override
     public void write(DBObject doc, String key, CDOID id)
     {
       long value = toValue(id);
       doc.put(key, value);
     }
 
+    @Override
     public CDOID read(DBObject doc, String key)
     {
       long value = (Long)doc.get(key);
       return fromValue(value);
     }
 
+    @Override
     public Long toValue(CDOID id)
     {
       return CDOIDUtil.getLong(id);
     }
 
+    @Override
     public CDOID fromValue(Object value)
     {
       return CDOIDUtil.createLong((Long)value);

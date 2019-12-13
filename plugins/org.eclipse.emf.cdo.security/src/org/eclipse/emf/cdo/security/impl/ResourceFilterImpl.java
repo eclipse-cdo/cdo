@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2014, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2014, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -98,6 +98,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getPath()
   {
     return (String)eGet(SecurityPackage.Literals.RESOURCE_FILTER__PATH, true);
@@ -108,6 +109,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public ResourceFilter setPath(String newPath)
   {
     eSet(SecurityPackage.Literals.RESOURCE_FILTER__PATH, newPath);
@@ -119,6 +121,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PatternStyle getPatternStyle()
   {
     return (PatternStyle)eGet(SecurityPackage.Literals.RESOURCE_FILTER__PATTERN_STYLE, true);
@@ -129,6 +132,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public ResourceFilter setPatternStyle(PatternStyle newPatternStyle)
   {
     eSet(SecurityPackage.Literals.RESOURCE_FILTER__PATTERN_STYLE, newPatternStyle);
@@ -140,6 +144,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isFolders()
   {
     return (Boolean)eGet(SecurityPackage.Literals.RESOURCE_FILTER__FOLDERS, true);
@@ -150,6 +155,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public ResourceFilter setFolders(boolean newFolders)
   {
     eSet(SecurityPackage.Literals.RESOURCE_FILTER__FOLDERS, newFolders);
@@ -161,6 +167,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isModelResources()
   {
     return (Boolean)eGet(SecurityPackage.Literals.RESOURCE_FILTER__MODEL_RESOURCES, true);
@@ -171,6 +178,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public ResourceFilter setModelResources(boolean newModelResources)
   {
     eSet(SecurityPackage.Literals.RESOURCE_FILTER__MODEL_RESOURCES, newModelResources);
@@ -182,6 +190,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isModelObjects()
   {
     return (Boolean)eGet(SecurityPackage.Literals.RESOURCE_FILTER__MODEL_OBJECTS, true);
@@ -192,6 +201,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public ResourceFilter setModelObjects(boolean newModelObjects)
   {
     eSet(SecurityPackage.Literals.RESOURCE_FILTER__MODEL_OBJECTS, newModelObjects);
@@ -203,6 +213,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isIncludeParents()
   {
     return (Boolean)eGet(SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_PARENTS, true);
@@ -213,6 +224,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public ResourceFilter setIncludeParents(boolean newIncludeParents)
   {
     eSet(SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_PARENTS, newIncludeParents);
@@ -224,6 +236,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isIncludeRoot()
   {
     return (Boolean)eGet(SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_ROOT, true);
@@ -234,6 +247,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public ResourceFilter setIncludeRoot(boolean newIncludeRoot)
   {
     eSet(SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_ROOT, newIncludeRoot);
@@ -245,6 +259,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isTextResources()
   {
     return (Boolean)eGet(SecurityPackage.Literals.RESOURCE_FILTER__TEXT_RESOURCES, true);
@@ -255,6 +270,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public ResourceFilter setTextResources(boolean newTextResources)
   {
     eSet(SecurityPackage.Literals.RESOURCE_FILTER__TEXT_RESOURCES, newTextResources);
@@ -266,6 +282,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isBinaryResources()
   {
     return (Boolean)eGet(SecurityPackage.Literals.RESOURCE_FILTER__BINARY_RESOURCES, true);
@@ -276,17 +293,20 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public ResourceFilter setBinaryResources(boolean newBinaryResources)
   {
     eSet(SecurityPackage.Literals.RESOURCE_FILTER__BINARY_RESOURCES, newBinaryResources);
     return this;
   }
 
+  @Override
   public boolean isImpacted(CommitImpactContext context)
   {
     return isResourceTreeImpacted(context);
   }
 
+  @Override
   public String format()
   {
     String label = "?";
@@ -583,11 +603,13 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
       super(path);
     }
 
+    @Override
     public boolean matches(String revisionPath)
     {
       return path.equals(revisionPath);
     }
 
+    @Override
     public PatternStyle getParentPatternStyle()
     {
       return PatternStyle.EXACT;
@@ -604,6 +626,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
       super(path);
     }
 
+    @Override
     public boolean matches(String revisionPath)
     {
       if (revisionPath == null)
@@ -614,6 +637,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
       return revisionPath.startsWith(path);
     }
 
+    @Override
     public PatternStyle getParentPatternStyle()
     {
       return PatternStyle.EXACT;
@@ -630,11 +654,13 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
       super(path);
     }
 
+    @Override
     public boolean matches(String revisionPath)
     {
       return StringUtil.glob(path, revisionPath);
     }
 
+    @Override
     public PatternStyle getParentPatternStyle()
     {
       return PatternStyle.ANT;
@@ -660,11 +686,13 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
       }
     }
 
+    @Override
     public boolean matches(String revisionPath)
     {
       return pattern.matcher(revisionPath).matches();
     }
 
+    @Override
     public PatternStyle getParentPatternStyle()
     {
       return PatternStyle.REGEX;

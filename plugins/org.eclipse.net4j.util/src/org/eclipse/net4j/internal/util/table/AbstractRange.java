@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2014, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -25,10 +25,13 @@ import java.util.Set;
  */
 public abstract class AbstractRange implements Range
 {
+  @Override
   public abstract Table table();
 
+  @Override
   public abstract Iterator<Cell> iterator();
 
+  @Override
   public Set<Cell> set()
   {
     Set<Cell> set = new HashSet<Cell>();
@@ -36,6 +39,7 @@ public abstract class AbstractRange implements Range
     return set;
   }
 
+  @Override
   public List<Cell> list()
   {
     List<Cell> list = new ArrayList<Cell>();
@@ -43,6 +47,7 @@ public abstract class AbstractRange implements Range
     return list;
   }
 
+  @Override
   public int accept(Visitor visitor) throws Exception
   {
     int n = 0;
@@ -57,6 +62,7 @@ public abstract class AbstractRange implements Range
     return n;
   }
 
+  @Override
   public boolean contains(int col, int row)
   {
     for (Cell cell : this)
@@ -70,16 +76,19 @@ public abstract class AbstractRange implements Range
     return false;
   }
 
+  @Override
   public boolean contains(Coordinate coordinate)
   {
     return contains(coordinate.col, coordinate.row);
   }
 
+  @Override
   public boolean contains(Cell cell)
   {
     return contains(cell.col, cell.row);
   }
 
+  @Override
   public boolean contains(Range range)
   {
     for (Cell cell : range)
@@ -93,43 +102,51 @@ public abstract class AbstractRange implements Range
     return true;
   }
 
+  @Override
   public Range offset(int cols, int rows)
   {
     return new OffsetRange(this, cols, rows);
   }
 
+  @Override
   public Range addRange(Coordinate coordinate1, Coordinate coordinate2)
   {
     return addRanges(table().range(coordinate1, coordinate2));
   }
 
+  @Override
   public Range addRange(int col1, int row1, int col2, int row2)
   {
     return addRange(new Coordinate(col1, row1), new Coordinate(col2, row2));
   }
 
+  @Override
   public Range addRanges(Range... ranges)
   {
     Range result = new ComposedRange(table(), this);
     return result.addRanges(ranges);
   }
 
+  @Override
   public Range subtractRange(Coordinate coordinate1, Coordinate coordinate2)
   {
     return subtractRanges(table().range(coordinate1, coordinate2));
   }
 
+  @Override
   public Range subtractRange(int col1, int row1, int col2, int row2)
   {
     return subtractRange(new Coordinate(col1, row1), new Coordinate(col2, row2));
   }
 
+  @Override
   public Range subtractRanges(Range... ranges)
   {
     Range result = new ComposedRange(table(), this);
     return result.subtractRanges(ranges);
   }
 
+  @Override
   public Range value(Object value)
   {
     for (Cell cell : this)
@@ -140,6 +157,7 @@ public abstract class AbstractRange implements Range
     return this;
   }
 
+  @Override
   public Range format(Format format)
   {
     for (Cell cell : this)
@@ -150,6 +168,7 @@ public abstract class AbstractRange implements Range
     return this;
   }
 
+  @Override
   public Range alignment(Alignment alignment)
   {
     for (Cell cell : this)

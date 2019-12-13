@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2009, 2011, 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2009, 2011, 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -38,27 +38,32 @@ public abstract class Preference<T> implements OMPreference<T>
     this.defaultValue = defaultValue;
   }
 
+  @Override
   public Preferences getPreferences()
   {
     return preferences;
   }
 
+  @Override
   public String getName()
   {
     return name;
   }
 
+  @Override
   public T getDefaultValue()
   {
     return defaultValue;
   }
 
+  @Override
   public T getValue()
   {
     load();
     return value;
   }
 
+  @Override
   public T setValue(T value)
   {
     if (value == null)
@@ -83,11 +88,13 @@ public abstract class Preference<T> implements OMPreference<T>
     return null;
   }
 
+  @Override
   public boolean isSet()
   {
     return !equals(defaultValue, value);
   }
 
+  @Override
   public T unSet()
   {
     return setValue(defaultValue);

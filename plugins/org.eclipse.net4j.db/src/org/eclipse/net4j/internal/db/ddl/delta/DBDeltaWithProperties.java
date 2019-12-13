@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -42,6 +42,7 @@ public abstract class DBDeltaWithProperties extends DBDelta implements IDBDeltaW
   {
   }
 
+  @Override
   public <T> DBPropertyDelta<T> getPropertyDelta(String name)
   {
     name = name(name);
@@ -51,11 +52,13 @@ public abstract class DBDeltaWithProperties extends DBDelta implements IDBDeltaW
     return propertyDelta;
   }
 
+  @Override
   public <T> T getPropertyValue(String name)
   {
     return getPropertyValue(name, false);
   }
 
+  @Override
   public <T> T getPropertyValue(String name, boolean old)
   {
     IDBPropertyDelta<T> propertyDelta = getPropertyDelta(name);
@@ -72,11 +75,13 @@ public abstract class DBDeltaWithProperties extends DBDelta implements IDBDeltaW
     return propertyDelta.getValue();
   }
 
+  @Override
   public final Map<String, IDBPropertyDelta<?>> getPropertyDeltas()
   {
     return Collections.unmodifiableMap(propertyDeltas);
   }
 
+  @Override
   public IDBPropertyDelta<?>[] getPropertyDeltasSortedByName()
   {
     DBPropertyDelta<?>[] result = propertyDeltas.values().toArray(new DBPropertyDelta[propertyDeltas.size()]);

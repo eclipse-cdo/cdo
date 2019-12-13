@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -231,6 +231,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     //
     submenuManager.addMenuListener(new IMenuListener()
     {
+      @Override
       public void menuAboutToShow(IMenuManager menuManager)
       {
         menuManager.updateAll(true);
@@ -332,6 +333,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   /**
    * @ADDED
    */
+  @Override
   public void selectionChanged(SelectionChangedEvent event)
   {
     // Remove any menu items for old selection.

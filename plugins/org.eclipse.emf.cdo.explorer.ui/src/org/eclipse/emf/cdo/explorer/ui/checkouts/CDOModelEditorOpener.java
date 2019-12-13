@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -80,6 +80,7 @@ public class CDOModelEditorOpener extends CDOEditorOpener.Default
     final IEditorPart editor = openEditor(page, view, CDOURIUtil.extractResourcePath(uri), objectID);
     page.addPartListener(new IPartListener()
     {
+      @Override
       public void partClosed(IWorkbenchPart part)
       {
         if (part == editor)
@@ -99,21 +100,25 @@ public class CDOModelEditorOpener extends CDOEditorOpener.Default
         }
       }
 
+      @Override
       public void partOpened(IWorkbenchPart part)
       {
         // Do nothing.
       }
 
+      @Override
       public void partDeactivated(IWorkbenchPart part)
       {
         // Do nothing.
       }
 
+      @Override
       public void partBroughtToTop(IWorkbenchPart part)
       {
         // Do nothing.
       }
 
+      @Override
       public void partActivated(IWorkbenchPart part)
       {
         // Do nothing.

@@ -52,6 +52,7 @@ public class Bugzilla_547640_Test extends AbstractCDOTest
     {
       private int expectedVersion;
 
+      @Override
       public void modifyAndCommit1(CDOTransaction transaction, Company company) throws Exception
       {
         company.getCategories().add(getModel1Factory().createCategory());
@@ -59,11 +60,13 @@ public class Bugzilla_547640_Test extends AbstractCDOTest
         expectedVersion = CDOUtil.getCDOObject(company).cdoRevision().getVersion() + 1;
       }
 
+      @Override
       public void modify2(CDOTransaction transaction, Company company) throws Exception
       {
         company.getCategories().add(getModel1Factory().createCategory());
       }
 
+      @Override
       public void verify2(CDOTransaction transaction, Company company) throws Exception
       {
         CDORevision cdoRevision = CDOUtil.getCDOObject(company).cdoRevision();
@@ -81,6 +84,7 @@ public class Bugzilla_547640_Test extends AbstractCDOTest
     {
       private int expectedVersion;
 
+      @Override
       public void modifyAndCommit1(CDOTransaction transaction, Company company) throws Exception
       {
         company.getCategories().add(getModel1Factory().createCategory());
@@ -90,11 +94,13 @@ public class Bugzilla_547640_Test extends AbstractCDOTest
         expectedVersion = CDOUtil.getCDOObject(company).cdoRevision().getVersion() + 1;
       }
 
+      @Override
       public void modify2(CDOTransaction transaction, Company company) throws Exception
       {
         company.getCategories().add(getModel1Factory().createCategory());
       }
 
+      @Override
       public void verify2(CDOTransaction transaction, Company company) throws Exception
       {
         CDORevision cdoRevision = CDOUtil.getCDOObject(company).cdoRevision();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -564,6 +564,7 @@ public class CDOServerBrowser extends Worker
         this.container = container;
       }
 
+      @Override
       public CDOServerBrowser.ContainerBased create(String description) throws ProductCreationException
       {
         CDOServerBrowser.ContainerBased browser = new CDOServerBrowser.ContainerBased(container);
@@ -645,11 +646,13 @@ public class CDOServerBrowser extends Worker
       this.label = label;
     }
 
+    @Override
     public String getName()
     {
       return name;
     }
 
+    @Override
     public String getLabel()
     {
       return label;
@@ -670,11 +673,13 @@ public class CDOServerBrowser extends Worker
       super(NAME, "Packages and Classes");
     }
 
+    @Override
     public boolean canDisplay(InternalRepository repository)
     {
       return true;
     }
 
+    @Override
     public void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out)
     {
       String param = browser.getParam("classifier");
@@ -741,11 +746,13 @@ public class CDOServerBrowser extends Worker
       super(NAME, "Locks");
     }
 
+    @Override
     public boolean canDisplay(InternalRepository repository)
     {
       return true;
     }
 
+    @Override
     public void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out)
     {
       InternalLockManager lockingManager = repository.getLockingManager();
@@ -798,6 +805,7 @@ public class CDOServerBrowser extends Worker
       super(name, label);
     }
 
+    @Override
     public void display(final CDOServerBrowser browser, InternalRepository repository, PrintStream out)
     {
       Map<CDOBranch, List<CDORevision>> allRevisions = getAllRevisions(repository);
@@ -1109,6 +1117,7 @@ public class CDOServerBrowser extends Worker
         super(NAME, "Revisions From Cache");
       }
 
+      @Override
       public boolean canDisplay(InternalRepository repository)
       {
         return true;
@@ -1135,6 +1144,7 @@ public class CDOServerBrowser extends Worker
         super(NAME, "Revisions From Store");
       }
 
+      @Override
       public boolean canDisplay(InternalRepository repository)
       {
         return repository.getStore() instanceof CDOAllRevisionsProvider;
@@ -1162,11 +1172,13 @@ public class CDOServerBrowser extends Worker
       super(NAME, "Large Objects");
     }
 
+    @Override
     public boolean canDisplay(InternalRepository repository)
     {
       return true;
     }
 
+    @Override
     public void display(final CDOServerBrowser browser, InternalRepository repository, final PrintStream out)
     {
       out.print("<table border=\"0\">\r\n");
@@ -1180,6 +1192,7 @@ public class CDOServerBrowser extends Worker
       {
         repository.handleLobs(0, 0, new CDOLobHandler()
         {
+          @Override
           public OutputStream handleBlob(byte[] id, long size)
           {
             if (showLob(out, "Blob", id, size, browser, param))
@@ -1194,6 +1207,7 @@ public class CDOServerBrowser extends Worker
             return null;
           }
 
+          @Override
           public Writer handleClob(byte[] id, long size)
           {
             if (showLob(out, "Clob", id, size, browser, param))
@@ -1284,11 +1298,13 @@ public class CDOServerBrowser extends Worker
       super(NAME, "Commit Infos");
     }
 
+    @Override
     public boolean canDisplay(InternalRepository repository)
     {
       return true;
     }
 
+    @Override
     public void display(final CDOServerBrowser browser, InternalRepository repository, final PrintStream out)
     {
       out.print("<table border=\"0\">\r\n");
@@ -1321,6 +1337,7 @@ public class CDOServerBrowser extends Worker
         final boolean auditing = repository.isSupportingAudits();
         repository.getCommitInfoManager().getCommitInfos(null, 0L, 0L, new CDOCommitInfoHandler()
         {
+          @Override
           public void handleCommitInfo(CDOCommitInfo commitInfo)
           {
             if (showCommitInfo(out, commitInfo, browser, param, auditing))

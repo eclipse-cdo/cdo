@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -31,22 +31,26 @@ public abstract class DelegatingStreamWrapper implements IStreamWrapper
     return delegate;
   }
 
+  @Override
   public InputStream wrapInputStream(InputStream in) throws IOException
   {
     return doWrapInputStream(delegate.wrapInputStream(in));
   }
 
+  @Override
   public OutputStream wrapOutputStream(OutputStream out) throws IOException
   {
     return doWrapOutputStream(delegate.wrapOutputStream(out));
   }
 
+  @Override
   public void finishInputStream(InputStream in) throws IOException
   {
     delegate.finishInputStream(in);
     doFinishInputStream(in);
   }
 
+  @Override
   public void finishOutputStream(OutputStream out) throws IOException
   {
     delegate.finishOutputStream(out);

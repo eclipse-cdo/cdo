@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2014 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2014, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -72,6 +72,7 @@ public final class Predicates
       this.inclusions = inclusions;
     }
 
+    @Override
     public boolean apply(T element)
     {
       return inclusions.contains(element);
@@ -91,6 +92,7 @@ public final class Predicates
       this.exclusions = exclusions;
     }
 
+    @Override
     public boolean apply(T element)
     {
       return !exclusions.contains(element);
@@ -105,6 +107,7 @@ public final class Predicates
   {
     private final Set<T> applied = new HashSet<T>();
 
+    @Override
     public boolean apply(T element)
     {
       return applied.add(element);
@@ -118,6 +121,7 @@ public final class Predicates
   {
     private static final Predicate<Object> INSTANCE = new FalsePredicate();
 
+    @Override
     public boolean apply(Object element)
     {
       return false;
@@ -131,6 +135,7 @@ public final class Predicates
   {
     private static final Predicate<Object> INSTANCE = new TruePredicate();
 
+    @Override
     public boolean apply(Object element)
     {
       return true;

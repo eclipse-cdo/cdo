@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -76,6 +76,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
    *
    * @generated
    */
+  @Override
   public Product getProduct()
   {
     return (Product)eGet(InventoryPackage.Literals.OFFERING__PRODUCT, true);
@@ -86,6 +87,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
    *
    * @generated
    */
+  @Override
   public void setProduct(Product newProduct)
   {
     eSet(InventoryPackage.Literals.OFFERING__PRODUCT, newProduct);
@@ -96,6 +98,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
    *
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(InventoryPackage.Literals.OFFERING__NAME, true);
@@ -106,6 +109,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
    *
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(InventoryPackage.Literals.OFFERING__NAME, newName);
@@ -116,6 +120,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
    *
    * @generated
    */
+  @Override
   public String getDescription()
   {
     return (String)eGet(InventoryPackage.Literals.OFFERING__DESCRIPTION, true);
@@ -126,6 +131,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
    *
    * @generated
    */
+  @Override
   public void setDescription(String newDescription)
   {
     eSet(InventoryPackage.Literals.OFFERING__DESCRIPTION, newDescription);
@@ -136,6 +142,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
    *
    * @generated
    */
+  @Override
   public float getPrice()
   {
     return (Float)eGet(InventoryPackage.Literals.OFFERING__PRICE, true);
@@ -146,6 +153,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
    *
    * @generated
    */
+  @Override
   public void setPrice(float newPrice)
   {
     eSet(InventoryPackage.Literals.OFFERING__PRICE, newPrice);
@@ -156,6 +164,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
    *
    * @generated
    */
+  @Override
   public Section getSection()
   {
     return (Section)eGet(InventoryPackage.Literals.OFFERING__SECTION, true);
@@ -166,6 +175,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
    *
    * @generated
    */
+  @Override
   public void setSection(Section newSection)
   {
     eSet(InventoryPackage.Literals.OFFERING__SECTION, newSection);

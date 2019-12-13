@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -62,6 +62,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
    *
    * @generated
    */
+  @Override
   public Stock getStock()
   {
     return (Stock)eGet(InventoryPackage.Literals.STOCK_PRODUCT__STOCK, true);
@@ -72,6 +73,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
    *
    * @generated
    */
+  @Override
   public void setStock(Stock newStock)
   {
     eSet(InventoryPackage.Literals.STOCK_PRODUCT__STOCK, newStock);
@@ -93,6 +95,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
    *
    * @generated
    */
+  @Override
   public void setCost(float newCost)
   {
     eSet(InventoryPackage.Literals.STOCK_PRODUCT__COST, newCost);
@@ -103,6 +106,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
    *
    * @generated
    */
+  @Override
   public int getAvailable()
   {
     return (Integer)eGet(InventoryPackage.Literals.STOCK_PRODUCT__AVAILABLE, true);
@@ -113,6 +117,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
    *
    * @generated
    */
+  @Override
   public void setAvailable(int newAvailable)
   {
     eSet(InventoryPackage.Literals.STOCK_PRODUCT__AVAILABLE, newAvailable);
@@ -123,6 +128,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
    *
    * @generated
    */
+  @Override
   public int getOrderLimit()
   {
     return (Integer)eGet(InventoryPackage.Literals.STOCK_PRODUCT__ORDER_LIMIT, true);
@@ -133,6 +139,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
    *
    * @generated
    */
+  @Override
   public void setOrderLimit(int newOrderLimit)
   {
     eSet(InventoryPackage.Literals.STOCK_PRODUCT__ORDER_LIMIT, newOrderLimit);
@@ -143,6 +150,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
    *
    * @ADDED
    */
+  @Override
   public Department getDepartment()
   {
     Stock stock = getStock();

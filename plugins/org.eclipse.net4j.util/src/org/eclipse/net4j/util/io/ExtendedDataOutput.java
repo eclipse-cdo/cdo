@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013, 2015, 2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2013, 2015, 2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,81 +66,97 @@ public interface ExtendedDataOutput extends DataOutput
       return delegate;
     }
 
+    @Override
     public void write(byte[] b, int off, int len) throws IOException
     {
       delegate.write(b, off, len);
     }
 
+    @Override
     public void write(byte[] b) throws IOException
     {
       delegate.write(b);
     }
 
+    @Override
     public void write(int b) throws IOException
     {
       delegate.write(b);
     }
 
+    @Override
     public void writeBoolean(boolean v) throws IOException
     {
       delegate.writeBoolean(v);
     }
 
+    @Override
     public void writeByte(int v) throws IOException
     {
       delegate.writeByte(v);
     }
 
+    @Override
     public void writeByteArray(byte[] b) throws IOException
     {
       delegate.writeByteArray(b);
     }
 
+    @Override
     public void writeBytes(String s) throws IOException
     {
       delegate.writeBytes(s);
     }
 
+    @Override
     public void writeChar(int v) throws IOException
     {
       delegate.writeChar(v);
     }
 
+    @Override
     public void writeChars(String s) throws IOException
     {
       delegate.writeChars(s);
     }
 
+    @Override
     public void writeDouble(double v) throws IOException
     {
       delegate.writeDouble(v);
     }
 
+    @Override
     public void writeFloat(float v) throws IOException
     {
       delegate.writeFloat(v);
     }
 
+    @Override
     public void writeInt(int v) throws IOException
     {
       delegate.writeInt(v);
     }
 
+    @Override
     public void writeLong(long v) throws IOException
     {
       delegate.writeLong(v);
     }
 
+    @Override
     public void writeObject(Object object) throws IOException
     {
       delegate.writeObject(object);
     }
 
+    @Override
     public void writeShort(int v) throws IOException
     {
       delegate.writeShort(v);
     }
 
+    @Override
     public void writeString(String str) throws IOException
     {
       delegate.writeString(str);
@@ -149,6 +165,7 @@ public interface ExtendedDataOutput extends DataOutput
     /**
      * @since 3.0
      */
+    @Override
     public void writeEnum(Enum<?> literal) throws IOException
     {
       delegate.writeEnum(literal);
@@ -157,11 +174,13 @@ public interface ExtendedDataOutput extends DataOutput
     /**
      * @since 3.4
      */
+    @Override
     public void writeException(Throwable t) throws IOException
     {
       delegate.writeException(t);
     }
 
+    @Override
     public void writeUTF(String str) throws IOException
     {
       delegate.writeUTF(str);
@@ -170,6 +189,7 @@ public interface ExtendedDataOutput extends DataOutput
     /**
      * @since 3.7
      */
+    @Override
     public void writeVarInt(int v) throws IOException
     {
       delegate.writeVarInt(v);
@@ -178,6 +198,7 @@ public interface ExtendedDataOutput extends DataOutput
     /**
      * @since 3.7
      */
+    @Override
     public void writeVarLong(long v) throws IOException
     {
       delegate.writeVarLong(v);
@@ -186,6 +207,7 @@ public interface ExtendedDataOutput extends DataOutput
     /**
      * @since 3.6
      */
+    @Override
     public void close() throws IOException
     {
       if (delegate instanceof Closeable)

@@ -1104,6 +1104,7 @@ public final class DBUtil
     final Object[][] result = new Object[1][];
     IDBRowHandler rowHandler = new IDBRowHandler()
     {
+      @Override
       public boolean handle(int row, Object... values)
       {
         result[0] = values;

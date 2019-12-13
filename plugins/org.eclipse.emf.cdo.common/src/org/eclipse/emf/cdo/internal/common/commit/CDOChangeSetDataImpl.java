@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -55,6 +55,7 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
     this(new ArrayList<CDOIDAndVersion>(), new ArrayList<CDORevisionKey>(), new ArrayList<CDOIDAndVersion>());
   }
 
+  @Override
   public boolean isEmpty()
   {
     if (newObjects != null && !newObjects.isEmpty())
@@ -75,6 +76,7 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
     return true;
   }
 
+  @Override
   public CDOChangeSetData copy()
   {
     List<CDOIDAndVersion> newObjectsCopy = new ArrayList<CDOIDAndVersion>(newObjects.size());
@@ -114,6 +116,7 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
     return new CDOChangeSetDataImpl(newObjectsCopy, changedObjectsCopy, detachedObjectsCopy);
   }
 
+  @Override
   public void merge(CDOChangeSetData changeSetData)
   {
     Map<CDOID, CDOIDAndVersion> newMap = CDOIDUtil.createMap();
@@ -177,21 +180,25 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
     changedMap.put(id, key);
   }
 
+  @Override
   public List<CDOIDAndVersion> getNewObjects()
   {
     return newObjects;
   }
 
+  @Override
   public List<CDORevisionKey> getChangedObjects()
   {
     return changedObjects;
   }
 
+  @Override
   public List<CDOIDAndVersion> getDetachedObjects()
   {
     return detachedObjects;
   }
 
+  @Override
   public synchronized Map<CDOID, CDOChangeKind> getChangeKinds()
   {
     if (changeKindCache == null)
@@ -202,6 +209,7 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
     return changeKindCache;
   }
 
+  @Override
   public CDOChangeKind getChangeKind(CDOID id)
   {
     return getChangeKinds().get(id);

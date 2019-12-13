@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -37,12 +37,16 @@ public interface CDOAdminClient extends CDOAdmin
 
   public IConnector getConnector();
 
+  @Override
   public CDOAdminClientRepository[] getRepositories();
 
+  @Override
   public CDOAdminClientRepository getRepository(String name);
 
+  @Override
   public CDOAdminClientRepository createRepository(String name, String type, Map<String, Object> properties);
 
+  @Override
   public CDOAdminClientRepository waitForRepository(String name);
 
   /**
@@ -55,6 +59,7 @@ public interface CDOAdminClient extends CDOAdmin
    */
   public interface ConnectionStateChangedEvent extends IEvent
   {
+    @Override
     public CDOAdminClient getSource();
 
     public boolean isConnected();

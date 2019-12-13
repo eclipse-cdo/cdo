@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2014-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2014-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -149,6 +149,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getModelElement()
   {
     return modelElementEClass;
@@ -158,6 +159,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getModelElement_Annotations()
   {
     return (EReference)modelElementEClass.getEStructuralFeatures().get(0);
@@ -167,6 +169,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getAnnotation()
   {
     return annotationEClass;
@@ -176,6 +179,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getAnnotation_Source()
   {
     return (EAttribute)annotationEClass.getEStructuralFeatures().get(0);
@@ -185,6 +189,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getAnnotation_Details()
   {
     return (EReference)annotationEClass.getEStructuralFeatures().get(1);
@@ -194,6 +199,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getAnnotation_ModelElement()
   {
     return (EReference)annotationEClass.getEStructuralFeatures().get(2);
@@ -203,6 +209,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getAnnotation_Contents()
   {
     return (EReference)annotationEClass.getEStructuralFeatures().get(3);
@@ -212,6 +219,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getAnnotation_References()
   {
     return (EReference)annotationEClass.getEStructuralFeatures().get(4);
@@ -223,6 +231,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getLob()
   {
     return lobEDataType;
@@ -234,6 +243,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getInputStream()
   {
     return inputStreamEDataType;
@@ -245,6 +255,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getReader()
   {
     return readerEDataType;
@@ -254,6 +265,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getBlob()
   {
     return blobEDataType;
@@ -263,6 +275,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getClob()
   {
     return clobEDataType;
@@ -272,6 +285,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EtypesFactory getEtypesFactory()
   {
     return (EtypesFactory)getEFactoryInstance();

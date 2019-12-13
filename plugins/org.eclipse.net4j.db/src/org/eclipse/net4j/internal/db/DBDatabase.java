@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -62,6 +62,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
     schema = DBUtil.execute(DBDatabase.this, new RunnableWithConnection<IDBSchema>()
     {
+      @Override
       public IDBSchema run(Connection connection) throws SQLException
       {
         return DBUtil.readSchema(adapter, connection, schemaName, fixNullableIndexColumns);
@@ -72,6 +73,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     activate();
   }
 
+  @Override
   public String getUserID()
   {
     if (connectionProvider instanceof IUserAware)
@@ -82,21 +84,25 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     return null;
   }
 
+  @Override
   public DBAdapter getAdapter()
   {
     return adapter;
   }
 
+  @Override
   public IDBSchema getSchema()
   {
     return schema;
   }
 
+  @Override
   public DBSchemaTransaction openSchemaTransaction()
   {
     return openSchemaTransaction(null);
   }
 
+  @Override
   public DBSchemaTransaction openSchemaTransaction(IDBConnection connection)
   {
     DBSchemaTransaction schemaTransaction = new DBSchemaTransaction(this);
@@ -128,12 +134,14 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     }
   }
 
+  @Override
   @Deprecated
   public DBSchemaTransaction getSchemaTransaction()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void updateSchema(RunnableWithSchema runnable)
   {
     DBSchemaTransaction schemaTransaction = openSchemaTransaction();
@@ -150,6 +158,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     }
   }
 
+  @Override
   public DBConnection getConnection()
   {
     Connection delegate = connectionProvider.getConnection();
@@ -170,26 +179,31 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     removeElement(connection);
   }
 
+  @Override
   public IDBConnection[] getConnections()
   {
     return getElements();
   }
 
+  @Override
   public int getStatementCacheCapacity()
   {
     return statementCacheCapacity;
   }
 
+  @Override
   public void setStatementCacheCapacity(int statementCacheCapacity)
   {
     this.statementCacheCapacity = statementCacheCapacity;
   }
 
+  @Override
   public boolean isClosed()
   {
     return !isActive();
   }
 
+  @Override
   public void close()
   {
     deactivate();
@@ -395,6 +409,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
       return (IDBDatabase)super.getSource();
     }
 
+    @Override
     public IDBSchemaDelta getSchemaDelta()
     {
       return schemaDelta;

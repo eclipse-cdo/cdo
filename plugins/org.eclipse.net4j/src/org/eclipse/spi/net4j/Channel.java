@@ -71,46 +71,55 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   {
   }
 
+  @Override
   public String getUserID()
   {
     return userID;
   }
 
+  @Override
   public void setUserID(String userID)
   {
     this.userID = userID;
   }
 
+  @Override
   public Location getLocation()
   {
     return channelMultiplexer == null ? null : channelMultiplexer.getLocation();
   }
 
+  @Override
   public boolean isClient()
   {
     return channelMultiplexer == null ? false : channelMultiplexer.isClient();
   }
 
+  @Override
   public boolean isServer()
   {
     return channelMultiplexer == null ? false : channelMultiplexer.isServer();
   }
 
+  @Override
   public IChannelMultiplexer getMultiplexer()
   {
     return channelMultiplexer;
   }
 
+  @Override
   public void setMultiplexer(IChannelMultiplexer channelMultiplexer)
   {
     this.channelMultiplexer = (InternalChannelMultiplexer)channelMultiplexer;
   }
 
+  @Override
   public short getID()
   {
     return id;
   }
 
+  @Override
   public void setID(short id)
   {
     checkArg(id != IBuffer.NO_CHANNEL, "id == IBuffer.NO_CHANNEL"); //$NON-NLS-1$
@@ -120,28 +129,33 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   /**
    * @since 4.5
    */
+  @Override
   public ExecutorService getExecutorService()
   {
     return ConcurrencyUtil.getExecutorService(channelMultiplexer);
   }
 
+  @Override
   @Deprecated
   public ExecutorService getReceiveExecutor()
   {
     return null;
   }
 
+  @Override
   @Deprecated
   public void setReceiveExecutor(ExecutorService receiveExecutor)
   {
     // Do nothing.
   }
 
+  @Override
   public IBufferHandler getReceiveHandler()
   {
     return receiveHandler;
   }
 
+  @Override
   public void setReceiveHandler(IBufferHandler receiveHandler)
   {
     this.receiveHandler = receiveHandler;
@@ -150,6 +164,7 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   /**
    * @since 3.0
    */
+  @Override
   public long getSentBuffers()
   {
     return sentBuffers;
@@ -158,16 +173,19 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   /**
    * @since 3.0
    */
+  @Override
   public long getReceivedBuffers()
   {
     return receivedBuffers;
   }
 
+  @Override
   public Queue<IBuffer> getSendQueue()
   {
     return sendQueue;
   }
 
+  @Override
   public void sendBuffer(IBuffer buffer)
   {
     handleBuffer(buffer);
@@ -181,6 +199,7 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
    * @see BufferState#PUTTING
    * @see Channel#sendQueue
    */
+  @Override
   public void handleBuffer(IBuffer buffer)
   {
     BufferState state = buffer.getState();
@@ -217,6 +236,7 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
    *
    * @see InternalChannelMultiplexer#multiplexChannel
    */
+  @Override
   public void handleBufferFromMultiplexer(IBuffer buffer)
   {
     if (receiveHandler != null)
@@ -243,16 +263,19 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
     return new ReceiverWork(buffer);
   }
 
+  @Override
   public short getBufferCapacity()
   {
     return channelMultiplexer.getBufferCapacity();
   }
 
+  @Override
   public IBuffer provideBuffer()
   {
     return channelMultiplexer.provideBuffer();
   }
 
+  @Override
   public void retainBuffer(IBuffer buffer)
   {
     channelMultiplexer.retainBuffer(buffer);
@@ -306,11 +329,13 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
     channelMultiplexer.closeChannel(this);
   }
 
+  @Override
   public void close()
   {
     LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 
+  @Override
   public boolean isClosed()
   {
     return !isActive();
@@ -477,11 +502,13 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
       return (InternalChannel)super.getSource();
     }
 
+    @Override
     public Type getType()
     {
       return type;
     }
 
+    @Override
     public int getQueueSize()
     {
       return queueSize;

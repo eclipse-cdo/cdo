@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -80,6 +80,7 @@ public class AuditListTableMapping extends AbstractListTableMapping
     stmt.setInt(2, revision.getVersion());
   }
 
+  @Override
   public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
   {
     // The audit list mapping does not care about revised references -> NOOP

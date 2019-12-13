@@ -55,21 +55,25 @@ public class RegExContentProposalProvider implements IContentProposalProvider
         fCursorPosition = cursorPosition;
       }
 
+      @Override
       public String getContent()
       {
         return fContent;
       }
 
+      @Override
       public String getLabel()
       {
         return fLabel;
       }
 
+      @Override
       public String getDescription()
       {
         return fDescription;
       }
 
+      @Override
       public int getCursorPosition()
       {
         return fCursorPosition;
@@ -427,6 +431,7 @@ public class RegExContentProposalProvider implements IContentProposalProvider
   /*
    * @see org.eclipse.jface.fieldassist.IContentProposalProvider#getProposals(java.lang.String, int)
    */
+  @Override
   public IContentProposal[] getProposals(String contents, int position)
   {
     if (fIsFind)

@@ -149,11 +149,13 @@ public class CDOPackageRegistryPopulator extends Worker
       return nsURI;
     }
 
+    @Override
     public EFactory getEFactory()
     {
       return source.getEFactory(nsURI);
     }
 
+    @Override
     public EPackage getEPackage()
     {
       return source.getEPackage(nsURI);

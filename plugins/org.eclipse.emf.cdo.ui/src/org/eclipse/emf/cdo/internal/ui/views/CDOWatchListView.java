@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -147,6 +147,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     // This listener always refreshes viewer upon notification
     IListener refreshListener = new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         UIUtil.refreshViewer(viewer);
@@ -209,6 +210,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     menuMgr.setRemoveAllWhenShown(true);
     menuMgr.addMenuListener(new IMenuListener()
     {
+      @Override
       public void menuAboutToShow(IMenuManager m)
       {
         CDOWatchListView.this.fillContextMenu(m);
@@ -256,6 +258,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     viewer.getControl().setFocus();
   }
 
+  @Override
   public ISelection getSelection()
   {
     if (viewer != null)
@@ -266,11 +269,13 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     return StructuredSelection.EMPTY;
   }
 
+  @Override
   public void setSelection(ISelection selection)
   {
     // Doesn't need to set viewer.setSelection(). Already done with user event.
   }
 
+  @Override
   public void addSelectionChangedListener(ISelectionChangedListener listener)
   {
     if (viewer != null)
@@ -279,6 +284,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     }
   }
 
+  @Override
   public void removeSelectionChangedListener(ISelectionChangedListener listener)
   {
     if (viewer != null)
@@ -388,6 +394,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
       }
     }
 
+    @Override
     public boolean isValid(EObject object, Adapter adapter)
     {
       return adapter instanceof CDOSubscriptionAdapter;
@@ -413,6 +420,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     {
     }
 
+    @Override
     public CDOObject[] getElements()
     {
       return watchedObjects.toArray(new CDOObject[watchedObjects.size()]);
@@ -427,6 +435,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     /**
      * @returns true if the element was added successfully to the container
      */
+    @Override
     public boolean addElement(CDOObject element)
     {
       if (watchedObjects.add(element))
@@ -442,6 +451,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     /**
      * @returns true if the element was removed successfully from the container
      */
+    @Override
     public boolean removeElement(CDOObject element)
     {
       if (watchedObjects.remove(element))
@@ -457,6 +467,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     /**
      * @returns true if at least one element was added. False otherwise.
      */
+    @Override
     public boolean addAllElements(Collection<CDOObject> elements)
     {
       ArrayList<CDOObject> addedElements = new ArrayList<CDOObject>();
@@ -481,6 +492,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     /**
      * @returns true if at least one element was removed. False otherwise.
      */
+    @Override
     public boolean removeAllElements(Collection<CDOObject> elements)
     {
       ArrayList<CDOObject> removedElements = new ArrayList<CDOObject>();
@@ -554,6 +566,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
      */
     private final class ViewDeactivationListener implements IListener
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof ILifecycleEvent)
@@ -649,6 +662,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
 
     private final IEvent dataRegistryEvent = new IEvent()
     {
+      @Override
       public INotifier getSource()
       {
         return WatchedObjectsDataRegistry.this;
@@ -715,6 +729,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
       return getData(object).getNotification();
     }
 
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof ContainerEvent<?>)
@@ -779,6 +794,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
       this.adapterFactory = adapterFactory;
     }
 
+    @Override
     public Image getColumnImage(Object object, int columnIndex)
     {
       // In case an invalid object arrives (i.e., detached), return CDOState
@@ -800,6 +816,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
       return null;
     }
 
+    @Override
     public String getColumnText(Object element, int columnIndex)
     {
       CDOObject object = CDOUtil.getCDOObject((EObject)element);
@@ -845,6 +862,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
       return element.toString();
     }
 
+    @Override
     public Color getBackground(Object element)
     {
       if (element instanceof CDOObject)
@@ -858,6 +876,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
       return null;
     }
 
+    @Override
     public Color getForeground(Object element)
     {
       return null;
@@ -894,17 +913,20 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     {
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public Object[] getElements(Object object)
     {
       return ((IContainer<Object>)object).getElements();
     }
 
+    @Override
     public void dispose()
     {
       // do nothing
     }
 
+    @Override
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
     {
       // do nothing

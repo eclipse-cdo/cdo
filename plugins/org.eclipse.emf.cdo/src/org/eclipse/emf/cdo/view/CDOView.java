@@ -102,6 +102,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
    * @see CDOSession#openView()
    * @see CDOSession#openTransaction()
    */
+  @Override
   public CDOSession getSession();
 
   /**
@@ -598,6 +599,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   /**
    * @since 2.0
    */
+  @Override
   public Options options();
 
   /**
@@ -614,6 +616,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
      *
      * @since 4.0
      */
+    @Override
     public CDOView getContainer();
 
     /**

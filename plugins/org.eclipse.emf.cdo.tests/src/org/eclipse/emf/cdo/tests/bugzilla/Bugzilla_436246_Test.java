@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2014-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -262,11 +262,13 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
       this.companyCDOID = companyCDOID;
     }
 
+    @Override
     public CDOID getContext()
     {
       return companyCDOID;
     }
 
+    @Override
     public List<CDOFetchRule> getFetchRules(Collection<CDOID> ids)
     {
       List<CDOFetchRule> fetchRules = null;
@@ -279,6 +281,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
       return fetchRules;
     }
 
+    @Override
     public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
     {
       return CDOUtil.createCollectionLoadingPolicy(Integer.MAX_VALUE, Integer.MAX_VALUE);

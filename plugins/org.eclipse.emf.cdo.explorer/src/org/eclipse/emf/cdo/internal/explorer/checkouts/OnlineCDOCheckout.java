@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -36,21 +36,25 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
     super(readOnly);
   }
 
+  @Override
   public boolean isOffline()
   {
     return false;
   }
 
+  @Override
   public boolean isOnline()
   {
     return true;
   }
 
+  @Override
   public final boolean isDirty()
   {
     return false;
   }
 
+  @Override
   public CDOState getState(Object object)
   {
     // Online checkout objects are always clean. Don't show that.
@@ -83,6 +87,7 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
     CDOView view = openView(session, branch);
     view.addListener(new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof CDOViewTargetChangedEvent)

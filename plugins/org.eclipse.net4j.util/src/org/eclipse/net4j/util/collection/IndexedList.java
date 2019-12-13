@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -26,15 +26,19 @@ public abstract class IndexedList<E> implements List<E>
   {
   }
 
+  @Override
   public abstract E get(int index);
 
+  @Override
   public abstract int size();
 
+  @Override
   public boolean isEmpty()
   {
     return size() == 0;
   }
 
+  @Override
   public boolean contains(Object o)
   {
     int size = size();
@@ -49,6 +53,7 @@ public abstract class IndexedList<E> implements List<E>
     return false;
   }
 
+  @Override
   public boolean containsAll(Collection<?> c)
   {
     for (Object object : c)
@@ -62,26 +67,31 @@ public abstract class IndexedList<E> implements List<E>
     return true;
   }
 
+  @Override
   public int indexOf(Object o)
   {
     return 0;
   }
 
+  @Override
   public int lastIndexOf(Object o)
   {
     return 0;
   }
 
+  @Override
   public Iterator<E> iterator()
   {
     return new IndexedIterator();
   }
 
+  @Override
   public ListIterator<E> listIterator()
   {
     return new IndexedListIterator(0);
   }
 
+  @Override
   public ListIterator<E> listIterator(int index)
   {
     if (index < 0 || index > size())
@@ -92,66 +102,79 @@ public abstract class IndexedList<E> implements List<E>
     return new IndexedListIterator(index);
   }
 
+  @Override
   public List<E> subList(int fromIndex, int toIndex)
   {
     return null;
   }
 
+  @Override
   public Object[] toArray()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public <T> T[] toArray(T[] a)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean add(E o)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean remove(Object o)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean addAll(Collection<? extends E> c)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean addAll(int index, Collection<? extends E> c)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean removeAll(Collection<?> c)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean retainAll(Collection<?> c)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void clear()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public E set(int index, E element)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void add(int index, E element)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public E remove(int index)
   {
     throw new UnsupportedOperationException();
@@ -183,11 +206,13 @@ public abstract class IndexedList<E> implements List<E>
   {
     int pos = 0;
 
+    @Override
     public boolean hasNext()
     {
       return pos != size();
     }
 
+    @Override
     public E next()
     {
       try
@@ -200,6 +225,7 @@ public abstract class IndexedList<E> implements List<E>
       }
     }
 
+    @Override
     public void remove()
     {
       throw new UnsupportedOperationException();
@@ -216,11 +242,13 @@ public abstract class IndexedList<E> implements List<E>
       pos = index;
     }
 
+    @Override
     public boolean hasPrevious()
     {
       return pos != 0;
     }
 
+    @Override
     public E previous()
     {
       try
@@ -233,21 +261,25 @@ public abstract class IndexedList<E> implements List<E>
       }
     }
 
+    @Override
     public int nextIndex()
     {
       return pos;
     }
 
+    @Override
     public int previousIndex()
     {
       return pos - 1;
     }
 
+    @Override
     public void set(E o)
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public void add(E o)
     {
       throw new UnsupportedOperationException();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -136,6 +136,7 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Supplier createSupplier()
   {
     SupplierImpl supplier = new SupplierImpl();
@@ -146,6 +147,7 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PurchaseOrder createPurchaseOrder()
   {
     PurchaseOrderImpl purchaseOrder = new PurchaseOrderImpl();
@@ -156,6 +158,7 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public OrderDetail createOrderDetail()
   {
     OrderDetailImpl orderDetail = new OrderDetailImpl();
@@ -189,6 +192,7 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Category createCategory()
   {
     CategoryImpl category = new CategoryImpl();
@@ -199,6 +203,7 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Product createProduct()
   {
     ProductImpl product = new ProductImpl();
@@ -209,6 +214,7 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Company createCompany()
   {
     CompanyImpl company = new CompanyImpl();
@@ -219,6 +225,7 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Customer createCustomer()
   {
     CustomerImpl customer = new CustomerImpl();
@@ -229,6 +236,7 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Order createOrder()
   {
     OrderImpl order = new OrderImpl();
@@ -239,6 +247,7 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public SalesOrder createSalesOrder()
   {
     SalesOrderImpl salesOrder = new SalesOrderImpl();
@@ -249,6 +258,7 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public CompanyPackage getCompanyPackage()
   {
     return (CompanyPackage)getEPackage();

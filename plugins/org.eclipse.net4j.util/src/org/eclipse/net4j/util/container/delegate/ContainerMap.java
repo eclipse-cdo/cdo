@@ -34,6 +34,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
     this.delegate = delegate;
   }
 
+  @Override
   public Map<K, V> getDelegate()
   {
     return delegate;
@@ -42,6 +43,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   /**
    * @category WRITE
    */
+  @Override
   public void clear()
   {
     if (!isEmpty())
@@ -59,6 +61,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   /**
    * @category WRITE
    */
+  @Override
   public V put(K key, V value)
   {
     ContainerEvent<Map.Entry<K, V>> event = new ContainerEvent<Map.Entry<K, V>>(this);
@@ -81,6 +84,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   /**
    * @category WRITE
    */
+  @Override
   public void putAll(Map<? extends K, ? extends V> t)
   {
     ContainerEvent<Map.Entry<K, V>> event = new ContainerEvent<Map.Entry<K, V>>(this);
@@ -105,6 +109,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   /**
    * @category WRITE
    */
+  @Override
   public V remove(Object key)
   {
     V removed = getDelegate().remove(key);
@@ -119,6 +124,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   /**
    * @category READ
    */
+  @Override
   public boolean containsKey(Object key)
   {
     return getDelegate().containsKey(key);
@@ -127,6 +133,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   /**
    * @category READ
    */
+  @Override
   public boolean containsValue(Object value)
   {
     return getDelegate().containsValue(value);
@@ -135,6 +142,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   /**
    * @category READ
    */
+  @Override
   public V get(Object key)
   {
     return getDelegate().get(key);
@@ -143,6 +151,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   /**
    * @category READ
    */
+  @Override
   public int size()
   {
     return getDelegate().size();
@@ -151,6 +160,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   /**
    * @category READ
    */
+  @Override
   @SuppressWarnings("unchecked")
   public Map.Entry<K, V>[] getElements()
   {
@@ -160,6 +170,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   /**
    * @category READ
    */
+  @Override
   public boolean isEmpty()
   {
     return getDelegate().isEmpty();
@@ -168,6 +179,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   /**
    * @category READ
    */
+  @Override
   public Set<Map.Entry<K, V>> entrySet()
   {
     return new ContainerSet<Map.Entry<K, V>>(getDelegate().entrySet());
@@ -176,6 +188,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   /**
    * @category READ
    */
+  @Override
   public Set<K> keySet()
   {
     return new ContainerSet<K>(getDelegate().keySet());
@@ -184,6 +197,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   /**
    * @category READ
    */
+  @Override
   public Collection<V> values()
   {
     return new ContainerCollection<V>(getDelegate().values());

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,6 +66,7 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<SecurityItem> getItems()
   {
@@ -77,6 +78,7 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(SecurityPackage.Literals.DIRECTORY__NAME, true);
@@ -87,6 +89,7 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(SecurityPackage.Literals.DIRECTORY__NAME, newName);
@@ -95,6 +98,7 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
   /**
    * @since 4.2
    */
+  @Override
   public Role getRole(String id)
   {
     return RealmUtil.findRole(getItems(), id);
@@ -103,6 +107,7 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
   /**
    * @since 4.2
    */
+  @Override
   public Group getGroup(String id)
   {
     return RealmUtil.findGroup(getItems(), id);
@@ -111,6 +116,7 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
   /**
    * @since 4.2
    */
+  @Override
   public User getUser(String id)
   {
     return RealmUtil.findUser(getItems(), id);
@@ -119,6 +125,7 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
   /**
    * @since 4.2
    */
+  @Override
   public Role addRole(String id)
   {
     Role role = SecurityFactory.eINSTANCE.createRole(id);
@@ -129,6 +136,7 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
   /**
    * @since 4.2
    */
+  @Override
   public Group addGroup(String id)
   {
     Group group = SecurityFactory.eINSTANCE.createGroup(id);
@@ -139,6 +147,7 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
   /**
    * @since 4.2
    */
+  @Override
   public User addUser(String id)
   {
     User user = SecurityFactory.eINSTANCE.createUser(id);
@@ -149,6 +158,7 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
   /**
    * @since 4.2
    */
+  @Override
   public User addUser(String id, String password)
   {
     User user = SecurityFactory.eINSTANCE.createUser(id, password);
@@ -159,6 +169,7 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
   /**
    * @since 4.3
    */
+  @Override
   public User addUser(IPasswordCredentials credentials)
   {
     return addUser(credentials.getUserID(), new String(credentials.getPassword()));
@@ -167,6 +178,7 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
   /**
    * @since 4.3
    */
+  @Override
   public User setPassword(String id, String password)
   {
     return getRealm().setPassword(id, password);
@@ -175,6 +187,7 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
   /**
    * @since 4.2
    */
+  @Override
   public Role removeRole(String id)
   {
     return RealmUtil.removeRole(getItems(), id);
@@ -183,6 +196,7 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
   /**
    * @since 4.2
    */
+  @Override
   public Group removeGroup(String id)
   {
     return RealmUtil.removeGroup(getItems(), id);
@@ -191,6 +205,7 @@ public class DirectoryImpl extends SecurityItemImpl implements Directory
   /**
    * @since 4.2
    */
+  @Override
   public User removeUser(String id)
   {
     return RealmUtil.removeUser(getItems(), id);

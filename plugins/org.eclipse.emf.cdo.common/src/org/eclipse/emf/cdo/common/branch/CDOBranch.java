@@ -86,6 +86,7 @@ public interface CDOBranch extends CDOBranchPoint, CDONameProvider, IContainer<C
    * createBranch()} or {@link #MAIN_BRANCH_NAME} if this branch is the {@link CDOBranchManager#getMainBranch() main
    * branch}.
    */
+  @Override
   public String getName();
 
   /**

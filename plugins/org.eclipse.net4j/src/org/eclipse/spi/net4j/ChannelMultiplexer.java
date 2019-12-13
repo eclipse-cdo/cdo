@@ -70,6 +70,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   {
   }
 
+  @Override
   public synchronized ITransportConfig getConfig()
   {
     if (config == null)
@@ -80,17 +81,20 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     return config;
   }
 
+  @Override
   public synchronized void setConfig(ITransportConfig config)
   {
     checkInactive();
     this.config = Net4jUtil.copyTransportConfig(this, config);
   }
 
+  @Override
   public ExecutorService getExecutorService()
   {
     return ConcurrencyUtil.getExecutorService(config);
   }
 
+  @Override
   public long getOpenChannelTimeout()
   {
     if (openChannelTimeout == IChannelMultiplexer.DEFAULT_OPEN_CHANNEL_TIMEOUT)
@@ -101,6 +105,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     return openChannelTimeout;
   }
 
+  @Override
   public void setOpenChannelTimeout(long openChannelTimeout)
   {
     this.openChannelTimeout = openChannelTimeout;
@@ -111,6 +116,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     return (InternalChannel)channels.get(channelID);
   }
 
+  @Override
   public final Collection<IChannel> getChannels()
   {
     return channels.values();
@@ -122,17 +128,20 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     return channels.isEmpty();
   }
 
+  @Override
   public IChannel[] getElements()
   {
     List<IChannel> list = new ArrayList<IChannel>(getChannels());
     return list.toArray(new IChannel[list.size()]);
   }
 
+  @Override
   public InternalChannel openChannel() throws ChannelException
   {
     return openChannel((IProtocol<?>)null);
   }
 
+  @Override
   public InternalChannel openChannel(String protocolID, Object infraStructure) throws ChannelException
   {
     IProtocol<?> protocol = createProtocol(protocolID, infraStructure);
@@ -144,6 +153,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     return openChannel(protocol);
   }
 
+  @Override
   public InternalChannel openChannel(IProtocol<?> protocol) throws ChannelException
   {
     long start = System.currentTimeMillis();
@@ -221,6 +231,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     }
   }
 
+  @Override
   public void closeChannel(InternalChannel channel) throws ChannelException
   {
     InternalChannel internalChannel = channel;

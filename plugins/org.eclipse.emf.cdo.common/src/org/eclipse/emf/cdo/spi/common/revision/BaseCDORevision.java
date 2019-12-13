@@ -157,6 +157,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 3.0
    */
+  @Override
   public void read(CDODataInput in) throws IOException
   {
     if (READING.isEnabled())
@@ -236,6 +237,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.3
    */
+  @Override
   public boolean readValues(CDODataInput in) throws IOException
   {
     EClass owner = getEClass();
@@ -300,6 +302,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.0
    */
+  @Override
   public void write(CDODataOutput out, int referenceChunk) throws IOException
   {
     write(out, referenceChunk, null);
@@ -308,6 +311,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.1
    */
+  @Override
   public void write(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext) throws IOException
   {
     if (WRITING.isEnabled())
@@ -386,6 +390,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.3
    */
+  @Override
   public void writeValues(CDODataOutput out, int referenceChunk) throws IOException
   {
     EClass owner = getEClass();
@@ -443,6 +448,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
    * @see #write(CDODataOutput, int)
    * @since 3.0
    */
+  @Override
   public void convertEObjects(CDOIDProvider idProvider)
   {
     if (!(containerID instanceof CDOID))
@@ -498,11 +504,13 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
   }
 
+  @Override
   public CDOID getID()
   {
     return id;
   }
 
+  @Override
   public void setID(CDOID id)
   {
     if (CDOIDUtil.isNull(id))
@@ -521,6 +529,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.2
    */
+  @Override
   public InternalCDOBranch getBranch()
   {
     if (branchPoint == null)
@@ -534,6 +543,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 3.0
    */
+  @Override
   public long getTimeStamp()
   {
     if (branchPoint == null)
@@ -547,6 +557,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 3.0
    */
+  @Override
   public void setBranchPoint(CDOBranchPoint branchPoint)
   {
     branchPoint = CDOBranchUtil.copyBranchPoint(branchPoint);
@@ -558,11 +569,13 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     this.branchPoint = branchPoint;
   }
 
+  @Override
   public int getVersion()
   {
     return version;
   }
 
+  @Override
   public void setVersion(int version)
   {
     if (TRACER.isEnabled())
@@ -573,11 +586,13 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     this.version = version;
   }
 
+  @Override
   public long getRevised()
   {
     return revised;
   }
 
+  @Override
   public void setRevised(long revised)
   {
     long created = branchPoint.getTimeStamp();
@@ -595,22 +610,26 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     this.revised = revised;
   }
 
+  @Override
   public InternalCDORevisionDelta compare(CDORevision origin)
   {
     return new CDORevisionDeltaImpl(origin, this);
   }
 
+  @Override
   public void merge(CDORevisionDelta delta)
   {
     CDORevisionMerger applier = new CDORevisionMerger();
     applier.merge(this, delta);
   }
 
+  @Override
   public CDOID getResourceID()
   {
     return resourceID;
   }
 
+  @Override
   public void setResourceID(CDOID resourceID)
   {
     if (TRACER.isEnabled())
@@ -621,11 +640,13 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     this.resourceID = resourceID;
   }
 
+  @Override
   public Object getContainerID()
   {
     return containerID;
   }
 
+  @Override
   public void setContainerID(Object containerID)
   {
     if (TRACER.isEnabled())
@@ -636,11 +657,13 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     this.containerID = containerID;
   }
 
+  @Override
   public int getContainingFeatureID()
   {
     return containingFeatureID;
   }
 
+  @Override
   public void setContainingFeatureID(int containingFeatureID)
   {
     if (TRACER.isEnabled())
@@ -651,6 +674,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     this.containingFeatureID = containingFeatureID;
   }
 
+  @Override
   public int hashCode(EStructuralFeature feature)
   {
     Object value = getValue(feature);
@@ -663,6 +687,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     return value.hashCode();
   }
 
+  @Override
   public Object get(EStructuralFeature feature, int index)
   {
     if (feature.isMany())
@@ -679,36 +704,42 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     return getValue(feature);
   }
 
+  @Override
   public boolean contains(EStructuralFeature feature, Object value)
   {
     CDOList list = getListOrNull(feature);
     return list != null && list.contains(value);
   }
 
+  @Override
   public int indexOf(EStructuralFeature feature, Object value)
   {
     CDOList list = getListOrNull(feature);
     return list == null ? -1 : list.indexOf(value);
   }
 
+  @Override
   public int lastIndexOf(EStructuralFeature feature, Object value)
   {
     CDOList list = getListOrNull(feature);
     return list == null ? -1 : list.lastIndexOf(value);
   }
 
+  @Override
   public boolean isEmpty(EStructuralFeature feature)
   {
     CDOList list = getListOrNull(feature);
     return list == null || list.isEmpty();
   }
 
+  @Override
   public int size(EStructuralFeature feature)
   {
     CDOList list = getListOrNull(feature);
     return list == null ? 0 : list.size();
   }
 
+  @Override
   public Object[] toArray(EStructuralFeature feature)
   {
     if (!feature.isMany())
@@ -720,6 +751,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     return list == null ? EMPTY_ARRAY : list.toArray();
   }
 
+  @Override
   public <T> T[] toArray(EStructuralFeature feature, T[] array)
   {
     if (!feature.isMany())
@@ -743,12 +775,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     return list.toArray(array);
   }
 
+  @Override
   public void add(EStructuralFeature feature, int index, Object value)
   {
     CDOList list = getOrCreateList(feature);
     list.add(index, value);
   }
 
+  @Override
   public void clear(EStructuralFeature feature)
   {
     if (feature.isMany() && feature.isUnsettable())
@@ -761,6 +795,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
   }
 
+  @Override
   public Object move(EStructuralFeature feature, int targetIndex, int sourceIndex)
   {
     CDOList list = getListOrNull(feature);
@@ -772,6 +807,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     return list.move(targetIndex, sourceIndex);
   }
 
+  @Override
   public Object remove(EStructuralFeature feature, int index)
   {
     CDOList list = getListOrNull(feature);
@@ -783,6 +819,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     return list.remove(index);
   }
 
+  @Override
   public Object set(EStructuralFeature feature, int index, Object value)
   {
     if (feature.isMany())
@@ -794,6 +831,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     return setValue(feature, value);
   }
 
+  @Override
   public void unset(EStructuralFeature feature)
   {
     // if (feature.isMany() && isListPreserving())
@@ -812,6 +850,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.0
    */
+  @Override
   public boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster)
   {
     if (TRACER.isEnabled())
@@ -869,6 +908,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.3
    */
+  @Override
   public void adjustBranches(CDOBranchManager newBranchManager)
   {
     if (branchPoint != null)
@@ -882,6 +922,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
   }
 
+  @Override
   public Object getValue(EStructuralFeature feature)
   {
     checkReadable(feature);
@@ -890,6 +931,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     return getValue(featureIndex);
   }
 
+  @Override
   public Object setValue(EStructuralFeature feature, Object value)
   {
     int featureIndex = getFeatureIndex(feature);
@@ -909,16 +951,19 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.7
    */
+  @Override
   public CDOList getListOrNull(EStructuralFeature feature)
   {
     return getOrCreateList(feature, DO_NOT_CREATE_LIST);
   }
 
+  @Override
   public CDOList getOrCreateList(EStructuralFeature feature)
   {
     return getOrCreateList(feature, 0);
   }
 
+  @Override
   public CDOList getOrCreateList(EStructuralFeature feature, int size)
   {
     checkReadable(feature);
@@ -956,6 +1001,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     return list;
   }
 
+  @Override
   public void setList(EStructuralFeature feature, InternalCDOList list)
   {
     int featureIndex = getFeatureIndex(feature);
@@ -965,6 +1011,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.2
    */
+  @Override
   public EStructuralFeature[] clearValues()
   {
     EStructuralFeature[] features = getClassInfo().getAllPersistentFeatures();
@@ -975,6 +1022,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.3
    */
+  @Override
   public String getResourceNodeName()
   {
     return (String)doGetValue(RESOURCE_NODE_NAME_INDEX);
@@ -983,6 +1031,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.1
    */
+  @Override
   public CDOPermission getPermission()
   {
     return CDOPermission.get(flags & PERMISSION_MASK);
@@ -991,6 +1040,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.1
    */
+  @Override
   public void setPermission(CDOPermission permission)
   {
     flags = (byte)(flags & ~PERMISSION_MASK | permission.getBits() & PERMISSION_MASK);
@@ -999,6 +1049,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.3
    */
+  @Override
   public boolean bypassPermissionChecks(boolean on)
   {
     boolean old = (flags & BYPASS_PERMISSION_CHECKS_FLAG) != 0;
@@ -1018,6 +1069,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.3
    */
+  @Override
   public boolean isListPreserving()
   {
     return (flags & LIST_PRESERVING_FLAG) != 0;
@@ -1026,6 +1078,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.3
    */
+  @Override
   public void setListPreserving()
   {
     flags |= LIST_PRESERVING_FLAG;
@@ -1034,6 +1087,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.1
    */
+  @Override
   public void freeze()
   {
     flags |= FROZEN_FLAG;
@@ -1059,6 +1113,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.2
    */
+  @Override
   public boolean isFrozen()
   {
     return (flags & FROZEN_FLAG) != 0;
@@ -1067,6 +1122,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.1
    */
+  @Override
   public boolean isUnchunked()
   {
     return (flags & UNCHUNKED_FLAG) != 0;
@@ -1075,6 +1131,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.1
    */
+  @Override
   public void setUnchunked()
   {
     flags |= UNCHUNKED_FLAG;

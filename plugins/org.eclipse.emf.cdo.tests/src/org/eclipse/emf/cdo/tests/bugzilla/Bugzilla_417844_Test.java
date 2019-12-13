@@ -36,6 +36,7 @@ public class Bugzilla_417844_Test extends AbstractCDOTest
 
     SessionUtil.setTestDelayInViewActivation(new Runnable()
     {
+      @Override
       public void run()
       {
         try

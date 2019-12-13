@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -53,6 +53,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getId()
   {
     return (Integer)eGet(CompanyPackage.Literals.SALES_ORDER__ID, true);
@@ -62,6 +63,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setId(int newId)
   {
     eSet(CompanyPackage.Literals.SALES_ORDER__ID, newId);
@@ -71,6 +73,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Customer getCustomer()
   {
     return (Customer)eGet(CompanyPackage.Literals.SALES_ORDER__CUSTOMER, true);
@@ -80,6 +83,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setCustomer(Customer newCustomer)
   {
     eSet(CompanyPackage.Literals.SALES_ORDER__CUSTOMER, newCustomer);

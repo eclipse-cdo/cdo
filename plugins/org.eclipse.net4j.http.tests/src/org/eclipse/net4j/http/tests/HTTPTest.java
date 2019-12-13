@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -54,21 +54,25 @@ public class HTTPTest extends AbstractTransportTest
     PostMethod method = new PostMethod("http://eike@localhost:8080/net4j/echotest"); //$NON-NLS-1$
     method.setRequestEntity(new RequestEntity()
     {
+      @Override
       public long getContentLength()
       {
         return -1;
       }
 
+      @Override
       public String getContentType()
       {
         return "application/octet-stream"; //$NON-NLS-1$
       }
 
+      @Override
       public boolean isRepeatable()
       {
         return false;
       }
 
+      @Override
       public void writeRequest(OutputStream out) throws IOException
       {
         int count = 10;

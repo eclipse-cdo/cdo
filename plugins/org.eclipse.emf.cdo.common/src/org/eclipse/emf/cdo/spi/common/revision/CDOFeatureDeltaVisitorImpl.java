@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -34,18 +34,22 @@ public class CDOFeatureDeltaVisitorImpl implements CDOFeatureDeltaVisitor
   {
   }
 
+  @Override
   public void visit(CDOAddFeatureDelta delta)
   {
   }
 
+  @Override
   public void visit(CDOClearFeatureDelta delta)
   {
   }
 
+  @Override
   public void visit(CDOContainerFeatureDelta delta)
   {
   }
 
+  @Override
   public void visit(CDOListFeatureDelta deltas)
   {
     for (CDOFeatureDelta delta : deltas.getListChanges())
@@ -61,18 +65,22 @@ public class CDOFeatureDeltaVisitorImpl implements CDOFeatureDeltaVisitor
     }
   }
 
+  @Override
   public void visit(CDOMoveFeatureDelta delta)
   {
   }
 
+  @Override
   public void visit(CDORemoveFeatureDelta delta)
   {
   }
 
+  @Override
   public void visit(CDOSetFeatureDelta delta)
   {
   }
 
+  @Override
   public void visit(CDOUnsetFeatureDelta delta)
   {
   }

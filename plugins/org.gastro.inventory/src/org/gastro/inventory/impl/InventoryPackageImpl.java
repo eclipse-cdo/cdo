@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -202,6 +202,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EClass getStock()
   {
     return stockEClass;
@@ -212,6 +213,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getStock_Products()
   {
     return (EReference)stockEClass.getEStructuralFeatures().get(0);
@@ -222,6 +224,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getStock_Name()
   {
     return (EAttribute)stockEClass.getEStructuralFeatures().get(1);
@@ -232,6 +235,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getStock_Department()
   {
     return (EReference)stockEClass.getEStructuralFeatures().get(2);
@@ -242,6 +246,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EClass getProduct()
   {
     return productEClass;
@@ -252,6 +257,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getProduct_Name()
   {
     return (EAttribute)productEClass.getEStructuralFeatures().get(0);
@@ -262,6 +268,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EClass getStockProduct()
   {
     return stockProductEClass;
@@ -272,6 +279,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getStockProduct_Stock()
   {
     return (EReference)stockProductEClass.getEStructuralFeatures().get(0);
@@ -282,6 +290,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getStockProduct_Cost()
   {
     return (EAttribute)stockProductEClass.getEStructuralFeatures().get(1);
@@ -292,6 +301,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getStockProduct_Available()
   {
     return (EAttribute)stockProductEClass.getEStructuralFeatures().get(2);
@@ -302,6 +312,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getStockProduct_OrderLimit()
   {
     return (EAttribute)stockProductEClass.getEStructuralFeatures().get(3);
@@ -312,6 +323,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EClass getRecipe()
   {
     return recipeEClass;
@@ -322,6 +334,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getRecipe_Ingredients()
   {
     return (EReference)recipeEClass.getEStructuralFeatures().get(0);
@@ -332,6 +345,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getRecipe_Department()
   {
     return (EReference)recipeEClass.getEStructuralFeatures().get(1);
@@ -342,6 +356,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getRecipe_Cost()
   {
     return (EAttribute)recipeEClass.getEStructuralFeatures().get(2);
@@ -352,6 +367,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EClass getIngredient()
   {
     return ingredientEClass;
@@ -362,6 +378,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getIngredient_Recipe()
   {
     return (EReference)ingredientEClass.getEStructuralFeatures().get(0);
@@ -372,6 +389,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getIngredient_Product()
   {
     return (EReference)ingredientEClass.getEStructuralFeatures().get(1);
@@ -382,6 +400,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getIngredient_Quantity()
   {
     return (EAttribute)ingredientEClass.getEStructuralFeatures().get(2);
@@ -392,6 +411,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EClass getMenuCard()
   {
     return menuCardEClass;
@@ -402,6 +422,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getMenuCard_Title()
   {
     return (EAttribute)menuCardEClass.getEStructuralFeatures().get(0);
@@ -412,6 +433,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getMenuCard_Restaurant()
   {
     return (EReference)menuCardEClass.getEStructuralFeatures().get(1);
@@ -422,6 +444,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getMenuCard_Sections()
   {
     return (EReference)menuCardEClass.getEStructuralFeatures().get(2);
@@ -432,6 +455,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EClass getRestaurant()
   {
     return restaurantEClass;
@@ -442,6 +466,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getRestaurant_Name()
   {
     return (EAttribute)restaurantEClass.getEStructuralFeatures().get(0);
@@ -452,6 +477,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getRestaurant_Departments()
   {
     return (EReference)restaurantEClass.getEStructuralFeatures().get(1);
@@ -462,6 +488,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getRestaurant_MenuCards()
   {
     return (EReference)restaurantEClass.getEStructuralFeatures().get(2);
@@ -472,6 +499,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getRestaurant_Tables()
   {
     return (EReference)restaurantEClass.getEStructuralFeatures().get(3);
@@ -482,6 +510,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getRestaurant_Stations()
   {
     return (EReference)restaurantEClass.getEStructuralFeatures().get(4);
@@ -492,6 +521,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EClass getDepartment()
   {
     return departmentEClass;
@@ -502,6 +532,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getDepartment_Recipes()
   {
     return (EReference)departmentEClass.getEStructuralFeatures().get(0);
@@ -512,6 +543,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getDepartment_Restaurant()
   {
     return (EReference)departmentEClass.getEStructuralFeatures().get(1);
@@ -522,6 +554,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getDepartment_Employees()
   {
     return (EReference)departmentEClass.getEStructuralFeatures().get(2);
@@ -532,6 +565,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getDepartment_Stocks()
   {
     return (EReference)departmentEClass.getEStructuralFeatures().get(3);
@@ -542,6 +576,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EClass getOffering()
   {
     return offeringEClass;
@@ -552,6 +587,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getOffering_Product()
   {
     return (EReference)offeringEClass.getEStructuralFeatures().get(0);
@@ -562,6 +598,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getOffering_Name()
   {
     return (EAttribute)offeringEClass.getEStructuralFeatures().get(1);
@@ -572,6 +609,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getOffering_Description()
   {
     return (EAttribute)offeringEClass.getEStructuralFeatures().get(2);
@@ -582,6 +620,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getOffering_Price()
   {
     return (EAttribute)offeringEClass.getEStructuralFeatures().get(3);
@@ -592,6 +631,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getOffering_Section()
   {
     return (EReference)offeringEClass.getEStructuralFeatures().get(4);
@@ -602,6 +642,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EClass getTable()
   {
     return tableEClass;
@@ -612,6 +653,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getTable_Seats()
   {
     return (EAttribute)tableEClass.getEStructuralFeatures().get(0);
@@ -622,6 +664,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getTable_Restaurant()
   {
     return (EReference)tableEClass.getEStructuralFeatures().get(1);
@@ -632,6 +675,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EClass getEmployee()
   {
     return employeeEClass;
@@ -642,6 +686,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getEmployee_Department()
   {
     return (EReference)employeeEClass.getEStructuralFeatures().get(0);
@@ -652,6 +697,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getEmployee_Name()
   {
     return (EAttribute)employeeEClass.getEStructuralFeatures().get(1);
@@ -662,6 +708,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EClass getStation()
   {
     return stationEClass;
@@ -672,6 +719,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getStation_StationID()
   {
     return (EAttribute)stationEClass.getEStructuralFeatures().get(0);
@@ -682,6 +730,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EClass getSection()
   {
     return sectionEClass;
@@ -692,6 +741,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getSection_MenuCard()
   {
     return (EReference)sectionEClass.getEStructuralFeatures().get(0);
@@ -702,6 +752,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EReference getSection_Offerings()
   {
     return (EReference)sectionEClass.getEStructuralFeatures().get(1);
@@ -712,6 +763,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getSection_Title()
   {
     return (EAttribute)sectionEClass.getEStructuralFeatures().get(2);
@@ -722,6 +774,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public EAttribute getSection_Text()
   {
     return (EAttribute)sectionEClass.getEStructuralFeatures().get(3);
@@ -732,6 +785,7 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
    *
    * @generated
    */
+  @Override
   public InventoryFactory getInventoryFactory()
   {
     return (InventoryFactory)getEFactoryInstance();

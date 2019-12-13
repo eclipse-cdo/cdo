@@ -500,6 +500,7 @@ public final class IOUtil
     }
   }
 
+  @SafeVarargs
   public static void copyText(File source, File target, IOFilter<String>... lineFilters) throws IORuntimeException
   {
     BufferedReader reader = null;
@@ -518,6 +519,7 @@ public final class IOUtil
     }
   }
 
+  @SafeVarargs
   public static void copyText(BufferedReader reader, BufferedWriter writer, IOFilter<String>... lineFilters)
   {
     try
@@ -1119,6 +1121,7 @@ public final class IOUtil
       return files;
     }
 
+    @Override
     public boolean visit(File file) throws IOException
     {
       files.add(file);

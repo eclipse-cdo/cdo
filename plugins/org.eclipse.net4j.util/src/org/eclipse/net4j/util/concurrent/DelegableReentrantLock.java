@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -68,6 +68,7 @@ public class DelegableReentrantLock extends NonFairReentrantLock implements ILif
     return container;
   }
 
+  @Override
   public final synchronized void activate() throws LifecycleException
   {
     if (!active)
@@ -83,6 +84,7 @@ public class DelegableReentrantLock extends NonFairReentrantLock implements ILif
     }
   }
 
+  @Override
   public final synchronized Exception deactivate()
   {
     if (active)
@@ -105,31 +107,37 @@ public class DelegableReentrantLock extends NonFairReentrantLock implements ILif
     return null;
   }
 
+  @Override
   public final LifecycleState getLifecycleState()
   {
     return active ? LifecycleState.ACTIVE : LifecycleState.INACTIVE;
   }
 
+  @Override
   public final boolean isActive()
   {
     return active;
   }
 
+  @Override
   public final void addListener(IListener listener)
   {
     // Do nothing
   }
 
+  @Override
   public final void removeListener(IListener listener)
   {
     // Do nothing
   }
 
+  @Override
   public final IListener[] getListeners()
   {
     return EventUtil.NO_LISTENERS;
   }
 
+  @Override
   public final boolean hasListeners()
   {
     return false;
@@ -196,6 +204,7 @@ public class DelegableReentrantLock extends NonFairReentrantLock implements ILif
         super(PRODUCT_GROUP, type);
       }
 
+      @Override
       public abstract DelegateDetector create(String description) throws ProductCreationException;
     }
   }

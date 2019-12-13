@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -149,11 +149,13 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
       return "QueryResultList" + objects.toString();
     }
 
+    @Override
     public void move(int newPosition, T object)
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public T move(int newPosition, int oldPosition)
     {
       throw new UnsupportedOperationException();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -120,6 +120,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   // -- property related methods -----------------------------------------
 
+  @Override
   public synchronized Map<String, String> getProperties()
   {
     if (properties == null)
@@ -130,6 +131,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     return properties;
   }
 
+  @Override
   public synchronized void setProperties(Map<String, String> properties)
   {
     this.properties = properties;
@@ -177,11 +179,13 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   // -- getters and setters ----------------------------------------------
 
+  @Override
   public final IDBStore getStore()
   {
     return store;
   }
 
+  @Override
   public final void setStore(IDBStore dbStore)
   {
     checkInactive();
@@ -195,6 +199,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   // -- object id related methods ----------------------------------------
 
+  @Override
   public void handleRevisions(IDBStoreAccessor accessor, EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     if (eClass == null)
@@ -212,6 +217,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     }
   }
 
+  @Override
   public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, OMMonitor monitor, CDOChangeSetSegment[] segments)
   {
     Set<CDOID> result = new HashSet<CDOID>();
@@ -244,6 +250,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     }
   }
 
+  @Override
   public CloseableIterator<CDOID> readObjectIDs(IDBStoreAccessor accessor)
   {
     Collection<EClass> classes = getClassesWithObjectInfo();
@@ -317,6 +324,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     return prefix;
   }
 
+  @Override
   public String getTableName(ENamedElement element)
   {
     String name = null;
@@ -359,6 +367,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     return getName(prefix + name, suffix, maxTableNameLength);
   }
 
+  @Override
   public String getTableName(EClass eClass, EStructuralFeature feature)
   {
     String name = DBAnnotation.TABLE_NAME.getValue(eClass);
@@ -385,6 +394,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     return getName(prefix + name, suffix, maxTableNameLength);
   }
 
+  @Override
   public String getFieldName(EStructuralFeature feature)
   {
     String name = DBAnnotation.COLUMN_NAME.getValue(feature);
@@ -460,6 +470,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     return builder.toString();
   }
 
+  @Override
   public void createMapping(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
     monitor.begin();
@@ -485,6 +496,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     }
   }
 
+  @Override
   public void removeMapping(Connection connection, InternalCDOPackageUnit[] packageUnits)
   {
     mapPackageUnits(packageUnits, connection, true);
@@ -569,6 +581,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   protected abstract IClassMapping doCreateClassMapping(EClass eClass);
 
+  @Override
   public final IClassMapping getClassMapping(EClass eClass)
   {
     if (!isMapped(eClass))
@@ -598,11 +611,13 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     return result;
   }
 
+  @Override
   public final Map<EClass, IClassMapping> getClassMappings()
   {
     return getClassMappings(true);
   }
 
+  @Override
   public final Map<EClass, IClassMapping> getClassMappings(boolean createOnDemand)
   {
     return doGetClassMappings(createOnDemand);
@@ -647,6 +662,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   protected abstract boolean isMapped(EClass eClass);
 
+  @Override
   public ITypeMapping createValueMapping(EStructuralFeature feature)
   {
     ITypeMapping.Provider provider = getTypeMappingProvider();
@@ -658,6 +674,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     return ITypeMapping.Provider.INSTANCE;
   }
 
+  @Override
   public final IListMapping createListMapping(EClass containingClass, EStructuralFeature feature)
   {
     checkArg(feature.isMany(), "Only many-valued features allowed"); //$NON-NLS-1$

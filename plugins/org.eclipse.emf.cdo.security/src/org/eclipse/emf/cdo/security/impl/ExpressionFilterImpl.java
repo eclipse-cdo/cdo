@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -63,6 +63,7 @@ public class ExpressionFilterImpl extends ObjectFilterImpl implements Expression
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Expression getExpression()
   {
     return (Expression)eGet(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, true);
@@ -73,6 +74,7 @@ public class ExpressionFilterImpl extends ObjectFilterImpl implements Expression
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setExpression(Expression newExpression)
   {
     eSet(SecurityPackage.Literals.EXPRESSION_FILTER__EXPRESSION, newExpression);
@@ -87,12 +89,14 @@ public class ExpressionFilterImpl extends ObjectFilterImpl implements Expression
     return (Boolean)expression.evaluate(evaluationContext);
   }
 
+  @Override
   public boolean isImpacted(CommitImpactContext context)
   {
     // TODO Implement impact analysis in the expression model
     return true;
   }
 
+  @Override
   public String format()
   {
     Expression expression = getExpression();

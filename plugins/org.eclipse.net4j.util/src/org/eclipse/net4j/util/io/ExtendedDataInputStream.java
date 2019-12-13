@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2008, 2010-2013, 2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2008, 2010-2013, 2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -29,6 +29,7 @@ public class ExtendedDataInputStream extends DataInputStream implements Extended
   /**
    * @since 3.7
    */
+  @Override
   public int readVarInt() throws IOException
   {
     return ExtendedIOUtil.readVarInt(this);
@@ -37,21 +38,25 @@ public class ExtendedDataInputStream extends DataInputStream implements Extended
   /**
   * @since 3.7
   */
+  @Override
   public long readVarLong() throws IOException
   {
     return ExtendedIOUtil.readVarLong(this);
   }
 
+  @Override
   public byte[] readByteArray() throws IOException
   {
     return ExtendedIOUtil.readByteArray(this);
   }
 
+  @Override
   public String readString() throws IOException
   {
     return ExtendedIOUtil.readString(this);
   }
 
+  @Override
   public Object readObject() throws IOException
   {
     return ExtendedIOUtil.readObject(this);
@@ -60,6 +65,7 @@ public class ExtendedDataInputStream extends DataInputStream implements Extended
   /**
    * @since 3.0
    */
+  @Override
   public <T extends Enum<?>> T readEnum(Class<T> type) throws IOException
   {
     return ExtendedIOUtil.readEnum(this, type);
@@ -68,16 +74,19 @@ public class ExtendedDataInputStream extends DataInputStream implements Extended
   /**
    * @since 3.4
    */
+  @Override
   public Throwable readException() throws IOException
   {
     return ExtendedIOUtil.readException(this);
   }
 
+  @Override
   public Object readObject(ClassLoader classLoader) throws IOException
   {
     return ExtendedIOUtil.readObject(this, classLoader);
   }
 
+  @Override
   public Object readObject(ClassResolver classResolver) throws IOException
   {
     return ExtendedIOUtil.readObject(this, classResolver);

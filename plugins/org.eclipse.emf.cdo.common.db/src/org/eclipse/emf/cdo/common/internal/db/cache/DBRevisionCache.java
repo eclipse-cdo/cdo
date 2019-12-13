@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -81,6 +81,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   {
   }
 
+  @Override
   public InternalCDORevisionCache instantiate(CDORevision revision)
   {
     // TODO: Support branches directly
@@ -147,6 +148,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
     this.dbConnectionProvider = dbConnectionProvider;
   }
 
+  @Override
   public EClass getObjectType(CDOID id)
   {
     return null;
@@ -228,6 +230,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
    *          the id
    * @return the revision by time
    */
+  @Override
   public InternalCDORevision getRevision(final CDOID id, final CDOBranchPoint branchPoint)
   {
     Connection connection = null;
@@ -293,6 +296,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
    *          the id to match the revision against
    * @return the revision by version
    */
+  @Override
   public InternalCDORevision getRevisionByVersion(final CDOID id, final CDOBranchVersion branchVersion)
   {
     Connection connection = null;
@@ -355,6 +359,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
    *
    * @return the revisions
    */
+  @Override
   public List<CDORevision> getCurrentRevisions()
   {
     Connection connection = null;
@@ -416,6 +421,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
     }
   }
 
+  @Override
   public void getAllRevisions(List<InternalCDORevision> result)
   {
     // TODO: implement DBRevisionCache.enclosing_method(enclosing_method_arguments)
@@ -429,6 +435,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
    * @param revision
    *          the revision to add to this cache
    */
+  @Override
   public void addRevision(CDORevision revision)
   {
     CheckUtil.checkArg(revision, "revision");
@@ -569,6 +576,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
    *          the id of the revision to remove
    * @return the {@link InternalCDORevision} that was removed, <tt>null</tt> otherwise
    */
+  @Override
   public InternalCDORevision removeRevision(CDOID id, CDOBranchVersion branchVersion)
   {
     Connection connection = null;
@@ -619,6 +627,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   /**
    * Removes all revisions from this cache (and its database).
    */
+  @Override
   public void clear()
   {
     Connection connection = null;
@@ -652,11 +661,13 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
     }
   }
 
+  @Override
   public Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public List<CDORevision> getRevisions(CDOBranchPoint branchPoint)
   {
     throw new UnsupportedOperationException();
@@ -745,6 +756,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   {
     return new CDODataInputImpl(inputStream)
     {
+      @Override
       public CDOPackageRegistry getPackageRegistry()
       {
         return packageRegistry;

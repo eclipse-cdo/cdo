@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -76,6 +76,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public BusinessDay getBusinessDay()
   {
     return (BusinessDay)eGet(BusinessPackage.Literals.WAITER__BUSINESS_DAY, true);
@@ -85,6 +86,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setBusinessDay(BusinessDay newBusinessDay)
   {
     eSet(BusinessPackage.Literals.WAITER__BUSINESS_DAY, newBusinessDay);
@@ -94,6 +96,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Table> getTables()
   {
@@ -104,6 +107,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Employee getEmployee()
   {
     return (Employee)eGet(BusinessPackage.Literals.WAITER__EMPLOYEE, true);
@@ -113,6 +117,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setEmployee(Employee newEmployee)
   {
     eSet(BusinessPackage.Literals.WAITER__EMPLOYEE, newEmployee);
@@ -122,6 +127,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Date getFrom()
   {
     return (Date)eGet(BusinessPackage.Literals.WAITER__FROM, true);
@@ -131,6 +137,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setFrom(Date newFrom)
   {
     eSet(BusinessPackage.Literals.WAITER__FROM, newFrom);
@@ -140,6 +147,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Date getUntil()
   {
     return (Date)eGet(BusinessPackage.Literals.WAITER__UNTIL, true);
@@ -149,6 +157,7 @@ public class WaiterImpl extends CDOObjectImpl implements Waiter
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUntil(Date newUntil)
   {
     eSet(BusinessPackage.Literals.WAITER__UNTIL, newUntil);

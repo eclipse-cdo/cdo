@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -38,11 +38,13 @@ public class CDOViewRegistryImpl extends Container<Registration> implements CDOV
   {
   }
 
+  @Override
   public synchronized Registration[] getElements()
   {
     return ids.values().toArray(new Registration[ids.size()]);
   }
 
+  @Override
   public synchronized int[] getIDs()
   {
     int[] result = new int[ids.size()];
@@ -56,11 +58,13 @@ public class CDOViewRegistryImpl extends Container<Registration> implements CDOV
     return result;
   }
 
+  @Override
   public synchronized CDOView[] getViews()
   {
     return views.keySet().toArray(new CDOView[views.size()]);
   }
 
+  @Override
   public synchronized int getID(CDOView view)
   {
     Registration registration = views.get(view);
@@ -72,6 +76,7 @@ public class CDOViewRegistryImpl extends Container<Registration> implements CDOV
     return NOT_REGISTERED;
   }
 
+  @Override
   public synchronized CDOView getView(int id)
   {
     Registration registration = ids.get(id);
@@ -134,11 +139,13 @@ public class CDOViewRegistryImpl extends Container<Registration> implements CDOV
       this.view = view;
     }
 
+    @Override
     public int getID()
     {
       return id;
     }
 
+    @Override
     public CDOView getView()
     {
       return view;

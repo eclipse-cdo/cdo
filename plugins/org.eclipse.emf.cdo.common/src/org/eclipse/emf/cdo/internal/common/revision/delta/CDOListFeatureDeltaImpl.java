@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -74,6 +74,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     }
   }
 
+  @Override
   public CDOListFeatureDelta copy()
   {
     CDOListFeatureDeltaImpl result = new CDOListFeatureDeltaImpl(getFeature(), getOriginSize());
@@ -143,16 +144,19 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     }
   }
 
+  @Override
   public Type getType()
   {
     return Type.LIST;
   }
 
+  @Override
   public int getOriginSize()
   {
     return originSize;
   }
 
+  @Override
   public List<CDOFeatureDelta> getListChanges()
   {
     return listChanges;
@@ -447,11 +451,13 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
         return indexIntoListChanges;
       }
 
+      @Override
       public int getIndex()
       {
         return index;
       }
 
+      @Override
       public void adjustAfterAddition(int index)
       {
         if (index <= this.index)
@@ -460,6 +466,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
         }
       }
 
+      @Override
       public void adjustAfterRemoval(int index)
       {
         if (index < this.index && this.index > 0)
@@ -468,6 +475,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
         }
       }
 
+      @Override
       public void adjustAfterMove(int oldPosition, int newPosition)
       {
         if (index == oldPosition)
@@ -577,6 +585,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     }
   }
 
+  @Override
   public Object applyTo(CDORevision revision)
   {
     for (CDOFeatureDelta featureDelta : listChanges)
@@ -599,6 +608,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     return changed;
   }
 
+  @Override
   public void accept(CDOFeatureDeltaVisitor visitor)
   {
     visitor.visit(this);

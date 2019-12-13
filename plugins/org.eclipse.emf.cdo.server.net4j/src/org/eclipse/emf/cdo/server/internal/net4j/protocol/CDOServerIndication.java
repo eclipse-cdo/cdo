@@ -106,6 +106,7 @@ public abstract class CDOServerIndication extends IndicationWithResponse
   {
     indicating(new CDODataInputImpl(in)
     {
+      @Override
       public CDOPackageRegistry getPackageRegistry()
       {
         return getRepository().getPackageRegistry();

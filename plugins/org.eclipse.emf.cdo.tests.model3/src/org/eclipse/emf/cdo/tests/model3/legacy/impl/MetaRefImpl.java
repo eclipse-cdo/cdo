@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -89,6 +89,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EPackage getEPackageRef()
   {
     if (ePackageRef != null && ePackageRef.eIsProxy())
@@ -119,6 +120,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setEPackageRef(EPackage newEPackageRef)
   {
     EPackage oldEPackageRef = ePackageRef;
@@ -133,6 +135,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getEClassRef()
   {
     if (eClassRef != null && eClassRef.eIsProxy())
@@ -163,6 +166,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setEClassRef(EClass newEClassRef)
   {
     EClass oldEClassRef = eClassRef;
@@ -177,6 +181,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEReferenceRef()
   {
     if (eReferenceRef != null && eReferenceRef.eIsProxy())
@@ -207,6 +212,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setEReferenceRef(EReference newEReferenceRef)
   {
     EReference oldEReferenceRef = eReferenceRef;

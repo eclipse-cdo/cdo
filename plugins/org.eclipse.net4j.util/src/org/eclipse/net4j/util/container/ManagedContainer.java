@@ -89,6 +89,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   /**
    * @since 3.8
    */
+  @Override
   public String getName()
   {
     return name;
@@ -97,12 +98,14 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   /**
    * @since 3.8
    */
+  @Override
   public void setName(String name)
   {
     checkInactive();
     this.name = name;
   }
 
+  @Override
   public synchronized IRegistry<IFactoryKey, IFactory> getFactoryRegistry()
   {
     if (factoryRegistry == null)
@@ -137,12 +140,14 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return factoryRegistry;
   }
 
+  @Override
   public ManagedContainer registerFactory(IFactory factory)
   {
     getFactoryRegistry().put(factory.getKey(), factory);
     return this;
   }
 
+  @Override
   public synchronized List<IElementProcessor> getPostProcessors()
   {
     if (postProcessors == null)
@@ -153,6 +158,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return postProcessors;
   }
 
+  @Override
   public synchronized void addPostProcessor(IElementProcessor postProcessor, boolean processExistingElements)
   {
     if (processExistingElements)
@@ -185,16 +191,19 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     getPostProcessors().add(postProcessor);
   }
 
+  @Override
   public void addPostProcessor(IElementProcessor postProcessor)
   {
     addPostProcessor(postProcessor, false);
   }
 
+  @Override
   public void removePostProcessor(IElementProcessor postProcessor)
   {
     getPostProcessors().remove(postProcessor);
   }
 
+  @Override
   public Set<String> getProductGroups()
   {
     checkActive();
@@ -212,6 +221,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return result;
   }
 
+  @Override
   public Set<String> getFactoryTypes(String productGroup)
   {
     checkActive();
@@ -235,6 +245,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return result;
   }
 
+  @Override
   public IFactory getFactory(String productGroup, String factoryType) throws FactoryNotFoundException
   {
     FactoryKey key = new FactoryKey(productGroup, factoryType);
@@ -247,6 +258,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return factory;
   }
 
+  @Override
   public boolean isEmpty()
   {
     checkActive();
@@ -256,6 +268,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     }
   }
 
+  @Override
   public String[] getElementKey(Object element)
   {
     checkActive();
@@ -272,12 +285,14 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return null;
   }
 
+  @Override
   public Object[] getElements()
   {
     checkActive();
     return getElementRegistryValues();
   }
 
+  @Override
   public Object[] getElements(String productGroup)
   {
     checkActive();
@@ -294,6 +309,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return result.toArray();
   }
 
+  @Override
   public Object[] getElements(String productGroup, String factoryType)
   {
     checkActive();
@@ -310,6 +326,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return result.toArray();
   }
 
+  @Override
   public Object getElement(String productGroup, String factoryType, String description) throws FactoryNotFoundException, ProductCreationException
   {
     return getElement(productGroup, factoryType, description, true);
@@ -318,6 +335,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   /**
    * @since 2.0
    */
+  @Override
   public Object getElement(String productGroup, String factoryType, String description, boolean activate)
       throws FactoryNotFoundException, ProductCreationException
   {
@@ -370,6 +388,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     }
   }
 
+  @Override
   public Object putElement(String productGroup, String factoryType, String description, Object element)
   {
     checkActive();
@@ -411,6 +430,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return oldElement;
   }
 
+  @Override
   public Object removeElement(String productGroup, String factoryType, String description)
   {
     checkActive();
@@ -440,6 +460,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return element;
   }
 
+  @Override
   public void clearElements()
   {
     checkActive();
@@ -465,6 +486,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     }
   }
 
+  @Override
   public void loadElements(InputStream stream) throws IOException, FactoryNotFoundException, ProductCreationException
   {
     checkActive();
@@ -496,6 +518,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     }
   }
 
+  @Override
   public void saveElements(OutputStream stream) throws IOException
   {
     checkActive();
@@ -729,6 +752,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
       return MessageFormat.format("{0}[{1}, {2}]", productGroup, factoryType, description); //$NON-NLS-1$
     }
 
+    @Override
     public int compareTo(ElementKey key)
     {
       if (id < key.id)
@@ -750,6 +774,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
    */
   private static final class EntryComparator implements Comparator<Entry<ElementKey, Object>>
   {
+    @Override
     public int compare(Entry<ElementKey, Object> entry1, Entry<ElementKey, Object> entry2)
     {
       return entry1.getKey().compareTo(entry2.getKey());

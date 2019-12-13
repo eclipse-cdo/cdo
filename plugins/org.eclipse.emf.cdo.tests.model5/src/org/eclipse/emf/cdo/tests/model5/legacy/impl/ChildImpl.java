@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -96,6 +96,7 @@ public class ChildImpl extends EObjectImpl implements Child
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Parent getParent()
   {
     if (eContainerFeatureID() != Model5Package.CHILD__PARENT)
@@ -121,6 +122,7 @@ public class ChildImpl extends EObjectImpl implements Child
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setParent(Parent newParent)
   {
     if (newParent != eInternalContainer() || eContainerFeatureID() != Model5Package.CHILD__PARENT && newParent != null)
@@ -155,6 +157,7 @@ public class ChildImpl extends EObjectImpl implements Child
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Parent getPreferredBy()
   {
     if (preferredBy != null && preferredBy.eIsProxy())
@@ -236,6 +239,7 @@ public class ChildImpl extends EObjectImpl implements Child
     }
   }
 
+  @Override
   public void setPreferredBy(Parent newPreferredBy)
   {
     IsLoadingTestFixture.reportLoading(eResource(), this);
@@ -247,6 +251,7 @@ public class ChildImpl extends EObjectImpl implements Child
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return name;
@@ -267,6 +272,7 @@ public class ChildImpl extends EObjectImpl implements Child
     }
   }
 
+  @Override
   public void setName(String newName)
   {
     IsLoadingTestFixture.reportLoading(eResource(), this);

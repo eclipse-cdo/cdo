@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2008, 2010-2012, 2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2008, 2010-2012, 2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -32,21 +32,25 @@ public abstract class BufferProvider extends Notifier implements IBufferProvider
     this.bufferCapacity = bufferCapacity;
   }
 
+  @Override
   public final long getProvidedBuffers()
   {
     return providedBuffers;
   }
 
+  @Override
   public final long getRetainedBuffers()
   {
     return retainedBuffers;
   }
 
+  @Override
   public final short getBufferCapacity()
   {
     return bufferCapacity;
   }
 
+  @Override
   public final IBuffer provideBuffer()
   {
     IBuffer buffer = doProvideBuffer();
@@ -61,6 +65,7 @@ public abstract class BufferProvider extends Notifier implements IBufferProvider
     return buffer;
   }
 
+  @Override
   public final void retainBuffer(IBuffer buffer)
   {
     IListener[] listeners = getListeners();

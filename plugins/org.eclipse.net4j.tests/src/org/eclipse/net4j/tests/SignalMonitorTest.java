@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -42,6 +42,7 @@ public class SignalMonitorTest extends AbstractTransportTest
     IManagedContainer container = super.createContainer();
     container.registerFactory(new ServerProtocolFactory(PROTOCOL_TYPE)
     {
+      @Override
       public Object create(String description) throws ProductCreationException
       {
         return new SignalProtocol<Object>(PROTOCOL_TYPE)

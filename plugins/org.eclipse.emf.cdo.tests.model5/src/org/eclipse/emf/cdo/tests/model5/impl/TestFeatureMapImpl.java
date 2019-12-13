@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -70,6 +70,7 @@ public class TestFeatureMapImpl extends CDOObjectImpl implements TestFeatureMap
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Manager> getManagers()
   {
@@ -80,6 +81,7 @@ public class TestFeatureMapImpl extends CDOObjectImpl implements TestFeatureMap
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Doctor> getDoctors()
   {
@@ -91,6 +93,7 @@ public class TestFeatureMapImpl extends CDOObjectImpl implements TestFeatureMap
    *
    * @generated NOT
    */
+  @Override
   public FeatureMap getPeople()
   {
     return (FeatureMap)eGet(Model5Package.eINSTANCE.getTestFeatureMap_People(), true);

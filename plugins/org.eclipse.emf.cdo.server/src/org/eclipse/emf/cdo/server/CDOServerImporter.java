@@ -242,6 +242,7 @@ public abstract class CDOServerImporter
     {
     }
 
+    @Override
     public void handleRepository(String name, String uuid, CDOID root, long created, long committed)
     {
       repository.getStore().setCreationTime(created);
@@ -266,6 +267,7 @@ public abstract class CDOServerImporter
       }
     }
 
+    @Override
     public InternalCDOPackageUnit handlePackageUnit(String id, Type type, long time, String data)
     {
       ++statistics.packageUnits;
@@ -281,6 +283,7 @@ public abstract class CDOServerImporter
       return packageUnit;
     }
 
+    @Override
     public InternalCDOPackageInfo handlePackageInfo(String packageURI)
     {
       ++statistics.packageInfos;
@@ -291,6 +294,7 @@ public abstract class CDOServerImporter
       return packageInfo;
     }
 
+    @Override
     public InternalCDOPackageRegistry handleModels()
     {
       collectPackageInfos();
@@ -301,6 +305,7 @@ public abstract class CDOServerImporter
 
       PackageLoader loader = new PackageLoader()
       {
+        @Override
         public EPackage[] loadPackages(CDOPackageUnit packageUnit)
         {
           String id = packageUnit.getID();
@@ -328,6 +333,7 @@ public abstract class CDOServerImporter
       return packageRegistry;
     }
 
+    @Override
     public InternalCDOBranch handleBranch(int id, String name, long time, int parentID)
     {
       ++statistics.branches;
@@ -342,6 +348,7 @@ public abstract class CDOServerImporter
       return branchManager.createBranch(id, name, parent, time);
     }
 
+    @Override
     public boolean handleRevision(CDORevision revision)
     {
       ++statistics.revisions;
@@ -349,6 +356,7 @@ public abstract class CDOServerImporter
       return true;
     }
 
+    @Override
     public OutputStream handleBlob(final byte[] id, final long size) throws IOException
     {
       ++statistics.blobs;
@@ -362,6 +370,7 @@ public abstract class CDOServerImporter
       };
     }
 
+    @Override
     public Writer handleClob(final byte[] id, final long size) throws IOException
     {
       ++statistics.clobs;
@@ -375,11 +384,13 @@ public abstract class CDOServerImporter
       };
     }
 
+    @Override
     public void handleCommitInfo(long time, long previous, int branchID, String user, String comment)
     {
       handleCommitInfo(time, previous, branchID, user, comment, 0, CDOBranchPoint.UNSPECIFIED_DATE);
     }
 
+    @Override
     public void handleCommitInfo(long time, long previous, int branchID, String user, String comment, int mergeSourceBranchID, long mergeSourceTime)
     {
       ++statistics.commits;
@@ -399,6 +410,7 @@ public abstract class CDOServerImporter
       }
     }
 
+    @Override
     public void flush()
     {
       accessor.rawCommit(1.0, monitor);
@@ -963,6 +975,7 @@ public abstract class CDOServerImporter
     {
       return new CDODataInputImpl(new ExtendedDataInputStream(new BufferedInputStream(stream)))
       {
+        @Override
         public CDOPackageRegistry getPackageRegistry()
         {
           return getRepository().getPackageRegistry(false);

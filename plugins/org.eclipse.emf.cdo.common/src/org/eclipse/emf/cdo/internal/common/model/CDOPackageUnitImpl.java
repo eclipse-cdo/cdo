@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015-2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015-2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -59,16 +59,19 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
   {
   }
 
+  @Override
   public InternalCDOPackageRegistry getPackageRegistry()
   {
     return packageRegistry;
   }
 
+  @Override
   public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry)
   {
     this.packageRegistry = packageRegistry;
   }
 
+  @Override
   public String getID()
   {
     try
@@ -81,11 +84,13 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     }
   }
 
+  @Override
   public State getState()
   {
     return state;
   }
 
+  @Override
   public void setState(State state)
   {
     this.state = state;
@@ -95,6 +100,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     }
   }
 
+  @Override
   public Type getType()
   {
     if (getOriginalType() == Type.DYNAMIC)
@@ -123,26 +129,31 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     return type;
   }
 
+  @Override
   public Type getOriginalType()
   {
     return originalType;
   }
 
+  @Override
   public void setOriginalType(Type originalType)
   {
     this.originalType = originalType;
   }
 
+  @Override
   public long getTimeStamp()
   {
     return timeStamp;
   }
 
+  @Override
   public void setTimeStamp(long timeStamp)
   {
     this.timeStamp = timeStamp;
   }
 
+  @Override
   public InternalCDOPackageInfo getTopLevelPackageInfo()
   {
     if (packageInfos == null || packageInfos.length == 0)
@@ -153,6 +164,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     return packageInfos[0];
   }
 
+  @Override
   public InternalCDOPackageInfo getPackageInfo(String packageURI)
   {
     for (InternalCDOPackageInfo packageInfo : packageInfos)
@@ -166,11 +178,13 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     return null;
   }
 
+  @Override
   public InternalCDOPackageInfo[] getPackageInfos()
   {
     return packageInfos;
   }
 
+  @Override
   public void setPackageInfos(InternalCDOPackageInfo[] packageInfos)
   {
     this.packageInfos = packageInfos;
@@ -180,6 +194,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     }
   }
 
+  @Override
   public EPackage[] getEPackages(boolean loadOnDemand)
   {
     List<EPackage> result = new ArrayList<EPackage>();
@@ -195,16 +210,19 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     return result.toArray(new EPackage[result.size()]);
   }
 
+  @Override
   public boolean isSystem()
   {
     return getTopLevelPackageInfo().isSystemPackage();
   }
 
+  @Override
   public boolean isResource()
   {
     return getTopLevelPackageInfo().isResourcePackage();
   }
 
+  @Override
   public void init(EPackage ePackage)
   {
     EPackage topLevelPackage = EMFUtil.getTopLevelPackage(ePackage);
@@ -216,18 +234,21 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     setOriginalType(getType());
   }
 
+  @Override
   public void dispose()
   {
     packageInfos = null;
     setState(State.DISPOSED);
   }
 
+  @Override
   public synchronized void load(boolean resolve)
   {
     PackageLoader packageLoader = packageRegistry.getPackageLoader();
     load(packageLoader, resolve);
   }
 
+  @Override
   public synchronized void load(PackageLoader packageLoader, boolean resolve)
   {
     if (state == State.PROXY)
@@ -257,6 +278,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     }
   }
 
+  @Override
   public void write(CDODataOutput out, boolean withPackages) throws IOException
   {
     if (TRACER.isEnabled())
@@ -279,6 +301,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     }
   }
 
+  @Override
   public void read(CDODataInput in, ResourceSet resourceSet) throws IOException
   {
     if (packageRegistry == null)
@@ -329,6 +352,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     }
   }
 
+  @Override
   public InternalCDOPackageUnit copy()
   {
     InternalCDOPackageUnit packageUnit = (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
@@ -348,6 +372,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     return packageUnit;
   }
 
+  @Override
   public int compareTo(CDOPackageUnit o)
   {
     return getID().compareTo(o.getID());

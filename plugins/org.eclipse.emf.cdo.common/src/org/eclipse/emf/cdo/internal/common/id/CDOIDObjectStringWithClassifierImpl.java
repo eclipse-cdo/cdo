@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -56,11 +56,13 @@ public final class CDOIDObjectStringWithClassifierImpl extends AbstractCDOID imp
     classifierRef = null;
   }
 
+  @Override
   public String getStringValue()
   {
     return value;
   }
 
+  @Override
   public CDOClassifierRef getClassifierRef()
   {
     return classifierRef;
@@ -73,31 +75,37 @@ public final class CDOIDObjectStringWithClassifierImpl extends AbstractCDOID imp
     out.writeCDOClassifierRef(classifierRef);
   }
 
+  @Override
   public String toURIFragment()
   {
     return classifierRef.getPackageURI() + CDOClassifierRef.URI_SEPARATOR + classifierRef.getClassifierName() + CDOClassifierRef.URI_SEPARATOR + value;
   }
 
+  @Override
   public Type getType()
   {
     return Type.OBJECT;
   }
 
+  @Override
   public CDOID.ObjectType getSubType()
   {
     return CDOID.ObjectType.STRING_WITH_CLASSIFIER;
   }
 
+  @Override
   public boolean isExternal()
   {
     return false;
   }
 
+  @Override
   public boolean isObject()
   {
     return true;
   }
 
+  @Override
   public boolean isTemporary()
   {
     return false;

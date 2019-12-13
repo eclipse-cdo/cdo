@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2014, 2016, 2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2014, 2016, 2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -58,31 +58,37 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
     newResourceID = in.readCDOID();
   }
 
+  @Override
   public Type getType()
   {
     return Type.CONTAINER;
   }
 
+  @Override
   public CDOFeatureDelta copy()
   {
     return new CDOContainerFeatureDeltaImpl(newResourceID, newContainerID, newContainerFeatureID);
   }
 
+  @Override
   public CDOID getResourceID()
   {
     return newResourceID;
   }
 
+  @Override
   public Object getContainerID()
   {
     return newContainerID;
   }
 
+  @Override
   public int getContainerFeatureID()
   {
     return newContainerFeatureID;
   }
 
+  @Override
   public Object applyTo(CDORevision revision)
   {
     InternalCDORevision internalRevision = (InternalCDORevision)revision;
@@ -123,6 +129,7 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
     out.writeCDOID(newResourceID);
   }
 
+  @Override
   public void accept(CDOFeatureDeltaVisitor visitor)
   {
     visitor.visit(this);

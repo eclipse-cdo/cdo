@@ -1,13 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.http.tests;singleton:=true
-Bundle-Version: 4.0.500.qualifier
+Bundle-Version: 4.1.0.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.net4j.internal.http.bundle.OM$Activator
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
  org.eclipse.net4j.tests;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
@@ -17,5 +17,5 @@ Import-Package: javax.servlet;version="[2.3.0,4.0.0)",
  javax.servlet.http;version="[2.3.0,4.0.0)",
  org.apache.commons.httpclient;version="[3.0.1,4.0.0)",
  org.apache.commons.httpclient.methods;version="[3.0.1,4.0.0)"
-Export-Package: org.eclipse.net4j.http.tests;version="4.0.500";x-internal:=true
+Export-Package: org.eclipse.net4j.http.tests;version="4.1.0";x-internal:=true
 Automatic-Module-Name: org.eclipse.net4j.http.tests

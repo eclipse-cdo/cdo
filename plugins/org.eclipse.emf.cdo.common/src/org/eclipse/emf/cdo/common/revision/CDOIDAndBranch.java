@@ -25,5 +25,6 @@ import org.eclipse.emf.cdo.common.id.CDOIdentifiable;
  */
 public interface CDOIDAndBranch extends CDOIdentifiable, CDOBranchProvider
 {
+  @Override
   public CDOBranch getBranch();
 }

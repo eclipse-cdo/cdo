@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -213,6 +213,7 @@ public class BranchingTest extends AbstractCDOTest
     final AsyncResult<CDOBranch> result = new AsyncResult<CDOBranch>();
     session2.getBranchManager().addListener(new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof CDOBranchChangedEvent)
@@ -996,6 +997,7 @@ public class BranchingTest extends AbstractCDOTest
     CDOSessionProtocol sessionProtocol = ((InternalCDOSession)session).getSessionProtocol();
     sessionProtocol.handleRevisions(null, subBranch, false, CDOBranchPoint.UNSPECIFIED_DATE, false, new CDORevisionHandler()
     {
+      @Override
       public boolean handleRevision(CDORevision revision)
       {
         if (revision.getEClass() == getModel1Package().getProduct1())

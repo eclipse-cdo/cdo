@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -68,6 +68,7 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getAttrBefore()
   {
     return (String)eGet(Model2Package.eINSTANCE.getPersistentContainment_AttrBefore(), true);
@@ -77,6 +78,7 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrBefore(String newAttrBefore)
   {
     eSet(Model2Package.eINSTANCE.getPersistentContainment_AttrBefore(), newAttrBefore);
@@ -86,6 +88,7 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<TransientContainer> getChildren()
   {
@@ -96,6 +99,7 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getAttrAfter()
   {
     return (String)eGet(Model2Package.eINSTANCE.getPersistentContainment_AttrAfter(), true);
@@ -105,6 +109,7 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrAfter(String newAttrAfter)
   {
     eSet(Model2Package.eINSTANCE.getPersistentContainment_AttrAfter(), newAttrAfter);

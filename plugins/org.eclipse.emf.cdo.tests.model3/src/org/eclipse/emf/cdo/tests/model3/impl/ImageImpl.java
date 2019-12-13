@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,6 +66,7 @@ public class ImageImpl extends CDOObjectImpl implements Image
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getWidth()
   {
     return (Integer)eGet(Model3Package.eINSTANCE.getImage_Width(), true);
@@ -75,6 +76,7 @@ public class ImageImpl extends CDOObjectImpl implements Image
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setWidth(int newWidth)
   {
     eSet(Model3Package.eINSTANCE.getImage_Width(), newWidth);
@@ -84,6 +86,7 @@ public class ImageImpl extends CDOObjectImpl implements Image
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getHeight()
   {
     return (Integer)eGet(Model3Package.eINSTANCE.getImage_Height(), true);
@@ -93,6 +96,7 @@ public class ImageImpl extends CDOObjectImpl implements Image
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setHeight(int newHeight)
   {
     eSet(Model3Package.eINSTANCE.getImage_Height(), newHeight);
@@ -102,6 +106,7 @@ public class ImageImpl extends CDOObjectImpl implements Image
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public CDOBlob getData()
   {
     return (CDOBlob)eGet(Model3Package.eINSTANCE.getImage_Data(), true);
@@ -111,6 +116,7 @@ public class ImageImpl extends CDOObjectImpl implements Image
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setData(CDOBlob newData)
   {
     eSet(Model3Package.eINSTANCE.getImage_Data(), newData);

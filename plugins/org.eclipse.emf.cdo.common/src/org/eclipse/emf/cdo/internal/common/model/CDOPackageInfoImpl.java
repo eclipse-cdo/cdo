@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -48,36 +48,43 @@ public class CDOPackageInfoImpl implements InternalCDOPackageInfo
   {
   }
 
+  @Override
   public InternalCDOPackageUnit getPackageUnit()
   {
     return packageUnit;
   }
 
+  @Override
   public void setPackageUnit(InternalCDOPackageUnit packageUnit)
   {
     this.packageUnit = packageUnit;
   }
 
+  @Override
   public String getPackageURI()
   {
     return packageURI;
   }
 
+  @Override
   public void setPackageURI(String packageURI)
   {
     this.packageURI = packageURI;
   }
 
+  @Override
   public String getParentURI()
   {
     return parentURI;
   }
 
+  @Override
   public void setParentURI(String parentURI)
   {
     this.parentURI = parentURI;
   }
 
+  @Override
   public void write(CDODataOutput out) throws IOException
   {
     if (TRACER.isEnabled())
@@ -89,6 +96,7 @@ public class CDOPackageInfoImpl implements InternalCDOPackageInfo
     out.writeCDOPackageURI(parentURI);
   }
 
+  @Override
   public void read(CDODataInput in) throws IOException
   {
     packageURI = in.readCDOPackageURI();
@@ -99,6 +107,7 @@ public class CDOPackageInfoImpl implements InternalCDOPackageInfo
     }
   }
 
+  @Override
   public InternalCDOPackageInfo copy()
   {
     InternalCDOPackageInfo packageInfo = (InternalCDOPackageInfo)CDOModelUtil.createPackageInfo();
@@ -108,16 +117,19 @@ public class CDOPackageInfoImpl implements InternalCDOPackageInfo
     return packageInfo;
   }
 
+  @Override
   public EFactory getEFactory()
   {
     return getEPackage().getEFactoryInstance();
   }
 
+  @Override
   public EPackage getEPackage()
   {
     return getEPackage(true);
   }
 
+  @Override
   public EPackage getEPackage(boolean loadOnDemand)
   {
     if (ePackage == null && loadOnDemand)
@@ -128,31 +140,37 @@ public class CDOPackageInfoImpl implements InternalCDOPackageInfo
     return ePackage;
   }
 
+  @Override
   public void setEPackage(EPackage ePackage)
   {
     this.ePackage = ePackage;
   }
 
+  @Override
   public boolean isCorePackage()
   {
     return CDOModelUtil.isCorePackage(getEPackage());
   }
 
+  @Override
   public boolean isResourcePackage()
   {
     return CDOModelUtil.isResourcePackage(getEPackage());
   }
 
+  @Override
   public boolean isTypePackage()
   {
     return CDOModelUtil.isTypesPackage(getEPackage());
   }
 
+  @Override
   public boolean isSystemPackage()
   {
     return CDOModelUtil.isSystemPackage(getEPackage());
   }
 
+  @Override
   public int compareTo(CDOPackageInfo o)
   {
     return getPackageURI().compareTo(o.getPackageURI());
@@ -168,6 +186,7 @@ public class CDOPackageInfoImpl implements InternalCDOPackageInfo
    * @deprecated As of 4.2 CDOPackageInfos are no longer mapped through Adapters.
    * @see InternalCDOPackageRegistry#registerPackageInfo(EPackage, InternalCDOPackageInfo)
    */
+  @Override
   @Deprecated
   public void notifyChanged(Notification notification)
   {
@@ -178,6 +197,7 @@ public class CDOPackageInfoImpl implements InternalCDOPackageInfo
    * @deprecated As of 4.2 CDOPackageInfos are no longer mapped through Adapters.
    * @see InternalCDOPackageRegistry#registerPackageInfo(EPackage, InternalCDOPackageInfo)
    */
+  @Override
   @Deprecated
   public Notifier getTarget()
   {
@@ -188,6 +208,7 @@ public class CDOPackageInfoImpl implements InternalCDOPackageInfo
    * @deprecated As of 4.2 CDOPackageInfos are no longer mapped through Adapters.
    * @see InternalCDOPackageRegistry#registerPackageInfo(EPackage, InternalCDOPackageInfo)
    */
+  @Override
   @Deprecated
   public void setTarget(Notifier newTarget)
   {
@@ -198,6 +219,7 @@ public class CDOPackageInfoImpl implements InternalCDOPackageInfo
    * @deprecated As of 4.2 CDOPackageInfos are no longer mapped through Adapters.
    * @see InternalCDOPackageRegistry#registerPackageInfo(EPackage, InternalCDOPackageInfo)
    */
+  @Override
   @Deprecated
   public void unsetTarget(Notifier oldTarget)
   {
@@ -208,6 +230,7 @@ public class CDOPackageInfoImpl implements InternalCDOPackageInfo
    * @deprecated As of 4.2 CDOPackageInfos are no longer mapped through Adapters.
    * @see InternalCDOPackageRegistry#registerPackageInfo(EPackage, InternalCDOPackageInfo)
    */
+  @Override
   @Deprecated
   public boolean isAdapterForType(Object type)
   {

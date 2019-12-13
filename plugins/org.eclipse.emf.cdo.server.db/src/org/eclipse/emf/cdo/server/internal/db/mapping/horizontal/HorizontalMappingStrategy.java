@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -65,6 +65,7 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
     return delegate;
   }
 
+  @Override
   public Map<String, String> getProperties()
   {
     if (delegate != null)
@@ -80,6 +81,7 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
     return new HashMap<String, String>();
   }
 
+  @Override
   public void setProperties(Map<String, String> properties)
   {
     if (delegate != null)
@@ -92,6 +94,7 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
     }
   }
 
+  @Override
   public IDBStore getStore()
   {
     if (delegate != null)
@@ -102,6 +105,7 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
     return store;
   }
 
+  @Override
   public void setStore(IDBStore store)
   {
     if (delegate != null)
@@ -114,117 +118,140 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
     }
   }
 
+  @Override
   public ITypeMapping createValueMapping(EStructuralFeature feature)
   {
     return delegate.createValueMapping(feature);
   }
 
+  @Override
   public IListMapping createListMapping(EClass containingClass, EStructuralFeature feature)
   {
     return delegate.createListMapping(containingClass, feature);
   }
 
+  @Override
   public String getTableName(ENamedElement element)
   {
     return delegate.getTableName(element);
   }
 
+  @Override
   public String getTableName(EClass containingClass, EStructuralFeature feature)
   {
     return delegate.getTableName(containingClass, feature);
   }
 
+  @Override
   public String getFieldName(EStructuralFeature feature)
   {
     return delegate.getFieldName(feature);
   }
 
+  @Override
   public void createMapping(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
     delegate.createMapping(connection, packageUnits, monitor);
   }
 
+  @Override
   public void removeMapping(Connection connection, InternalCDOPackageUnit[] packageUnits)
   {
     delegate.removeMapping(connection, packageUnits);
   }
 
+  @Override
   public IClassMapping getClassMapping(EClass eClass)
   {
     return delegate.getClassMapping(eClass);
   }
 
+  @Override
   public Map<EClass, IClassMapping> getClassMappings()
   {
     return delegate.getClassMappings();
   }
 
+  @Override
   public Map<EClass, IClassMapping> getClassMappings(boolean createOnDemand)
   {
     return delegate.getClassMappings(createOnDemand);
   }
 
+  @Override
   public boolean hasDeltaSupport()
   {
     return delegate.hasDeltaSupport();
   }
 
+  @Override
   public boolean hasAuditSupport()
   {
     return delegate.hasAuditSupport();
   }
 
+  @Override
   public boolean hasBranchingSupport()
   {
     return delegate.hasBranchingSupport();
   }
 
+  @Override
   public void queryResources(IDBStoreAccessor accessor, QueryResourcesContext context)
   {
     delegate.queryResources(accessor, context);
   }
 
+  @Override
   public void queryXRefs(IDBStoreAccessor accessor, QueryXRefsContext context)
   {
     delegate.queryXRefs(accessor, context);
   }
 
+  @Override
   public CDOClassifierRef readObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     return delegate.readObjectType(accessor, id);
   }
 
+  @Override
   public CloseableIterator<CDOID> readObjectIDs(IDBStoreAccessor accessor)
   {
     return delegate.readObjectIDs(accessor);
   }
 
+  @Override
   public void repairAfterCrash(IDBAdapter dbAdapter, Connection connection)
   {
     delegate.repairAfterCrash(dbAdapter, connection);
   }
 
+  @Override
   public void handleRevisions(IDBStoreAccessor accessor, EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     delegate.handleRevisions(accessor, eClass, branch, timeStamp, exactTime, handler);
   }
 
+  @Override
   public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, OMMonitor monitor, CDOChangeSetSegment[] segments)
   {
     return delegate.readChangeSet(accessor, monitor, segments);
   }
 
+  @Override
   public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, int lastReplicatedBranchID, int lastBranchID, long lastReplicatedCommitTime,
       long lastCommitTime) throws IOException
   {
     delegate.rawExport(accessor, out, lastReplicatedBranchID, lastBranchID, lastReplicatedCommitTime, lastCommitTime);
   }
 
+  @Override
   public void rawImport(IDBStoreAccessor accessor, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
     delegate.rawImport(accessor, in, fromCommitTime, toCommitTime, monitor);
   }
 
+  @Override
   public String getListJoin(String attrTable, String listTable)
   {
     return delegate.getListJoin(attrTable, listTable);

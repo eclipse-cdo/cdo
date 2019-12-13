@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -343,6 +343,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRefSingleContained()
   {
     return refSingleContainedEClass;
@@ -352,6 +353,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRefSingleContained_Element()
   {
     return (EReference)refSingleContainedEClass.getEStructuralFeatures().get(0);
@@ -361,6 +363,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getSingleContainedElement()
   {
     return singleContainedElementEClass;
@@ -370,6 +373,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getSingleContainedElement_Name()
   {
     return (EAttribute)singleContainedElementEClass.getEStructuralFeatures().get(0);
@@ -379,6 +383,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getSingleContainedElement_Parent()
   {
     return (EReference)singleContainedElementEClass.getEStructuralFeatures().get(1);
@@ -388,6 +393,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRefSingleNonContained()
   {
     return refSingleNonContainedEClass;
@@ -397,6 +403,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRefSingleNonContained_Element()
   {
     return (EReference)refSingleNonContainedEClass.getEStructuralFeatures().get(0);
@@ -406,6 +413,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getSingleNonContainedElement()
   {
     return singleNonContainedElementEClass;
@@ -415,6 +423,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getSingleNonContainedElement_Name()
   {
     return (EAttribute)singleNonContainedElementEClass.getEStructuralFeatures().get(0);
@@ -424,6 +433,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getSingleNonContainedElement_Parent()
   {
     return (EReference)singleNonContainedElementEClass.getEStructuralFeatures().get(1);
@@ -433,6 +443,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRefMultiContained()
   {
     return refMultiContainedEClass;
@@ -442,6 +453,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRefMultiContained_Elements()
   {
     return (EReference)refMultiContainedEClass.getEStructuralFeatures().get(0);
@@ -451,6 +463,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getMultiContainedElement()
   {
     return multiContainedElementEClass;
@@ -460,6 +473,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getMultiContainedElement_Name()
   {
     return (EAttribute)multiContainedElementEClass.getEStructuralFeatures().get(0);
@@ -469,6 +483,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMultiContainedElement_Parent()
   {
     return (EReference)multiContainedElementEClass.getEStructuralFeatures().get(1);
@@ -478,6 +493,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRefMultiNonContained()
   {
     return refMultiNonContainedEClass;
@@ -487,6 +503,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRefMultiNonContained_Elements()
   {
     return (EReference)refMultiNonContainedEClass.getEStructuralFeatures().get(0);
@@ -496,6 +513,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getMultiNonContainedElement()
   {
     return multiNonContainedElementEClass;
@@ -505,6 +523,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getMultiNonContainedElement_Name()
   {
     return (EAttribute)multiNonContainedElementEClass.getEStructuralFeatures().get(0);
@@ -514,6 +533,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMultiNonContainedElement_Parent()
   {
     return (EReference)multiNonContainedElementEClass.getEStructuralFeatures().get(1);
@@ -523,6 +543,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRefMultiNonContainedUnsettable()
   {
     return refMultiNonContainedUnsettableEClass;
@@ -532,6 +553,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRefMultiNonContainedUnsettable_Elements()
   {
     return (EReference)refMultiNonContainedUnsettableEClass.getEStructuralFeatures().get(0);
@@ -541,6 +563,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getMultiNonContainedUnsettableElement()
   {
     return multiNonContainedUnsettableElementEClass;
@@ -550,6 +573,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getMultiNonContainedUnsettableElement_Name()
   {
     return (EAttribute)multiNonContainedUnsettableElementEClass.getEStructuralFeatures().get(0);
@@ -559,6 +583,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMultiNonContainedUnsettableElement_Parent()
   {
     return (EReference)multiNonContainedUnsettableElementEClass.getEStructuralFeatures().get(1);
@@ -568,6 +593,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRefSingleContainedNPL()
   {
     return refSingleContainedNPLEClass;
@@ -577,6 +603,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRefSingleContainedNPL_Element()
   {
     return (EReference)refSingleContainedNPLEClass.getEStructuralFeatures().get(0);
@@ -586,6 +613,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRefSingleNonContainedNPL()
   {
     return refSingleNonContainedNPLEClass;
@@ -595,6 +623,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRefSingleNonContainedNPL_Element()
   {
     return (EReference)refSingleNonContainedNPLEClass.getEStructuralFeatures().get(0);
@@ -604,6 +633,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRefMultiContainedNPL()
   {
     return refMultiContainedNPLEClass;
@@ -613,6 +643,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRefMultiContainedNPL_Elements()
   {
     return (EReference)refMultiContainedNPLEClass.getEStructuralFeatures().get(0);
@@ -622,6 +653,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRefMultiNonContainedNPL()
   {
     return refMultiNonContainedNPLEClass;
@@ -631,6 +663,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRefMultiNonContainedNPL_Elements()
   {
     return (EReference)refMultiNonContainedNPLEClass.getEStructuralFeatures().get(0);
@@ -640,6 +673,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getContainedElementNoOpposite()
   {
     return containedElementNoOppositeEClass;
@@ -649,6 +683,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getContainedElementNoOpposite_Name()
   {
     return (EAttribute)containedElementNoOppositeEClass.getEStructuralFeatures().get(0);
@@ -658,6 +693,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenRefSingleContained()
   {
     return genRefSingleContainedEClass;
@@ -667,6 +703,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getGenRefSingleContained_Element()
   {
     return (EReference)genRefSingleContainedEClass.getEStructuralFeatures().get(0);
@@ -676,6 +713,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenRefSingleNonContained()
   {
     return genRefSingleNonContainedEClass;
@@ -685,6 +723,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getGenRefSingleNonContained_Element()
   {
     return (EReference)genRefSingleNonContainedEClass.getEStructuralFeatures().get(0);
@@ -694,6 +733,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenRefMultiContained()
   {
     return genRefMultiContainedEClass;
@@ -703,6 +743,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getGenRefMultiContained_Elements()
   {
     return (EReference)genRefMultiContainedEClass.getEStructuralFeatures().get(0);
@@ -712,6 +753,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenRefMultiNonContained()
   {
     return genRefMultiNonContainedEClass;
@@ -721,6 +763,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getGenRefMultiNonContained_Elements()
   {
     return (EReference)genRefMultiNonContainedEClass.getEStructuralFeatures().get(0);
@@ -730,6 +773,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImplSingleRefContainer()
   {
     return implSingleRefContainerEClass;
@@ -739,6 +783,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImplSingleRefContainedElement()
   {
     return implSingleRefContainedElementEClass;
@@ -748,6 +793,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getImplSingleRefContainedElement_Name()
   {
     return (EAttribute)implSingleRefContainedElementEClass.getEStructuralFeatures().get(0);
@@ -757,6 +803,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImplSingleRefNonContainer()
   {
     return implSingleRefNonContainerEClass;
@@ -766,6 +813,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImplSingleRefNonContainedElement()
   {
     return implSingleRefNonContainedElementEClass;
@@ -775,6 +823,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getImplSingleRefNonContainedElement_Name()
   {
     return (EAttribute)implSingleRefNonContainedElementEClass.getEStructuralFeatures().get(0);
@@ -784,6 +833,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImplMultiRefNonContainer()
   {
     return implMultiRefNonContainerEClass;
@@ -793,6 +843,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImplMultiRefNonContainedElement()
   {
     return implMultiRefNonContainedElementEClass;
@@ -802,6 +853,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getImplMultiRefNonContainedElement_Name()
   {
     return (EAttribute)implMultiRefNonContainedElementEClass.getEStructuralFeatures().get(0);
@@ -811,6 +863,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImplMultiRefContainer()
   {
     return implMultiRefContainerEClass;
@@ -820,6 +873,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImplMultiRefContainedElement()
   {
     return implMultiRefContainedElementEClass;
@@ -829,6 +883,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getImplMultiRefContainedElement_Name()
   {
     return (EAttribute)implMultiRefContainedElementEClass.getEStructuralFeatures().get(0);
@@ -838,6 +893,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImplSingleRefContainerNPL()
   {
     return implSingleRefContainerNPLEClass;
@@ -847,6 +903,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImplSingleRefNonContainerNPL()
   {
     return implSingleRefNonContainerNPLEClass;
@@ -856,6 +913,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImplMultiRefContainerNPL()
   {
     return implMultiRefContainerNPLEClass;
@@ -865,6 +923,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImplMultiRefNonContainerNPL()
   {
     return implMultiRefNonContainerNPLEClass;
@@ -874,6 +933,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImplContainedElementNPL()
   {
     return implContainedElementNPLEClass;
@@ -883,6 +943,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenRefMultiNUNonContained()
   {
     return genRefMultiNUNonContainedEClass;
@@ -892,6 +953,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getGenRefMultiNUNonContained_Elements()
   {
     return (EReference)genRefMultiNUNonContainedEClass.getEStructuralFeatures().get(0);
@@ -901,6 +963,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenRefMapNonContained()
   {
     return genRefMapNonContainedEClass;
@@ -910,6 +973,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getGenRefMapNonContained_Elements()
   {
     return (EReference)genRefMapNonContainedEClass.getEStructuralFeatures().get(0);
@@ -919,6 +983,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getStringToEObject()
   {
     return stringToEObjectEClass;
@@ -928,6 +993,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getStringToEObject_Key()
   {
     return (EAttribute)stringToEObjectEClass.getEStructuralFeatures().get(0);
@@ -937,6 +1003,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getStringToEObject_Value()
   {
     return (EReference)stringToEObjectEClass.getEStructuralFeatures().get(1);
@@ -946,6 +1013,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public model4Factory getmodel4Factory()
   {
     return (model4Factory)getEFactoryInstance();

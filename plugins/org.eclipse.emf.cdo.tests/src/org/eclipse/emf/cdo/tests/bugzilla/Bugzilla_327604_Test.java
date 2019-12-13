@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -288,10 +288,12 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
    */
   private final class RemoteSessionConfigurationFactory implements CDOSessionConfigurationFactory
   {
+    @Override
     public CDOSessionConfiguration createSessionConfiguration()
     {
       return new TestSessionConfiguration()
       {
+        @Override
         public CDOSession openSession()
         {
           return Bugzilla_327604_Test.this.openSession();

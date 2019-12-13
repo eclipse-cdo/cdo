@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,6 +66,7 @@ public class MultiNonContainedElementImpl extends CDOObjectImpl implements Multi
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(model4Package.eINSTANCE.getMultiNonContainedElement_Name(), true);
@@ -75,6 +76,7 @@ public class MultiNonContainedElementImpl extends CDOObjectImpl implements Multi
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(model4Package.eINSTANCE.getMultiNonContainedElement_Name(), newName);
@@ -84,6 +86,7 @@ public class MultiNonContainedElementImpl extends CDOObjectImpl implements Multi
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public RefMultiNonContained getParent()
   {
     return (RefMultiNonContained)eGet(model4Package.eINSTANCE.getMultiNonContainedElement_Parent(), true);
@@ -93,6 +96,7 @@ public class MultiNonContainedElementImpl extends CDOObjectImpl implements Multi
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setParent(RefMultiNonContained newParent)
   {
     eSet(model4Package.eINSTANCE.getMultiNonContainedElement_Parent(), newParent);

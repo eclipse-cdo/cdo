@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -85,11 +85,13 @@ public abstract class RepositoryActivityLog extends LifecycleHook<IRepository> i
 
   private final WriteAccessHandler writeAccessHandler = new WriteAccessHandler()
   {
+    @Override
     public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
     {
       commitStarted(commitContext, concurrentCommits.incrementAndGet(), commits.incrementAndGet());
     }
 
+    @Override
     public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
     {
       commitFinished(commitContext, concurrentCommits.decrementAndGet());
@@ -248,6 +250,7 @@ public abstract class RepositoryActivityLog extends LifecycleHook<IRepository> i
       rollingLog = new RollingLog(logFile, logSize, append);
     }
 
+    @Override
     public void log(String message)
     {
       rollingLog.log(message);

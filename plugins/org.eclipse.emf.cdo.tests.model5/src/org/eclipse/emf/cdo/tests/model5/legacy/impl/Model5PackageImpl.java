@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -230,6 +230,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getTestFeatureMap()
   {
     return testFeatureMapEClass;
@@ -239,6 +240,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getTestFeatureMap_Managers()
   {
     return (EReference)testFeatureMapEClass.getEStructuralFeatures().get(0);
@@ -248,6 +250,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getTestFeatureMap_Doctors()
   {
     return (EReference)testFeatureMapEClass.getEStructuralFeatures().get(1);
@@ -257,6 +260,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getTestFeatureMap_People()
   {
     return (EAttribute)testFeatureMapEClass.getEStructuralFeatures().get(2);
@@ -266,6 +270,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getManager()
   {
     return managerEClass;
@@ -275,6 +280,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getDoctor()
   {
     return doctorEClass;
@@ -284,6 +290,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenListOfString()
   {
     return genListOfStringEClass;
@@ -293,6 +300,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getGenListOfString_Elements()
   {
     return (EAttribute)genListOfStringEClass.getEStructuralFeatures().get(0);
@@ -302,6 +310,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenListOfInt()
   {
     return genListOfIntEClass;
@@ -311,6 +320,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getGenListOfInt_Elements()
   {
     return (EAttribute)genListOfIntEClass.getEStructuralFeatures().get(0);
@@ -320,6 +330,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenListOfInteger()
   {
     return genListOfIntegerEClass;
@@ -329,6 +340,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getGenListOfInteger_Elements()
   {
     return (EAttribute)genListOfIntegerEClass.getEStructuralFeatures().get(0);
@@ -338,6 +350,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenListOfLong()
   {
     return genListOfLongEClass;
@@ -347,6 +360,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getGenListOfLong_Elements()
   {
     return (EAttribute)genListOfLongEClass.getEStructuralFeatures().get(0);
@@ -356,6 +370,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenListOfBoolean()
   {
     return genListOfBooleanEClass;
@@ -365,6 +380,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getGenListOfBoolean_Elements()
   {
     return (EAttribute)genListOfBooleanEClass.getEStructuralFeatures().get(0);
@@ -374,6 +390,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenListOfShort()
   {
     return genListOfShortEClass;
@@ -383,6 +400,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getGenListOfShort_Elements()
   {
     return (EAttribute)genListOfShortEClass.getEStructuralFeatures().get(0);
@@ -392,6 +410,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenListOfFloat()
   {
     return genListOfFloatEClass;
@@ -401,6 +420,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getGenListOfFloat_Elements()
   {
     return (EAttribute)genListOfFloatEClass.getEStructuralFeatures().get(0);
@@ -410,6 +430,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenListOfDouble()
   {
     return genListOfDoubleEClass;
@@ -419,6 +440,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getGenListOfDouble_Elements()
   {
     return (EAttribute)genListOfDoubleEClass.getEStructuralFeatures().get(0);
@@ -428,6 +450,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenListOfDate()
   {
     return genListOfDateEClass;
@@ -437,6 +460,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getGenListOfDate_Elements()
   {
     return (EAttribute)genListOfDateEClass.getEStructuralFeatures().get(0);
@@ -446,6 +470,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenListOfChar()
   {
     return genListOfCharEClass;
@@ -455,6 +480,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getGenListOfChar_Elements()
   {
     return (EAttribute)genListOfCharEClass.getEStructuralFeatures().get(0);
@@ -464,6 +490,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGenListOfIntArray()
   {
     return genListOfIntArrayEClass;
@@ -473,6 +500,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getGenListOfIntArray_Elements()
   {
     return (EAttribute)genListOfIntArrayEClass.getEStructuralFeatures().get(0);
@@ -483,6 +511,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getParent()
   {
     return parentEClass;
@@ -493,6 +522,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getParent_Children()
   {
     return (EReference)parentEClass.getEStructuralFeatures().get(0);
@@ -503,6 +533,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getParent_Favourite()
   {
     return (EReference)parentEClass.getEStructuralFeatures().get(1);
@@ -513,6 +544,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getParent_Name()
   {
     return (EAttribute)parentEClass.getEStructuralFeatures().get(2);
@@ -523,6 +555,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getChild()
   {
     return childEClass;
@@ -533,6 +566,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getChild_Parent()
   {
     return (EReference)childEClass.getEStructuralFeatures().get(0);
@@ -543,6 +577,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getChild_PreferredBy()
   {
     return (EReference)childEClass.getEStructuralFeatures().get(1);
@@ -553,6 +588,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getChild_Name()
   {
     return (EAttribute)childEClass.getEStructuralFeatures().get(2);
@@ -563,6 +599,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getWithCustomType()
   {
     return withCustomTypeEClass;
@@ -573,6 +610,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   	 * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getWithCustomType_Value()
   {
     return (EAttribute)withCustomTypeEClass.getEStructuralFeatures().get(0);
@@ -582,6 +620,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getIntArray()
   {
     return intArrayEDataType;
@@ -592,6 +631,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getCustomType()
   {
     return customTypeEDataType;
@@ -601,6 +641,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Model5Factory getModel5Factory()
   {
     return (Model5Factory)getEFactoryInstance();

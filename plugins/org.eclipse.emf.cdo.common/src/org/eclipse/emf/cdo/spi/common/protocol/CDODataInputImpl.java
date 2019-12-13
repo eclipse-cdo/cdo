@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012-2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -123,6 +123,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   /**
    * @since 4.6
    */
+  @Override
   public int readXInt() throws IOException
   {
     if (isXCompression())
@@ -136,6 +137,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   /**
    * @since 4.6
    */
+  @Override
   public long readXLong() throws IOException
   {
     if (isXCompression())
@@ -146,6 +148,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return readLong();
   }
 
+  @Override
   public CDOPackageUnit readCDOPackageUnit(ResourceSet resourceSet) throws IOException
   {
     InternalCDOPackageUnit packageUnit = (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
@@ -153,6 +156,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return packageUnit;
   }
 
+  @Override
   public CDOPackageUnit[] readCDOPackageUnits(ResourceSet resourceSet) throws IOException
   {
     int size = readXInt();
@@ -170,11 +174,13 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return packageUnits;
   }
 
+  @Override
   public CDOPackageUnit.Type readCDOPackageUnitType() throws IOException
   {
     return CDOPackageUnit.Type.values()[readByte()];
   }
 
+  @Override
   public CDOPackageInfo readCDOPackageInfo() throws IOException
   {
     InternalCDOPackageInfo packageInfo = (InternalCDOPackageInfo)CDOModelUtil.createPackageInfo();
@@ -182,16 +188,19 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return packageInfo;
   }
 
+  @Override
   public String readCDOPackageURI() throws IOException
   {
     return getPackageURICompressor().read(this);
   }
 
+  @Override
   public CDOClassifierRef readCDOClassifierRef() throws IOException
   {
     return new CDOClassifierRef(this);
   }
 
+  @Override
   public EClassifier readCDOClassifierRefAndResolve() throws IOException
   {
     CDOClassifierRef classifierRef = readCDOClassifierRef();
@@ -204,12 +213,14 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return classifier;
   }
 
+  @Override
   public CDOType readCDOType() throws IOException
   {
     byte typeID = readByte();
     return CDOModelUtil.getType(typeID);
   }
 
+  @Override
   public CDOBranch readCDOBranch() throws IOException
   {
     int branchID = readXInt();
@@ -222,6 +233,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return branch;
   }
 
+  @Override
   public CDOBranchPoint readCDOBranchPoint() throws IOException
   {
     CDOBranch branch = readCDOBranch();
@@ -229,6 +241,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return branch.getPoint(timeStamp);
   }
 
+  @Override
   public CDOBranchVersion readCDOBranchVersion() throws IOException
   {
     CDOBranch branch = readCDOBranch();
@@ -236,6 +249,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return branch.getVersion(version);
   }
 
+  @Override
   public CDOChangeSetData readCDOChangeSetData() throws IOException
   {
     int size1 = readXInt();
@@ -280,6 +294,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return new CDOChangeSetDataImpl(newObjects, changedObjects, detachedObjects);
   }
 
+  @Override
   public CDOCommitData readCDOCommitData() throws IOException
   {
     InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)getPackageRegistry();
@@ -299,6 +314,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return CDOCommitInfoUtil.createCommitData(newPackageUnits, data.getNewObjects(), data.getChangedObjects(), data.getDetachedObjects());
   }
 
+  @Override
   public CDOCommitInfo readCDOCommitInfo() throws IOException
   {
     InternalCDOCommitInfoManager commitInfoManager = (InternalCDOCommitInfoManager)getCommitInfoManager();
@@ -319,6 +335,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return new FailureCommitInfo(commitInfoManager, timeStamp, previousTimeStamp);
   }
 
+  @Override
   public CDOLockChangeInfo readCDOLockChangeInfo() throws IOException
   {
     boolean isInvalidateAll = readBoolean();
@@ -342,6 +359,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return new CDOLockChangeInfoImpl(branchPoint, lockOwner, lockStates, operation, lockType);
   }
 
+  @Override
   public LockArea readCDOLockArea() throws IOException
   {
     String durableLockingID = readString();
@@ -362,6 +380,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return new CDOLockAreaImpl(durableLockingID, userID, branch.getPoint(timestamp), readOnly, locks);
   }
 
+  @Override
   public CDOLockOwner readCDOLockOwner() throws IOException
   {
     int session = readXInt();
@@ -371,6 +390,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return new CDOLockOwnerImpl(session, view, lockAreaID, isDurableView);
   }
 
+  @Override
   public CDOLockState readCDOLockState() throws IOException
   {
     Object target;
@@ -410,21 +430,25 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return lockState;
   }
 
+  @Override
   public LockType readCDOLockType() throws IOException
   {
     return readEnum(LockType.class);
   }
 
+  @Override
   public CDOID readCDOID() throws IOException
   {
     return CDOIDUtil.read(this);
   }
 
+  @Override
   public CDOIDReference readCDOIDReference() throws IOException
   {
     return new CDOIDReference(this);
   }
 
+  @Override
   public CDOIDAndVersion readCDOIDAndVersion() throws IOException
   {
     CDOID id = readCDOID();
@@ -432,6 +456,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return new CDOIDAndVersionImpl(id, version);
   }
 
+  @Override
   public CDOIDAndBranch readCDOIDAndBranch() throws IOException
   {
     CDOID id = readCDOID();
@@ -439,6 +464,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return new CDOIDAndBranchImpl(id, branch);
   }
 
+  @Override
   public CDORevisionKey readCDORevisionKey() throws IOException
   {
     CDOID id = readCDOID();
@@ -447,11 +473,13 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return CDORevisionUtil.createRevisionKey(id, branch, version);
   }
 
+  @Override
   public CDORevision readCDORevision() throws IOException
   {
     return readCDORevision(true);
   }
 
+  @Override
   public CDORevision readCDORevision(boolean freeze) throws IOException
   {
     boolean notNull = readBoolean();
@@ -471,6 +499,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return null;
   }
 
+  @Override
   public CDORevisable readCDORevisable() throws IOException
   {
     CDOBranch branch = readCDOBranch();
@@ -480,6 +509,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return CDORevisionUtil.createRevisable(branch, version, timeStamp, revised);
   }
 
+  @Override
   public CDOList readCDOList(EClass owner, EStructuralFeature feature) throws IOException
   {
     int referenceChunk;
@@ -585,6 +615,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return list;
   }
 
+  @Override
   public Object readCDOFeatureValue(EStructuralFeature feature) throws IOException
   {
     CDOType type = CDOModelUtil.getType(feature);
@@ -598,11 +629,13 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     return value;
   }
 
+  @Override
   public CDORevisionDelta readCDORevisionDelta() throws IOException
   {
     return new CDORevisionDeltaImpl(this);
   }
 
+  @Override
   public CDOFeatureDelta readCDOFeatureDelta(EClass owner) throws IOException
   {
     int typeOrdinal = readXInt();
@@ -638,12 +671,14 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     }
   }
 
+  @Override
   public Object readCDORevisionOrPrimitive() throws IOException
   {
     CDOType type = readCDOType();
     return type.readValue(this);
   }
 
+  @Override
   public Object readCDORevisionOrPrimitiveOrClassifier() throws IOException
   {
     boolean isClassifier = readBoolean();
@@ -696,6 +731,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public CDOPackageRegistry getPackageRegistry()
     {
       throw new UnsupportedOperationException();

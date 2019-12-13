@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -45,11 +45,13 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
   {
   }
 
+  @Override
   public final Object[] getElements(Object parent)
   {
     return getChildren(parent);
   }
 
+  @Override
   public boolean hasChildren(Object parent)
   {
     return getChildren(parent).length != 0;
@@ -58,6 +60,7 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
   /**
    * @since 3.5
    */
+  @Override
   public StyledString getStyledText(Object obj)
   {
     String text = getText(obj);
@@ -69,11 +72,13 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
     return new StyledString(text);
   }
 
+  @Override
   public String getText(Object obj)
   {
     return obj.toString();
   }
 
+  @Override
   public Image getImage(Object obj)
   {
     if (PlatformUI.isWorkbenchRunning())
@@ -85,11 +90,13 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
     return null;
   }
 
+  @Override
   public Color getBackground(Object element)
   {
     return null;
   }
 
+  @Override
   public Color getForeground(Object element)
   {
     if (!LifecycleUtil.isActive(element))
@@ -100,11 +107,13 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
     return null;
   }
 
+  @Override
   public Font getFont(Object element)
   {
     return null;
   }
 
+  @Override
   public boolean isLabelProperty(Object element, String property)
   {
     return true;
@@ -118,6 +127,7 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
     }
   }
 
+  @Override
   public void addListener(ILabelProviderListener listener)
   {
     synchronized (listeners)
@@ -126,6 +136,7 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
     }
   }
 
+  @Override
   public void removeListener(ILabelProviderListener listener)
   {
     synchronized (listeners)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -64,41 +64,49 @@ public class TimerLifecycle extends Timer implements ILifecycle
   /**
    * @since 3.0
    */
+  @Override
   public final LifecycleState getLifecycleState()
   {
     return delegate.getLifecycleState();
   }
 
+  @Override
   public final boolean isActive()
   {
     return delegate.isActive();
   }
 
+  @Override
   public void addListener(IListener listener)
   {
     delegate.addListener(listener);
   }
 
+  @Override
   public void removeListener(IListener listener)
   {
     delegate.removeListener(listener);
   }
 
+  @Override
   public IListener[] getListeners()
   {
     return delegate.getListeners();
   }
 
+  @Override
   public boolean hasListeners()
   {
     return delegate.hasListeners();
   }
 
+  @Override
   public final void activate() throws LifecycleException
   {
     delegate.activate();
   }
 
+  @Override
   public final Exception deactivate()
   {
     return delegate.deactivate();
@@ -122,6 +130,7 @@ public class TimerLifecycle extends Timer implements ILifecycle
       super(PRODUCT_GROUP, TYPE);
     }
 
+    @Override
     public Object create(String name) throws ProductCreationException
     {
       if (name == null)

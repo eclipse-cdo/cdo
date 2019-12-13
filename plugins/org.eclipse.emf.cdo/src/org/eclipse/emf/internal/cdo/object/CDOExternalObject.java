@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -38,11 +38,13 @@ public class CDOExternalObject extends CDOObjectWrapperBase
     id = view.provideCDOID(instance);
   }
 
+  @Override
   public CDOID cdoID()
   {
     return id;
   }
 
+  @Override
   public CDOView cdoView()
   {
     return view;
@@ -53,52 +55,62 @@ public class CDOExternalObject extends CDOObjectWrapperBase
   {
   }
 
+  @Override
   public CDOState cdoState()
   {
     return CDOState.CLEAN;
   }
 
+  @Override
   public CDORevision cdoRevision()
   {
     return null;
   }
 
+  @Override
   public CDORevision cdoRevision(boolean loadOnDemand)
   {
     return null;
   }
 
+  @Override
   public CDOPermission cdoPermission()
   {
     return null;
   }
 
+  @Override
   public CDOLock cdoReadLock()
   {
     return null;
   }
 
+  @Override
   public CDOLock cdoWriteLock()
   {
     return null;
   }
 
+  @Override
   public CDOLock cdoWriteOption()
   {
     return null;
   }
 
+  @Override
   public CDOLockState cdoLockState()
   {
     return null;
   }
 
+  @Override
   @Deprecated
   public void cdoReload()
   {
     // Do nothing
   }
 
+  @Override
   public CDOObjectHistory cdoHistory()
   {
     return null;

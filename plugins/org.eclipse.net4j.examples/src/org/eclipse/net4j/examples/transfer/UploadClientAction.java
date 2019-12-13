@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -48,11 +48,13 @@ public class UploadClientAction implements IWorkbenchWindowActionDelegate, Uploa
   {
   }
 
+  @Override
   public void init(IWorkbenchWindow window)
   {
     this.window = window;
   }
 
+  @Override
   public void run(IAction action)
   {
     FileDialog fileDialog = new FileDialog(window.getShell());
@@ -88,10 +90,12 @@ public class UploadClientAction implements IWorkbenchWindowActionDelegate, Uploa
     }
   }
 
+  @Override
   public void selectionChanged(IAction action, ISelection selection)
   {
   }
 
+  @Override
   public void dispose()
   {
   }

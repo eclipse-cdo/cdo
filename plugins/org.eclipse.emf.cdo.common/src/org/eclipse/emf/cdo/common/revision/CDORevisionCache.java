@@ -70,6 +70,7 @@ public interface CDORevisionCache extends CDORevisionCacheAdder, INotifier
     /**
      * @since 3.0
      */
+    @Override
     public CDORevisionCache getSource();
 
     /**

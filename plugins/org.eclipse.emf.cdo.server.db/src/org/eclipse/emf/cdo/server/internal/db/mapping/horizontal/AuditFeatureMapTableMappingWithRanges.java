@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -362,6 +362,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     return dbTypes;
   }
 
+  @Override
   public Collection<IDBTable> getDBTables()
   {
     return Collections.singleton(table);
@@ -387,6 +388,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     return tagMap;
   }
 
+  @Override
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     MoveableList<Object> list = revision.getListOrNull(getFeature());
@@ -470,6 +472,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     typeMappings.put(tag, typeMapping);
   }
 
+  @Override
   public final void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String where)
   {
     if (TRACER.isEnabled())
@@ -557,6 +560,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     }
   }
 
+  @Override
   public void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
     CDOList values = revision.getListOrNull(getFeature());
@@ -690,6 +694,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     }
   }
 
+  @Override
   public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
   {
     if (TRACER.isEnabled())
@@ -713,6 +718,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     throw new UnsupportedOperationException("Raw deletion does not work in range-based mappings");
   }
 
+  @Override
   public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion, final int newVersion, long created,
       CDOListFeatureDelta delta)
   {
@@ -769,6 +775,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
       this.timestamp = timestamp;
     }
 
+    @Override
     public void visit(CDOMoveFeatureDelta delta)
     {
       int fromIdx = delta.getOldPosition();
@@ -798,6 +805,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
       addEntry(accessor, id, newVersion, toIdx, value, timestamp);
     }
 
+    @Override
     public void visit(CDOAddFeatureDelta delta)
     {
       int startIndex = delta.getIndex();
@@ -820,6 +828,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
       ++lastIndex;
     }
 
+    @Override
     public void visit(CDORemoveFeatureDelta delta)
     {
       int startIndex = delta.getIndex();
@@ -839,6 +848,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
       --lastIndex;
     }
 
+    @Override
     public void visit(CDOSetFeatureDelta delta)
     {
       int index = delta.getIndex();
@@ -855,6 +865,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
       addEntry(accessor, id, newVersion, index, delta.getValue(), timestamp);
     }
 
+    @Override
     public void visit(CDOUnsetFeatureDelta delta)
     {
       if (delta.getFeature().isUnsettable())
@@ -871,11 +882,13 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
       lastIndex = -1;
     }
 
+    @Override
     public void visit(CDOListFeatureDelta delta)
     {
       throw new ImplementationError("Should not be called"); //$NON-NLS-1$
     }
 
+    @Override
     public void visit(CDOClearFeatureDelta delta)
     {
       if (TRACER.isEnabled())
@@ -887,6 +900,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
       lastIndex = -1;
     }
 
+    @Override
     public void visit(CDOContainerFeatureDelta delta)
     {
       throw new ImplementationError("Should not be called"); //$NON-NLS-1$
@@ -1194,6 +1208,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     }
   }
 
+  @Override
   public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere, QueryXRefsContext context, String idString)
   {
     // must never be called (a feature map is not associated with an EReference feature, so XRefs are nor supported

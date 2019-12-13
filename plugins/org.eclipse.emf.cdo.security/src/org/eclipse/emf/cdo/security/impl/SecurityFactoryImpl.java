@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -191,12 +191,14 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Realm createRealm()
   {
     RealmImpl realm = new RealmImpl();
     return realm;
   }
 
+  @Override
   public Realm createRealm(String name)
   {
     Realm realm = createRealm();
@@ -204,6 +206,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
     return realm;
   }
 
+  @Override
   public Realm createRealm(String name, Access defaultAccess)
   {
     Realm realm = createRealm(name);
@@ -211,6 +214,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
     return realm;
   }
 
+  @Override
   public Directory createDirectory(String name)
   {
     Directory directory = createDirectory();
@@ -218,6 +222,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
     return directory;
   }
 
+  @Override
   public Role createRole(String id)
   {
     Role role = createRole();
@@ -225,6 +230,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
     return role;
   }
 
+  @Override
   public Group createGroup(String id)
   {
     Group group = createGroup();
@@ -232,6 +238,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
     return group;
   }
 
+  @Override
   public User createUser(String id)
   {
     User user = createUser();
@@ -239,6 +246,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
     return user;
   }
 
+  @Override
   public User createUser(String id, String password)
   {
     UserPassword userPassword = createUserPassword();
@@ -249,6 +257,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
     return user;
   }
 
+  @Override
   @Deprecated
   public org.eclipse.emf.cdo.security.ClassPermission createClassPermission(EClass eClass, Access access)
   {
@@ -258,6 +267,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
     return permission;
   }
 
+  @Override
   @Deprecated
   public org.eclipse.emf.cdo.security.PackagePermission createPackagePermission(EPackage ePackage, Access access)
   {
@@ -267,6 +277,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
     return permission;
   }
 
+  @Override
   @Deprecated
   public org.eclipse.emf.cdo.security.ResourcePermission createResourcePermission(String pattern, Access access)
   {
@@ -281,6 +292,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Directory createDirectory()
   {
     DirectoryImpl directory = new DirectoryImpl();
@@ -292,6 +304,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Role createRole()
   {
     RoleImpl role = new RoleImpl();
@@ -303,6 +316,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Group createGroup()
   {
     GroupImpl group = new GroupImpl();
@@ -314,6 +328,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public User createUser()
   {
     UserImpl user = new UserImpl();
@@ -325,6 +340,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public UserPassword createUserPassword()
   {
     UserPasswordImpl userPassword = new UserPasswordImpl();
@@ -336,6 +352,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @Deprecated
   public ClassPermission createClassPermission()
   {
@@ -348,6 +365,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @Deprecated
   public PackagePermission createPackagePermission()
   {
@@ -360,6 +378,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @Deprecated
   public ResourcePermission createResourcePermission()
   {
@@ -373,6 +392,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public FilterPermission createFilterPermission()
   {
     FilterPermissionImpl filterPermission = new FilterPermissionImpl();
@@ -385,6 +405,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public LinkedFilter createLinkedFilter()
   {
     LinkedFilterImpl linkedFilter = new LinkedFilterImpl();
@@ -394,6 +415,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   /**
    * @since 4.3
    */
+  @Override
   public FilterPermission createFilterPermission(Access access, PermissionFilter... filters)
   {
     FilterPermission permission = createFilterPermission();
@@ -408,6 +430,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PackageFilter createPackageFilter()
   {
     PackageFilterImpl packageFilter = new PackageFilterImpl();
@@ -417,6 +440,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   /**
    * @since 4.3
    */
+  @Override
   public PackageFilter createPackageFilter(EPackage ePackage)
   {
     PackageFilter filter = createPackageFilter();
@@ -430,6 +454,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ClassFilter createClassFilter()
   {
     ClassFilterImpl classFilter = new ClassFilterImpl();
@@ -439,6 +464,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   /**
    * @since 4.3
    */
+  @Override
   public ClassFilter createClassFilter(EClass eClass)
   {
     ClassFilter filter = createClassFilter();
@@ -452,6 +478,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ResourceFilter createResourceFilter()
   {
     ResourceFilterImpl resourceFilter = new ResourceFilterImpl();
@@ -461,6 +488,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   /**
    * @since 4.3
    */
+  @Override
   public ResourceFilter createResourceFilter(String path)
   {
     ResourceFilter filter = createResourceFilter();
@@ -471,6 +499,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   /**
    * @since 4.3
    */
+  @Override
   public ResourceFilter createResourceFilter(String path, PatternStyle patternStyle)
   {
     ResourceFilter filter = createResourceFilter(path);
@@ -481,6 +510,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   /**
    * @since 4.3
    */
+  @Override
   public ResourceFilter createResourceFilter(String path, PatternStyle patternStyle, boolean includeParents)
   {
     ResourceFilter filter = createResourceFilter(path, patternStyle);
@@ -494,6 +524,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ExpressionFilter createExpressionFilter()
   {
     ExpressionFilterImpl expressionFilter = new ExpressionFilterImpl();
@@ -503,6 +534,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   /**
    * @since 4.3
    */
+  @Override
   public ExpressionFilter createExpressionFilter(Expression expression)
   {
     ExpressionFilter filter = createExpressionFilter();
@@ -516,6 +548,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NotFilter createNotFilter()
   {
     NotFilterImpl notFilter = new NotFilterImpl();
@@ -525,6 +558,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   /**
    * @since 4.3
    */
+  @Override
   public NotFilter createNotFilter(PermissionFilter operand)
   {
     NotFilter filter = createNotFilter();
@@ -538,6 +572,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public AndFilter createAndFilter()
   {
     AndFilterImpl andFilter = new AndFilterImpl();
@@ -547,6 +582,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   /**
    * @since 4.3
    */
+  @Override
   public AndFilter createAndFilter(PermissionFilter... operands)
   {
     AndFilter filter = createAndFilter();
@@ -560,6 +596,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public OrFilter createOrFilter()
   {
     OrFilterImpl orFilter = new OrFilterImpl();
@@ -596,6 +633,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   /**
    * @since 4.3
    */
+  @Override
   public OrFilter createOrFilter(PermissionFilter... operands)
   {
     OrFilter filter = createOrFilter();
@@ -653,6 +691,7 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public SecurityPackage getSecurityPackage()
   {
     return (SecurityPackage)getEPackage();

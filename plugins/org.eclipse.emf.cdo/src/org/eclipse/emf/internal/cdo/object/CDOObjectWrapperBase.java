@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -57,6 +57,7 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
   {
   }
 
+  @Override
   public CDOResourceImpl cdoResource()
   {
     Resource resource = eResource();
@@ -71,6 +72,7 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
   /**
    * @since 2.0
    */
+  @Override
   public CDOResourceImpl cdoDirectResource()
   {
     Resource.Internal resource = eDirectResource();
@@ -90,6 +92,7 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
   /**
    * @since 2.0
    */
+  @Override
   public boolean cdoConflict()
   {
     return FSMUtil.isConflict(this);
@@ -98,6 +101,7 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
   /**
    * @since 2.0
    */
+  @Override
   public boolean cdoInvalid()
   {
     return FSMUtil.isInvalid(this);
@@ -106,6 +110,7 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
   /**
    * @since 3.0
    */
+  @Override
   public void cdoPrefetch(int depth)
   {
     InternalCDOView view = (InternalCDOView)cdoView();
@@ -208,96 +213,115 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
     instance.eSet(feature, value);
   }
 
+  @Override
   public EList<Adapter> eAdapters()
   {
     return instance.eAdapters();
   }
 
+  @Override
   public TreeIterator<EObject> eAllContents()
   {
     return instance.eAllContents();
   }
 
+  @Override
   public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
   {
     return instance.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
   }
 
+  @Override
   public NotificationChain eBasicRemoveFromContainer(NotificationChain notifications)
   {
     return instance.eBasicRemoveFromContainer(notifications);
   }
 
+  @Override
   public NotificationChain eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID, NotificationChain notifications)
   {
     return instance.eBasicSetContainer(newContainer, newContainerFeatureID, notifications);
   }
 
+  @Override
   public EClass eClass()
   {
     return instance.eClass();
   }
 
+  @Override
   public EObject eContainer()
   {
     return instance.eContainer();
   }
 
+  @Override
   public int eContainerFeatureID()
   {
     return instance.eContainerFeatureID();
   }
 
+  @Override
   public EStructuralFeature eContainingFeature()
   {
     return instance.eContainingFeature();
   }
 
+  @Override
   public EReference eContainmentFeature()
   {
     return instance.eContainmentFeature();
   }
 
+  @Override
   public EList<EObject> eContents()
   {
     return instance.eContents();
   }
 
+  @Override
   public EList<EObject> eCrossReferences()
   {
     return instance.eCrossReferences();
   }
 
+  @Override
   public boolean eDeliver()
   {
     return instance.eDeliver();
   }
 
+  @Override
   public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
   {
     return instance.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
+  @Override
   public Resource.Internal eDirectResource()
   {
     return instance.eDirectResource();
   }
 
+  @Override
   public Object eGet(EStructuralFeature feature, boolean resolve, boolean coreType)
   {
     return instance.eGet(feature, resolve, coreType);
   }
 
+  @Override
   public Object eGet(EStructuralFeature feature, boolean resolve)
   {
     return instance.eGet(feature, resolve);
   }
 
+  @Override
   public Object eGet(EStructuralFeature feature)
   {
     return instance.eGet(feature);
   }
 
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     return instance.eGet(featureID, resolve, coreType);
@@ -306,6 +330,7 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
   /**
    * @since 3.0
    */
+  @Override
   public int eDerivedOperationID(int baseOperationID, Class<?> baseClass)
   {
     // Note: This causes a compiler error with EMF < 2.6M4!!! Ignore it or update your target platform.
@@ -315,6 +340,7 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
   /**
    * @since 3.0
    */
+  @Override
   public Object eInvoke(EOperation operation, EList<?> arguments) throws InvocationTargetException
   {
     // Note: This causes a compiler error with EMF < 2.6M4!!! Ignore it or update your target platform.
@@ -324,17 +350,20 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
   /**
    * @since 3.0
    */
+  @Override
   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
   {
     // Note: This causes a compiler error with EMF < 2.6M4!!! Ignore it or update your target platform.
     return instance.eInvoke(operationID, arguments);
   }
 
+  @Override
   public InternalEObject eInternalContainer()
   {
     return instance.eInternalContainer();
   }
 
+  @Override
   public Resource.Internal eInternalResource()
   {
     CDOView view = cdoView();
@@ -346,26 +375,31 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
     return instance.eInternalResource();
   }
 
+  @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, Class<?> baseClass, NotificationChain notifications)
   {
     return instance.eInverseAdd(otherEnd, featureID, baseClass, notifications);
   }
 
+  @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, Class<?> baseClass, NotificationChain notifications)
   {
     return instance.eInverseRemove(otherEnd, featureID, baseClass, notifications);
   }
 
+  @Override
   public boolean eIsProxy()
   {
     return instance.eIsProxy();
   }
 
+  @Override
   public boolean eIsSet(EStructuralFeature feature)
   {
     return isSetInstanceValue(instance, feature);
   }
 
+  @Override
   public boolean eIsSet(int featureID)
   {
     // Features that need special handling
@@ -378,91 +412,109 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
     return instance.eIsSet(featureID);
   }
 
+  @Override
   public boolean eNotificationRequired()
   {
     return instance.eNotificationRequired();
   }
 
+  @Override
   public void eNotify(Notification notification)
   {
     instance.eNotify(notification);
   }
 
+  @Override
   public EObject eObjectForURIFragmentSegment(String uriFragmentSegment)
   {
     return instance.eObjectForURIFragmentSegment(uriFragmentSegment);
   }
 
+  @Override
   public URI eProxyURI()
   {
     return instance.eProxyURI();
   }
 
+  @Override
   public EObject eResolveProxy(InternalEObject proxy)
   {
     return instance.eResolveProxy(proxy);
   }
 
+  @Override
   public Resource eResource()
   {
     return instance.eResource();
   }
 
+  @Override
   public void eSet(EStructuralFeature feature, Object newValue)
   {
     instance.eSet(feature, newValue);
   }
 
+  @Override
   public void eSet(int featureID, Object newValue)
   {
     instance.eSet(featureID, newValue);
   }
 
+  @Override
   public void eSetClass(EClass class1)
   {
     instance.eSetClass(class1);
   }
 
+  @Override
   public void eSetDeliver(boolean deliver)
   {
     instance.eSetDeliver(deliver);
   }
 
+  @Override
   public void eSetProxyURI(URI uri)
   {
     instance.eSetProxyURI(uri);
   }
 
+  @Override
   public NotificationChain eSetResource(Resource.Internal resource, NotificationChain notifications)
   {
     return instance.eSetResource(resource, notifications);
   }
 
+  @Override
   public void eSetStore(EStore store)
   {
     instance.eSetStore(store);
   }
 
+  @Override
   public Setting eSetting(EStructuralFeature feature)
   {
     return instance.eSetting(feature);
   }
 
+  @Override
   public EStore eStore()
   {
     return instance.eStore();
   }
 
+  @Override
   public void eUnset(EStructuralFeature feature)
   {
     instance.eUnset(feature);
   }
 
+  @Override
   public void eUnset(int featureID)
   {
     instance.eUnset(featureID);
   }
 
+  @Override
   public String eURIFragmentSegment(EStructuralFeature feature, EObject object)
   {
     return instance.eURIFragmentSegment(feature, object);

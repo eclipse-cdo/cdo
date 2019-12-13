@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -40,11 +40,13 @@ public class EClassDetailsPageProvider implements IDetailsPageProvider
     return new Builder(editorActionBars);
   }
 
+  @Override
   public Object getPageKey(Object object)
   {
     return object instanceof EObject ? ((EObject)object).eClass() : null;
   }
 
+  @Override
   public IDetailsPage getPage(Object key)
   {
     return pages.get(key);

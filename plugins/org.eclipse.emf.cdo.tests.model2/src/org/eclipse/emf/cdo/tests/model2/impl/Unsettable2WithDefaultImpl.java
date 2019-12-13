@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -77,6 +77,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isUnsettableBoolean()
   {
     return (Boolean)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableBoolean(), true);
@@ -86,6 +87,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableBoolean(boolean newUnsettableBoolean)
   {
     eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableBoolean(), newUnsettableBoolean);
@@ -95,6 +97,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableBoolean()
   {
     eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableBoolean());
@@ -104,6 +107,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableBoolean()
   {
     return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableBoolean());
@@ -113,6 +117,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public byte getUnsettableByte()
   {
     return (Byte)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableByte(), true);
@@ -122,6 +127,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableByte(byte newUnsettableByte)
   {
     eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableByte(), newUnsettableByte);
@@ -131,6 +137,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableByte()
   {
     eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableByte());
@@ -140,6 +147,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableByte()
   {
     return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableByte());
@@ -149,6 +157,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public char getUnsettableChar()
   {
     return (Character)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableChar(), true);
@@ -158,6 +167,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableChar(char newUnsettableChar)
   {
     eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableChar(), newUnsettableChar);
@@ -167,6 +177,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableChar()
   {
     eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableChar());
@@ -176,6 +187,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableChar()
   {
     return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableChar());
@@ -185,6 +197,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Date getUnsettableDate()
   {
     return (Date)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableDate(), true);
@@ -194,6 +207,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableDate(Date newUnsettableDate)
   {
     eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableDate(), newUnsettableDate);
@@ -203,6 +217,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableDate()
   {
     eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableDate());
@@ -212,6 +227,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableDate()
   {
     return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableDate());
@@ -221,6 +237,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public double getUnsettableDouble()
   {
     return (Double)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableDouble(), true);
@@ -230,6 +247,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableDouble(double newUnsettableDouble)
   {
     eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableDouble(), newUnsettableDouble);
@@ -239,6 +257,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableDouble()
   {
     eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableDouble());
@@ -248,6 +267,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableDouble()
   {
     return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableDouble());
@@ -257,6 +277,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public float getUnsettableFloat()
   {
     return (Float)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableFloat(), true);
@@ -266,6 +287,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableFloat(float newUnsettableFloat)
   {
     eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableFloat(), newUnsettableFloat);
@@ -275,6 +297,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableFloat()
   {
     eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableFloat());
@@ -284,6 +307,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableFloat()
   {
     return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableFloat());
@@ -293,6 +317,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getUnsettableInt()
   {
     return (Integer)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableInt(), true);
@@ -302,6 +327,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableInt(int newUnsettableInt)
   {
     eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableInt(), newUnsettableInt);
@@ -311,6 +337,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableInt()
   {
     eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableInt());
@@ -320,6 +347,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableInt()
   {
     return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableInt());
@@ -329,6 +357,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public long getUnsettableLong()
   {
     return (Long)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableLong(), true);
@@ -338,6 +367,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableLong(long newUnsettableLong)
   {
     eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableLong(), newUnsettableLong);
@@ -347,6 +377,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableLong()
   {
     eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableLong());
@@ -356,6 +387,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableLong()
   {
     return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableLong());
@@ -365,6 +397,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public short getUnsettableShort()
   {
     return (Short)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableShort(), true);
@@ -374,6 +407,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableShort(short newUnsettableShort)
   {
     eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableShort(), newUnsettableShort);
@@ -383,6 +417,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableShort()
   {
     eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableShort());
@@ -392,6 +427,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableShort()
   {
     return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableShort());
@@ -401,6 +437,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getUnsettableString()
   {
     return (String)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableString(), true);
@@ -410,6 +447,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableString(String newUnsettableString)
   {
     eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableString(), newUnsettableString);
@@ -419,6 +457,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableString()
   {
     eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableString());
@@ -428,6 +467,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableString()
   {
     return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableString());
@@ -437,6 +477,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public VAT getUnsettableVAT()
   {
     return (VAT)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableVAT(), true);
@@ -446,6 +487,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsettableVAT(VAT newUnsettableVAT)
   {
     eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableVAT(), newUnsettableVAT);
@@ -455,6 +497,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetUnsettableVAT()
   {
     eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableVAT());
@@ -464,6 +507,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetUnsettableVAT()
   {
     return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableVAT());

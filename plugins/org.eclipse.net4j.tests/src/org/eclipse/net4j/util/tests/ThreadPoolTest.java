@@ -43,6 +43,7 @@ public class ThreadPoolTest extends AbstractOMTest
         msg("scheduling " + n);
         pool.execute(new Runnable()
         {
+          @Override
           public void run()
           {
             msg("started " + n + " (wc=" + pool.getPoolSize() + ")");
@@ -224,6 +225,7 @@ public class ThreadPoolTest extends AbstractOMTest
     
       return new ThreadFactory()
       {
+        @Override
         public Thread newThread(Runnable task)
         {
           System.out.println("Creating new worker");
@@ -257,6 +259,7 @@ public class ThreadPoolTest extends AbstractOMTest
         countDown();
       }
 
+      @Override
       public final void run()
       {
         if (!used.compareAndSet(false, true))

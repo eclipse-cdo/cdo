@@ -101,6 +101,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   /**
    * @since 2.0
    */
+  @Override
   public InternalRepository getRepository()
   {
     return repository;
@@ -109,12 +110,14 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   /**
    * @since 2.0
    */
+  @Override
   public void setRepository(InternalRepository repository)
   {
     checkInactive();
     this.repository = repository;
   }
 
+  @Override
   @Deprecated
   public IUserManager getUserManager()
   {
@@ -126,6 +129,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     return null;
   }
 
+  @Override
   @Deprecated
   public void setUserManager(IUserManager userManager)
   {
@@ -135,21 +139,25 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     setAuthenticator(userManagerAuthenticator);
   }
 
+  @Override
   public DiffieHellman.Server getAuthenticationServer()
   {
     return authenticationServer;
   }
 
+  @Override
   public void setAuthenticationServer(DiffieHellman.Server authenticationServer)
   {
     this.authenticationServer = authenticationServer;
   }
 
+  @Override
   public IAuthenticator getAuthenticator()
   {
     return authenticator;
   }
 
+  @Override
   public void setAuthenticator(IAuthenticator authenticator)
   {
     this.authenticator = authenticator;
@@ -159,16 +167,19 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
+  @Override
   public IPermissionManager getPermissionManager()
   {
     return permissionManager;
   }
 
+  @Override
   public void setPermissionManager(IPermissionManager permissionManager)
   {
     this.permissionManager = permissionManager;
   }
 
+  @Override
   public InternalSession[] getSessions()
   {
     synchronized (sessions)
@@ -180,6 +191,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   /**
    * @since 2.0
    */
+  @Override
   public InternalSession getSession(int sessionID)
   {
     checkActive();
@@ -189,6 +201,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
+  @Override
   public InternalSession[] getElements()
   {
     return getSessions();
@@ -206,6 +219,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   /**
    * @since 2.0
    */
+  @Override
   public InternalSession openSession(ISessionProtocol sessionProtocol)
   {
     final int id = lastSessionID.incrementAndGet();
@@ -222,6 +236,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     {
       repository.executeOutsideStartCommit(new Runnable()
       {
+        @Override
         public void run()
         {
           long firstUpdateTime = repository.getLastCommitTimeStamp();
@@ -242,6 +257,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     return new Session(this, protocol, id, userID);
   }
 
+  @Override
   public void sessionClosed(InternalSession session)
   {
     int sessionID = session.getSessionID();
@@ -258,11 +274,13 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
+  @Override
   public void openedOnClientSide(InternalSession session)
   {
     processQueuedCommitNotifications(session);
   }
 
+  @Override
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
   {
     for (InternalSession session : getSessions())
@@ -278,12 +296,14 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
+  @Override
   @Deprecated
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
   {
     sendRepositoryStateNotification(oldState, newState, null);
   }
 
+  @Override
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState, CDOID rootResourceID)
   {
     for (InternalSession session : getSessions())
@@ -299,12 +319,14 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
+  @Override
   @Deprecated
   public void sendBranchNotification(InternalSession sender, InternalCDOBranch branch)
   {
     sendBranchNotification(sender, branch, ChangeKind.CREATED);
   }
 
+  @Override
   public void sendBranchNotification(InternalSession sender, InternalCDOBranch branch, ChangeKind changeKind)
   {
     for (InternalSession session : getSessions())
@@ -323,18 +345,21 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
+  @Override
   @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void sendCommitNotification(CommitNotificationInfo info)
   {
     CDOCommonSession sender = info.getSender();
@@ -403,6 +428,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
+  @Override
   public void sendLockNotification(InternalSession sender, CDOLockChangeInfo lockChangeInfo)
   {
     for (InternalSession session : getSessions())
@@ -426,6 +452,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   /**
    * @since 2.0
    */
+  @Override
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode)
   {
     try
@@ -451,6 +478,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
+  @Override
   public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message, int[] recipients)
   {
     List<Integer> result = new ArrayList<Integer>();
@@ -490,6 +518,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
+  @Override
   public String authenticateUser(IAuthenticationProtocol protocol) throws SecurityException
   {
     if (protocol == null)
@@ -536,11 +565,13 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
+  @Override
   public void changeUserCredentials(IAuthenticationProtocol sessionProtocol, String userID)
   {
     changeUserCredentials(sessionProtocol, userID, CredentialsUpdateOperation.CHANGE_PASSWORD);
   }
 
+  @Override
   public void resetUserCredentials(IAuthenticationProtocol sessionProtocol, String userID)
   {
     changeUserCredentials(sessionProtocol, userID, CredentialsUpdateOperation.RESET_PASSWORD);

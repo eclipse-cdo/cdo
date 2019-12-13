@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2009, 2011-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2009, 2011-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -53,6 +53,7 @@ public class GZIPStreamWrapper implements IStreamWrapper
     this.compressionLevel = compressionLevel;
   }
 
+  @Override
   public GZIPInputStream wrapInputStream(InputStream in) throws IOException
   {
     if (in instanceof GZIPInputStream)
@@ -63,6 +64,7 @@ public class GZIPStreamWrapper implements IStreamWrapper
     return new GZIPInputStream(in, bufferSize);
   }
 
+  @Override
   public GZIPOutputStream wrapOutputStream(OutputStream out) throws IOException
   {
     if (out instanceof GZIPOutputStream)
@@ -78,10 +80,12 @@ public class GZIPStreamWrapper implements IStreamWrapper
     };
   }
 
+  @Override
   public void finishInputStream(InputStream in) throws IOException
   {
   }
 
+  @Override
   public void finishOutputStream(OutputStream out) throws IOException
   {
     ((GZIPOutputStream)out).finish();

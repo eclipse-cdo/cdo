@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -62,29 +62,35 @@ public abstract class CDOPostEventTransactionHandler implements CDOTransactionHa
   {
   }
 
+  @Override
   public void attachingObject(CDOTransaction transaction, CDOObject object)
   {
     object.eAdapters().add(ATTACHED_ADAPTER);
   }
 
+  @Override
   public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
   {
     object.eAdapters().add(MODIFIED_ADAPTER);
   }
 
+  @Override
   public void detachingObject(CDOTransaction transaction, CDOObject object)
   {
     object.eAdapters().add(DEATTACHED_ADAPTER);
   }
 
+  @Override
   public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
   {
   }
 
+  @Override
   public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
   {
   }
 
+  @Override
   public void rolledBackTransaction(CDOTransaction transaction)
   {
   }

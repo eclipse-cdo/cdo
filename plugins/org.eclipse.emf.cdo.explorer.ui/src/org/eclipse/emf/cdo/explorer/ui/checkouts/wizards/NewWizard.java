@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -55,6 +55,7 @@ public abstract class NewWizard extends Wizard implements INewWizard
     this.title = title;
   }
 
+  @Override
   public void init(IWorkbench workbench, IStructuredSelection selection)
   {
     this.selection = selection;
@@ -138,6 +139,7 @@ public abstract class NewWizard extends Wizard implements INewWizard
           final IStatus status = new Status(IStatus.ERROR, OM.BUNDLE_ID, ex.getMessage(), ex);
           UIUtil.getDisplay().asyncExec(new Runnable()
           {
+            @Override
             public void run()
             {
               ErrorDialog.openError(getShell(), "Error", error, status);

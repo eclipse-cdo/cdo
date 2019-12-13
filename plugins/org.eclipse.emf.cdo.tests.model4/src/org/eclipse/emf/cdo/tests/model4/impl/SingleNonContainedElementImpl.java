@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,6 +66,7 @@ public class SingleNonContainedElementImpl extends CDOObjectImpl implements Sing
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(model4Package.eINSTANCE.getSingleNonContainedElement_Name(), true);
@@ -75,6 +76,7 @@ public class SingleNonContainedElementImpl extends CDOObjectImpl implements Sing
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(model4Package.eINSTANCE.getSingleNonContainedElement_Name(), newName);
@@ -84,6 +86,7 @@ public class SingleNonContainedElementImpl extends CDOObjectImpl implements Sing
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public RefSingleNonContained getParent()
   {
     return (RefSingleNonContained)eGet(model4Package.eINSTANCE.getSingleNonContainedElement_Parent(), true);
@@ -93,6 +96,7 @@ public class SingleNonContainedElementImpl extends CDOObjectImpl implements Sing
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setParent(RefSingleNonContained newParent)
   {
     eSet(model4Package.eINSTANCE.getSingleNonContainedElement_Parent(), newParent);

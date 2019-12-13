@@ -62,6 +62,7 @@ public interface CDOPackageUnit extends Comparable<CDOPackageUnit>, CDOTimeProvi
   /**
    * Returns the time this package unit was originally committed.
    */
+  @Override
   public long getTimeStamp();
 
   /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2009, 2011-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2009, 2011-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -38,6 +38,7 @@ public abstract class ReferenceValueMap<K, V> extends ReferenceValueMap2<K, V> i
     super(map);
   }
 
+  @Override
   public V putIfAbsent(K key, V value)
   {
     try
@@ -52,6 +53,7 @@ public abstract class ReferenceValueMap<K, V> extends ReferenceValueMap2<K, V> i
     }
   }
 
+  @Override
   public V replace(K key, V value)
   {
     try
@@ -66,6 +68,7 @@ public abstract class ReferenceValueMap<K, V> extends ReferenceValueMap2<K, V> i
     }
   }
 
+  @Override
   public boolean replace(K key, V oldValue, V newValue)
   {
     try
@@ -81,6 +84,7 @@ public abstract class ReferenceValueMap<K, V> extends ReferenceValueMap2<K, V> i
     }
   }
 
+  @Override
   public boolean remove(Object key, Object value)
   {
     // TODO Consider a dummy KeyedReference class for value

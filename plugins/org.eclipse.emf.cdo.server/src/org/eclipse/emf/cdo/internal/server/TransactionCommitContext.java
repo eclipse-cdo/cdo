@@ -223,16 +223,19 @@ public class TransactionCommitContext implements InternalCommitContext
     repositoryPackageRegistry = repository.getPackageRegistry(false);
   }
 
+  @Override
   public InternalTransaction getTransaction()
   {
     return transaction;
   }
 
+  @Override
   public CDOBranchPoint getBranchPoint()
   {
     return branch.getPoint(timeStamp);
   }
 
+  @Override
   public String getUserID()
   {
     return transaction.getSession().getUserID();
@@ -243,36 +246,43 @@ public class TransactionCommitContext implements InternalCommitContext
     return commitNumber;
   }
 
+  @Override
   public String getCommitComment()
   {
     return commitComment;
   }
 
+  @Override
   public CDOBranchPoint getCommitMergeSource()
   {
     return commitMergeSource;
   }
 
+  @Override
   public long getLastUpdateTime()
   {
     return lastUpdateTime;
   }
 
+  @Override
   public byte getRollbackReason()
   {
     return rollbackReason;
   }
 
+  @Override
   public String getRollbackMessage()
   {
     return rollbackMessage;
   }
 
+  @Override
   public List<CDOIDReference> getXRefs()
   {
     return xRefs;
   }
 
+  @Override
   public InternalCDOPackageRegistry getPackageRegistry()
   {
     if (packageRegistry == null)
@@ -284,61 +294,73 @@ public class TransactionCommitContext implements InternalCommitContext
     return packageRegistry;
   }
 
+  @Override
   public boolean isClearResourcePathCache()
   {
     return commitNotificationInfo.isClearResourcePathCache();
   }
 
+  @Override
   public byte getSecurityImpact()
   {
     return commitNotificationInfo.getSecurityImpact();
   }
 
+  @Override
   public boolean isUsingEcore()
   {
     return usingEcore;
   }
 
+  @Override
   public boolean isUsingEtypes()
   {
     return usingEtypes;
   }
 
+  @Override
   public InternalCDOPackageUnit[] getNewPackageUnits()
   {
     return newPackageUnits;
   }
 
+  @Override
   public InternalCDORevision[] getNewObjects()
   {
     return newObjects;
   }
 
+  @Override
   public InternalCDORevision[] getDirtyObjects()
   {
     return dirtyObjects;
   }
 
+  @Override
   public CDOID[] getDetachedObjects()
   {
     return detachedObjects;
   }
 
+  @Override
   public Map<CDOID, EClass> getDetachedObjectTypes()
   {
     return detachedObjectTypes;
   }
 
+  @Override
   public CDOBranchVersion[] getDetachedObjectVersions()
   {
     return detachedObjectVersions;
   }
 
+  @Override
   public InternalCDORevision[] getDetachedRevisions()
   {
     return getDetachedRevisions(true);
   }
 
+  @Override
   public InternalCDORevision[] getDetachedRevisions(boolean check)
   {
     if (check)
@@ -356,16 +378,19 @@ public class TransactionCommitContext implements InternalCommitContext
     return cachedDetachedRevisions;
   }
 
+  @Override
   public InternalCDORevisionDelta[] getDirtyObjectDeltas()
   {
     return dirtyObjectDeltas;
   }
 
+  @Override
   public Map<CDOID, InternalCDORevision> getOldRevisions()
   {
     return oldRevisions;
   }
 
+  @Override
   public Map<CDOID, InternalCDORevision> getNewRevisions()
   {
     if (newRevisions == null)
@@ -382,11 +407,13 @@ public class TransactionCommitContext implements InternalCommitContext
     return newRevisions;
   }
 
+  @Override
   public CommitData getOriginalCommmitData()
   {
     return originalCommmitData;
   }
 
+  @Override
   public InternalCDORevision getRevision(CDOID id)
   {
     if (cachedRevisions == null)
@@ -442,11 +469,13 @@ public class TransactionCommitContext implements InternalCommitContext
     return cache;
   }
 
+  @Override
   public Map<CDOID, CDOID> getIDMappings()
   {
     return Collections.unmodifiableMap(idMappings);
   }
 
+  @Override
   public void addIDMapping(CDOID oldID, CDOID newID)
   {
     if (CDOIDUtil.isNull(newID) || newID.isTemporary())
@@ -461,6 +490,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
+  @Override
   public void applyIDMappings(OMMonitor monitor)
   {
     boolean mapIDs = !idMappings.isEmpty();
@@ -519,6 +549,7 @@ public class TransactionCommitContext implements InternalCommitContext
     repository.notifyWriteAccessHandlers(transaction, this, true, monitor.fork());
   }
 
+  @Override
   public void preWrite()
   {
     // Allocate a store writer
@@ -529,6 +560,7 @@ public class TransactionCommitContext implements InternalCommitContext
     StoreThreadLocal.setCommitContext(this);
   }
 
+  @Override
   public boolean isTreeRestructuring()
   {
     if (treeRestructuring == null)
@@ -539,124 +571,148 @@ public class TransactionCommitContext implements InternalCommitContext
     return treeRestructuring;
   }
 
+  @Override
   public void setLastTreeRestructuringCommit(long lastTreeRestructuringCommit)
   {
     this.lastTreeRestructuringCommit = lastTreeRestructuringCommit;
   }
 
+  @Override
   public void setClearResourcePathCache(boolean clearResourcePathCache)
   {
     commitNotificationInfo.setClearResourcePathCache(clearResourcePathCache);
   }
 
+  @Override
   public void setSecurityImpact(byte securityImpact, Set<? extends Object> impactedRules)
   {
     commitNotificationInfo.setSecurityImpact(securityImpact);
     commitNotificationInfo.setImpactedRules(impactedRules);
   }
 
+  @Override
   public void setUsingEcore(boolean usingEcore)
   {
     this.usingEcore = usingEcore;
   }
 
+  @Override
   public void setUsingEtypes(boolean usingEtypes)
   {
     this.usingEtypes = usingEtypes;
   }
 
+  @Override
   public void setNewPackageUnits(InternalCDOPackageUnit[] newPackageUnits)
   {
     this.newPackageUnits = newPackageUnits;
   }
 
+  @Override
   public void setNewObjects(InternalCDORevision[] newObjects)
   {
     this.newObjects = newObjects;
   }
 
+  @Override
   public void setDirtyObjectDeltas(InternalCDORevisionDelta[] dirtyObjectDeltas)
   {
     this.dirtyObjectDeltas = dirtyObjectDeltas;
   }
 
+  @Override
   public void setDetachedObjects(CDOID[] detachedObjects)
   {
     this.detachedObjects = detachedObjects;
   }
 
+  @Override
   public void setDetachedObjectTypes(Map<CDOID, EClass> detachedObjectTypes)
   {
     this.detachedObjectTypes = detachedObjectTypes;
   }
 
+  @Override
   public void setDetachedObjectVersions(CDOBranchVersion[] detachedObjectVersions)
   {
     this.detachedObjectVersions = detachedObjectVersions;
   }
 
+  @Override
   public void setLastUpdateTime(long lastUpdateTime)
   {
     this.lastUpdateTime = lastUpdateTime;
   }
 
+  @Override
   public void setCommitNumber(int commitNumber)
   {
     this.commitNumber = commitNumber;
   }
 
+  @Override
   public void setCommitComment(String commitComment)
   {
     this.commitComment = commitComment;
   }
 
+  @Override
   public void setCommitMergeSource(CDOBranchPoint commitMergeSource)
   {
     this.commitMergeSource = commitMergeSource;
   }
 
+  @Override
   public ExtendedDataInputStream getLobs()
   {
     return lobs;
   }
 
+  @Override
   public void setLobs(ExtendedDataInputStream in)
   {
     lobs = in;
   }
 
+  @Override
   @Deprecated
   public boolean isAutoReleaseLocksEnabled()
   {
     return false;
   }
 
+  @Override
   @Deprecated
   public void setAutoReleaseLocksEnabled(boolean on)
   {
     // Do nothing.
   }
 
+  @Override
   public CDOLockState[] getLocksOnNewObjects()
   {
     return locksOnNewObjects;
   }
 
+  @Override
   public void setLocksOnNewObjects(CDOLockState[] locksOnNewObjects)
   {
     this.locksOnNewObjects = locksOnNewObjects;
   }
 
+  @Override
   public CDOID[] getIDsToUnlock()
   {
     return idsToUnlock;
   }
 
+  @Override
   public void setIDsToUnlock(CDOID[] idsToUnlock)
   {
     this.idsToUnlock = idsToUnlock;
   }
 
+  @Override
   public <T> T getData(Object key)
   {
     if (data == null)
@@ -669,6 +725,7 @@ public class TransactionCommitContext implements InternalCommitContext
     return result;
   }
 
+  @Override
   public synchronized <T extends Object> T setData(Object key, T value)
   {
     if (data == null)
@@ -711,6 +768,7 @@ public class TransactionCommitContext implements InternalCommitContext
   /**
    * @since 2.0
    */
+  @Override
   public void write(OMMonitor monitor)
   {
     try
@@ -763,6 +821,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
+  @Override
   public void commit(OMMonitor monitor)
   {
     try
@@ -795,6 +854,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
+  @Override
   public List<LockState<Object, IView>> getPostCommmitLockStates()
   {
     return postCommitLockStates;
@@ -873,6 +933,7 @@ public class TransactionCommitContext implements InternalCommitContext
     return repository.createCommitTimeStamp(monitor);
   }
 
+  @Override
   public long getTimeStamp()
   {
     return timeStamp;
@@ -884,11 +945,13 @@ public class TransactionCommitContext implements InternalCommitContext
     this.timeStamp = timeStamp;
   }
 
+  @Override
   public long getPreviousTimeStamp()
   {
     return previousTimeStamp;
   }
 
+  @Override
   public void postCommit(boolean success)
   {
     try
@@ -948,6 +1011,7 @@ public class TransactionCommitContext implements InternalCommitContext
     repository.sendCommitNotification(commitNotificationInfo);
   }
 
+  @Override
   public CDOCommitInfo createCommitInfo()
   {
     String userID = transaction.getSession().getUserID();
@@ -1068,6 +1132,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
         CDOReferenceAdjuster revisionTargetLocker = new CDOReferenceAdjuster()
         {
+          @Override
           public Object adjustReference(Object value, EStructuralFeature feature, int index)
           {
             lockTarget(value, newIDs, supportingBranches);
@@ -1469,6 +1534,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
+  @Override
   public synchronized void rollback(String message)
   {
     // Check if we already rolled back
@@ -1496,6 +1562,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
+  @Override
   public IStoreAccessor getAccessor()
   {
     return accessor;
@@ -1861,6 +1928,7 @@ public class TransactionCommitContext implements InternalCommitContext
       final CDOID[] dirtyID = { null };
       CDOReferenceAdjuster dirtyObjectChecker = new CDOReferenceAdjuster()
       {
+        @Override
         public Object adjustReference(Object targetID, EStructuralFeature feature, int index)
         {
           if (!(feature instanceof EReference && ((EReference)feature).isContainer()))
@@ -1882,36 +1950,43 @@ public class TransactionCommitContext implements InternalCommitContext
       }
     }
 
+    @Override
     public long getTimeStamp()
     {
       return CDOBranchPoint.UNSPECIFIED_DATE;
     }
 
+    @Override
     public CDOBranch getBranch()
     {
       return branch;
     }
 
+    @Override
     public Map<CDOID, EClass> getTargetObjects()
     {
       return detachedObjectTypes;
     }
 
+    @Override
     public EReference[] getSourceReferences()
     {
       return new EReference[0];
     }
 
+    @Override
     public Map<EClass, List<EReference>> getSourceCandidates()
     {
       return sourceCandidates;
     }
 
+    @Override
     public int getMaxResults()
     {
       return CDOQueryInfo.UNLIMITED_RESULTS;
     }
 
+    @Override
     public boolean addXRef(CDOID targetID, CDOID sourceID, EReference sourceReference, int sourceIndex)
     {
       if (CDOIDUtil.isNull(targetID))

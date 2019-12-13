@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2014, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2014, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -36,6 +36,7 @@ public interface CDOAdapterPolicy
     /**
      * Always returns <code>false</code>.
      */
+    @Override
     public boolean isValid(EObject eObject, Adapter adapter)
     {
       return false;
@@ -57,6 +58,7 @@ public interface CDOAdapterPolicy
     /**
      * Returns <code>true</code> if the given adapter implements {@link CDOAdapter}.
      */
+    @Override
     public boolean isValid(EObject eObject, Adapter adapter)
     {
       return adapter instanceof CDOAdapter;
@@ -77,6 +79,7 @@ public interface CDOAdapterPolicy
     /**
      * Always returns <code>true</code>.
      */
+    @Override
     public boolean isValid(EObject eObject, Adapter adapter)
     {
       return true;

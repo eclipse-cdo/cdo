@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2011-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2011-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -49,11 +49,13 @@ public abstract class DBSchemaElement extends DBNamedElement implements Internal
   {
   }
 
+  @Override
   public IDBSchemaElement getWrapper()
   {
     return wrapper;
   }
 
+  @Override
   public final void setWrapper(IDBSchemaElement wrapper)
   {
     this.wrapper = wrapper;
@@ -76,6 +78,7 @@ public abstract class DBSchemaElement extends DBNamedElement implements Internal
     return super.hashCode() ^ getSchemaElementType().hashCode();
   }
 
+  @Override
   public final int compareTo(IDBSchemaElement element2)
   {
     int result = getSchemaElementType().compareTo(element2.getSchemaElementType());
@@ -94,11 +97,13 @@ public abstract class DBSchemaElement extends DBNamedElement implements Internal
     return result;
   }
 
+  @Override
   public final boolean isEmpty()
   {
     return getElements().length == 0;
   }
 
+  @Override
   public final IDBSchemaElement[] getElements()
   {
     if (elements == null)
@@ -127,6 +132,7 @@ public abstract class DBSchemaElement extends DBNamedElement implements Internal
 
   protected abstract void collectElements(List<IDBSchemaElement> elements);
 
+  @Override
   public final <T extends IDBSchemaElement> T getElement(Class<T> type, String name)
   {
     name = name(name);
@@ -143,6 +149,7 @@ public abstract class DBSchemaElement extends DBNamedElement implements Internal
     return null;
   }
 
+  @Override
   public final void accept(IDBSchemaVisitor visitor)
   {
     try
@@ -162,6 +169,7 @@ public abstract class DBSchemaElement extends DBNamedElement implements Internal
 
   protected abstract void doAccept(IDBSchemaVisitor visitor);
 
+  @Override
   public void dump(Writer writer) throws IOException
   {
     SchemaElementType schemaElementType = getSchemaElementType();

@@ -524,6 +524,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     return mappingStrategy;
   }
 
+  @Override
   public final EClass getEClass()
   {
     return eClass;
@@ -539,6 +540,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     return listSizeFields;
   }
 
+  @Override
   public final List<ITypeMapping> getValueMappings()
   {
     return valueMappings;
@@ -557,11 +559,13 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     return null;
   }
 
+  @Override
   public final List<IListMapping> getListMappings()
   {
     return listMappings;
   }
 
+  @Override
   public final IListMapping getListMapping(EStructuralFeature feature)
   {
     for (IListMapping mapping : listMappings)
@@ -580,6 +584,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     return table;
   }
 
+  @Override
   public List<IDBTable> getDBTables()
   {
     List<IDBTable> tables = new ArrayList<IDBTable>();
@@ -629,6 +634,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
   }
 
+  @Override
   public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean firstRevision, boolean revise, OMMonitor monitor)
   {
     if (table == null)
@@ -747,6 +753,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
   }
 
+  @Override
   public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     if (table == null)
@@ -862,6 +869,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
   }
 
+  @Override
   public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, CDOChangeSetSegment[] segments)
   {
     Set<CDOID> result = new HashSet<CDOID>();
@@ -926,6 +934,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
   }
 
+  @Override
   public void detachObject(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp, OMMonitor monitor)
   {
     if (table == null)
@@ -1016,6 +1025,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
   protected abstract void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version, OMMonitor fork);
 
+  @Override
   public final boolean queryXRefs(IDBStoreAccessor accessor, QueryXRefsContext context, String idString)
   {
     if (table == null)
@@ -1140,6 +1150,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
   protected abstract void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision);
 
+  @Override
   public Exception deactivate()
   {
     return null;
@@ -1218,24 +1229,28 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
     protected abstract void doProcess(InternalCDORevisionDelta delta);
 
+    @Override
     @Deprecated
     public final void visit(CDOAddFeatureDelta delta)
     {
       throw new ImplementationError("Should not be called"); //$NON-NLS-1$
     }
 
+    @Override
     @Deprecated
     public final void visit(CDORemoveFeatureDelta delta)
     {
       throw new ImplementationError("Should not be called"); //$NON-NLS-1$
     }
 
+    @Override
     @Deprecated
     public final void visit(CDOMoveFeatureDelta delta)
     {
       throw new ImplementationError("Should not be called"); //$NON-NLS-1$
     }
 
+    @Override
     @Deprecated
     public final void visit(CDOClearFeatureDelta delta)
     {

@@ -71,5 +71,6 @@ public interface XAConnection extends Connection
     *
     * @since 1.1
     */
+  @Override
   Session createSession(boolean transacted, int acknowledgeMode) throws JMSException;
 }

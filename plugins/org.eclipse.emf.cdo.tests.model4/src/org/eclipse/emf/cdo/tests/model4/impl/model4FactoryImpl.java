@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -183,6 +183,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public RefSingleContained createRefSingleContained()
   {
     RefSingleContainedImpl refSingleContained = new RefSingleContainedImpl();
@@ -193,6 +194,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public SingleContainedElement createSingleContainedElement()
   {
     SingleContainedElementImpl singleContainedElement = new SingleContainedElementImpl();
@@ -203,6 +205,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public RefSingleNonContained createRefSingleNonContained()
   {
     RefSingleNonContainedImpl refSingleNonContained = new RefSingleNonContainedImpl();
@@ -213,6 +216,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public SingleNonContainedElement createSingleNonContainedElement()
   {
     SingleNonContainedElementImpl singleNonContainedElement = new SingleNonContainedElementImpl();
@@ -223,6 +227,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public RefMultiContained createRefMultiContained()
   {
     RefMultiContainedImpl refMultiContained = new RefMultiContainedImpl();
@@ -233,6 +238,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public MultiContainedElement createMultiContainedElement()
   {
     MultiContainedElementImpl multiContainedElement = new MultiContainedElementImpl();
@@ -243,6 +249,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public RefMultiNonContained createRefMultiNonContained()
   {
     RefMultiNonContainedImpl refMultiNonContained = new RefMultiNonContainedImpl();
@@ -253,6 +260,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public MultiNonContainedElement createMultiNonContainedElement()
   {
     MultiNonContainedElementImpl multiNonContainedElement = new MultiNonContainedElementImpl();
@@ -263,6 +271,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public RefMultiNonContainedUnsettable createRefMultiNonContainedUnsettable()
   {
     RefMultiNonContainedUnsettableImpl refMultiNonContainedUnsettable = new RefMultiNonContainedUnsettableImpl();
@@ -273,6 +282,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public MultiNonContainedUnsettableElement createMultiNonContainedUnsettableElement()
   {
     MultiNonContainedUnsettableElementImpl multiNonContainedUnsettableElement = new MultiNonContainedUnsettableElementImpl();
@@ -283,6 +293,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public RefSingleContainedNPL createRefSingleContainedNPL()
   {
     RefSingleContainedNPLImpl refSingleContainedNPL = new RefSingleContainedNPLImpl();
@@ -293,6 +304,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public RefSingleNonContainedNPL createRefSingleNonContainedNPL()
   {
     RefSingleNonContainedNPLImpl refSingleNonContainedNPL = new RefSingleNonContainedNPLImpl();
@@ -303,6 +315,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public RefMultiContainedNPL createRefMultiContainedNPL()
   {
     RefMultiContainedNPLImpl refMultiContainedNPL = new RefMultiContainedNPLImpl();
@@ -313,6 +326,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public RefMultiNonContainedNPL createRefMultiNonContainedNPL()
   {
     RefMultiNonContainedNPLImpl refMultiNonContainedNPL = new RefMultiNonContainedNPLImpl();
@@ -323,6 +337,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ContainedElementNoOpposite createContainedElementNoOpposite()
   {
     ContainedElementNoOppositeImpl containedElementNoOpposite = new ContainedElementNoOppositeImpl();
@@ -333,6 +348,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenRefSingleContained createGenRefSingleContained()
   {
     GenRefSingleContainedImpl genRefSingleContained = new GenRefSingleContainedImpl();
@@ -343,6 +359,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenRefSingleNonContained createGenRefSingleNonContained()
   {
     GenRefSingleNonContainedImpl genRefSingleNonContained = new GenRefSingleNonContainedImpl();
@@ -353,6 +370,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenRefMultiContained createGenRefMultiContained()
   {
     GenRefMultiContainedImpl genRefMultiContained = new GenRefMultiContainedImpl();
@@ -363,6 +381,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenRefMultiNonContained createGenRefMultiNonContained()
   {
     GenRefMultiNonContainedImpl genRefMultiNonContained = new GenRefMultiNonContainedImpl();
@@ -373,6 +392,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ImplSingleRefContainer createImplSingleRefContainer()
   {
     ImplSingleRefContainerImpl implSingleRefContainer = new ImplSingleRefContainerImpl();
@@ -383,6 +403,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ImplSingleRefContainedElement createImplSingleRefContainedElement()
   {
     ImplSingleRefContainedElementImpl implSingleRefContainedElement = new ImplSingleRefContainedElementImpl();
@@ -393,6 +414,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ImplSingleRefNonContainer createImplSingleRefNonContainer()
   {
     ImplSingleRefNonContainerImpl implSingleRefNonContainer = new ImplSingleRefNonContainerImpl();
@@ -403,6 +425,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ImplSingleRefNonContainedElement createImplSingleRefNonContainedElement()
   {
     ImplSingleRefNonContainedElementImpl implSingleRefNonContainedElement = new ImplSingleRefNonContainedElementImpl();
@@ -413,6 +436,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ImplMultiRefNonContainer createImplMultiRefNonContainer()
   {
     ImplMultiRefNonContainerImpl implMultiRefNonContainer = new ImplMultiRefNonContainerImpl();
@@ -423,6 +447,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ImplMultiRefNonContainedElement createImplMultiRefNonContainedElement()
   {
     ImplMultiRefNonContainedElementImpl implMultiRefNonContainedElement = new ImplMultiRefNonContainedElementImpl();
@@ -433,6 +458,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ImplMultiRefContainer createImplMultiRefContainer()
   {
     ImplMultiRefContainerImpl implMultiRefContainer = new ImplMultiRefContainerImpl();
@@ -443,6 +469,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ImplMultiRefContainedElement createImplMultiRefContainedElement()
   {
     ImplMultiRefContainedElementImpl implMultiRefContainedElement = new ImplMultiRefContainedElementImpl();
@@ -453,6 +480,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ImplSingleRefContainerNPL createImplSingleRefContainerNPL()
   {
     ImplSingleRefContainerNPLImpl implSingleRefContainerNPL = new ImplSingleRefContainerNPLImpl();
@@ -463,6 +491,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ImplSingleRefNonContainerNPL createImplSingleRefNonContainerNPL()
   {
     ImplSingleRefNonContainerNPLImpl implSingleRefNonContainerNPL = new ImplSingleRefNonContainerNPLImpl();
@@ -473,6 +502,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ImplMultiRefContainerNPL createImplMultiRefContainerNPL()
   {
     ImplMultiRefContainerNPLImpl implMultiRefContainerNPL = new ImplMultiRefContainerNPLImpl();
@@ -483,6 +513,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ImplMultiRefNonContainerNPL createImplMultiRefNonContainerNPL()
   {
     ImplMultiRefNonContainerNPLImpl implMultiRefNonContainerNPL = new ImplMultiRefNonContainerNPLImpl();
@@ -493,6 +524,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ImplContainedElementNPL createImplContainedElementNPL()
   {
     ImplContainedElementNPLImpl implContainedElementNPL = new ImplContainedElementNPLImpl();
@@ -503,6 +535,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenRefMultiNUNonContained createGenRefMultiNUNonContained()
   {
     GenRefMultiNUNonContainedImpl genRefMultiNUNonContained = new GenRefMultiNUNonContainedImpl();
@@ -513,6 +546,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GenRefMapNonContained createGenRefMapNonContained()
   {
     GenRefMapNonContainedImpl genRefMapNonContained = new GenRefMapNonContainedImpl();
@@ -533,6 +567,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public model4Package getmodel4Package()
   {
     return (model4Package)getEPackage();

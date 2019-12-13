@@ -68,5 +68,6 @@ public interface XATopicConnection extends XAConnection, TopicConnection
     *                         internal error.
     */
 
+  @Override
   TopicSession createTopicSession(boolean transacted, int acknowledgeMode) throws JMSException;
 }

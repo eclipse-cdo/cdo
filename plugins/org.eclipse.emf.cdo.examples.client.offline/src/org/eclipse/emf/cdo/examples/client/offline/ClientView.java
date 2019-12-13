@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -94,6 +94,7 @@ public class ClientView extends AbstractView<CDOSession>
     IRepository repository = Application.NODE.getObject(IRepository.class);
     repository.addListener(new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         updateEnablement();
@@ -102,6 +103,7 @@ public class ClientView extends AbstractView<CDOSession>
 
     final IListener transactionListener = new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         updateEnablement();
@@ -131,6 +133,7 @@ public class ClientView extends AbstractView<CDOSession>
   {
     treeViewer.addDoubleClickListener(new IDoubleClickListener()
     {
+      @Override
       public void doubleClick(DoubleClickEvent event)
       {
         ITreeSelection selection = (ITreeSelection)treeViewer.getSelection();
@@ -177,6 +180,7 @@ public class ClientView extends AbstractView<CDOSession>
     menuMgr.setRemoveAllWhenShown(true);
     menuMgr.addMenuListener(new IMenuListener()
     {
+      @Override
       public void menuAboutToShow(IMenuManager manager)
       {
         ITreeSelection selection = (ITreeSelection)treeViewer.getSelection();
@@ -225,6 +229,7 @@ public class ClientView extends AbstractView<CDOSession>
       {
         PlatformUI.getWorkbench().getProgressService().run(true, true, new IRunnableWithProgress()
         {
+          @Override
           public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
           {
             CDOTransaction transaction = Application.NODE.getObject(CDOTransaction.class);

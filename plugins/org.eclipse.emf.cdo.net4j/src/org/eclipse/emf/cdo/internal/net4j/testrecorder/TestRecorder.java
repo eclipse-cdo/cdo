@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -282,6 +282,7 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
     transaction.addTransactionHandler(this);
   }
 
+  @Override
   public synchronized void attachingObject(CDOTransaction transaction, CDOObject object)
   {
     if (object instanceof CDOResourceNode)
@@ -298,6 +299,7 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
     }
   }
 
+  @Override
   public synchronized void detachingObject(CDOTransaction transaction, CDOObject object)
   {
     if (object instanceof CDOResourceNode)
@@ -309,6 +311,7 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
     }
   }
 
+  @Override
   public synchronized void modifyingObject(CDOTransaction transaction, final CDOObject object, CDOFeatureDelta featureDelta)
   {
     if (object instanceof CDOResourceNode)
@@ -449,6 +452,7 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
     });
   }
 
+  @Override
   public synchronized void undoingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
   {
     modifyingObject(transaction, object, featureDelta);

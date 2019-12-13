@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -40,6 +40,7 @@ public interface Model1Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Model1Factory eINSTANCE = org.eclipse.emf.cdo.tests.model1.legacy.impl.Model1FactoryImpl.init();
 
+  @Override
   /**
    * Returns a new object of class '<em>Address</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -48,6 +49,7 @@ public interface Model1Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Address createAddress();
 
+  @Override
   /**
    * Returns a new object of class '<em>Company</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -56,6 +58,7 @@ public interface Model1Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Company createCompany();
 
+  @Override
   /**
    * Returns a new object of class '<em>Supplier</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -64,6 +67,7 @@ public interface Model1Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Supplier createSupplier();
 
+  @Override
   /**
    * Returns a new object of class '<em>Customer</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -72,6 +76,7 @@ public interface Model1Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Customer createCustomer();
 
+  @Override
   /**
    * Returns a new object of class '<em>Order Detail</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -80,6 +85,7 @@ public interface Model1Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   OrderDetail createOrderDetail();
 
+  @Override
   /**
    * Returns a new object of class '<em>Purchase Order</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -88,6 +94,7 @@ public interface Model1Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   PurchaseOrder createPurchaseOrder();
 
+  @Override
   /**
    * Returns a new object of class '<em>Sales Order</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -96,6 +103,7 @@ public interface Model1Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   SalesOrder createSalesOrder();
 
+  @Override
   /**
    * Returns a new object of class '<em>Category</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -104,6 +112,7 @@ public interface Model1Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Category createCategory();
 
+  @Override
   /**
    * Returns a new object of class '<em>Product1</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -112,6 +121,7 @@ public interface Model1Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Product1 createProduct1();
 
+  @Override
   /**
    * Returns a new object of class '<em>Order Address</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -120,6 +130,7 @@ public interface Model1Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   OrderAddress createOrderAddress();
 
+  @Override
   /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->

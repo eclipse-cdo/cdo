@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -60,47 +60,56 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
     externalReferenceManager = new ExternalReferenceManager(this);
   }
 
+  @Override
   public DBStore getStore()
   {
     return store;
   }
 
+  @Override
   public Set<ObjectType> getObjectIDTypes()
   {
     return LongIDStore.OBJECT_ID_TYPES;
   }
 
+  @Override
   public CDOID getMinCDOID()
   {
     return MIN;
   }
 
+  @Override
   public CDOID getMaxCDOID()
   {
     return MAX;
   }
 
+  @Override
   public int compare(CDOID id1, CDOID id2)
   {
     return id1.compareTo(id2);
   }
 
+  @Override
   public CDOID createCDOID(String val)
   {
     Long id = Long.valueOf(val);
     return create(id);
   }
 
+  @Override
   public synchronized CDOID getLastObjectID()
   {
     return lastObjectID;
   }
 
+  @Override
   public synchronized void setLastObjectID(CDOID lastObjectID)
   {
     this.lastObjectID = lastObjectID;
   }
 
+  @Override
   public synchronized void adjustLastObjectID(CDOID maxID)
   {
     if (compare(maxID, lastObjectID) > 0)
@@ -109,16 +118,19 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
     }
   }
 
+  @Override
   public synchronized CDOID getNextLocalObjectID()
   {
     return nextLocalObjectID;
   }
 
+  @Override
   public synchronized void setNextLocalObjectID(CDOID nextLocalObjectID)
   {
     this.nextLocalObjectID = nextLocalObjectID;
   }
 
+  @Override
   public synchronized CDOID getNextCDOID(CDORevision revision)
   {
     if (revision.getBranch().isLocal())
@@ -132,22 +144,26 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
     return lastObjectID;
   }
 
+  @Override
   @Deprecated
   public boolean isLocalCDOID(CDOID id)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public DBType getDBType()
   {
     return DBType.BIGINT;
   }
 
+  @Override
   public ITypeMapping getObjectTypeMapping()
   {
     return new CoreTypeMappings.TMObject();
   }
 
+  @Override
   public void appendCDOID(StringBuilder builder, CDOID id)
   {
     long value;
@@ -165,16 +181,19 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
     builder.append(value);
   }
 
+  @Override
   public void setCDOIDRaw(PreparedStatement stmt, int column, Object rawID) throws SQLException
   {
     stmt.setLong(column, (Long)rawID);
   }
 
+  @Override
   public void setCDOID(PreparedStatement stmt, int column, CDOID id) throws SQLException
   {
     setCDOID(stmt, column, id, CDOBranchPoint.INVALID_DATE);
   }
 
+  @Override
   public void setCDOID(PreparedStatement stmt, int column, CDOID id, long commitTime) throws SQLException
   {
     long value;
@@ -201,6 +220,7 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
     stmt.setLong(column, value);
   }
 
+  @Override
   public CDOID getCDOID(ResultSet resultSet, int column) throws SQLException
   {
     long id = resultSet.getLong(column);
@@ -212,6 +232,7 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
     return unmapExternalReference(id);
   }
 
+  @Override
   public CDOID getCDOID(ResultSet resultSet, String name) throws SQLException
   {
     long id = resultSet.getLong(name);
@@ -233,11 +254,13 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
     return create(id);
   }
 
+  @Override
   public CDOID mapURI(IDBStoreAccessor accessor, String uri, long commitTime)
   {
     return create(externalReferenceManager.mapURI(accessor, uri, commitTime));
   }
 
+  @Override
   public String unmapURI(IDBStoreAccessor accessor, CDOID id)
   {
     if (id != null && id.getType() == CDOID.Type.EXTERNAL_OBJECT)
@@ -248,11 +271,13 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
     return externalReferenceManager.unmapURI(accessor, value(id));
   }
 
+  @Override
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
     externalReferenceManager.rawExport(connection, out, fromCommitTime, toCommitTime);
   }
 
+  @Override
   public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
     externalReferenceManager.rawImport(connection, in, fromCommitTime, toCommitTime, monitor);

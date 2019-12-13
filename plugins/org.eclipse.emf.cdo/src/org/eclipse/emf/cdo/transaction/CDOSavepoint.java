@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -33,10 +33,13 @@ public interface CDOSavepoint extends CDOUserSavepoint, CDOChangeSetDataProvider
   /**
    * @since 3.0
    */
+  @Override
   public CDOTransaction getTransaction();
 
+  @Override
   public CDOSavepoint getNextSavepoint();
 
+  @Override
   public CDOSavepoint getPreviousSavepoint();
 
   /**

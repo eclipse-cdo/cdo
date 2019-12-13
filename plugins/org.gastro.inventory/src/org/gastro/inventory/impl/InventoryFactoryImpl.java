@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -114,6 +114,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
    *
    * @generated
    */
+  @Override
   public Stock createStock()
   {
     StockImpl stock = new StockImpl();
@@ -125,6 +126,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
    *
    * @generated
    */
+  @Override
   public StockProduct createStockProduct()
   {
     StockProductImpl stockProduct = new StockProductImpl();
@@ -136,6 +138,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
    *
    * @generated
    */
+  @Override
   public Recipe createRecipe()
   {
     RecipeImpl recipe = new RecipeImpl();
@@ -147,6 +150,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
    *
    * @generated
    */
+  @Override
   public Ingredient createIngredient()
   {
     IngredientImpl ingredient = new IngredientImpl();
@@ -158,6 +162,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
    *
    * @generated
    */
+  @Override
   public MenuCard createMenuCard()
   {
     MenuCardImpl menuCard = new MenuCardImpl();
@@ -169,6 +174,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
    *
    * @generated
    */
+  @Override
   public Restaurant createRestaurant()
   {
     RestaurantImpl restaurant = new RestaurantImpl();
@@ -180,6 +186,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
    *
    * @generated
    */
+  @Override
   public Department createDepartment()
   {
     DepartmentImpl department = new DepartmentImpl();
@@ -191,6 +198,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
    *
    * @generated
    */
+  @Override
   public Offering createOffering()
   {
     OfferingImpl offering = new OfferingImpl();
@@ -202,6 +210,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
    *
    * @generated
    */
+  @Override
   public Table createTable()
   {
     TableImpl table = new TableImpl();
@@ -213,6 +222,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
    *
    * @generated
    */
+  @Override
   public Employee createEmployee()
   {
     EmployeeImpl employee = new EmployeeImpl();
@@ -224,6 +234,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
    *
    * @generated
    */
+  @Override
   public Section createSection()
   {
     SectionImpl section = new SectionImpl();
@@ -235,6 +246,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
    *
    * @generated
    */
+  @Override
   public InventoryPackage getInventoryPackage()
   {
     return (InventoryPackage)getEPackage();

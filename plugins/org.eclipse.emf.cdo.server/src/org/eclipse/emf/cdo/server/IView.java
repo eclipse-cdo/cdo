@@ -27,5 +27,6 @@ public interface IView extends CDOCommonView
    */
   public IRepository getRepository();
 
+  @Override
   public ISession getSession();
 }

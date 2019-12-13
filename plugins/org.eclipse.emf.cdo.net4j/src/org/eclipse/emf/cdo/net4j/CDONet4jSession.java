@@ -31,6 +31,7 @@ public interface CDONet4jSession extends org.eclipse.emf.cdo.session.CDOSession
   /**
    * Returns the {@link Options options} of this session.
    */
+  @Override
   public Options options();
 
   /**

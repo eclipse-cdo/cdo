@@ -99,6 +99,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     return false;
   }
 
+  @Override
   public boolean hasClientContainer()
   {
     if (usesServerContainer())
@@ -109,6 +110,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     return clientContainer != null;
   }
 
+  @Override
   public IManagedContainer getClientContainer()
   {
     if (usesServerContainer())
@@ -144,19 +146,23 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     return container;
   }
 
+  @Override
   public void startTransport() throws Exception
   {
   }
 
+  @Override
   public void stopTransport() throws Exception
   {
   }
 
+  @Override
   public CDOSession openSession()
   {
     return openSession(IRepositoryConfig.REPOSITORY_NAME);
   }
 
+  @Override
   public CDOSession openSession(String repositoryName)
   {
     if (RepositoryConfig.REPOSITORY_NAME.equals(repositoryName))
@@ -180,6 +186,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     return openSession(configuration);
   }
 
+  @Override
   public CDOSession openSession(CDOSessionConfiguration configuration)
   {
     CDOSession session = configuration.openSession();
@@ -333,6 +340,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       super(name);
     }
 
+    @Override
     public void initCapabilities(Set<String> capabilities)
     {
       capabilities.add(CAPABILITY_NET4J);
@@ -383,6 +391,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       }
     }
 
+    @Override
     public String getURIProtocol()
     {
       return "cdo.net4j." + getTransportType();
@@ -462,6 +471,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
         capabilities.add(CAPABILITY_NET4J_TCP);
       }
 
+      @Override
       public String getURIPrefix()
       {
         return getURIProtocol() + "://" + CONNECTOR_HOST;
@@ -530,6 +540,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
         capabilities.add(CAPABILITY_NET4J_SSL);
       }
 
+      @Override
       public String getURIPrefix()
       {
         return getURIProtocol() + "://" + CONNECTOR_HOST;
@@ -603,6 +614,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
         capabilities.add(CAPABILITY_NET4J_JVM);
       }
 
+      @Override
       public String getURIPrefix()
       {
         return getURIProtocol() + "://" + ACCEPTOR_NAME;

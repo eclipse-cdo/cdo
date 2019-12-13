@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015-2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015-2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -335,6 +335,7 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
     this.dbName = dbName;
   }
 
+  @Override
   public DB getDB()
   {
     return db;
@@ -355,31 +356,37 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
     return classes;
   }
 
+  @Override
   public Map<String, String> getPersistentProperties(Set<String> names)
   {
     return props.get(names);
   }
 
+  @Override
   public void setPersistentProperties(Map<String, String> properties)
   {
     props.set(properties);
   }
 
+  @Override
   public void removePersistentProperties(Set<String> names)
   {
     props.remove(names);
   }
 
+  @Override
   public boolean isFirstStart()
   {
     return firstStart;
   }
 
+  @Override
   public long getCreationTime()
   {
     return creationTime;
   }
 
+  @Override
   public void setCreationTime(long creationTime)
   {
     this.creationTime = creationTime;
@@ -394,11 +401,13 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
     return branching;
   }
 
+  @Override
   public CDOID createObjectID(String val)
   {
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
+  @Override
   @Deprecated
   public boolean isLocal(CDOID id)
   {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2014, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2014, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -34,10 +34,12 @@ public class CDOAsyncTransactionHandler implements CDOTransactionHandler
    * Asynchronously executes the delegate handler's {@link #attachingObject(CDOTransaction, CDOObject)
    * attachingObject()} method.
    */
+  @Override
   public final void attachingObject(final CDOTransaction transaction, final CDOObject object)
   {
     runAsync(new Runnable()
     {
+      @Override
       public void run()
       {
         delegate.attachingObject(transaction, object);
@@ -49,10 +51,12 @@ public class CDOAsyncTransactionHandler implements CDOTransactionHandler
    * Asynchronously executes the delegate handler's {@link #detachingObject(CDOTransaction, CDOObject)
    * detachingObject()} method.
    */
+  @Override
   public final void detachingObject(final CDOTransaction transaction, final CDOObject object)
   {
     runAsync(new Runnable()
     {
+      @Override
       public void run()
       {
         delegate.detachingObject(transaction, object);
@@ -64,10 +68,12 @@ public class CDOAsyncTransactionHandler implements CDOTransactionHandler
    * Asynchronously executes the delegate handler's {@link #modifyingObject(CDOTransaction, CDOObject, CDOFeatureDelta)
    * modifyingObject()} method.
    */
+  @Override
   public final void modifyingObject(final CDOTransaction transaction, final CDOObject object, final CDOFeatureDelta featureChange)
   {
     runAsync(new Runnable()
     {
+      @Override
       public void run()
       {
         delegate.modifyingObject(transaction, object, featureChange);
@@ -79,6 +85,7 @@ public class CDOAsyncTransactionHandler implements CDOTransactionHandler
    * Asynchronously executes the delegate handler's {@link #committingTransaction(CDOTransaction, CDOCommitContext)
    * committingTransaction()} method.
    */
+  @Override
   public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
   {
     delegate.committingTransaction(transaction, commitContext);
@@ -88,6 +95,7 @@ public class CDOAsyncTransactionHandler implements CDOTransactionHandler
    * Synchronously executes the delegate handler's {@link #committedTransaction(CDOTransaction, CDOCommitContext)
    * committedTransaction()} method.
    */
+  @Override
   public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
   {
     delegate.committedTransaction(transaction, commitContext);
@@ -97,6 +105,7 @@ public class CDOAsyncTransactionHandler implements CDOTransactionHandler
    * Synchronously executes the delegate handler's {@link #rolledBackTransaction(CDOTransaction)
    * rolledBackTransaction()} method.
    */
+  @Override
   public void rolledBackTransaction(CDOTransaction transaction)
   {
     delegate.rolledBackTransaction(transaction);

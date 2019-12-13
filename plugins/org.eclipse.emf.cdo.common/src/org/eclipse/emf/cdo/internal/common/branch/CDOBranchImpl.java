@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -60,26 +60,31 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     activate();
   }
 
+  @Override
   public boolean isMainBranch()
   {
     return false;
   }
 
+  @Override
   public boolean isLocal()
   {
     return id < 0;
   }
 
+  @Override
   public InternalCDOBranchManager getBranchManager()
   {
     return branchManager;
   }
 
+  @Override
   public int getID()
   {
     return id;
   }
 
+  @Override
   public synchronized String getName()
   {
     if (name == null)
@@ -90,6 +95,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     return name;
   }
 
+  @Override
   public void setName(String name)
   {
     checkActive();
@@ -112,27 +118,32 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     }
   }
 
+  @Override
   public void basicSetName(String name)
   {
     this.name = name;
     branchManager.handleBranchChanged(this, ChangeKind.RENAMED);
   }
 
+  @Override
   public CDOBranch getBranch()
   {
     return base.getBranch();
   }
 
+  @Override
   public long getTimeStamp()
   {
     return base.getTimeStamp();
   }
 
+  @Override
   public boolean isProxy()
   {
     return name == null || base == null;
   }
 
+  @Override
   public String getPathName()
   {
     StringBuilder builder = new StringBuilder();
@@ -153,6 +164,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     builder.append(branch.getName());
   }
 
+  @Override
   public CDOBranchPoint[] getBasePath()
   {
     List<CDOBranchPoint> path = new ArrayList<CDOBranchPoint>();
@@ -172,6 +184,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     path.add(base);
   }
 
+  @Override
   public synchronized CDOBranchPoint getBase()
   {
     if (base == null)
@@ -182,21 +195,25 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     return base;
   }
 
+  @Override
   public CDOBranchPoint getHead()
   {
     return head;
   }
 
+  @Override
   public CDOBranchPoint getPoint(long timeStamp)
   {
     return new CDOBranchPointImpl(this, timeStamp);
   }
 
+  @Override
   public CDOBranchVersion getVersion(int version)
   {
     return new CDOBranchVersionImpl(this, version);
   }
 
+  @Override
   public InternalCDOBranch createBranch(String name, long timeStamp)
   {
     if (!branchManager.getRepository().isSupportingBranches())
@@ -207,16 +224,19 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     return branchManager.createBranch(BranchLoader.NEW_BRANCH, name, this, timeStamp);
   }
 
+  @Override
   public InternalCDOBranch createBranch(String name)
   {
     return createBranch(name, CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
+  @Override
   public InternalCDOBranch[] getElements()
   {
     return getBranches();
   }
 
+  @Override
   public InternalCDOBranch[] getBranches(boolean loadOnDemand)
   {
     if (!branchManager.getRepository().isSupportingBranches())
@@ -232,11 +252,13 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     return branches;
   }
 
+  @Override
   public synchronized InternalCDOBranch[] getBranches()
   {
     return getBranches(true);
   }
 
+  @Override
   public InternalCDOBranch getBranch(String path)
   {
     if (!branchManager.getRepository().isSupportingBranches())
@@ -272,6 +294,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     return child.getBranch(rest);
   }
 
+  @Override
   @Deprecated
   public void rename(String newName)
   {
@@ -292,18 +315,21 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     return null;
   }
 
+  @Override
   public BranchInfo getBranchInfo()
   {
     CDOBranchPoint base = getBase();
     return new BranchInfo(getName(), base.getBranch().getID(), base.getTimeStamp());
   }
 
+  @Override
   public void setBranchInfo(String name, InternalCDOBranch baseBranch, long baseTimeStamp)
   {
     this.name = name;
     base = baseBranch.getPoint(baseTimeStamp);
   }
 
+  @Override
   public void addChild(InternalCDOBranch branch)
   {
     synchronized (this)
@@ -324,6 +350,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     fireElementAddedEvent(branch);
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
@@ -334,6 +361,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
       {
         return new CDOBranchCreationContext()
         {
+          @Override
           public CDOBranchPoint getBase()
           {
             return getHead();
@@ -345,6 +373,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     return AdapterUtil.adapt(this, adapter, false);
   }
 
+  @Override
   public int compareTo(CDOBranch o)
   {
     int otherID = o.getID();

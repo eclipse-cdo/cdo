@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -142,6 +142,7 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
     super.dispose();
   }
 
+  @Override
   public void selectionChanged(SelectionChangedEvent event)
   {
     ISelection selection = event.getSelection();
@@ -377,16 +378,19 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
       this.contentProvider = contentProvider;
     }
 
+    @Override
     public IWizardCategory getRootCategory()
     {
       return DELEGATE.getRootCategory();
     }
 
+    @Override
     public IWizardDescriptor[] getPrimaryWizards()
     {
       return DELEGATE.getPrimaryWizards();
     }
 
+    @Override
     public IWizardDescriptor findWizard(String id)
     {
       final IWizardDescriptor delegate = DELEGATE.findWizard(id);
@@ -398,6 +402,7 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
       return delegate;
     }
 
+    @Override
     public IWizardCategory findCategory(String id)
     {
       return DELEGATE.findCategory(id);
@@ -419,41 +424,49 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
       this.contentProvider = contentProvider;
     }
 
+    @Override
     public String getId()
     {
       return delegate.getId();
     }
 
+    @Override
     public ImageDescriptor getImageDescriptor()
     {
       return delegate.getImageDescriptor();
     }
 
+    @Override
     public IStructuredSelection adaptedSelection(IStructuredSelection selection)
     {
       return delegate.adaptedSelection(selection);
     }
 
+    @Override
     public String getLabel()
     {
       return delegate.getLabel();
     }
 
+    @Override
     public <T> T getAdapter(Class<T> adapter)
     {
       return delegate.getAdapter(adapter);
     }
 
+    @Override
     public String getDescription()
     {
       return delegate.getDescription();
     }
 
+    @Override
     public String[] getTags()
     {
       return delegate.getTags();
     }
 
+    @Override
     public IWorkbenchWizard createWizard() throws CoreException
     {
       IWorkbenchWizard wizard = delegate.createWizard();
@@ -466,26 +479,31 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
       return wizard;
     }
 
+    @Override
     public ImageDescriptor getDescriptionImage()
     {
       return delegate.getDescriptionImage();
     }
 
+    @Override
     public String getHelpHref()
     {
       return delegate.getHelpHref();
     }
 
+    @Override
     public IWizardCategory getCategory()
     {
       return delegate.getCategory();
     }
 
+    @Override
     public boolean canFinishEarly()
     {
       return delegate.canFinishEarly();
     }
 
+    @Override
     public boolean hasPages()
     {
       return delegate.hasPages();

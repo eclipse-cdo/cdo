@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -57,16 +57,19 @@ public class RemoveResourceActionDelegate implements IObjectActionDelegate
   {
   }
 
+  @Override
   public void setActivePart(IAction action, IWorkbenchPart targetPart)
   {
     shell = targetPart.getSite().getShell();
   }
 
+  @Override
   public void selectionChanged(IAction action, ISelection selection)
   {
     nodes = UIUtil.getElements(selection, CDOResourceNode.class);
   }
 
+  @Override
   public void run(IAction action)
   {
     if (MessageDialog.openConfirm(shell, Messages.getString("RemoveResourceAction_1"), MessageFormat.format( //$NON-NLS-1$

@@ -208,6 +208,7 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
           getEditingDomain().getCommandStack().execute(command);
           viewer.getControl().getDisplay().asyncExec(new Runnable()
           {
+            @Override
             public void run()
             {
               viewer.getControl().setFocus();
@@ -272,6 +273,7 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
   {
     viewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
+      @Override
       public void selectionChanged(SelectionChangedEvent event)
       {
         IManagedForm form = getManagedForm();

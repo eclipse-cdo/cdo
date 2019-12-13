@@ -356,6 +356,7 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
           hideRunnable = new Runnable()
           {
 
+            @Override
             public void run()
             {
               if (hideRunnable == this)

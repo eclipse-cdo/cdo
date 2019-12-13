@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -70,16 +70,19 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     this.branch = branch;
   }
 
+  @Override
   public final CDOCommitInfoManager getManager()
   {
     return manager;
   }
 
+  @Override
   public final CDOBranch getBranch()
   {
     return branch;
   }
 
+  @Override
   public final int getLoadCount()
   {
     synchronized (loadLock)
@@ -88,6 +91,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
   }
 
+  @Override
   public final void setLoadCount(int loadCount)
   {
     synchronized (loadLock)
@@ -96,6 +100,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
   }
 
+  @Override
   public final boolean isAppendingTriggerLoadElement()
   {
     synchronized (loadLock)
@@ -104,6 +109,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
   }
 
+  @Override
   public final void setAppendingTriggerLoadElement(boolean appendingTriggerLoadElement)
   {
     int event = 0;
@@ -140,6 +146,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
   }
 
+  @Override
   public final CDOCommitInfo getFirstElement()
   {
     checkActive();
@@ -164,6 +171,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
   }
 
+  @Override
   public final CDOCommitInfo getLastElement()
   {
     checkActive();
@@ -188,6 +196,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
   }
 
+  @Override
   public final CDOCommitInfo getElement(int index)
   {
     checkActive();
@@ -207,6 +216,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
   }
 
+  @Override
   public final CDOCommitInfo[] getElements()
   {
     checkActive();
@@ -241,6 +251,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
   }
 
+  @Override
   public final int size()
   {
     checkActive();
@@ -291,6 +302,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
   }
 
+  @Override
   public final boolean isFull()
   {
     synchronized (loadLock)
@@ -299,6 +311,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
   }
 
+  @Override
   public final boolean isLoading()
   {
     synchronized (loadLock)
@@ -307,6 +320,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
   }
 
+  @Override
   public final void waitWhileLoading(long timeout)
   {
     long end = System.currentTimeMillis() + timeout;
@@ -333,6 +347,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
   }
 
+  @Override
   public final void handleCommitInfo(CDOCommitInfo commitInfo)
   {
     synchronized (loadLock)
@@ -355,11 +370,13 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
   }
 
+  @Override
   public final boolean triggerLoad()
   {
     return triggerLoad(null);
   }
 
+  @Override
   public final boolean triggerLoad(final CDOCommitInfoHandler handler)
   {
     synchronized (loadLock)
@@ -448,6 +465,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
 
       manager.getCommitInfos(branch, timeStamp, null, null, -loadCount, new CDOCommitInfoHandler()
       {
+        @Override
         public void handleCommitInfo(CDOCommitInfo commitInfo)
         {
           ++loaded[0];
@@ -628,105 +646,126 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
    */
   private final class TriggerLoadElementImpl implements TriggerLoadElement
   {
+    @Override
     public CDOCommitHistory getHistory()
     {
       return CDOCommitHistoryImpl.this;
     }
 
+    @Override
     public CDOCommitInfoManager getCommitInfoManager()
     {
       return manager;
     }
 
+    @Override
     public CDOBranch getBranch()
     {
       return null;
     }
 
+    @Override
     public long getTimeStamp()
     {
       return CDOBranchPoint.UNSPECIFIED_DATE;
     }
 
+    @Override
     public long getPreviousTimeStamp()
     {
       return CDOBranchPoint.UNSPECIFIED_DATE;
     }
 
+    @Override
     public CDOCommitInfo getPreviousCommitInfo()
     {
       return null;
     }
 
+    @Override
     public String getUserID()
     {
       return null;
     }
 
+    @Override
     public String getComment()
     {
       return "Load more history elements";
     }
 
+    @Override
     public CDOBranchPoint getMergeSource()
     {
       return null;
     }
 
+    @Override
     public CDOCommitInfo getMergedCommitInfo()
     {
       return null;
     }
 
+    @Override
     public boolean isEmpty()
     {
       return true;
     }
 
+    @Override
     public boolean isInitialCommit()
     {
       return false;
     }
 
+    @Override
     public boolean isCommitDataLoaded()
     {
       return true;
     }
 
+    @Override
     public List<CDOPackageUnit> getNewPackageUnits()
     {
       return null;
     }
 
+    @Override
     public List<CDOIDAndVersion> getNewObjects()
     {
       return null;
     }
 
+    @Override
     public List<CDORevisionKey> getChangedObjects()
     {
       return null;
     }
 
+    @Override
     public List<CDOIDAndVersion> getDetachedObjects()
     {
       return null;
     }
 
+    @Override
     public Map<CDOID, CDOChangeKind> getChangeKinds()
     {
       return null;
     }
 
+    @Override
     public CDOChangeKind getChangeKind(CDOID id)
     {
       return null;
     }
 
+    @Override
     public void merge(CDOChangeSetData changeSetData)
     {
     }
 
+    @Override
     public CDOChangeSetData copy()
     {
       return null;
@@ -738,82 +777,99 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
    */
   public static final class Empty extends Container<CDOCommitInfo> implements CDOCommitHistory
   {
+    @Override
     public CDOCommitInfo[] getElements()
     {
       return NO_ELEMENTS;
     }
 
+    @Override
     public void handleCommitInfo(CDOCommitInfo commitInfo)
     {
     }
 
+    @Override
     public CDOCommitInfoManager getManager()
     {
       return null;
     }
 
+    @Override
     public CDOBranch getBranch()
     {
       return null;
     }
 
+    @Override
     public boolean isAppendingTriggerLoadElement()
     {
       return false;
     }
 
+    @Override
     public void setAppendingTriggerLoadElement(boolean appendingTriggerLoadElement)
     {
     }
 
+    @Override
     public CDOCommitInfo getFirstElement()
     {
       return null;
     }
 
+    @Override
     public CDOCommitInfo getLastElement()
     {
       return null;
     }
 
+    @Override
     public CDOCommitInfo getElement(int index)
     {
       return null;
     }
 
+    @Override
     public int size()
     {
       return 0;
     }
 
+    @Override
     public boolean isLoading()
     {
       return false;
     }
 
+    @Override
     public void waitWhileLoading(long timeout)
     {
     }
 
+    @Override
     public int getLoadCount()
     {
       return 0;
     }
 
+    @Override
     public void setLoadCount(int loadCount)
     {
     }
 
+    @Override
     public boolean triggerLoad()
     {
       return false;
     }
 
+    @Override
     public boolean triggerLoad(CDOCommitInfoHandler handler)
     {
       return false;
     }
 
+    @Override
     public boolean isFull()
     {
       return true;

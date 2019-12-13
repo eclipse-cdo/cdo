@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -71,6 +71,7 @@ public class ElementImpl extends CDOObjectImpl implements Element
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Element> getSubelements()
   {
@@ -82,6 +83,7 @@ public class ElementImpl extends CDOObjectImpl implements Element
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Element getParent()
   {
     return (Element)eGet(BasePackage.Literals.ELEMENT__PARENT, true);
@@ -92,6 +94,7 @@ public class ElementImpl extends CDOObjectImpl implements Element
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setParent(Element newParent)
   {
     eSet(BasePackage.Literals.ELEMENT__PARENT, newParent);

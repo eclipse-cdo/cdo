@@ -156,11 +156,13 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
     }
   }
 
+  @Override
   public final void activate() throws LifecycleException
   {
     internalActivate();
   }
 
+  @Override
   public final Exception deactivate()
   {
     return internalDeactivate();
@@ -169,11 +171,13 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
   /**
    * @since 3.0
    */
+  @Override
   public final LifecycleState getLifecycleState()
   {
     return lifecycleState;
   }
 
+  @Override
   public final boolean isActive()
   {
     return lifecycleState == LifecycleState.ACTIVE;
@@ -270,6 +274,7 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
   /**
    * @since 3.2
    */
+  @Override
   public boolean isDeferredActivation()
   {
     return false;

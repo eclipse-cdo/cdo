@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -156,6 +156,7 @@ public class SelectClassDialog extends TitleAreaDialog
     packageViewer.setInput(registry);
     packageViewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
+      @Override
       public void selectionChanged(SelectionChangedEvent event)
       {
         IStructuredSelection selection = (IStructuredSelection)event.getSelection();
@@ -200,6 +201,7 @@ public class SelectClassDialog extends TitleAreaDialog
     classViewer.setLabelProvider(new ClassLabelProvider());
     classViewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
+      @Override
       public void selectionChanged(SelectionChangedEvent event)
       {
         IStructuredSelection selection = (IStructuredSelection)event.getSelection();
@@ -211,6 +213,7 @@ public class SelectClassDialog extends TitleAreaDialog
 
     classViewer.addDoubleClickListener(new IDoubleClickListener()
     {
+      @Override
       public void doubleClick(DoubleClickEvent event)
       {
         okPressed();
@@ -250,6 +253,7 @@ public class SelectClassDialog extends TitleAreaDialog
 
     private String[] elements;
 
+    @Override
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
     {
       this.viewer = viewer;
@@ -257,6 +261,7 @@ public class SelectClassDialog extends TitleAreaDialog
       computeElements();
     }
 
+    @Override
     public void handleFilter(String filter)
     {
       this.filter = filter == null ? null : filter.toLowerCase();
@@ -264,11 +269,13 @@ public class SelectClassDialog extends TitleAreaDialog
       viewer.refresh();
     }
 
+    @Override
     public Object[] getElements(Object inputElement)
     {
       return elements;
     }
 
+    @Override
     public void dispose()
     {
       elements = null;
@@ -348,6 +355,7 @@ public class SelectClassDialog extends TitleAreaDialog
 
     private EClass[] elements;
 
+    @Override
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
     {
       this.viewer = viewer;
@@ -355,6 +363,7 @@ public class SelectClassDialog extends TitleAreaDialog
       computeElements();
     }
 
+    @Override
     public void handleFilter(String filter)
     {
       this.filter = filter == null ? null : filter.toLowerCase();
@@ -362,11 +371,13 @@ public class SelectClassDialog extends TitleAreaDialog
       viewer.refresh();
     }
 
+    @Override
     public Object[] getElements(Object inputElement)
     {
       return elements;
     }
 
+    @Override
     public void dispose()
     {
       elements = null;
@@ -397,6 +408,7 @@ public class SelectClassDialog extends TitleAreaDialog
         elements = eClasses.toArray(new EClass[eClasses.size()]);
         Arrays.sort(elements, new Comparator<EClass>()
         {
+          @Override
           public int compare(EClass c1, EClass c2)
           {
             return StringUtil.safe(c1.getName()).compareTo(StringUtil.safe(c2.getName()));

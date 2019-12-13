@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -50,6 +50,7 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     queue.add(new QueueEntry<E>(exception));
   }
 
+  @Override
   public void close()
   {
     synchronized (closeLock)
@@ -61,6 +62,7 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     }
   }
 
+  @Override
   public boolean isClosed()
   {
     synchronized (closeLock)
@@ -69,22 +71,26 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     }
   }
 
+  @Override
   public boolean add(E e)
   {
     QueueEntry<E> entry = new QueueEntry<E>(e);
     return queue.add(entry);
   }
 
+  @Override
   public void clear()
   {
     queue.clear();
   }
 
+  @Override
   public boolean contains(Object o)
   {
     return queue.contains(o);
   }
 
+  @Override
   public E element()
   {
     return checkObject(queue.element());
@@ -102,11 +108,13 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     return queue.hashCode();
   }
 
+  @Override
   public boolean isEmpty()
   {
     return queue.isEmpty();
   }
 
+  @Override
   public BlockingCloseableIterator<E> iterator()
   {
     return new BlockingCloseableIteratorImpl();
@@ -117,11 +125,13 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     return queue.offer(new QueueEntry<E>(e), timeout, unit);
   }
 
+  @Override
   public boolean offer(E e)
   {
     return queue.offer(new QueueEntry<E>(e));
   }
 
+  @Override
   public E peek()
   {
     return checkObject(queue.peek());
@@ -142,16 +152,19 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     return queue.remainingCapacity();
   }
 
+  @Override
   public E remove()
   {
     return checkObject(queue.remove());
   }
 
+  @Override
   public boolean remove(Object o)
   {
     return queue.remove(o);
   }
 
+  @Override
   public int size()
   {
     return queue.size();
@@ -166,11 +179,13 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     return checkObject(entry);
   }
 
+  @Override
   public Object[] toArray()
   {
     return queue.toArray();
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public Object[] toArray(Object[] a)
   {
@@ -183,6 +198,7 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     return queue.toString();
   }
 
+  @Override
   public E poll()
   {
     QueueEntry<E> entry = queue.poll();
@@ -194,21 +210,25 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean containsAll(Collection<?> c)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean addAll(Collection<? extends E> c)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean removeAll(Collection<?> c)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean retainAll(Collection<?> c)
   {
     throw new UnsupportedOperationException();
@@ -290,6 +310,7 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
       return null;
     }
 
+    @Override
     public int compareTo(QueueEntry<E> o)
     {
       if (this == o)
@@ -341,6 +362,7 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
     {
     }
 
+    @Override
     public E peek()
     {
       if (nextElement == null)
@@ -351,6 +373,7 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
       return nextElement;
     }
 
+    @Override
     public boolean hasNext()
     {
       privateNext(false);
@@ -385,6 +408,7 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
       }
     }
 
+    @Override
     public E next()
     {
       try
@@ -398,16 +422,19 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
       }
     }
 
+    @Override
     public void remove()
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public void close()
     {
       this.closed = true;
     }
 
+    @Override
     public boolean isClosed()
     {
       return this.closed;

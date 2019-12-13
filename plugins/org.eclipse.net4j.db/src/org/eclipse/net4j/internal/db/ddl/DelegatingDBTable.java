@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -58,6 +58,7 @@ public final class DelegatingDBTable extends DelegatingDBSchemaElement implement
     }
   }
 
+  @Override
   public IDBTable getWrapper()
   {
     return this;
@@ -69,141 +70,169 @@ public final class DelegatingDBTable extends DelegatingDBSchemaElement implement
     return wrap(getDelegate().getParent());
   }
 
+  @Override
   public IDBField addField(String name, DBType type)
   {
     return wrap(getDelegate().addField(name, type));
   }
 
+  @Override
   public IDBField addField(String name, DBType type, boolean notNull)
   {
     return wrap(getDelegate().addField(name, type, notNull));
   }
 
+  @Override
   public void removeField(IDBField fieldToRemove)
   {
     getDelegate().removeField(unwrap(fieldToRemove));
   }
 
+  @Override
   public IDBField addField(String name, DBType type, int precision)
   {
     return wrap(getDelegate().addField(name, type, precision));
   }
 
+  @Override
   public void removeIndex(IDBIndex indexToRemove)
   {
     getDelegate().removeIndex(unwrap(indexToRemove));
   }
 
+  @Override
   public IDBField addField(String name, DBType type, int precision, boolean notNull)
   {
     return wrap(getDelegate().addField(name, type, precision, notNull));
   }
 
+  @Override
   public IDBField addField(String name, DBType type, int precision, int scale)
   {
     return wrap(getDelegate().addField(name, type, precision, scale));
   }
 
+  @Override
   public IDBField addField(String name, DBType type, int precision, int scale, boolean notNull)
   {
     return wrap(getDelegate().addField(name, type, precision, scale, notNull));
   }
 
+  @Override
   public IDBField getFieldSafe(String name) throws SchemaElementNotFoundException
   {
     return wrap(getDelegate().getFieldSafe(name));
   }
 
+  @Override
   public IDBField getField(String name)
   {
     return wrap(getDelegate().getField(name));
   }
 
+  @Override
   public IDBField getField(int position)
   {
     return wrap(getDelegate().getField(position));
   }
 
+  @Override
   public int getFieldCount()
   {
     return getDelegate().getFieldCount();
   }
 
+  @Override
   public IDBField[] getFields()
   {
     return wrap(getDelegate().getFields(), IDBField.class);
   }
 
+  @Override
   public IDBField[] getFields(String... fieldNames) throws SchemaElementNotFoundException
   {
     return wrap(getDelegate().getFields(fieldNames), IDBField.class);
   }
 
+  @Override
   public boolean hasIndexFor(IDBField... fields)
   {
     return getDelegate().hasIndexFor(unwrap(fields, IDBField.class));
   }
 
+  @Override
   public IDBIndex addIndex(String name, Type type, IDBField... fields)
   {
     return wrap(getDelegate().addIndex(name, type, unwrap(fields, IDBField.class)));
   }
 
+  @Override
   public IDBIndex addIndex(String name, Type type, String... fieldNames) throws SchemaElementNotFoundException
   {
     return wrap(getDelegate().addIndex(name, type, fieldNames));
   }
 
+  @Override
   public IDBIndex addIndexEmpty(String name, Type type)
   {
     return wrap(getDelegate().addIndexEmpty(name, type));
   }
 
+  @Override
   public IDBIndex addIndex(Type type, IDBField... fields)
   {
     return wrap(getDelegate().addIndex(type, unwrap(fields, IDBField.class)));
   }
 
+  @Override
   public IDBIndex addIndex(Type type, String... fieldNames) throws SchemaElementNotFoundException
   {
     return wrap(getDelegate().addIndex(type, fieldNames));
   }
 
+  @Override
   public IDBIndex addIndexEmpty(Type type)
   {
     return wrap(getDelegate().addIndexEmpty(type));
   }
 
+  @Override
   public IDBIndex getIndexSafe(String name) throws SchemaElementNotFoundException
   {
     return wrap(getDelegate().getIndexSafe(name));
   }
 
+  @Override
   public IDBIndex getIndex(String name)
   {
     return wrap(getDelegate().getIndex(name));
   }
 
+  @Override
   public IDBIndex getIndex(int position)
   {
     return wrap(getDelegate().getIndex(position));
   }
 
+  @Override
   public int getIndexCount()
   {
     return getDelegate().getIndexCount();
   }
 
+  @Override
   public IDBIndex[] getIndices()
   {
     return wrap(getDelegate().getIndices(), IDBIndex.class);
   }
 
+  @Override
   public IDBIndex getPrimaryKeyIndex()
   {
     return wrap(getDelegate().getPrimaryKeyIndex());
   }
 
+  @Override
   public String sqlInsert()
   {
     return getDelegate().sqlInsert();

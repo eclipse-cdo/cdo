@@ -87,6 +87,7 @@ public interface CDOResource extends CDOResourceLeaf, Resource
    * @model dataType="org.eclipse.emf.cdo.eresource.ResourceSet" transient="true"
    * @generated
    */
+  @Override
   ResourceSet getResourceSet();
 
   /**
@@ -110,6 +111,7 @@ public interface CDOResource extends CDOResourceLeaf, Resource
    * @model dataType="org.eclipse.emf.cdo.eresource.URI" transient="true" volatile="true" derived="true"
    * @generated
    */
+  @Override
   URI getURI();
 
   /**
@@ -121,6 +123,7 @@ public interface CDOResource extends CDOResourceLeaf, Resource
    * @see #getURI()
    * @generated
    */
+  @Override
   void setURI(URI value);
 
   /**
@@ -133,6 +136,7 @@ public interface CDOResource extends CDOResourceLeaf, Resource
    * @model containment="true"
    * @generated
    */
+  @Override
   EList<EObject> getContents();
 
   /**
@@ -145,6 +149,7 @@ public interface CDOResource extends CDOResourceLeaf, Resource
    * @model transient="true"
    * @generated
    */
+  @Override
   boolean isModified();
 
   /**
@@ -155,6 +160,7 @@ public interface CDOResource extends CDOResourceLeaf, Resource
    * @see #isModified()
    * @generated
    */
+  @Override
   void setModified(boolean value);
 
   /**
@@ -167,6 +173,7 @@ public interface CDOResource extends CDOResourceLeaf, Resource
    * @model default="true" transient="true" changeable="false" volatile="true" derived="true"
    * @generated
    */
+  @Override
   boolean isLoaded();
 
   /**
@@ -179,6 +186,7 @@ public interface CDOResource extends CDOResourceLeaf, Resource
    * @model transient="true"
    * @generated
    */
+  @Override
   boolean isTrackingModification();
 
   /**
@@ -189,6 +197,7 @@ public interface CDOResource extends CDOResourceLeaf, Resource
    * @see #isTrackingModification()
    * @generated
    */
+  @Override
   void setTrackingModification(boolean value);
 
   /**
@@ -201,6 +210,7 @@ public interface CDOResource extends CDOResourceLeaf, Resource
    * @model dataType="org.eclipse.emf.cdo.eresource.Diagnostic" transient="true" changeable="false" volatile="true" derived="true"
    * @generated
    */
+  @Override
   EList<Resource.Diagnostic> getErrors();
 
   /**
@@ -213,6 +223,7 @@ public interface CDOResource extends CDOResourceLeaf, Resource
    * @model dataType="org.eclipse.emf.cdo.eresource.Diagnostic" transient="true" changeable="false" volatile="true" derived="true"
    * @generated
    */
+  @Override
   EList<Resource.Diagnostic> getWarnings();
 
   /**
@@ -225,6 +236,7 @@ public interface CDOResource extends CDOResourceLeaf, Resource
    * @model transient="true"
    * @generated
    */
+  @Override
   long getTimeStamp();
 
   /**
@@ -235,6 +247,7 @@ public interface CDOResource extends CDOResourceLeaf, Resource
    * @see #getTimeStamp()
    * @generated
    */
+  @Override
   void setTimeStamp(long value);
 
   /**

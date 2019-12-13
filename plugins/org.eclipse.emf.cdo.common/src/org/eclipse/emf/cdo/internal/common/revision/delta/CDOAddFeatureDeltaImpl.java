@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2014-2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2014-2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -40,11 +40,13 @@ public class CDOAddFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl imple
     super(in, eClass);
   }
 
+  @Override
   public Type getType()
   {
     return Type.ADD;
   }
 
+  @Override
   public Object applyTo(CDORevision revision)
   {
     EStructuralFeature feature = getFeature();
@@ -71,16 +73,19 @@ public class CDOAddFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl imple
     return null;
   }
 
+  @Override
   public void accept(CDOFeatureDeltaVisitor visitor)
   {
     visitor.visit(this);
   }
 
+  @Override
   public CDOAddFeatureDelta copy()
   {
     return new CDOAddFeatureDeltaImpl(getFeature(), getIndex(), getValue());
   }
 
+  @Override
   public void affectIndices(ListTargetAdding[] source, int[] indices)
   {
     int index = getIndex();
@@ -98,6 +103,7 @@ public class CDOAddFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl imple
     }
   }
 
+  @Override
   public int projectIndex(int index)
   {
     if (index >= getIndex())

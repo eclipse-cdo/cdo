@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -59,6 +59,7 @@ public final class DelegatingDBSchema extends DelegatingDBSchemaElement implemen
     }
   }
 
+  @Override
   public IDBSchema getWrapper()
   {
     return this;
@@ -70,58 +71,69 @@ public final class DelegatingDBSchema extends DelegatingDBSchemaElement implemen
     return wrap(getDelegate().getParent());
   }
 
+  @Override
   public IDBTable addTable(String name)
   {
     return wrap(getDelegate().addTable(name));
   }
 
+  @Override
   public IDBTable removeTable(String name)
   {
     return wrap(getDelegate().removeTable(name));
   }
 
+  @Override
   public String createIndexName(IDBTable table, Type type, IDBField[] fields, int position)
   {
     return getDelegate().createIndexName(unwrap(table), type, fields, position);
   }
 
+  @Override
   public boolean isLocked()
   {
     return getDelegate().isLocked();
   }
 
+  @Override
   public boolean lock()
   {
     return getDelegate().lock();
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends IDBSchemaElement> T findElement(IDBSchemaElement prototype)
   {
     T unwrapped = (T)unwrap(prototype);
-    return (T)wrap(getDelegate().findElement(unwrapped));
+    return wrap((T)getDelegate().findElement(unwrapped));
   }
 
+  @Override
   public boolean unlock()
   {
     return getDelegate().unlock();
   }
 
+  @Override
   public void assertUnlocked() throws DBException
   {
     getDelegate().assertUnlocked();
   }
 
+  @Override
   public IDBTable getTableSafe(String name) throws SchemaElementNotFoundException
   {
     return wrap(getDelegate().getTableSafe(name));
   }
 
+  @Override
   public IDBTable getTable(String name)
   {
     return wrap(getDelegate().getTable(name));
   }
 
+  @Override
   public IDBTable[] getTables()
   {
     IDBTable[] tables = getDelegate().getTables();
@@ -134,51 +146,61 @@ public final class DelegatingDBSchema extends DelegatingDBSchemaElement implemen
     return wrappers;
   }
 
+  @Override
   public Set<IDBTable> create(IDBAdapter dbAdapter, Connection connection) throws DBException
   {
     return wrap(getDelegate().create(dbAdapter, connection));
   }
 
+  @Override
   public Set<IDBTable> create(IDBAdapter dbAdapter, DataSource dataSource) throws DBException
   {
     return wrap(getDelegate().create(dbAdapter, dataSource));
   }
 
+  @Override
   public Set<IDBTable> create(IDBAdapter dbAdapter, IDBConnectionProvider connectionProvider) throws DBException
   {
     return wrap(getDelegate().create(dbAdapter, connectionProvider));
   }
 
+  @Override
   public void drop(IDBAdapter dbAdapter, Connection connection) throws DBException
   {
     getDelegate().drop(dbAdapter, connection);
   }
 
+  @Override
   public void drop(IDBAdapter dbAdapter, DataSource dataSource) throws DBException
   {
     getDelegate().drop(dbAdapter, dataSource);
   }
 
+  @Override
   public void drop(IDBAdapter dbAdapter, IDBConnectionProvider connectionProvider) throws DBException
   {
     getDelegate().drop(dbAdapter, connectionProvider);
   }
 
+  @Override
   public void export(Connection connection, PrintStream out) throws DBException
   {
     getDelegate().export(connection, out);
   }
 
+  @Override
   public void export(DataSource dataSource, PrintStream out) throws DBException
   {
     getDelegate().export(dataSource, out);
   }
 
+  @Override
   public void export(IDBConnectionProvider connectionProvider, PrintStream out) throws DBException
   {
     getDelegate().export(connectionProvider, out);
   }
 
+  @Override
   public IDBSchemaDelta compare(IDBSchema oldSchema)
   {
     return getDelegate().compare(unwrap(oldSchema));

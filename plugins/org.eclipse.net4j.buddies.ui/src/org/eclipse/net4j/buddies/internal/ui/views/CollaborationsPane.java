@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2009, 2011, 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2009, 2011, 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -169,6 +169,7 @@ public class CollaborationsPane extends Composite implements IListener
     }
   }
 
+  @Override
   public void notifyEvent(IEvent event)
   {
     if (session == null)
@@ -182,11 +183,13 @@ public class CollaborationsPane extends Composite implements IListener
       IContainerEvent<IMembership> e = (IContainerEvent<IMembership>)event;
       e.accept(new IContainerEventVisitor<IMembership>()
       {
+        @Override
         public void added(IMembership membership)
         {
           collaborationAdded((IBuddyCollaboration)membership.getCollaboration());
         }
 
+        @Override
         public void removed(IMembership membership)
         {
           collaborationRemoved((IBuddyCollaboration)membership.getCollaboration());
@@ -247,6 +250,7 @@ public class CollaborationsPane extends Composite implements IListener
     {
       Runnable runnable = new Runnable()
       {
+        @Override
         public void run()
         {
           try

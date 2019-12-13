@@ -27,6 +27,7 @@ public class ContainerDelta<E> implements IContainerDelta<E>
     this.kind = kind;
   }
 
+  @Override
   public E getElement()
   {
     return element;
@@ -37,6 +38,7 @@ public class ContainerDelta<E> implements IContainerDelta<E>
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public Kind getKind()
   {
     return kind;

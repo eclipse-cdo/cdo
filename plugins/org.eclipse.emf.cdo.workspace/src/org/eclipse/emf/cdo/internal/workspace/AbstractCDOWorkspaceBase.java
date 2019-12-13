@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -45,16 +45,19 @@ public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBa
   {
   }
 
+  @Override
   public void init(InternalCDOWorkspace workspace)
   {
     this.workspace = workspace;
   }
 
+  @Override
   public final InternalCDOWorkspace getWorkspace()
   {
     return workspace;
   }
 
+  @Override
   public final synchronized Set<CDOID> getIDs()
   {
     if (ids == null)
@@ -65,30 +68,35 @@ public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBa
     return ids;
   }
 
+  @Override
   @Deprecated
   public final void updateAfterCommit(CDOTransaction transaction)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public final synchronized void registerChangedOrDetachedObject(InternalCDORevision revision)
   {
     getIDs().add(revision.getID());
     doRegisterChangedOrDetachedObject(revision);
   }
 
+  @Override
   public final synchronized void registerAddedAndDetachedObject(InternalCDORevision revision)
   {
     doRegisterAddedAndDetachedObject(revision);
     deregisterObject(revision.getID());
   }
 
+  @Override
   public final synchronized void registerAddedObject(CDOID id)
   {
     getIDs().add(id);
     doRegisterAddedObject(id);
   }
 
+  @Override
   public final synchronized void deregisterObject(CDOID id)
   {
     if (ids != null)
@@ -99,17 +107,20 @@ public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBa
     doDeregisterObject(id);
   }
 
+  @Override
   public final synchronized void clear()
   {
     ids = new HashSet<CDOID>();
     doClear();
   }
 
+  @Override
   public final synchronized boolean isEmpty()
   {
     return getIDs().isEmpty();
   }
 
+  @Override
   public final synchronized boolean containsID(CDOID id)
   {
     return getIDs().contains(id);

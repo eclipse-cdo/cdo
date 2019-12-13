@@ -187,6 +187,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getAddress()
   {
     return addressEClass;
@@ -196,6 +197,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getAddress_Name()
   {
     return (EAttribute)addressEClass.getEStructuralFeatures().get(0);
@@ -205,6 +207,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getAddress_Street()
   {
     return (EAttribute)addressEClass.getEStructuralFeatures().get(1);
@@ -214,6 +217,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getAddress_City()
   {
     return (EAttribute)addressEClass.getEStructuralFeatures().get(2);
@@ -223,6 +227,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCompany()
   {
     return companyEClass;
@@ -232,6 +237,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCompany_Categories()
   {
     return (EReference)companyEClass.getEStructuralFeatures().get(0);
@@ -241,6 +247,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCompany_Suppliers()
   {
     return (EReference)companyEClass.getEStructuralFeatures().get(1);
@@ -250,6 +257,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCompany_Customers()
   {
     return (EReference)companyEClass.getEStructuralFeatures().get(2);
@@ -259,6 +267,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCompany_PurchaseOrders()
   {
     return (EReference)companyEClass.getEStructuralFeatures().get(3);
@@ -268,6 +277,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCompany_SalesOrders()
   {
     return (EReference)companyEClass.getEStructuralFeatures().get(4);
@@ -277,6 +287,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getSupplier()
   {
     return supplierEClass;
@@ -286,6 +297,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getSupplier_PurchaseOrders()
   {
     return (EReference)supplierEClass.getEStructuralFeatures().get(0);
@@ -295,6 +307,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getSupplier_Preferred()
   {
     return (EAttribute)supplierEClass.getEStructuralFeatures().get(1);
@@ -304,6 +317,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCustomer()
   {
     return customerEClass;
@@ -313,6 +327,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCustomer_SalesOrders()
   {
     return (EReference)customerEClass.getEStructuralFeatures().get(0);
@@ -322,6 +337,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCustomer_OrderByProduct()
   {
     return (EReference)customerEClass.getEStructuralFeatures().get(1);
@@ -331,6 +347,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getOrder()
   {
     return orderEClass;
@@ -340,6 +357,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getOrder_OrderDetails()
   {
     return (EReference)orderEClass.getEStructuralFeatures().get(0);
@@ -349,6 +367,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getOrderDetail()
   {
     return orderDetailEClass;
@@ -358,6 +377,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getOrderDetail_Order()
   {
     return (EReference)orderDetailEClass.getEStructuralFeatures().get(0);
@@ -367,6 +387,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getOrderDetail_Product()
   {
     return (EReference)orderDetailEClass.getEStructuralFeatures().get(1);
@@ -376,6 +397,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getOrderDetail_Price()
   {
     return (EAttribute)orderDetailEClass.getEStructuralFeatures().get(2);
@@ -385,6 +407,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPurchaseOrder()
   {
     return purchaseOrderEClass;
@@ -394,6 +417,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPurchaseOrder_Date()
   {
     return (EAttribute)purchaseOrderEClass.getEStructuralFeatures().get(0);
@@ -403,6 +427,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPurchaseOrder_Supplier()
   {
     return (EReference)purchaseOrderEClass.getEStructuralFeatures().get(1);
@@ -413,6 +438,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPurchaseOrder_SalesOrders()
   {
     return (EReference)purchaseOrderEClass.getEStructuralFeatures().get(2);
@@ -422,6 +448,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getSalesOrder()
   {
     return salesOrderEClass;
@@ -431,6 +458,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getSalesOrder_Id()
   {
     return (EAttribute)salesOrderEClass.getEStructuralFeatures().get(0);
@@ -440,6 +468,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getSalesOrder_Customer()
   {
     return (EReference)salesOrderEClass.getEStructuralFeatures().get(1);
@@ -450,6 +479,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getSalesOrder_PurchaseOrders()
   {
     return (EReference)salesOrderEClass.getEStructuralFeatures().get(2);
@@ -459,6 +489,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCategory()
   {
     return categoryEClass;
@@ -468,6 +499,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCategory_Name()
   {
     return (EAttribute)categoryEClass.getEStructuralFeatures().get(0);
@@ -477,6 +509,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCategory_Categories()
   {
     return (EReference)categoryEClass.getEStructuralFeatures().get(1);
@@ -486,6 +519,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCategory_Products()
   {
     return (EReference)categoryEClass.getEStructuralFeatures().get(2);
@@ -495,6 +529,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getProduct1()
   {
     return product1EClass;
@@ -504,6 +539,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getProduct1_Name()
   {
     return (EAttribute)product1EClass.getEStructuralFeatures().get(0);
@@ -513,6 +549,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getProduct1_OrderDetails()
   {
     return (EReference)product1EClass.getEStructuralFeatures().get(1);
@@ -522,6 +559,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getProduct1_Vat()
   {
     return (EAttribute)product1EClass.getEStructuralFeatures().get(2);
@@ -532,6 +570,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getProduct1_OtherVATs()
   {
     return (EAttribute)product1EClass.getEStructuralFeatures().get(3);
@@ -541,6 +580,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getProduct1_Description()
   {
     return (EAttribute)product1EClass.getEStructuralFeatures().get(4);
@@ -550,6 +590,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getOrderAddress()
   {
     return orderAddressEClass;
@@ -559,6 +600,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getOrderAddress_TestAttribute()
   {
     return (EAttribute)orderAddressEClass.getEStructuralFeatures().get(0);
@@ -568,6 +610,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getProductToOrder()
   {
     return productToOrderEClass;
@@ -577,6 +620,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getProductToOrder_Key()
   {
     return (EReference)productToOrderEClass.getEStructuralFeatures().get(0);
@@ -586,6 +630,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getProductToOrder_Value()
   {
     return (EReference)productToOrderEClass.getEStructuralFeatures().get(1);
@@ -595,6 +640,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getVAT()
   {
     return vatEEnum;
@@ -604,6 +650,7 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Model1Factory getModel1Factory()
   {
     return (Model1Factory)getEFactoryInstance();

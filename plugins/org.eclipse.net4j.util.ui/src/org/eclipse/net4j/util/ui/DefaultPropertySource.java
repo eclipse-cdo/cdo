@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -92,6 +92,7 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
     }
   }
 
+  @Override
   public IPropertyDescriptor[] getPropertyDescriptors()
   {
     return descriptors.values().toArray(new IPropertyDescriptor[descriptors.size()]);
@@ -123,6 +124,7 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
     return null;
   }
 
+  @Override
   public Object getPropertyValue(Object id)
   {
     Property<RECEIVER> property = getProperty(id);
@@ -134,19 +136,23 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
     return null;
   }
 
+  @Override
   public boolean isPropertySet(Object id)
   {
     return true;
   }
 
+  @Override
   public void resetPropertyValue(Object id)
   {
   }
 
+  @Override
   public void setPropertyValue(Object id, Object value)
   {
   }
 
+  @Override
   public Object getEditableValue()
   {
     return null;
@@ -225,31 +231,37 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
       return property;
     }
 
+    @Override
     public String getCategory()
     {
       return property.getCategory();
     }
 
+    @Override
     public String getId()
     {
       return property.getName();
     }
 
+    @Override
     public String getDisplayName()
     {
       return property.getLabel();
     }
 
+    @Override
     public String getDescription()
     {
       return property.getDescription();
     }
 
+    @Override
     public boolean isCompatibleWith(IPropertyDescriptor anotherProperty)
     {
       return anotherProperty.getCategory().equals(getCategory()) && anotherProperty.getId().equals(getId());
     }
 
+    @Override
     public ILabelProvider getLabelProvider()
     {
       if (labelProvider != null)
@@ -265,16 +277,19 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
       this.labelProvider = labelProvider;
     }
 
+    @Override
     public Object getHelpContextIds()
     {
       return null;
     }
 
+    @Override
     public String[] getFilterFlags()
     {
       return null;
     }
 
+    @Override
     public CellEditor createPropertyEditor(Composite parent)
     {
       return null;

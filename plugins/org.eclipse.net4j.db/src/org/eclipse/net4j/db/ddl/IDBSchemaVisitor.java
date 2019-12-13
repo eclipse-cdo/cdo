@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -39,26 +39,31 @@ public interface IDBSchemaVisitor
    */
   public static class Default implements IDBSchemaVisitor
   {
+    @Override
     public void visit(IDBSchema element)
     {
       visitDefault(element);
     }
 
+    @Override
     public void visit(IDBTable element)
     {
       visitDefault(element);
     }
 
+    @Override
     public void visit(IDBField element)
     {
       visitDefault(element);
     }
 
+    @Override
     public void visit(IDBIndex element)
     {
       visitDefault(element);
     }
 
+    @Override
     public void visit(IDBIndexField element)
     {
       visitDefault(element);

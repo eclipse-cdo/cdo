@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -65,6 +65,7 @@ public class CDOTreeExpansionAgent
     {
       tree.getDisplay().syncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           for (Object element : viewer.getExpandedElements())
@@ -139,6 +140,7 @@ public class CDOTreeExpansionAgent
       {
         tree.getDisplay().syncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             tree.removeDisposeListener(listener);
@@ -220,6 +222,7 @@ public class CDOTreeExpansionAgent
    */
   private final class Listener implements IListener, ITreeViewerListener, DisposeListener
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof CDOViewTargetChangedEvent)
@@ -229,6 +232,7 @@ public class CDOTreeExpansionAgent
         {
           tree.getDisplay().asyncExec(new Runnable()
           {
+            @Override
             public void run()
             {
               if (!tree.isDisposed() && !view.isClosed())
@@ -249,18 +253,21 @@ public class CDOTreeExpansionAgent
       }
     }
 
+    @Override
     public void treeExpanded(TreeExpansionEvent event)
     {
       Object element = event.getElement();
       addExpandedElement(element);
     }
 
+    @Override
     public void treeCollapsed(TreeExpansionEvent event)
     {
       Object element = event.getElement();
       removeExpandedElement(element);
     }
 
+    @Override
     public void widgetDisposed(DisposeEvent e)
     {
       dispose();

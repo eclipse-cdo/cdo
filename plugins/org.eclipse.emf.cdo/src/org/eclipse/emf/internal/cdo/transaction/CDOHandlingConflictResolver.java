@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -77,6 +77,7 @@ public class CDOHandlingConflictResolver extends CDOMergingConflictResolver impl
     this.conflictHandlerSelector = conflictHandlerSelector;
   }
 
+  @Override
   public boolean preCommit()
   {
     if (isConflict())
@@ -157,6 +158,7 @@ public class CDOHandlingConflictResolver extends CDOMergingConflictResolver impl
 
     Collections.sort(result, new Comparator<ConflictHandler>()
     {
+      @Override
       public int compare(ConflictHandler h1, ConflictHandler h2)
       {
         return h1.getPriority() - h2.getPriority();
@@ -208,6 +210,7 @@ public class CDOHandlingConflictResolver extends CDOMergingConflictResolver impl
         super(PRODUCT_GROUP, type);
       }
 
+      @Override
       public abstract ConflictHandler create(String description) throws ProductCreationException;
     }
   }

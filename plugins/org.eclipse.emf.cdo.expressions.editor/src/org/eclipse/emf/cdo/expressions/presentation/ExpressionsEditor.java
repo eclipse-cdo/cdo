@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -234,6 +234,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
    */
   protected IPartListener partListener = new IPartListener()
   {
+    @Override
     public void partActivated(IWorkbenchPart p)
     {
       if (p instanceof ContentOutline)
@@ -259,21 +260,25 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
       }
     }
 
+    @Override
     public void partBroughtToTop(IWorkbenchPart p)
     {
       // Ignore.
     }
 
+    @Override
     public void partClosed(IWorkbenchPart p)
     {
       // Ignore.
     }
 
+    @Override
     public void partDeactivated(IWorkbenchPart p)
     {
       // Ignore.
     }
 
+    @Override
     public void partOpened(IWorkbenchPart p)
     {
       // Ignore.
@@ -354,6 +359,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
           {
             getSite().getShell().getDisplay().asyncExec(new Runnable()
             {
+              @Override
               public void run()
               {
                 updateProblemIndication();
@@ -385,6 +391,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
       {
         getSite().getShell().getDisplay().asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             updateProblemIndication();
@@ -402,6 +409,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
    */
   protected IResourceChangeListener resourceChangeListener = new IResourceChangeListener()
   {
+    @Override
     public void resourceChanged(IResourceChangeEvent event)
     {
       IResourceDelta delta = event.getDelta();
@@ -415,6 +423,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
 
           protected Collection<Resource> removedResources = new ArrayList<Resource>();
 
+          @Override
           public boolean visit(IResourceDelta delta)
           {
             if (delta.getResource().getType() == IResource.FILE)
@@ -458,6 +467,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
         {
           getSite().getShell().getDisplay().asyncExec(new Runnable()
           {
+            @Override
             public void run()
             {
               removedResources.addAll(visitor.getRemovedResources());
@@ -473,6 +483,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
         {
           getSite().getShell().getDisplay().asyncExec(new Runnable()
           {
+            @Override
             public void run()
             {
               changedResources.addAll(visitor.getChangedResources());
@@ -691,10 +702,12 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
     //
     commandStack.addCommandStackListener(new CommandStackListener()
     {
+      @Override
       public void commandStackChanged(final EventObject event)
       {
         getContainer().getDisplay().asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             firePropertyChange(IEditorPart.PROP_DIRTY);
@@ -755,6 +768,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
     {
       Runnable runnable = new Runnable()
       {
+        @Override
         public void run()
         {
           // Try to select the items in the current content viewer of the editor.
@@ -777,6 +791,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EditingDomain getEditingDomain()
   {
     return editingDomain;
@@ -868,6 +883,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
         {
           // This just notifies those things that are affected by the section.
           //
+          @Override
           public void selectionChanged(SelectionChangedEvent selectionChangedEvent)
           {
             setSelection(selectionChangedEvent.getSelection());
@@ -905,6 +921,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Viewer getViewer()
   {
     return currentViewer;
@@ -1027,6 +1044,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
 
       getSite().getShell().getDisplay().asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           setActivePage(0);
@@ -1055,6 +1073,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
 
     getSite().getShell().getDisplay().asyncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         updateProblemIndication();
@@ -1211,6 +1230,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
       {
         // This ensures that we handle selections correctly.
         //
+        @Override
         public void selectionChanged(SelectionChangedEvent event)
         {
           handleContentOutlineSelection(event.getSelection());
@@ -1446,6 +1466,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void gotoMarker(IMarker marker)
   {
     List<?> targetObjects = markerHelper.getTargetObjects(editingDomain, marker);
@@ -1489,6 +1510,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void addSelectionChangedListener(ISelectionChangedListener listener)
   {
     selectionChangedListeners.add(listener);
@@ -1500,6 +1522,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void removeSelectionChangedListener(ISelectionChangedListener listener)
   {
     selectionChangedListeners.remove(listener);
@@ -1511,6 +1534,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ISelection getSelection()
   {
     return editorSelection;
@@ -1523,6 +1547,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setSelection(ISelection selection)
   {
     editorSelection = selection;
@@ -1604,6 +1629,7 @@ public class ExpressionsEditor extends MultiPageEditorPart implements IEditingDo
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void menuAboutToShow(IMenuManager menuManager)
   {
     ((IMenuListener)getEditorSite().getActionBarContributor()).menuAboutToShow(menuManager);

@@ -34,6 +34,7 @@ public class ContainerSortedSet<E> extends ContainerSet<E> implements IContainer
   /**
    * @category READ
    */
+  @Override
   public Comparator<? super E> comparator()
   {
     return getDelegate().comparator();
@@ -42,6 +43,7 @@ public class ContainerSortedSet<E> extends ContainerSet<E> implements IContainer
   /**
    * @category READ
    */
+  @Override
   public E first()
   {
     return getDelegate().first();
@@ -50,6 +52,7 @@ public class ContainerSortedSet<E> extends ContainerSet<E> implements IContainer
   /**
    * @category READ
    */
+  @Override
   public E last()
   {
     return getDelegate().last();
@@ -58,6 +61,7 @@ public class ContainerSortedSet<E> extends ContainerSet<E> implements IContainer
   /**
    * @category READ
    */
+  @Override
   public SortedSet<E> headSet(E toElement)
   {
     return getDelegate().headSet(toElement);
@@ -66,6 +70,7 @@ public class ContainerSortedSet<E> extends ContainerSet<E> implements IContainer
   /**
    * @category READ
    */
+  @Override
   public SortedSet<E> subSet(E fromElement, E toElement)
   {
     return getDelegate().subSet(fromElement, toElement);
@@ -74,6 +79,7 @@ public class ContainerSortedSet<E> extends ContainerSet<E> implements IContainer
   /**
    * @category READ
    */
+  @Override
   public SortedSet<E> tailSet(E fromElement)
   {
     return getDelegate().tailSet(fromElement);

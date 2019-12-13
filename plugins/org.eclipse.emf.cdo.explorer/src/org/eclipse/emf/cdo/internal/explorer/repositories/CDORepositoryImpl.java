@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -92,6 +92,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   private final IListener branchManagerListener = new IListener()
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof CDOBranchChangedEvent)
@@ -111,6 +112,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   private final IListener mainBranchListener = new IListener()
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof IContainerEvent)
@@ -167,26 +169,31 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     return OM.getRepositoryManager();
   }
 
+  @Override
   public final String getName()
   {
     return name;
   }
 
+  @Override
   public final VersioningMode getVersioningMode()
   {
     return versioningMode;
   }
 
+  @Override
   public final IDGeneration getIDGeneration()
   {
     return idGeneration;
   }
 
+  @Override
   public IPasswordCredentials getCredentials()
   {
     return getCredentials(null);
   }
 
+  @Override
   public IPasswordCredentials getCredentials(String realm)
   {
     try
@@ -216,6 +223,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     return null;
   }
 
+  @Override
   public void setCredentials(IPasswordCredentials credentials)
   {
     try
@@ -238,21 +246,25 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     }
   }
 
+  @Override
   public boolean isInteractive()
   {
     return false;
   }
 
+  @Override
   public final State getState()
   {
     return state;
   }
 
+  @Override
   public final boolean isConnected()
   {
     return session != null;
   }
 
+  @Override
   public final void connect()
   {
     explicitlyConnected = true;
@@ -315,6 +327,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     }
   }
 
+  @Override
   public final void disconnect()
   {
     explicitlyConnected = false;
@@ -376,11 +389,13 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     }
   }
 
+  @Override
   public final CDOSession getSession()
   {
     return session;
   }
 
+  @Override
   public CDOSession acquireSession()
   {
     ++sessionRefCount;
@@ -389,12 +404,14 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     return session;
   }
 
+  @Override
   public void releaseSession()
   {
     --sessionRefCount;
     doDisconnect(false);
   }
 
+  @Override
   public CDOTransaction openTransaction(CDOBranchPoint target, ResourceSet resourceSet)
   {
     CDOSession session = acquireSession();
@@ -403,6 +420,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     return transaction;
   }
 
+  @Override
   public CDOTransaction openTransaction(String durableLockingID, ResourceSet resourceSet)
   {
     CDOSession session = acquireSession();
@@ -411,6 +429,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     return transaction;
   }
 
+  @Override
   public CDOView openView(CDOBranchPoint target, ResourceSet resourceSet)
   {
     CDOSession session = acquireSession();
@@ -419,6 +438,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     return view;
   }
 
+  @Override
   public CDOView openView(String durableLockingID, ResourceSet resourceSet)
   {
     CDOSession session = acquireSession();
@@ -441,6 +461,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     super.delete(deleteContents);
   }
 
+  @Override
   public final CDOCheckout[] getCheckouts()
   {
     synchronized (checkouts)
@@ -485,6 +506,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     }
   }
 
+  @Override
   public final boolean isEmpty()
   {
     if (isConnected())
@@ -495,6 +517,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     return false;
   }
 
+  @Override
   public final CDOBranch[] getElements()
   {
     if (isConnected())
@@ -522,6 +545,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
         {
           return new CDOBranchCreationContext()
           {
+            @Override
             public CDOBranchPoint getBase()
             {
               return session.getBranchManager().getMainBranch().getHead();
@@ -535,21 +559,25 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     {
       return new CDORepositoryElement()
       {
+        @Override
         public CDORepository getRepository()
         {
           return CDORepositoryImpl.this;
         }
 
+        @Override
         public int getBranchID()
         {
           return CDOBranch.MAIN_BRANCH_ID;
         }
 
+        @Override
         public long getTimeStamp()
         {
           return CDOBranchPoint.UNSPECIFIED_DATE;
         }
 
+        @Override
         public CDOID getObjectID()
         {
           return null;
@@ -627,6 +655,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
         private int typeCounter;
 
+        @Override
         public CDOID generateCDOID(EObject object)
         {
           if (counters == null)
@@ -635,6 +664,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
             CDOView view = CDOUtil.getView(object);
             view.getSession().getRevisionManager().handleRevisions(null, null, false, CDOBranchPoint.UNSPECIFIED_DATE, false, new CDORevisionHandler()
             {
+              @Override
               public boolean handleRevision(CDORevision revision)
               {
                 EClass eClass = revision.getEClass();
@@ -699,6 +729,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
           return counter;
         }
 
+        @Override
         public void reset()
         {
         }

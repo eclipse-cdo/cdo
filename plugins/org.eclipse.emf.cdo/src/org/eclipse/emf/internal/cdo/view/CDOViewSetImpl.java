@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -76,21 +76,25 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
   {
   }
 
+  @Override
   public ResourceSet getResourceSet()
   {
     return resourceSet;
   }
 
+  @Override
   public EPackage.Registry getPackageRegistry()
   {
     return packageRegistry;
   }
 
+  @Override
   public CDOResourceFactory getResourceFactory()
   {
     return resourceFactory;
   }
 
+  @Override
   public CDOView[] getViews()
   {
     synchronized (views)
@@ -103,6 +107,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
    * @throws IllegalArgumentException
    *           if repositoryUUID doesn't match any CDOView.
    */
+  @Override
   @Deprecated
   public InternalCDOView resolveView(String repositoryUUID)
   {
@@ -113,6 +118,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
    * @throws IllegalArgumentException
    *           if repositoryUUID doesn't match any CDOView.
    */
+  @Override
   public InternalCDOView resolveView(URI viewURI)
   {
     InternalCDOView view = null;
@@ -151,6 +157,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     }
   }
 
+  @Override
   public void add(InternalCDOView view)
   {
     URI viewURI = getViewURI(view);
@@ -174,6 +181,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     }
   }
 
+  @Override
   public void remove(InternalCDOView view)
   {
     List<Resource> resToRemove = new ArrayList<Resource>();
@@ -208,6 +216,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     }
   }
 
+  @Override
   public void remapView(InternalCDOView view)
   {
     synchronized (views)
@@ -227,11 +236,13 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     }
   }
 
+  @Override
   public Notifier getTarget()
   {
     return resourceSet;
   }
 
+  @Override
   public void setTarget(Notifier newTarget)
   {
     if (newTarget == resourceSet)
@@ -296,11 +307,13 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     }
   }
 
+  @Override
   public boolean isAdapterForType(Object type)
   {
     return type instanceof ResourceSet;
   }
 
+  @Override
   public synchronized <V> V executeWithoutNotificationHandling(Callable<V> callable)
   {
     Boolean wasIgnore = ignoreNotifications.get();
@@ -323,6 +336,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     }
   }
 
+  @Override
   public void notifyChanged(Notification notification)
   {
     // The resource <-> view association is done in CDOResourceImpl.basicSetResourceSet()

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2014, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2014, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -40,6 +40,7 @@ public interface CDOViewInvalidationEvent extends CDOViewEvent, CDOTimeProvider
    * Returns the time stamp of the server transaction if this event was sent as a result of a successfully committed
    * transaction or <code>LOCAL_ROLLBACK</code> if this event was sent due to a local rollback.
    */
+  @Override
   public long getTimeStamp();
 
   /**

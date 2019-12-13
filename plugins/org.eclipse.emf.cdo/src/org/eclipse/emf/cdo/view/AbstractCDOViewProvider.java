@@ -50,6 +50,7 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider2
     this(regex, DEFAULT_PRIORITY);
   }
 
+  @Override
   public int getPriority()
   {
     return priority;
@@ -60,6 +61,7 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider2
     this.priority = priority;
   }
 
+  @Override
   public String getRegex()
   {
     return regex;
@@ -74,6 +76,7 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider2
     }
   }
 
+  @Override
   public boolean matchesRegex(URI uri)
   {
     synchronized (regex)
@@ -93,6 +96,7 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider2
    *
    * @since 4.0
    */
+  @Override
   public URI getResourceURI(CDOView view, String path)
   {
     return null;
@@ -101,6 +105,7 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider2
   /**
    * @since 4.4
    */
+  @Override
   public final URI getViewURI(CDOView view)
   {
     return getResourceURI(view, null);
@@ -111,6 +116,7 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider2
    *
    * @since 4.4
    */
+  @Override
   public URI getViewURI(URI uri)
   {
     return URI.createHierarchicalURI(uri.scheme(), uri.authority(), uri.device(), null, null);
@@ -121,6 +127,7 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider2
    *
    * @since 4.4
    */
+  @Override
   public String getPath(URI uri)
   {
     return uri.path();

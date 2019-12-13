@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -58,6 +58,7 @@ public interface CDOStaleReferencePolicy
    */
   public static final CDOStaleReferencePolicy EXCEPTION = new CDOStaleReferencePolicy()
   {
+    @Override
     public Object processStaleReference(EObject source, EStructuralFeature feature, int index, CDOID target)
     {
       throw new ObjectNotFoundException(target);
@@ -94,11 +95,13 @@ public interface CDOStaleReferencePolicy
   {
     private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOStaleReferencePolicy.class);
 
+    @Override
     public Object processStaleReference(final EObject source, final EStructuralFeature feature, int index, final CDOID target)
     {
       final EClassifier type = getType(source, feature, index, target);
       InvocationHandler handler = new InvocationHandler()
       {
+        @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
         {
           String name = method.getName();
@@ -331,6 +334,7 @@ public interface CDOStaleReferencePolicy
         types.clear();
       }
 
+      @Override
       public void objectStateChanged(CDOView view, CDOObject object, CDOState oldState, CDOState newState)
       {
         addType(object);

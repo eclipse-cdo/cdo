@@ -48,6 +48,7 @@ public interface CDOBranchPoint extends CDOBranchProvider, CDOTimeProvider
    * Returns the branch of this branch point, or <code>null</code> if this branch point is the
    * {@link CDOBranch#getBase() base} of the {@link CDOBranchManager#getMainBranch() main branch}.
    */
+  @Override
   public CDOBranch getBranch();
 
   /**
@@ -55,5 +56,6 @@ public interface CDOBranchPoint extends CDOBranchProvider, CDOTimeProvider
    * {@link CDOBranchPoint#UNSPECIFIED_DATE unspecified}</i> if this branch point marks the {@link CDOBranch#getHead()
    * head} of a branch.
    */
+  @Override
   public long getTimeStamp();
 }

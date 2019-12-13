@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -28,6 +28,7 @@ public interface model4interfacesFactory extends org.eclipse.emf.cdo.tests.model
    */
   model4interfacesFactory eINSTANCE = org.eclipse.emf.cdo.tests.model4interfaces.legacy.impl.model4interfacesFactoryImpl.init();
 
+  @Override
   /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
    *

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -107,37 +107,44 @@ public class DBField extends DBSchemaElement implements InternalDBField
     return (IDBField)super.getWrapper();
   }
 
+  @Override
   public SchemaElementType getSchemaElementType()
   {
     return SchemaElementType.FIELD;
   }
 
+  @Override
   public IDBSchema getSchema()
   {
     return table.getSchema();
   }
 
+  @Override
   public IDBTable getTable()
   {
     return table;
   }
 
+  @Override
   public IDBTable getParent()
   {
     return getTable();
   }
 
+  @Override
   public DBType getType()
   {
     return type;
   }
 
+  @Override
   public void setType(DBType type)
   {
     assertUnlocked();
     this.type = type;
   }
 
+  @Override
   public int getPrecision()
   {
     if (precision == DEFAULT)
@@ -169,12 +176,14 @@ public class DBField extends DBSchemaElement implements InternalDBField
     return precision;
   }
 
+  @Override
   public void setPrecision(int precision)
   {
     assertUnlocked();
     this.precision = precision;
   }
 
+  @Override
   public int getScale()
   {
     if (scale == DEFAULT)
@@ -185,17 +194,20 @@ public class DBField extends DBSchemaElement implements InternalDBField
     return scale;
   }
 
+  @Override
   public void setScale(int scale)
   {
     assertUnlocked();
     this.scale = scale;
   }
 
+  @Override
   public boolean isNotNull()
   {
     return notNull;
   }
 
+  @Override
   public void setNotNull(boolean notNull)
   {
     if (DBIndex.FIX_NULLABLE_INDEX_COLUMNS.get() != Boolean.TRUE)
@@ -206,27 +218,32 @@ public class DBField extends DBSchemaElement implements InternalDBField
     this.notNull = notNull;
   }
 
+  @Override
   public int getPosition()
   {
     return position;
   }
 
+  @Override
   public void setPosition(int position)
   {
     assertUnlocked();
     this.position = position;
   }
 
+  @Override
   public String getFullName()
   {
     return table.getName() + "." + getName(); //$NON-NLS-1$
   }
 
+  @Override
   public void remove()
   {
     ((InternalDBTable)table).removeField(this);
   }
 
+  @Override
   public String formatPrecision()
   {
     int precision = getPrecision();
@@ -238,6 +255,7 @@ public class DBField extends DBSchemaElement implements InternalDBField
     return ""; //$NON-NLS-1$
   }
 
+  @Override
   public String formatPrecisionAndScale()
   {
     if (scale == DEFAULT)
@@ -248,6 +266,7 @@ public class DBField extends DBSchemaElement implements InternalDBField
     return "(" + getPrecision() + ", " + getScale() + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
+  @Override
   public Exception getConstructionStackTrace()
   {
     return constructionStackTrace;

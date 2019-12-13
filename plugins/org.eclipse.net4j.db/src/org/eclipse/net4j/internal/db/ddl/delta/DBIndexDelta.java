@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -65,6 +65,7 @@ public final class DBIndexDelta extends DBDeltaWithProperties implements IDBInde
     IDBIndexField[] oldIndexFields = oldIndex == null ? InternalDBIndex.NO_INDEX_FIELDS : oldIndex.getIndexFields();
     compare(indexFields, oldIndexFields, new SchemaElementComparator<IDBIndexField>()
     {
+      @Override
       public void compare(IDBIndexField indexField, IDBIndexField oldIndexField)
       {
         DBIndexFieldDelta indexFieldDelta = new DBIndexFieldDelta(DBIndexDelta.this, indexField, oldIndexField);
@@ -83,6 +84,7 @@ public final class DBIndexDelta extends DBDeltaWithProperties implements IDBInde
   {
   }
 
+  @Override
   public DeltaType getDeltaType()
   {
     return DeltaType.INDEX;
@@ -94,11 +96,13 @@ public final class DBIndexDelta extends DBDeltaWithProperties implements IDBInde
     return (DBTableDelta)super.getParent();
   }
 
+  @Override
   public int getIndexFieldDeltaCount()
   {
     return indexFieldDeltas.size();
   }
 
+  @Override
   public DBIndexFieldDelta getIndexFieldDelta(int position)
   {
     for (IDBIndexFieldDelta indexFieldDelta : indexFieldDeltas.values())
@@ -112,16 +116,19 @@ public final class DBIndexDelta extends DBDeltaWithProperties implements IDBInde
     return null;
   }
 
+  @Override
   public DBIndexFieldDelta getIndexFieldDelta(String name)
   {
     return (DBIndexFieldDelta)indexFieldDeltas.get(name);
   }
 
+  @Override
   public Map<String, IDBIndexFieldDelta> getIndexFieldDeltas()
   {
     return Collections.unmodifiableMap(indexFieldDeltas);
   }
 
+  @Override
   public DBIndexFieldDelta[] getIndexFieldDeltasSortedByPosition()
   {
     DBIndexFieldDelta[] result = indexFieldDeltas.values().toArray(new DBIndexFieldDelta[indexFieldDeltas.size()]);
@@ -129,6 +136,7 @@ public final class DBIndexDelta extends DBDeltaWithProperties implements IDBInde
     return result;
   }
 
+  @Override
   public IDBIndex getSchemaElement(IDBSchema schema)
   {
     IDBTable table = getParent().getSchemaElement(schema);

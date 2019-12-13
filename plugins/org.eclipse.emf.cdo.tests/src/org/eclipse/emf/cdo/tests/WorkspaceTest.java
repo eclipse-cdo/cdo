@@ -1351,12 +1351,14 @@ public class WorkspaceTest extends AbstractCDOTest
 
     CDOMerger merger = new CDOMerger2()
     {
+      @Override
       @Deprecated
       public CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source) throws UnsupportedOperationException
       {
         throw new UnsupportedOperationException();
       }
 
+      @Override
       public void merge(CDOTransaction localTransaction, CDOView remoteView, Set<CDOID> affectedIDs) throws ConflictException
       {
         CDOComparisonScope scope = new CDOComparisonScope.Minimal(remoteView, localTransaction, null, affectedIDs);
@@ -1783,10 +1785,12 @@ public class WorkspaceTest extends AbstractCDOTest
    */
   private final class RemoteSessionConfigurationFactory implements CDOSessionConfigurationFactory
   {
+    @Override
     public CDOSessionConfiguration createSessionConfiguration()
     {
       return new TestSessionConfiguration()
       {
+        @Override
         public CDOSession openSession()
         {
           return WorkspaceTest.this.openSession();

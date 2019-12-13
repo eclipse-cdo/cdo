@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -106,11 +106,13 @@ public abstract class DBAdapter implements IDBAdapter
     this.version = version;
   }
 
+  @Override
   public String getName()
   {
     return name;
   }
 
+  @Override
   public String getVersion()
   {
     return version;
@@ -120,6 +122,7 @@ public abstract class DBAdapter implements IDBAdapter
    * @since 4.2
    * @deprecated As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).
    */
+  @Override
   @Deprecated
   public Driver getJDBCDriver()
   {
@@ -130,6 +133,7 @@ public abstract class DBAdapter implements IDBAdapter
    * @since 4.2
    * @deprecated As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).
    */
+  @Override
   @Deprecated
   public DataSource createJDBCDataSource()
   {
@@ -139,6 +143,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.3
    */
+  @Override
   public IDBConnectionProvider createConnectionProvider(DataSource dataSource)
   {
     return DBUtil.createConnectionProvider(dataSource);
@@ -147,6 +152,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.5
    */
+  @Override
   public Connection modifyConnection(Connection connection)
   {
     return connection;
@@ -155,6 +161,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
+  @Override
   public IDBSchema readSchema(Connection connection, String name)
   {
     return DBUtil.readSchema(this, connection, name);
@@ -163,6 +170,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
+  @Override
   public void readSchema(Connection connection, IDBSchema schema)
   {
     boolean wasTrackConstruction = DBField.isTrackConstruction();
@@ -366,6 +374,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
+  @Override
   public void updateSchema(final Connection connection, final IDBSchema schema, IDBSchemaDelta delta) throws DBException
   {
     // Apply delta to in-memory representation of the schema
@@ -636,6 +645,7 @@ public abstract class DBAdapter implements IDBAdapter
   {
   }
 
+  @Override
   public Set<IDBTable> createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException
   {
     Set<IDBTable> createdTables = new HashSet<IDBTable>();
@@ -665,6 +675,7 @@ public abstract class DBAdapter implements IDBAdapter
     return createdTables;
   }
 
+  @Override
   public boolean createTable(IDBTable table, Statement statement) throws DBException
   {
     boolean created = true;
@@ -686,6 +697,7 @@ public abstract class DBAdapter implements IDBAdapter
     return created;
   }
 
+  @Override
   public Collection<IDBTable> dropTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException
   {
     List<IDBTable> droppedTables = new ArrayList<IDBTable>();
@@ -715,6 +727,7 @@ public abstract class DBAdapter implements IDBAdapter
     return droppedTables;
   }
 
+  @Override
   public boolean dropTable(IDBTable table, Statement statement)
   {
     try
@@ -747,6 +760,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 2.0
    */
+  @Override
   public int getMaxTableNameLength()
   {
     // Ansi SQL 92 default value
@@ -756,6 +770,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 2.0
    */
+  @Override
   public int getMaxFieldNameLength()
   {
     // Ansi SQL 92 default value
@@ -765,11 +780,13 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
+  @Override
   public int getFieldLength(DBType type)
   {
     return getDefaultDBLength(type);
   }
 
+  @Override
   public boolean isTypeIndexable(DBType type)
   {
     switch (type)
@@ -965,6 +982,7 @@ public abstract class DBAdapter implements IDBAdapter
     return SQL92_RESERVED_WORDS;
   }
 
+  @Override
   public boolean isReservedWord(String word)
   {
     if (reservedWords == null)
@@ -1113,6 +1131,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 3.0
    */
+  @Override
   public DBType adaptType(DBType type)
   {
     return type;
@@ -1121,6 +1140,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.0
    */
+  @Override
   public boolean isValidFirstChar(char ch)
   {
     return true;
@@ -1129,6 +1149,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.0
    */
+  @Override
   public boolean isDuplicateKeyException(SQLException ex)
   {
     String sqlState = ex.getSQLState();
@@ -1138,6 +1159,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
+  @Override
   public boolean isTableNotFoundException(SQLException ex)
   {
     String sqlState = ex.getSQLState();
@@ -1147,6 +1169,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
+  @Override
   public boolean isColumnNotFoundException(SQLException ex)
   {
     String sqlState = ex.getSQLState();
@@ -1156,6 +1179,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
+  @Override
   public String sqlRenameField(IDBField field, String oldName)
   {
     return "ALTER TABLE " + field.getTable() + " RENAME COLUMN " + oldName + " TO " + field;
@@ -1164,6 +1188,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
+  @Override
   public String sqlModifyField(IDBField field)
   {
     String tableName = field.getTable().getName();
@@ -1237,6 +1262,7 @@ public abstract class DBAdapter implements IDBAdapter
 
     public int position;
 
+    @Override
     public int compareTo(FieldInfo o)
     {
       return position - o.position;

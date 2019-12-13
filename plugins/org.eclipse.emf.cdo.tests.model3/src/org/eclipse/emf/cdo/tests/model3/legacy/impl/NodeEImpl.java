@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -107,6 +107,7 @@ public class NodeEImpl extends EObjectImpl implements NodeE
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NodeA getMainNode()
   {
     if (mainNode != null && mainNode.eIsProxy())
@@ -139,6 +140,7 @@ public class NodeEImpl extends EObjectImpl implements NodeE
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setMainNode(NodeA newMainNode)
   {
     NodeA oldMainNode = mainNode;
@@ -154,6 +156,7 @@ public class NodeEImpl extends EObjectImpl implements NodeE
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return name;
@@ -164,6 +167,7 @@ public class NodeEImpl extends EObjectImpl implements NodeE
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     String oldName = name;
@@ -179,6 +183,7 @@ public class NodeEImpl extends EObjectImpl implements NodeE
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<NodeA> getOtherNodes()
   {
     if (otherNodes == null)

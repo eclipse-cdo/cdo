@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -52,6 +52,7 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
     dawnGMFHandler = createDawnGMFHandler(editor);
   }
 
+  @Override
   public void close()
   {
     CDOView view = getView();
@@ -132,6 +133,7 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
     return editor.getAdapter(DiagramDocumentEditor.class);
   }
 
+  @Override
   public void refresh()
   {
     final DiagramDocumentEditor diagramDocumentEditor = getDiagramEditor(getEditor());
@@ -147,6 +149,7 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
     });
   }
 
+  @Override
   public void lockObject(Object objectToBeLocked)
   {
     if (objectToBeLocked instanceof EditPart)
@@ -172,6 +175,7 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
     refresh();
   }
 
+  @Override
   public void unlockObject(Object objectToBeUnlocked)
   {
     if (objectToBeUnlocked instanceof EditPart)
@@ -198,6 +202,7 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
     refresh();
   }
 
+  @Override
   public void handleRemoteLockChanges(Map<Object, DawnState> changedObjects)
   {
     for (Object o : changedObjects.keySet())

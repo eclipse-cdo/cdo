@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -55,6 +55,7 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
     IDBTable[] oldTables = oldSchema == null ? InternalDBSchema.NO_TABLES : oldSchema.getTables();
     compare(tables, oldTables, new SchemaElementComparator<IDBTable>()
     {
+      @Override
       public void compare(IDBTable table, IDBTable oldTable)
       {
         DBTableDelta tableDelta = new DBTableDelta(DBSchemaDelta.this, table, oldTable);
@@ -73,26 +74,31 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
   {
   }
 
+  @Override
   public DeltaType getDeltaType()
   {
     return DeltaType.SCHEMA;
   }
 
+  @Override
   public int getTableDeltaCount()
   {
     return tableDeltas.size();
   }
 
+  @Override
   public DBTableDelta getTableDelta(String name)
   {
     return (DBTableDelta)tableDeltas.get(name);
   }
 
+  @Override
   public Map<String, IDBTableDelta> getTableDeltas()
   {
     return Collections.unmodifiableMap(tableDeltas);
   }
 
+  @Override
   public IDBTableDelta[] getTableDeltasSortedByName()
   {
     IDBTableDelta[] result = tableDeltas.values().toArray(new IDBTableDelta[tableDeltas.size()]);
@@ -106,11 +112,13 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
     resetElements();
   }
 
+  @Override
   public IDBSchema getSchemaElement(IDBSchema schema)
   {
     return schema;
   }
 
+  @Override
   public void applyTo(IDBSchema schema)
   {
     IDBDeltaVisitor visitor = new DBSchemaDelta.Applier(schema);

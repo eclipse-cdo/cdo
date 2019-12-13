@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -56,6 +56,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
   {
   }
 
+  @Override
   public Selector getSocketSelector()
   {
     return selector;
@@ -67,11 +68,13 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     return "TCPSelector"; //$NON-NLS-1$
   }
 
+  @Override
   public void orderRegistration(final ServerSocketChannel channel, final ITCPPassiveSelectorListener listener)
   {
     assertValidListener(listener);
     order(false, new Runnable()
     {
+      @Override
       public void run()
       {
         executeRegistration(channel, listener);
@@ -85,11 +88,13 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     });
   }
 
+  @Override
   public void orderRegistration(final SocketChannel channel, final boolean client, final ITCPActiveSelectorListener listener)
   {
     assertValidListener(listener);
     order(client, new Runnable()
     {
+      @Override
       public void run()
       {
         executeRegistration(channel, listener, client);
@@ -103,10 +108,12 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     });
   }
 
+  @Override
   public void orderConnectInterest(final SelectionKey selectionKey, boolean client, final boolean on)
   {
     order(client, new Runnable()
     {
+      @Override
       public void run()
       {
         SelectorUtil.setConnectInterest(selectionKey, on);
@@ -120,10 +127,12 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     });
   }
 
+  @Override
   public void orderReadInterest(final SelectionKey selectionKey, boolean client, final boolean on)
   {
     order(client, new Runnable()
     {
+      @Override
       public void run()
       {
         SelectorUtil.setReadInterest(selectionKey, on);
@@ -137,10 +146,12 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     });
   }
 
+  @Override
   public void orderWriteInterest(final SelectionKey selectionKey, boolean client, final boolean on)
   {
     order(client, new Runnable()
     {
+      @Override
       public void run()
       {
         SelectorUtil.setWriteInterest(selectionKey, on);
@@ -154,6 +165,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     });
   }
 
+  @Override
   public void run()
   {
     while (running && !Thread.interrupted())

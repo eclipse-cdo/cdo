@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -41,6 +41,7 @@ public class CDOAdminClientManagerImpl extends SetContainer<CDOAdminClient> impl
     executorService = ExecutorServiceFactory.get(container);
   }
 
+  @Override
   public final IManagedContainer getContainer()
   {
     return container;
@@ -51,11 +52,13 @@ public class CDOAdminClientManagerImpl extends SetContainer<CDOAdminClient> impl
     return executorService;
   }
 
+  @Override
   public CDOAdminClient[] getConnections()
   {
     return getElements();
   }
 
+  @Override
   public List<String> getConnectionURLs()
   {
     List<String> urls = new ArrayList<String>();
@@ -67,6 +70,7 @@ public class CDOAdminClientManagerImpl extends SetContainer<CDOAdminClient> impl
     return urls;
   }
 
+  @Override
   public CDOAdminClient getConnection(String url)
   {
     for (CDOAdminClient connection : getConnections())
@@ -80,6 +84,7 @@ public class CDOAdminClientManagerImpl extends SetContainer<CDOAdminClient> impl
     return null;
   }
 
+  @Override
   public int addConnections(Collection<String> urls)
   {
     int count = 0;
@@ -94,6 +99,7 @@ public class CDOAdminClientManagerImpl extends SetContainer<CDOAdminClient> impl
     return count;
   }
 
+  @Override
   public boolean addConnection(String url)
   {
     if (getConnection(url) == null)
@@ -109,6 +115,7 @@ public class CDOAdminClientManagerImpl extends SetContainer<CDOAdminClient> impl
     return false;
   }
 
+  @Override
   public boolean removeConnection(CDOAdminClient connection)
   {
     return removeElement(connection);

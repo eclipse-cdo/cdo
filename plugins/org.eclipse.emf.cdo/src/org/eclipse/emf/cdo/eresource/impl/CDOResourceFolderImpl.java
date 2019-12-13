@@ -64,6 +64,7 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
   /**
    * @ADDED
    */
+  @Override
   public boolean isRoot()
   {
     return false;
@@ -151,6 +152,7 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<CDOResourceNode> getNodes()
   {
@@ -161,6 +163,7 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
    * @ADDED
    * @since 4.4
    */
+  @Override
   public CDOResourceNode getNode(String name)
   {
     for (CDOResourceNode resourceNode : getNodes())
@@ -180,6 +183,7 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public CDOResourceFolder addResourceFolder(String name)
   {
     return cdoView().toTransaction().createResourceFolder(getPath() + CDOURIUtil.SEGMENT_SEPARATOR + name);
@@ -191,6 +195,7 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public CDOResource addResource(String name)
   {
     InternalCDOTransaction transaction = cdoView().toTransaction();
@@ -203,6 +208,7 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public CDOTextResource addTextResource(String name)
   {
     // TODO: implement this method
@@ -216,6 +222,7 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public CDOBinaryResource addBinaryResource(String name)
   {
     // TODO: implement this method
@@ -226,6 +233,7 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
   /**
    * @ADDED
    */
+  @Override
   public void delete(Map<?, ?> options) throws IOException
   {
     if (!FSMUtil.isTransient(this))

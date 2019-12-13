@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2014, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -29,6 +29,7 @@ public interface Formula
       this.range = range;
     }
 
+    @Override
     public Double evaluate()
     {
       double sum = 0.0;
@@ -57,6 +58,7 @@ public interface Formula
       this.range = range;
     }
 
+    @Override
     public Double evaluate()
     {
       double min = Double.MAX_VALUE;
@@ -88,6 +90,7 @@ public interface Formula
       this.range = range;
     }
 
+    @Override
     public Double evaluate()
     {
       double max = Double.MIN_VALUE;
@@ -119,6 +122,7 @@ public interface Formula
       this.range = range;
     }
 
+    @Override
     public Double evaluate()
     {
       double sum = 0.0;
@@ -150,6 +154,7 @@ public interface Formula
       this.range = range;
     }
 
+    @Override
     public Integer evaluate()
     {
       int count = 0;

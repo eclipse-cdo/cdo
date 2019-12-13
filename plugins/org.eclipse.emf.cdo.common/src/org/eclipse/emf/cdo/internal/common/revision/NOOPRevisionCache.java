@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -39,6 +39,7 @@ public class NOOPRevisionCache extends Lifecycle implements InternalCDORevisionC
   {
   }
 
+  @Override
   public InternalCDORevisionCache instantiate(CDORevision revision)
   {
     return this;
@@ -49,11 +50,13 @@ public class NOOPRevisionCache extends Lifecycle implements InternalCDORevisionC
     return true;
   }
 
+  @Override
   public EClass getObjectType(CDOID id)
   {
     return null;
   }
 
+  @Override
   public List<CDORevision> getCurrentRevisions()
   {
     return EMPTY;
@@ -64,41 +67,49 @@ public class NOOPRevisionCache extends Lifecycle implements InternalCDORevisionC
     return null;
   }
 
+  @Override
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint)
   {
     return null;
   }
 
+  @Override
   public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion)
   {
     return null;
   }
 
+  @Override
   public void addRevision(CDORevision revision)
   {
     // Do nothing
   }
 
+  @Override
   public InternalCDORevision removeRevision(CDOID id, CDOBranchVersion branchVersion)
   {
     return null;
   }
 
+  @Override
   public void clear()
   {
     // Do nothing
   }
 
+  @Override
   public Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
     return Collections.emptyMap();
   }
 
+  @Override
   public void getAllRevisions(List<InternalCDORevision> result)
   {
     // Do nothing
   }
 
+  @Override
   public List<CDORevision> getRevisions(CDOBranchPoint branchPoint)
   {
     return Collections.emptyList();

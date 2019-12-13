@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -106,6 +106,7 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
      * <!-- end-user-doc -->
      * @generated NOT
      */
+    @Override
     public Object start(IApplicationContext context) throws Exception
     {
       WorkbenchAdvisor workbenchAdvisor = new EditorEditorAdvisor();
@@ -132,6 +133,7 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void stop()
     {
       // Do nothing.
@@ -160,6 +162,7 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void createInitialLayout(IPageLayout layout)
     {
       layout.setEditorAreaVisible(true);
@@ -383,6 +386,7 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void run(IAction action)
     {
       MessageDialog.openInformation(getWindow().getShell(), getString("_UI_About_title"), getString("_UI_About_text"));
@@ -403,6 +407,7 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void run(IAction action)
     {
       String[] filePaths = openFilePathDialog(getWindow().getShell(), SWT.OPEN, null);
@@ -427,6 +432,7 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void run(IAction action)
     {
       LoadResourceAction.LoadResourceDialog loadResourceDialog = new LoadResourceAction.LoadResourceDialog(getWindow().getShell());

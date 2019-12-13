@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013-2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -95,6 +95,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public BigDecimal getAttrBigDecimal()
   {
     return (BigDecimal)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BIG_DECIMAL, true);
@@ -105,6 +106,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrBigDecimal(BigDecimal newAttrBigDecimal)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BIG_DECIMAL, newAttrBigDecimal);
@@ -115,6 +117,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrBigDecimal()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BIG_DECIMAL);
@@ -125,6 +128,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrBigDecimal()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BIG_DECIMAL);
@@ -135,6 +139,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public BigInteger getAttrBigInteger()
   {
     return (BigInteger)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BIG_INTEGER, true);
@@ -145,6 +150,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrBigInteger(BigInteger newAttrBigInteger)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BIG_INTEGER, newAttrBigInteger);
@@ -155,6 +161,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrBigInteger()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BIG_INTEGER);
@@ -165,6 +172,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrBigInteger()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BIG_INTEGER);
@@ -175,6 +183,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isAttrBoolean()
   {
     return (Boolean)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN, true);
@@ -185,6 +194,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrBoolean(boolean newAttrBoolean)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN, newAttrBoolean);
@@ -195,6 +205,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrBoolean()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN);
@@ -205,6 +216,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrBoolean()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN);
@@ -215,6 +227,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Boolean getAttrBooleanObject()
   {
     return (Boolean)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN_OBJECT, true);
@@ -225,6 +238,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrBooleanObject(Boolean newAttrBooleanObject)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN_OBJECT, newAttrBooleanObject);
@@ -235,6 +249,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrBooleanObject()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN_OBJECT);
@@ -245,6 +260,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrBooleanObject()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN_OBJECT);
@@ -255,6 +271,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public byte getAttrByte()
   {
     return (Byte)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BYTE, true);
@@ -265,6 +282,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrByte(byte newAttrByte)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BYTE, newAttrByte);
@@ -275,6 +293,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrByte()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BYTE);
@@ -285,6 +304,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrByte()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BYTE);
@@ -295,6 +315,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public byte[] getAttrByteArray()
   {
     return (byte[])eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BYTE_ARRAY, true);
@@ -305,6 +326,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrByteArray(byte[] newAttrByteArray)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BYTE_ARRAY, newAttrByteArray);
@@ -315,6 +337,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrByteArray()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BYTE_ARRAY);
@@ -325,6 +348,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrByteArray()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BYTE_ARRAY);
@@ -335,6 +359,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Byte getAttrByteObject()
   {
     return (Byte)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BYTE_OBJECT, true);
@@ -345,6 +370,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrByteObject(Byte newAttrByteObject)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BYTE_OBJECT, newAttrByteObject);
@@ -355,6 +381,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrByteObject()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BYTE_OBJECT);
@@ -365,6 +392,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrByteObject()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_BYTE_OBJECT);
@@ -375,6 +403,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public char getAttrChar()
   {
     return (Character)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_CHAR, true);
@@ -385,6 +414,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrChar(char newAttrChar)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_CHAR, newAttrChar);
@@ -395,6 +425,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrChar()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_CHAR);
@@ -405,6 +436,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrChar()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_CHAR);
@@ -415,6 +447,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Character getAttrCharacterObject()
   {
     return (Character)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_CHARACTER_OBJECT, true);
@@ -425,6 +458,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrCharacterObject(Character newAttrCharacterObject)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_CHARACTER_OBJECT, newAttrCharacterObject);
@@ -435,6 +469,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrCharacterObject()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_CHARACTER_OBJECT);
@@ -445,6 +480,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrCharacterObject()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_CHARACTER_OBJECT);
@@ -455,6 +491,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Date getAttrDate()
   {
     return (Date)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_DATE, true);
@@ -465,6 +502,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrDate(Date newAttrDate)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_DATE, newAttrDate);
@@ -475,6 +513,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrDate()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_DATE);
@@ -485,6 +524,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrDate()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_DATE);
@@ -495,6 +535,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public double getAttrDouble()
   {
     return (Double)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE, true);
@@ -505,6 +546,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrDouble(double newAttrDouble)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE, newAttrDouble);
@@ -515,6 +557,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrDouble()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE);
@@ -525,6 +568,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrDouble()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE);
@@ -535,6 +579,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Double getAttrDoubleObject()
   {
     return (Double)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE_OBJECT, true);
@@ -545,6 +590,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrDoubleObject(Double newAttrDoubleObject)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE_OBJECT, newAttrDoubleObject);
@@ -555,6 +601,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrDoubleObject()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE_OBJECT);
@@ -565,6 +612,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrDoubleObject()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE_OBJECT);
@@ -575,6 +623,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public float getAttrFloat()
   {
     return (Float)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_FLOAT, true);
@@ -585,6 +634,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrFloat(float newAttrFloat)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_FLOAT, newAttrFloat);
@@ -595,6 +645,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrFloat()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_FLOAT);
@@ -605,6 +656,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrFloat()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_FLOAT);
@@ -615,6 +667,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Float getAttrFloatObject()
   {
     return (Float)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_FLOAT_OBJECT, true);
@@ -625,6 +678,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrFloatObject(Float newAttrFloatObject)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_FLOAT_OBJECT, newAttrFloatObject);
@@ -635,6 +689,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrFloatObject()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_FLOAT_OBJECT);
@@ -645,6 +700,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrFloatObject()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_FLOAT_OBJECT);
@@ -655,6 +711,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getAttrInt()
   {
     return (Integer)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_INT, true);
@@ -665,6 +722,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrInt(int newAttrInt)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_INT, newAttrInt);
@@ -675,6 +733,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrInt()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_INT);
@@ -685,6 +744,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrInt()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_INT);
@@ -695,6 +755,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Integer getAttrIntegerObject()
   {
     return (Integer)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_INTEGER_OBJECT, true);
@@ -705,6 +766,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrIntegerObject(Integer newAttrIntegerObject)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_INTEGER_OBJECT, newAttrIntegerObject);
@@ -715,6 +777,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrIntegerObject()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_INTEGER_OBJECT);
@@ -725,6 +788,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrIntegerObject()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_INTEGER_OBJECT);
@@ -735,6 +799,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Class<?> getAttrJavaClass()
   {
     return (Class<?>)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_JAVA_CLASS, true);
@@ -745,6 +810,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrJavaClass(Class<?> newAttrJavaClass)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_JAVA_CLASS, newAttrJavaClass);
@@ -755,6 +821,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrJavaClass()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_JAVA_CLASS);
@@ -765,6 +832,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrJavaClass()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_JAVA_CLASS);
@@ -775,6 +843,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Object getAttrJavaObject()
   {
     return eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_JAVA_OBJECT, true);
@@ -785,6 +854,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrJavaObject(Object newAttrJavaObject)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_JAVA_OBJECT, newAttrJavaObject);
@@ -795,6 +865,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrJavaObject()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_JAVA_OBJECT);
@@ -805,6 +876,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrJavaObject()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_JAVA_OBJECT);
@@ -815,6 +887,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public long getAttrLong()
   {
     return (Long)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_LONG, true);
@@ -825,6 +898,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrLong(long newAttrLong)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_LONG, newAttrLong);
@@ -835,6 +909,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrLong()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_LONG);
@@ -845,6 +920,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrLong()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_LONG);
@@ -855,6 +931,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Long getAttrLongObject()
   {
     return (Long)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_LONG_OBJECT, true);
@@ -865,6 +942,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrLongObject(Long newAttrLongObject)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_LONG_OBJECT, newAttrLongObject);
@@ -875,6 +953,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrLongObject()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_LONG_OBJECT);
@@ -885,6 +964,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrLongObject()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_LONG_OBJECT);
@@ -895,6 +975,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public short getAttrShort()
   {
     return (Short)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_SHORT, true);
@@ -905,6 +986,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrShort(short newAttrShort)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_SHORT, newAttrShort);
@@ -915,6 +997,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrShort()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_SHORT);
@@ -925,6 +1008,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrShort()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_SHORT);
@@ -935,6 +1019,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Short getAttrShortObject()
   {
     return (Short)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_SHORT_OBJECT, true);
@@ -945,6 +1030,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrShortObject(Short newAttrShortObject)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_SHORT_OBJECT, newAttrShortObject);
@@ -955,6 +1041,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrShortObject()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_SHORT_OBJECT);
@@ -965,6 +1052,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrShortObject()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_SHORT_OBJECT);
@@ -975,6 +1063,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getAttrString()
   {
     return (String)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_STRING, true);
@@ -985,6 +1074,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrString(String newAttrString)
   {
     eSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_STRING, newAttrString);
@@ -995,6 +1085,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrString()
   {
     eUnset(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_STRING);
@@ -1005,6 +1096,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrString()
   {
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_STRING);

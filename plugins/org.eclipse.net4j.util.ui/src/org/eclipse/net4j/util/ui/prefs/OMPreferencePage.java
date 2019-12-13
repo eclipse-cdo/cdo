@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2008, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2008, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -43,11 +43,13 @@ public abstract class OMPreferencePage extends PreferencePage implements IWorkbe
 
   private SelectionListener selectionListener = new SelectionListener()
   {
+    @Override
     public void widgetDefaultSelected(SelectionEvent e)
     {
       dialogChanged();
     }
 
+    @Override
     public void widgetSelected(SelectionEvent e)
     {
       dialogChanged();
@@ -56,6 +58,7 @@ public abstract class OMPreferencePage extends PreferencePage implements IWorkbe
 
   private ModifyListener modifyListener = new ModifyListener()
   {
+    @Override
     public void modifyText(ModifyEvent e)
     {
       dialogChanged();
@@ -77,6 +80,7 @@ public abstract class OMPreferencePage extends PreferencePage implements IWorkbe
     return workbench;
   }
 
+  @Override
   public void init(IWorkbench workbench)
   {
     this.workbench = workbench;

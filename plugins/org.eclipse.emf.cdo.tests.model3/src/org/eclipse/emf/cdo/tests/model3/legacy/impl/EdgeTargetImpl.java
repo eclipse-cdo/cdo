@@ -86,6 +86,7 @@ public class EdgeTargetImpl extends EObjectImpl implements EdgeTarget
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Edge> getOutgoingEdges()
   {
     if (outgoingEdges == null)
@@ -100,6 +101,7 @@ public class EdgeTargetImpl extends EObjectImpl implements EdgeTarget
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Edge> getIncomingEdges()
   {
     if (incomingEdges == null)

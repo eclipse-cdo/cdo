@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -56,47 +56,56 @@ public class DBIndexField extends DBSchemaElement implements InternalDBIndexFiel
     return (IDBIndexField)super.getWrapper();
   }
 
+  @Override
   public SchemaElementType getSchemaElementType()
   {
     return SchemaElementType.INDEX_FIELD;
   }
 
+  @Override
   public IDBIndex getIndex()
   {
     return index;
   }
 
+  @Override
   public IDBIndex getParent()
   {
     return getIndex();
   }
 
+  @Override
   public IDBField getField()
   {
     return field;
   }
 
+  @Override
   public int getPosition()
   {
     return position;
   }
 
+  @Override
   public void setPosition(int position)
   {
     assertUnlocked();
     this.position = position;
   }
 
+  @Override
   public IDBSchema getSchema()
   {
     return field.getSchema();
   }
 
+  @Override
   public String getFullName()
   {
     return field.getFullName();
   }
 
+  @Override
   public void remove()
   {
     ((InternalDBIndex)index).removeIndexField(this);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -217,6 +217,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
         CDORevisionHandler handler = new CDORevisionHandler()
         {
+          @Override
           public boolean handleRevision(CDORevision remoteRevision)
           {
             InternalCDORevision repositoryRevision = (InternalCDORevision)remoteRevision;
@@ -303,26 +304,31 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     setDirty(!base.isEmpty());
   }
 
+  @Override
   public int getBranchID()
   {
     return branchID;
   }
 
+  @Override
   public String getBranchPath()
   {
     return branchPath;
   }
 
+  @Override
   public long getTimeStamp()
   {
     return timeStamp;
   }
 
+  @Override
   public boolean isFixed()
   {
     return fixed;
   }
 
+  @Override
   public boolean isDirty()
   {
     return dirty;
@@ -343,6 +349,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     setDirty(false);
   }
 
+  @Override
   public CDOState getState(Object object)
   {
     if (object instanceof CDOObject)
@@ -366,6 +373,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     return null;
   }
 
+  @Override
   public IDGenerationLocation getIDGenerationLocation()
   {
     return idGenerationLocation;
@@ -376,11 +384,13 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     return idGenerator;
   }
 
+  @Override
   public InternalCDOWorkspaceBase getBase()
   {
     return base;
   }
 
+  @Override
   public InternalCDOView openView()
   {
     CDOView view = getLocalSession().openView();
@@ -388,6 +398,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     return (InternalCDOView)view;
   }
 
+  @Override
   public InternalCDOView openView(ResourceSet resourceSet)
   {
     CDOView view = getLocalSession().openView(resourceSet);
@@ -395,6 +406,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     return (InternalCDOView)view;
   }
 
+  @Override
   public InternalCDOTransaction openTransaction()
   {
     CDOTransaction transaction = getLocalSession().openTransaction();
@@ -403,6 +415,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     return (InternalCDOTransaction)transaction;
   }
 
+  @Override
   public InternalCDOTransaction openTransaction(ResourceSet resourceSet)
   {
     CDOTransaction transaction = getLocalSession().openTransaction(resourceSet);
@@ -499,16 +512,19 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     properties.put("org.eclipse.emf.cdo.workspace.CDOWorkspace", this);
   }
 
+  @Override
   public InternalCDOTransaction update(CDOMerger merger)
   {
     return merge(merger, branchPath);
   }
 
+  @Override
   public InternalCDOTransaction merge(CDOMerger merger, String branchPath)
   {
     return merge(merger, branchPath, CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
+  @Override
   public InternalCDOTransaction merge(CDOMerger merger, String branchPath, long timeStamp)
   {
     return merge(merger, branchPath, CDOBranchPoint.UNSPECIFIED_DATE, false);
@@ -751,12 +767,14 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     return merger.merge(localChanges, remoteChanges);
   }
 
+  @Override
   public void revert()
   {
     CDOChangeSetData revertData = getLocalChanges(false);
     revert(revertData);
   }
 
+  @Override
   public void revert(CDOChangeSetData revertData)
   {
     final CDOBranch localBranch = localSessionHead.getBranch();
@@ -825,6 +843,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
     localSession.refresh(new RefreshSessionResult.Provider()
     {
+      @Override
       public RefreshSessionResult getRefreshSessionResult(Map<CDOBranch, List<InternalCDOView>> views,
           Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
       {
@@ -858,12 +877,14 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     setDirty(false);
   }
 
+  @Override
   public void replace(String branchPath, long timeStamp)
   {
     CDOChangeSetData revertData = getLocalChanges(false);
     replace(branchPath, timeStamp, revertData);
   }
 
+  @Override
   public void replace(String branchPath, long timeStamp, CDOChangeSetData revertData)
   {
     revert(revertData);
@@ -887,11 +908,13 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     }
   }
 
+  @Override
   public CDOCommitInfo checkin() throws CommitException
   {
     return checkin(null);
   }
 
+  @Override
   public CDOCommitInfo checkin(String comment) throws CommitException
   {
     Set<CDOID> ids = null;
@@ -1027,6 +1050,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
     transaction.addListener(new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof CDOTransactionFinishedEvent)
@@ -1115,17 +1139,20 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     }
   }
 
+  @Override
   public CDOChangeSetData compare(String branchPath)
   {
     return compare(branchPath, CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
+  @Override
   public CDOChangeSetData compare(String branchPath, long timeStamp)
   {
     // TODO: implement CDOWorkspaceImpl.compare(branchPath, timeStamp)
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public synchronized void close()
   {
     LifecycleUtil.deactivate(localSession);
@@ -1140,11 +1167,13 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     container = null;
   }
 
+  @Override
   public synchronized boolean isClosed()
   {
     return container == null;
   }
 
+  @Override
   public CDORevision getRevision(CDOID id)
   {
     InternalCDOSession session = getLocalSession();
@@ -1152,11 +1181,13 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     return revisionManager.getRevision(id, localSessionHead, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
   }
 
+  @Override
   public InternalRepository getLocalRepository()
   {
     return localRepository;
   }
 
+  @Override
   public synchronized InternalCDOSession getLocalSession()
   {
     if (localSession == null)
@@ -1167,11 +1198,13 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     return localSession;
   }
 
+  @Override
   public CDOChangeSetData getLocalChanges()
   {
     return getLocalChanges(true);
   }
 
+  @Override
   public CDOChangeSetData getLocalChanges(boolean forward)
   {
     Set<CDOID> ids = base.getIDs();
@@ -1184,11 +1217,13 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     return CDORevisionUtil.createChangeSetData(ids, this, base, true);
   }
 
+  @Override
   public CDOSessionConfigurationFactory getRemoteSessionConfigurationFactory()
   {
     return remoteSessionConfigurationFactory;
   }
 
+  @Override
   public IManagedContainer getContainer()
   {
     return container;
@@ -1298,6 +1333,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     return session;
   }
 
+  @Override
   public InternalCDOView[] getViews()
   {
     synchronized (views)
@@ -1441,6 +1477,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
    */
   private class BaseRevisionProvider implements CDORevisionProvider
   {
+    @Override
     public CDORevision getRevision(CDOID id)
     {
       CDORevision revision = base.getRevision(id);
@@ -1498,6 +1535,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       return (CDOWorkspace)super.getSource();
     }
 
+    @Override
     public boolean isDirty()
     {
       return dirty;
@@ -1525,6 +1563,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       return (CDOWorkspace)super.getSource();
     }
 
+    @Override
     public Set<CDOID> getChangedIDs()
     {
       return changedIDs;

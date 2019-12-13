@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -42,16 +42,19 @@ public class ServerSession extends Lifecycle implements ISession, IListener
   /**
    * @since 2.0
    */
+  @Override
   public BuddiesServerProtocol getProtocol()
   {
     return protocol;
   }
 
+  @Override
   public IBuddy getSelf()
   {
     return self;
   }
 
+  @Override
   public void close()
   {
     protocol.close();
@@ -59,12 +62,14 @@ public class ServerSession extends Lifecycle implements ISession, IListener
     LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
     return AdapterUtil.adapt(this, adapter, false);
   }
 
+  @Override
   public void notifyEvent(IEvent event)
   {
     if (event.getSource() == protocol)

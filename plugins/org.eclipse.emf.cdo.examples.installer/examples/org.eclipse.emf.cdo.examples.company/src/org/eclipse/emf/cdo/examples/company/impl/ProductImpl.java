@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -70,6 +70,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(CompanyPackage.Literals.PRODUCT__NAME, true);
@@ -79,6 +80,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(CompanyPackage.Literals.PRODUCT__NAME, newName);
@@ -88,6 +90,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<OrderDetail> getOrderDetails()
   {
@@ -98,6 +101,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public VAT getVat()
   {
     return (VAT)eGet(CompanyPackage.Literals.PRODUCT__VAT, true);
@@ -107,6 +111,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setVat(VAT newVat)
   {
     eSet(CompanyPackage.Literals.PRODUCT__VAT, newVat);
@@ -116,6 +121,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getDescription()
   {
     return (String)eGet(CompanyPackage.Literals.PRODUCT__DESCRIPTION, true);
@@ -125,6 +131,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDescription(String newDescription)
   {
     eSet(CompanyPackage.Literals.PRODUCT__DESCRIPTION, newDescription);
@@ -136,6 +143,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    * @since 4.0 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public float getPrice()
   {
     return (Float)eGet(CompanyPackage.Literals.PRODUCT__PRICE, true);
@@ -147,6 +155,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
    * @since 4.0 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setPrice(float newPrice)
   {
     eSet(CompanyPackage.Literals.PRODUCT__PRICE, newPrice);

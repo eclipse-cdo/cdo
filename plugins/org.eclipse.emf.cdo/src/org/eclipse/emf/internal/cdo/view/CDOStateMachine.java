@@ -843,6 +843,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   private final class PrepareTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Pair<InternalCDOTransaction, List<InternalCDOObject>>>
   {
+    @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Pair<InternalCDOTransaction, List<InternalCDOObject>> transactionAndContents)
     {
       InternalCDOTransaction transaction = transactionAndContents.getElement1();
@@ -940,6 +941,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   private final class AttachTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
+    @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
       // Transfer the EObject values into a CDORevision.
@@ -967,6 +969,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   private final class ReattachTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, InternalCDOTransaction>
   {
+    @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, InternalCDOTransaction transaction)
     {
       internalReattach(object, transaction);
@@ -1066,6 +1069,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   private static final class DetachTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, List<InternalCDOObject>>
   {
+    @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, List<InternalCDOObject> objectsToDetach)
     {
       InternalCDOTransaction transaction = (InternalCDOTransaction)object.cdoView();
@@ -1098,6 +1102,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
     }
 
+    @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CommitTransactionResult data)
     {
       InternalCDOTransaction transaction = object.cdoView().toTransaction();
@@ -1128,6 +1133,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   private final class RollbackTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, InternalCDOTransaction>
   {
+    @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, InternalCDOTransaction transaction)
     {
       CDOID id = object.cdoID();
@@ -1184,6 +1190,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   private static abstract class AbstractWriteTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, FeatureDeltaAndResult>
   {
+    @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, FeatureDeltaAndResult featureDeltaAndResult)
     {
       InternalCDORevision revision = object.cdoRevision();
@@ -1352,6 +1359,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     static final DetachRemoteTransition INSTANCE = new DetachRemoteTransition();
 
+    @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
       CDOStateMachine.INSTANCE.changeState(object, CDOState.INVALID);
@@ -1367,6 +1375,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   private class InvalidateTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, CDORevisionKey>
   {
+    @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CDORevisionKey key)
     {
       InternalCDORevision oldRevision = object.cdoRevision();
@@ -1491,6 +1500,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   private final class LoadTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
   {
+    @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object UNUSED)
     {
       internalLoad(object, false);
@@ -1504,6 +1514,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public static final InvalidTransition INSTANCE = new InvalidTransition();
 
+    @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
       InternalCDOView view = object.cdoView();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -42,6 +42,7 @@ public class Account implements IAccount, Serializable
     this.password = password;
   }
 
+  @Override
   public String getUserID()
   {
     return userID;
@@ -52,26 +53,31 @@ public class Account implements IAccount, Serializable
     return password;
   }
 
+  @Override
   public void setPassword(String password)
   {
     this.password = password;
   }
 
+  @Override
   public boolean authenticate(String password)
   {
     return ObjectUtil.equals(password, this.password);
   }
 
+  @Override
   public Map<String, String> getProperties()
   {
     return properties;
   }
 
+  @Override
   public void touch()
   {
     timeStamp = System.currentTimeMillis();
   }
 
+  @Override
   public long getTimeStamp()
   {
     return timeStamp;

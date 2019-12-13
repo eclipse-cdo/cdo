@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -95,46 +95,55 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
     setBranchPoint(branchPoint);
   }
 
+  @Override
   public InternalSession getSession()
   {
     return session;
   }
 
+  @Override
   public int getSessionID()
   {
     return session.getSessionID();
   }
 
+  @Override
   public int getViewID()
   {
     return viewID;
   }
 
+  @Override
   public CDOBranch getBranch()
   {
     return branchPoint.getBranch();
   }
 
+  @Override
   public long getTimeStamp()
   {
     return branchPoint.getTimeStamp();
   }
 
+  @Override
   public boolean isReadOnly()
   {
     return true;
   }
 
+  @Override
   public boolean isHistorical()
   {
     return branchPoint.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE;
   }
 
+  @Override
   public boolean isDurableView()
   {
     return durableLockingID != null;
   }
 
+  @Override
   public String getDurableLockingID()
   {
     return durableLockingID;
@@ -143,11 +152,13 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   /**
    * @since 2.0
    */
+  @Override
   public InternalRepository getRepository()
   {
     return repository;
   }
 
+  @Override
   public InternalCDORevision getRevision(CDOID id)
   {
     CDORevisionManager revisionManager = repository.getRevisionManager();
@@ -160,6 +171,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
     return revisionManager.getRevisions(ids, normalizedBranchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
   }
 
+  @Override
   public void changeTarget(CDOBranchPoint branchPoint, List<CDOID> invalidObjects, List<CDORevisionDelta> allChangedObjects, List<CDOID> allDetachedObjects)
   {
     List<CDORevision> oldRevisions = getRevisions(invalidObjects);
@@ -186,6 +198,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
     }
   }
 
+  @Override
   public void setBranchPoint(CDOBranchPoint branchPoint)
   {
     checkOpen();
@@ -204,11 +217,13 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
     }
   }
 
+  @Override
   public void setDurableLockingID(String durableLockingID)
   {
     this.durableLockingID = durableLockingID;
   }
 
+  @Override
   public boolean openUnit(CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
     IUnitManager unitManager = repository.getUnitManager();
@@ -251,11 +266,13 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
     return true;
   }
 
+  @Override
   public void closeUnit(CDOID rootID)
   {
     openUnitRoots.remove(rootID);
   }
 
+  @Override
   public boolean isInOpenUnit(CDOID id)
   {
     if (openUnitRoots.isEmpty())
@@ -292,6 +309,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   /**
    * @since 2.0
    */
+  @Override
   public synchronized void subscribe(CDOID id)
   {
     checkOpen();
@@ -301,6 +319,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   /**
    * @since 2.0
    */
+  @Override
   public synchronized void unsubscribe(CDOID id)
   {
     checkOpen();
@@ -310,6 +329,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   /**
    * @since 2.0
    */
+  @Override
   public synchronized boolean hasSubscription(CDOID id)
   {
     if (isClosed())
@@ -328,12 +348,14 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   /**
    * @since 2.0
    */
+  @Override
   public synchronized void clearChangeSubscription()
   {
     checkOpen();
     changeSubscriptionIDs.clear();
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
@@ -361,6 +383,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   /**
    * @since 2.0
    */
+  @Override
   public void close()
   {
     deactivate();
@@ -380,6 +403,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   /**
    * @since 2.0
    */
+  @Override
   public void doClose()
   {
     clearChangeSubscription();
@@ -390,6 +414,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   /**
    * @since 2.0
    */
+  @Override
   public boolean isClosed()
   {
     return closed;
@@ -403,26 +428,31 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
     }
   }
 
+  @Override
   public IOptionsContainer getContainer()
   {
     return this;
   }
 
+  @Override
   public Options options()
   {
     return this;
   }
 
+  @Override
   public final IRegistry<String, Object> properties()
   {
     return properties;
   }
 
+  @Override
   public boolean isLockNotificationEnabled()
   {
     return lockNotificationsEnabled;
   }
 
+  @Override
   public void setLockNotificationEnabled(boolean enable)
   {
     lockNotificationsEnabled = enable;

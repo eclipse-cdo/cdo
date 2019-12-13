@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -49,16 +49,19 @@ public class CDOLockImpl implements CDOLock
     owner = CDOLockUtil.createLockOwner(object.cdoView());
   }
 
+  @Override
   public InternalCDOObject getObject()
   {
     return object;
   }
 
+  @Override
   public LockType getType()
   {
     return type;
   }
 
+  @Override
   public boolean isLocked()
   {
     return object.cdoLockState().isLocked(type, owner, false);
@@ -67,11 +70,13 @@ public class CDOLockImpl implements CDOLock
   /**
    * @see org.eclipse.emf.cdo.CDOLock#isLockedByOthers()
    */
+  @Override
   public boolean isLockedByOthers()
   {
     return object.cdoLockState().isLocked(type, owner, true);
   }
 
+  @Override
   public void lock()
   {
     try
@@ -84,6 +89,7 @@ public class CDOLockImpl implements CDOLock
     }
   }
 
+  @Override
   public void lock(long time, TimeUnit unit) throws TimeoutException
   {
     try
@@ -99,26 +105,31 @@ public class CDOLockImpl implements CDOLock
     }
   }
 
+  @Override
   public void lock(long millis) throws TimeoutException
   {
     lock(millis, TimeUnit.MILLISECONDS);
   }
 
+  @Override
   public boolean tryLock(long millis) throws InterruptedException
   {
     return tryLock(millis, TimeUnit.MILLISECONDS);
   }
 
+  @Override
   public void lockInterruptibly() throws InterruptedException
   {
     lock();
   }
 
+  @Override
   public Condition newCondition()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean tryLock()
   {
     try
@@ -136,6 +147,7 @@ public class CDOLockImpl implements CDOLock
     }
   }
 
+  @Override
   public boolean tryLock(long time, TimeUnit unit) throws InterruptedException
   {
     try
@@ -149,6 +161,7 @@ public class CDOLockImpl implements CDOLock
     }
   }
 
+  @Override
   public void unlock()
   {
     object.cdoView().unlockObjects(Collections.singletonList(object), type);
@@ -169,16 +182,19 @@ public class CDOLockImpl implements CDOLock
     {
     }
 
+    @Override
     public CDOObject getObject()
     {
       return null;
     }
 
+    @Override
     public LockType getType()
     {
       return null;
     }
 
+    @Override
     public boolean isLocked()
     {
       return false;
@@ -187,51 +203,61 @@ public class CDOLockImpl implements CDOLock
     /**
      * @see org.eclipse.emf.cdo.CDOLock#isLockedByOthers()
      */
+    @Override
     public boolean isLockedByOthers()
     {
       return false;
     }
 
+    @Override
     public void lock()
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public void lockInterruptibly() throws InterruptedException
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public Condition newCondition()
     {
       return null;
     }
 
+    @Override
     public void lock(long time, TimeUnit unit) throws TimeoutException
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public void lock(long millis) throws TimeoutException
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean tryLock(long millis) throws InterruptedException
     {
       return false;
     }
 
+    @Override
     public boolean tryLock()
     {
       return false;
     }
 
+    @Override
     public boolean tryLock(long time, TimeUnit unit) throws InterruptedException
     {
       return false;
     }
 
+    @Override
     public void unlock()
     {
       throw new UnsupportedOperationException();

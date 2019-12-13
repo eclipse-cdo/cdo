@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -74,6 +74,7 @@ public class LinkedObjectImpl extends CDOObjectImpl implements LinkedObject
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EObject getObject()
   {
     return (EObject)eDynamicGet(ExpressionsPackage.LINKED_OBJECT__OBJECT, ExpressionsPackage.Literals.LINKED_OBJECT__OBJECT, true, true);
@@ -94,6 +95,7 @@ public class LinkedObjectImpl extends CDOObjectImpl implements LinkedObject
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setObject(EObject newObject)
   {
     eDynamicSet(ExpressionsPackage.LINKED_OBJECT__OBJECT, ExpressionsPackage.Literals.LINKED_OBJECT__OBJECT, newObject);
@@ -104,6 +106,7 @@ public class LinkedObjectImpl extends CDOObjectImpl implements LinkedObject
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public Object evaluate(EvaluationContext context)
   {
     return getObject();

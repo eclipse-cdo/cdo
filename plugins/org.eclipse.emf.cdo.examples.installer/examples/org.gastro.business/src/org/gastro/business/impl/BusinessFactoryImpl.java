@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -124,6 +124,7 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public BusinessDay createBusinessDay()
   {
     BusinessDayImpl businessDay = new BusinessDayImpl();
@@ -134,6 +135,7 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Order createOrder()
   {
     OrderImpl order = new OrderImpl();
@@ -144,6 +146,7 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public OrderDetail createOrderDetail()
   {
     OrderDetailImpl orderDetail = new OrderDetailImpl();
@@ -154,6 +157,7 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Waiter createWaiter()
   {
     WaiterImpl waiter = new WaiterImpl();
@@ -187,6 +191,7 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public BusinessPackage getBusinessPackage()
   {
     return (BusinessPackage)getEPackage();

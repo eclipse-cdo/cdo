@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -138,6 +138,7 @@ public class ManageSecurityHandler extends LongRunningHandler
         UIUtil.getDisplay().syncExec(new Runnable()
         {
 
+          @Override
           public void run()
           {
             IEditorInput input = CDOEditorUtil.createCDOEditorInput(view[0], resource.getPath(), false);
@@ -173,6 +174,7 @@ public class ManageSecurityHandler extends LongRunningHandler
     UIUtil.getDisplay().syncExec(new Runnable()
     {
 
+      @Override
       public void run()
       {
         MessageDialog.openWarning(part.getSite().getShell(), title, message);
@@ -236,6 +238,7 @@ public class ManageSecurityHandler extends LongRunningHandler
         openEditors.add(editor);
       }
 
+      @Override
       public void partClosed(IWorkbenchPart part)
       {
         openEditors.remove(part);
@@ -247,6 +250,7 @@ public class ManageSecurityHandler extends LongRunningHandler
         }
       }
 
+      @Override
       public void partOpened(IWorkbenchPart part)
       {
         if (part instanceof IEditorPart)
@@ -260,16 +264,19 @@ public class ManageSecurityHandler extends LongRunningHandler
         }
       }
 
+      @Override
       public void partDeactivated(IWorkbenchPart part)
       {
         // Pass
       }
 
+      @Override
       public void partBroughtToTop(IWorkbenchPart part)
       {
         // Pass
       }
 
+      @Override
       public void partActivated(IWorkbenchPart part)
       {
         // Pass
@@ -287,6 +294,7 @@ public class ManageSecurityHandler extends LongRunningHandler
   {
     private static final AtomicInteger NEXT_SESSION_NUMBER = new AtomicInteger();
 
+    @Override
     public void prepare(CDONet4jSessionConfiguration configuration)
     {
       IPasswordCredentialsProvider credentialsProvider = getCredentialsProvider();

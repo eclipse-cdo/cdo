@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -73,6 +73,7 @@ public class NodeEImpl extends CDOObjectImpl implements NodeE
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NodeA getMainNode()
   {
     return (NodeA)eGet(Model3Package.eINSTANCE.getNodeE_MainNode(), true);
@@ -83,6 +84,7 @@ public class NodeEImpl extends CDOObjectImpl implements NodeE
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setMainNode(NodeA newMainNode)
   {
     eSet(Model3Package.eINSTANCE.getNodeE_MainNode(), newMainNode);
@@ -93,6 +95,7 @@ public class NodeEImpl extends CDOObjectImpl implements NodeE
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(Model3Package.eINSTANCE.getNodeE_Name(), true);
@@ -103,6 +106,7 @@ public class NodeEImpl extends CDOObjectImpl implements NodeE
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(Model3Package.eINSTANCE.getNodeE_Name(), newName);
@@ -113,6 +117,7 @@ public class NodeEImpl extends CDOObjectImpl implements NodeE
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<NodeA> getOtherNodes()
   {

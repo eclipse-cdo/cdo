@@ -239,6 +239,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
   @Deprecated
   public static class IgnoreTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
   {
+    @Override
     public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
     {
       // Do nothing
@@ -260,6 +261,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
   @Deprecated
   public static class FailTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
   {
+    @Override
     public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
     {
       // Do nothing
@@ -279,6 +281,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
    */
   private static class InternalIgnoreTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
   {
+    @Override
     public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
     {
       // Do nothing
@@ -298,6 +301,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
    */
   private static class InternalFailTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
   {
+    @Override
     public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
     {
       // Do nothing
@@ -329,6 +333,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
       return targetState;
     }
 
+    @Override
     public void execute(SUBJECT subject, STATE state, EVENT event, Object data)
     {
       changeState(subject, targetState);
@@ -359,6 +364,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
       this.newState = newState;
     }
 
+    @Override
     public INotifier getSource()
     {
       return FiniteStateMachine.this;

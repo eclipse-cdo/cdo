@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -133,6 +133,7 @@ public class ComposeBranchPointComposite extends Composite
 
         getDisplay().asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             branchViewer.setSelection(new StructuredSelection(branch));
@@ -187,6 +188,7 @@ public class ComposeBranchPointComposite extends Composite
     branchViewer = createBranchViewer();
     branchViewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
+      @Override
       public void selectionChanged(SelectionChangedEvent event)
       {
         IStructuredSelection selection = (IStructuredSelection)event.getSelection();
@@ -235,6 +237,7 @@ public class ComposeBranchPointComposite extends Composite
 
     branchViewer.addDoubleClickListener(new IDoubleClickListener()
     {
+      @Override
       public void doubleClick(DoubleClickEvent event)
       {
         doubleClicked();
@@ -275,6 +278,7 @@ public class ComposeBranchPointComposite extends Composite
     timeStampComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     timeStampComposite.setValidationContext(new ValidationContext()
     {
+      @Override
       public void setValidationError(Object source, String message)
       {
         timeStampError(message);

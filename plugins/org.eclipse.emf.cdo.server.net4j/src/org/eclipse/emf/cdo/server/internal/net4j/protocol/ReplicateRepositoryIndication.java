@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -73,21 +73,25 @@ public class ReplicateRepositoryIndication extends CDOServerReadIndication
 
     getRepository().replicate(new CDOReplicationContext()
     {
+      @Override
       public int getLastReplicatedBranchID()
       {
         return lastReplicatedBranchID;
       }
 
+      @Override
       public long getLastReplicatedCommitTime()
       {
         return lastReplicatedCommitTime;
       }
 
+      @Override
       public String[] getLockAreaIDs()
       {
         return lockAreaIDs;
       }
 
+      @Override
       public void handleBranch(CDOBranch branch)
       {
         try
@@ -101,6 +105,7 @@ public class ReplicateRepositoryIndication extends CDOServerReadIndication
         }
       }
 
+      @Override
       public void handleCommitInfo(CDOCommitInfo commitInfo)
       {
         try
@@ -114,6 +119,7 @@ public class ReplicateRepositoryIndication extends CDOServerReadIndication
         }
       }
 
+      @Override
       public boolean handleLockArea(LockArea lockArea)
       {
         try

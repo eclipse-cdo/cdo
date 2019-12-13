@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -59,6 +59,7 @@ public class TableImpl extends StationImpl implements Table
    *
    * @generated
    */
+  @Override
   public int getSeats()
   {
     return (Integer)eGet(InventoryPackage.Literals.TABLE__SEATS, true);
@@ -69,6 +70,7 @@ public class TableImpl extends StationImpl implements Table
    *
    * @generated
    */
+  @Override
   public void setSeats(int newSeats)
   {
     eSet(InventoryPackage.Literals.TABLE__SEATS, newSeats);
@@ -79,6 +81,7 @@ public class TableImpl extends StationImpl implements Table
    *
    * @generated
    */
+  @Override
   public Restaurant getRestaurant()
   {
     return (Restaurant)eGet(InventoryPackage.Literals.TABLE__RESTAURANT, true);
@@ -89,6 +92,7 @@ public class TableImpl extends StationImpl implements Table
    *
    * @generated
    */
+  @Override
   public void setRestaurant(Restaurant newRestaurant)
   {
     eSet(InventoryPackage.Literals.TABLE__RESTAURANT, newRestaurant);

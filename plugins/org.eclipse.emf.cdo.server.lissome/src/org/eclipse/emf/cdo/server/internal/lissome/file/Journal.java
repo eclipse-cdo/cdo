@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2016, 2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2016, 2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -342,6 +342,7 @@ public class Journal extends LissomeFile
     {
       writer.append(new LissomeFileOperation()
       {
+        @Override
         public void execute(LissomeFileHandle writer) throws IOException
         {
           writer.writeByte(PACKAGE_UNITS_BLOCK);
@@ -396,6 +397,7 @@ public class Journal extends LissomeFile
 
     return writer.append(new LissomeFileOperation()
     {
+      @Override
       public void execute(LissomeFileHandle writer) throws IOException
       {
         writer.writeByte(CREATE_BRANCH_BLOCK);
@@ -435,6 +437,7 @@ public class Journal extends LissomeFile
 
       newCommitPointer = writer.append(new LissomeFileOperation()
       {
+        @Override
         public void execute(LissomeFileHandle writer) throws IOException
         {
           writer.writeByte(COMMIT_TRANSACTION_BLOCK);

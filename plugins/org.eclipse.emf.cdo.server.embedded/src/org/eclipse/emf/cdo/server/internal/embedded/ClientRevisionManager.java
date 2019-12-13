@@ -41,11 +41,13 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     super(delegate);
   }
 
+  @Override
   public RevisionLocker getRevisionLocker()
   {
     return delegate.getRevisionLocker();
   }
 
+  @Override
   public void setRevisionLocker(RevisionLocker revisionLocker)
   {
     if (revisionLocker instanceof CDONet4jSession)
@@ -54,56 +56,67 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  @Override
   public RevisionLoader getRevisionLoader()
   {
     return delegate.getRevisionLoader();
   }
 
+  @Override
   public void setRevisionLoader(RevisionLoader revisionLoader)
   {
     // Do nothing.
   }
 
+  @Override
   public CDORevisionFactory getFactory()
   {
     return delegate.getFactory();
   }
 
+  @Override
   public void setFactory(CDORevisionFactory factory)
   {
     // Do nothing.
   }
 
+  @Override
   public InternalCDORevisionCache getCache()
   {
     return delegate.getCache();
   }
 
+  @Override
   public void setCache(CDORevisionCache cache)
   {
     // Do nothing.
   }
 
+  @Override
   public boolean isSupportingAudits()
   {
     return delegate.isSupportingAudits();
   }
 
+  @Override
   public void setSupportingAudits(boolean on)
   {
     // Do nothing.
   }
 
+  @Override
   public boolean isSupportingBranches()
   {
     return delegate.isSupportingBranches();
   }
 
+  @Override
   public void setSupportingBranches(boolean on)
   {
     // Do nothing.
   }
 
+  @Override
   public EClass getObjectType(CDOID id)
   {
     try
@@ -117,6 +130,7 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  @Override
   public EClass getObjectType(CDOID id, CDOBranchManager branchManagerForLoadOnDemand)
   {
     try
@@ -130,6 +144,7 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  @Override
   public CDOBranchPointRange getObjectLifetime(CDOID id, CDOBranchPoint branchPoint)
   {
     try
@@ -143,6 +158,7 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  @Override
   public boolean containsRevision(CDOID id, CDOBranchPoint branchPoint)
   {
     try
@@ -156,6 +172,7 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  @Override
   public boolean containsRevisionByVersion(CDOID id, CDOBranchVersion branchVersion)
   {
     try
@@ -169,6 +186,7 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  @Override
   public InternalCDORevision getBaseRevision(CDORevision revision, int referenceChunk, boolean loadOnDemand)
   {
     try
@@ -182,6 +200,7 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  @Override
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
       SyntheticCDORevision[] synthetics)
   {
@@ -196,6 +215,7 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  @Override
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
       SyntheticCDORevision[] synthetics)
   {
@@ -210,6 +230,7 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  @Override
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
   {
     try
@@ -223,6 +244,7 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  @Override
   public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk, boolean loadOnDemand)
   {
     try
@@ -236,6 +258,7 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  @Override
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
   {
     try
@@ -249,6 +272,7 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  @Override
   public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     try
@@ -262,6 +286,7 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  @Override
   public void addRevision(CDORevision revision)
   {
     try
@@ -275,6 +300,7 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  @Override
   public void reviseLatest(CDOID id, CDOBranch branch)
   {
     try
@@ -288,6 +314,7 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     }
   }
 
+  @Override
   public void reviseVersion(CDOID id, CDOBranchVersion branchVersion, long timeStamp)
   {
     try

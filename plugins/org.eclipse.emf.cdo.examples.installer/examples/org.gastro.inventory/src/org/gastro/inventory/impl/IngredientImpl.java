@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -74,6 +74,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
    *
    * @generated
    */
+  @Override
   public Recipe getRecipe()
   {
     return (Recipe)eGet(InventoryPackage.Literals.INGREDIENT__RECIPE, true);
@@ -84,6 +85,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
    *
    * @generated
    */
+  @Override
   public void setRecipe(Recipe newRecipe)
   {
     eSet(InventoryPackage.Literals.INGREDIENT__RECIPE, newRecipe);
@@ -94,6 +96,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
    *
    * @generated
    */
+  @Override
   public Product getProduct()
   {
     return (Product)eGet(InventoryPackage.Literals.INGREDIENT__PRODUCT, true);
@@ -104,6 +107,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
    *
    * @generated
    */
+  @Override
   public void setProduct(Product newProduct)
   {
     eSet(InventoryPackage.Literals.INGREDIENT__PRODUCT, newProduct);
@@ -114,6 +118,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
    *
    * @generated
    */
+  @Override
   public int getQuantity()
   {
     return (Integer)eGet(InventoryPackage.Literals.INGREDIENT__QUANTITY, true);
@@ -124,6 +129,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
    *
    * @generated
    */
+  @Override
   public void setQuantity(int newQuantity)
   {
     eSet(InventoryPackage.Literals.INGREDIENT__QUANTITY, newQuantity);

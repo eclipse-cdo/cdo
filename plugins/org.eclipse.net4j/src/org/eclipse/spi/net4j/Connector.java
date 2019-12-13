@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -62,11 +62,13 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
   {
   }
 
+  @Override
   public INegotiator getNegotiator()
   {
     return getConfig().getNegotiator();
   }
 
+  @Override
   public void setNegotiator(INegotiator negotiator)
   {
     getConfig().setNegotiator(negotiator);
@@ -77,16 +79,19 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
     return negotiationContext;
   }
 
+  @Override
   public boolean isClient()
   {
     return getLocation() == Location.CLIENT;
   }
 
+  @Override
   public boolean isServer()
   {
     return getLocation() == Location.SERVER;
   }
 
+  @Override
   public String getUserID()
   {
     return userID;
@@ -103,6 +108,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
     this.userID = userID;
   }
 
+  @Override
   public ConnectorState getState()
   {
     return connectorState;
@@ -175,6 +181,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
     return connectorState == ConnectorState.NEGOTIATING;
   }
 
+  @Override
   public boolean isConnected()
   {
     if (negotiationException != null)
@@ -185,6 +192,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
     return connectorState == ConnectorState.CONNECTED;
   }
 
+  @Override
   public void connectAsync() throws ConnectorException
   {
     try
@@ -204,6 +212,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
   /**
    * @since 4.0
    */
+  @Override
   public void waitForConnection(long timeout) throws ConnectorException
   {
     String message = "Connection timeout after " + timeout + " milliseconds";
@@ -262,6 +271,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
   /**
    * @since 4.0
    */
+  @Override
   public void connect(long timeout) throws ConnectorException
   {
     connectAsync();
@@ -271,31 +281,37 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
   /**
    * @since 4.0
    */
+  @Override
   public void connect() throws ConnectorException
   {
     connect(NO_TIMEOUT);
   }
 
+  @Override
   public void close()
   {
     LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 
+  @Override
   public boolean isClosed()
   {
     return !isActive();
   }
 
+  @Override
   public short getBufferCapacity()
   {
     return getConfig().getBufferProvider().getBufferCapacity();
   }
 
+  @Override
   public IBuffer provideBuffer()
   {
     return getConfig().getBufferProvider().provideBuffer();
   }
 
+  @Override
   public void retainBuffer(IBuffer buffer)
   {
     getConfig().getBufferProvider().retainBuffer(buffer);
@@ -338,11 +354,13 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
   {
   }
 
+  @Override
   public Location getLocation()
   {
     return null;
   }
 
+  @Override
   public String getURL()
   {
     return null;
@@ -415,11 +433,13 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
       return (IConnector)super.getSource();
     }
 
+    @Override
     public ConnectorState getOldState()
     {
       return oldState;
     }
 
+    @Override
     public ConnectorState getNewState()
     {
       return newState;

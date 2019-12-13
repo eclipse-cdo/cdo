@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -70,11 +70,13 @@ public class Model extends Lifecycle implements IModel
     adapterFactory = new ComposedAdapterFactory(EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry());
   }
 
+  @Override
   public AdapterFactory getAdapterFactory()
   {
     return adapterFactory;
   }
 
+  @Override
   public synchronized Restaurant getRestaurant()
   {
     if (restaurant == null)
@@ -110,6 +112,7 @@ public class Model extends Lifecycle implements IModel
     return restaurant;
   }
 
+  @Override
   public synchronized BusinessDay getBusinessDay()
   {
     if (businessDay == null)
@@ -157,6 +160,7 @@ public class Model extends Lifecycle implements IModel
     return businessDay;
   }
 
+  @Override
   public synchronized Station getStation()
   {
     if (station == null)
@@ -175,6 +179,7 @@ public class Model extends Lifecycle implements IModel
     return station;
   }
 
+  @Override
   public <T extends CDOObject> Object modify(T object, ITransactionalOperation<T> operation)
   {
     CDOTransaction transaction = session.openTransaction();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -72,48 +72,56 @@ public class Randomizer extends Lifecycle implements IRandomizer
     setSeed(String.valueOf(seed).getBytes());
   }
 
+  @Override
   public synchronized boolean nextBoolean()
   {
     checkActive();
     return secureRandom.nextBoolean();
   }
 
+  @Override
   public synchronized double nextDouble()
   {
     checkActive();
     return secureRandom.nextDouble();
   }
 
+  @Override
   public synchronized float nextFloat()
   {
     checkActive();
     return secureRandom.nextFloat();
   }
 
+  @Override
   public synchronized double nextGaussian()
   {
     checkActive();
     return secureRandom.nextGaussian();
   }
 
+  @Override
   public synchronized int nextInt()
   {
     checkActive();
     return secureRandom.nextInt();
   }
 
+  @Override
   public synchronized int nextInt(int n)
   {
     checkActive();
     return secureRandom.nextInt(n);
   }
 
+  @Override
   public synchronized long nextLong()
   {
     checkActive();
     return secureRandom.nextLong();
   }
 
+  @Override
   public synchronized byte[] generateSeed(int numBytes)
   {
     checkActive();
@@ -126,12 +134,14 @@ public class Randomizer extends Lifecycle implements IRandomizer
     return secureRandom.getAlgorithm();
   }
 
+  @Override
   public synchronized void nextBytes(byte[] bytes)
   {
     checkActive();
     secureRandom.nextBytes(bytes);
   }
 
+  @Override
   public synchronized String nextString(int length, String alphabet)
   {
     checkActive();

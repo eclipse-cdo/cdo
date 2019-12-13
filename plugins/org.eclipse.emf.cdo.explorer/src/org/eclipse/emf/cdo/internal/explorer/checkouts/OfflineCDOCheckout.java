@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -65,6 +65,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
 
   private final IListener workspaceListener = new IListener()
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof DirtyStateChangedEvent)
@@ -102,11 +103,13 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
   {
   }
 
+  @Override
   public boolean isOffline()
   {
     return true;
   }
 
+  @Override
   public boolean isOnline()
   {
     return false;
@@ -123,6 +126,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
     return workspace;
   }
 
+  @Override
   public final boolean isDirty()
   {
     if (workspace != null)
@@ -142,6 +146,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
     }
   }
 
+  @Override
   public CDOState getState(Object object)
   {
     if (object == this)
@@ -216,6 +221,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
   {
     CDOSessionConfigurationFactory remote = new CDOSessionConfigurationFactory()
     {
+      @Override
       public CDOSessionConfiguration createSessionConfiguration()
       {
         return new RemoteSessionConfiguration();
@@ -306,131 +312,159 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
   {
     private boolean closed;
 
+    @Override
     public void addListener(IListener listener)
     {
     }
 
+    @Override
     public void removeListener(IListener listener)
     {
     }
 
+    @Override
     public boolean hasListeners()
     {
       return false;
     }
 
+    @Override
     public IListener[] getListeners()
     {
       return null;
     }
 
+    @Override
     public String getUserID()
     {
       return null;
     }
 
+    @Override
     public void setUserID(String userID)
     {
     }
 
+    @Override
     public boolean isPassiveUpdateEnabled()
     {
       return false;
     }
 
+    @Override
     public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
     {
     }
 
+    @Override
     public PassiveUpdateMode getPassiveUpdateMode()
     {
       return null;
     }
 
+    @Override
     public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
     {
     }
 
+    @Override
     public LockNotificationMode getLockNotificationMode()
     {
       return null;
     }
 
+    @Override
     public void setLockNotificationMode(LockNotificationMode mode)
     {
     }
 
+    @Override
     public ExceptionHandler getExceptionHandler()
     {
       return null;
     }
 
+    @Override
     public void setExceptionHandler(ExceptionHandler exceptionHandler)
     {
     }
 
+    @Override
     public CDOIDGenerator getIDGenerator()
     {
       return null;
     }
 
+    @Override
     public void setIDGenerator(CDOIDGenerator idGenerator)
     {
     }
 
+    @Override
     public CDOFetchRuleManager getFetchRuleManager()
     {
       return null;
     }
 
+    @Override
     public void setFetchRuleManager(CDOFetchRuleManager fetchRuleManager)
     {
     }
 
+    @Override
     public CDOBranchManager getBranchManager()
     {
       return null;
     }
 
+    @Override
     public void setBranchManager(CDOBranchManager branchManager)
     {
     }
 
+    @Override
     @Deprecated
     public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator()
     {
       return null;
     }
 
+    @Override
     public IPasswordCredentialsProvider getCredentialsProvider()
     {
       return null;
     }
 
+    @Override
     public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
     {
     }
 
+    @Override
     public boolean isActivateOnOpen()
     {
       return false;
     }
 
+    @Override
     public void setActivateOnOpen(boolean activateOnOpen)
     {
     }
 
+    @Override
     public boolean isSessionOpen()
     {
       return !closed;
     }
 
+    @Override
     public CDOSession openSession()
     {
       CDORepository repository = getRepository();
       return repository.acquireSession();
     }
 
+    @Override
     public void close()
     {
       if (!closed)
@@ -442,6 +476,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
       }
     }
 
+    @Override
     public boolean isClosed()
     {
       return closed;

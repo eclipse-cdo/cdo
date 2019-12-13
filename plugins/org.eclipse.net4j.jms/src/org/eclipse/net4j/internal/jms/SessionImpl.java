@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2009, 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2009, 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -100,26 +100,31 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
     return id;
   }
 
+  @Override
   public boolean getTransacted()
   {
     return transacted;
   }
 
+  @Override
   public int getAcknowledgeMode()
   {
     return acknowledgeMode;
   }
 
+  @Override
   public MessageListener getMessageListener()
   {
     return null;
   }
 
+  @Override
   public void setMessageListener(MessageListener listener)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public MessageProducer createProducer(Destination destination) throws JMSException
   {
     DestinationImpl dest = DestinationUtil.convert(destination);
@@ -128,16 +133,19 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
     return producer;
   }
 
+  @Override
   public MessageConsumer createConsumer(Destination destination) throws JMSException
   {
     return createConsumer(destination, null);
   }
 
+  @Override
   public MessageConsumer createConsumer(Destination destination, String messageSelector) throws JMSException
   {
     return createConsumer(destination, null, false);
   }
 
+  @Override
   public MessageConsumer createConsumer(Destination destination, String messageSelector, boolean noLocal) throws JMSException
   {
     DestinationImpl dest = DestinationUtil.convert(destination);
@@ -147,41 +155,49 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
     return consumer;
   }
 
+  @Override
   public Queue createQueue(String queueName)
   {
     return new QueueImpl(queueName);
   }
 
+  @Override
   public TemporaryQueue createTemporaryQueue()
   {
     return new TemporaryQueueImpl();
   }
 
+  @Override
   public QueueBrowser createBrowser(Queue queue)
   {
     return new QueueBrowserImpl(queue);
   }
 
+  @Override
   public QueueBrowser createBrowser(Queue queue, String messageSelector)
   {
     return new QueueBrowserImpl(queue, messageSelector);
   }
 
+  @Override
   public Topic createTopic(String topicName)
   {
     return new TopicImpl(topicName);
   }
 
+  @Override
   public TemporaryTopic createTemporaryTopic()
   {
     return new TemporaryTopicImpl();
   }
 
+  @Override
   public TopicSubscriber createDurableSubscriber(Topic topic, String name) throws JMSException
   {
     return createDurableSubscriber(topic, name, null, false);
   }
 
+  @Override
   public TopicSubscriber createDurableSubscriber(Topic topic, String name, String messageSelector, boolean noLocal) throws JMSException
   {
     TopicImpl dest = (TopicImpl)DestinationUtil.convert(topic);
@@ -191,51 +207,61 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
     return subscriber;
   }
 
+  @Override
   public void unsubscribe(String name)
   {
     throw new NotYetImplementedException();
   }
 
+  @Override
   public Message createMessage()
   {
     return new MessageImpl();
   }
 
+  @Override
   public StreamMessage createStreamMessage()
   {
     return new StreamMessageImpl();
   }
 
+  @Override
   public BytesMessage createBytesMessage()
   {
     return new BytesMessageImpl();
   }
 
+  @Override
   public MapMessage createMapMessage()
   {
     return new MapMessageImpl();
   }
 
+  @Override
   public ObjectMessage createObjectMessage()
   {
     return createObjectMessage(null);
   }
 
+  @Override
   public ObjectMessage createObjectMessage(Serializable object)
   {
     return new ObjectMessageImpl(object);
   }
 
+  @Override
   public TextMessage createTextMessage()
   {
     return createTextMessage(null);
   }
 
+  @Override
   public TextMessage createTextMessage(String text)
   {
     return new TextMessageImpl(text);
   }
 
+  @Override
   public void recover() throws JMSException
   {
     ensureNotTransacted();
@@ -252,6 +278,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
     }
   }
 
+  @Override
   public void commit() throws JMSException
   {
     ensureTransacted();
@@ -287,6 +314,7 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
     }
   }
 
+  @Override
   public void rollback() throws JMSException
   {
     ensureTransacted();
@@ -316,11 +344,13 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
     }
   }
 
+  @Override
   public void close()
   {
     LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 
+  @Override
   public void run()
   {
     throw new UnsupportedOperationException();

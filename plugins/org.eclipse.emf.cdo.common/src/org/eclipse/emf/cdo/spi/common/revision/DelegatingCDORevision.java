@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2014, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2014, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -51,6 +51,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.2
    */
+  @Override
   public InternalCDORevision getRevisionForID(CDOID id)
   {
     return getDelegate().getRevisionForID(id);
@@ -59,6 +60,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.2
    */
+  @Override
   public InternalCDORevision getProperRevision()
   {
     return getDelegate().getProperRevision();
@@ -67,6 +69,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.0
    */
+  @Override
   public boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster)
   {
     return getDelegate().adjustReferences(referenceAdjuster);
@@ -75,11 +78,13 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.3
    */
+  @Override
   public void adjustBranches(CDOBranchManager newBranchManager)
   {
     getDelegate().adjustBranches(newBranchManager);
   }
 
+  @Override
   public long getTimeStamp()
   {
     return getDelegate().getTimeStamp();
@@ -88,71 +93,85 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.2
    */
+  @Override
   public InternalCDOBranch getBranch()
   {
     return getDelegate().getBranch();
   }
 
+  @Override
   public boolean isHistorical()
   {
     return getDelegate().isHistorical();
   }
 
+  @Override
   public CDOID getID()
   {
     return getDelegate().getID();
   }
 
+  @Override
   public CDORevision revision()
   {
     return getDelegate().revision();
   }
 
+  @Override
   public CDOID getResourceID()
   {
     return getDelegate().getResourceID();
   }
 
+  @Override
   public Object getContainerID()
   {
     return getDelegate().getContainerID();
   }
 
+  @Override
   public int getContainingFeatureID()
   {
     return getDelegate().getContainingFeatureID();
   }
 
+  @Override
   public Object get(EStructuralFeature feature, int index)
   {
     return getDelegate().get(feature, index);
   }
 
+  @Override
   public EClass getEClass()
   {
     return getDelegate().getEClass();
   }
 
+  @Override
   public int getVersion()
   {
     return getDelegate().getVersion();
   }
 
+  @Override
   public int size(EStructuralFeature feature)
   {
     return getDelegate().size(feature);
   }
 
+  @Override
   public long getRevised()
   {
     return getDelegate().getRevised();
   }
 
+  @Override
   public boolean isEmpty(EStructuralFeature feature)
   {
     return getDelegate().isEmpty(feature);
   }
 
+  @Override
   public boolean isValid(long timeStamp)
   {
     return getDelegate().isValid(timeStamp);
@@ -161,6 +180,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.0
    */
+  @Override
   public boolean isValid(CDOBranchPoint branchPoint)
   {
     return getDelegate().isValid(branchPoint);
@@ -169,6 +189,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.0
    */
+  @Override
   public InternalCDORevision copy()
   {
     return null;
@@ -177,183 +198,219 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.2
    */
+  @Override
   public InternalCDOClassInfo getClassInfo()
   {
     return getDelegate().getClassInfo();
   }
 
+  @Override
   public void setID(CDOID id)
   {
     getDelegate().setID(id);
   }
 
+  @Override
   public boolean contains(EStructuralFeature feature, Object value)
   {
     return getDelegate().contains(feature, value);
   }
 
+  @Override
   public boolean isResourceNode()
   {
     return getDelegate().isResourceNode();
   }
 
+  @Override
   public void setVersion(int version)
   {
     getDelegate().setVersion(version);
   }
 
+  @Override
   public boolean isResourceFolder()
   {
     return getDelegate().isResourceFolder();
   }
 
+  @Override
   public int indexOf(EStructuralFeature feature, Object value)
   {
     return getDelegate().indexOf(feature, value);
   }
 
+  @Override
   public boolean isResource()
   {
     return getDelegate().isResource();
   }
 
+  @Override
   public void setBranchPoint(CDOBranchPoint branchPoint)
   {
     getDelegate().setBranchPoint(branchPoint);
   }
 
+  @Override
   public void adjustForCommit(CDOBranch branch, long timeStamp)
   {
     getDelegate().adjustForCommit(branch, timeStamp);
   }
 
+  @Override
   public CDORevisionData data()
   {
     return getDelegate().data();
   }
 
+  @Override
   public int lastIndexOf(EStructuralFeature feature, Object value)
   {
     return getDelegate().lastIndexOf(feature, value);
   }
 
+  @Override
   public void setRevised(long revised)
   {
     getDelegate().setRevised(revised);
   }
 
+  @Override
   public InternalCDORevisionDelta compare(CDORevision origin)
   {
     return getDelegate().compare(origin);
   }
 
+  @Override
   public void setResourceID(CDOID resourceID)
   {
     getDelegate().setResourceID(resourceID);
   }
 
+  @Override
   public void merge(CDORevisionDelta delta)
   {
     getDelegate().merge(delta);
   }
 
+  @Override
   public <T> T[] toArray(EStructuralFeature feature, T[] array)
   {
     return getDelegate().toArray(feature, array);
   }
 
+  @Override
   public void setContainerID(Object containerID)
   {
     getDelegate().setContainerID(containerID);
   }
 
+  @Override
   public void setContainingFeatureID(int containingFeatureID)
   {
     getDelegate().setContainingFeatureID(containingFeatureID);
   }
 
+  @Override
   public Object[] toArray(EStructuralFeature feature)
   {
     return getDelegate().toArray(feature);
   }
 
+  @Override
   public void add(EStructuralFeature feature, int index, Object value)
   {
     getDelegate().add(feature, index, value);
   }
 
+  @Override
   public int hashCode(EStructuralFeature feature)
   {
     return getDelegate().hashCode(feature);
   }
 
+  @Override
   public void clear(EStructuralFeature feature)
   {
     getDelegate().clear(feature);
   }
 
+  @Override
   public Object move(EStructuralFeature feature, int targetIndex, int sourceIndex)
   {
     return getDelegate().move(feature, targetIndex, sourceIndex);
   }
 
+  @Override
   public Object remove(EStructuralFeature feature, int index)
   {
     return getDelegate().remove(feature, index);
   }
 
+  @Override
   public Object set(EStructuralFeature feature, int index, Object value)
   {
     return getDelegate().set(feature, index, value);
   }
 
+  @Override
   public void unset(EStructuralFeature feature)
   {
     getDelegate().unset(feature);
   }
 
+  @Override
   public Object getValue(EStructuralFeature feature)
   {
     return getDelegate().getValue(feature);
   }
 
+  @Override
   public Object setValue(EStructuralFeature feature, Object value)
   {
     return getDelegate().setValue(feature, value);
   }
 
+  @Override
   public void setList(EStructuralFeature feature, InternalCDOList list)
   {
     getDelegate().setList(feature, list);
   }
 
+  @Override
   @Deprecated
   public CDOList getList(EStructuralFeature feature)
   {
     return getDelegate().getList(feature);
   }
 
+  @Override
   @Deprecated
   public CDOList getList(EStructuralFeature feature, int initialCapacity)
   {
     return getDelegate().getList(feature, initialCapacity);
   }
 
+  @Override
   public CDOList getListOrNull(EStructuralFeature feature)
   {
     return getDelegate().getListOrNull(feature);
   }
 
+  @Override
   public CDOList getOrCreateList(EStructuralFeature feature)
   {
     return getDelegate().getOrCreateList(feature);
   }
 
+  @Override
   public CDOList getOrCreateList(EStructuralFeature feature, int size)
   {
     return getDelegate().getOrCreateList(feature, size);
   }
 
+  @Override
   public void read(CDODataInput in) throws IOException
   {
     getDelegate().read(in);
@@ -362,11 +419,13 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.3
    */
+  @Override
   public boolean readValues(CDODataInput in) throws IOException
   {
     return getDelegate().readValues(in);
   }
 
+  @Override
   public void write(CDODataOutput out, int referenceChunk) throws IOException
   {
     getDelegate().write(out, referenceChunk);
@@ -375,6 +434,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.1
    */
+  @Override
   public void write(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext) throws IOException
   {
     getDelegate().write(out, referenceChunk, securityContext);
@@ -383,11 +443,13 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.3
    */
+  @Override
   public void writeValues(CDODataOutput out, int referenceChunk) throws IOException
   {
     getDelegate().writeValues(out, referenceChunk);
   }
 
+  @Override
   public void convertEObjects(CDOIDProvider oidProvider)
   {
     getDelegate().convertEObjects(oidProvider);
@@ -396,6 +458,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.2
    */
+  @Override
   public EStructuralFeature[] clearValues()
   {
     return getDelegate().clearValues();
@@ -404,6 +467,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.3
    */
+  @Override
   public String getResourceNodeName()
   {
     return getDelegate().getResourceNodeName();
@@ -412,6 +476,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.1
    */
+  @Override
   public CDOPermission getPermission()
   {
     return getDelegate().getPermission();
@@ -420,6 +485,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.1
    */
+  @Override
   public void setPermission(CDOPermission permission)
   {
     getDelegate().setPermission(permission);
@@ -428,6 +494,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.1
    */
+  @Override
   public boolean isReadable()
   {
     return getDelegate().isReadable();
@@ -436,6 +503,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.1
    */
+  @Override
   public boolean isWritable()
   {
     return getDelegate().isWritable();
@@ -444,6 +512,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.2
    */
+  @Override
   public void accept(CDORevisionValueVisitor visitor)
   {
     getDelegate().accept(visitor);
@@ -452,6 +521,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.2
    */
+  @Override
   public void accept(CDORevisionValueVisitor visitor, Predicate<EStructuralFeature> filter)
   {
     getDelegate().accept(visitor, filter);
@@ -460,6 +530,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.3
    */
+  @Override
   public boolean bypassPermissionChecks(boolean on)
   {
     return getDelegate().bypassPermissionChecks(on);
@@ -468,6 +539,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.3
    */
+  @Override
   public boolean isListPreserving()
   {
     return getDelegate().isListPreserving();
@@ -476,6 +548,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.3
    */
+  @Override
   public void setListPreserving()
   {
     getDelegate().setListPreserving();
@@ -484,6 +557,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.0
    */
+  @Override
   public void freeze()
   {
     getDelegate().freeze();
@@ -492,6 +566,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.2
    */
+  @Override
   public boolean isFrozen()
   {
     return getDelegate().isFrozen();
@@ -500,6 +575,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.1
    */
+  @Override
   public boolean isUnchunked()
   {
     return getDelegate().isUnchunked();
@@ -508,6 +584,7 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.1
    */
+  @Override
   public void setUnchunked()
   {
     getDelegate().setUnchunked();

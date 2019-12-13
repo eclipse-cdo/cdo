@@ -309,6 +309,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     sqlClearList = builder.toString();
   }
 
+  @Override
   public Collection<IDBTable> getDBTables()
   {
     return Collections.singleton(table);
@@ -324,6 +325,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     return typeMapping;
   }
 
+  @Override
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, final int listChunk)
   {
     if (table == null)
@@ -468,6 +470,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
   }
 
+  @Override
   public final void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String where)
   {
     if (TRACER.isEnabled())
@@ -650,6 +653,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
   }
 
+  @Override
   public void writeValues(IDBStoreAccessor accessor, CDORevision revision, boolean firstRevision, boolean raw)
   {
     if (firstRevision || !raw)
@@ -675,6 +679,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
   }
 
+  @Override
   public void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
     CDOList values = revision.getListOrNull(getFeature());
@@ -755,6 +760,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
   }
 
+  @Override
   public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
   {
     ITransaction transaction = accessor.getTransaction();
@@ -788,6 +794,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     throw new UnsupportedOperationException("Raw deletion does not work in range-based mappings");
   }
 
+  @Override
   public void processDelta(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, long created, CDOListFeatureDelta delta)
   {
     List<CDOFeatureDelta> listChanges = delta.getListChanges();
@@ -877,6 +884,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       lastRemovedIndex = -1;
     }
 
+    @Override
     public void visit(CDOAddFeatureDelta delta)
     {
       finishPendingRemove();
@@ -900,6 +908,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       ++lastIndex;
     }
 
+    @Override
     public void visit(CDORemoveFeatureDelta delta)
     {
       finishPendingRemove();
@@ -914,6 +923,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       removeEntry(accessor, id, branchID, oldVersion, newVersion, lastRemovedIndex);
     }
 
+    @Override
     public void visit(CDOSetFeatureDelta delta)
     {
       finishPendingRemove();
@@ -931,6 +941,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       addEntry(accessor, id, branchID, newVersion, index, delta.getValue());
     }
 
+    @Override
     public void visit(CDOUnsetFeatureDelta delta)
     {
       if (TRACER.isEnabled())
@@ -943,6 +954,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       lastRemovedIndex = -1;
     }
 
+    @Override
     public void visit(CDOClearFeatureDelta delta)
     {
       if (TRACER.isEnabled())
@@ -955,6 +967,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       lastRemovedIndex = -1;
     }
 
+    @Override
     public void visit(CDOMoveFeatureDelta delta)
     {
       int fromIdx = delta.getOldPosition();
@@ -1006,11 +1019,13 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       addEntry(accessor, id, branchID, newVersion, toIdx, value);
     }
 
+    @Override
     public void visit(CDOListFeatureDelta delta)
     {
       throw new ImplementationError("Should not be called"); //$NON-NLS-1$
     }
 
+    @Override
     public void visit(CDOContainerFeatureDelta delta)
     {
       throw new ImplementationError("Should not be called"); //$NON-NLS-1$
@@ -1459,6 +1474,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     return accessor.createChunkReader(baseRevision, getFeature());
   }
 
+  @Override
   public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere, QueryXRefsContext context, String idString)
   {
     if (table == null)

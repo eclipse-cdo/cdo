@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -83,6 +83,7 @@ public interface SubpackagePackage extends EPackage, org.eclipse.emf.cdo.tests.m
    */
   int CLASS2_FEATURE_COUNT = 1;
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.subpackage.Class2 <em>Class2</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -92,6 +93,7 @@ public interface SubpackagePackage extends EPackage, org.eclipse.emf.cdo.tests.m
    */
   EClass getClass2();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model3.subpackage.Class2#getClass1 <em>Class1</em>}'.
    * <!-- begin-user-doc
@@ -103,6 +105,7 @@ public interface SubpackagePackage extends EPackage, org.eclipse.emf.cdo.tests.m
    */
   EReference getClass2_Class1();
 
+  @Override
   /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc --> <!-- end-user-doc -->

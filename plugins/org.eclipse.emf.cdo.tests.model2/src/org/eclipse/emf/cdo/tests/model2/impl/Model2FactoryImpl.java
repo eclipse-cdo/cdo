@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -132,6 +132,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public SpecialPurchaseOrder createSpecialPurchaseOrder()
   {
     SpecialPurchaseOrderImpl specialPurchaseOrder = new SpecialPurchaseOrderImpl();
@@ -142,6 +143,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public TaskContainer createTaskContainer()
   {
     TaskContainerImpl taskContainer = new TaskContainerImpl();
@@ -152,6 +154,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Task createTask()
   {
     TaskImpl task = new TaskImpl();
@@ -162,6 +165,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Unsettable1 createUnsettable1()
   {
     Unsettable1Impl unsettable1 = new Unsettable1Impl();
@@ -172,6 +176,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Unsettable2WithDefault createUnsettable2WithDefault()
   {
     Unsettable2WithDefaultImpl unsettable2WithDefault = new Unsettable2WithDefaultImpl();
@@ -182,6 +187,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PersistentContainment createPersistentContainment()
   {
     PersistentContainmentImpl persistentContainment = new PersistentContainmentImpl();
@@ -192,6 +198,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public TransientContainer createTransientContainer()
   {
     TransientContainerImpl transientContainer = new TransientContainerImpl();
@@ -202,6 +209,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NotUnsettable createNotUnsettable()
   {
     NotUnsettableImpl notUnsettable = new NotUnsettableImpl();
@@ -212,6 +220,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NotUnsettableWithDefault createNotUnsettableWithDefault()
   {
     NotUnsettableWithDefaultImpl notUnsettableWithDefault = new NotUnsettableWithDefaultImpl();
@@ -222,6 +231,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public MapHolder createMapHolder()
   {
     MapHolderImpl mapHolder = new MapHolderImpl();
@@ -322,6 +332,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EnumListHolder createEnumListHolder()
   {
     EnumListHolderImpl enumListHolder = new EnumListHolderImpl();
@@ -332,6 +343,7 @@ public class Model2FactoryImpl extends EFactoryImpl implements Model2Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Model2Package getModel2Package()
   {
     return (Model2Package)getEPackage();

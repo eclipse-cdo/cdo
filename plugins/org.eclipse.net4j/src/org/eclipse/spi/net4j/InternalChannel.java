@@ -79,6 +79,7 @@ public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle
    */
   public interface SendQueueEvent extends IEvent
   {
+    @Override
     public InternalChannel getSource();
 
     public Type getType();

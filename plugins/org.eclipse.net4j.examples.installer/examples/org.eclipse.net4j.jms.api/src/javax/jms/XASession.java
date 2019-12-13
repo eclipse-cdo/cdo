@@ -93,6 +93,7 @@ public interface XASession extends Session
     *                         transaction mode due to some internal error.
     */
 
+  @Override
   boolean getTransacted() throws JMSException;
 
   /** Throws a <CODE>TransactionInProgressException</CODE>, since it should
@@ -103,6 +104,7 @@ public interface XASession extends Session
     *
     */
 
+  @Override
   void commit() throws JMSException;
 
   /** Throws a <CODE>TransactionInProgressException</CODE>, since it should
@@ -113,5 +115,6 @@ public interface XASession extends Session
     *
     */
 
+  @Override
   void rollback() throws JMSException;
 }

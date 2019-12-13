@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -102,26 +102,31 @@ public class Bugzilla_265114_Test extends AbstractCDOTest
       this.session = session;
     }
 
+    @Override
     public int getPriority()
     {
       return PRIORITY;
     }
 
+    @Override
     public String getRegex()
     {
       return null;
     }
 
+    @Override
     public CDOView getView(URI uri, ResourceSet resourceSet)
     {
       return session.openTransaction(resourceSet);
     }
 
+    @Override
     public URI getResourceURI(CDOView view, String path)
     {
       return null;
     }
 
+    @Override
     public boolean matchesRegex(URI uri)
     {
       return true;

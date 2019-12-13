@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -41,6 +41,7 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionP
 {
   public static final int TEMP_VIEW_ID = 0;
 
+  @Override
   public InternalSessionManager getManager();
 
   /**
@@ -68,12 +69,16 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionP
    */
   public void setOpenOnClientSide();
 
+  @Override
   public InternalView[] getViews();
 
+  @Override
   public InternalView getView(int viewID);
 
+  @Override
   public InternalView openView(int viewID, CDOBranchPoint branchPoint);
 
+  @Override
   public InternalTransaction openTransaction(int viewID, CDOBranchPoint branchPoint);
 
   public void viewClosed(InternalView view);

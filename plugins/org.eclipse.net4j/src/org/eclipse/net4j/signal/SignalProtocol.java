@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2006-2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -114,6 +114,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   /**
    * @since 2.0
    */
+  @Override
   public long getTimeout()
   {
     return timeout;
@@ -124,6 +125,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
    *
    * @since 2.0
    */
+  @Override
   public void setTimeout(long timeout)
   {
     setTimeout(timeout, false);
@@ -161,16 +163,19 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     return timeoutSent;
   }
 
+  @Override
   public IStreamWrapper getStreamWrapper()
   {
     return streamWrapper;
   }
 
+  @Override
   public void setStreamWrapper(IStreamWrapper streamWrapper)
   {
     this.streamWrapper = streamWrapper;
   }
 
+  @Override
   public void addStreamWrapper(IStreamWrapper streamWrapper)
   {
     if (this.streamWrapper == null)
@@ -186,6 +191,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   /**
    * @since 2.0
    */
+  @Override
   public IChannel open(IConnector connector)
   {
     return connector.openChannel(this);
@@ -194,6 +200,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   /**
    * @since 2.0
    */
+  @Override
   public void close()
   {
     LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
@@ -223,6 +230,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
    * Handles a given (incoming) buffer. Creates a signal to act upon the given buffer or uses a previously created
    * signal.
    */
+  @Override
   public void handleBuffer(IBuffer buffer)
   {
     ByteBuffer byteBuffer = buffer.getByteBuffer();
@@ -700,11 +708,13 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
         private boolean firstBuffer = addSignalID;
 
+        @Override
         public short getBufferCapacity()
         {
           return delegate.getBufferCapacity();
         }
 
+        @Override
         public IBuffer provideBuffer()
         {
           IChannel channel = getChannel();
@@ -735,6 +745,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
           return buffer;
         }
 
+        @Override
         public void retainBuffer(IBuffer buffer)
         {
           delegate.retainBuffer(buffer);

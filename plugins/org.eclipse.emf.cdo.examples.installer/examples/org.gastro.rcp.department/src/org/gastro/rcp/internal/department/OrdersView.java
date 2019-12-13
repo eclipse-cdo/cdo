@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -69,6 +69,7 @@ public class OrdersView extends ViewPart
       {
         treeViewer.getTree().getDisplay().asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             try
@@ -120,6 +121,7 @@ public class OrdersView extends ViewPart
       treeViewer = new TreeViewer(parent, SWT.NONE);
       treeViewer.addSelectionChangedListener(new ISelectionChangedListener()
       {
+        @Override
         public void selectionChanged(SelectionChangedEvent event)
         {
           Object object = ((IStructuredSelection)event.getSelection()).getFirstElement();
@@ -128,6 +130,7 @@ public class OrdersView extends ViewPart
             OrderDetail orderDetail = (OrderDetail)object;
             IModel.INSTANCE.modify(orderDetail, new ITransactionalOperation<OrderDetail>()
             {
+              @Override
               public Object execute(OrderDetail orderDetail)
               {
                 orderDetail.setState(orderDetail.getState() == OrderState.ORDERED ? OrderState.SERVED : OrderState.ORDERED);

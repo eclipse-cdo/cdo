@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2012, 2015-2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2012, 2015-2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -323,6 +323,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       public void doManipulations(EList<?> list)
       {
         list.remove(5);
@@ -334,6 +335,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       public void doManipulations(EList<?> list)
       {
         list.remove(list.size() - 1);
@@ -345,6 +347,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       public void doManipulations(EList<?> list)
       {
         list.remove(0);
@@ -357,6 +360,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       public void doManipulations(EList<?> list)
       {
         list.move(2, 7);
@@ -369,6 +373,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       public void doManipulations(EList<?> list)
       {
         list.move(2, list.size() - 1);
@@ -381,6 +386,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       public void doManipulations(EList<?> list)
       {
         list.move(2, 0);
@@ -393,6 +399,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       public void doManipulations(EList<?> list)
       {
         list.move(1, 3);
@@ -406,6 +413,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       public void doManipulations(EList<?> list)
       {
         list.move(1, 7);
@@ -419,6 +427,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       @SuppressWarnings("unchecked")
       public void doManipulations(EList<?> list)
       {
@@ -435,6 +444,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       @SuppressWarnings("unchecked")
       public void doManipulations(EList<?> list)
       {
@@ -450,6 +460,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       @SuppressWarnings("unchecked")
       public void doManipulations(EList<?> list)
       {
@@ -466,6 +477,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       @SuppressWarnings("unchecked")
       public void doManipulations(EList<?> list)
       {
@@ -505,6 +517,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       @SuppressWarnings("unchecked")
       public void doManipulations(EList<?> list)
       {
@@ -544,6 +557,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       @SuppressWarnings("unchecked")
       public void doManipulations(EList<?> list)
       {
@@ -563,6 +577,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       @SuppressWarnings("unchecked")
       public void doManipulations(EList<?> list)
       {
@@ -580,6 +595,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       @SuppressWarnings("unchecked")
       public void doManipulations(EList<?> list)
       {
@@ -596,6 +612,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       @SuppressWarnings("unchecked")
       public void doManipulations(EList<?> list)
       {
@@ -610,6 +627,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       @SuppressWarnings("unchecked")
       public void doManipulations(EList<?> list)
       {
@@ -628,6 +646,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       @SuppressWarnings("unchecked")
       public void doManipulations(EList<?> list)
       {
@@ -648,6 +667,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       @SuppressWarnings("unchecked")
       public void doManipulations(EList<?> list)
       {
@@ -666,6 +686,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     testStoreDelta(new ListManipulator()
     {
+      @Override
       @SuppressWarnings("unchecked")
       public void doManipulations(EList<?> list)
       {

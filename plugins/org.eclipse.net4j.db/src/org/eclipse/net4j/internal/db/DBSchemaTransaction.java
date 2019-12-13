@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -52,11 +52,13 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
     workingCopy = DelegatingDBSchemaElement.wrap(copy);
   }
 
+  @Override
   public DBDatabase getDatabase()
   {
     return database;
   }
 
+  @Override
   public DBConnection getConnection()
   {
     return connection;
@@ -67,11 +69,13 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
     this.connection = connection;
   }
 
+  @Override
   public IDBSchema getWorkingCopy()
   {
     return workingCopy;
   }
 
+  @Override
   public DBSchemaDelta ensureSchema(IDBSchema schema, IDBDeltaVisitor.Filter.Policy policy)
   {
     IDBSchema workingCopy = getWorkingCopy();
@@ -86,16 +90,19 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
     return result;
   }
 
+  @Override
   public DBSchemaDelta ensureSchema(IDBSchema schema)
   {
     return ensureSchema(schema, DEFAULT_ENSURE_SCHEMA_POLICY);
   }
 
+  @Override
   public DBSchemaDelta getSchemaDelta()
   {
     return (DBSchemaDelta)workingCopy.compare(oldSchemaCopy);
   }
 
+  @Override
   public DBSchemaDelta commit()
   {
     if (connection == null)
@@ -119,6 +126,7 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
     }
   }
 
+  @Override
   public DBSchemaDelta run(Connection connection) throws SQLException
   {
     DBSchemaDelta delta = getSchemaDelta();
@@ -144,6 +152,7 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
     return delta;
   }
 
+  @Override
   public void close()
   {
     doClose(null);
@@ -161,6 +170,7 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
     }
   }
 
+  @Override
   public boolean isClosed()
   {
     return workingCopy == null;

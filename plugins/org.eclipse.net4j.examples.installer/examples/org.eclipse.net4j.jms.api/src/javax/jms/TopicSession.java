@@ -81,6 +81,7 @@ public interface TopicSession extends Session
     *                         due to some internal error.
     */
 
+  @Override
   Topic createTopic(String topicName) throws JMSException;
 
   /** Creates a nondurable subscriber to the specified topic.
@@ -175,6 +176,7 @@ public interface TopicSession extends Session
     * @exception InvalidDestinationException if an invalid topic is specified.
     */
 
+  @Override
   TopicSubscriber createDurableSubscriber(Topic topic, String name) throws JMSException;
 
   /** Creates a durable subscriber to the specified topic, using a
@@ -218,6 +220,7 @@ public interface TopicSession extends Session
     * @exception InvalidSelectorException if the message selector is invalid.
     */
 
+  @Override
   TopicSubscriber createDurableSubscriber(Topic topic, String name, String messageSelector, boolean noLocal) throws JMSException;
 
   /** Creates a publisher for the specified topic.
@@ -248,6 +251,7 @@ public interface TopicSession extends Session
     *                         topic due to some internal error.
     */
 
+  @Override
   TemporaryTopic createTemporaryTopic() throws JMSException;
 
   /** Unsubscribes a durable subscription that has been created by a client.
@@ -268,5 +272,6 @@ public interface TopicSession extends Session
     *                                        is specified.
     */
 
+  @Override
   void unsubscribe(String name) throws JMSException;
 }

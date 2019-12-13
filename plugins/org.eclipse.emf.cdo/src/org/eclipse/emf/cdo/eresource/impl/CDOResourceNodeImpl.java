@@ -94,6 +94,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public CDOResourceFolder getFolder()
   {
     return (CDOResourceFolder)eGet(EresourcePackage.Literals.CDO_RESOURCE_NODE__FOLDER, true);
@@ -113,6 +114,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
    *
    * @generated NOT
    */
+  @Override
   public void setFolder(CDOResourceFolder newFolder)
   {
     basicSetFolder(newFolder, true);
@@ -151,6 +153,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME, true);
@@ -170,6 +173,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
    *
    * @generated NOT
    */
+  @Override
   public void setName(String newName)
   {
     basicSetName(newName, true);
@@ -210,6 +214,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
    *
    * @generated NOT
    */
+  @Override
   public String getPath()
   {
     if (isRoot())
@@ -231,6 +236,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
    *
    * @generated NOT
    */
+  @Override
   public void setPath(String newPath)
   {
     InternalCDOTransaction transaction = cdoView().toTransaction();
@@ -265,6 +271,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   /**
    * @since 4.4
    */
+  @Override
   public String getExtension()
   {
     String name = getName();
@@ -283,6 +290,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   /**
    * @since 4.7
    */
+  @Override
   public void setExtension(String extension)
   {
     InternalCDOView view = cdoView();
@@ -328,6 +336,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   /**
    * @since 4.4
    */
+  @Override
   public String trimExtension()
   {
     return getBasename();
@@ -336,6 +345,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   /**
    * @since 4.7
    */
+  @Override
   public String getBasename()
   {
     String name = getName();
@@ -354,6 +364,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   /**
    * @since 4.7
    */
+  @Override
   public void setBasename(String basename)
   {
     InternalCDOView view = cdoView();
@@ -405,6 +416,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   /**
    * @ADDED
    */
+  @Override
   public URI getURI()
   {
     InternalCDOView view = cdoView();
@@ -517,6 +529,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
      */
     public static final class Single implements ExtensionFinder
     {
+      @Override
       public int findExtension(String name)
       {
         return name.lastIndexOf(DOT);
@@ -528,6 +541,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
      */
     public static final class Multi implements ExtensionFinder
     {
+      @Override
       public int findExtension(String name)
       {
         return name.indexOf(DOT);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -164,6 +164,7 @@ public abstract class MonitoredThread extends Thread
       }
     }
 
+    @Override
     public void handleStarting(MonitoredThread thread)
     {
       if (startLatch != null)
@@ -183,6 +184,7 @@ public abstract class MonitoredThread extends Thread
       }
     }
 
+    @Override
     public void handleFinished(MonitoredThread thread)
     {
       synchronized (threads)
@@ -191,6 +193,7 @@ public abstract class MonitoredThread extends Thread
       }
     }
 
+    @Override
     public void run()
     {
       startupThreads();

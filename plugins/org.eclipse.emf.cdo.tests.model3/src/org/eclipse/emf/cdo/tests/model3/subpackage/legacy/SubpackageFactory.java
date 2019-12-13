@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -31,6 +31,7 @@ public interface SubpackageFactory extends EFactory, org.eclipse.emf.cdo.tests.m
    */
   SubpackageFactory eINSTANCE = org.eclipse.emf.cdo.tests.model3.subpackage.legacy.impl.SubpackageFactoryImpl.init();
 
+  @Override
   /**
    * Returns a new object of class '<em>Class2</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -39,6 +40,7 @@ public interface SubpackageFactory extends EFactory, org.eclipse.emf.cdo.tests.m
    */
   Class2 createClass2();
 
+  @Override
   /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->

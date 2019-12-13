@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -31,6 +31,7 @@ public class XORStreamWrapper implements IStreamWrapper
     return key;
   }
 
+  @Override
   public XORInputStream wrapInputStream(InputStream in) throws IOException
   {
     if (in instanceof XORInputStream)
@@ -41,6 +42,7 @@ public class XORStreamWrapper implements IStreamWrapper
     return new XORInputStream(in, key);
   }
 
+  @Override
   public XOROutputStream wrapOutputStream(OutputStream out) throws IOException
   {
     if (out instanceof XOROutputStream)
@@ -51,10 +53,12 @@ public class XORStreamWrapper implements IStreamWrapper
     return new XOROutputStream(out, key);
   }
 
+  @Override
   public void finishInputStream(InputStream in) throws IOException
   {
   }
 
+  @Override
   public void finishOutputStream(OutputStream out) throws IOException
   {
   }

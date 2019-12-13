@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -44,26 +44,31 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> impleme
     return PROPERTIES_FILE;
   }
 
+  @Override
   public CDOCheckout getCheckout(String id)
   {
     return getElement(id);
   }
 
+  @Override
   public CDOCheckout getCheckout(CDOView view)
   {
     return viewMap.get(view);
   }
 
+  @Override
   public CDOCheckout getCheckoutByLabel(String label)
   {
     return getElementByLabel(label);
   }
 
+  @Override
   public CDOCheckout[] getCheckouts()
   {
     return getElements();
   }
 
+  @Override
   public CDOCheckout addCheckout(Properties properties)
   {
     return newElement(properties);
@@ -161,16 +166,19 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> impleme
       return (CDOCheckoutManager)super.getSource();
     }
 
+    @Override
     public CDOCheckout getCheckout()
     {
       return checkout;
     }
 
+    @Override
     public CDOCheckout.State getOldState()
     {
       return oldState;
     }
 
+    @Override
     public CDOCheckout.State getNewState()
     {
       return newState;

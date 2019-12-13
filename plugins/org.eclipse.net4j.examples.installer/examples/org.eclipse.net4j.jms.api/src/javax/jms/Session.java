@@ -406,6 +406,7 @@ public interface Session extends Runnable
    *
    * @see javax.jms.ServerSession
    */
+  @Override
   public void run();
 
   /** Creates a <CODE>MessageProducer</CODE> to send messages to the specified

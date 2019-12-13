@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -187,31 +187,37 @@ public final class CDOWorkspaceUtil
       delegate = base;
     }
 
+    @Override
     public CDOWorkspace getWorkspace()
     {
       return delegate.getWorkspace();
     }
 
+    @Override
     public Set<CDOID> getIDs()
     {
       return delegate.getIDs();
     }
 
+    @Override
     public CDORevision getRevision(CDOID id)
     {
       return delegate.getRevision(id);
     }
 
+    @Override
     public boolean isEmpty()
     {
       return getIDs().isEmpty();
     }
 
+    @Override
     public boolean containsID(CDOID id)
     {
       return getIDs().contains(id);
     }
 
+    @Override
     public boolean isAddedObject(CDOID id)
     {
       return containsID(id) && getRevision(id) == null;

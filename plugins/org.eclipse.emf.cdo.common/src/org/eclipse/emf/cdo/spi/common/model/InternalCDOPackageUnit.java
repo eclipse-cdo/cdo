@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -30,6 +30,7 @@ import java.io.IOException;
  */
 public interface InternalCDOPackageUnit extends CDOPackageUnit
 {
+  @Override
   public InternalCDOPackageRegistry getPackageRegistry();
 
   public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry);
@@ -40,10 +41,13 @@ public interface InternalCDOPackageUnit extends CDOPackageUnit
 
   public void setTimeStamp(long timeStamp);
 
+  @Override
   public InternalCDOPackageInfo getTopLevelPackageInfo();
 
+  @Override
   public InternalCDOPackageInfo getPackageInfo(String packageURI);
 
+  @Override
   public InternalCDOPackageInfo[] getPackageInfos();
 
   public void setPackageInfos(InternalCDOPackageInfo[] packageInfos);

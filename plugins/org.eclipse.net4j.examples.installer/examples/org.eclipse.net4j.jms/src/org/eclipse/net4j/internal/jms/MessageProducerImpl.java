@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -49,76 +49,91 @@ public class MessageProducerImpl extends Lifecycle implements MessageProducer
     return session;
   }
 
+  @Override
   public int getDeliveryMode()
   {
     return deliveryMode;
   }
 
+  @Override
   public void setDeliveryMode(int deliveryMode)
   {
     this.deliveryMode = deliveryMode;
   }
 
+  @Override
   public int getPriority()
   {
     return priority;
   }
 
+  @Override
   public void setPriority(int priority)
   {
     this.priority = priority;
   }
 
+  @Override
   public long getTimeToLive()
   {
     return timeToLive;
   }
 
+  @Override
   public void setTimeToLive(long timeToLive)
   {
     this.timeToLive = timeToLive;
   }
 
+  @Override
   public DestinationImpl getDestination()
   {
     return destination;
   }
 
+  @Override
   public boolean getDisableMessageID()
   {
     return disableMessageID;
   }
 
+  @Override
   public void setDisableMessageID(boolean disableMessageID)
   {
     this.disableMessageID = disableMessageID;
   }
 
+  @Override
   public boolean getDisableMessageTimestamp()
   {
     return disableMessageTimestamp;
   }
 
+  @Override
   public void setDisableMessageTimestamp(boolean disableMessageTimestamp)
   {
     this.disableMessageTimestamp = disableMessageTimestamp;
   }
 
+  @Override
   public void send(Message message) throws JMSException
   {
     send(getDestination(), message, getDeliveryMode(), getPriority(), getTimeToLive());
   }
 
+  @Override
   public void send(Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
   {
     send(getDestination(), message, getDeliveryMode(), getPriority(), getTimeToLive());
   }
 
+  @Override
   public void send(Destination destination, Message message) throws JMSException
   {
     send(destination, message, getDeliveryMode(), getPriority(), getTimeToLive());
   }
 
+  @Override
   public void send(Destination destination, Message message, int deliveryMode, int priority, long timeToLive) throws JMSException
   {
     if (message == null)
@@ -152,6 +167,7 @@ public class MessageProducerImpl extends Lifecycle implements MessageProducer
     session.sendMessage(message);
   }
 
+  @Override
   public void close()
   {
     throw new NotYetImplementedException();

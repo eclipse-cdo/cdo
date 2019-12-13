@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -108,11 +108,13 @@ public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> imple
     this.negotiationTimeout = negotiationTimeout;
   }
 
+  @Override
   public Response sendAuthenticationChallenge(Challenge challenge) throws Exception
   {
     return new AuthenticationRequest(this, CDOAdminProtocolConstants.SIGNAL_AUTHENTICATION, challenge).send(negotiationTimeout, new Monitor());
   }
 
+  @Override
   public Response sendCredentialsChallenge(Challenge challenge, String userID, CredentialsUpdateOperation operation) throws Exception
   {
     throw new UnsupportedOperationException("sendCredentialsChallenge"); //$NON-NLS-1$
@@ -171,6 +173,7 @@ public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> imple
       return container;
     }
 
+    @Override
     public CDOAdminServerProtocol create(String description)
     {
       CDOAdminServer admin = getAdmin();

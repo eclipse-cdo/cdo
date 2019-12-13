@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -41,142 +41,170 @@ public abstract class DelegatingCommitContext implements IStoreAccessor.CommitCo
 {
   protected abstract CommitContext getDelegate();
 
+  @Override
   public ITransaction getTransaction()
   {
     return getDelegate().getTransaction();
   }
 
+  @Override
   public CDOBranchPoint getBranchPoint()
   {
     return getDelegate().getBranchPoint();
   }
 
+  @Override
   public String getUserID()
   {
     return getDelegate().getUserID();
   }
 
+  @Override
   public String getCommitComment()
   {
     return getDelegate().getCommitComment();
   }
 
+  @Override
   public InternalCDOPackageRegistry getPackageRegistry()
   {
     return getDelegate().getPackageRegistry();
   }
 
+  @Override
   public InternalCDOPackageUnit[] getNewPackageUnits()
   {
     return getDelegate().getNewPackageUnits();
   }
 
+  @Override
   public InternalCDORevision[] getNewObjects()
   {
     return getDelegate().getNewObjects();
   }
 
+  @Override
   public InternalCDORevision[] getDirtyObjects()
   {
     return getDelegate().getDirtyObjects();
   }
 
+  @Override
   public InternalCDORevisionDelta[] getDirtyObjectDeltas()
   {
     return getDelegate().getDirtyObjectDeltas();
   }
 
+  @Override
   public CDOID[] getDetachedObjects()
   {
     return getDelegate().getDetachedObjects();
   }
 
+  @Override
   public Map<CDOID, EClass> getDetachedObjectTypes()
   {
     return getDelegate().getDetachedObjectTypes();
   }
 
+  @Override
   public CDORevision getRevision(CDOID id)
   {
     return getDelegate().getRevision(id);
   }
 
+  @Override
   public Map<CDOID, CDOID> getIDMappings()
   {
     return getDelegate().getIDMappings();
   }
 
+  @Override
   public long getPreviousTimeStamp()
   {
     return getDelegate().getPreviousTimeStamp();
   }
 
+  @Override
   public long getLastUpdateTime()
   {
     return getDelegate().getLastUpdateTime();
   }
 
+  @Override
   public boolean isClearResourcePathCache()
   {
     return getDelegate().isClearResourcePathCache();
   }
 
+  @Override
   public boolean isUsingEcore()
   {
     return getDelegate().isUsingEcore();
   }
 
+  @Override
   public boolean isUsingEtypes()
   {
     return getDelegate().isUsingEtypes();
   }
 
+  @Override
   @Deprecated
   public boolean isAutoReleaseLocksEnabled()
   {
     return getDelegate().isAutoReleaseLocksEnabled();
   }
 
+  @Override
   public CDOLockState[] getLocksOnNewObjects()
   {
     return getDelegate().getLocksOnNewObjects();
   }
 
+  @Override
   public CDOID[] getIDsToUnlock()
   {
     return getDelegate().getIDsToUnlock();
   }
 
+  @Override
   public CDOBranchVersion[] getDetachedObjectVersions()
   {
     return getDelegate().getDetachedObjectVersions();
   }
 
+  @Override
   public ExtendedDataInputStream getLobs()
   {
     return getDelegate().getLobs();
   }
 
+  @Override
   public CDOCommitInfo createCommitInfo()
   {
     return getDelegate().createCommitInfo();
   }
 
+  @Override
   public List<LockState<Object, IView>> getPostCommmitLockStates()
   {
     return getDelegate().getPostCommmitLockStates();
   }
 
+  @Override
   public byte getRollbackReason()
   {
     return getDelegate().getRollbackReason();
   }
 
+  @Override
   public String getRollbackMessage()
   {
     return getDelegate().getRollbackMessage();
   }
 
+  @Override
   public List<CDOIDReference> getXRefs()
   {
     return getDelegate().getXRefs();

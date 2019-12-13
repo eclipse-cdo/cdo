@@ -243,106 +243,126 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
   }
 
+  @Override
   public CDORepositoryInfo getRepositoryInfo()
   {
     return repositoryInfo;
   }
 
+  @Override
   public void setRepositoryInfo(CDORepositoryInfo repositoryInfo)
   {
     this.repositoryInfo = repositoryInfo;
   }
 
+  @Override
   public int getSessionID()
   {
     return sessionID;
   }
 
+  @Override
   public void setSessionID(int sessionID)
   {
     this.sessionID = sessionID;
   }
 
+  @Override
   public String getUserID()
   {
     return userID;
   }
 
+  @Override
   public void setUserID(String userID)
   {
     this.userID = userID;
   }
 
+  @Override
   public ExceptionHandler getExceptionHandler()
   {
     return exceptionHandler;
   }
 
+  @Override
   public void setExceptionHandler(ExceptionHandler exceptionHandler)
   {
     checkInactive();
     this.exceptionHandler = exceptionHandler;
   }
 
+  @Override
   public CDOIDGenerator getIDGenerator()
   {
     return idGenerator;
   }
 
+  @Override
   public void setIDGenerator(CDOIDGenerator idGenerator)
   {
     checkInactive();
     this.idGenerator = idGenerator;
   }
 
+  @Override
   public InternalCDOPackageRegistry getPackageRegistry()
   {
     return packageRegistry;
   }
 
+  @Override
   public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry)
   {
     this.packageRegistry = packageRegistry;
   }
 
+  @Override
   public InternalCDOBranchManager getBranchManager()
   {
     return branchManager;
   }
 
+  @Override
   public void setBranchManager(InternalCDOBranchManager branchManager)
   {
     checkInactive();
     this.branchManager = branchManager;
   }
 
+  @Override
   public InternalCDORevisionManager getRevisionManager()
   {
     return revisionManager;
   }
 
+  @Override
   public void setRevisionManager(InternalCDORevisionManager revisionManager)
   {
     checkInactive();
     this.revisionManager = revisionManager;
   }
 
+  @Override
   public InternalCDOCommitInfoManager getCommitInfoManager()
   {
     return commitInfoManager;
   }
 
+  @Override
   public void setCommitInfoManager(InternalCDOCommitInfoManager commitInfoManager)
   {
     checkInactive();
     this.commitInfoManager = commitInfoManager;
   }
 
+  @Override
   public CDOSessionProtocol getSessionProtocol()
   {
     return sessionProtocol;
   }
 
+  @Override
   public void setSessionProtocol(CDOSessionProtocol sessionProtocol)
   {
     if (exceptionHandler == null)
@@ -365,11 +385,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   /**
    * @since 3.0
    */
+  @Override
   public CDOFetchRuleManager getFetchRuleManager()
   {
     return fetchRuleManager;
   }
 
+  @Override
   public ExecutorService getExecutorService()
   {
     return ConcurrencyUtil.getExecutorService(sessionProtocol);
@@ -378,12 +400,14 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   /**
    * @since 3.0
    */
+  @Override
   public void setFetchRuleManager(CDOFetchRuleManager fetchRuleManager)
   {
     if (fetchRuleManager == null)
     {
       fetchRuleManager = new NOOPFetchRuleManager()
       {
+        @Override
         public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
         {
           return options().getCollectionLoadingPolicy();
@@ -394,23 +418,27 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     this.fetchRuleManager = fetchRuleManager;
   }
 
+  @Override
   @Deprecated
   public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public void setAuthenticator(org.eclipse.emf.cdo.common.protocol.CDOAuthenticator authenticator)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public IPasswordCredentialsProvider getCredentialsProvider()
   {
     return credentialsProvider;
   }
 
+  @Override
   public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
   {
     this.credentialsProvider = credentialsProvider;
@@ -421,21 +449,25 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return mainBranchLocal;
   }
 
+  @Override
   public void setMainBranchLocal(boolean mainBranchLocal)
   {
     this.mainBranchLocal = mainBranchLocal;
   }
 
+  @Override
   public InternalCDORemoteSessionManager getRemoteSessionManager()
   {
     return remoteSessionManager;
   }
 
+  @Override
   public void setRemoteSessionManager(InternalCDORemoteSessionManager remoteSessionManager)
   {
     this.remoteSessionManager = remoteSessionManager;
   }
 
+  @Override
   public CDOLobStore getLobStore()
   {
     final CDOLobStore cache = options().getLobCache();
@@ -536,6 +568,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     });
   }
 
+  @Override
   public void close()
   {
     LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
@@ -544,6 +577,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   /**
    * @since 2.0
    */
+  @Override
   public boolean isClosed()
   {
     return !isActive();
@@ -552,11 +586,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   /**
    * @since 2.0
    */
+  @Override
   public CDOSession.Options options()
   {
     return options;
   }
 
+  @Override
   public IRegistry<String, Object> properties()
   {
     return properties;
@@ -570,12 +606,14 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return new OptionsImpl();
   }
 
+  @Override
   public Object processPackage(Object value)
   {
     CDOFactoryImpl.prepareDynamicEPackage(value);
     return value;
   }
 
+  @Override
   public EPackage[] loadPackages(CDOPackageUnit packageUnit)
   {
     if (packageUnit.getOriginalType().isGenerated())
@@ -589,6 +627,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return getSessionProtocol().loadPackages(packageUnit);
   }
 
+  @Override
   public void acquireAtomicRequestLock(Object key)
   {
     try
@@ -601,6 +640,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   }
 
+  @Override
   public void releaseAtomicRequestLock(Object key)
   {
     lockManager.unlock(LockType.WRITE, key, singletonCollection);
@@ -622,6 +662,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   /**
    * @since 2.0
    */
+  @Override
   public long refresh()
   {
     checkActive();
@@ -633,6 +674,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return refresh(false);
   }
 
+  @Override
   public long refresh(RefreshSessionResult.Provider provider)
   {
     Map<CDOBranch, List<InternalCDOView>> views = new HashMap<CDOBranch, List<InternalCDOView>>();
@@ -659,6 +701,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     return refresh(new RefreshSessionResult.Provider()
     {
+      @Override
       public RefreshSessionResult getRefreshSessionResult(Map<CDOBranch, List<InternalCDOView>> views,
           Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
       {
@@ -671,6 +714,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     });
   }
 
+  @Override
   public void processRefreshSessionResult(RefreshSessionResult result, CDOBranch branch, List<InternalCDOView> branchViews,
       Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
   {
@@ -769,6 +813,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   }
 
+  @Override
   public long getLastUpdateTime()
   {
     synchronized (lastUpdateTimeLock)
@@ -777,6 +822,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   }
 
+  @Override
   public void setLastUpdateTime(long lastUpdateTime)
   {
     synchronized (lastUpdateTimeLock)
@@ -790,11 +836,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   }
 
+  @Override
   public void waitForUpdate(long updateTime)
   {
     waitForUpdate(updateTime, NO_TIMEOUT);
   }
 
+  @Override
   public boolean waitForUpdate(long updateTime, long timeoutMillis)
   {
     long end = timeoutMillis == NO_TIMEOUT ? Long.MAX_VALUE : System.currentTimeMillis() + timeoutMillis;
@@ -842,6 +890,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   }
 
+  @Override
   public boolean runAfterUpdate(final long updateTime, final Runnable runnable)
   {
     synchronized (lastUpdateTimeLock)
@@ -850,6 +899,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       {
         addListener(new IListener()
         {
+          @Override
           public void notifyEvent(IEvent event)
           {
             if (event instanceof CDOSessionInvalidationEvent)
@@ -875,6 +925,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   /**
    * @since 3.0
    */
+  @Override
   public Object resolveElementProxy(CDORevision revision, EStructuralFeature feature, int accessIndex, int serverIndex)
   {
     if (!((InternalCDORevision)revision).isUnchunked())
@@ -889,6 +940,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   /**
    * @since 4.0
    */
+  @Override
   public void resolveAllElementProxies(CDORevision revision)
   {
     InternalCDORevision internalRevision = (InternalCDORevision)revision;
@@ -920,39 +972,46 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   }
 
+  @Override
   public void ensureChunks(InternalCDORevision revision, int chunkSize)
   {
     resolveAllElementProxies(revision);
   }
 
+  @Override
   public void handleRepositoryTypeChanged(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
   {
     fireEvent(new RepositoryTypeChangedEvent(this, oldType, newType));
   }
 
+  @Override
   public void handleRepositoryStateChanged(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
   {
     fireEvent(new RepositoryStateChangedEvent(this, oldState, newState));
   }
 
+  @Override
   @Deprecated
   public void handleBranchNotification(InternalCDOBranch branch)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public void handleCommitNotification(CDOCommitInfo commitInfo)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void handleCommitNotification(CommitNotificationInfo info)
   {
     try
@@ -983,6 +1042,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   }
 
+  @Override
   public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender)
   {
     for (InternalCDOView view : getViews())
@@ -1079,28 +1139,33 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   }
 
+  @Override
   public Object startLocalCommit()
   {
     return invalidator.startLocalCommit();
   }
 
+  @Override
   public void endLocalCommit(Object token)
   {
     invalidator.endLocalCommit(token);
   }
 
+  @Override
   @Deprecated
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache, byte securityImpact,
       Map<CDOID, CDOPermission> newPermissions)
@@ -1108,6 +1173,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void invalidate(InvalidationData invalidationData)
   {
     invalidator.reorderInvalidations(invalidationData);
@@ -1118,6 +1184,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return invalidator;
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
@@ -1136,6 +1203,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return MessageFormat.format("Session{0} [{1}]", sessionID, name); //$NON-NLS-1$
   }
 
+  @Override
   public CDOBranchPoint getCommittedSinceLastRefresh(CDOID id)
   {
     if (isSticky())
@@ -1146,6 +1214,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return null;
   }
 
+  @Override
   public void setCommittedSinceLastRefresh(CDOID id, CDOBranchPoint branchPoint)
   {
     if (isSticky())
@@ -1154,6 +1223,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   }
 
+  @Override
   public void clearCommittedSinceLastRefresh()
   {
     if (isSticky())
@@ -1162,11 +1232,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   }
 
+  @Override
   public boolean isSticky()
   {
     return !options().isPassiveUpdateEnabled() && getRepositoryInfo().isSupportingAudits();
   }
 
+  @Override
   public CDOChangeSetData compareRevisions(CDOBranchPoint source, CDOBranchPoint target)
   {
     long now = getLastUpdateTime();
@@ -1193,11 +1265,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return CDORevisionUtil.createChangeSetData(ids, sourceInfo, targetInfo);
   }
 
+  @Override
   public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase, boolean computeChangeSets)
   {
     return getMergeData(target, source, null, sourceBase, computeChangeSets);
   }
 
+  @Override
   public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint targetBase, CDOBranchPoint sourceBase, boolean computeChangeSets)
   {
     boolean auto;
@@ -1269,6 +1343,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         result.getSourceIDs(), sourceChanges, result.getResultBase());
   }
 
+  @Override
   @Deprecated
   public CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint)
   {
@@ -1312,6 +1387,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return info;
   }
 
+  @Override
   @Deprecated
   public void cacheRevisions(CDORevisionAvailabilityInfo info)
   {
@@ -1450,16 +1526,19 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       setCollectionLoadingPolicy(null); // Init default
     }
 
+    @Override
     public CDOSession getContainer()
     {
       return CDOSessionImpl.this;
     }
 
+    @Override
     public boolean isGeneratedPackageEmulationEnabled()
     {
       return generatedPackageEmulationEnabled;
     }
 
+    @Override
     public synchronized void setGeneratedPackageEmulationEnabled(boolean generatedPackageEmulationEnabled)
     {
       this.generatedPackageEmulationEnabled = generatedPackageEmulationEnabled;
@@ -1476,11 +1555,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
     }
 
+    @Override
     public boolean isPassiveUpdateEnabled()
     {
       return passiveUpdateEnabled;
     }
 
+    @Override
     public synchronized void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
     {
       if (this.passiveUpdateEnabled != passiveUpdateEnabled)
@@ -1507,11 +1588,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
     }
 
+    @Override
     public PassiveUpdateMode getPassiveUpdateMode()
     {
       return passiveUpdateMode;
     }
 
+    @Override
     public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
     {
       checkArg(passiveUpdateMode, "passiveUpdateMode"); //$NON-NLS-1$
@@ -1533,11 +1616,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
     }
 
+    @Override
     public LockNotificationMode getLockNotificationMode()
     {
       return lockNotificationMode;
     }
 
+    @Override
     public void setLockNotificationMode(LockNotificationMode lockNotificationMode)
     {
       checkArg(lockNotificationMode, "lockNotificationMode"); //$NON-NLS-1$
@@ -1560,6 +1645,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       this.lockNotificationMode = lockNotificationMode;
     }
 
+    @Override
     public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
     {
       synchronized (this)
@@ -1568,6 +1654,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
     }
 
+    @Override
     public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy)
     {
       if (policy == null)
@@ -1604,6 +1691,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
     }
 
+    @Override
     public CDOLobStore getLobCache()
     {
       synchronized (this)
@@ -1612,6 +1700,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
     }
 
+    @Override
     public void setLobCache(CDOLobStore cache)
     {
       if (cache == null)
@@ -1640,6 +1729,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
     }
 
+    @Override
     public CDOPermissionUpdater getPermissionUpdater()
     {
       synchronized (this)
@@ -1648,6 +1738,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
     }
 
+    @Override
     public void setPermissionUpdater(CDOPermissionUpdater permissionUpdater)
     {
       IListener[] listeners = getListeners();
@@ -1671,6 +1762,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
     }
 
+    @Override
     public boolean isDelegableViewLockEnabled()
     {
       synchronized (this)
@@ -1679,6 +1771,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
     }
 
+    @Override
     public void setDelegableViewLockEnabled(boolean delegableViewLockEnabled)
     {
       IListener[] listeners = getListeners();
@@ -1739,21 +1832,25 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         this.newMode = newMode;
       }
 
+      @Override
       public boolean getOldEnabled()
       {
         return oldEnabled;
       }
 
+      @Override
       public boolean getNewEnabled()
       {
         return newEnabled;
       }
 
+      @Override
       public PassiveUpdateMode getOldMode()
       {
         return oldMode;
       }
 
+      @Override
       public PassiveUpdateMode getNewMode()
       {
         return newMode;
@@ -1776,11 +1873,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         this.newMode = newMode;
       }
 
+      @Override
       public LockNotificationMode getOldMode()
       {
         return oldMode;
       }
 
+      @Override
       public LockNotificationMode getNewMode()
       {
         return newMode;
@@ -1948,6 +2047,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       return commitInfo.getPreviousTimeStamp();
     }
 
+    @Override
     public int compareTo(SessionInvalidation o)
     {
       return CDOCommonUtil.compareTimeStamps(getTimeStamp(), o.getTimeStamp());
@@ -2251,128 +2351,153 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       return (CDOSession)super.getSource();
     }
 
+    @Override
     public CDOCommitInfoManager getCommitInfoManager()
     {
       return commitInfo.getCommitInfoManager();
     }
 
+    @Override
     public CDOTransaction getLocalTransaction()
     {
       return sender;
     }
 
+    @Override
     @Deprecated
     public InternalCDOView getView()
     {
       return sender;
     }
 
+    @Override
     public boolean isRemote()
     {
       return sender == null;
     }
 
+    @Override
     public CDOBranch getBranch()
     {
       return commitInfo.getBranch();
     }
 
+    @Override
     public long getTimeStamp()
     {
       return commitInfo.getTimeStamp();
     }
 
+    @Override
     public long getPreviousTimeStamp()
     {
       return commitInfo.getPreviousTimeStamp();
     }
 
+    @Override
     public CDOCommitInfo getPreviousCommitInfo()
     {
       return commitInfo.getPreviousCommitInfo();
     }
 
+    @Override
     public String getUserID()
     {
       return commitInfo.getUserID();
     }
 
+    @Override
     public String getComment()
     {
       return commitInfo.getComment();
     }
 
+    @Override
     public CDOBranchPoint getMergeSource()
     {
       return commitInfo.getMergeSource();
     }
 
+    @Override
     public CDOCommitInfo getMergedCommitInfo()
     {
       CDOBranchPoint mergeSource = getMergeSource();
       return mergeSource == null ? null : commitInfoManager.getCommitInfo(mergeSource.getBranch(), mergeSource.getTimeStamp(), false);
     }
 
+    @Override
     public boolean isEmpty()
     {
       return false;
     }
 
+    @Override
     public boolean isInitialCommit()
     {
       return commitInfo.isInitialCommit();
     }
 
+    @Override
     public boolean isCommitDataLoaded()
     {
       return commitInfo.isCommitDataLoaded();
     }
 
+    @Override
     public CDOChangeSetData copy()
     {
       return commitInfo.copy();
     }
 
+    @Override
     public void merge(CDOChangeSetData changeSetData)
     {
       commitInfo.merge(changeSetData);
     }
 
+    @Override
     public List<CDOPackageUnit> getNewPackageUnits()
     {
       return commitInfo.getNewPackageUnits();
     }
 
+    @Override
     public List<CDOIDAndVersion> getNewObjects()
     {
       return commitInfo.getNewObjects();
     }
 
+    @Override
     public List<CDORevisionKey> getChangedObjects()
     {
       return commitInfo.getChangedObjects();
     }
 
+    @Override
     public List<CDOIDAndVersion> getDetachedObjects()
     {
       return commitInfo.getDetachedObjects();
     }
 
+    @Override
     public Map<CDOID, CDOChangeKind> getChangeKinds()
     {
       return commitInfo.getChangeKinds();
     }
 
+    @Override
     public CDOChangeKind getChangeKind(CDOID id)
     {
       return commitInfo.getChangeKind(id);
     }
 
+    @Override
     public byte getSecurityImpact()
     {
       return securityImpact;
     }
 
+    @Override
     public Map<CDORevision, CDOPermission> getOldPermissions()
     {
       return oldPermissions;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -54,6 +54,7 @@ public class Bugzilla_340961_Test extends AbstractCDOTest
 
   private final CDORevisionFactory revisionFactory = new CDORevisionFactory()
   {
+    @Override
     public CDORevision createRevision(EClass eClass)
     {
       return new CustomCDORevision(eClass);
@@ -233,6 +234,7 @@ public class Bugzilla_340961_Test extends AbstractCDOTest
       ids = protectedIds;
     }
 
+    @Override
     public void handleRevisionsBeforeSending(ISession session, CDORevision[] revisions, List<CDORevision> additionalRevisions) throws RuntimeException
     {
       for (int i = 0; i < revisions.length; i++)

@@ -67,12 +67,14 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
    * Returns <code>true</code> if this transaction is not closed and contains uncommitted changes, <code>false</code>
    * otherwise.
    */
+  @Override
   public boolean isDirty();
 
   /**
    * Returns <code>true</code> if this transaction contains local modifications that are conflicting with remote
    * modifications, <code>false</code> otherwise.
    */
+  @Override
   public boolean hasConflict();
 
   /**
@@ -191,6 +193,7 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
   /**
    * @since 3.0
    */
+  @Override
   public CDOSavepoint setSavepoint();
 
   /**
@@ -201,6 +204,7 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
   /**
    * @since 3.0
    */
+  @Override
   public CDOSavepoint getLastSavepoint();
 
   public Map<CDOID, CDOObject> getNewObjects();
@@ -283,6 +287,7 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
    */
   public CDOCommitInfo commit(Runnable runnable, int attempts, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException;
 
+  @Override
   public Options options();
 
   /**
@@ -309,6 +314,7 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
      *
      * @since 4.0
      */
+    @Override
     public CDOTransaction getContainer();
 
     /**

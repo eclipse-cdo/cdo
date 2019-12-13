@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2014-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2014-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -35,6 +35,7 @@ public interface CDORevisionPrefetchingPolicy
 {
   public static final CDORevisionPrefetchingPolicy NO_PREFETCHING = new CDORevisionPrefetchingPolicy()
   {
+    @Override
     public List<CDOID> loadAhead(CDORevisionManager revisionManager, CDOBranchPoint branchPoint, EObject targetObject, EStructuralFeature feature, CDOList list,
         int accessIndex, CDOID accessID)
     {

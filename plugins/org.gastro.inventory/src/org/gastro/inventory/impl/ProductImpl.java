@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -70,6 +70,7 @@ public abstract class ProductImpl extends CDOObjectImpl implements Product
    *
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(InventoryPackage.Literals.PRODUCT__NAME, true);
@@ -80,6 +81,7 @@ public abstract class ProductImpl extends CDOObjectImpl implements Product
    *
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(InventoryPackage.Literals.PRODUCT__NAME, newName);
@@ -90,6 +92,7 @@ public abstract class ProductImpl extends CDOObjectImpl implements Product
    *
    * @generated NOT
    */
+  @Override
   public abstract float getCost();
 
 } // ProductImpl

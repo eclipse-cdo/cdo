@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -67,16 +67,19 @@ public abstract class ElementWizard extends Notifier implements IElementWizard, 
     return defaultDescription;
   }
 
+  @Override
   public String getResultDescription()
   {
     return resultDescription;
   }
 
+  @Override
   public Object getResultElement()
   {
     return container.getElement(productGroup, factoryType, resultDescription);
   }
 
+  @Override
   public void create(Composite parent, IManagedContainer container, String productGroup, String factoryType, String defaultDescription,
       ValidationContext context)
   {
@@ -99,6 +102,7 @@ public abstract class ElementWizard extends Notifier implements IElementWizard, 
     }
   }
 
+  @Override
   public void setValidationError(Object source, String message)
   {
     if (context != null)

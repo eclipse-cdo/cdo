@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -137,6 +137,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   {
     private boolean clearUserInfos;
 
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof InternalCDOSessionInvalidationEvent)
@@ -202,21 +203,25 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     this.container = container;
   }
 
+  @Override
   public final IManagedContainer getContainer()
   {
     return container;
   }
 
+  @Override
   public final String getRealmPath()
   {
     return realmPath;
   }
 
+  @Override
   public final IRepository getRepository()
   {
     return repository;
   }
 
+  @Override
   public void setRepository(InternalRepository repository)
   {
     this.repository = repository;
@@ -226,11 +231,13 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     }
   }
 
+  @Override
   public Realm getRealm()
   {
     return realm;
   }
 
+  @Override
   public Role getRole(String id)
   {
     Role item = realm.getRole(id);
@@ -242,6 +249,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return item;
   }
 
+  @Override
   public Group getGroup(String id)
   {
     Group item = realm.getGroup(id);
@@ -253,6 +261,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return item;
   }
 
+  @Override
   public User getUser(String id)
   {
     User item = realm.getUser(id);
@@ -264,11 +273,13 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return item;
   }
 
+  @Override
   public Role addRole(final String id)
   {
     final Role[] result = { null };
     modify(new RealmOperation()
     {
+      @Override
       public void execute(Realm realm)
       {
         result[0] = realm.addRole(id);
@@ -278,11 +289,13 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return result[0];
   }
 
+  @Override
   public Group addGroup(final String id)
   {
     final Group[] result = { null };
     modify(new RealmOperation()
     {
+      @Override
       public void execute(Realm realm)
       {
         result[0] = realm.addGroup(id);
@@ -292,11 +305,13 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return result[0];
   }
 
+  @Override
   public User addUser(final String id)
   {
     final User[] result = { null };
     modify(new RealmOperation()
     {
+      @Override
       public void execute(Realm realm)
       {
         result[0] = realm.addUser(id);
@@ -306,11 +321,13 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return result[0];
   }
 
+  @Override
   public User addUser(final String id, final String password)
   {
     final User[] result = { null };
     modify(new RealmOperation()
     {
+      @Override
       public void execute(Realm realm)
       {
         UserPassword userPassword = SF.createUserPassword();
@@ -324,16 +341,19 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return result[0];
   }
 
+  @Override
   public User addUser(IPasswordCredentials credentials)
   {
     return addUser(credentials.getUserID(), new String(credentials.getPassword()));
   }
 
+  @Override
   public User setPassword(final String id, final String password)
   {
     final User[] result = { null };
     modify(new RealmOperation()
     {
+      @Override
       public void execute(Realm realm)
       {
         result[0] = realm.setPassword(id, password);
@@ -343,11 +363,13 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return result[0];
   }
 
+  @Override
   public Role removeRole(final String id)
   {
     final Role[] result = { null };
     modify(new RealmOperation()
     {
+      @Override
       public void execute(Realm realm)
       {
         result[0] = realm.removeRole(id);
@@ -357,11 +379,13 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return result[0];
   }
 
+  @Override
   public Group removeGroup(final String id)
   {
     final Group[] result = { null };
     modify(new RealmOperation()
     {
+      @Override
       public void execute(Realm realm)
       {
         result[0] = realm.removeGroup(id);
@@ -371,11 +395,13 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return result[0];
   }
 
+  @Override
   public User removeUser(final String id)
   {
     final User[] result = { null };
     modify(new RealmOperation()
     {
+      @Override
       public void execute(Realm realm)
       {
         result[0] = realm.removeUser(id);
@@ -385,22 +411,26 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     return result[0];
   }
 
+  @Override
   public void read(RealmOperation operation)
   {
     checkReady();
     operation.execute(realm);
   }
 
+  @Override
   public void modify(RealmOperation operation)
   {
     modify(operation, false);
   }
 
+  @Override
   public void modify(RealmOperation operation, boolean waitUntilReadable)
   {
     modifyWithInfo(operation, waitUntilReadable);
   }
 
+  @Override
   public CDOCommitInfo modifyWithInfo(RealmOperation operation, boolean waitUntilReadable)
   {
     checkReady();
@@ -432,16 +462,19 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     }
   }
 
+  @Override
   public CommitHandler[] getCommitHandlers()
   {
     return commitHandlers;
   }
 
+  @Override
   public CommitHandler2[] getCommitHandlers2()
   {
     return commitHandlers2;
   }
 
+  @Override
   public void addCommitHandler(CommitHandler handler)
   {
     checkInactive();
@@ -456,6 +489,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     }
   }
 
+  @Override
   public void removeCommitHandler(CommitHandler handler)
   {
     checkInactive();
@@ -916,6 +950,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
    */
   private final class Authenticator implements IAuthenticator2
   {
+    @Override
     public void authenticate(String userID, char[] password) throws SecurityException
     {
       User user = getUser(userID);
@@ -931,12 +966,14 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       }
     }
 
+    @Override
     public void updatePassword(String userID, char[] oldPassword, char[] newPassword)
     {
       authenticate(userID, oldPassword);
       setPassword(userID, new String(newPassword));
     }
 
+    @Override
     public void resetPassword(String adminID, char[] adminPassword, String userID, char[] newPassword)
     {
       authenticate(adminID, adminPassword);
@@ -950,6 +987,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       setPassword(userID, new String(newPassword));
     }
 
+    @Override
     public boolean isAdministrator(String userID)
     {
       Realm realm = getRealm();
@@ -970,12 +1008,14 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
    */
   private final class PermissionManager implements IPermissionManager
   {
+    @Override
     @Deprecated
     public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public CDOPermission getPermission(CDORevision revision, final CDOBranchPoint securityContext, final ISession session)
     {
       String userID = session.getUserID();
@@ -994,6 +1034,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
       PermissionUtil.initViewCreation(new ViewCreator()
       {
+        @Override
         public CDOView createView(CDORevisionProvider revisionProvider)
         {
           CDOView view = CDOServerUtil.openView(session, securityContext, revisionProvider);
@@ -1014,6 +1055,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       }
     }
 
+    @Override
     public boolean hasAnyRule(ISession session, Set<? extends Object> rules)
     {
       String userID = session.getUserID();
@@ -1044,6 +1086,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   {
     private final IRepository.WriteAccessHandler realmValidationHandler = new RealmValidationHandler();
 
+    @Override
     public void handleTransactionBeforeCommitting(ITransaction transaction, final CommitContext commitContext, OMMonitor monitor) throws RuntimeException
     {
       doHandleTransactionBeforeCommitting(transaction, commitContext, monitor);
@@ -1073,6 +1116,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       PermissionUtil.setUser(user.getId());
       PermissionUtil.initViewCreation(new ViewCreator()
       {
+        @Override
         public CDOView createView(CDORevisionProvider revisionProvider)
         {
           return CDOServerUtil.openView(commitContext);
@@ -1121,21 +1165,25 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
           {
             CommitImpactContext commitImpactContext = new PermissionImpl.CommitImpactContext()
             {
+              @Override
               public CDORevision[] getNewObjects()
               {
                 return commitContext.getNewObjects();
               }
 
+              @Override
               public CDORevision[] getDirtyObjects()
               {
                 return revisions;
               }
 
+              @Override
               public CDORevisionDelta[] getDirtyObjectDeltas()
               {
                 return revisionDeltas;
               }
 
+              @Override
               public CDOID[] getDetachedObjects()
               {
                 return commitContext.getDetachedObjects();
@@ -1172,6 +1220,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       }
     }
 
+    @Override
     public void handleTransactionAfterCommitted(ITransaction transaction, final CommitContext commitContext, OMMonitor monitor)
     {
       if (commitContext.getSecurityImpact() == CommitNotificationInfo.IMPACT_REALM)

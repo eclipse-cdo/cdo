@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2009, 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2009, 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -39,36 +39,43 @@ public class PluginElementProcessorList extends Lifecycle implements List<IEleme
   {
   }
 
+  @Override
   public boolean add(IElementProcessor o)
   {
     return processors.add(o);
   }
 
+  @Override
   public void add(int index, IElementProcessor element)
   {
     processors.add(index, element);
   }
 
+  @Override
   public boolean addAll(Collection<? extends IElementProcessor> c)
   {
     return processors.addAll(c);
   }
 
+  @Override
   public boolean addAll(int index, Collection<? extends IElementProcessor> c)
   {
     return processors.addAll(index, c);
   }
 
+  @Override
   public void clear()
   {
     processors.clear();
   }
 
+  @Override
   public boolean contains(Object o)
   {
     return processors.contains(o);
   }
 
+  @Override
   public boolean containsAll(Collection<?> c)
   {
     return processors.containsAll(c);
@@ -80,6 +87,7 @@ public class PluginElementProcessorList extends Lifecycle implements List<IEleme
     return processors.equals(o);
   }
 
+  @Override
   public IElementProcessor get(int index)
   {
     return processors.get(index);
@@ -91,76 +99,91 @@ public class PluginElementProcessorList extends Lifecycle implements List<IEleme
     return processors.hashCode();
   }
 
+  @Override
   public int indexOf(Object o)
   {
     return processors.indexOf(o);
   }
 
+  @Override
   public boolean isEmpty()
   {
     return processors.isEmpty();
   }
 
+  @Override
   public Iterator<IElementProcessor> iterator()
   {
     return processors.iterator();
   }
 
+  @Override
   public int lastIndexOf(Object o)
   {
     return processors.lastIndexOf(o);
   }
 
+  @Override
   public ListIterator<IElementProcessor> listIterator()
   {
     return processors.listIterator();
   }
 
+  @Override
   public ListIterator<IElementProcessor> listIterator(int index)
   {
     return processors.listIterator(index);
   }
 
+  @Override
   public IElementProcessor remove(int index)
   {
     return processors.remove(index);
   }
 
+  @Override
   public boolean remove(Object o)
   {
     return processors.remove(o);
   }
 
+  @Override
   public boolean removeAll(Collection<?> c)
   {
     return processors.removeAll(c);
   }
 
+  @Override
   public boolean retainAll(Collection<?> c)
   {
     return processors.retainAll(c);
   }
 
+  @Override
   public IElementProcessor set(int index, IElementProcessor element)
   {
     return processors.set(index, element);
   }
 
+  @Override
   public int size()
   {
     return processors.size();
   }
 
+  @Override
   public List<IElementProcessor> subList(int fromIndex, int toIndex)
   {
     return processors.subList(fromIndex, toIndex);
   }
 
+  @Override
   public Object[] toArray()
   {
     return processors.toArray();
   }
 
+  @Override
   public <T> T[] toArray(T[] a)
   {
     return processors.toArray(a);
@@ -219,6 +242,7 @@ public class PluginElementProcessorList extends Lifecycle implements List<IEleme
 
     org.eclipse.core.runtime.IRegistryChangeListener listener = new org.eclipse.core.runtime.IRegistryChangeListener()
     {
+      @Override
       public void registryChanged(org.eclipse.core.runtime.IRegistryChangeEvent event)
       {
         org.eclipse.core.runtime.IExtensionDelta[] deltas = event.getExtensionDeltas(NAMESPACE, EXT_POINT);

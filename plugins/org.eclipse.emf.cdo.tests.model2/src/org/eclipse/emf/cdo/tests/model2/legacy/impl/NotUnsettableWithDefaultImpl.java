@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -293,6 +293,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isNotUnsettableBoolean()
   {
     return notUnsettableBoolean;
@@ -302,6 +303,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setNotUnsettableBoolean(boolean newNotUnsettableBoolean)
   {
     boolean oldNotUnsettableBoolean = notUnsettableBoolean;
@@ -317,6 +319,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public byte getNotUnsettableByte()
   {
     return notUnsettableByte;
@@ -326,6 +329,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setNotUnsettableByte(byte newNotUnsettableByte)
   {
     byte oldNotUnsettableByte = notUnsettableByte;
@@ -341,6 +345,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public char getNotUnsettableChar()
   {
     return notUnsettableChar;
@@ -350,6 +355,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setNotUnsettableChar(char newNotUnsettableChar)
   {
     char oldNotUnsettableChar = notUnsettableChar;
@@ -365,6 +371,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Date getNotUnsettableDate()
   {
     return notUnsettableDate;
@@ -374,6 +381,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setNotUnsettableDate(Date newNotUnsettableDate)
   {
     Date oldNotUnsettableDate = notUnsettableDate;
@@ -389,6 +397,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public double getNotUnsettableDouble()
   {
     return notUnsettableDouble;
@@ -398,6 +407,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setNotUnsettableDouble(double newNotUnsettableDouble)
   {
     double oldNotUnsettableDouble = notUnsettableDouble;
@@ -413,6 +423,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public float getNotUnsettableFloat()
   {
     return notUnsettableFloat;
@@ -422,6 +433,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setNotUnsettableFloat(float newNotUnsettableFloat)
   {
     float oldNotUnsettableFloat = notUnsettableFloat;
@@ -437,6 +449,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getNotUnsettableInt()
   {
     return notUnsettableInt;
@@ -446,6 +459,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setNotUnsettableInt(int newNotUnsettableInt)
   {
     int oldNotUnsettableInt = notUnsettableInt;
@@ -461,6 +475,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public long getNotUnsettableLong()
   {
     return notUnsettableLong;
@@ -470,6 +485,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setNotUnsettableLong(long newNotUnsettableLong)
   {
     long oldNotUnsettableLong = notUnsettableLong;
@@ -485,6 +501,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public short getNotUnsettableShort()
   {
     return notUnsettableShort;
@@ -494,6 +511,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setNotUnsettableShort(short newNotUnsettableShort)
   {
     short oldNotUnsettableShort = notUnsettableShort;
@@ -509,6 +527,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getNotUnsettableString()
   {
     return notUnsettableString;
@@ -518,6 +537,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setNotUnsettableString(String newNotUnsettableString)
   {
     String oldNotUnsettableString = notUnsettableString;
@@ -533,6 +553,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public VAT getNotUnsettableVAT()
   {
     return notUnsettableVAT;
@@ -542,6 +563,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setNotUnsettableVAT(VAT newNotUnsettableVAT)
   {
     VAT oldNotUnsettableVAT = notUnsettableVAT;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -144,6 +144,7 @@ public abstract class Store extends Lifecycle implements InternalStore
     this.type = type;
   }
 
+  @Override
   public final String getType()
   {
     return type;
@@ -152,6 +153,7 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 3.0
    */
+  @Override
   public Set<CDOID.ObjectType> getObjectIDTypes()
   {
     return objectIDTypes;
@@ -165,26 +167,31 @@ public abstract class Store extends Lifecycle implements InternalStore
     this.objectIDTypes = objectIDTypes;
   }
 
+  @Override
   public Set<ChangeFormat> getSupportedChangeFormats()
   {
     return supportedChangeFormats;
   }
 
+  @Override
   public Set<RevisionTemporality> getSupportedRevisionTemporalities()
   {
     return supportedRevisionTemporalities;
   }
 
+  @Override
   public final Set<RevisionParallelism> getSupportedRevisionParallelisms()
   {
     return supportedRevisionParallelisms;
   }
 
+  @Override
   public RevisionTemporality getRevisionTemporality()
   {
     return revisionTemporality;
   }
 
+  @Override
   public void setRevisionTemporality(RevisionTemporality revisionTemporality)
   {
     checkInactive();
@@ -193,11 +200,13 @@ public abstract class Store extends Lifecycle implements InternalStore
     this.revisionTemporality = revisionTemporality;
   }
 
+  @Override
   public RevisionParallelism getRevisionParallelism()
   {
     return revisionParallelism;
   }
 
+  @Override
   public void setRevisionParallelism(RevisionParallelism revisionParallelism)
   {
     checkInactive();
@@ -209,11 +218,13 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 3.0
    */
+  @Override
   public InternalRepository getRepository()
   {
     return repository;
   }
 
+  @Override
   public void setRepository(IRepository repository)
   {
     this.repository = (InternalRepository)repository;
@@ -222,6 +233,7 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 4.0
    */
+  @Override
   public boolean isDropAllDataOnActivate()
   {
     return dropAllDataOnActivate;
@@ -230,6 +242,7 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 4.0
    */
+  @Override
   public void setDropAllDataOnActivate(boolean dropAllDataOnActivate)
   {
     this.dropAllDataOnActivate = dropAllDataOnActivate;
@@ -238,6 +251,7 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 3.0
    */
+  @Override
   public int getLastBranchID()
   {
     return lastBranchID;
@@ -246,6 +260,7 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 3.0
    */
+  @Override
   public void setLastBranchID(int lastBranchID)
   {
     this.lastBranchID = lastBranchID;
@@ -254,6 +269,7 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 3.0
    */
+  @Override
   public int getNextBranchID()
   {
     return ++lastBranchID;
@@ -262,6 +278,7 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 3.0
    */
+  @Override
   public int getLastLocalBranchID()
   {
     return lastLocalBranchID;
@@ -270,6 +287,7 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 3.0
    */
+  @Override
   public void setLastLocalBranchID(int lastLocalBranchID)
   {
     this.lastLocalBranchID = lastLocalBranchID;
@@ -278,6 +296,7 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 3.0
    */
+  @Override
   public int getNextLocalBranchID()
   {
     return --lastLocalBranchID;
@@ -286,6 +305,7 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 3.0
    */
+  @Override
   public long getLastCommitTime()
   {
     synchronized (lastCommitTimeLock)
@@ -297,6 +317,7 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 3.0
    */
+  @Override
   public void setLastCommitTime(long lastCommitTime)
   {
     synchronized (lastCommitTimeLock)
@@ -311,6 +332,7 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 3.0
    */
+  @Override
   public long getLastNonLocalCommitTime()
   {
     synchronized (lastNonLocalCommitTimeLock)
@@ -322,6 +344,7 @@ public abstract class Store extends Lifecycle implements InternalStore
   /**
    * @since 3.0
    */
+  @Override
   public void setLastNonLocalCommitTime(long lastNonLocalCommitTime)
   {
     synchronized (lastNonLocalCommitTimeLock)
@@ -333,6 +356,7 @@ public abstract class Store extends Lifecycle implements InternalStore
     }
   }
 
+  @Override
   public IStoreAccessor getReader(ISession session)
   {
     IStoreAccessor reader = null;
@@ -368,6 +392,7 @@ public abstract class Store extends Lifecycle implements InternalStore
     return reader;
   }
 
+  @Override
   public IStoreAccessor getWriter(ITransaction transaction)
   {
     IStoreAccessor writer = null;
@@ -386,6 +411,7 @@ public abstract class Store extends Lifecycle implements InternalStore
     return writer;
   }
 
+  @Override
   public ProgressDistributor getIndicatingCommitDistributor()
   {
     return indicatingCommitDistributor;
@@ -484,6 +510,7 @@ public abstract class Store extends Lifecycle implements InternalStore
    */
   protected abstract IStoreAccessor createWriter(ITransaction transaction);
 
+  @SafeVarargs
   protected static <T> Set<T> set(T... elements)
   {
     return Collections.unmodifiableSet(new HashSet<T>(Arrays.asList(elements)));
@@ -517,41 +544,49 @@ public abstract class Store extends Lifecycle implements InternalStore
     {
       private CDOID resourceID;
 
+      @Override
       public CDOID getResourceID()
       {
         return resourceID;
       }
 
+      @Override
       public CDOBranch getBranch()
       {
         return branchPoint.getBranch();
       }
 
+      @Override
       public long getTimeStamp()
       {
         return branchPoint.getTimeStamp();
       }
 
+      @Override
       public CDOID getFolderID()
       {
         return folderID;
       }
 
+      @Override
       public String getName()
       {
         return name;
       }
 
+      @Override
       public boolean exactMatch()
       {
         return true;
       }
 
+      @Override
       public int getMaxResults()
       {
         return 1;
       }
 
+      @Override
       public boolean addResource(CDOID resourceID)
       {
         this.resourceID = resourceID;

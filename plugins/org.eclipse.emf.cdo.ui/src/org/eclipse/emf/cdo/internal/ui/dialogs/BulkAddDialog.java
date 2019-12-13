@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -112,6 +112,7 @@ public class BulkAddDialog extends TitleAreaDialog
     featureViewer.setInput(features);
     featureViewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
+      @Override
       public void selectionChanged(SelectionChangedEvent event)
       {
         IStructuredSelection selection = (IStructuredSelection)featureViewer.getSelection();
@@ -126,6 +127,7 @@ public class BulkAddDialog extends TitleAreaDialog
     instancesText.setText(String.valueOf(instances));
     instancesText.addModifyListener(new ModifyListener()
     {
+      @Override
       public void modifyText(ModifyEvent e)
       {
         try

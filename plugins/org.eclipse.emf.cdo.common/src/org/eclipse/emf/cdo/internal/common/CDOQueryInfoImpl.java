@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015-2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015-2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -118,21 +118,25 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     }
   }
 
+  @Override
   public String getQueryString()
   {
     return queryString;
   }
 
+  @Override
   public String getQueryLanguage()
   {
     return queryLanguage;
   }
 
+  @Override
   public Map<String, Object> getParameters()
   {
     return Collections.unmodifiableMap(parameters);
   }
 
+  @Override
   public <T> T getParameter(String name)
   {
     @SuppressWarnings("unchecked")
@@ -140,6 +144,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     return value;
   }
 
+  @Override
   public Object getContext()
   {
     return context;
@@ -156,6 +161,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     parameters.put(key, value);
   }
 
+  @Override
   public int getMaxResults()
   {
     return maxResults;
@@ -167,12 +173,14 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     return this;
   }
 
+  @Override
   @Deprecated
   public boolean isLegacyModeEnabled()
   {
     return true;
   }
 
+  @Override
   public CDOChangeSetData getChangeSetData()
   {
     return changeSetData;

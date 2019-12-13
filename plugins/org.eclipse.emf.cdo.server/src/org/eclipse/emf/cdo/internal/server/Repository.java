@@ -241,36 +241,43 @@ public class Repository extends Container<Object> implements InternalRepository,
   {
   }
 
+  @Override
   public String getName()
   {
     return name;
   }
 
+  @Override
   public void setName(String name)
   {
     this.name = name;
   }
 
+  @Override
   public String getUUID()
   {
     return uuid;
   }
 
+  @Override
   public InternalStore getStore()
   {
     return store;
   }
 
+  @Override
   public void setStore(InternalStore store)
   {
     this.store = store;
   }
 
+  @Override
   public Type getType()
   {
     return type;
   }
 
+  @Override
   public void setType(Type type)
   {
     checkArg(type, "type"); //$NON-NLS-1$
@@ -291,11 +298,13 @@ public class Repository extends Container<Object> implements InternalRepository,
     }
   }
 
+  @Override
   public State getState()
   {
     return state;
   }
 
+  @Override
   public void setState(State state)
   {
     checkArg(state, "state"); //$NON-NLS-1$
@@ -316,11 +325,13 @@ public class Repository extends Container<Object> implements InternalRepository,
     }
   }
 
+  @Override
   public boolean waitWhileInitial(IProgressMonitor monitor)
   {
     return CDOCommonUtil.waitWhileInitial(this, this, monitor);
   }
 
+  @Override
   public synchronized Map<String, String> getProperties()
   {
     if (properties == null)
@@ -331,11 +342,13 @@ public class Repository extends Container<Object> implements InternalRepository,
     return properties;
   }
 
+  @Override
   public synchronized void setProperties(Map<String, String> properties)
   {
     this.properties = properties;
   }
 
+  @Override
   public boolean isAuthenticating()
   {
     if (sessionManager != null)
@@ -346,89 +359,106 @@ public class Repository extends Container<Object> implements InternalRepository,
     return false;
   }
 
+  @Override
   public boolean isSupportingAudits()
   {
     return supportingAudits;
   }
 
+  @Override
   public boolean isSupportingBranches()
   {
     return supportingBranches;
   }
 
+  @Override
   public boolean isSupportingUnits()
   {
     return supportingUnits;
   }
 
+  @Override
   @Deprecated
   public boolean isSupportingEcore()
   {
     return true;
   }
 
+  @Override
   public boolean isSerializingCommits()
   {
     return serializingCommits;
   }
 
+  @Override
   public boolean isEnsuringReferentialIntegrity()
   {
     return ensuringReferentialIntegrity;
   }
 
+  @Override
   public IDGenerationLocation getIDGenerationLocation()
   {
     return idGenerationLocation;
   }
 
+  @Override
   public CommitInfoStorage getCommitInfoStorage()
   {
     return commitInfoStorage;
   }
 
+  @Override
   public long getOptimisticLockingTimeout()
   {
     return optimisticLockingTimeout;
   }
 
+  @Override
   public void setOptimisticLockingTimeout(long optimisticLockingTimeout)
   {
     this.optimisticLockingTimeout = optimisticLockingTimeout;
   }
 
+  @Override
   public String getStoreType()
   {
     return store.getType();
   }
 
+  @Override
   public Set<CDOID.ObjectType> getObjectIDTypes()
   {
     return store.getObjectIDTypes();
   }
 
+  @Override
   public CDOID getRootResourceID()
   {
     return rootResourceID;
   }
 
+  @Override
   public void setRootResourceID(CDOID rootResourceID)
   {
     this.rootResourceID = rootResourceID;
   }
 
+  @Override
   public Object processPackage(Object value)
   {
     CDOFactoryImpl.prepareDynamicEPackage(value);
     return value;
   }
 
+  @Override
   public EPackage[] loadPackages(CDOPackageUnit packageUnit)
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     return accessor.loadPackageUnit((InternalCDOPackageUnit)packageUnit);
   }
 
+  @Override
   public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     if (!isSupportingBranches())
@@ -452,36 +482,42 @@ public class Repository extends Container<Object> implements InternalRepository,
     }
   }
 
+  @Override
   public BranchInfo loadBranch(int branchID)
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     return accessor.loadBranch(branchID);
   }
 
+  @Override
   public SubBranchInfo[] loadSubBranches(int branchID)
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     return accessor.loadSubBranches(branchID);
   }
 
+  @Override
   public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     return accessor.loadBranches(startID, endID, branchHandler);
   }
 
+  @Override
   @Deprecated
   public void deleteBranch(int branchID)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public void renameBranch(int branchID, String newName)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void renameBranch(int branchID, String oldName, String newName)
   {
     if (!isSupportingBranches())
@@ -506,18 +542,21 @@ public class Repository extends Container<Object> implements InternalRepository,
     }
   }
 
+  @Override
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     accessor.loadCommitInfos(branch, startTime, endTime, handler);
   }
 
+  @Override
   public CDOCommitData loadCommitData(long timeStamp)
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     return accessor.loadCommitData(timeStamp);
   }
 
+  @Override
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
   {
     for (RevisionInfo info : infos)
@@ -669,12 +708,14 @@ public class Repository extends Container<Object> implements InternalRepository,
     return CDORevision.UNSPECIFIED_DATE;
   }
 
+  @Override
   public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk)
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     return accessor.readRevisionByVersion(id, branchVersion, referenceChunk, revisionManager);
   }
 
+  @Override
   public CDOBranchPointRange loadObjectLifetime(CDOID id, CDOBranchPoint branchPoint)
   {
     CDORevision revision = revisionManager.getRevision(id, branchPoint, UNCHUNKED, NONE, true);
@@ -758,11 +799,13 @@ public class Repository extends Container<Object> implements InternalRepository,
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void ensureChunks(InternalCDORevision revision)
   {
     ensureChunks(revision, UNCHUNKED);
   }
 
+  @Override
   public void ensureChunks(InternalCDORevision revision, int chunkSize)
   {
     if (revision.isUnchunked())
@@ -813,6 +856,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     }
   }
 
+  @Override
   public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart, int chunkEnd)
   {
     if (!revision.isUnchunked())
@@ -956,17 +1000,20 @@ public class Repository extends Container<Object> implements InternalRepository,
     return accessor;
   }
 
+  @Override
   public CDOTimeProvider getTimeProvider()
   {
     return timeProvider;
   }
 
+  @Override
   public void setTimeProvider(CDOTimeProvider timeProvider)
   {
     checkInactive();
     this.timeProvider = timeProvider;
   }
 
+  @Override
   public InternalCDOPackageRegistry getPackageRegistry(boolean considerCommitContext)
   {
     if (considerCommitContext)
@@ -985,11 +1032,13 @@ public class Repository extends Container<Object> implements InternalRepository,
     return packageRegistry;
   }
 
+  @Override
   public Semaphore getPackageRegistryCommitLock()
   {
     return packageRegistryCommitLock;
   }
 
+  @Override
   public InternalCDOPackageRegistry getPackageRegistry()
   {
     return getPackageRegistry(true);
@@ -1001,6 +1050,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     this.packageRegistry = packageRegistry;
   }
 
+  @Override
   public InternalSessionManager getSessionManager()
   {
     return sessionManager;
@@ -1009,34 +1059,40 @@ public class Repository extends Container<Object> implements InternalRepository,
   /**
    * @since 2.0
    */
+  @Override
   public void setSessionManager(InternalSessionManager sessionManager)
   {
     checkInactive();
     this.sessionManager = sessionManager;
   }
 
+  @Override
   public InternalUnitManager getUnitManager()
   {
     return unitManager;
   }
 
+  @Override
   public void setUnitManager(InternalUnitManager unitManager)
   {
     checkInactive();
     this.unitManager = unitManager;
   }
 
+  @Override
   public InternalCDOBranchManager getBranchManager()
   {
     return branchManager;
   }
 
+  @Override
   public void setBranchManager(InternalCDOBranchManager branchManager)
   {
     checkInactive();
     this.branchManager = branchManager;
   }
 
+  @Override
   public InternalCDOCommitInfoManager getCommitInfoManager()
   {
     return commitInfoManager;
@@ -1048,17 +1104,20 @@ public class Repository extends Container<Object> implements InternalRepository,
     this.commitInfoManager = commitInfoManager;
   }
 
+  @Override
   public ICommitConflictResolver getCommitConflictResolver()
   {
     return commitConflictResolver;
   }
 
+  @Override
   public void setCommitConflictResolver(ICommitConflictResolver commitConflictResolver)
   {
     checkInactive();
     this.commitConflictResolver = commitConflictResolver;
   }
 
+  @Override
   public InternalCDORevisionManager getRevisionManager()
   {
     return revisionManager;
@@ -1067,6 +1126,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   /**
    * @since 2.0
    */
+  @Override
   public void setRevisionManager(InternalCDORevisionManager revisionManager)
   {
     checkInactive();
@@ -1076,6 +1136,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   /**
    * @since 2.0
    */
+  @Override
   public InternalQueryManager getQueryManager()
   {
     return queryManager;
@@ -1093,6 +1154,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   /**
    * @since 2.0
    */
+  @Override
   public InternalCommitManager getCommitManager()
   {
     return commitManager;
@@ -1111,12 +1173,14 @@ public class Repository extends Container<Object> implements InternalRepository,
    * @since 2.0
    * @deprecated
    */
+  @Override
   @Deprecated
   public InternalLockManager getLockManager()
   {
     return getLockingManager();
   }
 
+  @Override
   public InternalLockManager getLockingManager()
   {
     return lockingManager;
@@ -1131,46 +1195,55 @@ public class Repository extends Container<Object> implements InternalRepository,
     this.lockingManager = lockingManager;
   }
 
+  @Override
   public InternalCommitContext createCommitContext(InternalTransaction transaction)
   {
     return new TransactionCommitContext(transaction);
   }
 
+  @Override
   public long getLastCommitTimeStamp()
   {
     return timeStampAuthority.getLastFinishedTimeStamp();
   }
 
+  @Override
   public void setLastCommitTimeStamp(long lastCommitTimeStamp)
   {
     timeStampAuthority.setLastFinishedTimeStamp(lastCommitTimeStamp);
   }
 
+  @Override
   public long waitForCommit(long timeout)
   {
     return timeStampAuthority.waitForCommit(timeout);
   }
 
+  @Override
   public long[] createCommitTimeStamp(OMMonitor monitor)
   {
     return timeStampAuthority.startCommit(CDOBranchPoint.UNSPECIFIED_DATE, monitor);
   }
 
+  @Override
   public long[] forceCommitTimeStamp(long override, OMMonitor monitor)
   {
     return timeStampAuthority.startCommit(override, monitor);
   }
 
+  @Override
   public void endCommit(long timestamp)
   {
     timeStampAuthority.endCommit(timestamp);
   }
 
+  @Override
   public void failCommit(long timestamp)
   {
     timeStampAuthority.failCommit(timestamp);
   }
 
+  @Override
   public void executeOutsideStartCommit(Runnable runnable)
   {
     synchronized (timeStampAuthority)
@@ -1179,6 +1252,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     }
   }
 
+  @Override
   public void commit(InternalCommitContext commitContext, OMMonitor monitor)
   {
     if (commitContext.isTreeRestructuring())
@@ -1209,36 +1283,42 @@ public class Repository extends Container<Object> implements InternalRepository,
     distributor.run(InternalCommitContext.OPS, commitContext, monitor);
   }
 
+  @Override
   @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo)
   {
     sendCommitNotification(sender, commitInfo, true);
   }
 
+  @Override
   @Deprecated
   public CDOCommitInfoHandler[] getCommitInfoHandlers()
   {
     return commitInfoManager.getCommitInfoHandlers();
   }
 
+  @Override
   @Deprecated
   public void addCommitInfoHandler(CDOCommitInfoHandler handler)
   {
     commitInfoManager.addCommitInfoHandler(handler);
   }
 
+  @Override
   @Deprecated
   public void removeCommitInfoHandler(CDOCommitInfoHandler handler)
   {
     commitInfoManager.removeCommitInfoHandler(handler);
   }
 
+  @Override
   @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void sendCommitNotification(CommitNotificationInfo info)
   {
     CDOCommitInfo commitInfo = info.getCommitInfo();
@@ -1253,6 +1333,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   /**
    * @since 2.0
    */
+  @Override
   public IQueryHandlerProvider getQueryHandlerProvider()
   {
     return queryHandlerProvider;
@@ -1261,6 +1342,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   /**
    * @since 2.0
    */
+  @Override
   public void setQueryHandlerProvider(IQueryHandlerProvider queryHandlerProvider)
   {
     this.queryHandlerProvider = queryHandlerProvider;
@@ -1269,6 +1351,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   /**
    * @since 2.0
    */
+  @Override
   public synchronized IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
     String language = info.getQueryLanguage();
@@ -1312,6 +1395,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     return null;
   }
 
+  @Override
   public IManagedContainer getContainer()
   {
     if (container == null)
@@ -1322,17 +1406,20 @@ public class Repository extends Container<Object> implements InternalRepository,
     return container;
   }
 
+  @Override
   public void setContainer(IManagedContainer container)
   {
     this.container = container;
   }
 
+  @Override
   public ExecutorService getExecutorService()
   {
     IManagedContainer container = getContainer();
     return ConcurrencyUtil.getExecutorService(container);
   }
 
+  @Override
   public Object[] getElements()
   {
     final Object[] elements = { packageRegistry, branchManager, revisionManager, sessionManager, queryManager, commitManager, commitInfoManager,
@@ -1349,6 +1436,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   /**
    * @since 2.0
    */
+  @Override
   public long getCreationTime()
   {
     return store.getCreationTime();
@@ -1357,6 +1445,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   /**
    * @since 2.0
    */
+  @Override
   public void validateTimeStamp(long timeStamp) throws IllegalArgumentException
   {
     long creationTimeStamp = getCreationTime();
@@ -1374,11 +1463,13 @@ public class Repository extends Container<Object> implements InternalRepository,
     }
   }
 
+  @Override
   public long getTimeStamp()
   {
     return timeProvider.getTimeStamp();
   }
 
+  @Override
   public Set<Handler> getHandlers()
   {
     Set<Handler> handlers = new HashSet<Handler>();
@@ -1399,6 +1490,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   /**
    * @since 2.0
    */
+  @Override
   public void addHandler(Handler handler)
   {
     if (handler instanceof ReadAccessHandler)
@@ -1427,6 +1519,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   /**
    * @since 2.0
    */
+  @Override
   public void removeHandler(Handler handler)
   {
     if (handler instanceof ReadAccessHandler)
@@ -1449,6 +1542,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   /**
    * @since 2.0
    */
+  @Override
   public void notifyReadAccessHandlers(InternalSession session, CDORevision[] revisions, List<CDORevision> additionalRevisions)
   {
     ReadAccessHandler[] handlers;
@@ -1470,6 +1564,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     }
   }
 
+  @Override
   public void notifyWriteAccessHandlers(ITransaction transaction, IStoreAccessor.CommitContext commitContext, boolean beforeCommit, OMMonitor monitor)
   {
     WriteAccessHandler[] handlers;
@@ -1520,12 +1615,14 @@ public class Repository extends Container<Object> implements InternalRepository,
     }
   }
 
+  @Override
   public void setInitialPackages(EPackage... initialPackages)
   {
     checkInactive();
     this.initialPackages = initialPackages;
   }
 
+  @Override
   public CDOReplicationInfo replicateRaw(CDODataOutput out, int lastReplicatedBranchID, long lastReplicatedCommitTime) throws IOException
   {
     final int fromBranchID = lastReplicatedBranchID + 1;
@@ -1542,16 +1639,19 @@ public class Repository extends Container<Object> implements InternalRepository,
 
     return new CDOReplicationInfo()
     {
+      @Override
       public int getLastReplicatedBranchID()
       {
         return toBranchID;
       }
 
+      @Override
       public long getLastReplicatedCommitTime()
       {
         return toCommitTime;
       }
 
+      @Override
       public String[] getLockAreaIDs()
       {
         return null; // TODO (CD) Raw replication of lockAreas
@@ -1559,6 +1659,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     };
   }
 
+  @Override
   public void replicate(CDOReplicationContext context)
   {
     int startID = context.getLastReplicatedBranchID() + 1;
@@ -1570,6 +1671,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     getLockingManager().getLockAreas(null, context);
   }
 
+  @Override
   public CDOChangeSetData getChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint)
   {
     CDOChangeSetSegment[] segments = CDOChangeSetSegment.createFrom(startPoint, endPoint);
@@ -1580,6 +1682,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     return CDORevisionUtil.createChangeSetData(ids, startPoint, endPoint, revisionManager);
   }
 
+  @Override
   @Deprecated
   public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
       CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor)
@@ -1590,6 +1693,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     return ids;
   }
 
+  @Override
   public MergeDataResult getMergeData2(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
       CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor)
   {
@@ -1803,24 +1907,28 @@ public class Repository extends Container<Object> implements InternalRepository,
     return revisionManager.getRevision(id, branchPoint, UNCHUNKED, NONE, true);
   }
 
+  @Override
   public void queryLobs(List<byte[]> ids)
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     accessor.queryLobs(ids);
   }
 
+  @Override
   public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     accessor.handleLobs(fromTime, toTime, handler);
   }
 
+  @Override
   public void loadLob(byte[] id, OutputStream out) throws IOException
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     accessor.loadLob(id, out);
   }
 
+  @Override
   public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, final CDORevisionHandler handler)
   {
     CDORevisionHandler wrapper = handler;
@@ -1835,6 +1943,7 @@ public class Repository extends Container<Object> implements InternalRepository,
       {
         private Set<CDOID> handled = new HashSet<CDOID>();
 
+        @Override
         public boolean handleRevision(CDORevision revision)
         {
           CDOID id = revision.getID();
@@ -1882,6 +1991,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     return lockables;
   }
 
+  @Override
   public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revKeys, boolean recursive, long timeout)
   {
     List<Object> lockables = revisionKeysToObjects(revKeys, view.getBranch(), isSupportingBranches());
@@ -1992,6 +2102,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     return cdoLockStates;
   }
 
+  @Override
   public UnlockObjectsResult unlock(InternalView view, LockType lockType, List<CDOID> objectIDs, boolean recursive)
   {
     List<Object> unlockables = null;
@@ -2028,6 +2139,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     return new UnlockObjectsResult(cdoLockStates, timestamp);
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
@@ -2040,11 +2152,13 @@ public class Repository extends Container<Object> implements InternalRepository,
     return MessageFormat.format("Repository[{0}]", name); //$NON-NLS-1$
   }
 
+  @Override
   public boolean isSkipInitialization()
   {
     return skipInitialization;
   }
 
+  @Override
   public void setSkipInitialization(boolean skipInitialization)
   {
     this.skipInitialization = skipInitialization;
@@ -2139,12 +2253,14 @@ public class Repository extends Container<Object> implements InternalRepository,
     }
   }
 
+  @Override
   @Deprecated
   public void initSystemPackages()
   {
     initSystemPackages(true);
   }
 
+  @Override
   public void initSystemPackages(final boolean firstStart)
   {
     final List<InternalCDOPackageUnit> list = new ArrayList<InternalCDOPackageUnit>();
@@ -2195,16 +2311,19 @@ public class Repository extends Container<Object> implements InternalRepository,
 
     fireEvent(new PackagesInitializedEvent()
     {
+      @Override
       public InternalRepository getSource()
       {
         return Repository.this;
       }
 
+      @Override
       public boolean isFirstStart()
       {
         return firstStart;
       }
 
+      @Override
       public List<InternalCDOPackageUnit> getPackageUnits()
       {
         return Collections.unmodifiableList(list);
@@ -2223,6 +2342,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     return packageUnit;
   }
 
+  @Override
   public void initMainBranch(InternalCDOBranchManager branchManager, long timeStamp)
   {
     branchManager.initMainBranch(false, timeStamp);

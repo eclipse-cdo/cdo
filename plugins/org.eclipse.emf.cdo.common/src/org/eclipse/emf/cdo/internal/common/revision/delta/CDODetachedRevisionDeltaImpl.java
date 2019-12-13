@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2014 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2014, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -34,36 +34,43 @@ public class CDODetachedRevisionDeltaImpl implements CDORevisionDelta
   {
   }
 
+  @Override
   public CDOID getID()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public CDOBranch getBranch()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public int getVersion()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public EClass getEClass()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public CDORevisable getTarget()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public int size()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean isEmpty()
   {
     throw new UnsupportedOperationException();
@@ -74,37 +81,44 @@ public class CDODetachedRevisionDeltaImpl implements CDORevisionDelta
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public CDORevisionDelta copy()
   {
     return this;
   }
 
+  @Override
   public CDOFeatureDelta getFeatureDelta(EStructuralFeature feature)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public List<CDOFeatureDelta> getFeatureDeltas()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public void apply(CDORevision revision)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void applyTo(CDORevision revision)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void accept(CDOFeatureDeltaVisitor visitor)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void accept(CDOFeatureDeltaVisitor visitor, Predicate<EStructuralFeature> filter)
   {
     throw new UnsupportedOperationException();

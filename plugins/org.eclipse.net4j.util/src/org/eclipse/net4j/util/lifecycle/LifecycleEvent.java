@@ -47,6 +47,7 @@ public class LifecycleEvent extends Event implements ILifecycleEvent
     return (ILifecycle)super.getSource();
   }
 
+  @Override
   public Kind getKind()
   {
     return kind;

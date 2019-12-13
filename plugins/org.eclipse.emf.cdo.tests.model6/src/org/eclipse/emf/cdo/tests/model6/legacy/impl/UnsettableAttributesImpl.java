@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -742,6 +742,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public BigDecimal getAttrBigDecimal()
   {
     return attrBigDecimal;
@@ -752,6 +753,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrBigDecimal(BigDecimal newAttrBigDecimal)
   {
     BigDecimal oldAttrBigDecimal = attrBigDecimal;
@@ -770,6 +772,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrBigDecimal()
   {
     BigDecimal oldAttrBigDecimal = attrBigDecimal;
@@ -788,6 +791,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrBigDecimal()
   {
     return attrBigDecimalESet;
@@ -798,6 +802,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public BigInteger getAttrBigInteger()
   {
     return attrBigInteger;
@@ -808,6 +813,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrBigInteger(BigInteger newAttrBigInteger)
   {
     BigInteger oldAttrBigInteger = attrBigInteger;
@@ -826,6 +832,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrBigInteger()
   {
     BigInteger oldAttrBigInteger = attrBigInteger;
@@ -844,6 +851,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrBigInteger()
   {
     return attrBigIntegerESet;
@@ -854,6 +862,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isAttrBoolean()
   {
     return attrBoolean;
@@ -864,6 +873,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrBoolean(boolean newAttrBoolean)
   {
     boolean oldAttrBoolean = attrBoolean;
@@ -882,6 +892,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrBoolean()
   {
     boolean oldAttrBoolean = attrBoolean;
@@ -900,6 +911,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrBoolean()
   {
     return attrBooleanESet;
@@ -910,6 +922,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Boolean getAttrBooleanObject()
   {
     return attrBooleanObject;
@@ -920,6 +933,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrBooleanObject(Boolean newAttrBooleanObject)
   {
     Boolean oldAttrBooleanObject = attrBooleanObject;
@@ -938,6 +952,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrBooleanObject()
   {
     Boolean oldAttrBooleanObject = attrBooleanObject;
@@ -956,6 +971,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrBooleanObject()
   {
     return attrBooleanObjectESet;
@@ -966,6 +982,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public byte getAttrByte()
   {
     return attrByte;
@@ -976,6 +993,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrByte(byte newAttrByte)
   {
     byte oldAttrByte = attrByte;
@@ -993,6 +1011,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrByte()
   {
     byte oldAttrByte = attrByte;
@@ -1011,6 +1030,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrByte()
   {
     return attrByteESet;
@@ -1021,6 +1041,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public byte[] getAttrByteArray()
   {
     return attrByteArray;
@@ -1031,6 +1052,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrByteArray(byte[] newAttrByteArray)
   {
     byte[] oldAttrByteArray = attrByteArray;
@@ -1049,6 +1071,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrByteArray()
   {
     byte[] oldAttrByteArray = attrByteArray;
@@ -1067,6 +1090,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrByteArray()
   {
     return attrByteArrayESet;
@@ -1077,6 +1101,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Byte getAttrByteObject()
   {
     return attrByteObject;
@@ -1087,6 +1112,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrByteObject(Byte newAttrByteObject)
   {
     Byte oldAttrByteObject = attrByteObject;
@@ -1105,6 +1131,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrByteObject()
   {
     Byte oldAttrByteObject = attrByteObject;
@@ -1123,6 +1150,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrByteObject()
   {
     return attrByteObjectESet;
@@ -1133,6 +1161,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public char getAttrChar()
   {
     return attrChar;
@@ -1143,6 +1172,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrChar(char newAttrChar)
   {
     char oldAttrChar = attrChar;
@@ -1160,6 +1190,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrChar()
   {
     char oldAttrChar = attrChar;
@@ -1178,6 +1209,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrChar()
   {
     return attrCharESet;
@@ -1188,6 +1220,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Character getAttrCharacterObject()
   {
     return attrCharacterObject;
@@ -1198,6 +1231,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrCharacterObject(Character newAttrCharacterObject)
   {
     Character oldAttrCharacterObject = attrCharacterObject;
@@ -1216,6 +1250,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrCharacterObject()
   {
     Character oldAttrCharacterObject = attrCharacterObject;
@@ -1234,6 +1269,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrCharacterObject()
   {
     return attrCharacterObjectESet;
@@ -1244,6 +1280,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Date getAttrDate()
   {
     return attrDate;
@@ -1254,6 +1291,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrDate(Date newAttrDate)
   {
     Date oldAttrDate = attrDate;
@@ -1271,6 +1309,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrDate()
   {
     Date oldAttrDate = attrDate;
@@ -1289,6 +1328,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrDate()
   {
     return attrDateESet;
@@ -1299,6 +1339,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public double getAttrDouble()
   {
     return attrDouble;
@@ -1309,6 +1350,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrDouble(double newAttrDouble)
   {
     double oldAttrDouble = attrDouble;
@@ -1326,6 +1368,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrDouble()
   {
     double oldAttrDouble = attrDouble;
@@ -1344,6 +1387,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrDouble()
   {
     return attrDoubleESet;
@@ -1354,6 +1398,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Double getAttrDoubleObject()
   {
     return attrDoubleObject;
@@ -1364,6 +1409,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrDoubleObject(Double newAttrDoubleObject)
   {
     Double oldAttrDoubleObject = attrDoubleObject;
@@ -1382,6 +1428,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrDoubleObject()
   {
     Double oldAttrDoubleObject = attrDoubleObject;
@@ -1400,6 +1447,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrDoubleObject()
   {
     return attrDoubleObjectESet;
@@ -1410,6 +1458,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public float getAttrFloat()
   {
     return attrFloat;
@@ -1420,6 +1469,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrFloat(float newAttrFloat)
   {
     float oldAttrFloat = attrFloat;
@@ -1437,6 +1487,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrFloat()
   {
     float oldAttrFloat = attrFloat;
@@ -1455,6 +1506,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrFloat()
   {
     return attrFloatESet;
@@ -1465,6 +1517,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Float getAttrFloatObject()
   {
     return attrFloatObject;
@@ -1475,6 +1528,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrFloatObject(Float newAttrFloatObject)
   {
     Float oldAttrFloatObject = attrFloatObject;
@@ -1493,6 +1547,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrFloatObject()
   {
     Float oldAttrFloatObject = attrFloatObject;
@@ -1511,6 +1566,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrFloatObject()
   {
     return attrFloatObjectESet;
@@ -1521,6 +1577,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getAttrInt()
   {
     return attrInt;
@@ -1531,6 +1588,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrInt(int newAttrInt)
   {
     int oldAttrInt = attrInt;
@@ -1548,6 +1606,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrInt()
   {
     int oldAttrInt = attrInt;
@@ -1565,6 +1624,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrInt()
   {
     return attrIntESet;
@@ -1575,6 +1635,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Integer getAttrIntegerObject()
   {
     return attrIntegerObject;
@@ -1585,6 +1646,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrIntegerObject(Integer newAttrIntegerObject)
   {
     Integer oldAttrIntegerObject = attrIntegerObject;
@@ -1603,6 +1665,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrIntegerObject()
   {
     Integer oldAttrIntegerObject = attrIntegerObject;
@@ -1621,6 +1684,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrIntegerObject()
   {
     return attrIntegerObjectESet;
@@ -1631,6 +1695,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Class<?> getAttrJavaClass()
   {
     return attrJavaClass;
@@ -1641,6 +1706,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrJavaClass(Class<?> newAttrJavaClass)
   {
     Class<?> oldAttrJavaClass = attrJavaClass;
@@ -1659,6 +1725,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrJavaClass()
   {
     Class<?> oldAttrJavaClass = attrJavaClass;
@@ -1677,6 +1744,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrJavaClass()
   {
     return attrJavaClassESet;
@@ -1687,6 +1755,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Object getAttrJavaObject()
   {
     return attrJavaObject;
@@ -1697,6 +1766,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrJavaObject(Object newAttrJavaObject)
   {
     Object oldAttrJavaObject = attrJavaObject;
@@ -1715,6 +1785,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrJavaObject()
   {
     Object oldAttrJavaObject = attrJavaObject;
@@ -1733,6 +1804,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrJavaObject()
   {
     return attrJavaObjectESet;
@@ -1743,6 +1815,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public long getAttrLong()
   {
     return attrLong;
@@ -1753,6 +1826,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrLong(long newAttrLong)
   {
     long oldAttrLong = attrLong;
@@ -1770,6 +1844,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrLong()
   {
     long oldAttrLong = attrLong;
@@ -1788,6 +1863,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrLong()
   {
     return attrLongESet;
@@ -1798,6 +1874,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Long getAttrLongObject()
   {
     return attrLongObject;
@@ -1808,6 +1885,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrLongObject(Long newAttrLongObject)
   {
     Long oldAttrLongObject = attrLongObject;
@@ -1826,6 +1904,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrLongObject()
   {
     Long oldAttrLongObject = attrLongObject;
@@ -1844,6 +1923,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrLongObject()
   {
     return attrLongObjectESet;
@@ -1854,6 +1934,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public short getAttrShort()
   {
     return attrShort;
@@ -1864,6 +1945,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrShort(short newAttrShort)
   {
     short oldAttrShort = attrShort;
@@ -1881,6 +1963,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrShort()
   {
     short oldAttrShort = attrShort;
@@ -1899,6 +1982,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrShort()
   {
     return attrShortESet;
@@ -1909,6 +1993,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Short getAttrShortObject()
   {
     return attrShortObject;
@@ -1919,6 +2004,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrShortObject(Short newAttrShortObject)
   {
     Short oldAttrShortObject = attrShortObject;
@@ -1937,6 +2023,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrShortObject()
   {
     Short oldAttrShortObject = attrShortObject;
@@ -1955,6 +2042,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrShortObject()
   {
     return attrShortObjectESet;
@@ -1965,6 +2053,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getAttrString()
   {
     return attrString;
@@ -1975,6 +2064,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrString(String newAttrString)
   {
     String oldAttrString = attrString;
@@ -1992,6 +2082,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetAttrString()
   {
     String oldAttrString = attrString;
@@ -2010,6 +2101,7 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetAttrString()
   {
     return attrStringESet;

@@ -62,8 +62,10 @@ public interface CDONet4jSessionConfiguration extends org.eclipse.emf.cdo.sessio
    */
   public void setPackageRegistry(CDOPackageRegistry packageRegistry);
 
+  @Override
   public CDOBranchManager getBranchManager();
 
+  @Override
   public void setBranchManager(CDOBranchManager branchManager);
 
   /**
@@ -86,6 +88,7 @@ public interface CDONet4jSessionConfiguration extends org.eclipse.emf.cdo.sessio
   /**
    * @deprecated Use {@link #openNet4jSession() openNet4jSession()}.
    */
+  @Override
   @Deprecated
   public org.eclipse.emf.cdo.net4j.CDOSession openSession();
 }

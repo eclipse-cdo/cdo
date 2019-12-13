@@ -129,22 +129,26 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   {
   }
 
+  @Override
   public InternalRepository getRepository()
   {
     return repository;
   }
 
+  @Override
   public void setRepository(InternalRepository repository)
   {
     this.repository = repository;
   }
 
+  @Override
   public synchronized Object getLockEntryObject(Object key)
   {
     LockState<Object, IView> lockState = getObjectToLocksMap().get(key);
     return lockState == null ? null : lockState.getLockedObject();
   }
 
+  @Override
   public Object getLockKey(CDOID id, CDOBranch branch)
   {
     if (repository.isSupportingBranches())
@@ -155,6 +159,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     return id;
   }
 
+  @Override
   public synchronized Map<CDOID, LockGrade> getLocks(final IView view)
   {
     final Map<CDOID, LockGrade> result = CDOIDUtil.createMap();
@@ -187,12 +192,14 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     return result;
   }
 
+  @Override
   @Deprecated
   public void lock(boolean explicit, LockType type, IView view, Collection<? extends Object> objectsToLock, long timeout) throws InterruptedException
   {
     lock2(explicit, type, view, objectsToLock, false, timeout);
   }
 
+  @Override
   public List<LockState<Object, IView>> lock2(boolean explicit, LockType type, IView view, Collection<? extends Object> objectsToLock, boolean recursive,
       long timeout) throws InterruptedException
   {
@@ -288,12 +295,14 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     }
   }
 
+  @Override
   @Deprecated
   public synchronized void unlock(boolean explicit, LockType type, IView view, Collection<? extends Object> objectsToUnlock)
   {
     unlock2(explicit, type, view, objectsToUnlock, false);
   }
 
+  @Override
   public synchronized List<LockState<Object, IView>> unlock2(boolean explicit, LockType type, IView view, Collection<? extends Object> objects,
       boolean recursive)
   {
@@ -321,12 +330,14 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     return newLockStates;
   }
 
+  @Override
   @Deprecated
   public synchronized void unlock(boolean explicit, IView view)
   {
     unlock2(explicit, view);
   }
 
+  @Override
   public synchronized List<LockState<Object, IView>> unlock2(boolean explicit, IView view)
   {
     if (explicit)
@@ -373,6 +384,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     unlock2(type, context, objectsToUnlock);
   }
 
+  @Override
   public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     return createLockArea(userID, branchPoint, readOnly, locks, null);
@@ -390,11 +402,13 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     return accessor.createLockArea(lockAreaID, userID, branchPoint, readOnly, locks);
   }
 
+  @Override
   public LockArea createLockArea(InternalView view)
   {
     return createLockArea(view, null);
   }
 
+  @Override
   public LockArea createLockArea(InternalView view, String lockAreaID)
   {
     String userID = view.getSession().getUserID();
@@ -411,12 +425,14 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     return area;
   }
 
+  @Override
   public LockArea getLockArea(String durableLockingID) throws LockAreaNotFoundException
   {
     DurableLocking accessor = getDurableLocking();
     return accessor.getLockArea(durableLockingID);
   }
 
+  @Override
   public void getLockAreas(String userIDPrefix, LockArea.Handler handler)
   {
     if (userIDPrefix == null)
@@ -428,6 +444,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     accessor.getLockAreas(userIDPrefix, handler);
   }
 
+  @Override
   public void deleteLockArea(String durableLockingID)
   {
     DurableLocking accessor = getDurableLocking();
@@ -435,6 +452,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     unregisterOpenDurableView(durableLockingID);
   }
 
+  @Override
   public IView openView(ISession session, int viewID, boolean readOnly, final String durableLockingID)
   {
     synchronized (openDurableViews)
@@ -535,6 +553,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     throw new IllegalStateException("Store does not implement " + DurableLocking2.class.getSimpleName());
   }
 
+  @Override
   public void reloadLocks()
   {
     DurableLockLoader handler = new DurableLockLoader();
@@ -573,6 +592,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     }
   }
 
+  @Override
   public CDOID getLockKeyID(Object key)
   {
     if (key instanceof CDOID)
@@ -588,16 +608,19 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     throw new ImplementationError("Unexpected lock object: " + key);
   }
 
+  @Override
   public void addDurableViewHandler(DurableViewHandler handler)
   {
     durableViewHandlers.add(handler);
   }
 
+  @Override
   public void removeDurableViewHandler(DurableViewHandler handler)
   {
     durableViewHandlers.remove(handler);
   }
 
+  @Override
   public DurableViewHandler[] getDurableViewHandlers()
   {
     return durableViewHandlers.get();
@@ -617,66 +640,79 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       this.durableLockingID = durableLockingID;
     }
 
+    @Override
     public String getDurableLockingID()
     {
       return durableLockingID;
     }
 
+    @Override
     public boolean isDurableView()
     {
       return true;
     }
 
+    @Override
     public int getSessionID()
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public int getViewID()
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isReadOnly()
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isHistorical()
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public CDOBranch getBranch()
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public long getTimeStamp()
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public CDORevision getRevision(CDOID id)
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public void close()
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean isClosed()
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public IRepository getRepository()
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public ISession getSession()
     {
       return null;
@@ -711,34 +747,41 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       return MessageFormat.format("DurableView[{0}]", durableLockingID);
     }
 
+    @Override
     public IOptionsContainer getContainer()
     {
       return null;
     }
 
+    @Override
     public void addListener(IListener listener)
     {
     }
 
+    @Override
     public void removeListener(IListener listener)
     {
     }
 
+    @Override
     public boolean hasListeners()
     {
       return false;
     }
 
+    @Override
     public IListener[] getListeners()
     {
       return null;
     }
 
+    @Override
     public Options options()
     {
       return this;
     }
 
+    @Override
     public synchronized IRegistry<String, Object> properties()
     {
       if (properties == null)
@@ -756,11 +799,13 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       return properties;
     }
 
+    @Override
     public boolean isLockNotificationEnabled()
     {
       return false;
     }
 
+    @Override
     public void setLockNotificationEnabled(boolean enabled)
     {
     }
@@ -786,6 +831,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       return view;
     }
 
+    @Override
     public boolean handleLockArea(LockArea area)
     {
       String durableLockingID = area.getDurableLockingID();
@@ -839,6 +885,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     }
   }
 
+  @Override
   public LockGrade getLockGrade(Object key)
   {
     LockState<Object, IView> lockState = getObjectToLocksMap().get(key);
@@ -869,6 +916,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     }
   }
 
+  @Override
   public void updateLockArea(LockArea lockArea)
   {
     String durableLockingID = lockArea.getDurableLockingID();

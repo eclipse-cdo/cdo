@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -94,6 +94,7 @@ public class Class1Impl extends EObjectImpl implements Class1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Class2> getClass2()
   {
     if (class2 == null)
@@ -108,6 +109,7 @@ public class Class1Impl extends EObjectImpl implements Class1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetClass2()
   {
     if (class2 != null)
@@ -120,6 +122,7 @@ public class Class1Impl extends EObjectImpl implements Class1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetClass2()
   {
     return class2 != null && ((InternalEList.Unsettable<?>)class2).isSet();
@@ -130,6 +133,7 @@ public class Class1Impl extends EObjectImpl implements Class1
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getAdditionalValue()
   {
     return additionalValue;
@@ -140,6 +144,7 @@ public class Class1Impl extends EObjectImpl implements Class1
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAdditionalValue(String newAdditionalValue)
   {
     String oldAdditionalValue = additionalValue;

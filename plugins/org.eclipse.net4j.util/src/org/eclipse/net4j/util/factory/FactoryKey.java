@@ -35,6 +35,7 @@ public final class FactoryKey implements IFactoryKey, Serializable, Comparable<F
     this.type = type;
   }
 
+  @Override
   public String getProductGroup()
   {
     return productGroup;
@@ -45,6 +46,7 @@ public final class FactoryKey implements IFactoryKey, Serializable, Comparable<F
     this.productGroup = productGroup;
   }
 
+  @Override
   public String getType()
   {
     return type;
@@ -84,6 +86,7 @@ public final class FactoryKey implements IFactoryKey, Serializable, Comparable<F
     return MessageFormat.format("{0}[{1}]", productGroup, type); //$NON-NLS-1$
   }
 
+  @Override
   public int compareTo(FactoryKey key)
   {
     int result = StringUtil.compare(productGroup, key.productGroup);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2014, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2014, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -58,6 +58,7 @@ public final class CDOLockChangeInfoImpl implements CDOLockChangeInfo, CDOBranch
     isInvalidateAll = true;
   }
 
+  @Override
   public void adjustBranches(CDOBranchManager newBranchManager)
   {
     if (branchPoint != null)
@@ -71,36 +72,43 @@ public final class CDOLockChangeInfoImpl implements CDOLockChangeInfo, CDOBranch
     }
   }
 
+  @Override
   public CDOBranch getBranch()
   {
     return branchPoint == null ? null : branchPoint.getBranch();
   }
 
+  @Override
   public long getTimeStamp()
   {
     return branchPoint == null ? CDOBranchPoint.UNSPECIFIED_DATE : branchPoint.getTimeStamp();
   }
 
+  @Override
   public Operation getOperation()
   {
     return operation;
   }
 
+  @Override
   public LockType getLockType()
   {
     return lockType;
   }
 
+  @Override
   public CDOLockOwner getLockOwner()
   {
     return lockOwner;
   }
 
+  @Override
   public CDOLockState[] getLockStates()
   {
     return lockStates;
   }
 
+  @Override
   public boolean isInvalidateAll()
   {
     return isInvalidateAll;

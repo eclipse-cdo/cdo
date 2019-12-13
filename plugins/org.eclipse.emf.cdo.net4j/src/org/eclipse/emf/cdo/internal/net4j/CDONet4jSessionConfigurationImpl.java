@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -55,21 +55,25 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   {
   }
 
+  @Override
   public String getRepositoryName()
   {
     return repositoryName;
   }
 
+  @Override
   public void setRepositoryName(String repositoryName)
   {
     this.repositoryName = repositoryName;
   }
 
+  @Override
   public IConnector getConnector()
   {
     return connector;
   }
 
+  @Override
   public void setConnector(IConnector connector)
   {
     checkNotOpen();
@@ -81,27 +85,32 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     this.connector = connector;
   }
 
+  @Override
   public IStreamWrapper getStreamWrapper()
   {
     return streamWrapper;
   }
 
+  @Override
   public void setStreamWrapper(IStreamWrapper streamWrapper)
   {
     checkNotOpen();
     this.streamWrapper = streamWrapper;
   }
 
+  @Override
   public long getSignalTimeout()
   {
     return signalTimeout;
   }
 
+  @Override
   public void setSignalTimeout(long signalTimeout)
   {
     this.signalTimeout = signalTimeout;
   }
 
+  @Override
   public CDONet4jSession openNet4jSession()
   {
     return (CDONet4jSession)super.openSession();
@@ -113,6 +122,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     return (CDOSession)openNet4jSession();
   }
 
+  @Override
   public InternalCDOSession createSession()
   {
     if (isActivateOnOpen())
@@ -204,11 +214,13 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       commitInfoStorage = result.getCommitInfoStorage();
     }
 
+    @Override
     public InternalCDOSession getSession()
     {
       return session;
     }
 
+    @Override
     public String getName()
     {
       return name;
@@ -217,11 +229,13 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     /**
      * Must be callable before session activation has finished!
      */
+    @Override
     public String getUUID()
     {
       return uuid;
     }
 
+    @Override
     public Type getType()
     {
       return type;
@@ -232,6 +246,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       this.type = type;
     }
 
+    @Override
     public State getState()
     {
       return state;
@@ -242,26 +257,31 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       this.state = state;
     }
 
+    @Override
     public String getStoreType()
     {
       return storeType;
     }
 
+    @Override
     public Set<CDOID.ObjectType> getObjectIDTypes()
     {
       return objectIDTypes;
     }
 
+    @Override
     public long getCreationTime()
     {
       return creationTime;
     }
 
+    @Override
     public long getTimeStamp()
     {
       return getTimeStamp(false);
     }
 
+    @Override
     public long getTimeStamp(boolean forceRefresh)
     {
       if (timeResult == null || forceRefresh)
@@ -272,6 +292,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       return timeResult.getAproximateRepositoryTime();
     }
 
+    @Override
     public CDOID getRootResourceID()
     {
       return rootResourceID;
@@ -294,52 +315,62 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       }
     }
 
+    @Override
     public boolean isAuthenticating()
     {
       return authenticating;
     }
 
+    @Override
     public boolean isSupportingAudits()
     {
       return supportingAudits;
     }
 
+    @Override
     public boolean isSupportingBranches()
     {
       return supportingBranches;
     }
 
+    @Override
     public boolean isSupportingUnits()
     {
       return supportingUnits;
     }
 
+    @Override
     @Deprecated
     public boolean isSupportingEcore()
     {
       return true;
     }
 
+    @Override
     public boolean isSerializingCommits()
     {
       return serializingCommits;
     }
 
+    @Override
     public boolean isEnsuringReferentialIntegrity()
     {
       return ensuringReferentialIntegrity;
     }
 
+    @Override
     public IDGenerationLocation getIDGenerationLocation()
     {
       return idGenerationLocation;
     }
 
+    @Override
     public CommitInfoStorage getCommitInfoStorage()
     {
       return commitInfoStorage;
     }
 
+    @Override
     public boolean waitWhileInitial(IProgressMonitor monitor)
     {
       return CDOCommonUtil.waitWhileInitial(this, session, monitor);

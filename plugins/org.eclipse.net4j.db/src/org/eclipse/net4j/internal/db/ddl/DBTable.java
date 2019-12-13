@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -59,46 +59,55 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
     return (IDBTable)super.getWrapper();
   }
 
+  @Override
   public SchemaElementType getSchemaElementType()
   {
     return SchemaElementType.TABLE;
   }
 
+  @Override
   public IDBSchema getSchema()
   {
     return schema;
   }
 
+  @Override
   public IDBSchema getParent()
   {
     return getSchema();
   }
 
+  @Override
   public IDBField addField(String name, DBType type)
   {
     return addField(name, type, IDBField.DEFAULT, IDBField.DEFAULT, false);
   }
 
+  @Override
   public IDBField addField(String name, DBType type, boolean notNull)
   {
     return addField(name, type, IDBField.DEFAULT, IDBField.DEFAULT, notNull);
   }
 
+  @Override
   public IDBField addField(String name, DBType type, int precision)
   {
     return addField(name, type, precision, IDBField.DEFAULT, false);
   }
 
+  @Override
   public IDBField addField(String name, DBType type, int precision, boolean notNull)
   {
     return addField(name, type, precision, IDBField.DEFAULT, notNull);
   }
 
+  @Override
   public IDBField addField(String name, DBType type, int precision, int scale)
   {
     return addField(name, type, precision, scale, false);
   }
 
+  @Override
   public IDBField addField(String name, DBType type, int precision, int scale, boolean notNull)
   {
     assertUnlocked();
@@ -115,6 +124,7 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
     return field;
   }
 
+  @Override
   public void removeField(IDBField fieldToRemove)
   {
     assertUnlocked();
@@ -137,6 +147,7 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
     resetElements();
   }
 
+  @Override
   public IDBField getFieldSafe(String name) throws SchemaElementNotFoundException
   {
     IDBField field = getField(name);
@@ -148,26 +159,31 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
     return field;
   }
 
+  @Override
   public IDBField getField(String name)
   {
     return findElement(getFields(), name);
   }
 
+  @Override
   public IDBField getField(int position)
   {
     return fields.get(position);
   }
 
+  @Override
   public int getFieldCount()
   {
     return fields.size();
   }
 
+  @Override
   public IDBField[] getFields()
   {
     return fields.toArray(new IDBField[fields.size()]);
   }
 
+  @Override
   public IDBField[] getFields(String... fieldNames) throws SchemaElementNotFoundException
   {
     List<IDBField> result = new ArrayList<IDBField>();
@@ -180,6 +196,7 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
     return result.toArray(new IDBField[result.size()]);
   }
 
+  @Override
   public boolean hasIndexFor(IDBField... fields)
   {
     for (IDBIndex index : indices)
@@ -194,6 +211,7 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
     return false;
   }
 
+  @Override
   public IDBIndex addIndex(String name, IDBIndex.Type type, IDBField... fields)
   {
     assertUnlocked();
@@ -226,32 +244,38 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
     return index;
   }
 
+  @Override
   public IDBIndex addIndex(String name, IDBIndex.Type type, String... fieldNames)
   {
     return addIndex(name, type, getFields(fieldNames));
   }
 
+  @Override
   public IDBIndex addIndexEmpty(String name, IDBIndex.Type type)
   {
     return addIndex(name, type, NO_FIELDS);
   }
 
+  @Override
   public IDBIndex addIndex(IDBIndex.Type type, IDBField... fields)
   {
     return addIndex(null, type, fields);
   }
 
+  @Override
   public IDBIndex addIndex(IDBIndex.Type type, String... fieldNames)
   {
     IDBField[] fields = getFields(fieldNames);
     return addIndex(type, fields);
   }
 
+  @Override
   public IDBIndex addIndexEmpty(IDBIndex.Type type)
   {
     return addIndex(type, NO_FIELDS);
   }
 
+  @Override
   public void removeIndex(IDBIndex indexToRemove)
   {
     assertUnlocked();
@@ -261,6 +285,7 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
     }
   }
 
+  @Override
   public IDBIndex getIndexSafe(String name) throws SchemaElementNotFoundException
   {
     IDBIndex index = getIndex(name);
@@ -272,26 +297,31 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
     return index;
   }
 
+  @Override
   public IDBIndex getIndex(String name)
   {
     return findElement(getIndices(), name);
   }
 
+  @Override
   public IDBIndex getIndex(int position)
   {
     return indices.get(position);
   }
 
+  @Override
   public int getIndexCount()
   {
     return indices.size();
   }
 
+  @Override
   public IDBIndex[] getIndices()
   {
     return indices.toArray(new IDBIndex[indices.size()]);
   }
 
+  @Override
   public IDBIndex getPrimaryKeyIndex()
   {
     for (IDBIndex index : indices)
@@ -305,16 +335,19 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
     return null;
   }
 
+  @Override
   public String getFullName()
   {
     return getName();
   }
 
+  @Override
   public void remove()
   {
     schema.removeTable(getName());
   }
 
+  @Override
   public String sqlInsert()
   {
     StringBuilder builder = new StringBuilder();

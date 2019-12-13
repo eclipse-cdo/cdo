@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,6 +66,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EPackage getEPackageRef()
   {
     return (EPackage)eGet(Model3Package.eINSTANCE.getMetaRef_EPackageRef(), true);
@@ -75,6 +76,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setEPackageRef(EPackage newEPackageRef)
   {
     eSet(Model3Package.eINSTANCE.getMetaRef_EPackageRef(), newEPackageRef);
@@ -84,6 +86,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getEClassRef()
   {
     return (EClass)eGet(Model3Package.eINSTANCE.getMetaRef_EClassRef(), true);
@@ -93,6 +96,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setEClassRef(EClass newEClassRef)
   {
     eSet(Model3Package.eINSTANCE.getMetaRef_EClassRef(), newEClassRef);
@@ -102,6 +106,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEReferenceRef()
   {
     return (EReference)eGet(Model3Package.eINSTANCE.getMetaRef_EReferenceRef(), true);
@@ -111,6 +116,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setEReferenceRef(EReference newEReferenceRef)
   {
     eSet(Model3Package.eINSTANCE.getMetaRef_EReferenceRef(), newEReferenceRef);

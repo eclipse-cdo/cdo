@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -73,11 +73,13 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   /**
    * @since 4.2
    */
+  @Override
   public final InternalCDOClassInfo getClassInfo()
   {
     return classInfo;
   }
 
+  @Override
   public final EClass getEClass()
   {
     if (classInfo != null)
@@ -91,6 +93,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   /**
    * @since 4.2
    */
+  @Override
   public InternalCDORevision getRevisionForID(CDOID id)
   {
     if (id != null && id.equals(getID()))
@@ -104,31 +107,37 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   /**
    * @since 4.2
    */
+  @Override
   public InternalCDORevision getProperRevision()
   {
     return this;
   }
 
+  @Override
   public boolean isResourceNode()
   {
     return classInfo.isResourceNode();
   }
 
+  @Override
   public boolean isResourceFolder()
   {
     return classInfo.isResourceFolder();
   }
 
+  @Override
   public boolean isResource()
   {
     return classInfo.isResource();
   }
 
+  @Override
   public CDORevisionData data()
   {
     return this;
   }
 
+  @Override
   public CDORevision revision()
   {
     return this;
@@ -137,11 +146,13 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   /**
    * @since 3.0
    */
+  @Override
   public boolean isHistorical()
   {
     return getRevised() != UNSPECIFIED_DATE;
   }
 
+  @Override
   public boolean isValid(long timeStamp)
   {
     long startTime = getTimeStamp();
@@ -152,6 +163,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   /**
    * @since 4.0
    */
+  @Override
   public boolean isValid(CDOBranchPoint branchPoint)
   {
     return getBranch() == branchPoint.getBranch() && isValid(branchPoint.getTimeStamp());
@@ -160,6 +172,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   /**
    * @since 4.1
    */
+  @Override
   public boolean isReadable()
   {
     return getPermission().isReadable();
@@ -168,6 +181,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   /**
    * @since 4.1
    */
+  @Override
   public boolean isWritable()
   {
     return getPermission().isWritable();
@@ -176,6 +190,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   /**
    * @since 4.2
    */
+  @Override
   public void accept(CDORevisionValueVisitor visitor)
   {
     accept(visitor, Predicates.<EStructuralFeature> alwaysTrue());
@@ -184,6 +199,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   /**
    * @since 4.2
    */
+  @Override
   public void accept(CDORevisionValueVisitor visitor, Predicate<EStructuralFeature> filter)
   {
     for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
@@ -214,6 +230,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   /**
    * @since 3.0
    */
+  @Override
   public void adjustForCommit(CDOBranch branch, long timeStamp)
   {
     if (branch == getBranch())
@@ -284,12 +301,14 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     return string;
   }
 
+  @Override
   @Deprecated
   public CDOList getList(EStructuralFeature feature)
   {
     return getOrCreateList(feature);
   }
 
+  @Override
   @Deprecated
   public CDOList getList(EStructuralFeature feature, int initialCapacity)
   {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,10 +22,12 @@ public class ExtendedIOAdapter implements ExtendedIOHandler
   {
   }
 
+  @Override
   public void handleIn(ExtendedDataInputStream in) throws IOException
   {
   }
 
+  @Override
   public void handleOut(ExtendedDataOutputStream out) throws IOException
   {
   }

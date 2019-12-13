@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -61,59 +61,70 @@ public class TransportConfig implements ITransportConfig, IExecutorServiceProvid
     this.negotiator = negotiator;
   }
 
+  @Override
   public ILifecycle getLifecycle()
   {
     return lifecycle;
   }
 
+  @Override
   public void setLifecycle(ILifecycle lifecycle)
   {
     this.lifecycle = lifecycle;
   }
 
+  @Override
   public ExecutorService getExecutorService()
   {
     return receiveExecutor;
   }
 
+  @Override
   public ExecutorService getReceiveExecutor()
   {
     return receiveExecutor;
   }
 
+  @Override
   public void setReceiveExecutor(ExecutorService receiveExecutor)
   {
     LifecycleUtil.checkInactive(lifecycle);
     this.receiveExecutor = receiveExecutor;
   }
 
+  @Override
   public IBufferProvider getBufferProvider()
   {
     return bufferProvider;
   }
 
+  @Override
   public void setBufferProvider(IBufferProvider bufferProvider)
   {
     LifecycleUtil.checkInactive(lifecycle);
     this.bufferProvider = bufferProvider;
   }
 
+  @Override
   public IProtocolProvider getProtocolProvider()
   {
     return protocolProvider;
   }
 
+  @Override
   public void setProtocolProvider(IProtocolProvider protocolProvider)
   {
     LifecycleUtil.checkInactive(lifecycle);
     this.protocolProvider = protocolProvider;
   }
 
+  @Override
   public INegotiator getNegotiator()
   {
     return negotiator;
   }
 
+  @Override
   public void setNegotiator(INegotiator negotiator)
   {
     LifecycleUtil.checkInactive(lifecycle);

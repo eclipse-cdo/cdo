@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2011-2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2011-2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -111,6 +111,7 @@ public abstract class ConfigTestSuite implements IConstants
 
     Collections.sort(result, new Comparator<Class<? extends ConfigTest>>()
     {
+      @Override
       public int compare(Class<? extends ConfigTest> c1, Class<? extends ConfigTest> c2)
       {
         return c1.getName().compareTo(c2.getName());
@@ -184,6 +185,7 @@ public abstract class ConfigTestSuite implements IConstants
 
       Collections.sort(tests, new Comparator<Test>()
       {
+        @Override
         public int compare(Test t1, Test t2)
         {
           String n1 = getName(t1);

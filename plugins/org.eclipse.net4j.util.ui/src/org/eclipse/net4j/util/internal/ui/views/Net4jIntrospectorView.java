@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -227,6 +227,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     UIUtil.refreshViewer(currentViewer);
   }
 
+  @Override
   public void partActivated(IWorkbenchPart part)
   {
     if (part == this)
@@ -242,14 +243,17 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     }
   }
 
+  @Override
   public void partBroughtToTop(IWorkbenchPart part)
   {
   }
 
+  @Override
   public void partClosed(IWorkbenchPart part)
   {
   }
 
+  @Override
   public void partDeactivated(IWorkbenchPart part)
   {
     if (modeAction.isChecked())
@@ -262,10 +266,12 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     }
   }
 
+  @Override
   public void partOpened(IWorkbenchPart part)
   {
   }
 
+  @Override
   public void selectionChanged(IWorkbenchPart part, ISelection sel)
   {
     if (part == this)
@@ -290,6 +296,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     }
   }
 
+  @Override
   public void doubleClick(DoubleClickEvent event)
   {
     ISelection sel = event.getSelection();
@@ -341,6 +348,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     }
   }
 
+  @Override
   public void notifyEvent(IEvent event)
   {
     refreshViewer();
@@ -570,10 +578,12 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
    */
   abstract class AbstractContentProvider implements IStructuredContentProvider
   {
+    @Override
     public void inputChanged(Viewer v, Object oldInput, Object newInput)
     {
     }
 
+    @Override
     public void dispose()
     {
     }
@@ -590,6 +600,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
       return getColumnText(element, 0);
     }
 
+    @Override
     public Image getColumnImage(Object obj, int index)
     {
       return null;
@@ -607,6 +618,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
    */
   class ObjectContentProvider extends AbstractContentProvider
   {
+    @Override
     public Object[] getElements(Object parent)
     {
       if (!elements.isEmpty())
@@ -630,6 +642,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
    */
   class ObjectLabelProvider extends AbstractLabelProvider
   {
+    @Override
     public String getColumnText(Object obj, int index)
     {
       if (obj instanceof Pair<?, ?>)
@@ -669,6 +682,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
    */
   class IterableContentProvider extends AbstractContentProvider
   {
+    @Override
     public Object[] getElements(Object parent)
     {
       if (!elements.isEmpty())
@@ -695,6 +709,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
    */
   class IterableLabelProvider extends AbstractLabelProvider
   {
+    @Override
     public String getColumnText(Object obj, int index)
     {
       switch (index)
@@ -714,6 +729,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
    */
   class ArrayContentProvider extends AbstractContentProvider
   {
+    @Override
     @SuppressWarnings("unchecked")
     public Object[] getElements(Object parent)
     {
@@ -742,6 +758,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
    */
   class ArrayLabelProvider extends AbstractLabelProvider
   {
+    @Override
     public String getColumnText(Object obj, int index)
     {
       if (obj instanceof Pair<?, ?>)
@@ -778,6 +795,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
    */
   class MapContentProvider extends AbstractContentProvider
   {
+    @Override
     public Object[] getElements(Object parent)
     {
       if (!elements.isEmpty())
@@ -798,6 +816,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
    */
   class MapLabelProvider extends AbstractLabelProvider
   {
+    @Override
     public String getColumnText(Object obj, int index)
     {
       if (obj instanceof Map.Entry<?, ?>)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -42,16 +42,19 @@ public abstract class StoreChunkReader implements IStoreChunkReader
     this.feature = feature;
   }
 
+  @Override
   public IStoreAccessor getAccessor()
   {
     return accessor;
   }
 
+  @Override
   public CDORevision getRevision()
   {
     return revision;
   }
 
+  @Override
   public EStructuralFeature getFeature()
   {
     return feature;
@@ -62,11 +65,13 @@ public abstract class StoreChunkReader implements IStoreChunkReader
     return chunks;
   }
 
+  @Override
   public void addSimpleChunk(int index)
   {
     chunks.add(new Chunk(index));
   }
 
+  @Override
   public void addRangedChunk(int fromIndex, int toIndex)
   {
     chunks.add(new Chunk(fromIndex, toIndex - fromIndex));

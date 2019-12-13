@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -36,6 +36,7 @@ public class Application implements IApplication
 
   public static Node NODE;
 
+  @Override
   public Object start(IApplicationContext context)
   {
     Display display = PlatformUI.createDisplay();
@@ -60,6 +61,7 @@ public class Application implements IApplication
       System.out.println("Node: " + NODE);
       BusyIndicator.showWhile(display, new Runnable()
       {
+        @Override
         public void run()
         {
           NODE.start();
@@ -98,6 +100,7 @@ public class Application implements IApplication
     return IApplication.EXIT_OK;
   }
 
+  @Override
   public void stop()
   {
     if (!PlatformUI.isWorkbenchRunning())
@@ -109,6 +112,7 @@ public class Application implements IApplication
     final Display display = workbench.getDisplay();
     display.syncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         if (!display.isDisposed())

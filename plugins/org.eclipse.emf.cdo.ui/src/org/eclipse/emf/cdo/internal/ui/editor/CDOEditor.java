@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -247,6 +247,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected CDOObjectHandler objectHandler = new CDOObjectHandler()
   {
+    @Override
     public void objectStateChanged(CDOView view, CDOObject object, CDOState oldState, CDOState newState)
     {
       if (object == viewerInput && newState == CDOState.INVALID)
@@ -344,6 +345,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected IPartListener partListener = new IPartListener()
   {
+    @Override
     public void partActivated(IWorkbenchPart p)
     {
       if (p instanceof ContentOutline)
@@ -369,21 +371,25 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       }
     }
 
+    @Override
     public void partBroughtToTop(IWorkbenchPart p)
     {
       // Ignore.
     }
 
+    @Override
     public void partClosed(IWorkbenchPart p)
     {
       // Ignore.
     }
 
+    @Override
     public void partDeactivated(IWorkbenchPart p)
     {
       // Ignore.
     }
 
+    @Override
     public void partOpened(IWorkbenchPart p)
     {
       // Ignore.
@@ -459,6 +465,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           {
             getSite().getShell().getDisplay().asyncExec(new Runnable()
             {
+              @Override
               public void run()
               {
                 updateProblemIndication();
@@ -490,6 +497,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         getSite().getShell().getDisplay().asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             updateProblemIndication();
@@ -685,10 +693,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     //
     commandStack.addCommandStackListener(new CommandStackListener()
     {
+      @Override
       public void commandStackChanged(final EventObject event)
       {
         getContainer().getDisplay().asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             firePropertyChange(IEditorPart.PROP_DIRTY);
@@ -755,6 +765,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     {
       Runnable runnable = new Runnable()
       {
+        @Override
         public void run()
         {
           // Try to select the items in the current content viewer of the editor.
@@ -776,6 +787,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EditingDomain getEditingDomain()
   {
     return editingDomain;
@@ -860,6 +872,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         {
           // This just notifies those things that are affected by the section.
           //
+          @Override
           public void selectionChanged(SelectionChangedEvent selectionChangedEvent)
           {
             setSelection(selectionChangedEvent.getSelection());
@@ -897,6 +910,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * end-user-doc -->
    * @generated
    */
+  @Override
   public Viewer getViewer()
   {
     return currentViewer;
@@ -1021,6 +1035,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       commandStack.addCommandStackListener(new CommandStackListener()
       {
+        @Override
         public void commandStackChanged(final EventObject event)
         {
           Composite container = getContainer();
@@ -1028,6 +1043,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           {
             container.getDisplay().asyncExec(new Runnable()
             {
+              @Override
               public void run()
               {
                 firePropertyChange(IEditorPart.PROP_DIRTY);
@@ -1167,6 +1183,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       getSite().getShell().getDisplay().asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           setActivePage(0);
@@ -1195,6 +1212,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     getSite().getShell().getDisplay().asyncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         updateProblemIndication();
@@ -1223,6 +1241,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       getSite().getShell().getDisplay().asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           try
@@ -1376,6 +1395,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     getViewer().getControl().addMouseListener(new MouseListener()
     {
+      @Override
       public void mouseDoubleClick(MouseEvent e)
       {
         try
@@ -1388,11 +1408,13 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         }
       }
 
+      @Override
       public void mouseDown(MouseEvent e)
       {
         // do nothing
       }
 
+      @Override
       public void mouseUp(MouseEvent e)
       {
         // do nothing
@@ -1704,6 +1726,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         // This ensures that we handle selections correctly.
         //
+        @Override
         public void selectionChanged(SelectionChangedEvent event)
         {
           handleContentOutlineSelection(event.getSelection());
@@ -1864,6 +1887,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     {
       // This is the method that gets invoked when the operation runs.
       //
+      @Override
       public void run(IProgressMonitor monitor)
       {
         // Save the resources to the file system.
@@ -1928,6 +1952,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     IRunnableWithProgress operation = new IRunnableWithProgress()
     {
+      @Override
       public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
       {
         boolean first = true;
@@ -1976,6 +2001,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
               final Shell shell = getSite().getShell();
               shell.getDisplay().syncExec(new Runnable()
               {
+                @Override
                 public void run()
                 {
                   String title = Messages.getString("CDOEditor.17"); //$NON-NLS-1$
@@ -2144,6 +2170,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void addSelectionChangedListener(ISelectionChangedListener listener)
   {
     selectionChangedListeners.add(listener);
@@ -2154,6 +2181,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void removeSelectionChangedListener(ISelectionChangedListener listener)
   {
     selectionChangedListeners.remove(listener);
@@ -2164,6 +2192,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ISelection getSelection()
   {
     return editorSelection;
@@ -2175,6 +2204,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public void setSelection(ISelection selection)
   {
     editorSelection = selection;
@@ -2287,6 +2317,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
+  @Override
   public void menuAboutToShow(IMenuManager menuManager)
   {
     menuAboutToShowGen(menuManager);
@@ -2564,6 +2595,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     {
       getSite().getShell().getDisplay().asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           try
@@ -2590,6 +2622,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     {
       getSite().getShell().getDisplay().asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           try
@@ -2619,6 +2652,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     {
       selectionViewer.getControl().getDisplay().asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           try
@@ -2910,6 +2944,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       submenuManager.addMenuListener(new IMenuListener()
       {
+        @Override
         public void menuAboutToShow(IMenuManager manager)
         {
           String nsURI = submenuManager.getMenuText();
@@ -2948,6 +2983,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         Collections.sort(objects, new Comparator<EObject>()
         {
+          @Override
           public int compare(EObject o1, EObject o2)
           {
             return o1.eClass().getName().compareTo(o2.eClass().getName());
@@ -3004,25 +3040,30 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected class EditingDomainProviderAdapter implements Adapter, IEditingDomainProvider
   {
+    @Override
     public boolean isAdapterForType(Object type)
     {
       return type == IEditingDomainProvider.class;
     }
 
+    @Override
     public EditingDomain getEditingDomain()
     {
       return editingDomain;
     }
 
+    @Override
     public Notifier getTarget()
     {
       return null;
     }
 
+    @Override
     public void notifyChanged(Notification notification)
     {
     }
 
+    @Override
     public void setTarget(Notifier newTarget)
     {
     }

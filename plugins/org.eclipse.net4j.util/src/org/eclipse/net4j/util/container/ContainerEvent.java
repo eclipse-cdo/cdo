@@ -50,17 +50,20 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
     return (IContainer<E>)super.getSource();
   }
 
+  @Override
   public boolean isEmpty()
   {
     return deltas.isEmpty();
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public IContainerDelta<E>[] getDeltas()
   {
     return deltas.toArray(new IContainerDelta[deltas.size()]);
   }
 
+  @Override
   public IContainerDelta<E> getDelta() throws IllegalStateException
   {
     if (deltas.size() != 1)
@@ -71,11 +74,13 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
     return deltas.get(0);
   }
 
+  @Override
   public E getDeltaElement() throws IllegalStateException
   {
     return getDelta().getElement();
   }
 
+  @Override
   public IContainerDelta.Kind getDeltaKind() throws IllegalStateException
   {
     return getDelta().getKind();
@@ -91,6 +96,7 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
     deltas.add(delta);
   }
 
+  @Override
   public void accept(IContainerEventVisitor<E> visitor)
   {
     for (IContainerDelta<E> delta : deltas)

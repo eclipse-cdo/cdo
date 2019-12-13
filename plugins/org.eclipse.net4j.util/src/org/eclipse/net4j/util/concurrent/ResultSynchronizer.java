@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -30,6 +30,7 @@ public final class ResultSynchronizer<RESULT> implements ISynchronizer<RESULT>
   {
   }
 
+  @Override
   public RESULT get(long timeout)
   {
     try
@@ -64,6 +65,7 @@ public final class ResultSynchronizer<RESULT> implements ISynchronizer<RESULT>
     }
   }
 
+  @Override
   public void put(RESULT result)
   {
     synchronized (consumerLock)
@@ -73,6 +75,7 @@ public final class ResultSynchronizer<RESULT> implements ISynchronizer<RESULT>
     }
   }
 
+  @Override
   public boolean put(RESULT result, long timeout)
   {
     synchronized (consumerLock)

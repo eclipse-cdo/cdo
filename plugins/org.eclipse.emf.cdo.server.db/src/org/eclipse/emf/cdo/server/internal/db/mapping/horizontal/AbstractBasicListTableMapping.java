@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -79,11 +79,13 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
     return containingClass;
   }
 
+  @Override
   public final EStructuralFeature getFeature()
   {
     return feature;
   }
 
+  @Override
   public void addSimpleChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int index)
   {
     builder.append(LIST_IDX);
@@ -91,6 +93,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
     builder.append(index);
   }
 
+  @Override
   public void addRangedChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int fromIndex, int toIndex)
   {
     builder.append(LIST_IDX);
@@ -100,6 +103,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
     builder.append(toIndex - 1);
   }
 
+  @Override
   public void setClassMapping(IClassMapping classMapping)
   {
     // Subclasses may override.
@@ -231,6 +235,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
       throw new NewListSizeResult(newListSize);
     }
 
+    @Override
     public void visit(CDOAddFeatureDelta delta)
     {
       if (TRACER.isEnabled())
@@ -246,6 +251,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
       ++newListSize;
     }
 
+    @Override
     public void visit(CDORemoveFeatureDelta delta)
     {
       if (TRACER.isEnabled())
@@ -261,6 +267,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
       --newListSize;
     }
 
+    @Override
     public void visit(CDOSetFeatureDelta delta)
     {
       if (TRACER.isEnabled())
@@ -282,6 +289,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
       }
     }
 
+    @Override
     public void visit(CDOUnsetFeatureDelta delta)
     {
       if (!delta.getFeature().isUnsettable())
@@ -302,6 +310,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
       newListSize = 0;
     }
 
+    @Override
     public void visit(CDOClearFeatureDelta delta)
     {
       if (TRACER.isEnabled())
@@ -317,6 +326,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
       newListSize = 0;
     }
 
+    @Override
     public void visit(CDOMoveFeatureDelta delta)
     {
       int fromIdx = delta.getOldPosition();
@@ -357,12 +367,14 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
       }
     }
 
+    @Override
     @Deprecated
     public void visit(CDOListFeatureDelta delta)
     {
       throw new UnsupportedOperationException("Should never be called");
     }
 
+    @Override
     @Deprecated
     public void visit(CDOContainerFeatureDelta delta)
     {

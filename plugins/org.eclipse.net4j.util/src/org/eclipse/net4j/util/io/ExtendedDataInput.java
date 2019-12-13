@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013, 2015, 2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2013, 2015, 2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -73,81 +73,97 @@ public interface ExtendedDataInput extends DataInput
       return delegate;
     }
 
+    @Override
     public boolean readBoolean() throws IOException
     {
       return delegate.readBoolean();
     }
 
+    @Override
     public byte readByte() throws IOException
     {
       return delegate.readByte();
     }
 
+    @Override
     public byte[] readByteArray() throws IOException
     {
       return delegate.readByteArray();
     }
 
+    @Override
     public char readChar() throws IOException
     {
       return delegate.readChar();
     }
 
+    @Override
     public double readDouble() throws IOException
     {
       return delegate.readDouble();
     }
 
+    @Override
     public float readFloat() throws IOException
     {
       return delegate.readFloat();
     }
 
+    @Override
     public void readFully(byte[] b, int off, int len) throws IOException
     {
       delegate.readFully(b, off, len);
     }
 
+    @Override
     public void readFully(byte[] b) throws IOException
     {
       delegate.readFully(b);
     }
 
+    @Override
     public int readInt() throws IOException
     {
       return delegate.readInt();
     }
 
+    @Override
     public String readLine() throws IOException
     {
       return delegate.readLine();
     }
 
+    @Override
     public long readLong() throws IOException
     {
       return delegate.readLong();
     }
 
+    @Override
     public Object readObject() throws IOException
     {
       return delegate.readObject();
     }
 
+    @Override
     public Object readObject(ClassLoader classLoader) throws IOException
     {
       return delegate.readObject(classLoader);
     }
 
+    @Override
     public Object readObject(ClassResolver classResolver) throws IOException
     {
       return delegate.readObject(classResolver);
     }
 
+    @Override
     public short readShort() throws IOException
     {
       return delegate.readShort();
     }
 
+    @Override
     public String readString() throws IOException
     {
       return delegate.readString();
@@ -156,6 +172,7 @@ public interface ExtendedDataInput extends DataInput
     /**
      * @since 3.0
      */
+    @Override
     public <T extends Enum<?>> T readEnum(Class<T> type) throws IOException
     {
       return delegate.readEnum(type);
@@ -164,21 +181,25 @@ public interface ExtendedDataInput extends DataInput
     /**
      * @since 3.4
      */
+    @Override
     public Throwable readException() throws IOException
     {
       return delegate.readException();
     }
 
+    @Override
     public int readUnsignedByte() throws IOException
     {
       return delegate.readUnsignedByte();
     }
 
+    @Override
     public int readUnsignedShort() throws IOException
     {
       return delegate.readUnsignedShort();
     }
 
+    @Override
     public String readUTF() throws IOException
     {
       return delegate.readUTF();
@@ -187,6 +208,7 @@ public interface ExtendedDataInput extends DataInput
     /**
      * @since 3.7
      */
+    @Override
     public int readVarInt() throws IOException
     {
       return delegate.readVarInt();
@@ -195,11 +217,13 @@ public interface ExtendedDataInput extends DataInput
     /**
      * @since 3.7
      */
+    @Override
     public long readVarLong() throws IOException
     {
       return delegate.readVarLong();
     }
 
+    @Override
     public int skipBytes(int n) throws IOException
     {
       return delegate.skipBytes(n);
@@ -208,6 +232,7 @@ public interface ExtendedDataInput extends DataInput
     /**
      * @since 3.6
      */
+    @Override
     public void close() throws IOException
     {
       if (delegate instanceof Closeable)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2009, 2011-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2009, 2011-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -30,29 +30,35 @@ public final class ContainerUtil
 
   private static final IContainer<Object> EMPTY = new IContainer<Object>()
   {
+    @Override
     public Object[] getElements()
     {
       return NO_ELEMENTS;
     }
 
+    @Override
     public boolean isEmpty()
     {
       return true;
     }
 
+    @Override
     public void addListener(IListener listener)
     {
     }
 
+    @Override
     public void removeListener(IListener listener)
     {
     }
 
+    @Override
     public IListener[] getListeners()
     {
       return EventUtil.NO_LISTENERS;
     }
 
+    @Override
     public boolean hasListeners()
     {
       return false;

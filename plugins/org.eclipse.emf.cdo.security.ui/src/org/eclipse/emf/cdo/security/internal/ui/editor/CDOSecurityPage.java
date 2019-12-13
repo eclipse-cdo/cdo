@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -117,6 +117,7 @@ public class CDOSecurityPage extends FormPage
     {
       private DetailsPart details;
 
+      @Override
       public void selectionChanged(IFormPart part, ISelection selection)
       {
         if (selection.isEmpty() && details != null)
@@ -197,6 +198,7 @@ public class CDOSecurityPage extends FormPage
     // ensure the heading's summary of problems is up-to-date
     Display.getCurrent().asyncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         getManagedForm().getMessageManager().update();
@@ -251,6 +253,7 @@ public class CDOSecurityPage extends FormPage
     {
       protected CDOID inputID;
 
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof CDOViewTargetChangedEvent)
@@ -258,6 +261,7 @@ public class CDOSecurityPage extends FormPage
           final CDOViewTargetChangedEvent e = (CDOViewTargetChangedEvent)event;
           getSite().getShell().getDisplay().asyncExec(new Runnable()
           {
+            @Override
             public void run()
             {
               Object input = getManagedForm().getInput();
@@ -307,6 +311,7 @@ public class CDOSecurityPage extends FormPage
     {
       getSite().getShell().getDisplay().asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           try

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -73,6 +73,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Order getOrder()
   {
     return (Order)eGet(BusinessPackage.Literals.ORDER_DETAIL__ORDER, true);
@@ -82,6 +83,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setOrder(Order newOrder)
   {
     eSet(BusinessPackage.Literals.ORDER_DETAIL__ORDER, newOrder);
@@ -91,6 +93,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Offering getOffering()
   {
     return (Offering)eGet(BusinessPackage.Literals.ORDER_DETAIL__OFFERING, true);
@@ -100,6 +103,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setOffering(Offering newOffering)
   {
     eSet(BusinessPackage.Literals.ORDER_DETAIL__OFFERING, newOffering);
@@ -109,6 +113,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getQuantity()
   {
     return (Integer)eGet(BusinessPackage.Literals.ORDER_DETAIL__QUANTITY, true);
@@ -118,6 +123,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setQuantity(int newQuantity)
   {
     eSet(BusinessPackage.Literals.ORDER_DETAIL__QUANTITY, newQuantity);
@@ -127,6 +133,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public OrderState getState()
   {
     return (OrderState)eGet(BusinessPackage.Literals.ORDER_DETAIL__STATE, true);
@@ -136,6 +143,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setState(OrderState newState)
   {
     eSet(BusinessPackage.Literals.ORDER_DETAIL__STATE, newState);
@@ -146,6 +154,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    *
    * @generated NOT
    */
+  @Override
   public float getPrice()
   {
     Offering offering = getOffering();

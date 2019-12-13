@@ -38,21 +38,25 @@ public class TestAdapter implements Adapter
     }
   }
 
+  @Override
   public Notifier getTarget()
   {
     return notifier;
   }
 
+  @Override
   public void setTarget(Notifier newTarget)
   {
     notifier = newTarget;
   }
 
+  @Override
   public boolean isAdapterForType(Object type)
   {
     return false;
   }
 
+  @Override
   public void notifyChanged(Notification notification)
   {
     synchronized (notifications)

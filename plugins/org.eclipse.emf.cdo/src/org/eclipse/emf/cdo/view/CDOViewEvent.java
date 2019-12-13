@@ -25,5 +25,6 @@ public interface CDOViewEvent extends IEvent
   /**
    * @since 3.0
    */
+  @Override
   public CDOView getSource();
 }

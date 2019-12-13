@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -162,6 +162,7 @@ public class GImpl extends EObjectImpl implements G
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getDummy()
   {
     return dummy;
@@ -172,6 +173,7 @@ public class GImpl extends EObjectImpl implements G
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDummy(String newDummy)
   {
     String oldDummy = dummy;
@@ -187,6 +189,7 @@ public class GImpl extends EObjectImpl implements G
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public BaseObject getReference()
   {
     if (reference != null && reference.eIsProxy())
@@ -219,6 +222,7 @@ public class GImpl extends EObjectImpl implements G
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setReference(BaseObject newReference)
   {
     BaseObject oldReference = reference;
@@ -234,6 +238,7 @@ public class GImpl extends EObjectImpl implements G
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<BaseObject> getList()
   {
     if (list == null)
@@ -246,6 +251,7 @@ public class GImpl extends EObjectImpl implements G
   /**
    * @ADDED
    */
+  @Override
   public List<Notification> getNotifications()
   {
     return notifications;
@@ -256,6 +262,7 @@ public class GImpl extends EObjectImpl implements G
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean isAttributeModified()
   {
     return attributeModified;
@@ -266,6 +273,7 @@ public class GImpl extends EObjectImpl implements G
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean isReferenceModified()
   {
     return referenceModified;
@@ -276,6 +284,7 @@ public class GImpl extends EObjectImpl implements G
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean isListModified()
   {
     return listModified;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2009, 2011, 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2009, 2011, 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -45,6 +45,7 @@ public class Preferences extends Notifier implements OMPreferences
     this.bundle = bundle;
   }
 
+  @Override
   public AbstractBundle getBundle()
   {
     return bundle;
@@ -62,6 +63,7 @@ public class Preferences extends Notifier implements OMPreferences
       {
         IOUtil.safeInput(file, new IORunnable<FileInputStream>()
         {
+          @Override
           public void run(FileInputStream io) throws IOException
           {
             properties.load(io);
@@ -78,6 +80,7 @@ public class Preferences extends Notifier implements OMPreferences
     }
   }
 
+  @Override
   public synchronized void save()
   {
     if (dirty)
@@ -108,6 +111,7 @@ public class Preferences extends Notifier implements OMPreferences
       {
         IOUtil.safeOutput(file, new IORunnable<FileOutputStream>()
         {
+          @Override
           public void run(FileOutputStream io) throws IOException
           {
             properties.store(io, "Preferences of " + bundle.getBundleID()); //$NON-NLS-1$
@@ -119,143 +123,170 @@ public class Preferences extends Notifier implements OMPreferences
     }
   }
 
+  @Override
   public boolean isDirty()
   {
     return dirty;
   }
 
+  @Override
   public OMPreference<Boolean> init(String name, boolean defaultValue)
   {
     return init(new BooleanPreference(this, name, defaultValue));
   }
 
+  @Override
   public OMPreference<Integer> init(String name, int defaultValue)
   {
     return init(new IntegerPreference(this, name, defaultValue));
   }
 
+  @Override
   public OMPreference<Long> init(String name, long defaultValue)
   {
     return init(new LongPreference(this, name, defaultValue));
   }
 
+  @Override
   public OMPreference<Float> init(String name, float defaultValue)
   {
     return init(new FloatPreference(this, name, defaultValue));
   }
 
+  @Override
   public OMPreference<Double> init(String name, double defaultValue)
   {
     return init(new DoublePreference(this, name, defaultValue));
   }
 
+  @Override
   public OMPreference<String> init(String name, String defaultValue)
   {
     return init(new StringPreference(this, name, defaultValue));
   }
 
+  @Override
   public OMPreference<String[]> init(String name, String[] defaultValue)
   {
     return init(new ArrayPreference(this, name, defaultValue));
   }
 
+  @Override
   public OMPreference<byte[]> init(String name, byte[] defaultValue)
   {
     return init(new BytesPreference(this, name, defaultValue));
   }
 
+  @Override
   public OMPreference<Boolean> initBoolean(String name)
   {
     return init(name, DEFAULT_BOOLEAN);
   }
 
+  @Override
   public OMPreference<Integer> initInteger(String name)
   {
     return init(name, DEFAULT_INTEGER);
   }
 
+  @Override
   public OMPreference<Long> initLong(String name)
   {
     return init(name, DEFAULT_LONG);
   }
 
+  @Override
   public OMPreference<Float> initFloat(String name)
   {
     return init(name, DEFAULT_FLOAT);
   }
 
+  @Override
   public OMPreference<Double> initDouble(String name)
   {
     return init(name, DEFAULT_DOUBLE);
   }
 
+  @Override
   public OMPreference<String> initString(String name)
   {
     return init(name, DEFAULT_STRING);
   }
 
+  @Override
   public OMPreference<String[]> initArray(String name)
   {
     return init(name, DEFAULT_ARRAY);
   }
 
+  @Override
   public OMPreference<byte[]> initBytes(String name)
   {
     return init(name, DEFAULT_BYTES);
   }
 
+  @Override
   public boolean contains(String name)
   {
     return prefs.containsKey(name);
   }
 
+  @Override
   public OMPreference<?> get(String name)
   {
     return prefs.get(name);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public OMPreference<Boolean> getBoolean(String name)
   {
     return (OMPreference<Boolean>)get(name);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public OMPreference<Integer> getInteger(String name)
   {
     return (OMPreference<Integer>)get(name);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public OMPreference<Long> getLong(String name)
   {
     return (OMPreference<Long>)get(name);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public OMPreference<Float> getFloat(String name)
   {
     return (OMPreference<Float>)get(name);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public OMPreference<Double> getDouble(String name)
   {
     return (OMPreference<Double>)get(name);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public OMPreference<String> getString(String name)
   {
     return (OMPreference<String>)get(name);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public OMPreference<String[]> getArray(String name)
   {
     return (OMPreference<String[]>)get(name);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public OMPreference<byte[]> getBytes(String name)
   {

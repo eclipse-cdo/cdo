@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -130,11 +130,13 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     return properties;
   }
 
+  @Override
   public Properties getSettings()
   {
     return settings;
   }
 
+  @Override
   public void showSettings()
   {
     showSettings(null);
@@ -180,6 +182,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     return null;
   }
 
+  @Override
   public Image getImage()
   {
     return ExampleResourceManager.getPluginImage(Application.PLUGIN_ID, "icons/Folder.gif");
@@ -202,6 +205,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     return name;
   }
 
+  @Override
   public Composite getDetailsControl()
   {
     return getDetailsControl(null);
@@ -416,6 +420,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
         final Text text = new Text(parent, SWT.BORDER);
         text.addModifyListener(new ModifyListener()
         {
+          @Override
           public void modifyText(ModifyEvent e)
           {
             if (!dialog.isUpdatingDetails())
@@ -460,6 +465,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
         comboViewer.setLabelProvider(new LabelProvider());
         comboViewer.setContentProvider(new IStructuredContentProvider()
         {
+          @Override
           public Object[] getElements(Object inputElement)
           {
             List<Node> result = new ArrayList<Node>();
@@ -476,10 +482,12 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
             return result.toArray(new Node[result.size()]);
           }
 
+          @Override
           public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
           {
           }
 
+          @Override
           public void dispose()
           {
           }
@@ -487,6 +495,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
 
         comboViewer.addSelectionChangedListener(new ISelectionChangedListener()
         {
+          @Override
           public void selectionChanged(SelectionChangedEvent event)
           {
             if (!dialog.isUpdatingDetails())
@@ -554,6 +563,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
       {
         session.addListener(new IListener()
         {
+          @Override
           public void notifyEvent(IEvent event)
           {
             if (session.getRepositoryInfo().getState() != State.INITIAL)
@@ -591,6 +601,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
 
       CDOSessionConfigurationFactory factory = new CDOSessionConfigurationFactory()
       {
+        @Override
         public CDONet4jSessionConfiguration createSessionConfiguration()
         {
           String serverAddress = "localhost:" + serverNode.getSetting(PORT_PROPERTY);
@@ -645,6 +656,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
       transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
       transaction.addListener(new IListener()
       {
+        @Override
         public void notifyEvent(IEvent event)
         {
           if (event instanceof CDOViewTargetChangedEvent)

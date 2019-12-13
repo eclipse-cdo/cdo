@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -362,6 +362,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
     sqlClearList = builder.toString();
   }
 
+  @Override
   public Collection<IDBTable> getDBTables()
   {
     return Collections.singleton(table);
@@ -392,6 +393,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
     return tagMap;
   }
 
+  @Override
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     MoveableList<Object> list = revision.getListOrNull(getFeature());
@@ -521,6 +523,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
     }
   }
 
+  @Override
   public final void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String where)
   {
     CDORevision revision = chunkReader.getRevision();
@@ -684,6 +687,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
     }
   }
 
+  @Override
   public void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
     CDOList values = revision.getListOrNull(getFeature());
@@ -828,6 +832,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
     }
   }
 
+  @Override
   public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
   {
     InternalCDORevision revision = (InternalCDORevision)accessor.getTransaction().getRevision(id);
@@ -847,6 +852,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
     throw new UnsupportedOperationException("Raw deletion does not work in range-based mappings");
   }
 
+  @Override
   public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion, final int newVersion, long created,
       CDOListFeatureDelta delta)
   {
@@ -923,6 +929,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
       this.timestamp = timestamp;
     }
 
+    @Override
     public void visit(CDOMoveFeatureDelta delta)
     {
       int fromIdx = delta.getOldPosition();
@@ -952,6 +959,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
       addEntry(accessor, id, branchID, newVersion, toIdx, value, timestamp);
     }
 
+    @Override
     public void visit(CDOAddFeatureDelta delta)
     {
       int startIndex = delta.getIndex();
@@ -974,6 +982,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
       ++lastIndex;
     }
 
+    @Override
     public void visit(CDORemoveFeatureDelta delta)
     {
       int startIndex = delta.getIndex();
@@ -993,6 +1002,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
       --lastIndex;
     }
 
+    @Override
     public void visit(CDOSetFeatureDelta delta)
     {
       int index = delta.getIndex();
@@ -1009,6 +1019,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
       addEntry(accessor, id, branchID, newVersion, index, delta.getValue(), timestamp);
     }
 
+    @Override
     public void visit(CDOUnsetFeatureDelta delta)
     {
       if (delta.getFeature().isUnsettable())
@@ -1025,11 +1036,13 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
       lastIndex = -1;
     }
 
+    @Override
     public void visit(CDOListFeatureDelta delta)
     {
       throw new ImplementationError("Should not be called"); //$NON-NLS-1$
     }
 
+    @Override
     public void visit(CDOClearFeatureDelta delta)
     {
       if (TRACER.isEnabled())
@@ -1041,6 +1054,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
       lastIndex = -1;
     }
 
+    @Override
     public void visit(CDOContainerFeatureDelta delta)
     {
       throw new ImplementationError("Should not be called"); //$NON-NLS-1$
@@ -1487,6 +1501,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
     return accessor.createChunkReader(baseRevision, getFeature());
   }
 
+  @Override
   public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere, QueryXRefsContext context, String idString)
   {
     // must never be called (a feature map is not associated with an EReference feature, so XRefs are nor supported

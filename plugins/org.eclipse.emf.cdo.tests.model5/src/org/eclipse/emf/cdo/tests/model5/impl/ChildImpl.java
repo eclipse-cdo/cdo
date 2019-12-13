@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -73,6 +73,7 @@ public class ChildImpl extends CDOObjectImpl implements Child
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Parent getParent()
   {
     return (Parent)eGet(Model5Package.eINSTANCE.getChild_Parent(), true);
@@ -83,6 +84,7 @@ public class ChildImpl extends CDOObjectImpl implements Child
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setParent(Parent newParent)
   {
     eSet(Model5Package.eINSTANCE.getChild_Parent(), newParent);
@@ -93,6 +95,7 @@ public class ChildImpl extends CDOObjectImpl implements Child
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Parent getPreferredBy()
   {
     return (Parent)eGet(Model5Package.eINSTANCE.getChild_PreferredBy(), true);
@@ -103,6 +106,7 @@ public class ChildImpl extends CDOObjectImpl implements Child
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setPreferredBy(Parent newPreferredBy)
   {
     eSet(Model5Package.eINSTANCE.getChild_PreferredBy(), newPreferredBy);
@@ -113,6 +117,7 @@ public class ChildImpl extends CDOObjectImpl implements Child
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(Model5Package.eINSTANCE.getChild_Name(), true);
@@ -128,6 +133,7 @@ public class ChildImpl extends CDOObjectImpl implements Child
     eSet(Model5Package.eINSTANCE.getChild_Name(), newName);
   }
 
+  @Override
   public void setName(String newName)
   {
     IsLoadingTestFixture.reportLoading(eResource(), this);

@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CDO Release Engineering
 Bundle-SymbolicName: org.eclipse.emf.cdo.releng
-Bundle-Version: 4.2.400.qualifier
+Bundle-Version: 4.3.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
-Export-Package: org.eclipse.emf.cdo.releng;version="4.2.400";x-internal:=true
+Export-Package: org.eclipse.emf.cdo.releng;version="4.3.0";x-internal:=true
 Automatic-Module-Name: org.eclipse.emf.cdo.releng

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -65,6 +65,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
     addViewProvider(PluginContainerViewProvider.INSTANCE);
   }
 
+  @Override
   public CDOView provideView(URI uri, ResourceSet resourceSet)
   {
     if (uri == null)
@@ -166,6 +167,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
     return null;
   }
 
+  @Override
   @Deprecated
   public Pair<CDOView, CDOViewProvider> provideViewWithInfo(URI uri, ResourceSet resourceSet)
   {
@@ -178,6 +180,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
     return null;
   }
 
+  @Override
   public CDOViewProvider[] getViewProviders(URI uri)
   {
     List<CDOViewProvider> result = new ArrayList<CDOViewProvider>();
@@ -196,6 +199,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
     // Sort highest priority first
     Collections.sort(result, new Comparator<CDOViewProvider>()
     {
+      @Override
       public int compare(CDOViewProvider o1, CDOViewProvider o2)
       {
         return -Integer.valueOf(o1.getPriority()).compareTo(o2.getPriority());
@@ -205,6 +209,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
     return result.toArray(new CDOViewProvider[result.size()]);
   }
 
+  @Override
   public boolean hasViewProvider(CDOViewProvider viewProvider)
   {
     synchronized (viewProviders)
@@ -213,6 +218,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
     }
   }
 
+  @Override
   public void addViewProvider(CDOViewProvider viewProvider)
   {
     boolean added;
@@ -231,6 +237,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
     }
   }
 
+  @Override
   public void removeViewProvider(CDOViewProvider viewProvider)
   {
     boolean removed;
@@ -245,6 +252,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
     }
   }
 
+  @Override
   public CDOViewProvider[] getElements()
   {
     synchronized (viewProviders)
@@ -315,6 +323,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
       }
     }
 
+    @Override
     public CDOView getView(URI uri, ResourceSet resourceSet)
     {
       return getViewProvider().getView(uri, resourceSet);

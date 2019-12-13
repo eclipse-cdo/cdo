@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -105,16 +105,19 @@ public class DawnGraphitiDiagramEditor extends DiagramEditor implements IDawnEdi
     dawnEditorSupport.registerListeners();
   }
 
+  @Override
   public CDOView getView()
   {
     return dawnEditorSupport.getView();
   }
 
+  @Override
   public IDawnEditorSupport getDawnEditorSupport()
   {
     return dawnEditorSupport;
   }
 
+  @Override
   public String getContributorID()
   {
     return ID;
@@ -127,6 +130,7 @@ public class DawnGraphitiDiagramEditor extends DiagramEditor implements IDawnEdi
     return dawnEditorSupport.isDirty();
   }
 
+  @Override
   public void setDirty()
   {
     dawnEditorSupport.setDirty(true);

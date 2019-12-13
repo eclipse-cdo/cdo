@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -585,6 +585,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ComposeableAdapterFactory getRootAdapterFactory()
   {
     return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
@@ -596,6 +597,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory)
   {
     this.parentAdapterFactory = parentAdapterFactory;
@@ -659,6 +661,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain)
   {
     return childCreationExtenderManager.getNewChildDescriptors(object, editingDomain);
@@ -669,6 +672,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ResourceLocator getResourceLocator()
   {
     return childCreationExtenderManager;
@@ -680,6 +684,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void addListener(INotifyChangedListener notifyChangedListener)
   {
     changeNotifier.addListener(notifyChangedListener);
@@ -691,6 +696,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void removeListener(INotifyChangedListener notifyChangedListener)
   {
     changeNotifier.removeListener(notifyChangedListener);
@@ -702,6 +708,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void fireNotifyChanged(Notification notification)
   {
     changeNotifier.fireNotifyChanged(notification);
@@ -718,6 +725,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void dispose()
   {
     if (realmItemProvider != null)

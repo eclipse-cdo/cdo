@@ -827,6 +827,7 @@ public final class CDORevisionUtil
     {
     }
 
+    @Override
     public int compare(CDORevisionKey rev1, CDORevisionKey rev2)
     {
       int result = rev1.getID().compareTo(rev2.getID());

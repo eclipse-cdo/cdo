@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -150,6 +150,7 @@ public class TimeSlider extends Scale implements IListener, ITreeViewerListener
       {
         display.asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             if (getSelection() != newSelection)
@@ -257,6 +258,7 @@ public class TimeSlider extends Scale implements IListener, ITreeViewerListener
     }
   }
 
+  @Override
   public void notifyEvent(IEvent event)
   {
     if (event instanceof CDOViewTargetChangedEvent)
@@ -274,6 +276,7 @@ public class TimeSlider extends Scale implements IListener, ITreeViewerListener
     }
   }
 
+  @Override
   public void treeExpanded(TreeExpansionEvent event)
   {
     CDOID id = getID(event.getElement());
@@ -283,6 +286,7 @@ public class TimeSlider extends Scale implements IListener, ITreeViewerListener
     }
   }
 
+  @Override
   public void treeCollapsed(TreeExpansionEvent event)
   {
     CDOID id = getID(event.getElement());

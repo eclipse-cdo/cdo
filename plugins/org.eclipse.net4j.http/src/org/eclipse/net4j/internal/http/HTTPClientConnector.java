@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -80,6 +80,7 @@ public class HTTPClientConnector extends HTTPConnector
     this.url = url;
   }
 
+  @Override
   public int getMaxIdleTime()
   {
     return maxIdleTime;
@@ -153,12 +154,14 @@ public class HTTPClientConnector extends HTTPConnector
   {
     request(new ExtendedIOHandler()
     {
+      @Override
       public void handleOut(ExtendedDataOutputStream out) throws IOException
       {
         out.writeByte(OPCODE_CONNECT);
         out.writeString(getUserID());
       }
 
+      @Override
       public void handleIn(ExtendedDataInputStream in) throws IOException
       {
         String connectorID = in.readString();
@@ -228,6 +231,7 @@ public class HTTPClientConnector extends HTTPConnector
       final boolean moreOperations[] = { false };
       request(new ExtendedIOHandler()
       {
+        @Override
         public void handleOut(ExtendedDataOutputStream out) throws IOException
         {
           out.writeByte(OPCODE_OPERATIONS);
@@ -235,6 +239,7 @@ public class HTTPClientConnector extends HTTPConnector
           moreOperations[0] = writeOutputOperations(out);
         }
 
+        @Override
         public void handleIn(ExtendedDataInputStream in) throws IOException
         {
           readInputOperations(in);

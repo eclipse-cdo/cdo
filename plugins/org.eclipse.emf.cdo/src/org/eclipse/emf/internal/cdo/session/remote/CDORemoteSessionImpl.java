@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -38,31 +38,37 @@ public class CDORemoteSessionImpl implements InternalCDORemoteSession
     this.userID = userID;
   }
 
+  @Override
   public InternalCDORemoteSessionManager getManager()
   {
     return manager;
   }
 
+  @Override
   public int getSessionID()
   {
     return sessionID;
   }
 
+  @Override
   public String getUserID()
   {
     return userID;
   }
 
+  @Override
   public boolean isSubscribed()
   {
     return subscribed;
   }
 
+  @Override
   public void setSubscribed(boolean subscribed)
   {
     this.subscribed = subscribed;
   }
 
+  @Override
   public boolean sendMessage(CDORemoteSessionMessage message)
   {
     if (!isSubscribed())
@@ -73,6 +79,7 @@ public class CDORemoteSessionImpl implements InternalCDORemoteSession
     return manager.sendMessage(message, this).size() == 1;
   }
 
+  @Override
   public int compareTo(CDORemoteSession obj)
   {
     int result = userID.compareTo(obj.getUserID());

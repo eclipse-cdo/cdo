@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -79,11 +79,13 @@ public abstract class OM
       INSTANCE = null;
     }
 
+    @Override
     public URL getBaseURL()
     {
       return getOMBundle().getBaseURL();
     }
 
+    @Override
     public Object getImage(String key)
     {
       try
@@ -96,11 +98,13 @@ public abstract class OM
       }
     }
 
+    @Override
     public String getString(String key)
     {
       return getString(key, true);
     }
 
+    @Override
     public String getString(String key, boolean translate)
     {
       if (!translate)
@@ -116,11 +120,13 @@ public abstract class OM
       return resourceBundle.getString(key);
     }
 
+    @Override
     public String getString(String key, Object[] substitutions)
     {
       return getString(key, substitutions, true);
     }
 
+    @Override
     public String getString(String key, Object[] substitutions, boolean translate)
     {
       return MessageFormat.format(getString(key, translate), substitutions);

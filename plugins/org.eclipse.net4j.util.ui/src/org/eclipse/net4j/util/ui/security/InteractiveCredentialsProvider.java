@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2011-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2011-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -40,11 +40,13 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
   {
   }
 
+  @Override
   public boolean isInteractive()
   {
     return true;
   }
 
+  @Override
   public IPasswordCredentials getCredentials()
   {
     return getCredentials(null);
@@ -53,12 +55,14 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
   /**
    * @since 3.3
    */
+  @Override
   public IPasswordCredentials getCredentials(final String realm)
   {
     final IPasswordCredentials[] credentials = new IPasswordCredentials[1];
     final Display display = UIUtil.getDisplay();
     display.syncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         CredentialsDialog dialog = new CredentialsDialog(UIUtil.getShell(), realm);
@@ -75,6 +79,7 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
   /**
    * @since 3.4
    */
+  @Override
   public IPasswordCredentialsUpdate getCredentialsUpdate(String userID, CredentialsUpdateOperation operation)
   {
     return getCredentialsUpdate(null, userID, operation);
@@ -83,12 +88,14 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
   /**
    * @since 3.4
    */
+  @Override
   public IPasswordCredentialsUpdate getCredentialsUpdate(final String realm, final String userID, final CredentialsUpdateOperation operation)
   {
     final IPasswordCredentialsUpdate[] update = { null };
     final Display display = UIUtil.getDisplay();
     display.syncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         Shell shell = UIUtil.getShell();

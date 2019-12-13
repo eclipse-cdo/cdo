@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -71,97 +71,116 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
     return (MongoDBStore)super.getStore();
   }
 
+  @Override
   public IStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature)
   {
     // Partial collection loading not supported, yet.
     return null;
   }
 
+  @Override
   public Collection<InternalCDOPackageUnit> readPackageUnits()
   {
     return commits.readPackageUnits();
   }
 
+  @Override
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
   {
     return commits.loadPackageUnit(packageUnit);
   }
 
+  @Override
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk, CDORevisionCacheAdder cache)
   {
     return commits.readRevision(id, branchPoint, listChunk, cache);
   }
 
+  @Override
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk, CDORevisionCacheAdder cache)
   {
     return commits.readRevisionByVersion(id, branchVersion, listChunk, cache);
   }
 
+  @Override
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
+  @Override
   public Set<CDOID> readChangeSet(OMMonitor monitor, CDOChangeSetSegment... segments)
   {
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
+  @Override
   public void queryResources(QueryResourcesContext context)
   {
     commits.queryResources(context);
   }
 
+  @Override
   public void queryXRefs(QueryXRefsContext context)
   {
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
+  @Override
   public void queryLobs(List<byte[]> ids)
   {
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
+  @Override
   public void loadLob(byte[] id, OutputStream out) throws IOException
   {
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
+  @Override
   public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
   {
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
+  @Override
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
     return null;
   }
 
+  @Override
   public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
+  @Override
   public BranchInfo loadBranch(int branchID)
   {
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
+  @Override
   public SubBranchInfo[] loadSubBranches(int branchID)
   {
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
+  @Override
   public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
   {
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
+  @Override
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
     commits.loadCommitInfos(branch, startTime, endTime, handler);
   }
 
+  @Override
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
     commits.writePackageUnits(this, packageUnits, monitor);

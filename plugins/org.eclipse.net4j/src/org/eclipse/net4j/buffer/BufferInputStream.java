@@ -113,6 +113,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
     this.exception = exception;
   }
 
+  @Override
   public void handleBuffer(IBuffer buffer)
   {
     // If stream has been closed - ignore the new buffer.

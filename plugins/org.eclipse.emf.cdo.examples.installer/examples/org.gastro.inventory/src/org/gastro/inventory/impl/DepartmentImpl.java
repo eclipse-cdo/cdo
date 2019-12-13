@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -65,6 +65,7 @@ public class DepartmentImpl extends StationImpl implements Department
    *
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Recipe> getRecipes()
   {
@@ -76,6 +77,7 @@ public class DepartmentImpl extends StationImpl implements Department
    *
    * @generated
    */
+  @Override
   public Restaurant getRestaurant()
   {
     return (Restaurant)eGet(InventoryPackage.Literals.DEPARTMENT__RESTAURANT, true);
@@ -86,6 +88,7 @@ public class DepartmentImpl extends StationImpl implements Department
    *
    * @generated
    */
+  @Override
   public void setRestaurant(Restaurant newRestaurant)
   {
     eSet(InventoryPackage.Literals.DEPARTMENT__RESTAURANT, newRestaurant);
@@ -96,6 +99,7 @@ public class DepartmentImpl extends StationImpl implements Department
    *
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Employee> getEmployees()
   {
@@ -107,6 +111,7 @@ public class DepartmentImpl extends StationImpl implements Department
    *
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Stock> getStocks()
   {

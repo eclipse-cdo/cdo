@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -40,10 +40,10 @@ import java.util.Set;
  */
 public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDOTimeProvider
 {
-  @SuppressWarnings("unchecked")
   public static final ProgressDistributable<InternalCommitContext>[] OPS = ProgressDistributor.array( //
       new ProgressDistributable.Default<InternalCommitContext>()
       {
+        @Override
         public void runLoop(int index, InternalCommitContext commitContext, OMMonitor monitor) throws Exception
         {
           commitContext.write(monitor.fork());
@@ -52,6 +52,7 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDO
 
       new ProgressDistributable.Default<InternalCommitContext>()
       {
+        @Override
         public void runLoop(int index, InternalCommitContext commitContext, OMMonitor monitor) throws Exception
         {
           if (commitContext.getRollbackMessage() == null)
@@ -65,6 +66,7 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDO
         }
       });
 
+  @Override
   public InternalTransaction getTransaction();
 
   /**
@@ -75,6 +77,7 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDO
   /**
    * @since 4.2
    */
+  @Override
   public long getTimeStamp();
 
   /**

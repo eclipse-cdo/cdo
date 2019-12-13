@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2014, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -35,6 +35,7 @@ import java.util.List;
  */
 public class CDOUndoDetectorImpl implements CDOUndoDetector
 {
+  @Override
   public boolean detectUndo(CDOTransaction transaction, CDORevision cleanRevision, CDORevision currentRevision, CDOFeatureDelta featureDelta)
   {
     EStructuralFeature feature = featureDelta.getFeature();
@@ -176,6 +177,7 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
    */
   public static final class NoFeatures implements CDOUndoDetector
   {
+    @Override
     public boolean detectUndo(CDOTransaction transaction, CDORevision cleanRevision, CDORevision currentRevision, CDOFeatureDelta featureDelta)
     {
       return false;

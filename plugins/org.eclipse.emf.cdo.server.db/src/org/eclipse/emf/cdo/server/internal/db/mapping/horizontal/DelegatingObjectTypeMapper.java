@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -48,6 +48,7 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
     this.delegate = delegate;
   }
 
+  @Override
   public CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     CDOID type = doGetObjectType(accessor, id);
@@ -60,6 +61,7 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
     return delegate.getObjectType(accessor, id);
   }
 
+  @Override
   public boolean putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
   {
     CDOID classID = getMetaDataManager().getMetaID(type, timeStamp);
@@ -71,12 +73,14 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
     return delegate.putObjectType(accessor, timeStamp, id, type);
   }
 
+  @Override
   public boolean removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     doRemoveObjectType(accessor, id);
     return delegate.removeObjectType(accessor, id);
   }
 
+  @Override
   public CDOID getMaxID(Connection connection, IIDHandler idHandler)
   {
     CDOID maxID = doGetMaxID(connection, idHandler);
@@ -88,11 +92,13 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
     return delegate.getMaxID(connection, idHandler);
   }
 
+  @Override
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
     delegate.rawExport(connection, out, fromCommitTime, toCommitTime);
   }
 
+  @Override
   public void rawImport(Connection connection, CDODataInput in, OMMonitor monitor) throws IOException
   {
     delegate.rawImport(connection, in, monitor);

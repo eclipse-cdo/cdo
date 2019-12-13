@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -89,6 +89,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getDiscountCode()
   {
     return discountCode;
@@ -98,6 +99,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDiscountCode(String newDiscountCode)
   {
     String oldDiscountCode = discountCode;
@@ -112,6 +114,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Address getShippingAddress()
   {
     return shippingAddress;
@@ -145,6 +148,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setShippingAddress(Address newShippingAddress)
   {
     if (newShippingAddress != shippingAddress)

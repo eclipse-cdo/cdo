@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -95,6 +95,7 @@ public class CDOHistoryPage extends HistoryPage
       {
         commitHistoryComposite.getDisplay().asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             if (!commitHistoryComposite.isDisposed())
@@ -111,11 +112,13 @@ public class CDOHistoryPage extends HistoryPage
   {
   }
 
+  @Override
   public String getName()
   {
     return input != null ? input.toString() : null;
   }
 
+  @Override
   public String getDescription()
   {
     return "";
@@ -252,17 +255,20 @@ public class CDOHistoryPage extends HistoryPage
     commitHistoryComposite.setFocus();
   }
 
+  @Override
   public void refresh()
   {
     commitHistoryComposite.refreshLayout(true);
   }
 
+  @Override
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public Object getAdapter(Class adapter)
   {
     return AdapterUtil.adapt(this, adapter, false);
   }
 
+  @Override
   public boolean isValidInput(Object object)
   {
     return canShowHistoryFor(object);
@@ -439,6 +445,7 @@ public class CDOHistoryPage extends HistoryPage
         CDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
         commitInfoManager.getCommitInfos(branch, Long.MAX_VALUE, null, null, -1, new CDOCommitInfoHandler()
         {
+          @Override
           public void handleCommitInfo(CDOCommitInfo commitInfo)
           {
             lastCommitTime[0] = commitInfo.getTimeStamp();

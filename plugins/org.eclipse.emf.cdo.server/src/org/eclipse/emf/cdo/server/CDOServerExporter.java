@@ -269,6 +269,7 @@ public abstract class CDOServerExporter<OUT>
       {
         branchManager.getBranches(0, 0, new CDOBranchHandler()
         {
+          @Override
           public void handleBranch(CDOBranch branch)
           {
             try
@@ -295,6 +296,7 @@ public abstract class CDOServerExporter<OUT>
   {
     repository.handleRevisions(null, branch, true, timeStamp, false, new CDORevisionHandler()
     {
+      @Override
       public boolean handleRevision(CDORevision revision)
       {
         try
@@ -317,6 +319,7 @@ public abstract class CDOServerExporter<OUT>
   {
     repository.handleLobs(0, 0, new CDOLobHandler()
     {
+      @Override
       public OutputStream handleBlob(byte[] id, long size)
       {
         try
@@ -330,6 +333,7 @@ public abstract class CDOServerExporter<OUT>
         }
       }
 
+      @Override
       public Writer handleClob(byte[] id, long size)
       {
         try
@@ -354,6 +358,7 @@ public abstract class CDOServerExporter<OUT>
     InternalCDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
     commitInfoManager.getCommitInfos(null, 0L, 0L, new CDOCommitInfoHandler()
     {
+      @Override
       public void handleCommitInfo(CDOCommitInfo commitInfo)
       {
         try

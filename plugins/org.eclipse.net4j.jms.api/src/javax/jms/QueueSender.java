@@ -108,6 +108,7 @@ public interface QueueSender extends MessageProducer
     * @see javax.jms.MessageProducer#getPriority()
     */
 
+  @Override
   void send(Message message) throws JMSException;
 
   /** Sends a message to the queue, specifying delivery mode, priority, and
@@ -129,6 +130,7 @@ public interface QueueSender extends MessageProducer
     *                         not specify a queue at creation time.
     */
 
+  @Override
   void send(Message message, int deliveryMode, int priority, long timeToLive) throws JMSException;
 
   /** Sends a message to a queue for an unidentified message producer.

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -105,6 +105,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     return false;
   }
 
+  @Override
   public Object[] getChildren(Object element)
   {
     try
@@ -148,6 +149,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     return NO_ELEMENTS;
   }
 
+  @Override
   public Object getParent(Object element)
   {
     try
@@ -483,11 +485,13 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       this.parent = parent;
     }
 
+    @Override
     public boolean isDisposed()
     {
       return disposed;
     }
 
+    @Override
     public void dispose()
     {
       if (!disposed)
@@ -501,6 +505,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     /**
      * @since 3.5
      */
+    @Override
     public void disposeChildren()
     {
     }
@@ -511,12 +516,14 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       return MessageFormat.format("{0}[{1}]", getClass().getSimpleName(), getElement()); //$NON-NLS-1$
     }
 
+    @Override
     public final Node getParent()
     {
       checkNotDisposed();
       return parent;
     }
 
+    @Override
     public TreePath getTreePath()
     {
       TreePath parentPath = parent == null ? TreePath.EMPTY : parent.getTreePath();
@@ -526,6 +533,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     /**
      * @since 3.5
      */
+    @Override
     public boolean hasChildren()
     {
       return false;
@@ -652,6 +660,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       return children != null && !children.isEmpty();
     }
 
+    @Override
     public final List<Node> getChildren()
     {
       checkNotDisposed();
@@ -686,6 +695,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
         Runnable runnable = new Runnable()
         {
+          @Override
           public void run()
           {
             try
@@ -788,6 +798,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       }
     }
 
+    @Override
     public Object getElement()
     {
       return container;
@@ -819,18 +830,21 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       }
     }
 
+    @Override
     public Object getElement()
     {
       checkNotDisposed();
       return element;
     }
 
+    @Override
     public List<Node> getChildren()
     {
       checkNotDisposed();
       return Collections.emptyList();
     }
 
+    @Override
     public void notifyEvent(IEvent event)
     {
       updateLabels(event.getSource());

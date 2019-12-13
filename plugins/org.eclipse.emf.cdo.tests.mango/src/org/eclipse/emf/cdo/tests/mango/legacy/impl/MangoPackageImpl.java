@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -126,6 +126,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getMangoValueList()
   {
     return mangoValueListEClass;
@@ -135,6 +136,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getMangoValueList_Name()
   {
     return (EAttribute)mangoValueListEClass.getEStructuralFeatures().get(0);
@@ -144,6 +146,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMangoValueList_Values()
   {
     return (EReference)mangoValueListEClass.getEStructuralFeatures().get(1);
@@ -153,6 +156,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getMangoValue()
   {
     return mangoValueEClass;
@@ -162,6 +166,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getMangoValue_Name()
   {
     return (EAttribute)mangoValueEClass.getEStructuralFeatures().get(0);
@@ -171,6 +176,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getMangoParameter()
   {
     return mangoParameterEClass;
@@ -180,6 +186,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getMangoParameter_Name()
   {
     return (EAttribute)mangoParameterEClass.getEStructuralFeatures().get(0);
@@ -189,6 +196,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getMangoParameter_Passing()
   {
     return (EAttribute)mangoParameterEClass.getEStructuralFeatures().get(1);
@@ -198,6 +206,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getParameterPassing()
   {
     return parameterPassingEEnum;
@@ -207,6 +216,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public MangoFactory getMangoFactory()
   {
     return (MangoFactory)getEFactoryInstance();

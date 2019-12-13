@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -158,6 +158,7 @@ public class SessionTest extends AbstractCDOTest
 
     OMLogHandler logHandler = new OMLogHandler()
     {
+      @Override
       public void logged(OMLogger logger, OMLogger.Level level, String msg, Throwable t)
       {
         fail("Detaching the resource set adapter should not log inactive transaction exception");
@@ -419,6 +420,7 @@ public class SessionTest extends AbstractCDOTest
     org.eclipse.emf.cdo.net4j.CDONet4jSession session = (org.eclipse.emf.cdo.net4j.CDONet4jSession)openSession();
     session.options().getNet4jProtocol().addListener(new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof TimeoutChangedEvent)

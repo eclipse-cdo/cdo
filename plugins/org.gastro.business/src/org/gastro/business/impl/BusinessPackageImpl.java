@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -135,6 +135,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getBusinessDay()
   {
     return businessDayEClass;
@@ -144,6 +145,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getBusinessDay_Date()
   {
     return (EAttribute)businessDayEClass.getEStructuralFeatures().get(0);
@@ -153,6 +155,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getBusinessDay_MenuCard()
   {
     return (EReference)businessDayEClass.getEStructuralFeatures().get(1);
@@ -162,6 +165,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getBusinessDay_Orders()
   {
     return (EReference)businessDayEClass.getEStructuralFeatures().get(2);
@@ -171,6 +175,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getBusinessDay_Waiters()
   {
     return (EReference)businessDayEClass.getEStructuralFeatures().get(3);
@@ -180,6 +185,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getBusinessDay_Closed()
   {
     return (EAttribute)businessDayEClass.getEStructuralFeatures().get(4);
@@ -189,6 +195,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getOrder()
   {
     return orderEClass;
@@ -198,6 +205,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getOrder_BusinessDay()
   {
     return (EReference)orderEClass.getEStructuralFeatures().get(0);
@@ -207,6 +215,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getOrder_Table()
   {
     return (EReference)orderEClass.getEStructuralFeatures().get(1);
@@ -216,6 +225,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getOrder_OrderDetails()
   {
     return (EReference)orderEClass.getEStructuralFeatures().get(2);
@@ -225,6 +235,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getOrder_Number()
   {
     return (EAttribute)orderEClass.getEStructuralFeatures().get(3);
@@ -234,6 +245,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getOrderDetail()
   {
     return orderDetailEClass;
@@ -243,6 +255,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getOrderDetail_Order()
   {
     return (EReference)orderDetailEClass.getEStructuralFeatures().get(0);
@@ -252,6 +265,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getOrderDetail_Offering()
   {
     return (EReference)orderDetailEClass.getEStructuralFeatures().get(1);
@@ -261,6 +275,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getOrderDetail_Quantity()
   {
     return (EAttribute)orderDetailEClass.getEStructuralFeatures().get(2);
@@ -270,6 +285,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getOrderDetail_State()
   {
     return (EAttribute)orderDetailEClass.getEStructuralFeatures().get(3);
@@ -279,6 +295,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getOrderDetail_Price()
   {
     return (EAttribute)orderDetailEClass.getEStructuralFeatures().get(4);
@@ -288,6 +305,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getWaiter()
   {
     return waiterEClass;
@@ -297,6 +315,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getWaiter_BusinessDay()
   {
     return (EReference)waiterEClass.getEStructuralFeatures().get(0);
@@ -306,6 +325,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getWaiter_Tables()
   {
     return (EReference)waiterEClass.getEStructuralFeatures().get(1);
@@ -315,6 +335,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getWaiter_Employee()
   {
     return (EReference)waiterEClass.getEStructuralFeatures().get(2);
@@ -324,6 +345,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getWaiter_From()
   {
     return (EAttribute)waiterEClass.getEStructuralFeatures().get(3);
@@ -333,6 +355,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getWaiter_Until()
   {
     return (EAttribute)waiterEClass.getEStructuralFeatures().get(4);
@@ -342,6 +365,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getOrderState()
   {
     return orderStateEEnum;
@@ -351,6 +375,7 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public BusinessFactory getBusinessFactory()
   {
     return (BusinessFactory)getEFactoryInstance();

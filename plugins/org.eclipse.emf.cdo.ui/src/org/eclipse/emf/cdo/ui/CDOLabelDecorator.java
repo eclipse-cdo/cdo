@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,6 +66,7 @@ public class CDOLabelDecorator implements ILabelDecorator
 
   private IListener preferenceListener = new IListener()
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       @SuppressWarnings("unchecked")
@@ -88,6 +89,7 @@ public class CDOLabelDecorator implements ILabelDecorator
     this.pattern = pattern;
   }
 
+  @Override
   public void dispose()
   {
     OM.PREFS.removeListener(preferenceListener);
@@ -103,6 +105,7 @@ public class CDOLabelDecorator implements ILabelDecorator
     return StringUtil.replace(unparsedPattern, DECORATION_PROPOSALS, DECORATION_ARGS);
   }
 
+  @Override
   public Image decorateImage(Image image, Object element)
   {
     try
@@ -116,6 +119,7 @@ public class CDOLabelDecorator implements ILabelDecorator
     return image;
   }
 
+  @Override
   public String decorateText(String text, Object element)
   {
     try
@@ -152,16 +156,19 @@ public class CDOLabelDecorator implements ILabelDecorator
     return text;
   }
 
+  @Override
   public boolean isLabelProperty(Object element, String property)
   {
     return false;
   }
 
+  @Override
   public void addListener(ILabelProviderListener listener)
   {
     // Ignore listeners, DecoratorManager handles them.
   }
 
+  @Override
   public void removeListener(ILabelProviderListener listener)
   {
     // Ignore listeners, DecoratorManager handles them.

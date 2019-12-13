@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -33,47 +33,56 @@ public class CacheRegistration implements ICacheRegistration
     this.cache = cache;
   }
 
+  @Override
   public void dispose()
   {
     cacheMonitor = null;
     cache = null;
   }
 
+  @Override
   public boolean isDisposed()
   {
     return cacheMonitor == null || cache == null;
   }
 
+  @Override
   public ICacheMonitor getCacheMonitor()
   {
     return cacheMonitor;
   }
 
+  @Override
   public ICache getCache()
   {
     return cache;
   }
 
+  @Override
   public int getElementCount()
   {
     return elementCount;
   }
 
+  @Override
   public long getCacheSize()
   {
     return cacheSize;
   }
 
+  @Override
   public long getAverageElementSize()
   {
     return cacheSize / elementCount;
   }
 
+  @Override
   public long getReconstructionCost()
   {
     return reconstructionCost;
   }
 
+  @Override
   public void elementCached(int elementSize)
   {
     checkDisposal();
@@ -81,6 +90,7 @@ public class CacheRegistration implements ICacheRegistration
     cacheSize += elementSize;
   }
 
+  @Override
   public void elementEvicted(int elementSize)
   {
     checkDisposal();
@@ -88,6 +98,7 @@ public class CacheRegistration implements ICacheRegistration
     cacheSize -= elementSize;
   }
 
+  @Override
   public void elementReconstructed(long reconstructionTime)
   {
     checkDisposal();

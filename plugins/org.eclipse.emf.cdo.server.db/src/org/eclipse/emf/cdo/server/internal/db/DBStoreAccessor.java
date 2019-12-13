@@ -147,26 +147,31 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     return (DBStore)super.getStore();
   }
 
+  @Override
   public final IDBConnection getDBConnection()
   {
     return connection;
   }
 
+  @Override
   public final Connection getConnection()
   {
     return connection;
   }
 
+  @Override
   @Deprecated
   public org.eclipse.emf.cdo.server.db.IPreparedStatementCache getStatementCache()
   {
     return new org.eclipse.emf.cdo.server.db.IPreparedStatementCache()
     {
+      @Override
       public void setConnection(Connection connection)
       {
         // Do nothing
       }
 
+      @Override
       public IDBPreparedStatement getPreparedStatement(String sql, ReuseProbability reuseProbability)
       {
         org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability converted = //
@@ -175,6 +180,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
         return connection.prepareStatement(sql, converted);
       }
 
+      @Override
       public void releasePreparedStatement(PreparedStatement ps)
       {
         DBUtil.close(ps);
@@ -182,6 +188,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     };
   }
 
+  @Override
   public DBStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature)
   {
     return new DBStoreChunkReader(this, revision, feature);
@@ -216,6 +223,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     return mappingStrategy.readObjectType(this, id);
   }
 
+  @Override
   public EClass getObjectType(CDOID id)
   {
     IRepository repository = getStore().getRepository();
@@ -250,6 +258,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     return null;
   }
 
+  @Override
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk, CDORevisionCacheAdder cache)
   {
     if (TRACER.isEnabled())
@@ -282,6 +291,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     return null;
   }
 
+  @Override
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk, CDORevisionCacheAdder cache)
   {
     DBStore store = getStore();
@@ -340,18 +350,21 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   /**
    * @since 2.0
    */
+  @Override
   public void queryResources(QueryResourcesContext context)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     mappingStrategy.queryResources(this, context);
   }
 
+  @Override
   public void queryXRefs(QueryXRefsContext context)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     mappingStrategy.queryXRefs(this, context);
   }
 
+  @Override
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
     String queryLanguage = info.getQueryLanguage();
@@ -363,6 +376,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     return null;
   }
 
+  @Override
   public void queryLobs(List<byte[]> ids)
   {
     IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_QUERY_LOBS, ReuseProbability.MEDIUM);
@@ -399,6 +413,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
+  @Override
   public void loadLob(byte[] id, OutputStream out) throws IOException
   {
     IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_LOAD_LOB, ReuseProbability.MEDIUM);
@@ -433,6 +448,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
+  @Override
   public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
   {
     IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_HANDLE_LOBS, ReuseProbability.LOW);
@@ -890,12 +906,14 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     // do nothing
   }
 
+  @Override
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
   {
     IMetaDataManager metaDataManager = getStore().getMetaDataManager();
     return metaDataManager.loadPackageUnit(getConnection(), packageUnit);
   }
 
+  @Override
   public Collection<InternalCDOPackageUnit> readPackageUnits()
   {
     IMetaDataManager metaDataManager = getStore().getMetaDataManager();
@@ -927,6 +945,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
+  @Override
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
     monitor.begin(2);
@@ -948,6 +967,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
+  @Override
   public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     checkBranchingSupport();
@@ -983,6 +1003,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
+  @Override
   public BranchInfo loadBranch(int branchID)
   {
     checkBranchingSupport();
@@ -1015,6 +1036,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
+  @Override
   public SubBranchInfo[] loadSubBranches(int baseID)
   {
     checkBranchingSupport();
@@ -1056,6 +1078,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
+  @Override
   public int loadBranches(int startID, int endID, CDOBranchHandler handler)
   {
     int count = 0;
@@ -1096,18 +1119,21 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
+  @Override
   @Deprecated
   public void deleteBranch(int branchID)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public void renameBranch(int branchID, String newName)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void renameBranch(int branchID, String oldName, String newName)
   {
     checkBranchingSupport();
@@ -1132,6 +1158,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
+  @Override
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
     CommitInfoTable commitInfoTable = getStore().getCommitInfoTable();
@@ -1141,18 +1168,21 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
+  @Override
   public Set<CDOID> readChangeSet(OMMonitor monitor, CDOChangeSetSegment... segments)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     return mappingStrategy.readChangeSet(this, monitor, segments);
   }
 
+  @Override
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
     mappingStrategy.handleRevisions(this, eClass, branch, timeStamp, exactTime, new DBRevisionHandler(handler));
   }
 
+  @Override
   public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime) throws IOException
   {
     DBStore store = getStore();
@@ -1192,6 +1222,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     mappingStrategy.rawExport(this, out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
   }
 
+  @Override
   public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
     DBStore store = getStore();
@@ -1336,11 +1367,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
+  @Override
   public void rawStore(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
     writePackageUnits(packageUnits, monitor);
   }
 
+  @Override
   public void rawStore(InternalCDORevision revision, OMMonitor monitor)
   {
     CDOID id = revision.getID();
@@ -1364,26 +1397,31 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     getStore().getIDHandler().adjustLastObjectID(id);
   }
 
+  @Override
   public void rawStore(byte[] id, long size, InputStream inputStream) throws IOException
   {
     writeBlob(id, size, inputStream);
   }
 
+  @Override
   public void rawStore(byte[] id, long size, Reader reader) throws IOException
   {
     writeClob(id, size, reader);
   }
 
+  @Override
   public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor)
   {
     writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null, monitor);
   }
 
+  @Override
   public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOBranchPoint mergeSource, OMMonitor monitor)
   {
     writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource, monitor);
   }
 
+  @Override
   public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor)
   {
     if (eClass == null)
@@ -1404,6 +1442,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
+  @Override
   public void rawCommit(double commitWork, OMMonitor monitor)
   {
     monitor.begin();
@@ -1425,89 +1464,104 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
   }
 
+  @Override
   public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     return createLockArea(null, userID, branchPoint, readOnly, locks);
   }
 
+  @Override
   public LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     DurableLockingManager manager = getStore().getDurableLockingManager();
     return manager.createLockArea(this, durableLockingID, userID, branchPoint, readOnly, locks);
   }
 
+  @Override
   public void updateLockArea(LockArea area)
   {
     DurableLockingManager manager = getStore().getDurableLockingManager();
     manager.updateLockArea(this, area);
   }
 
+  @Override
   public LockArea getLockArea(String durableLockingID) throws LockAreaNotFoundException
   {
     DurableLockingManager manager = getStore().getDurableLockingManager();
     return manager.getLockArea(this, durableLockingID);
   }
 
+  @Override
   public void getLockAreas(String userIDPrefix, Handler handler)
   {
     DurableLockingManager manager = getStore().getDurableLockingManager();
     manager.getLockAreas(this, userIDPrefix, handler);
   }
 
+  @Override
   public void deleteLockArea(String durableLockingID)
   {
     DurableLockingManager manager = getStore().getDurableLockingManager();
     manager.deleteLockArea(this, durableLockingID);
   }
 
+  @Override
   public void lock(String durableLockingID, LockType type, Collection<? extends Object> objectsToLock)
   {
     DurableLockingManager manager = getStore().getDurableLockingManager();
     manager.lock(this, durableLockingID, type, objectsToLock);
   }
 
+  @Override
   public void unlock(String durableLockingID, LockType type, Collection<? extends Object> objectsToUnlock)
   {
     DurableLockingManager manager = getStore().getDurableLockingManager();
     manager.unlock(this, durableLockingID, type, objectsToUnlock);
   }
 
+  @Override
   public void unlock(String durableLockingID)
   {
     DurableLockingManager manager = getStore().getDurableLockingManager();
     manager.unlock(this, durableLockingID);
   }
 
+  @Override
   public List<CDOID> readUnitRoots()
   {
     UnitMappingTable unitMappingTable = getStore().getUnitMappingTable();
     return unitMappingTable.readUnitRoots(this);
   }
 
+  @Override
   public void readUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
     UnitMappingTable unitMappingTable = getStore().getUnitMappingTable();
     unitMappingTable.readUnitRevisions(this, view, rootID, revisionHandler, monitor);
   }
 
+  @Override
   public Object initUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, Set<CDOID> initializedIDs, long timeStamp, OMMonitor monitor)
   {
     UnitMappingTable unitMappingTable = getStore().getUnitMappingTable();
     return unitMappingTable.initUnit(this, timeStamp, view, rootID, revisionHandler, initializedIDs, monitor);
   }
 
+  @Override
   public void finishUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, long timeStamp, Object initResult, List<CDOID> ids)
   {
     UnitMappingTable unitMappingTable = getStore().getUnitMappingTable();
     unitMappingTable.finishUnit((BatchedStatement)initResult, rootID, ids, timeStamp);
   }
 
+  @Override
   public void writeUnits(Map<CDOID, CDOID> unitMappings, long timeStamp)
   {
     UnitMappingTable unitMappingTable = getStore().getUnitMappingTable();
     unitMappingTable.writeUnitMappings(this, unitMappings, timeStamp);
   }
 
+  @Override
   public void tableCreated(IDBTable table)
   {
     if (createdTables == null)

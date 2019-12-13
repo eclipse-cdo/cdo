@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -32,11 +32,13 @@ public class ClientBranchManager extends AbstractClientManager<InternalCDOBranch
     super(delegate);
   }
 
+  @Override
   public void initMainBranch(boolean local, long timestamp)
   {
     // Do nothing.
   }
 
+  @Override
   public CDOCommonRepository getRepository()
   {
     if (clientSession == null)
@@ -47,78 +49,93 @@ public class ClientBranchManager extends AbstractClientManager<InternalCDOBranch
     return clientSession.getRepositoryInfo();
   }
 
+  @Override
   public void setRepository(CDOCommonRepository repository)
   {
     initServerSession((CDONet4jSession)((CDORepositoryInfo)repository).getSession());
   }
 
+  @Override
   public BranchLoader getBranchLoader()
   {
     return delegate.getBranchLoader();
   }
 
+  @Override
   public void setBranchLoader(BranchLoader branchLoader)
   {
     // Do nothing.
   }
 
+  @Override
   public CDOTimeProvider getTimeProvider()
   {
     return delegate.getTimeProvider();
   }
 
+  @Override
   public InternalCDOBranch getMainBranch()
   {
     return delegate.getMainBranch();
   }
 
+  @Override
   public InternalCDOBranch getBranch(int branchID)
   {
     return delegate.getBranch(branchID);
   }
 
+  @Override
   public InternalCDOBranch getBranch(int id, String name, InternalCDOBranch baseBranch, long baseTimeStamp)
   {
     return delegate.getBranch(id, name, baseBranch, baseTimeStamp);
   }
 
+  @Override
   public InternalCDOBranch getBranch(int id, BranchInfo branchInfo)
   {
     return delegate.getBranch(id, branchInfo);
   }
 
+  @Override
   public InternalCDOBranch getBranch(String path)
   {
     return delegate.getBranch(path);
   }
 
+  @Override
   public InternalCDOBranch createBranch(int id, String name, InternalCDOBranch baseBranch, long baseTimeStamp)
   {
     return delegate.createBranch(id, name, baseBranch, baseTimeStamp);
   }
 
+  @Override
   public void handleBranchChanged(InternalCDOBranch branch, ChangeKind changeKind)
   {
     delegate.handleBranchChanged(branch, changeKind);
   }
 
+  @Override
   public int getBranches(int startID, int endID, CDOBranchHandler handler)
   {
     return delegate.getBranches(startID, endID, handler);
   }
 
+  @Override
   @Deprecated
   public void setTimeProvider(CDOTimeProvider timeProvider)
   {
     // Do nothing.
   }
 
+  @Override
   @Deprecated
   public void renameBranch(CDOBranch branch, String newName)
   {
     // Do nothing.
   }
 
+  @Override
   @Deprecated
   public void handleBranchCreated(InternalCDOBranch branch)
   {

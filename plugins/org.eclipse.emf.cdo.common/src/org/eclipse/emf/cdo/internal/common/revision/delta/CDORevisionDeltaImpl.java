@@ -184,82 +184,98 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
     }
   }
 
+  @Override
   public EClass getEClass()
   {
     return eClass;
   }
 
+  @Override
   public CDOID getID()
   {
     return id;
   }
 
+  @Override
   public CDOBranch getBranch()
   {
     return branch;
   }
 
+  @Override
   public void setBranch(CDOBranch branch)
   {
     this.branch = branch;
   }
 
+  @Override
   public int getVersion()
   {
     return version;
   }
 
+  @Override
   public void setVersion(int version)
   {
     this.version = version;
   }
 
+  @Override
   public CDORevisable getTarget()
   {
     return target;
   }
 
+  @Override
   public void setTarget(CDORevisable target)
   {
     this.target = target;
   }
 
+  @Override
   public int size()
   {
     return featureDeltas.size();
   }
 
+  @Override
   public boolean isEmpty()
   {
     return featureDeltas.isEmpty();
   }
 
+  @Override
   public CDORevisionDelta copy()
   {
     return new CDORevisionDeltaImpl(this, true);
   }
 
+  @Override
   public Map<EStructuralFeature, CDOFeatureDelta> getFeatureDeltaMap()
   {
     return featureDeltas;
   }
 
+  @Override
   public CDOFeatureDelta getFeatureDelta(EStructuralFeature feature)
   {
     return featureDeltas.get(feature);
   }
 
+  @Override
   public List<CDOFeatureDelta> getFeatureDeltas()
   {
     return new ArrayList<CDOFeatureDelta>(featureDeltas.values());
   }
 
+  @Override
   @Deprecated
   public void apply(CDORevision revision)
   {
     applyTo(revision);
   }
 
+  @Override
   public void applyTo(CDORevision revision)
   {
     for (CDOFeatureDelta featureDelta : featureDeltas.values())
@@ -268,12 +284,14 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
     }
   }
 
+  @Override
   @Deprecated
   public void addFeatureDelta(CDOFeatureDelta delta)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void addFeatureDelta(CDOFeatureDelta delta, CDOOriginSizeProvider originSizeProvider)
   {
     if (delta instanceof CDOListFeatureDelta)
@@ -323,6 +341,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
     }
   }
 
+  @Override
   public boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster)
   {
     boolean changed = false;
@@ -334,6 +353,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
     return changed;
   }
 
+  @Override
   public void adjustBranches(CDOBranchManager newBranchManager)
   {
     if (branch != null)
@@ -347,11 +367,13 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
     }
   }
 
+  @Override
   public void accept(CDOFeatureDeltaVisitor visitor)
   {
     accept(visitor, Predicates.<EStructuralFeature> alwaysTrue());
   }
 
+  @Override
   public void accept(CDOFeatureDeltaVisitor visitor, Predicate<EStructuralFeature> filter)
   {
     for (CDOFeatureDelta featureDelta : featureDeltas.values())
@@ -364,11 +386,13 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
     }
   }
 
+  @Override
   public void addDelta(CDOListFeatureDelta listFeatureDelta)
   {
     featureDeltas.put(listFeatureDelta.getFeature(), listFeatureDelta);
   }
 
+  @Override
   public void addClearDelta(CDOClearFeatureDelta clearFeatureDelta, CDOOriginSizeProvider originSizeProvider)
   {
     addFeatureDelta(clearFeatureDelta, originSizeProvider);
@@ -476,6 +500,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
     {
       handler.addClearDelta(new CDOClearFeatureDeltaImpl(feature), new CDOOriginSizeProvider()
       {
+        @Override
         public int getOriginSize()
         {
           return originSize;
@@ -589,11 +614,13 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
     final CDOListFeatureDelta[] result = { null };
     compareLists(originRevision, dirtyRevision, feature, new ListComparisonHandler()
     {
+      @Override
       public void addDelta(CDOListFeatureDelta listFeatureDelta)
       {
         result[0] = listFeatureDelta;
       }
 
+      @Override
       public void addClearDelta(CDOClearFeatureDelta clearFeatureDelta, CDOOriginSizeProvider originSizeProvider)
       {
         CDOListFeatureDeltaImpl listFeatureDelta = new CDOListFeatureDeltaImpl(feature, originRevision.size(feature));
@@ -622,123 +649,148 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
     {
     }
 
+    @Override
     public int size()
     {
       return 0;
     }
 
+    @Override
     public boolean isEmpty()
     {
       return true;
     }
 
+    @Override
     public boolean contains(Object o)
     {
       return false;
     }
 
+    @Override
     public Iterator<ListChange> iterator()
     {
       return LIST.iterator();
     }
 
+    @Override
     public Object[] toArray()
     {
       return LIST.toArray();
     }
 
+    @Override
     public <T> T[] toArray(T[] a)
     {
       return LIST.toArray(a);
     }
 
+    @Override
     public boolean add(ListChange o)
     {
       return false;
     }
 
+    @Override
     public boolean remove(Object o)
     {
       return false;
     }
 
+    @Override
     public boolean containsAll(Collection<?> c)
     {
       return false;
     }
 
+    @Override
     public boolean addAll(Collection<? extends ListChange> c)
     {
       return false;
     }
 
+    @Override
     public boolean addAll(int index, Collection<? extends ListChange> c)
     {
       return false;
     }
 
+    @Override
     public boolean removeAll(Collection<?> c)
     {
       return false;
     }
 
+    @Override
     public boolean retainAll(Collection<?> c)
     {
       return false;
     }
 
+    @Override
     public void clear()
     {
     }
 
+    @Override
     public ListChange get(int index)
     {
       return LIST.get(index);
     }
 
+    @Override
     public ListChange set(int index, ListChange element)
     {
       return null;
     }
 
+    @Override
     public void add(int index, ListChange element)
     {
     }
 
+    @Override
     public ListChange remove(int index)
     {
       return null;
     }
 
+    @Override
     public int indexOf(Object o)
     {
       return LIST.indexOf(o);
     }
 
+    @Override
     public int lastIndexOf(Object o)
     {
       return LIST.lastIndexOf(o);
     }
 
+    @Override
     public ListIterator<ListChange> listIterator()
     {
       return LIST.listIterator();
     }
 
+    @Override
     public ListIterator<ListChange> listIterator(int index)
     {
       return LIST.listIterator(index);
     }
 
+    @Override
     public List<ListChange> subList(int fromIndex, int toIndex)
     {
       return LIST.subList(fromIndex, toIndex);
     }
 
+    @Override
     public void move(int newPosition, ListChange object)
     {
     }
 
+    @Override
     public ListChange move(int newPosition, int oldPosition)
     {
       return null;

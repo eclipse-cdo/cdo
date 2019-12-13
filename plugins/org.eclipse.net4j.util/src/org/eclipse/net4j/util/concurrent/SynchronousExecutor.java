@@ -26,6 +26,7 @@ public final class SynchronousExecutor implements Executor
   {
   }
 
+  @Override
   public void execute(Runnable work)
   {
     work.run();

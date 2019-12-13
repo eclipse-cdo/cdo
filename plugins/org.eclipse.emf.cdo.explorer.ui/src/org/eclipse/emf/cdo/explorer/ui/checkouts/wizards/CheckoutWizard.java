@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -89,6 +89,7 @@ public class CheckoutWizard extends Wizard implements IImportWizard, IPageChange
     return labelPage;
   }
 
+  @Override
   public void init(IWorkbench workbench, IStructuredSelection selection)
   {
     if (selection.size() == 1)
@@ -114,6 +115,7 @@ public class CheckoutWizard extends Wizard implements IImportWizard, IPageChange
     }
   }
 
+  @Override
   public void pageChanged(PageChangedEvent event)
   {
     Object page = event.getSelectedPage();
@@ -184,6 +186,7 @@ public class CheckoutWizard extends Wizard implements IImportWizard, IPageChange
           final IStatus status = new Status(IStatus.ERROR, OM.BUNDLE_ID, ex.getMessage(), ex);
           UIUtil.getDisplay().asyncExec(new Runnable()
           {
+            @Override
             public void run()
             {
               ErrorDialog.openError(getShell(), "Error", "An error occured while creating the checkout.", status);
@@ -207,6 +210,7 @@ public class CheckoutWizard extends Wizard implements IImportWizard, IPageChange
   {
     UIUtil.getDisplay().asyncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         IWorkbench workbench = PlatformUI.getWorkbench();

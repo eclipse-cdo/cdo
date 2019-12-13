@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -49,6 +49,7 @@ public interface CDOCheckoutContentModifier
       super(PRODUCT_GROUP, type);
     }
 
+    @Override
     public abstract CDOCheckoutContentModifier create(String description) throws ProductCreationException;
   }
 
@@ -85,6 +86,7 @@ public interface CDOCheckoutContentModifier
       }
     }
 
+    @Override
     public Object[] modifyChildren(Object parent, Object[] children)
     {
       List<CDOCheckoutContentModifier> modifiers = getModifiers();
@@ -116,6 +118,7 @@ public interface CDOCheckoutContentModifier
       return children;
     }
 
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof IContainerEvent)

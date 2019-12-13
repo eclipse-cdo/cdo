@@ -32,6 +32,7 @@ public class ExecutorServiceNotifier extends Notifier implements IExecutorServic
   /**
    * @since 3.6
    */
+  @Override
   public ExecutorService getExecutorService()
   {
     return notificationExecutorService;

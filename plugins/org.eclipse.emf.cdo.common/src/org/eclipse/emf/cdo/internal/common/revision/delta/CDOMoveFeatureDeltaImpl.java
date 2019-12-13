@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2014-2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2014-2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -68,26 +68,31 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     out.writeXInt(oldPosition);
   }
 
+  @Override
   public int getNewPosition()
   {
     return newPosition;
   }
 
+  @Override
   public int getOldPosition()
   {
     return oldPosition;
   }
 
+  @Override
   public Type getType()
   {
     return Type.MOVE;
   }
 
+  @Override
   public int getIndex()
   {
     return oldPosition;
   }
 
+  @Override
   public Object getValue()
   {
     return value;
@@ -108,6 +113,7 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     this.newPosition = newPosition;
   }
 
+  @Override
   public CDOFeatureDelta copy()
   {
     CDOFeatureDelta copy = new CDOMoveFeatureDeltaImpl(getFeature(), newPosition, oldPosition);
@@ -115,6 +121,7 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     return copy;
   }
 
+  @Override
   public Object applyTo(CDORevision revision)
   {
     EStructuralFeature feature = getFeature();
@@ -145,6 +152,7 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     return list.move(newPosition, oldPosition);
   }
 
+  @Override
   public void affectIndices(ListTargetAdding[] source, int[] indices)
   {
     if (oldPosition < newPosition)
@@ -205,6 +213,7 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     System.out.println(index);
   }
 
+  @Override
   public int projectIndex(int index)
   {
     if (oldPosition < newPosition)
@@ -235,11 +244,13 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     return index;
   }
 
+  @Override
   public void accept(CDOFeatureDeltaVisitor visitor)
   {
     visitor.visit(this);
   }
 
+  @Override
   public void adjustAfterAddition(int index)
   {
     if (index <= oldPosition)
@@ -253,6 +264,7 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     }
   }
 
+  @Override
   public void adjustAfterRemoval(int index)
   {
     if (index < oldPosition && oldPosition > 0)
@@ -272,6 +284,7 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
     }
   }
 
+  @Override
   public void adjustAfterMove(int oldPosition, int newPosition)
   {
     if (this.oldPosition == oldPosition)

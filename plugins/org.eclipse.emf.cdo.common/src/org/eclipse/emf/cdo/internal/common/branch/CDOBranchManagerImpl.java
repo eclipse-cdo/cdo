@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -48,49 +48,58 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
   {
   }
 
+  @Override
   public CDOCommonRepository getRepository()
   {
     return repository;
   }
 
+  @Override
   public void setRepository(CDOCommonRepository repository)
   {
     this.repository = repository;
   }
 
+  @Override
   public BranchLoader getBranchLoader()
   {
     return branchLoader;
   }
 
+  @Override
   public void setBranchLoader(BranchLoader branchLoader)
   {
     checkInactive();
     this.branchLoader = branchLoader;
   }
 
+  @Override
   public CDOTimeProvider getTimeProvider()
   {
     return repository;
   }
 
+  @Override
   @Deprecated
   public void setTimeProvider(CDOTimeProvider timeProvider)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void initMainBranch(boolean local, long timeStamp)
   {
     mainBranch = new CDOBranchImpl.Main(this, local, timeStamp);
   }
 
+  @Override
   @Deprecated
   public void handleBranchCreated(InternalCDOBranch branch)
   {
     handleBranchChanged(branch, ChangeKind.CREATED);
   }
 
+  @Override
   public void handleBranchChanged(InternalCDOBranch branch, ChangeKind changeKind)
   {
     if (changeKind == ChangeKind.CREATED)
@@ -107,17 +116,20 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
     }
   }
 
+  @Override
   public CDOBranch[] getElements()
   {
     return new CDOBranch[] { getMainBranch() };
   }
 
+  @Override
   public InternalCDOBranch getMainBranch()
   {
     checkActive();
     return mainBranch;
   }
 
+  @Override
   public InternalCDOBranch getBranch(int branchID)
   {
     checkActive();
@@ -145,6 +157,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
     return branch;
   }
 
+  @Override
   public InternalCDOBranch getBranch(int id, String name, InternalCDOBranch baseBranch, long baseTimeStamp)
   {
     synchronized (branches)
@@ -164,6 +177,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
     }
   }
 
+  @Override
   public InternalCDOBranch getBranch(int id, BranchInfo branchInfo)
   {
     String name = branchInfo.getName();
@@ -172,6 +186,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
     return getBranch(id, name, baseBranch, baseTimeStamp);
   }
 
+  @Override
   public InternalCDOBranch getBranch(String path)
   {
     if (path.startsWith(CDOBranch.PATH_SEPARATOR))
@@ -205,6 +220,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
     return null;
   }
 
+  @Override
   public int getBranches(int startID, int endID, CDOBranchHandler handler)
   {
     checkActive();
@@ -222,6 +238,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
     return branchLoader.loadBranches(startID, endID, handler);
   }
 
+  @Override
   public InternalCDOBranch createBranch(int branchID, String name, InternalCDOBranch baseBranch, long baseTimeStamp)
   {
     checkActive();
@@ -247,6 +264,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
     return new CDOBranchImpl(this, branchID, name, base);
   }
 
+  @Override
   @Deprecated
   public void renameBranch(CDOBranch branch, String newName)
   {
@@ -311,11 +329,13 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
       return (CDOBranchManager)super.getSource();
     }
 
+    @Override
     public CDOBranch getBranch()
     {
       return branch;
     }
 
+    @Override
     public ChangeKind getChangeKind()
     {
       return changeKind;

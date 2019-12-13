@@ -72,11 +72,13 @@ public class Buffer implements InternalBuffer
     return id;
   }
 
+  @Override
   public boolean isEOS()
   {
     return (flags & FLAG_EOS) != 0;
   }
 
+  @Override
   public void setEOS(boolean eos)
   {
     if (eos)
@@ -89,11 +91,13 @@ public class Buffer implements InternalBuffer
     }
   }
 
+  @Override
   public boolean isCCAM()
   {
     return (flags & FLAG_CCAM) != 0;
   }
 
+  @Override
   public void setCCAM(boolean ccam)
   {
     if (ccam)
@@ -106,16 +110,19 @@ public class Buffer implements InternalBuffer
     }
   }
 
+  @Override
   public IBufferProvider getBufferProvider()
   {
     return bufferProvider;
   }
 
+  @Override
   public void setBufferProvider(IBufferProvider bufferProvider)
   {
     this.bufferProvider = bufferProvider;
   }
 
+  @Override
   public short getChannelID()
   {
     if (state == BufferState.INITIAL || state == BufferState.READING_HEADER)
@@ -131,11 +138,13 @@ public class Buffer implements InternalBuffer
     this.channelID = channelID;
   }
 
+  @Override
   public short getCapacity()
   {
     return (short)byteBuffer.capacity();
   }
 
+  @Override
   public BufferState getState()
   {
     return state;
@@ -146,6 +155,7 @@ public class Buffer implements InternalBuffer
     this.state = state;
   }
 
+  @Override
   public ByteBuffer getByteBuffer()
   {
     return byteBuffer;
@@ -156,6 +166,7 @@ public class Buffer implements InternalBuffer
     byteBuffer = buffer;
   }
 
+  @Override
   public void clear()
   {
     state = BufferState.INITIAL;
@@ -164,6 +175,7 @@ public class Buffer implements InternalBuffer
     byteBuffer.clear();
   }
 
+  @Override
   public void release()
   {
     if (state != BufferState.RELEASED)
@@ -177,6 +189,7 @@ public class Buffer implements InternalBuffer
     }
   }
 
+  @Override
   public void dispose()
   {
     state = BufferState.DISPOSED;
@@ -184,6 +197,7 @@ public class Buffer implements InternalBuffer
     byteBuffer = null;
   }
 
+  @Override
   public ByteBuffer startGetting(SocketChannel socketChannel) throws IOException
   {
     try
@@ -276,6 +290,7 @@ public class Buffer implements InternalBuffer
     }
   }
 
+  @Override
   public ByteBuffer startPutting(short channelID)
   {
     try
@@ -317,6 +332,7 @@ public class Buffer implements InternalBuffer
   /**
    * @return <code>true</code> if the buffer has been completely written, <code>false</code> otherwise.
    */
+  @Override
   public boolean write(SocketChannel socketChannel) throws IOException
   {
     try
@@ -391,6 +407,7 @@ public class Buffer implements InternalBuffer
     }
   }
 
+  @Override
   public void flip()
   {
     try
@@ -416,71 +433,85 @@ public class Buffer implements InternalBuffer
     }
   }
 
+  @Override
   public void compact()
   {
     byteBuffer.compact();
   }
 
+  @Override
   public int getPosition()
   {
     return byteBuffer.position();
   }
 
+  @Override
   public void setPosition(int position)
   {
     byteBuffer.position(position);
   }
 
+  @Override
   public int getLimit()
   {
     return byteBuffer.limit();
   }
 
+  @Override
   public void setLimit(int limit)
   {
     byteBuffer.limit(limit);
   }
 
+  @Override
   public boolean hasRemaining()
   {
     return byteBuffer.hasRemaining();
   }
 
+  @Override
   public byte get()
   {
     return byteBuffer.get();
   }
 
+  @Override
   public void get(byte[] dst)
   {
     byteBuffer.get(dst);
   }
 
+  @Override
   public short getShort()
   {
     return byteBuffer.getShort();
   }
 
+  @Override
   public int getInt()
   {
     return byteBuffer.getInt();
   }
 
+  @Override
   public String getString()
   {
     return BufferUtil.getString(byteBuffer);
   }
 
+  @Override
   public void put(byte b)
   {
     byteBuffer.put(b);
   }
 
+  @Override
   public void put(byte[] src, int offset, int length)
   {
     byteBuffer.put(src, offset, length);
   }
 
+  @Override
   public void putShort(short value)
   {
     byteBuffer.putShort(value);
@@ -492,6 +523,7 @@ public class Buffer implements InternalBuffer
     return MessageFormat.format("Buffer@{0}[{1}]", id, state); //$NON-NLS-1$
   }
 
+  @Override
   @SuppressWarnings("deprecation")
   public String formatContent(boolean showHeader)
   {
@@ -527,11 +559,13 @@ public class Buffer implements InternalBuffer
     }
   }
 
+  @Override
   public IErrorHandler getErrorHandler()
   {
     return errorHandler;
   }
 
+  @Override
   public void setErrorHandler(IErrorHandler errorHandler)
   {
     this.errorHandler = errorHandler;

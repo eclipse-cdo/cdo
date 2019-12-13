@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -177,6 +177,7 @@ public final class UIUtil
     final Display display = getDisplay();
     display.syncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         shell[0] = display.getActiveShell();
@@ -591,6 +592,7 @@ public final class UIUtil
 
       display.syncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           if (display.isDisposed())
@@ -634,6 +636,7 @@ public final class UIUtil
     {
       IRunnableWithProgress op = new IRunnableWithProgress()
       {
+        @Override
         public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
         {
           ModalContext.run(runnable, true, monitor, PlatformUI.getWorkbench().getDisplay());
@@ -661,6 +664,7 @@ public final class UIUtil
     {
       viewer.getControl().getDisplay().asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           ISelection selection = viewer.getSelection();
@@ -705,6 +709,7 @@ public final class UIUtil
   {
     preserveViewerState(viewer, new Runnable()
     {
+      @Override
       public void run()
       {
         viewer.refresh();
@@ -719,6 +724,7 @@ public final class UIUtil
   {
     preserveViewerState(viewer, new Runnable()
     {
+      @Override
       public void run()
       {
         try
@@ -758,6 +764,7 @@ public final class UIUtil
       {
         control.getDisplay().asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             try
@@ -793,6 +800,7 @@ public final class UIUtil
   {
     getDisplay().syncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         try

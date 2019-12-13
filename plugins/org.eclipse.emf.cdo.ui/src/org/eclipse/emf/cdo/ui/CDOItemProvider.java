@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -622,6 +622,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     List<String> registeredURIs = new ArrayList<String>(EPackage.Registry.INSTANCE.keySet());
     Collections.sort(registeredURIs, new Comparator<String>()
     {
+      @Override
       public int compare(String o1, String o2)
       {
         return o1.compareTo(o2);
@@ -882,6 +883,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       return itemProvider;
     }
 
+    @Override
     public void propertyChanged(Object source, int propId)
     {
       if (propId == IEditorRegistry.PROP_CONTENTS)
@@ -963,6 +965,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       }
     }
 
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof ILifecycleEvent)
@@ -1015,6 +1018,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       }
     }
 
+    @Override
     public void objectStateChanged(CDOView view, CDOObject object, CDOState oldState, CDOState newState)
     {
       updateLabels(object);

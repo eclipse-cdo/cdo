@@ -84,8 +84,10 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
       SyntheticCDORevision[] synthetics);
 
+  @Override
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand);
 
+  @Override
   public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk, boolean loadOnDemand);
 
   /**

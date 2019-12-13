@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -73,21 +73,25 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     return folder;
   }
 
+  @Override
   public final String getID()
   {
     return id;
   }
 
+  @Override
   public final String getType()
   {
     return type;
   }
 
+  @Override
   public final String getLabel()
   {
     return label;
   }
 
+  @Override
   public final void setLabel(String label)
   {
     if (!ObjectUtil.equals(this.label, label))
@@ -99,11 +103,13 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     }
   }
 
+  @Override
   public final String getDescription()
   {
     return description;
   }
 
+  @Override
   public final void setDescription(String description)
   {
     if (!ObjectUtil.equals(this.description, description))
@@ -159,6 +165,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     return null;
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
@@ -166,6 +173,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     {
       return new CDONameProvider()
       {
+        @Override
         public String getName()
         {
           return label;
@@ -176,20 +184,24 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     return AdapterUtil.adapt(this, adapter, false);
   }
 
+  @Override
   public void notifyChanged(Notification notification)
   {
   }
 
+  @Override
   public org.eclipse.emf.common.notify.Notifier getTarget()
   {
     return target;
   }
 
+  @Override
   public void setTarget(org.eclipse.emf.common.notify.Notifier newTarget)
   {
     target = newTarget;
   }
 
+  @Override
   public void unsetTarget(org.eclipse.emf.common.notify.Notifier oldTarget)
   {
     if (target == oldTarget)
@@ -198,6 +210,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     }
   }
 
+  @Override
   public boolean isAdapterForType(Object type)
   {
     return false;
@@ -231,6 +244,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     return getClass().hashCode() ^ id.hashCode();
   }
 
+  @Override
   public int compareTo(CDOExplorerElement o)
   {
     String label1 = StringUtil.safe(label).toLowerCase();
@@ -241,6 +255,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
   /**
    * @since 4.5
    */
+  @Override
   public File getStateFolder(String path)
   {
     File stateFolder = new File(folder, path);
@@ -252,6 +267,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     return stateFolder;
   }
 
+  @Override
   public void delete(boolean deleteContents)
   {
     if (deleteContents)

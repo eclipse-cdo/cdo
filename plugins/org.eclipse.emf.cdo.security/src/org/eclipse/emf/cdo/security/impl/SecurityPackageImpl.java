@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -332,6 +332,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     // Register package validator
     EValidator.Registry.INSTANCE.put(theSecurityPackage, new EValidator.Descriptor()
     {
+      @Override
       public EValidator getEValidator()
       {
         return SecurityValidator.INSTANCE;
@@ -351,6 +352,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getSecurityElement()
   {
     return securityElementEClass;
@@ -361,6 +363,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRealm()
   {
     return realmEClass;
@@ -371,6 +374,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRealm_Items()
   {
     return (EReference)realmEClass.getEStructuralFeatures().get(0);
@@ -381,6 +385,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRealm_AllUsers()
   {
     return (EReference)realmEClass.getEStructuralFeatures().get(1);
@@ -391,6 +396,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRealm_AllGroups()
   {
     return (EReference)realmEClass.getEStructuralFeatures().get(2);
@@ -401,6 +407,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRealm_AllRoles()
   {
     return (EReference)realmEClass.getEStructuralFeatures().get(3);
@@ -411,6 +418,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRealm_AllPermissions()
   {
     return (EReference)realmEClass.getEStructuralFeatures().get(4);
@@ -421,6 +429,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getRealm_Name()
   {
     return (EAttribute)realmEClass.getEStructuralFeatures().get(5);
@@ -431,6 +440,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getRealm_DefaultAccess()
   {
     return (EAttribute)realmEClass.getEStructuralFeatures().get(6);
@@ -442,6 +452,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRealm_DefaultUserDirectory()
   {
     return (EReference)realmEClass.getEStructuralFeatures().get(7);
@@ -453,6 +464,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRealm_DefaultGroupDirectory()
   {
     return (EReference)realmEClass.getEStructuralFeatures().get(8);
@@ -464,6 +476,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRealm_DefaultRoleDirectory()
   {
     return (EReference)realmEClass.getEStructuralFeatures().get(9);
@@ -474,6 +487,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getDirectory()
   {
     return directoryEClass;
@@ -484,6 +498,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getDirectory_Items()
   {
     return (EReference)directoryEClass.getEStructuralFeatures().get(0);
@@ -494,6 +509,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getDirectory_Name()
   {
     return (EAttribute)directoryEClass.getEStructuralFeatures().get(1);
@@ -504,6 +520,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getSecurityItem()
   {
     return securityItemEClass;
@@ -514,6 +531,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRole()
   {
     return roleEClass;
@@ -524,6 +542,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRole_Assignees()
   {
     return (EReference)roleEClass.getEStructuralFeatures().get(2);
@@ -534,6 +553,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getRole_Id()
   {
     return (EAttribute)roleEClass.getEStructuralFeatures().get(0);
@@ -544,6 +564,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRole_Permissions()
   {
     return (EReference)roleEClass.getEStructuralFeatures().get(1);
@@ -554,6 +575,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getAssignee()
   {
     return assigneeEClass;
@@ -564,6 +586,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getAssignee_Roles()
   {
     return (EReference)assigneeEClass.getEStructuralFeatures().get(1);
@@ -574,6 +597,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getAssignee_Id()
   {
     return (EAttribute)assigneeEClass.getEStructuralFeatures().get(0);
@@ -584,6 +608,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGroup()
   {
     return groupEClass;
@@ -594,6 +619,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getGroup_Users()
   {
     return (EReference)groupEClass.getEStructuralFeatures().get(0);
@@ -604,6 +630,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getGroup_InheritedGroups()
   {
     return (EReference)groupEClass.getEStructuralFeatures().get(1);
@@ -614,6 +641,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getGroup_InheritingGroups()
   {
     return (EReference)groupEClass.getEStructuralFeatures().get(2);
@@ -624,6 +652,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getGroup_AllInheritingGroups()
   {
     return (EReference)groupEClass.getEStructuralFeatures().get(4);
@@ -634,6 +663,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getGroup_AllInheritedGroups()
   {
     return (EReference)groupEClass.getEStructuralFeatures().get(3);
@@ -644,6 +674,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getGroup_AllRoles()
   {
     return (EReference)groupEClass.getEStructuralFeatures().get(5);
@@ -654,6 +685,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getUser()
   {
     return userEClass;
@@ -664,6 +696,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getUser_Groups()
   {
     return (EReference)userEClass.getEStructuralFeatures().get(0);
@@ -674,6 +707,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getUser_AllGroups()
   {
     return (EReference)userEClass.getEStructuralFeatures().get(9);
@@ -684,6 +718,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getUser_AllRoles()
   {
     return (EReference)userEClass.getEStructuralFeatures().get(10);
@@ -694,6 +729,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getUser_AllPermissions()
   {
     return (EReference)userEClass.getEStructuralFeatures().get(11);
@@ -704,6 +740,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getUser_UnassignedRoles()
   {
     return (EReference)userEClass.getEStructuralFeatures().get(12);
@@ -714,6 +751,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUser_Label()
   {
     return (EAttribute)userEClass.getEStructuralFeatures().get(1);
@@ -724,6 +762,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUser_FirstName()
   {
     return (EAttribute)userEClass.getEStructuralFeatures().get(2);
@@ -734,6 +773,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUser_LastName()
   {
     return (EAttribute)userEClass.getEStructuralFeatures().get(3);
@@ -744,6 +784,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUser_Email()
   {
     return (EAttribute)userEClass.getEStructuralFeatures().get(4);
@@ -754,6 +795,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUser_DefaultAccessOverride()
   {
     return (EAttribute)userEClass.getEStructuralFeatures().get(5);
@@ -764,6 +806,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUser_DefaultAccess()
   {
     return (EAttribute)userEClass.getEStructuralFeatures().get(6);
@@ -774,6 +817,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUser_Locked()
   {
     return (EAttribute)userEClass.getEStructuralFeatures().get(7);
@@ -784,6 +828,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getUser_Password()
   {
     return (EReference)userEClass.getEStructuralFeatures().get(8);
@@ -794,6 +839,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getUserPassword()
   {
     return userPasswordEClass;
@@ -804,6 +850,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUserPassword_Encrypted()
   {
     return (EAttribute)userPasswordEClass.getEStructuralFeatures().get(0);
@@ -814,6 +861,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPermission()
   {
     return permissionEClass;
@@ -824,6 +872,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPermission_Role()
   {
     return (EReference)permissionEClass.getEStructuralFeatures().get(0);
@@ -834,6 +883,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPermission_Access()
   {
     return (EAttribute)permissionEClass.getEStructuralFeatures().get(1);
@@ -844,6 +894,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getClassPermission()
   {
     return classPermissionEClass;
@@ -854,6 +905,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getClassPermission_ApplicableClass()
   {
     return (EReference)classPermissionEClass.getEStructuralFeatures().get(0);
@@ -864,6 +916,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPackagePermission()
   {
     return packagePermissionEClass;
@@ -874,6 +927,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPackagePermission_ApplicablePackage()
   {
     return (EReference)packagePermissionEClass.getEStructuralFeatures().get(0);
@@ -884,6 +938,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getResourcePermission()
   {
     return resourcePermissionEClass;
@@ -894,6 +949,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getResourcePermission_Pattern()
   {
     return (EAttribute)resourcePermissionEClass.getEStructuralFeatures().get(0);
@@ -905,6 +961,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getObjectPermission()
   {
     return objectPermissionEClass;
@@ -916,6 +973,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getFilterPermission()
   {
     return filterPermissionEClass;
@@ -927,6 +985,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getFilterPermission_Filters()
   {
     return (EReference)filterPermissionEClass.getEStructuralFeatures().get(0);
@@ -938,6 +997,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPermissionFilter()
   {
     return permissionFilterEClass;
@@ -949,6 +1009,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getLinkedFilter()
   {
     return linkedFilterEClass;
@@ -960,6 +1021,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getLinkedFilter_Filter()
   {
     return (EReference)linkedFilterEClass.getEStructuralFeatures().get(0);
@@ -971,6 +1033,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPackageFilter()
   {
     return packageFilterEClass;
@@ -982,6 +1045,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPackageFilter_ApplicablePackage()
   {
     return (EReference)packageFilterEClass.getEStructuralFeatures().get(0);
@@ -993,6 +1057,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getClassFilter()
   {
     return classFilterEClass;
@@ -1004,6 +1069,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getClassFilter_ApplicableClass()
   {
     return (EReference)classFilterEClass.getEStructuralFeatures().get(0);
@@ -1015,6 +1081,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getClassFilter_SubTypes()
   {
     return (EAttribute)classFilterEClass.getEStructuralFeatures().get(1);
@@ -1026,6 +1093,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getResourceFilter()
   {
     return resourceFilterEClass;
@@ -1037,6 +1105,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getResourceFilter_Path()
   {
     return (EAttribute)resourceFilterEClass.getEStructuralFeatures().get(0);
@@ -1048,6 +1117,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getResourceFilter_PatternStyle()
   {
     return (EAttribute)resourceFilterEClass.getEStructuralFeatures().get(1);
@@ -1059,6 +1129,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getResourceFilter_Folders()
   {
     return (EAttribute)resourceFilterEClass.getEStructuralFeatures().get(2);
@@ -1070,6 +1141,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getResourceFilter_ModelResources()
   {
     return (EAttribute)resourceFilterEClass.getEStructuralFeatures().get(5);
@@ -1081,6 +1153,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getResourceFilter_ModelObjects()
   {
     return (EAttribute)resourceFilterEClass.getEStructuralFeatures().get(6);
@@ -1092,6 +1165,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getResourceFilter_IncludeParents()
   {
     return (EAttribute)resourceFilterEClass.getEStructuralFeatures().get(7);
@@ -1103,6 +1177,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getResourceFilter_IncludeRoot()
   {
     return (EAttribute)resourceFilterEClass.getEStructuralFeatures().get(8);
@@ -1114,6 +1189,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getResourceFilter_TextResources()
   {
     return (EAttribute)resourceFilterEClass.getEStructuralFeatures().get(3);
@@ -1125,6 +1201,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getResourceFilter_BinaryResources()
   {
     return (EAttribute)resourceFilterEClass.getEStructuralFeatures().get(4);
@@ -1136,6 +1213,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getObjectFilter()
   {
     return objectFilterEClass;
@@ -1147,6 +1225,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getExpressionFilter()
   {
     return expressionFilterEClass;
@@ -1158,6 +1237,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getExpressionFilter_Expression()
   {
     return (EReference)expressionFilterEClass.getEStructuralFeatures().get(0);
@@ -1169,6 +1249,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCombinedFilter()
   {
     return combinedFilterEClass;
@@ -1180,6 +1261,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCombinedFilter_Operands()
   {
     return (EReference)combinedFilterEClass.getEStructuralFeatures().get(0);
@@ -1191,6 +1273,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNotFilter()
   {
     return notFilterEClass;
@@ -1202,6 +1285,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getAndFilter()
   {
     return andFilterEClass;
@@ -1213,6 +1297,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getOrFilter()
   {
     return orFilterEClass;
@@ -1224,6 +1309,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getPatternStyle()
   {
     return patternStyleEEnum;
@@ -1234,6 +1320,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getAccess()
   {
     return accessEEnum;
@@ -1244,6 +1331,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getAccessObject()
   {
     return accessObjectEDataType;
@@ -1254,6 +1342,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public SecurityFactory getSecurityFactory()
   {
     return (SecurityFactory)getEFactoryInstance();

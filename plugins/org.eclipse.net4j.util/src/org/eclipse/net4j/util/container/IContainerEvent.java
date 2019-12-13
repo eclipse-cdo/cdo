@@ -25,6 +25,7 @@ public interface IContainerEvent<E> extends IEvent
   /**
    * @since 3.0
    */
+  @Override
   public IContainer<E> getSource();
 
   public boolean isEmpty();

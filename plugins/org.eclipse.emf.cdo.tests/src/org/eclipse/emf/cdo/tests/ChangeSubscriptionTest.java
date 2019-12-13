@@ -823,6 +823,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     {
     }
 
+    @Override
     public boolean isValid(EObject eObject, Adapter object)
     {
       return ids.contains(((InternalCDOObject)eObject).cdoID());

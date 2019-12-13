@@ -38,6 +38,7 @@ public interface CDOCommonSession extends IAdaptable, IUserAware, IOptionsContai
   /**
    * Returns the {@link Options options} of this session.
    */
+  @Override
   public Options options();
 
   /**
@@ -54,6 +55,7 @@ public interface CDOCommonSession extends IAdaptable, IUserAware, IOptionsContai
      *
      * @since 4.0
      */
+    @Override
     public CDOCommonSession getContainer();
 
     public boolean isPassiveUpdateEnabled();

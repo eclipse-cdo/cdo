@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -80,6 +80,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     this.store = store;
   }
 
+  @Override
   public synchronized CDOID getMetaID(EModelElement modelElement, long commitTime)
   {
     CDOID metaID = modelElementToMetaID.get(modelElement);
@@ -96,6 +97,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     return metaID;
   }
 
+  @Override
   public synchronized EModelElement getMetaInstance(CDOID id)
   {
     EModelElement modelElement = metaIDToModelElement.get(id);
@@ -113,12 +115,14 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     return (EModelElement)resourceSet.getEObject(URI.createURI(uri), true);
   }
 
+  @Override
   public synchronized void clearMetaIDMappings()
   {
     modelElementToMetaID.clear();
     metaIDToModelElement.clear();
   }
 
+  @Override
   public final EPackage[] loadPackageUnit(Connection connection, InternalCDOPackageUnit packageUnit)
   {
     String where = CDODBSchema.PACKAGE_UNITS_ID.getName() + "='" + packageUnit.getID() + "'"; //$NON-NLS-1$ //$NON-NLS-2$
@@ -128,11 +132,13 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     return EMFUtil.getAllPackages(ePackage);
   }
 
+  @Override
   public Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection)
   {
     return readPackageUnits(connection, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, new Monitor());
   }
 
+  @Override
   public final void writePackageUnits(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
     try
@@ -146,6 +152,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     }
   }
 
+  @Override
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
     // Export package units
@@ -160,6 +167,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     DBUtil.serializeTable(out, connection, CDODBSchema.PACKAGE_INFOS, "p_i", join);
   }
 
+  @Override
   public Collection<InternalCDOPackageUnit> rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor)
       throws IOException
   {
@@ -353,6 +361,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     final Map<String, InternalCDOPackageUnit> packageUnits = new HashMap<String, InternalCDOPackageUnit>();
     IDBRowHandler unitRowHandler = new IDBRowHandler()
     {
+      @Override
       public boolean handle(int row, final Object... values)
       {
         int index = DBUtil.asInt(values[1]);
@@ -381,6 +390,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     final Map<String, List<InternalCDOPackageInfo>> packageInfos = new HashMap<String, List<InternalCDOPackageInfo>>();
     IDBRowHandler infoRowHandler = new IDBRowHandler()
     {
+      @Override
       public boolean handle(int row, final Object... values)
       {
         InternalCDOPackageInfo packageInfo = createPackageInfo();

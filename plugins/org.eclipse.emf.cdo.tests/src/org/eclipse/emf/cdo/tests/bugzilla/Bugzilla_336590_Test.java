@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -97,21 +97,25 @@ public class Bugzilla_336590_Test extends AbstractCDOTest
   {
     private CDOTransaction tx;
 
+    @Override
     public CDOTransaction getTransaction()
     {
       return tx;
     }
 
+    @Override
     public void setTransaction(CDOTransaction transaction)
     {
       tx = transaction;
     }
 
+    @Override
     public void resolveConflicts(Set<CDOObject> conflicts)
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts, List<CDORevisionDelta> allRemoteDeltas)
     {
       assertEquals(1, allRemoteDeltas.size());

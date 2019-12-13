@@ -703,6 +703,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   int VAT = 12;
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model1.Address <em>Address</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -713,6 +714,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getAddress();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.Address#getName <em>Name</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -723,6 +725,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getAddress_Name();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.Address#getStreet <em>Street</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -733,6 +736,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getAddress_Street();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.Address#getCity <em>City</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -743,6 +747,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getAddress_City();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model1.Company <em>Company</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -753,6 +758,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getCompany();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model1.Company#getCategories <em>Categories</em>}'.
    * <!-- begin-user-doc -->
@@ -764,6 +770,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getCompany_Categories();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model1.Company#getSuppliers <em>Suppliers</em>}'.
    * <!-- begin-user-doc -->
@@ -775,6 +782,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getCompany_Suppliers();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model1.Company#getCustomers <em>Customers</em>}'.
    * <!-- begin-user-doc -->
@@ -786,6 +794,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getCompany_Customers();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model1.Company#getPurchaseOrders <em>Purchase Orders</em>}'. <!--
@@ -798,6 +807,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getCompany_PurchaseOrders();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model1.Company#getSalesOrders <em>Sales Orders</em>}'.
    * <!-- begin-user-doc
@@ -809,6 +819,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getCompany_SalesOrders();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Supplier <em>Supplier</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -818,6 +829,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getSupplier();
 
+  @Override
   /**
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model1.Supplier#getPurchaseOrders <em>Purchase Orders</em>}'. <!--
@@ -830,6 +842,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getSupplier_PurchaseOrders();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.Supplier#isPreferred <em>Preferred</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -840,6 +853,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getSupplier_Preferred();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Customer <em>Customer</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -849,6 +863,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getCustomer();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model1.Customer#getSalesOrders <em>Sales Orders</em>}'.
    * <!-- begin-user-doc
@@ -860,6 +875,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getCustomer_SalesOrders();
 
+  @Override
   /**
    * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model1.Customer#getOrderByProduct <em>Order By Product</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -870,6 +886,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getCustomer_OrderByProduct();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model1.Order <em>Order</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -880,6 +897,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getOrder();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model1.Order#getOrderDetails <em>Order Details</em>}'.
    * <!-- begin-user-doc
@@ -891,6 +909,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getOrder_OrderDetails();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.OrderDetail <em>Order Detail</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -900,6 +919,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getOrderDetail();
 
+  @Override
   /**
    * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.model1.OrderDetail#getOrder <em>Order</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -911,6 +931,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getOrderDetail_Order();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model1.OrderDetail#getProduct <em>Product</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -921,6 +942,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getOrderDetail_Product();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.OrderDetail#getPrice <em>Price</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -931,6 +953,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getOrderDetail_Price();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder <em>Purchase Order</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -940,6 +963,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getPurchaseOrder();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getDate <em>Date</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -950,6 +974,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getPurchaseOrder_Date();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getSupplier <em>Supplier</em>}'.
    * <!-- begin-user-doc
@@ -961,6 +986,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getPurchaseOrder_Supplier();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model1.PurchaseOrder#getSalesOrders <em>Sales Orders</em>}'.
    * <!-- begin-user-doc -->
@@ -972,6 +998,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getPurchaseOrder_SalesOrders();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder <em>Sales Order</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -981,6 +1008,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getSalesOrder();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getId <em>Id</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -991,6 +1019,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getSalesOrder_Id();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getCustomer <em>Customer</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1001,6 +1030,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getSalesOrder_Customer();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getPurchaseOrders <em>Purchase Orders</em>}'.
    * <!-- begin-user-doc -->
@@ -1012,6 +1042,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getSalesOrder_PurchaseOrders();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Category <em>Category</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1021,6 +1052,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getCategory();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.Category#getName <em>Name</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1031,6 +1063,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getCategory_Name();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model1.Category#getCategories <em>Categories</em>}'.
    * <!-- begin-user-doc
@@ -1042,6 +1075,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getCategory_Categories();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model1.Category#getProducts <em>Products</em>}'.
    * <!-- begin-user-doc -->
@@ -1053,6 +1087,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getCategory_Products();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Product1 <em>Product1</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1062,6 +1097,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getProduct1();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.Product1#getName <em>Name</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1072,6 +1108,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getProduct1_Name();
 
+  @Override
   /**
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model1.Product1#getOrderDetails <em>Order Details</em>}'. <!--
@@ -1084,6 +1121,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getProduct1_OrderDetails();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.Product1#getVat <em>Vat</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1094,6 +1132,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getProduct1_Vat();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model1.Product1#getOtherVATs <em>Other VA Ts</em>}'.
    * <!-- begin-user-doc -->
@@ -1105,6 +1144,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getProduct1_OtherVATs();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model1.Product1#getDescription <em>Description</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1115,6 +1155,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getProduct1_Description();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.OrderAddress <em>Order Address</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1124,6 +1165,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getOrderAddress();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model1.OrderAddress#isTestAttribute <em>Test Attribute</em>}'. <!--
@@ -1136,6 +1178,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getOrderAddress_TestAttribute();
 
+  @Override
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>Product To Order</em>}'.
    * <!-- begin-user-doc -->
@@ -1148,6 +1191,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getProductToOrder();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -1159,6 +1203,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getProductToOrder_Key();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
    * <!-- begin-user-doc -->
@@ -1170,6 +1215,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getProductToOrder_Value();
 
+  @Override
   /**
    * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.legacy.model1.VAT <em>VAT</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -1180,6 +1226,7 @@ public interface Model1Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EEnum getVAT();
 
+  @Override
   /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc --> <!-- end-user-doc -->

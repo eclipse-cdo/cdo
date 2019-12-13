@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -213,6 +213,7 @@ public class SecurityActionBarContributor extends EditingDomainActionBarContribu
     //
     submenuManager.addMenuListener(new IMenuListener()
     {
+      @Override
       public void menuAboutToShow(IMenuManager menuManager)
       {
         menuManager.updateAll(true);
@@ -266,6 +267,7 @@ public class SecurityActionBarContributor extends EditingDomainActionBarContribu
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void selectionChanged(SelectionChangedEvent event)
   {
     // Remove any menu items for old selection.

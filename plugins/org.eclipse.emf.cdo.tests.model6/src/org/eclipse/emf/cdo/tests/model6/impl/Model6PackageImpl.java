@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -294,6 +294,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRoot()
   {
     return rootEClass;
@@ -303,6 +304,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRoot_ListA()
   {
     return (EReference)rootEClass.getEStructuralFeatures().get(0);
@@ -312,6 +314,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRoot_ListB()
   {
     return (EReference)rootEClass.getEStructuralFeatures().get(1);
@@ -321,6 +324,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRoot_ListC()
   {
     return (EReference)rootEClass.getEStructuralFeatures().get(2);
@@ -330,6 +334,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRoot_ListD()
   {
     return (EReference)rootEClass.getEStructuralFeatures().get(3);
@@ -339,6 +344,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getBaseObject()
   {
     return baseObjectEClass;
@@ -348,6 +354,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getBaseObject_AttributeOptional()
   {
     return (EAttribute)baseObjectEClass.getEStructuralFeatures().get(0);
@@ -357,6 +364,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getBaseObject_AttributeRequired()
   {
     return (EAttribute)baseObjectEClass.getEStructuralFeatures().get(1);
@@ -366,6 +374,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getBaseObject_AttributeList()
   {
     return (EAttribute)baseObjectEClass.getEStructuralFeatures().get(2);
@@ -375,6 +384,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getReferenceObject()
   {
     return referenceObjectEClass;
@@ -384,6 +394,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getReferenceObject_ReferenceOptional()
   {
     return (EReference)referenceObjectEClass.getEStructuralFeatures().get(0);
@@ -393,6 +404,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getReferenceObject_ReferenceList()
   {
     return (EReference)referenceObjectEClass.getEStructuralFeatures().get(1);
@@ -402,6 +414,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getContainmentObject()
   {
     return containmentObjectEClass;
@@ -411,6 +424,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getContainmentObject_ContainmentOptional()
   {
     return (EReference)containmentObjectEClass.getEStructuralFeatures().get(0);
@@ -420,6 +434,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getContainmentObject_ContainmentList()
   {
     return (EReference)containmentObjectEClass.getEStructuralFeatures().get(1);
@@ -429,6 +444,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getUnorderedList()
   {
     return unorderedListEClass;
@@ -438,6 +454,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getUnorderedList_Contained()
   {
     return (EReference)unorderedListEClass.getEStructuralFeatures().get(0);
@@ -447,6 +464,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getUnorderedList_Referenced()
   {
     return (EReference)unorderedListEClass.getEStructuralFeatures().get(1);
@@ -457,6 +475,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPropertiesMap()
   {
     return propertiesMapEClass;
@@ -467,6 +486,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPropertiesMap_Label()
   {
     return (EAttribute)propertiesMapEClass.getEStructuralFeatures().get(0);
@@ -477,6 +497,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPropertiesMap_PersistentMap()
   {
     return (EReference)propertiesMapEClass.getEStructuralFeatures().get(1);
@@ -487,6 +508,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPropertiesMap_TransientMap()
   {
     return (EReference)propertiesMapEClass.getEStructuralFeatures().get(2);
@@ -497,6 +519,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPropertiesMapEntry()
   {
     return propertiesMapEntryEClass;
@@ -507,6 +530,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPropertiesMapEntry_Key()
   {
     return (EAttribute)propertiesMapEntryEClass.getEStructuralFeatures().get(0);
@@ -517,6 +541,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPropertiesMapEntry_Value()
   {
     return (EReference)propertiesMapEntryEClass.getEStructuralFeatures().get(1);
@@ -527,6 +552,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPropertiesMapEntryValue()
   {
     return propertiesMapEntryValueEClass;
@@ -537,6 +563,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPropertiesMapEntryValue_Label()
   {
     return (EAttribute)propertiesMapEntryValueEClass.getEStructuralFeatures().get(0);
@@ -546,6 +573,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getA()
   {
     return aEClass;
@@ -555,6 +583,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getA_OwnedDs()
   {
     return (EReference)aEClass.getEStructuralFeatures().get(0);
@@ -564,6 +593,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getA_OwnedBs()
   {
     return (EReference)aEClass.getEStructuralFeatures().get(1);
@@ -573,6 +603,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getB()
   {
     return bEClass;
@@ -582,6 +613,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getB_OwnedC()
   {
     return (EReference)bEClass.getEStructuralFeatures().get(0);
@@ -591,6 +623,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getC()
   {
     return cEClass;
@@ -600,6 +633,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getD()
   {
     return dEClass;
@@ -609,6 +643,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getD_Data()
   {
     return (EReference)dEClass.getEStructuralFeatures().get(0);
@@ -618,6 +653,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getE()
   {
     return eEClass;
@@ -627,6 +663,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getE_OwnedAs()
   {
     return (EReference)eEClass.getEStructuralFeatures().get(0);
@@ -636,6 +673,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getF()
   {
     return fEClass;
@@ -645,6 +683,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getF_OwnedEs()
   {
     return (EReference)fEClass.getEStructuralFeatures().get(0);
@@ -655,6 +694,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getG()
   {
     return gEClass;
@@ -665,6 +705,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getG_Dummy()
   {
     return (EAttribute)gEClass.getEStructuralFeatures().get(0);
@@ -675,6 +716,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getG_Reference()
   {
     return (EReference)gEClass.getEStructuralFeatures().get(1);
@@ -685,6 +727,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getG_List()
   {
     return (EReference)gEClass.getEStructuralFeatures().get(2);
@@ -695,6 +738,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getMyEnumList()
   {
     return myEnumListEClass;
@@ -705,6 +749,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getMyEnumList_MyEnum()
   {
     return (EAttribute)myEnumListEClass.getEStructuralFeatures().get(0);
@@ -715,6 +760,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getMyEnumListUnsettable()
   {
     return myEnumListUnsettableEClass;
@@ -725,6 +771,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getMyEnumListUnsettable_MyEnum()
   {
     return (EAttribute)myEnumListUnsettableEClass.getEStructuralFeatures().get(0);
@@ -735,6 +782,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getHolder()
   {
     return holderEClass;
@@ -745,6 +793,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getHolder_Held()
   {
     return (EReference)holderEClass.getEStructuralFeatures().get(0);
@@ -755,6 +804,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getHolder_Owned()
   {
     return (EReference)holderEClass.getEStructuralFeatures().get(1);
@@ -765,6 +815,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getThing()
   {
     return thingEClass;
@@ -775,6 +826,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getHoldable()
   {
     return holdableEClass;
@@ -785,6 +837,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getHoldable_Name()
   {
     return (EAttribute)holdableEClass.getEStructuralFeatures().get(0);
@@ -795,6 +848,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getHasNillableAttribute()
   {
     return hasNillableAttributeEClass;
@@ -805,6 +859,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getHasNillableAttribute_Nillable()
   {
     return (EAttribute)hasNillableAttributeEClass.getEStructuralFeatures().get(0);
@@ -815,6 +870,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getEmptyStringDefault()
   {
     return emptyStringDefaultEClass;
@@ -825,6 +881,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getEmptyStringDefault_Attribute()
   {
     return (EAttribute)emptyStringDefaultEClass.getEStructuralFeatures().get(0);
@@ -835,6 +892,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getEmptyStringDefaultUnsettable()
   {
     return emptyStringDefaultUnsettableEClass;
@@ -845,6 +903,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getEmptyStringDefaultUnsettable_Attribute()
   {
     return (EAttribute)emptyStringDefaultUnsettableEClass.getEStructuralFeatures().get(0);
@@ -855,6 +914,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getUnsettableAttributes()
   {
     return unsettableAttributesEClass;
@@ -865,6 +925,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrBigDecimal()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(0);
@@ -875,6 +936,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrBigInteger()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(1);
@@ -885,6 +947,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrBoolean()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(2);
@@ -895,6 +958,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrBooleanObject()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(3);
@@ -905,6 +969,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrByte()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(4);
@@ -915,6 +980,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrByteArray()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(5);
@@ -925,6 +991,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrByteObject()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(6);
@@ -935,6 +1002,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrChar()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(7);
@@ -945,6 +1013,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrCharacterObject()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(8);
@@ -955,6 +1024,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrDate()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(9);
@@ -965,6 +1035,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrDouble()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(10);
@@ -975,6 +1046,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrDoubleObject()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(11);
@@ -985,6 +1057,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrFloat()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(12);
@@ -995,6 +1068,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrFloatObject()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(13);
@@ -1005,6 +1079,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrInt()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(14);
@@ -1015,6 +1090,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrIntegerObject()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(15);
@@ -1025,6 +1101,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrJavaClass()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(16);
@@ -1035,6 +1112,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrJavaObject()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(17);
@@ -1045,6 +1123,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrLong()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(18);
@@ -1055,6 +1134,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrLongObject()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(19);
@@ -1065,6 +1145,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrShort()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(20);
@@ -1075,6 +1156,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrShortObject()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(21);
@@ -1085,6 +1167,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettableAttributes_AttrString()
   {
     return (EAttribute)unsettableAttributesEClass.getEStructuralFeatures().get(22);
@@ -1095,6 +1178,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCanReferenceLegacy()
   {
     return canReferenceLegacyEClass;
@@ -1105,6 +1189,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCanReferenceLegacy_SingleContainment()
   {
     return (EReference)canReferenceLegacyEClass.getEStructuralFeatures().get(0);
@@ -1115,6 +1200,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCanReferenceLegacy_MultipleContainment()
   {
     return (EReference)canReferenceLegacyEClass.getEStructuralFeatures().get(1);
@@ -1125,6 +1211,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCanReferenceLegacy_SingleReference()
   {
     return (EReference)canReferenceLegacyEClass.getEStructuralFeatures().get(2);
@@ -1135,6 +1222,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCanReferenceLegacy_MultipleReference()
   {
     return (EReference)canReferenceLegacyEClass.getEStructuralFeatures().get(3);
@@ -1145,6 +1233,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getMyEnum()
   {
     return myEnumEEnum;
@@ -1155,6 +1244,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getMyString()
   {
     return myStringEDataType;
@@ -1164,6 +1254,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Model6Factory getModel6Factory()
   {
     return (Model6Factory)getEFactoryInstance();

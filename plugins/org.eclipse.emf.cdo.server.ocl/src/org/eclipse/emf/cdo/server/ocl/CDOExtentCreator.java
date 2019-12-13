@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -84,6 +84,7 @@ public class CDOExtentCreator implements OCLExtentCreator
     this.revisionCacheAdder = revisionCacheAdder;
   }
 
+  @Override
   public Set<EObject> createExtent(EClass eClass, AtomicBoolean canceled)
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
@@ -113,6 +114,7 @@ public class CDOExtentCreator implements OCLExtentCreator
 
     CDORevisionHandler revisionHandler = new CDORevisionHandler.Filtered.Undetached(new CDORevisionHandler()
     {
+      @Override
       public boolean handleRevision(CDORevision revision)
       {
         if (revisionCacheAdder != null)
@@ -220,6 +222,7 @@ public class CDOExtentCreator implements OCLExtentCreator
 
         private CountDownLatch emptyKnown = new CountDownLatch(1);
 
+        @Override
         public synchronized boolean isEmpty()
         {
           if (empty != null)
@@ -240,6 +243,7 @@ public class CDOExtentCreator implements OCLExtentCreator
           }
         }
 
+        @Override
         public synchronized Iterator<EObject> iterator()
         {
           if (emptyIterator != null)
@@ -294,6 +298,7 @@ public class CDOExtentCreator implements OCLExtentCreator
             {
               CDORevisionHandler revisionHandler = new CDORevisionHandler.Filtered.Undetached(new CDORevisionHandler()
               {
+                @Override
                 public boolean handleRevision(CDORevision revision)
                 {
                   empty = false;
@@ -335,6 +340,7 @@ public class CDOExtentCreator implements OCLExtentCreator
           {
             private CDOID next;
 
+            @Override
             public boolean hasNext()
             {
               while (next == null)
@@ -372,6 +378,7 @@ public class CDOExtentCreator implements OCLExtentCreator
               return true;
             }
 
+            @Override
             public EObject next()
             {
               if (!hasNext())
@@ -389,6 +396,7 @@ public class CDOExtentCreator implements OCLExtentCreator
               }
             }
 
+            @Override
             public void remove()
             {
               throw new UnsupportedOperationException();
@@ -396,56 +404,67 @@ public class CDOExtentCreator implements OCLExtentCreator
           };
         }
 
+        @Override
         public int size()
         {
           throw new Error("Not supported"); // RuntimeException gets swallowed up the stack!
         }
 
+        @Override
         public boolean contains(Object o)
         {
           throw new Error("Not supported");
         }
 
+        @Override
         public Object[] toArray()
         {
           throw new Error("Not supported");
         }
 
+        @Override
         public <T> T[] toArray(T[] a)
         {
           throw new Error("Not supported");
         }
 
+        @Override
         public boolean add(EObject o)
         {
           throw new Error("Not supported");
         }
 
+        @Override
         public boolean remove(Object o)
         {
           throw new Error("Not supported");
         }
 
+        @Override
         public boolean containsAll(Collection<?> c)
         {
           throw new Error("Not supported");
         }
 
+        @Override
         public boolean addAll(Collection<? extends EObject> c)
         {
           throw new Error("Not supported");
         }
 
+        @Override
         public boolean retainAll(Collection<?> c)
         {
           throw new Error("Not supported");
         }
 
+        @Override
         public boolean removeAll(Collection<?> c)
         {
           throw new Error("Not supported");
         }
 
+        @Override
         public void clear()
         {
           throw new Error("Not supported");

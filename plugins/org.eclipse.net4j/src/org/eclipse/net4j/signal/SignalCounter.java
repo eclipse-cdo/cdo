@@ -123,6 +123,7 @@ public final class SignalCounter implements IListener
     }
   }
 
+  @Override
   public void notifyEvent(IEvent event)
   {
     if (event instanceof SignalFinishedEvent)

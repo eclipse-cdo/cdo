@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -81,6 +81,7 @@ public final class CDOStoreImpl implements CDOStore
     this.view = view;
   }
 
+  @Override
   public InternalCDOView getView()
   {
     return view;
@@ -89,6 +90,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category READ
    */
+  @Override
   public InternalEObject getContainer(InternalEObject eObject)
   {
     synchronized (view.getViewMonitor())
@@ -116,6 +118,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category READ
    */
+  @Override
   public int getContainingFeatureID(InternalEObject eObject)
   {
     synchronized (view.getViewMonitor())
@@ -143,6 +146,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category READ
    */
+  @Override
   public InternalEObject getResource(InternalEObject eObject)
   {
     synchronized (view.getViewMonitor())
@@ -170,6 +174,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category READ
    */
+  @Override
   public EStructuralFeature getContainingFeature(InternalEObject eObject)
   {
     throw new UnsupportedOperationException("Use getContainingFeatureID() instead"); //$NON-NLS-1$
@@ -178,6 +183,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category READ
    */
+  @Override
   public Object get(InternalEObject eObject, EStructuralFeature feature, int index)
   {
     synchronized (view.getViewMonitor())
@@ -213,6 +219,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category READ
    */
+  @Override
   public boolean isSet(InternalEObject eObject, EStructuralFeature feature)
   {
     synchronized (view.getViewMonitor())
@@ -261,6 +268,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category READ
    */
+  @Override
   public int size(InternalEObject eObject, EStructuralFeature feature)
   {
     synchronized (view.getViewMonitor())
@@ -288,6 +296,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category READ
    */
+  @Override
   public boolean isEmpty(InternalEObject eObject, EStructuralFeature feature)
   {
     synchronized (view.getViewMonitor())
@@ -315,6 +324,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category READ
    */
+  @Override
   public boolean contains(InternalEObject eObject, EStructuralFeature feature, Object value)
   {
     synchronized (view.getViewMonitor())
@@ -373,6 +383,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category READ
    */
+  @Override
   public int indexOf(InternalEObject eObject, EStructuralFeature feature, Object value)
   {
     synchronized (view.getViewMonitor())
@@ -402,6 +413,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category READ
    */
+  @Override
   public int lastIndexOf(InternalEObject eObject, EStructuralFeature feature, Object value)
   {
     synchronized (view.getViewMonitor())
@@ -431,6 +443,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category READ
    */
+  @Override
   public int hashCode(InternalEObject eObject, EStructuralFeature feature)
   {
     synchronized (view.getViewMonitor())
@@ -458,6 +471,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category READ
    */
+  @Override
   public Object[] toArray(InternalEObject eObject, EStructuralFeature feature)
   {
     synchronized (view.getViewMonitor())
@@ -501,6 +515,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category READ
    */
+  @Override
   @SuppressWarnings("unchecked")
   public <T> T[] toArray(InternalEObject eObject, EStructuralFeature feature, T[] a)
   {
@@ -536,6 +551,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category WRITE
    */
+  @Override
   public void setContainer(InternalEObject eObject, CDOResource newResource, InternalEObject newEContainer, int newContainerFeatureID)
   {
     synchronized (view.getViewMonitor())
@@ -567,6 +583,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category WRITE RESULT
    */
+  @Override
   public Object set(InternalEObject eObject, EStructuralFeature feature, int index, Object value)
   {
     synchronized (view.getViewMonitor())
@@ -603,6 +620,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category WRITE
    */
+  @Override
   public void unset(InternalEObject eObject, EStructuralFeature feature)
   {
     synchronized (view.getViewMonitor())
@@ -645,6 +663,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category WRITE
    */
+  @Override
   public void add(InternalEObject eObject, EStructuralFeature feature, int index, Object value)
   {
     synchronized (view.getViewMonitor())
@@ -674,6 +693,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category WRITE RESULT
    */
+  @Override
   public Object remove(InternalEObject eObject, EStructuralFeature feature, int index)
   {
     synchronized (view.getViewMonitor())
@@ -703,6 +723,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category WRITE RESULT
    */
+  @Override
   public Object move(InternalEObject eObject, EStructuralFeature feature, int target, int source)
   {
     synchronized (view.getViewMonitor())
@@ -734,6 +755,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @category WRITE
    */
+  @Override
   public void clear(InternalEObject eObject, EStructuralFeature feature)
   {
     synchronized (view.getViewMonitor())
@@ -758,6 +780,7 @@ public final class CDOStoreImpl implements CDOStore
     }
   }
 
+  @Override
   public EObject create(EClass eClass)
   {
     throw new UnsupportedOperationException("Use the generated factory to create objects"); //$NON-NLS-1$
@@ -772,6 +795,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @since 2.0
    */
+  @Override
   public Object resolveProxy(InternalCDORevision revision, EStructuralFeature feature, int index, Object value)
   {
     if (value instanceof CDOElementProxy)
@@ -799,6 +823,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @since 3.0
    */
+  @Override
   public Object convertToCDO(InternalCDOObject object, EStructuralFeature feature, Object value)
   {
     if (value != null)
@@ -846,6 +871,7 @@ public final class CDOStoreImpl implements CDOStore
   /**
    * @since 2.0
    */
+  @Override
   public Object convertToEMF(EObject eObject, InternalCDORevision revision, EStructuralFeature feature, int index, Object value)
   {
     if (value != null)

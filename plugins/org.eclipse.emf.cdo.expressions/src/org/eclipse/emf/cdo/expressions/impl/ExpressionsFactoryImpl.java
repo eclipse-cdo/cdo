@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -166,6 +166,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public BooleanValue createBooleanValue()
   {
     BooleanValueImpl booleanValue = new BooleanValueImpl();
@@ -177,6 +178,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ByteValue createByteValue()
   {
     ByteValueImpl byteValue = new ByteValueImpl();
@@ -188,6 +190,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ShortValue createShortValue()
   {
     ShortValueImpl shortValue = new ShortValueImpl();
@@ -199,6 +202,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public IntValue createIntValue()
   {
     IntValueImpl intValue = new IntValueImpl();
@@ -210,6 +214,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public LongValue createLongValue()
   {
     LongValueImpl longValue = new LongValueImpl();
@@ -221,6 +226,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public FloatValue createFloatValue()
   {
     FloatValueImpl floatValue = new FloatValueImpl();
@@ -232,6 +238,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public DoubleValue createDoubleValue()
   {
     DoubleValueImpl doubleValue = new DoubleValueImpl();
@@ -243,6 +250,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public CharValue createCharValue()
   {
     CharValueImpl charValue = new CharValueImpl();
@@ -254,6 +262,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public StringValue createStringValue()
   {
     StringValueImpl stringValue = new StringValueImpl();
@@ -265,6 +274,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public FunctionInvocation createFunctionInvocation()
   {
     FunctionInvocationImpl functionInvocation = new FunctionInvocationImpl();
@@ -276,6 +286,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public MemberInvocation createMemberInvocation()
   {
     MemberInvocationImpl memberInvocation = new MemberInvocationImpl();
@@ -287,6 +298,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public StaticAccess createStaticAccess()
   {
     StaticAccessImpl staticAccess = new StaticAccessImpl();
@@ -298,6 +310,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public MemberAccess createMemberAccess()
   {
     MemberAccessImpl memberAccess = new MemberAccessImpl();
@@ -309,6 +322,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ContextAccess createContextAccess()
   {
     ContextAccessImpl contextAccess = new ContextAccessImpl();
@@ -320,6 +334,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ContainedObject createContainedObject()
   {
     ContainedObjectImpl containedObject = new ContainedObjectImpl();
@@ -331,6 +346,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public LinkedObject createLinkedObject()
   {
     LinkedObjectImpl linkedObject = new LinkedObjectImpl();
@@ -342,6 +358,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public LinkedExpression createLinkedExpression()
   {
     LinkedExpressionImpl linkedExpression = new LinkedExpressionImpl();
@@ -353,6 +370,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ListConstruction createListConstruction()
   {
     ListConstructionImpl listConstruction = new ListConstructionImpl();
@@ -364,6 +382,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ExpressionsPackage getExpressionsPackage()
   {
     return (ExpressionsPackage)getEPackage();

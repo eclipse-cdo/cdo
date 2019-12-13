@@ -42,6 +42,7 @@ public class UserRolesQueryHandlerFactory extends QueryHandlerFactory
   {
     return new IQueryHandler()
     {
+      @Override
       public void executeQuery(CDOQueryInfo info, final IQueryContext context)
       {
         ISession session = context.getView().getSession();
@@ -54,6 +55,7 @@ public class UserRolesQueryHandlerFactory extends QueryHandlerFactory
 
           securityManager.read(new RealmOperation()
           {
+            @Override
             public void execute(Realm realm)
             {
               User user = realm.getUser(userID);

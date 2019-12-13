@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -56,6 +56,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
   /**
    * @since 3.5
    */
+  @Override
   public final Persistence<E> getPersistence()
   {
     return persistence;
@@ -64,6 +65,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
   /**
    * @since 3.5
    */
+  @Override
   public final void setPersistence(Persistence<E> persistence)
   {
     this.persistence = persistence;
@@ -83,6 +85,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
     return set.isEmpty();
   }
 
+  @Override
   public E[] getElements()
   {
     E[] array;
@@ -98,6 +101,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
     return array;
   }
 
+  @Override
   public boolean addElement(E element)
   {
     if (!validateElement(element))
@@ -129,6 +133,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
   /**
    * @since 3.5
    */
+  @Override
   public boolean addAllElements(Collection<E> elements)
   {
     List<E> validElements = new ArrayList<E>();
@@ -174,6 +179,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
     return false;
   }
 
+  @Override
   public boolean removeElement(E element)
   {
     IContainerEvent<E> event = null;
@@ -200,6 +206,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
   /**
    * @since 3.5
    */
+  @Override
   public boolean removeAllElements(Collection<E> elements)
   {
     ContainerEvent<E> event = null;
@@ -272,6 +279,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
   /**
    * @since 3.5
    */
+  @Override
   public synchronized void load() throws IORuntimeException
   {
     if (persistence != null)
@@ -286,6 +294,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
   /**
    * @since 3.5
    */
+  @Override
   public synchronized void save() throws IORuntimeException
   {
     if (persistence != null)

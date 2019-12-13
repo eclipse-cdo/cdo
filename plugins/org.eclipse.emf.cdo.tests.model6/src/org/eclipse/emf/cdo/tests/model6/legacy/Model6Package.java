@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -1201,6 +1201,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   int MY_STRING = 26;
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.Root <em>Root</em>}'.
    * <!-- begin-user-doc -->
@@ -1211,6 +1212,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getRoot();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.Root#getListA <em>List A</em>}'.
    * <!-- begin-user-doc -->
@@ -1222,6 +1224,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getRoot_ListA();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.Root#getListB <em>List B</em>}'.
    * <!-- begin-user-doc -->
@@ -1233,6 +1236,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getRoot_ListB();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.Root#getListC <em>List C</em>}'.
    * <!-- begin-user-doc -->
@@ -1244,6 +1248,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getRoot_ListC();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.Root#getListD <em>List D</em>}'.
    * <!-- begin-user-doc -->
@@ -1255,6 +1260,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getRoot_ListD();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.BaseObject <em>Base Object</em>}'.
    * <!-- begin-user-doc -->
@@ -1265,6 +1271,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getBaseObject();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.BaseObject#getAttributeOptional <em>Attribute Optional</em>}'.
    * <!-- begin-user-doc -->
@@ -1276,6 +1283,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getBaseObject_AttributeOptional();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.BaseObject#getAttributeRequired <em>Attribute Required</em>}'.
    * <!-- begin-user-doc -->
@@ -1287,6 +1295,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getBaseObject_AttributeRequired();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model6.BaseObject#getAttributeList <em>Attribute List</em>}'.
    * <!-- begin-user-doc -->
@@ -1298,6 +1307,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getBaseObject_AttributeList();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.ReferenceObject <em>Reference Object</em>}'.
    * <!-- begin-user-doc -->
@@ -1308,6 +1318,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getReferenceObject();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model6.ReferenceObject#getReferenceOptional <em>Reference Optional</em>}'.
    * <!-- begin-user-doc -->
@@ -1319,6 +1330,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getReferenceObject_ReferenceOptional();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model6.ReferenceObject#getReferenceList <em>Reference List</em>}'.
    * <!-- begin-user-doc -->
@@ -1330,6 +1342,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getReferenceObject_ReferenceList();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.ContainmentObject <em>Containment Object</em>}'.
    * <!-- begin-user-doc -->
@@ -1340,6 +1353,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getContainmentObject();
 
+  @Override
   /**
    * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.model6.ContainmentObject#getContainmentOptional <em>Containment Optional</em>}'.
    * <!-- begin-user-doc -->
@@ -1351,6 +1365,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getContainmentObject_ContainmentOptional();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.ContainmentObject#getContainmentList <em>Containment List</em>}'.
    * <!-- begin-user-doc -->
@@ -1362,6 +1377,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getContainmentObject_ContainmentList();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.UnorderedList <em>Unordered List</em>}'.
    * <!-- begin-user-doc -->
@@ -1372,6 +1388,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getUnorderedList();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.UnorderedList#getContained <em>Contained</em>}'.
    * <!-- begin-user-doc -->
@@ -1383,6 +1400,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getUnorderedList_Contained();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model6.UnorderedList#getReferenced <em>Referenced</em>}'.
    * <!-- begin-user-doc -->
@@ -1394,6 +1412,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getUnorderedList_Referenced();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.PropertiesMap <em>Properties Map</em>}'.
    * <!-- begin-user-doc -->
@@ -1404,6 +1423,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getPropertiesMap();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.PropertiesMap#getLabel <em>Label</em>}'.
    * <!-- begin-user-doc -->
@@ -1415,6 +1435,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getPropertiesMap_Label();
 
+  @Override
   /**
    * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model6.PropertiesMap#getPersistentMap <em>Persistent Map</em>}'.
    * <!-- begin-user-doc -->
@@ -1426,6 +1447,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getPropertiesMap_PersistentMap();
 
+  @Override
   /**
    * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model6.PropertiesMap#getTransientMap <em>Transient Map</em>}'.
    * <!-- begin-user-doc -->
@@ -1437,6 +1459,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getPropertiesMap_TransientMap();
 
+  @Override
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>Properties Map Entry</em>}'.
    * <!-- begin-user-doc -->
@@ -1449,6 +1472,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getPropertiesMapEntry();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
    * <!-- begin-user-doc -->
@@ -1460,6 +1484,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getPropertiesMapEntry_Key();
 
+  @Override
   /**
    * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Value</em>}'.
    * <!-- begin-user-doc -->
@@ -1471,6 +1496,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getPropertiesMapEntry_Value();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue <em>Properties Map Entry Value</em>}'.
    * <!-- begin-user-doc -->
@@ -1481,6 +1507,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getPropertiesMapEntryValue();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue#getLabel <em>Label</em>}'.
    * <!-- begin-user-doc -->
@@ -1492,6 +1519,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getPropertiesMapEntryValue_Label();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.A <em>A</em>}'.
    * <!-- begin-user-doc -->
@@ -1502,6 +1530,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getA();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.A#getOwnedDs <em>Owned Ds</em>}'.
    * <!-- begin-user-doc -->
@@ -1513,6 +1542,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getA_OwnedDs();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.A#getOwnedBs <em>Owned Bs</em>}'.
    * <!-- begin-user-doc -->
@@ -1524,6 +1554,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getA_OwnedBs();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.B <em>B</em>}'.
    * <!-- begin-user-doc -->
@@ -1534,6 +1565,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getB();
 
+  @Override
   /**
    * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.model6.B#getOwnedC <em>Owned C</em>}'.
    * <!-- begin-user-doc -->
@@ -1545,6 +1577,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getB_OwnedC();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.C <em>C</em>}'.
    * <!-- begin-user-doc -->
@@ -1555,6 +1588,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getC();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.D <em>D</em>}'.
    * <!-- begin-user-doc -->
@@ -1565,6 +1599,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getD();
 
+  @Override
   /**
    * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.model6.D#getData <em>Data</em>}'.
    * <!-- begin-user-doc -->
@@ -1576,6 +1611,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getD_Data();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.E <em>E</em>}'.
    * <!-- begin-user-doc -->
@@ -1586,6 +1622,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getE();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.E#getOwnedAs <em>Owned As</em>}'.
    * <!-- begin-user-doc -->
@@ -1597,6 +1634,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getE_OwnedAs();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.F <em>F</em>}'.
    * <!-- begin-user-doc -->
@@ -1607,6 +1645,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getF();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.F#getOwnedEs <em>Owned Es</em>}'.
    * <!-- begin-user-doc -->
@@ -1618,6 +1657,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getF_OwnedEs();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.G <em>G</em>}'.
    * <!-- begin-user-doc -->
@@ -1628,6 +1668,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getG();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.G#getDummy <em>Dummy</em>}'.
    * <!-- begin-user-doc -->
@@ -1639,6 +1680,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getG_Dummy();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model6.G#getReference <em>Reference</em>}'.
    * <!-- begin-user-doc -->
@@ -1650,6 +1692,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getG_Reference();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model6.G#getList <em>List</em>}'.
    * <!-- begin-user-doc -->
@@ -1661,6 +1704,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getG_List();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.MyEnumList <em>My Enum List</em>}'.
    * <!-- begin-user-doc -->
@@ -1671,6 +1715,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getMyEnumList();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model6.MyEnumList#getMyEnum <em>My Enum</em>}'.
    * <!-- begin-user-doc -->
@@ -1682,6 +1727,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getMyEnumList_MyEnum();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable <em>My Enum List Unsettable</em>}'.
    * <!-- begin-user-doc -->
@@ -1692,6 +1738,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getMyEnumListUnsettable();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable#getMyEnum <em>My Enum</em>}'.
    * <!-- begin-user-doc -->
@@ -1703,6 +1750,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getMyEnumListUnsettable_MyEnum();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.Holder <em>Holder</em>}'.
    * <!-- begin-user-doc -->
@@ -1713,6 +1761,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getHolder();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model6.Holder#getHeld <em>Held</em>}'.
    * <!-- begin-user-doc -->
@@ -1724,6 +1773,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getHolder_Held();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.Holder#getOwned <em>Owned</em>}'.
    * <!-- begin-user-doc -->
@@ -1735,6 +1785,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getHolder_Owned();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.Thing <em>Thing</em>}'.
    * <!-- begin-user-doc -->
@@ -1745,6 +1796,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getThing();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.Holdable <em>Holdable</em>}'.
    * <!-- begin-user-doc -->
@@ -1755,6 +1807,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getHoldable();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.Holdable#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
@@ -1766,6 +1819,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getHoldable_Name();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.HasNillableAttribute <em>Has Nillable Attribute</em>}'.
    * <!-- begin-user-doc -->
@@ -1776,6 +1830,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getHasNillableAttribute();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.HasNillableAttribute#getNillable <em>Nillable</em>}'.
    * <!-- begin-user-doc -->
@@ -1787,6 +1842,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getHasNillableAttribute_Nillable();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.EmptyStringDefault <em>Empty String Default</em>}'.
    * <!-- begin-user-doc -->
@@ -1797,6 +1853,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getEmptyStringDefault();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.EmptyStringDefault#getAttribute <em>Attribute</em>}'.
    * <!-- begin-user-doc -->
@@ -1808,6 +1865,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getEmptyStringDefault_Attribute();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable <em>Empty String Default Unsettable</em>}'.
    * <!-- begin-user-doc -->
@@ -1818,6 +1876,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getEmptyStringDefaultUnsettable();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.EmptyStringDefaultUnsettable#getAttribute <em>Attribute</em>}'.
    * <!-- begin-user-doc -->
@@ -1829,6 +1888,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getEmptyStringDefaultUnsettable_Attribute();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes <em>Unsettable Attributes</em>}'.
    * <!-- begin-user-doc -->
@@ -1839,6 +1899,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getUnsettableAttributes();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrBigDecimal <em>Attr Big Decimal</em>}'.
    * <!-- begin-user-doc -->
@@ -1850,6 +1911,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrBigDecimal();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrBigInteger <em>Attr Big Integer</em>}'.
    * <!-- begin-user-doc -->
@@ -1861,6 +1923,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrBigInteger();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#isAttrBoolean <em>Attr Boolean</em>}'.
    * <!-- begin-user-doc -->
@@ -1872,6 +1935,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrBoolean();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrBooleanObject <em>Attr Boolean Object</em>}'.
    * <!-- begin-user-doc -->
@@ -1883,6 +1947,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrBooleanObject();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrByte <em>Attr Byte</em>}'.
    * <!-- begin-user-doc -->
@@ -1894,6 +1959,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrByte();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrByteArray <em>Attr Byte Array</em>}'.
    * <!-- begin-user-doc -->
@@ -1905,6 +1971,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrByteArray();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrByteObject <em>Attr Byte Object</em>}'.
    * <!-- begin-user-doc -->
@@ -1916,6 +1983,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrByteObject();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrChar <em>Attr Char</em>}'.
    * <!-- begin-user-doc -->
@@ -1927,6 +1995,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrChar();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrCharacterObject <em>Attr Character Object</em>}'.
    * <!-- begin-user-doc -->
@@ -1938,6 +2007,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrCharacterObject();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrDate <em>Attr Date</em>}'.
    * <!-- begin-user-doc -->
@@ -1949,6 +2019,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrDate();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrDouble <em>Attr Double</em>}'.
    * <!-- begin-user-doc -->
@@ -1960,6 +2031,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrDouble();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrDoubleObject <em>Attr Double Object</em>}'.
    * <!-- begin-user-doc -->
@@ -1971,6 +2043,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrDoubleObject();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrFloat <em>Attr Float</em>}'.
    * <!-- begin-user-doc -->
@@ -1982,6 +2055,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrFloat();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrFloatObject <em>Attr Float Object</em>}'.
    * <!-- begin-user-doc -->
@@ -1993,6 +2067,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrFloatObject();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrInt <em>Attr Int</em>}'.
    * <!-- begin-user-doc -->
@@ -2004,6 +2079,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrInt();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrIntegerObject <em>Attr Integer Object</em>}'.
    * <!-- begin-user-doc -->
@@ -2015,6 +2091,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrIntegerObject();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrJavaClass <em>Attr Java Class</em>}'.
    * <!-- begin-user-doc -->
@@ -2026,6 +2103,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrJavaClass();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrJavaObject <em>Attr Java Object</em>}'.
    * <!-- begin-user-doc -->
@@ -2037,6 +2115,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrJavaObject();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrLong <em>Attr Long</em>}'.
    * <!-- begin-user-doc -->
@@ -2048,6 +2127,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrLong();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrLongObject <em>Attr Long Object</em>}'.
    * <!-- begin-user-doc -->
@@ -2059,6 +2139,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrLongObject();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrShort <em>Attr Short</em>}'.
    * <!-- begin-user-doc -->
@@ -2070,6 +2151,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrShort();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrShortObject <em>Attr Short Object</em>}'.
    * <!-- begin-user-doc -->
@@ -2081,6 +2163,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrShortObject();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.UnsettableAttributes#getAttrString <em>Attr String</em>}'.
    * <!-- begin-user-doc -->
@@ -2092,6 +2175,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettableAttributes_AttrString();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy <em>Can Reference Legacy</em>}'.
    * <!-- begin-user-doc -->
@@ -2102,6 +2186,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getCanReferenceLegacy();
 
+  @Override
   /**
    * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy#getSingleContainment <em>Single Containment</em>}'.
    * <!-- begin-user-doc -->
@@ -2113,6 +2198,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getCanReferenceLegacy_SingleContainment();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy#getMultipleContainment <em>Multiple Containment</em>}'.
    * <!-- begin-user-doc -->
@@ -2124,6 +2210,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getCanReferenceLegacy_MultipleContainment();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy#getSingleReference <em>Single Reference</em>}'.
    * <!-- begin-user-doc -->
@@ -2135,6 +2222,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getCanReferenceLegacy_SingleReference();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy#getMultipleReference <em>Multiple Reference</em>}'.
    * <!-- begin-user-doc -->
@@ -2146,6 +2234,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getCanReferenceLegacy_MultipleReference();
 
+  @Override
   /**
    * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}'.
    * <!-- begin-user-doc -->
@@ -2156,6 +2245,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EEnum getMyEnum();
 
+  @Override
   /**
    * Returns the meta object for data type '{@link java.lang.String <em>My String</em>}'.
    * <!-- begin-user-doc -->
@@ -2167,6 +2257,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EDataType getMyString();
 
+  @Override
   /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->

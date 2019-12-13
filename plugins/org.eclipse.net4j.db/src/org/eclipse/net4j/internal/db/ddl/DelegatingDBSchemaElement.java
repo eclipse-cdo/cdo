@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -58,72 +58,86 @@ public abstract class DelegatingDBSchemaElement implements InternalDBSchemaEleme
     }
   }
 
+  @Override
   public final void setWrapper(IDBSchemaElement wrapper)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public IDBSchemaElement getParent()
   {
     return wrap(getDelegate().getParent());
   }
 
+  @Override
   public final String getName()
   {
     return getDelegate().getName();
   }
 
+  @Override
   @Deprecated
   public final void setName(String name)
   {
     getDelegate().setName(name);
   }
 
+  @Override
   public final <T extends IDBSchemaElement> T getElement(Class<T> type, String name)
   {
     return getDelegate().getElement(type, name);
   }
 
+  @Override
   public final String getFullName()
   {
     return getDelegate().getFullName();
   }
 
+  @Override
   public final IDBSchema getSchema()
   {
     return wrap(getDelegate().getSchema());
   }
 
+  @Override
   public final Properties getProperties()
   {
     return getDelegate().getProperties();
   }
 
+  @Override
   public final String dumpToString()
   {
     return getDelegate().dumpToString();
   }
 
+  @Override
   public final void dump()
   {
     getDelegate().dump();
   }
 
+  @Override
   public final void dump(Writer writer) throws IOException
   {
     getDelegate().dump(writer);
   }
 
+  @Override
   public final SchemaElementType getSchemaElementType()
   {
     return getDelegate().getSchemaElementType();
   }
 
+  @Override
   public final boolean isEmpty()
   {
     return getDelegate().isEmpty();
   }
 
+  @Override
   public final IDBSchemaElement[] getElements()
   {
     IDBSchemaElement[] elements = getDelegate().getElements();
@@ -136,31 +150,37 @@ public abstract class DelegatingDBSchemaElement implements InternalDBSchemaEleme
     return wrappers;
   }
 
+  @Override
   public final void accept(IDBSchemaVisitor visitor)
   {
     getDelegate().accept(visitor);
   }
 
+  @Override
   public final void remove()
   {
     getDelegate().remove();
   }
 
+  @Override
   public final void addListener(IListener listener)
   {
     getDelegate().addListener(listener);
   }
 
+  @Override
   public final IListener[] getListeners()
   {
     return getDelegate().getListeners();
   }
 
+  @Override
   public final boolean hasListeners()
   {
     return getDelegate().hasListeners();
   }
 
+  @Override
   public final void removeListener(IListener listener)
   {
     getDelegate().removeListener(listener);
@@ -178,6 +198,7 @@ public abstract class DelegatingDBSchemaElement implements InternalDBSchemaEleme
     return getDelegate().equals(obj);
   }
 
+  @Override
   public final int compareTo(IDBSchemaElement o)
   {
     return getDelegate().compareTo(unwrap(o));

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -37,6 +37,7 @@ public class ResourcesQueryHandler implements IQueryHandler
   {
   }
 
+  @Override
   public void executeQuery(CDOQueryInfo info, IQueryContext context)
   {
     try
@@ -93,36 +94,43 @@ public class ResourcesQueryHandler implements IQueryHandler
       return resourceIDs;
     }
 
+    @Override
     public CDOBranch getBranch()
     {
       return branchPoint.getBranch();
     }
 
+    @Override
     public long getTimeStamp()
     {
       return branchPoint.getTimeStamp();
     }
 
+    @Override
     public CDOID getFolderID()
     {
       return (CDOID)info.getParameters().get(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES_FOLDER_ID);
     }
 
+    @Override
     public String getName()
     {
       return info.getQueryString();
     }
 
+    @Override
     public boolean exactMatch()
     {
       return (Boolean)info.getParameters().get(CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES_EXACT_MATCH);
     }
 
+    @Override
     public int getMaxResults()
     {
       return info.getMaxResults();
     }
 
+    @Override
     public boolean addResource(CDOID resourceID)
     {
       if (resourceIDs.add(resourceID))

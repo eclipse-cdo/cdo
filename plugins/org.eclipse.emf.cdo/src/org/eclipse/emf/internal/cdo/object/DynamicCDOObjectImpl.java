@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -47,17 +47,20 @@ public class DynamicCDOObjectImpl extends CDOObjectImpl
       super(eClass);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public K getKey()
     {
       return (K)eGet(keyFeature);
     }
 
+    @Override
     public void setKey(Object key)
     {
       eSet(keyFeature, key);
     }
 
+    @Override
     public int getHash()
     {
       if (hash == -1)
@@ -69,17 +72,20 @@ public class DynamicCDOObjectImpl extends CDOObjectImpl
       return hash;
     }
 
+    @Override
     public void setHash(int hash)
     {
       this.hash = hash;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public V getValue()
     {
       return (V)eGet(valueFeature);
     }
 
+    @Override
     public V setValue(V value)
     {
       @SuppressWarnings("unchecked")

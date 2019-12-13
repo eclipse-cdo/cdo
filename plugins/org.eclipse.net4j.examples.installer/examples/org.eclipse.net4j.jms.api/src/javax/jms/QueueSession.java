@@ -84,6 +84,7 @@ public interface QueueSession extends Session
     *                         due to some internal error.
     */
 
+  @Override
   Queue createQueue(String queueName) throws JMSException;
 
   /** Creates a <CODE>QueueReceiver</CODE> object to receive messages from the
@@ -139,6 +140,7 @@ public interface QueueSession extends Session
     * @exception InvalidDestinationException if an invalid queue is specified.
     */
 
+  @Override
   QueueBrowser createBrowser(Queue queue) throws JMSException;
 
   /** Creates a <CODE>QueueBrowser</CODE> object to peek at the messages on
@@ -156,6 +158,7 @@ public interface QueueSession extends Session
     * @exception InvalidSelectorException if the message selector is invalid.
     */
 
+  @Override
   QueueBrowser createBrowser(Queue queue, String messageSelector) throws JMSException;
 
   /** Creates a <CODE>TemporaryQueue</CODE> object. Its lifetime will be that
@@ -167,5 +170,6 @@ public interface QueueSession extends Session
     *                         due to some internal error.
     */
 
+  @Override
   TemporaryQueue createTemporaryQueue() throws JMSException;
 }

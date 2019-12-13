@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -74,6 +74,7 @@ public abstract class CDOClientIndication extends Indication
 
     indicating(new CDODataInputImpl(in)
     {
+      @Override
       public CDOPackageRegistry getPackageRegistry()
       {
         return session.getPackageRegistry();

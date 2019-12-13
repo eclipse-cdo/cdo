@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -276,6 +276,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
       sash.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
       sash.addListener(SWT.Selection, new Listener()
       {
+        @Override
         public void handleEvent(Event e)
         {
           int dashBoardHeight = parent.getBounds().height - e.y;
@@ -300,6 +301,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
       dashboard[0].setLayoutData(gridData);
       dashboard[0].addDisposeListener(new DisposeListener()
       {
+        @Override
         public void widgetDisposed(DisposeEvent e)
         {
           viewer.setData(DASHBOARD_KEY, null);
@@ -312,6 +314,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
 
             parent.getDisplay().asyncExec(new Runnable()
             {
+              @Override
               public void run()
               {
                 parent.layout();
@@ -542,6 +545,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
         final TreeViewer viewer = ((CDOSessionsView)viewPart).getViewer();
         viewer.getControl().getDisplay().asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             try

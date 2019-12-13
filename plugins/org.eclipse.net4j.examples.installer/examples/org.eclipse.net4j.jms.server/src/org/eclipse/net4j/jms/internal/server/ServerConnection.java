@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -35,11 +35,13 @@ public class ServerConnection implements IConnection
     this.userName = userName;
   }
 
+  @Override
   public Server getServer()
   {
     return server;
   }
 
+  @Override
   public String getUserName()
   {
     return userName;
@@ -55,6 +57,7 @@ public class ServerConnection implements IConnection
     this.protocol = protocol;
   }
 
+  @Override
   public ServerSession openSession(int sessionID)
   {
     ServerSession session = new ServerSession(this, sessionID);
@@ -71,6 +74,7 @@ public class ServerConnection implements IConnection
     return session;
   }
 
+  @Override
   public ServerSession getSession(int sessionID)
   {
     return sessions.get(sessionID);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -46,11 +46,13 @@ public class SecurityExtension implements IAppExtension2
   {
   }
 
+  @Override
   public void start(File configFile) throws Exception
   {
     start(getDocument(configFile));
   }
 
+  @Override
   public void startDynamic(Reader xmlConfigReader) throws Exception
   {
     start(getDocument(xmlConfigReader));
@@ -70,6 +72,7 @@ public class SecurityExtension implements IAppExtension2
     OM.LOG.info("Security extension started"); //$NON-NLS-1$
   }
 
+  @Override
   public void stop() throws Exception
   {
     OM.LOG.info("Security extension stopping"); //$NON-NLS-1$

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -199,6 +199,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
   {
     page.getWorkbenchWindow().getShell().getDisplay().asyncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         try
@@ -221,6 +222,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
     {
     }
 
+    @Override
     public String getColumnText(Object element, int columnIndex)
     {
       @SuppressWarnings("unchecked")
@@ -259,6 +261,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
       }
     }
 
+    @Override
     public Image getColumnImage(Object element, int columnIndex)
     {
       if (columnIndex == 0)
@@ -287,11 +290,13 @@ public class PackageRegistryDialog extends TitleAreaDialog
       return null;
     }
 
+    @Override
     public Color getBackground(Object element)
     {
       return null;
     }
 
+    @Override
     public Color getForeground(Object element)
     {
       @SuppressWarnings("unchecked")
@@ -319,10 +324,12 @@ public class PackageRegistryDialog extends TitleAreaDialog
     {
     }
 
+    @Override
     public void dispose()
     {
     }
 
+    @Override
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
     {
       if (newInput instanceof CDOSession)
@@ -334,6 +341,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
       }
     }
 
+    @Override
     public Object[] getElements(Object inputElement)
     {
       if (inputElement != session)

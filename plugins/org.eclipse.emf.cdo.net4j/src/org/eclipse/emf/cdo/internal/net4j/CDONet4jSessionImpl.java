@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -112,6 +112,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     }
   }
 
+  @Override
   public void changeCredentials()
   {
     // Send a request to the server to initiate (from the server) the password change protocol
@@ -119,6 +120,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     sessionProtocol.requestChangeCredentials();
   }
 
+  @Override
   public void resetCredentials(String userID)
   {
     // Send a request to the server to initiate (from the server) the password reset protocol
@@ -341,6 +343,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       return (CDONet4jSession)super.getContainer();
     }
 
+    @Override
     public ISignalProtocol<org.eclipse.emf.cdo.net4j.CDONet4jSession> getNet4jProtocol()
     {
       CDOSessionProtocol protocol = getSessionProtocol();
@@ -354,6 +357,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       return signalProtocol;
     }
 
+    @Override
     public ISignalProtocol<org.eclipse.emf.cdo.net4j.CDOSession> getProtocol()
     {
       @SuppressWarnings("unchecked")
@@ -361,21 +365,25 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       return net4jProtocol;
     }
 
+    @Override
     public int getCommitTimeout()
     {
       return commitTimeout;
     }
 
+    @Override
     public synchronized void setCommitTimeout(int commitTimeout)
     {
       this.commitTimeout = commitTimeout;
     }
 
+    @Override
     public int getProgressInterval()
     {
       return progressInterval;
     }
 
+    @Override
     public synchronized void setProgressInterval(int progressInterval)
     {
       this.progressInterval = progressInterval;

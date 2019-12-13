@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -90,31 +90,37 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
   {
   }
 
+  @Override
   public boolean isReplacingDescriptors()
   {
     return replacingDescriptors;
   }
 
+  @Override
   public void setReplacingDescriptors(boolean replacingDescriptors)
   {
     this.replacingDescriptors = replacingDescriptors;
   }
 
+  @Override
   public PackageProcessor getPackageProcessor()
   {
     return packageProcessor;
   }
 
+  @Override
   public void setPackageProcessor(PackageProcessor packageProcessor)
   {
     this.packageProcessor = packageProcessor;
   }
 
+  @Override
   public PackageLoader getPackageLoader()
   {
     return packageLoader;
   }
 
+  @Override
   public void setPackageLoader(PackageLoader packageLoader)
   {
     LifecycleUtil.checkInactive(this);
@@ -130,6 +136,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return super.get(key);
   }
 
+  @Override
   public synchronized Set<String> getAllKeys()
   {
     LifecycleUtil.checkActive(this);
@@ -150,6 +157,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return result;
   }
 
+  @Override
   public synchronized Object getWithDelegation(String nsURI, boolean resolve)
   {
     LifecycleUtil.checkActive(this);
@@ -172,6 +180,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return registry.get(nsURI);
   }
 
+  @Override
   public synchronized Object basicPut(String nsURI, Object value)
   {
     LifecycleUtil.checkActive(this);
@@ -240,12 +249,14 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return basicPut(nsURI, value);
   }
 
+  @Override
   public synchronized Object putEPackage(EPackage ePackage)
   {
     LifecycleUtil.checkActive(this);
     return put(ePackage.getNsURI(), ePackage);
   }
 
+  @Override
   public synchronized void putPackageUnit(InternalCDOPackageUnit packageUnit)
   {
     LifecycleUtil.checkActive(this);
@@ -267,6 +278,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     resetInternalCaches();
   }
 
+  @Override
   public synchronized void putPackageUnits(InternalCDOPackageUnit[] packageUnits, State state)
   {
     LifecycleUtil.checkActive(this);
@@ -281,12 +293,14 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     }
   }
 
+  @Override
   public synchronized void registerPackageInfo(EPackage ePackage, InternalCDOPackageInfo packageInfo)
   {
     packageInfo.setEPackage(ePackage);
     packageInfoMap.put(ePackage, packageInfo);
   }
 
+  @Override
   public synchronized InternalCDOPackageInfo getPackageInfo(EPackage ePackage)
   {
     LifecycleUtil.checkActive(this);
@@ -306,6 +320,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return packageInfoMap.get(ePackage);
   }
 
+  @Override
   public synchronized InternalCDOPackageInfo[] getPackageInfos()
   {
     LifecycleUtil.checkActive(this);
@@ -335,6 +350,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return packageInfos;
   }
 
+  @Override
   public synchronized InternalCDOPackageUnit getPackageUnit(EPackage ePackage)
   {
     LifecycleUtil.checkActive(this);
@@ -352,6 +368,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return (InternalCDOPackageUnit)packageInfo.getPackageUnit();
   }
 
+  @Override
   public synchronized InternalCDOPackageUnit getPackageUnit(String id)
   {
     LifecycleUtil.checkActive(this);
@@ -380,6 +397,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return null;
   }
 
+  @Override
   public synchronized InternalCDOPackageUnit[] getPackageUnits(long startTime, long endTime)
   {
     LifecycleUtil.checkActive(this);
@@ -418,12 +436,14 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return result.toArray(new InternalCDOPackageUnit[result.size()]);
   }
 
+  @Override
   public synchronized InternalCDOPackageUnit[] getPackageUnits(boolean withSystemPackages)
   {
     LifecycleUtil.checkActive(this);
     return collectPackageUnits(withSystemPackages);
   }
 
+  @Override
   public synchronized InternalCDOPackageUnit[] getPackageUnits()
   {
     LifecycleUtil.checkActive(this);
@@ -471,6 +491,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return null;
   }
 
+  @Override
   public synchronized EPackage[] getEPackages()
   {
     LifecycleUtil.checkActive(this);
@@ -487,6 +508,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return result.toArray(new EPackage[result.size()]);
   }
 
+  @Override
   public synchronized EEnumLiteral getEnumLiteralFor(Enumerator value)
   {
     LifecycleUtil.checkActive(this);
@@ -537,6 +559,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return result;
   }
 
+  @Override
   public synchronized Map<EClass, List<EClass>> getSubTypes()
   {
     LifecycleUtil.checkActive(this);
@@ -554,36 +577,43 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return "PackageRegistry";
   }
 
+  @Override
   public void addListener(IListener listener)
   {
     // Do nothing
   }
 
+  @Override
   public void removeListener(IListener listener)
   {
     // Do nothing
   }
 
+  @Override
   public IListener[] getListeners()
   {
     return EventUtil.NO_LISTENERS;
   }
 
+  @Override
   public boolean hasListeners()
   {
     return false;
   }
 
+  @Override
   public synchronized boolean isActive()
   {
     return active;
   }
 
+  @Override
   public synchronized LifecycleState getLifecycleState()
   {
     return active ? LifecycleState.ACTIVE : LifecycleState.INACTIVE;
   }
 
+  @Override
   public synchronized void activate() throws LifecycleException
   {
     if (!active)
@@ -593,6 +623,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     }
   }
 
+  @Override
   public synchronized Exception deactivate()
   {
     if (active)
@@ -645,6 +676,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     }
   }
 
+  @Override
   public InternalCDOPackageUnit createPackageUnit()
   {
     InternalCDOPackageUnit packageUnit = (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();

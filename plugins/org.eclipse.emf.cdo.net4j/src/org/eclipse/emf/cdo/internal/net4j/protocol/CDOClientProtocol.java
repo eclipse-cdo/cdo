@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -106,6 +106,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     return PROTOCOL_VERSION;
   }
 
+  @Override
   public CDOSession getSession()
   {
     return getInfraStructure();
@@ -122,135 +123,161 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     return send(new OpenSessionRequest(this, repositoryName, userID, passiveUpdateEnabled, passiveUpdateMode, lockNotificationMode), new Monitor());
   }
 
+  @Override
   public void disablePassiveUpdate()
   {
     send(new DisablePassiveUpdateRequest(this));
   }
 
+  @Override
   public void setPassiveUpdateMode(PassiveUpdateMode mode)
   {
     send(new SetPassiveUpdateModeRequest(this, mode));
   }
 
+  @Override
   public RepositoryTimeResult getRepositoryTime()
   {
     return send(new RepositoryTimeRequest(this));
   }
 
+  @Override
   public void openedSession()
   {
     send(new OpenedSessionRequest(this));
   }
 
+  @Override
   public EPackage[] loadPackages(CDOPackageUnit packageUnit)
   {
     return send(new LoadPackagesRequest(this, (InternalCDOPackageUnit)packageUnit));
   }
 
+  @Override
   public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     return send(new CreateBranchRequest(this, branchID, branchInfo));
   }
 
+  @Override
   public BranchInfo loadBranch(int branchID)
   {
     return send(new LoadBranchRequest(this, branchID));
   }
 
+  @Override
   public SubBranchInfo[] loadSubBranches(int branchID)
   {
     return send(new LoadSubBranchesRequest(this, branchID));
   }
 
+  @Override
   public int loadBranches(int startID, int endID, CDOBranchHandler handler)
   {
     return send(new LoadBranchesRequest(this, startID, endID, handler));
   }
 
+  @Override
   @Deprecated
   public void deleteBranch(int branchID)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public void renameBranch(int branchID, String newName)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void renameBranch(int branchID, String oldName, String newName)
   {
     send(new RenameBranchRequest(this, branchID, oldName, newName));
   }
 
+  @Override
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
     send(new LoadCommitInfosRequest(this, branch, startTime, endTime, handler));
   }
 
+  @Override
   public CDOCommitData loadCommitData(long timeStamp)
   {
     return send(new LoadCommitDataRequest(this, timeStamp));
   }
 
+  @Override
   public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex, int fromIndex, int toIndex)
   {
     return send(new LoadChunkRequest(this, revision, feature, accessIndex, fetchIndex, fromIndex, toIndex));
   }
 
+  @Override
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
   {
     return send(new LoadRevisionsRequest(this, infos, branchPoint, referenceChunk, prefetchDepth));
   }
 
+  @Override
   public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk)
   {
     return send(new LoadRevisionByVersionRequest(this, id, branchVersion, referenceChunk));
   }
 
+  @Override
   public CDOBranchPointRange loadObjectLifetime(CDOID id, CDOBranchPoint branchPoint)
   {
     return send(new LoadObjectLifetimeRequest(this, id, branchPoint));
   }
 
+  @Override
   public RefreshSessionResult refresh(long lastUpdateTime, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
       boolean enablePassiveUpdates)
   {
     return send(new RefreshSessionRequest(this, lastUpdateTime, viewedRevisions, initialChunkSize, enablePassiveUpdates));
   }
 
+  @Override
   public void openView(int viewID, boolean readOnly, CDOBranchPoint branchPoint)
   {
     send(new OpenViewRequest(this, viewID, readOnly, branchPoint));
   }
 
+  @Override
   public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID)
   {
     return send(new OpenViewRequest(this, viewID, readOnly, durableLockingID));
   }
 
+  @Override
   public void switchTarget(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects, List<CDORevisionKey> allChangedObjects,
       List<CDOIDAndVersion> allDetachedObjects, OMMonitor monitor)
   {
     send(new SwitchTargetRequest(this, viewID, branchPoint, invalidObjects, allChangedObjects, allDetachedObjects), monitor);
   }
 
+  @Override
   public void closeView(int viewID)
   {
     send(new CloseViewRequest(this, viewID));
   }
 
+  @Override
   public void changeSubscription(int viewID, List<CDOID> ids, boolean subscribeMode, boolean clear)
   {
     send(new ChangeSubscriptionRequest(this, viewID, ids, subscribeMode, clear));
   }
 
+  @Override
   public void query(CDOView view, AbstractQueryIterator<?> queryResult)
   {
     send(new QueryRequest(this, view, queryResult));
   }
 
+  @Override
   public boolean cancelQuery(int queryId)
   {
     try
@@ -263,6 +290,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     }
   }
 
+  @Override
   @Deprecated
   public LockObjectsResult lockObjects(List<InternalCDORevision> revisions, int viewID, CDOBranch viewedBranch, LockType lockType, long timeout)
       throws InterruptedException
@@ -278,6 +306,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch, LockType lockType, boolean recursive,
       long timeout) throws InterruptedException
   {
@@ -316,6 +345,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     throw runtimeException;
   }
 
+  @Override
   public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys, CDOBranch viewedBranch, LockType lockType,
       boolean recursive, long timeout) throws InterruptedException
   {
@@ -354,6 +384,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     throw runtimeException;
   }
 
+  @Override
   @Deprecated
   public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
   {
@@ -362,31 +393,37 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType, boolean recursive)
   {
     return send(new UnlockObjectsRequest(this, view.getViewID(), objectIDs, lockType, recursive));
   }
 
+  @Override
   public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType, boolean recursive)
   {
     return send(new UnlockDelegationRequest(this, lockAreaID, objectIDs, lockType, recursive));
   }
 
+  @Override
   public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType, boolean byOthers)
   {
     return send(new ObjectLockedRequest(this, view, object, lockType, byOthers));
   }
 
+  @Override
   public String changeLockArea(CDOView view, boolean create)
   {
     return send(new LockAreaRequest(this, view, create));
   }
 
+  @Override
   public List<byte[]> queryLobs(Set<byte[]> ids)
   {
     return send(new QueryLobsRequest(this, ids));
   }
 
+  @Override
   public void loadLob(CDOLobInfo info, Object outputStreamOrWriter) throws IOException
   {
     try
@@ -407,11 +444,13 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     }
   }
 
+  @Override
   public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     send(new HandleRevisionsRequest(this, eClass, branch, exactBranch, timeStamp, exactTime, handler));
   }
 
+  @Override
   @Deprecated
   public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData,
       Collection<CDOLob<?>> lobs, OMMonitor monitor)
@@ -419,11 +458,13 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public CommitTransactionResult commitTransaction(InternalCDOCommitContext context, OMMonitor monitor)
   {
     return send(new CommitTransactionRequest(this, context), monitor);
   }
 
+  @Override
   @Deprecated
   public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment, CDOCommitData commitData,
       Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
@@ -431,66 +472,79 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public CommitTransactionResult commitDelegation(InternalCDOCommitContext context, OMMonitor monitor)
   {
     return send(new CommitDelegationRequest(this, context), monitor);
   }
 
+  @Override
   public CommitTransactionResult commitXATransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
     return send(new CommitXATransactionPhase1Request(this, xaContext), monitor);
   }
 
+  @Override
   public CommitTransactionResult commitXATransactionPhase2(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
     return send(new CommitXATransactionPhase2Request(this, xaContext), monitor);
   }
 
+  @Override
   public CommitTransactionResult commitXATransactionPhase3(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
     return send(new CommitXATransactionPhase3Request(this, xaContext), monitor);
   }
 
+  @Override
   public CommitTransactionResult commitXATransactionCancel(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
     return send(new CommitXATransactionCancelRequest(this, xaContext), monitor);
   }
 
+  @Override
   public CDOCommitInfo resetTransaction(int transactionID, int commitNumber)
   {
     return send(new ResetTransactionRequest(this, transactionID, commitNumber));
   }
 
+  @Override
   public List<CDORemoteSession> getRemoteSessions(InternalCDORemoteSessionManager manager, boolean subscribe)
   {
     return send(new GetRemoteSessionsRequest(this, subscribe));
   }
 
+  @Override
   public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, List<CDORemoteSession> recipients)
   {
     return send(new RemoteMessageRequest(this, message, recipients));
   }
 
+  @Override
   public boolean unsubscribeRemoteSessions()
   {
     return send(new UnsubscribeRemoteSessionsRequest(this));
   }
 
+  @Override
   public void replicateRepository(CDOReplicationContext context, OMMonitor monitor)
   {
     send(new ReplicateRepositoryRequest(this, context, monitor));
   }
 
+  @Override
   public void replicateRepositoryRaw(CDORawReplicationContext context, OMMonitor monitor)
   {
     send(new ReplicateRepositoryRawRequest(this, context), monitor);
   }
 
+  @Override
   public CDOChangeSetData[] loadChangeSets(CDOBranchPointRange... ranges)
   {
     return send(new LoadChangeSetsRequest(this, ranges));
   }
 
+  @Override
   @Deprecated
   public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
       CDORevisionAvailabilityInfo sourceBaseInfo)
@@ -498,48 +552,57 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public MergeDataResult loadMergeData2(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
       CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo)
   {
     return send(new LoadMergeDataRequest(this, targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo));
   }
 
+  @Override
   @Deprecated
   public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids)
   {
     return getLockStates(viewID, ids, CDOLockState.DEPTH_NONE);
   }
 
+  @Override
   public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids, int depth)
   {
     return send(new LockStateRequest(this, viewID, ids, depth));
   }
 
+  @Override
   public void enableLockNotifications(int viewID, boolean on)
   {
     send(new EnableLockNotificationRequest(this, viewID, on));
   }
 
+  @Override
   public void setLockNotificationMode(LockNotificationMode mode)
   {
     send(new SetLockNotificationModeRequest(this, mode));
   }
 
+  @Override
   public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
   {
     return send(new LoadPermissionsRequest(this, revisions));
   }
 
+  @Override
   public void requestChangeCredentials()
   {
     send(new ChangeCredentialsRequest(this, CredentialsUpdateOperation.CHANGE_PASSWORD, null), new Monitor());
   }
 
+  @Override
   public void requestResetCredentials(String userID)
   {
     send(new ChangeCredentialsRequest(this, CredentialsUpdateOperation.RESET_PASSWORD, userID), new Monitor());
   }
 
+  @Override
   public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
     return send(new UnitRequest(this, viewID, rootID, opcode, revisionHandler), monitor);

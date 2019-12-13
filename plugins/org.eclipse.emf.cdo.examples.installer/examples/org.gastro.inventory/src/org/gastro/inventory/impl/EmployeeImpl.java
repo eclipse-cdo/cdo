@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -72,6 +72,7 @@ public class EmployeeImpl extends CDOObjectImpl implements Employee
    *
    * @generated
    */
+  @Override
   public Department getDepartment()
   {
     return (Department)eGet(InventoryPackage.Literals.EMPLOYEE__DEPARTMENT, true);
@@ -82,6 +83,7 @@ public class EmployeeImpl extends CDOObjectImpl implements Employee
    *
    * @generated
    */
+  @Override
   public void setDepartment(Department newDepartment)
   {
     eSet(InventoryPackage.Literals.EMPLOYEE__DEPARTMENT, newDepartment);
@@ -92,6 +94,7 @@ public class EmployeeImpl extends CDOObjectImpl implements Employee
    *
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(InventoryPackage.Literals.EMPLOYEE__NAME, true);
@@ -102,6 +105,7 @@ public class EmployeeImpl extends CDOObjectImpl implements Employee
    *
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(InventoryPackage.Literals.EMPLOYEE__NAME, newName);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -43,21 +43,25 @@ public abstract class AbstractCDOAdmin extends SetContainer<CDOAdminRepository> 
     return timeout;
   }
 
+  @Override
   public boolean isClosed()
   {
     return !isActive();
   }
 
+  @Override
   public void close()
   {
     deactivate();
   }
 
+  @Override
   public CDOAdminRepository[] getRepositories()
   {
     return getElements();
   }
 
+  @Override
   public synchronized CDOAdminRepository getRepository(String name)
   {
     for (CDOAdminRepository repository : getSet())
@@ -71,6 +75,7 @@ public abstract class AbstractCDOAdmin extends SetContainer<CDOAdminRepository> 
     return null;
   }
 
+  @Override
   public CDOAdminRepository waitForRepository(String name)
   {
     checkActive();
@@ -99,6 +104,7 @@ public abstract class AbstractCDOAdmin extends SetContainer<CDOAdminRepository> 
     }
   }
 
+  @Override
   public CDOAdminRepository createRepository(String name, String type, Map<String, Object> properties)
   {
     checkActive();
@@ -152,6 +158,7 @@ public abstract class AbstractCDOAdmin extends SetContainer<CDOAdminRepository> 
   {
     Arrays.sort(array, new Comparator<CDOAdminRepository>()
     {
+      @Override
       public int compare(CDOAdminRepository r1, CDOAdminRepository r2)
       {
         return r1.getName().compareTo(r2.getName());

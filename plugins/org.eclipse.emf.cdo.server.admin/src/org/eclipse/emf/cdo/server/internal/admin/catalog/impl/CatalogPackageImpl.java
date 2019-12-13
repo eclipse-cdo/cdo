@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -120,6 +120,7 @@ public class CatalogPackageImpl extends EPackageImpl implements CatalogPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRepositoryCatalog()
   {
     return repositoryCatalogEClass;
@@ -130,6 +131,7 @@ public class CatalogPackageImpl extends EPackageImpl implements CatalogPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getRepositoryCatalog_Repositories()
   {
     return (EReference)repositoryCatalogEClass.getEStructuralFeatures().get(0);
@@ -140,6 +142,7 @@ public class CatalogPackageImpl extends EPackageImpl implements CatalogPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EOperation getRepositoryCatalog__GetRepository__String()
   {
     return repositoryCatalogEClass.getEOperations().get(0);
@@ -150,6 +153,7 @@ public class CatalogPackageImpl extends EPackageImpl implements CatalogPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRepositoryConfiguration()
   {
     return repositoryConfigurationEClass;
@@ -160,6 +164,7 @@ public class CatalogPackageImpl extends EPackageImpl implements CatalogPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getRepositoryConfiguration_Name()
   {
     return (EAttribute)repositoryConfigurationEClass.getEStructuralFeatures().get(0);
@@ -170,6 +175,7 @@ public class CatalogPackageImpl extends EPackageImpl implements CatalogPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getRepositoryConfiguration_ConfigXML()
   {
     return (EAttribute)repositoryConfigurationEClass.getEStructuralFeatures().get(1);
@@ -180,6 +186,7 @@ public class CatalogPackageImpl extends EPackageImpl implements CatalogPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public CatalogFactory getCatalogFactory()
   {
     return (CatalogFactory)getEFactoryInstance();

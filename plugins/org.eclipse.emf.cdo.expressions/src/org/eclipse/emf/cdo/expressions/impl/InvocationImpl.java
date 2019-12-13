@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2014, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2014, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -86,6 +86,7 @@ public abstract class InvocationImpl extends CDOObjectImpl implements Invocation
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Expression> getArguments()
   {
@@ -97,6 +98,7 @@ public abstract class InvocationImpl extends CDOObjectImpl implements Invocation
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Expression getName()
   {
     return (Expression)eDynamicGet(ExpressionsPackage.INVOCATION__NAME, ExpressionsPackage.Literals.INVOCATION__NAME, true, true);
@@ -118,6 +120,7 @@ public abstract class InvocationImpl extends CDOObjectImpl implements Invocation
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(Expression newName)
   {
     eDynamicSet(ExpressionsPackage.INVOCATION__NAME, ExpressionsPackage.Literals.INVOCATION__NAME, newName);
@@ -128,6 +131,7 @@ public abstract class InvocationImpl extends CDOObjectImpl implements Invocation
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public Object evaluate(EvaluationContext context)
   {
     String name = (String)getName().evaluate(context);
@@ -171,16 +175,19 @@ public abstract class InvocationImpl extends CDOObjectImpl implements Invocation
   {
     return new Invocable()
     {
+      @Override
       public String getName()
       {
         return method.getName();
       }
 
+      @Override
       public Class<?>[] getParameterTypes()
       {
         return method.getParameterTypes();
       }
 
+      @Override
       public Object invoke(Object[] arguments)
       {
         try

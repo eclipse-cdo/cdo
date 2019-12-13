@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -122,24 +122,28 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
     return (LissomeStore)super.getStore();
   }
 
+  @Override
   public IStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature)
   {
     // return new LissomeStoreChunkReader(this, revision, feature);
     return null;
   }
 
+  @Override
   public Collection<InternalCDOPackageUnit> readPackageUnits()
   {
     Journal journal = getStore().getJournal();
     return journal.readPackageUnits();
   }
 
+  @Override
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
   {
     Journal journal = getStore().getJournal();
     return journal.loadPackageUnit(packageUnit);
   }
 
+  @Override
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk, CDORevisionCacheAdder cache)
   {
     Optimizer optimizer = getStore().getOptimizer();
@@ -163,6 +167,7 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
     return readRevision(info);
   }
 
+  @Override
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk, CDORevisionCacheAdder cache)
   {
     RevisionInfo info = indexReader.readRevisionByVersion(id, branchVersion);
@@ -215,10 +220,12 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
     }
   }
 
+  @Override
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, final CDORevisionHandler handler)
   {
     indexReader.handleRevisions(eClass, branch, timeStamp, exactTime, new RevisionInfo.Handler()
     {
+      @Override
       public void handleRevisionInfo(CDOID id, RevisionInfo info)
       {
         // TODO Check if optimizer isn't about to delete the id
@@ -236,12 +243,14 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
     optimizer.handleRevisions(eClass, branch, timeStamp, exactTime, handler);
   }
 
+  @Override
   public Set<CDOID> readChangeSet(OMMonitor monitor, CDOChangeSetSegment... segments)
   {
     // TODO: implement LissomeStoreReader.readChangeSet(monitor, segments)
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void queryResources(final QueryResourcesContext delegate)
   {
     QueryResourcesContext context = new DelegatingQueryResourcesContext()
@@ -275,28 +284,33 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
     }
   }
 
+  @Override
   public void queryXRefs(QueryXRefsContext context)
   {
     // TODO: implement LissomeStoreReader.queryXRefs(context)
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void queryLobs(List<byte[]> ids)
   {
     // TODO: implement LissomeStoreReader.queryLobs(ids)
   }
 
+  @Override
   public void loadLob(byte[] id, OutputStream out) throws IOException
   {
     // TODO: implement LissomeStoreReader.loadLob(id, out)
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
   {
     // TODO: implement LissomeStoreReader.handleLobs(fromTime, toTime, handler)
   }
 
+  @Override
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
     String queryLanguage = info.getQueryLanguage();
@@ -308,21 +322,25 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
     return null;
   }
 
+  @Override
   public BranchInfo loadBranch(int branchID)
   {
     return indexReader.loadBranch(branchID);
   }
 
+  @Override
   public SubBranchInfo[] loadSubBranches(int branchID)
   {
     return indexReader.loadSubBranches(branchID);
   }
 
+  @Override
   public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
   {
     return indexReader.loadBranches(startID, endID, branchHandler);
   }
 
+  @Override
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, final CDOCommitInfoHandler handler)
   {
     if (endTime < CDOBranchPoint.UNSPECIFIED_DATE)
@@ -340,6 +358,7 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
 
     indexReader.loadCommitInfos(branch, startTime, endTime, new IndexReader.PointerHandler()
     {
+      @Override
       public void handlePointer(long pointer)
       {
         CDOCommitInfo commitInfo = journal.readCommitInfo(journalReader, pointer);
@@ -386,17 +405,20 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
     }
   }
 
+  @Override
   public LockArea getLockArea(String durableLockingID) throws LockAreaNotFoundException
   {
     // TODO: implement LissomeStoreReader.getLockArea(durableLockingID)
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void getLockAreas(String userIDPrefix, Handler handler)
   {
     // TODO: implement LissomeStoreReader.getLockAreas(userIDPrefix, handler)
   }
 
+  @Override
   public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     if (branchID == NEW_BRANCH)
@@ -421,48 +443,56 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
     return Pair.create(branchID, branchInfo.getBaseTimeStamp());
   }
 
+  @Override
   public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks) throws LockAreaAlreadyExistsException
   {
     // Implemented in LissomeStoreWriter
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     // Implemented in LissomeStoreWriter
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void updateLockArea(LockArea lockArea)
   {
     // Implemented in LissomeStoreWriter
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void deleteLockArea(String durableLockingID)
   {
     // Implemented in LissomeStoreWriter
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void lock(String durableLockingID, LockType type, Collection<? extends Object> objectsToLock)
   {
     // Implemented in LissomeStoreWriter
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void unlock(String durableLockingID, LockType type, Collection<? extends Object> objectsToUnlock)
   {
     // Implemented in LissomeStoreWriter
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void unlock(String durableLockingID)
   {
     // Implemented in LissomeStoreWriter
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
     // Implemented in LissomeStoreWriter

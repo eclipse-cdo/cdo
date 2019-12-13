@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -35,21 +35,25 @@ public class Logger extends RollingLog implements Listener
     super(logFile, logSize, append);
   }
 
+  @Override
   public void methodCalled(Element caller, String callingMethod, Element callee, String calledMethod)
   {
     log(caller + "." + callingMethod + "()\t" + callee + "." + calledMethod + "()");
   }
 
+  @Override
   public void elementCreated(Element element)
   {
     log(element + ".init()");
   }
 
+  @Override
   public void ownerChanged(BufferElement element, Element oldOwner, Element newOwner)
   {
     log("\t\t" + element + ".owner = " + newOwner);
   }
 
+  @Override
   public void threadChanged(BufferElement element, Element oldThread, Element newThread)
   {
     String warning;
@@ -65,26 +69,31 @@ public class Logger extends RollingLog implements Listener
     log("\t\t" + element + ".thread = " + newThread + warning);
   }
 
+  @Override
   public void stateChanged(BufferElement element, BufferState oldState, BufferState newState)
   {
     log("\t\t" + element + ".state = " + newState);
   }
 
+  @Override
   public void positionChanged(BufferElement element, int oldPosition, int newPosition)
   {
     log("\t\t" + element + ".position = " + newPosition);
   }
 
+  @Override
   public void limitChanged(BufferElement element, int oldLimit, int newLimit)
   {
     log("\t\t" + element + ".limit = " + newLimit);
   }
 
+  @Override
   public void eosChanged(BufferElement element, boolean newEOS)
   {
     log("\t\t" + element + ".eos = " + newEOS);
   }
 
+  @Override
   public void ccamChanged(BufferElement element, boolean newCCAM)
   {
     log("\t\t" + element + ".ccam = " + newCCAM);

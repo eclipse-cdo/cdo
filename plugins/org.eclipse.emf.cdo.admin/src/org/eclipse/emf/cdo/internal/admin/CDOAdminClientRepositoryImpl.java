@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -111,117 +111,140 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
     commitInfoStorage = in.readEnum(CommitInfoStorage.class);
   }
 
+  @Override
   public CDOAdminClient getAdmin()
   {
     return admin;
   }
 
+  @Override
   public String getName()
   {
     return name;
   }
 
+  @Override
   public String getUUID()
   {
     return uuid;
   }
 
+  @Override
   public Type getType()
   {
     return type;
   }
 
+  @Override
   public State getState()
   {
     return state;
   }
 
+  @Override
   public String getStoreType()
   {
     return storeType;
   }
 
+  @Override
   public Set<ObjectType> getObjectIDTypes()
   {
     return objectIDTypes;
   }
 
+  @Override
   public long getCreationTime()
   {
     return creationTime;
   }
 
+  @Override
   public CDOID getRootResourceID()
   {
     return rootResourceID;
   }
 
+  @Override
   public boolean isAuthenticating()
   {
     return authenticating;
   }
 
+  @Override
   public boolean isSupportingAudits()
   {
     return supportingAudits;
   }
 
+  @Override
   public boolean isSupportingBranches()
   {
     return supportingBranches;
   }
 
+  @Override
   public boolean isSupportingUnits()
   {
     return supportingUnits;
   }
 
+  @Override
   @Deprecated
   public boolean isSupportingEcore()
   {
     return true;
   }
 
+  @Override
   public boolean isSerializingCommits()
   {
     return serializingCommits;
   }
 
+  @Override
   public boolean isEnsuringReferentialIntegrity()
   {
     return ensuringReferentialIntegrity;
   }
 
+  @Override
   public IDGenerationLocation getIDGenerationLocation()
   {
     return idGenerationLocation;
   }
 
+  @Override
   public CommitInfoStorage getCommitInfoStorage()
   {
     return commitInfoStorage;
   }
 
+  @Override
   public boolean waitWhileInitial(IProgressMonitor monitor)
   {
     return CDOCommonUtil.waitWhileInitial(this, this, monitor);
   }
 
+  @Override
   public long getTimeStamp() throws UnsupportedOperationException
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean delete(String type)
   {
     return admin.deleteRepository(this, type);
   }
 
+  @Override
   public CDONet4jSession openSession()
   {
     return openSession(null);
   }
 
+  @Override
   public CDONet4jSession openSession(SessionConfigurator configurator)
   {
     IConnector connector = admin.getConnector();
@@ -242,6 +265,7 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
     return configuration.openNet4jSession();
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,6 +66,7 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(model4Package.eINSTANCE.getMultiNonContainedUnsettableElement_Name(), true);
@@ -75,6 +76,7 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(model4Package.eINSTANCE.getMultiNonContainedUnsettableElement_Name(), newName);
@@ -84,6 +86,7 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public RefMultiNonContainedUnsettable getParent()
   {
     return (RefMultiNonContainedUnsettable)eGet(model4Package.eINSTANCE.getMultiNonContainedUnsettableElement_Parent(), true);
@@ -93,6 +96,7 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setParent(RefMultiNonContainedUnsettable newParent)
   {
     eSet(model4Package.eINSTANCE.getMultiNonContainedUnsettableElement_Parent(), newParent);
@@ -102,6 +106,7 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetParent()
   {
     eUnset(model4Package.eINSTANCE.getMultiNonContainedUnsettableElement_Parent());
@@ -111,6 +116,7 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetParent()
   {
     return eIsSet(model4Package.eINSTANCE.getMultiNonContainedUnsettableElement_Parent());

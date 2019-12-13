@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -76,6 +76,7 @@ public abstract class AccessImpl extends CDOObjectImpl implements Access
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Expression getName()
   {
     return (Expression)eDynamicGet(ExpressionsPackage.ACCESS__NAME, ExpressionsPackage.Literals.ACCESS__NAME, true, true);
@@ -97,6 +98,7 @@ public abstract class AccessImpl extends CDOObjectImpl implements Access
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(Expression newName)
   {
     eDynamicSet(ExpressionsPackage.ACCESS__NAME, ExpressionsPackage.Literals.ACCESS__NAME, newName);
@@ -107,6 +109,7 @@ public abstract class AccessImpl extends CDOObjectImpl implements Access
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public Object evaluate(EvaluationContext context)
   {
     String name = (String)getName().evaluate(context);

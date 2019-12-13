@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,6 +66,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public TaskContainer getTaskContainer()
   {
     return (TaskContainer)eGet(Model2Package.eINSTANCE.getTask_TaskContainer(), true);
@@ -75,6 +76,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setTaskContainer(TaskContainer newTaskContainer)
   {
     eSet(Model2Package.eINSTANCE.getTask_TaskContainer(), newTaskContainer);
@@ -84,6 +86,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getDescription()
   {
     return (String)eGet(Model2Package.eINSTANCE.getTask_Description(), true);
@@ -93,6 +96,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDescription(String newDescription)
   {
     eSet(Model2Package.eINSTANCE.getTask_Description(), newDescription);
@@ -102,6 +106,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isDone()
   {
     return (Boolean)eGet(Model2Package.eINSTANCE.getTask_Done(), true);
@@ -111,6 +116,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDone(boolean newDone)
   {
     eSet(Model2Package.eINSTANCE.getTask_Done(), newDone);

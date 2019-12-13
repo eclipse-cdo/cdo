@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -73,6 +73,7 @@ public class OrderImpl extends CDOObjectImpl implements Order
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public BusinessDay getBusinessDay()
   {
     return (BusinessDay)eGet(BusinessPackage.Literals.ORDER__BUSINESS_DAY, true);
@@ -82,6 +83,7 @@ public class OrderImpl extends CDOObjectImpl implements Order
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setBusinessDay(BusinessDay newBusinessDay)
   {
     eSet(BusinessPackage.Literals.ORDER__BUSINESS_DAY, newBusinessDay);
@@ -91,6 +93,7 @@ public class OrderImpl extends CDOObjectImpl implements Order
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Table getTable()
   {
     return (Table)eGet(BusinessPackage.Literals.ORDER__TABLE, true);
@@ -100,6 +103,7 @@ public class OrderImpl extends CDOObjectImpl implements Order
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setTable(Table newTable)
   {
     eSet(BusinessPackage.Literals.ORDER__TABLE, newTable);
@@ -109,6 +113,7 @@ public class OrderImpl extends CDOObjectImpl implements Order
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<OrderDetail> getOrderDetails()
   {
@@ -119,6 +124,7 @@ public class OrderImpl extends CDOObjectImpl implements Order
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getNumber()
   {
     return (Integer)eGet(BusinessPackage.Literals.ORDER__NUMBER, true);
@@ -128,6 +134,7 @@ public class OrderImpl extends CDOObjectImpl implements Order
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setNumber(int newNumber)
   {
     eSet(BusinessPackage.Literals.ORDER__NUMBER, newNumber);

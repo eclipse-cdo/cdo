@@ -39,6 +39,7 @@ public abstract class Config implements IConfig
     this.name = name;
   }
 
+  @Override
   public String getName()
   {
     return name;
@@ -73,21 +74,25 @@ public abstract class Config implements IConfig
     return ObjectUtil.hashCode(name);
   }
 
+  @Override
   public ConfigTest getCurrentTest()
   {
     return currentTest;
   }
 
+  @Override
   public void setCurrentTest(ConfigTest currentTest)
   {
     this.currentTest = currentTest;
   }
 
+  @Override
   public Map<String, Object> getTestProperties()
   {
     return currentTest.getTestProperties();
   }
 
+  @Override
   public Object getTestProperty(String key)
   {
     Map<String, Object> testProperties = getTestProperties();
@@ -99,11 +104,13 @@ public abstract class Config implements IConfig
     return null;
   }
 
+  @Override
   public boolean isValid(Set<IConfig> configs)
   {
     return true;
   }
 
+  @Override
   public void setUp() throws Exception
   {
     if (currentTest == null)
@@ -112,10 +119,12 @@ public abstract class Config implements IConfig
     }
   }
 
+  @Override
   public void tearDown() throws Exception
   {
   }
 
+  @Override
   public void mainSuiteFinished() throws Exception
   {
   }

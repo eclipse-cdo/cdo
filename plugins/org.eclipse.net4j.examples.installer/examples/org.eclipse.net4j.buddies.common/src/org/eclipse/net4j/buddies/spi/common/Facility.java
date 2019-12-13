@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -31,27 +31,32 @@ public abstract class Facility extends Lifecycle implements IFacility
     this.type = type;
   }
 
+  @Override
   public String getType()
   {
     return type;
   }
 
+  @Override
   public Collaboration getCollaboration()
   {
     return collaboration;
   }
 
+  @Override
   public void setCollaboration(ICollaboration collaboration)
   {
     this.collaboration = (Collaboration)collaboration;
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
     return AdapterUtil.adapt(this, adapter, false);
   }
 
+  @Override
   public void sendMessage(IMessage message)
   {
     collaboration.sendMessage(collaboration.getID(), type, message);

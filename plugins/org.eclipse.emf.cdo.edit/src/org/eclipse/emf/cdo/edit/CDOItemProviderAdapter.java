@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2009-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2009-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -292,6 +292,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
     /**
      * @since 4.4
      */
+    @Override
     public String getId(Object object)
     {
       return "___CDO___" + property.getName();
@@ -300,6 +301,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
     /**
      * @since 4.4
      */
+    @Override
     public Object getFeature(Object object)
     {
       return getId(object);
@@ -308,6 +310,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
     /**
      * @since 4.4
      */
+    @Override
     public String getDisplayName(Object object)
     {
       return property.getLabel();
@@ -316,11 +319,13 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
     /**
      * @since 4.4
      */
+    @Override
     public String getDescription(Object object)
     {
       return property.getDescription();
     }
 
+    @Override
     public boolean isPropertySet(Object object)
     {
       return true;
@@ -329,66 +334,79 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
     /**
      * @since 4.4
      */
+    @Override
     public Object getPropertyValue(Object object)
     {
       return property.getValue((EObject)object);
     }
 
+    @Override
     public void setPropertyValue(Object object, Object value)
     {
       // Do nothing.
     }
 
+    @Override
     public void resetPropertyValue(Object object)
     {
       // Do nothing.
     }
 
+    @Override
     public boolean canSetProperty(Object object)
     {
       return false;
     }
 
+    @Override
     public String getCategory(Object object)
     {
       return CDO_CATEGORY;
     }
 
+    @Override
     public Collection<?> getChoiceOfValues(Object object)
     {
       return null;
     }
 
+    @Override
     public Object getHelpContextIds(Object object)
     {
       return null;
     }
 
+    @Override
     public boolean isCompatibleWith(Object object, Object anotherObject, IItemPropertyDescriptor anotherPropertyDescriptor)
     {
       return false;
     }
 
+    @Override
     public boolean isMany(Object object)
     {
       return false;
     }
 
+    @Override
     public boolean isMultiLine(Object object)
     {
       return false;
     }
 
+    @Override
     public boolean isSortChoices(Object object)
     {
       return false;
     }
 
+    @Override
     public String[] getFilterFlags(Object object)
     {
       return FILTER_ID_EXPERT;
     }
 
+    @Override
     public IItemLabelProvider getLabelProvider(Object object)
     {
       return this;
@@ -397,6 +415,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
     /**
      * @since 4.4
      */
+    @Override
     public Object getImage(Object object)
     {
       return null;
@@ -405,6 +424,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
     /**
      * @since 4.4
      */
+    @Override
     public String getText(Object object)
     {
       return object.toString();
@@ -423,11 +443,13 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
       {
       }
 
+      @Override
       public Object getImage(Object object)
       {
         return null;
       }
 
+      @Override
       public String getText(Object object)
       {
         return object.toString();

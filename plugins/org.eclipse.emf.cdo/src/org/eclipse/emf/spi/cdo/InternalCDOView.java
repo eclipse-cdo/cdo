@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -61,10 +61,12 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
    */
   public void setRepositoryName(String repositoryName);
 
+  @Override
   public InternalCDOSession getSession();
 
   public void setSession(InternalCDOSession session);
 
+  @Override
   public InternalCDOViewSet getViewSet();
 
   public void setViewSet(InternalCDOViewSet viewSet);

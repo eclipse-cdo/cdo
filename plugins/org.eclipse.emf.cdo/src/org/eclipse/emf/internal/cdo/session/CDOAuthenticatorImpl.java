@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -32,46 +32,55 @@ public class CDOAuthenticatorImpl implements org.eclipse.emf.cdo.common.protocol
   {
   }
 
+  @Override
   public String getEncryptionAlgorithmName()
   {
     return encryptionAlgorithmName;
   }
 
+  @Override
   public void setEncryptionAlgorithmName(String encryptionAlgorithmName)
   {
     this.encryptionAlgorithmName = encryptionAlgorithmName;
   }
 
+  @Override
   public byte[] getEncryptionSaltBytes()
   {
     return encryptionSaltBytes;
   }
 
+  @Override
   public void setEncryptionSaltBytes(byte[] encryptionSaltBytes)
   {
     this.encryptionSaltBytes = encryptionSaltBytes;
   }
 
+  @Override
   public int getEncryptionIterationCount()
   {
     return encryptionIterationCount;
   }
 
+  @Override
   public void setEncryptionIterationCount(int encryptionIterationCount)
   {
     this.encryptionIterationCount = encryptionIterationCount;
   }
 
+  @Override
   public IPasswordCredentialsProvider getCredentialsProvider()
   {
     return credentialsProvider;
   }
 
+  @Override
   public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
   {
     this.credentialsProvider = credentialsProvider;
   }
 
+  @Override
   public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult authenticate(byte[] randomToken)
   {
     if (credentialsProvider == null)

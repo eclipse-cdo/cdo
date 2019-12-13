@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -31,11 +31,13 @@ public abstract class DawnAbstractEditorSupport implements IDawnEditorSupport
 
   private boolean dirty;
 
+  @Override
   public CDOView getView()
   {
     return view;
   }
 
+  @Override
   public void setView(CDOView view)
   {
     this.view = view;
@@ -46,11 +48,13 @@ public abstract class DawnAbstractEditorSupport implements IDawnEditorSupport
     this.editor = editor;
   }
 
+  @Override
   public void setDirty(boolean dirty)
   {
     this.dirty = dirty;
   }
 
+  @Override
   public boolean isDirty()
   {
     return dirty;
@@ -74,6 +78,7 @@ public abstract class DawnAbstractEditorSupport implements IDawnEditorSupport
    * @see #getLockingHandler()
    * @since 2.0
    */
+  @Override
   public void registerListeners()
   {
     BasicDawnListener listener = getBasicHandler();
@@ -131,6 +136,7 @@ public abstract class DawnAbstractEditorSupport implements IDawnEditorSupport
   /**
    * @since 1.0
    */
+  @Override
   public void rollback()
   {
     CDOView view = getEditor().getView();
@@ -144,6 +150,7 @@ public abstract class DawnAbstractEditorSupport implements IDawnEditorSupport
   /**
    * @since 2.0
    */
+  @Override
   public void lockObjects(List<Object> objectsToBeLocked)
   {
     for (Object objectToBeLocked : objectsToBeLocked)
@@ -155,6 +162,7 @@ public abstract class DawnAbstractEditorSupport implements IDawnEditorSupport
   /**
    * @since 2.0
    */
+  @Override
   public void unlockObjects(List<Object> objectsToBeLocked)
   {
     for (Object objectToBeUnlocked : objectsToBeLocked)

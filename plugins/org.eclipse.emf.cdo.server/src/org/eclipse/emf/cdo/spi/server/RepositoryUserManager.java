@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -51,16 +51,19 @@ public abstract class RepositoryUserManager extends Lifecycle implements IUserMa
     this.repositoryName = repositoryName;
   }
 
+  @Override
   public void addUser(String userID, char[] password)
   {
     // Cann be overridden in subclasses.
   }
 
+  @Override
   public void removeUser(String userID)
   {
     // Cann be overridden in subclasses.
   }
 
+  @Override
   public byte[] encrypt(String userID, byte[] data, String algorithmName, byte[] salt, int count) throws SecurityException
   {
     try
@@ -81,6 +84,7 @@ public abstract class RepositoryUserManager extends Lifecycle implements IUserMa
   /**
    * @since 4.2
    */
+  @Override
   public void authenticate(String userID, char[] password) throws SecurityException
   {
     char[] userPassword = getPassword(userID);
@@ -134,6 +138,7 @@ public abstract class RepositoryUserManager extends Lifecycle implements IUserMa
       super(type);
     }
 
+    @Override
     public final Object create(String description) throws ProductCreationException
     {
       RepositoryUserManager userManager = doCreate(description);
@@ -163,6 +168,7 @@ public abstract class RepositoryUserManager extends Lifecycle implements IUserMa
       super(type);
     }
 
+    @Override
     public final Object create(String description) throws ProductCreationException
     {
       RepositoryUserManager userManager = doCreate(description);
@@ -190,6 +196,7 @@ public abstract class RepositoryUserManager extends Lifecycle implements IUserMa
     {
     }
 
+    @Override
     public Object process(IManagedContainer container, String productGroup, String factoryType, String description, Object element)
     {
       if (element instanceof RepositoryUserManager)

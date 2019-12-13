@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -75,6 +75,7 @@ public class SessionComposite extends Composite
     connectorText.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
     connectorText.getCombo().addModifyListener(new ModifyListener()
     {
+      @Override
       public void modifyText(ModifyEvent e)
       {
         connectorDescription = connectorText.getText();
@@ -94,6 +95,7 @@ public class SessionComposite extends Composite
     repositoryText.getCombo().setLayoutData(new GridData(150, SWT.DEFAULT));
     repositoryText.getCombo().addModifyListener(new ModifyListener()
     {
+      @Override
       public void modifyText(ModifyEvent e)
       {
         repositoryName = repositoryText.getText();
@@ -115,6 +117,7 @@ public class SessionComposite extends Composite
     connectorText.setFocus();
     connectorText.getCombo().addFocusListener(new FocusListener()
     {
+      @Override
       public void focusGained(FocusEvent e)
       {
         if (exampleLabel != null)
@@ -123,6 +126,7 @@ public class SessionComposite extends Composite
         }
       }
 
+      @Override
       public void focusLost(FocusEvent e)
       {
         if (exampleLabel != null)

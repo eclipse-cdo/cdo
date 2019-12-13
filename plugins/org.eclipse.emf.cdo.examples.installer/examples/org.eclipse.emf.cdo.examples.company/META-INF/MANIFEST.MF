@@ -1,16 +1,16 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.examples.company; singleton:=true
-Bundle-Version: 4.0.700.qualifier
+Bundle-Version: 4.1.0.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.emf.cdo;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
-Export-Package: org.eclipse.emf.cdo.examples.company;version="4.0.700",
- org.eclipse.emf.cdo.examples.company.impl;version="4.0.700",
- org.eclipse.emf.cdo.examples.company.util;version="4.0.700",
- org.eclipse.emf.cdo.examples.company.validation;version="4.0.700"
+Export-Package: org.eclipse.emf.cdo.examples.company;version="4.1.0",
+ org.eclipse.emf.cdo.examples.company.impl;version="4.1.0",
+ org.eclipse.emf.cdo.examples.company.util;version="4.1.0",
+ org.eclipse.emf.cdo.examples.company.validation;version="4.1.0"
 Automatic-Module-Name: org.eclipse.emf.cdo.examples.company

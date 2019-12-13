@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -45,36 +45,43 @@ public class DefaultLocksChangedEvent extends Event implements CDOLockChangeInfo
     return sender;
   }
 
+  @Override
   public final CDOBranch getBranch()
   {
     return lockChangeInfo.getBranch();
   }
 
+  @Override
   public final long getTimeStamp()
   {
     return lockChangeInfo.getTimeStamp();
   }
 
+  @Override
   public final Operation getOperation()
   {
     return lockChangeInfo.getOperation();
   }
 
+  @Override
   public final LockType getLockType()
   {
     return lockChangeInfo.getLockType();
   }
 
+  @Override
   public final CDOLockOwner getLockOwner()
   {
     return lockChangeInfo.getLockOwner();
   }
 
+  @Override
   public final CDOLockState[] getLockStates()
   {
     return lockChangeInfo.getLockStates();
   }
 
+  @Override
   public final boolean isInvalidateAll()
   {
     return lockChangeInfo.isInvalidateAll();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015-2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015-2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -67,11 +67,13 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
     super(left, right, origin);
   }
 
+  @Override
   public Iterator<? extends Resource> getCoveredResources(ResourceSet resourceSet)
   {
     return Collections.<Resource> emptyList().iterator();
   }
 
+  @Override
   public Iterator<? extends EObject> getCoveredEObjects(Resource resource)
   {
     return Collections.<EObject> emptyList().iterator();
@@ -141,6 +143,7 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
       super(left, right, origin);
     }
 
+    @Override
     public Iterator<? extends EObject> getChildren(EObject eObject)
     {
       return EcoreUtil.getAllProperContents(eObject, isResolveProxies());
@@ -213,6 +216,7 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
       ids.remove(rootResource.cdoID());
     }
 
+    @Override
     public Iterator<? extends EObject> getChildren(EObject eObject)
     {
       return new AbstractTreeIterator<EObject>(eObject, false)
@@ -234,6 +238,7 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
       };
     }
 
+    @Override
     public boolean apply(EObject input)
     {
       CDOObject object = CDOUtil.getCDOObject(input);

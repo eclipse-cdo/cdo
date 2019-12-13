@@ -38,13 +38,16 @@ public interface InternalCDOObject extends CDOObject, InternalEObject, InternalC
    */
   public InternalCDOClassInfo cdoClassInfo();
 
+  @Override
   public InternalCDOView cdoView();
 
+  @Override
   public InternalCDORevision cdoRevision();
 
   /**
    * @since 4.3
    */
+  @Override
   public InternalCDORevision cdoRevision(boolean loadOnDemand);
 
   /**

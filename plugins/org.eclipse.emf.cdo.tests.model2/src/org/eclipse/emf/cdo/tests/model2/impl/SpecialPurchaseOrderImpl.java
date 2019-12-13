@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -55,6 +55,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getDiscountCode()
   {
     return (String)eGet(Model2Package.eINSTANCE.getSpecialPurchaseOrder_DiscountCode(), true);
@@ -64,6 +65,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDiscountCode(String newDiscountCode)
   {
     eSet(Model2Package.eINSTANCE.getSpecialPurchaseOrder_DiscountCode(), newDiscountCode);
@@ -73,6 +75,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Address getShippingAddress()
   {
     return (Address)eGet(Model2Package.eINSTANCE.getSpecialPurchaseOrder_ShippingAddress(), true);
@@ -82,6 +85,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setShippingAddress(Address newShippingAddress)
   {
     eSet(Model2Package.eINSTANCE.getSpecialPurchaseOrder_ShippingAddress(), newShippingAddress);

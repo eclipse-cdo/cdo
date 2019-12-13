@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -30,6 +30,7 @@ public class Net4jAppExtension implements IAppExtension
   {
   }
 
+  @Override
   public void start(File configFile) throws Exception
   {
     OM.LOG.info("Net4j extension starting"); //$NON-NLS-1$
@@ -44,6 +45,7 @@ public class Net4jAppExtension implements IAppExtension
     OM.LOG.info("Net4j extension started"); //$NON-NLS-1$
   }
 
+  @Override
   public void stop() throws Exception
   {
     OM.LOG.info("Net4j extension stopping"); //$NON-NLS-1$

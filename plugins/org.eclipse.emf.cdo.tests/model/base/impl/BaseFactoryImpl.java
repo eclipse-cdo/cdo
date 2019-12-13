@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -82,6 +82,7 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public BaseClass createBaseClass()
   {
     BaseClassImpl baseClass = new BaseClassImpl();
@@ -93,6 +94,7 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Document createDocument()
   {
     DocumentImpl document = new DocumentImpl();
@@ -104,6 +106,7 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
   	 * <!-- end-user-doc -->
   	 * @generated
   	 */
+  @Override
   public Element createElement()
   {
     ElementImpl element = new ElementImpl();
@@ -114,6 +117,7 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
   	 * <!-- begin-user-doc --> <!-- end-user-doc -->
   	 * @generated
   	 */
+  @Override
   public BasePackage getBasePackage()
   {
     return (BasePackage)getEPackage();

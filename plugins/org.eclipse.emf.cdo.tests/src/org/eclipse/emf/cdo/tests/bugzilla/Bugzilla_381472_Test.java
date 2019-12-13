@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -71,17 +71,20 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
       {
         return new CDOAdminHandler()
         {
+          @Override
           public String getType()
           {
             return ADMIN_HANDLER_TYPE;
           }
 
+          @Override
           public IRepository createRepository(String name, Map<String, Object> properties)
           {
             assertEquals(expectedProperties, properties);
             return getRepository(name);
           }
 
+          @Override
           public void deleteRepository(IRepository delegate)
           {
             // Do nothing
@@ -323,6 +326,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
       listener.assertEvent(IContainerEvent.class, new EventAssertion<IContainerEvent<CDOAdminRepository>>()
       {
+        @Override
         public void execute(IContainerEvent<CDOAdminRepository> event)
         {
           assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
@@ -360,6 +364,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
       listener.assertEvent(IContainerEvent.class, new EventAssertion<IContainerEvent<CDOAdminRepository>>()
       {
+        @Override
         public void execute(IContainerEvent<CDOAdminRepository> event)
         {
           assertEquals(IContainerDelta.Kind.REMOVED, event.getDeltaKind());
@@ -388,6 +393,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
       listener.assertEvent(RepositoryTypeChangedEvent.class, new EventAssertion<RepositoryTypeChangedEvent>()
       {
+        @Override
         public void execute(RepositoryTypeChangedEvent event)
         {
           assertEquals(Type.MASTER, event.getOldType());
@@ -416,6 +422,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
       listener.assertEvent(RepositoryStateChangedEvent.class, new EventAssertion<RepositoryStateChangedEvent>()
       {
+        @Override
         public void execute(RepositoryStateChangedEvent event)
         {
           assertEquals(State.ONLINE, event.getOldState());
@@ -448,6 +455,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
       listener.assertEvent(IContainerEvent.class, new EventAssertion<IContainerEvent<CDOAdminRepository>>()
       {
+        @Override
         public void execute(IContainerEvent<CDOAdminRepository> event)
         {
           assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
@@ -481,6 +489,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
       listener.assertEvent(IContainerEvent.class, new EventAssertion<IContainerEvent<CDOAdminRepository>>()
       {
+        @Override
         public void execute(IContainerEvent<CDOAdminRepository> event)
         {
           assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
@@ -516,6 +525,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
       listener.assertEvent(IContainerEvent.class, new EventAssertion<IContainerEvent<CDOAdminRepository>>()
       {
+        @Override
         public void execute(IContainerEvent<CDOAdminRepository> event)
         {
           assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
@@ -551,6 +561,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
       listener.assertEvent(IContainerEvent.class, new EventAssertion<IContainerEvent<CDOAdminRepository>>()
       {
+        @Override
         public void execute(IContainerEvent<CDOAdminRepository> event)
         {
           assertEquals(IContainerDelta.Kind.ADDED, event.getDeltaKind());
@@ -598,6 +609,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
       listener.assertEvent(IContainerEvent.class, new EventAssertion<IContainerEvent<CDOAdminRepository>>()
       {
+        @Override
         public void execute(IContainerEvent<CDOAdminRepository> event)
         {
           assertEquals(IContainerDelta.Kind.REMOVED, event.getDeltaKind());

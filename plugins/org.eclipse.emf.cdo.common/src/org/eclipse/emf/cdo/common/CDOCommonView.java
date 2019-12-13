@@ -34,6 +34,7 @@ import org.eclipse.core.runtime.IAdaptable;
  */
 public interface CDOCommonView extends CDOLockOwner, CDOBranchPoint, CDORevisionProvider, IOptionsContainer, IPropertiesContainer, IAdaptable, Closeable
 {
+  @Override
   public int getViewID();
 
   /**
@@ -51,6 +52,7 @@ public interface CDOCommonView extends CDOLockOwner, CDOBranchPoint, CDORevision
   /**
    * @since 4.0
    */
+  @Override
   public String getDurableLockingID();
 
   /**
@@ -58,6 +60,7 @@ public interface CDOCommonView extends CDOLockOwner, CDOBranchPoint, CDORevision
    *
    * @since 4.1
    */
+  @Override
   public Options options();
 
   /**

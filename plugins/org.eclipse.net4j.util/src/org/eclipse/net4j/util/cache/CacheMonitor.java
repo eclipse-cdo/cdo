@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -82,6 +82,7 @@ public class CacheMonitor extends Worker implements ICacheMonitor
     this.pauseRED = pauseRED;
   }
 
+  @Override
   public ConditionPolicy getConditionPolicy()
   {
     return conditionPolicy;
@@ -92,6 +93,7 @@ public class CacheMonitor extends Worker implements ICacheMonitor
     this.conditionPolicy = conditionPolicy;
   }
 
+  @Override
   public Condition getCondition()
   {
     return condition;
@@ -105,6 +107,7 @@ public class CacheMonitor extends Worker implements ICacheMonitor
     }
   }
 
+  @Override
   public ICacheRegistration registerCache(ICache cache)
   {
     if (TRACER.isEnabled())
@@ -127,6 +130,7 @@ public class CacheMonitor extends Worker implements ICacheMonitor
     return registration;
   }
 
+  @Override
   public void deregisterCache(ICache cache)
   {
     ICacheRegistration registration;
@@ -238,11 +242,13 @@ public class CacheMonitor extends Worker implements ICacheMonitor
       return (ICacheMonitor)super.getSource();
     }
 
+    @Override
     public Condition getOldCondition()
     {
       return oldCondition;
     }
 
+    @Override
     public Condition getNewCondition()
     {
       return newCondition;

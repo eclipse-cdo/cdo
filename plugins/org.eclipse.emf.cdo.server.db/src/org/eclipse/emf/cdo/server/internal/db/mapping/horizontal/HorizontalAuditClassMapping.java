@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -284,6 +284,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     return strings;
   }
 
+  @Override
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
@@ -326,6 +327,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     }
   }
 
+  @Override
   public boolean readRevisionByVersion(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
@@ -357,6 +359,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     }
   }
 
+  @Override
   public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name, boolean exactMatch,
       CDOBranchPoint branchPoint)
   {
@@ -445,6 +448,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     }
   }
 
+  @Override
   public IDBPreparedStatement createObjectIDStatement(IDBStoreAccessor accessor)
   {
     if (TRACER.isEnabled())
@@ -619,6 +623,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     }
   }
 
+  @Override
   public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created, OMMonitor monitor)
   {
     Async async = null;
@@ -679,6 +684,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     return builder.toString();
   }
 
+  @Override
   public void readUnitRevisions(IDBStoreAccessor accessor, CDOBranchPoint branchPoint, CDOID rootID, CDORevisionHandler revisionHandler) throws SQLException
   {
     DBStore store = (DBStore)getMappingStrategy().getStore();
@@ -842,6 +848,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       }
     }
 
+    @Override
     public void run()
     {
       StoreThreadLocal.setAccessor(accessor);
@@ -946,16 +953,19 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       writeValues(accessor, newRevision);
     }
 
+    @Override
     public void visit(CDOSetFeatureDelta delta)
     {
       delta.applyTo(newRevision);
     }
 
+    @Override
     public void visit(CDOUnsetFeatureDelta delta)
     {
       delta.applyTo(newRevision);
     }
 
+    @Override
     public void visit(CDOListFeatureDelta delta)
     {
       delta.applyTo(newRevision);
@@ -964,6 +974,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       listMapping.processDelta(accessor, id, branchId, oldVersion, oldVersion + 1, created, delta);
     }
 
+    @Override
     public void visit(CDOContainerFeatureDelta delta)
     {
       delta.applyTo(newRevision);

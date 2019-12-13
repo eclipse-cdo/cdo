@@ -63,12 +63,14 @@ public class CDOLockStateImpl implements InternalCDOLockState
     return newLockState;
   }
 
+  @Override
   @Deprecated
   public void updateFrom(Object object, CDOLockState source)
   {
     updateFrom(source);
   }
 
+  @Override
   public void updateFrom(CDOLockState source)
   {
     Set<CDOLockOwner> owners = source.getReadLockOwners();
@@ -85,6 +87,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
     writeOptionOwner = source.getWriteOptionOwner();
   }
 
+  @Override
   public boolean isLocked(LockType lockType, CDOLockOwner lockOwner, boolean others)
   {
     if (lockedObject == null)
@@ -143,6 +146,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
     return writeOptionOwner.equals(by) ^ others;
   }
 
+  @Override
   public Set<CDOLockOwner> getReadLockOwners()
   {
     if (lockedObject == null || readLockOwners == null)
@@ -153,6 +157,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
     return Collections.unmodifiableSet(readLockOwners);
   }
 
+  @Override
   public void addReadLockOwner(CDOLockOwner lockOwner)
   {
     checkNotDisposed();
@@ -165,6 +170,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
     readLockOwners.add(lockOwner);
   }
 
+  @Override
   public boolean removeReadLockOwner(CDOLockOwner lockOwner)
   {
     checkNotDisposed();
@@ -183,28 +189,33 @@ public class CDOLockStateImpl implements InternalCDOLockState
     return changed;
   }
 
+  @Override
   public CDOLockOwner getWriteLockOwner()
   {
     return writeLockOwner;
   }
 
+  @Override
   public void setWriteLockOwner(CDOLockOwner lockOwner)
   {
     checkNotDisposed();
     writeLockOwner = lockOwner;
   }
 
+  @Override
   public CDOLockOwner getWriteOptionOwner()
   {
     return writeOptionOwner;
   }
 
+  @Override
   public void setWriteOptionOwner(CDOLockOwner lockOwner)
   {
     checkNotDisposed();
     writeOptionOwner = lockOwner;
   }
 
+  @Override
   public boolean removeOwner(CDOLockOwner lockOwner)
   {
     boolean changed = removeReadLockOwner(lockOwner);
@@ -224,6 +235,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
     return changed;
   }
 
+  @Override
   public Object getLockedObject()
   {
     return lockedObject;
@@ -329,6 +341,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
     return builder.toString();
   }
 
+  @Override
   public void dispose()
   {
     readLockOwners = null;

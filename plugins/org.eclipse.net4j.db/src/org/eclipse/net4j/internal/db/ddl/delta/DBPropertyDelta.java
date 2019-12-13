@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -49,26 +49,31 @@ public final class DBPropertyDelta<T> extends DBDelta implements IDBPropertyDelt
   {
   }
 
+  @Override
   public DeltaType getDeltaType()
   {
     return DeltaType.PROPERTY;
   }
 
+  @Override
   public IDBSchemaElement getSchemaElement(IDBSchema schema)
   {
     return null;
   }
 
+  @Override
   public Type getType()
   {
     return type;
   }
 
+  @Override
   public T getValue()
   {
     return value;
   }
 
+  @Override
   public T getOldValue()
   {
     return oldValue;

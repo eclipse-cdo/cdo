@@ -55,6 +55,7 @@ public abstract class CDOCommand extends org.eclipse.net4j.util.factory.Factory
     this(name, description, NO_PARAMETERS);
   }
 
+  @Override
   public final CDOCommand create(String description) throws ProductCreationException
   {
     return this;

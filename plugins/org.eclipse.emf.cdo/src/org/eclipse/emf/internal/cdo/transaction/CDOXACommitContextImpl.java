@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -70,133 +70,159 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
     delegateCommitContext = commitContext;
   }
 
+  @Override
   public InternalCDOXATransaction getTransactionManager()
   {
     return transactionManager;
   }
 
+  @Override
   public void setProgressMonitor(IProgressMonitor progressMonitor)
   {
     this.progressMonitor = progressMonitor;
   }
 
+  @Override
   public CDOXAState getState()
   {
     return state;
   }
 
+  @Override
   public void setState(CDOXAState state)
   {
     this.state = state;
   }
 
+  @Override
   public CommitTransactionResult getResult()
   {
     return result;
   }
 
+  @Override
   public void setResult(CommitTransactionResult result)
   {
     this.result = result;
   }
 
+  @Override
   public int getViewID()
   {
     return delegateCommitContext.getViewID();
   }
 
+  @Override
   public String getUserID()
   {
     return delegateCommitContext.getUserID();
   }
 
+  @Override
   public CDOBranch getBranch()
   {
     return delegateCommitContext.getBranch();
   }
 
+  @Override
   public InternalCDOTransaction getTransaction()
   {
     return delegateCommitContext.getTransaction();
   }
 
+  @Override
   public boolean isPartialCommit()
   {
     return delegateCommitContext.isPartialCommit();
   }
 
+  @Override
   public CDOCommitData getCommitData()
   {
     return delegateCommitContext.getCommitData();
   }
 
+  @Override
   public String getCommitComment()
   {
     return delegateCommitContext.getCommitComment();
   }
 
+  @Override
   public CDOBranchPoint getCommitMergeSource()
   {
     return delegateCommitContext.getCommitMergeSource();
   }
 
+  @Override
   public Map<CDOIDTempObjectExternalImpl, InternalCDOTransaction> getRequestedIDs()
   {
     return requestedIDs;
   }
 
+  @Override
   public Map<CDOID, CDOObject> getDirtyObjects()
   {
     return delegateCommitContext.getDirtyObjects();
   }
 
+  @Override
   public Map<CDOID, CDOObject> getNewObjects()
   {
     return delegateCommitContext.getNewObjects();
   }
 
+  @Override
   public List<CDOPackageUnit> getNewPackageUnits()
   {
     return delegateCommitContext.getNewPackageUnits();
   }
 
+  @Override
   public Map<CDOID, CDOObject> getDetachedObjects()
   {
     return delegateCommitContext.getDetachedObjects();
   }
 
+  @Override
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas()
   {
     return delegateCommitContext.getRevisionDeltas();
   }
 
+  @Override
   public Collection<CDOLob<?>> getLobs()
   {
     return delegateCommitContext.getLobs();
   }
 
+  @Override
   @Deprecated
   public boolean isAutoReleaseLocks()
   {
     return delegateCommitContext.isAutoReleaseLocks();
   }
 
+  @Override
   public Collection<CDOLockState> getLocksOnNewObjects()
   {
     return delegateCommitContext.getLocksOnNewObjects();
   }
 
+  @Override
   public Collection<CDOID> getIDsToUnlock()
   {
     return delegateCommitContext.getIDsToUnlock();
   }
 
+  @Override
   public Object call() throws Exception
   {
     state.handle(this, progressMonitor);
     return true;
   }
 
+  @Override
   public CDOID provideCDOID(Object idOrObject)
   {
     CDOID id = getTransaction().provideCDOID(idOrObject);
@@ -223,11 +249,13 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
     return id;
   }
 
+  @Override
   public void preCommit()
   {
     delegateCommitContext.preCommit();
   }
 
+  @Override
   public void postCommit(CommitTransactionResult result)
   {
     if (result != null)
@@ -237,6 +265,7 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
         final CDOReferenceAdjuster defaultReferenceAdjuster = result.getReferenceAdjuster();
         result.setReferenceAdjuster(new CDOReferenceAdjuster()
         {
+          @Override
           public Object adjustReference(Object id, EStructuralFeature feature, int index)
           {
             CDOIDTempObjectExternalImpl externalID = objectToID.get(id);

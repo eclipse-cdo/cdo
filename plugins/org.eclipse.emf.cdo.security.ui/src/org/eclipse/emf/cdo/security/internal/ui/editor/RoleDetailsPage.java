@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -93,6 +93,7 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
     return new INewObjectConfigurator()
     {
 
+      @Override
       public Command createConfigureCommand(Object newObject)
       {
         ResourceFilter filter = SecurityFactory.eINSTANCE.createResourceFilter("/home/${user}", PatternStyle.TREE); //$NON-NLS-1$
@@ -118,11 +119,13 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
 
       private final CellEditor[] cellEditors = new CellEditor[3];
 
+      @Override
       public String[] getColumnTitles()
       {
         return columnTitles;
       }
 
+      @Override
       public int getColumnWeight(int index)
       {
         switch (index)
@@ -138,6 +141,7 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
         }
       }
 
+      @Override
       public int getColumnMinimumSize(int index)
       {
         switch (index)
@@ -153,6 +157,7 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
         }
       }
 
+      @Override
       public boolean isColumnResizable(int index)
       {
         switch (index)
@@ -168,6 +173,7 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
         }
       }
 
+      @Override
       public CellLabelProvider getLabelProvider(TableViewer viewer, final int columnIndex)
       {
         return new ColumnLabelProvider()
@@ -210,11 +216,13 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
         };
       }
 
+      @Override
       public boolean canEdit(TableViewer viewer, Object element, int columnIndex)
       {
         return true;
       }
 
+      @Override
       public void setValue(TableViewer viewer, Object element, int columnIndex, Object value)
       {
         final FilterPermission perm = (FilterPermission)element;
@@ -248,6 +256,7 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
         }
       }
 
+      @Override
       public Object getValue(TableViewer viewer, Object element, int columnIndex)
       {
         final FilterPermission perm = (FilterPermission)element;
@@ -266,6 +275,7 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
         }
       }
 
+      @Override
       public CellEditor getCellEditor(final TableViewer viewer, int columnIndex)
       {
         CellEditor result = cellEditors[columnIndex];

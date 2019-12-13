@@ -44,10 +44,12 @@ public interface CDOBranchVersion extends CDOBranchProvider, CDOVersionProvider
   /**
    * Returns the branch of this branch version.
    */
+  @Override
   public CDOBranch getBranch();
 
   /**
    * Returns the version number of this branch version.
    */
+  @Override
   public int getVersion();
 }

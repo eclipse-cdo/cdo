@@ -31,6 +31,7 @@ public class CDOListImpl extends BasicEList<Object> implements InternalCDOList.C
 {
   public static final CDOListFactory FACTORY = new CDOListFactory()
   {
+    @Override
     public CDOList createList(int initialCapacity, int size, int initialChunk)
     {
       return new CDOListImpl(initialCapacity, size);
@@ -54,6 +55,7 @@ public class CDOListImpl extends BasicEList<Object> implements InternalCDOList.C
     }
   }
 
+  @Override
   public InternalCDOList clone(EClassifier classifier)
   {
     CDOType type = CDOModelUtil.getType(classifier);
@@ -71,11 +73,13 @@ public class CDOListImpl extends BasicEList<Object> implements InternalCDOList.C
     return list;
   }
 
+  @Override
   public Object get(int index, boolean resolve)
   {
     return super.get(index);
   }
 
+  @Override
   public boolean adjustReferences(CDOReferenceAdjuster revisionAdjuster, EStructuralFeature feature)
   {
     boolean changed = false;
@@ -100,6 +104,7 @@ public class CDOListImpl extends BasicEList<Object> implements InternalCDOList.C
   {
   }
 
+  @Override
   public void freeze()
   {
     flags |= FROZEN_FLAG;
@@ -183,6 +188,7 @@ public class CDOListImpl extends BasicEList<Object> implements InternalCDOList.C
     return super.remove(index);
   }
 
+  @Override
   public void setWithoutFrozenCheck(int index, Object element)
   {
     super.set(index, element);
@@ -194,6 +200,7 @@ public class CDOListImpl extends BasicEList<Object> implements InternalCDOList.C
     return (flags & USE_EQUALS_FLAG) != 0;
   }
 
+  @Override
   public final void setUseEquals(boolean useEquals)
   {
     if (useEquals)

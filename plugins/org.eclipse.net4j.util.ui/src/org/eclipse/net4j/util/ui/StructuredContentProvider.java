@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2008, 2010-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2008, 2010-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -40,6 +40,7 @@ public abstract class StructuredContentProvider<INPUT> extends org.eclipse.jface
   {
   }
 
+  @Override
   public void dispose()
   {
     if (input != null)
@@ -71,6 +72,7 @@ public abstract class StructuredContentProvider<INPUT> extends org.eclipse.jface
     return viewer;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
   {
@@ -106,6 +108,7 @@ public abstract class StructuredContentProvider<INPUT> extends org.eclipse.jface
   {
   }
 
+  @Override
   public void notifyEvent(IEvent event)
   {
     refreshViewer(true);
@@ -154,6 +157,7 @@ public abstract class StructuredContentProvider<INPUT> extends org.eclipse.jface
     {
       getDisplay().asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           try
@@ -180,6 +184,7 @@ public abstract class StructuredContentProvider<INPUT> extends org.eclipse.jface
     {
       getDisplay().asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           try
@@ -212,6 +217,7 @@ public abstract class StructuredContentProvider<INPUT> extends org.eclipse.jface
         {
           getDisplay().asyncExec(new Runnable()
           {
+            @Override
             public void run()
             {
               try

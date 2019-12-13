@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2014 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2014, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -38,16 +38,19 @@ public class CDOIDAndBranchImpl implements CDOIDAndBranch, CDOBranchAdjustable
     this.branch = branch;
   }
 
+  @Override
   public CDOID getID()
   {
     return id;
   }
 
+  @Override
   public CDOBranch getBranch()
   {
     return branch;
   }
 
+  @Override
   public void adjustBranches(CDOBranchManager newBranchManager)
   {
     branch = newBranchManager.getBranch(branch.getID());

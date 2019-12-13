@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2014-2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -86,6 +86,7 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       final CountDownLatch recoveryFinished = new CountDownLatch(1);
       reconnectingSession.addListener(new IListener()
       {
+        @Override
         public void notifyEvent(final IEvent event)
         {
           if (event instanceof CDOSessionRecoveryEvent)
@@ -188,6 +189,7 @@ public class ReconnectingSessionTest extends AbstractCDOTest
         final CountDownLatch recoveryFinished = new CountDownLatch(1);
         reconnectingSession.addListener(new IListener()
         {
+          @Override
           public void notifyEvent(final IEvent event)
           {
             if (event instanceof CDOSessionRecoveryEvent)
@@ -284,6 +286,7 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       final CountDownLatch recoveryFinished = new CountDownLatch(1);
       session2.addListener(new IListener()
       {
+        @Override
         public void notifyEvent(final IEvent event)
         {
           if (event instanceof CDOSessionRecoveryEvent)
@@ -366,6 +369,7 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       {
         new ThreadTimeOuter()
         {
+          @Override
           public void run()
           {
             branch.getName(); // This would hang without the fix in RecoveringExceptionHandler.handleException()

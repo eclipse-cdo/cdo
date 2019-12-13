@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, 2017, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2017-2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -408,6 +408,7 @@ public class OfflineTest extends AbstractSyncingTest
     CDOSession session = openSession();
     session.getCommitInfoManager().getCommitInfos(null, 0L, 0L, new CDOCommitInfoHandler()
     {
+      @Override
       public void handleCommitInfo(CDOCommitInfo commitInfo)
       {
         result.add(commitInfo);

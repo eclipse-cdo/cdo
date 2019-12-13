@@ -227,6 +227,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append(ATTRIBUTES_REVISED);
   }
 
+  @Override
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     long timeStamp = revision.getTimeStamp();
@@ -274,6 +275,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     return success;
   }
 
+  @Override
   public boolean readRevisionByVersion(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
@@ -307,6 +309,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     return success;
   }
 
+  @Override
   public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name, boolean exactMatch,
       CDOBranchPoint branchPoint)
   {
@@ -400,6 +403,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
   }
 
+  @Override
   public IDBPreparedStatement createObjectIDStatement(IDBStoreAccessor accessor)
   {
     if (TRACER.isEnabled())
@@ -931,6 +935,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     return builder.toString();
   }
 
+  @Override
   public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created, OMMonitor monitor)
   {
     monitor.begin();
@@ -1039,16 +1044,19 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       writeValues(accessor, newRevision);
     }
 
+    @Override
     public void visit(CDOSetFeatureDelta delta)
     {
       delta.applyTo(newRevision);
     }
 
+    @Override
     public void visit(CDOUnsetFeatureDelta delta)
     {
       delta.applyTo(newRevision);
     }
 
+    @Override
     public void visit(CDOListFeatureDelta delta)
     {
       delta.applyTo(newRevision);
@@ -1057,6 +1065,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       listMapping.processDelta(accessor, id, targetBranch.getID(), oldVersion, newVersion, created, delta);
     }
 
+    @Override
     public void visit(CDOContainerFeatureDelta delta)
     {
       delta.applyTo(newRevision);

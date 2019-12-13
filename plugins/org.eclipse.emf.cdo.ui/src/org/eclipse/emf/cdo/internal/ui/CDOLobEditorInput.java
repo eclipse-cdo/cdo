@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -49,26 +49,31 @@ public class CDOLobEditorInput extends PlatformObject implements IEditorInput
     return commitOnSave;
   }
 
+  @Override
   public boolean exists()
   {
     return true;
   }
 
+  @Override
   public ImageDescriptor getImageDescriptor()
   {
     return null;
   }
 
+  @Override
   public String getName()
   {
     return resource.getName();
   }
 
+  @Override
   public IPersistableElement getPersistable()
   {
     return null;
   }
 
+  @Override
   public String getToolTipText()
   {
     return resource.getURI().toString();

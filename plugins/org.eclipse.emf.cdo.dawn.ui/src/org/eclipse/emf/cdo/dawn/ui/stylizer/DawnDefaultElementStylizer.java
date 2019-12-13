@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -24,18 +24,22 @@ import org.eclipse.swt.graphics.Image;
  */
 public class DawnDefaultElementStylizer implements DawnElementStylizer
 {
+  @Override
   public void setDefault(Object element)
   {
   }
 
+  @Override
   public void setConflicted(Object element, int type)
   {
   }
 
+  @Override
   public void setLocked(Object element, int type)
   {
   }
 
+  @Override
   public Image getImage(Object element, DawnState state)
   {
     switch (state)
@@ -52,6 +56,7 @@ public class DawnDefaultElementStylizer implements DawnElementStylizer
     return null;
   }
 
+  @Override
   public Color getForegroundColor(Object element, DawnState state)
   {
     switch (state)
@@ -65,6 +70,7 @@ public class DawnDefaultElementStylizer implements DawnElementStylizer
     return null;
   }
 
+  @Override
   public Color getBackgroundColor(Object element, DawnState state)
   {
     switch (state)

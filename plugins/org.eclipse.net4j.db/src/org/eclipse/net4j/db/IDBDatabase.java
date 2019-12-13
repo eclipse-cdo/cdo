@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -45,6 +45,7 @@ public interface IDBDatabase extends IContainer<IDBConnection>, IDBConnectionPro
 
   public void updateSchema(RunnableWithSchema runnable);
 
+  @Override
   public IDBConnection getConnection();
 
   public IDBConnection[] getConnections();
@@ -58,6 +59,7 @@ public interface IDBDatabase extends IContainer<IDBConnection>, IDBConnectionPro
    */
   public interface SchemaChangedEvent extends IEvent
   {
+    @Override
     public IDBDatabase getSource();
 
     public IDBSchemaDelta getSchemaDelta();

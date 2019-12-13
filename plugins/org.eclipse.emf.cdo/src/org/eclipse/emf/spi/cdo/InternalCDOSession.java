@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -84,6 +84,7 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
    */
   public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider);
 
+  @Override
   public InternalCDOPackageRegistry getPackageRegistry();
 
   /**
@@ -94,6 +95,7 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   /**
    * @since 3.0
    */
+  @Override
   public InternalCDOBranchManager getBranchManager();
 
   /**
@@ -104,6 +106,7 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   /**
    * @since 3.0
    */
+  @Override
   public InternalCDORevisionManager getRevisionManager();
 
   /**
@@ -114,6 +117,7 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   /**
    * @since 3.0
    */
+  @Override
   public InternalCDOCommitInfoManager getCommitInfoManager();
 
   /**
@@ -124,6 +128,7 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   /**
    * @since 3.0
    */
+  @Override
   public InternalCDORemoteSessionManager getRemoteSessionManager();
 
   /**

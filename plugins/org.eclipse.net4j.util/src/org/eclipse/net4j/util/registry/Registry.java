@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -46,36 +46,43 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
     return keySet().isEmpty();
   }
 
+  @Override
   public int size()
   {
     return keySet().size();
   }
 
+  @Override
   public Set<Entry<K, V>> entrySet()
   {
     return getMap().entrySet();
   }
 
+  @Override
   public Set<K> keySet()
   {
     return getMap().keySet();
   }
 
+  @Override
   public Collection<V> values()
   {
     return getMap().values();
   }
 
+  @Override
   public boolean containsKey(Object key)
   {
     return keySet().contains(key);
   }
 
+  @Override
   public boolean containsValue(Object value)
   {
     return values().contains(value);
   }
 
+  @Override
   public V get(Object key)
   {
     return getMap().get(key);
@@ -84,6 +91,7 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
   /**
    * Requires {@link #commit()} to be called later if not {@link #isAutoCommit()}.
    */
+  @Override
   public synchronized V put(K key, V value)
   {
     V result = register(key, value);
@@ -94,6 +102,7 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
   /**
    * Requires {@link #commit()} to be called later if not {@link #isAutoCommit()}.
    */
+  @Override
   public synchronized void putAll(Map<? extends K, ? extends V> t)
   {
     if (!t.isEmpty())
@@ -112,6 +121,7 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
   /**
    * Requires {@link #commit()} to be called later if not {@link #isAutoCommit()}.
    */
+  @Override
   public synchronized V remove(Object key)
   {
     V result = deregister(key);
@@ -122,6 +132,7 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
   /**
    * Requires {@link #commit()} to be called later if not {@link #isAutoCommit()}.
    */
+  @Override
   public synchronized void clear()
   {
     if (!isEmpty())
@@ -135,22 +146,26 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
     }
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public Entry<K, V>[] getElements()
   {
     return entrySet().toArray(new Entry[size()]);
   }
 
+  @Override
   public boolean isAutoCommit()
   {
     return autoCommit;
   }
 
+  @Override
   public void setAutoCommit(boolean autoCommit)
   {
     this.autoCommit = autoCommit;
   }
 
+  @Override
   public synchronized void commit(boolean notifications)
   {
     if (transaction != null)
@@ -166,6 +181,7 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
     }
   }
 
+  @Override
   public void commit()
   {
     commit(true);
@@ -310,16 +326,19 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
       this.value = value;
     }
 
+    @Override
     public K getKey()
     {
       return key;
     }
 
+    @Override
     public V getValue()
     {
       return value;
     }
 
+    @Override
     public V setValue(V value)
     {
       throw new UnsupportedOperationException();

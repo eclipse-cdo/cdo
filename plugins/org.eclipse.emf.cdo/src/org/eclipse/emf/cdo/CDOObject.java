@@ -46,6 +46,7 @@ public interface CDOObject extends EObject, CDOWithID
    *
    * @see #cdoState()
    */
+  @Override
   public CDOID cdoID();
 
   /**

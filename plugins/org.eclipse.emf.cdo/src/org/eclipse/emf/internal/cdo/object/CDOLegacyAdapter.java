@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -60,11 +60,13 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
     ((org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EObservableAdapterList)instance.eAdapters()).addListener(new AdapterListListener());
   }
 
+  @Override
   public void setTarget(Notifier newTarget)
   {
     instance = (InternalEObject)newTarget;
   }
 
+  @Override
   public void unsetTarget(Notifier oldTarget)
   {
     if (instance == oldTarget)
@@ -73,11 +75,13 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
     }
   }
 
+  @Override
   public Notifier getTarget()
   {
     return instance;
   }
 
+  @Override
   public boolean isAdapterForType(Object type)
   {
     return type == CDOLegacyAdapter.class;
@@ -85,6 +89,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
   public static boolean extendedLegacyAttachmentChecks = true;
 
+  @Override
   public void notifyChanged(Notification msg)
   {
     if (msg.isTouch() || msg instanceof CDONotification)
@@ -447,6 +452,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
     {
     }
 
+    @Override
     public void added(Notifier notifier, Adapter adapter)
     {
       if (TRACER.isEnabled())
@@ -464,6 +470,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
       }
     }
 
+    @Override
     public void removed(Notifier notifier, Adapter adapter)
     {
       if (TRACER.isEnabled())

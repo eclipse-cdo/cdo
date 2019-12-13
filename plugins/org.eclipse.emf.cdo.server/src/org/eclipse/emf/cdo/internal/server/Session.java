@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -141,11 +141,13 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
+  @Override
   public Options options()
   {
     return this;
   }
 
+  @Override
   public final IRegistry<String, Object> properties()
   {
     return properties;
@@ -154,11 +156,13 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
+  @Override
   public CDOCommonSession getContainer()
   {
     return this;
   }
 
+  @Override
   public InternalSessionManager getManager()
   {
     return manager;
@@ -169,11 +173,13 @@ public class Session extends Container<IView> implements InternalSession
     return manager.getRepository().getBranchManager();
   }
 
+  @Override
   public ISessionProtocol getProtocol()
   {
     return protocol;
   }
 
+  @Override
   public int getSessionID()
   {
     return sessionID;
@@ -182,11 +188,13 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
+  @Override
   public String getUserID()
   {
     return userID;
   }
 
+  @Override
   public void setUserID(String userID)
   {
     this.userID = userID;
@@ -195,6 +203,7 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
+  @Override
   public boolean isSubscribed()
   {
     return subscribed;
@@ -203,6 +212,7 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
+  @Override
   public void setSubscribed(boolean subscribed)
   {
     checkActive();
@@ -217,6 +227,7 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
+  @Override
   public boolean isPassiveUpdateEnabled()
   {
     return passiveUpdateEnabled;
@@ -225,17 +236,20 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
+  @Override
   public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
   {
     checkActive();
     this.passiveUpdateEnabled = passiveUpdateEnabled;
   }
 
+  @Override
   public PassiveUpdateMode getPassiveUpdateMode()
   {
     return passiveUpdateMode;
   }
 
+  @Override
   public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
   {
     checkActive();
@@ -243,11 +257,13 @@ public class Session extends Container<IView> implements InternalSession
     this.passiveUpdateMode = passiveUpdateMode;
   }
 
+  @Override
   public LockNotificationMode getLockNotificationMode()
   {
     return lockNotificationMode;
   }
 
+  @Override
   public void setLockNotificationMode(LockNotificationMode lockNotificationMode)
   {
     checkActive();
@@ -255,6 +271,7 @@ public class Session extends Container<IView> implements InternalSession
     this.lockNotificationMode = lockNotificationMode;
   }
 
+  @Override
   @Deprecated
   public long getLastUpdateTime()
   {
@@ -264,27 +281,32 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
+  @Override
   public long getFirstUpdateTime()
   {
     return firstUpdateTime;
   }
 
+  @Override
   public void setFirstUpdateTime(long firstUpdateTime)
   {
     this.firstUpdateTime = firstUpdateTime;
   }
 
+  @Override
   public boolean isOpenOnClientSide()
   {
     return openOnClientSide;
   }
 
+  @Override
   public void setOpenOnClientSide()
   {
     openOnClientSide = true;
     manager.openedOnClientSide(this);
   }
 
+  @Override
   public InternalView[] getElements()
   {
     checkActive();
@@ -302,6 +324,7 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
+  @Override
   public InternalView[] getViews()
   {
     checkActive();
@@ -316,6 +339,7 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
+  @Override
   public InternalView getView(int viewID)
   {
     checkActive();
@@ -329,6 +353,7 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
+  @Override
   public InternalView openView(int viewID, CDOBranchPoint branchPoint)
   {
     checkActive();
@@ -346,6 +371,7 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
+  @Override
   public InternalTransaction openTransaction(int viewID, CDOBranchPoint branchPoint)
   {
     checkActive();
@@ -376,6 +402,7 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
+  @Override
   public void viewClosed(InternalView view)
   {
     int viewID = view.getViewID();
@@ -398,6 +425,7 @@ public class Session extends Container<IView> implements InternalSession
    *
    * @since 2.0
    */
+  @Override
   public void collectContainedRevisions(InternalCDORevision revision, CDOBranchPoint branchPoint, int referenceChunk, Set<CDOID> revisions,
       List<CDORevision> additionalRevisions)
   {
@@ -425,11 +453,13 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
+  @Override
   public CDOID provideCDOID(Object idObject)
   {
     return (CDOID)idObject;
   }
 
+  @Override
   public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext)
   {
     IPermissionManager permissionManager = manager.getPermissionManager();
@@ -441,6 +471,7 @@ public class Session extends Container<IView> implements InternalSession
     return CDORevision.PERMISSION_PROVIDER.getPermission(revision, securityContext);
   }
 
+  @Override
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType) throws Exception
   {
     if (protocol != null)
@@ -449,12 +480,14 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
+  @Override
   @Deprecated
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState) throws Exception
   {
     sendRepositoryStateNotification(oldState, newState, null);
   }
 
+  @Override
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState, CDOID rootResourceID) throws Exception
   {
     if (protocol != null)
@@ -463,12 +496,14 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
+  @Override
   @Deprecated
   public void sendBranchNotification(InternalCDOBranch branch) throws Exception
   {
     sendBranchNotification(branch, ChangeKind.CREATED);
   }
 
+  @Override
   public void sendBranchNotification(InternalCDOBranch branch, ChangeKind changeKind) throws Exception
   {
     if (protocol != null)
@@ -477,18 +512,21 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
+  @Override
   @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo) throws Exception
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void sendCommitNotification(CommitNotificationInfo notificationInfo) throws Exception
   {
     if (protocol == null)
@@ -542,6 +580,7 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
+  @Override
   public void sendLockNotification(CDOLockChangeInfo lockChangeInfo) throws Exception
   {
     if (protocol != null)
@@ -629,6 +668,7 @@ public class Session extends Container<IView> implements InternalSession
     return false;
   }
 
+  @Override
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception
   {
     if (protocol != null)
@@ -637,6 +677,7 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
+  @Override
   public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message) throws Exception
   {
     if (protocol != null)
@@ -645,6 +686,7 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
@@ -675,6 +717,7 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
+  @Override
   public void close()
   {
     LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
@@ -683,6 +726,7 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
+  @Override
   public boolean isClosed()
   {
     return !isActive();

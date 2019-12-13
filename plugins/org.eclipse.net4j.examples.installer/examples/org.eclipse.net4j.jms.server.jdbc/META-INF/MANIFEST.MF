@@ -1,19 +1,19 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.jms.server.jdbc
-Bundle-Version: 4.0.500.qualifier
+Bundle-Version: 4.1.0.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.net4j.jms.server.internal.jdbc.bundle.OM
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.net4j.jms.server;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.net4j.db;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
 Import-Package: javax.jms;version="[1.1.0,2.0.0)"
-Export-Package: org.eclipse.net4j.jms.server.internal.jdbc;version="4.0.500";x-internal:=true,
- org.eclipse.net4j.jms.server.internal.jdbc.bundle;version="4.0.500";x-internal:=true,
- org.eclipse.net4j.jms.server.jdbc;version="4.0.500"
+Export-Package: org.eclipse.net4j.jms.server.internal.jdbc;version="4.1.0";x-internal:=true,
+ org.eclipse.net4j.jms.server.internal.jdbc.bundle;version="4.1.0";x-internal:=true,
+ org.eclipse.net4j.jms.server.jdbc;version="4.1.0"
 Automatic-Module-Name: org.eclipse.net4j.jms.server.jdbc

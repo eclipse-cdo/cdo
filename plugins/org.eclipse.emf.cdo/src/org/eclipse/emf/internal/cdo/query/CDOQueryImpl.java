@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -45,6 +45,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     this.view = view;
   }
 
+  @Override
   public InternalCDOView getView()
   {
     return view;
@@ -57,12 +58,14 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     return this;
   }
 
+  @Override
   public CDOQueryImpl setParameter(String name, Object value)
   {
     parameters.put(name, value);
     return this;
   }
 
+  @Override
   public CDOQueryImpl unsetParameter(String name)
   {
     parameters.remove(name);
@@ -87,6 +90,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     return new CDOQueryResultIteratorImpl<T>(view, queryInfo);
   }
 
+  @Override
   public <T> List<T> getResult(Class<T> type)
   {
     AbstractQueryIterator<T> queryResult = null;
@@ -106,11 +110,13 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     }
   }
 
+  @Override
   public <T> List<T> getResult()
   {
     return getResult(null);
   }
 
+  @Override
   public <T> T getResultValue(Class<T> type)
   {
     AbstractQueryIterator<T> queryResult = null;
@@ -130,17 +136,20 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     }
   }
 
+  @Override
   public <T> T getResultValue()
   {
     return getResultValue(null);
   }
 
+  @Override
   public <T> BlockingCloseableIterator<T> getResultAsync(Class<T> classObject)
   {
     final AbstractQueryIterator<T> queryResult = createQueryResult(classObject);
     final Exception exception[] = new Exception[1];
     Runnable runnable = new Runnable()
     {
+      @Override
       public void run()
       {
         try
@@ -175,6 +184,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     return queryResult;
   }
 
+  @Override
   public <T> BlockingCloseableIterator<T> getResultAsync()
   {
     return getResultAsync(null);

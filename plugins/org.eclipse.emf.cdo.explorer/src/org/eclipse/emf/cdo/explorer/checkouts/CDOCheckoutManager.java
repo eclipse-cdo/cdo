@@ -44,6 +44,7 @@ public interface CDOCheckoutManager extends CDOExplorerManager<CDOCheckout>
    */
   public interface CheckoutStateEvent extends IEvent
   {
+    @Override
     public CDOCheckoutManager getSource();
 
     public CDOCheckout getCheckout();

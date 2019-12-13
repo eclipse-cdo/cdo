@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -75,6 +75,7 @@ public class StockImpl extends CDOObjectImpl implements Stock
    *
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<StockProduct> getProducts()
   {
@@ -86,6 +87,7 @@ public class StockImpl extends CDOObjectImpl implements Stock
    *
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(InventoryPackage.Literals.STOCK__NAME, true);
@@ -96,6 +98,7 @@ public class StockImpl extends CDOObjectImpl implements Stock
    *
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(InventoryPackage.Literals.STOCK__NAME, newName);
@@ -106,6 +109,7 @@ public class StockImpl extends CDOObjectImpl implements Stock
    *
    * @generated
    */
+  @Override
   public Department getDepartment()
   {
     return (Department)eGet(InventoryPackage.Literals.STOCK__DEPARTMENT, true);
@@ -116,6 +120,7 @@ public class StockImpl extends CDOObjectImpl implements Stock
    *
    * @generated
    */
+  @Override
   public void setDepartment(Department newDepartment)
   {
     eSet(InventoryPackage.Literals.STOCK__DEPARTMENT, newDepartment);

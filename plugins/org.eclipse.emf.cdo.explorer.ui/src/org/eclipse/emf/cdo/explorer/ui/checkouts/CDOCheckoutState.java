@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -76,6 +76,7 @@ public final class CDOCheckoutState
 
   private final IListener checkoutManagerListener = new IListener()
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof CDOCheckoutManager.CheckoutStateEvent)
@@ -230,6 +231,7 @@ public final class CDOCheckoutState
       removeListenerObject(listener);
     }
 
+    @Override
     public void labelProviderChanged(final LabelProviderChangedEvent event)
     {
       Object[] listeners = getListeners();
@@ -238,6 +240,7 @@ public final class CDOCheckoutState
         final ILabelProviderListener listener = (ILabelProviderListener)listeners[i];
         SafeRunnable.run(new SafeRunnable()
         {
+          @Override
           public void run()
           {
             listener.labelProviderChanged(event);

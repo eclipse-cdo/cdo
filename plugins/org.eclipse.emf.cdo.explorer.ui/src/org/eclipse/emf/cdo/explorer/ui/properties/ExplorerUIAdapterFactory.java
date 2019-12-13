@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -52,11 +52,13 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
   {
   }
 
+  @Override
   public Class<?>[] getAdapterList()
   {
     return CLASSES;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public <T> T getAdapter(Object adaptableObject, Class<T> adapterType)
   {
@@ -104,6 +106,7 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
   {
     return new CDORenameContext()
     {
+      @Override
       public String getType()
       {
         String type = StringUtil.capAll(element.getType());
@@ -119,16 +122,19 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
         return type;
       }
 
+      @Override
       public String getName()
       {
         return element.getLabel();
       }
 
+      @Override
       public void setName(String name)
       {
         element.setLabel(name);
       }
 
+      @Override
       public String validateName(String name)
       {
         return element.validateLabel(name);
@@ -140,21 +146,25 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
   {
     return new CDORenameContext()
     {
+      @Override
       public String getType()
       {
         return "Branch";
       }
 
+      @Override
       public String getName()
       {
         return branch.getName();
       }
 
+      @Override
       public void setName(String name)
       {
         branch.setName(name);
       }
 
+      @Override
       public String validateName(String name)
       {
         if (StringUtil.isEmpty(name))
@@ -182,16 +192,19 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
   {
     return new CDORenameContext()
     {
+      @Override
       public String getType()
       {
         return resourceNode instanceof CDOResourceFolder ? "Folder" : "Resource";
       }
 
+      @Override
       public String getName()
       {
         return resourceNode.getName();
       }
 
+      @Override
       public void setName(final String name)
       {
         final String title = "Rename " + getType().toLowerCase();
@@ -249,6 +262,7 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
         }.schedule();
       }
 
+      @Override
       public String validateName(String name)
       {
         String type = getType();

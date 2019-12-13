@@ -242,11 +242,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     initObjectsMap(ReferenceType.SOFT);
   }
 
+  @Override
   public final IRegistry<String, Object> properties()
   {
     return properties;
   }
 
+  @Override
   public String getRepositoryName()
   {
     Object repositoryName = properties.get(REPOSITORY_NAME_KEY);
@@ -258,16 +260,19 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return getSession().getRepositoryInfo().getName();
   }
 
+  @Override
   public void setRepositoryName(String repositoryName)
   {
     properties.put(REPOSITORY_NAME_KEY, repositoryName);
   }
 
+  @Override
   public boolean isReadOnly()
   {
     return true;
   }
 
+  @Override
   public boolean isHistorical()
   {
     synchronized (getViewMonitor())
@@ -285,6 +290,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   @Deprecated
   public boolean isLegacyModeEnabled()
   {
@@ -320,6 +326,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return 0;
   }
 
+  @Override
   public Map<CDOID, InternalCDOObject> getObjects()
   {
     synchronized (getViewMonitor())
@@ -452,17 +459,20 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return true;
   }
 
+  @Override
   public ViewAndState getViewAndState(CDOState state)
   {
     return viewAndStates[state.ordinal()];
   }
 
+  @Override
   public CDOStore getStore()
   {
     checkActive();
     return store;
   }
 
+  @Override
   public ResourceSet getResourceSet()
   {
     return getViewSet().getResourceSet();
@@ -471,6 +481,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   /**
    * @since 2.0
    */
+  @Override
   public InternalCDOViewSet getViewSet()
   {
     return viewSet;
@@ -479,6 +490,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   /**
    * @since 2.0
    */
+  @Override
   public void setViewSet(InternalCDOViewSet viewSet)
   {
     this.viewSet = viewSet;
@@ -488,6 +500,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public final Object getViewMonitor()
   {
     if (viewLock != null)
@@ -498,11 +511,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return this;
   }
 
+  @Override
   public final Lock getViewLock()
   {
     return viewLock;
   }
 
+  @Override
   public final void lockView()
   {
     if (viewLock != null)
@@ -511,6 +526,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public final void unlockView()
   {
     if (viewLock != null)
@@ -519,6 +535,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public void syncExec(Runnable runnable)
   {
     synchronized (getViewMonitor())
@@ -536,6 +553,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public <V> V syncExec(Callable<V> callable) throws Exception
   {
     synchronized (getViewMonitor())
@@ -553,11 +571,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public CDOViewProvider getProvider()
   {
     return provider;
   }
 
+  @Override
   public void setProvider(CDOViewProvider provider)
   {
     this.provider = provider;
@@ -568,6 +588,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public void setSession(InternalCDOSession session)
   {
     rootResourceID = session.getRepositoryInfo().getRootResourceID();
@@ -577,6 +598,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public CDOResourceImpl getRootResource()
   {
     checkActive();
@@ -618,6 +640,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   @SuppressWarnings("deprecation")
   public URI createResourceURI(String path)
   {
@@ -634,6 +657,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return CDOURIUtil.createResourceURI(session, path);
   }
 
+  @Override
   public boolean isEmpty()
   {
     synchronized (getViewMonitor())
@@ -659,6 +683,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public CDOResourceNode[] getElements()
   {
     List<CDOResourceNode> elements = new ArrayList<CDOResourceNode>();
@@ -705,6 +730,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
       options().addChangeSubscriptionPolicy(new CDOAdapterPolicy()
       {
+        @Override
         public boolean isValid(EObject eObject, Adapter adapter)
         {
           return eObject == rootResource;
@@ -726,6 +752,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return null;
   }
 
+  @Override
   public CDOURIHandler getURIHandler()
   {
     return uriHandler;
@@ -765,6 +792,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public boolean setBranch(CDOBranch branch)
   {
     synchronized (getViewMonitor())
@@ -782,6 +810,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public boolean setBranch(CDOBranch branch, IProgressMonitor monitor)
   {
     synchronized (getViewMonitor())
@@ -799,6 +828,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public boolean setTimeStamp(long timeStamp)
   {
     synchronized (getViewMonitor())
@@ -816,6 +846,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public boolean setTimeStamp(long timeStamp, IProgressMonitor monitor)
   {
     synchronized (getViewMonitor())
@@ -833,17 +864,20 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public boolean setBranchPoint(CDOBranch branch, long timeStamp)
   {
     return setBranchPoint(branch, timeStamp, null);
   }
 
+  @Override
   public boolean setBranchPoint(CDOBranch branch, long timeStamp, IProgressMonitor monitor)
   {
     CDOBranchPoint branchPoint = branch.getPoint(timeStamp);
     return setBranchPoint(branchPoint, monitor);
   }
 
+  @Override
   public boolean setBranchPoint(CDOBranchPoint branchPoint)
   {
     return setBranchPoint(branchPoint, null);
@@ -880,11 +914,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return CDOBranchUtil.copyBranchPoint(branchPoint);
   }
 
+  @Override
   public void waitForUpdate(long updateTime)
   {
     waitForUpdate(updateTime, NO_TIMEOUT);
   }
 
+  @Override
   public CDOBranch getBranch()
   {
     synchronized (getViewMonitor())
@@ -902,6 +938,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public long getTimeStamp()
   {
     synchronized (getViewMonitor())
@@ -924,16 +961,19 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     fireEvent(new ViewTargetChangedEvent(oldBranchPoint, branchPoint), listeners);
   }
 
+  @Override
   public boolean isDirty()
   {
     return false;
   }
 
+  @Override
   public boolean hasConflict()
   {
     return false;
   }
 
+  @Override
   public boolean hasResource(String path)
   {
     synchronized (getViewMonitor())
@@ -957,11 +997,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public CDOQueryImpl createQuery(String language, String queryString)
   {
     return createQuery(language, queryString, null);
   }
 
+  @Override
   public CDOQueryImpl createQuery(String language, String queryString, Object context)
   {
     checkActive();
@@ -980,6 +1022,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public CDOResourceNode getResourceNode(String path) throws CDOResourceNodeNotFoundException
   {
     synchronized (getViewMonitor())
@@ -1032,6 +1075,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public void setResourcePathCache(Map<String, CDOID> resourcePathCache)
   {
     synchronized (getViewMonitor())
@@ -1053,6 +1097,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
    * If <code>delta == null</code> the cache is cleared unconditionally.
    * If <code>delta != null</code> the cache is cleared only if the delta can have an impact on the resource tree structure.
    */
+  @Override
   public void clearResourcePathCacheIfNecessary(CDORevisionDelta delta)
   {
     synchronized (getViewMonitor())
@@ -1086,6 +1131,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   /**
    * @return never <code>null</code>
    */
+  @Override
   public CDOID getResourceNodeID(String path)
   {
     if (StringUtil.isEmpty(path))
@@ -1316,6 +1362,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return revision;
   }
 
+  @Override
   public CDOLockState[] getLockStatesOfObjects(Collection<? extends CDOObject> objects)
   {
     List<CDOID> ids = new ArrayList<CDOID>();
@@ -1331,6 +1378,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return getLockStates(ids);
   }
 
+  @Override
   public List<InternalCDOObject> getObjectsList()
   {
     synchronized (getViewMonitor())
@@ -1357,11 +1405,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public CDOResource getResource(String path) throws CDOResourceNodeNotFoundException
   {
     return getResource(path, true);
   }
 
+  @Override
   public CDOResource getResource(String path, boolean loadOnDemand) throws CDOResourceNodeNotFoundException
   {
     checkActive();
@@ -1402,16 +1452,19 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public CDOTextResource getTextResource(String path) throws CDOResourceNodeNotFoundException
   {
     return (CDOTextResource)getResourceNode(path);
   }
 
+  @Override
   public CDOBinaryResource getBinaryResource(String path) throws CDOResourceNodeNotFoundException
   {
     return (CDOBinaryResource)getResourceNode(path);
   }
 
+  @Override
   public CDOResourceFolder getResourceFolder(String path) throws CDOResourceNodeNotFoundException
   {
     return (CDOResourceFolder)getResourceNode(path);
@@ -1452,6 +1505,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     } while (resources.size() > size);
   }
 
+  @Override
   public final List<CDOResourceNode> queryResources(CDOResourceFolder folder, String name, boolean exactMatch)
   {
     synchronized (getViewMonitor())
@@ -1485,6 +1539,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public final CloseableIterator<CDOResourceNode> queryResourcesAsync(CDOResourceFolder folder, String name, boolean exactMatch)
   {
     synchronized (getViewMonitor())
@@ -1517,6 +1572,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return query;
   }
 
+  @Override
   public final <T extends EObject> List<T> queryInstances(EClass type)
   {
     synchronized (getViewMonitor())
@@ -1551,11 +1607,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public final <T extends EObject> CloseableIterator<T> queryInstancesAsync(EClass type)
   {
     return queryInstancesAsync(type, false);
   }
 
+  @Override
   public final <T extends EObject> CloseableIterator<T> queryInstancesAsync(EClass type, boolean exact)
   {
     if (exact && (type.isInterface() || type.isAbstract()))
@@ -1597,11 +1655,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return query;
   }
 
+  @Override
   public final List<CDOObjectReference> queryXRefs(CDOObject targetObject, EReference... sourceReferences)
   {
     return queryXRefs(Collections.singleton(targetObject), sourceReferences);
   }
 
+  @Override
   public final List<CDOObjectReference> queryXRefs(Set<CDOObject> targetObjects, EReference... sourceReferences)
   {
     synchronized (getViewMonitor())
@@ -1636,6 +1696,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public final CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects, EReference... sourceReferences)
   {
     synchronized (getViewMonitor())
@@ -1776,16 +1837,19 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public InternalCDORevision getRevision(CDOID id)
   {
     return getRevision(id, true);
   }
 
+  @Override
   public InternalCDOObject getObject(CDOID id)
   {
     return getObject(id, true);
   }
 
+  @Override
   public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
   {
     if (CDOIDUtil.isNull(id))
@@ -1886,6 +1950,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public boolean isObjectNew(CDOID id)
   {
     return id.isTemporary();
@@ -1894,6 +1959,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   /**
    * @since 2.0
    */
+  @Override
   public <T extends EObject> T getObject(T objectFromDifferentView)
   {
     checkActive();
@@ -1941,6 +2007,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public boolean isObjectRegistered(CDOID id)
   {
     checkActive();
@@ -2133,6 +2200,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public CDOID provideCDOID(Object idOrObject)
   {
     synchronized (getViewMonitor())
@@ -2192,6 +2260,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public Object convertObjectToID(Object potentialObject)
   {
     return convertObjectToID(potentialObject, false);
@@ -2200,6 +2269,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   /**
    * @since 2.0
    */
+  @Override
   public Object convertObjectToID(Object potentialObject, boolean onlyPersistedID)
   {
     if (potentialObject instanceof CDOID)
@@ -2291,6 +2361,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public Object convertIDToObject(Object potentialID)
   {
     if (potentialID instanceof CDOID)
@@ -2333,6 +2404,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   /**
    * @since 2.0
    */
+  @Override
   public void attachResource(CDOResourceImpl resource)
   {
     synchronized (getViewMonitor())
@@ -2409,6 +2481,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   /**
    * @deprecated No longer supported.
    */
+  @Override
   @Deprecated
   public void registerProxyResource(CDOResourceImpl resource)
   {
@@ -2436,6 +2509,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     registerObject(object);
   }
 
+  @Override
   public void registerObject(InternalCDOObject object)
   {
     synchronized (getViewMonitor())
@@ -2472,6 +2546,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public void deregisterObject(InternalCDOObject object)
   {
     synchronized (getViewMonitor())
@@ -2569,6 +2644,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public void remapObject(CDOID oldID)
   {
     synchronized (getViewMonitor())
@@ -2601,21 +2677,25 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public void addObjectHandler(CDOObjectHandler handler)
   {
     objectHandlers.add(handler);
   }
 
+  @Override
   public void removeObjectHandler(CDOObjectHandler handler)
   {
     objectHandlers.remove(handler);
   }
 
+  @Override
   public CDOObjectHandler[] getObjectHandlers()
   {
     return objectHandlers.get();
   }
 
+  @Override
   public void handleObjectStateChanged(InternalCDOObject object, CDOState oldState, CDOState newState)
   {
     CDOObjectHandler[] handlers = getObjectHandlers();
@@ -2641,16 +2721,19 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public void addRegistrationHandler(CDORegistrationHandler handler)
   {
     registrationHandlers.add(handler);
   }
 
+  @Override
   public void removeRegistrationHandler(CDORegistrationHandler handler)
   {
     registrationHandlers.remove(handler);
   }
 
+  @Override
   public CDORegistrationHandler[] getRegistrationHandlers()
   {
     return registrationHandlers.get();
@@ -2818,6 +2901,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return false;
   }
 
+  @Override
   @Deprecated
   public int reload(CDOObject... objects)
   {
@@ -2859,6 +2943,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  @Override
   public void close()
   {
     LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
@@ -2867,11 +2952,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   /**
    * @since 2.0
    */
+  @Override
   public boolean isClosed()
   {
     return !isActive();
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
@@ -2949,6 +3036,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return getResourceSet();
   }
 
+  @Override
   public void collectViewedRevisions(Map<CDOID, InternalCDORevision> revisions)
   {
     synchronized (getViewMonitor())
@@ -2992,6 +3080,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return CDOStateMachine.INSTANCE.readNoLoad(object);
   }
 
+  @Override
   public CDOChangeSetData compareRevisions(CDOBranchPoint source)
   {
     synchronized (getViewMonitor())
@@ -3169,6 +3258,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       this.timeStamp = timeStamp;
     }
 
+    @Override
     public long getTimeStamp()
     {
       return timeStamp;
@@ -3204,11 +3294,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       this.branchPoint = CDOBranchUtil.copyBranchPoint(branchPoint);
     }
 
+    @Override
     public CDOBranchPoint getOldBranchPoint()
     {
       return oldBranchPoint;
     }
 
+    @Override
     public CDOBranchPoint getBranchPoint()
     {
       return branchPoint;

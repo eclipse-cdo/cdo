@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2009, 2011, 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2009, 2011, 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -111,6 +111,7 @@ public abstract class SashComposite extends Composite implements INotifier
   /**
    * @since 2.0
    */
+  @Override
   public void addListener(IListener listener)
   {
     notifier.addListener(listener);
@@ -119,6 +120,7 @@ public abstract class SashComposite extends Composite implements INotifier
   /**
    * @since 2.0
    */
+  @Override
   public IListener[] getListeners()
   {
     return notifier.getListeners();
@@ -127,6 +129,7 @@ public abstract class SashComposite extends Composite implements INotifier
   /**
    * @since 2.0
    */
+  @Override
   public boolean hasListeners()
   {
     return notifier.hasListeners();
@@ -135,6 +138,7 @@ public abstract class SashComposite extends Composite implements INotifier
   /**
    * @since 2.0
    */
+  @Override
   public void removeListener(IListener listener)
   {
     notifier.removeListener(listener);
@@ -285,6 +289,7 @@ public abstract class SashComposite extends Composite implements INotifier
     {
     }
 
+    @Override
     public void handleEvent(Event e)
     {
       Rectangle sashRect = sash.getBounds();

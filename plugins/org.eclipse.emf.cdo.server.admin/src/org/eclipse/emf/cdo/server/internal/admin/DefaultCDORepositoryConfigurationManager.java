@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -121,11 +121,13 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
     return container;
   }
 
+  @Override
   public void setManagedContainer(IManagedContainer container)
   {
     this.container = container;
   }
 
+  @Override
   public void setAdminRepository(InternalRepository adminRepository)
   {
     this.adminRepository = adminRepository;
@@ -140,6 +142,7 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
     this.catalogPath = StringUtil.isEmpty(catalogPath) ? DEFAULT_CATALOG_PATH : catalogPath;
   }
 
+  @Override
   public IRepository addRepository(String name, Document configurationXML)
   {
     checkActive();
@@ -167,12 +170,14 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
     }
   }
 
+  @Override
   public void removeRepository(IRepository repository)
   {
     checkActive();
     deleteConfiguration(repository.getName());
   }
 
+  @Override
   public boolean canRemoveRepository(IRepository repository)
   {
     checkActive();
@@ -180,6 +185,7 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
     return isInCatalog(repository.getName());
   }
 
+  @Override
   public Map<String, IRepository> getRepositories()
   {
     checkActive();
@@ -200,6 +206,7 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
     return result;
   }
 
+  @Override
   public void authenticateAdministrator()
   {
     requireSecurityManager();
@@ -307,6 +314,7 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
     requireSecurityManager().modify(new RealmOperation()
     {
 
+      @Override
       public void execute(Realm realm)
       {
         try
@@ -400,6 +408,7 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
   {
     modify(new CatalogOperation<RepositoryConfiguration>()
     {
+      @Override
       public RepositoryConfiguration execute(RepositoryCatalog catalog) throws Exception
       {
         RepositoryConfiguration result = CatalogFactory.eINSTANCE.createRepositoryConfiguration();
@@ -427,6 +436,7 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
   {
     modify(new CatalogOperation<Void>()
     {
+      @Override
       public Void execute(RepositoryCatalog catalog) throws Exception
       {
         RepositoryConfiguration configuration = catalog.getRepository(repositoryName);
@@ -506,6 +516,7 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
 
     requireSecurityManager().modify(new RealmOperation()
     {
+      @Override
       public void execute(Realm realm)
       {
         CDOTransaction initialTransaction = (CDOTransaction)realm.cdoView();
@@ -528,6 +539,7 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
     // Get the read-only view of the catalog now from the security manager's view
     requireSecurityManager().read(new RealmOperation()
     {
+      @Override
       public void execute(Realm realm)
       {
         catalog = realm.cdoView().getObject(catalog);

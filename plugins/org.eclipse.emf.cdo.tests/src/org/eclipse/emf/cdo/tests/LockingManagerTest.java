@@ -168,6 +168,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
     Runnable step1 = new Runnable()
     {
+      @Override
       public void run()
       {
         Set<Integer> keys = new HashSet<Integer>();

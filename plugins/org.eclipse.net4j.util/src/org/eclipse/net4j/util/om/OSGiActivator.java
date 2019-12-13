@@ -50,6 +50,7 @@ public abstract class OSGiActivator implements BundleActivator
     return omBundle;
   }
 
+  @Override
   public final void start(BundleContext context) throws Exception
   {
     bundleContext = context;
@@ -77,6 +78,7 @@ public abstract class OSGiActivator implements BundleActivator
     }
   }
 
+  @Override
   public final void stop(BundleContext context) throws Exception
   {
     OSGiActivator.traceStop(context);

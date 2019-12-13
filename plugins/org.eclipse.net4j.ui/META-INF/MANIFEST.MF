@@ -1,13 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.ui;singleton:=true
-Bundle-Version: 4.2.600.qualifier
+Bundle-Version: 4.3.0.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.net4j.internal.ui.bundle.OM$Activator
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.net4j;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
@@ -15,9 +15,9 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.net4j.ui.shared;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.net4j.jvm;bundle-version="[4.0.0,5.0.0)";resolution:=optional,
  org.eclipse.net4j.tcp;bundle-version="[4.0.0,5.0.0)";resolution:=optional
-Export-Package: org.eclipse.net4j.internal.ui.bundle;version="4.2.600";x-internal:=true,
- org.eclipse.net4j.internal.ui.container;version="4.2.600";x-internal:=true,
- org.eclipse.net4j.internal.ui.messages;version="4.2.600";x-internal:=true,
- org.eclipse.net4j.internal.ui.views;version="4.2.600";x-friends:="org.eclipse.emf.cdo.ui.admin",
- org.eclipse.net4j.ui;version="4.2.600"
+Export-Package: org.eclipse.net4j.internal.ui.bundle;version="4.3.0";x-internal:=true,
+ org.eclipse.net4j.internal.ui.container;version="4.3.0";x-internal:=true,
+ org.eclipse.net4j.internal.ui.messages;version="4.3.0";x-internal:=true,
+ org.eclipse.net4j.internal.ui.views;version="4.3.0";x-friends:="org.eclipse.emf.cdo.ui.admin",
+ org.eclipse.net4j.ui;version="4.3.0"
 Automatic-Module-Name: org.eclipse.net4j.ui

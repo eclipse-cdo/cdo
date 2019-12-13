@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -92,26 +92,31 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     relativePath = Path.EMPTY;
   }
 
+  @Override
   public CDOTransfer getTransfer()
   {
     return transfer;
   }
 
+  @Override
   public CDOTransferElement getSource()
   {
     return source;
   }
 
+  @Override
   public CDOTransferMapping getParent()
   {
     return parent;
   }
 
+  @Override
   public boolean isRoot()
   {
     return parent == null;
   }
 
+  @Override
   public boolean isDirectory()
   {
     if (source == null)
@@ -122,21 +127,25 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     return source.isDirectory();
   }
 
+  @Override
   public String getName()
   {
     return relativePath.lastSegment();
   }
 
+  @Override
   public void setName(String name)
   {
     setRelativePath(relativePath.removeLastSegments(1).append(name));
   }
 
+  @Override
   public IPath getRelativePath()
   {
     return relativePath;
   }
 
+  @Override
   public void setRelativePath(IPath path)
   {
     if (!ObjectUtil.equals(relativePath, path))
@@ -148,11 +157,13 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     }
   }
 
+  @Override
   public void setRelativePath(String path)
   {
     setRelativePath(new Path(path));
   }
 
+  @Override
   public void accept(Visitor visitor)
   {
     if (visitor.visit(this) && children != null)
@@ -164,6 +175,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     }
   }
 
+  @Override
   public CDOTransferMapping[] getChildren()
   {
     if (children == null || children.isEmpty())
@@ -176,6 +188,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     return result;
   }
 
+  @Override
   public CDOTransferMapping getChild(IPath path)
   {
     if (path.isEmpty())
@@ -195,6 +208,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     return null;
   }
 
+  @Override
   public CDOTransferMapping getChild(String path)
   {
     return getChild(new Path(path));
@@ -226,6 +240,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     }
   }
 
+  @Override
   public void unmap()
   {
     transfer.unmap(this);
@@ -235,11 +250,13 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     }
   }
 
+  @Override
   public CDOTransferType getTransferType()
   {
     return transferType;
   }
 
+  @Override
   public void setTransferType(CDOTransferType transferType)
   {
     if (!ObjectUtil.equals(this.transferType, transferType))
@@ -250,6 +267,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     }
   }
 
+  @Override
   public IPath getFullPath()
   {
     IPath relativePath = getRelativePath();
@@ -262,6 +280,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     return path.append(relativePath);
   }
 
+  @Override
   public Status getStatus()
   {
     if (status == null)
@@ -322,6 +341,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     }
   }
 
+  @Override
   public CDOTransferElement getTarget()
   {
     CDOTransferSystem targetSystem = transfer.getTargetSystem();
@@ -329,6 +349,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
     return targetSystem.getElement(fullPath);
   }
 
+  @Override
   public int compareTo(CDOTransferMapping o)
   {
     boolean directory = isDirectory();

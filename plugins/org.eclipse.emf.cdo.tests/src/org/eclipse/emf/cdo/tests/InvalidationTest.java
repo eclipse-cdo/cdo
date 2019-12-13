@@ -73,6 +73,7 @@ public class InvalidationTest extends AbstractCDOTest
         this.nr = nr;
       }
 
+      @Override
       public void run()
       {
         for (int i = 0; i < 10; i++)
@@ -263,6 +264,7 @@ public class InvalidationTest extends AbstractCDOTest
     final CountDownLatch latch = new CountDownLatch(1);
     viewB.getSession().addListener(new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof CDOSessionInvalidationEvent)

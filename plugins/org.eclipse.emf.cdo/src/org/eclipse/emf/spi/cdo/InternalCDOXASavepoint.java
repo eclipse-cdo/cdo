@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -25,14 +25,19 @@ import java.util.List;
  */
 public interface InternalCDOXASavepoint extends CDOXASavepoint, InternalCDOUserSavepoint
 {
+  @Override
   public InternalCDOXATransaction getTransaction();
 
+  @Override
   public InternalCDOXASavepoint getFirstSavePoint();
 
+  @Override
   public InternalCDOXASavepoint getPreviousSavepoint();
 
+  @Override
   public InternalCDOXASavepoint getNextSavepoint();
 
+  @Override
   public List<CDOSavepoint> getSavepoints();
 
   public void setSavepoints(List<CDOSavepoint> savepoints);

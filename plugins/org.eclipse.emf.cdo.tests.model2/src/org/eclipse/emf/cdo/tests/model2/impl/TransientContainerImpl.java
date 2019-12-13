@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -67,6 +67,7 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getAttrBefore()
   {
     return (String)eGet(Model2Package.eINSTANCE.getTransientContainer_AttrBefore(), true);
@@ -76,6 +77,7 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrBefore(String newAttrBefore)
   {
     eSet(Model2Package.eINSTANCE.getTransientContainer_AttrBefore(), newAttrBefore);
@@ -85,6 +87,7 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PersistentContainment getParent()
   {
     return (PersistentContainment)eGet(Model2Package.eINSTANCE.getTransientContainer_Parent(), true);
@@ -94,6 +97,7 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setParent(PersistentContainment newParent)
   {
     eSet(Model2Package.eINSTANCE.getTransientContainer_Parent(), newParent);
@@ -103,6 +107,7 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getAttrAfter()
   {
     return (String)eGet(Model2Package.eINSTANCE.getTransientContainer_AttrAfter(), true);
@@ -112,6 +117,7 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttrAfter(String newAttrAfter)
   {
     eSet(Model2Package.eINSTANCE.getTransientContainer_AttrAfter(), newAttrAfter);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2014 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2014, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -67,6 +67,7 @@ public interface ISecurityManagementContext
    */
   public static class Default implements ISecurityManagementContext
   {
+    @Override
     public CDOView connect(CDOSession session)
     {
       if (session.isClosed())
@@ -82,11 +83,13 @@ public interface ISecurityManagementContext
       return session.openView();
     }
 
+    @Override
     public void disconnect(CDOView view)
     {
       view.close();
     }
 
+    @Override
     public CDOResource getSecurityResource(CDOView view)
     {
       CDOResource result = null;

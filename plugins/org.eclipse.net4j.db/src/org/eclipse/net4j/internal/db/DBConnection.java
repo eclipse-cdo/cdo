@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,11 +66,13 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
     }
   }
 
+  @Override
   public DBDatabase getDatabase()
   {
     return database;
   }
 
+  @Override
   public String getUserID()
   {
     return database.getUserID();
@@ -91,6 +93,7 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
     return closed;
   }
 
+  @Override
   public IDBSchemaTransaction openSchemaTransaction()
   {
     DBSchemaTransaction schemaTransaction = database.openSchemaTransaction(this);
@@ -125,11 +128,13 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public IDBPreparedStatement prepareStatement(String sql, ReuseProbability reuseProbability)
   {
     return prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY, reuseProbability);
   }
 
+  @Override
   public IDBPreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency, ReuseProbability reuseProbability)
   {
     database.beginSchemaAccess(false);

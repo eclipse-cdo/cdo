@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2014-2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2014-2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -53,11 +53,13 @@ public class CDORemoveFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl im
     return UNKNOWN_VALUE;
   }
 
+  @Override
   public Type getType()
   {
     return Type.REMOVE;
   }
 
+  @Override
   public CDOFeatureDelta copy()
   {
     CDORemoveFeatureDeltaImpl delta = new CDORemoveFeatureDeltaImpl(getFeature(), getIndex());
@@ -65,6 +67,7 @@ public class CDORemoveFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl im
     return delta;
   }
 
+  @Override
   public Object applyTo(CDORevision revision)
   {
     EStructuralFeature feature = getFeature();
@@ -80,11 +83,13 @@ public class CDORemoveFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl im
     return list.remove(index);
   }
 
+  @Override
   public void accept(CDOFeatureDeltaVisitor visitor)
   {
     visitor.visit(this);
   }
 
+  @Override
   public void affectIndices(ListTargetAdding sources[], int[] indices)
   {
     int index = getIndex();
@@ -107,6 +112,7 @@ public class CDORemoveFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl im
     }
   }
 
+  @Override
   public int projectIndex(int index)
   {
     if (index >= getIndex())

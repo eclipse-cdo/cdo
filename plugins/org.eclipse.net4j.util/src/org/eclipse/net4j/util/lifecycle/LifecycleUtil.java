@@ -185,6 +185,7 @@ public final class LifecycleUtil
         final CountDownLatch latch = new CountDownLatch(1);
         IListener adapter = new IListener()
         {
+          @Override
           public void notifyEvent(IEvent event)
           {
             if (event instanceof ILifecycleEvent)
@@ -394,6 +395,7 @@ public final class LifecycleUtil
       this.delegate = delegate;
     }
 
+    @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
     {
       String name = method.getName();

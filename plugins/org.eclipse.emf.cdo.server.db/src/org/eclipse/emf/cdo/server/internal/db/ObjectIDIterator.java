@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -53,6 +53,7 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
 
   }
 
+  @Override
   public void close()
   {
     closeCurrentResultSet();
@@ -60,6 +61,7 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
     closed = true;
   }
 
+  @Override
   public boolean isClosed()
   {
     return closed;
@@ -75,6 +77,7 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
     return accessor;
   }
 
+  @Override
   public boolean hasNext()
   {
     if (closed)
@@ -119,6 +122,7 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
     DBUtil.close(currentResultSet);
   }
 
+  @Override
   public CDOID next()
   {
     if (nextID == null)
@@ -129,6 +133,7 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
     return nextID;
   }
 
+  @Override
   public void remove()
   {
     throw new UnsupportedOperationException();

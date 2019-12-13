@@ -44,31 +44,37 @@ public class SingleDeltaContainerEvent<E> extends Event implements IContainerEve
     return (IContainer<E>)super.getSource();
   }
 
+  @Override
   public boolean isEmpty()
   {
     return false;
   }
 
+  @Override
   public IContainerDelta<E>[] getDeltas()
   {
     return deltas;
   }
 
+  @Override
   public IContainerDelta<E> getDelta() throws IllegalStateException
   {
     return deltas[0];
   }
 
+  @Override
   public E getDeltaElement() throws IllegalStateException
   {
     return deltas[0].getElement();
   }
 
+  @Override
   public IContainerDelta.Kind getDeltaKind() throws IllegalStateException
   {
     return deltas[0].getKind();
   }
 
+  @Override
   public void accept(IContainerEventVisitor<E> visitor)
   {
     E element = deltas[0].getElement();

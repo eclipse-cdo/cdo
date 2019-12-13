@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -64,6 +64,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   model4Factory eINSTANCE = org.eclipse.emf.cdo.tests.model4.legacy.impl.model4FactoryImpl.init();
 
+  @Override
   /**
    * Returns a new object of class '<em>Ref Single Contained</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -72,6 +73,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   RefSingleContained createRefSingleContained();
 
+  @Override
   /**
    * Returns a new object of class '<em>Single Contained Element</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -80,6 +82,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   SingleContainedElement createSingleContainedElement();
 
+  @Override
   /**
    * Returns a new object of class '<em>Ref Single Non Contained</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -88,6 +91,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   RefSingleNonContained createRefSingleNonContained();
 
+  @Override
   /**
    * Returns a new object of class '<em>Single Non Contained Element</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
@@ -97,6 +101,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   SingleNonContainedElement createSingleNonContainedElement();
 
+  @Override
   /**
    * Returns a new object of class '<em>Ref Multi Contained</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -105,6 +110,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   RefMultiContained createRefMultiContained();
 
+  @Override
   /**
    * Returns a new object of class '<em>Multi Contained Element</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -113,6 +119,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   MultiContainedElement createMultiContainedElement();
 
+  @Override
   /**
    * Returns a new object of class '<em>Ref Multi Non Contained</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -121,6 +128,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   RefMultiNonContained createRefMultiNonContained();
 
+  @Override
   /**
    * Returns a new object of class '<em>Multi Non Contained Element</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -129,6 +137,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   MultiNonContainedElement createMultiNonContainedElement();
 
+  @Override
   /**
    * Returns a new object of class '<em>Ref Multi Non Contained Unsettable</em>'.
    * <!-- begin-user-doc --> <!--
@@ -138,6 +147,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   RefMultiNonContainedUnsettable createRefMultiNonContainedUnsettable();
 
+  @Override
   /**
    * Returns a new object of class '<em>Multi Non Contained Unsettable Element</em>'.
    * <!-- begin-user-doc --> <!--
@@ -147,6 +157,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   MultiNonContainedUnsettableElement createMultiNonContainedUnsettableElement();
 
+  @Override
   /**
    * Returns a new object of class '<em>Ref Single Contained NPL</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -155,6 +166,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   RefSingleContainedNPL createRefSingleContainedNPL();
 
+  @Override
   /**
    * Returns a new object of class '<em>Ref Single Non Contained NPL</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
@@ -164,6 +176,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   RefSingleNonContainedNPL createRefSingleNonContainedNPL();
 
+  @Override
   /**
    * Returns a new object of class '<em>Ref Multi Contained NPL</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -172,6 +185,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   RefMultiContainedNPL createRefMultiContainedNPL();
 
+  @Override
   /**
    * Returns a new object of class '<em>Ref Multi Non Contained NPL</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -180,6 +194,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   RefMultiNonContainedNPL createRefMultiNonContainedNPL();
 
+  @Override
   /**
    * Returns a new object of class '<em>Contained Element No Opposite</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
@@ -189,6 +204,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ContainedElementNoOpposite createContainedElementNoOpposite();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen Ref Single Contained</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -197,6 +213,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenRefSingleContained createGenRefSingleContained();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen Ref Single Non Contained</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
@@ -206,6 +223,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenRefSingleNonContained createGenRefSingleNonContained();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen Ref Multi Contained</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -214,6 +232,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenRefMultiContained createGenRefMultiContained();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen Ref Multi Non Contained</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -222,6 +241,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenRefMultiNonContained createGenRefMultiNonContained();
 
+  @Override
   /**
    * Returns a new object of class '<em>Impl Single Ref Container</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -230,6 +250,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ImplSingleRefContainer createImplSingleRefContainer();
 
+  @Override
   /**
    * Returns a new object of class '<em>Impl Single Ref Contained Element</em>'.
    * <!-- begin-user-doc --> <!--
@@ -239,6 +260,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ImplSingleRefContainedElement createImplSingleRefContainedElement();
 
+  @Override
   /**
    * Returns a new object of class '<em>Impl Single Ref Non Container</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
@@ -248,6 +270,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ImplSingleRefNonContainer createImplSingleRefNonContainer();
 
+  @Override
   /**
    * Returns a new object of class '<em>Impl Single Ref Non Contained Element</em>'.
    * <!-- begin-user-doc --> <!--
@@ -257,6 +280,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ImplSingleRefNonContainedElement createImplSingleRefNonContainedElement();
 
+  @Override
   /**
    * Returns a new object of class '<em>Impl Multi Ref Non Container</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
@@ -266,6 +290,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ImplMultiRefNonContainer createImplMultiRefNonContainer();
 
+  @Override
   /**
    * Returns a new object of class '<em>Impl Multi Ref Non Contained Element</em>'.
    * <!-- begin-user-doc --> <!--
@@ -275,6 +300,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ImplMultiRefNonContainedElement createImplMultiRefNonContainedElement();
 
+  @Override
   /**
    * Returns a new object of class '<em>Impl Multi Ref Container</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -283,6 +309,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ImplMultiRefContainer createImplMultiRefContainer();
 
+  @Override
   /**
    * Returns a new object of class '<em>Impl Multi Ref Contained Element</em>'.
    * <!-- begin-user-doc --> <!--
@@ -292,6 +319,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ImplMultiRefContainedElement createImplMultiRefContainedElement();
 
+  @Override
   /**
    * Returns a new object of class '<em>Impl Single Ref Container NPL</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
@@ -301,6 +329,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ImplSingleRefContainerNPL createImplSingleRefContainerNPL();
 
+  @Override
   /**
    * Returns a new object of class '<em>Impl Single Ref Non Container NPL</em>'.
    * <!-- begin-user-doc --> <!--
@@ -310,6 +339,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ImplSingleRefNonContainerNPL createImplSingleRefNonContainerNPL();
 
+  @Override
   /**
    * Returns a new object of class '<em>Impl Multi Ref Container NPL</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
@@ -319,6 +349,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ImplMultiRefContainerNPL createImplMultiRefContainerNPL();
 
+  @Override
   /**
    * Returns a new object of class '<em>Impl Multi Ref Non Container NPL</em>'.
    * <!-- begin-user-doc --> <!--
@@ -328,6 +359,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ImplMultiRefNonContainerNPL createImplMultiRefNonContainerNPL();
 
+  @Override
   /**
    * Returns a new object of class '<em>Impl Contained Element NPL</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -336,6 +368,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ImplContainedElementNPL createImplContainedElementNPL();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen Ref Multi NU Non Contained</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
@@ -345,6 +378,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenRefMultiNUNonContained createGenRefMultiNUNonContained();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen Ref Map Non Contained</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -353,6 +387,7 @@ public interface model4Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenRefMapNonContained createGenRefMapNonContained();
 
+  @Override
   /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->

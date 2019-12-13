@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2008, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2008, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -97,12 +97,14 @@ public abstract class FacilityPane extends Composite implements IListener
     return control;
   }
 
+  @Override
   public final void notifyEvent(final IEvent event)
   {
     try
     {
       control.getDisplay().syncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           try

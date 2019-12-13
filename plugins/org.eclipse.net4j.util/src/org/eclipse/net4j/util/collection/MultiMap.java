@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -52,6 +52,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
   /**
    * @category WRITE
    */
+  @Override
   public void clear()
   {
     throw new UnsupportedOperationException();
@@ -60,6 +61,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
   /**
    * @category WRITE
    */
+  @Override
   public V put(K key, V value)
   {
     throw new UnsupportedOperationException();
@@ -68,6 +70,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
   /**
    * @category WRITE
    */
+  @Override
   public void putAll(Map<? extends K, ? extends V> t)
   {
     throw new UnsupportedOperationException();
@@ -76,6 +79,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
   /**
    * @category WRITE
    */
+  @Override
   public V remove(Object key)
   {
     throw new UnsupportedOperationException();
@@ -84,6 +88,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
   /**
    * @category READ
    */
+  @Override
   public boolean containsKey(Object key)
   {
     return containsKey(key, getDelegateCount());
@@ -92,6 +97,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
   /**
    * @category READ
    */
+  @Override
   public boolean containsValue(Object value)
   {
     for (int i = 0; i < getDelegateCount(); i++)
@@ -112,6 +118,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
   /**
    * @category READ
    */
+  @Override
   public V get(Object key)
   {
     for (int i = 0; i < getDelegateCount(); i++)
@@ -132,6 +139,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
   /**
    * @category READ
    */
+  @Override
   public int size()
   {
     int size = 0;
@@ -162,6 +170,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
   /**
    * @category READ
    */
+  @Override
   public boolean isEmpty()
   {
     for (int i = 0; i < getDelegateCount(); i++)
@@ -179,6 +188,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     return true;
   }
 
+  @Override
   public synchronized Set<Map.Entry<K, V>> entrySet()
   {
     if (entries == null)
@@ -189,6 +199,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     return entries;
   }
 
+  @Override
   public synchronized Set<K> keySet()
   {
     if (keys == null)
@@ -199,6 +210,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
     return keys;
   }
 
+  @Override
   public synchronized Collection<V> values()
   {
     if (values == null)
@@ -403,6 +415,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
         /**
          * @category WRITE
          */
+        @Override
         public void remove()
         {
           throw new UnsupportedOperationException();
@@ -411,6 +424,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
         /**
          * @category READ
          */
+        @Override
         public boolean hasNext()
         {
           next = null;
@@ -451,6 +465,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
         /**
          * @category READ
          */
+        @Override
         public Map.Entry<K, V> next()
         {
           if (next == null)
@@ -578,6 +593,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
         /**
          * @category WRITE
          */
+        @Override
         public void remove()
         {
           throw new UnsupportedOperationException();
@@ -586,6 +602,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
         /**
          * @category READ
          */
+        @Override
         public boolean hasNext()
         {
           next = null;
@@ -626,6 +643,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
         /**
          * @category READ
          */
+        @Override
         public K next()
         {
           if (next == null)
@@ -749,6 +767,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
         /**
          * @category WRITE
          */
+        @Override
         public void remove()
         {
           throw new UnsupportedOperationException();
@@ -757,6 +776,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
         /**
          * @category READ
          */
+        @Override
         public boolean hasNext()
         {
           return delegateIt.hasNext();
@@ -765,6 +785,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
         /**
          * @category READ
          */
+        @Override
         public V next()
         {
           return delegateIt.next().getValue();

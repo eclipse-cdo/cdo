@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -1061,6 +1061,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   int STRING_TO_EOBJECT_FEATURE_COUNT = 2;
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.RefSingleContained <em>Ref Single Contained</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1070,6 +1071,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getRefSingleContained();
 
+  @Override
   /**
    * Returns the meta object for the containment reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefSingleContained#getElement <em>Element</em>}'. <!--
@@ -1082,6 +1084,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getRefSingleContained_Element();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.SingleContainedElement <em>Single Contained Element</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1091,6 +1094,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getSingleContainedElement();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model4.SingleContainedElement#getName <em>Name</em>}'.
    * <!-- begin-user-doc
@@ -1102,6 +1106,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getSingleContainedElement_Name();
 
+  @Override
   /**
    * Returns the meta object for the container reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.SingleContainedElement#getParent <em>Parent</em>}'. <!--
@@ -1114,6 +1119,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getSingleContainedElement_Parent();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.RefSingleNonContained <em>Ref Single Non Contained</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1123,6 +1129,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getRefSingleNonContained();
 
+  @Override
   /**
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContained#getElement <em>Element</em>}'. <!--
@@ -1135,6 +1142,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getRefSingleNonContained_Element();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.SingleNonContainedElement <em>Single Non Contained Element</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1144,6 +1152,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getSingleNonContainedElement();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.SingleNonContainedElement#getName <em>Name</em>}'. <!--
@@ -1156,6 +1165,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getSingleNonContainedElement_Name();
 
+  @Override
   /**
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.SingleNonContainedElement#getParent <em>Parent</em>}'. <!--
@@ -1168,6 +1178,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getSingleNonContainedElement_Parent();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.RefMultiContained <em>Ref Multi Contained</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1177,6 +1188,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getRefMultiContained();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContained#getElements <em>Elements</em>}'. <!--
@@ -1189,6 +1201,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getRefMultiContained_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.MultiContainedElement <em>Multi Contained Element</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1198,6 +1211,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getMultiContainedElement();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model4.MultiContainedElement#getName <em>Name</em>}'.
    * <!-- begin-user-doc
@@ -1209,6 +1223,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getMultiContainedElement_Name();
 
+  @Override
   /**
    * Returns the meta object for the container reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiContainedElement#getParent <em>Parent</em>}'. <!--
@@ -1221,6 +1236,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getMultiContainedElement_Parent();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContained <em>Ref Multi Non Contained</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1230,6 +1246,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getRefMultiNonContained();
 
+  @Override
   /**
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContained#getElements <em>Elements</em>}'. <!--
@@ -1242,6 +1259,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getRefMultiNonContained_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedElement <em>Multi Non Contained Element</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1251,6 +1269,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getMultiNonContainedElement();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedElement#getName <em>Name</em>}'. <!--
@@ -1263,6 +1282,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getMultiNonContainedElement_Name();
 
+  @Override
   /**
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedElement#getParent <em>Parent</em>}'. <!--
@@ -1275,6 +1295,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getMultiNonContainedElement_Parent();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable <em>Ref Multi Non Contained Unsettable</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1284,6 +1305,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getRefMultiNonContainedUnsettable();
 
+  @Override
   /**
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedUnsettable#getElements <em>Elements</em>}'. <!--
@@ -1296,6 +1318,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getRefMultiNonContainedUnsettable_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement <em>Multi Non Contained Unsettable Element</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1305,6 +1328,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getMultiNonContainedUnsettableElement();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedUnsettableElement#getName <em>Name</em>}'. <!--
@@ -1317,6 +1341,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getMultiNonContainedUnsettableElement_Name();
 
+  @Override
   /**
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.MultiNonContainedUnsettableElement#getParent <em>Parent</em>}'. <!--
@@ -1329,6 +1354,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getMultiNonContainedUnsettableElement_Parent();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.RefSingleContainedNPL <em>Ref Single Contained NPL</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1338,6 +1364,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getRefSingleContainedNPL();
 
+  @Override
   /**
    * Returns the meta object for the containment reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefSingleContainedNPL#getElement <em>Element</em>}'. <!--
@@ -1350,6 +1377,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getRefSingleContainedNPL_Element();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.RefSingleNonContainedNPL <em>Ref Single Non Contained NPL</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1359,6 +1387,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getRefSingleNonContainedNPL();
 
+  @Override
   /**
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefSingleNonContainedNPL#getElement <em>Element</em>}'. <!--
@@ -1371,6 +1400,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getRefSingleNonContainedNPL_Element();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.RefMultiContainedNPL <em>Ref Multi Contained NPL</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1380,6 +1410,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getRefMultiContainedNPL();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiContainedNPL#getElements <em>Elements</em>}'. <!--
@@ -1392,6 +1423,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getRefMultiContainedNPL_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL <em>Ref Multi Non Contained NPL</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1401,6 +1433,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getRefMultiNonContainedNPL();
 
+  @Override
   /**
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.RefMultiNonContainedNPL#getElements <em>Elements</em>}'. <!--
@@ -1413,6 +1446,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getRefMultiNonContainedNPL_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite <em>Contained Element No Opposite</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1422,6 +1456,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getContainedElementNoOpposite();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ContainedElementNoOpposite#getName <em>Name</em>}'. <!--
@@ -1434,6 +1469,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getContainedElementNoOpposite_Name();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.GenRefSingleContained <em>Gen Ref Single Contained</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1443,6 +1479,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenRefSingleContained();
 
+  @Override
   /**
    * Returns the meta object for the containment reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleContained#getElement <em>Element</em>}'. <!--
@@ -1455,6 +1492,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getGenRefSingleContained_Element();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained <em>Gen Ref Single Non Contained</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1464,6 +1502,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenRefSingleNonContained();
 
+  @Override
   /**
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefSingleNonContained#getElement <em>Element</em>}'. <!--
@@ -1476,6 +1515,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getGenRefSingleNonContained_Element();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.GenRefMultiContained <em>Gen Ref Multi Contained</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1485,6 +1525,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenRefMultiContained();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiContained#getElements <em>Elements</em>}'. <!--
@@ -1497,6 +1538,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getGenRefMultiContained_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.GenRefMultiNonContained <em>Gen Ref Multi Non Contained</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1506,6 +1548,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenRefMultiNonContained();
 
+  @Override
   /**
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNonContained#getElements <em>Elements</em>}'. <!--
@@ -1518,6 +1561,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getGenRefMultiNonContained_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainer <em>Impl Single Ref Container</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1527,6 +1571,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getImplSingleRefContainer();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainedElement <em>Impl Single Ref Contained Element</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1536,6 +1581,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getImplSingleRefContainedElement();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefContainedElement#getName <em>Name</em>}'. <!--
@@ -1548,6 +1594,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getImplSingleRefContainedElement_Name();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainer <em>Impl Single Ref Non Container</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1557,6 +1604,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getImplSingleRefNonContainer();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainedElement <em>Impl Single Ref Non Contained Element</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1566,6 +1614,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getImplSingleRefNonContainedElement();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ImplSingleRefNonContainedElement#getName <em>Name</em>}'. <!--
@@ -1578,6 +1627,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getImplSingleRefNonContainedElement_Name();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainer <em>Impl Multi Ref Non Container</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1587,6 +1637,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getImplMultiRefNonContainer();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainedElement <em>Impl Multi Ref Non Contained Element</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1596,6 +1647,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getImplMultiRefNonContainedElement();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefNonContainedElement#getName <em>Name</em>}'. <!--
@@ -1608,6 +1660,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getImplMultiRefNonContainedElement_Name();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainer <em>Impl Multi Ref Container</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1617,6 +1670,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getImplMultiRefContainer();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainedElement <em>Impl Multi Ref Contained Element</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1626,6 +1680,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getImplMultiRefContainedElement();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.ImplMultiRefContainedElement#getName <em>Name</em>}'. <!--
@@ -1638,6 +1693,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getImplMultiRefContainedElement_Name();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainerNPL <em>Impl Single Ref Container NPL</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1647,6 +1703,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getImplSingleRefContainerNPL();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainerNPL <em>Impl Single Ref Non Container NPL</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1656,6 +1713,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getImplSingleRefNonContainerNPL();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefContainerNPL <em>Impl Multi Ref Container NPL</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1665,6 +1723,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getImplMultiRefContainerNPL();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainerNPL <em>Impl Multi Ref Non Container NPL</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1674,6 +1733,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getImplMultiRefNonContainerNPL();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.ImplContainedElementNPL <em>Impl Contained Element NPL</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1683,6 +1743,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getImplContainedElementNPL();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained <em>Gen Ref Multi NU Non Contained</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1692,6 +1753,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenRefMultiNUNonContained();
 
+  @Override
   /**
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefMultiNUNonContained#getElements <em>Elements</em>}'. <!--
@@ -1704,6 +1766,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getGenRefMultiNUNonContained_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model4.GenRefMapNonContained <em>Gen Ref Map Non Contained</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1713,6 +1776,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenRefMapNonContained();
 
+  @Override
   /**
    * Returns the meta object for the map '
    * {@link org.eclipse.emf.cdo.tests.legacy.model4.GenRefMapNonContained#getElements <em>Elements</em>}'. <!--
@@ -1725,6 +1789,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getGenRefMapNonContained_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>String To EObject</em>}'.
    * <!-- begin-user-doc -->
@@ -1737,6 +1802,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getStringToEObject();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -1748,6 +1814,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getStringToEObject_Key();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
    * <!-- begin-user-doc -->
@@ -1759,6 +1826,7 @@ public interface model4Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getStringToEObject_Value();
 
+  @Override
   /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc --> <!-- end-user-doc -->

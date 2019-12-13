@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -81,6 +81,7 @@ public class TableLabelProvider<T> extends ManagedLabelProvider implements ITabl
     return columns.get(columnIndex);
   }
 
+  @Override
   public String getColumnText(Object element, int columnIndex)
   {
     @SuppressWarnings("unchecked")
@@ -94,6 +95,7 @@ public class TableLabelProvider<T> extends ManagedLabelProvider implements ITabl
     return text;
   }
 
+  @Override
   public Image getColumnImage(Object element, int columnIndex)
   {
     @SuppressWarnings("unchecked")
@@ -101,6 +103,7 @@ public class TableLabelProvider<T> extends ManagedLabelProvider implements ITabl
     return getColumn(columnIndex).getImage(t);
   }
 
+  @Override
   public Color getForeground(Object element, int columnIndex)
   {
     @SuppressWarnings("unchecked")
@@ -108,6 +111,7 @@ public class TableLabelProvider<T> extends ManagedLabelProvider implements ITabl
     return getColumn(columnIndex).getForeground(t);
   }
 
+  @Override
   public Color getBackground(Object element, int columnIndex)
   {
     @SuppressWarnings("unchecked")
@@ -115,6 +119,7 @@ public class TableLabelProvider<T> extends ManagedLabelProvider implements ITabl
     return getColumn(columnIndex).getBackground(t);
   }
 
+  @Override
   public Font getFont(Object element, int columnIndex)
   {
     @SuppressWarnings("unchecked")

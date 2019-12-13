@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -67,6 +67,7 @@ public class XRefsQueryHandler implements IQueryHandler
   {
   }
 
+  @Override
   public void executeQuery(CDOQueryInfo info, IQueryContext context)
   {
     try
@@ -250,16 +251,19 @@ public class XRefsQueryHandler implements IQueryHandler
       this.branchPoint = branchPoint;
     }
 
+    @Override
     public final CDOBranch getBranch()
     {
       return branchPoint.getBranch();
     }
 
+    @Override
     public final long getTimeStamp()
     {
       return branchPoint.getTimeStamp();
     }
 
+    @Override
     public final Map<CDOID, EClass> getTargetObjects()
     {
       if (targetObjects == null)
@@ -303,6 +307,7 @@ public class XRefsQueryHandler implements IQueryHandler
       return targetObjects;
     }
 
+    @Override
     public final EReference[] getSourceReferences()
     {
       if (sourceReferences == null)
@@ -313,6 +318,7 @@ public class XRefsQueryHandler implements IQueryHandler
       return sourceReferences;
     }
 
+    @Override
     public final Map<EClass, List<EReference>> getSourceCandidates()
     {
       if (sourceCandidates == null)
@@ -339,6 +345,7 @@ public class XRefsQueryHandler implements IQueryHandler
       return sourceCandidates;
     }
 
+    @Override
     public final int getMaxResults()
     {
       return info.getMaxResults();
@@ -349,6 +356,7 @@ public class XRefsQueryHandler implements IQueryHandler
       return context.getView().getRepository();
     }
 
+    @Override
     public final boolean addXRef(CDOID targetID, CDOID sourceID, EReference sourceReference, int sourceIndex)
     {
       if (CDOIDUtil.isNull(targetID))

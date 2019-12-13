@@ -181,6 +181,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     super(name);
   }
 
+  @Override
   public void initCapabilities(Set<String> capabilities)
   {
     if (supportingAudits())
@@ -227,6 +228,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return true;
   }
 
+  @Override
   public boolean supportingAudits()
   {
     return supportingAudits;
@@ -244,6 +246,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return this;
   }
 
+  @Override
   public boolean supportingBranches()
   {
     return supportingBranches;
@@ -261,6 +264,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return this;
   }
 
+  @Override
   public boolean supportingChunks()
   {
     return supportingChunks;
@@ -272,6 +276,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return this;
   }
 
+  @Override
   public boolean supportingExtRefs()
   {
     return supportingExtRefs;
@@ -283,6 +288,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return this;
   }
 
+  @Override
   public IDGenerationLocation idGenerationLocation()
   {
     return idGenerationLocation;
@@ -294,6 +300,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return this;
   }
 
+  @Override
   public ListOrdering listOrdering()
   {
     return listOrdering;
@@ -317,6 +324,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return "";
   }
 
+  @Override
   public void setRestarting(boolean on)
   {
     restarting = on;
@@ -327,11 +335,13 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return restarting;
   }
 
+  @Override
   public boolean hasServerContainer()
   {
     return serverContainer != null;
   }
 
+  @Override
   public IManagedContainer getServerContainer()
   {
     if (serverContainer == null)
@@ -363,6 +373,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return container;
   }
 
+  @Override
   public Map<String, String> getRepositoryProperties()
   {
     Map<String, String> repositoryProperties = new HashMap<String, String>();
@@ -394,6 +405,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     List<Map.Entry<String, String>> list = new ArrayList<Map.Entry<String, String>>(repositoryProperties.entrySet());
     Collections.sort(list, new Comparator<Map.Entry<String, String>>()
     {
+      @Override
       public int compare(Entry<String, String> o1, Entry<String, String> o2)
       {
         return o1.getKey().compareTo(o2.getKey());
@@ -423,11 +435,13 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return values.toArray(new InternalRepository[values.size()]);
   }
 
+  @Override
   public synchronized InternalRepository getRepository(String name)
   {
     return getRepository(name, true);
   }
 
+  @Override
   public synchronized InternalRepository getRepository(String name, boolean activate)
   {
     InternalRepository repository = repositories.get(name);
@@ -500,6 +514,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     // props.put(Props.LIST_ORDERING, listOrdering.toString());
   }
 
+  @Override
   public void registerRepository(final InternalRepository repository)
   {
     repository.addListener(new LifecycleEventAdapter()
@@ -519,6 +534,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       repository.addHandler(new IRepository.WriteAccessHandler()
       {
+        @Override
         public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
         {
           int count = 0;
@@ -534,6 +550,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
           }
         }
 
+        @Override
         public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
         {
         }
@@ -569,6 +586,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     CDOAdminServerUtil.prepareContainer(serverContainer);
     CDONet4jServerUtil.prepareContainer(serverContainer, new IRepositoryProvider()
     {
+      @Override
       public IRepository getRepository(String name)
       {
         return repositories.get(name);
@@ -673,6 +691,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       resourcePathChecker = new IRepository.WriteAccessHandler()
       {
+        @Override
         public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
         {
           for (InternalCDORevision revision : commitContext.getNewObjects())
@@ -691,6 +710,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
           }
         }
 
+        @Override
         public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
         {
           // Do nothing
@@ -1073,6 +1093,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       CDOSessionConfigurationFactory masterFactory = new CDOSessionConfigurationFactory()
       {
+        @Override
         public org.eclipse.emf.cdo.session.CDOSessionConfiguration createSessionConfiguration()
         {
           IManagedContainer container = getCurrentTest().getServerContainer();
@@ -1118,6 +1139,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       synchronizer.setRawReplication(getTestRawReplication());
       synchronizer.addListener(new IListener()
       {
+        @Override
         public void notifyEvent(IEvent event)
         {
           if (event instanceof ThrowableEvent)
@@ -1242,6 +1264,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       return false;
     }
 
+    @Override
     public IStore createStore(String repoName)
     {
       return MEMStoreUtil.createMEMStore();
@@ -1300,6 +1323,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       return false;
     }
 
+    @Override
     public IStore createStore(String repoName)
     {
       return MEMStoreUtil.createMEMStore();

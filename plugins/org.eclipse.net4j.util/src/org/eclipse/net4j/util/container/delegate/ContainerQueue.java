@@ -33,6 +33,7 @@ public class ContainerQueue<E> extends ContainerCollection<E> implements IContai
   /**
    * @category READ
    */
+  @Override
   public E element()
   {
     return getDelegate().element();
@@ -41,6 +42,7 @@ public class ContainerQueue<E> extends ContainerCollection<E> implements IContai
   /**
    * @category WRITE
    */
+  @Override
   public boolean offer(E o)
   {
     boolean modified = getDelegate().offer(o);
@@ -55,6 +57,7 @@ public class ContainerQueue<E> extends ContainerCollection<E> implements IContai
   /**
    * @category READ
    */
+  @Override
   public E peek()
   {
     return getDelegate().element();
@@ -63,6 +66,7 @@ public class ContainerQueue<E> extends ContainerCollection<E> implements IContai
   /**
    * @category WRITE
    */
+  @Override
   public E poll()
   {
     E removed = getDelegate().poll();
@@ -77,6 +81,7 @@ public class ContainerQueue<E> extends ContainerCollection<E> implements IContai
   /**
    * @category WRITE
    */
+  @Override
   public E remove()
   {
     E removed = getDelegate().remove();

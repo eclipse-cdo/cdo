@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2009, 2011-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2009, 2011-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -249,6 +249,7 @@ public final class ZIPUtil
       List<File> list = IOUtil.listBreadthFirst(sourceFolder);
       Collections.sort(list, new Comparator<File>()
       {
+        @Override
         public int compare(File f1, File f2)
         {
           String path1 = getPath(f1, baseLength);
@@ -341,6 +342,7 @@ public final class ZIPUtil
       }
     }
 
+    @Override
     public void handleEntry(EntryContext context) throws IOException
     {
       if (files.hasNext())
@@ -393,6 +395,7 @@ public final class ZIPUtil
       return targetFolder;
     }
 
+    @Override
     public void unzipDirectory(String name)
     {
       File directory = new File(targetFolder, name);
@@ -402,6 +405,7 @@ public final class ZIPUtil
       }
     }
 
+    @Override
     public void unzipFile(String name, InputStream zipStream)
     {
       File targetFile = new File(targetFolder, name);

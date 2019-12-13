@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -82,6 +82,7 @@ public class MasterRepositoryController
 
   private final DisposeListener disposeListener = new DisposeListener()
   {
+    @Override
     public void widgetDisposed(DisposeEvent e)
     {
       dispose();
@@ -90,6 +91,7 @@ public class MasterRepositoryController
 
   private IListener adminListener = new IListener()
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       ViewerUtil.refresh(repositoryTableViewer, null);
@@ -174,6 +176,7 @@ public class MasterRepositoryController
     repositoryTableViewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
     repositoryTableViewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
+      @Override
       public void selectionChanged(SelectionChangedEvent event)
       {
         IStructuredSelection selection = (IStructuredSelection)event.getSelection();
@@ -194,6 +197,7 @@ public class MasterRepositoryController
     userNameText.setLayoutData(createWidthGridData());
     userNameText.addModifyListener(new ModifyListener()
     {
+      @Override
       public void modifyText(ModifyEvent e)
       {
         userName = userNameText.getText();
@@ -206,6 +210,7 @@ public class MasterRepositoryController
     passwordText.setLayoutData(createWidthGridData());
     passwordText.addModifyListener(new ModifyListener()
     {
+      @Override
       public void modifyText(ModifyEvent e)
       {
         password = passwordText.getText();
@@ -283,6 +288,7 @@ public class MasterRepositoryController
   {
     parent.getDisplay().asyncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         if (!parent.isDisposed())
@@ -362,6 +368,7 @@ public class MasterRepositoryController
       }
     }
 
+    @Override
     public void modifyText(ModifyEvent e)
     {
       modifyText(true);
@@ -378,6 +385,7 @@ public class MasterRepositoryController
 
       parent.getDisplay().timerExec(delay ? 400 : 0, new Runnable()
       {
+        @Override
         public void run()
         {
           if (!parent.isDisposed())
@@ -464,6 +472,7 @@ public class MasterRepositoryController
         {
           display.syncExec(new Runnable()
           {
+            @Override
             public void run()
             {
               try
@@ -694,14 +703,17 @@ public class MasterRepositoryController
    */
   private final class AdminContentProvider implements IStructuredContentProvider
   {
+    @Override
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
     {
     }
 
+    @Override
     public void dispose()
     {
     }
 
+    @Override
     public Object[] getElements(Object inputElement)
     {
       if (connectorDescription != null)

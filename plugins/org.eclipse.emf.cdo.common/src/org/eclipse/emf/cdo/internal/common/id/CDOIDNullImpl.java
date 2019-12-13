@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -50,16 +50,19 @@ public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDTemp, CDO
     // Do nothing
   }
 
+  @Override
   public String toURIFragment()
   {
     return "NULL"; //$NON-NLS-1$
   }
 
+  @Override
   public Type getType()
   {
     return Type.NULL;
   }
 
+  @Override
   public boolean isExternal()
   {
     return false;
@@ -71,11 +74,13 @@ public final class CDOIDNullImpl extends AbstractCDOID implements CDOIDTemp, CDO
     return true;
   }
 
+  @Override
   public boolean isObject()
   {
     return false;
   }
 
+  @Override
   public boolean isTemporary()
   {
     return false;

@@ -25,6 +25,7 @@ public class LifecycleEventAdapter implements IListener
   {
   }
 
+  @Override
   public final void notifyEvent(IEvent event)
   {
     if (event instanceof ILifecycleEvent)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2014, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012-2014, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -76,6 +76,7 @@ public abstract class PermissionImpl extends CDOObjectImpl implements Permission
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Role getRole()
   {
     return (Role)eGet(SecurityPackage.Literals.PERMISSION__ROLE, true);
@@ -86,6 +87,7 @@ public abstract class PermissionImpl extends CDOObjectImpl implements Permission
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setRole(Role newRole)
   {
     eSet(SecurityPackage.Literals.PERMISSION__ROLE, newRole);
@@ -96,6 +98,7 @@ public abstract class PermissionImpl extends CDOObjectImpl implements Permission
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Access getAccess()
   {
     return (Access)eGet(SecurityPackage.Literals.PERMISSION__ACCESS, true);
@@ -106,6 +109,7 @@ public abstract class PermissionImpl extends CDOObjectImpl implements Permission
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAccess(Access newAccess)
   {
     eSet(SecurityPackage.Literals.PERMISSION__ACCESS, newAccess);

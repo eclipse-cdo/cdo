@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2015, 2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2015, 2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -53,11 +53,13 @@ public class CommitManager extends Lifecycle implements InternalCommitManager
   {
   }
 
+  @Override
   public InternalRepository getRepository()
   {
     return repository;
   }
 
+  @Override
   public void setRepository(InternalRepository repository)
   {
     this.repository = repository;
@@ -101,12 +103,14 @@ public class CommitManager extends Lifecycle implements InternalCommitManager
     setExecutors(null);
   }
 
+  @Override
   @Deprecated
   public void preCommit(InternalCommitContext commitContext, OMMonitor monitor)
   {
     preCommit(commitContext, null, monitor);
   }
 
+  @Override
   public void preCommit(InternalCommitContext commitContext, CDODataInput in, OMMonitor monitor)
   {
     TransactionCommitContextEntry contextEntry = new TransactionCommitContextEntry(in, monitor);
@@ -121,11 +125,13 @@ public class CommitManager extends Lifecycle implements InternalCommitManager
   /**
    * Called after a commitContext is done successfully or not.
    */
+  @Override
   public void remove(InternalCommitContext commitContext)
   {
     contextEntries.remove(commitContext.getTransaction());
   }
 
+  @Override
   public void rollback(InternalCommitContext commitContext)
   {
     TransactionCommitContextEntry contextEntry = contextEntries.get(commitContext.getTransaction());
@@ -140,12 +146,14 @@ public class CommitManager extends Lifecycle implements InternalCommitManager
   /**
    * Waiting for a commit to be done.
    */
+  @Override
   public void waitForTermination(InternalTransaction transaction) throws InterruptedException, ExecutionException
   {
     TransactionCommitContextEntry contextEntry = contextEntries.get(transaction);
     contextEntry.getFuture().get();
   }
 
+  @Override
   public InternalCommitContext get(InternalTransaction transaction)
   {
     TransactionCommitContextEntry contextEntry = contextEntries.get(transaction);
@@ -180,6 +188,7 @@ public class CommitManager extends Lifecycle implements InternalCommitManager
     {
       return new Callable<Object>()
       {
+        @Override
         public Object call() throws Exception
         {
           try

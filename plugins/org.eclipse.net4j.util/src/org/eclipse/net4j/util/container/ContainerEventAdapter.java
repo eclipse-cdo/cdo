@@ -48,6 +48,7 @@ public class ContainerEventAdapter<E> implements IListener
     return waitForActive;
   }
 
+  @Override
   public final void notifyEvent(IEvent event)
   {
     if (event instanceof IContainerEvent<?>)
@@ -67,6 +68,7 @@ public class ContainerEventAdapter<E> implements IListener
     final IContainer<E> container = event.getSource();
     event.accept(new IContainerEventVisitor<E>()
     {
+      @Override
       public void added(final E element)
       {
         if (waitForActive && !LifecycleUtil.isActive(element))
@@ -87,6 +89,7 @@ public class ContainerEventAdapter<E> implements IListener
         }
       }
 
+      @Override
       public void removed(E element)
       {
         onRemoved(container, element);

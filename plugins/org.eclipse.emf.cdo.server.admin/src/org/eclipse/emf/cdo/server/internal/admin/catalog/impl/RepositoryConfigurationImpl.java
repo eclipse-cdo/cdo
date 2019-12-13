@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -71,6 +71,7 @@ public class RepositoryConfigurationImpl extends CDOObjectImpl implements Reposi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(CatalogPackage.Literals.REPOSITORY_CONFIGURATION__NAME, true);
@@ -81,6 +82,7 @@ public class RepositoryConfigurationImpl extends CDOObjectImpl implements Reposi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(CatalogPackage.Literals.REPOSITORY_CONFIGURATION__NAME, newName);
@@ -91,6 +93,7 @@ public class RepositoryConfigurationImpl extends CDOObjectImpl implements Reposi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public CDOClob getConfigXML()
   {
     return (CDOClob)eGet(CatalogPackage.Literals.REPOSITORY_CONFIGURATION__CONFIG_XML, true);
@@ -101,6 +104,7 @@ public class RepositoryConfigurationImpl extends CDOObjectImpl implements Reposi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setConfigXML(CDOClob newConfigXML)
   {
     eSet(CatalogPackage.Literals.REPOSITORY_CONFIGURATION__CONFIG_XML, newConfigXML);

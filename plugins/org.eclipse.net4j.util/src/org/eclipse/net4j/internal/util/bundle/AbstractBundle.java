@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -83,11 +83,13 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     setDebugging(debug);
   }
 
+  @Override
   public OMPlatform getPlatform()
   {
     return platform;
   }
 
+  @Override
   public String getBundleID()
   {
     return bundleID;
@@ -108,22 +110,26 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     return bundleContext;
   }
 
+  @Override
   @Deprecated
   public void setBundleContext(Object bundleContext)
   {
     this.bundleContext = bundleContext;
   }
 
+  @Override
   public DebugSupport getDebugSupport()
   {
     return this;
   }
 
+  @Override
   public TranslationSupport getTranslationSupport()
   {
     return this;
   }
 
+  @Override
   public boolean isDebugging()
   {
     if (!platform.isDebugging())
@@ -134,28 +140,33 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     return debugging;
   }
 
+  @Override
   public void setDebugging(boolean debugging)
   {
     this.debugging = debugging;
   }
 
+  @Override
   public String getDebugOption(String option, String defaultValue)
   {
     String value = getDebugOption(option);
     return value == null ? defaultValue : value;
   }
 
+  @Override
   public boolean getDebugOption(String option, boolean defaultValue)
   {
     String value = getDebugOption(option);
     return value == null ? defaultValue : Boolean.parseBoolean(value);
   }
 
+  @Override
   public void setDebugOption(String option, boolean value)
   {
     setDebugOption(option, Boolean.toString(value));
   }
 
+  @Override
   public int getDebugOption(String option, int defaultValue)
   {
     try
@@ -169,21 +180,25 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     }
   }
 
+  @Override
   public void setDebugOption(String option, int value)
   {
     setDebugOption(option, Integer.toString(value));
   }
 
+  @Override
   public String getDebugOption(String option)
   {
     return platform.getDebugOption(bundleID, option);
   }
 
+  @Override
   public void setDebugOption(String option, String value)
   {
     platform.setDebugOption(bundleID, option, value);
   }
 
+  @Override
   public synchronized OMTracer tracer(String name)
   {
     OMTracer tracer = tracers.get(name);
@@ -195,6 +210,7 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     return tracer;
   }
 
+  @Override
   public synchronized OMLogger logger()
   {
     if (logger == null)
@@ -205,6 +221,7 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     return logger;
   }
 
+  @Override
   public IStatus getStatus(Object obj)
   {
     if (obj instanceof CoreException)
@@ -228,6 +245,7 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     return new Status(IStatus.INFO, getBundleID(), obj.toString(), null);
   }
 
+  @Override
   public void coreException(Throwable t) throws CoreException
   {
     if (t instanceof CoreException)
@@ -256,16 +274,19 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     throw new CoreException(status);
   }
 
+  @Override
   public File getConfigFile()
   {
     return platform.getConfigFile(getConfigFileName());
   }
 
+  @Override
   public Properties getConfigProperties()
   {
     return platform.getConfigProperties(getConfigFileName());
   }
 
+  @Override
   public synchronized Preferences preferences()
   {
     if (preferences == null)
@@ -276,6 +297,7 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     return preferences;
   }
 
+  @Override
   public InputStream getInputStream(String path) throws IOException
   {
     String base = getBaseURL().toString();
@@ -293,16 +315,19 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     return url.openStream();
   }
 
+  @Override
   public boolean shouldTranslate()
   {
     return shouldTranslate;
   }
 
+  @Override
   public void setShouldTranslate(boolean shouldTranslate)
   {
     this.shouldTranslate = shouldTranslate;
   }
 
+  @Override
   public String getString(String key, boolean translate)
   {
     Map<String, String> stringMap = translate ? strings : untranslatedStrings;
@@ -375,16 +400,19 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     return result;
   }
 
+  @Override
   public String getString(String key)
   {
     return getString(key, shouldTranslate());
   }
 
+  @Override
   public String getString(String key, Object... args)
   {
     return getString(key, shouldTranslate(), args);
   }
 
+  @Override
   public String getString(String key, boolean translate, Object... args)
   {
     return MessageFormat.format(getString(key, translate), args);

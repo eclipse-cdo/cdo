@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2014 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2014, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -39,16 +39,19 @@ public class CDOClearFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDO
     super(in, eClass);
   }
 
+  @Override
   public Type getType()
   {
     return Type.CLEAR;
   }
 
+  @Override
   public CDOFeatureDelta copy()
   {
     return new CDOClearFeatureDeltaImpl(getFeature());
   }
 
+  @Override
   public Object applyTo(CDORevision revision)
   {
     EStructuralFeature feature = getFeature();
@@ -58,6 +61,7 @@ public class CDOClearFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDO
     return null;
   }
 
+  @Override
   public void accept(CDOFeatureDeltaVisitor visitor)
   {
     visitor.visit(this);

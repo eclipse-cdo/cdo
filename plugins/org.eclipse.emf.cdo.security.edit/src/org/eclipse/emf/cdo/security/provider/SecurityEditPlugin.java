@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -100,6 +100,7 @@ public final class SecurityEditPlugin extends EMFPlugin
 
     Collections.sort(result, new Comparator<EPackage>()
     {
+      @Override
       public int compare(EPackage p1, EPackage p2)
       {
         return p1.getNsURI().compareTo(p2.getNsURI());
@@ -129,6 +130,7 @@ public final class SecurityEditPlugin extends EMFPlugin
 
     Collections.sort(result, new Comparator<EClass>()
     {
+      @Override
       public int compare(EClass c1, EClass c2)
       {
         int comparison = c1.getName().compareTo(c2.getName());

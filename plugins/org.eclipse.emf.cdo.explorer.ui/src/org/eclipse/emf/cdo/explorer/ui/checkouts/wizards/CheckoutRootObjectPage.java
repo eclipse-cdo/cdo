@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -247,6 +247,7 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
     treeViewer.setComparator(new CDOCheckoutViewerSorter());
     treeViewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
+      @Override
       public void selectionChanged(SelectionChangedEvent event)
       {
         IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
@@ -286,6 +287,7 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
 
     treeViewer.addDoubleClickListener(new IDoubleClickListener()
     {
+      @Override
       public void doubleClick(DoubleClickEvent event)
       {
         showNextPage();
@@ -331,6 +333,7 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
 
       getShell().getDisplay().asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           CDOResource rootResource = view.getRootResource();

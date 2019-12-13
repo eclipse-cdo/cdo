@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -62,6 +62,7 @@ public class ClassFilterImpl extends PermissionFilterImpl implements ClassFilter
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getApplicableClass()
   {
     return (EClass)eGet(SecurityPackage.Literals.CLASS_FILTER__APPLICABLE_CLASS, true);
@@ -72,6 +73,7 @@ public class ClassFilterImpl extends PermissionFilterImpl implements ClassFilter
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setApplicableClass(EClass newApplicableClass)
   {
     eSet(SecurityPackage.Literals.CLASS_FILTER__APPLICABLE_CLASS, newApplicableClass);
@@ -82,6 +84,7 @@ public class ClassFilterImpl extends PermissionFilterImpl implements ClassFilter
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSubTypes()
   {
     return (Boolean)eGet(SecurityPackage.Literals.CLASS_FILTER__SUB_TYPES, true);
@@ -92,6 +95,7 @@ public class ClassFilterImpl extends PermissionFilterImpl implements ClassFilter
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setSubTypes(boolean newSubTypes)
   {
     eSet(SecurityPackage.Literals.CLASS_FILTER__SUB_TYPES, newSubTypes);
@@ -111,11 +115,13 @@ public class ClassFilterImpl extends PermissionFilterImpl implements ClassFilter
     return applicableClass == actualClass;
   }
 
+  @Override
   public boolean isImpacted(CommitImpactContext context)
   {
     return false;
   }
 
+  @Override
   public String format()
   {
     String label = "?";

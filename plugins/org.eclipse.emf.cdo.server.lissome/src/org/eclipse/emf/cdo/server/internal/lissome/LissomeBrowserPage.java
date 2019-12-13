@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -30,11 +30,13 @@ public class LissomeBrowserPage extends AbstractPage
     super("ltables", "LissomeDB Tables");
   }
 
+  @Override
   public boolean canDisplay(InternalRepository repository)
   {
     return repository.getStore() instanceof ILissomeStore;
   }
 
+  @Override
   public void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out)
   {
     out.print("<table border=\"0\">\r\n");
@@ -67,6 +69,7 @@ public class LissomeBrowserPage extends AbstractPage
       super(PRODUCT_GROUP, TYPE);
     }
 
+    @Override
     public LissomeBrowserPage create(String description) throws ProductCreationException
     {
       return new LissomeBrowserPage();

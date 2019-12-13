@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -90,6 +90,7 @@ public class NewWizardPage extends WizardPage
     return name;
   }
 
+  @Override
   public void createControl(Composite parentControl)
   {
     setTitle(title);
@@ -110,6 +111,7 @@ public class NewWizardPage extends WizardPage
     parentViewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
     parentViewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
+      @Override
       public void selectionChanged(SelectionChangedEvent event)
       {
         if (parentRevealed)
@@ -130,6 +132,7 @@ public class NewWizardPage extends WizardPage
     nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     nameText.addModifyListener(new ModifyListener()
     {
+      @Override
       public void modifyText(ModifyEvent e)
       {
         nameModified = true;
@@ -139,6 +142,7 @@ public class NewWizardPage extends WizardPage
 
     getShell().getDisplay().asyncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         try

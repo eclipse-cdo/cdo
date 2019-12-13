@@ -103,6 +103,7 @@ public abstract class AbstractDelegator<E> extends Notifier implements IContaine
     /**
      * @category READ
      */
+    @Override
     public boolean hasNext()
     {
       return getDelegate().hasNext();
@@ -111,6 +112,7 @@ public abstract class AbstractDelegator<E> extends Notifier implements IContaine
     /**
      * @category READ
      */
+    @Override
     public E next()
     {
       return last = getDelegate().next();
@@ -119,6 +121,7 @@ public abstract class AbstractDelegator<E> extends Notifier implements IContaine
     /**
      * @category WRITE
      */
+    @Override
     public void remove()
     {
       getDelegate().remove();

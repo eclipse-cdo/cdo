@@ -68,5 +68,6 @@ public interface XAQueueConnection extends XAConnection, QueueConnection
     *                         fails to create an XA queue session due to some
     *                         internal error.
     */
+  @Override
   QueueSession createQueueSession(boolean transacted, int acknowledgeMode) throws JMSException;
 }

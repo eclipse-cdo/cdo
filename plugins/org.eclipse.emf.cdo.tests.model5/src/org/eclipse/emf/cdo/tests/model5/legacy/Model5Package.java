@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -560,6 +560,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   int CUSTOM_TYPE = 18;
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap <em>Test Feature Map</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -569,6 +570,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getTestFeatureMap();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap#getManagers <em>Managers</em>}'.
    * <!-- begin-user-doc
@@ -580,6 +582,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getTestFeatureMap_Managers();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap#getDoctors <em>Doctors</em>}'.
    * <!-- begin-user-doc
@@ -591,6 +594,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getTestFeatureMap_Doctors();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model5.TestFeatureMap#getPeople <em>People</em>}'.
    * <!-- begin-user-doc -->
@@ -602,6 +606,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getTestFeatureMap_People();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.Manager <em>Manager</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -612,6 +617,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getManager();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model5.Doctor <em>Doctor</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -622,6 +628,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getDoctor();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfString <em>Gen List Of String</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -631,6 +638,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenListOfString();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model5.GenListOfString#getElements <em>Elements</em>}'.
    * <!-- begin-user-doc
@@ -642,6 +650,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getGenListOfString_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfInt <em>Gen List Of Int</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -651,6 +660,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenListOfInt();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model5.GenListOfInt#getElements <em>Elements</em>}'.
    * <!-- begin-user-doc
@@ -662,6 +672,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getGenListOfInt_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfInteger <em>Gen List Of Integer</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -671,6 +682,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenListOfInteger();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfInteger#getElements <em>Elements</em>}'. <!--
@@ -683,6 +695,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getGenListOfInteger_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfLong <em>Gen List Of Long</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -692,6 +705,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenListOfLong();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model5.GenListOfLong#getElements <em>Elements</em>}'.
    * <!-- begin-user-doc
@@ -703,6 +717,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getGenListOfLong_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfBoolean <em>Gen List Of Boolean</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -712,6 +727,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenListOfBoolean();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfBoolean#getElements <em>Elements</em>}'. <!--
@@ -724,6 +740,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getGenListOfBoolean_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfShort <em>Gen List Of Short</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -733,6 +750,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenListOfShort();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model5.GenListOfShort#getElements <em>Elements</em>}'.
    * <!-- begin-user-doc
@@ -744,6 +762,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getGenListOfShort_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfFloat <em>Gen List Of Float</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -753,6 +772,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenListOfFloat();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model5.GenListOfFloat#getElements <em>Elements</em>}'.
    * <!-- begin-user-doc
@@ -764,6 +784,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getGenListOfFloat_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfDouble <em>Gen List Of Double</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -773,6 +794,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenListOfDouble();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model5.GenListOfDouble#getElements <em>Elements</em>}'.
    * <!-- begin-user-doc
@@ -784,6 +806,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getGenListOfDouble_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfDate <em>Gen List Of Date</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -793,6 +816,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenListOfDate();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model5.GenListOfDate#getElements <em>Elements</em>}'.
    * <!-- begin-user-doc
@@ -804,6 +828,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getGenListOfDate_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfChar <em>Gen List Of Char</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -813,6 +838,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenListOfChar();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model5.GenListOfChar#getElements <em>Elements</em>}'.
    * <!-- begin-user-doc
@@ -824,6 +850,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getGenListOfChar_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfIntArray <em>Gen List Of Int Array</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -833,6 +860,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getGenListOfIntArray();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model5.GenListOfIntArray#getElements <em>Elements</em>}'. <!--
@@ -845,6 +873,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getGenListOfIntArray_Elements();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.Parent <em>Parent</em>}'.
    * <!-- begin-user-doc -->
@@ -855,6 +884,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getParent();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model5.Parent#getChildren <em>Children</em>}'.
    * <!-- begin-user-doc -->
@@ -866,6 +896,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getParent_Children();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model5.Parent#getFavourite <em>Favourite</em>}'.
    * <!-- begin-user-doc -->
@@ -877,6 +908,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getParent_Favourite();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model5.Parent#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
@@ -888,6 +920,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getParent_Name();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.Child <em>Child</em>}'.
    * <!-- begin-user-doc -->
@@ -898,6 +931,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getChild();
 
+  @Override
   /**
    * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.model5.Child#getParent <em>Parent</em>}'.
    * <!-- begin-user-doc -->
@@ -909,6 +943,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getChild_Parent();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model5.Child#getPreferredBy <em>Preferred By</em>}'.
    * <!-- begin-user-doc -->
@@ -920,6 +955,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getChild_PreferredBy();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model5.Child#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
@@ -931,6 +967,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getChild_Name();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.WithCustomType <em>With Custom Type</em>}'.
    * <!-- begin-user-doc -->
@@ -941,6 +978,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getWithCustomType();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model5.WithCustomType#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
@@ -952,6 +990,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getWithCustomType_Value();
 
+  @Override
   /**
    * Returns the meta object for data type '<em>Int Array</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -961,6 +1000,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EDataType getIntArray();
 
+  @Override
   /**
    * Returns the meta object for data type '{@link org.eclipse.emf.cdo.tests.model5.CustomType <em>Custom Type</em>}'.
    * <!-- begin-user-doc -->
@@ -972,6 +1012,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EDataType getCustomType();
 
+  @Override
   /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc --> <!-- end-user-doc -->

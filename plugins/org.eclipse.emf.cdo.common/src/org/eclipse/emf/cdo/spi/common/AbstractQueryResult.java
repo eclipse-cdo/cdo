@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -75,17 +75,20 @@ public class AbstractQueryResult<T> implements BlockingCloseableIterator<T>
     this.queryID = queryID;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public T peek()
   {
     return (T)queueItr.peek();
   }
 
+  @Override
   public boolean hasNext()
   {
     return queueItr.hasNext();
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public T next()
   {
@@ -103,17 +106,20 @@ public class AbstractQueryResult<T> implements BlockingCloseableIterator<T>
     return (T)element;
   }
 
+  @Override
   public void remove()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void close()
   {
     queueItr.close();
     queue.close();
   }
 
+  @Override
   public boolean isClosed()
   {
     return queueItr.isClosed();

@@ -53,6 +53,7 @@ public interface CDORepositoryManager extends CDOExplorerManager<CDORepository>
    */
   public interface RepositoryConnectionEvent extends IEvent
   {
+    @Override
     public CDORepositoryManager getSource();
 
     public CDORepository getRepository();

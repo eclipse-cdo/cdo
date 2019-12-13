@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2010-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2010-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -27,6 +27,7 @@ public interface IDBField extends IDBSchemaElement, PositionProvider
   /**
    * @since 4.2
    */
+  @Override
   public IDBTable getParent();
 
   public IDBTable getTable();
@@ -47,6 +48,7 @@ public interface IDBField extends IDBSchemaElement, PositionProvider
 
   public void setNotNull(boolean notNull);
 
+  @Override
   public String getFullName();
 
   public String formatPrecision();

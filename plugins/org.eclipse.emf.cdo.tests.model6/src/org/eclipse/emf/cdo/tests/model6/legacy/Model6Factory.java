@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -55,6 +55,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Model6Factory eINSTANCE = org.eclipse.emf.cdo.tests.model6.legacy.impl.Model6FactoryImpl.init();
 
+  @Override
   /**
    * Returns a new object of class '<em>Root</em>'.
    * <!-- begin-user-doc -->
@@ -64,6 +65,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Root createRoot();
 
+  @Override
   /**
    * Returns a new object of class '<em>Base Object</em>'.
    * <!-- begin-user-doc -->
@@ -73,6 +75,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   BaseObject createBaseObject();
 
+  @Override
   /**
    * Returns a new object of class '<em>Reference Object</em>'.
    * <!-- begin-user-doc -->
@@ -82,6 +85,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ReferenceObject createReferenceObject();
 
+  @Override
   /**
    * Returns a new object of class '<em>Containment Object</em>'.
    * <!-- begin-user-doc -->
@@ -91,6 +95,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   ContainmentObject createContainmentObject();
 
+  @Override
   /**
    * Returns a new object of class '<em>Unordered List</em>'.
    * <!-- begin-user-doc -->
@@ -100,6 +105,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   UnorderedList createUnorderedList();
 
+  @Override
   /**
    * Returns a new object of class '<em>Properties Map</em>'.
    * <!-- begin-user-doc -->
@@ -109,6 +115,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   PropertiesMap createPropertiesMap();
 
+  @Override
   /**
    * Returns a new object of class '<em>Properties Map Entry Value</em>'.
    * <!-- begin-user-doc -->
@@ -118,6 +125,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   PropertiesMapEntryValue createPropertiesMapEntryValue();
 
+  @Override
   /**
    * Returns a new object of class '<em>A</em>'.
    * <!-- begin-user-doc -->
@@ -127,6 +135,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   A createA();
 
+  @Override
   /**
    * Returns a new object of class '<em>B</em>'.
    * <!-- begin-user-doc -->
@@ -136,6 +145,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   B createB();
 
+  @Override
   /**
    * Returns a new object of class '<em>C</em>'.
    * <!-- begin-user-doc -->
@@ -145,6 +155,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   C createC();
 
+  @Override
   /**
    * Returns a new object of class '<em>D</em>'.
    * <!-- begin-user-doc -->
@@ -154,6 +165,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   D createD();
 
+  @Override
   /**
    * Returns a new object of class '<em>E</em>'.
    * <!-- begin-user-doc -->
@@ -163,6 +175,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   E createE();
 
+  @Override
   /**
    * Returns a new object of class '<em>F</em>'.
    * <!-- begin-user-doc -->
@@ -172,6 +185,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   F createF();
 
+  @Override
   /**
    * Returns a new object of class '<em>G</em>'.
    * <!-- begin-user-doc -->
@@ -181,6 +195,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   G createG();
 
+  @Override
   /**
    * Returns a new object of class '<em>My Enum List</em>'.
    * <!-- begin-user-doc -->
@@ -190,6 +205,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   MyEnumList createMyEnumList();
 
+  @Override
   /**
    * Returns a new object of class '<em>My Enum List Unsettable</em>'.
    * <!-- begin-user-doc -->
@@ -199,6 +215,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   MyEnumListUnsettable createMyEnumListUnsettable();
 
+  @Override
   /**
    * Returns a new object of class '<em>Holder</em>'.
    * <!-- begin-user-doc -->
@@ -208,6 +225,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Holder createHolder();
 
+  @Override
   /**
    * Returns a new object of class '<em>Thing</em>'.
    * <!-- begin-user-doc -->
@@ -217,6 +235,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Thing createThing();
 
+  @Override
   /**
    * Returns a new object of class '<em>Has Nillable Attribute</em>'.
    * <!-- begin-user-doc -->
@@ -226,6 +245,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   HasNillableAttribute createHasNillableAttribute();
 
+  @Override
   /**
    * Returns a new object of class '<em>Empty String Default</em>'.
    * <!-- begin-user-doc -->
@@ -235,6 +255,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   EmptyStringDefault createEmptyStringDefault();
 
+  @Override
   /**
    * Returns a new object of class '<em>Empty String Default Unsettable</em>'.
    * <!-- begin-user-doc -->
@@ -244,6 +265,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   EmptyStringDefaultUnsettable createEmptyStringDefaultUnsettable();
 
+  @Override
   /**
    * Returns a new object of class '<em>Unsettable Attributes</em>'.
    * <!-- begin-user-doc -->
@@ -253,6 +275,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   UnsettableAttributes createUnsettableAttributes();
 
+  @Override
   /**
    * Returns a new object of class '<em>Can Reference Legacy</em>'.
    * <!-- begin-user-doc -->
@@ -262,6 +285,7 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   CanReferenceLegacy createCanReferenceLegacy();
 
+  @Override
   /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->

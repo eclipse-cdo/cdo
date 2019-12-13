@@ -45,6 +45,7 @@ public class DBPreparedStatement extends DelegatingPreparedStatement implements 
     return (DBConnection)super.getConnection();
   }
 
+  @Override
   @Deprecated
   public DBConnection getTransaction()
   {
@@ -58,11 +59,13 @@ public class DBPreparedStatement extends DelegatingPreparedStatement implements 
     }
   }
 
+  @Override
   public String getSQL()
   {
     return sql;
   }
 
+  @Override
   public ReuseProbability getReuseProbability()
   {
     return reuseProbability;
@@ -83,6 +86,7 @@ public class DBPreparedStatement extends DelegatingPreparedStatement implements 
     this.nextCached = nextCached;
   }
 
+  @Override
   public int compareTo(IDBPreparedStatement o)
   {
     int result = reuseProbability.compareTo(o.getReuseProbability());

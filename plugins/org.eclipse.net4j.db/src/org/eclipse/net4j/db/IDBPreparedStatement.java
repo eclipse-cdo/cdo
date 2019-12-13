@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -25,6 +25,7 @@ public interface IDBPreparedStatement extends Comparable<IDBPreparedStatement>, 
   /**
    * @since 4.3
    */
+  @Override
   public IDBConnection getConnection() throws SQLException;
 
   /**
@@ -37,15 +38,19 @@ public interface IDBPreparedStatement extends Comparable<IDBPreparedStatement>, 
 
   public ReuseProbability getReuseProbability();
 
+  @Override
   public IDBResultSet getGeneratedKeys() throws SQLException;
 
+  @Override
   public IDBResultSet getResultSet() throws SQLException;
 
+  @Override
   public IDBResultSet executeQuery() throws SQLException;
 
   /**
    * @deprecated Not supported.
    */
+  @Override
   @Deprecated
   public ResultSet executeQuery(String sql) throws SQLException;
 

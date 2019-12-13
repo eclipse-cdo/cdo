@@ -61,6 +61,7 @@ public interface CDORevision extends CDORevisionKey, CDORevisable
    */
   public static final CDOPermissionProvider PERMISSION_PROVIDER = new CDOPermissionProvider()
   {
+    @Override
     public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext)
     {
       return revision.getPermission();

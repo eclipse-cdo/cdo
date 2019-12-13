@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -111,6 +111,7 @@ public class EObjectToEObjectKeyContainedMapImpl extends CDOObjectImpl implement
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getHash()
   {
     if (hash == -1)
@@ -125,6 +126,7 @@ public class EObjectToEObjectKeyContainedMapImpl extends CDOObjectImpl implement
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setHash(int hash)
   {
     this.hash = hash;
@@ -134,6 +136,7 @@ public class EObjectToEObjectKeyContainedMapImpl extends CDOObjectImpl implement
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EObject getKey()
   {
     return getTypedKey();
@@ -143,6 +146,7 @@ public class EObjectToEObjectKeyContainedMapImpl extends CDOObjectImpl implement
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setKey(EObject key)
   {
     setTypedKey(key);
@@ -152,6 +156,7 @@ public class EObjectToEObjectKeyContainedMapImpl extends CDOObjectImpl implement
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EObject getValue()
   {
     return getTypedValue();
@@ -161,6 +166,7 @@ public class EObjectToEObjectKeyContainedMapImpl extends CDOObjectImpl implement
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EObject setValue(EObject value)
   {
     EObject oldValue = getValue();

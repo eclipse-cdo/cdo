@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -333,32 +333,38 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
     transaction.addTransactionHandler(new CDOAsyncTransactionHandler(new CDOTransactionHandler()
     {
+      @Override
       public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
       {
         // Create READ access to see if we have deadlock
         company.getCity();
       }
 
+      @Override
       public void detachingObject(CDOTransaction transaction, CDOObject object)
       {
         // Create READ access to see if we have deadlock
         company.getCity();
       }
 
+      @Override
       public void attachingObject(CDOTransaction transaction, CDOObject object)
       {
         // Create READ access to see if we have deadlock
         company.getCity();
       }
 
+      @Override
       public void rolledBackTransaction(CDOTransaction transaction)
       {
       }
 
+      @Override
       public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
       {
       }
 
+      @Override
       public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
       {
       }
@@ -432,31 +438,37 @@ public class TransactionHandlerTest extends AbstractCDOTest
       return numberOfRollback;
     }
 
+    @Override
     public void attachingObject(CDOTransaction transaction, CDOObject object)
     {
       listOfAddingObject.add(object);
     }
 
+    @Override
     public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
     {
       numberOfCommit++;
     }
 
+    @Override
     public void detachingObject(CDOTransaction transaction, CDOObject object)
     {
       listOfDetachingObject.add(object);
     }
 
+    @Override
     public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
     {
       listOfModifyinObject.add(object);
     }
 
+    @Override
     public void rolledBackTransaction(CDOTransaction transaction)
     {
       numberOfRollback++;
     }
 
+    @Override
     public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
     {
     }

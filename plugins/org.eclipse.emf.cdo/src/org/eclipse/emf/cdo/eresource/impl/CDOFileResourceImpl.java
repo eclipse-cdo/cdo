@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2014, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2014, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -53,6 +53,7 @@ public abstract class CDOFileResourceImpl<IO> extends CDOResourceLeafImpl implem
   /**
    * @ADDED
    */
+  @Override
   public boolean isRoot()
   {
     return false;
@@ -61,6 +62,7 @@ public abstract class CDOFileResourceImpl<IO> extends CDOResourceLeafImpl implem
   /**
    * @ADDED
    */
+  @Override
   public void delete(Map<?, ?> options) throws IOException
   {
     if (!FSMUtil.isTransient(this))
@@ -82,6 +84,7 @@ public abstract class CDOFileResourceImpl<IO> extends CDOResourceLeafImpl implem
    *
    * @generated NOT
    */
+  @Override
   public abstract CDOLob<IO> getContents();
 
 } // CDOFileResourceImpl

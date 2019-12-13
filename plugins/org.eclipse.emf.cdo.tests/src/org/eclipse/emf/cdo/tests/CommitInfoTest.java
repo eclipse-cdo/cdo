@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -1066,10 +1066,12 @@ public class CommitInfoTest extends AbstractCDOTest
 
     getRepository().addHandler(new IRepository.WriteAccessHandler()
     {
+      @Override
       public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
       {
       }
 
+      @Override
       public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
       {
         log.handleCommitInfo(commitContext.createCommitInfo());
@@ -1150,6 +1152,7 @@ public class CommitInfoTest extends AbstractCDOTest
       return infos;
     }
 
+    @Override
     public void handleCommitInfo(CDOCommitInfo commitInfo)
     {
       infos.add(commitInfo);

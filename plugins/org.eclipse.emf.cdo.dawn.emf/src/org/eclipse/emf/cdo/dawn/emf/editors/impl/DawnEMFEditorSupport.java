@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -36,6 +36,7 @@ public class DawnEMFEditorSupport extends DawnAbstractEditorSupport
     super(editor);
   }
 
+  @Override
   public void close()
   {
     CDOView view = getView();
@@ -70,11 +71,13 @@ public class DawnEMFEditorSupport extends DawnAbstractEditorSupport
     refresh();
   }
 
+  @Override
   public void refresh()
   {
     ((IViewerProvider)getEditor()).getViewer().refresh();
   }
 
+  @Override
   public void lockObject(Object objectToBeLocked)
   {
     if (objectToBeLocked instanceof EObject)
@@ -84,16 +87,19 @@ public class DawnEMFEditorSupport extends DawnAbstractEditorSupport
     refresh();
   }
 
+  @Override
   public void unlockObject(Object objectToBeUnlocked)
   {
     CDOUtil.getCDOObject((EObject)objectToBeUnlocked).cdoWriteLock().unlock();
     refresh();
   }
 
+  @Override
   public void handleRemoteLockChanges(Map<Object, DawnState> changedObjects)
   {
     getEditor().getSite().getShell().getDisplay().asyncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         refresh();

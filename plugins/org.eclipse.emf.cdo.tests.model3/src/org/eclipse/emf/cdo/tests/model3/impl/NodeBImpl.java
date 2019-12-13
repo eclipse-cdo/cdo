@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,6 +66,7 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<NodeB> getChildren()
   {
@@ -76,6 +77,7 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NodeB getParent()
   {
     return (NodeB)eGet(Model3Package.eINSTANCE.getNodeB_Parent(), true);
@@ -85,6 +87,7 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setParent(NodeB newParent)
   {
     eSet(Model3Package.eINSTANCE.getNodeB_Parent(), newParent);
@@ -94,6 +97,7 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(Model3Package.eINSTANCE.getNodeB_Name(), true);
@@ -103,6 +107,7 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(Model3Package.eINSTANCE.getNodeB_Name(), newName);

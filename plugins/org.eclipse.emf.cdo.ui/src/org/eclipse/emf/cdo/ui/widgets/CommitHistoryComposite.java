@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -84,10 +84,12 @@ public class CommitHistoryComposite extends Composite
 
   private CDOCommitInfoHandler revealElementHandler = new CDOCommitInfoHandler()
   {
+    @Override
     public void handleCommitInfo(final CDOCommitInfo commitInfo)
     {
       getDisplay().asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           tableViewer.reveal(commitInfo);
@@ -118,6 +120,7 @@ public class CommitHistoryComposite extends Composite
 
     tableViewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
+      @Override
       public void selectionChanged(SelectionChangedEvent event)
       {
         IStructuredSelection selection = (IStructuredSelection)tableViewer.getSelection();
@@ -131,6 +134,7 @@ public class CommitHistoryComposite extends Composite
 
     tableViewer.addOpenListener(new IOpenListener()
     {
+      @Override
       public void open(OpenEvent event)
       {
         doubleClicked();
@@ -309,6 +313,7 @@ public class CommitHistoryComposite extends Composite
   {
     private IListener lifecycleListener = new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof ILifecycleEvent)
@@ -493,23 +498,27 @@ public class CommitHistoryComposite extends Composite
       return string;
     }
 
+    @Override
     public void activate() throws LifecycleException
     {
       EventUtil.addListener(getLifecycle(), lifecycleListener);
     }
 
+    @Override
     public Exception deactivate()
     {
       EventUtil.removeListener(getLifecycle(), lifecycleListener);
       return null;
     }
 
+    @Override
     public LifecycleState getLifecycleState()
     {
       Object object = getLifecycle();
       return LifecycleUtil.getLifecycleState(object);
     }
 
+    @Override
     public boolean isActive()
     {
       Object object = getLifecycle();
@@ -559,6 +568,7 @@ public class CommitHistoryComposite extends Composite
    */
   public static class ContentProvider extends StructuredContentProvider<CDOCommitHistory>
   {
+    @Override
     public Object[] getElements(Object inputElement)
     {
       return ((CDOCommitHistory)inputElement).getElements();

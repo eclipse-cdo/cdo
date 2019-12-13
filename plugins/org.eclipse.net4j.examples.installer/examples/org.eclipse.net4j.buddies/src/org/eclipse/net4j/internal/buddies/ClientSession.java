@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -42,11 +42,13 @@ public class ClientSession extends BuddyContainer implements IBuddySession
     this.protocol = protocol;
   }
 
+  @Override
   public BuddiesClientProtocol getProtocol()
   {
     return protocol;
   }
 
+  @Override
   public Self getSelf()
   {
     return self;
@@ -59,6 +61,7 @@ public class ClientSession extends BuddyContainer implements IBuddySession
     self.addListener(this);
   }
 
+  @Override
   public void close()
   {
     protocol.close();
@@ -66,6 +69,7 @@ public class ClientSession extends BuddyContainer implements IBuddySession
     LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {

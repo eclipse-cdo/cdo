@@ -121,6 +121,7 @@ public final class EMFUtil
    */
   public static final Predicate<EStructuralFeature> ATTRIBUTES = new Predicate<EStructuralFeature>()
   {
+    @Override
     public boolean apply(EStructuralFeature feature)
     {
       return feature instanceof EAttribute;
@@ -132,6 +133,7 @@ public final class EMFUtil
    */
   public static final Predicate<EStructuralFeature> REFERENCES = new Predicate<EStructuralFeature>()
   {
+    @Override
     public boolean apply(EStructuralFeature feature)
     {
       return feature instanceof EReference;
@@ -143,6 +145,7 @@ public final class EMFUtil
    */
   public static final Predicate<EStructuralFeature> CONTAINER_REFERENCES = new Predicate<EStructuralFeature>()
   {
+    @Override
     public boolean apply(EStructuralFeature feature)
     {
       if (feature instanceof EReference)
@@ -160,6 +163,7 @@ public final class EMFUtil
    */
   public static final Predicate<EStructuralFeature> CROSS_REFERENCES = new Predicate<EStructuralFeature>()
   {
+    @Override
     public boolean apply(EStructuralFeature feature)
     {
       if (feature instanceof EReference)
@@ -177,6 +181,7 @@ public final class EMFUtil
    */
   public static final Predicate<EStructuralFeature> CONTAINMENT_REFERENCES = new Predicate<EStructuralFeature>()
   {
+    @Override
     public boolean apply(EStructuralFeature feature)
     {
       if (feature instanceof EReference)
@@ -277,6 +282,7 @@ public final class EMFUtil
     Map.Entry<String, Object>[] array = entries.toArray(new Entry[entries.size()]);
     Arrays.sort(array, new Comparator<Map.Entry<String, Object>>()
     {
+      @Override
       public int compare(Map.Entry<String, Object> o1, Map.Entry<String, Object> o2)
       {
         return o1.getKey().compareTo(o2.getKey());

@@ -74,6 +74,7 @@ public class ExecutorWorkSerializerTest extends AbstractOMTest
   {
     createWorkProducerThreads(new WorkProducerFactory()
     {
+      @Override
       public WorkProducer createWorkProducer()
       {
         return new WorkProducer()
@@ -99,6 +100,7 @@ public class ExecutorWorkSerializerTest extends AbstractOMTest
   {
     createWorkProducerThreads(new WorkProducerFactory()
     {
+      @Override
       public WorkProducer createWorkProducer()
       {
         return new WorkProducer()
@@ -158,6 +160,7 @@ public class ExecutorWorkSerializerTest extends AbstractOMTest
     /**
      * Produce work: add work units to the queue worker
      */
+    @Override
     public void run()
     {
       try
@@ -204,6 +207,7 @@ public class ExecutorWorkSerializerTest extends AbstractOMTest
       IOUtil.OUT().println("work unit " + id + " created");
     }
 
+    @Override
     public void run()
     {
       workConsumedLatch.countDown();

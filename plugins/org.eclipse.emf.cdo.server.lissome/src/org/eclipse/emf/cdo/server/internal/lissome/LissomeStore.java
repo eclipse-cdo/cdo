@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -153,6 +153,7 @@ public class LissomeStore extends Store
     return journal;
   }
 
+  @Override
   public Map<String, String> getPersistentProperties(Set<String> names)
   {
     Map<String, String> properties = new HashMap<String, String>();
@@ -172,6 +173,7 @@ public class LissomeStore extends Store
     return properties;
   }
 
+  @Override
   public void setPersistentProperties(Map<String, String> properties)
   {
     synchronized (persistentProperties)
@@ -181,6 +183,7 @@ public class LissomeStore extends Store
     }
   }
 
+  @Override
   public void removePersistentProperties(Set<String> names)
   {
     synchronized (persistentProperties)
@@ -237,12 +240,14 @@ public class LissomeStore extends Store
     return new File(folder, getRepository().getName() + "." + PERSISTENT_PROPERTIES_EXTENSION);
   }
 
+  @Override
   public CDOID createObjectID(String val)
   {
     // TODO: implement LissomeStore.createObjectID(val)
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public boolean isLocal(CDOID id)
   {
@@ -285,6 +290,7 @@ public class LissomeStore extends Store
     return new LissomeStoreWriter(this, transaction);
   }
 
+  @Override
   public Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
     final Map<CDOBranch, List<CDORevision>> result = new HashMap<CDOBranch, List<CDORevision>>();
@@ -295,6 +301,7 @@ public class LissomeStore extends Store
     {
       accessor.handleRevisions(null, null, CDOBranchPoint.UNSPECIFIED_DATE, true, new CDORevisionHandler.Filtered.Undetached(new CDORevisionHandler()
       {
+        @Override
         public boolean handleRevision(CDORevision revision)
         {
           CDOBranch branch = revision.getBranch();
@@ -318,11 +325,13 @@ public class LissomeStore extends Store
     return result;
   }
 
+  @Override
   public long getCreationTime()
   {
     return creationTime;
   }
 
+  @Override
   public void setCreationTime(long creationTime)
   {
     this.creationTime = creationTime;
@@ -332,6 +341,7 @@ public class LissomeStore extends Store
     setPersistentProperties(map);
   }
 
+  @Override
   public boolean isFirstStart()
   {
     return firstStart;
@@ -554,6 +564,7 @@ public class LissomeStore extends Store
     return metaObjects.get(metaID);
   }
 
+  @Override
   public Connection getConnection() throws DBException
   {
     return index.getConnection();

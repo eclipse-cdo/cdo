@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -67,6 +67,7 @@ public class H2Adapter extends DBAdapter
     return super.getTypeName(field);
   }
 
+  @Override
   public String[] getReservedWords()
   {
     return getSQL92ReservedWords();
@@ -103,6 +104,7 @@ public class H2Adapter extends DBAdapter
   {
     DBUtil.execute(DBUtil.createConnectionProvider(dataSource), new RunnableWithConnection<Object>()
     {
+      @Override
       public Object run(Connection connection) throws SQLException
       {
         if (dropIfExists)
@@ -123,6 +125,7 @@ public class H2Adapter extends DBAdapter
   {
     DBUtil.execute(DBUtil.createConnectionProvider(dataSource), new RunnableWithConnection<Object>()
     {
+      @Override
       public Object run(Connection connection) throws SQLException
       {
         DBUtil.execute(connection, "SHUTDOWN");

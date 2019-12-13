@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -28,11 +28,13 @@ public class SynchronizingCorrelator<CORRELATION, RESULT> implements ICorrelator
     return map.get(correlation);
   }
 
+  @Override
   public boolean isCorrelated(CORRELATION correlation)
   {
     return map.containsKey(correlation);
   }
 
+  @Override
   public ISynchronizer<RESULT> correlate(CORRELATION correlation)
   {
     ISynchronizer<RESULT> synchronizer = map.get(correlation);
@@ -45,6 +47,7 @@ public class SynchronizingCorrelator<CORRELATION, RESULT> implements ICorrelator
     return synchronizer;
   }
 
+  @Override
   public ISynchronizer<RESULT> correlateUnique(CORRELATION correlation)
   {
     ISynchronizer<RESULT> synchronizer = createSynchronizer(correlation);
@@ -56,6 +59,7 @@ public class SynchronizingCorrelator<CORRELATION, RESULT> implements ICorrelator
     return synchronizer;
   }
 
+  @Override
   public ISynchronizer<RESULT> uncorrelate(CORRELATION correlation)
   {
     return map.remove(correlation);
@@ -98,6 +102,7 @@ public class SynchronizingCorrelator<CORRELATION, RESULT> implements ICorrelator
     {
       private ISynchronizer<RESULT> delegate = new ResultSynchronizer<RESULT>();
 
+      @Override
       public RESULT get(long timeout)
       {
         RESULT result = delegate.get(timeout);
@@ -105,11 +110,13 @@ public class SynchronizingCorrelator<CORRELATION, RESULT> implements ICorrelator
         return result;
       }
 
+      @Override
       public void put(RESULT result)
       {
         delegate.put(result);
       }
 
+      @Override
       public boolean put(RESULT result, long timeout)
       {
         return delegate.put(result, timeout);

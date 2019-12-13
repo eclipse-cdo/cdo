@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -56,6 +56,7 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public BaseObject getContainmentOptional()
   {
     return (BaseObject)eGet(Model6Package.Literals.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL, true);
@@ -65,6 +66,7 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setContainmentOptional(BaseObject newContainmentOptional)
   {
     eSet(Model6Package.Literals.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL, newContainmentOptional);
@@ -74,6 +76,7 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<BaseObject> getContainmentList()
   {

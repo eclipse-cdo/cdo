@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -52,6 +52,7 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
     IDBField[] oldFields = oldTable == null ? InternalDBTable.NO_FIELDS : oldTable.getFields();
     compare(fields, oldFields, new SchemaElementComparator<IDBField>()
     {
+      @Override
       public void compare(IDBField field, IDBField oldField)
       {
         DBFieldDelta fieldDelta = new DBFieldDelta(DBTableDelta.this, field, oldField);
@@ -66,6 +67,7 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
     IDBIndex[] oldIndices = oldTable == null ? InternalDBTable.NO_INDICES : oldTable.getIndices();
     compare(indices, oldIndices, new SchemaElementComparator<IDBIndex>()
     {
+      @Override
       public void compare(IDBIndex index, IDBIndex oldIndex)
       {
         DBIndexDelta indexDelta = new DBIndexDelta(DBTableDelta.this, index, oldIndex);
@@ -84,6 +86,7 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
   {
   }
 
+  @Override
   public DeltaType getDeltaType()
   {
     return DeltaType.TABLE;
@@ -95,16 +98,19 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
     return (DBSchemaDelta)super.getParent();
   }
 
+  @Override
   public int getFieldDeltaCount()
   {
     return fieldDeltas.size();
   }
 
+  @Override
   public int getIndexDeltaCount()
   {
     return indexDeltas.size();
   }
 
+  @Override
   public DBFieldDelta getFieldDelta(int position)
   {
     for (IDBFieldDelta fieldDelta : fieldDeltas.values())
@@ -118,26 +124,31 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
     return null;
   }
 
+  @Override
   public DBFieldDelta getFieldDelta(String name)
   {
     return (DBFieldDelta)fieldDeltas.get(name);
   }
 
+  @Override
   public DBIndexDelta getIndexDelta(String name)
   {
     return (DBIndexDelta)indexDeltas.get(name);
   }
 
+  @Override
   public Map<String, IDBFieldDelta> getFieldDeltas()
   {
     return Collections.unmodifiableMap(fieldDeltas);
   }
 
+  @Override
   public Map<String, IDBIndexDelta> getIndexDeltas()
   {
     return Collections.unmodifiableMap(indexDeltas);
   }
 
+  @Override
   public DBFieldDelta[] getFieldDeltasSortedByPosition()
   {
     DBFieldDelta[] result = fieldDeltas.values().toArray(new DBFieldDelta[fieldDeltas.size()]);
@@ -145,6 +156,7 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
     return result;
   }
 
+  @Override
   public DBIndexDelta[] getIndexDeltasSortedByName()
   {
     DBIndexDelta[] result = indexDeltas.values().toArray(new DBIndexDelta[indexDeltas.size()]);
@@ -152,6 +164,7 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
     return result;
   }
 
+  @Override
   public IDBTable getSchemaElement(IDBSchema schema)
   {
     return schema.getTable(getName());

@@ -172,6 +172,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * @since 4.0 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getAddressable()
   {
     return addressableEClass;
@@ -183,6 +184,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * @since 4.0 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getAddressable_Name()
   {
     return (EAttribute)addressableEClass.getEStructuralFeatures().get(0);
@@ -194,6 +196,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * @since 4.0 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getAddressable_Street()
   {
     return (EAttribute)addressableEClass.getEStructuralFeatures().get(1);
@@ -205,6 +208,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * @since 4.0 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getAddressable_City()
   {
     return (EAttribute)addressableEClass.getEStructuralFeatures().get(2);
@@ -214,6 +218,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getSupplier()
   {
     return supplierEClass;
@@ -223,6 +228,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getSupplier_PurchaseOrders()
   {
     return (EReference)supplierEClass.getEStructuralFeatures().get(0);
@@ -232,6 +238,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getSupplier_Preferred()
   {
     return (EAttribute)supplierEClass.getEStructuralFeatures().get(1);
@@ -241,6 +248,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPurchaseOrder()
   {
     return purchaseOrderEClass;
@@ -250,6 +258,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPurchaseOrder_Date()
   {
     return (EAttribute)purchaseOrderEClass.getEStructuralFeatures().get(0);
@@ -259,6 +268,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPurchaseOrder_Supplier()
   {
     return (EReference)purchaseOrderEClass.getEStructuralFeatures().get(1);
@@ -268,6 +278,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getOrderDetail()
   {
     return orderDetailEClass;
@@ -277,6 +288,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getOrderDetail_Order()
   {
     return (EReference)orderDetailEClass.getEStructuralFeatures().get(0);
@@ -286,6 +298,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getOrderDetail_Product()
   {
     return (EReference)orderDetailEClass.getEStructuralFeatures().get(1);
@@ -295,6 +308,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getOrderDetail_Price()
   {
     return (EAttribute)orderDetailEClass.getEStructuralFeatures().get(2);
@@ -304,6 +318,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getVAT()
   {
     return vatEEnum;
@@ -313,6 +328,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCategory()
   {
     return categoryEClass;
@@ -322,6 +338,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCategory_Name()
   {
     return (EAttribute)categoryEClass.getEStructuralFeatures().get(0);
@@ -331,6 +348,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCategory_Categories()
   {
     return (EReference)categoryEClass.getEStructuralFeatures().get(1);
@@ -340,6 +358,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCategory_Products()
   {
     return (EReference)categoryEClass.getEStructuralFeatures().get(2);
@@ -349,6 +368,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getProduct()
   {
     return productEClass;
@@ -358,6 +378,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getProduct_Name()
   {
     return (EAttribute)productEClass.getEStructuralFeatures().get(0);
@@ -367,6 +388,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getProduct_OrderDetails()
   {
     return (EReference)productEClass.getEStructuralFeatures().get(1);
@@ -376,6 +398,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getProduct_Vat()
   {
     return (EAttribute)productEClass.getEStructuralFeatures().get(2);
@@ -385,6 +408,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getProduct_Description()
   {
     return (EAttribute)productEClass.getEStructuralFeatures().get(3);
@@ -396,6 +420,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * @since 4.0 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getProduct_Price()
   {
     return (EAttribute)productEClass.getEStructuralFeatures().get(4);
@@ -405,6 +430,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCompany()
   {
     return companyEClass;
@@ -414,6 +440,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCompany_Categories()
   {
     return (EReference)companyEClass.getEStructuralFeatures().get(0);
@@ -423,6 +450,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCompany_Suppliers()
   {
     return (EReference)companyEClass.getEStructuralFeatures().get(1);
@@ -432,6 +460,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCompany_PurchaseOrders()
   {
     return (EReference)companyEClass.getEStructuralFeatures().get(3);
@@ -441,6 +470,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCompany_Customers()
   {
     return (EReference)companyEClass.getEStructuralFeatures().get(2);
@@ -450,6 +480,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCompany_SalesOrders()
   {
     return (EReference)companyEClass.getEStructuralFeatures().get(4);
@@ -459,6 +490,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCustomer()
   {
     return customerEClass;
@@ -468,6 +500,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCustomer_SalesOrders()
   {
     return (EReference)customerEClass.getEStructuralFeatures().get(0);
@@ -477,6 +510,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getOrder()
   {
     return orderEClass;
@@ -486,6 +520,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getOrder_OrderDetails()
   {
     return (EReference)orderEClass.getEStructuralFeatures().get(0);
@@ -495,6 +530,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getSalesOrder()
   {
     return salesOrderEClass;
@@ -504,6 +540,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getSalesOrder_Id()
   {
     return (EAttribute)salesOrderEClass.getEStructuralFeatures().get(0);
@@ -513,6 +550,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getSalesOrder_Customer()
   {
     return (EReference)salesOrderEClass.getEStructuralFeatures().get(1);
@@ -522,6 +560,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public CompanyFactory getCompanyFactory()
   {
     return (CompanyFactory)getEFactoryInstance();

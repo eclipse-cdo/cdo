@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -260,6 +260,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 2.0
    */
+  @Override
   public boolean isRoot()
   {
     return root;
@@ -277,6 +278,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ResourceSet getResourceSet()
   {
     return (ResourceSet)eGet(EresourcePackage.Literals.CDO_RESOURCE__RESOURCE_SET, true);
@@ -286,6 +288,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setResourceSet(ResourceSet newResourceSet)
   {
     eSet(EresourcePackage.Literals.CDO_RESOURCE__RESOURCE_SET, newResourceSet);
@@ -415,6 +418,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    *
    * @generated NOT
    */
+  @Override
   public void setURI(URI newURI)
   {
     boolean notificationRequired = eNotificationRequired();
@@ -506,6 +510,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    *
    * @generated NOT
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<EObject> getContents()
   {
@@ -532,6 +537,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    *
    * @generated NOT
    */
+  @Override
   public boolean isModified()
   {
     return modified;
@@ -542,6 +548,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    *
    * @generated NOT
    */
+  @Override
   public void setModified(boolean newModified)
   {
     boolean oldModified = modified;
@@ -572,6 +579,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    *
    * @generated NOT
    */
+  @Override
   public boolean isLoaded()
   {
     return loaded;
@@ -614,6 +622,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isTrackingModification()
   {
     return (Boolean)eGet(EresourcePackage.Literals.CDO_RESOURCE__TRACKING_MODIFICATION, true);
@@ -635,6 +644,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    *
    * @generated NOT
    */
+  @Override
   public void setTrackingModification(boolean newTrackingModification)
   {
     if (cdoView().isReadOnly())
@@ -672,6 +682,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    *
    * @generated NOT
    */
+  @Override
   public EList<Diagnostic> getErrors()
   {
     if (errors == null)
@@ -708,6 +719,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    *
    * @generated NOT
    */
+  @Override
   public EList<Diagnostic> getWarnings()
   {
     if (warnings == null)
@@ -743,6 +755,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public long getTimeStamp()
   {
     return (Long)eGet(EresourcePackage.Literals.CDO_RESOURCE__TIME_STAMP, true);
@@ -752,6 +765,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setTimeStamp(long newTimeStamp)
   {
     eSet(EresourcePackage.Literals.CDO_RESOURCE__TIME_STAMP, newTimeStamp);
@@ -761,6 +775,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    * @ADDED
    * @see ResourceImpl#getAllContents()
    */
+  @Override
   public TreeIterator<EObject> getAllContents()
   {
     return new AbstractTreeIterator<EObject>(this, false)
@@ -785,6 +800,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    *
    * @ADDED
    */
+  @Override
   public EObject getEObject(String uriFragment)
   {
     try
@@ -1003,6 +1019,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @ADDED
    */
+  @Override
   public String getURIFragment(EObject object)
   {
     // TODO if object == this ??? what we do. Is it wanted ? How we handle them ?
@@ -1015,6 +1032,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @ADDED
    */
+  @Override
   public boolean isLoading()
   {
     return loading;
@@ -1024,6 +1042,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    * @ADDED
    * @since 4.2
    */
+  @Override
   public void cdoInternalLoading(EObject object)
   {
     if (loadingCounter.incrementAndGet() == 1)
@@ -1036,6 +1055,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    * @ADDED
    * @since 4.2
    */
+  @Override
   public void cdoInternalLoadingDone(EObject object)
   {
     if (loadingCounter.decrementAndGet() == 0)
@@ -1064,6 +1084,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @ADDED
    */
+  @Override
   public void load(InputStream inputStream, Map<?, ?> options) throws IOException
   {
     // final String baseURI = getBaseURIOption(options);
@@ -1197,6 +1218,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @ADDED
    */
+  @Override
   public void load(Map<?, ?> options) throws IOException
   {
     if (!isLoaded())
@@ -1289,6 +1311,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @ADDED
    */
+  @Override
   public void save(Map<?, ?> options) throws IOException
   {
     CDOTransaction transaction = getTransaction(options);
@@ -1331,6 +1354,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @ADDED
    */
+  @Override
   public void save(OutputStream outputStream, Map<?, ?> options) throws IOException
   {
     final String baseURI = getBaseURIOption(options);
@@ -1497,6 +1521,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @ADDED
    */
+  @Override
   public void unload()
   {
     if (!root)
@@ -1512,6 +1537,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @ADDED
    */
+  @Override
   public void delete(Map<?, ?> options) throws IOException
   {
     if (FSMUtil.isTransient(this))
@@ -1545,6 +1571,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
       InternalCDOViewSet viewSet = (InternalCDOViewSet)CDOUtil.getViewSet(resourceSet);
       viewSet.executeWithoutNotificationHandling(new Callable<Boolean>()
       {
+        @Override
         public Boolean call() throws Exception
         {
           resourceSet.getResources().remove(CDOResourceImpl.this);
@@ -1557,6 +1584,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @ADDED
    */
+  @Override
   public void attached(EObject object)
   {
     if (!FSMUtil.isTransient(this))
@@ -1614,6 +1642,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @ADDED
    */
+  @Override
   public void detached(EObject object)
   {
     if (!FSMUtil.isTransient(this))
@@ -1631,6 +1660,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    * @ADDED
    * @see ResourceImpl#basicSetResourceSet(ResourceSet, NotificationChain)
    */
+  @Override
   public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications)
   {
     final ResourceSet oldResourceSet = getResourceSet();
@@ -1641,6 +1671,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
       InternalCDOViewSet viewSet = (InternalCDOViewSet)CDOUtil.getViewSet(oldResourceSet);
       notifications = viewSet.executeWithoutNotificationHandling(new Callable<NotificationChain>()
       {
+        @Override
         public NotificationChain call() throws Exception
         {
           return ((InternalEList<Resource>)oldResourceSet.getResources()).basicRemove(this, finalNotifications);
@@ -1714,6 +1745,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @ADDED
    */
+  @Override
   public boolean isExisting()
   {
     return existing;
@@ -1763,6 +1795,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public String getID(EObject eObject)
   {
     return getURIFragment(eObject);
@@ -1771,6 +1804,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public void setID(EObject eObject, String id)
   {
     // Do nothing.
@@ -1779,6 +1813,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public boolean useZip()
   {
     return false;
@@ -1787,6 +1822,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public void setUseZip(boolean useZip)
   {
     // Do nothing.
@@ -1795,6 +1831,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public String getPublicId()
   {
     throw new UnsupportedOperationException();
@@ -1803,6 +1840,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public String getSystemId()
   {
     throw new UnsupportedOperationException();
@@ -1811,6 +1849,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public DOMHelper getDOMHelper()
   {
     throw new UnsupportedOperationException();
@@ -1819,6 +1858,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public Map<Object, Object> getDefaultLoadOptions()
   {
     throw new UnsupportedOperationException();
@@ -1827,6 +1867,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public Map<Object, Object> getDefaultSaveOptions()
   {
     throw new UnsupportedOperationException();
@@ -1835,6 +1876,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public Map<EObject, AnyType> getEObjectToExtensionMap()
   {
     throw new UnsupportedOperationException();
@@ -1843,6 +1885,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public String getEncoding()
   {
     throw new UnsupportedOperationException();
@@ -1851,6 +1894,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public void setEncoding(String encoding)
   {
     // Do nothing.
@@ -1859,6 +1903,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public String getXMLVersion()
   {
     throw new UnsupportedOperationException();
@@ -1867,6 +1912,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public void setXMLVersion(String version)
   {
     // Do nothing.
@@ -1875,6 +1921,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public void setDoctypeInfo(String publicId, String systemId)
   {
     // Do nothing.
@@ -1883,6 +1930,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public void load(Node node, Map<?, ?> options) throws IOException
   {
     throw new UnsupportedOperationException();
@@ -1891,6 +1939,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public void load(InputSource inputSource, Map<?, ?> options) throws IOException
   {
     throw new UnsupportedOperationException();
@@ -1899,6 +1948,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public void save(Writer writer, Map<?, ?> options) throws IOException
   {
     throw new UnsupportedOperationException();
@@ -1907,6 +1957,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   public Document save(Document document, Map<?, ?> options, DOMHandler handler)
   {
     throw new UnsupportedOperationException();
@@ -1915,6 +1966,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   @Deprecated
   public Map<String, EObject> getIDToEObjectMap()
   {
@@ -1924,6 +1976,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   /**
    * @since 4.4
    */
+  @Override
   @Deprecated
   public Map<EObject, String> getEObjectToIDMap()
   {

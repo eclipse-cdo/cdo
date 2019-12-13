@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -74,6 +74,7 @@ public class ClassWithTransientContainmentImpl extends CDOObjectImpl implements 
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(Model3Package.eINSTANCE.getClassWithTransientContainment_Name(), true);
@@ -84,6 +85,7 @@ public class ClassWithTransientContainmentImpl extends CDOObjectImpl implements 
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(Model3Package.eINSTANCE.getClassWithTransientContainment_Name(), newName);
@@ -94,6 +96,7 @@ public class ClassWithTransientContainmentImpl extends CDOObjectImpl implements 
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ClassWithTransientContainment getTransientChild()
   {
     return (ClassWithTransientContainment)eGet(Model3Package.eINSTANCE.getClassWithTransientContainment_TransientChild(), true);
@@ -104,6 +107,7 @@ public class ClassWithTransientContainmentImpl extends CDOObjectImpl implements 
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setTransientChild(ClassWithTransientContainment newTransientChild)
   {
     eSet(Model3Package.eINSTANCE.getClassWithTransientContainment_TransientChild(), newTransientChild);
@@ -114,6 +118,7 @@ public class ClassWithTransientContainmentImpl extends CDOObjectImpl implements 
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<ClassWithTransientContainment> getTransientChildren()
   {
@@ -125,6 +130,7 @@ public class ClassWithTransientContainmentImpl extends CDOObjectImpl implements 
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ClassWithTransientContainment getPersistentChild()
   {
     return (ClassWithTransientContainment)eGet(Model3Package.eINSTANCE.getClassWithTransientContainment_PersistentChild(), true);
@@ -135,6 +141,7 @@ public class ClassWithTransientContainmentImpl extends CDOObjectImpl implements 
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setPersistentChild(ClassWithTransientContainment newPersistentChild)
   {
     eSet(Model3Package.eINSTANCE.getClassWithTransientContainment_PersistentChild(), newPersistentChild);
@@ -145,6 +152,7 @@ public class ClassWithTransientContainmentImpl extends CDOObjectImpl implements 
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<ClassWithTransientContainment> getPersistentChildren()
   {

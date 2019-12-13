@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -197,6 +197,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Group> getGroups()
   {
@@ -208,6 +209,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public EList<Group> getAllGroups()
   {
     return allGroups;
@@ -218,6 +220,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public EList<Role> getAllRoles()
   {
     return allRoles;
@@ -228,6 +231,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public EList<Permission> getAllPermissions()
   {
     return allPermissions;
@@ -238,6 +242,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public EList<Role> getUnassignedRoles()
   {
     return unassignedRoles;
@@ -248,6 +253,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getLabel()
   {
     return (String)eGet(SecurityPackage.Literals.USER__LABEL, true);
@@ -258,6 +264,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getFirstName()
   {
     return (String)eGet(SecurityPackage.Literals.USER__FIRST_NAME, true);
@@ -268,6 +275,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setFirstName(String newFirstName)
   {
     eSet(SecurityPackage.Literals.USER__FIRST_NAME, newFirstName);
@@ -278,6 +286,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getLastName()
   {
     return (String)eGet(SecurityPackage.Literals.USER__LAST_NAME, true);
@@ -288,6 +297,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setLastName(String newLastName)
   {
     eSet(SecurityPackage.Literals.USER__LAST_NAME, newLastName);
@@ -298,6 +308,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getEmail()
   {
     return (String)eGet(SecurityPackage.Literals.USER__EMAIL, true);
@@ -308,6 +319,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setEmail(String newEmail)
   {
     eSet(SecurityPackage.Literals.USER__EMAIL, newEmail);
@@ -318,6 +330,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Access getDefaultAccessOverride()
   {
     return (Access)eGet(SecurityPackage.Literals.USER__DEFAULT_ACCESS_OVERRIDE, true);
@@ -328,6 +341,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDefaultAccessOverride(Access newDefaultAccessOverride)
   {
     eSet(SecurityPackage.Literals.USER__DEFAULT_ACCESS_OVERRIDE, newDefaultAccessOverride);
@@ -338,6 +352,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public Access getDefaultAccess()
   {
     Access defaultAccessOverride = getDefaultAccessOverride();
@@ -360,6 +375,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isLocked()
   {
     return (Boolean)eGet(SecurityPackage.Literals.USER__LOCKED, true);
@@ -370,6 +386,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setLocked(boolean newLocked)
   {
     eSet(SecurityPackage.Literals.USER__LOCKED, newLocked);
@@ -380,6 +397,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public UserPassword getPassword()
   {
     return (UserPassword)eGet(SecurityPackage.Literals.USER__PASSWORD, true);
@@ -390,6 +408,7 @@ public class UserImpl extends AssigneeImpl implements User
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setPassword(UserPassword newPassword)
   {
     eSet(SecurityPackage.Literals.USER__PASSWORD, newPassword);

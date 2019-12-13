@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,6 +66,7 @@ public class BaseObjectImpl extends CDOObjectImpl implements BaseObject
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getAttributeOptional()
   {
     return (String)eGet(Model6Package.Literals.BASE_OBJECT__ATTRIBUTE_OPTIONAL, true);
@@ -75,6 +76,7 @@ public class BaseObjectImpl extends CDOObjectImpl implements BaseObject
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttributeOptional(String newAttributeOptional)
   {
     eSet(Model6Package.Literals.BASE_OBJECT__ATTRIBUTE_OPTIONAL, newAttributeOptional);
@@ -84,6 +86,7 @@ public class BaseObjectImpl extends CDOObjectImpl implements BaseObject
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getAttributeRequired()
   {
     return (String)eGet(Model6Package.Literals.BASE_OBJECT__ATTRIBUTE_REQUIRED, true);
@@ -93,6 +96,7 @@ public class BaseObjectImpl extends CDOObjectImpl implements BaseObject
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAttributeRequired(String newAttributeRequired)
   {
     eSet(Model6Package.Literals.BASE_OBJECT__ATTRIBUTE_REQUIRED, newAttributeRequired);
@@ -102,6 +106,7 @@ public class BaseObjectImpl extends CDOObjectImpl implements BaseObject
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<String> getAttributeList()
   {

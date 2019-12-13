@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -72,11 +72,13 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     this.repository = repository;
   }
 
+  @Override
   public final InternalRepository getRepository()
   {
     return repository;
   }
 
+  @Override
   public boolean isUnit(CDOID rootID)
   {
     checkActive();
@@ -95,6 +97,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     }
   }
 
+  @Override
   public IUnit createUnit(CDOID rootID, IView view, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
     checkActive();
@@ -225,6 +228,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     }
   }
 
+  @Override
   public IUnit getUnit(CDOID rootID)
   {
     checkActive();
@@ -243,12 +247,14 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     }
   }
 
+  @Override
   public IUnit[] getUnits()
   {
     checkActive();
     return getElements();
   }
 
+  @Override
   public IUnit[] getElements()
   {
     ReadLock readLock = managerLock.readLock();
@@ -265,6 +271,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     }
   }
 
+  @Override
   public Map<CDOID, CDOID> getUnitsOf(Set<CDOID> ids, CDORevisionProvider revisionProvider)
   {
     ReadLock readLock = managerLock.readLock();
@@ -296,6 +303,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     }
   }
 
+  @Override
   public List<InternalCDORevisionDelta> getUnitMoves(InternalCDORevisionDelta[] deltas, CDORevisionProvider before, CDORevisionProvider after)
   {
     ReadLock readLock = managerLock.readLock();
@@ -341,6 +349,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     }
   }
 
+  @Override
   public InternalObjectAttacher attachObjects(InternalCommitContext commitContext)
   {
     checkActive();
@@ -532,16 +541,19 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
       this.rootID = rootID;
     }
 
+    @Override
     public IUnitManager getManager()
     {
       return UnitManager.this;
     }
 
+    @Override
     public CDOID getRootID()
     {
       return rootID;
     }
 
+    @Override
     public boolean isOpen()
     {
       synchronized (views)
@@ -550,6 +562,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
       }
     }
 
+    @Override
     public void open(IView view, final CDORevisionHandler revisionHandler, OMMonitor monitor)
     {
       synchronized (views)
@@ -569,6 +582,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
       }
     }
 
+    @Override
     public void close(IView view)
     {
       synchronized (views)
@@ -675,6 +689,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
       final Set<CDOID> ids = new HashSet<CDOID>();
       hookedRevisionHandlers.add(new CDORevisionHandler()
       {
+        @Override
         public boolean handleRevision(CDORevision revision)
         {
           ids.add(revision.getID());
@@ -720,6 +735,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
         // Now send the missed revisions.
         unit.open(view, new CDORevisionHandler()
         {
+          @Override
           public boolean handleRevision(CDORevision revision)
           {
             if (ids.contains(revision.getID()))
@@ -748,6 +764,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
       unitInitialized.countDown();
     }
 
+    @Override
     public boolean handleRevision(CDORevision revision)
     {
       if (revisionHandler.handleRevision(revision))
@@ -797,6 +814,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     /**
      * Does not hold any manager lock when called.
      */
+    @Override
     public void finishedCommit(boolean success)
     {
       objectAttacherFinishedCommit(this);

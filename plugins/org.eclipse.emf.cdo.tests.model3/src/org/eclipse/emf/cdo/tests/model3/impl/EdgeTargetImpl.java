@@ -72,6 +72,7 @@ public class EdgeTargetImpl extends CDOObjectImpl implements EdgeTarget
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Edge> getOutgoingEdges()
   {
@@ -83,6 +84,7 @@ public class EdgeTargetImpl extends CDOObjectImpl implements EdgeTarget
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Edge> getIncomingEdges()
   {

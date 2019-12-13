@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -38,41 +38,49 @@ public abstract class AbstractClientManager<T extends ILifecycle> implements ILi
     this.delegate = delegate;
   }
 
+  @Override
   public boolean hasListeners()
   {
     return delegate.hasListeners();
   }
 
+  @Override
   public IListener[] getListeners()
   {
     return delegate.getListeners();
   }
 
+  @Override
   public void addListener(IListener listener)
   {
     delegate.addListener(listener);
   }
 
+  @Override
   public void removeListener(IListener listener)
   {
     delegate.removeListener(listener);
   }
 
+  @Override
   public LifecycleState getLifecycleState()
   {
     return lifecycleState;
   }
 
+  @Override
   public boolean isActive()
   {
     return lifecycleState == LifecycleState.ACTIVE;
   }
 
+  @Override
   public void activate() throws LifecycleException
   {
     lifecycleState = LifecycleState.ACTIVE;
   }
 
+  @Override
   public Exception deactivate()
   {
     lifecycleState = LifecycleState.INACTIVE;

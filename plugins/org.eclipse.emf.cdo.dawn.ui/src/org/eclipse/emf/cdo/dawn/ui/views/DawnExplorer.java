@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -63,6 +63,7 @@ public class DawnExplorer extends CDOSessionsView
     {
       Thread thread = new Thread(new Runnable()
       {
+        @Override
         public void run()
         {
           while (!initialize())
@@ -112,6 +113,7 @@ public class DawnExplorer extends CDOSessionsView
   {
     return new DawnItemProvider(getSite().getPage(), this, new IElementFilter()
     {
+      @Override
       public boolean filter(Object element)
       {
         return element instanceof CDOSession;
@@ -124,6 +126,7 @@ public class DawnExplorer extends CDOSessionsView
   {
     getViewer().addDoubleClickListener(new IDoubleClickListener()
     {
+      @Override
       public void doubleClick(DoubleClickEvent event)
       {
         Object obj = ((IStructuredSelection)event.getSelection()).getFirstElement();

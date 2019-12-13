@@ -21,12 +21,14 @@ public class SynchronousWorkSerializer implements IWorkSerializer
   {
   }
 
+  @Override
   public boolean addWork(Runnable work)
   {
     work.run();
     return true;
   }
 
+  @Override
   public void dispose()
   {
   }

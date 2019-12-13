@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,36 +22,43 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
  */
 public abstract class DelegatingQueryResourcesContext implements QueryResourcesContext
 {
+  @Override
   public CDOBranch getBranch()
   {
     return getDelegate().getBranch();
   }
 
+  @Override
   public long getTimeStamp()
   {
     return getDelegate().getTimeStamp();
   }
 
+  @Override
   public CDOID getFolderID()
   {
     return getDelegate().getFolderID();
   }
 
+  @Override
   public String getName()
   {
     return getDelegate().getName();
   }
 
+  @Override
   public boolean exactMatch()
   {
     return getDelegate().exactMatch();
   }
 
+  @Override
   public int getMaxResults()
   {
     return getDelegate().getMaxResults();
   }
 
+  @Override
   public boolean addResource(CDOID resourceID)
   {
     return getDelegate().addResource(resourceID);

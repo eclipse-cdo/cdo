@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -49,101 +49,121 @@ public class CDOWorkspaceConfigurationImpl implements CDOWorkspaceConfiguration
   {
   }
 
+  @Override
   public String getLocalRepositoryName()
   {
     return localRepositoryName;
   }
 
+  @Override
   public void setLocalRepositoryName(String localRepositoryName)
   {
     this.localRepositoryName = localRepositoryName;
   }
 
+  @Override
   public IStore getStore()
   {
     return store;
   }
 
+  @Override
   public void setStore(IStore store)
   {
     this.store = store;
   }
 
+  @Override
   public CDOWorkspaceBase getBase()
   {
     return base;
   }
 
+  @Override
   public void setBase(CDOWorkspaceBase base)
   {
     this.base = base;
   }
 
+  @Override
   public CDOSessionConfigurationFactory getRemote()
   {
     return remote;
   }
 
+  @Override
   public void setRemote(CDOSessionConfigurationFactory remote)
   {
     this.remote = remote;
   }
 
+  @Override
   public int getBranchID()
   {
     return branchID;
   }
 
+  @Override
   public void setBranchID(int branchID)
   {
     this.branchID = branchID;
   }
 
+  @Override
   public String getBranchPath()
   {
     return branchPath;
   }
 
+  @Override
   public void setBranchPath(String branchPath)
   {
     this.branchPath = branchPath;
   }
 
+  @Override
   public long getTimeStamp()
   {
     return timeStamp;
   }
 
+  @Override
   public void setTimeStamp(long timeStamp)
   {
     this.timeStamp = timeStamp;
   }
 
+  @Override
   public IDGenerationLocation getIDGenerationLocation()
   {
     return idGenerationLocation;
   }
 
+  @Override
   public void setIDGenerationLocation(IDGenerationLocation idGenerationLocation)
   {
     this.idGenerationLocation = idGenerationLocation;
   }
 
+  @Override
   public CDOIDGenerator getIDGenerator()
   {
     return idGenerator;
   }
 
+  @Override
   public void setIDGenerator(CDOIDGenerator idGenerator)
   {
     this.idGenerator = idGenerator;
   }
 
+  @Override
   public CDOWorkspace open()
   {
     return new CDOWorkspaceImpl(localRepositoryName, store, idGenerationLocation, idGenerator, (InternalCDOWorkspaceBase)base, remote);
   }
 
+  @Override
   public CDOWorkspace checkout()
   {
     return new CDOWorkspaceImpl(localRepositoryName, store, idGenerationLocation, idGenerator, (InternalCDOWorkspaceBase)base, remote, branchID, branchPath,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -54,6 +54,7 @@ public class Bugzilla_250910_Test extends AbstractCDOTest
 
       Company company2 = transaction2.syncExec(new Callable<Company>()
       {
+        @Override
         public Company call() throws Exception
         {
           transaction1.commit();

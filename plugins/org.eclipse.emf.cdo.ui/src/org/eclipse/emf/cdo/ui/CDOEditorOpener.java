@@ -106,31 +106,37 @@ public interface CDOEditorOpener
       this.priority = priority;
     }
 
+    @Override
     public String getID()
     {
       return id;
     }
 
+    @Override
     public String getName()
     {
       return name;
     }
 
+    @Override
     public ImageDescriptor getIcon()
     {
       return icon;
     }
 
+    @Override
     public final int getPriority()
     {
       return priority;
     }
 
+    @Override
     public final String getRegex()
     {
       return regex;
     }
 
+    @Override
     public final boolean matchesRegex(URI uri)
     {
       synchronized (regex)
@@ -145,6 +151,7 @@ public interface CDOEditorOpener
       return matcher.matches();
     }
 
+    @Override
     public IEditorPart openEditor(final IWorkbenchPage page, URI uri)
     {
       final Set<IEditorPart> editors = new HashSet<IEditorPart>();
@@ -152,6 +159,7 @@ public interface CDOEditorOpener
 
       IPartListener partListener = new IPartListener()
       {
+        @Override
         public void partClosed(IWorkbenchPart part)
         {
           if (part == editor[0])
@@ -171,21 +179,25 @@ public interface CDOEditorOpener
           }
         }
 
+        @Override
         public void partOpened(IWorkbenchPart part)
         {
           // Do nothing.
         }
 
+        @Override
         public void partDeactivated(IWorkbenchPart part)
         {
           // Do nothing.
         }
 
+        @Override
         public void partBroughtToTop(IWorkbenchPart part)
         {
           // Do nothing.
         }
 
+        @Override
         public void partActivated(IWorkbenchPart part)
         {
           // Do nothing.
@@ -276,6 +288,7 @@ public interface CDOEditorOpener
       // Sort highest priority first
       Collections.sort(result, new Comparator<CDOEditorOpener>()
       {
+        @Override
         public int compare(CDOEditorOpener o1, CDOEditorOpener o2)
         {
           return -Integer.valueOf(o1.getPriority()).compareTo(o2.getPriority());
@@ -319,6 +332,7 @@ public interface CDOEditorOpener
       }
     }
 
+    @Override
     public CDOEditorOpener[] getElements()
     {
       synchronized (editorOpeners)

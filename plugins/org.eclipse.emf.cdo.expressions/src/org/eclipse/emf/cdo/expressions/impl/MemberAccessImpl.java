@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -67,6 +67,7 @@ public class MemberAccessImpl extends AccessImpl implements MemberAccess
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Expression getObject()
   {
     return (Expression)eDynamicGet(ExpressionsPackage.MEMBER_ACCESS__OBJECT, ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, true, true);
@@ -88,6 +89,7 @@ public class MemberAccessImpl extends AccessImpl implements MemberAccess
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setObject(Expression newObject)
   {
     eDynamicSet(ExpressionsPackage.MEMBER_ACCESS__OBJECT, ExpressionsPackage.Literals.MEMBER_ACCESS__OBJECT, newObject);

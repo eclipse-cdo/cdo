@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -36,6 +36,7 @@ public class InstancesQueryHandler implements IQueryHandler
   {
   }
 
+  @Override
   public void executeQuery(CDOQueryInfo info, IQueryContext context)
   {
     EClass type = (EClass)info.getParameters().get(CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES_TYPE);
@@ -75,6 +76,7 @@ public class InstancesQueryHandler implements IQueryHandler
     InternalRepository repository = (InternalRepository)context.getView().getRepository();
     repository.handleRevisions(type, branch, false, timeStamp, false, new CDORevisionHandler()
     {
+      @Override
       public boolean handleRevision(CDORevision revision)
       {
         if (revision instanceof DetachedCDORevision)

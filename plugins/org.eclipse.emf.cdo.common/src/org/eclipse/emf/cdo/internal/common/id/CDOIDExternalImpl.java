@@ -59,36 +59,43 @@ public final class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExter
     out.writeString(uri);
   }
 
+  @Override
   public String toURIFragment()
   {
     return uri;
   }
 
+  @Override
   public String getURI()
   {
     return uri;
   }
 
+  @Override
   public String getStringValue()
   {
     return uri;
   }
 
+  @Override
   public Type getType()
   {
     return Type.EXTERNAL_OBJECT;
   }
 
+  @Override
   public boolean isExternal()
   {
     return true;
   }
 
+  @Override
   public boolean isObject()
   {
     return true;
   }
 
+  @Override
   public boolean isTemporary()
   {
     return false;

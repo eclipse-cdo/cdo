@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -261,6 +261,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
   }
 
+  @Override
   public IDBPreparedStatement createObjectIDStatement(IDBStoreAccessor accessor)
   {
     if (TRACER.isEnabled())
@@ -271,6 +272,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     return accessor.getDBConnection().prepareStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
   }
 
+  @Override
   public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name, boolean exactMatch,
       CDOBranchPoint branchPoint)
   {
@@ -341,6 +343,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
   }
 
+  @Override
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     long timeStamp = revision.getTimeStamp();
@@ -492,6 +495,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
   }
 
+  @Override
   public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created, OMMonitor monitor)
   {
     Async async = null;
@@ -559,6 +563,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       updateAttributes();
     }
 
+    @Override
     public void visit(CDOSetFeatureDelta delta)
     {
       if (delta.getFeature().isMany())
@@ -575,6 +580,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       attributeChanges.add(Pair.create(am, delta.getValue()));
     }
 
+    @Override
     public void visit(CDOUnsetFeatureDelta delta)
     {
       // TODO: correct this when DBStore implements unsettable features
@@ -583,6 +589,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       attributeChanges.add(Pair.create(tm, null));
     }
 
+    @Override
     public void visit(CDOListFeatureDelta delta)
     {
       EStructuralFeature feature = delta.getFeature();
@@ -605,6 +612,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       }
     }
 
+    @Override
     public void visit(CDOContainerFeatureDelta delta)
     {
       newContainingFeatureID = delta.getContainerFeatureID();

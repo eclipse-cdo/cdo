@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -31,16 +31,19 @@ public final class DelegatingDBIndexField extends DelegatingDBSchemaElement impl
     return (InternalDBIndexField)super.getDelegate();
   }
 
+  @Override
   public IDBIndexField getWrapper()
   {
     return this;
   }
 
+  @Override
   public int getPosition()
   {
     return getDelegate().getPosition();
   }
 
+  @Override
   public void setPosition(int position)
   {
     getDelegate().setPosition(position);
@@ -52,11 +55,13 @@ public final class DelegatingDBIndexField extends DelegatingDBSchemaElement impl
     return wrap(getDelegate().getParent());
   }
 
+  @Override
   public IDBIndex getIndex()
   {
     return wrap(getDelegate().getIndex());
   }
 
+  @Override
   public IDBField getField()
   {
     return wrap(getDelegate().getField());

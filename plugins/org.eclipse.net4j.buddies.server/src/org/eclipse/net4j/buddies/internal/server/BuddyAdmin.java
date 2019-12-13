@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -63,26 +63,31 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin
     activate();
   }
 
+  @Override
   public Map<String, IAccount> getAccounts()
   {
     return accounts;
   }
 
+  @Override
   public ISession getSession(IBuddy buddy)
   {
     return getSession(buddy.getUserID());
   }
 
+  @Override
   public ISession getSession(String userID)
   {
     return sessions.get(userID);
   }
 
+  @Override
   public ISession[] getSessions()
   {
     return sessions.values().toArray(new ISession[sessions.size()]);
   }
 
+  @Override
   public IBuddy[] getBuddies()
   {
     List<IBuddy> buddies = new ArrayList<IBuddy>();
@@ -94,6 +99,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin
     return buddies.toArray(new IBuddy[buddies.size()]);
   }
 
+  @Override
   public IBuddy getBuddy(String userID)
   {
     ISession session = getSession(userID);
@@ -105,6 +111,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin
     return session.getSelf();
   }
 
+  @Override
   public synchronized ISession openSession(IChannel channel, String userID, String password, String[] facilityTypes)
   {
     if (sessions.containsKey(userID))
@@ -146,6 +153,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin
     return session;
   }
 
+  @Override
   public ICollaboration initiateCollaboration(IBuddy initiator, String... userIDs)
   {
     long collaborationID;

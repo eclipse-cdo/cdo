@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -121,6 +121,7 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
     referenceQueue.setMaxWorkPerPoll(maxWorkPerPoll);
   }
 
+  @Override
   public final void addRevision(CDORevision revision)
   {
     referenceQueue.register((InternalCDORevision)revision);
@@ -129,6 +130,7 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
 
   protected abstract void doAddRevision(CDORevision revision);
 
+  @Override
   public final CDORevision removeRevision(CDOID id, CDOBranchVersion branchVersion)
   {
     referenceQueue.clean();
@@ -219,16 +221,19 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
       version = revision.getVersion();
     }
 
+    @Override
     public CDOID getID()
     {
       return id;
     }
 
+    @Override
     public CDOBranch getBranch()
     {
       return branch;
     }
 
+    @Override
     public int getVersion()
     {
       return version;
@@ -260,16 +265,19 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
       version = revision.getVersion();
     }
 
+    @Override
     public CDOID getID()
     {
       return id;
     }
 
+    @Override
     public CDOBranch getBranch()
     {
       return branch;
     }
 
+    @Override
     public int getVersion()
     {
       return version;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -69,6 +69,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
   private ISelectionChangedListener selectionListener = new ISelectionChangedListener()
   {
+    @Override
     public void selectionChanged(SelectionChangedEvent event)
     {
       ITreeSelection selection = (ITreeSelection)event.getSelection();
@@ -109,6 +110,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
     Runnable runnable = new Runnable()
     {
+      @Override
       public void run()
       {
         try
@@ -141,6 +143,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   /**
    * @since 3.0
    */
+  @Override
   public ISelection getSelection()
   {
     if (viewer != null)
@@ -154,6 +157,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   /**
    * @since 3.0
    */
+  @Override
   public void setSelection(ISelection selection)
   {
     if (viewer != null)
@@ -165,6 +169,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   /**
    * @since 3.0
    */
+  @Override
   public void addSelectionChangedListener(ISelectionChangedListener listener)
   {
     if (viewer != null)
@@ -176,6 +181,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   /**
    * @since 3.0
    */
+  @Override
   public void removeSelectionChangedListener(ISelectionChangedListener listener)
   {
     if (viewer != null)
@@ -184,6 +190,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     }
   }
 
+  @Override
   public void selectReveal(ISelection selection)
   {
     if (viewer != null)
@@ -382,6 +389,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   {
     viewer.addDoubleClickListener(new IDoubleClickListener()
     {
+      @Override
       public void doubleClick(DoubleClickEvent event)
       {
         ITreeSelection selection = (ITreeSelection)viewer.getSelection();
@@ -397,6 +405,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     menuMgr.setRemoveAllWhenShown(true);
     menuMgr.addMenuListener(new IMenuListener()
     {
+      @Override
       public void menuAboutToShow(IMenuManager manager)
       {
         ITreeSelection selection = (ITreeSelection)viewer.getSelection();
@@ -509,6 +518,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     {
       getDisplay().syncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           try

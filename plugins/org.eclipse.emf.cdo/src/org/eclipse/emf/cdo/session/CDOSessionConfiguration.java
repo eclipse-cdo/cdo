@@ -182,6 +182,7 @@ public interface CDOSessionConfiguration extends INotifier
    */
   public interface SessionOpenedEvent extends IEvent
   {
+    @Override
     public CDOSessionConfiguration getSource();
 
     public CDOSession getOpenedSession();

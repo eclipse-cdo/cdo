@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -85,11 +85,13 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
     this.context = context;
   }
 
+  @Override
   public Store getStore()
   {
     return store;
   }
 
+  @Override
   public boolean isReader()
   {
     return reader;
@@ -98,6 +100,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
   /**
    * @since 3.0
    */
+  @Override
   public InternalSession getSession()
   {
     if (context instanceof ITransaction)
@@ -108,6 +111,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
     return (InternalSession)context;
   }
 
+  @Override
   public ITransaction getTransaction()
   {
     if (context instanceof ITransaction)
@@ -118,6 +122,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
     return null;
   }
 
+  @Override
   public void release()
   {
     store.releaseAccessor(this);
@@ -127,6 +132,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
   /**
    * @since 3.0
    */
+  @Override
   public final void write(InternalCommitContext context, OMMonitor monitor)
   {
     if (TRACER.isEnabled())
@@ -143,6 +149,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
   /**
    * @since 3.0
    */
+  @Override
   public final void commit(OMMonitor monitor)
   {
     doCommit(monitor);
@@ -177,6 +184,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
    */
   protected abstract void doCommit(OMMonitor monitor);
 
+  @Override
   public final void rollback()
   {
     if (TRACER.isEnabled())
@@ -195,6 +203,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
   /**
    * @since 3.0
    */
+  @Override
   public CDOID readResourceID(CDOID folderID, String name, CDOBranchPoint branchPoint)
   {
     QueryResourcesContext.ExactMatch context = Store.createExactMatchContext(folderID, name, branchPoint);
@@ -205,6 +214,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
   /**
    * @since 3.0
    */
+  @Override
   public CDOCommitData loadCommitData(long timeStamp)
   {
     CommitDataRevisionHandler handler = new CommitDataRevisionHandler(this, timeStamp);
@@ -309,6 +319,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
     /**
      * @since 4.0
      */
+    @Override
     public boolean handleRevision(CDORevision rev)
     {
       if (rev instanceof DetachedCDORevision)

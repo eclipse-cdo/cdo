@@ -57,11 +57,13 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
    */
   private final Map<CONTEXT, Set<LockState<OBJECT, CONTEXT>>> contextToLockStates = createContextToLocksMap();
 
+  @Override
   public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout) throws InterruptedException
   {
     lock2(type, context, objectsToLock, timeout);
   }
 
+  @Override
   public List<LockState<OBJECT, CONTEXT>> lock2(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout)
       throws InterruptedException
   {
@@ -102,22 +104,26 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     }
   }
 
+  @Override
   public void lock(LockType type, CONTEXT context, OBJECT objectToLock, long timeout) throws InterruptedException
   {
     // Do not synchronize the entire method as it would corrupt the timeout!
     lock(type, context, Collections.singleton(objectToLock), timeout);
   }
 
+  @Override
   public void unlock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
   {
     unlock2(type, context, objectsToUnlock);
   }
 
+  @Override
   public List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
   {
     return unlock2(ALL_LOCK_TYPES, context, objectsToUnlock);
   }
 
+  @Override
   public List<LockState<OBJECT, CONTEXT>> unlock2(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
   {
     return unlock2(new LockType[] { type }, context, objectsToUnlock);
@@ -180,11 +186,13 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     return new LinkedList<RWOLockManager.LockState<OBJECT, CONTEXT>>(result);
   }
 
+  @Override
   public synchronized void unlock(CONTEXT context)
   {
     unlock2(context);
   }
 
+  @Override
   public synchronized List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context)
   {
     Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
@@ -230,12 +238,14 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     return toList(lockStates);
   }
 
+  @Override
   public synchronized boolean hasLock(LockType type, CONTEXT context, OBJECT objectToLock)
   {
     LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(objectToLock);
     return lockState != null && lockState.hasLock(type, context, false);
   }
 
+  @Override
   public synchronized boolean hasLockByOthers(LockType type, CONTEXT context, OBJECT objectToLock)
   {
     LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(objectToLock);

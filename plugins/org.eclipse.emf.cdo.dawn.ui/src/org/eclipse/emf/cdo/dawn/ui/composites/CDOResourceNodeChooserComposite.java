@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -110,6 +110,7 @@ public class CDOResourceNodeChooserComposite extends Composite
 
     selectCDOResourceNodeComposite.addSelectionChangedListener(new ISelectionChangedListener()
     {
+      @Override
       public void selectionChanged(SelectionChangedEvent event)
       {
         if (event.getSelection().isEmpty())
@@ -155,10 +156,12 @@ public class CDOResourceNodeChooserComposite extends Composite
     resourceNameComposite.setText(getDefaultName() + "." + fileExtension); //$NON-NLS-1$
     resourceNameComposite.addKeyListener(new KeyListener()
     {
+      @Override
       public void keyPressed(KeyEvent e)
       {
       }
 
+      @Override
       public void keyReleased(KeyEvent e)
       {
         getValidator().validate();
@@ -178,10 +181,12 @@ public class CDOResourceNodeChooserComposite extends Composite
     resourcePathComposite.setText(""); //$NON-NLS-1$
     resourcePathComposite.addKeyListener(new KeyListener()
     {
+      @Override
       public void keyPressed(KeyEvent e)
       {
       }
 
+      @Override
       public void keyReleased(KeyEvent e)
       {
         getValidator().validate();

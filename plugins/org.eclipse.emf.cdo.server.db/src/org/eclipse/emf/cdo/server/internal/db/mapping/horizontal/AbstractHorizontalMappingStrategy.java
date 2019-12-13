@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015-2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015-2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -82,6 +82,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     return objectTypeMapper;
   }
 
+  @Override
   public CDOClassifierRef readObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     return objectTypeMapper.getObjectType(accessor, id);
@@ -97,6 +98,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     return objectTypeMapper.removeObjectType(accessor, id);
   }
 
+  @Override
   public void repairAfterCrash(IDBAdapter dbAdapter, Connection connection)
   {
     IDBStore store = getStore();
@@ -116,6 +118,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
   }
 
+  @Override
   public void queryResources(IDBStoreAccessor accessor, QueryResourcesContext context)
   {
     // only support timestamp in audit mode
@@ -138,6 +141,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
   }
 
+  @Override
   public void queryXRefs(IDBStoreAccessor accessor, QueryXRefsContext context)
   {
     IIDHandler idHandler = getStore().getIDHandler();
@@ -176,6 +180,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
   }
 
+  @Override
   public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException
   {
@@ -230,6 +235,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     return getListJoin(attrTable, listTable);
   }
 
+  @Override
   public void rawImport(IDBStoreAccessor accessor, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
     int size = in.readXInt();
@@ -353,6 +359,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     return null;
   }
 
+  @Override
   public String getListJoin(String attrTable, String listTable)
   {
     return " AND " + attrTable + "." + ATTRIBUTES_ID + "=" + listTable + "." + LIST_REVISION_ID;
@@ -498,6 +505,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
     getStore().visitAllTables(connection, new IDBStore.TableVisitor()
     {
+      @Override
       public void visitTable(Connection connection, String name) throws SQLException
       {
         Statement stmt = null;

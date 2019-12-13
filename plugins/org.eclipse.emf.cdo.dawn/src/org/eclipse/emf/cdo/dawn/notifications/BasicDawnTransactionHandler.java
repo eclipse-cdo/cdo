@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -35,6 +35,7 @@ public class BasicDawnTransactionHandler extends BasicDawnListener implements ID
     super(editor);
   }
 
+  @Override
   public void attachingObject(CDOTransaction transaction, CDOObject object)
   {
     if (TRACER.isEnabled())
@@ -44,6 +45,7 @@ public class BasicDawnTransactionHandler extends BasicDawnListener implements ID
     editor.setDirty();
   }
 
+  @Override
   public void detachingObject(CDOTransaction transaction, CDOObject object)
   {
     if (TRACER.isEnabled())
@@ -54,6 +56,7 @@ public class BasicDawnTransactionHandler extends BasicDawnListener implements ID
     editor.setDirty();
   }
 
+  @Override
   public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
   {
     if (TRACER.isEnabled())
@@ -64,14 +67,17 @@ public class BasicDawnTransactionHandler extends BasicDawnListener implements ID
     editor.setDirty();
   }
 
+  @Override
   public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
   { // This method can be overwritten be subclasses
   }
 
+  @Override
   public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
   { // This method can be overwritten be subclasses
   }
 
+  @Override
   public void rolledBackTransaction(CDOTransaction transaction)
   { // This method can be overwritten be subclasses
   }

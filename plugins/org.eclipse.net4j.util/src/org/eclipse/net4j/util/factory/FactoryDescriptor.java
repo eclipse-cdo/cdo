@@ -65,6 +65,7 @@ public class FactoryDescriptor extends Factory
     }
   }
 
+  @Override
   public Object create(String description)
   {
     throw new UnsupportedOperationException();

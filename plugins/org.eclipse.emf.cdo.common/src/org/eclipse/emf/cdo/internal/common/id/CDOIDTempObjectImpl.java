@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013, 2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -60,26 +60,31 @@ public final class CDOIDTempObjectImpl extends AbstractCDOID implements CDOIDTem
     out.writeXInt(value);
   }
 
+  @Override
   public String toURIFragment()
   {
     return String.valueOf(value);
   }
 
+  @Override
   public Type getType()
   {
     return Type.TEMP_OBJECT;
   }
 
+  @Override
   public boolean isExternal()
   {
     return false;
   }
 
+  @Override
   public boolean isObject()
   {
     return true;
   }
 
+  @Override
   public boolean isTemporary()
   {
     return true;

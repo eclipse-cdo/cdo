@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -39,6 +39,7 @@ public class HandleConflictsAction implements IObjectActionDelegate
 
   public final static String ID = "org.eclipse.emf.cdo.dawn.actions.HandleConflictAction";
 
+  @Override
   public void run(IAction action)
   {
 
@@ -68,6 +69,7 @@ public class HandleConflictsAction implements IObjectActionDelegate
     }
   }
 
+  @Override
   public void selectionChanged(IAction action, ISelection selection)
   {
     selectedElement = null;
@@ -81,6 +83,7 @@ public class HandleConflictsAction implements IObjectActionDelegate
     }
   }
 
+  @Override
   public void setActivePart(IAction action, IWorkbenchPart targetPart)
   {
   }

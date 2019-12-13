@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -134,6 +134,7 @@ public class CDOCompareEditorUtil
       {
         UIUtil.getDisplay().asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             transaction.close();
@@ -153,6 +154,7 @@ public class CDOCompareEditorUtil
     final IWorkbenchPage page = UIUtil.getActiveWorkbenchPage();
     final IPartListener listener = new IPartListener()
     {
+      @Override
       @SuppressWarnings("restriction")
       public void partOpened(IWorkbenchPart part)
       {
@@ -162,11 +164,13 @@ public class CDOCompareEditorUtil
         }
       }
 
+      @Override
       public void partDeactivated(IWorkbenchPart part)
       {
         // Do nothing.
       }
 
+      @Override
       public void partClosed(IWorkbenchPart part)
       {
         if (part == result[0])
@@ -176,11 +180,13 @@ public class CDOCompareEditorUtil
         }
       }
 
+      @Override
       public void partBroughtToTop(IWorkbenchPart part)
       {
         // Do nothing.
       }
 
+      @Override
       public void partActivated(IWorkbenchPart part)
       {
         // Do nothing.
@@ -198,6 +204,7 @@ public class CDOCompareEditorUtil
         {
           UIUtil.getDisplay().asyncExec(new Runnable()
           {
+            @Override
             public void run()
             {
               page.closeEditor(result[0], false);
@@ -329,6 +336,7 @@ public class CDOCompareEditorUtil
 
     addDisposeRunnables(new Runnable()
     {
+      @Override
       public void run()
       {
         LifecycleUtil.deactivate(leftAndRightView[0]);
@@ -415,6 +423,7 @@ public class CDOCompareEditorUtil
     {
       UIUtil.getDisplay().syncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           Shell shell = UIUtil.getShell();
@@ -433,6 +442,7 @@ public class CDOCompareEditorUtil
 
       UIUtil.getDisplay().asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           CompareUI.openCompareEditor(input, activateEditor);
@@ -445,6 +455,7 @@ public class CDOCompareEditorUtil
 
       UIUtil.getDisplay().syncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           CompareUI.openCompareDialog(input);
@@ -926,11 +937,13 @@ public class CDOCompareEditorUtil
       return closeTransactionAfterCommit;
     }
 
+    @Override
     public CDOTransaction openTransaction(String durableLockingID, ResourceSet resourceSet)
     {
       return wrap(delegate.openTransaction(durableLockingID, resourceSet));
     }
 
+    @Override
     public CDOTransaction openTransaction(CDOBranchPoint target, ResourceSet resourceSet)
     {
       return wrap(delegate.openTransaction(target, resourceSet));

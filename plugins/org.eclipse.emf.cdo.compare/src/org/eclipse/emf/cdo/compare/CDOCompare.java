@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -189,6 +189,7 @@ public class CDOCompare
    */
   public static class CDOIDFunction implements Function<EObject, String>
   {
+    @Override
     public String apply(EObject o)
     {
       CDOObject object = CDOUtil.getCDOObject(o);
@@ -435,21 +436,25 @@ public class CDOCompare
         return new CDOMatchEngine(matcher, comparisonFactory);
       }
 
+      @Override
       public IMatchEngine getMatchEngine()
       {
         return matchEngine;
       }
 
+      @Override
       public int getRanking()
       {
         return ranking;
       }
 
+      @Override
       public void setRanking(int ranking)
       {
         this.ranking = ranking;
       }
 
+      @Override
       public boolean isMatchEngineFactoryFor(IComparisonScope scope)
       {
         return scope instanceof CDOComparisonScope;

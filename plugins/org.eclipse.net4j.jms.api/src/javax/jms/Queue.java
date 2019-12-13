@@ -73,5 +73,6 @@ public interface Queue extends Destination
     * @return the provider-specific identity values for this queue
     */
 
+  @Override
   String toString();
 }

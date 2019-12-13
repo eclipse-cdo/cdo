@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -220,103 +220,123 @@ public abstract class AbstractRepositoryProperties<RECEIVER> extends Properties<
     });
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
     return AdapterUtil.adapt(this, adapter, false);
   }
 
+  @Override
   public long getTimeStamp()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public String getName()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public String getUUID()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public Type getType()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public State getState()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public long getCreationTime()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public String getStoreType()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public Set<ObjectType> getObjectIDTypes()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public IDGenerationLocation getIDGenerationLocation()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public CommitInfoStorage getCommitInfoStorage()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public CDOID getRootResourceID()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean isAuthenticating()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean isSupportingAudits()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean isSupportingBranches()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean isSupportingUnits()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public boolean isSupportingEcore()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean isSerializingCommits()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean isEnsuringReferentialIntegrity()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean waitWhileInitial(IProgressMonitor monitor)
   {
     throw new UnsupportedOperationException();

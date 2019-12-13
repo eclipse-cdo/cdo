@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -43,6 +43,7 @@ public class CDOExtentMap implements Map<EClass, Set<? extends EObject>>
     canceled.set(true);
   }
 
+  @Override
   public Set<? extends EObject> get(Object key)
   {
     if (key instanceof EClass)
@@ -67,21 +68,25 @@ public class CDOExtentMap implements Map<EClass, Set<? extends EObject>>
   // Strictly delegating methods
   //
 
+  @Override
   public void clear()
   {
     delegate.clear();
   }
 
+  @Override
   public boolean containsKey(Object key)
   {
     return delegate.containsKey(key);
   }
 
+  @Override
   public boolean containsValue(Object value)
   {
     return delegate.containsValue(value);
   }
 
+  @Override
   public Set<Map.Entry<EClass, Set<? extends EObject>>> entrySet()
   {
     return delegate.entrySet();
@@ -99,31 +104,37 @@ public class CDOExtentMap implements Map<EClass, Set<? extends EObject>>
     return delegate.hashCode();
   }
 
+  @Override
   public boolean isEmpty()
   {
     return delegate.isEmpty();
   }
 
+  @Override
   public Set<EClass> keySet()
   {
     return delegate.keySet();
   }
 
+  @Override
   public Set<? extends EObject> put(EClass key, Set<? extends EObject> value)
   {
     return delegate.put(key, value);
   }
 
+  @Override
   public void putAll(Map<? extends EClass, ? extends Set<? extends EObject>> t)
   {
     delegate.putAll(t);
   }
 
+  @Override
   public Set<? extends EObject> remove(Object key)
   {
     return delegate.remove(key);
   }
 
+  @Override
   public int size()
   {
     return delegate.size();
@@ -135,6 +146,7 @@ public class CDOExtentMap implements Map<EClass, Set<? extends EObject>>
     return delegate.toString();
   }
 
+  @Override
   public Collection<Set<? extends EObject>> values()
   {
     return delegate.values();

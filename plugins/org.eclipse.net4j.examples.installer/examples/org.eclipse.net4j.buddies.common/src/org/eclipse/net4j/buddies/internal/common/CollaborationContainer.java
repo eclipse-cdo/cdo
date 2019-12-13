@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -88,6 +88,7 @@ public class CollaborationContainer extends Lifecycle implements ICollaborationC
     return collaboration;
   }
 
+  @Override
   public ICollaboration[] getCollaborations()
   {
     synchronized (collaborations)
@@ -96,6 +97,7 @@ public class CollaborationContainer extends Lifecycle implements ICollaborationC
     }
   }
 
+  @Override
   public ICollaboration getCollaboration(long id)
   {
     synchronized (collaborations)
@@ -104,11 +106,13 @@ public class CollaborationContainer extends Lifecycle implements ICollaborationC
     }
   }
 
+  @Override
   public ICollaboration[] getElements()
   {
     return getCollaborations();
   }
 
+  @Override
   public boolean isEmpty()
   {
     synchronized (collaborations)
@@ -117,6 +121,7 @@ public class CollaborationContainer extends Lifecycle implements ICollaborationC
     }
   }
 
+  @Override
   public void notifyEvent(IEvent event)
   {
     if (event.getSource() instanceof ICollaboration)

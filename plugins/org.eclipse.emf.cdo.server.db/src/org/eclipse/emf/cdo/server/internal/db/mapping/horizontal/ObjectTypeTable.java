@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2014, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2014, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -61,6 +61,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
   {
   }
 
+  @Override
   public final CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
@@ -101,6 +102,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
     }
   }
 
+  @Override
   public final boolean putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
   {
     IDBStore store = getMappingStrategy().getStore();
@@ -142,6 +144,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
     }
   }
 
+  @Override
   public final boolean removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
@@ -169,6 +172,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
     }
   }
 
+  @Override
   public CDOID getMaxID(Connection connection, IIDHandler idHandler)
   {
     Statement stmt = null;
@@ -197,12 +201,14 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
     }
   }
 
+  @Override
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
     String where = " WHERE " + ATTRIBUTES_CREATED + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, table, null, where);
   }
 
+  @Override
   public void rawImport(Connection connection, CDODataInput in, OMMonitor monitor) throws IOException
   {
     DBUtil.deserializeTable(in, connection, table, monitor);
@@ -223,6 +229,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
     {
       database.updateSchema(new RunnableWithSchema()
       {
+        @Override
         public void run(IDBSchema schema)
         {
           table = schema.addTable(CDODBSchema.CDO_OBJECTS);

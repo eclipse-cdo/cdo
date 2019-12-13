@@ -33,6 +33,7 @@ public abstract class CDOObjectWrapper extends CDOObjectWrapperBase implements I
   /**
    * @since 2.0
    */
+  @Override
   public CDOLock cdoReadLock()
   {
     return CDOObjectImpl.createLock(this, LockType.READ);
@@ -41,6 +42,7 @@ public abstract class CDOObjectWrapper extends CDOObjectWrapperBase implements I
   /**
    * @since 2.0
    */
+  @Override
   public CDOLock cdoWriteLock()
   {
     return CDOObjectImpl.createLock(this, LockType.WRITE);
@@ -49,11 +51,13 @@ public abstract class CDOObjectWrapper extends CDOObjectWrapperBase implements I
   /**
    * @since 4.1
    */
+  @Override
   public CDOLock cdoWriteOption()
   {
     return CDOObjectImpl.createLock(this, LockType.OPTION);
   }
 
+  @Override
   public synchronized CDOLockState cdoLockState()
   {
     return CDOObjectImpl.getLockState(this);

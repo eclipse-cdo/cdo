@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -67,6 +67,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
   {
   }
 
+  @Override
   public void resolveConflicts(Set<CDOObject> conflicts)
   {
     Map<CDOID, CDORevisionDelta> localDeltas = getTransaction().getRevisionDeltas();
@@ -88,6 +89,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
   /**
    * @since 4.0
    */
+  @Override
   public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts, List<CDORevisionDelta> allRemoteDeltas)
   {
     Map<CDOID, CDORevisionDelta> localDeltas = getTransaction().getRevisionDeltas();
@@ -245,6 +247,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
     {
     }
 
+    @Override
     public boolean isValid(EObject object, Adapter adapter)
     {
       return adapter instanceof CDOChangeSubscriptionAdapter;
@@ -312,6 +315,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
         deltas.clear();
       }
 
+      @Override
       public void notifyEvent(IEvent event)
       {
         try

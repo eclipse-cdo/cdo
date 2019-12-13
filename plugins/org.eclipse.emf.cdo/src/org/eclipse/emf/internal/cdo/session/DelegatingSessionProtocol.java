@@ -120,16 +120,19 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     this.delegate = delegate;
   }
 
+  @Override
   public CDOSession getSession()
   {
     return (CDOSession)delegate.getSession();
   }
 
+  @Override
   public ExecutorService getExecutorService()
   {
     return ConcurrencyUtil.getExecutorService(delegate);
   }
 
+  @Override
   public boolean cancelQuery(int queryId)
   {
     int attempt = 0;
@@ -146,6 +149,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void changeSubscription(int viewID, List<CDOID> ids, boolean subscribeMode, boolean clear)
   {
     int attempt = 0;
@@ -163,6 +167,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void openView(int viewID, boolean readOnly, CDOBranchPoint branchPoint)
   {
     int attempt = 0;
@@ -180,6 +185,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID)
   {
     int attempt = 0;
@@ -196,6 +202,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void switchTarget(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects, List<CDORevisionKey> allChangedObjects,
       List<CDOIDAndVersion> allDetachedObjects, OMMonitor monitor)
   {
@@ -214,6 +221,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void closeView(int viewID)
   {
     int attempt = 0;
@@ -235,6 +243,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public List<byte[]> queryLobs(Set<byte[]> ids)
   {
     int attempt = 0;
@@ -251,6 +260,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void loadLob(CDOLobInfo info, Object outputStreamOrWriter)
   {
     int attempt = 0;
@@ -268,6 +278,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     int attempt = 0;
@@ -285,6 +296,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   @Deprecated
   public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData,
       Collection<CDOLob<?>> lobs, OMMonitor monitor)
@@ -292,6 +304,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public CommitTransactionResult commitTransaction(InternalCDOCommitContext context, OMMonitor monitor)
   {
     int attempt = 0;
@@ -308,6 +321,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   @Deprecated
   public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment, CDOCommitData commitData,
       Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
@@ -315,6 +329,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public CommitTransactionResult commitDelegation(InternalCDOCommitContext context, OMMonitor monitor)
   {
     int attempt = 0;
@@ -331,6 +346,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public CommitTransactionResult commitXATransactionCancel(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
     int attempt = 0;
@@ -347,6 +363,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public CommitTransactionResult commitXATransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
     int attempt = 0;
@@ -363,6 +380,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public CommitTransactionResult commitXATransactionPhase2(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
     int attempt = 0;
@@ -379,6 +397,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public CommitTransactionResult commitXATransactionPhase3(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
     int attempt = 0;
@@ -395,6 +414,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public CDOCommitInfo resetTransaction(int transactionID, int commitNumber)
   {
     int attempt = 0;
@@ -411,6 +431,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public RepositoryTimeResult getRepositoryTime()
   {
     int attempt = 0;
@@ -427,6 +448,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void openedSession()
   {
     int attempt = 0;
@@ -444,12 +466,14 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   @Deprecated
   public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids)
   {
     return getLockStates(viewID, ids, CDOLockState.DEPTH_NONE);
   }
 
+  @Override
   public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids, int depth)
   {
     int attempt = 0;
@@ -466,6 +490,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void enableLockNotifications(int viewID, boolean enable)
   {
     int attempt = 0;
@@ -483,6 +508,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType, boolean byOthers)
   {
     int attempt = 0;
@@ -499,6 +525,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public String changeLockArea(CDOView view, boolean create)
   {
     int attempt = 0;
@@ -515,6 +542,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public EPackage[] loadPackages(CDOPackageUnit packageUnit)
   {
     int attempt = 0;
@@ -531,6 +559,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     int attempt = 0;
@@ -547,6 +576,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public BranchInfo loadBranch(int branchID)
   {
     int attempt = 0;
@@ -563,6 +593,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public SubBranchInfo[] loadSubBranches(int branchID)
   {
     int attempt = 0;
@@ -579,6 +610,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
   {
     int attempt = 0;
@@ -595,18 +627,21 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   @Deprecated
   public void deleteBranch(int branchID)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public void renameBranch(int branchID, String newName)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void renameBranch(int branchID, String oldName, String newName)
   {
     int attempt = 0;
@@ -624,6 +659,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
     int attempt = 0;
@@ -641,6 +677,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public CDOCommitData loadCommitData(long timeStamp)
   {
     int attempt = 0;
@@ -657,6 +694,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex, int fromIndex, int toIndex)
   {
     int attempt = 0;
@@ -673,6 +711,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
   {
     int attempt = 0;
@@ -689,6 +728,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk)
   {
     int attempt = 0;
@@ -705,6 +745,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public CDOBranchPointRange loadObjectLifetime(CDOID id, CDOBranchPoint branchPoint)
   {
     int attempt = 0;
@@ -721,6 +762,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   @Deprecated
   public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch, LockType lockType, long timeout)
       throws InterruptedException
@@ -731,6 +773,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   /**
    * @since 4.1
    */
+  @Override
   public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch, LockType lockType, boolean recursive,
       long timeout) throws InterruptedException
 
@@ -749,6 +792,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys, CDOBranch viewedBranch, LockType lockType,
       boolean recursive, long timeout) throws InterruptedException
   {
@@ -766,6 +810,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType, boolean recursive)
   {
     int attempt = 0;
@@ -782,6 +827,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void query(CDOView view, AbstractQueryIterator<?> queryResult)
   {
     int attempt = 0;
@@ -799,6 +845,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void disablePassiveUpdate()
   {
     int attempt = 0;
@@ -816,6 +863,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void setPassiveUpdateMode(PassiveUpdateMode mode)
   {
     int attempt = 0;
@@ -833,6 +881,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void setLockNotificationMode(LockNotificationMode mode)
   {
     int attempt = 0;
@@ -850,6 +899,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public RefreshSessionResult refresh(long lastUpdateTime, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
       boolean enablePassiveUpdates)
   {
@@ -867,12 +917,14 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   @Deprecated
   public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType, boolean recursive)
   {
     int attempt = 0;
@@ -889,6 +941,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public List<CDORemoteSession> getRemoteSessions(InternalCDORemoteSessionManager manager, boolean subscribe)
   {
     int attempt = 0;
@@ -905,6 +958,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, List<CDORemoteSession> recipients)
   {
     int attempt = 0;
@@ -921,6 +975,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public boolean unsubscribeRemoteSessions()
   {
     int attempt = 0;
@@ -937,6 +992,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void replicateRepository(CDOReplicationContext context, OMMonitor monitor)
   {
     int attempt = 0;
@@ -954,6 +1010,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void replicateRepositoryRaw(CDORawReplicationContext context, OMMonitor monitor)
   {
     int attempt = 0;
@@ -971,6 +1028,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public CDOChangeSetData[] loadChangeSets(CDOBranchPointRange... ranges)
   {
     int attempt = 0;
@@ -987,6 +1045,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   @Deprecated
   public Set<CDOID> loadMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo, CDORevisionAvailabilityInfo targetBaseInfo,
       CDORevisionAvailabilityInfo sourceBaseInfo)
@@ -994,6 +1053,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public MergeDataResult loadMergeData2(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
       CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo)
   {
@@ -1011,6 +1071,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
   {
     int attempt = 0;
@@ -1027,6 +1088,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void requestChangeCredentials()
   {
     int attempt = 0;
@@ -1044,6 +1106,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public void requestResetCredentials(String userID)
   {
     int attempt = 0;
@@ -1061,6 +1124,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Override
   public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
     int attempt = 0;

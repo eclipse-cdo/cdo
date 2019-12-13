@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -36,21 +36,25 @@ public class ReconnectingCDOSessionConfigurationImpl extends RecoveringCDOSessio
     setRepositoryName(repositoryName);
   }
 
+  @Override
   public long getReconnectInterval()
   {
     return reconnectInterval;
   }
 
+  @Override
   public void setReconnectInterval(long reconnectInterval)
   {
     this.reconnectInterval = reconnectInterval;
   }
 
+  @Override
   public int getMaxReconnectAttempts()
   {
     return maxReconnectAttempts;
   }
 
+  @Override
   public void setMaxReconnectAttempts(int maxReconnectAttempts)
   {
     this.maxReconnectAttempts = maxReconnectAttempts;

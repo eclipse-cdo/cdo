@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -69,6 +69,7 @@ public class FailoverMonitorView extends AbstractView<FailoverMonitor>
         final Channel channel = scope.getChannel(agent.getConnectorDescription());
         agent.addListener(new IListener()
         {
+          @Override
           public void notifyEvent(IEvent event)
           {
             if (event instanceof SignalScheduledEvent)
@@ -77,6 +78,7 @@ public class FailoverMonitorView extends AbstractView<FailoverMonitor>
               {
                 scope.getDisplay().asyncExec(new Runnable()
                 {
+                  @Override
                   public void run()
                   {
                     if (!scope.isDisposed())
@@ -192,6 +194,7 @@ public class FailoverMonitorView extends AbstractView<FailoverMonitor>
           {
             getDisplay().syncExec(new Runnable()
             {
+              @Override
               public void run()
               {
                 controlResized(null);
@@ -204,11 +207,13 @@ public class FailoverMonitorView extends AbstractView<FailoverMonitor>
       }
     }
 
+    @Override
     public void controlMoved(ControlEvent e)
     {
       // Do nothing
     }
 
+    @Override
     public void controlResized(ControlEvent e)
     {
       try
@@ -245,6 +250,7 @@ public class FailoverMonitorView extends AbstractView<FailoverMonitor>
       }
     }
 
+    @Override
     public void paintControl(PaintEvent e)
     {
       if (!resizing)
@@ -260,6 +266,7 @@ public class FailoverMonitorView extends AbstractView<FailoverMonitor>
       }
     }
 
+    @Override
     public void run()
     {
       if (isDisposed())

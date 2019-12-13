@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -73,6 +73,7 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
     return null;
   }
 
+  @Override
   public void createControl(Composite parent)
   {
     Composite container = new Composite(parent, SWT.NULL);
@@ -87,6 +88,7 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
     labelText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     labelText.addModifyListener(new ModifyListener()
     {
+      @Override
       public void modifyText(ModifyEvent e)
       {
         validate();
@@ -99,16 +101,19 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
     validate();
   }
 
+  @Override
   public void modifyText(ModifyEvent e)
   {
     validate();
   }
 
+  @Override
   public void widgetSelected(SelectionEvent e)
   {
     validate();
   }
 
+  @Override
   public void widgetDefaultSelected(SelectionEvent e)
   {
     validate();

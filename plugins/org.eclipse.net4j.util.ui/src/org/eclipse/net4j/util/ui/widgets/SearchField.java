@@ -78,6 +78,7 @@ public class SearchField extends Composite
     final Text filterControl = filteredTree.getFilterControl();
     filterControl.addTraverseListener(new TraverseListener()
     {
+      @Override
       public void keyTraversed(TraverseEvent e)
       {
         if (e.keyCode == SWT.ESC)
@@ -182,6 +183,7 @@ public class SearchField extends Composite
         {
           UIUtil.syncExec(new Runnable()
           {
+            @Override
             public void run()
             {
               patternFilter.filter(treeViewer, (Object)null, null);

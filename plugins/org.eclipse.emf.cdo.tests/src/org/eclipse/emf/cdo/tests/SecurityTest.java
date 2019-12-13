@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -247,6 +247,7 @@ public class SecurityTest extends AbstractCDOTest
 
     private long lastID;
 
+    @Override
     public CDORevisionImpl getRevision(CDOID id)
     {
       return get(id);
@@ -336,6 +337,7 @@ public class SecurityTest extends AbstractCDOTest
       this.value = value;
     }
 
+    @Override
     public String format()
     {
       return Boolean.toString(value);
@@ -347,6 +349,7 @@ public class SecurityTest extends AbstractCDOTest
       return value;
     }
 
+    @Override
     public boolean isImpacted(CommitImpactContext context)
     {
       return false;

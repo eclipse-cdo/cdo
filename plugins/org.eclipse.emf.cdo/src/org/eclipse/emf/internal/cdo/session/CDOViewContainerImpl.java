@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -55,6 +55,7 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
   {
   }
 
+  @Override
   public CDOView getView(int viewID)
   {
     checkActive();
@@ -72,11 +73,13 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
   /**
    * @since 2.0
    */
+  @Override
   public InternalCDOView[] getViews()
   {
     return getViews(null);
   }
 
+  @Override
   public InternalCDOView[] getViews(CDOBranch branch)
   {
     List<InternalCDOView> views = getViews(branch, false);
@@ -108,6 +111,7 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
     }
   }
 
+  @Override
   public CDOView[] getElements()
   {
     return getViews();
@@ -120,16 +124,19 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
     return views.isEmpty();
   }
 
+  @Override
   public CDOView openView(CDOBranchPoint target, ResourceSet resourceSet)
   {
     return openView(target.getBranch(), target.getTimeStamp(), resourceSet);
   }
 
+  @Override
   public CDOView openView(CDOBranchPoint target)
   {
     return openView(target, createResourceSet());
   }
 
+  @Override
   public InternalCDOView openView(CDOBranch branch, long timeStamp, ResourceSet resourceSet)
   {
     checkActive();
@@ -138,21 +145,25 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
     return view;
   }
 
+  @Override
   public InternalCDOView openView(CDOBranch branch, long timeStamp)
   {
     return openView(branch, timeStamp, createResourceSet());
   }
 
+  @Override
   public InternalCDOView openView(CDOBranch branch)
   {
     return openView(branch, CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
+  @Override
   public InternalCDOView openView(long timeStamp)
   {
     return openView(getMainBranch(), timeStamp);
   }
 
+  @Override
   public InternalCDOView openView(ResourceSet resourceSet)
   {
     return openView(getMainBranch(), CDOBranchPoint.UNSPECIFIED_DATE, resourceSet);
@@ -161,16 +172,19 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
   /**
    * @since 2.0
    */
+  @Override
   public InternalCDOView openView()
   {
     return openView(CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
+  @Override
   public CDOView openView(String durableLockingID)
   {
     return openView(durableLockingID, createResourceSet());
   }
 
+  @Override
   public CDOView openView(String durableLockingID, ResourceSet resourceSet)
   {
     checkActive();

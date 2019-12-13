@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -32,36 +32,43 @@ public abstract class NegotiationContext implements INegotiationContext
   {
   }
 
+  @Override
   public Receiver getReceiver()
   {
     return receiver;
   }
 
+  @Override
   public void setReceiver(Receiver receiver)
   {
     this.receiver = receiver;
   }
 
+  @Override
   public Enum<?> getState()
   {
     return state;
   }
 
+  @Override
   public void setState(Enum<?> state)
   {
     this.state = state;
   }
 
+  @Override
   public Object getInfo()
   {
     return info;
   }
 
+  @Override
   public void setInfo(Object info)
   {
     this.info = info;
   }
 
+  @Override
   public void setFinished(boolean success)
   {
     if (finishedLatch != null)
@@ -70,6 +77,7 @@ public abstract class NegotiationContext implements INegotiationContext
     }
   }
 
+  @Override
   public Enum<?> waitUntilFinished(long timeout)
   {
     if (finishedLatch == null)

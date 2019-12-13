@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -47,6 +47,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Model5Factory eINSTANCE = org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5FactoryImpl.init();
 
+  @Override
   /**
    * Returns a new object of class '<em>Test Feature Map</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -55,6 +56,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   TestFeatureMap createTestFeatureMap();
 
+  @Override
   /**
    * Returns a new object of class '<em>Manager</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -63,6 +65,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Manager createManager();
 
+  @Override
   /**
    * Returns a new object of class '<em>Doctor</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -71,6 +74,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Doctor createDoctor();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen List Of String</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -79,6 +83,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenListOfString createGenListOfString();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen List Of Int</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -87,6 +92,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenListOfInt createGenListOfInt();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen List Of Integer</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -95,6 +101,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenListOfInteger createGenListOfInteger();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen List Of Long</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -103,6 +110,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenListOfLong createGenListOfLong();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen List Of Boolean</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -111,6 +119,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenListOfBoolean createGenListOfBoolean();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen List Of Short</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -119,6 +128,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenListOfShort createGenListOfShort();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen List Of Float</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -127,6 +137,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenListOfFloat createGenListOfFloat();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen List Of Double</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -135,6 +146,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenListOfDouble createGenListOfDouble();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen List Of Date</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -143,6 +155,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenListOfDate createGenListOfDate();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen List Of Char</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -151,6 +164,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenListOfChar createGenListOfChar();
 
+  @Override
   /**
    * Returns a new object of class '<em>Gen List Of Int Array</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -159,6 +173,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   GenListOfIntArray createGenListOfIntArray();
 
+  @Override
   /**
    * Returns a new object of class '<em>Parent</em>'.
    * <!-- begin-user-doc -->
@@ -168,6 +183,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Parent createParent();
 
+  @Override
   /**
    * Returns a new object of class '<em>Child</em>'.
    * <!-- begin-user-doc -->
@@ -177,6 +193,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   Child createChild();
 
+  @Override
   /**
    * Returns a new object of class '<em>With Custom Type</em>'.
    * <!-- begin-user-doc -->
@@ -186,6 +203,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    */
   WithCustomType createWithCustomType();
 
+  @Override
   /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->

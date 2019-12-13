@@ -27,6 +27,7 @@ public interface ILifecycle extends IDeactivateable, INotifier
 {
   public void activate() throws LifecycleException;
 
+  @Override
   public Exception deactivate();
 
   /**

@@ -127,6 +127,7 @@ public interface TopicConnection extends Connection
     * @see javax.jms.ConnectionConsumer
     */
 
+  @Override
   ConnectionConsumer createDurableConnectionConsumer(Topic topic, String subscriptionName, String messageSelector, ServerSessionPool sessionPool,
       int maxMessages) throws JMSException;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -114,6 +114,7 @@ public abstract class FailoverExample
 
     repository.addListener(new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof RepositoryTypeChangedEvent)
@@ -268,6 +269,7 @@ public abstract class FailoverExample
   {
     return new CDOSessionConfigurationFactory()
     {
+      @Override
       public CDONet4jSessionConfiguration createSessionConfiguration()
       {
         return FailoverExample.this.createSessionConfiguration(connectorDescription, repositoryName);
@@ -560,6 +562,7 @@ public abstract class FailoverExample
 
         session.addListener(new IListener()
         {
+          @Override
           public void notifyEvent(IEvent event)
           {
             if (event instanceof CDOSessionRecoveryEvent)

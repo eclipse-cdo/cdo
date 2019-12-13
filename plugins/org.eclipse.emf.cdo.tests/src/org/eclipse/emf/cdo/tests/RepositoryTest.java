@@ -154,6 +154,7 @@ public class RepositoryTest extends AbstractCDOTest
 
     getRepository().addHandler(new IRepository.WriteAccessHandler()
     {
+      @Override
       public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
       {
         // Use the package registry of the commit context to catch new packages!
@@ -174,6 +175,7 @@ public class RepositoryTest extends AbstractCDOTest
         }
       }
 
+      @Override
       public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
       {
       }
@@ -211,6 +213,7 @@ public class RepositoryTest extends AbstractCDOTest
 
     getRepository().addHandler(new IRepository.WriteAccessHandler()
     {
+      @Override
       public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
       {
         CDOView view = CDOServerUtil.openView(commitContext);
@@ -232,6 +235,7 @@ public class RepositoryTest extends AbstractCDOTest
         view.close();
       }
 
+      @Override
       public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
       {
       }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -131,21 +131,25 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return OM.getCheckoutManager();
   }
 
+  @Override
   public final CDORepository getRepository()
   {
     return repository;
   }
 
+  @Override
   public final int getBranchID()
   {
     return branchID;
   }
 
+  @Override
   public final void setBranchID(int branchID)
   {
     setBranchPoint(branchID, timeStamp);
   }
 
+  @Override
   public String getBranchPath()
   {
     return branchPath;
@@ -160,11 +164,13 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     }
   }
 
+  @Override
   public final CDOBranchPoint getBranchPoint()
   {
     return view;
   }
 
+  @Override
   public final void setBranchPoint(CDOBranchPoint branchPoint)
   {
     int branchID = branchPoint.getBranch().getID();
@@ -172,6 +178,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     setBranchPoint(branchID, timeStamp);
   }
 
+  @Override
   public final void setBranchPoint(int branchID, long timeStamp)
   {
     if (this.branchID != branchID || this.timeStamp != timeStamp)
@@ -202,6 +209,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     }
   }
 
+  @Override
   public final CDOBranchPoint getBranchPoint(CDOCheckout fromCheckout)
   {
     if (repository == fromCheckout.getRepository() && repository.isConnected())
@@ -222,6 +230,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return branch.getPathName();
   }
 
+  @Override
   public CDOBranchPoint[] getBranchPoints()
   {
     if (branchPoints != null && isOpen())
@@ -256,6 +265,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return NO_BRANCH_POINTS;
   }
 
+  @Override
   public boolean addBranchPoint(CDOBranchPoint branchPoint)
   {
     int branchID = branchPoint.getBranch().getID();
@@ -314,21 +324,25 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return false;
   }
 
+  @Override
   public final long getTimeStamp()
   {
     return timeStamp;
   }
 
+  @Override
   public final void setTimeStamp(long timeStamp)
   {
     setBranchPoint(branchID, timeStamp);
   }
 
+  @Override
   public final boolean isReadOnly()
   {
     return readOnly;
   }
 
+  @Override
   public void setReadOnly(boolean readOnly)
   {
     if (state != State.Closed)
@@ -343,16 +357,19 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     }
   }
 
+  @Override
   public final CDOID getRootID()
   {
     return rootID;
   }
 
+  @Override
   public final void setRootID(CDOID rootID)
   {
     this.rootID = rootID;
   }
 
+  @Override
   public CDOCheckout duplicate()
   {
     Properties properties = new Properties();
@@ -378,16 +395,19 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     properties.setProperty(PROP_ROOT_ID, getCDOIDString(getRootID()));
   }
 
+  @Override
   public final State getState()
   {
     return state;
   }
 
+  @Override
   public final boolean isOpen()
   {
     return view != null;
   }
 
+  @Override
   public final void open()
   {
     CDOCheckoutManagerImpl manager = getManager();
@@ -470,6 +490,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     // Do nothing.
   }
 
+  @Override
   public final void close()
   {
     boolean closed = false;
@@ -537,6 +558,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     }
   }
 
+  @Override
   public CDOView[] getViews()
   {
     synchronized (this)
@@ -545,21 +567,25 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     }
   }
 
+  @Override
   public final CDOView getView()
   {
     return view;
   }
 
+  @Override
   public final URI getURI()
   {
     return uri;
   }
 
+  @Override
   public final EObject getRootObject()
   {
     return rootObject;
   }
 
+  @Override
   public final ObjectType getRootType()
   {
     return ObjectType.valueFor(rootObject);
@@ -570,31 +596,37 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return new ResourceSetImpl();
   }
 
+  @Override
   public final CDOView openView()
   {
     return openView(createResourceSet());
   }
 
+  @Override
   public CDOView openView(ResourceSet resourceSet)
   {
     return openView(readOnly, resourceSet);
   }
 
+  @Override
   public final CDOView openView(boolean readOnly)
   {
     return openView(readOnly, createResourceSet());
   }
 
+  @Override
   public CDOView openView(boolean readOnly, ResourceSet resourceSet)
   {
     return openAndConfigureView(readOnly, resourceSet);
   }
 
+  @Override
   public final CDOTransaction openTransaction()
   {
     return openTransaction(createResourceSet());
   }
 
+  @Override
   public CDOTransaction openTransaction(ResourceSet resourceSet)
   {
     if (readOnly)
@@ -646,6 +678,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
     view.addListener(new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof CDOViewLocksChangedEvent)
@@ -685,6 +718,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return view;
   }
 
+  @Override
   public URI createResourceURI(String path)
   {
     String authority = getID();
@@ -698,6 +732,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return URI.createHierarchicalURI(CDOCheckoutViewProvider.SCHEME, authority, null, segments, null, null);
   }
 
+  @Override
   public String getEditorOpenerID(CDOID objectID)
   {
     synchronized (editorIDs)
@@ -719,6 +754,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     }
   }
 
+  @Override
   public void setEditorOpenerID(CDOID objectID, String editorID)
   {
     synchronized (editorIDs)

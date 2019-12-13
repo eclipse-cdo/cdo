@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -67,6 +67,7 @@ public class ImplSingleRefContainedElementImpl extends CDOObjectImpl implements 
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ISingleRefContainer getParent()
   {
     return (ISingleRefContainer)eGet(model4interfacesPackage.eINSTANCE.getISingleRefContainedElement_Parent(), true);
@@ -76,6 +77,7 @@ public class ImplSingleRefContainedElementImpl extends CDOObjectImpl implements 
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setParent(ISingleRefContainer newParent)
   {
     eSet(model4interfacesPackage.eINSTANCE.getISingleRefContainedElement_Parent(), newParent);
@@ -85,6 +87,7 @@ public class ImplSingleRefContainedElementImpl extends CDOObjectImpl implements 
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(model4Package.eINSTANCE.getImplSingleRefContainedElement_Name(), true);
@@ -94,6 +97,7 @@ public class ImplSingleRefContainedElementImpl extends CDOObjectImpl implements 
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(model4Package.eINSTANCE.getImplSingleRefContainedElement_Name(), newName);

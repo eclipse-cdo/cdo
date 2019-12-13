@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2009, 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2009, 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -90,6 +90,7 @@ public abstract class RegisterPackagesAction extends SessionAction
           : MessageFormat.format(Messages.getString("RegisterPackagesAction.2"), errors); //$NON-NLS-1$
       getDisplay().asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           Shell shell = getShell();

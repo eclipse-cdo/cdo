@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -63,12 +63,14 @@ public class ActionBarsHelper
   {
     control.addFocusListener(new FocusListener()
     {
+      @Override
       public void focusLost(FocusEvent e)
       {
         unsetGlobalActions();
         bars.updateActionBars();
       }
 
+      @Override
       public void focusGained(FocusEvent e)
       {
         updateActions();
@@ -100,6 +102,7 @@ public class ActionBarsHelper
 
     control.addDisposeListener(new DisposeListener()
     {
+      @Override
       public void widgetDisposed(DisposeEvent e)
       {
         globalActions.clear();

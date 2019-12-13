@@ -48,6 +48,7 @@ public interface ICommitConflictResolver
    */
   public static class Merging implements ICommitConflictResolver
   {
+    @Override
     public CDOChangeSetData resolveConflicts(IStoreAccessor.CommitContext commitContext, List<InternalCDORevisionDelta> conflicts)
     {
       CDOBranchPoint sourceEndPoint = commitContext.getBranchPoint();

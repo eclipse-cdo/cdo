@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,11 +66,13 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
   {
   }
 
+  @Override
   public InternalRepository getRepository()
   {
     return repository;
   }
 
+  @Override
   public void setRepository(InternalRepository repository)
   {
     this.repository = repository;
@@ -113,6 +115,7 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
     this.executors = executors;
   }
 
+  @Override
   public InternalQueryResult execute(InternalView view, CDOQueryInfo queryInfo)
   {
     InternalQueryResult queryResult = new QueryResult(view, queryInfo, getNextQueryID());
@@ -121,12 +124,14 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
     return queryResult;
   }
 
+  @Override
   public boolean isRunning(int queryID)
   {
     QueryContext queryContext = queryContexts.get(queryID);
     return queryContext != null;
   }
 
+  @Override
   public void cancel(int queryID)
   {
     QueryContext queryContext = queryContexts.get(queryID);
@@ -198,6 +203,7 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
 
     private IListener sessionListener = new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof SingleDeltaContainerEvent<?>)
@@ -236,16 +242,19 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
       return queryResult;
     }
 
+    @Override
     public InternalView getView()
     {
       return queryResult.getView();
     }
 
+    @Override
     public CDOBranch getBranch()
     {
       return branchPoint.getBranch();
     }
 
+    @Override
     public long getTimeStamp()
     {
       return branchPoint.getTimeStamp();
@@ -275,11 +284,13 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
       }
     }
 
+    @Override
     public int getResultCount()
     {
       return resultCount;
     }
 
+    @Override
     public boolean addResult(Object object)
     {
       if (resultCount == 0)
@@ -293,6 +304,7 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
       return !cancelled && --resultCount > 0;
     }
 
+    @Override
     public void run()
     {
       CDOQueryQueue<Object> queue = queryResult.getQueue();

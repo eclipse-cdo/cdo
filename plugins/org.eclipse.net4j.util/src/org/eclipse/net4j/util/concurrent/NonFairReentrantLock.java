@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, 2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2016, 2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -31,31 +31,37 @@ public class NonFairReentrantLock implements Lock, Serializable
   {
   }
 
+  @Override
   public void lock()
   {
     sync.lock();
   }
 
+  @Override
   public void lockInterruptibly() throws InterruptedException
   {
     sync.acquireInterruptibly(1);
   }
 
+  @Override
   public boolean tryLock()
   {
     return sync.tryAcquire(1);
   }
 
+  @Override
   public boolean tryLock(long timeout, TimeUnit unit) throws InterruptedException
   {
     return sync.tryAcquireNanos(1, unit.toNanos(timeout));
   }
 
+  @Override
   public void unlock()
   {
     sync.release(1);
   }
 
+  @Override
   public Condition newCondition()
   {
     return sync.newCondition();

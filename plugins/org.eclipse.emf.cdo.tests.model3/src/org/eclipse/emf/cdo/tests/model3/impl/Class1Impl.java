@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2015, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2015, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,6 +66,7 @@ public class Class1Impl extends CDOObjectImpl implements Class1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<Class2> getClass2()
   {
@@ -76,6 +77,7 @@ public class Class1Impl extends CDOObjectImpl implements Class1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void unsetClass2()
   {
     eUnset(Model3Package.eINSTANCE.getClass1_Class2());
@@ -85,6 +87,7 @@ public class Class1Impl extends CDOObjectImpl implements Class1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isSetClass2()
   {
     return eIsSet(Model3Package.eINSTANCE.getClass1_Class2());
@@ -95,6 +98,7 @@ public class Class1Impl extends CDOObjectImpl implements Class1
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getAdditionalValue()
   {
     return (String)eGet(Model3Package.eINSTANCE.getClass1_AdditionalValue(), true);
@@ -105,6 +109,7 @@ public class Class1Impl extends CDOObjectImpl implements Class1
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAdditionalValue(String newAdditionalValue)
   {
     eSet(Model3Package.eINSTANCE.getClass1_AdditionalValue(), newAdditionalValue);

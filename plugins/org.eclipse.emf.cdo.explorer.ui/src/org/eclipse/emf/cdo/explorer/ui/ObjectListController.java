@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -98,6 +98,7 @@ public class ObjectListController
 
     control.getDisplay().asyncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         configureAsync(treeViewer, labelProvider);
@@ -158,6 +159,7 @@ public class ObjectListController
       {
         control.getDisplay().asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             refreshing.set(false);
@@ -240,6 +242,7 @@ public class ObjectListController
       return false;
     }
 
+    @Override
     public int compareTo(Wrapper o)
     {
       return toString().compareTo(o.toString());
@@ -262,14 +265,17 @@ public class ObjectListController
    */
   private final class ContentProvider implements ITreeContentProvider
   {
+    @Override
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
     {
     }
 
+    @Override
     public void dispose()
     {
     }
 
+    @Override
     public Object[] getElements(Object element)
     {
       if (element == wrappers)
@@ -287,16 +293,19 @@ public class ObjectListController
       return ItemProvider.NO_ELEMENTS;
     }
 
+    @Override
     public Object getParent(Object element)
     {
       return null;
     }
 
+    @Override
     public Object[] getChildren(Object element)
     {
       return getElements(element);
     }
 
+    @Override
     public boolean hasChildren(Object element)
     {
       return element == wrappers && !wrappers.isEmpty();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -70,6 +70,7 @@ public class DocumentImpl extends CDOObjectImpl implements Document
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Element getRoot()
   {
     return (Element)eGet(BasePackage.Literals.DOCUMENT__ROOT, true);
@@ -80,6 +81,7 @@ public class DocumentImpl extends CDOObjectImpl implements Document
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setRoot(Element newRoot)
   {
     eSet(BasePackage.Literals.DOCUMENT__ROOT, newRoot);

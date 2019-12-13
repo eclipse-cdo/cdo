@@ -65,21 +65,25 @@ public class CDOIDReference implements CDOReference<CDOID>
     out.writeXInt(sourceIndex);
   }
 
+  @Override
   public CDOID getTargetObject()
   {
     return targetID;
   }
 
+  @Override
   public CDOID getSourceObject()
   {
     return sourceID;
   }
 
+  @Override
   public EStructuralFeature getSourceFeature()
   {
     return sourceFeature;
   }
 
+  @Override
   public int getSourceIndex()
   {
     return sourceIndex;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -39,6 +39,7 @@ public final class ServerBranchLoader implements BranchLoader3
     return delegate;
   }
 
+  @Override
   public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     if (!StoreThreadLocal.hasSession())
@@ -57,6 +58,7 @@ public final class ServerBranchLoader implements BranchLoader3
     return delegate.createBranch(branchID, branchInfo);
   }
 
+  @Override
   public BranchInfo loadBranch(int branchID)
   {
     if (!StoreThreadLocal.hasSession())
@@ -75,6 +77,7 @@ public final class ServerBranchLoader implements BranchLoader3
     return delegate.loadBranch(branchID);
   }
 
+  @Override
   public SubBranchInfo[] loadSubBranches(int branchID)
   {
     if (!StoreThreadLocal.hasSession())
@@ -93,6 +96,7 @@ public final class ServerBranchLoader implements BranchLoader3
     return delegate.loadSubBranches(branchID);
   }
 
+  @Override
   public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
   {
     if (!StoreThreadLocal.hasSession())
@@ -111,6 +115,7 @@ public final class ServerBranchLoader implements BranchLoader3
     return delegate.loadBranches(startID, endID, branchHandler);
   }
 
+  @Override
   public void renameBranch(int branchID, String oldName, String newName)
   {
     if (!StoreThreadLocal.hasSession())
@@ -131,11 +136,13 @@ public final class ServerBranchLoader implements BranchLoader3
     }
   }
 
+  @Override
   @Deprecated
   public void deleteBranch(int branchID)
   {
   }
 
+  @Override
   @Deprecated
   public void renameBranch(int branchID, String newName)
   {

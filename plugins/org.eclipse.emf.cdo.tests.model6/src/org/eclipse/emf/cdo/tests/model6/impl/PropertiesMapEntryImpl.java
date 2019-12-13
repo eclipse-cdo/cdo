@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -120,6 +120,7 @@ public class PropertiesMapEntryImpl extends CDOObjectImpl implements BasicEMap.E
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getHash()
   {
     if (hash == -1)
@@ -135,6 +136,7 @@ public class PropertiesMapEntryImpl extends CDOObjectImpl implements BasicEMap.E
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setHash(int hash)
   {
     this.hash = hash;
@@ -145,6 +147,7 @@ public class PropertiesMapEntryImpl extends CDOObjectImpl implements BasicEMap.E
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getKey()
   {
     return getTypedKey();
@@ -155,6 +158,7 @@ public class PropertiesMapEntryImpl extends CDOObjectImpl implements BasicEMap.E
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setKey(String key)
   {
     setTypedKey(key);
@@ -165,6 +169,7 @@ public class PropertiesMapEntryImpl extends CDOObjectImpl implements BasicEMap.E
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PropertiesMapEntryValue getValue()
   {
     return getTypedValue();
@@ -175,6 +180,7 @@ public class PropertiesMapEntryImpl extends CDOObjectImpl implements BasicEMap.E
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PropertiesMapEntryValue setValue(PropertiesMapEntryValue value)
   {
     PropertiesMapEntryValue oldValue = getValue();

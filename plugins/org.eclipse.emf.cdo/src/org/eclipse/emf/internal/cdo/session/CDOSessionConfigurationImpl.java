@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -79,11 +79,13 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
       newSession.removeListener(lifecycleEventAdapter);
       fireEvent(new SessionOpenedEvent()
       {
+        @Override
         public CDOSessionConfiguration getSource()
         {
           return CDOSessionConfigurationImpl.this;
         }
 
+        @Override
         public CDOSession getOpenedSession()
         {
           return (CDOSession)newSession;
@@ -96,22 +98,26 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
   {
   }
 
+  @Override
   public String getUserID()
   {
     return userID;
   }
 
+  @Override
   public void setUserID(String userID)
   {
     checkNotOpen();
     this.userID = userID;
   }
 
+  @Override
   public boolean isPassiveUpdateEnabled()
   {
     return passiveUpdateEnabled;
   }
 
+  @Override
   public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
   {
     checkNotOpen();
@@ -123,11 +129,13 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
     this.passiveUpdateEnabled = passiveUpdateEnabled;
   }
 
+  @Override
   public PassiveUpdateMode getPassiveUpdateMode()
   {
     return passiveUpdateMode;
   }
 
+  @Override
   public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
   {
     checkNotOpen();
@@ -139,11 +147,13 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
     this.passiveUpdateMode = passiveUpdateMode;
   }
 
+  @Override
   public LockNotificationMode getLockNotificationMode()
   {
     return lockNotificationMode;
   }
 
+  @Override
   public void setLockNotificationMode(LockNotificationMode lockNotificationMode)
   {
     checkNotOpen();
@@ -155,48 +165,58 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
     this.lockNotificationMode = lockNotificationMode;
   }
 
+  @Override
   @Deprecated
   public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator()
   {
     return new org.eclipse.emf.cdo.common.protocol.CDOAuthenticator()
     {
+      @Override
       public String getEncryptionAlgorithmName()
       {
         return null;
       }
 
+      @Override
       public void setEncryptionAlgorithmName(String encryptionAlgorithmName)
       {
       }
 
+      @Override
       public byte[] getEncryptionSaltBytes()
       {
         return null;
       }
 
+      @Override
       public void setEncryptionSaltBytes(byte[] encryptionSaltBytes)
       {
       }
 
+      @Override
       public int getEncryptionIterationCount()
       {
         return 0;
       }
 
+      @Override
       public void setEncryptionIterationCount(int encryptionIterationCount)
       {
       }
 
+      @Override
       public IPasswordCredentialsProvider getCredentialsProvider()
       {
         return CDOSessionConfigurationImpl.this.getCredentialsProvider();
       }
 
+      @Override
       public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
       {
         CDOSessionConfigurationImpl.this.setCredentialsProvider(credentialsProvider);
       }
 
+      @Override
       public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult authenticate(byte[] randomToken)
       {
         throw new UnsupportedOperationException();
@@ -204,55 +224,65 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
     };
   }
 
+  @Override
   public IPasswordCredentialsProvider getCredentialsProvider()
   {
     return credentialsProvider;
   }
 
+  @Override
   public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
   {
     checkNotOpen();
     this.credentialsProvider = credentialsProvider;
   }
 
+  @Override
   public CDOSession.ExceptionHandler getExceptionHandler()
   {
     return exceptionHandler;
   }
 
+  @Override
   public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler)
   {
     checkNotOpen();
     this.exceptionHandler = exceptionHandler;
   }
 
+  @Override
   public CDOIDGenerator getIDGenerator()
   {
     return idGenerator;
   }
 
+  @Override
   public void setIDGenerator(CDOIDGenerator idGenerator)
   {
     checkNotOpen();
     this.idGenerator = idGenerator;
   }
 
+  @Override
   public CDOFetchRuleManager getFetchRuleManager()
   {
     return fetchRuleManager;
   }
 
+  @Override
   public void setFetchRuleManager(CDOFetchRuleManager fetchRuleManager)
   {
     checkNotOpen();
     this.fetchRuleManager = fetchRuleManager;
   }
 
+  @Override
   public InternalCDOBranchManager getBranchManager()
   {
     return branchManager;
   }
 
+  @Override
   public void setBranchManager(CDOBranchManager branchManager)
   {
     checkNotOpen();
@@ -306,27 +336,32 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
     this.commitInfoManager = (InternalCDOCommitInfoManager)commitInfoManager;
   }
 
+  @Override
   public boolean isMainBranchLocal()
   {
     return mainBranchLocal;
   }
 
+  @Override
   public void setMainBranchLocal(boolean mainBranchLocal)
   {
     this.mainBranchLocal = mainBranchLocal;
   }
 
+  @Override
   public boolean isActivateOnOpen()
   {
     return activateOnOpen;
   }
 
+  @Override
   public void setActivateOnOpen(boolean activateOnOpen)
   {
     checkNotOpen();
     this.activateOnOpen = activateOnOpen;
   }
 
+  @Override
   public boolean isSessionOpen()
   {
     if (session == null)
@@ -346,6 +381,7 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
   /**
    * @since 2.0
    */
+  @Override
   public CDOSession openSession()
   {
     if (!isSessionOpen())
@@ -380,6 +416,7 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
     session.setPackageRegistry(packageRegistry);
   }
 
+  @Override
   public InternalCDOSession getSession()
   {
     checkOpen();

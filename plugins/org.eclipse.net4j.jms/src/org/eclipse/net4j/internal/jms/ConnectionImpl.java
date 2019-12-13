@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -131,17 +131,20 @@ public class ConnectionImpl extends Container<Session> implements Connection
     }
   }
 
+  @Override
   public ConnectionConsumer createConnectionConsumer(Destination destination, String messageSelector, ServerSessionPool sessionPool, int maxMessages)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public ConnectionConsumer createDurableConnectionConsumer(Topic topic, String subscriptionName, String messageSelector, ServerSessionPool sessionPool,
       int maxMessages)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public Session createSession(boolean transacted, int acknowledgeMode) throws JMSException
   {
     ensureOpen();
@@ -194,6 +197,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
     return password;
   }
 
+  @Override
   public ConnectionMetaData getMetaData()
   {
     ensureOpen();
@@ -201,6 +205,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
     return metaData;
   }
 
+  @Override
   public String getClientID()
   {
     ensureOpen();
@@ -208,6 +213,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
     return clientID;
   }
 
+  @Override
   public void setClientID(String clientID)
   {
     ensureOpen();
@@ -224,6 +230,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
     this.clientID = clientID;
   }
 
+  @Override
   public ExceptionListener getExceptionListener()
   {
     ensureOpen();
@@ -231,6 +238,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
     return exceptionListener;
   }
 
+  @Override
   public void setExceptionListener(ExceptionListener listener)
   {
     ensureOpen();
@@ -248,6 +256,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
     this.sendTimeout = sendTimeout;
   }
 
+  @Override
   public synchronized void start() throws JMSException
   {
     ensureOpen();
@@ -271,6 +280,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
     }
   }
 
+  @Override
   public synchronized void stop()
   {
     ensureOpen();
@@ -286,6 +296,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
     }
   }
 
+  @Override
   public synchronized void close()
   {
     if (protocol != null)
@@ -333,6 +344,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
     return result.toArray(new SessionImpl[result.size()]);
   }
 
+  @Override
   public Session[] getElements()
   {
     return getSessions();

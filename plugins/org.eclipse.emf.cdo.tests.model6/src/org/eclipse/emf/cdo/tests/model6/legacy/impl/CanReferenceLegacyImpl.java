@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -111,6 +111,7 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EObject getSingleContainment()
   {
     if (singleContainment != null && singleContainment.eIsProxy())
@@ -180,6 +181,7 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setSingleContainment(EObject newSingleContainment)
   {
     if (newSingleContainment != singleContainment)
@@ -213,6 +215,7 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<EObject> getMultipleContainment()
   {
     if (multipleContainment == null)
@@ -227,6 +230,7 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EObject getSingleReference()
   {
     if (singleReference != null && singleReference.eIsProxy())
@@ -259,6 +263,7 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setSingleReference(EObject newSingleReference)
   {
     EObject oldSingleReference = singleReference;
@@ -274,6 +279,7 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<EObject> getMultipleReference()
   {
     if (multipleReference == null)

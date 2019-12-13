@@ -182,11 +182,13 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
+  @Override
   public OptionsImpl options()
   {
     return options;
   }
 
+  @Override
   public int getViewID()
   {
     return viewID;
@@ -195,11 +197,13 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
+  @Override
   public void setViewID(int viewId)
   {
     viewID = viewId;
   }
 
+  @Override
   public ExecutorService getExecutorService()
   {
     return ConcurrencyUtil.getExecutorService(session);
@@ -208,6 +212,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
+  @Override
   public InternalCDOSession getSession()
   {
     return session;
@@ -223,11 +228,13 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     this.session = session;
   }
 
+  @Override
   public int getSessionID()
   {
     return session.getSessionID();
   }
 
+  @Override
   public boolean setBranchPoint(CDOBranchPoint branchPoint, IProgressMonitor progressMonitor)
   {
     checkActive();
@@ -339,11 +346,13 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
+  @Override
   public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout) throws InterruptedException
   {
     lockObjects(objects, lockType, timeout, false);
   }
 
+  @Override
   public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout, boolean recursive) throws InterruptedException
   {
     checkActive();
@@ -547,6 +556,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     return CDOLockUtil.createLockChangeInfo(timestamp, this, getBranch(), op, type, newLockStates);
   }
 
+  @Override
   public void handleLockNotification(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
   {
     CDOLockChangeInfo event = null;
@@ -608,6 +618,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
+  @Override
   public void unlockObjects(Collection<? extends CDOObject> objects, LockType lockType)
   {
     unlockObjects(objects, lockType, false);
@@ -617,6 +628,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
    * Note: This may get called with objects == null, and lockType == null, which is a request to remove all locks on all
    * objects in this view.
    */
+  @Override
   public void unlockObjects(Collection<? extends CDOObject> objects, LockType lockType, boolean recursive)
   {
     checkActive();
@@ -704,6 +716,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
+  @Override
   public void unlockObjects()
   {
     unlockObjects(null, null);
@@ -712,6 +725,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
+  @Override
   public boolean isObjectLocked(CDOObject object, LockType lockType, boolean byOthers)
   {
     checkActive();
@@ -731,11 +745,13 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
   }
 
+  @Override
   public boolean isDurableView()
   {
     return durableLockingID != null;
   }
 
+  @Override
   public String getDurableLockingID()
   {
     synchronized (getViewMonitor())
@@ -753,6 +769,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
   }
 
+  @Override
   @Deprecated
   public String enableDurableLocking(boolean enable)
   {
@@ -765,6 +782,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     return null;
   }
 
+  @Override
   public String enableDurableLocking()
   {
     final String oldID = durableLockingID;
@@ -797,6 +815,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
   }
 
+  @Override
   public void disableDurableLocking(boolean releaseLocks)
   {
     final String oldID = durableLockingID;
@@ -839,16 +858,19 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     {
       fireEvent(new CDOViewDurabilityChangedEvent()
       {
+        @Override
         public CDOView getSource()
         {
           return CDOViewImpl.this;
         }
 
+        @Override
         public String getOldDurableLockingID()
         {
           return oldID;
         }
 
+        @Override
         public String getNewDurableLockingID()
         {
           return durableLockingID;
@@ -860,6 +882,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
+  @Override
   @Deprecated
   public CDOFeatureAnalyzer getFeatureAnalyzer()
   {
@@ -881,6 +904,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
+  @Override
   @Deprecated
   public void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer)
   {
@@ -902,6 +926,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
+  @Override
   public InternalCDOTransaction toTransaction()
   {
     checkActive();
@@ -913,6 +938,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     throw new ReadOnlyException(MessageFormat.format(Messages.getString("CDOViewImpl.0"), this)); //$NON-NLS-1$
   }
 
+  @Override
   public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
   {
     synchronized (getViewMonitor())
@@ -981,6 +1007,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     super.objectDeregistered(object);
   }
 
+  @Override
   public CDOLockState[] getLockStates(Collection<CDOID> ids)
   {
     synchronized (getViewMonitor())
@@ -1117,6 +1144,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     return this;
   }
 
+  @Override
   public void prefetchRevisions(CDOID id, int depth)
   {
     checkArg(depth != CDORevision.DEPTH_NONE, "Prefetch depth must not be zero"); //$NON-NLS-1$
@@ -1143,6 +1171,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     revisionManager.getRevision(id, this, initialChunkSize, depth, true);
   }
 
+  @Override
   @Deprecated
   public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
       Map<CDOID, InternalCDORevision> oldRevisions, boolean async)
@@ -1150,6 +1179,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
       Map<CDOID, InternalCDORevision> oldRevisions, boolean async, boolean clearResourcePathCache)
@@ -1160,6 +1190,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /*
    * Must not by synchronized on the view!
    */
+  @Override
   public void invalidate(ViewInvalidationData invalidationData)
   {
     if (invalidationData.isAsync())
@@ -1267,12 +1298,14 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     return invalidator;
   }
 
+  @Override
   @Deprecated
   public boolean isInvalidationRunnerActive()
   {
     return isInvalidating();
   }
 
+  @Override
   public boolean isInvalidating()
   {
     return invalidating;
@@ -1413,6 +1446,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
+  @Override
   public void handleAddAdapter(InternalCDOObject eObject, Adapter adapter)
   {
     synchronized (getViewMonitor())
@@ -1438,6 +1472,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
+  @Override
   public void handleRemoveAdapter(InternalCDOObject eObject, Adapter adapter)
   {
     synchronized (getViewMonitor())
@@ -1463,6 +1498,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
+  @Override
   public void subscribe(EObject eObject, Adapter adapter)
   {
     synchronized (getViewMonitor())
@@ -1486,6 +1522,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
+  @Override
   public void unsubscribe(EObject eObject, Adapter adapter)
   {
     synchronized (getViewMonitor())
@@ -1509,6 +1546,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
+  @Override
   public boolean hasSubscription(CDOID id)
   {
     synchronized (getViewMonitor())
@@ -1697,6 +1735,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     super.doDeactivate();
   }
 
+  @Override
   public long getLastUpdateTime()
   {
     synchronized (getViewMonitor())
@@ -1714,6 +1753,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
   }
 
+  @Override
   public void setLastUpdateTime(long lastUpdateTime)
   {
     synchronized (getViewMonitor())
@@ -1743,6 +1783,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
   }
 
+  @Override
   public boolean waitForUpdate(long updateTime, long timeoutMillis)
   {
     long end = timeoutMillis == NO_TIMEOUT ? Long.MAX_VALUE : System.currentTimeMillis() + timeoutMillis;
@@ -1791,6 +1832,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
   }
 
+  @Override
   public boolean runAfterUpdate(final long updateTime, final Runnable runnable)
   {
     synchronized (getViewMonitor())
@@ -1804,6 +1846,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         {
           addListener(new IListener()
           {
+            @Override
             public void notifyEvent(IEvent event)
             {
               if (event instanceof CDOViewInvalidationEvent)
@@ -1853,6 +1896,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     return id;
   }
 
+  @Override
   public void resourceLoaded(CDOResourceImpl resource, boolean loaded)
   {
     if (session.getRepositoryInfo().isSupportingUnits())
@@ -1861,6 +1905,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
   }
 
+  @Override
   public final CDOUnitManagerImpl getUnitManager()
   {
     return unitManager;
@@ -1885,17 +1930,20 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     {
     }
 
+    @Override
     public CDOView getView()
     {
       return CDOViewImpl.this;
     }
 
+    @Override
     public boolean isUnit(EObject root)
     {
       CDOUnitImpl unit = requestUnit(root, UnitOpcode.CHECK, null);
       return unit != null;
     }
 
+    @Override
     public CDOUnit createUnit(EObject root, boolean open, IProgressMonitor monitor) throws UnitExistsException
     {
       UnitOpcode opcode = open ? UnitOpcode.CREATE_AND_OPEN : UnitOpcode.CREATE;
@@ -1915,6 +1963,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       return unit;
     }
 
+    @Override
     public CDOUnit openUnit(EObject root, boolean createOnDemand, IProgressMonitor monitor) throws UnitNotFoundException
     {
       UnitOpcode opcode = createOnDemand ? UnitOpcode.OPEN_DEMAND_CREATE : UnitOpcode.OPEN;
@@ -1929,6 +1978,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       return unit;
     }
 
+    @Override
     public CDOUnit[] getElements()
     {
       synchronized (getViewMonitor())
@@ -1946,11 +1996,13 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
     }
 
+    @Override
     public CDOUnit[] getOpenUnits()
     {
       return getElements();
     }
 
+    @Override
     public CDOUnit getOpenUnit(EObject object)
     {
       synchronized (getViewMonitor())
@@ -2030,11 +2082,13 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
     }
 
+    @Override
     public synchronized boolean isAutoResourceUnitsEnabled()
     {
       return resourceUnits != null;
     }
 
+    @Override
     public synchronized void setAutoResourceUnitsEnabled(boolean enabled)
     {
       if (enabled)
@@ -2158,6 +2212,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
             revisionHandler = new CDORevisionHandler()
             {
+              @Override
               public boolean handleRevision(CDORevision revision)
               {
                 ++openingUnit.elements;
@@ -2264,26 +2319,31 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         this.root = root;
       }
 
+      @Override
       public CDOUnitManagerImpl getManager()
       {
         return CDOUnitManagerImpl.this;
       }
 
+      @Override
       public EObject getRoot()
       {
         return root;
       }
 
+      @Override
       public int getElements()
       {
         return elements;
       }
 
+      @Override
       public void close()
       {
         close(true);
       }
 
+      @Override
       public void close(boolean resubscribe)
       {
         closeUnit(this, resubscribe);
@@ -2655,6 +2715,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       session.getRevisionManager().addListener(this);
     }
 
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof CDORevisionsLoadedEvent)
@@ -2823,21 +2884,25 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       this.detachedObjects = detachedObjects;
     }
 
+    @Override
     public long getTimeStamp()
     {
       return timeStamp;
     }
 
+    @Override
     public Set<CDOObject> getDirtyObjects()
     {
       return revisionDeltas.keySet();
     }
 
+    @Override
     public Map<CDOObject, CDORevisionDelta> getRevisionDeltas()
     {
       return revisionDeltas;
     }
 
+    @Override
     public Set<CDOObject> getDetachedObjects()
     {
       return detachedObjects;
@@ -2875,6 +2940,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       return (InternalCDOView)super.getSource();
     }
 
+    @Override
     public EObject[] getAffectedObjects()
     {
       List<EObject> objects = new ArrayList<EObject>();
@@ -2993,11 +3059,13 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     {
     }
 
+    @Override
     public CDOViewImpl getContainer()
     {
       return CDOViewImpl.this;
     }
 
+    @Override
     public boolean isLoadNotificationEnabled()
     {
       synchronized (getViewMonitor())
@@ -3015,6 +3083,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
     }
 
+    @Override
     public void setLoadNotificationEnabled(boolean enabled)
     {
       checkActive();
@@ -3041,6 +3110,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       fireEvent(event);
     }
 
+    @Override
     public boolean isDetachmentNotificationEnabled()
     {
       synchronized (getViewMonitor())
@@ -3058,6 +3128,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
     }
 
+    @Override
     public void setDetachmentNotificationEnabled(boolean enabled)
     {
       checkActive();
@@ -3084,6 +3155,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       fireEvent(event);
     }
 
+    @Override
     public boolean isInvalidationNotificationEnabled()
     {
       synchronized (getViewMonitor())
@@ -3101,6 +3173,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
     }
 
+    @Override
     public void setInvalidationNotificationEnabled(boolean enabled)
     {
       checkActive();
@@ -3127,6 +3200,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       fireEvent(event);
     }
 
+    @Override
     public CDOInvalidationPolicy getInvalidationPolicy()
     {
       synchronized (getViewMonitor())
@@ -3144,6 +3218,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
     }
 
+    @Override
     public void setInvalidationPolicy(CDOInvalidationPolicy policy)
     {
       checkActive();
@@ -3170,11 +3245,13 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       fireEvent(event);
     }
 
+    @Override
     public boolean isLockNotificationEnabled()
     {
       return lockNotificationsEnabled;
     }
 
+    @Override
     public void setLockNotificationEnabled(boolean enabled)
     {
       checkActive();
@@ -3298,6 +3375,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
     }
 
+    @Override
     public CDOAdapterPolicy[] getChangeSubscriptionPolicies()
     {
       synchronized (getViewMonitor())
@@ -3315,6 +3393,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
     }
 
+    @Override
     public void addChangeSubscriptionPolicy(CDOAdapterPolicy policy)
     {
       checkActive();
@@ -3341,6 +3420,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       fireEvent(event);
     }
 
+    @Override
     public void removeChangeSubscriptionPolicy(CDOAdapterPolicy policy)
     {
       checkActive();
@@ -3367,6 +3447,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       fireEvent(event);
     }
 
+    @Override
     public CDOAdapterPolicy getStrongReferencePolicy()
     {
       synchronized (getViewMonitor())
@@ -3384,6 +3465,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
     }
 
+    @Override
     public void setStrongReferencePolicy(CDOAdapterPolicy adapterPolicy)
     {
       checkActive();
@@ -3416,6 +3498,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       fireEvent(event);
     }
 
+    @Override
     public CDORevisionPrefetchingPolicy getRevisionPrefetchingPolicy()
     {
       synchronized (getViewMonitor())
@@ -3433,6 +3516,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
     }
 
+    @Override
     public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy)
     {
       checkActive();
@@ -3464,6 +3548,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       fireEvent(event);
     }
 
+    @Override
     public CDOFeatureAnalyzer getFeatureAnalyzer()
     {
       synchronized (getViewMonitor())
@@ -3481,6 +3566,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
     }
 
+    @Override
     public void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer)
     {
       checkActive();
@@ -3512,18 +3598,21 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       fireEvent(event);
     }
 
+    @Override
     @Deprecated
     public CDOStaleReferencePolicy getStaleReferenceBehaviour()
     {
       return getStaleReferencePolicy();
     }
 
+    @Override
     @Deprecated
     public void setStaleReferenceBehaviour(CDOStaleReferencePolicy policy)
     {
       setStaleReferencePolicy(policy);
     }
 
+    @Override
     public CDOStaleReferencePolicy getStaleReferencePolicy()
     {
       synchronized (getViewMonitor())
@@ -3541,6 +3630,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
     }
 
+    @Override
     public void setStaleReferencePolicy(CDOStaleReferencePolicy policy)
     {
       checkActive();
@@ -3572,6 +3662,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       fireEvent(event);
     }
 
+    @Override
     public ReferenceType getCacheReferenceType()
     {
       synchronized (getViewMonitor())
@@ -3605,6 +3696,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
     }
 
+    @Override
     public boolean setCacheReferenceType(ReferenceType referenceType)
     {
       checkActive();
@@ -3733,6 +3825,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         this.enabled = enabled;
       }
 
+      @Override
       public boolean getEnabled()
       {
         return enabled;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -45,6 +45,7 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
     this.facilityTypes = facilityTypes == null ? null : Collections.unmodifiableSet(facilityTypes);
   }
 
+  @Override
   public ISession getSession()
   {
     return session;
@@ -55,6 +56,7 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
     this.session = session;
   }
 
+  @Override
   public State getState()
   {
     return state;
@@ -74,6 +76,7 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
     }
   }
 
+  @Override
   public Set<String> getFacilityTypes()
   {
     if (facilityTypes == null)
@@ -94,6 +97,7 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
     return removeMembership(this, collaboration);
   }
 
+  @Override
   public ICollaboration getCollaboration(long collaborationID)
   {
     for (IMembership membership : getMemberships())
@@ -108,6 +112,7 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
     return null;
   }
 
+  @Override
   public ICollaboration[] getCollaborations()
   {
     List<ICollaboration> collaborations = new ArrayList<ICollaboration>();
@@ -120,11 +125,13 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
     return collaborations.toArray(new ICollaboration[collaborations.size()]);
   }
 
+  @Override
   public IMembership initiate()
   {
     return initiate((IBuddy)null);
   }
 
+  @Override
   public IMembership initiate(IBuddy buddy)
   {
     HashSet<IBuddy> buddies = new HashSet<IBuddy>();
@@ -137,6 +144,7 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
     return memberships.length == 0 ? null : memberships[0];
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
@@ -201,11 +209,13 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
       return (IBuddy)super.getSource();
     }
 
+    @Override
     public State getOldState()
     {
       return oldState;
     }
 
+    @Override
     public State getNewState()
     {
       return newState;

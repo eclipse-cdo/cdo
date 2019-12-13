@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -131,6 +131,7 @@ public class TransferDetailsComposite extends Composite implements IListener
     transferType.setLabelProvider(new LabelProvider());
     transferType.addSelectionChangedListener(new ISelectionChangedListener()
     {
+      @Override
       public void selectionChanged(SelectionChangedEvent event)
       {
         if (mapping != null)
@@ -175,6 +176,7 @@ public class TransferDetailsComposite extends Composite implements IListener
     relativePath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
     relativePath.addModifyListener(new ModifyListener()
     {
+      @Override
       public void modifyText(ModifyEvent e)
       {
         if (mapping != null && !handlingMappingEvent)
@@ -282,6 +284,7 @@ public class TransferDetailsComposite extends Composite implements IListener
     unmappedModels.setInput(transfer);
     unmappedModels.addSelectionChangedListener(new ISelectionChangedListener()
     {
+      @Override
       public void selectionChanged(SelectionChangedEvent event)
       {
         IStructuredSelection selection = (IStructuredSelection)unmappedModels.getSelection();
@@ -447,6 +450,7 @@ public class TransferDetailsComposite extends Composite implements IListener
     return relativePath.setFocus();
   }
 
+  @Override
   public void notifyEvent(final IEvent event)
   {
     if (isDisposed())
@@ -458,6 +462,7 @@ public class TransferDetailsComposite extends Composite implements IListener
     {
       getDisplay().asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           if (!isDisposed())
@@ -565,6 +570,7 @@ public class TransferDetailsComposite extends Composite implements IListener
    */
   public static class UnmappedModelsContentProvider extends StructuredContentProvider<CDOTransfer>
   {
+    @Override
     public Object[] getElements(Object inputElement)
     {
       CDOTransfer transfer = getInput();
@@ -609,6 +615,7 @@ public class TransferDetailsComposite extends Composite implements IListener
       return super.getText(element);
     }
 
+    @Override
     public Color getForeground(Object element)
     {
       if (element instanceof Resource)
@@ -627,6 +634,7 @@ public class TransferDetailsComposite extends Composite implements IListener
       return RED;
     }
 
+    @Override
     public Color getBackground(Object element)
     {
       return null;

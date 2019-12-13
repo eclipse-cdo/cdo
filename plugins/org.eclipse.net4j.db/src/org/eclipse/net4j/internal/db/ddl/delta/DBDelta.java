@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -54,16 +54,19 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
   {
   }
 
+  @Override
   public DBDelta getParent()
   {
     return parent;
   }
 
+  @Override
   public final ChangeKind getChangeKind()
   {
     return changeKind;
   }
 
+  @Override
   public final int compareTo(IDBDelta delta2)
   {
     int result = getDeltaType().compareTo(delta2.getDeltaType());
@@ -82,6 +85,7 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
     return result;
   }
 
+  @Override
   public final void accept(IDBDeltaVisitor visitor)
   {
     try
@@ -101,11 +105,13 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
 
   protected abstract void doAccept(IDBDeltaVisitor visitor);
 
+  @Override
   public final boolean isEmpty()
   {
     return getElements().length == 0;
   }
 
+  @Override
   public final IDBDelta[] getElements()
   {
     if (elements == null)
@@ -134,6 +140,7 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
 
   protected abstract void collectElements(List<IDBDelta> elements);
 
+  @Override
   public void dump(Writer writer) throws IOException
   {
     int level = getLevel();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -38,36 +38,43 @@ public abstract class CDOUserSavepointImpl implements InternalCDOUserSavepoint
     }
   }
 
+  @Override
   public InternalCDOUserTransaction getTransaction()
   {
     return transaction;
   }
 
+  @Override
   public InternalCDOUserSavepoint getPreviousSavepoint()
   {
     return previousSavepoint;
   }
 
+  @Override
   public void setPreviousSavepoint(InternalCDOUserSavepoint previousSavepoint)
   {
     this.previousSavepoint = previousSavepoint;
   }
 
+  @Override
   public InternalCDOUserSavepoint getNextSavepoint()
   {
     return nextSavepoint;
   }
 
+  @Override
   public void setNextSavepoint(InternalCDOUserSavepoint nextSavepoint)
   {
     this.nextSavepoint = nextSavepoint;
   }
 
+  @Override
   public InternalCDOUserSavepoint getFirstSavePoint()
   {
     return previousSavepoint != null ? previousSavepoint.getFirstSavePoint() : this;
   }
 
+  @Override
   public boolean isValid()
   {
     InternalCDOUserSavepoint lastSavepoint = getTransaction().getLastSavepoint();
@@ -82,6 +89,7 @@ public abstract class CDOUserSavepointImpl implements InternalCDOUserSavepoint
     return false;
   }
 
+  @Override
   public int getNumber()
   {
     int number = 1;

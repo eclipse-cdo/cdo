@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -68,6 +68,7 @@ public class NodeCImpl extends CDOObjectImpl implements NodeC
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<NodeC> getChildren()
   {
@@ -78,6 +79,7 @@ public class NodeCImpl extends CDOObjectImpl implements NodeC
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NodeC getParent()
   {
     return (NodeC)eGet(Model3Package.eINSTANCE.getNodeC_Parent(), true);
@@ -87,6 +89,7 @@ public class NodeCImpl extends CDOObjectImpl implements NodeC
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setParent(NodeC newParent)
   {
     eSet(Model3Package.eINSTANCE.getNodeC_Parent(), newParent);
@@ -96,6 +99,7 @@ public class NodeCImpl extends CDOObjectImpl implements NodeC
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(Model3Package.eINSTANCE.getNodeC_Name(), true);
@@ -105,6 +109,7 @@ public class NodeCImpl extends CDOObjectImpl implements NodeC
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(Model3Package.eINSTANCE.getNodeC_Name(), newName);
@@ -114,6 +119,7 @@ public class NodeCImpl extends CDOObjectImpl implements NodeC
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<NodeC> getOtherNodes()
   {
@@ -124,6 +130,7 @@ public class NodeCImpl extends CDOObjectImpl implements NodeC
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<NodeC> getOppositeNodes()
   {

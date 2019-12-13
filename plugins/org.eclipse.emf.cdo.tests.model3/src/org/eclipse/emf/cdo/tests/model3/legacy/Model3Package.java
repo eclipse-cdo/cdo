@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -810,6 +810,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   int POINT = 19;
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.Class1 <em>Class1</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -820,6 +821,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getClass1();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model3.Class1#getClass2 <em>Class2</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -830,6 +832,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getClass1_Class2();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.Class1#getAdditionalValue <em>Additional Value</em>}'.
    * <!-- begin-user-doc -->
@@ -841,6 +844,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getClass1_AdditionalValue();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.MetaRef <em>Meta Ref</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -851,6 +855,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getMetaRef();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model3.MetaRef#getEPackageRef <em>EPackage Ref</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -861,6 +866,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getMetaRef_EPackageRef();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model3.MetaRef#getEClassRef <em>EClass Ref</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -871,6 +877,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getMetaRef_EClassRef();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model3.MetaRef#getEReferenceRef <em>EReference Ref</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -881,6 +888,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getMetaRef_EReferenceRef();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.Polygon <em>Polygon</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -891,6 +899,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getPolygon();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model3.Polygon#getPoints <em>Points</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -901,6 +910,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getPolygon_Points();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates <em>Polygon With Duplicates</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -910,6 +920,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getPolygonWithDuplicates();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model3.PolygonWithDuplicates#getPoints <em>Points</em>}'. <!--
@@ -922,6 +933,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getPolygonWithDuplicates_Points();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeA <em>Node A</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -932,6 +944,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getNodeA();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model3.NodeA#getChildren <em>Children</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -943,6 +956,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getNodeA_Children();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.NodeA#getName <em>Name</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -953,6 +967,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNodeA_Name();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model3.NodeA#getOtherNodes <em>Other Nodes</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -963,6 +978,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getNodeA_OtherNodes();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeB <em>Node B</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -973,6 +989,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getNodeB();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model3.NodeB#getChildren <em>Children</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -984,6 +1001,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getNodeB_Children();
 
+  @Override
   /**
    * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.model3.NodeB#getParent <em>Parent</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -995,6 +1013,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getNodeB_Parent();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.NodeB#getName <em>Name</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1005,6 +1024,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNodeB_Name();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeC <em>Node C</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -1015,6 +1035,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getNodeC();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model3.NodeC#getChildren <em>Children</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -1026,6 +1047,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getNodeC_Children();
 
+  @Override
   /**
    * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.model3.NodeC#getParent <em>Parent</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -1037,6 +1059,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getNodeC_Parent();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.NodeC#getName <em>Name</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1047,6 +1070,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNodeC_Name();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model3.NodeC#getOtherNodes <em>Other Nodes</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1057,6 +1081,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getNodeC_OtherNodes();
 
+  @Override
   /**
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model3.NodeC#getOppositeNodes <em>Opposite Nodes</em>}'. <!--
@@ -1069,6 +1094,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getNodeC_OppositeNodes();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.NodeD <em>Node D</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -1079,6 +1105,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getNodeD();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model3.NodeD#getChildren <em>Children</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -1090,6 +1117,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getNodeD_Children();
 
+  @Override
   /**
    * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.model3.NodeD#getParent <em>Parent</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -1101,6 +1129,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getNodeD_Parent();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.NodeD#getName <em>Name</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1111,6 +1140,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNodeD_Name();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model3.NodeD#getOtherNodes <em>Other Nodes</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1121,6 +1151,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getNodeD_OtherNodes();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model3.NodeD#getOppositeNode <em>Opposite Node</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1131,6 +1162,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getNodeD_OppositeNode();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.NodeE <em>Node E</em>}'.
    * <!-- begin-user-doc -->
@@ -1141,6 +1173,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getNodeE();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model3.NodeE#getMainNode <em>Main Node</em>}'.
    * <!-- begin-user-doc -->
@@ -1152,6 +1185,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getNodeE_MainNode();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.NodeE#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
@@ -1163,6 +1197,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNodeE_Name();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model3.NodeE#getOtherNodes <em>Other Nodes</em>}'.
    * <!-- begin-user-doc -->
@@ -1174,6 +1209,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getNodeE_OtherNodes();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.Image <em>Image</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -1184,6 +1220,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getImage();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.Image#getWidth <em>Width</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1194,6 +1231,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getImage_Width();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.Image#getHeight <em>Height</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1204,6 +1242,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getImage_Height();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.Image#getData <em>Data</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1214,6 +1253,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getImage_Data();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model3.File <em>File</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -1224,6 +1264,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getFile();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.File#getName <em>Name</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1234,6 +1275,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getFile_Name();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.File#getData <em>Data</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1244,6 +1286,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getFile_Data();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute <em>Class With ID Attribute</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1253,6 +1296,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getClassWithIDAttribute();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute#getId <em>Id</em>}'.
    * <!-- begin-user-doc -->
@@ -1264,6 +1308,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getClassWithIDAttribute_Id();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute <em>Class With Java Class Attribute</em>}'.
    * <!-- begin-user-doc -->
@@ -1274,6 +1319,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getClassWithJavaClassAttribute();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.ClassWithJavaClassAttribute#getJavaClass <em>Java Class</em>}'.
    * <!-- begin-user-doc -->
@@ -1285,6 +1331,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getClassWithJavaClassAttribute_JavaClass();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.ClassWithJavaObjectAttribute <em>Class With Java Object Attribute</em>}'.
    * <!-- begin-user-doc -->
@@ -1295,6 +1342,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getClassWithJavaObjectAttribute();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.ClassWithJavaObjectAttribute#getJavaObject <em>Java Object</em>}'.
    * <!-- begin-user-doc -->
@@ -1306,6 +1354,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getClassWithJavaObjectAttribute_JavaObject();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment <em>Class With Transient Containment</em>}'.
    * <!-- begin-user-doc -->
@@ -1316,6 +1365,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getClassWithTransientContainment();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
@@ -1327,6 +1377,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getClassWithTransientContainment_Name();
 
+  @Override
   /**
    * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment#getTransientChild <em>Transient Child</em>}'.
    * <!-- begin-user-doc -->
@@ -1338,6 +1389,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getClassWithTransientContainment_TransientChild();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment#getTransientChildren <em>Transient Children</em>}'.
    * <!-- begin-user-doc -->
@@ -1349,6 +1401,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getClassWithTransientContainment_TransientChildren();
 
+  @Override
   /**
    * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment#getPersistentChild <em>Persistent Child</em>}'.
    * <!-- begin-user-doc -->
@@ -1360,6 +1413,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getClassWithTransientContainment_PersistentChild();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model3.ClassWithTransientContainment#getPersistentChildren <em>Persistent Children</em>}'.
    * <!-- begin-user-doc -->
@@ -1371,6 +1425,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getClassWithTransientContainment_PersistentChildren();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.EdgeTarget <em>Edge Target</em>}'.
    * <!-- begin-user-doc -->
@@ -1381,6 +1436,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getEdgeTarget();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model3.EdgeTarget#getOutgoingEdges <em>Outgoing Edges</em>}'.
    * <!-- begin-user-doc -->
@@ -1392,6 +1448,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getEdgeTarget_OutgoingEdges();
 
+  @Override
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model3.EdgeTarget#getIncomingEdges <em>Incoming Edges</em>}'.
    * <!-- begin-user-doc -->
@@ -1403,6 +1460,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getEdgeTarget_IncomingEdges();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.NodeF <em>Node F</em>}'.
    * <!-- begin-user-doc -->
@@ -1413,6 +1471,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getNodeF();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.Edge <em>Edge</em>}'.
    * <!-- begin-user-doc -->
@@ -1423,6 +1482,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getEdge();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model3.Edge#getSourceNode <em>Source Node</em>}'.
    * <!-- begin-user-doc -->
@@ -1434,6 +1494,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getEdge_SourceNode();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model3.Edge#getTargetNode <em>Target Node</em>}'.
    * <!-- begin-user-doc -->
@@ -1445,6 +1506,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getEdge_TargetNode();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.Diagram <em>Diagram</em>}'.
    * <!-- begin-user-doc -->
@@ -1455,6 +1517,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getDiagram();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model3.Diagram#getEdges <em>Edges</em>}'.
    * <!-- begin-user-doc -->
@@ -1466,6 +1529,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getDiagram_Edges();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model3.Diagram#getEdgeTargets <em>Edge Targets</em>}'.
    * <!-- begin-user-doc -->
@@ -1477,6 +1541,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getDiagram_EdgeTargets();
 
+  @Override
   /**
    * Returns the meta object for data type '{@link org.eclipse.emf.cdo.tests.model3.Point <em>Point</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -1488,6 +1553,7 @@ public interface Model3Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EDataType getPoint();
 
+  @Override
   /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc --> <!-- end-user-doc -->

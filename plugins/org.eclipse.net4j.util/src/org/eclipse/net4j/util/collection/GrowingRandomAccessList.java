@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -272,26 +272,31 @@ public class GrowingRandomAccessList<E> extends AbstractList<E> implements Queue
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean offer(E e)
   {
     return offerLast(e);
   }
 
+  @Override
   public E remove()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public E poll()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public E element()
   {
     return getFirst();
   }
 
+  @Override
   public E peek()
   {
     return peekFirst();

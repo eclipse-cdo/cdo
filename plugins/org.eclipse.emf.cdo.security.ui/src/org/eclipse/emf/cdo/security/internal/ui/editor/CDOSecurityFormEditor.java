@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -127,6 +127,7 @@ public class CDOSecurityFormEditor extends FormEditor implements IEditingDomainP
     {
       display.asyncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           fireDirtyStateChanged();
@@ -188,6 +189,7 @@ public class CDOSecurityFormEditor extends FormEditor implements IEditingDomainP
       view = resource.cdoView();
       dirtyStackListener = new CommandStackListener()
       {
+        @Override
         public void commandStackChanged(final EventObject event)
         {
           fireDirtyStateChanged();
@@ -245,6 +247,7 @@ public class CDOSecurityFormEditor extends FormEditor implements IEditingDomainP
     return adapterFactory;
   }
 
+  @Override
   public EditingDomain getEditingDomain()
   {
     return editingDomain;

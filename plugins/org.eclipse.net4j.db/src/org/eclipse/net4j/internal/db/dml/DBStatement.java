@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -32,6 +32,7 @@ public class DBStatement implements IDBStatement
 
   private List<Object> sequence = new ArrayList<Object>();
 
+  @Override
   public IDBParameter addParameter(DBType type)
   {
     int position = 0;
@@ -49,11 +50,13 @@ public class DBStatement implements IDBStatement
     return parameter;
   }
 
+  @Override
   public IDBParameter addParameter(IDBField field)
   {
     return addParameter(field.getType());
   }
 
+  @Override
   public DBParameter[] getParameters()
   {
     if (parameters == null)
@@ -64,6 +67,7 @@ public class DBStatement implements IDBStatement
     return parameters.toArray(new DBParameter[parameters.size()]);
   }
 
+  @Override
   public void addSQL(String literal)
   {
     int tailPos = sequence.size() - 1;
@@ -78,16 +82,19 @@ public class DBStatement implements IDBStatement
     }
   }
 
+  @Override
   public void addSQL(IDBParameter parameter)
   {
     sequence.add(parameter);
   }
 
+  @Override
   public void addSQL(IDBSchemaElement schemaElement)
   {
     addSQL(schemaElement.getName());
   }
 
+  @Override
   public String getSQL()
   {
     StringBuilder builder = new StringBuilder();

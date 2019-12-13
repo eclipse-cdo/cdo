@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -52,41 +52,49 @@ public class CDOEditorInputImpl extends PlatformObject implements CDOEditorInput
     this.resourcePath = resourcePath;
   }
 
+  @Override
   public CDOView getView()
   {
     return view;
   }
 
+  @Override
   public boolean isViewOwned()
   {
     return viewOwned;
   }
 
+  @Override
   public String getResourcePath()
   {
     return resourcePath;
   }
 
+  @Override
   public CDOID getObjectID()
   {
     return objectID;
   }
 
+  @Override
   public void setObjectID(CDOID objectID)
   {
     this.objectID = objectID;
   }
 
+  @Override
   public boolean exists()
   {
     return true;
   }
 
+  @Override
   public ImageDescriptor getImageDescriptor()
   {
     return CDOItemProvider.getViewImageDescriptor(view);
   }
 
+  @Override
   public String getName()
   {
     if (resourcePath != null)
@@ -97,11 +105,13 @@ public class CDOEditorInputImpl extends PlatformObject implements CDOEditorInput
     return view.getSession().getRepositoryInfo().getName();
   }
 
+  @Override
   public IPersistableElement getPersistable()
   {
     return null;
   }
 
+  @Override
   public String getToolTipText()
   {
     if (view.isClosed())

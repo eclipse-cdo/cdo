@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -41,31 +41,37 @@ public class CDOCollectionLoadingPolicyImpl implements CDOCollectionLoadingPolic
     this.initialChunkSize = initialChunkSize < 0 ? this.resolveChunkSize : initialChunkSize;
   }
 
+  @Override
   public CDOSession getSession()
   {
     return session;
   }
 
+  @Override
   public void setSession(CDOSession session)
   {
     this.session = session;
   }
 
+  @Override
   public int getInitialChunkSize()
   {
     return initialChunkSize;
   }
 
+  @Override
   public int getResolveChunkSize()
   {
     return resolveChunkSize;
   }
 
+  @Override
   public void resolveAllProxies(CDORevision revision, EStructuralFeature feature)
   {
     doResolveProxy(revision, feature, 0, 0, Integer.MAX_VALUE);
   }
 
+  @Override
   public Object resolveProxy(CDORevision rev, EStructuralFeature feature, int accessIndex, int serverIndex)
   {
     int chunkSize = resolveChunkSize;

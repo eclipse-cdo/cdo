@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -100,79 +100,94 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
     setDaemon(true);
   }
 
+  @Override
   public int getRetryInterval()
   {
     return retryInterval;
   }
 
+  @Override
   public void setRetryInterval(int retryInterval)
   {
     this.retryInterval = retryInterval;
   }
 
+  @Override
   public InternalSynchronizableRepository getLocalRepository()
   {
     return localRepository;
   }
 
+  @Override
   public void setLocalRepository(InternalSynchronizableRepository localRepository)
   {
     checkInactive();
     this.localRepository = localRepository;
   }
 
+  @Override
   public CDOSessionConfigurationFactory getRemoteSessionConfigurationFactory()
   {
     return remoteSessionConfigurationFactory;
   }
 
+  @Override
   public void setRemoteSessionConfigurationFactory(CDOSessionConfigurationFactory masterSessionConfigurationFactory)
   {
     checkArg(masterSessionConfigurationFactory, "remoteSessionConfigurationFactory"); //$NON-NLS-1$
     remoteSessionConfigurationFactory = masterSessionConfigurationFactory;
   }
 
+  @Override
   public InternalCDOSession getRemoteSession()
   {
     return remoteSession;
   }
 
+  @Override
   public boolean isRawReplication()
   {
     return rawReplication;
   }
 
+  @Override
   public void setRawReplication(boolean rawReplication)
   {
     checkInactive();
     this.rawReplication = rawReplication;
   }
 
+  @Override
   public int getMaxRecommits()
   {
     return maxRecommits;
   }
 
+  @Override
   public void setMaxRecommits(int maxRecommits)
   {
     this.maxRecommits = maxRecommits;
   }
 
+  @Override
   public int getRecommitInterval()
   {
     return recommitInterval;
   }
 
+  @Override
   public void setRecommitInterval(int recommitInterval)
   {
     this.recommitInterval = recommitInterval;
   }
 
+  @Override
   public boolean isEmpty()
   {
     return remoteSession == null;
   }
 
+  @Override
   public CDOSession[] getElements()
   {
     if (remoteSession == null)
@@ -329,6 +344,7 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
    */
   private final class RemoteSessionListener implements IListener
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (!isActive())
@@ -381,6 +397,7 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
     {
     }
 
+    @Override
     public void run()
     {
       synchronized (connectLock)
@@ -457,6 +474,7 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
     {
     }
 
+    @Override
     public void run()
     {
       try
@@ -532,6 +550,7 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
       this.branch = branch;
     }
 
+    @Override
     public void run()
     {
       try
@@ -574,6 +593,7 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
     {
     }
 
+    @Override
     public void run()
     {
       try

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011-2013, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011-2013, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -92,6 +92,7 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
   {
   }
 
+  @Override
   public InternalCDORevision getRevisionForID(CDOID id)
   {
     if (id == null)
@@ -102,25 +103,30 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
     return new RevisionWithID(this, id);
   }
 
+  @Override
   public boolean isAdapterForType(Object type)
   {
     return type == CDOClassInfo.class;
   }
 
+  @Override
   public void notifyChanged(Notification notification)
   {
   }
 
+  @Override
   public EClass getTarget()
   {
     return eClass;
   }
 
+  @Override
   public void setTarget(Notifier newTarget)
   {
     init((EClass)newTarget);
   }
 
+  @Override
   public void unsetTarget(Notifier oldTarget)
   {
     // pass. In particular, don't forget the EClass because it may still
@@ -128,64 +134,76 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
     // me as a descriptor of their class
   }
 
+  @Override
   public EClass getEClass()
   {
     return eClass;
   }
 
+  @Override
   public boolean isResource()
   {
     return CDOModelUtil.isResource(eClass);
   }
 
+  @Override
   public boolean isResourceFolder()
   {
     return CDOModelUtil.isResourceFolder(eClass);
   }
 
+  @Override
   public boolean isResourceNode()
   {
     return CDOModelUtil.isResourceNode(eClass);
   }
 
+  @Override
   public boolean isPersistent(int featureID)
   {
     return persistentBits.get(featureID);
   }
 
+  @Override
   public boolean isPersistent(EStructuralFeature feature)
   {
     int featureID = eClass.getFeatureID(feature);
     return isPersistent(featureID);
   }
 
+  @Override
   public boolean hasPersistentOpposite(EStructuralFeature feature)
   {
     int featureID = eClass.getFeatureID(feature);
     return persistentOppositeBits.get(featureID);
   }
 
+  @Override
   public EStructuralFeature[] getAllPersistentFeatures()
   {
     return allPersistentFeatures;
   }
 
+  @Override
   public EReference[] getAllPersistentReferences()
   {
     return allPersistentReferences;
   }
 
+  @Override
   public EStructuralFeature[] getAllPersistentContainments()
   {
     return allPersistentContainments;
   }
 
+  @Override
   public int getPersistentFeatureIndex(EStructuralFeature feature) throws IllegalArgumentException
   {
     int featureID = eClass.getFeatureID(feature);
     return getPersistentFeatureIndex(featureID);
   }
 
+  @Override
   public int getPersistentFeatureIndex(int featureID) throws IllegalArgumentException
   {
     int index = persistentFeatureIndices[featureID];
@@ -197,32 +215,38 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
     return index;
   }
 
+  @Override
   public int getSettingsFeatureCount()
   {
     return settingsFeatureCount;
   }
 
+  @Override
   public int getSettingsFeatureIndex(int featureID)
   {
     return settingsFeatureIndices[featureID];
   }
 
+  @Override
   public int getTransientFeatureCount()
   {
     return transientFeatureCount;
   }
 
+  @Override
   public int getTransientFeatureIndex(int featureID)
   {
     return transientFeatureIndices[featureID];
   }
 
+  @Override
   public int getTransientFeatureIndex(EStructuralFeature feature)
   {
     int featureID = eClass.getFeatureID(feature);
     return getTransientFeatureIndex(featureID);
   }
 
+  @Override
   public PersistenceFilter getPersistenceFilter(EStructuralFeature feature)
   {
     if (persistenceFilters == NO_FILTERS)
@@ -369,12 +393,14 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
     return false;
   }
 
+  @Override
   @Deprecated
   public int getFeatureIndex(EStructuralFeature feature)
   {
     return getPersistentFeatureIndex(feature);
   }
 
+  @Override
   @Deprecated
   public int getFeatureIndex(int featureID)
   {

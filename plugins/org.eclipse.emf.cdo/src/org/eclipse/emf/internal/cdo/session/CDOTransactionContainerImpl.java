@@ -39,6 +39,7 @@ public abstract class CDOTransactionContainerImpl extends CDOViewContainerImpl i
   {
   }
 
+  @Override
   public InternalCDOTransaction getTransaction(int viewID)
   {
     CDOView view = getView(viewID);
@@ -50,28 +51,33 @@ public abstract class CDOTransactionContainerImpl extends CDOViewContainerImpl i
     return null;
   }
 
+  @Override
   public InternalCDOTransaction[] getTransactions()
   {
     return getTransactions(null);
   }
 
+  @Override
   public InternalCDOTransaction[] getTransactions(CDOBranch branch)
   {
     List<InternalCDOView> transactions = getViews(branch, true);
     return transactions.toArray(new InternalCDOTransaction[transactions.size()]);
   }
 
+  @Override
   public CDOTransaction openTransaction(CDOBranchPoint target, ResourceSet resourceSet)
   {
     checkArg(target.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE, "Target is not head of a branch: " + target);
     return openTransaction(target.getBranch(), resourceSet);
   }
 
+  @Override
   public CDOTransaction openTransaction(CDOBranchPoint target)
   {
     return openTransaction(target, createResourceSet());
   }
 
+  @Override
   public InternalCDOTransaction openTransaction(CDOBranch branch, ResourceSet resourceSet)
   {
     checkActive();
@@ -80,11 +86,13 @@ public abstract class CDOTransactionContainerImpl extends CDOViewContainerImpl i
     return transaction;
   }
 
+  @Override
   public InternalCDOTransaction openTransaction(ResourceSet resourceSet)
   {
     return openTransaction(getMainBranch(), resourceSet);
   }
 
+  @Override
   public InternalCDOTransaction openTransaction(CDOBranch branch)
   {
     return openTransaction(branch, createResourceSet());
@@ -93,16 +101,19 @@ public abstract class CDOTransactionContainerImpl extends CDOViewContainerImpl i
   /**
    * @since 2.0
    */
+  @Override
   public InternalCDOTransaction openTransaction()
   {
     return openTransaction(getMainBranch());
   }
 
+  @Override
   public CDOTransaction openTransaction(String durableLockingID)
   {
     return openTransaction(durableLockingID, createResourceSet());
   }
 
+  @Override
   public CDOTransaction openTransaction(String durableLockingID, ResourceSet resourceSet)
   {
     checkActive();

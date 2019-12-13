@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -60,6 +60,7 @@ public class ClassPermissionImpl extends PermissionImpl implements ClassPermissi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getApplicableClass()
   {
     return (EClass)eGet(SecurityPackage.Literals.CLASS_PERMISSION__APPLICABLE_CLASS, true);
@@ -70,11 +71,13 @@ public class ClassPermissionImpl extends PermissionImpl implements ClassPermissi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setApplicableClass(EClass newApplicableClass)
   {
     eSet(SecurityPackage.Literals.CLASS_PERMISSION__APPLICABLE_CLASS, newApplicableClass);
   }
 
+  @Override
   public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
     EClass actualClass = revision.getEClass();

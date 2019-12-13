@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2012, 2014, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2012, 2014, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -61,6 +61,7 @@ public class CDOEventHandler
 
   private IListener sessionListener = new IListener()
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof IContainerEvent<?>)
@@ -84,6 +85,7 @@ public class CDOEventHandler
 
   private IListener viewListener = new IListener()
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof CDOViewInvalidationEvent)
@@ -139,6 +141,7 @@ public class CDOEventHandler
 
   private CDOObjectHandler objectHandler = new CDOObjectHandler()
   {
+    @Override
     public void objectStateChanged(CDOView view, CDOObject object, CDOState oldState, CDOState newState)
     {
       CDOEventHandler.this.objectStateChanged(object);
@@ -147,6 +150,7 @@ public class CDOEventHandler
 
   private IListener preferenceListener = new IListener()
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       @SuppressWarnings("unchecked")
@@ -165,6 +169,7 @@ public class CDOEventHandler
         {
           treeViewer.getControl().getDisplay().asyncExec(new Runnable()
           {
+            @Override
             public void run()
             {
               try
@@ -188,6 +193,7 @@ public class CDOEventHandler
   {
     UIUtil.getDisplay().asyncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         try
@@ -276,6 +282,7 @@ public class CDOEventHandler
       {
         control.getDisplay().asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             try

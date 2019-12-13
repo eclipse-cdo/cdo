@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -70,6 +70,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   {
   }
 
+  @Override
   public String getHost()
   {
     return host;
@@ -80,6 +81,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     this.host = host;
   }
 
+  @Override
   public int getPort()
   {
     return port;
@@ -90,6 +92,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     this.port = port;
   }
 
+  @Override
   public ITCPSelector getSelector()
   {
     return selector;
@@ -169,6 +172,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     return "tcp://";
   }
 
+  @Override
   public void handleRegistration(ITCPSelector selector, SocketChannel socketChannel)
   {
     try
@@ -186,6 +190,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
   }
 
+  @Override
   public void handleConnect(ITCPSelector selector, SocketChannel channel)
   {
     try
@@ -203,6 +208,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
   }
 
+  @Override
   public void handleRead(ITCPSelector selector, SocketChannel socketChannel)
   {
     try
@@ -263,6 +269,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
    * Called by an {@link IChannel} each time a new buffer is available for multiplexing. This or another buffer can be
    * dequeued from the outputQueue of the {@link IChannel}.
    */
+  @Override
   public void multiplexChannel(InternalChannel channel)
   {
     synchronized (writeQueue)
@@ -288,6 +295,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
   }
 
+  @Override
   public void handleWrite(ITCPSelector selector, SocketChannel socketChannel)
   {
     try
@@ -425,6 +433,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     // Do the rest of the deactivation asynchronously
     getConfig().getReceiveExecutor().execute(new Runnable()
     {
+      @Override
       public void run()
       {
         deactivate();
@@ -454,16 +463,19 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     {
     }
 
+    @Override
     public TCPConnector getConnector()
     {
       return TCPConnector.this;
     }
 
+    @Override
     public void setUserID(String userID)
     {
       TCPConnector.this.setUserID(userID);
     }
 
+    @Override
     public ByteBuffer getBuffer()
     {
       buffer = getConfig().getBufferProvider().provideBuffer();
@@ -472,6 +484,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       return byteBuffer;
     }
 
+    @Override
     public void transmitBuffer(ByteBuffer byteBuffer)
     {
       if (buffer.getByteBuffer() != byteBuffer)

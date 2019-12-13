@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -55,6 +55,7 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     buffer = new byte[bufferSize];
   }
 
+  @Override
   public void close() throws IOException
   {
     if (raf != null)
@@ -66,6 +67,7 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     }
   }
 
+  @Override
   public void flush() throws IOException
   {
     if (modified)
@@ -124,6 +126,7 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     return fileLength;
   }
 
+  @Override
   public int skipBytes(int n) throws IOException
   {
     seek(getFilePointer() + n);
@@ -210,11 +213,13 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     return array;
   }
 
+  @Override
   public void readFully(byte[] array) throws IOException
   {
     readFully(array, 0, array.length);
   }
 
+  @Override
   public void readFully(byte[] array, int offset, int length) throws IOException
   {
     int n = 0;
@@ -230,6 +235,7 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     }
   }
 
+  @Override
   public boolean readBoolean() throws IOException
   {
     int ch = this.read();
@@ -241,6 +247,7 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     return ch != 0;
   }
 
+  @Override
   public byte readByte() throws IOException
   {
     int ch = this.read();
@@ -252,6 +259,7 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     return (byte)ch;
   }
 
+  @Override
   public int readUnsignedByte() throws IOException
   {
     int ch = this.read();
@@ -263,6 +271,7 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     return ch;
   }
 
+  @Override
   public short readShort() throws IOException
   {
     int ch1 = this.read();
@@ -275,6 +284,7 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     return (short)((ch1 << 8) + ch2);
   }
 
+  @Override
   public int readUnsignedShort() throws IOException
   {
     int ch1 = this.read();
@@ -287,6 +297,7 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     return (ch1 << 8) + ch2;
   }
 
+  @Override
   public char readChar() throws IOException
   {
     int ch1 = this.read();
@@ -299,6 +310,7 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     return (char)((ch1 << 8) + ch2);
   }
 
+  @Override
   public int readInt() throws IOException
   {
     int ch1 = this.read();
@@ -313,21 +325,25 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     return (ch1 << 24) + (ch2 << 16) + (ch3 << 8) + ch4;
   }
 
+  @Override
   public long readLong() throws IOException
   {
     return ((long)readInt() << 32) + (readInt() & 0xFFFFFFFFL);
   }
 
+  @Override
   public float readFloat() throws IOException
   {
     return Float.intBitsToFloat(readInt());
   }
 
+  @Override
   public double readDouble() throws IOException
   {
     return Double.longBitsToDouble(readLong());
   }
 
+  @Override
   public String readLine() throws IOException
   {
     StringBuffer input = new StringBuffer();
@@ -366,11 +382,13 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     return input.toString();
   }
 
+  @Override
   public String readUTF() throws IOException
   {
     return DataInputStream.readUTF(this);
   }
 
+  @Override
   public void write(int byteValue) throws IOException
   {
     if (position < end)
@@ -401,11 +419,13 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     }
   }
 
+  @Override
   public void write(byte[] array) throws IOException
   {
     write(array, 0, array.length);
   }
 
+  @Override
   public void write(byte[] array, int offset, int length) throws IOException
   {
     if (length < buffer.length)
@@ -458,28 +478,33 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     }
   }
 
+  @Override
   public void writeBoolean(boolean value) throws IOException
   {
     write(value ? 1 : 0);
   }
 
+  @Override
   public void writeByte(int value) throws IOException
   {
     write(value);
   }
 
+  @Override
   public void writeShort(int value) throws IOException
   {
     write(value >>> 8 & 0xFF);
     write(value & 0xFF);
   }
 
+  @Override
   public void writeChar(int value) throws IOException
   {
     write(value >>> 8 & 0xFF);
     write(value & 0xFF);
   }
 
+  @Override
   public void writeInt(int value) throws IOException
   {
     write(value >>> 24 & 0xFF);
@@ -488,6 +513,7 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     write(value & 0xFF);
   }
 
+  @Override
   public void writeLong(long value) throws IOException
   {
     write((int)(value >>> 56) & 0xFF);
@@ -500,16 +526,19 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     write((int)value & 0xFF);
   }
 
+  @Override
   public void writeFloat(float value) throws IOException
   {
     writeInt(Float.floatToIntBits(value));
   }
 
+  @Override
   public void writeDouble(double value) throws IOException
   {
     writeLong(Double.doubleToLongBits(value));
   }
 
+  @Override
   public void writeBytes(String value) throws IOException
   {
     int length = value.length();
@@ -519,6 +548,7 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     }
   }
 
+  @Override
   public void writeChars(String value) throws IOException
   {
     int length = value.length();
@@ -530,6 +560,7 @@ public class DataInputOutputFile implements DataInput, DataOutput, Flushable, Cl
     }
   }
 
+  @Override
   public void writeUTF(String value) throws IOException
   {
     int length = value.length();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -49,6 +49,7 @@ public final class DelegatingDBIndex extends DelegatingDBSchemaElement implement
     }
   }
 
+  @Override
   public IDBIndex getWrapper()
   {
     return this;
@@ -60,92 +61,110 @@ public final class DelegatingDBIndex extends DelegatingDBSchemaElement implement
     return wrap(getDelegate().getParent());
   }
 
+  @Override
   public IDBTable getTable()
   {
     return wrap(getDelegate().getTable());
   }
 
+  @Override
   public Type getType()
   {
     return getDelegate().getType();
   }
 
+  @Override
   public void setType(Type type)
   {
     getDelegate().setType(type);
   }
 
+  @Override
   public void removeIndexField(IDBIndexField indexFieldToRemove)
   {
     getDelegate().removeIndexField(unwrap(indexFieldToRemove));
   }
 
+  @Override
   public boolean isOptional()
   {
     return getDelegate().isOptional();
   }
 
+  @Override
   public void setOptional(boolean optional)
   {
     getDelegate().setOptional(optional);
   }
 
+  @Override
   @Deprecated
   public int getPosition()
   {
     return getDelegate().getPosition();
   }
 
+  @Override
   public IDBIndexField addIndexField(IDBField field)
   {
     return wrap(getDelegate().addIndexField(unwrap(field)));
   }
 
+  @Override
   public IDBIndexField addIndexField(String name) throws SchemaElementNotFoundException
   {
     return wrap(getDelegate().addIndexField(name));
   }
 
+  @Override
   public IDBIndexField getIndexFieldSafe(String name) throws SchemaElementNotFoundException
   {
     return wrap(getDelegate().getIndexFieldSafe(name));
   }
 
+  @Override
   public IDBIndexField getIndexField(String name)
   {
     return wrap(getDelegate().getIndexField(name));
   }
 
+  @Override
   public IDBIndexField getIndexField(int position)
   {
     return wrap(getDelegate().getIndexField(position));
   }
 
+  @Override
   public IDBField getFieldSafe(String name) throws SchemaElementNotFoundException
   {
     return wrap(getDelegate().getFieldSafe(name));
   }
 
+  @Override
   public IDBField getField(String name)
   {
     return wrap(getDelegate().getField(name));
   }
 
+  @Override
   public IDBField getField(int position)
   {
     return wrap(getDelegate().getField(position));
   }
 
+  @Override
   public int getFieldCount()
   {
     return getDelegate().getFieldCount();
   }
 
+  @Override
   public IDBIndexField[] getIndexFields()
   {
     return wrap(getDelegate().getIndexFields(), IDBIndexField.class);
   }
 
+  @Override
   public IDBField[] getFields()
   {
     return wrap(getDelegate().getFields(), IDBField.class);

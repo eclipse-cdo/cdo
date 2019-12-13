@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -39,21 +39,25 @@ public class AsyncContentProvider implements ITreeContentProvider
     this.delegate = delegate;
   }
 
+  @Override
   public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
   {
     delegate.inputChanged(viewer, oldInput, newInput);
   }
 
+  @Override
   public void dispose()
   {
     delegate.dispose();
   }
 
+  @Override
   public final Object[] getElements(Object inputElement)
   {
     return getChildren(inputElement);
   }
 
+  @Override
   public Object[] getChildren(Object parentElement)
   {
     if (parentElement instanceof LoadJob)
@@ -74,6 +78,7 @@ public class AsyncContentProvider implements ITreeContentProvider
     return delegate.getChildren(parentElement);
   }
 
+  @Override
   public boolean hasChildren(Object parentElement)
   {
     if (parentElement instanceof LoadJob)
@@ -94,6 +99,7 @@ public class AsyncContentProvider implements ITreeContentProvider
     return delegate.hasChildren(parentElement);
   }
 
+  @Override
   public Object getParent(Object element)
   {
     if (element instanceof LoadJob)
@@ -160,6 +166,7 @@ public class AsyncContentProvider implements ITreeContentProvider
       return false;
     }
 
+    @Override
     public void run()
     {
     }

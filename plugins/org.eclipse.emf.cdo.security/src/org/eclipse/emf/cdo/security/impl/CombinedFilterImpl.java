@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -62,12 +62,14 @@ public abstract class CombinedFilterImpl extends PermissionFilterImpl implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<PermissionFilter> getOperands()
   {
     return (EList<PermissionFilter>)eGet(SecurityPackage.Literals.COMBINED_FILTER__OPERANDS, true);
   }
 
+  @Override
   public boolean isImpacted(CommitImpactContext context)
   {
     for (PermissionFilter operand : getOperands())
@@ -81,6 +83,7 @@ public abstract class CombinedFilterImpl extends PermissionFilterImpl implements
     return false;
   }
 
+  @Override
   public String format()
   {
     StringBuilder builder = new StringBuilder();

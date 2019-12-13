@@ -162,6 +162,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    * calling thread until all of this session's views have incorporated a commit operation with the given time stamp (or
    * higher).
    */
+  @Override
   public void waitForUpdate(long updateTime);
 
   /**
@@ -169,6 +170,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    * calling thread until all of this session's views have incorporated a commit operation with the given time stamp (or
    * higher) or the given total timeout has expired.
    */
+  @Override
   public boolean waitForUpdate(long updateTime, long timeoutMillis);
 
   /**
@@ -190,6 +192,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
   /**
    * Returns the {@link Options options} of this session.
    */
+  @Override
   public Options options();
 
   /**
@@ -215,6 +218,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
      *
      * @since 4.0
      */
+    @Override
     public CDOSession getContainer();
 
     public boolean isGeneratedPackageEmulationEnabled();

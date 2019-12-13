@@ -41,11 +41,13 @@ public class DBBrowserPage extends AbstractPage
     super("tables", "DB Tables");
   }
 
+  @Override
   public boolean canDisplay(InternalRepository repository)
   {
     return repository.getStore() instanceof IDBConnectionProvider;
   }
 
+  @Override
   public void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out)
   {
     IDBConnectionProvider connectionProvider = (IDBConnectionProvider)repository.getStore();
@@ -263,6 +265,7 @@ public class DBBrowserPage extends AbstractPage
       super(PRODUCT_GROUP, TYPE);
     }
 
+    @Override
     public DBBrowserPage create(String description) throws ProductCreationException
     {
       return new DBBrowserPage();

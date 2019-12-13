@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -46,6 +46,7 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
 
   private IListener delegateListener = new IListener()
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof TypeChangedEvent)
@@ -71,6 +72,7 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
 
   private IListener delegateSynchronizerListener = new IListener()
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       if (event instanceof OMMonitorProgress)
@@ -98,6 +100,7 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     }
   }
 
+  @Override
   public final CDOAdmin getAdmin()
   {
     return admin;
@@ -108,107 +111,128 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     return delegate;
   }
 
+  @Override
   public boolean delete(String type)
   {
     return admin.deleteRepository(this, type);
   }
 
+  @Override
   public String getName()
   {
     return delegate.getName();
   }
 
+  @Override
   public String getUUID()
   {
     return delegate.getUUID();
   }
 
+  @Override
   public Type getType()
   {
     return delegate.getType();
   }
 
+  @Override
   public State getState()
   {
     return delegate.getState();
   }
 
+  @Override
   public String getStoreType()
   {
     return delegate.getStoreType();
   }
 
+  @Override
   public Set<ObjectType> getObjectIDTypes()
   {
     return delegate.getObjectIDTypes();
   }
 
+  @Override
   public long getCreationTime()
   {
     return delegate.getCreationTime();
   }
 
+  @Override
   public CDOID getRootResourceID()
   {
     return delegate.getRootResourceID();
   }
 
+  @Override
   public boolean isAuthenticating()
   {
     return delegate.isAuthenticating();
   }
 
+  @Override
   public boolean isSupportingAudits()
   {
     return delegate.isSupportingAudits();
   }
 
+  @Override
   public boolean isSupportingBranches()
   {
     return delegate.isSupportingBranches();
   }
 
+  @Override
   public boolean isSupportingUnits()
   {
     return delegate.isSupportingUnits();
   }
 
+  @Override
   @Deprecated
   public boolean isSupportingEcore()
   {
     return delegate.isSupportingEcore();
   }
 
+  @Override
   public boolean isSerializingCommits()
   {
     return delegate.isSerializingCommits();
   }
 
+  @Override
   public boolean isEnsuringReferentialIntegrity()
   {
     return delegate.isEnsuringReferentialIntegrity();
   }
 
+  @Override
   public boolean waitWhileInitial(IProgressMonitor monitor)
   {
     return delegate.waitWhileInitial(monitor);
   }
 
+  @Override
   public IDGenerationLocation getIDGenerationLocation()
   {
     return delegate.getIDGenerationLocation();
   }
 
+  @Override
   public CommitInfoStorage getCommitInfoStorage()
   {
     return delegate.getCommitInfoStorage();
   }
 
+  @Override
   public long getTimeStamp() throws UnsupportedOperationException
   {
     return delegate.getTimeStamp();
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {

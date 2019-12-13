@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -240,6 +240,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
 
   protected abstract void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException;
 
+  @Override
   public Collection<IDBTable> getDBTables()
   {
     return Collections.singleton(table);
@@ -255,6 +256,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     return typeMapping;
   }
 
+  @Override
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     if (table == null)
@@ -341,6 +343,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     }
   }
 
+  @Override
   public final void readChunks(IDBStoreChunkReader chunkReader, List<Chunk> chunks, String where)
   {
     if (TRACER.isEnabled())
@@ -424,6 +427,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     }
   }
 
+  @Override
   public void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
     CDOList values = revision.getListOrNull(getFeature());
@@ -470,6 +474,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     }
   }
 
+  @Override
   public boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere, QueryXRefsContext context, String idString)
   {
     if (table == null)

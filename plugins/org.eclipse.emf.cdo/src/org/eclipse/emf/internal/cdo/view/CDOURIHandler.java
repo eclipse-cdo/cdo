@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -55,18 +55,21 @@ public class CDOURIHandler implements URIHandler
     return view;
   }
 
+  @Override
   public boolean canHandle(URI uri)
   {
     CDOViewProvider[] viewProviders = CDOViewProviderRegistry.INSTANCE.getViewProviders(uri);
     return viewProviders.length != 0;
   }
 
+  @Override
   public boolean exists(URI uri, Map<?, ?> options)
   {
     String path = getPath(uri);
     return view.hasResource(path);
   }
 
+  @Override
   public void delete(URI uri, Map<?, ?> options) throws IOException
   {
     String path = CDOURIUtil.extractResourcePath(uri);
@@ -91,16 +94,19 @@ public class CDOURIHandler implements URIHandler
     }
   }
 
+  @Override
   public InputStream createInputStream(URI uri, Map<?, ?> options) throws IOException
   {
     throw new IOException("CDOURIHandler.createInputStream() not implemented"); //$NON-NLS-1$
   }
 
+  @Override
   public OutputStream createOutputStream(URI uri, Map<?, ?> options) throws IOException
   {
     throw new IOException("CDOURIHandler.createOutputStream() not implemented"); //$NON-NLS-1$
   }
 
+  @Override
   public Map<String, ?> contentDescription(URI uri, Map<?, ?> options) throws IOException
   {
     // ViK: I hardly find this useful for CDO. ContentHandler defines, for instance, VALIDITY_PROPERTY
@@ -108,6 +114,7 @@ public class CDOURIHandler implements URIHandler
     return ContentHandler.INVALID_CONTENT_DESCRIPTION;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public Map<String, ?> getAttributes(URI uri, Map<?, ?> options)
   {
@@ -137,6 +144,7 @@ public class CDOURIHandler implements URIHandler
     return result;
   }
 
+  @Override
   public void setAttributes(URI uri, Map<String, ?> attributes, Map<?, ?> options) throws IOException
   {
     // ViK: We can't change any of the proposed attributes. Only TIME_STAMP, and I believe we are not

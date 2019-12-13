@@ -51,6 +51,7 @@ public class SerializingExecutor extends Lifecycle implements Executor, Runnable
     this.delegate = delegate == null ? SynchronousExecutor.INSTANCE : delegate;
   }
 
+  @Override
   public final void execute(Runnable task)
   {
     tasks.add(task);
@@ -61,6 +62,7 @@ public class SerializingExecutor extends Lifecycle implements Executor, Runnable
     }
   }
 
+  @Override
   public final void run()
   {
     Runnable task;

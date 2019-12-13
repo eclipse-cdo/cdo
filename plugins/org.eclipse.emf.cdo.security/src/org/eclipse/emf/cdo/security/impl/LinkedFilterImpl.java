@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -62,6 +62,7 @@ public class LinkedFilterImpl extends PermissionFilterImpl implements LinkedFilt
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PermissionFilter getFilter()
   {
     return (PermissionFilter)eGet(SecurityPackage.Literals.LINKED_FILTER__FILTER, true);
@@ -72,6 +73,7 @@ public class LinkedFilterImpl extends PermissionFilterImpl implements LinkedFilt
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setFilter(PermissionFilter newFilter)
   {
     eSet(SecurityPackage.Literals.LINKED_FILTER__FILTER, newFilter);
@@ -84,12 +86,14 @@ public class LinkedFilterImpl extends PermissionFilterImpl implements LinkedFilt
     return filter.isApplicable(revision, revisionProvider, securityContext, level + 1);
   }
 
+  @Override
   public boolean isImpacted(CommitImpactContext context)
   {
     PermissionFilter filter = getFilter();
     return filter.isImpacted(context);
   }
 
+  @Override
   public String format()
   {
     PermissionFilter filter = getFilter();

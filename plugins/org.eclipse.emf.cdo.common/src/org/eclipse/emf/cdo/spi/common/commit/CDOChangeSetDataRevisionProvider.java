@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2014, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2014, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -33,11 +33,13 @@ public class CDOChangeSetDataRevisionProvider implements CDORevisionProvider, CD
 {
   private static final CDOIDAndVersion DETACHED = new CDOIDAndVersion()
   {
+    @Override
     public CDOID getID()
     {
       return CDOID.NULL;
     }
 
+    @Override
     public int getVersion()
     {
       return Integer.MIN_VALUE;
@@ -74,11 +76,13 @@ public class CDOChangeSetDataRevisionProvider implements CDORevisionProvider, CD
     this(delegate, changeSetData, null, null);
   }
 
+  @Override
   public CDOChangeSetData getChangeSetData()
   {
     return changeSetData;
   }
 
+  @Override
   public synchronized CDORevision getRevision(CDOID id)
   {
     if (cachedRevisions == null)

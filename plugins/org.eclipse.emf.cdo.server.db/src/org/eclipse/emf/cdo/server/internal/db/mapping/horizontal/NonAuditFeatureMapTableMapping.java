@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -202,6 +202,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, revision.getID());
   }
 
+  @Override
   public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
   {
     clearList(accessor, id);
@@ -514,31 +515,37 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     }
   }
 
+  @Override
   public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion, final int newVersion, final long created,
       CDOListFeatureDelta listDelta)
   {
     CDOFeatureDeltaVisitor visitor = new CDOFeatureDeltaVisitor()
     {
+      @Override
       public void visit(CDOMoveFeatureDelta delta)
       {
         moveListItem(accessor, id, delta.getOldPosition(), delta.getNewPosition());
       }
 
+      @Override
       public void visit(CDOAddFeatureDelta delta)
       {
         insertListItem(accessor, id, delta.getIndex(), delta.getValue(), created);
       }
 
+      @Override
       public void visit(CDORemoveFeatureDelta delta)
       {
         removeListItem(accessor, id, delta.getIndex());
       }
 
+      @Override
       public void visit(CDOSetFeatureDelta delta)
       {
         setListItem(accessor, id, delta.getIndex(), delta.getValue(), created);
       }
 
+      @Override
       public void visit(CDOUnsetFeatureDelta delta)
       {
         if (delta.getFeature().isUnsettable())
@@ -549,16 +556,19 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
         clearList(accessor, id);
       }
 
+      @Override
       public void visit(CDOListFeatureDelta delta)
       {
         throw new ImplementationError("Should not be called"); //$NON-NLS-1$
       }
 
+      @Override
       public void visit(CDOClearFeatureDelta delta)
       {
         clearList(accessor, id);
       }
 
+      @Override
       public void visit(CDOContainerFeatureDelta delta)
       {
         throw new ImplementationError("Should not be called"); //$NON-NLS-1$

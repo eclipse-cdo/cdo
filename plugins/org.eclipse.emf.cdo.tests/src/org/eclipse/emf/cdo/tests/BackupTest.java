@@ -363,6 +363,7 @@ public class BackupTest extends AbstractCDOTest
     CDOBranch branch = session2.getBranchManager().getMainBranch();
     session2.getRevisionManager().handleRevisions(eClass, branch, true, 0, false, new CDORevisionHandler()
     {
+      @Override
       public boolean handleRevision(CDORevision revision)
       {
         fail("No PurchaseOrder revision should be visible by now.");

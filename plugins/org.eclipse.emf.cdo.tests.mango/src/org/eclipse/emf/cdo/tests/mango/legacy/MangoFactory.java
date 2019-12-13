@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -33,6 +33,7 @@ public interface MangoFactory extends EFactory, org.eclipse.emf.cdo.tests.mango.
    */
   MangoFactory eINSTANCE = org.eclipse.emf.cdo.tests.mango.legacy.impl.MangoFactoryImpl.init();
 
+  @Override
   /**
    * Returns a new object of class '<em>Value List</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -41,6 +42,7 @@ public interface MangoFactory extends EFactory, org.eclipse.emf.cdo.tests.mango.
    */
   MangoValueList createMangoValueList();
 
+  @Override
   /**
    * Returns a new object of class '<em>Value</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -49,6 +51,7 @@ public interface MangoFactory extends EFactory, org.eclipse.emf.cdo.tests.mango.
    */
   MangoValue createMangoValue();
 
+  @Override
   /**
    * Returns a new object of class '<em>Parameter</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -57,6 +60,7 @@ public interface MangoFactory extends EFactory, org.eclipse.emf.cdo.tests.mango.
    */
   MangoParameter createMangoParameter();
 
+  @Override
   /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,12 +22,15 @@ import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
  */
 public interface InternalCDOUserSavepoint extends CDOUserSavepoint
 {
+  @Override
   public InternalCDOUserTransaction getTransaction();
 
   public InternalCDOUserSavepoint getFirstSavePoint();
 
+  @Override
   public InternalCDOUserSavepoint getPreviousSavepoint();
 
+  @Override
   public InternalCDOUserSavepoint getNextSavepoint();
 
   public void setPreviousSavepoint(InternalCDOUserSavepoint previousSavepoint);

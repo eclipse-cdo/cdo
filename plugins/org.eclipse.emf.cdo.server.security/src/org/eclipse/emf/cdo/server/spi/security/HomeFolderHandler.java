@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -69,6 +69,7 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
     return homeFolder;
   }
 
+  @Override
   public ExecutorService getExecutorService()
   {
     return executorService;
@@ -79,6 +80,7 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
     this.executorService = executorService;
   }
 
+  @Override
   public void init(InternalSecurityManager securityManager, boolean firstTime)
   {
     if (firstTime)
@@ -106,11 +108,13 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
         SF.createResourceFilter(homeFolder, PatternStyle.EXACT, true)));
   }
 
+  @Override
   public void handleCommit(final InternalSecurityManager securityManager, CommitContext commitContext, User user)
   {
     // Do nothing
   }
 
+  @Override
   public void handleCommitted(final InternalSecurityManager securityManager, CommitContext commitContext)
   {
     List<String> userIDs = null;
@@ -143,6 +147,7 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
       CDOView view = securityManager.getRealm().cdoView();
       view.runAfterUpdate(commitTime, new Runnable()
       {
+        @Override
         public void run()
         {
           handleUsers(securityManager, list, false);
@@ -155,10 +160,12 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
   {
     executorService.submit(new Runnable()
     {
+      @Override
       public void run()
       {
         securityManager.modify(new RealmOperation()
         {
+          @Override
           public void execute(Realm realm)
           {
             String roleID = "Home Folder " + homeFolder;
@@ -235,6 +242,7 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
       super("home");
     }
 
+    @Override
     public void setManagedContainer(IManagedContainer container)
     {
       this.container = container;

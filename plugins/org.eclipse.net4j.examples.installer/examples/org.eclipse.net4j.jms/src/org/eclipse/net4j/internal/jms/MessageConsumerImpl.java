@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,16 +66,19 @@ public class MessageConsumerImpl extends Lifecycle implements MessageConsumer
     return destination;
   }
 
+  @Override
   public String getMessageSelector()
   {
     return messageSelector;
   }
 
+  @Override
   public MessageListener getMessageListener()
   {
     return messageListener;
   }
 
+  @Override
   public void setMessageListener(MessageListener listener)
   {
     messageListener = listener;
@@ -85,11 +88,13 @@ public class MessageConsumerImpl extends Lifecycle implements MessageConsumer
     }
   }
 
+  @Override
   public Message receive() throws JMSException
   {
     return receive(Long.MAX_VALUE);
   }
 
+  @Override
   public Message receive(long timeout) throws JMSException
   {
     if (messageListener != null)
@@ -112,11 +117,13 @@ public class MessageConsumerImpl extends Lifecycle implements MessageConsumer
     }
   }
 
+  @Override
   public Message receiveNoWait() throws JMSException
   {
     return receive(DO_NOT_WAIT);
   }
 
+  @Override
   public void close()
   {
     throw new NotYetImplementedException();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -77,6 +77,7 @@ public class CharValueImpl extends ValueImpl implements CharValue
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setLiteral(char newLiteral)
   {
     eDynamicSet(ExpressionsPackage.CHAR_VALUE__LITERAL, ExpressionsPackage.Literals.CHAR_VALUE__LITERAL, newLiteral);

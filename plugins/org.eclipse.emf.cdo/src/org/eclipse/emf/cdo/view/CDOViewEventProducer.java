@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -30,6 +30,7 @@ public class CDOViewEventProducer extends SelfAttachingContainerListener.Delegat
 {
   private final CDOObjectHandler objectHandler = new CDOObjectHandler()
   {
+    @Override
     public void objectStateChanged(CDOView view, CDOObject object, CDOState oldState, CDOState newState)
     {
       notifyOtherEvent(new CDOObjectStateChangedEvent(view, object, oldState, newState));
@@ -38,16 +39,19 @@ public class CDOViewEventProducer extends SelfAttachingContainerListener.Delegat
 
   private final CDOTransactionHandler1 transactionHandler1 = new CDOTransactionHandler1()
   {
+    @Override
     public void attachingObject(CDOTransaction transaction, CDOObject object)
     {
       notifyOtherEvent(new CDOAttachingObjectEvent(transaction, object));
     }
 
+    @Override
     public void detachingObject(CDOTransaction transaction, CDOObject object)
     {
       notifyOtherEvent(new CDODetachingObjectEvent(transaction, object));
     }
 
+    @Override
     public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
     {
       notifyOtherEvent(new CDOModifyingObjectEvent(transaction, object, featureDelta));
@@ -56,16 +60,19 @@ public class CDOViewEventProducer extends SelfAttachingContainerListener.Delegat
 
   private final CDOTransactionHandler2 transactionHandler2 = new CDOTransactionHandler2()
   {
+    @Override
     public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
     {
       notifyOtherEvent(new CDOCommittingTransactionEvent(transaction, commitContext));
     }
 
+    @Override
     public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
     {
       notifyOtherEvent(new CDOCommittedTransactionEvent(transaction, commitContext));
     }
 
+    @Override
     public void rolledBackTransaction(CDOTransaction transaction)
     {
       notifyOtherEvent(new CDORolledBackTransactionEvent(transaction));

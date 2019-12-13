@@ -54,6 +54,7 @@ public class ExecutorWorkSerializer extends Lifecycle implements IWorkSerializer
     this.executor = executor;
   }
 
+  @Override
   public synchronized boolean addWork(Runnable runnable)
   {
     if (disposed)
@@ -73,6 +74,7 @@ public class ExecutorWorkSerializer extends Lifecycle implements IWorkSerializer
     return true;
   }
 
+  @Override
   public synchronized void dispose()
   {
     LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
@@ -99,6 +101,7 @@ public class ExecutorWorkSerializer extends Lifecycle implements IWorkSerializer
     {
       executor.execute(new Runnable()
       {
+        @Override
         public void run()
         {
           try

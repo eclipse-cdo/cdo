@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -92,6 +92,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<PurchaseOrder> getPurchaseOrders()
   {
     if (purchaseOrders == null)
@@ -106,6 +107,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isPreferred()
   {
     return preferred;
@@ -115,6 +117,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setPreferred(boolean newPreferred)
   {
     boolean oldPreferred = preferred;

@@ -91,72 +91,85 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   {
   }
 
+  @Override
   public boolean isSupportingAudits()
   {
     return supportingAudits;
   }
 
+  @Override
   public void setSupportingAudits(boolean on)
   {
     checkInactive();
     supportingAudits = on;
   }
 
+  @Override
   public boolean isSupportingBranches()
   {
     return supportingBranches;
   }
 
+  @Override
   public void setSupportingBranches(boolean on)
   {
     checkInactive();
     supportingBranches = on;
   }
 
+  @Override
   public RevisionLoader getRevisionLoader()
   {
     return revisionLoader;
   }
 
+  @Override
   public void setRevisionLoader(RevisionLoader revisionLoader)
   {
     checkInactive();
     this.revisionLoader = revisionLoader;
   }
 
+  @Override
   public RevisionLocker getRevisionLocker()
   {
     return revisionLocker;
   }
 
+  @Override
   public void setRevisionLocker(RevisionLocker revisionLocker)
   {
     checkInactive();
     this.revisionLocker = revisionLocker;
   }
 
+  @Override
   public CDORevisionFactory getFactory()
   {
     return factory;
   }
 
+  @Override
   public void setFactory(CDORevisionFactory factory)
   {
     checkInactive();
     this.factory = factory;
   }
 
+  @Override
   public InternalCDORevisionCache getCache()
   {
     return cache;
   }
 
+  @Override
   public void setCache(CDORevisionCache cache)
   {
     checkInactive();
     this.cache = (InternalCDORevisionCache)cache;
   }
 
+  @Override
   public EClass getObjectType(CDOID id, CDOBranchManager branchManagerForLoadOnDemand)
   {
     EClass type = cache.getObjectType(id);
@@ -173,11 +186,13 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return type;
   }
 
+  @Override
   public EClass getObjectType(CDOID id)
   {
     return getObjectType(id, null);
   }
 
+  @Override
   public boolean containsRevision(CDOID id, CDOBranchPoint branchPoint)
   {
     if (supportingBranches)
@@ -188,11 +203,13 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return getCachedRevision(id, branchPoint) != null;
   }
 
+  @Override
   public boolean containsRevisionByVersion(CDOID id, CDOBranchVersion branchVersion)
   {
     return cache.getRevisionByVersion(id, branchVersion) != null;
   }
 
+  @Override
   public void reviseLatest(CDOID id, CDOBranch branch)
   {
     acquireAtomicRequestLock(reviseLock);
@@ -212,6 +229,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     }
   }
 
+  @Override
   public void reviseVersion(CDOID id, CDOBranchVersion branchVersion, long timeStamp)
   {
     acquireAtomicRequestLock(reviseLock);
@@ -235,6 +253,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     }
   }
 
+  @Override
   public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk, boolean loadOnDemand)
   {
     checkArg(branchVersion.getVersion() >= CDOBranchVersion.FIRST_VERSION, "Invalid version: " + branchVersion.getVersion());
@@ -265,6 +284,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     }
   }
 
+  @Override
   public InternalCDORevision getBaseRevision(CDORevision revision, int referenceChunk, boolean loadOnDemand)
   {
     CDOID id = revision.getID();
@@ -286,6 +306,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return getRevisionByVersion(id, baseVersion, referenceChunk, loadOnDemand);
   }
 
+  @Override
   public CDOBranchPointRange getObjectLifetime(CDOID id, CDOBranchPoint branchPoint)
   {
     if (revisionLoader instanceof RevisionLoader2)
@@ -297,11 +318,13 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return null;
   }
 
+  @Override
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
   {
     return getRevision(id, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, null);
   }
 
+  @Override
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
       SyntheticCDORevision[] synthetics)
   {
@@ -310,11 +333,13 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return (InternalCDORevision)result;
   }
 
+  @Override
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
   {
     return getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, null);
   }
 
+  @Override
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
       SyntheticCDORevision[] synthetics)
   {
@@ -347,6 +372,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return getResultsAndSynthetics(infos, synthetics);
   }
 
+  @Override
   public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     revisionLoader.handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime, handler);
@@ -472,6 +498,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     return results;
   }
 
+  @Override
   public void addRevision(CDORevision revision)
   {
     if (revision != null)
@@ -636,16 +663,19 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
       return (CDORevisionManager)super.getSource();
     }
 
+    @Override
     public List<? extends CDORevision> getPrimaryLoadedRevisions()
     {
       return primaryLoadedRevisions;
     }
 
+    @Override
     public List<? extends CDORevision> getAdditionalLoadedRevisions()
     {
       return additionalLoadedRevisions;
     }
 
+    @Override
     public int getPrefetchDepth()
     {
       return prefetchDepth;

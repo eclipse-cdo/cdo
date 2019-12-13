@@ -60,6 +60,7 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
     this.type = type;
   }
 
+  @Override
   public final String getType()
   {
     return type;
@@ -68,31 +69,37 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
   /**
    * @since 4.2
    */
+  @Override
   public int getVersion()
   {
     return UNSPECIFIED_VERSION;
   }
 
+  @Override
   public ExecutorService getExecutorService()
   {
     return executorService;
   }
 
+  @Override
   public void setExecutorService(ExecutorService executorService)
   {
     this.executorService = executorService;
   }
 
+  @Override
   public IBufferProvider getBufferProvider()
   {
     return bufferProvider;
   }
 
+  @Override
   public INFRA_STRUCTURE getInfraStructure()
   {
     return infraStructure;
   }
 
+  @Override
   public void setInfraStructure(INFRA_STRUCTURE infraStructure)
   {
     this.infraStructure = infraStructure;
@@ -101,6 +108,7 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
   /**
    * @since 2.0
    */
+  @Override
   public Location getLocation()
   {
     return channel.getLocation();
@@ -109,6 +117,7 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
   /**
    * @since 2.0
    */
+  @Override
   public boolean isClient()
   {
     return channel.isClient();
@@ -117,16 +126,19 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
   /**
    * @since 2.0
    */
+  @Override
   public boolean isServer()
   {
     return channel.isServer();
   }
 
+  @Override
   public IChannel getChannel()
   {
     return channel;
   }
 
+  @Override
   public void setChannel(IChannel newChannel)
   {
     if (channel != newChannel)
@@ -148,6 +160,7 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
     }
   }
 
+  @Override
   public String getUserID()
   {
     if (userID == null && channel != null)

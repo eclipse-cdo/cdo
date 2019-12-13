@@ -89,11 +89,13 @@ public class CDOLobStoreImpl implements CDOLobStore
     return folder;
   }
 
+  @Override
   public File getBinaryFile(byte[] id)
   {
     return new File(getFolder(), HexUtil.bytesToHex(id) + ".blob");
   }
 
+  @Override
   public InputStream getBinary(CDOLobInfo info) throws IOException
   {
     File file = getBinaryFile(info.getID());
@@ -103,6 +105,7 @@ public class CDOLobStoreImpl implements CDOLobStore
     return inputStream;
   }
 
+  @Override
   public CDOLobInfo putBinary(InputStream contents) throws IOException
   {
     File tempFile = getTempFile();
@@ -128,11 +131,13 @@ public class CDOLobStoreImpl implements CDOLobStore
     return new CDOLobInfo(id, size);
   }
 
+  @Override
   public File getCharacterFile(byte[] id)
   {
     return new File(getFolder(), HexUtil.bytesToHex(id) + ".clob");
   }
 
+  @Override
   public Reader getCharacter(CDOLobInfo info) throws IOException
   {
     File file = getCharacterFile(info.getID());
@@ -143,6 +148,7 @@ public class CDOLobStoreImpl implements CDOLobStore
 
   }
 
+  @Override
   public CDOLobInfo putCharacter(Reader contents) throws IOException
   {
     File tempFile = getTempFile();

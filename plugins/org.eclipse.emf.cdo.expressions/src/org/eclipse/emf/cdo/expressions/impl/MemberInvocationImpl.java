@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -70,6 +70,7 @@ public class MemberInvocationImpl extends InvocationImpl implements MemberInvoca
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Expression getObject()
   {
     return (Expression)eDynamicGet(ExpressionsPackage.MEMBER_INVOCATION__OBJECT, ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT, true, true);
@@ -91,6 +92,7 @@ public class MemberInvocationImpl extends InvocationImpl implements MemberInvoca
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setObject(Expression newObject)
   {
     eDynamicSet(ExpressionsPackage.MEMBER_INVOCATION__OBJECT, ExpressionsPackage.Literals.MEMBER_INVOCATION__OBJECT, newObject);
@@ -209,11 +211,13 @@ public class MemberInvocationImpl extends InvocationImpl implements MemberInvoca
   {
     return new Invocable()
     {
+      @Override
       public String getName()
       {
         return eOperation.getName();
       }
 
+      @Override
       public Class<?>[] getParameterTypes()
       {
         EList<EParameter> parameters = eOperation.getEParameters();
@@ -227,6 +231,7 @@ public class MemberInvocationImpl extends InvocationImpl implements MemberInvoca
         return types;
       }
 
+      @Override
       public Object invoke(Object[] arguments)
       {
         try

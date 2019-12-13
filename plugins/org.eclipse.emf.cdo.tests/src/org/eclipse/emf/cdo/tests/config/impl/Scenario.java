@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -61,11 +61,13 @@ public class Scenario implements IScenario
     setModelConfig(modelConfig);
   }
 
+  @Override
   public IRepositoryConfig getRepositoryConfig()
   {
     return repositoryConfig;
   }
 
+  @Override
   public Scenario setRepositoryConfig(IRepositoryConfig repositoryConfig)
   {
     configs = null;
@@ -78,11 +80,13 @@ public class Scenario implements IScenario
     return this;
   }
 
+  @Override
   public ISessionConfig getSessionConfig()
   {
     return sessionConfig;
   }
 
+  @Override
   public Scenario setSessionConfig(ISessionConfig sessionConfig)
   {
     configs = null;
@@ -95,11 +99,13 @@ public class Scenario implements IScenario
     return this;
   }
 
+  @Override
   public IModelConfig getModelConfig()
   {
     return modelConfig;
   }
 
+  @Override
   public Scenario setModelConfig(IModelConfig modelConfig)
   {
     configs = null;
@@ -119,6 +125,7 @@ public class Scenario implements IScenario
         getRepositoryConfig(), getSessionConfig(), getModelConfig());
   }
 
+  @Override
   public Set<IConfig> getConfigs()
   {
     if (configs == null)
@@ -132,6 +139,7 @@ public class Scenario implements IScenario
     return configs;
   }
 
+  @Override
   public Set<String> getCapabilities()
   {
     Set<String> capabilities = new CaseInsensitiveStringSet();
@@ -149,6 +157,7 @@ public class Scenario implements IScenario
     return capabilities;
   }
 
+  @Override
   public boolean isValid()
   {
     Set<IConfig> configs = getConfigs();
@@ -163,16 +172,19 @@ public class Scenario implements IScenario
     return true;
   }
 
+  @Override
   public boolean alwaysCleanRepositories()
   {
     return false;
   }
 
+  @Override
   public ConfigTest getCurrentTest()
   {
     return currentTest;
   }
 
+  @Override
   public void setCurrentTest(ConfigTest currentTest)
   {
     this.currentTest = currentTest;
@@ -192,6 +204,7 @@ public class Scenario implements IScenario
     }
   }
 
+  @Override
   public void setUp() throws Exception
   {
     try
@@ -211,6 +224,7 @@ public class Scenario implements IScenario
     }
   }
 
+  @Override
   public void tearDown() throws Exception
   {
     try
@@ -241,6 +255,7 @@ public class Scenario implements IScenario
     }
   }
 
+  @Override
   public void mainSuiteFinished()
   {
     try
@@ -271,6 +286,7 @@ public class Scenario implements IScenario
     }
   }
 
+  @Override
   public void save()
   {
     File file = getStateFile();

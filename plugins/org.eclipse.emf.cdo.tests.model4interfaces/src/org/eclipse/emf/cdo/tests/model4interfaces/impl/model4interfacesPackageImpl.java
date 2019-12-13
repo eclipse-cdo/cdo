@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -192,6 +192,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getISingleRefContainer()
   {
     return iSingleRefContainerEClass;
@@ -201,6 +202,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getISingleRefContainer_Element()
   {
     return (EReference)iSingleRefContainerEClass.getEStructuralFeatures().get(0);
@@ -210,6 +212,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getISingleRefContainedElement()
   {
     return iSingleRefContainedElementEClass;
@@ -219,6 +222,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getISingleRefContainedElement_Parent()
   {
     return (EReference)iSingleRefContainedElementEClass.getEStructuralFeatures().get(0);
@@ -228,6 +232,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getISingleRefNonContainer()
   {
     return iSingleRefNonContainerEClass;
@@ -237,6 +242,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getISingleRefNonContainer_Element()
   {
     return (EReference)iSingleRefNonContainerEClass.getEStructuralFeatures().get(0);
@@ -246,6 +252,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getISingleRefNonContainedElement()
   {
     return iSingleRefNonContainedElementEClass;
@@ -255,6 +262,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getISingleRefNonContainedElement_Parent()
   {
     return (EReference)iSingleRefNonContainedElementEClass.getEStructuralFeatures().get(0);
@@ -264,6 +272,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getIMultiRefContainer()
   {
     return iMultiRefContainerEClass;
@@ -273,6 +282,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getIMultiRefContainer_Elements()
   {
     return (EReference)iMultiRefContainerEClass.getEStructuralFeatures().get(0);
@@ -282,6 +292,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getIMultiRefContainedElement()
   {
     return iMultiRefContainedElementEClass;
@@ -291,6 +302,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getIMultiRefContainedElement_Parent()
   {
     return (EReference)iMultiRefContainedElementEClass.getEStructuralFeatures().get(0);
@@ -300,6 +312,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getIMultiRefNonContainer()
   {
     return iMultiRefNonContainerEClass;
@@ -309,6 +322,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getIMultiRefNonContainer_Elements()
   {
     return (EReference)iMultiRefNonContainerEClass.getEStructuralFeatures().get(0);
@@ -318,6 +332,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getIMultiRefNonContainedElement()
   {
     return iMultiRefNonContainedElementEClass;
@@ -327,6 +342,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getIMultiRefNonContainedElement_Parent()
   {
     return (EReference)iMultiRefNonContainedElementEClass.getEStructuralFeatures().get(0);
@@ -336,6 +352,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getINamedElement()
   {
     return iNamedElementEClass;
@@ -345,6 +362,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getINamedElement_Name()
   {
     return (EAttribute)iNamedElementEClass.getEStructuralFeatures().get(0);
@@ -354,6 +372,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getIContainedElementNoParentLink()
   {
     return iContainedElementNoParentLinkEClass;
@@ -363,6 +382,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getISingleRefContainerNPL()
   {
     return iSingleRefContainerNPLEClass;
@@ -372,6 +392,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getISingleRefContainerNPL_Element()
   {
     return (EReference)iSingleRefContainerNPLEClass.getEStructuralFeatures().get(0);
@@ -381,6 +402,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getISingleRefNonContainerNPL()
   {
     return iSingleRefNonContainerNPLEClass;
@@ -390,6 +412,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getISingleRefNonContainerNPL_Element()
   {
     return (EReference)iSingleRefNonContainerNPLEClass.getEStructuralFeatures().get(0);
@@ -399,6 +422,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getIMultiRefContainerNPL()
   {
     return iMultiRefContainerNPLEClass;
@@ -408,6 +432,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getIMultiRefContainerNPL_Elements()
   {
     return (EReference)iMultiRefContainerNPLEClass.getEStructuralFeatures().get(0);
@@ -417,6 +442,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getIMultiRefNonContainerNPL()
   {
     return iMultiRefNonContainerNPLEClass;
@@ -426,6 +452,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getIMultiRefNonContainerNPL_Elements()
   {
     return (EReference)iMultiRefNonContainerNPLEClass.getEStructuralFeatures().get(0);
@@ -435,6 +462,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public model4interfacesFactory getmodel4interfacesFactory()
   {
     return (model4interfacesFactory)getEFactoryInstance();

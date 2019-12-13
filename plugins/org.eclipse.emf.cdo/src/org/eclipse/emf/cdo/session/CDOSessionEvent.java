@@ -25,5 +25,6 @@ public interface CDOSessionEvent extends IEvent
   /**
    * @since 3.0
    */
+  @Override
   public CDOSession getSource();
 }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2014-2016 Eike Stepper (Loehne, Germany) and others.
- * Copyright (c) 2014-2016 IBM Corporation and others.
+ * Copyright (c) 2014-2016, 2019 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2014-2016, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -549,6 +549,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
    * (non-Javadoc)
    * @see org.eclipse.core.runtime.IProgressMonitor#isCanceled()
    */
+  @Override
   public final boolean isCanceled()
   {
     return root.isCanceled();
@@ -558,6 +559,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
    * (non-Javadoc)
    * @see org.eclipse.core.runtime.IProgressMonitor#setTaskName(java.lang.String)
    */
+  @Override
   public final void setTaskName(String name)
   {
     checkCancelation();
@@ -582,6 +584,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
    *
    * @see org.eclipse.core.runtime.IProgressMonitor#beginTask(java.lang.String, int)
    */
+  @Override
   public final void beginTask(String name, int totalWork)
   {
     if ((flags & SUPPRESS_BEGINTASK) == 0 && name != null)
@@ -596,6 +599,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
    * @see org.eclipse.core.runtime.IProgressMonitor#done()
    */
   // Can't be final because ProbingSubMonitor overrides it.
+  @Override
   public void done()
   {
     cleanupActiveChild();
@@ -615,6 +619,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
    * (non-Javadoc)
    * @see org.eclipse.core.runtime.IProgressMonitor#internalWorked(double)
    */
+  @Override
   public final void internalWorked(double work)
   {
     checkCancelation();
@@ -631,6 +636,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
    * (non-Javadoc)
    * @see org.eclipse.core.runtime.IProgressMonitor#subTask(java.lang.String)
    */
+  @Override
   public final void subTask(String name)
   {
     checkCancelation();
@@ -654,6 +660,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
    * @see org.eclipse.core.runtime.IProgressMonitor#worked(int)
    */
   // Can't be final because ProbingSubMonitor overrides it.
+  @Override
   public void worked(int work)
   {
     internalWorked(work);
@@ -680,6 +687,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
    * (non-Javadoc)
    * @see org.eclipse.core.runtime.IProgressMonitor#setCanceled(boolean)
    */
+  @Override
   public final void setCanceled(boolean b)
   {
     root.setCanceled(b);
@@ -877,6 +885,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
    * (non-Javadoc)
    * @see org.eclipse.core.runtime.IProgressMonitorWithBlocking#clearBlocked()
    */
+  @Override
   public final void clearBlocked()
   {
     checkCancelation();
@@ -887,6 +896,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
    * (non-Javadoc)
    * @see org.eclipse.core.runtime.IProgressMonitorWithBlocking#setBlocked(org.eclipse.core.runtime.IStatus)
    */
+  @Override
   public final void setBlocked(IStatus reason)
   {
     checkCancelation();

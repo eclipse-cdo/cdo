@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2012, 2014-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2012, 2014-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -173,6 +173,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * @since 2.0<!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCDOResourceNode()
   {
     return cdoResourceNodeEClass;
@@ -184,6 +185,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * @since 2.0<!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCDOResourceNode_Folder()
   {
     return (EReference)cdoResourceNodeEClass.getEStructuralFeatures().get(0);
@@ -195,6 +197,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * @since 2.0<!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCDOResourceNode_Name()
   {
     return (EAttribute)cdoResourceNodeEClass.getEStructuralFeatures().get(1);
@@ -206,6 +209,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * @since 2.0<!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCDOResourceNode_Path()
   {
     return (EAttribute)cdoResourceNodeEClass.getEStructuralFeatures().get(2);
@@ -217,6 +221,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * @since 2.0<!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCDOResourceFolder()
   {
     return cdoResourceFolderEClass;
@@ -228,6 +233,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * @since 2.0<!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCDOResourceFolder_Nodes()
   {
     return (EReference)cdoResourceFolderEClass.getEStructuralFeatures().get(0);
@@ -237,6 +243,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCDOResource()
   {
     return cdoResourceEClass;
@@ -246,6 +253,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCDOResource_ResourceSet()
   {
     return (EAttribute)cdoResourceEClass.getEStructuralFeatures().get(0);
@@ -255,6 +263,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCDOResource_URI()
   {
     return (EAttribute)cdoResourceEClass.getEStructuralFeatures().get(1);
@@ -264,6 +273,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCDOResource_Contents()
   {
     return (EReference)cdoResourceEClass.getEStructuralFeatures().get(2);
@@ -273,6 +283,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCDOResource_Modified()
   {
     return (EAttribute)cdoResourceEClass.getEStructuralFeatures().get(3);
@@ -282,6 +293,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCDOResource_Loaded()
   {
     return (EAttribute)cdoResourceEClass.getEStructuralFeatures().get(4);
@@ -291,6 +303,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCDOResource_TrackingModification()
   {
     return (EAttribute)cdoResourceEClass.getEStructuralFeatures().get(5);
@@ -300,6 +313,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCDOResource_Errors()
   {
     return (EAttribute)cdoResourceEClass.getEStructuralFeatures().get(6);
@@ -309,6 +323,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCDOResource_Warnings()
   {
     return (EAttribute)cdoResourceEClass.getEStructuralFeatures().get(7);
@@ -318,6 +333,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCDOResource_TimeStamp()
   {
     return (EAttribute)cdoResourceEClass.getEStructuralFeatures().get(8);
@@ -329,6 +345,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCDOResourceLeaf()
   {
     return cdoResourceLeafEClass;
@@ -340,6 +357,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCDOFileResource()
   {
     return cdoFileResourceEClass;
@@ -351,6 +369,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCDOBinaryResource()
   {
     return cdoBinaryResourceEClass;
@@ -362,6 +381,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCDOBinaryResource_Contents()
   {
     return (EAttribute)cdoBinaryResourceEClass.getEStructuralFeatures().get(0);
@@ -373,6 +393,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCDOTextResource()
   {
     return cdoTextResourceEClass;
@@ -384,6 +405,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCDOTextResource_Contents()
   {
     return (EAttribute)cdoTextResourceEClass.getEStructuralFeatures().get(0);
@@ -395,6 +417,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCDOTextResource_Encoding()
   {
     return (EAttribute)cdoTextResourceEClass.getEStructuralFeatures().get(1);
@@ -404,6 +427,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getResourceSet()
   {
     return resourceSetEDataType;
@@ -413,6 +437,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getURI()
   {
     return uriEDataType;
@@ -422,6 +447,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getDiagnostic()
   {
     return diagnosticEDataType;
@@ -431,6 +457,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EresourceFactory getEresourceFactory()
   {
     return (EresourceFactory)getEFactoryInstance();

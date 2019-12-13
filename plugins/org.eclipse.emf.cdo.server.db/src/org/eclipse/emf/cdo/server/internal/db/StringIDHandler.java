@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -56,11 +56,13 @@ public class StringIDHandler extends Lifecycle implements IIDHandler
     this.store = store;
   }
 
+  @Override
   public DBStore getStore()
   {
     return store;
   }
 
+  @Override
   public int compare(CDOID id1, CDOID id2)
   {
     if (id1.getType() == CDOID.Type.OBJECT && id2.getType() == CDOID.Type.OBJECT)
@@ -71,47 +73,56 @@ public class StringIDHandler extends Lifecycle implements IIDHandler
     return id1.compareTo(id2);
   }
 
+  @Override
   public DBType getDBType()
   {
     return DBType.VARCHAR;
   }
 
+  @Override
   public Set<ObjectType> getObjectIDTypes()
   {
     return OBJECT_ID_TYPES;
   }
 
+  @Override
   public CDOID createCDOID(String val)
   {
     return create(val);
   }
 
+  @Override
   public synchronized CDOID getLastObjectID()
   {
     return CDOIDUtil.createString("" + lastObjectID);
   }
 
+  @Override
   public synchronized void setLastObjectID(CDOID lastObjectID)
   {
     this.lastObjectID = Long.parseLong(value(lastObjectID));
   }
 
+  @Override
   public void adjustLastObjectID(CDOID maxID)
   {
     // TODO: implement StringIDHandler.adjustLastObjectID(maxID)
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public synchronized CDOID getNextLocalObjectID()
   {
     return CDOIDUtil.createString("" + nextLocalObjectID);
   }
 
+  @Override
   public synchronized void setNextLocalObjectID(CDOID nextLocalObjectID)
   {
     this.nextLocalObjectID = Long.parseLong(value(nextLocalObjectID));
   }
 
+  @Override
   public synchronized CDOID getNextCDOID(CDORevision revision)
   {
     if (revision.getBranch().isLocal())
@@ -122,17 +133,20 @@ public class StringIDHandler extends Lifecycle implements IIDHandler
     return CDOIDUtil.createString("" + ++lastObjectID);
   }
 
+  @Override
   @Deprecated
   public boolean isLocalCDOID(CDOID id)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public ITypeMapping getObjectTypeMapping()
   {
     return new CoreTypeMappings.TMObject();
   }
 
+  @Override
   public void appendCDOID(StringBuilder builder, CDOID id)
   {
     builder.append("'");
@@ -140,22 +154,26 @@ public class StringIDHandler extends Lifecycle implements IIDHandler
     builder.append("'");
   }
 
+  @Override
   public void setCDOIDRaw(PreparedStatement stmt, int column, Object rawID) throws SQLException
   {
     stmt.setString(column, (String)rawID);
   }
 
+  @Override
   public void setCDOID(PreparedStatement stmt, int column, CDOID id) throws SQLException
   {
     setCDOID(stmt, column, id, CDOBranchPoint.INVALID_DATE);
   }
 
+  @Override
   public void setCDOID(PreparedStatement stmt, int column, CDOID id, long commitTime) throws SQLException
   {
     String value = value(id);
     stmt.setString(column, value == null || value.length() == 0 ? "0" : value);
   }
 
+  @Override
   public CDOID getCDOID(ResultSet resultSet, int column) throws SQLException
   {
     String id = resultSet.getString(column);
@@ -167,6 +185,7 @@ public class StringIDHandler extends Lifecycle implements IIDHandler
     return create(id);
   }
 
+  @Override
   public CDOID getCDOID(ResultSet resultSet, String name) throws SQLException
   {
     String id = resultSet.getString(name);
@@ -178,31 +197,37 @@ public class StringIDHandler extends Lifecycle implements IIDHandler
     return create(id);
   }
 
+  @Override
   public CDOID getMinCDOID()
   {
     return MIN;
   }
 
+  @Override
   public CDOID getMaxCDOID()
   {
     return MAX;
   }
 
+  @Override
   public CDOID mapURI(IDBStoreAccessor accessor, String uri, long commitTime)
   {
     return create(uri);
   }
 
+  @Override
   public String unmapURI(IDBStoreAccessor accessor, CDOID id)
   {
     return value(id);
   }
 
+  @Override
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
     // Do nothing
   }
 
+  @Override
   public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
     // Do nothing

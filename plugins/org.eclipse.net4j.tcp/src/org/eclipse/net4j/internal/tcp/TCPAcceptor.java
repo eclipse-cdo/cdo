@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -67,6 +67,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
   {
   }
 
+  @Override
   public String getAddress()
   {
     return address;
@@ -77,6 +78,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
     this.address = address;
   }
 
+  @Override
   public int getPort()
   {
     return port;
@@ -87,6 +89,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
     this.port = port;
   }
 
+  @Override
   public TCPSelector getSelector()
   {
     return selector;
@@ -122,6 +125,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
     this.synchronousStartTimeout = synchronousStartTimeout;
   }
 
+  @Override
   public void handleRegistration(ITCPSelector selector, ServerSocketChannel serverSocketChannel)
   {
     InetSocketAddress addr = null;
@@ -170,6 +174,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
     }
   }
 
+  @Override
   public void handleAccept(ITCPSelector selector, ServerSocketChannel serverSocketChannel)
   {
     try
@@ -276,6 +281,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
     // Do the rest of the deactivation asynchronously
     getConfig().getReceiveExecutor().execute(new Runnable()
     {
+      @Override
       public void run()
       {
         deactivate();

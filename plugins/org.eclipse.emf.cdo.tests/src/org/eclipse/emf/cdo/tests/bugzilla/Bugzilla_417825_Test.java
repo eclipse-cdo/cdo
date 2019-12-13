@@ -29,6 +29,7 @@ public class Bugzilla_417825_Test extends AbstractCDOTest
   {
     SessionUtil.setTestDelayInSessionActivation(new Runnable()
     {
+      @Override
       public void run()
       {
         // The session invalidator polls its queue every 100ms, so wait a little longer to see if it died

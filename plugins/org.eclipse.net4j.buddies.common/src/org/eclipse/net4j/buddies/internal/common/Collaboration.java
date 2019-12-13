@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -52,31 +52,37 @@ public class Collaboration extends MembershipContainer implements ICollaboration
     this.id = id;
   }
 
+  @Override
   public long getID()
   {
     return id;
   }
 
+  @Override
   public String getTitle()
   {
     return title == null ? String.valueOf(id) : title;
   }
 
+  @Override
   public String getDescription()
   {
     return description;
   }
 
+  @Override
   public Visibility getVisibility()
   {
     return visibility;
   }
 
+  @Override
   public boolean isPublic()
   {
     return visibility == Visibility.PUBLIC;
   }
 
+  @Override
   public void setPublic(String title, String description)
   {
     visibility = Visibility.PUBLIC;
@@ -84,6 +90,7 @@ public class Collaboration extends MembershipContainer implements ICollaboration
     this.description = description;
   }
 
+  @Override
   public void setPrivate()
   {
     visibility = Visibility.PRIVATE;
@@ -101,6 +108,7 @@ public class Collaboration extends MembershipContainer implements ICollaboration
     return removeMembership(buddy, this);
   }
 
+  @Override
   public IBuddy getBuddy(String userID)
   {
     for (IMembership membership : getMemberships())
@@ -115,6 +123,7 @@ public class Collaboration extends MembershipContainer implements ICollaboration
     return null;
   }
 
+  @Override
   public IBuddy[] getBuddies()
   {
     List<IBuddy> buddies = new ArrayList<IBuddy>();
@@ -127,16 +136,19 @@ public class Collaboration extends MembershipContainer implements ICollaboration
     return buddies.toArray(new IBuddy[buddies.size()]);
   }
 
+  @Override
   public String[] getFacilityTypes()
   {
     return facilities.keySet().toArray(new String[facilities.size()]);
   }
 
+  @Override
   public IFacility[] getFacilities()
   {
     return facilities.values().toArray(new IFacility[facilities.size()]);
   }
 
+  @Override
   public IFacility getFacility(String type)
   {
     return facilities.get(type);
@@ -182,6 +194,7 @@ public class Collaboration extends MembershipContainer implements ICollaboration
     }
   }
 
+  @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
@@ -272,11 +285,13 @@ public class Collaboration extends MembershipContainer implements ICollaboration
       return (ICollaboration)super.getSource();
     }
 
+    @Override
     public IFacility getFacility()
     {
       return facility;
     }
 
+    @Override
     public boolean fromRemote()
     {
       return remote;

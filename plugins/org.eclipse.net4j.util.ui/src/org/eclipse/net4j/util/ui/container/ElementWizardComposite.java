@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -177,6 +177,7 @@ public abstract class ElementWizardComposite extends Composite implements IListe
   /**
    * @since 3.2
    */
+  @Override
   public void notifyEvent(IEvent event)
   {
     notifier.fireEvent(event);
@@ -341,11 +342,13 @@ public abstract class ElementWizardComposite extends Composite implements IListe
       super(parent, style, productGroup, label, validationContext, defaultFactoryType);
     }
 
+    @Override
     public void widgetSelected(SelectionEvent e)
     {
       factoryTypeChanged();
     }
 
+    @Override
     public void widgetDefaultSelected(SelectionEvent e)
     {
     }
@@ -414,11 +417,13 @@ public abstract class ElementWizardComposite extends Composite implements IListe
       super(parent, style, productGroup, label, validationContext, defaultFactoryType);
     }
 
+    @Override
     public void widgetSelected(SelectionEvent e)
     {
       factoryTypeChanged();
     }
 
+    @Override
     public void widgetDefaultSelected(SelectionEvent e)
     {
     }

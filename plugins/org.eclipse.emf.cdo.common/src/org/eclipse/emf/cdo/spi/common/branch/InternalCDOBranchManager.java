@@ -57,14 +57,17 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
    */
   public void initMainBranch(boolean local, long timestamp);
 
+  @Override
   public InternalCDOBranch getMainBranch();
 
+  @Override
   public InternalCDOBranch getBranch(int branchID);
 
   public InternalCDOBranch getBranch(int id, String name, InternalCDOBranch baseBranch, long baseTimeStamp);
 
   public InternalCDOBranch getBranch(int id, BranchInfo branchInfo);
 
+  @Override
   public InternalCDOBranch getBranch(String path);
 
   public InternalCDOBranch createBranch(int id, String name, InternalCDOBranch baseBranch, long baseTimeStamp);

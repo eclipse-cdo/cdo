@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -82,6 +82,7 @@ public abstract class AbstractOMTest extends TestCase
 
   private static final IListener DUMPER = new IListener()
   {
+    @Override
     public void notifyEvent(IEvent event)
     {
       IOUtil.OUT().println(event);
@@ -293,6 +294,7 @@ public abstract class AbstractOMTest extends TestCase
   {
     TestExecuter.execute(this, new TestExecuter.Executable()
     {
+      @Override
       public void execute() throws Throwable
       {
         try
@@ -804,55 +806,67 @@ public abstract class AbstractOMTest extends TestCase
   {
     BasicConfigurator.configure(new Appender()
     {
+      @Override
       public void setName(String arg0)
       {
       }
 
+      @Override
       public void setLayout(Layout arg0)
       {
       }
 
+      @Override
       public void setErrorHandler(ErrorHandler arg0)
       {
       }
 
+      @Override
       public boolean requiresLayout()
       {
         return false;
       }
 
+      @Override
       public String getName()
       {
         return null;
       }
 
+      @Override
       public Layout getLayout()
       {
         return null;
       }
 
+      @Override
       public Filter getFilter()
       {
         return null;
       }
 
+      @Override
       public ErrorHandler getErrorHandler()
       {
         return null;
       }
 
+      @Override
       public void doAppend(LoggingEvent arg0)
       {
       }
 
+      @Override
       public void close()
       {
       }
 
+      @Override
       public void clearFilters()
       {
       }
 
+      @Override
       public void addFilter(Filter arg0)
       {
       }
@@ -979,6 +993,7 @@ public abstract class AbstractOMTest extends TestCase
     {
     }
 
+    @Override
     public boolean timedOut(long timeoutMillis) throws InterruptedException
     {
       int retries = (int)Math.round(timeoutMillis / sleepMillis + .5d);
@@ -1015,6 +1030,7 @@ public abstract class AbstractOMTest extends TestCase
       return lock;
     }
 
+    @Override
     public boolean timedOut(long timeoutMillis) throws InterruptedException
     {
       Condition condition = lock.newCondition();
@@ -1067,6 +1083,7 @@ public abstract class AbstractOMTest extends TestCase
       }
     }
 
+    @Override
     public boolean timedOut(long timeoutMillis) throws InterruptedException
     {
       return !latch.await(timeoutMillis, TimeUnit.MILLISECONDS);

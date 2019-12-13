@@ -76,12 +76,14 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
 
   public void setState(State state);
 
+  @Override
   public InternalStore getStore();
 
   public void setStore(InternalStore store);
 
   public void setProperties(Map<String, String> properties);
 
+  @Override
   public InternalCDOBranchManager getBranchManager();
 
   public void setBranchManager(InternalCDOBranchManager branchManager);
@@ -104,14 +106,17 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
   /**
    * Same as calling {@link #getPackageRegistry(boolean) getPackageRegistry(true)}.
    */
+  @Override
   public InternalCDOPackageRegistry getPackageRegistry();
 
   public InternalCDOPackageRegistry getPackageRegistry(boolean considerCommitContext);
 
+  @Override
   public InternalCDORevisionManager getRevisionManager();
 
   public void setRevisionManager(InternalCDORevisionManager revisionManager);
 
+  @Override
   public InternalCDOCommitInfoManager getCommitInfoManager();
 
   /**
@@ -119,6 +124,7 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
    */
   public void setCommitConflictResolver(ICommitConflictResolver commitConflictResolver);
 
+  @Override
   public InternalSessionManager getSessionManager();
 
   public void setSessionManager(InternalSessionManager sessionManager);
@@ -126,17 +132,20 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
   /**
    * @deprecated As of 4.1 use {@link #getLockingManager()}.
    */
+  @Override
   @Deprecated
   public InternalLockManager getLockManager();
 
   /**
    * @since 4.1
    */
+  @Override
   public InternalLockManager getLockingManager();
 
   /**
    * @since 4.5
    */
+  @Override
   public InternalUnitManager getUnitManager();
 
   /**
@@ -280,6 +289,7 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
   /**
    * @since 4.0
    */
+  @Override
   public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, CDORevisionHandler handler);
 
   /**
@@ -337,6 +347,7 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
    */
   public interface PackagesInitializedEvent extends IEvent
   {
+    @Override
     public InternalRepository getSource();
 
     public boolean isFirstStart();

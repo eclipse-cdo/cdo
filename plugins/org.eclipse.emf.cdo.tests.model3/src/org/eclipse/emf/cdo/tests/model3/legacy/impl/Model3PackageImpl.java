@@ -258,6 +258,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getClass1()
   {
     return class1EClass;
@@ -267,6 +268,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getClass1_Class2()
   {
     return (EReference)class1EClass.getEStructuralFeatures().get(0);
@@ -277,6 +279,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getClass1_AdditionalValue()
   {
     return (EAttribute)class1EClass.getEStructuralFeatures().get(1);
@@ -286,6 +289,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getMetaRef()
   {
     return metaRefEClass;
@@ -295,6 +299,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMetaRef_EPackageRef()
   {
     return (EReference)metaRefEClass.getEStructuralFeatures().get(0);
@@ -304,6 +309,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMetaRef_EClassRef()
   {
     return (EReference)metaRefEClass.getEStructuralFeatures().get(1);
@@ -313,6 +319,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMetaRef_EReferenceRef()
   {
     return (EReference)metaRefEClass.getEStructuralFeatures().get(2);
@@ -322,6 +329,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPolygon()
   {
     return polygonEClass;
@@ -331,6 +339,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPolygon_Points()
   {
     return (EAttribute)polygonEClass.getEStructuralFeatures().get(0);
@@ -340,6 +349,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPolygonWithDuplicates()
   {
     return polygonWithDuplicatesEClass;
@@ -349,6 +359,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPolygonWithDuplicates_Points()
   {
     return (EAttribute)polygonWithDuplicatesEClass.getEStructuralFeatures().get(0);
@@ -358,6 +369,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNodeA()
   {
     return nodeAEClass;
@@ -367,6 +379,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeA_Children()
   {
     return (EReference)nodeAEClass.getEStructuralFeatures().get(0);
@@ -376,6 +389,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNodeA_Name()
   {
     return (EAttribute)nodeAEClass.getEStructuralFeatures().get(1);
@@ -385,6 +399,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeA_OtherNodes()
   {
     return (EReference)nodeAEClass.getEStructuralFeatures().get(2);
@@ -394,6 +409,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNodeB()
   {
     return nodeBEClass;
@@ -403,6 +419,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeB_Children()
   {
     return (EReference)nodeBEClass.getEStructuralFeatures().get(0);
@@ -412,6 +429,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeB_Parent()
   {
     return (EReference)nodeBEClass.getEStructuralFeatures().get(1);
@@ -421,6 +439,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNodeB_Name()
   {
     return (EAttribute)nodeBEClass.getEStructuralFeatures().get(2);
@@ -430,6 +449,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNodeC()
   {
     return nodeCEClass;
@@ -439,6 +459,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeC_Children()
   {
     return (EReference)nodeCEClass.getEStructuralFeatures().get(0);
@@ -448,6 +469,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeC_Parent()
   {
     return (EReference)nodeCEClass.getEStructuralFeatures().get(1);
@@ -457,6 +479,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNodeC_Name()
   {
     return (EAttribute)nodeCEClass.getEStructuralFeatures().get(2);
@@ -466,6 +489,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeC_OtherNodes()
   {
     return (EReference)nodeCEClass.getEStructuralFeatures().get(3);
@@ -475,6 +499,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeC_OppositeNodes()
   {
     return (EReference)nodeCEClass.getEStructuralFeatures().get(4);
@@ -484,6 +509,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNodeD()
   {
     return nodeDEClass;
@@ -493,6 +519,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeD_Children()
   {
     return (EReference)nodeDEClass.getEStructuralFeatures().get(0);
@@ -502,6 +529,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeD_Parent()
   {
     return (EReference)nodeDEClass.getEStructuralFeatures().get(1);
@@ -511,6 +539,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNodeD_Name()
   {
     return (EAttribute)nodeDEClass.getEStructuralFeatures().get(2);
@@ -520,6 +549,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeD_OtherNodes()
   {
     return (EReference)nodeDEClass.getEStructuralFeatures().get(3);
@@ -529,6 +559,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeD_OppositeNode()
   {
     return (EReference)nodeDEClass.getEStructuralFeatures().get(4);
@@ -539,6 +570,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNodeE()
   {
     return nodeEEClass;
@@ -549,6 +581,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeE_MainNode()
   {
     return (EReference)nodeEEClass.getEStructuralFeatures().get(0);
@@ -559,6 +592,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNodeE_Name()
   {
     return (EAttribute)nodeEEClass.getEStructuralFeatures().get(1);
@@ -569,6 +603,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeE_OtherNodes()
   {
     return (EReference)nodeEEClass.getEStructuralFeatures().get(2);
@@ -578,6 +613,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImage()
   {
     return imageEClass;
@@ -587,6 +623,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getImage_Width()
   {
     return (EAttribute)imageEClass.getEStructuralFeatures().get(0);
@@ -596,6 +633,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getImage_Height()
   {
     return (EAttribute)imageEClass.getEStructuralFeatures().get(1);
@@ -605,6 +643,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getImage_Data()
   {
     return (EAttribute)imageEClass.getEStructuralFeatures().get(2);
@@ -614,6 +653,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getFile()
   {
     return fileEClass;
@@ -623,6 +663,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getFile_Name()
   {
     return (EAttribute)fileEClass.getEStructuralFeatures().get(0);
@@ -632,6 +673,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getFile_Data()
   {
     return (EAttribute)fileEClass.getEStructuralFeatures().get(1);
@@ -641,6 +683,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getClassWithIDAttribute()
   {
     return classWithIDAttributeEClass;
@@ -650,6 +693,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getClassWithIDAttribute_Id()
   {
     return (EAttribute)classWithIDAttributeEClass.getEStructuralFeatures().get(0);
@@ -660,6 +704,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getClassWithJavaClassAttribute()
   {
     return classWithJavaClassAttributeEClass;
@@ -670,6 +715,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getClassWithJavaClassAttribute_JavaClass()
   {
     return (EAttribute)classWithJavaClassAttributeEClass.getEStructuralFeatures().get(0);
@@ -680,6 +726,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getClassWithJavaObjectAttribute()
   {
     return classWithJavaObjectAttributeEClass;
@@ -690,6 +737,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getClassWithJavaObjectAttribute_JavaObject()
   {
     return (EAttribute)classWithJavaObjectAttributeEClass.getEStructuralFeatures().get(0);
@@ -700,6 +748,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getClassWithTransientContainment()
   {
     return classWithTransientContainmentEClass;
@@ -710,6 +759,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getClassWithTransientContainment_Name()
   {
     return (EAttribute)classWithTransientContainmentEClass.getEStructuralFeatures().get(0);
@@ -720,6 +770,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getClassWithTransientContainment_TransientChild()
   {
     return (EReference)classWithTransientContainmentEClass.getEStructuralFeatures().get(1);
@@ -730,6 +781,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getClassWithTransientContainment_TransientChildren()
   {
     return (EReference)classWithTransientContainmentEClass.getEStructuralFeatures().get(2);
@@ -740,6 +792,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getClassWithTransientContainment_PersistentChild()
   {
     return (EReference)classWithTransientContainmentEClass.getEStructuralFeatures().get(3);
@@ -750,6 +803,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getClassWithTransientContainment_PersistentChildren()
   {
     return (EReference)classWithTransientContainmentEClass.getEStructuralFeatures().get(4);
@@ -760,6 +814,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getEdgeTarget()
   {
     return edgeTargetEClass;
@@ -770,6 +825,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEdgeTarget_OutgoingEdges()
   {
     return (EReference)edgeTargetEClass.getEStructuralFeatures().get(0);
@@ -780,6 +836,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEdgeTarget_IncomingEdges()
   {
     return (EReference)edgeTargetEClass.getEStructuralFeatures().get(1);
@@ -790,6 +847,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNodeF()
   {
     return nodeFEClass;
@@ -800,6 +858,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getEdge()
   {
     return edgeEClass;
@@ -810,6 +869,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEdge_SourceNode()
   {
     return (EReference)edgeEClass.getEStructuralFeatures().get(0);
@@ -820,6 +880,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEdge_TargetNode()
   {
     return (EReference)edgeEClass.getEStructuralFeatures().get(1);
@@ -830,6 +891,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getDiagram()
   {
     return diagramEClass;
@@ -840,6 +902,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getDiagram_Edges()
   {
     return (EReference)diagramEClass.getEStructuralFeatures().get(0);
@@ -850,6 +913,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getDiagram_EdgeTargets()
   {
     return (EReference)diagramEClass.getEStructuralFeatures().get(1);
@@ -859,6 +923,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getPoint()
   {
     return pointEDataType;
@@ -868,6 +933,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Model3Factory getModel3Factory()
   {
     return (Model3Factory)getEFactoryInstance();

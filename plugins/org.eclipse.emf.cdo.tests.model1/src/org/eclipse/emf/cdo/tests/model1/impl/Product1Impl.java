@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -70,6 +70,7 @@ public class Product1Impl extends CDOObjectImpl implements Product1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return (String)eGet(Model1Package.eINSTANCE.getProduct1_Name(), true);
@@ -79,6 +80,7 @@ public class Product1Impl extends CDOObjectImpl implements Product1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     eSet(Model1Package.eINSTANCE.getProduct1_Name(), newName);
@@ -88,6 +90,7 @@ public class Product1Impl extends CDOObjectImpl implements Product1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<OrderDetail> getOrderDetails()
   {
@@ -98,6 +101,7 @@ public class Product1Impl extends CDOObjectImpl implements Product1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public VAT getVat()
   {
     return (VAT)eGet(Model1Package.eINSTANCE.getProduct1_Vat(), true);
@@ -107,6 +111,7 @@ public class Product1Impl extends CDOObjectImpl implements Product1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setVat(VAT newVat)
   {
     eSet(Model1Package.eINSTANCE.getProduct1_Vat(), newVat);
@@ -117,6 +122,7 @@ public class Product1Impl extends CDOObjectImpl implements Product1
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<VAT> getOtherVATs()
   {
@@ -127,6 +133,7 @@ public class Product1Impl extends CDOObjectImpl implements Product1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getDescription()
   {
     return (String)eGet(Model1Package.eINSTANCE.getProduct1_Description(), true);
@@ -136,6 +143,7 @@ public class Product1Impl extends CDOObjectImpl implements Product1
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDescription(String newDescription)
   {
     eSet(Model1Package.eINSTANCE.getProduct1_Description(), newDescription);

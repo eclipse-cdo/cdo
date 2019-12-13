@@ -26,6 +26,7 @@ public interface ILifecycleEvent extends IEvent
   /**
    * @since 3.0
    */
+  @Override
   public ILifecycle getSource();
 
   public Kind getKind();

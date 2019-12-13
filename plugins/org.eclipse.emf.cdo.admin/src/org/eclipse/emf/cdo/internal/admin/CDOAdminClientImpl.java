@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,6 +66,7 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
     executorService = ExecutorServiceFactory.get(container);
   }
 
+  @Override
   public final String getURL()
   {
     return url;
@@ -76,11 +77,13 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
     return container;
   }
 
+  @Override
   public boolean isConnected()
   {
     return connected;
   }
 
+  @Override
   public IConnector getConnector()
   {
     if (!connected)
@@ -155,6 +158,7 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
     }
   }
 
+  @Override
   public IPasswordCredentialsProvider getCredentialsProvider()
   {
     try
@@ -168,6 +172,7 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
     }
   }
 
+  @Override
   public IConfirmationProvider getConfirmationProvider()
   {
     try
@@ -269,11 +274,13 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
 
     fireEvent(new ConnectionStateChangedEvent()
     {
+      @Override
       public CDOAdminClient getSource()
       {
         return CDOAdminClientImpl.this;
       }
 
+      @Override
       public boolean isConnected()
       {
         return on;
@@ -303,6 +310,7 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
    */
   protected class ConnectRunnable implements Runnable
   {
+    @Override
     public void run()
     {
       if (!container.isActive())

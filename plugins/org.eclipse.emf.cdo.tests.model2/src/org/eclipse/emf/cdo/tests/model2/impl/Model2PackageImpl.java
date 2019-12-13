@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -230,6 +230,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getSpecialPurchaseOrder()
   {
     return specialPurchaseOrderEClass;
@@ -239,6 +240,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getSpecialPurchaseOrder_DiscountCode()
   {
     return (EAttribute)specialPurchaseOrderEClass.getEStructuralFeatures().get(0);
@@ -248,6 +250,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getSpecialPurchaseOrder_ShippingAddress()
   {
     return (EReference)specialPurchaseOrderEClass.getEStructuralFeatures().get(1);
@@ -257,6 +260,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getTaskContainer()
   {
     return taskContainerEClass;
@@ -266,6 +270,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getTaskContainer_Tasks()
   {
     return (EReference)taskContainerEClass.getEStructuralFeatures().get(0);
@@ -275,6 +280,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getTask()
   {
     return taskEClass;
@@ -284,6 +290,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getTask_TaskContainer()
   {
     return (EReference)taskEClass.getEStructuralFeatures().get(0);
@@ -293,6 +300,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getTask_Description()
   {
     return (EAttribute)taskEClass.getEStructuralFeatures().get(1);
@@ -302,6 +310,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getTask_Done()
   {
     return (EAttribute)taskEClass.getEStructuralFeatures().get(2);
@@ -311,6 +320,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getUnsettable1()
   {
     return unsettable1EClass;
@@ -320,6 +330,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable1_UnsettableBoolean()
   {
     return (EAttribute)unsettable1EClass.getEStructuralFeatures().get(0);
@@ -329,6 +340,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable1_UnsettableByte()
   {
     return (EAttribute)unsettable1EClass.getEStructuralFeatures().get(1);
@@ -338,6 +350,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable1_UnsettableChar()
   {
     return (EAttribute)unsettable1EClass.getEStructuralFeatures().get(2);
@@ -347,6 +360,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable1_UnsettableDate()
   {
     return (EAttribute)unsettable1EClass.getEStructuralFeatures().get(3);
@@ -356,6 +370,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable1_UnsettableDouble()
   {
     return (EAttribute)unsettable1EClass.getEStructuralFeatures().get(4);
@@ -365,6 +380,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable1_UnsettableFloat()
   {
     return (EAttribute)unsettable1EClass.getEStructuralFeatures().get(5);
@@ -374,6 +390,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable1_UnsettableInt()
   {
     return (EAttribute)unsettable1EClass.getEStructuralFeatures().get(6);
@@ -383,6 +400,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable1_UnsettableLong()
   {
     return (EAttribute)unsettable1EClass.getEStructuralFeatures().get(7);
@@ -392,6 +410,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable1_UnsettableShort()
   {
     return (EAttribute)unsettable1EClass.getEStructuralFeatures().get(8);
@@ -401,6 +420,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable1_UnsettableString()
   {
     return (EAttribute)unsettable1EClass.getEStructuralFeatures().get(9);
@@ -410,6 +430,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable1_UnsettableVAT()
   {
     return (EAttribute)unsettable1EClass.getEStructuralFeatures().get(10);
@@ -420,6 +441,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getUnsettable1_UnsettableElement()
   {
     return (EReference)unsettable1EClass.getEStructuralFeatures().get(11);
@@ -429,6 +451,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getUnsettable2WithDefault()
   {
     return unsettable2WithDefaultEClass;
@@ -438,6 +461,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable2WithDefault_UnsettableBoolean()
   {
     return (EAttribute)unsettable2WithDefaultEClass.getEStructuralFeatures().get(0);
@@ -447,6 +471,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable2WithDefault_UnsettableByte()
   {
     return (EAttribute)unsettable2WithDefaultEClass.getEStructuralFeatures().get(1);
@@ -456,6 +481,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable2WithDefault_UnsettableChar()
   {
     return (EAttribute)unsettable2WithDefaultEClass.getEStructuralFeatures().get(2);
@@ -465,6 +491,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable2WithDefault_UnsettableDate()
   {
     return (EAttribute)unsettable2WithDefaultEClass.getEStructuralFeatures().get(3);
@@ -474,6 +501,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable2WithDefault_UnsettableDouble()
   {
     return (EAttribute)unsettable2WithDefaultEClass.getEStructuralFeatures().get(4);
@@ -483,6 +511,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable2WithDefault_UnsettableFloat()
   {
     return (EAttribute)unsettable2WithDefaultEClass.getEStructuralFeatures().get(5);
@@ -492,6 +521,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable2WithDefault_UnsettableInt()
   {
     return (EAttribute)unsettable2WithDefaultEClass.getEStructuralFeatures().get(6);
@@ -501,6 +531,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable2WithDefault_UnsettableLong()
   {
     return (EAttribute)unsettable2WithDefaultEClass.getEStructuralFeatures().get(7);
@@ -510,6 +541,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable2WithDefault_UnsettableShort()
   {
     return (EAttribute)unsettable2WithDefaultEClass.getEStructuralFeatures().get(8);
@@ -519,6 +551,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable2WithDefault_UnsettableString()
   {
     return (EAttribute)unsettable2WithDefaultEClass.getEStructuralFeatures().get(9);
@@ -528,6 +561,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getUnsettable2WithDefault_UnsettableVAT()
   {
     return (EAttribute)unsettable2WithDefaultEClass.getEStructuralFeatures().get(10);
@@ -537,6 +571,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPersistentContainment()
   {
     return persistentContainmentEClass;
@@ -546,6 +581,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPersistentContainment_AttrBefore()
   {
     return (EAttribute)persistentContainmentEClass.getEStructuralFeatures().get(0);
@@ -555,6 +591,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPersistentContainment_Children()
   {
     return (EReference)persistentContainmentEClass.getEStructuralFeatures().get(1);
@@ -564,6 +601,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPersistentContainment_AttrAfter()
   {
     return (EAttribute)persistentContainmentEClass.getEStructuralFeatures().get(2);
@@ -573,6 +611,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getTransientContainer()
   {
     return transientContainerEClass;
@@ -582,6 +621,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getTransientContainer_AttrBefore()
   {
     return (EAttribute)transientContainerEClass.getEStructuralFeatures().get(0);
@@ -591,6 +631,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getTransientContainer_Parent()
   {
     return (EReference)transientContainerEClass.getEStructuralFeatures().get(1);
@@ -600,6 +641,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getTransientContainer_AttrAfter()
   {
     return (EAttribute)transientContainerEClass.getEStructuralFeatures().get(2);
@@ -609,6 +651,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNotUnsettable()
   {
     return notUnsettableEClass;
@@ -618,6 +661,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettable_NotUnsettableBoolean()
   {
     return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(0);
@@ -627,6 +671,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettable_NotUnsettableByte()
   {
     return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(1);
@@ -636,6 +681,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettable_NotUnsettableChar()
   {
     return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(2);
@@ -645,6 +691,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettable_NotUnsettableDate()
   {
     return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(3);
@@ -654,6 +701,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettable_NotUnsettableDouble()
   {
     return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(4);
@@ -663,6 +711,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettable_NotUnsettableFloat()
   {
     return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(5);
@@ -672,6 +721,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettable_NotUnsettableInt()
   {
     return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(6);
@@ -681,6 +731,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettable_NotUnsettableLong()
   {
     return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(7);
@@ -690,6 +741,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettable_NotUnsettableShort()
   {
     return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(8);
@@ -699,6 +751,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettable_NotUnsettableString()
   {
     return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(9);
@@ -708,6 +761,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettable_NotUnsettableVAT()
   {
     return (EAttribute)notUnsettableEClass.getEStructuralFeatures().get(10);
@@ -717,6 +771,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNotUnsettableWithDefault()
   {
     return notUnsettableWithDefaultEClass;
@@ -726,6 +781,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettableWithDefault_NotUnsettableBoolean()
   {
     return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(0);
@@ -735,6 +791,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettableWithDefault_NotUnsettableByte()
   {
     return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(1);
@@ -744,6 +801,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettableWithDefault_NotUnsettableChar()
   {
     return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(2);
@@ -753,6 +811,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettableWithDefault_NotUnsettableDate()
   {
     return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(3);
@@ -762,6 +821,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettableWithDefault_NotUnsettableDouble()
   {
     return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(4);
@@ -771,6 +831,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettableWithDefault_NotUnsettableFloat()
   {
     return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(5);
@@ -780,6 +841,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettableWithDefault_NotUnsettableInt()
   {
     return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(6);
@@ -789,6 +851,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettableWithDefault_NotUnsettableLong()
   {
     return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(7);
@@ -798,6 +861,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettableWithDefault_NotUnsettableShort()
   {
     return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(8);
@@ -807,6 +871,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettableWithDefault_NotUnsettableString()
   {
     return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(9);
@@ -816,6 +881,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNotUnsettableWithDefault_NotUnsettableVAT()
   {
     return (EAttribute)notUnsettableWithDefaultEClass.getEStructuralFeatures().get(10);
@@ -825,6 +891,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getMapHolder()
   {
     return mapHolderEClass;
@@ -834,6 +901,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMapHolder_IntegerToStringMap()
   {
     return (EReference)mapHolderEClass.getEStructuralFeatures().get(0);
@@ -843,6 +911,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMapHolder_StringToStringMap()
   {
     return (EReference)mapHolderEClass.getEStructuralFeatures().get(1);
@@ -852,6 +921,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMapHolder_StringToVATMap()
   {
     return (EReference)mapHolderEClass.getEStructuralFeatures().get(2);
@@ -861,6 +931,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMapHolder_StringToAddressContainmentMap()
   {
     return (EReference)mapHolderEClass.getEStructuralFeatures().get(3);
@@ -870,6 +941,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMapHolder_StringToAddressReferenceMap()
   {
     return (EReference)mapHolderEClass.getEStructuralFeatures().get(4);
@@ -879,6 +951,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMapHolder_EObjectToEObjectMap()
   {
     return (EReference)mapHolderEClass.getEStructuralFeatures().get(5);
@@ -888,6 +961,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMapHolder_EObjectToEObjectKeyContainedMap()
   {
     return (EReference)mapHolderEClass.getEStructuralFeatures().get(6);
@@ -897,6 +971,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMapHolder_EObjectToEObjectBothContainedMap()
   {
     return (EReference)mapHolderEClass.getEStructuralFeatures().get(7);
@@ -906,6 +981,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMapHolder_EObjectToEObjectValueContainedMap()
   {
     return (EReference)mapHolderEClass.getEStructuralFeatures().get(8);
@@ -915,6 +991,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getStringToStringMap()
   {
     return stringToStringMapEClass;
@@ -924,6 +1001,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getStringToStringMap_Key()
   {
     return (EAttribute)stringToStringMapEClass.getEStructuralFeatures().get(0);
@@ -933,6 +1011,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getStringToStringMap_Value()
   {
     return (EAttribute)stringToStringMapEClass.getEStructuralFeatures().get(1);
@@ -942,6 +1021,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getIntegerToStringMap()
   {
     return integerToStringMapEClass;
@@ -951,6 +1031,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getIntegerToStringMap_Key()
   {
     return (EAttribute)integerToStringMapEClass.getEStructuralFeatures().get(0);
@@ -960,6 +1041,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getIntegerToStringMap_Value()
   {
     return (EAttribute)integerToStringMapEClass.getEStructuralFeatures().get(1);
@@ -969,6 +1051,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getStringToVATMap()
   {
     return stringToVATMapEClass;
@@ -978,6 +1061,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getStringToVATMap_Key()
   {
     return (EAttribute)stringToVATMapEClass.getEStructuralFeatures().get(0);
@@ -987,6 +1071,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getStringToVATMap_Value()
   {
     return (EAttribute)stringToVATMapEClass.getEStructuralFeatures().get(1);
@@ -996,6 +1081,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getStringToAddressContainmentMap()
   {
     return stringToAddressContainmentMapEClass;
@@ -1005,6 +1091,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getStringToAddressContainmentMap_Key()
   {
     return (EAttribute)stringToAddressContainmentMapEClass.getEStructuralFeatures().get(0);
@@ -1014,6 +1101,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getStringToAddressContainmentMap_Value()
   {
     return (EReference)stringToAddressContainmentMapEClass.getEStructuralFeatures().get(1);
@@ -1023,6 +1111,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getStringToAddressReferenceMap()
   {
     return stringToAddressReferenceMapEClass;
@@ -1032,6 +1121,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getStringToAddressReferenceMap_Key()
   {
     return (EAttribute)stringToAddressReferenceMapEClass.getEStructuralFeatures().get(0);
@@ -1041,6 +1131,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getStringToAddressReferenceMap_Value()
   {
     return (EReference)stringToAddressReferenceMapEClass.getEStructuralFeatures().get(1);
@@ -1050,6 +1141,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getEObjectToEObjectMap()
   {
     return eObjectToEObjectMapEClass;
@@ -1059,6 +1151,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEObjectToEObjectMap_Key()
   {
     return (EReference)eObjectToEObjectMapEClass.getEStructuralFeatures().get(0);
@@ -1068,6 +1161,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEObjectToEObjectMap_Value()
   {
     return (EReference)eObjectToEObjectMapEClass.getEStructuralFeatures().get(1);
@@ -1077,6 +1171,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getEObjectToEObjectKeyContainedMap()
   {
     return eObjectToEObjectKeyContainedMapEClass;
@@ -1086,6 +1181,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEObjectToEObjectKeyContainedMap_Key()
   {
     return (EReference)eObjectToEObjectKeyContainedMapEClass.getEStructuralFeatures().get(0);
@@ -1095,6 +1191,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEObjectToEObjectKeyContainedMap_Value()
   {
     return (EReference)eObjectToEObjectKeyContainedMapEClass.getEStructuralFeatures().get(1);
@@ -1104,6 +1201,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getEObjectToEObjectBothContainedMap()
   {
     return eObjectToEObjectBothContainedMapEClass;
@@ -1113,6 +1211,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEObjectToEObjectBothContainedMap_Key()
   {
     return (EReference)eObjectToEObjectBothContainedMapEClass.getEStructuralFeatures().get(0);
@@ -1122,6 +1221,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEObjectToEObjectBothContainedMap_Value()
   {
     return (EReference)eObjectToEObjectBothContainedMapEClass.getEStructuralFeatures().get(1);
@@ -1131,6 +1231,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getEObjectToEObjectValueContainedMap()
   {
     return eObjectToEObjectValueContainedMapEClass;
@@ -1140,6 +1241,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEObjectToEObjectValueContainedMap_Key()
   {
     return (EReference)eObjectToEObjectValueContainedMapEClass.getEStructuralFeatures().get(0);
@@ -1149,6 +1251,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEObjectToEObjectValueContainedMap_Value()
   {
     return (EReference)eObjectToEObjectValueContainedMapEClass.getEStructuralFeatures().get(1);
@@ -1158,6 +1261,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getEnumListHolder()
   {
     return enumListHolderEClass;
@@ -1167,6 +1271,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getEnumListHolder_EnumList()
   {
     return (EAttribute)enumListHolderEClass.getEStructuralFeatures().get(0);
@@ -1176,6 +1281,7 @@ public class Model2PackageImpl extends EPackageImpl implements Model2Package
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Model2Factory getModel2Factory()
   {
     return (Model2Factory)getEFactoryInstance();

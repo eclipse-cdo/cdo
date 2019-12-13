@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -49,11 +49,13 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
   {
   }
 
+  @Override
   public InternalCDORevisionCache instantiate(CDORevision revision)
   {
     return new CDORevisionCacheAuditing();
   }
 
+  @Override
   public EClass getObjectType(CDOID id)
   {
     synchronized (revisionLists)
@@ -73,6 +75,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     }
   }
 
+  @Override
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint)
   {
     checkBranch(branchPoint.getBranch());
@@ -86,6 +89,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     return null;
   }
 
+  @Override
   public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion)
   {
     CDOBranch branch = branchVersion.getBranch();
@@ -100,6 +104,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     return null;
   }
 
+  @Override
   public List<CDORevision> getCurrentRevisions()
   {
     List<CDORevision> currentRevisions = new ArrayList<CDORevision>();
@@ -118,6 +123,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     return currentRevisions;
   }
 
+  @Override
   public Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
     Map<CDOBranch, List<CDORevision>> result = new HashMap<CDOBranch, List<CDORevision>>();
@@ -132,6 +138,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     return result;
   }
 
+  @Override
   public void getAllRevisions(List<InternalCDORevision> result)
   {
     synchronized (revisionLists)
@@ -143,6 +150,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     }
   }
 
+  @Override
   public List<CDORevision> getRevisions(CDOBranchPoint branchPoint)
   {
     CDOBranch branch = branchPoint.getBranch();
@@ -224,6 +232,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     return null;
   }
 
+  @Override
   public void clear()
   {
     synchronized (revisionLists)

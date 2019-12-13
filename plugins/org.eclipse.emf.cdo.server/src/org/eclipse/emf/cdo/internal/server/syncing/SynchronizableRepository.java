@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -160,17 +160,20 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     handleCommitInfoLock = rwLock.writeLock();
   }
 
+  @Override
   public InternalRepositorySynchronizer getSynchronizer()
   {
     return synchronizer;
   }
 
+  @Override
   public void setSynchronizer(InternalRepositorySynchronizer synchronizer)
   {
     checkInactive();
     this.synchronizer = synchronizer;
   }
 
+  @Override
   public InternalSession getReplicatorSession()
   {
     return replicatorSession;
@@ -184,16 +187,19 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     return list.toArray();
   }
 
+  @Override
   public boolean hasBeenReplicated()
   {
     return getLastReplicatedCommitTime() != CDOBranchPoint.UNSPECIFIED_DATE;
   }
 
+  @Override
   public int getLastReplicatedBranchID()
   {
     return lastReplicatedBranchID;
   }
 
+  @Override
   public void setLastReplicatedBranchID(int lastReplicatedBranchID)
   {
     if (this.lastReplicatedBranchID < lastReplicatedBranchID)
@@ -202,11 +208,13 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
   }
 
+  @Override
   public long getLastReplicatedCommitTime()
   {
     return lastReplicatedCommitTime;
   }
 
+  @Override
   public void setLastReplicatedCommitTime(long lastReplicatedCommitTime)
   {
     if (this.lastReplicatedCommitTime < lastReplicatedCommitTime)
@@ -227,6 +235,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
   }
 
+  @Override
   public String[] getLockAreaIDs()
   {
     try
@@ -235,6 +244,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       final List<String> areaIDs = new LinkedList<String>();
       getLockingManager().getLockAreas(null, new LockArea.Handler()
       {
+        @Override
         public boolean handleLockArea(LockArea area)
         {
           areaIDs.add(area.getDurableLockingID());
@@ -249,6 +259,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
   }
 
+  @Override
   public void handleBranch(CDOBranch branch)
   {
     if (branch.isLocal())
@@ -268,6 +279,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     setLastReplicatedBranchID(branchID);
   }
 
+  @Override
   public void handleCommitInfo(final CDOCommitInfo commitInfo)
   {
     CDOBranch branch = commitInfo.getBranch();
@@ -349,6 +361,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
   }
 
+  @Override
   public void handleLockChangeInfo(CDOLockChangeInfo lockChangeInfo)
   {
     CDOLockOwner owner = lockChangeInfo.getLockOwner();
@@ -398,6 +411,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
   }
 
+  @Override
   public boolean handleLockArea(LockArea area)
   {
     try
@@ -417,6 +431,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   /**
    * Called by ReplicateRepositoryRawRequest.confirming().
    */
+  @Override
   public void replicateRaw(CDODataInput in, OMMonitor monitor) throws IOException
   {
     try
@@ -446,6 +461,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
   }
 
+  @Override
   public void goOnline()
   {
     if (getState() == OFFLINE)
@@ -456,6 +472,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
   }
 
+  @Override
   public void goOffline()
   {
     if (getState() != OFFLINE)
@@ -524,6 +541,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     final Map<CDOBranch, TimeRange> branches = new HashMap<CDOBranch, TimeRange>();
     CDOCommitInfoHandler handler = new CDOCommitInfoHandler()
     {
+      @Override
       public void handleCommitInfo(CDOCommitInfo commitInfo)
       {
         CDOBranch branch = commitInfo.getBranch();
@@ -861,21 +879,25 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       this.commitContext = commitContext;
     }
 
+    @Override
     public boolean isEmpty()
     {
       return false;
     }
 
+    @Override
     public CDOChangeSetData copy()
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public void merge(CDOChangeSetData changeSetData)
     {
       throw new UnsupportedOperationException();
     }
 
+    @Override
     public List<CDOPackageUnit> getNewPackageUnits()
     {
       final InternalCDOPackageUnit[] newPackageUnits = commitContext.getNewPackageUnits();
@@ -895,6 +917,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       };
     }
 
+    @Override
     public List<CDOIDAndVersion> getNewObjects()
     {
       final InternalCDORevision[] newObjects = commitContext.getNewObjects();
@@ -914,6 +937,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       };
     }
 
+    @Override
     public List<CDORevisionKey> getChangedObjects()
     {
       final InternalCDORevisionDelta[] changedObjects = commitContext.getDirtyObjectDeltas();
@@ -933,6 +957,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       };
     }
 
+    @Override
     public List<CDOIDAndVersion> getDetachedObjects()
     {
       final CDOID[] detachedObjects = commitContext.getDetachedObjects();
@@ -952,6 +977,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       };
     }
 
+    @Override
     public synchronized Map<CDOID, CDOChangeKind> getChangeKinds()
     {
       if (changeKindCache == null)
@@ -962,6 +988,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       return changeKindCache;
     }
 
+    @Override
     public CDOChangeKind getChangeKind(CDOID id)
     {
       return getChangeKinds().get(id);
@@ -1002,99 +1029,118 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
       InternalCDOCommitContext ctx = new InternalCDOCommitContext()
       {
+        @Override
         public boolean isPartialCommit()
         {
           return false;
         }
 
+        @Override
         public Map<CDOID, CDORevisionDelta> getRevisionDeltas()
         {
           throw new UnsupportedOperationException();
         }
 
+        @Override
         public List<CDOPackageUnit> getNewPackageUnits()
         {
           return commitData.getNewPackageUnits();
         }
 
+        @Override
         public Map<CDOID, CDOObject> getNewObjects()
         {
           throw new UnsupportedOperationException();
         }
 
+        @Override
         public Collection<CDOLob<?>> getLobs()
         {
           return Collections.emptySet(); // TODO (CD) Did we forget to support this earlier?
         }
 
+        @Override
         public Map<CDOID, CDOObject> getDirtyObjects()
         {
           throw new UnsupportedOperationException();
         }
 
+        @Override
         public Map<CDOID, CDOObject> getDetachedObjects()
         {
           throw new UnsupportedOperationException();
         }
 
+        @Override
         public void preCommit()
         {
           throw new UnsupportedOperationException();
         }
 
+        @Override
         public void postCommit(CommitTransactionResult result)
         {
           throw new UnsupportedOperationException();
         }
 
+        @Override
         public InternalCDOTransaction getTransaction()
         {
           return null;
         }
 
+        @Override
         public CDOCommitData getCommitData()
         {
           return commitData;
         }
 
+        @Override
         public int getViewID()
         {
           return ARTIFICIAL_VIEW_ID;
         }
 
+        @Override
         public String getUserID()
         {
           return WriteThroughCommitContext.this.getUserID();
         }
 
+        @Override
         @Deprecated
         public boolean isAutoReleaseLocks()
         {
           return WriteThroughCommitContext.this.isAutoReleaseLocksEnabled();
         }
 
+        @Override
         public Collection<CDOLockState> getLocksOnNewObjects()
         {
           CDOLockState[] locksOnNewObjectsArray = WriteThroughCommitContext.this.getLocksOnNewObjects();
           return Arrays.asList(locksOnNewObjectsArray);
         }
 
+        @Override
         public Collection<CDOID> getIDsToUnlock()
         {
           CDOID[] idsToUnlockArray = WriteThroughCommitContext.this.getIDsToUnlock();
           return Arrays.asList(idsToUnlockArray);
         }
 
+        @Override
         public String getCommitComment()
         {
           return WriteThroughCommitContext.this.getCommitComment();
         }
 
+        @Override
         public CDOBranchPoint getCommitMergeSource()
         {
           return WriteThroughCommitContext.this.getCommitMergeSource();
         }
 
+        @Override
         public CDOBranch getBranch()
         {
           return WriteThroughCommitContext.this.getTransaction().getBranch();

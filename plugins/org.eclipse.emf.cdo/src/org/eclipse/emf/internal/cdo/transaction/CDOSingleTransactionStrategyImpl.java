@@ -50,6 +50,7 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
   {
   }
 
+  @Override
   public CDOCommitInfo commit(InternalCDOTransaction transaction, IProgressMonitor progressMonitor) throws Exception
   {
     InternalCDOCommitContext commitContext = transaction.createCommitContext();
@@ -116,22 +117,26 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
     return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, mergeSource, commitData);
   }
 
+  @Override
   public void rollback(InternalCDOTransaction transaction, InternalCDOUserSavepoint savepoint)
   {
     transaction.setCommitMergeSource(null);
     transaction.handleRollback((InternalCDOSavepoint)savepoint);
   }
 
+  @Override
   public InternalCDOUserSavepoint setSavepoint(InternalCDOTransaction transaction)
   {
     return transaction.handleSetSavepoint();
   }
 
+  @Override
   public void setTarget(InternalCDOTransaction transaction)
   {
     // Do nothing
   }
 
+  @Override
   public void unsetTarget(InternalCDOTransaction transaction)
   {
     // Do nothing

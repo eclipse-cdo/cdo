@@ -35,12 +35,14 @@ public interface CDOLockChangeInfo extends CDOBranchPoint
   /**
    * @return The branch at which the lock changes took place, same as <code>getView().getBranch()</code>.
    */
+  @Override
   public CDOBranch getBranch();
 
   /**
    * @return The repository time at which the lock changes took place. This is only an informal indication; no formal
    *         relation (e.g. an ordering) with commit time stamps is guaranteed.
    */
+  @Override
   public long getTimeStamp();
 
   /**

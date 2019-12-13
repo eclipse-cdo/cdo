@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -86,21 +86,25 @@ public class CDOTransfer implements INotifier
     this.targetSystem = targetSystem;
   }
 
+  @Override
   public void addListener(IListener listener)
   {
     notifier.addListener(listener);
   }
 
+  @Override
   public void removeListener(IListener listener)
   {
     notifier.removeListener(listener);
   }
 
+  @Override
   public boolean hasListeners()
   {
     return notifier.hasListeners();
   }
 
+  @Override
   public IListener[] getListeners()
   {
     return notifier.getListeners();
@@ -157,6 +161,7 @@ public class CDOTransfer implements INotifier
     final Set<CDOTransferType> result = new HashSet<CDOTransferType>();
     rootMapping.accept(new CDOTransferMapping.Visitor()
     {
+      @Override
       public boolean visit(CDOTransferMapping mapping)
       {
         result.add(mapping.getTransferType());
@@ -443,6 +448,7 @@ public class CDOTransfer implements INotifier
   {
     public static final PathProvider DEFAULT = new PathProvider()
     {
+      @Override
       public IPath getPath(CDOTransferElement element)
       {
         return new Path(element.getName());

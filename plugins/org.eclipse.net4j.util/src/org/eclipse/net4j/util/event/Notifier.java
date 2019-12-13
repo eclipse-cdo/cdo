@@ -52,23 +52,27 @@ public class Notifier implements INotifier
   {
   }
 
+  @Override
   public void addListener(IListener listener)
   {
     CheckUtil.checkArg(listener, "listener"); //$NON-NLS-1$
     listeners.add(listener);
   }
 
+  @Override
   public void removeListener(IListener listener)
   {
     CheckUtil.checkArg(listener, "listener"); //$NON-NLS-1$
     listeners.remove(listener);
   }
 
+  @Override
   public boolean hasListeners()
   {
     return !listeners.isEmpty();
   }
 
+  @Override
   public IListener[] getListeners()
   {
     return listeners.get();
@@ -102,6 +106,7 @@ public class Notifier implements INotifier
       {
         notificationService.execute(new Runnable()
         {
+          @Override
           public void run()
           {
             fireEventSafe(event, listeners);

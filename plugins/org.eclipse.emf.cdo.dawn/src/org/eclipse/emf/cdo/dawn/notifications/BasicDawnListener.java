@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -47,6 +47,7 @@ public abstract class BasicDawnListener implements IDawnListener// implements IL
     this.editor = editor;
   }
 
+  @Override
   public void notifyEvent(IEvent event)
   {
     if (event instanceof CDOViewInvalidationEvent)
@@ -67,10 +68,12 @@ public abstract class BasicDawnListener implements IDawnListener// implements IL
     }
   }
 
+  @Override
   public void handleViewInvalidationEvent(CDOViewInvalidationEvent event)
   {
   }
 
+  @Override
   public void handleTransactionConflictEvent(CDOTransactionConflictEvent event)
   {
   }
@@ -78,6 +81,7 @@ public abstract class BasicDawnListener implements IDawnListener// implements IL
   /**
    * @since 2.0
    */
+  @Override
   public void handleLocksChangedEvent(CDOViewLocksChangedEvent event)
   {
   }
@@ -85,6 +89,7 @@ public abstract class BasicDawnListener implements IDawnListener// implements IL
   /**
    * @since 2.0
    */
+  @Override
   public void handleEvent(IEvent event)
   {
   }

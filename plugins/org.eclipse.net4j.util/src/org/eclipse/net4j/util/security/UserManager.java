@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -30,12 +30,14 @@ public class UserManager extends Lifecycle implements IUserManager, IAuthenticat
   {
   }
 
+  @Override
   public synchronized void addUser(String userID, char[] password)
   {
     users.put(userID, password);
     save(users);
   }
 
+  @Override
   public synchronized void removeUser(String userID)
   {
     if (users.remove(userID) != null)
@@ -55,6 +57,7 @@ public class UserManager extends Lifecycle implements IUserManager, IAuthenticat
   /**
    * @since 3.3
    */
+  @Override
   public void authenticate(String userID, char[] password)
   {
     char[] userPassword;
@@ -77,6 +80,7 @@ public class UserManager extends Lifecycle implements IUserManager, IAuthenticat
   /**
    * @since 2.0
    */
+  @Override
   public byte[] encrypt(String userID, byte[] data, String algorithmName, byte[] salt, int count) throws SecurityException
   {
     char[] password;

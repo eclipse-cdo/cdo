@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -131,6 +131,7 @@ public class GImpl extends CDOObjectImpl implements G
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getDummy()
   {
     return (String)eGet(Model6Package.Literals.G__DUMMY, true);
@@ -141,6 +142,7 @@ public class GImpl extends CDOObjectImpl implements G
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDummy(String newDummy)
   {
     eSet(Model6Package.Literals.G__DUMMY, newDummy);
@@ -151,6 +153,7 @@ public class GImpl extends CDOObjectImpl implements G
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public BaseObject getReference()
   {
     return (BaseObject)eGet(Model6Package.Literals.G__REFERENCE, true);
@@ -161,6 +164,7 @@ public class GImpl extends CDOObjectImpl implements G
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setReference(BaseObject newReference)
   {
     eSet(Model6Package.Literals.G__REFERENCE, newReference);
@@ -171,6 +175,7 @@ public class GImpl extends CDOObjectImpl implements G
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   @SuppressWarnings("unchecked")
   public EList<BaseObject> getList()
   {
@@ -180,6 +185,7 @@ public class GImpl extends CDOObjectImpl implements G
   /**
    * @ADDED
    */
+  @Override
   public List<Notification> getNotifications()
   {
     return notifications;
@@ -190,6 +196,7 @@ public class GImpl extends CDOObjectImpl implements G
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean isAttributeModified()
   {
     return attributeModified;
@@ -200,6 +207,7 @@ public class GImpl extends CDOObjectImpl implements G
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean isReferenceModified()
   {
     return referenceModified;
@@ -210,6 +218,7 @@ public class GImpl extends CDOObjectImpl implements G
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean isListModified()
   {
     return listModified;

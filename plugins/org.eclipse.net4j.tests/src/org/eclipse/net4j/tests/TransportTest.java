@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -224,6 +224,7 @@ public abstract class TransportTest extends AbstractProtocolTest
 
     getAcceptor().addListener(new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof IContainerEvent<?>)
@@ -232,6 +233,7 @@ public abstract class TransportTest extends AbstractProtocolTest
           IContainerEvent<IConnector> e = (IContainerEvent<IConnector>)event;
           e.getDeltaElement().addListener(new IListener()
           {
+            @Override
             public void notifyEvent(IEvent event)
             {
               if (event instanceof IContainerEvent<?>)
@@ -288,6 +290,7 @@ public abstract class TransportTest extends AbstractProtocolTest
 
     getAcceptor().addListener(new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof IContainerEvent<?>)
@@ -296,6 +299,7 @@ public abstract class TransportTest extends AbstractProtocolTest
           IContainerEvent<IConnector> e = (IContainerEvent<IConnector>)event;
           e.getDeltaElement().addListener(new IListener()
           {
+            @Override
             public void notifyEvent(IEvent event)
             {
               if (event instanceof IContainerEvent<?>)
@@ -356,6 +360,7 @@ public abstract class TransportTest extends AbstractProtocolTest
 
     getAcceptor().addListener(new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof IContainerEvent<?>)
@@ -364,6 +369,7 @@ public abstract class TransportTest extends AbstractProtocolTest
           IContainerEvent<IConnector> e = (IContainerEvent<IConnector>)event;
           e.getDeltaElement().addListener(new IListener()
           {
+            @Override
             public void notifyEvent(IEvent event)
             {
               if (event instanceof IContainerEvent<?>)
@@ -441,6 +447,7 @@ public abstract class TransportTest extends AbstractProtocolTest
 
     getAcceptor().addListener(new IListener()
     {
+      @Override
       public void notifyEvent(IEvent event)
       {
         if (event instanceof IContainerEvent<?>)
@@ -449,6 +456,7 @@ public abstract class TransportTest extends AbstractProtocolTest
           IContainerEvent<IConnector> e = (IContainerEvent<IConnector>)event;
           e.getDeltaElement().addListener(new IListener()
           {
+            @Override
             public void notifyEvent(IEvent event)
             {
               if (event instanceof IContainerEvent<?>)
@@ -499,6 +507,7 @@ public abstract class TransportTest extends AbstractProtocolTest
       setInfraStructure(counter);
     }
 
+    @Override
     public void handleBuffer(IBuffer buffer)
     {
       IOUtil.OUT().println("BUFFER ARRIVED"); //$NON-NLS-1$
@@ -521,6 +530,7 @@ public abstract class TransportTest extends AbstractProtocolTest
         this.counter = counter;
       }
 
+      @Override
       public TestProtocol create(String description) throws ProductCreationException
       {
         return new TestProtocol(counter);
@@ -539,6 +549,7 @@ public abstract class TransportTest extends AbstractProtocolTest
         super(TYPE);
       }
 
+      @Override
       public TestProtocol create(String description) throws ProductCreationException
       {
         return new TestProtocol(null);

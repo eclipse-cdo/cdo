@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -167,6 +167,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
         set(RevisionParallelism.NONE, RevisionParallelism.BRANCHING));
   }
 
+  @Override
   public IMappingStrategy getMappingStrategy()
   {
     return mappingStrategy;
@@ -178,6 +179,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     mappingStrategy.setStore(this);
   }
 
+  @Override
   public IDBAdapter getDBAdapter()
   {
     return dbAdapter;
@@ -194,31 +196,37 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     this.properties = properties;
   }
 
+  @Override
   public Map<String, String> getProperties()
   {
     return properties;
   }
 
+  @Override
   public int getJDBCFetchSize()
   {
     return jdbcFetchSize;
   }
 
+  @Override
   public int getIDColumnLength()
   {
     return idColumnLength;
   }
 
+  @Override
   public IIDHandler getIDHandler()
   {
     return idHandler;
   }
 
+  @Override
   public IDBDatabase getDatabase()
   {
     return database;
   }
 
+  @Override
   public Connection getConnection()
   {
     Connection connection = dbConnectionProvider.getConnection();
@@ -244,6 +252,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     this.dbConnectionProvider = dbConnectionProvider;
   }
 
+  @Override
   public IMetaDataManager getMetaDataManager()
   {
     return metaDataManager;
@@ -285,11 +294,13 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     return accessorWriteDistributor;
   }
 
+  @Override
   public IDBSchema getDBSchema()
   {
     return database.getSchema();
   }
 
+  @Override
   public void visitAllTables(Connection connection, IDBStore.TableVisitor visitor)
   {
     for (String name : DBUtil.getAllTableNames(connection, getRepository().getName()))
@@ -318,6 +329,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
   }
 
+  @Override
   public Map<String, String> getPersistentProperties(Set<String> names)
   {
     IDBConnection connection = database.getConnection();
@@ -387,6 +399,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
   }
 
+  @Override
   public void setPersistentProperties(Map<String, String> properties)
   {
     IDBConnection connection = database.getConnection();
@@ -434,6 +447,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     setPersistentProperties(map);
   }
 
+  @Override
   public void removePersistentProperties(Set<String> names)
   {
     IDBConnection connection = database.getConnection();
@@ -496,6 +510,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     return new DBStoreAccessor(this, transaction);
   }
 
+  @Override
   public Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
     final Map<CDOBranch, List<CDORevision>> result = new HashMap<CDOBranch, List<CDORevision>>();
@@ -512,6 +527,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
       StoreThreadLocal.getAccessor().handleRevisions(null, null, CDOBranchPoint.UNSPECIFIED_DATE, true,
           new CDORevisionHandler.Filtered.Undetached(new CDORevisionHandler()
           {
+            @Override
             public boolean handleRevision(CDORevision revision)
             {
               CDOBranch branch = revision.getBranch();
@@ -539,11 +555,13 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     return result;
   }
 
+  @Override
   public CDOID createObjectID(String val)
   {
     return idHandler.createCDOID(val);
   }
 
+  @Override
   @Deprecated
   public boolean isLocal(CDOID id)
   {
@@ -555,11 +573,13 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     return idHandler.getNextCDOID(revision);
   }
 
+  @Override
   public long getCreationTime()
   {
     return creationTime;
   }
 
+  @Override
   public void setCreationTime(long creationTime)
   {
     this.creationTime = creationTime;
@@ -569,6 +589,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     setPersistentProperties(map);
   }
 
+  @Override
   public boolean isFirstStart()
   {
     return firstTime;
@@ -1014,6 +1035,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
       {
         store.visitAllTables(connection, new IDBStore.TableVisitor()
         {
+          @Override
           public void visitTable(Connection connection, String name) throws SQLException
           {
             Statement statement = null;

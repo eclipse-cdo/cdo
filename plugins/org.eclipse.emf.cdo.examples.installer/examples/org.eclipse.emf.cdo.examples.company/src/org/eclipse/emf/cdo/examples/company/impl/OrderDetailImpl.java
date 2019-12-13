@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -67,6 +67,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Order getOrder()
   {
     return (Order)eGet(CompanyPackage.Literals.ORDER_DETAIL__ORDER, true);
@@ -76,6 +77,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setOrder(Order newOrder)
   {
     eSet(CompanyPackage.Literals.ORDER_DETAIL__ORDER, newOrder);
@@ -85,6 +87,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Product getProduct()
   {
     return (Product)eGet(CompanyPackage.Literals.ORDER_DETAIL__PRODUCT, true);
@@ -94,6 +97,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setProduct(Product newProduct)
   {
     eSet(CompanyPackage.Literals.ORDER_DETAIL__PRODUCT, newProduct);
@@ -103,6 +107,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public float getPrice()
   {
     return (Float)eGet(CompanyPackage.Literals.ORDER_DETAIL__PRICE, true);
@@ -112,6 +117,7 @@ public class OrderDetailImpl extends CDOObjectImpl implements OrderDetail
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setPrice(float newPrice)
   {
     eSet(CompanyPackage.Literals.ORDER_DETAIL__PRICE, newPrice);

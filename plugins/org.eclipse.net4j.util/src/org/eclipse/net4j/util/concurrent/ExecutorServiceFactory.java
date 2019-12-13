@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009, 2011, 2012, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -47,6 +47,7 @@ public class ExecutorServiceFactory extends Factory
     super(PRODUCT_GROUP, DEFAULT_TYPE);
   }
 
+  @Override
   public ExecutorService create(String description)
   {
     final ExecutorService executorService = ThreadPool.create(description);
@@ -55,11 +56,13 @@ public class ExecutorServiceFactory extends Factory
     {
       private boolean active;
 
+      @Override
       public void activate() throws LifecycleException
       {
         active = true;
       }
 
+      @Override
       public Exception deactivate()
       {
         try
@@ -74,31 +77,37 @@ public class ExecutorServiceFactory extends Factory
         }
       }
 
+      @Override
       public LifecycleState getLifecycleState()
       {
         return active ? LifecycleState.ACTIVE : LifecycleState.INACTIVE;
       }
 
+      @Override
       public boolean isActive()
       {
         return active;
       }
 
+      @Override
       public void addListener(IListener listener)
       {
         // Do nothing
       }
 
+      @Override
       public void removeListener(IListener listener)
       {
         // Do nothing
       }
 
+      @Override
       public IListener[] getListeners()
       {
         return EventUtil.NO_LISTENERS;
       }
 
+      @Override
       public boolean hasListeners()
       {
         return false;

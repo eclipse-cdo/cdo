@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -102,6 +102,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getId()
   {
     return id;
@@ -111,6 +112,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setId(int newId)
   {
     int oldId = id;
@@ -123,6 +125,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Customer getCustomer()
   {
     if (customer != null && customer.eIsProxy())
@@ -170,6 +173,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setCustomer(Customer newCustomer)
   {
     if (newCustomer != customer)
@@ -192,6 +196,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<PurchaseOrder> getPurchaseOrders()
   {
     if (purchaseOrders == null)

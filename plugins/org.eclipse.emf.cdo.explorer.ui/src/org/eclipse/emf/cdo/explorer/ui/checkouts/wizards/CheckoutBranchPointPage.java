@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -163,6 +163,7 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
     final Display display = branchPointComposite.getDisplay();
     display.asyncExec(new Runnable()
     {
+      @Override
       public void run()
       {
         final CDOSession session = wizard.getRepositoryPage().getSession();
@@ -172,6 +173,7 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
         branchViewer.setInput(session.getBranchManager());
         display.asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             CDOBranch branch = branchPoint.getBranch();

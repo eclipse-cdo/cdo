@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -1167,6 +1167,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   int ENUM_LIST_HOLDER_FEATURE_COUNT = 1;
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder <em>Special Purchase Order</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1176,6 +1177,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getSpecialPurchaseOrder();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.SpecialPurchaseOrder#getDiscountCode <em>Discount Code</em>}'. <!--
@@ -1188,6 +1190,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getSpecialPurchaseOrder_DiscountCode();
 
+  @Override
   /**
    * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder#getShippingAddress <em>Shipping Address</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1198,6 +1201,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getSpecialPurchaseOrder_ShippingAddress();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.TaskContainer <em>Task Container</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1207,6 +1211,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getTaskContainer();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model2.TaskContainer#getTasks <em>Tasks</em>}'.
    * <!-- begin-user-doc -->
@@ -1218,6 +1223,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getTaskContainer_Tasks();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model2.Task <em>Task</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -1228,6 +1234,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getTask();
 
+  @Override
   /**
    * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.model2.Task#getTaskContainer <em>Task Container</em>}'.
    * <!-- begin-user-doc
@@ -1239,6 +1246,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getTask_TaskContainer();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Task#getDescription <em>Description</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1249,6 +1257,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getTask_Description();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Task#isDone <em>Done</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1259,6 +1268,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getTask_Done();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1 <em>Unsettable1</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1268,6 +1278,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getUnsettable1();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#isUnsettableBoolean <em>Unsettable Boolean</em>}'. <!--
@@ -1280,6 +1291,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable1_UnsettableBoolean();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableByte <em>Unsettable Byte</em>}'. <!--
@@ -1292,6 +1304,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable1_UnsettableByte();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableChar <em>Unsettable Char</em>}'. <!--
@@ -1304,6 +1317,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable1_UnsettableChar();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableDate <em>Unsettable Date</em>}'. <!--
@@ -1316,6 +1330,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable1_UnsettableDate();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableDouble <em>Unsettable Double</em>}'. <!--
@@ -1328,6 +1343,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable1_UnsettableDouble();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableFloat <em>Unsettable Float</em>}'. <!--
@@ -1340,6 +1356,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable1_UnsettableFloat();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableInt <em>Unsettable Int</em>}'. <!--
@@ -1352,6 +1369,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable1_UnsettableInt();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableLong <em>Unsettable Long</em>}'. <!--
@@ -1364,6 +1382,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable1_UnsettableLong();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableShort <em>Unsettable Short</em>}'. <!--
@@ -1376,6 +1395,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable1_UnsettableShort();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableString <em>Unsettable String</em>}'. <!--
@@ -1388,6 +1408,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable1_UnsettableString();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.Unsettable1#getUnsettableVAT <em>Unsettable VAT</em>}'. <!--
@@ -1400,6 +1421,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable1_UnsettableVAT();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1#getUnsettableElement <em>Unsettable Element</em>}'.
    * <!-- begin-user-doc -->
@@ -1411,6 +1433,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getUnsettable1_UnsettableElement();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault <em>Unsettable2 With Default</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1420,6 +1443,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getUnsettable2WithDefault();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#isUnsettableBoolean <em>Unsettable Boolean</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1430,6 +1454,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable2WithDefault_UnsettableBoolean();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableByte <em>Unsettable Byte</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1440,6 +1465,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable2WithDefault_UnsettableByte();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableChar <em>Unsettable Char</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1450,6 +1476,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable2WithDefault_UnsettableChar();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableDate <em>Unsettable Date</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1460,6 +1487,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable2WithDefault_UnsettableDate();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableDouble <em>Unsettable Double</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1470,6 +1498,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable2WithDefault_UnsettableDouble();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableFloat <em>Unsettable Float</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1480,6 +1509,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable2WithDefault_UnsettableFloat();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableInt <em>Unsettable Int</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1490,6 +1520,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable2WithDefault_UnsettableInt();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableLong <em>Unsettable Long</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1500,6 +1531,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable2WithDefault_UnsettableLong();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableShort <em>Unsettable Short</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1510,6 +1542,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable2WithDefault_UnsettableShort();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableString <em>Unsettable String</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1520,6 +1553,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable2WithDefault_UnsettableString();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableVAT <em>Unsettable VAT</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1530,6 +1564,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getUnsettable2WithDefault_UnsettableVAT();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.PersistentContainment <em>Persistent Containment</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1539,6 +1574,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getPersistentContainment();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.PersistentContainment#getAttrBefore <em>Attr Before</em>}'. <!--
@@ -1551,6 +1587,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getPersistentContainment_AttrBefore();
 
+  @Override
   /**
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.PersistentContainment#getChildren <em>Children</em>}'. <!--
@@ -1563,6 +1600,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getPersistentContainment_Children();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.PersistentContainment#getAttrAfter <em>Attr After</em>}'. <!--
@@ -1575,6 +1613,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getPersistentContainment_AttrAfter();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.TransientContainer <em>Transient Container</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1584,6 +1623,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getTransientContainer();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.TransientContainer#getAttrBefore <em>Attr Before</em>}'. <!--
@@ -1596,6 +1636,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getTransientContainer_AttrBefore();
 
+  @Override
   /**
    * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.model2.TransientContainer#getParent <em>Parent</em>}'.
    * <!-- begin-user-doc
@@ -1607,6 +1648,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getTransientContainer_Parent();
 
+  @Override
   /**
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.legacy.model2.TransientContainer#getAttrAfter <em>Attr After</em>}'. <!--
@@ -1619,6 +1661,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getTransientContainer_AttrAfter();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable <em>Not Unsettable</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1628,6 +1671,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getNotUnsettable();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#isNotUnsettableBoolean <em>Not Unsettable Boolean</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1638,6 +1682,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettable_NotUnsettableBoolean();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableByte <em>Not Unsettable Byte</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1648,6 +1693,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettable_NotUnsettableByte();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableChar <em>Not Unsettable Char</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1658,6 +1704,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettable_NotUnsettableChar();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableDate <em>Not Unsettable Date</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1668,6 +1715,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettable_NotUnsettableDate();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableDouble <em>Not Unsettable Double</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1678,6 +1726,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettable_NotUnsettableDouble();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableFloat <em>Not Unsettable Float</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1688,6 +1737,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettable_NotUnsettableFloat();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableInt <em>Not Unsettable Int</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1698,6 +1748,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettable_NotUnsettableInt();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableLong <em>Not Unsettable Long</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1708,6 +1759,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettable_NotUnsettableLong();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableShort <em>Not Unsettable Short</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1718,6 +1770,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettable_NotUnsettableShort();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableString <em>Not Unsettable String</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1728,6 +1781,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettable_NotUnsettableString();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableVAT <em>Not Unsettable VAT</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1738,6 +1792,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettable_NotUnsettableVAT();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault <em>Not Unsettable With Default</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1747,6 +1802,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getNotUnsettableWithDefault();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#isNotUnsettableBoolean <em>Not Unsettable Boolean</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1757,6 +1813,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettableWithDefault_NotUnsettableBoolean();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableByte <em>Not Unsettable Byte</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1767,6 +1824,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettableWithDefault_NotUnsettableByte();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableChar <em>Not Unsettable Char</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1777,6 +1835,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettableWithDefault_NotUnsettableChar();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableDate <em>Not Unsettable Date</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1787,6 +1846,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettableWithDefault_NotUnsettableDate();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableDouble <em>Not Unsettable Double</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1797,6 +1857,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettableWithDefault_NotUnsettableDouble();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableFloat <em>Not Unsettable Float</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1807,6 +1868,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettableWithDefault_NotUnsettableFloat();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableInt <em>Not Unsettable Int</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1817,6 +1879,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettableWithDefault_NotUnsettableInt();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableLong <em>Not Unsettable Long</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1827,6 +1890,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettableWithDefault_NotUnsettableLong();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableShort <em>Not Unsettable Short</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1837,6 +1901,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettableWithDefault_NotUnsettableShort();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableString <em>Not Unsettable String</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1847,6 +1912,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettableWithDefault_NotUnsettableString();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model2.NotUnsettableWithDefault#getNotUnsettableVAT <em>Not Unsettable VAT</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1857,6 +1923,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getNotUnsettableWithDefault_NotUnsettableVAT();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.MapHolder <em>Map Holder</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1866,6 +1933,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getMapHolder();
 
+  @Override
   /**
    * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getIntegerToStringMap <em>Integer To String Map</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1876,6 +1944,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getMapHolder_IntegerToStringMap();
 
+  @Override
   /**
    * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToStringMap <em>String To String Map</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1886,6 +1955,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getMapHolder_StringToStringMap();
 
+  @Override
   /**
    * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToVATMap <em>String To VAT Map</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1896,6 +1966,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getMapHolder_StringToVATMap();
 
+  @Override
   /**
    * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToAddressContainmentMap <em>String To Address Containment Map</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1906,6 +1977,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getMapHolder_StringToAddressContainmentMap();
 
+  @Override
   /**
    * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToAddressReferenceMap <em>String To Address Reference Map</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1916,6 +1988,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getMapHolder_StringToAddressReferenceMap();
 
+  @Override
   /**
    * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectMap <em>EObject To EObject Map</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1926,6 +1999,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getMapHolder_EObjectToEObjectMap();
 
+  @Override
   /**
    * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectKeyContainedMap <em>EObject To EObject Key Contained Map</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1936,6 +2010,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getMapHolder_EObjectToEObjectKeyContainedMap();
 
+  @Override
   /**
    * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectBothContainedMap <em>EObject To EObject Both Contained Map</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1946,6 +2021,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getMapHolder_EObjectToEObjectBothContainedMap();
 
+  @Override
   /**
    * Returns the meta object for the map '{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectValueContainedMap <em>EObject To EObject Value Contained Map</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1956,6 +2032,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getMapHolder_EObjectToEObjectValueContainedMap();
 
+  @Override
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>String To String Map</em>}'.
    * <!-- begin-user-doc
@@ -1968,6 +2045,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getStringToStringMap();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -1979,6 +2057,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getStringToStringMap_Key();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
    * <!-- begin-user-doc -->
@@ -1990,6 +2069,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getStringToStringMap_Value();
 
+  @Override
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>Integer To String Map</em>}'.
    * <!-- begin-user-doc
@@ -2002,6 +2082,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getIntegerToStringMap();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -2013,6 +2094,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getIntegerToStringMap_Key();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
    * <!-- begin-user-doc -->
@@ -2024,6 +2106,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getIntegerToStringMap_Value();
 
+  @Override
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>String To VAT Map</em>}'.
    * <!-- begin-user-doc -->
@@ -2036,6 +2119,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getStringToVATMap();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -2047,6 +2131,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getStringToVATMap_Key();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
    * <!-- begin-user-doc -->
@@ -2058,6 +2143,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getStringToVATMap_Value();
 
+  @Override
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Address Containment Map</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -2070,6 +2156,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getStringToAddressContainmentMap();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -2081,6 +2168,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getStringToAddressContainmentMap_Key();
 
+  @Override
   /**
    * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Value</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -2092,6 +2180,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getStringToAddressContainmentMap_Value();
 
+  @Override
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Address Reference Map</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -2103,6 +2192,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getStringToAddressReferenceMap();
 
+  @Override
   /**
    * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -2114,6 +2204,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getStringToAddressReferenceMap_Key();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
    * <!-- begin-user-doc -->
@@ -2125,6 +2216,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getStringToAddressReferenceMap_Value();
 
+  @Override
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>EObject To EObject Map</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -2136,6 +2228,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getEObjectToEObjectMap();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -2147,6 +2240,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getEObjectToEObjectMap_Key();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
    * <!-- begin-user-doc -->
@@ -2158,6 +2252,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getEObjectToEObjectMap_Value();
 
+  @Override
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>EObject To EObject Key Contained Map</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -2169,6 +2264,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getEObjectToEObjectKeyContainedMap();
 
+  @Override
   /**
    * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Key</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -2180,6 +2276,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getEObjectToEObjectKeyContainedMap_Key();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
    * <!-- begin-user-doc -->
@@ -2191,6 +2288,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getEObjectToEObjectKeyContainedMap_Value();
 
+  @Override
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>EObject To EObject Both Contained Map</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2202,6 +2300,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getEObjectToEObjectBothContainedMap();
 
+  @Override
   /**
    * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Key</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -2213,6 +2312,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getEObjectToEObjectBothContainedMap_Key();
 
+  @Override
   /**
    * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Value</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -2224,6 +2324,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getEObjectToEObjectBothContainedMap_Value();
 
+  @Override
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>EObject To EObject Value Contained Map</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2235,6 +2336,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getEObjectToEObjectValueContainedMap();
 
+  @Override
   /**
    * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'.
    * <!-- begin-user-doc --> <!--
@@ -2246,6 +2348,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getEObjectToEObjectValueContainedMap_Key();
 
+  @Override
   /**
    * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Value</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -2257,6 +2360,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EReference getEObjectToEObjectValueContainedMap_Value();
 
+  @Override
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.EnumListHolder <em>Enum List Holder</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2266,6 +2370,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EClass getEnumListHolder();
 
+  @Override
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model2.EnumListHolder#getEnumList <em>Enum List</em>}'.
    * <!-- begin-user-doc
@@ -2277,6 +2382,7 @@ public interface Model2Package extends EPackage, org.eclipse.emf.cdo.tests.model
    */
   EAttribute getEnumListHolder_EnumList();
 
+  @Override
   /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc --> <!-- end-user-doc -->

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -89,6 +89,7 @@ public abstract class MultiViewersView extends ViewPart implements ISetSelection
       {
         getDisplay().asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             try
@@ -123,6 +124,7 @@ public abstract class MultiViewersView extends ViewPart implements ISetSelection
       {
         getDisplay().asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             try
@@ -150,6 +152,7 @@ public abstract class MultiViewersView extends ViewPart implements ISetSelection
       {
         getDisplay().asyncExec(new Runnable()
         {
+          @Override
           public void run()
           {
             try
@@ -168,6 +171,7 @@ public abstract class MultiViewersView extends ViewPart implements ISetSelection
     }
   }
 
+  @Override
   public void selectReveal(ISelection selection)
   {
     StructuredViewer viewer = getCurrentViewer();
@@ -183,6 +187,7 @@ public abstract class MultiViewersView extends ViewPart implements ISetSelection
     {
       getSite().getShell().getDisplay().syncExec(new Runnable()
       {
+        @Override
         public void run()
         {
           try
@@ -303,6 +308,7 @@ public abstract class MultiViewersView extends ViewPart implements ISetSelection
     {
       viewer.addDoubleClickListener(new IDoubleClickListener()
       {
+        @Override
         public void doubleClick(DoubleClickEvent event)
         {
           IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
@@ -319,6 +325,7 @@ public abstract class MultiViewersView extends ViewPart implements ISetSelection
     menuMgr.setRemoveAllWhenShown(true);
     menuMgr.addMenuListener(new IMenuListener()
     {
+      @Override
       public void menuAboutToShow(IMenuManager manager)
       {
         final StructuredViewer viewer = getCurrentViewer();

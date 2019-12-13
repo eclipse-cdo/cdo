@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -32,11 +32,13 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
   {
   }
 
+  @Override
   public int remainingCapacity()
   {
     return Integer.MAX_VALUE;
   }
 
+  @Override
   public int size()
   {
     int size = 0;
@@ -51,6 +53,7 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
     return size;
   }
 
+  @Override
   public boolean isEmpty()
   {
     synchronized (list)
@@ -59,6 +62,7 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
     }
   }
 
+  @Override
   public boolean offer(E e)
   {
     synchronized (list)
@@ -76,21 +80,25 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
     }
   }
 
+  @Override
   public boolean offer(E o, long timeout, TimeUnit unit) throws InterruptedException
   {
     return offer(o);
   }
 
+  @Override
   public void put(E o) throws InterruptedException
   {
     offer(o);
   }
 
+  @Override
   public boolean add(E o)
   {
     return offer(o);
   }
 
+  @Override
   public E poll(long timeout, TimeUnit unit) throws InterruptedException
   {
     synchronized (list)
@@ -110,6 +118,7 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
     }
   }
 
+  @Override
   public E poll()
   {
     synchronized (list)
@@ -129,6 +138,7 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
     }
   }
 
+  @Override
   public E take() throws InterruptedException
   {
     synchronized (list)
@@ -143,6 +153,7 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
     }
   }
 
+  @Override
   public E peek()
   {
     synchronized (list)
@@ -157,6 +168,7 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
     }
   }
 
+  @Override
   public E element()
   {
     synchronized (list)
@@ -171,6 +183,7 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
     }
   }
 
+  @Override
   public E remove()
   {
     synchronized (list)
@@ -185,6 +198,7 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
     }
   }
 
+  @Override
   public boolean remove(Object o)
   {
     synchronized (list)
@@ -207,6 +221,7 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
     return false;
   }
 
+  @Override
   public void clear()
   {
     synchronized (list)
@@ -215,6 +230,7 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
     }
   }
 
+  @Override
   public Iterator<E> iterator()
   {
     List<E> copy = new ArrayList<E>();
@@ -247,6 +263,7 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
     return copy.iterator();
   }
 
+  @Override
   public boolean contains(Object o)
   {
     synchronized (list)
@@ -263,6 +280,7 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
     return false;
   }
 
+  @Override
   public Object[] toArray()
   {
     synchronized (list)
@@ -271,6 +289,7 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
     }
   }
 
+  @Override
   public <T> T[] toArray(T[] array)
   {
     synchronized (list)
@@ -279,36 +298,42 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
     }
   }
 
+  @Override
   public boolean containsAll(Collection<?> c)
   {
     // TODO: implement RoundRobinBlockingQueue.containsAll(c)
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean addAll(Collection<? extends E> c)
   {
     // TODO: implement RoundRobinBlockingQueue.addAll(c)
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean removeAll(Collection<?> c)
   {
     // TODO: implement RoundRobinBlockingQueue.removeAll(c)
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean retainAll(Collection<?> c)
   {
     // TODO: implement RoundRobinBlockingQueue.retainAll(c)
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public int drainTo(Collection<? super E> c)
   {
     // TODO: implement RoundRobinBlockingQueue.drainTo(c)
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public int drainTo(Collection<? super E> c, int maxElements)
   {
     // TODO: implement RoundRobinBlockingQueue.drainTo(c, maxElements)

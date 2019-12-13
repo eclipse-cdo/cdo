@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -36,11 +36,13 @@ public class CDOChangeSetSegment implements CDOBranchPoint
     this.endTime = endTime;
   }
 
+  @Override
   public CDOBranch getBranch()
   {
     return branchPoint.getBranch();
   }
 
+  @Override
   public long getTimeStamp()
   {
     return branchPoint.getTimeStamp();
@@ -162,6 +164,7 @@ public class CDOChangeSetSegment implements CDOBranchPoint
 
     handleSegments(startTime, endPoint, new Handler()
     {
+      @Override
       public boolean handleSegment(CDOChangeSetSegment segment)
       {
         result.addFirst(segment);
@@ -178,6 +181,7 @@ public class CDOChangeSetSegment implements CDOBranchPoint
 
     handleSegments(startPoint, endPoint, new Handler()
     {
+      @Override
       public boolean handleSegment(CDOChangeSetSegment segment)
       {
         result.addFirst(segment);

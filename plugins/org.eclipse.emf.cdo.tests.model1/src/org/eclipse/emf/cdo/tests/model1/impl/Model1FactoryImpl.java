@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -145,6 +145,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Address createAddress()
   {
     AddressImpl address = new AddressImpl();
@@ -155,6 +156,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Supplier createSupplier()
   {
     SupplierImpl supplier = new SupplierImpl();
@@ -165,6 +167,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PurchaseOrder createPurchaseOrder()
   {
     PurchaseOrderImpl purchaseOrder = new PurchaseOrderImpl();
@@ -175,6 +178,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public OrderDetail createOrderDetail()
   {
     OrderDetailImpl orderDetail = new OrderDetailImpl();
@@ -185,6 +189,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public OrderAddress createOrderAddress()
   {
     OrderAddressImpl orderAddress = new OrderAddressImpl();
@@ -228,6 +233,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Category createCategory()
   {
     CategoryImpl category = new CategoryImpl();
@@ -238,6 +244,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Product1 createProduct1()
   {
     Product1Impl product1 = new Product1Impl();
@@ -248,6 +255,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Company createCompany()
   {
     CompanyImpl company = new CompanyImpl();
@@ -258,6 +266,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Customer createCustomer()
   {
     CustomerImpl customer = new CustomerImpl();
@@ -268,6 +277,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public SalesOrder createSalesOrder()
   {
     SalesOrderImpl salesOrder = new SalesOrderImpl();
@@ -278,6 +288,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Model1Package getModel1Package()
   {
     return (Model1Package)getEPackage();

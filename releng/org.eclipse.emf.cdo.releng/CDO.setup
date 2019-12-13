@@ -53,6 +53,8 @@
     <requirement
         name="org.eclipse.oomph.version.feature.group"/>
     <requirement
+        name="org.eclipse.emf.sdk.feature.group"/>
+    <requirement
         name="org.eclipse.emf.ecoretools.sdk.feature.group"
         optional="true"/>
     <requirement
@@ -232,6 +234,25 @@
       <sourceLocator
           rootFolder="${cdo.git.clone.location}"/>
       <repositoryList
+          name="2020-03">
+        <repository
+            url="http://download.eclipse.org/releases/2020-03"/>
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/I-builds"/>
+        <repository
+            url="http://download.eclipse.org/tools/orbit/downloads/latest-I"/>
+        <repository
+            url="http://download.eclipse.org/nebula/releases/latest"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+        <repository
+            url="http://www.elver.org/eclipse/2.1.0/update"/>
+        <repository
+            url="${aspectj.repository}"/>
+      </repositoryList>
+      <repositoryList
           name="2019-12">
         <repository
             url="http://download.eclipse.org/releases/2019-12"/>
@@ -240,9 +261,9 @@
         <repository
             url="http://download.eclipse.org/tools/orbit/downloads/latest-I"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
-        <repository
             url="http://download.eclipse.org/nebula/releases/latest"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
@@ -348,6 +369,21 @@
       <requirement
           name="org.eclipse.equinox.executable.feature.group"/>
       <repositoryList
+          name="4.8">
+        <repository
+            url="http://download.eclipse.org/modeling/emf/cdo/drops/R20191211-0144"/>
+        <repository
+            url="http://download.eclipse.org/releases/2019-12"/>
+        <repository
+            url="http://download.eclipse.org/nebula/releases/2.2.0"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+        <repository
+            url="http://www.elver.org/eclipse/2.1.0/update"/>
+      </repositoryList>
+      <repositoryList
           name="4.7">
         <repository
             url="http://download.eclipse.org/modeling/emf/cdo/drops/R20180613-0111"/>
@@ -413,6 +449,10 @@
     </targlet>
   </setupTask>
   <setupTask
+      xsi:type="pde:APIBaselineFromTargetTask"
+      name="CDO ${cdo.baseline.version}"
+      targetName="Baseline Target"/>
+  <setupTask
       xsi:type="setup.workingsets:WorkingSetTask">
     <workingSet
         name="CDO"
@@ -430,7 +470,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.1 //@setupTasks.14/@workingSets.2 //@setupTasks.14/@workingSets.3 //@setupTasks.14/@workingSets.4 //@setupTasks.14/@workingSets.5"/>
+            excludedWorkingSet="//@setupTasks.15/@workingSets.1 //@setupTasks.15/@workingSets.2 //@setupTasks.15/@workingSets.3 //@setupTasks.15/@workingSets.4 //@setupTasks.15/@workingSets.5"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -443,7 +483,7 @@
             pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.4"/>
+            excludedWorkingSet="//@setupTasks.15/@workingSets.4"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -462,7 +502,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.4"/>
+            excludedWorkingSet="//@setupTasks.15/@workingSets.4"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -475,7 +515,7 @@
             pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.4"/>
+            excludedWorkingSet="//@setupTasks.15/@workingSets.4"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -504,7 +544,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.4 //@setupTasks.14/@workingSets.9"/>
+            excludedWorkingSet="//@setupTasks.15/@workingSets.4 //@setupTasks.15/@workingSets.9"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -517,7 +557,7 @@
             pattern="org\.eclipse\.net4j.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.7 //@setupTasks.14/@workingSets.8 //@setupTasks.14/@workingSets.9"/>
+            excludedWorkingSet="//@setupTasks.15/@workingSets.7 //@setupTasks.15/@workingSets.8 //@setupTasks.15/@workingSets.9"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -530,7 +570,7 @@
             pattern="org\.eclipse\.net4j\.db.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.9"/>
+            excludedWorkingSet="//@setupTasks.15/@workingSets.9"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -552,7 +592,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.14/@workingSets.9"/>
+            excludedWorkingSet="//@setupTasks.15/@workingSets.9"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -561,6 +601,25 @@
       <predicate
           xsi:type="predicates:NamePredicate"
           pattern="org\.eclipse\.net4j.*-feature"/>
+    </workingSet>
+    <workingSet
+        name="Infrastructure"
+        id="CDO Infrastructure">
+      <predicate
+          xsi:type="predicates:NamePredicate"
+          pattern="org\.eclipse\.emf\.cdo\.releng\.promotion.*"/>
+      <predicate
+          xsi:type="predicates:NamePredicate"
+          pattern="org\.eclipse\.emf\.cdo\.releng\.doc\.supplemental.*"/>
+      <predicate
+          xsi:type="predicates:NamePredicate"
+          pattern="cdo\.www.*"/>
+      <predicate
+          xsi:type="predicates:NamePredicate"
+          pattern="org\.eclipse\.simrel\.build.*"/>
+      <predicate
+          xsi:type="predicates:NamePredicate"
+          pattern="com\.ibm\.db2\.jcc.*"/>
     </workingSet>
   </setupTask>
   <setupTask
@@ -675,22 +734,7 @@
         url="${aspectj.repository}"/>
   </setupTask>
   <stream name="master"
-      label="4.8 Integration (2019-12)">
-    <setupTask
-        xsi:type="setup.p2:P2Task">
-      <requirement
-          name="org.eclipse.emf.sdk.feature.group"/>
-    </setupTask>
-    <setupTask
-        xsi:type="setup:RedirectionTask"
-        disabled="true"
-        sourceURL="http://download.eclipse.org/eclipse/updates/4.9-I-builds"
-        targetURL="http://download.eclipse.org/eclipse/updates/4.9milestones"/>
-    <setupTask
-        xsi:type="setup:EclipseIniTask"
-        option="-Doomph.redirection.cdosetup"
-        value="=https://git.eclipse.org/c/cdo/cdo.git/plain/releng/org.eclipse.emf.cdo.releng/CDO.setup->${cdo.git.clone.location|uri}/releng/org.eclipse.emf.cdo.releng/CDO.setup"
-        vm="true"/>
+      label="Master">
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.git.branch"
@@ -702,208 +746,19 @@
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.bugzilla.version"
+        value="4.9"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="cdo.baseline.version"
         value="4.8"/>
     <setupTask
-        xsi:type="setup:VariableTask"
-        name="cdo.baseline.version"
-        value="4.7"/>
-    <setupTask
         xsi:type="jdt:JRETask"
         version="JavaSE-1.8"
         location="${jre.location-1.8}"/>
     <setupTask
-        xsi:type="pde:APIBaselineFromTargetTask"
-        name="CDO 4.7"
-        targetName="Baseline Target"/>
-    <setupTask
-        xsi:type="setup.workingsets:WorkingSetTask">
-      <workingSet
-          name="Infrastructure"
-          id="CDO Infrastructure">
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.emf\.cdo\.releng\.promotion.*"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.emf\.cdo\.releng\.doc\.supplemental.*"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="cdo\.www.*"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.simrel\.build.*"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="com\.ibm\.db2\.jcc.*"/>
-      </workingSet>
-    </setupTask>
-  </stream>
-  <stream name="4.7-maintenance"
-      label="4.7 Maintenance (Photon)">
-    <setupTask
-        xsi:type="setup.p2:P2Task">
-      <requirement
-          name="org.eclipse.emf.sdk.feature.group"/>
-    </setupTask>
-    <setupTask
-        xsi:type="setup:RedirectionTask"
-        sourceURL="http://download.eclipse.org/eclipse/updates/4.8-I-builds"
-        targetURL="http://download.eclipse.org/eclipse/updates/4.8milestones"/>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        name="cdo.git.branch"
-        value="master"/>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        name="cdo.target.platform"
-        value="Photon"/>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        name="cdo.bugzilla.version"
-        value="4.7"/>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        name="cdo.baseline.version"
-        value="4.6"/>
-    <setupTask
-        xsi:type="jdt:JRETask"
-        version="JavaSE-1.8"
-        location="${jre.location-1.8}"/>
-    <setupTask
-        xsi:type="pde:APIBaselineFromTargetTask"
-        name="CDO 4.6"
-        targetName="Baseline Target"/>
-    <setupTask
-        xsi:type="setup.workingsets:WorkingSetTask">
-      <workingSet
-          name="Infrastructure"
-          id="CDO Infrastructure">
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.emf\.cdo\.releng\.promotion.*"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.emf\.cdo\.releng\.doc\.supplemental.*"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="cdo\.www.*"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.simrel\.build.*"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="com\.ibm\.db2\.jcc.*"/>
-      </workingSet>
-    </setupTask>
-  </stream>
-  <stream name="4.6-maintenance"
-      label="4.6 Maintenance (Oxygen)">
-    <setupTask
-        xsi:type="setup.p2:P2Task">
-      <requirement
-          name="org.eclipse.emf.sdk.feature.group"/>
-    </setupTask>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        name="cdo.git.branch"
-        value="streams/4.6-maintenance"/>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        name="cdo.target.platform"
-        value="Oxygen"/>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        name="cdo.bugzilla.version"
-        value="4.6"/>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        name="cdo.baseline.version"
-        value="4.6"/>
-    <setupTask
-        xsi:type="jdt:JRETask"
-        version="JavaSE-1.8"
-        location="${jre.location-1.8}"/>
-    <setupTask
-        xsi:type="pde:APIBaselineFromTargetTask"
-        name="CDO 4.6"
-        targetName="Baseline Target"/>
-    <setupTask
-        xsi:type="setup.workingsets:WorkingSetTask">
-      <workingSet
-          name="Infrastructure"
-          id="CDO Infrastructure">
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.emf\.cdo\.releng\.promotion.*"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.emf\.cdo\.releng\.doc\.supplemental.*"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="cdo\.www.*"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.simrel\.build.*"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="com\.ibm\.db2\.jcc.*"/>
-      </workingSet>
-    </setupTask>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        type="BOOLEAN"
-        name="INSTALL_AJDT"
-        value="false"
-        label="Install AJDT">
-      <description>The AspectJ Development Tooling is only needed for editing and compiling the buffer tracing aspect in &quot;org.eclipse.net4j.trace&quot;.</description>
-    </setupTask>
-  </stream>
-  <stream name="4.5-maintenance"
-      label="4.5 Maintenance (Neon)">
-    <setupTask
-        xsi:type="setup.p2:P2Task">
-      <requirement
-          name="org.eclipse.emf.sdk.feature.group"/>
-      <requirement
-          name="org.eclipse.gmf.runtime.notation.sdk.feature.group"/>
-      <requirement
-          name="org.eclipse.gmf.runtime.sdk.feature.group"/>
-      <requirement
-          name="org.eclipse.gmf.sdk.feature.group"/>
-      <repository
-          url="http://download.eclipse.org/releases/neon"/>
-    </setupTask>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        name="cdo.git.branch"
-        value="streams/4.5-maintenance"/>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        name="cdo.target.platform"
-        value="Neon"/>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        name="cdo.bugzilla.version"
-        value="4.5"/>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        name="cdo.baseline.version"
-        value="4.5"/>
-    <setupTask
-        xsi:type="jdt:JRETask"
-        version="JavaSE-1.8"
-        location="${jre.location-1.8}"/>
-    <setupTask
-        xsi:type="pde:APIBaselineFromTargetTask"
-        name="CDO 4.5"
-        targetName="Baseline Target"/>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        type="BOOLEAN"
-        name="INSTALL_AJDT"
-        value="false"
-        label="Install AJDT">
-      <description>The AspectJ Development Tooling is only needed for editing and compiling the buffer tracing aspect in &quot;org.eclipse.net4j.trace&quot;.</description>
-    </setupTask>
+        xsi:type="setup:EclipseIniTask"
+        option="-Doomph.redirection.cdosetup"
+        value="=https://git.eclipse.org/c/cdo/cdo.git/plain/releng/org.eclipse.emf.cdo.releng/CDO.setup->${cdo.git.clone.location|uri}/releng/org.eclipse.emf.cdo.releng/CDO.setup"
+        vm="true"/>
   </stream>
 </setup:Project>

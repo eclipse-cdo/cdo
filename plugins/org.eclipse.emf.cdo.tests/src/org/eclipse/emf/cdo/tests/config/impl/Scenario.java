@@ -130,7 +130,7 @@ public class Scenario implements IScenario
   {
     if (configs == null)
     {
-      configs = new HashSet<IConfig>();
+      configs = new HashSet<>();
       configs.add(getRepositoryConfig());
       configs.add(getSessionConfig());
       configs.add(getModelConfig());

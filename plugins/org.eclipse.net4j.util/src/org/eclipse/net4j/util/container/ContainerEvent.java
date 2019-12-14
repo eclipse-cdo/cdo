@@ -31,7 +31,7 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
   public ContainerEvent(IContainer<E> container)
   {
     super(container);
-    deltas = new ArrayList<IContainerDelta<E>>();
+    deltas = new ArrayList<>();
   }
 
   public ContainerEvent(IContainer<E> container, List<IContainerDelta<E>> deltas)
@@ -88,7 +88,7 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
 
   public void addDelta(E element, IContainerDelta.Kind kind)
   {
-    addDelta(new ContainerDelta<E>(element, kind));
+    addDelta(new ContainerDelta<>(element, kind));
   }
 
   public void addDelta(IContainerDelta<E> delta)

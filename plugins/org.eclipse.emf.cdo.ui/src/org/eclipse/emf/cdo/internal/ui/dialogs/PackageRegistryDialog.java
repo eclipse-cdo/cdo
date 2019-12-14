@@ -178,7 +178,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
 
   private boolean isGlobalPackageAvaliable()
   {
-    Set<String> uris = new HashSet<String>(EPackage.Registry.INSTANCE.keySet());
+    Set<String> uris = new HashSet<>(EPackage.Registry.INSTANCE.keySet());
     uris.removeAll(session.getPackageRegistry().keySet());
     return !uris.isEmpty();
   }

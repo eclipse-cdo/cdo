@@ -41,12 +41,12 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
   /**
    * Always processed <b>after</b> {@link #serverOperations}.
    */
-  private transient Queue<Runnable> clientOperations = new ConcurrentLinkedQueue<Runnable>();
+  private transient Queue<Runnable> clientOperations = new ConcurrentLinkedQueue<>();
 
   /**
    * Always processed <b>before</b> {@link #clientOperations}.
    */
-  private transient Queue<Runnable> serverOperations = new ConcurrentLinkedQueue<Runnable>();
+  private transient Queue<Runnable> serverOperations = new ConcurrentLinkedQueue<>();
 
   private transient Thread thread;
 

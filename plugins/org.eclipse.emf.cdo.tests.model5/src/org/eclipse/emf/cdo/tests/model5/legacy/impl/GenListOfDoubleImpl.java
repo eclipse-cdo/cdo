@@ -72,7 +72,7 @@ public class GenListOfDoubleImpl extends EObjectImpl implements GenListOfDouble
   {
     if (elements == null)
     {
-      elements = new EDataTypeUniqueEList<Double>(Double.class, this, Model5Package.GEN_LIST_OF_DOUBLE__ELEMENTS);
+      elements = new EDataTypeUniqueEList<>(Double.class, this, Model5Package.GEN_LIST_OF_DOUBLE__ELEMENTS);
     }
     return elements;
   }

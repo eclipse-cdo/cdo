@@ -99,7 +99,7 @@ public class Class1Impl extends EObjectImpl implements Class1
   {
     if (class2 == null)
     {
-      class2 = new EObjectWithInverseResolvingEList.Unsettable.ManyInverse<Class2>(Class2.class, this, Model3Package.CLASS1__CLASS2,
+      class2 = new EObjectWithInverseResolvingEList.Unsettable.ManyInverse<>(Class2.class, this, Model3Package.CLASS1__CLASS2,
           SubpackagePackage.CLASS2__CLASS1);
     }
     return class2;

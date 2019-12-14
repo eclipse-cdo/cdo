@@ -294,7 +294,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
 
   protected Soft<Integer, InternalCDOBranch> createMap()
   {
-    return new ReferenceValueMap.Soft<Integer, InternalCDOBranch>();
+    return new ReferenceValueMap.Soft<>();
   }
 
   @Override

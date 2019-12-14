@@ -1043,7 +1043,7 @@ public final class IOUtil
    */
   public static List<File> glob(String pattern, File folder)
   {
-    List<File> result = new ArrayList<File>();
+    List<File> result = new ArrayList<>();
     pattern = normalizeSeparator(pattern);
     if (pattern.endsWith(File.separator))
     {
@@ -1110,7 +1110,7 @@ public final class IOUtil
    */
   public static class FileCollector implements IOVisitor
   {
-    private List<File> files = new ArrayList<File>();
+    private List<File> files = new ArrayList<>();
 
     public FileCollector()
     {

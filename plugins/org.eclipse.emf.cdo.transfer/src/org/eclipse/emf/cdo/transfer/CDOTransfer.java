@@ -72,7 +72,7 @@ public class CDOTransfer implements INotifier
 
   private final CDOTransferMapping rootMapping = new CDOTransferMappingImpl(this);
 
-  private final Map<CDOTransferElement, CDOTransferMapping> mappings = new HashMap<CDOTransferElement, CDOTransferMapping>();
+  private final Map<CDOTransferElement, CDOTransferMapping> mappings = new HashMap<>();
 
   private CDOTransferType defaultTransferType = CDOTransferType.BINARY;
 
@@ -158,7 +158,7 @@ public class CDOTransfer implements INotifier
 
   public Set<CDOTransferType> getUsedTransferTypes()
   {
-    final Set<CDOTransferType> result = new HashSet<CDOTransferType>();
+    final Set<CDOTransferType> result = new HashSet<>();
     rootMapping.accept(new CDOTransferMapping.Visitor()
     {
       @Override
@@ -641,13 +641,13 @@ public class CDOTransfer implements INotifier
 
     private ResourceSet targetResourceSet;
 
-    private Map<CDOTransferElement, Resource> elementResources = new HashMap<CDOTransferElement, Resource>();
+    private Map<CDOTransferElement, Resource> elementResources = new HashMap<>();
 
-    private Map<Resource, CDOTransferElement> resourceElements = new HashMap<Resource, CDOTransferElement>();
+    private Map<Resource, CDOTransferElement> resourceElements = new HashMap<>();
 
     private Set<Resource> unmappedModels;
 
-    private Map<URI, ModelTransferResolution> resolutions = new HashMap<URI, ModelTransferResolution>();
+    private Map<URI, ModelTransferResolution> resolutions = new HashMap<>();
 
     private ResolveProxyAdapter resolveProxyAdapter;
 
@@ -765,7 +765,7 @@ public class CDOTransfer implements INotifier
       ResourceSet resourceSet = getSourceResourceSet();
       EList<Resource> resources = resourceSet.getResources();
 
-      Set<Resource> unmappedModels = new HashSet<Resource>(resources);
+      Set<Resource> unmappedModels = new HashSet<>(resources);
       unmappedModels.removeAll(mappedModels);
       return unmappedModels;
     }

@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -64,6 +64,7 @@ public class PropertiesSetStyleImpl extends NamedStyleImpl implements Properties
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EMap getPropertiesMap()
   {
     return (EMap)eDynamicGet(NotationPackage.PROPERTIES_SET_STYLE__PROPERTIES_MAP, NotationPackage.Literals.PROPERTIES_SET_STYLE__PROPERTIES_MAP, true, true);
@@ -74,6 +75,7 @@ public class PropertiesSetStyleImpl extends NamedStyleImpl implements Properties
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public Object getProperty(String propertyName)
   {
     PropertyValue propertyValue = (PropertyValue)getPropertiesMap().get(propertyName);
@@ -89,6 +91,7 @@ public class PropertiesSetStyleImpl extends NamedStyleImpl implements Properties
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean setProperty(String propertyName, Object newValue)
   {
     PropertyValue propertyValue = (PropertyValue)getPropertiesMap().get(propertyName);
@@ -105,6 +108,7 @@ public class PropertiesSetStyleImpl extends NamedStyleImpl implements Properties
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean createProperty(String propertyName, EDataType instanceType, Object initialValue)
   {
     if (propertyName != null && !hasProperty(propertyName))
@@ -136,6 +140,7 @@ public class PropertiesSetStyleImpl extends NamedStyleImpl implements Properties
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean removeProperty(String propertyName)
   {
     return getPropertiesMap().removeKey(propertyName) != null;
@@ -146,6 +151,7 @@ public class PropertiesSetStyleImpl extends NamedStyleImpl implements Properties
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean hasProperty(String propertyName)
   {
     return getPropertiesMap().containsKey(propertyName);
@@ -156,6 +162,7 @@ public class PropertiesSetStyleImpl extends NamedStyleImpl implements Properties
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean createProperty(String propertyName, String initialValue)
   {
     if (!hasProperty(propertyName))

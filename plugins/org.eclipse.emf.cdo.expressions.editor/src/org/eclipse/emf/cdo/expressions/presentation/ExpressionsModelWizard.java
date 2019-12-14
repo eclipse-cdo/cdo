@@ -175,7 +175,7 @@ public class ExpressionsModelWizard extends Wizard implements INewWizard
   {
     if (initialObjectNames == null)
     {
-      initialObjectNames = new ArrayList<String>();
+      initialObjectNames = new ArrayList<>();
       for (EClassifier eClassifier : expressionsPackage.getEClassifiers())
       {
         if (eClassifier instanceof EClass)
@@ -251,7 +251,7 @@ public class ExpressionsModelWizard extends Wizard implements INewWizard
 
             // Save the contents of the resource to the file system.
             //
-            Map<Object, Object> options = new HashMap<Object, Object>();
+            Map<Object, Object> options = new HashMap<>();
             options.put(XMLResource.OPTION_ENCODING, initialObjectCreationPage.getEncoding());
             resource.save(options);
           }
@@ -583,7 +583,7 @@ public class ExpressionsModelWizard extends Wizard implements INewWizard
     {
       if (encodings == null)
       {
-        encodings = new ArrayList<String>();
+        encodings = new ArrayList<>();
         for (StringTokenizer stringTokenizer = new StringTokenizer(ExpressionsEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer
             .hasMoreTokens();)
         {

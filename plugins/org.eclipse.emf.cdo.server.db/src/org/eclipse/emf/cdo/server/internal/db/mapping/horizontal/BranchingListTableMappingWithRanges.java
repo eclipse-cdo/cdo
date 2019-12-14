@@ -388,7 +388,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
         {
           if (toReadFromBase == null)
           {
-            toReadFromBase = new ArrayList<Pair<Integer, Integer>>();
+            toReadFromBase = new ArrayList<>();
           }
           toReadFromBase.add(Pair.create(currentIndex, index));
 
@@ -415,7 +415,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       {
         if (toReadFromBase == null)
         {
-          toReadFromBase = new ArrayList<Pair<Integer, Integer>>();
+          toReadFromBase = new ArrayList<>();
         }
         toReadFromBase.add(Pair.create(currentIndex, currentIndex + valuesToRead));
       }

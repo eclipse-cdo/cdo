@@ -36,7 +36,7 @@ public final class DBIndexDelta extends DBDeltaWithProperties implements IDBInde
 {
   private static final long serialVersionUID = 1L;
 
-  private Map<String, IDBIndexFieldDelta> indexFieldDeltas = new HashMap<String, IDBIndexFieldDelta>();
+  private Map<String, IDBIndexFieldDelta> indexFieldDeltas = new HashMap<>();
 
   public DBIndexDelta(DBDelta parent, String name, ChangeKind changeKind)
   {
@@ -51,14 +51,14 @@ public final class DBIndexDelta extends DBDeltaWithProperties implements IDBInde
     IDBIndex.Type oldType = oldIndex == null ? null : oldIndex.getType();
     if (!ObjectUtil.equals(type, oldType))
     {
-      addPropertyDelta(new DBPropertyDelta<IDBIndex.Type>(this, TYPE_PROPERTY, IDBPropertyDelta.Type.STRING, type, oldType));
+      addPropertyDelta(new DBPropertyDelta<>(this, TYPE_PROPERTY, IDBPropertyDelta.Type.STRING, type, oldType));
     }
 
     Boolean optional = index == null ? null : ((InternalDBIndex)index).isOptional();
     Boolean oldOptional = oldIndex == null ? null : ((InternalDBIndex)oldIndex).isOptional();
     if (!ObjectUtil.equals(optional, oldOptional))
     {
-      addPropertyDelta(new DBPropertyDelta<Boolean>(this, OPTIONAL_PROPERTY, IDBPropertyDelta.Type.BOOLEAN, optional, oldOptional));
+      addPropertyDelta(new DBPropertyDelta<>(this, OPTIONAL_PROPERTY, IDBPropertyDelta.Type.BOOLEAN, optional, oldOptional));
     }
 
     IDBIndexField[] indexFields = index == null ? InternalDBIndex.NO_INDEX_FIELDS : index.getIndexFields();

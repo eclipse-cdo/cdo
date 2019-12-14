@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -410,8 +410,8 @@ public class SecurityValidator extends EObjectValidator
    */
   public boolean validateGroup_AcyclicInheritance(Group group, DiagnosticChain diagnostics, Map<Object, Object> context)
   {
-    final Set<Group> visited = new java.util.HashSet<Group>();
-    final Queue<Group> toVisit = new java.util.LinkedList<Group>();
+    final Set<Group> visited = new java.util.HashSet<>();
+    final Queue<Group> toVisit = new java.util.LinkedList<>();
     toVisit.offer(group);
 
     for (Group next = toVisit.poll(); next != null; next = toVisit.poll())

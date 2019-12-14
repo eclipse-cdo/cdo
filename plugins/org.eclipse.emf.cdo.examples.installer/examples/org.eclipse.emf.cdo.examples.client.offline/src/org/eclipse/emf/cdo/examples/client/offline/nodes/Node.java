@@ -27,7 +27,7 @@ public final class Node implements IElement, Comparable<Node>
 
   private final Properties settings;
 
-  private final Map<Class<?>, Object> objects = new HashMap<Class<?>, Object>();
+  private final Map<Class<?>, Object> objects = new HashMap<>();
 
   public Node(NodeType type, Properties settings)
   {

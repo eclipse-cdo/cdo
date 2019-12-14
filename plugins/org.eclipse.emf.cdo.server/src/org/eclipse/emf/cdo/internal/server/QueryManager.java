@@ -52,7 +52,7 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
 
   private InternalRepository repository;
 
-  private Map<Integer, QueryContext> queryContexts = new ConcurrentHashMap<Integer, QueryContext>();
+  private Map<Integer, QueryContext> queryContexts = new ConcurrentHashMap<>();
 
   private ExecutorService executors;
 

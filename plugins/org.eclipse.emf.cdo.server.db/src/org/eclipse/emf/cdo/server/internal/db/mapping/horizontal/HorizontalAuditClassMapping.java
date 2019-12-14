@@ -752,7 +752,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
   private class AsnychronousListFiller implements Runnable
   {
-    private final BlockingQueue<InternalCDORevision> queue = new LinkedBlockingQueue<InternalCDORevision>();
+    private final BlockingQueue<InternalCDORevision> queue = new LinkedBlockingQueue<>();
 
     private final CountDownLatch latch = new CountDownLatch(1);
 

@@ -64,9 +64,9 @@ public abstract class ElementWizardComposite extends Composite implements IListe
 
   private List<IElementWizard> wizards;
 
-  private Map<IElementWizard, List<Control>> wizardControls = new HashMap<IElementWizard, List<Control>>();
+  private Map<IElementWizard, List<Control>> wizardControls = new HashMap<>();
 
-  private Map<Control, IElementWizard> controlWizards = new HashMap<Control, IElementWizard>();
+  private Map<Control, IElementWizard> controlWizards = new HashMap<>();
 
   private ValidationContext validationContext;
 
@@ -144,10 +144,10 @@ public abstract class ElementWizardComposite extends Composite implements IListe
   protected void init()
   {
     IManagedContainer container = getContainer();
-    factoryTypes = new ArrayList<String>(container.getFactoryTypes(getProductGroup()));
+    factoryTypes = new ArrayList<>(container.getFactoryTypes(getProductGroup()));
     Collections.sort(factoryTypes);
 
-    wizards = new ArrayList<IElementWizard>();
+    wizards = new ArrayList<>();
     wizardControls.put(NO_WIZARD, new ArrayList<Control>());
 
     for (Iterator<String> it = factoryTypes.iterator(); it.hasNext();)
@@ -225,7 +225,7 @@ public abstract class ElementWizardComposite extends Composite implements IListe
   protected void factoryTypeChanged()
   {
     String newFactoryType = getFactoryType();
-    List<Control> controlsToRefresh = new ArrayList<Control>();
+    List<Control> controlsToRefresh = new ArrayList<>();
 
     for (int i = 0; i < wizards.size(); i++)
     {

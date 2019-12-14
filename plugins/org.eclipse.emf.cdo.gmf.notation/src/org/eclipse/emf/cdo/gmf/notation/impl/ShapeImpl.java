@@ -221,6 +221,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getFontColor()
   {
     return ((Integer)eDynamicGet(NotationPackage.SHAPE__FONT_COLOR - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FONT_STYLE__FONT_COLOR, true, true))
@@ -232,6 +233,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setFontColor(int newFontColor)
   {
     eDynamicSet(NotationPackage.SHAPE__FONT_COLOR - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FONT_STYLE__FONT_COLOR, new Integer(newFontColor));
@@ -242,6 +244,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getFontName()
   {
     return (String)eDynamicGet(NotationPackage.SHAPE__FONT_NAME - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FONT_STYLE__FONT_NAME, true, true);
@@ -252,6 +255,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public void setFontName(String newFontName)
   {
     setFontNameGen(newFontName == null ? null : newFontName.intern());
@@ -272,6 +276,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getFontHeight()
   {
     return ((Integer)eDynamicGet(NotationPackage.SHAPE__FONT_HEIGHT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FONT_STYLE__FONT_HEIGHT, true, true))
@@ -283,6 +288,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setFontHeight(int newFontHeight)
   {
     eDynamicSet(NotationPackage.SHAPE__FONT_HEIGHT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FONT_STYLE__FONT_HEIGHT, new Integer(newFontHeight));
@@ -293,6 +299,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isBold()
   {
     return ((Boolean)eDynamicGet(NotationPackage.SHAPE__BOLD - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FONT_STYLE__BOLD, true, true)).booleanValue();
@@ -303,6 +310,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setBold(boolean newBold)
   {
     eDynamicSet(NotationPackage.SHAPE__BOLD - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FONT_STYLE__BOLD, new Boolean(newBold));
@@ -313,6 +321,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isItalic()
   {
     return ((Boolean)eDynamicGet(NotationPackage.SHAPE__ITALIC - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FONT_STYLE__ITALIC, true, true))
@@ -324,6 +333,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setItalic(boolean newItalic)
   {
     eDynamicSet(NotationPackage.SHAPE__ITALIC - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FONT_STYLE__ITALIC, new Boolean(newItalic));
@@ -334,6 +344,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isUnderline()
   {
     return ((Boolean)eDynamicGet(NotationPackage.SHAPE__UNDERLINE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FONT_STYLE__UNDERLINE, true, true))
@@ -345,6 +356,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnderline(boolean newUnderline)
   {
     eDynamicSet(NotationPackage.SHAPE__UNDERLINE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FONT_STYLE__UNDERLINE, new Boolean(newUnderline));
@@ -355,6 +367,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isStrikeThrough()
   {
     return ((Boolean)eDynamicGet(NotationPackage.SHAPE__STRIKE_THROUGH - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FONT_STYLE__STRIKE_THROUGH, true,
@@ -366,6 +379,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setStrikeThrough(boolean newStrikeThrough)
   {
     eDynamicSet(NotationPackage.SHAPE__STRIKE_THROUGH - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FONT_STYLE__STRIKE_THROUGH,
@@ -377,6 +391,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getDescription()
   {
     return (String)eDynamicGet(NotationPackage.SHAPE__DESCRIPTION - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.DESCRIPTION_STYLE__DESCRIPTION, true, true);
@@ -387,6 +402,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDescription(String newDescription)
   {
     eDynamicSet(NotationPackage.SHAPE__DESCRIPTION - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.DESCRIPTION_STYLE__DESCRIPTION, newDescription);
@@ -397,6 +413,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getFillColor()
   {
     return ((Integer)eDynamicGet(NotationPackage.SHAPE__FILL_COLOR - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FILL_STYLE__FILL_COLOR, true, true))
@@ -408,6 +425,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setFillColor(int newFillColor)
   {
     eDynamicSet(NotationPackage.SHAPE__FILL_COLOR - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FILL_STYLE__FILL_COLOR, new Integer(newFillColor));
@@ -418,6 +436,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getTransparency()
   {
     return ((Integer)eDynamicGet(NotationPackage.SHAPE__TRANSPARENCY - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FILL_STYLE__TRANSPARENCY, true, true))
@@ -429,6 +448,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setTransparency(int newTransparency)
   {
     eDynamicSet(NotationPackage.SHAPE__TRANSPARENCY - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FILL_STYLE__TRANSPARENCY, new Integer(newTransparency));
@@ -439,6 +459,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public GradientData getGradient()
   {
     return (GradientData)eDynamicGet(NotationPackage.SHAPE__GRADIENT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FILL_STYLE__GRADIENT, true, true);
@@ -449,6 +470,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setGradient(GradientData newGradient)
   {
     eDynamicSet(NotationPackage.SHAPE__GRADIENT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FILL_STYLE__GRADIENT, newGradient);
@@ -459,6 +481,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getLineColor()
   {
     return ((Integer)eDynamicGet(NotationPackage.SHAPE__LINE_COLOR - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.LINE_STYLE__LINE_COLOR, true, true))
@@ -470,6 +493,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setLineColor(int newLineColor)
   {
     eDynamicSet(NotationPackage.SHAPE__LINE_COLOR - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.LINE_STYLE__LINE_COLOR, new Integer(newLineColor));
@@ -480,6 +504,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getLineWidth()
   {
     return ((Integer)eDynamicGet(NotationPackage.SHAPE__LINE_WIDTH - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.LINE_STYLE__LINE_WIDTH, true, true))
@@ -491,6 +516,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setLineWidth(int newLineWidth)
   {
     eDynamicSet(NotationPackage.SHAPE__LINE_WIDTH - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.LINE_STYLE__LINE_WIDTH, new Integer(newLineWidth));
@@ -501,6 +527,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getRoundedBendpointsRadius()
   {
     return ((Integer)eDynamicGet(NotationPackage.SHAPE__ROUNDED_BENDPOINTS_RADIUS - ESTATIC_FEATURE_COUNT,
@@ -512,6 +539,7 @@ public class ShapeImpl extends NodeImpl implements Shape
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setRoundedBendpointsRadius(int newRoundedBendpointsRadius)
   {
     eDynamicSet(NotationPackage.SHAPE__ROUNDED_BENDPOINTS_RADIUS - ESTATIC_FEATURE_COUNT,

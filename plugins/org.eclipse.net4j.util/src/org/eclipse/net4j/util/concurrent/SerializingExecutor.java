@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class SerializingExecutor extends Lifecycle implements Executor, Runnable
 {
-  private final Queue<Runnable> tasks = new ConcurrentLinkedQueue<Runnable>();
+  private final Queue<Runnable> tasks = new ConcurrentLinkedQueue<>();
 
   private final AtomicBoolean running = new AtomicBoolean();
 

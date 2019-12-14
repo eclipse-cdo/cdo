@@ -64,14 +64,14 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   @Override
   public V put(K key, V value)
   {
-    ContainerEvent<Map.Entry<K, V>> event = new ContainerEvent<Map.Entry<K, V>>(this);
+    ContainerEvent<Map.Entry<K, V>> event = new ContainerEvent<>(this);
     V removed = getDelegate().put(key, value);
     if (removed != null)
     {
-      event.addDelta(new ContainerMapEntry<K, V>(key, removed), IContainerDelta.Kind.REMOVED);
+      event.addDelta(new ContainerMapEntry<>(key, removed), IContainerDelta.Kind.REMOVED);
     }
 
-    event.addDelta(new ContainerMapEntry<K, V>(key, value), IContainerDelta.Kind.ADDED);
+    event.addDelta(new ContainerMapEntry<>(key, value), IContainerDelta.Kind.ADDED);
     IListener[] listeners = getListeners();
     if (listeners != null)
     {
@@ -87,7 +87,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   @Override
   public void putAll(Map<? extends K, ? extends V> t)
   {
-    ContainerEvent<Map.Entry<K, V>> event = new ContainerEvent<Map.Entry<K, V>>(this);
+    ContainerEvent<Map.Entry<K, V>> event = new ContainerEvent<>(this);
     Iterator<? extends Entry<? extends K, ? extends V>> i = t.entrySet().iterator();
     while (i.hasNext())
     {
@@ -97,10 +97,10 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
       V removed = getDelegate().put(key, value);
       if (removed != null)
       {
-        event.addDelta(new ContainerMapEntry<K, V>(key, removed), IContainerDelta.Kind.REMOVED);
+        event.addDelta(new ContainerMapEntry<>(key, removed), IContainerDelta.Kind.REMOVED);
       }
 
-      event.addDelta(new ContainerMapEntry<K, V>(key, value), IContainerDelta.Kind.ADDED);
+      event.addDelta(new ContainerMapEntry<>(key, value), IContainerDelta.Kind.ADDED);
     }
 
     dispatchEvent(event);
@@ -115,7 +115,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
     V removed = getDelegate().remove(key);
     if (removed != null)
     {
-      fireRemovedEvent(new ContainerMapEntry<Object, V>(key, removed));
+      fireRemovedEvent(new ContainerMapEntry<>(key, removed));
     }
 
     return removed;
@@ -182,7 +182,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   @Override
   public Set<Map.Entry<K, V>> entrySet()
   {
-    return new ContainerSet<Map.Entry<K, V>>(getDelegate().entrySet());
+    return new ContainerSet<>(getDelegate().entrySet());
   }
 
   /**
@@ -191,7 +191,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   @Override
   public Set<K> keySet()
   {
-    return new ContainerSet<K>(getDelegate().keySet());
+    return new ContainerSet<>(getDelegate().keySet());
   }
 
   /**
@@ -200,7 +200,7 @@ public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> imple
   @Override
   public Collection<V> values()
   {
-    return new ContainerCollection<V>(getDelegate().values());
+    return new ContainerCollection<>(getDelegate().values());
   }
 
   /**

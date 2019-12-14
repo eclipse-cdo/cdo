@@ -158,7 +158,7 @@ public class CloneCDORepository extends CDORepositoryImpl
     IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
     IStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);
 
-    Map<String, String> props = new HashMap<String, String>();
+    Map<String, String> props = new HashMap<>();
     props.put(IRepository.Props.OVERRIDE_UUID, "");
     props.put(IRepository.Props.SUPPORTING_AUDITS, Boolean.toString(true));
     props.put(IRepository.Props.SUPPORTING_BRANCHES, Boolean.toString(true));

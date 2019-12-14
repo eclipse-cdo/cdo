@@ -79,7 +79,7 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
   @Override
   public CDOChangeSetData copy()
   {
-    List<CDOIDAndVersion> newObjectsCopy = new ArrayList<CDOIDAndVersion>(newObjects.size());
+    List<CDOIDAndVersion> newObjectsCopy = new ArrayList<>(newObjects.size());
     for (CDOIDAndVersion key : newObjects)
     {
       if (key instanceof CDORevision)
@@ -93,7 +93,7 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
       }
     }
 
-    List<CDORevisionKey> changedObjectsCopy = new ArrayList<CDORevisionKey>(changedObjects.size());
+    List<CDORevisionKey> changedObjectsCopy = new ArrayList<>(changedObjects.size());
     for (CDORevisionKey key : changedObjects)
     {
       if (key instanceof CDORevisionDelta)
@@ -107,7 +107,7 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
       }
     }
 
-    List<CDOIDAndVersion> detachedObjectsCopy = new ArrayList<CDOIDAndVersion>(detachedObjects.size());
+    List<CDOIDAndVersion> detachedObjectsCopy = new ArrayList<>(detachedObjects.size());
     for (CDOIDAndVersion key : detachedObjects)
     {
       detachedObjectsCopy.add(key);
@@ -141,9 +141,9 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
       }
     }
 
-    newObjects = new ArrayList<CDOIDAndVersion>(newMap.values());
-    changedObjects = new ArrayList<CDORevisionKey>(changedMap.values());
-    detachedObjects = new ArrayList<CDOIDAndVersion>(detachedMap.values());
+    newObjects = new ArrayList<>(newMap.values());
+    changedObjects = new ArrayList<>(changedMap.values());
+    detachedObjects = new ArrayList<>(detachedMap.values());
   }
 
   private void mergeChangedObject(CDORevisionKey key, Map<CDOID, CDOIDAndVersion> newMap, Map<CDOID, CDORevisionKey> changedMap)

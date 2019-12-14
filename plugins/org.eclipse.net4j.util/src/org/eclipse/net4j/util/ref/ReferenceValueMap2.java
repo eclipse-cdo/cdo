@@ -166,7 +166,7 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
 
   protected ReferenceQueue<V> createQueue()
   {
-    return new ReferenceQueue<V>();
+    return new ReferenceQueue<>();
   }
 
   /**
@@ -232,7 +232,7 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
     @Override
     protected KeyedReference<K, V> createReference(K key, V value, ReferenceQueue<V> queue)
     {
-      return new KeyedStrongReference<K, V>(key, value);
+      return new KeyedStrongReference<>(key, value);
     }
 
     @Override
@@ -259,7 +259,7 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
     @Override
     protected KeyedReference<K, V> createReference(K key, V value, ReferenceQueue<V> queue)
     {
-      return new KeyedSoftReference<K, V>(key, value, queue);
+      return new KeyedSoftReference<>(key, value, queue);
     }
   }
 
@@ -280,7 +280,7 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
     @Override
     protected KeyedReference<K, V> createReference(K key, V value, ReferenceQueue<V> queue)
     {
-      return new KeyedWeakReference<K, V>(key, value, queue);
+      return new KeyedWeakReference<>(key, value, queue);
     }
   }
 
@@ -426,7 +426,7 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
         V value = dereference(entry.getValue());
         if (value != null)
         {
-          nextEntry = new MapEntry<K, V>(lastKey, value);
+          nextEntry = new MapEntry<>(lastKey, value);
           return true;
         }
       }

@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public class EClassDetailsPageProvider implements IDetailsPageProvider
 {
-  private final Map<EClass, IDetailsPage> pages = new java.util.HashMap<EClass, IDetailsPage>();
+  private final Map<EClass, IDetailsPage> pages = new java.util.HashMap<>();
 
   private EClassDetailsPageProvider()
   {
@@ -57,7 +57,7 @@ public class EClassDetailsPageProvider implements IDetailsPageProvider
    */
   public static class Builder
   {
-    private final Map<EClass, IDetailsPage> pages = new java.util.HashMap<EClass, IDetailsPage>();
+    private final Map<EClass, IDetailsPage> pages = new java.util.HashMap<>();
 
     private final IActionBars actionBars;
 

@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -91,6 +91,7 @@ public class ArrowStyleImpl extends CDOObjectImpl implements ArrowStyle
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ArrowType getArrowSource()
   {
     return (ArrowType)eDynamicGet(NotationPackage.ARROW_STYLE__ARROW_SOURCE, NotationPackage.Literals.ARROW_STYLE__ARROW_SOURCE, true, true);
@@ -101,6 +102,7 @@ public class ArrowStyleImpl extends CDOObjectImpl implements ArrowStyle
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setArrowSource(ArrowType newArrowSource)
   {
     eDynamicSet(NotationPackage.ARROW_STYLE__ARROW_SOURCE, NotationPackage.Literals.ARROW_STYLE__ARROW_SOURCE, newArrowSource);
@@ -111,6 +113,7 @@ public class ArrowStyleImpl extends CDOObjectImpl implements ArrowStyle
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ArrowType getArrowTarget()
   {
     return (ArrowType)eDynamicGet(NotationPackage.ARROW_STYLE__ARROW_TARGET, NotationPackage.Literals.ARROW_STYLE__ARROW_TARGET, true, true);
@@ -121,6 +124,7 @@ public class ArrowStyleImpl extends CDOObjectImpl implements ArrowStyle
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setArrowTarget(ArrowType newArrowTarget)
   {
     eDynamicSet(NotationPackage.ARROW_STYLE__ARROW_TARGET, NotationPackage.Literals.ARROW_STYLE__ARROW_TARGET, newArrowTarget);

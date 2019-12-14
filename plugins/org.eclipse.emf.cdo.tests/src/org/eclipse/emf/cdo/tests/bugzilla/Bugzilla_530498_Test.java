@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -73,7 +73,8 @@ public class Bugzilla_530498_Test extends AbstractCDOTest
     assertTrue(transaction.getLastSavepoint().getDetachedObjects().containsKey(customerID));
     assertTrue(transaction.getLastSavepoint().getReattachedObjects().containsKey(customerID));
 
-    // Simulate DnD undo (or rollback of a EMF Transaction command doing the dnd: the ChangeDescription will be applied but
+    // Simulate DnD undo (or rollback of a EMF Transaction command doing the dnd: the ChangeDescription will be applied
+    // but
     // the concrete resulting command will result in a simple add (thanks to the EMF containment management, the
     // cancellation of the "Remove" step will do nothing).
     company1.getCustomers().add(customer);

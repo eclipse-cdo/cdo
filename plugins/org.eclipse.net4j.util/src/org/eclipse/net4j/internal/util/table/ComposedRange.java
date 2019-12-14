@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2014, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -28,9 +28,9 @@ final class ComposedRange extends AbstractRange
 {
   final Table table;
 
-  final List<Range> inclusions = new ArrayList<Range>();
+  final List<Range> inclusions = new ArrayList<>();
 
-  final List<Range> exclusions = new ArrayList<Range>();
+  final List<Range> exclusions = new ArrayList<>();
 
   public ComposedRange(ComposedRange source)
   {
@@ -76,7 +76,7 @@ final class ComposedRange extends AbstractRange
     Iterator<Cell> iterator = ComposedIterator.fromIterables(inclusions);
     if (!exclusions.isEmpty())
     {
-      Set<Cell> excludedCells = new HashSet<Cell>();
+      Set<Cell> excludedCells = new HashSet<>();
       for (Range range : exclusions)
       {
         for (Cell cell : range)
@@ -85,10 +85,10 @@ final class ComposedRange extends AbstractRange
         }
       }
 
-      iterator = new PredicateIterator<Cell>(Predicates.excluded(excludedCells), iterator);
+      iterator = new PredicateIterator<>(Predicates.excluded(excludedCells), iterator);
     }
 
-    return new PredicateIterator<Cell>(Predicates.unique(), iterator);
+    return new PredicateIterator<>(Predicates.unique(), iterator);
   }
 
   private static void addRanges(List<Range> list, Range... ranges)

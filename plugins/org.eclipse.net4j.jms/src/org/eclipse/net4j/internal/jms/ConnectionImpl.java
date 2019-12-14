@@ -66,7 +66,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
 
   private JMSClientProtocol protocol;
 
-  private List<SessionImpl> sessions = new ArrayList<SessionImpl>(0);
+  private List<SessionImpl> sessions = new ArrayList<>(0);
 
   private transient IListener sessionListener = new LifecycleEventConverter<Session>(this)
   {
@@ -78,7 +78,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
         removeSession((SessionImpl)element);
       }
 
-      return new SingleDeltaContainerEvent<Session>(container, element, kind);
+      return new SingleDeltaContainerEvent<>(container, element, kind);
     }
   };
 
@@ -329,7 +329,7 @@ public class ConnectionImpl extends Container<Session> implements Connection
 
   public SessionImpl[] getSessions()
   {
-    List<SessionImpl> result = new ArrayList<SessionImpl>(sessions.size());
+    List<SessionImpl> result = new ArrayList<>(sessions.size());
     synchronized (sessions)
     {
       for (SessionImpl session : sessions)

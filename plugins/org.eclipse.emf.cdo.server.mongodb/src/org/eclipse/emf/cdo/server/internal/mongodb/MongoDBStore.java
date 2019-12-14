@@ -93,7 +93,7 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
 
   private boolean branching;
 
-  public static Map<String, InternalRepository> REPOS = new HashMap<String, InternalRepository>();
+  public static Map<String, InternalRepository> REPOS = new HashMap<>();
 
   public MongoDBStore()
   {
@@ -391,7 +391,7 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
   {
     this.creationTime = creationTime;
 
-    Map<String, String> map = new HashMap<String, String>();
+    Map<String, String> map = new HashMap<>();
     map.put(Props.REPOSITORY_CREATED, Long.toString(creationTime));
     props.set(map);
   }
@@ -503,7 +503,7 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
   @Override
   protected void doDeactivate() throws Exception
   {
-    Map<String, String> map = new HashMap<String, String>();
+    Map<String, String> map = new HashMap<>();
     map.put(Props.GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
     map.put(Props.REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
     map.put(Props.NEXT_LOCAL_CDOID, Store.idToString(idHandler.getNextLocalObjectID()));
@@ -536,7 +536,7 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
 
   protected void reStart()
   {
-    Set<String> names = new HashSet<String>();
+    Set<String> names = new HashSet<>();
     names.add(Props.REPOSITORY_CREATED);
     names.add(Props.GRACEFULLY_SHUT_DOWN);
 

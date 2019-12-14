@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -160,7 +160,7 @@ public class Bugzilla_338884_Test extends AbstractCDOTest
     // Make the dummy object dirty to make the commit partial
     dummy.setName("dirty");
 
-    Set<EObject> committables = new HashSet<EObject>();
+    Set<EObject> committables = new HashSet<>();
     committables.add(referencer);
     committables.add(referencee);
     tx.setCommittables(committables);
@@ -185,7 +185,7 @@ public class Bugzilla_338884_Test extends AbstractCDOTest
     ContainedElementNoOpposite child = factory.createContainedElementNoOpposite();
     parent.getElements().add(child);
 
-    transaction.setCommittables(new HashSet<EObject>(Arrays.asList(new EObject[] { resource, parent })));
+    transaction.setCommittables(new HashSet<>(Arrays.asList(resource, parent)));
     try
     {
       transaction.commit();
@@ -223,7 +223,7 @@ public class Bugzilla_338884_Test extends AbstractCDOTest
     ContainedElementNoOpposite child = factory.createContainedElementNoOpposite();
     parent.setElement(child);
 
-    transaction.setCommittables(new HashSet<EObject>(Arrays.asList(new EObject[] { resource, parent })));
+    transaction.setCommittables(new HashSet<>(Arrays.asList(resource, parent)));
     try
     {
       transaction.commit();

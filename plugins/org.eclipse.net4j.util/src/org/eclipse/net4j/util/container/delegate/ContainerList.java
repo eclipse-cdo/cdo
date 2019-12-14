@@ -124,7 +124,7 @@ public class ContainerList<E> extends ContainerCollection<E> implements IContain
   public E set(int index, E element)
   {
     E removed = getDelegate().set(index, element);
-    ContainerEvent<E> event = new ContainerEvent<E>(ContainerList.this);
+    ContainerEvent<E> event = new ContainerEvent<>(ContainerList.this);
     event.addDelta(removed, IContainerDelta.Kind.REMOVED);
     event.addDelta(element, IContainerDelta.Kind.ADDED);
     IListener[] listeners = getListeners();
@@ -181,7 +181,7 @@ public class ContainerList<E> extends ContainerCollection<E> implements IContain
     public void set(E o)
     {
       getDelegate().set(o);
-      ContainerEvent<E> event = new ContainerEvent<E>(ContainerList.this);
+      ContainerEvent<E> event = new ContainerEvent<>(ContainerList.this);
       event.addDelta(last, IContainerDelta.Kind.REMOVED);
       event.addDelta(o, IContainerDelta.Kind.ADDED);
       IListener[] listeners = getListeners();

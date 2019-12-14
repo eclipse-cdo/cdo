@@ -108,7 +108,7 @@ public abstract class ReferenceValueMap<K, V> extends ReferenceValueMap2<K, V> i
     @Override
     protected KeyedReference<K, V> createReference(K key, V value, ReferenceQueue<V> queue)
     {
-      return new KeyedStrongReference<K, V>(key, value);
+      return new KeyedStrongReference<>(key, value);
     }
 
     @Override
@@ -135,7 +135,7 @@ public abstract class ReferenceValueMap<K, V> extends ReferenceValueMap2<K, V> i
     @Override
     protected KeyedReference<K, V> createReference(K key, V value, ReferenceQueue<V> queue)
     {
-      return new KeyedSoftReference<K, V>(key, value, queue);
+      return new KeyedSoftReference<>(key, value, queue);
     }
   }
 
@@ -156,7 +156,7 @@ public abstract class ReferenceValueMap<K, V> extends ReferenceValueMap2<K, V> i
     @Override
     protected KeyedReference<K, V> createReference(K key, V value, ReferenceQueue<V> queue)
     {
-      return new KeyedWeakReference<K, V>(key, value, queue);
+      return new KeyedWeakReference<>(key, value, queue);
     }
   }
 }

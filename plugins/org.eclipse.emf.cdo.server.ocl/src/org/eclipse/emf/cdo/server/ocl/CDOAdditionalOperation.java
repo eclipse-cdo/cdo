@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -174,7 +174,7 @@ abstract class CDOAdditionalOperation extends AdapterImpl
     @Override
     protected Object evaluate(CDOEvaluationEnvironment evalEnv, Object source, Object[] arguments)
     {
-      Collection<EObject> result = new ArrayList<EObject>();
+      Collection<EObject> result = new ArrayList<>();
 
       // Only resources and EObjects have contents
       Iterator<EObject> iter;
@@ -333,7 +333,7 @@ abstract class CDOAdditionalOperation extends AdapterImpl
     {
       if (stringAttributes == null)
       {
-        stringAttributes = new java.util.HashMap<EClass, List<EAttribute>>();
+        stringAttributes = new java.util.HashMap<>();
       }
 
       List<EAttribute> result = stringAttributes.get(eClass);
@@ -346,7 +346,7 @@ abstract class CDOAdditionalOperation extends AdapterImpl
           {
             if (result == null)
             {
-              result = new ArrayList<EAttribute>();
+              result = new ArrayList<>();
             }
             result.add(next);
           }

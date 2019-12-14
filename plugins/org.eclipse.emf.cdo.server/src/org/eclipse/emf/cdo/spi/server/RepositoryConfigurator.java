@@ -71,9 +71,9 @@ public class RepositoryConfigurator
 
   private IManagedContainer container;
 
-  private Map<String, IRepositoryFactory> repositoryFactories = new HashMap<String, IRepositoryFactory>();
+  private Map<String, IRepositoryFactory> repositoryFactories = new HashMap<>();
 
-  private Map<String, IStoreFactory> storeFactories = new HashMap<String, IStoreFactory>();
+  private Map<String, IStoreFactory> storeFactories = new HashMap<>();
 
   public RepositoryConfigurator()
   {
@@ -128,7 +128,7 @@ public class RepositoryConfigurator
    */
   protected IRepository[] configure(Document document) throws ParserConfigurationException, SAXException, IOException, CoreException
   {
-    List<IRepository> repositories = new ArrayList<IRepository>();
+    List<IRepository> repositories = new ArrayList<>();
     NodeList elements = document.getElementsByTagName("repository"); //$NON-NLS-1$
     for (int i = 0; i < elements.getLength(); i++)
     {
@@ -371,7 +371,7 @@ public class RepositoryConfigurator
 
   protected EPackage[] getInitialPackages(Element repositoryConfig)
   {
-    List<EPackage> result = new ArrayList<EPackage>();
+    List<EPackage> result = new ArrayList<>();
 
     NodeList initialPackagesConfig = repositoryConfig.getElementsByTagName("initialPackage"); //$NON-NLS-1$
     for (int i = 0; i < initialPackagesConfig.getLength(); i++)
@@ -440,23 +440,23 @@ public class RepositoryConfigurator
     {
       type = defaultType;
     }
-  
+
     String description = element.getAttribute("description"); //$NON-NLS-1$
     if (StringUtil.isEmpty(description))
     {
       Map<String, String> properties = getProperties(element, 1);
       description = PropertiesFactory.createDescription(properties);
     }
-  
+
     @SuppressWarnings("unchecked")
     T containerElement = (T)container.getElement(RepositoryActivityLog.Factory.PRODUCT_GROUP, type, description);
-  
+
     return containerElement;
   }
 
   public static Map<String, String> getProperties(Element element, int levels)
   {
-    Map<String, String> properties = new HashMap<String, String>();
+    Map<String, String> properties = new HashMap<>();
     collectProperties(element, "", properties, levels); //$NON-NLS-1$
     return properties;
   }

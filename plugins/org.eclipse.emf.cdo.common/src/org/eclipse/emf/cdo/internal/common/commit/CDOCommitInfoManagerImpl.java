@@ -39,13 +39,13 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
 
   private final Object cacheLock = new Object();
 
-  private final Map<CDOBranch, BranchInfoCache> branches = new WeakHashMap<CDOBranch, BranchInfoCache>();
+  private final Map<CDOBranch, BranchInfoCache> branches = new WeakHashMap<>();
 
   private CDOCommonRepository repository;
 
   private CommitInfoLoader loader;
 
-  private List<CDOCommitInfoHandler> handlers = new ArrayList<CDOCommitInfoHandler>();
+  private List<CDOCommitInfoHandler> handlers = new ArrayList<>();
 
   private long lastCommit = CDOBranchPoint.UNSPECIFIED_DATE;
 
@@ -53,7 +53,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
   {
     if (caching)
     {
-      cache = new ReferenceValueMap2.Soft<Long, CDOCommitInfo>();
+      cache = new ReferenceValueMap2.Soft<>();
     }
     else
     {
@@ -465,7 +465,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
 
     public void setBase(CDOCommitInfo base)
     {
-      this.base = new SoftReference<CDOCommitInfo>(base);
+      this.base = new SoftReference<>(base);
     }
 
     public CDOCommitInfo getFirst()
@@ -475,7 +475,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
 
     public void setFirst(CDOCommitInfo first)
     {
-      this.first = new SoftReference<CDOCommitInfo>(first);
+      this.first = new SoftReference<>(first);
     }
 
     public CDOCommitInfo getLast()
@@ -485,7 +485,7 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
 
     public void setLast(CDOCommitInfo last)
     {
-      this.last = new SoftReference<CDOCommitInfo>(last);
+      this.last = new SoftReference<>(last);
 
       long timeStamp = last.getTimeStamp();
       if (timeStamp > lastCommit)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -86,7 +86,7 @@ public class GenerateExampleBuilders
       }
     }
 
-    Map<String, String> substitutes = new HashMap<String, String>();
+    Map<String, String> substitutes = new HashMap<>();
     addSubtitute(substitutes, TOKEN_EXAMPLE_PROJECT, exampleProject.getName());
     addSubtitute(substitutes, TOKEN_INSTALLER_PROJECT, installerPoject.getName());
     addSubtitute(substitutes, TOKEN_RELEVANT_RESOURCES, relevantResources.toString());

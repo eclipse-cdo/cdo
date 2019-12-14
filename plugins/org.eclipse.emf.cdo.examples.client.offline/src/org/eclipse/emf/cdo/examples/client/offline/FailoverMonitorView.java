@@ -123,7 +123,7 @@ public class FailoverMonitorView extends AbstractView<FailoverMonitor>
         255, 0, 78, 77, 187, 88, 4, 164, 237, 96, 204, 5, 89, 168, 120, 48, 121, 197, 244, 10, 223, 5, 233, 240, 148, 170, 238, 222, 167, 105, 251, 48, 9, 237,
         20, 182, 137, 64, 6, 140, 255, 217 };
 
-    private SortedMap<String, Channel> channels = new TreeMap<String, Channel>();
+    private SortedMap<String, Channel> channels = new TreeMap<>();
 
     private Channel[] channelArray;
 

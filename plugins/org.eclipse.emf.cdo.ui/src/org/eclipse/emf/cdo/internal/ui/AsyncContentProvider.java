@@ -32,7 +32,7 @@ public class AsyncContentProvider implements ITreeContentProvider
 
   private ITreeContentProvider delegate;
 
-  private WeakHashMap<Object, LoadJob> loadJobs = new WeakHashMap<Object, LoadJob>();
+  private WeakHashMap<Object, LoadJob> loadJobs = new WeakHashMap<>();
 
   public AsyncContentProvider(ITreeContentProvider delegate)
   {
@@ -141,7 +141,7 @@ public class AsyncContentProvider implements ITreeContentProvider
   {
     private Object parent;
 
-    private List<Object> children = new ArrayList<Object>();
+    private List<Object> children = new ArrayList<>();
 
     public LoadJob(Object parent)
     {

@@ -462,7 +462,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
   public void testRemoveContained() throws Exception
   {
-    List<Category> categories = new ArrayList<Category>();
+    List<Category> categories = new ArrayList<>();
     categories.add(getModel1Factory().createCategory());
 
     Company company = getModel1Factory().createCompany();
@@ -519,7 +519,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
   public void testRemoveManyContained() throws Exception
   {
-    final List<Category> categories = new ArrayList<Category>();
+    final List<Category> categories = new ArrayList<>();
     categories.add(getModel1Factory().createCategory());
     categories.add(getModel1Factory().createCategory());
     categories.add(getModel1Factory().createCategory());
@@ -587,7 +587,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
   public void testRemoveXRef() throws Exception
   {
-    List<OrderDetail> details = new ArrayList<OrderDetail>();
+    List<OrderDetail> details = new ArrayList<>();
     details.add(getModel1Factory().createOrderDetail());
     details.add(getModel1Factory().createOrderDetail());
     details.add(getModel1Factory().createOrderDetail());
@@ -652,7 +652,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
   public void testRemoveManyXRef() throws Exception
   {
-    final List<OrderDetail> details = new ArrayList<OrderDetail>();
+    final List<OrderDetail> details = new ArrayList<>();
     details.add(getModel1Factory().createOrderDetail());
     details.add(getModel1Factory().createOrderDetail());
     details.add(getModel1Factory().createOrderDetail());
@@ -817,7 +817,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
    */
   private class CDOIDFilterChangeSubscriptionPolicy implements CDOAdapterPolicy
   {
-    private Set<CDOID> ids = new HashSet<CDOID>();
+    private Set<CDOID> ids = new HashSet<>();
 
     public CDOIDFilterChangeSubscriptionPolicy()
     {

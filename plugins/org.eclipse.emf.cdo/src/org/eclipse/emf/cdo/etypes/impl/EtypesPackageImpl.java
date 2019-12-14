@@ -127,7 +127,8 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
     // Obtain or create and register package
     EtypesPackageImpl theEtypesPackage = (EtypesPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof EtypesPackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new EtypesPackageImpl());
+        ? EPackage.Registry.INSTANCE.get(eNS_URI)
+        : new EtypesPackageImpl());
 
     isInited = true;
 

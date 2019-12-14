@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -40,11 +40,11 @@ public final class DBIndexAnnotation
 
   public static Set<List<EStructuralFeature>> getIndices(EClass eClass, EStructuralFeature[] allPersistentFeatures)
   {
-    Set<List<EStructuralFeature>> indices = new HashSet<List<EStructuralFeature>>();
+    Set<List<EStructuralFeature>> indices = new HashSet<>();
 
     for (EAnnotation annotation : EMFUtil.getAnnotations(eClass, SOURCE_URI))
     {
-      List<EStructuralFeature> features = new ArrayList<EStructuralFeature>();
+      List<EStructuralFeature> features = new ArrayList<>();
 
       String featureNames = annotation.getDetails().get(FEATURES);
       if (featureNames != null && featureNames.length() != 0)

@@ -61,7 +61,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
 
   private boolean reader;
 
-  private List<CommitContext> commitContexts = new ArrayList<CommitContext>();
+  private List<CommitContext> commitContexts = new ArrayList<>();
 
   private StoreAccessorBase(Store store, Object context, boolean reader)
   {
@@ -282,13 +282,13 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
 
     private InternalCDORevisionManager revisionManager;
 
-    private List<CDOPackageUnit> newPackageUnits = new ArrayList<CDOPackageUnit>();
+    private List<CDOPackageUnit> newPackageUnits = new ArrayList<>();
 
-    private List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>();
+    private List<CDOIDAndVersion> newObjects = new ArrayList<>();
 
-    private List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
+    private List<CDORevisionKey> changedObjects = new ArrayList<>();
 
-    private List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>();
+    private List<CDOIDAndVersion> detachedObjects = new ArrayList<>();
 
     public CommitDataRevisionHandler(IStoreAccessor storeAccessor, long timeStamp)
     {

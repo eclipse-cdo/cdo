@@ -98,7 +98,7 @@ public class NodeBImpl extends EObjectImpl implements NodeB
   {
     if (children == null)
     {
-      children = new EObjectContainmentWithInverseEList<NodeB>(NodeB.class, this, Model3Package.NODE_B__CHILDREN, Model3Package.NODE_B__PARENT);
+      children = new EObjectContainmentWithInverseEList<>(NodeB.class, this, Model3Package.NODE_B__CHILDREN, Model3Package.NODE_B__PARENT);
     }
     return children;
   }

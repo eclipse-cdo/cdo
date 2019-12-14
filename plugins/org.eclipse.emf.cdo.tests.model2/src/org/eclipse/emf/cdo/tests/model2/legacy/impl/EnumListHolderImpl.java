@@ -73,7 +73,7 @@ public class EnumListHolderImpl extends EObjectImpl implements EnumListHolder
   {
     if (enumList == null)
     {
-      enumList = new EDataTypeUniqueEList<VAT>(VAT.class, this, Model2Package.ENUM_LIST_HOLDER__ENUM_LIST);
+      enumList = new EDataTypeUniqueEList<>(VAT.class, this, Model2Package.ENUM_LIST_HOLDER__ENUM_LIST);
     }
     return enumList;
   }

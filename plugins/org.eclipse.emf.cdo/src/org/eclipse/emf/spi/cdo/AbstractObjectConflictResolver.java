@@ -185,7 +185,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
     private CDOChangeSetData createChangeSet(List<CDORevisionDelta> revisionDeltas)
     {
       List<CDOIDAndVersion> newObjects = Collections.emptyList();
-      List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
+      List<CDORevisionKey> changedObjects = new ArrayList<>();
       List<CDOIDAndVersion> detachedObjects = Collections.emptyList();
 
       for (CDORevisionDelta delta : revisionDeltas)
@@ -293,7 +293,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
      */
     public static class RevisionDeltaCollector implements IListener
     {
-      private Map<CDOObject, List<CDORevisionDelta>> deltas = new HashMap<CDOObject, List<CDORevisionDelta>>();
+      private Map<CDOObject, List<CDORevisionDelta>> deltas = new HashMap<>();
 
       public RevisionDeltaCollector()
       {
@@ -329,7 +329,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
               List<CDORevisionDelta> list = deltas.get(notifier);
               if (list == null)
               {
-                list = new ArrayList<CDORevisionDelta>();
+                list = new ArrayList<>();
                 deltas.put(notifier, list);
               }
 
@@ -386,7 +386,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
 
     protected boolean hasFeatureConflicts(CDORevisionDelta localDelta, List<CDORevisionDelta> remoteDeltas)
     {
-      Set<EStructuralFeature> features = new HashSet<EStructuralFeature>();
+      Set<EStructuralFeature> features = new HashSet<>();
       for (CDOFeatureDelta localFeatureDelta : localDelta.getFeatureDeltas())
       {
         features.add(localFeatureDelta.getFeature());

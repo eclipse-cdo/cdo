@@ -405,19 +405,19 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   private CDOChangeSetData createChangeSetData(Map<CDOID, CDOObject> newObjects, Map<CDOID, CDORevisionDelta> revisionDeltas,
       Map<CDOID, CDOObject> detachedObjects)
   {
-    List<CDOIDAndVersion> newList = new ArrayList<CDOIDAndVersion>(newObjects.size());
+    List<CDOIDAndVersion> newList = new ArrayList<>(newObjects.size());
     for (CDOObject object : newObjects.values())
     {
       newList.add(object.cdoRevision());
     }
 
-    List<CDORevisionKey> changedList = new ArrayList<CDORevisionKey>(revisionDeltas.size());
+    List<CDORevisionKey> changedList = new ArrayList<>(revisionDeltas.size());
     for (CDORevisionDelta delta : revisionDeltas.values())
     {
       changedList.add(delta);
     }
 
-    List<CDOIDAndVersion> detachedList = new ArrayList<CDOIDAndVersion>(detachedObjects.size());
+    List<CDOIDAndVersion> detachedList = new ArrayList<>(detachedObjects.size());
     for (CDOID id : detachedObjects.keySet())
     {
       detachedList.add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
@@ -449,7 +449,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
           return Collections.unmodifiableMap(getDirtyObjects());
         }
 
-        MultiMap.ListBased<CDOID, CDOObject> dirtyObjects = new MultiMap.ListBased<CDOID, CDOObject>();
+        MultiMap.ListBased<CDOID, CDOObject> dirtyObjects = new MultiMap.ListBased<>();
         for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
         {
           dirtyObjects.getDelegates().add(savepoint.getDirtyObjects());
@@ -518,7 +518,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
           return Collections.unmodifiableMap(getBaseNewObjects());
         }
 
-        MultiMap.ListBased<CDOID, CDORevision> newObjects = new MultiMap.ListBased<CDOID, CDORevision>();
+        MultiMap.ListBased<CDOID, CDORevision> newObjects = new MultiMap.ListBased<>();
         for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
         {
           newObjects.getDelegates().add(savepoint.getBaseNewObjects());
@@ -552,7 +552,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
 
         InternalCDOSavepoint firstSavePoint = getFirstSavePoint();
         boolean multiSavepoint = firstSavePoint.getNextSavepoint() != null;
-        Set<CDOFeatureDelta> originalFeatureDeltas = multiSavepoint ? new HashSet<CDOFeatureDelta>() : null;
+        Set<CDOFeatureDelta> originalFeatureDeltas = multiSavepoint ? new HashSet<>() : null;
 
         // We need to combine the results for all deltas in different savepoints.
         Map<CDOID, CDORevisionDelta> allRevisionDeltas = CDOIDUtil.createMap();

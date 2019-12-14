@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -257,7 +257,7 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
   {
     try
     {
-      List<EObject> selectedObjects = new ArrayList<EObject>();
+      List<EObject> selectedObjects = new ArrayList<>();
       ObjectType firstObjectType = null;
 
       for (Iterator<?> it = selection.iterator(); it.hasNext();)
@@ -379,7 +379,7 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
         return false;
       }
 
-      Set<Object> targetPath = new HashSet<Object>(path);
+      Set<Object> targetPath = new HashSet<>(path);
 
       for (EObject object : objects)
       {
@@ -415,7 +415,7 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
               copier = new EcoreUtil.Copier();
             }
 
-            List<EObject> transactionalObjects = new ArrayList<EObject>();
+            List<EObject> transactionalObjects = new ArrayList<>();
             for (int i = 0; i < objects.length; i++)
             {
               EObject object = objects[i];
@@ -540,7 +540,7 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
     {
       boolean nameConflict = false;
       String resourceName = resourceNode.getName();
-      Set<String> names = new HashSet<String>();
+      Set<String> names = new HashSet<>();
 
       for (Object existingChild : targetContents)
       {
@@ -656,7 +656,7 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
           }
         }
 
-        Map<EReference, FeatureUsage> usages = new HashMap<EReference, FeatureUsage>();
+        Map<EReference, FeatureUsage> usages = new HashMap<>();
         for (EReference feature : target.eClass().getEAllContainments())
         {
           usages.put(feature, new FeatureUsage(feature));

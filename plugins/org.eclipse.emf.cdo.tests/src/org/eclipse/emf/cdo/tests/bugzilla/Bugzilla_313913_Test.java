@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -60,7 +60,7 @@ public class Bugzilla_313913_Test extends AbstractCDOTest
     view3.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     view3.getObject(container).eAdapters().add(new TestAdapter());
 
-    List<Task> tasks = new ArrayList<Task>(container.getTasks());
+    List<Task> tasks = new ArrayList<>(container.getTasks());
     container.getTasks().removeAll(tasks);
 
     container.getTasks().add(getModel2Factory().createTask());

@@ -79,7 +79,8 @@ public class DerivedPackageImpl extends EPackageImpl implements DerivedPackage
 
     // Obtain or create and register package
     DerivedPackageImpl theDerivedPackage = (DerivedPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof DerivedPackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new DerivedPackageImpl());
+        ? EPackage.Registry.INSTANCE.get(eNS_URI)
+        : new DerivedPackageImpl());
 
     isInited = true;
 

@@ -91,7 +91,7 @@ public class EdgeTargetImpl extends EObjectImpl implements EdgeTarget
   {
     if (outgoingEdges == null)
     {
-      outgoingEdges = new EObjectWithInverseResolvingEList<Edge>(Edge.class, this, Model3Package.EDGE_TARGET__OUTGOING_EDGES, Model3Package.EDGE__SOURCE_NODE);
+      outgoingEdges = new EObjectWithInverseResolvingEList<>(Edge.class, this, Model3Package.EDGE_TARGET__OUTGOING_EDGES, Model3Package.EDGE__SOURCE_NODE);
     }
     return outgoingEdges;
   }
@@ -106,7 +106,7 @@ public class EdgeTargetImpl extends EObjectImpl implements EdgeTarget
   {
     if (incomingEdges == null)
     {
-      incomingEdges = new EObjectWithInverseResolvingEList<Edge>(Edge.class, this, Model3Package.EDGE_TARGET__INCOMING_EDGES, Model3Package.EDGE__TARGET_NODE);
+      incomingEdges = new EObjectWithInverseResolvingEList<>(Edge.class, this, Model3Package.EDGE_TARGET__INCOMING_EDGES, Model3Package.EDGE__TARGET_NODE);
     }
     return incomingEdges;
   }

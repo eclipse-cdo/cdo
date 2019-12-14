@@ -188,7 +188,7 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
   {
     if (containmentList == null)
     {
-      containmentList = new EObjectContainmentEList.Resolving<BaseObject>(BaseObject.class, this, Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_LIST);
+      containmentList = new EObjectContainmentEList.Resolving<>(BaseObject.class, this, Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_LIST);
     }
     return containmentList;
   }

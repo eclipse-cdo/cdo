@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -58,6 +58,7 @@ public class DataTypeStyleImpl extends NamedStyleImpl implements DataTypeStyle
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getInstanceType()
   {
     return (EDataType)eDynamicGet(NotationPackage.DATA_TYPE_STYLE__INSTANCE_TYPE, NotationPackage.Literals.DATA_TYPE_STYLE__INSTANCE_TYPE, true, true);
@@ -78,6 +79,7 @@ public class DataTypeStyleImpl extends NamedStyleImpl implements DataTypeStyle
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setInstanceType(EDataType newInstanceType)
   {
     eDynamicSet(NotationPackage.DATA_TYPE_STYLE__INSTANCE_TYPE, NotationPackage.Literals.DATA_TYPE_STYLE__INSTANCE_TYPE, newInstanceType);
@@ -88,6 +90,7 @@ public class DataTypeStyleImpl extends NamedStyleImpl implements DataTypeStyle
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public String getStringFromObject(Object objectValue)
   {
     if (getInstanceType() == null && objectValue instanceof String)
@@ -102,6 +105,7 @@ public class DataTypeStyleImpl extends NamedStyleImpl implements DataTypeStyle
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public Object getObjectFromString(String stringValue)
   {
     if (getInstanceType() == null)

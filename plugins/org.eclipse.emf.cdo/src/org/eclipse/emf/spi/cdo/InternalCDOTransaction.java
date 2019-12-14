@@ -208,7 +208,7 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
 
     private Map<CDOID, CDOID> idMappings = CDOIDUtil.createMap();
 
-    private List<CDOID> adjustedObjects = new ArrayList<CDOID>();
+    private List<CDOID> adjustedObjects = new ArrayList<>();
 
     public ApplyChangeSetResult()
     {

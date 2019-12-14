@@ -28,7 +28,7 @@ public class ServerBuddy extends Buddy
 
   public ServerBuddy(IAccount account, String[] facilityTypes)
   {
-    super(null, new HashSet<String>(Arrays.asList(facilityTypes)));
+    super(null, new HashSet<>(Arrays.asList(facilityTypes)));
     this.account = account;
   }
 

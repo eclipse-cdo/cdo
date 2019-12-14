@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -44,7 +44,7 @@ public class BidiMap<K, V> extends AbstractMap<K, V>
 
   public BidiMap(Class<K> keyClass, Class<V> valueClass)
   {
-    this(keyClass, valueClass, new HashMap<Object, Object>());
+    this(keyClass, valueClass, new HashMap<>());
   }
 
   public final Class<K> getKeyClass()
@@ -59,7 +59,7 @@ public class BidiMap<K, V> extends AbstractMap<K, V>
 
   public final Map<V, K> invert()
   {
-    return new BidiMap<V, K>(valueClass, keyClass, map);
+    return new BidiMap<>(valueClass, keyClass, map);
   }
 
   @Override

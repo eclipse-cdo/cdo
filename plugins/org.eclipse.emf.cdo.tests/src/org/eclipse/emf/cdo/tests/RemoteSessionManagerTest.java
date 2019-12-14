@@ -30,7 +30,7 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
 {
   public void testRemoteSessionOpened() throws Exception
   {
-    final AsyncResult<Integer> result1 = new AsyncResult<Integer>();
+    final AsyncResult<Integer> result1 = new AsyncResult<>();
 
     CDOSession session1 = openSession();
     session1.getRemoteSessionManager().addListener(new ContainerEventAdapter<CDORemoteSession>()
@@ -51,7 +51,7 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
 
   public void testRemoteSessionClosed() throws Exception
   {
-    final AsyncResult<Integer> result1 = new AsyncResult<Integer>();
+    final AsyncResult<Integer> result1 = new AsyncResult<>();
 
     CDOSession session1 = openSession();
     session1.getRemoteSessionManager().addListener(new ContainerEventAdapter<CDORemoteSession>()
@@ -73,7 +73,7 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
 
   public void testSubscribeByForce() throws Exception
   {
-    final AsyncResult<Integer> result1 = new AsyncResult<Integer>();
+    final AsyncResult<Integer> result1 = new AsyncResult<>();
 
     CDOSession session1 = openSession();
     session1.getRemoteSessionManager().addListener(new IListener()
@@ -106,7 +106,7 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
 
   public void testSubscribeByListen() throws Exception
   {
-    final AsyncResult<Integer> result1 = new AsyncResult<Integer>();
+    final AsyncResult<Integer> result1 = new AsyncResult<>();
 
     CDOSession session1 = openSession();
     session1.getRemoteSessionManager().addListener(new IListener()
@@ -145,7 +145,7 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
 
   public void testUnsubscribeByForce() throws Exception
   {
-    final AsyncResult<Integer> result1 = new AsyncResult<Integer>();
+    final AsyncResult<Integer> result1 = new AsyncResult<>();
 
     CDOSession session1 = openSession();
     session1.getRemoteSessionManager().addListener(new IListener()
@@ -183,8 +183,8 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
 
   public void testUnsubscribeByListen() throws Exception
   {
-    final AsyncResult<Integer> subscribed = new AsyncResult<Integer>();
-    final AsyncResult<Integer> unsubscribed = new AsyncResult<Integer>();
+    final AsyncResult<Integer> subscribed = new AsyncResult<>();
+    final AsyncResult<Integer> unsubscribed = new AsyncResult<>();
 
     CDOSession session1 = openSession();
     session1.getRemoteSessionManager().addListener(new IListener()
@@ -229,7 +229,7 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
 
   public void testCustomData() throws Exception
   {
-    final AsyncResult<byte[]> result1 = new AsyncResult<byte[]>();
+    final AsyncResult<byte[]> result1 = new AsyncResult<>();
 
     CDOSession session1 = openSession();
     session1.getRemoteSessionManager().addListener(new IListener()
@@ -259,7 +259,7 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
 
   public void testCustomDataLocallyUnsubscribed() throws Exception
   {
-    final AsyncResult<byte[]> result1 = new AsyncResult<byte[]>();
+    final AsyncResult<byte[]> result1 = new AsyncResult<>();
 
     CDOSession session1 = openSession();
     session1.getRemoteSessionManager().addListener(new IListener()

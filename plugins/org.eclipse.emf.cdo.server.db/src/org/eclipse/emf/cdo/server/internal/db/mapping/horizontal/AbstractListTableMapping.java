@@ -221,7 +221,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
   {
     if (keyFields == null)
     {
-      List<FieldInfo> list = new ArrayList<FieldInfo>(3);
+      List<FieldInfo> list = new ArrayList<>(3);
 
       IDBStore store = getMappingStrategy().getStore();
       DBType type = store.getIDHandler().getDBType();

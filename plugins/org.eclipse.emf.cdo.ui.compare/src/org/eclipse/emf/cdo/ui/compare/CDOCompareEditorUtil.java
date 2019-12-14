@@ -103,13 +103,13 @@ public class CDOCompareEditorUtil
    */
   public static final String PROP_COMPARISON_IMAGE = "comparison.image";
 
-  private static final ThreadLocal<String> COMPARISON_TITLE = new ThreadLocal<String>();
+  private static final ThreadLocal<String> COMPARISON_TITLE = new ThreadLocal<>();
 
-  private static final ThreadLocal<Boolean> ACTIVATE_EDITOR = new ThreadLocal<Boolean>();
+  private static final ThreadLocal<Boolean> ACTIVATE_EDITOR = new ThreadLocal<>();
 
-  private static final ThreadLocal<Boolean> SUPPRESS_COMMIT = new ThreadLocal<Boolean>();
+  private static final ThreadLocal<Boolean> SUPPRESS_COMMIT = new ThreadLocal<>();
 
-  private static final ThreadLocal<List<Runnable>> DISPOSE_RUNNABLES = new ThreadLocal<List<Runnable>>();
+  private static final ThreadLocal<List<Runnable>> DISPOSE_RUNNABLES = new ThreadLocal<>();
 
   /**
    * @since 4.4
@@ -451,7 +451,7 @@ public class CDOCompareEditorUtil
     }
     else
     {
-      final EList<Diff> differences = new BasicEList<Diff>();
+      final EList<Diff> differences = new BasicEList<>();
 
       UIUtil.getDisplay().syncExec(new Runnable()
       {
@@ -669,7 +669,7 @@ public class CDOCompareEditorUtil
     List<Runnable> list = DISPOSE_RUNNABLES.get();
     if (list == null)
     {
-      list = new ArrayList<Runnable>();
+      list = new ArrayList<>();
       DISPOSE_RUNNABLES.set(list);
     }
 

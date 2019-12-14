@@ -196,7 +196,7 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
   {
     try
     {
-      List<AfterRecoveryRunnable> runnables = new ArrayList<AfterRecoveryRunnable>();
+      List<AfterRecoveryRunnable> runnables = new ArrayList<>();
       for (InternalCDOView view : getViews())
       {
         runnables.add(new OpenViewRunnable(view));

@@ -72,7 +72,7 @@ public class PolygonImpl extends EObjectImpl implements Polygon
   {
     if (points == null)
     {
-      points = new EDataTypeUniqueEList<Point>(Point.class, this, Model3Package.POLYGON__POINTS);
+      points = new EDataTypeUniqueEList<>(Point.class, this, Model3Package.POLYGON__POINTS);
     }
     return points;
   }

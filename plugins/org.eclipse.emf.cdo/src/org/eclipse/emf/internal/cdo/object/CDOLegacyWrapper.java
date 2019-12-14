@@ -81,9 +81,9 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    * This ThreadLocal map stores all pre-registered objects. This avoids a never-ending loop when setting the container
    * of an object.
    */
-  private static ThreadLocal<Map<CDOID, CDOLegacyWrapper>> wrapperRegistry = new InheritableThreadLocal<Map<CDOID, CDOLegacyWrapper>>();
+  private static ThreadLocal<Map<CDOID, CDOLegacyWrapper>> wrapperRegistry = new InheritableThreadLocal<>();
 
-  private static ThreadLocal<Counter> recursionCounter = new InheritableThreadLocal<Counter>();
+  private static ThreadLocal<Counter> recursionCounter = new InheritableThreadLocal<>();
 
   protected ViewAndState viewAndState;
 

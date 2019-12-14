@@ -629,7 +629,7 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
         return targetIDs;
       }
 
-      Set<CDOID> ids = new HashSet<CDOID>();
+      Set<CDOID> ids = new HashSet<>();
       ids.addAll(targetIDs);
       ids.addAll(sourceIDs);
       return ids;

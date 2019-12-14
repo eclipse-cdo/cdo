@@ -88,7 +88,7 @@ public class ImportResourceAction extends AbstractViewAction
 
     // Source Resource
     Resource source = sourceSet.getResource(sourceURI, true);
-    List<EObject> sourceContents = new ArrayList<EObject>(source.getContents());
+    List<EObject> sourceContents = new ArrayList<>(source.getContents());
 
     // Target Resource
     Resource target = transaction.createResource(targetPath);

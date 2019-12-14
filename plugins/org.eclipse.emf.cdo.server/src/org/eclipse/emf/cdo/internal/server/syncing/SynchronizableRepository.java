@@ -182,7 +182,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   @Override
   public Object[] getElements()
   {
-    List<Object> list = new ArrayList<Object>(Arrays.asList(super.getElements()));
+    List<Object> list = new ArrayList<>(Arrays.asList(super.getElements()));
     list.add(synchronizer);
     return list.toArray();
   }
@@ -241,7 +241,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     try
     {
       StoreThreadLocal.setSession(replicatorSession);
-      final List<String> areaIDs = new LinkedList<String>();
+      final List<String> areaIDs = new LinkedList<>();
       getLockingManager().getLockAreas(null, new LockArea.Handler()
       {
         @Override
@@ -380,7 +380,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     try
     {
       view = SyncingUtil.openViewWithLockArea(replicatorSession, lockManager, viewedBranch, durableLockingID);
-      List<Object> lockables = new LinkedList<Object>();
+      List<Object> lockables = new LinkedList<>();
 
       for (CDOLockState lockState : lockChangeInfo.getLockStates())
       {
@@ -538,7 +538,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
   private Map<CDOBranch, TimeRange> replicateRawGetBranches(long fromCommitTime, long toCommitTime)
   {
-    final Map<CDOBranch, TimeRange> branches = new HashMap<CDOBranch, TimeRange>();
+    final Map<CDOBranch, TimeRange> branches = new HashMap<>();
     CDOCommitInfoHandler handler = new CDOCommitInfoHandler()
     {
       @Override
@@ -622,7 +622,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       }
       else
       {
-        Set<String> names = new HashSet<String>();
+        Set<String> names = new HashSet<>();
         names.add(PROP_LAST_REPLICATED_BRANCH_ID);
         names.add(PROP_LAST_REPLICATED_COMMIT_TIME);
 
@@ -666,7 +666,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   {
     stopSynchronization();
 
-    Map<String, String> map = new HashMap<String, String>();
+    Map<String, String> map = new HashMap<>();
     map.put(PROP_LAST_REPLICATED_BRANCH_ID, Integer.toString(lastReplicatedBranchID));
     map.put(PROP_LAST_REPLICATED_COMMIT_TIME, Long.toString(lastReplicatedCommitTime));
     map.put(PROP_GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2016, 2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2016, 2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -38,7 +38,7 @@ import java.util.Map.Entry;
  */
 public class RefreshSessionIndication extends CDOServerReadIndication
 {
-  private Map<CDOBranch, List<CDORevisionKey>> viewedRevisions = new HashMap<CDOBranch, List<CDORevisionKey>>();
+  private Map<CDOBranch, List<CDORevisionKey>> viewedRevisions = new HashMap<>();
 
   private long lastUpdateTime;
 
@@ -72,7 +72,7 @@ public class RefreshSessionIndication extends CDOServerReadIndication
     for (int i = 0; i < branches; i++)
     {
       CDOBranch branch = in.readCDOBranch();
-      List<CDORevisionKey> revisions = new ArrayList<CDORevisionKey>();
+      List<CDORevisionKey> revisions = new ArrayList<>();
       viewedRevisions.put(branch, revisions);
       int size = in.readXInt();
       for (int j = 0; j < size; j++)

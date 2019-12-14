@@ -50,7 +50,7 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
 
   private String connectorID;
 
-  private transient Queue<ChannelOperation> outputOperations = new ConcurrentLinkedQueue<ChannelOperation>();
+  private transient Queue<ChannelOperation> outputOperations = new ConcurrentLinkedQueue<>();
 
   private transient long lastTraffic;
 

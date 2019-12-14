@@ -83,7 +83,7 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
     state = in.readEnum(State.class);
     storeType = in.readString();
 
-    Set<CDOID.ObjectType> objectIDTypes = new HashSet<ObjectType>();
+    Set<CDOID.ObjectType> objectIDTypes = new HashSet<>();
     int types = in.readInt();
     for (int i = 0; i < types; i++)
     {

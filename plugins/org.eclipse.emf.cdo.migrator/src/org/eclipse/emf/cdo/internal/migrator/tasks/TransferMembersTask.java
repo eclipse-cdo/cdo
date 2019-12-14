@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
  */
 public class TransferMembersTask extends ExpandTemplateTask
 {
-  private final List<SourceClass> sourceClasses = new ArrayList<SourceClass>();
+  private final List<SourceClass> sourceClasses = new ArrayList<>();
 
   private String importsPlaceholder = "IMPORTS";
 
@@ -150,9 +150,9 @@ public class TransferMembersTask extends ExpandTemplateTask
 
     private boolean imports = true;
 
-    private final List<SourceField> sourceFields = new ArrayList<SourceField>();
+    private final List<SourceField> sourceFields = new ArrayList<>();
 
-    private final List<SourceMethod> sourceMethods = new ArrayList<SourceMethod>();
+    private final List<SourceMethod> sourceMethods = new ArrayList<>();
 
     public File getFile()
     {
@@ -286,11 +286,11 @@ public class TransferMembersTask extends ExpandTemplateTask
     private static final Pattern METHOD_PATTERN = Pattern.compile(
         "[\\t ]*((public|private|protected|static|final|native|synchronized|abstract|strictfp)+\\s)+[\\$_\\w\\<\\>\\[\\]]*\\s+(([\\$_\\w]+)\\([^\\)]*\\)?)[^\\{;]*(.)");
 
-    public final Map<String, List<String>> imports = new LinkedHashMap<String, List<String>>();
+    public final Map<String, List<String>> imports = new LinkedHashMap<>();
 
-    public final Map<String, List<String>> fields = new LinkedHashMap<String, List<String>>();
+    public final Map<String, List<String>> fields = new LinkedHashMap<>();
 
-    public final Map<String, List<String>> methods = new LinkedHashMap<String, List<String>>();
+    public final Map<String, List<String>> methods = new LinkedHashMap<>();
 
     private final CDOTask task;
 
@@ -375,7 +375,7 @@ public class TransferMembersTask extends ExpandTemplateTask
         List<String> texts = result.get(name);
         if (texts == null)
         {
-          texts = new ArrayList<String>();
+          texts = new ArrayList<>();
           result.put(name, texts);
         }
 

@@ -83,6 +83,7 @@ public class DescriptionStyleImpl extends CDOObjectImpl implements DescriptionSt
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public String getDescription()
   {
     return (String)eDynamicGet(NotationPackage.DESCRIPTION_STYLE__DESCRIPTION, NotationPackage.Literals.DESCRIPTION_STYLE__DESCRIPTION, true, true);
@@ -93,6 +94,7 @@ public class DescriptionStyleImpl extends CDOObjectImpl implements DescriptionSt
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setDescription(String newDescription)
   {
     eDynamicSet(NotationPackage.DESCRIPTION_STYLE__DESCRIPTION, NotationPackage.Literals.DESCRIPTION_STYLE__DESCRIPTION, newDescription);

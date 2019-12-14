@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -201,28 +201,28 @@ public final class RealmUtil
 
   public static BasicEList<User> allUsers(EList<SecurityItem> items)
   {
-    BasicEList<User> result = new BasicEList<User>();
+    BasicEList<User> result = new BasicEList<>();
     allUsers(items, result);
     return result;
   }
 
   public static BasicEList<Group> allGroups(EList<SecurityItem> items)
   {
-    BasicEList<Group> result = new BasicEList<Group>();
+    BasicEList<Group> result = new BasicEList<>();
     allGroups(items, result);
     return result;
   }
 
   public static BasicEList<Role> allRoles(EList<SecurityItem> items)
   {
-    BasicEList<Role> result = new BasicEList<Role>();
+    BasicEList<Role> result = new BasicEList<>();
     allRoles(items, result);
     return result;
   }
 
   public static BasicEList<Permission> allPermissions(EList<SecurityItem> items)
   {
-    BasicEList<Permission> result = new BasicEList<Permission>();
+    BasicEList<Permission> result = new BasicEList<>();
     allPermissions(items, result);
     return result;
   }

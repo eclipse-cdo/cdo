@@ -60,7 +60,7 @@ public interface CDOCheckoutContentModifier
   {
     public static final Registry INSTANCE = new Registry();
 
-    private final Map<String, CDOCheckoutContentModifier> modifiers = new LinkedHashMap<String, CDOCheckoutContentModifier>();
+    private final Map<String, CDOCheckoutContentModifier> modifiers = new LinkedHashMap<>();
 
     private Registry()
     {
@@ -82,7 +82,7 @@ public interface CDOCheckoutContentModifier
           return null;
         }
 
-        return new ArrayList<CDOCheckoutContentModifier>(modifiers.values());
+        return new ArrayList<>(modifiers.values());
       }
     }
 

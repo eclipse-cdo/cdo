@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class TableLabelProvider<T> extends ManagedLabelProvider implements ITableLabelProvider, ITableColorProvider, ITableFontProvider
 {
-  private final List<Column<T>> columns = new ArrayList<Column<T>>();
+  private final List<Column<T>> columns = new ArrayList<>();
 
   private boolean headerVisible = true;
 

@@ -145,7 +145,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
   {
     // TODO add annotation processing here ...
     ITypeMapping.Registry registry = ITypeMapping.Registry.INSTANCE;
-    dbTypes = new ArrayList<DBType>(registry.getDefaultFeatureMapDBTypes());
+    dbTypes = new ArrayList<>(registry.getDefaultFeatureMapDBTypes());
   }
 
   private void initTable()
@@ -169,7 +169,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
 
       tagMap = CDOIDUtil.createMap();
       typeMappings = CDOIDUtil.createMap();
-      columnNames = new ArrayList<String>();
+      columnNames = new ArrayList<>();
 
       initTypeColumns(true);
 

@@ -110,7 +110,8 @@ public class BusinessPackageImpl extends EPackageImpl implements BusinessPackage
 
     // Obtain or create and register package
     BusinessPackageImpl theBusinessPackage = (BusinessPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof BusinessPackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new BusinessPackageImpl());
+        ? EPackage.Registry.INSTANCE.get(eNS_URI)
+        : new BusinessPackageImpl());
 
     isInited = true;
 

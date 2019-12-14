@@ -78,7 +78,7 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
       return properties;
     }
 
-    return new HashMap<String, String>();
+    return new HashMap<>();
   }
 
   @Override

@@ -119,7 +119,7 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
   {
     if (values == null)
     {
-      values = new EObjectResolvingEList<MangoValue>(MangoValue.class, this, MangoPackage.MANGO_VALUE_LIST__VALUES);
+      values = new EObjectResolvingEList<>(MangoValue.class, this, MangoPackage.MANGO_VALUE_LIST__VALUES);
     }
     return values;
   }

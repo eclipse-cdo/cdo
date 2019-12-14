@@ -45,7 +45,7 @@ public class Optimizer extends Lifecycle
 
   private final boolean async;
 
-  private final LinkedList<OptimizerTask> queue = new LinkedList<OptimizerTask>();
+  private final LinkedList<OptimizerTask> queue = new LinkedList<>();
 
   private Worker worker;
 

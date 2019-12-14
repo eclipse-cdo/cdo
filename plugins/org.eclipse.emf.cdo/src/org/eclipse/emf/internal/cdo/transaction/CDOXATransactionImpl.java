@@ -103,15 +103,15 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
    */
   private static boolean SEQUENTIAL_EXECUTION = true;
 
-  private List<InternalCDOTransaction> transactions = new ArrayList<InternalCDOTransaction>();
+  private List<InternalCDOTransaction> transactions = new ArrayList<>();
 
   private boolean allowRequestFromTransactionEnabled = true;
 
   private ExecutorService executorService = createExecutorService();
 
-  private Map<InternalCDOTransaction, InternalCDOXACommitContext> activeContexts = new HashMap<InternalCDOTransaction, InternalCDOXACommitContext>();
+  private Map<InternalCDOTransaction, InternalCDOXACommitContext> activeContexts = new HashMap<>();
 
-  private Map<InternalCDOTransaction, Set<CDOID>> requestedCDOIDs = new HashMap<InternalCDOTransaction, Set<CDOID>>();
+  private Map<InternalCDOTransaction, Set<CDOID>> requestedCDOIDs = new HashMap<>();
 
   private InternalCDOXASavepoint lastSavepoint = createSavepoint(null);
 
@@ -194,7 +194,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       Set<CDOID> ids = requestedCDOIDs.get(transaction);
       if (ids == null)
       {
-        ids = new HashSet<CDOID>();
+        ids = new HashSet<>();
         requestedCDOIDs.put(transaction, ids);
       }
 
@@ -224,7 +224,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
     try
     {
-      Map<Future<Object>, InternalCDOXACommitContext> futures = new HashMap<Future<Object>, InternalCDOXACommitContext>();
+      Map<Future<Object>, InternalCDOXACommitContext> futures = new HashMap<>();
       for (InternalCDOXACommitContext xaContext : xaContexts)
       {
         if (progressMonitor != null)
@@ -289,7 +289,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
   private List<InternalCDOTransaction> getTransactions(CDOViewSet viewSet)
   {
-    List<InternalCDOTransaction> transactions = new ArrayList<InternalCDOTransaction>();
+    List<InternalCDOTransaction> transactions = new ArrayList<>();
     for (CDOView view : viewSet.getViews())
     {
       if (view instanceof InternalCDOTransaction)
@@ -519,7 +519,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
   {
     synchronized (transactions)
     {
-      List<CDOSavepoint> savepoints = new ArrayList<CDOSavepoint>();
+      List<CDOSavepoint> savepoints = new ArrayList<>();
       for (InternalCDOTransaction transaction : transactions)
       {
         savepoints.add(transaction.getLastSavepoint());

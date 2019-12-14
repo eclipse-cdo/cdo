@@ -140,7 +140,7 @@ public class PropertiesMapImpl extends EObjectImpl implements PropertiesMap
   {
     if (persistentMap == null)
     {
-      persistentMap = new EcoreEMap<String, PropertiesMapEntryValue>(Model6Package.eINSTANCE.getPropertiesMapEntry(), PropertiesMapEntryImpl.class, this,
+      persistentMap = new EcoreEMap<>(Model6Package.eINSTANCE.getPropertiesMapEntry(), PropertiesMapEntryImpl.class, this,
           Model6Package.PROPERTIES_MAP__PERSISTENT_MAP);
     }
     return persistentMap;
@@ -156,7 +156,7 @@ public class PropertiesMapImpl extends EObjectImpl implements PropertiesMap
   {
     if (transientMap == null)
     {
-      transientMap = new EcoreEMap<String, PropertiesMapEntryValue>(Model6Package.eINSTANCE.getPropertiesMapEntry(), PropertiesMapEntryImpl.class, this,
+      transientMap = new EcoreEMap<>(Model6Package.eINSTANCE.getPropertiesMapEntry(), PropertiesMapEntryImpl.class, this,
           Model6Package.PROPERTIES_MAP__TRANSIENT_MAP);
     }
     return transientMap;

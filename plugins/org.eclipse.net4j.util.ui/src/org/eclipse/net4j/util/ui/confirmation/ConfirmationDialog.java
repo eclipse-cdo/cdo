@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -53,7 +53,7 @@ public class ConfirmationDialog extends MessageDialog
 
   private static String[] getButtonLabels(List<Confirmation> acceptableResponses)
   {
-    List<String> result = new ArrayList<String>(acceptableResponses.size());
+    List<String> result = new ArrayList<>(acceptableResponses.size());
 
     for (Confirmation confirmation : acceptableResponses)
     {
@@ -65,7 +65,7 @@ public class ConfirmationDialog extends MessageDialog
 
   private static List<Confirmation> inOrder(Collection<Confirmation> confirmations)
   {
-    List<Confirmation> result = new ArrayList<Confirmation>(confirmations);
+    List<Confirmation> result = new ArrayList<>(confirmations);
     Collections.sort(result);
     return result;
   }

@@ -101,7 +101,7 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
   {
     if (managers == null)
     {
-      managers = new EObjectResolvingEList<Manager>(Manager.class, this, Model5Package.TEST_FEATURE_MAP__MANAGERS);
+      managers = new EObjectResolvingEList<>(Manager.class, this, Model5Package.TEST_FEATURE_MAP__MANAGERS);
     }
     return managers;
   }
@@ -115,7 +115,7 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
   {
     if (doctors == null)
     {
-      doctors = new EObjectResolvingEList<Doctor>(Doctor.class, this, Model5Package.TEST_FEATURE_MAP__DOCTORS);
+      doctors = new EObjectResolvingEList<>(Doctor.class, this, Model5Package.TEST_FEATURE_MAP__DOCTORS);
     }
     return doctors;
   }

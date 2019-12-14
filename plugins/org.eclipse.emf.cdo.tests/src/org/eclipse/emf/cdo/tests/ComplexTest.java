@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2014, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2014, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -1077,7 +1077,7 @@ public class ComplexTest extends AbstractCDOTest
     CDOTransaction transaction3 = session.openTransaction();
     EList<EObject> elements = transaction3.getResource(resource1path).getContents();
     EList<EObject> containers = transaction3.getResource(resource2path).getContents();
-    List<EObject> elementToRemove = new ArrayList<EObject>();
+    List<EObject> elementToRemove = new ArrayList<>();
     for (EObject o : elements)
     {
       elementToRemove.add(o);
@@ -1129,7 +1129,7 @@ public class ComplexTest extends AbstractCDOTest
     transaction2.commit();
     CDOResource resource1FromTx2 = transaction2.getResource(resource1path);
     EList<EObject> elements = resource1FromTx2.getContents();
-    List<EObject> elementToRemove = new ArrayList<EObject>();
+    List<EObject> elementToRemove = new ArrayList<>();
     for (EObject o : elements)
     {
       elementToRemove.add(o);

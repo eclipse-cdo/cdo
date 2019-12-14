@@ -206,7 +206,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   {
     super.setUp();
 
-    sessions = new HashSet<CDOSession>();
+    sessions = new HashSet<>();
     sessionListener = new LifecycleEventAdapter()
     {
       @Override
@@ -303,7 +303,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   private Set<String> captureGlobalPackageRegistry()
   {
-    return new HashSet<String>(GLOBAL_REGISTRY.keySet());
+    return new HashSet<>(GLOBAL_REGISTRY.keySet());
   }
 
   private void removeDynamicPackagesFromGlobalRegistry(Set<String> urisToProtect)

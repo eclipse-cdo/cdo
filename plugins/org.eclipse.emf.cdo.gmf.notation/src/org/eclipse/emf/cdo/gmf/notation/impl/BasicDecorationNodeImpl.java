@@ -71,36 +71,43 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     return NotationPackage.Literals.BASIC_DECORATION_NODE;
   }
 
+  @Override
   public EList getSourceEdges()
   {
     return new EcoreEList.UnmodifiableEList(this, NotationPackage.eINSTANCE.getView_SourceEdges(), 0, null);
   }
 
+  @Override
   public EList getTargetEdges()
   {
     return new EcoreEList.UnmodifiableEList(this, NotationPackage.eINSTANCE.getView_TargetEdges(), 0, null);
   }
 
+  @Override
   public EList getPersistedChildren()
   {
     return new EcoreEList.UnmodifiableEList(this, NotationPackage.eINSTANCE.getView_PersistedChildren(), 0, null);
   }
 
+  @Override
   public EList getTransientChildren()
   {
     return new EcoreEList.UnmodifiableEList(this, NotationPackage.eINSTANCE.getView_TransientChildren(), 0, null);
   }
 
+  @Override
   public EList getChildren()
   {
     return ECollections.emptyEList();
   }
 
+  @Override
   public EList getStyles()
   {
     return new EcoreEList.UnmodifiableEList(this, NotationPackage.eINSTANCE.getView_TransientChildren(), 0, null);
   }
 
+  @Override
   public Style getStyle(EClass eClass)
   {
     if (eClass != null && NotationPackage.eINSTANCE.getStyle().isSuperTypeOf(eClass))
@@ -125,6 +132,7 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     return null;
   }
 
+  @Override
   public NamedStyle getNamedStyle(EClass eClass, String name)
   {
     if (eClass != null && eIsSet(NotationPackage.Literals.VIEW__STYLES) && NotationPackage.eINSTANCE.getNamedStyle().isSuperTypeOf(eClass))
@@ -144,6 +152,7 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     return null;
   }
 
+  @Override
   public LayoutConstraint createLayoutConstraint(EClass eClass)
   {
     LayoutConstraint newLayoutConstraint = (LayoutConstraint)eClass.getEPackage().getEFactoryInstance().create(eClass);
@@ -151,6 +160,7 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     return newLayoutConstraint;
   }
 
+  @Override
   public void setLayoutConstraint(LayoutConstraint newLayoutConstraint)
   {
     throw new UnsupportedOperationException("BasicDecorationNodeImpl#setLayoutConstraint(LayoutConstraint newLayoutConstraint)"); //$NON-NLS-1$
@@ -161,6 +171,7 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     return msgs;
   }
 
+  @Override
   public LayoutConstraint getLayoutConstraint()
   {
     return null;
@@ -321,21 +332,25 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     return eDynamicIsSet(featureID);
   }
 
+  @Override
   public boolean isVisible()
   {
     return ((Boolean)eDynamicGet(NotationPackage.VIEW__VISIBLE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__VISIBLE, true, true)).booleanValue();
   }
 
+  @Override
   public void setVisible(boolean newVisible)
   {
     eDynamicSet(NotationPackage.VIEW__VISIBLE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__VISIBLE, new Boolean(newVisible));
   }
 
+  @Override
   public String getType()
   {
     return (String)eDynamicGet(NotationPackage.VIEW__TYPE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__TYPE, true, true);
   }
 
+  @Override
   public void setType(String newType)
   {
     setTypeGen(newType == null ? null : newType.intern());
@@ -346,16 +361,19 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     eDynamicSet(NotationPackage.VIEW__TYPE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__TYPE, newType);
   }
 
+  @Override
   public boolean isMutable()
   {
     return ((Boolean)eDynamicGet(NotationPackage.VIEW__MUTABLE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__MUTABLE, true, true)).booleanValue();
   }
 
+  @Override
   public void setMutable(boolean newMutable)
   {
     eDynamicSet(NotationPackage.VIEW__MUTABLE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__MUTABLE, new Boolean(newMutable));
   }
 
+  @Override
   public EObject getElement()
   {
     if (!isSetElement())
@@ -381,21 +399,25 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     return (EObject)eDynamicGet(NotationPackage.VIEW__ELEMENT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__ELEMENT, false, true);
   }
 
+  @Override
   public void setElement(EObject newElement)
   {
     eDynamicSet(NotationPackage.VIEW__ELEMENT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__ELEMENT, newElement);
   }
 
+  @Override
   public void unsetElement()
   {
     eDynamicUnset(NotationPackage.VIEW__ELEMENT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__ELEMENT);
   }
 
+  @Override
   public boolean isSetElement()
   {
     return eDynamicIsSet(NotationPackage.VIEW__ELEMENT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__ELEMENT);
   }
 
+  @Override
   public Diagram getDiagram()
   {
     Diagram diagram = basicGetDiagram();
@@ -414,6 +436,7 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     return null;
   }
 
+  @Override
   public Node createChild(EClass eClass)
   {
     Node newChild = (Node)eClass.getEPackage().getEFactoryInstance().create(eClass);
@@ -421,6 +444,7 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     return newChild;
   }
 
+  @Override
   public Style createStyle(EClass eClass)
   {
     Style newStyle = (Style)eClass.getEPackage().getEFactoryInstance().create(eClass);
@@ -428,6 +452,7 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     return newStyle;
   }
 
+  @Override
   public void persistChildren()
   {
     if (eIsSet(NotationPackage.VIEW__TRANSIENT_CHILDREN))
@@ -436,12 +461,14 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     }
   }
 
+  @Override
   public void insertChild(View child)
   {
     persistChildren();
     getPersistedChildren().add(child);
   }
 
+  @Override
   public void insertChild(View child, boolean persisted)
   {
     List children = null;
@@ -456,6 +483,7 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     children.add(child);
   }
 
+  @Override
   public void insertChildAt(View child, int index)
   {
     persistChildren();
@@ -465,6 +493,7 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     }
   }
 
+  @Override
   public void removeChild(View child)
   {
     if (child.eContainer() == this)
@@ -481,6 +510,7 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     }
   }
 
+  @Override
   public void persist()
   {
     EObject eContainer = eContainer();
@@ -495,6 +525,7 @@ public class BasicDecorationNodeImpl extends org.eclipse.emf.cdo.ecore.impl.EMod
     }
   }
 
+  @Override
   public EList getVisibleChildren()
   {
     boolean persistedChildrenSet = eIsSet(NotationPackage.VIEW__PERSISTED_CHILDREN);

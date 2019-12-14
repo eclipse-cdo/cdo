@@ -871,7 +871,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
 
   private List<String> getURIFragmentPath(String uriFragment, int length)
   {
-    List<String> uriFragmentPath = new ArrayList<String>(4);
+    List<String> uriFragmentPath = new ArrayList<>(4);
     int start = 1;
     for (int i = 1; i < length; ++i)
     {
@@ -1011,7 +1011,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
       @Override
       public Iterator<EObject> getChildren(Object object)
       {
-        return object == this.object ? ((List<EObject>)object).iterator() : new ProperContentIterator<EObject>((EObject)object);
+        return object == this.object ? ((List<EObject>)object).iterator() : new ProperContentIterator<>((EObject)object);
       }
     };
   }
@@ -1358,7 +1358,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
   public void save(OutputStream outputStream, Map<?, ?> options) throws IOException
   {
     final String baseURI = getBaseURIOption(options);
-    final Map<CDOResource, Resource> resourceMappings = new HashMap<CDOResource, Resource>();
+    final Map<CDOResource, Resource> resourceMappings = new HashMap<>();
 
     class ExportResource extends XMIResourceImpl
     {

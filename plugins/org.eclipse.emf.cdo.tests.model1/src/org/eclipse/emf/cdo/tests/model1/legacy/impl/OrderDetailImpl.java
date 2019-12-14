@@ -95,7 +95,9 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
   public Order getOrder()
   {
     if (eContainerFeatureID() != Model1Package.ORDER_DETAIL__ORDER)
+    {
       return null;
+    }
     return (Order)eContainer();
   }
 
@@ -107,7 +109,9 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
   public Order basicGetOrder()
   {
     if (eContainerFeatureID() != Model1Package.ORDER_DETAIL__ORDER)
+    {
       return null;
+    }
     return (Order)eInternalContainer();
   }
 
@@ -128,21 +132,31 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
   @Override
   public void setOrder(Order newOrder)
   {
-    if (newOrder != eInternalContainer() || (eContainerFeatureID() != Model1Package.ORDER_DETAIL__ORDER && newOrder != null))
+    if (newOrder != eInternalContainer() || eContainerFeatureID() != Model1Package.ORDER_DETAIL__ORDER && newOrder != null)
     {
       if (EcoreUtil.isAncestor(this, newOrder))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newOrder != null)
+      {
         msgs = ((InternalEObject)newOrder).eInverseAdd(this, Model1Package.ORDER__ORDER_DETAILS, Order.class, msgs);
+      }
       msgs = basicSetOrder(newOrder, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_DETAIL__ORDER, newOrder, newOrder));
+    }
   }
 
   /**
@@ -159,7 +173,9 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
       if (product != oldProduct)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.ORDER_DETAIL__PRODUCT, oldProduct, product));
+        }
       }
     }
     return product;
@@ -186,9 +202,13 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
     {
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_DETAIL__PRODUCT, oldProduct, newProduct);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -204,15 +224,23 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
     {
       NotificationChain msgs = null;
       if (product != null)
+      {
         msgs = ((InternalEObject)product).eInverseRemove(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class, msgs);
+      }
       if (newProduct != null)
+      {
         msgs = ((InternalEObject)newProduct).eInverseAdd(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class, msgs);
+      }
       msgs = basicSetProduct(newProduct, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_DETAIL__PRODUCT, newProduct, newProduct));
+    }
   }
 
   /**
@@ -235,7 +263,9 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
     float oldPrice = price;
     price = newPrice;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_DETAIL__PRICE, oldPrice, price));
+    }
   }
 
   /**
@@ -249,11 +279,15 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
     {
     case Model1Package.ORDER_DETAIL__ORDER:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetOrder((Order)otherEnd, msgs);
     case Model1Package.ORDER_DETAIL__PRODUCT:
       if (product != null)
+      {
         msgs = ((InternalEObject)product).eInverseRemove(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class, msgs);
+      }
       return basicSetProduct((Product1)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -302,11 +336,15 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
     {
     case Model1Package.ORDER_DETAIL__ORDER:
       if (resolve)
+      {
         return getOrder();
+      }
       return basicGetOrder();
     case Model1Package.ORDER_DETAIL__PRODUCT:
       if (resolve)
+      {
         return getProduct();
+      }
       return basicGetProduct();
     case Model1Package.ORDER_DETAIL__PRICE:
       return getPrice();
@@ -385,7 +423,9 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (price: ");

@@ -338,7 +338,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
     try
     {
-      Map<String, String> result = new HashMap<String, String>();
+      Map<String, String> result = new HashMap<>();
       boolean allProperties = names == null || names.isEmpty();
       if (allProperties)
       {
@@ -441,7 +441,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
   public void putPersistentProperty(String key, String value)
   {
-    Map<String, String> map = new HashMap<String, String>();
+    Map<String, String> map = new HashMap<>();
     map.put(key, value);
 
     setPersistentProperties(map);
@@ -513,7 +513,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   @Override
   public Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
-    final Map<CDOBranch, List<CDORevision>> result = new HashMap<CDOBranch, List<CDORevision>>();
+    final Map<CDOBranch, List<CDORevision>> result = new HashMap<>();
 
     InternalSession session = null;
     if (!StoreThreadLocal.hasSession())
@@ -534,7 +534,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
               List<CDORevision> list = result.get(branch);
               if (list == null)
               {
-                list = new ArrayList<CDORevision>();
+                list = new ArrayList<>();
                 result.put(branch, list);
               }
 
@@ -584,7 +584,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   {
     this.creationTime = creationTime;
 
-    Map<String, String> map = new HashMap<String, String>();
+    Map<String, String> map = new HashMap<>();
     map.put(PROP_REPOSITORY_CREATED, Long.toString(creationTime));
     setPersistentProperties(map);
   }
@@ -734,7 +734,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     LifecycleUtil.deactivate(metaDataManager);
     LifecycleUtil.deactivate(idHandler);
 
-    Map<String, String> map = new HashMap<String, String>();
+    Map<String, String> map = new HashMap<>();
     map.put(PROP_GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
     map.put(PROP_REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
 
@@ -773,7 +773,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
       return true;
     }
 
-    Set<String> names = new HashSet<String>();
+    Set<String> names = new HashSet<>();
     names.add(PROP_REPOSITORY_CREATED);
 
     Map<String, String> map = getPersistentProperties(names);
@@ -789,7 +789,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
   protected void reStart() throws Exception
   {
-    Set<String> names = new HashSet<String>();
+    Set<String> names = new HashSet<>();
     names.add(PROP_REPOSITORY_CREATED);
     names.add(PROP_GRACEFULLY_SHUT_DOWN);
 

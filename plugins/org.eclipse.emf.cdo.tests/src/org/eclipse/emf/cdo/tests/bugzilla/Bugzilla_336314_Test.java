@@ -95,7 +95,7 @@ public class Bugzilla_336314_Test extends AbstractCDOTest
     moveIt.move(orderX, detailY);
 
     // Partial commit
-    Set<EObject> committables = new HashSet<EObject>(1);
+    Set<EObject> committables = new HashSet<>(1);
     committables.add(orderX);
     tx.setCommittables(committables);
 

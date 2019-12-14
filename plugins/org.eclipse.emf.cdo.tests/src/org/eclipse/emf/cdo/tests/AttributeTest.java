@@ -533,15 +533,15 @@ public class AttributeTest extends AbstractCDOTest
 
     assertEquals(true, points.containsAll(points));
 
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(9, 0) })));
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(9, 0) })));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point(3, 4), new Point(5, 6), new Point(7, 8), new Point(9, 0))));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point(5, 6), new Point(7, 8), new Point(9, 0))));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point(7, 8), new Point(9, 0))));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point(9, 0))));
 
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6), new Point(7, 8), new Point(0, 0) })));
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(0, 0) })));
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(0, 0) })));
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(0, 0) })));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point(3, 4), new Point(5, 6), new Point(7, 8), new Point(0, 0))));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point(5, 6), new Point(7, 8), new Point(0, 0))));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point(7, 8), new Point(0, 0))));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point(0, 0))));
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
@@ -551,30 +551,30 @@ public class AttributeTest extends AbstractCDOTest
     points = polygon.getPoints();
     assertEquals(true, points.containsAll(points));
 
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(9, 0) })));
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(9, 0) })));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point(3, 4), new Point(5, 6), new Point(7, 8), new Point(9, 0))));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point(5, 6), new Point(7, 8), new Point(9, 0))));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point(7, 8), new Point(9, 0))));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point(9, 0))));
 
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6), new Point(7, 8), new Point(0, 0) })));
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(0, 0) })));
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(0, 0) })));
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(0, 0) })));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point(3, 4), new Point(5, 6), new Point(7, 8), new Point(0, 0))));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point(5, 6), new Point(7, 8), new Point(0, 0))));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point(7, 8), new Point(0, 0))));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point(0, 0))));
 
     transaction.commit();
 
     points = polygon.getPoints();
     assertEquals(true, points.containsAll(points));
 
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(9, 0) })));
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(9, 0) })));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point(3, 4), new Point(5, 6), new Point(7, 8), new Point(9, 0))));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point(5, 6), new Point(7, 8), new Point(9, 0))));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point(7, 8), new Point(9, 0))));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point(9, 0))));
 
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6), new Point(7, 8), new Point(0, 0) })));
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(0, 0) })));
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(0, 0) })));
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(0, 0) })));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point(3, 4), new Point(5, 6), new Point(7, 8), new Point(0, 0))));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point(5, 6), new Point(7, 8), new Point(0, 0))));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point(7, 8), new Point(0, 0))));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point(0, 0))));
 
     session.close();
     session = openSession();
@@ -585,15 +585,15 @@ public class AttributeTest extends AbstractCDOTest
     points = polygon.getPoints();
     assertEquals(true, points.containsAll(points));
 
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(9, 0) })));
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(9, 0) })));
-    assertEquals(true, points.containsAll(Arrays.asList(new Point[] { new Point(9, 0) })));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point(3, 4), new Point(5, 6), new Point(7, 8), new Point(9, 0))));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point(5, 6), new Point(7, 8), new Point(9, 0))));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point(7, 8), new Point(9, 0))));
+    assertEquals(true, points.containsAll(Arrays.asList(new Point(9, 0))));
 
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(3, 4), new Point(5, 6), new Point(7, 8), new Point(0, 0) })));
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(5, 6), new Point(7, 8), new Point(0, 0) })));
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(7, 8), new Point(0, 0) })));
-    assertEquals(false, points.containsAll(Arrays.asList(new Point[] { new Point(0, 0) })));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point(3, 4), new Point(5, 6), new Point(7, 8), new Point(0, 0))));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point(5, 6), new Point(7, 8), new Point(0, 0))));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point(7, 8), new Point(0, 0))));
+    assertEquals(false, points.containsAll(Arrays.asList(new Point(0, 0))));
   }
 
   public void testManyValuedCustomDataType_IndexOf() throws Exception
@@ -827,7 +827,7 @@ public class AttributeTest extends AbstractCDOTest
    */
   public void testJavaObject() throws Exception
   {
-    Map<String, Number> salaries = new HashMap<String, Number>();
+    Map<String, Number> salaries = new HashMap<>();
     salaries.put("Eike", 5000);
     salaries.put("Martin", 6000.99);
     salaries.put("Ed", 7000f);

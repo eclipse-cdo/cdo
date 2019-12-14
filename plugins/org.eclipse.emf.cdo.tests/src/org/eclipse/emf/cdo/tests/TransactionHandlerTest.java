@@ -399,11 +399,11 @@ public class TransactionHandlerTest extends AbstractCDOTest
    */
   private static class CDOAccumulateTransactionHandler implements CDOTransactionHandler
   {
-    private List<CDOObject> listOfAddingObject = new ArrayList<CDOObject>();
+    private List<CDOObject> listOfAddingObject = new ArrayList<>();
 
-    private List<CDOObject> listOfDetachingObject = new ArrayList<CDOObject>();
+    private List<CDOObject> listOfDetachingObject = new ArrayList<>();
 
-    private List<CDOObject> listOfModifyinObject = new ArrayList<CDOObject>();
+    private List<CDOObject> listOfModifyinObject = new ArrayList<>();
 
     private int numberOfCommit;
 

@@ -71,7 +71,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   private IDBStore store;
 
-  private Map<EModelElement, CDOID> modelElementToMetaID = new HashMap<EModelElement, CDOID>();
+  private Map<EModelElement, CDOID> modelElementToMetaID = new HashMap<>();
 
   private Map<CDOID, EModelElement> metaIDToModelElement = CDOIDUtil.createMap();
 
@@ -358,7 +358,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   private Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection, long fromCommitTime, long toCommitTime, OMMonitor monitor)
   {
-    final Map<String, InternalCDOPackageUnit> packageUnits = new HashMap<String, InternalCDOPackageUnit>();
+    final Map<String, InternalCDOPackageUnit> packageUnits = new HashMap<>();
     IDBRowHandler unitRowHandler = new IDBRowHandler()
     {
       @Override
@@ -387,7 +387,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     DBUtil.select(connection, unitRowHandler, where, CDODBSchema.PACKAGE_UNITS_ID, CDODBSchema.PACKAGE_UNITS_ORIGINAL_TYPE,
         CDODBSchema.PACKAGE_UNITS_TIME_STAMP);
 
-    final Map<String, List<InternalCDOPackageInfo>> packageInfos = new HashMap<String, List<InternalCDOPackageInfo>>();
+    final Map<String, List<InternalCDOPackageInfo>> packageInfos = new HashMap<>();
     IDBRowHandler infoRowHandler = new IDBRowHandler()
     {
       @Override
@@ -401,7 +401,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
         List<InternalCDOPackageInfo> list = packageInfos.get(unit);
         if (list == null)
         {
-          list = new ArrayList<InternalCDOPackageInfo>();
+          list = new ArrayList<>();
           packageInfos.put(unit, list);
         }
 

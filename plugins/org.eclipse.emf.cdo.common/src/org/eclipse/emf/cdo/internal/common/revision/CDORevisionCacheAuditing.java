@@ -43,7 +43,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, CDORevisionCacheAuditing.class);
 
-  protected Map<Object, RevisionList> revisionLists = new HashMap<Object, RevisionList>();
+  protected Map<Object, RevisionList> revisionLists = new HashMap<>();
 
   public CDORevisionCacheAuditing()
   {
@@ -107,7 +107,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
   @Override
   public List<CDORevision> getCurrentRevisions()
   {
-    List<CDORevision> currentRevisions = new ArrayList<CDORevision>();
+    List<CDORevision> currentRevisions = new ArrayList<>();
     synchronized (revisionLists)
     {
       for (RevisionList revisionList : revisionLists.values())
@@ -126,7 +126,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
   @Override
   public Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
-    Map<CDOBranch, List<CDORevision>> result = new HashMap<CDOBranch, List<CDORevision>>();
+    Map<CDOBranch, List<CDORevision>> result = new HashMap<>();
     synchronized (revisionLists)
     {
       for (RevisionList list : revisionLists.values())
@@ -156,7 +156,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     CDOBranch branch = branchPoint.getBranch();
     checkBranch(branch);
 
-    List<CDORevision> result = new ArrayList<CDORevision>();
+    List<CDORevision> result = new ArrayList<>();
     synchronized (revisionLists)
     {
       for (Map.Entry<Object, RevisionList> entry : revisionLists.entrySet())
@@ -458,7 +458,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
           List<CDORevision> resultList = result.get(branch);
           if (resultList == null)
           {
-            resultList = new ArrayList<CDORevision>(1);
+            resultList = new ArrayList<>(1);
             result.put(branch, resultList);
           }
 

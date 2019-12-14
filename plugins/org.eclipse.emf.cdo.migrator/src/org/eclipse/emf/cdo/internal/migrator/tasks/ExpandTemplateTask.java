@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class ExpandTemplateTask extends CDOTask
 {
-  private final List<TemplateProperty> templateProperties = new ArrayList<TemplateProperty>();
+  private final List<TemplateProperty> templateProperties = new ArrayList<>();
 
   private File template;
 
@@ -129,7 +129,7 @@ public class ExpandTemplateTask extends CDOTask
 
   protected Map<String, String> getProperties()
   {
-    Map<String, String> result = new LinkedHashMap<String, String>();
+    Map<String, String> result = new LinkedHashMap<>();
 
     for (TemplateProperty templateProperty : templateProperties)
     {

@@ -230,9 +230,9 @@ public abstract class CDOServerImporter
 
     private IStoreAccessor.Raw accessor;
 
-    private Map<String, String> models = new HashMap<String, String>();
+    private Map<String, String> models = new HashMap<>();
 
-    private LinkedList<InternalCDOPackageUnit> packageUnits = new LinkedList<InternalCDOPackageUnit>();
+    private LinkedList<InternalCDOPackageUnit> packageUnits = new LinkedList<>();
 
     private List<InternalCDOPackageInfo> packageInfos;
 
@@ -279,7 +279,7 @@ public abstract class CDOServerImporter
 
       models.put(id, data);
       packageUnits.add(packageUnit);
-      packageInfos = new ArrayList<InternalCDOPackageInfo>();
+      packageInfos = new ArrayList<>();
       return packageUnit;
     }
 

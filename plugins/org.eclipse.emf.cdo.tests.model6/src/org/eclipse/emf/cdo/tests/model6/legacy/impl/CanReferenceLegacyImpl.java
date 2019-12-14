@@ -220,7 +220,7 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
   {
     if (multipleContainment == null)
     {
-      multipleContainment = new EObjectContainmentEList.Resolving<EObject>(EObject.class, this, Model6Package.CAN_REFERENCE_LEGACY__MULTIPLE_CONTAINMENT);
+      multipleContainment = new EObjectContainmentEList.Resolving<>(EObject.class, this, Model6Package.CAN_REFERENCE_LEGACY__MULTIPLE_CONTAINMENT);
     }
     return multipleContainment;
   }
@@ -284,7 +284,7 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
   {
     if (multipleReference == null)
     {
-      multipleReference = new EObjectResolvingEList<EObject>(EObject.class, this, Model6Package.CAN_REFERENCE_LEGACY__MULTIPLE_REFERENCE);
+      multipleReference = new EObjectResolvingEList<>(EObject.class, this, Model6Package.CAN_REFERENCE_LEGACY__MULTIPLE_REFERENCE);
     }
     return multipleReference;
   }

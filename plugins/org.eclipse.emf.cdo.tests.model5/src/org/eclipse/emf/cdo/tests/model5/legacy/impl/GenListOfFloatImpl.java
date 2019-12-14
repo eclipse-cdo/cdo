@@ -72,7 +72,7 @@ public class GenListOfFloatImpl extends EObjectImpl implements GenListOfFloat
   {
     if (elements == null)
     {
-      elements = new EDataTypeUniqueEList<Float>(Float.class, this, Model5Package.GEN_LIST_OF_FLOAT__ELEMENTS);
+      elements = new EDataTypeUniqueEList<>(Float.class, this, Model5Package.GEN_LIST_OF_FLOAT__ELEMENTS);
     }
     return elements;
   }

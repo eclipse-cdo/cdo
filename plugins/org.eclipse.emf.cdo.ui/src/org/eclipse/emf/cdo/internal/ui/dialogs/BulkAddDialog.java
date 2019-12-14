@@ -48,7 +48,7 @@ public class BulkAddDialog extends TitleAreaDialog
 
   private IWorkbenchPage page;
 
-  private List<EReference> features = new ArrayList<EReference>();
+  private List<EReference> features = new ArrayList<>();
 
   private EReference feature;
 

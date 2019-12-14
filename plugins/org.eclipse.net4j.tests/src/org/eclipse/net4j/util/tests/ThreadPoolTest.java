@@ -222,7 +222,7 @@ public class ThreadPoolTest extends AbstractOMTest
     private static ThreadFactory createThreadFactory()
     {
       final ThreadFactory factory = Executors.defaultThreadFactory();
-    
+
       return new ThreadFactory()
       {
         @Override

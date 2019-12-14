@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -302,8 +302,8 @@ public class AuditTest extends AbstractCDOTest
   @Requires(IRepositoryConfig.CAPABILITY_RESTARTABLE)
   public void testConsistentHistoryForIsMany() throws Exception
   {
-    ArrayList<List<Integer>> history = new ArrayList<List<Integer>>();
-    ArrayList<Long> timestamps = new ArrayList<Long>();
+    ArrayList<List<Integer>> history = new ArrayList<>();
+    ArrayList<Long> timestamps = new ArrayList<>();
 
     {
       CDOSession session = openSession();
@@ -314,46 +314,46 @@ public class AuditTest extends AbstractCDOTest
       resource.getContents().add(persistentList);
 
       timestamps.add(transaction.commit().getTimeStamp());
-      history.add(new ArrayList<Integer>(persistentList.getElements()));
+      history.add(new ArrayList<>(persistentList.getElements()));
 
       persistentList.getElements().add(1);
       persistentList.getElements().add(2);
       persistentList.getElements().add(3);
 
       timestamps.add(transaction.commit().getTimeStamp());
-      history.add(new ArrayList<Integer>(persistentList.getElements()));
+      history.add(new ArrayList<>(persistentList.getElements()));
 
       persistentList.getElements().add(1, 4);
 
       timestamps.add(transaction.commit().getTimeStamp());
-      history.add(new ArrayList<Integer>(persistentList.getElements()));
+      history.add(new ArrayList<>(persistentList.getElements()));
 
       persistentList.getElements().add(0, 5);
 
       timestamps.add(transaction.commit().getTimeStamp());
-      history.add(new ArrayList<Integer>(persistentList.getElements()));
+      history.add(new ArrayList<>(persistentList.getElements()));
 
       persistentList.getElements().move(1, 3);
 
       timestamps.add(transaction.commit().getTimeStamp());
-      history.add(new ArrayList<Integer>(persistentList.getElements()));
+      history.add(new ArrayList<>(persistentList.getElements()));
 
       persistentList.getElements().move(4, 2);
       persistentList.getElements().move(1, 3);
 
       timestamps.add(transaction.commit().getTimeStamp());
-      history.add(new ArrayList<Integer>(persistentList.getElements()));
+      history.add(new ArrayList<>(persistentList.getElements()));
 
       persistentList.getElements().remove(2);
 
       timestamps.add(transaction.commit().getTimeStamp());
-      history.add(new ArrayList<Integer>(persistentList.getElements()));
+      history.add(new ArrayList<>(persistentList.getElements()));
 
       persistentList.getElements().add(1, 2);
       persistentList.getElements().remove(2);
 
       timestamps.add(transaction.commit().getTimeStamp());
-      history.add(new ArrayList<Integer>(persistentList.getElements()));
+      history.add(new ArrayList<>(persistentList.getElements()));
 
       persistentList.getElements().clear();
       persistentList.getElements().add(6);
@@ -361,7 +361,7 @@ public class AuditTest extends AbstractCDOTest
       persistentList.getElements().add(8);
 
       timestamps.add(transaction.commit().getTimeStamp());
-      history.add(new ArrayList<Integer>(persistentList.getElements()));
+      history.add(new ArrayList<>(persistentList.getElements()));
 
       resource.getContents().clear();
 

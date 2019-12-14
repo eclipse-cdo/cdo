@@ -95,7 +95,7 @@ public class CDOExtentCreator implements OCLExtentCreator
 
   protected Set<EObject> createExtent(EClass eClass, IStoreAccessor accessor, CDOBranch branch, long timeStamp, final AtomicBoolean canceled)
   {
-    final Set<EObject> extent = new HashSet<EObject>();
+    final Set<EObject> extent = new HashSet<>();
     if (changeSetData != null)
     {
       List<CDOIDAndVersion> newObjects = changeSetData.getNewObjects();
@@ -254,7 +254,7 @@ public class CDOExtentCreator implements OCLExtentCreator
           }
 
           final Object mutex = new Object();
-          final LinkedList<CDOID> ids = new LinkedList<CDOID>();
+          final LinkedList<CDOID> ids = new LinkedList<>();
           final boolean[] done = { false };
 
           Thread thread = new Thread("OCLExtentIterator")

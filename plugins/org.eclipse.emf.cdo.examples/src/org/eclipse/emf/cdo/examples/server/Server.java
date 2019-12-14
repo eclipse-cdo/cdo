@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -80,7 +80,7 @@ public class Server
 
   private static Map<String, String> createProperties(String name)
   {
-    Map<String, String> props = new HashMap<String, String>();
+    Map<String, String> props = new HashMap<>();
     props.put(IRepository.Props.OVERRIDE_UUID, name);
     props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
     props.put(IRepository.Props.SUPPORTING_BRANCHES, "true");

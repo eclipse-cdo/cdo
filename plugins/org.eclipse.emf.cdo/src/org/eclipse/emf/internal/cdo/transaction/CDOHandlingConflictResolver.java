@@ -138,7 +138,7 @@ public class CDOHandlingConflictResolver extends CDOMergingConflictResolver impl
 
   protected List<ConflictHandler> getConflictHandlers(CDOTransaction transaction)
   {
-    List<ConflictHandler> result = new ArrayList<ConflictHandler>();
+    List<ConflictHandler> result = new ArrayList<>();
 
     IManagedContainer container = getContainer();
     String productGroup = ConflictHandler.Factory.PRODUCT_GROUP;

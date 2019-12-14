@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class ProbeCollector
 {
-  private final List<PerformanceRecord> performanceRecords = new ArrayList<PerformanceRecord>();
+  private final List<PerformanceRecord> performanceRecords = new ArrayList<>();
 
   protected PerformanceRecord createPerformanceRecord(IScenario scenario, String testName, String testCaseName, int runs)
   {

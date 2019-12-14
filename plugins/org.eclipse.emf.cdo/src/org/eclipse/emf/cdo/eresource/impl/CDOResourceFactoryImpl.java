@@ -30,7 +30,7 @@ import java.util.Set;
  */
 public class CDOResourceFactoryImpl implements CDOResourceFactory
 {
-  private Set<String> resourceSetClassNames = new HashSet<String>();
+  private Set<String> resourceSetClassNames = new HashSet<>();
 
   /**
    * @since 4.0

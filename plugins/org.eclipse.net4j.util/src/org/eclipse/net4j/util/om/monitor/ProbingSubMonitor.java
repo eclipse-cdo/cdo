@@ -97,11 +97,11 @@ public final class ProbingSubMonitor extends org.eclipse.net4j.util.om.monitor.S
 {
   private static final boolean TRACE = Boolean.getBoolean("submonitor.probing.trace");
 
-  private static final Map<StackTraceElement, Statistics> STATISTICS = new HashMap<StackTraceElement, Statistics>();
+  private static final Map<StackTraceElement, Statistics> STATISTICS = new HashMap<>();
 
-  private static final Map<Integer, KeyedWeakReference> MAP = new ConcurrentHashMap<Integer, KeyedWeakReference>();
+  private static final Map<Integer, KeyedWeakReference> MAP = new ConcurrentHashMap<>();
 
-  private static final ReferenceQueue<ProbingSubMonitor> QUEUE = new ReferenceQueue<ProbingSubMonitor>();
+  private static final ReferenceQueue<ProbingSubMonitor> QUEUE = new ReferenceQueue<>();
 
   private static final AtomicInteger COUNTER = new AtomicInteger();
 
@@ -121,7 +121,7 @@ public final class ProbingSubMonitor extends org.eclipse.net4j.util.om.monitor.S
 
   private final int key;
 
-  private final Map<StackTraceElement, Probe> probes = new HashMap<StackTraceElement, Probe>();
+  private final Map<StackTraceElement, Probe> probes = new HashMap<>();
 
   private StackTraceElement location = determineLocation();
 
@@ -524,11 +524,11 @@ public final class ProbingSubMonitor extends org.eclipse.net4j.util.om.monitor.S
       List<Row> newRows;
       if (rows == null)
       {
-        newRows = new ArrayList<Row>(10);
+        newRows = new ArrayList<>(10);
       }
       else
       {
-        newRows = new ArrayList<Row>(10 + rows.length);
+        newRows = new ArrayList<>(10 + rows.length);
         for (int i = 0; i < rows.length; i++)
         {
           Row row = rows[i];
@@ -655,7 +655,7 @@ public final class ProbingSubMonitor extends org.eclipse.net4j.util.om.monitor.S
           {
             if (forkTargets.length != 1 || probe.forkTargets.length != 1 || !forkTargets[0].equals(probe.forkTargets[0]))
             {
-              Set<StackTraceElement> set = new HashSet<StackTraceElement>();
+              Set<StackTraceElement> set = new HashSet<>();
               set.addAll(Arrays.asList(forkTargets));
               set.addAll(Arrays.asList(probe.forkTargets));
 

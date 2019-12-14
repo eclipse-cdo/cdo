@@ -60,9 +60,9 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 {
   public static final String KEY_VIEW_URI = "org.eclipse.emf.cdo.viewURI";
 
-  private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
+  private Set<InternalCDOView> views = new HashSet<>();
 
-  private Map<URI, InternalCDOView> mapOfViews = new HashMap<URI, InternalCDOView>();
+  private Map<URI, InternalCDOView> mapOfViews = new HashMap<>();
 
   private CDOResourceFactory resourceFactory;
 
@@ -70,7 +70,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   private ResourceSet resourceSet;
 
-  private ThreadLocal<Boolean> ignoreNotifications = new InheritableThreadLocal<Boolean>();
+  private ThreadLocal<Boolean> ignoreNotifications = new InheritableThreadLocal<>();
 
   public CDOViewSetImpl()
   {
@@ -184,7 +184,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
   @Override
   public void remove(InternalCDOView view)
   {
-    List<Resource> resToRemove = new ArrayList<Resource>();
+    List<Resource> resToRemove = new ArrayList<>();
 
     synchronized (views)
     {
@@ -359,7 +359,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   private void deregisterResources(Collection<?> potentialResources)
   {
-    List<CDOResource> allDirtyResources = new ArrayList<CDOResource>();
+    List<CDOResource> allDirtyResources = new ArrayList<>();
 
     try
     {
@@ -405,7 +405,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   private List<CDOResource> getDirtyResources(List<CDOResource> resources)
   {
-    List<CDOResource> dirtyResources = new ArrayList<CDOResource>();
+    List<CDOResource> dirtyResources = new ArrayList<>();
     for (CDOResource resource : resources)
     {
       switch (resource.cdoState())
@@ -423,7 +423,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   private Map<CDOView, List<CDOResource>> getResourcesPerView(Collection<?> potentialResources)
   {
-    Map<CDOView, List<CDOResource>> resourcesPerView = new HashMap<CDOView, List<CDOResource>>();
+    Map<CDOView, List<CDOResource>> resourcesPerView = new HashMap<>();
 
     for (Object potentialResource : potentialResources)
     {
@@ -437,7 +437,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
           List<CDOResource> resources = resourcesPerView.get(view);
           if (resources == null)
           {
-            resources = new ArrayList<CDOResource>();
+            resources = new ArrayList<>();
             resourcesPerView.put(view, resources);
           }
 

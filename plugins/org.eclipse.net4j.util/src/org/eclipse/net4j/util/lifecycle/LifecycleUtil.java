@@ -464,7 +464,7 @@ public final class LifecycleUtil
         return pojo;
       }
 
-      Delegator<T> h = new Delegator<T>(pojo, delegate);
+      Delegator<T> h = new Delegator<>(pojo, delegate);
       final Class<?>[] interfaces = { pojoInterface, INTERFACE };
 
       @SuppressWarnings("unchecked")

@@ -73,7 +73,7 @@ public class ImplMultiRefNonContainerNPLImpl extends EObjectImpl implements Impl
   {
     if (elements == null)
     {
-      elements = new EObjectResolvingEList<IContainedElementNoParentLink>(IContainedElementNoParentLink.class, this,
+      elements = new EObjectResolvingEList<>(IContainedElementNoParentLink.class, this,
           model4Package.IMPL_MULTI_REF_NON_CONTAINER_NPL__ELEMENTS);
     }
     return elements;

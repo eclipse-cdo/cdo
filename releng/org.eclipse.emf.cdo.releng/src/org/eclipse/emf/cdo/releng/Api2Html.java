@@ -65,7 +65,7 @@ public class Api2Html extends DefaultHandler
 
   private Category reexports = new Category("Re-Exported API Changes");
 
-  private Map<String, String> docProjects = new HashMap<String, String>();
+  private Map<String, String> docProjects = new HashMap<>();
 
   private ClassLoader classLoader;
 
@@ -285,7 +285,7 @@ public class Api2Html extends DefaultHandler
 
   private ClassLoader createClassLoader() throws MalformedURLException
   {
-    List<URL> urls = new ArrayList<URL>();
+    List<URL> urls = new ArrayList<>();
 
     if (pluginsFolder != null)
     {
@@ -368,7 +368,7 @@ public class Api2Html extends DefaultHandler
 
   private List<String> sortedKeys(Map<String, ?> map)
   {
-    List<String> list = new ArrayList<String>(map.keySet());
+    List<String> list = new ArrayList<>(map.keySet());
     Collections.sort(list);
     return list;
   }
@@ -540,7 +540,7 @@ public class Api2Html extends DefaultHandler
    */
   private final class Category extends AbstractTreeNode
   {
-    private final Map<String, Component> components = new HashMap<String, Component>();
+    private final Map<String, Component> components = new HashMap<>();
 
     public Category(String text)
     {
@@ -581,9 +581,9 @@ public class Api2Html extends DefaultHandler
    */
   private final class Component extends AbstractTreeNode
   {
-    private final List<Change> changes = new ArrayList<Change>();
+    private final List<Change> changes = new ArrayList<>();
 
-    private final Map<String, Type> types = new HashMap<String, Type>();
+    private final Map<String, Type> types = new HashMap<>();
 
     private Version componentVersion;
 
@@ -669,7 +669,7 @@ public class Api2Html extends DefaultHandler
    */
   private final class Type extends AbstractTreeNode
   {
-    private final List<Change> changes = new ArrayList<Change>();
+    private final List<Change> changes = new ArrayList<>();
 
     private final Component component;
 

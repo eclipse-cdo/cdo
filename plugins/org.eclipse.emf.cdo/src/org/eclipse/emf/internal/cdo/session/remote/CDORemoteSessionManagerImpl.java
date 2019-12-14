@@ -47,7 +47,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
 
   private boolean subscribed;
 
-  private Map<Integer, CDORemoteSession> remoteSessions = new HashMap<Integer, CDORemoteSession>();
+  private Map<Integer, CDORemoteSession> remoteSessions = new HashMap<>();
 
   public CDORemoteSessionManagerImpl()
   {
@@ -134,7 +134,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   @Override
   public Set<CDORemoteSession> sendMessage(CDORemoteSessionMessage message, CDORemoteSession... recipients)
   {
-    return sendMessage(message, new ArrayIterator<CDORemoteSession>(recipients));
+    return sendMessage(message, new ArrayIterator<>(recipients));
   }
 
   @Override
@@ -145,7 +145,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
 
   private Set<CDORemoteSession> sendMessage(CDORemoteSessionMessage message, Iterator<CDORemoteSession> recipients)
   {
-    List<CDORemoteSession> subscribed = new ArrayList<CDORemoteSession>();
+    List<CDORemoteSession> subscribed = new ArrayList<>();
     while (recipients.hasNext())
     {
       CDORemoteSession recipient = recipients.next();
@@ -161,7 +161,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
     }
 
     Set<Integer> sessionIDs = localSession.getSessionProtocol().sendRemoteMessage(message, subscribed);
-    Set<CDORemoteSession> result = new HashSet<CDORemoteSession>();
+    Set<CDORemoteSession> result = new HashSet<>();
     for (CDORemoteSession recipient : subscribed)
     {
       if (sessionIDs.contains(recipient.getSessionID()))
@@ -303,7 +303,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   private IEvent[] subscribe()
   {
     List<CDORemoteSession> result = localSession.getSessionProtocol().getRemoteSessions(this, true);
-    ContainerEvent<CDORemoteSession> event = new ContainerEvent<CDORemoteSession>(this);
+    ContainerEvent<CDORemoteSession> event = new ContainerEvent<>(this);
     for (CDORemoteSession remoteSession : result)
     {
       remoteSessions.put(remoteSession.getSessionID(), remoteSession);
@@ -321,7 +321,7 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   private IEvent[] unsubscribe()
   {
     localSession.getSessionProtocol().unsubscribeRemoteSessions();
-    ContainerEvent<CDORemoteSession> event = new ContainerEvent<CDORemoteSession>(this);
+    ContainerEvent<CDORemoteSession> event = new ContainerEvent<>(this);
     for (CDORemoteSession remoteSession : remoteSessions.values())
     {
       event.addDelta(remoteSession, IContainerDelta.Kind.REMOVED);

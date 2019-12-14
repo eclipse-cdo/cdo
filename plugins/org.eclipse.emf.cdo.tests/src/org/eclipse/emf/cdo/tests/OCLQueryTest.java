@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2015-2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2015-2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -56,13 +56,13 @@ public class OCLQueryTest extends AbstractCDOTest
 
   private CDOResource resource;
 
-  private List<Product1> products = new ArrayList<Product1>();
+  private List<Product1> products = new ArrayList<>();
 
-  private List<Customer> customers = new ArrayList<Customer>();
+  private List<Customer> customers = new ArrayList<>();
 
-  private List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
+  private List<OrderDetail> orderDetails = new ArrayList<>();
 
-  private List<SalesOrder> salesOrders = new ArrayList<SalesOrder>();
+  private List<SalesOrder> salesOrders = new ArrayList<>();
 
   private int objectCount;
 
@@ -332,7 +332,7 @@ public class OCLQueryTest extends AbstractCDOTest
   private void fillResource(CDOResource resource)
   {
     msg("Creating Testset");
-    List<Product1> products = new ArrayList<Product1>();
+    List<Product1> products = new ArrayList<>();
     for (int i = 0; i < NUM_OF_PRODUCTS; i++)
     {
       products.add(createProduct(i));
@@ -385,7 +385,7 @@ public class OCLQueryTest extends AbstractCDOTest
 
   private List<OrderDetail> createOrderDetails(int index, List<Product1> products)
   {
-    List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
+    List<OrderDetail> orderDetails = new ArrayList<>();
 
     int count = 0;
     for (Product1 product : products)

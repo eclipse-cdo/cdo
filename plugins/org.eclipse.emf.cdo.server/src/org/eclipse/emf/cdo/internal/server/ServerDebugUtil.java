@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public final class ServerDebugUtil
 {
-  private static final Map<IRepository, IStoreAccessor> accessors = new HashMap<IRepository, IStoreAccessor>();
+  private static final Map<IRepository, IStoreAccessor> accessors = new HashMap<>();
 
   private ServerDebugUtil()
   {

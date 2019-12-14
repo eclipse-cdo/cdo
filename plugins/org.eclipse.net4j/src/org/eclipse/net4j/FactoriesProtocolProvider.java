@@ -44,7 +44,7 @@ public class FactoriesProtocolProvider implements IProtocolProvider
   {
     if (registry == null)
     {
-      registry = new HashMapRegistry<String, IFactory>();
+      registry = new HashMapRegistry<>();
     }
 
     return registry;

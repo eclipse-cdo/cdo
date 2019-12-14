@@ -127,7 +127,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     // ************************************************************* //
 
     Company companyA = getModel1Factory().createCompany();
-    WeakReference<Company> weakCompanyA = new WeakReference<Company>(companyA);
+    WeakReference<Company> weakCompanyA = new WeakReference<>(companyA);
 
     TestAdapter testAdapter = new TestAdapter(companyA);
 

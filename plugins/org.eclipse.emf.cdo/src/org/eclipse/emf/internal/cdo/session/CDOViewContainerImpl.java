@@ -44,9 +44,9 @@ import java.util.Set;
  */
 public abstract class CDOViewContainerImpl extends Container<CDOView> implements CDOViewContainer
 {
-  public static final ThreadLocal<CDOViewProvider> VIEW_PROVIDER = new ThreadLocal<CDOViewProvider>();
+  public static final ThreadLocal<CDOViewProvider> VIEW_PROVIDER = new ThreadLocal<>();
 
-  private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
+  private Set<InternalCDOView> views = new HashSet<>();
 
   @ExcludeFromDump
   private int lastViewID;
@@ -91,7 +91,7 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
     checkActive();
     synchronized (views)
     {
-      List<InternalCDOView> result = new ArrayList<InternalCDOView>();
+      List<InternalCDOView> result = new ArrayList<>();
       for (InternalCDOView view : views)
       {
         if (branch != null && branch != view.getBranch())

@@ -513,7 +513,7 @@ public abstract class Store extends Lifecycle implements InternalStore
   @SafeVarargs
   protected static <T> Set<T> set(T... elements)
   {
-    return Collections.unmodifiableSet(new HashSet<T>(Arrays.asList(elements)));
+    return Collections.unmodifiableSet(new HashSet<>(Arrays.asList(elements)));
   }
 
   /**

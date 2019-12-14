@@ -100,7 +100,7 @@ public class WorkspaceTest extends AbstractCDOTest
 
   private static final int ORDER_DETAILS = SALES_ORDERS * PRODUCTS;
 
-  private List<CDOWorkspace> workspaces = new ArrayList<CDOWorkspace>();
+  private List<CDOWorkspace> workspaces = new ArrayList<>();
 
   private CDOTransaction transaction;
 
@@ -126,10 +126,10 @@ public class WorkspaceTest extends AbstractCDOTest
     CDOSession session = openSession();
     transaction = session.openTransaction();
 
-    products = new ArrayList<Product1>();
-    customers = new ArrayList<Customer>();
-    orderDetails = new ArrayList<OrderDetail>();
-    salesOrders = new ArrayList<SalesOrder>();
+    products = new ArrayList<>();
+    customers = new ArrayList<>();
+    orderDetails = new ArrayList<>();
+    salesOrders = new ArrayList<>();
 
     createTestSet(transaction);
     assertEquals(PRODUCTS, products.size());
@@ -1430,7 +1430,7 @@ public class WorkspaceTest extends AbstractCDOTest
 
   private List<CDORevision> getDirtyRevisions(CDOTransaction transaction)
   {
-    List<CDORevision> revisions = new ArrayList<CDORevision>();
+    List<CDORevision> revisions = new ArrayList<>();
 
     for (CDOObject dirtyObject : transaction.getDirtyObjects().values())
     {
@@ -1443,7 +1443,7 @@ public class WorkspaceTest extends AbstractCDOTest
 
   private List<CDORevision> getStoreRevisions(InternalCDOWorkspace workspace, List<CDORevision> dirtyRevisions)
   {
-    List<CDORevision> revisions = new ArrayList<CDORevision>();
+    List<CDORevision> revisions = new ArrayList<>();
 
     IStore store = workspace.getLocalRepository().getStore();
     if (store instanceof MEMStore)
@@ -1462,7 +1462,7 @@ public class WorkspaceTest extends AbstractCDOTest
 
   private List<CDORevision> getBaseRevisions(InternalCDOWorkspace workspace)
   {
-    List<CDORevision> revisions = new ArrayList<CDORevision>();
+    List<CDORevision> revisions = new ArrayList<>();
 
     InternalCDOWorkspaceBase base = workspace.getBase();
     for (CDOID id : base.getIDs())

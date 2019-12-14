@@ -81,7 +81,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
 
   private CDORevisable target;
 
-  private Map<EStructuralFeature, CDOFeatureDelta> featureDeltas = new HashMap<EStructuralFeature, CDOFeatureDelta>();
+  private Map<EStructuralFeature, CDOFeatureDelta> featureDeltas = new HashMap<>();
 
   public CDORevisionDeltaImpl(CDORevision revision)
   {
@@ -265,7 +265,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
   @Override
   public List<CDOFeatureDelta> getFeatureDeltas()
   {
-    return new ArrayList<CDOFeatureDelta>(featureDeltas.values());
+    return new ArrayList<>(featureDeltas.values());
   }
 
   @Override

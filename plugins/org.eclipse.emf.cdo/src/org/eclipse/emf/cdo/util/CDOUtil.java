@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -599,7 +599,7 @@ public final class CDOUtil
    */
   public static List<? extends CDOObject> getCDOObjects(EObject... objects)
   {
-    List<CDOObject> result = new ArrayList<CDOObject>();
+    List<CDOObject> result = new ArrayList<>();
     for (EObject object : objects)
     {
       result.add(getCDOObject(object));
@@ -613,7 +613,7 @@ public final class CDOUtil
    */
   public static List<? extends CDOObject> getCDOObjects(Collection<? extends EObject> objects)
   {
-    List<CDOObject> result = new ArrayList<CDOObject>();
+    List<CDOObject> result = new ArrayList<>();
     for (EObject object : objects)
     {
       result.add(getCDOObject(object));
@@ -643,7 +643,7 @@ public final class CDOUtil
    */
   public static <T extends EObject> EList<T> filterReadables(Collection<T> collection)
   {
-    EList<T> result = new BasicEList<T>();
+    EList<T> result = new BasicEList<>();
     for (T element : collection)
     {
       CDOObject object = getCDOObject(element);
@@ -714,7 +714,7 @@ public final class CDOUtil
    */
   public static EList<Resource> getResources(ResourceSet resourceSet)
   {
-    EList<Resource> result = new BasicEList<Resource>();
+    EList<Resource> result = new BasicEList<>();
     EList<Resource> resources = resourceSet.getResources();
     for (Resource resource : resources)
     {

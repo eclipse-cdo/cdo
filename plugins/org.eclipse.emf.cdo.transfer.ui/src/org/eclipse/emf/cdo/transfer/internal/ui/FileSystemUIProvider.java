@@ -74,7 +74,7 @@ public class FileSystemUIProvider implements TransferUIProvider
     if (data instanceof String[])
     {
       String[] paths = (String[])data;
-      List<CDOTransferElement> result = new ArrayList<CDOTransferElement>(paths.length);
+      List<CDOTransferElement> result = new ArrayList<>(paths.length);
       for (int i = 0; i < paths.length; i++)
       {
         String path = paths[i];

@@ -371,7 +371,7 @@ public final class UIUtil
     List<Object> elements = getElements(selection);
     if (elements != null)
     {
-      List<T> result = new ArrayList<T>();
+      List<T> result = new ArrayList<>();
 
       for (Object element : elements)
       {
@@ -412,7 +412,7 @@ public final class UIUtil
     List<Object> elements = getElements(selection);
     if (elements != null)
     {
-      List<T> result = new ArrayList<T>();
+      List<T> result = new ArrayList<>();
 
       for (Object element : elements)
       {

@@ -37,7 +37,7 @@ public abstract class AbstractDelegator<E> extends Notifier implements IContaine
     IListener[] listeners = getListeners();
     if (listeners != null)
     {
-      fireEvent(new SingleDeltaContainerEvent<E>(this, o, IContainerDelta.Kind.ADDED), listeners);
+      fireEvent(new SingleDeltaContainerEvent<>(this, o, IContainerDelta.Kind.ADDED), listeners);
     }
   }
 
@@ -47,14 +47,14 @@ public abstract class AbstractDelegator<E> extends Notifier implements IContaine
     IListener[] listeners = getListeners();
     if (listeners != null)
     {
-      fireEvent(new SingleDeltaContainerEvent<E>(this, (E)o, IContainerDelta.Kind.REMOVED), listeners);
+      fireEvent(new SingleDeltaContainerEvent<>(this, (E)o, IContainerDelta.Kind.REMOVED), listeners);
     }
   }
 
   @SuppressWarnings("unchecked")
   protected ContainerEvent<E> createEvent(Collection<? super E> c, Kind kind)
   {
-    ContainerEvent<E> event = new ContainerEvent<E>(this);
+    ContainerEvent<E> event = new ContainerEvent<>(this);
     for (Object o : c)
     {
       event.addDelta((E)o, kind);

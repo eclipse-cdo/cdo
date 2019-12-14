@@ -167,7 +167,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   @Override
   public CDOBranchPoint[] getBasePath()
   {
-    List<CDOBranchPoint> path = new ArrayList<CDOBranchPoint>();
+    List<CDOBranchPoint> path = new ArrayList<>();
     computeBasePath(this, path);
     return path.toArray(new CDOBranchPoint[path.size()]);
   }

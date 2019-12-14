@@ -49,7 +49,7 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
     }
   };
 
-  private Set<IConnector> acceptedConnectors = new HashSet<IConnector>(0);
+  private Set<IConnector> acceptedConnectors = new HashSet<>(0);
 
   public Acceptor()
   {

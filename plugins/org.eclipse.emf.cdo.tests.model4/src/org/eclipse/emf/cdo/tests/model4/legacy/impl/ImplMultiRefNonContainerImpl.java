@@ -77,7 +77,7 @@ public class ImplMultiRefNonContainerImpl extends EObjectImpl implements ImplMul
   {
     if (elements == null)
     {
-      elements = new EObjectWithInverseResolvingEList<IMultiRefNonContainedElement>(IMultiRefNonContainedElement.class, this,
+      elements = new EObjectWithInverseResolvingEList<>(IMultiRefNonContainedElement.class, this,
           model4Package.IMPL_MULTI_REF_NON_CONTAINER__ELEMENTS, model4interfacesPackage.IMULTI_REF_NON_CONTAINED_ELEMENT__PARENT);
     }
     return elements;

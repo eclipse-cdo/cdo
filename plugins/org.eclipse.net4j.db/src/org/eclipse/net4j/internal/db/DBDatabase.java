@@ -50,7 +50,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
   private IDBSchema schema;
 
-  private final LinkedList<SchemaAccess> schemaAccessQueue = new LinkedList<SchemaAccess>();
+  private final LinkedList<SchemaAccess> schemaAccessQueue = new LinkedList<>();
 
   private int schemaWriters;
 

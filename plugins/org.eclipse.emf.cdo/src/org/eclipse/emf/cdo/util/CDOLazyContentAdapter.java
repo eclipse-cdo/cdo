@@ -38,7 +38,7 @@ public class CDOLazyContentAdapter extends EContentAdapter
 {
   private CDOObjectHandler handler = new CleanObjectHandler();
 
-  private Set<WeakReference<CDOObject>> adaptedObjects = new HashSet<WeakReference<CDOObject>>();
+  private Set<WeakReference<CDOObject>> adaptedObjects = new HashSet<>();
 
   /**
    * The root object to be adapted.
@@ -52,7 +52,7 @@ public class CDOLazyContentAdapter extends EContentAdapter
     {
       if (adaptedRoot == null)
       {
-        adaptedRoot = new WeakReference<CDOObject>(CDOUtil.getCDOObject(target));
+        adaptedRoot = new WeakReference<>(CDOUtil.getCDOObject(target));
       }
 
       basicSetTarget(target);
@@ -152,7 +152,7 @@ public class CDOLazyContentAdapter extends EContentAdapter
   {
     if (isConnectedObject(notifier) && !isAlreadyAdapted(notifier))
     {
-      adaptedObjects.add(new WeakReference<CDOObject>(CDOUtil.getCDOObject((EObject)notifier)));
+      adaptedObjects.add(new WeakReference<>(CDOUtil.getCDOObject((EObject)notifier)));
     }
 
     super.addAdapter(notifier);

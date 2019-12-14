@@ -170,8 +170,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
           table.addIndex(IDBIndex.Type.NON_UNIQUE, ATTRIBUTES_REVISED);
 
           EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getClassInfo(eClass).getAllPersistentFeatures();
-          Map<EStructuralFeature, ITypeMapping> valueMappings = new HashMap<EStructuralFeature, ITypeMapping>();
-          List<EStructuralFeature> unsettableFeatures = new ArrayList<EStructuralFeature>();
+          Map<EStructuralFeature, ITypeMapping> valueMappings = new HashMap<>();
+          List<EStructuralFeature> unsettableFeatures = new ArrayList<>();
 
           for (EStructuralFeature feature : allPersistentFeatures)
           {
@@ -257,7 +257,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       unsettableFields = null;
 
       EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getClassInfo(eClass).getAllPersistentFeatures();
-      List<EStructuralFeature> unsettableFeatures = new ArrayList<EStructuralFeature>();
+      List<EStructuralFeature> unsettableFeatures = new ArrayList<>();
 
       for (EStructuralFeature feature : allPersistentFeatures)
       {
@@ -274,7 +274,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
             if (listMappings == null)
             {
-              listMappings = new ArrayList<IListMapping>();
+              listMappings = new ArrayList<>();
             }
 
             listMappings.add(mapping);
@@ -283,7 +283,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
             if (listSizeFields == null)
             {
-              listSizeFields = new LinkedHashMap<EStructuralFeature, IDBField>();
+              listSizeFields = new LinkedHashMap<>();
             }
 
             listSizeFields.put(feature, listSizeField);
@@ -296,7 +296,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
           if (valueMappings == null)
           {
-            valueMappings = new ArrayList<ITypeMapping>();
+            valueMappings = new ArrayList<>();
           }
 
           valueMappings.add(mapping);
@@ -311,7 +311,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       // Register unsettable fields.
       if (!unsettableFeatures.isEmpty())
       {
-        unsettableFields = new LinkedHashMap<EStructuralFeature, IDBField>();
+        unsettableFields = new LinkedHashMap<>();
         for (EStructuralFeature feature : unsettableFeatures)
         {
           String fieldName = mappingStrategy.getUnsettableFieldName(feature);
@@ -587,7 +587,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
   @Override
   public List<IDBTable> getDBTables()
   {
-    List<IDBTable> tables = new ArrayList<IDBTable>();
+    List<IDBTable> tables = new ArrayList<>();
     tables.add(table);
 
     if (listMappings != null)
@@ -872,7 +872,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
   @Override
   public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, CDOChangeSetSegment[] segments)
   {
-    Set<CDOID> result = new HashSet<CDOID>();
+    Set<CDOID> result = new HashSet<>();
     if (table == null)
     {
       return result;
@@ -1035,7 +1035,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
     String tableName = table.getName();
     List<EReference> refs = context.getSourceCandidates().get(eClass);
-    List<EReference> scalarRefs = new ArrayList<EReference>();
+    List<EReference> scalarRefs = new ArrayList<>();
 
     for (EReference ref : refs)
     {

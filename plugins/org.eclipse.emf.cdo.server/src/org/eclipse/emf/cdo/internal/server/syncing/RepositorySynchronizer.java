@@ -252,7 +252,7 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
     remoteSession.addListener(remoteSessionListener);
     remoteSession.getBranchManager().addListener(remoteSessionListener);
 
-    fireEvent(new SingleDeltaContainerEvent<CDOSession>(this, remoteSession, IContainerDelta.Kind.ADDED));
+    fireEvent(new SingleDeltaContainerEvent<>(this, remoteSession, IContainerDelta.Kind.ADDED));
   }
 
   protected void handleDisconnect()
@@ -275,7 +275,7 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
     {
       CDOSession element = remoteSession;
       closeRemoteSession();
-      fireEvent(new SingleDeltaContainerEvent<CDOSession>(this, element, IContainerDelta.Kind.REMOVED));
+      fireEvent(new SingleDeltaContainerEvent<>(this, element, IContainerDelta.Kind.REMOVED));
     }
 
     reconnect();
@@ -605,7 +605,7 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
         fireThrowable(ex);
         if (failedRuns == null)
         {
-          failedRuns = new ArrayList<Exception>();
+          failedRuns = new ArrayList<>();
         }
 
         failedRuns.add(ex);

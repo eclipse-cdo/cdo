@@ -83,6 +83,7 @@ public class IdentityAnchorImpl extends CDOObjectImpl implements IdentityAnchor
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public String getId()
   {
     return (String)eDynamicGet(NotationPackage.IDENTITY_ANCHOR__ID, NotationPackage.Literals.IDENTITY_ANCHOR__ID, true, true);
@@ -93,6 +94,7 @@ public class IdentityAnchorImpl extends CDOObjectImpl implements IdentityAnchor
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setId(String newId)
   {
     eDynamicSet(NotationPackage.IDENTITY_ANCHOR__ID, NotationPackage.Literals.IDENTITY_ANCHOR__ID, newId);

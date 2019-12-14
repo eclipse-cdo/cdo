@@ -73,7 +73,7 @@ public class GenRefMultiNUNonContainedImpl extends EObjectImpl implements GenRef
   {
     if (elements == null)
     {
-      elements = new EObjectEList<EObject>(EObject.class, this, model4Package.GEN_REF_MULTI_NU_NON_CONTAINED__ELEMENTS);
+      elements = new EObjectEList<>(EObject.class, this, model4Package.GEN_REF_MULTI_NU_NON_CONTAINED__ELEMENTS);
     }
     return elements;
   }

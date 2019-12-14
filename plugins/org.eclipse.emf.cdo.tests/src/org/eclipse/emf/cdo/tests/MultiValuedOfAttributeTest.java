@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -38,7 +38,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
 {
   public void testListOfString() throws Exception
   {
-    List<String> list = new ArrayList<String>();
+    List<String> list = new ArrayList<>();
     list.add("Ottawa");
     list.add("Toronto");
     list.add("Berlin");
@@ -47,7 +47,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
 
   public void testListOfDate() throws Exception
   {
-    List<Date> list = new ArrayList<Date>();
+    List<Date> list = new ArrayList<>();
     list.add(new Date(1000));
     list.add(new Date());
     list.add(new Date(new Date().getTime() - 100));
@@ -56,7 +56,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
 
   public void testListOfInt() throws Exception
   {
-    List<Integer> list = new ArrayList<Integer>();
+    List<Integer> list = new ArrayList<>();
     list.add(10);
     list.add(11);
     list.add(20);
@@ -65,7 +65,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
 
   public void testListOfShort() throws Exception
   {
-    List<Short> list = new ArrayList<Short>();
+    List<Short> list = new ArrayList<>();
     list.add((short)10);
     list.add((short)11);
     list.add((short)20);
@@ -74,7 +74,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
 
   public void testListOfFloat() throws Exception
   {
-    List<Float> list = new ArrayList<Float>();
+    List<Float> list = new ArrayList<>();
     list.add((float)10);
     list.add((float)11);
     list.add((float)20);
@@ -83,7 +83,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
 
   public void testListOfChar() throws Exception
   {
-    List<Character> list = new ArrayList<Character>();
+    List<Character> list = new ArrayList<>();
     list.add('c');
     list.add('d');
     list.add('z');
@@ -92,7 +92,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
 
   public void testListOfBoolean() throws Exception
   {
-    List<Boolean> list = new ArrayList<Boolean>();
+    List<Boolean> list = new ArrayList<>();
     list.add(true);
     list.add(false);
     testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfBoolean(), getModel5Package().getGenListOfBoolean_Elements());
@@ -100,7 +100,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
 
   public void testListOfDouble() throws Exception
   {
-    List<Double> list = new ArrayList<Double>();
+    List<Double> list = new ArrayList<>();
     list.add(10.1928);
     list.add(11.12);
     list.add(20.99991);
@@ -109,7 +109,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
 
   public void testListOfInteger() throws Exception
   {
-    List<Integer> list = new ArrayList<Integer>();
+    List<Integer> list = new ArrayList<>();
     list.add(10);
     list.add(null);
     list.add(20);

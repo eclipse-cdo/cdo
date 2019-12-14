@@ -76,7 +76,7 @@ public class ImplMultiRefContainerNPLImpl extends EObjectImpl implements ImplMul
   {
     if (elements == null)
     {
-      elements = new EObjectContainmentEList<IContainedElementNoParentLink>(IContainedElementNoParentLink.class, this,
+      elements = new EObjectContainmentEList<>(IContainedElementNoParentLink.class, this,
           model4Package.IMPL_MULTI_REF_CONTAINER_NPL__ELEMENTS);
     }
     return elements;

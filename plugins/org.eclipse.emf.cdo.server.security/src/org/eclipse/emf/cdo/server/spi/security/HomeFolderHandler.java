@@ -88,7 +88,7 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
       EList<User> users = securityManager.getRealm().getAllUsers();
       if (!users.isEmpty())
       {
-        List<String> userIDs = new BasicEList<String>();
+        List<String> userIDs = new BasicEList<>();
         for (User user : users)
         {
           userIDs.add(user.getId());
@@ -131,7 +131,7 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
         {
           if (userIDs == null)
           {
-            userIDs = new BasicEList<String>();
+            userIDs = new BasicEList<>();
           }
 
           userIDs.add(userID);

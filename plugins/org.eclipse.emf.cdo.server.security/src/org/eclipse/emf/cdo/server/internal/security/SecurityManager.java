@@ -104,7 +104,7 @@ import java.util.Set;
  */
 public class SecurityManager extends Lifecycle implements InternalSecurityManager
 {
-  private static final Map<IRepository, InternalSecurityManager> SECURITY_MANAGERS = new HashMap<IRepository, InternalSecurityManager>();
+  private static final Map<IRepository, InternalSecurityManager> SECURITY_MANAGERS = new HashMap<>();
 
   private static final SecurityFactory SF = SecurityFactory.eINSTANCE;
 
@@ -169,9 +169,9 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   private final IManagedContainer container;
 
-  private final Map<ISession, UserInfo> userInfos = new HashMap<ISession, UserInfo>();
+  private final Map<ISession, UserInfo> userInfos = new HashMap<>();
 
-  private final HashBag<PermissionImpl> permissionBag = new HashBag<PermissionImpl>();
+  private final HashBag<PermissionImpl> permissionBag = new HashBag<>();
 
   private final Object commitHandlerLock = new Object();
 
@@ -1197,7 +1197,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
               {
                 if (impactedRules == null)
                 {
-                  impactedRules = new HashSet<Permission>();
+                  impactedRules = new HashSet<>();
                 }
 
                 impactedRules.add(permission);
@@ -1277,7 +1277,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
     protected Map<Object, Object> createValidationContext()
     {
-      Map<Object, Object> result = new java.util.HashMap<Object, Object>();
+      Map<Object, Object> result = new java.util.HashMap<>();
       final CommitContext commitContext = getCommitContext();
 
       // Supply the revision-provider and branch point required by realm validation

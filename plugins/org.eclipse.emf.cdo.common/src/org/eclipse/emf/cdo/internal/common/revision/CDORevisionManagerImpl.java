@@ -398,7 +398,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
       {
         if (infosToLoad == null)
         {
-          infosToLoad = new ArrayList<RevisionInfo>(1);
+          infosToLoad = new ArrayList<>(1);
         }
 
         infosToLoad.add(info);
@@ -470,7 +470,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
       if (additionalRevisionInfos != null)
       {
-        additionalRevisions = new ArrayList<InternalCDORevision>(additionalRevisionInfos.size());
+        additionalRevisions = new ArrayList<>(additionalRevisionInfos.size());
         for (RevisionInfo info : additionalRevisionInfos)
         {
           info.processResult(this, new ArrayList<CDORevision>(), null, 0);
@@ -488,7 +488,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
   private List<CDORevision> getResultsAndSynthetics(RevisionInfo[] infos, SyntheticCDORevision[] synthetics)
   {
-    List<CDORevision> results = new ArrayList<CDORevision>(infos.length);
+    List<CDORevision> results = new ArrayList<>(infos.length);
     for (int i = 0; i < infos.length; i++)
     {
       RevisionInfo info = infos[i];

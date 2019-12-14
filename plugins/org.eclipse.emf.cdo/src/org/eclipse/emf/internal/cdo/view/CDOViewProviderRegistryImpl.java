@@ -58,7 +58,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
 
   private static final String EXT_POINT = "viewProviders"; //$NON-NLS-1$
 
-  private List<CDOViewProvider> viewProviders = new ArrayList<CDOViewProvider>();
+  private List<CDOViewProvider> viewProviders = new ArrayList<>();
 
   public CDOViewProviderRegistryImpl()
   {
@@ -183,7 +183,7 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
   @Override
   public CDOViewProvider[] getViewProviders(URI uri)
   {
-    List<CDOViewProvider> result = new ArrayList<CDOViewProvider>();
+    List<CDOViewProvider> result = new ArrayList<>();
 
     synchronized (viewProviders)
     {

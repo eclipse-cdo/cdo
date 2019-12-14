@@ -31,7 +31,7 @@ public class SingleDeltaContainerEvent<E> extends Event implements IContainerEve
   public SingleDeltaContainerEvent(IContainer<E> container, E element, IContainerDelta.Kind kind)
   {
     super(container);
-    deltas = new IContainerDelta[] { new ContainerDelta<E>(element, kind) };
+    deltas = new IContainerDelta[] { new ContainerDelta<>(element, kind) };
   }
 
   /**

@@ -619,7 +619,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
    */
   public boolean fillGenerated(MenuManager manager, CDOSession session)
   {
-    List<String> registeredURIs = new ArrayList<String>(EPackage.Registry.INSTANCE.keySet());
+    List<String> registeredURIs = new ArrayList<>(EPackage.Registry.INSTANCE.keySet());
     Collections.sort(registeredURIs, new Comparator<String>()
     {
       @Override
@@ -898,7 +898,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
    */
   private final class ElementListener implements IListener, CDOObjectHandler
   {
-    private final Set<INotifier> notifiers = new HashSet<INotifier>();
+    private final Set<INotifier> notifiers = new HashSet<>();
 
     private boolean disposed;
 

@@ -94,7 +94,8 @@ public class CatalogPackageImpl extends EPackageImpl implements CatalogPackage
 
     // Obtain or create and register package
     CatalogPackageImpl theCatalogPackage = (CatalogPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof CatalogPackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new CatalogPackageImpl());
+        ? EPackage.Registry.INSTANCE.get(eNS_URI)
+        : new CatalogPackageImpl());
 
     isInited = true;
 

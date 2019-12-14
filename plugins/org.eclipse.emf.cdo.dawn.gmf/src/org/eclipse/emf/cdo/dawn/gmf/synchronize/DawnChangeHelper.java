@@ -81,9 +81,9 @@ public class DawnChangeHelper
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnChangeHelper.class);
 
-  protected static final java.util.Map<String, Boolean> options = new HashMap<String, Boolean>();
+  protected static final java.util.Map<String, Boolean> options = new HashMap<>();
 
-  protected static final java.util.Map<Object, Object> setElementOptions = new HashMap<Object, Object>();
+  protected static final java.util.Map<Object, Object> setElementOptions = new HashMap<>();
 
   static
   {

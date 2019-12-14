@@ -40,7 +40,7 @@ public final class DBIndexFieldDelta extends DBDeltaWithPosition implements IDBI
     Integer oldPosition = oldIndexField == null ? null : oldIndexField.getPosition();
     if (!ObjectUtil.equals(position, oldPosition))
     {
-      addPropertyDelta(new DBPropertyDelta<Integer>(this, POSITION_PROPERTY, IDBPropertyDelta.Type.INTEGER, position, oldPosition));
+      addPropertyDelta(new DBPropertyDelta<>(this, POSITION_PROPERTY, IDBPropertyDelta.Type.INTEGER, position, oldPosition));
     }
   }
 

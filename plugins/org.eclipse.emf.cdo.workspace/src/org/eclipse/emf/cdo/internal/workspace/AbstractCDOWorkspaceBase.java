@@ -110,7 +110,7 @@ public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBa
   @Override
   public final synchronized void clear()
   {
-    ids = new HashSet<CDOID>();
+    ids = new HashSet<>();
     doClear();
   }
 

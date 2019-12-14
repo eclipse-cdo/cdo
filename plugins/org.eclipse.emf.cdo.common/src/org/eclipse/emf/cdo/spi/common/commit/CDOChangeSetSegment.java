@@ -160,7 +160,7 @@ public class CDOChangeSetSegment implements CDOBranchPoint
    */
   public static CDOChangeSetSegment[] createFrom(long startTime, CDOBranchPoint endPoint)
   {
-    final LinkedList<CDOChangeSetSegment> result = new LinkedList<CDOChangeSetSegment>();
+    final LinkedList<CDOChangeSetSegment> result = new LinkedList<>();
 
     handleSegments(startTime, endPoint, new Handler()
     {
@@ -177,7 +177,7 @@ public class CDOChangeSetSegment implements CDOBranchPoint
 
   public static CDOChangeSetSegment[] createFrom(CDOBranchPoint startPoint, CDOBranchPoint endPoint)
   {
-    final LinkedList<CDOChangeSetSegment> result = new LinkedList<CDOChangeSetSegment>();
+    final LinkedList<CDOChangeSetSegment> result = new LinkedList<>();
 
     handleSegments(startPoint, endPoint, new Handler()
     {

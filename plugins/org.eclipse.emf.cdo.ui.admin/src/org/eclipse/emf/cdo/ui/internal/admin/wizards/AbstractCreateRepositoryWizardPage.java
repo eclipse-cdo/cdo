@@ -210,7 +210,7 @@ public abstract class AbstractCreateRepositoryWizardPage extends WizardPage
    */
   public static final class Whiteboard
   {
-    private List<Object> subscribers = new ArrayList<Object>();
+    private List<Object> subscribers = new ArrayList<>();
 
     /**
      * Publish a topic to interested subscribers.

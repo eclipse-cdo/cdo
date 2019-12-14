@@ -72,7 +72,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
     @Override
     public void executeQuery(CDOQueryInfo info, IQueryContext queryContext)
     {
-      List<Object> filters = new ArrayList<Object>();
+      List<Object> filters = new ArrayList<>();
       Object context = info.getParameters().get("context"); //$NON-NLS-1$
       Long sleep = (Long)info.getParameters().get("sleep"); //$NON-NLS-1$
       Integer integers = (Integer)info.getParameters().get("integers"); //$NON-NLS-1$
@@ -355,7 +355,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
   {
     if (newRevisions == null)
     {
-      newRevisions = new ArrayList<InternalCDORevision>();
+      newRevisions = new ArrayList<>();
     }
 
     newRevisions.add(revision);

@@ -103,7 +103,7 @@ public class CDOServerBrowser extends Worker
     @Override
     protected Map<String, String> initialValue()
     {
-      return new HashMap<String, String>();
+      return new HashMap<>();
     }
   };
 
@@ -113,7 +113,7 @@ public class CDOServerBrowser extends Worker
 
   private Map<String, InternalRepository> repositories;
 
-  private List<Page> pages = new ArrayList<Page>();
+  private List<Page> pages = new ArrayList<>();
 
   public CDOServerBrowser(Map<String, InternalRepository> repositories)
   {
@@ -252,13 +252,13 @@ public class CDOServerBrowser extends Worker
 
   public String href(String label, String resource, String... params)
   {
-    Map<String, String> map = new HashMap<String, String>(this.params.get());
+    Map<String, String> map = new HashMap<>(this.params.get());
     for (int i = 0; i < params.length;)
     {
       map.put(params[i++], params[i++]);
     }
 
-    List<String> list = new ArrayList<String>(map.keySet());
+    List<String> list = new ArrayList<>(map.keySet());
     Collections.sort(list);
 
     StringBuilder builder = new StringBuilder();
@@ -315,7 +315,7 @@ public class CDOServerBrowser extends Worker
   {
     String repo = getParam("repo");
 
-    List<String> repoNames = new ArrayList<String>(getRepositoryNames());
+    List<String> repoNames = new ArrayList<>(getRepositoryNames());
     Collections.sort(repoNames);
 
     pout.print("<h3><a href=\"/\">" + page.getLabel() + "</a>:&nbsp;&nbsp;");
@@ -1086,7 +1086,7 @@ public class CDOServerBrowser extends Worker
           List<CDORevision> revisions = ids.get(id);
           if (revisions == null)
           {
-            revisions = new ArrayList<CDORevision>();
+            revisions = new ArrayList<>();
             ids.put(id, revisions);
           }
 

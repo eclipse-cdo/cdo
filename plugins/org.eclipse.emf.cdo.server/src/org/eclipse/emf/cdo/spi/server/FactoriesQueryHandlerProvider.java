@@ -46,7 +46,7 @@ public class FactoriesQueryHandlerProvider implements IQueryHandlerProvider
   {
     if (registry == null)
     {
-      registry = new HashMapRegistry<String, IFactory>();
+      registry = new HashMapRegistry<>();
     }
 
     return registry;

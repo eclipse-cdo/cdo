@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -236,7 +236,7 @@ public final class CDOURIUtil
 
   public static List<String> analyzePath(String path)
   {
-    List<String> segments = new ArrayList<String>();
+    List<String> segments = new ArrayList<>();
     StringTokenizer tokenizer = new StringTokenizer(path, CDOURIUtil.SEGMENT_SEPARATOR);
     while (tokenizer.hasMoreTokens())
     {
@@ -255,7 +255,7 @@ public final class CDOURIUtil
    */
   public static Map<String, String> getParameters(String query)
   {
-    Map<String, String> result = new HashMap<String, String>();
+    Map<String, String> result = new HashMap<>();
     StringTokenizer tokenizer = new StringTokenizer(query, "&"); //$NON-NLS-1$
     while (tokenizer.hasMoreTokens())
     {

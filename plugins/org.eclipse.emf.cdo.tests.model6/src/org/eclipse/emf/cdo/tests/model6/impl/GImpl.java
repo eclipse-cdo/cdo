@@ -45,7 +45,7 @@ public class GImpl extends CDOObjectImpl implements G
   /**
    * @ADDED
    */
-  private List<Notification> notifications = new ArrayList<Notification>();
+  private List<Notification> notifications = new ArrayList<>();
 
   /**
    * @ADDED

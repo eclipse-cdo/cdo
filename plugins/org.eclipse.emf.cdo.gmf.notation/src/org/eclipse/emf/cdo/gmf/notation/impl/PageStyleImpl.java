@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -116,6 +116,7 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getPageX()
   {
     return ((Integer)eDynamicGet(NotationPackage.PAGE_STYLE__PAGE_X, NotationPackage.Literals.PAGE_STYLE__PAGE_X, true, true)).intValue();
@@ -126,6 +127,7 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setPageX(int newPageX)
   {
     eDynamicSet(NotationPackage.PAGE_STYLE__PAGE_X, NotationPackage.Literals.PAGE_STYLE__PAGE_X, new Integer(newPageX));
@@ -136,6 +138,7 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getPageY()
   {
     return ((Integer)eDynamicGet(NotationPackage.PAGE_STYLE__PAGE_Y, NotationPackage.Literals.PAGE_STYLE__PAGE_Y, true, true)).intValue();
@@ -146,6 +149,7 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setPageY(int newPageY)
   {
     eDynamicSet(NotationPackage.PAGE_STYLE__PAGE_Y, NotationPackage.Literals.PAGE_STYLE__PAGE_Y, new Integer(newPageY));
@@ -156,6 +160,7 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getPageWidth()
   {
     return ((Integer)eDynamicGet(NotationPackage.PAGE_STYLE__PAGE_WIDTH, NotationPackage.Literals.PAGE_STYLE__PAGE_WIDTH, true, true)).intValue();
@@ -166,6 +171,7 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setPageWidth(int newPageWidth)
   {
     eDynamicSet(NotationPackage.PAGE_STYLE__PAGE_WIDTH, NotationPackage.Literals.PAGE_STYLE__PAGE_WIDTH, new Integer(newPageWidth));
@@ -176,6 +182,7 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getPageHeight()
   {
     return ((Integer)eDynamicGet(NotationPackage.PAGE_STYLE__PAGE_HEIGHT, NotationPackage.Literals.PAGE_STYLE__PAGE_HEIGHT, true, true)).intValue();
@@ -186,6 +193,7 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setPageHeight(int newPageHeight)
   {
     eDynamicSet(NotationPackage.PAGE_STYLE__PAGE_HEIGHT, NotationPackage.Literals.PAGE_STYLE__PAGE_HEIGHT, new Integer(newPageHeight));

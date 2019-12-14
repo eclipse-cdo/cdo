@@ -44,7 +44,7 @@ public class CDOElement extends AdapterImpl implements IAdaptable
 
   private final EObject delegate;
 
-  private final List<Object> children = new ArrayList<Object>();
+  private final List<Object> children = new ArrayList<>();
 
   public CDOElement(EObject delegate)
   {

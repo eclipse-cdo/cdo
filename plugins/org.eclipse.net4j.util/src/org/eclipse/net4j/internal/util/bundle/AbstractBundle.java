@@ -57,7 +57,7 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
 
   private boolean debugging;
 
-  private Map<String, Tracer> tracers = new ConcurrentHashMap<String, Tracer>(0);
+  private Map<String, Tracer> tracers = new ConcurrentHashMap<>(0);
 
   private OMLogger logger;
 
@@ -67,9 +67,9 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
 
   private ResourceBundle untranslatedResourceBundle;
 
-  private Map<String, String> strings = new HashMap<String, String>(0);
+  private Map<String, String> strings = new HashMap<>(0);
 
-  private Map<String, String> untranslatedStrings = new HashMap<String, String>(0);
+  private Map<String, String> untranslatedStrings = new HashMap<>(0);
 
   private boolean shouldTranslate = true;
 

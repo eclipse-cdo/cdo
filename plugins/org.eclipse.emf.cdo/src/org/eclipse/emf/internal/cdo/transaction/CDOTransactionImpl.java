@@ -378,7 +378,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   public CDOTransactionHandler[] getTransactionHandlers()
   {
-    Set<CDOTransactionHandler> result = new HashSet<CDOTransactionHandler>();
+    Set<CDOTransactionHandler> result = new HashSet<>();
     synchronized (transactionHandlersLock)
     {
       CDOTransactionHandler1[] handlers1 = transactionHandlers1.get();
@@ -516,7 +516,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       try
       {
-        Set<CDOObject> conflicts = new HashSet<CDOObject>();
+        Set<CDOObject> conflicts = new HashSet<>();
         for (CDOObject object : getDirtyObjects().values())
         {
           if (object.cdoConflict())
@@ -759,7 +759,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private void applyNewObjects(List<CDOIDAndVersion> newObjects, List<CDOIDAndVersion> result)
   {
-    List<InternalCDOObject> objects = new ArrayList<InternalCDOObject>();
+    List<InternalCDOObject> objects = new ArrayList<>();
 
     for (CDOIDAndVersion key : newObjects)
     {
@@ -796,7 +796,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private Set<CDOObject> applyDetachedObjects(List<CDOIDAndVersion> detachedObjects, List<CDOIDAndVersion> result)
   {
-    Set<CDOObject> detachedSet = new HashSet<CDOObject>();
+    Set<CDOObject> detachedSet = new HashSet<>();
     for (CDOIDAndVersion key : detachedObjects)
     {
       CDOID id = key.getID();
@@ -932,8 +932,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
 
         // Remember original state to be able to restore it after an exception
-        List<CDOState> states = new ArrayList<CDOState>(conflicts.size());
-        List<CDORevision> revisions = new ArrayList<CDORevision>(conflicts.size());
+        List<CDOState> states = new ArrayList<>(conflicts.size());
+        List<CDORevision> revisions = new ArrayList<>(conflicts.size());
         for (CDOObject conflict : conflicts.keySet())
         {
           states.add(conflict.cdoState());
@@ -944,7 +944,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
         try
         {
-          Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> remaining = new HashMap<CDOObject, Pair<CDORevision, CDORevisionDelta>>(conflicts);
+          Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> remaining = new HashMap<>(conflicts);
           for (CDOConflictResolver resolver : resolvers)
           {
             if (resolver instanceof CDOConflictResolver2)
@@ -1778,7 +1778,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     @SuppressWarnings("unchecked")
     T r = (T)result[0];
-    return new CommitResult<T>(r, info);
+    return new CommitResult<>(r, info);
   }
 
   @Override
@@ -1976,12 +1976,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       try
       {
         // Remember current revisions
-        Map<CDOObject, CDORevision> oldRevisions = new HashMap<CDOObject, CDORevision>();
+        Map<CDOObject, CDORevision> oldRevisions = new HashMap<>();
         collectRevisions(oldRevisions, getDirtyObjects());
         collectRevisions(oldRevisions, getNewObjects());
 
         // Rollback objects
-        Map<CDOObject, CDORevision> newRevisions = new HashMap<CDOObject, CDORevision>();
+        Map<CDOObject, CDORevision> newRevisions = new HashMap<>();
         Set<CDOID> idsOfNewObjectWithDeltas = rollbackCompletely(savepoint, newRevisions);
 
         lastSavepoint = savepoint;
@@ -2077,13 +2077,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private Set<CDOID> rollbackCompletely(CDOUserSavepoint savepoint, Map<CDOObject, CDORevision> newRevisions)
   {
-    Set<CDOID> idsOfNewObjectsWithDeltas = new HashSet<CDOID>();
-    Set<InternalCDOObject> newObjects = new HashSet<InternalCDOObject>();
+    Set<CDOID> idsOfNewObjectsWithDeltas = new HashSet<>();
+    Set<InternalCDOObject> newObjects = new HashSet<>();
 
     // Start from the last savepoint and come back up to the active
     for (InternalCDOSavepoint itrSavepoint = lastSavepoint; itrSavepoint != null; itrSavepoint = itrSavepoint.getPreviousSavepoint())
     {
-      Set<Object> toBeDetached = new HashSet<Object>();
+      Set<Object> toBeDetached = new HashSet<>();
 
       // Rollback new objects attached after the save point
       Map<CDOID, CDOObject> newObjectsMap = itrSavepoint.getNewObjects();
@@ -2655,8 +2655,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       try
       {
         CDOPackageRegistry packageRegistry = getSession().getPackageRegistry();
-        Set<EPackage> usedPackages = new HashSet<EPackage>();
-        Set<EPackage> usedNewPackages = new HashSet<EPackage>();
+        Set<EPackage> usedPackages = new HashSet<>();
+        Set<EPackage> usedNewPackages = new HashSet<>();
         for (CDOObject object : getNewObjects().values())
         {
           EPackage ePackage = object.eClass().getEPackage();
@@ -2679,14 +2679,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
         if (usedNewPackages.size() > 0)
         {
-          Set<CDOPackageUnit> result = new HashSet<CDOPackageUnit>();
+          Set<CDOPackageUnit> result = new HashSet<>();
           for (EPackage usedNewPackage : analyzeNewPackages(usedNewPackages, packageRegistry))
           {
             CDOPackageUnit packageUnit = packageRegistry.getPackageUnit(usedNewPackage);
             result.add(packageUnit);
           }
 
-          return new ArrayList<CDOPackageUnit>(result);
+          return new ArrayList<>(result);
         }
 
         return Collections.emptyList();
@@ -2701,7 +2701,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private static List<EPackage> analyzeNewPackages(Collection<EPackage> usedTopLevelPackages, CDOPackageRegistry packageRegistry)
   {
     // Determine which of the corresponding EPackages are new
-    List<EPackage> newPackages = new ArrayList<EPackage>();
+    List<EPackage> newPackages = new ArrayList<>();
 
     IPackageClosure closure = new CompletePackageClosure();
     usedTopLevelPackages = closure.calculate(usedTopLevelPackages);
@@ -2841,7 +2841,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           }
         };
 
-        List<CDOSavepoint> savepoints = new ArrayList<CDOSavepoint>();
+        List<CDOSavepoint> savepoints = new ArrayList<>();
         int totalNewObjects = 0;
 
         InternalCDOSavepoint savepoint = firstSavepoint;
@@ -2903,7 +2903,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       try
       {
-        List<CDOSavepoint> savepoints = new ArrayList<CDOSavepoint>();
+        List<CDOSavepoint> savepoints = new ArrayList<>();
         if (stream.available() > 0)
         {
           CDODataInput in = new CDODataInputImpl(new ExtendedDataInputStream(stream))
@@ -2968,7 +2968,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             }
 
             // Import revisions and deltas
-            List<InternalCDORevision> revisions = new ArrayList<InternalCDORevision>();
+            List<InternalCDORevision> revisions = new ArrayList<>();
             importNewRevisions(in, revisions, idMappings);
             List<InternalCDORevisionDelta> revisionDeltas = importRevisionDeltas(in);
 
@@ -2990,7 +2990,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             if (!revisions.isEmpty())
             {
               // Create new objects
-              List<InternalCDOObject> newObjects = new ArrayList<InternalCDOObject>();
+              List<InternalCDOObject> newObjects = new ArrayList<>();
               for (InternalCDORevision revision : revisions)
               {
                 InternalCDOObject object = newInstance(revision);
@@ -3057,7 +3057,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private List<InternalCDORevisionDelta> importRevisionDeltas(CDODataInput in) throws IOException
   {
     int size = in.readXInt();
-    List<InternalCDORevisionDelta> deltas = new ArrayList<InternalCDORevisionDelta>(size);
+    List<InternalCDORevisionDelta> deltas = new ArrayList<>(size);
     for (int i = 0; i < size; i++)
     {
       InternalCDORevisionDelta delta = (InternalCDORevisionDelta)in.readCDORevisionDelta();
@@ -3233,7 +3233,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
             if (addedNodes == null)
             {
-              addedNodes = new ArrayList<CDOResourceNode>();
+              addedNodes = new ArrayList<>();
             }
 
             addedNodes.add(node);
@@ -3250,7 +3250,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             {
               if (validIDs == null)
               {
-                validIDs = new HashSet<CDOID>();
+                validIDs = new HashSet<>();
               }
 
               validIDs.add(id);
@@ -3463,13 +3463,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return super.queryXRefsUnsynced(targetObjects, sourceReferences);
     }
 
-    final Set<CDOID> targetIDs = new HashSet<CDOID>();
+    final Set<CDOID> targetIDs = new HashSet<>();
     final Set<EReference> relevantReferences = toSet(sourceReferences);
     final CDOQuery query = createXRefsQuery(false, targetIDs, targetObjects, sourceReferences);
 
     if (query.getQueryString() != null)
     {
-      final Set<CDOID> localIDs = new HashSet<CDOID>();
+      final Set<CDOID> localIDs = new HashSet<>();
       final List<CDOObjectReference> localXRefs = queryXRefsLocal(localIDs, targetIDs, relevantReferences);
       final CloseableIterator<CDOObjectReference> delegate = query.getResultAsync(CDOObjectReference.class);
 
@@ -3524,7 +3524,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     List<CDOObjectReference> localXRefs = queryXRefsLocal(null, targetIDs, relevantReferences);
     if (localXRefs != null)
     {
-      return new DelegatingCloseableIterator<CDOObjectReference>(localXRefs.iterator());
+      return new DelegatingCloseableIterator<>(localXRefs.iterator());
     }
 
     return AbstractCloseableIterator.emptyCloseable();
@@ -3544,7 +3544,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       localIDs.addAll(lastSavepoint.getAllDetachedObjects().keySet());
     }
 
-    Iterator<CDOObject> it = new ComposedIterator<CDOObject>( //
+    Iterator<CDOObject> it = new ComposedIterator<>( //
         newObjects.values().iterator(), //
         dirtyObjects.values().iterator());
 
@@ -3595,7 +3595,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
         if (refs == null)
         {
-          refs = new ArrayList<CDOObjectReference>();
+          refs = new ArrayList<>();
         }
 
         refs.add(ref);
@@ -3860,7 +3860,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   protected Map<String, CDOResourceNode> collectNewResourceNodes()
   {
-    Map<String, CDOResourceNode> result = new HashMap<String, CDOResourceNode>();
+    Map<String, CDOResourceNode> result = new HashMap<>();
 
     for (CDOObject object : getNewObjects().values())
     {
@@ -3877,7 +3877,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private Set<CDOObject> getObjects(Collection<? extends CDOIdentifiable> identifiables)
   {
-    Set<CDOObject> result = new HashSet<CDOObject>();
+    Set<CDOObject> result = new HashSet<>();
     for (CDOIdentifiable identifiable : identifiables)
     {
       CDOID id = identifiable.getID();
@@ -3894,7 +3894,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private void removeCrossReferences(Collection<CDOObject> possibleTargets, Collection<CDOObject> referencers)
   {
     CDOStaleReferenceCleaner staleReferenceCleaner = options().getStaleReferenceCleaner();
-    Collection<Pair<EStructuralFeature.Setting, EObject>> staleReferencesToClean = new LinkedList<Pair<EStructuralFeature.Setting, EObject>>();
+    Collection<Pair<EStructuralFeature.Setting, EObject>> staleReferencesToClean = new LinkedList<>();
 
     for (CDOObject referencer : referencers)
     {
@@ -3963,7 +3963,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     EStructuralFeature[] crossReferences = features.crossReferences();
     if (crossReferences != null)
     {
-      List<EStructuralFeature> changeableReferences = new ArrayList<EStructuralFeature>();
+      List<EStructuralFeature> changeableReferences = new ArrayList<>();
       for (int i = 0; i < crossReferences.length; i++)
       {
         EStructuralFeature reference = crossReferences[i];
@@ -3986,7 +3986,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       if (!changeableReferences.isEmpty())
       {
         EStructuralFeature[] collectedStructuralFeatures = changeableReferences.toArray(new EStructuralFeature[changeableReferences.size()]);
-        return new EContentsEList.ResolvingFeatureIteratorImpl<EObject>(object, collectedStructuralFeatures);
+        return new EContentsEList.ResolvingFeatureIteratorImpl<>(object, collectedStructuralFeatures);
       }
     }
 
@@ -4233,7 +4233,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   protected List<CDOLockState> createUnlockedLockStatesForAllNewObjects()
   {
-    List<CDOLockState> locksOnNewObjects = new LinkedList<CDOLockState>();
+    List<CDOLockState> locksOnNewObjects = new LinkedList<>();
     for (CDOObject object : getNewObjects().values())
     {
       Object lockTarget = getLockTarget(object);
@@ -4301,7 +4301,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     Set<T> result = null;
     if (objects.length != 0)
     {
-      result = new HashSet<T>();
+      result = new HashSet<>();
       for (T object : objects)
       {
         result.add(object);
@@ -4421,11 +4421,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     private Map<CDOID, CDOObject> dirtyObjects;
 
-    private Map<ByteArrayWrapper, CDOLob<?>> lobs = new HashMap<ByteArrayWrapper, CDOLob<?>>();
+    private Map<ByteArrayWrapper, CDOLob<?>> lobs = new HashMap<>();
 
-    private List<CDOLockState> locksOnNewObjects = new ArrayList<CDOLockState>();
+    private List<CDOLockState> locksOnNewObjects = new ArrayList<>();
 
-    private List<CDOID> idsToUnlock = new ArrayList<CDOID>();
+    private List<CDOID> idsToUnlock = new ArrayList<>();
 
     public CDOCommitContextImpl(InternalCDOTransaction transaction)
     {
@@ -4440,7 +4440,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       List<CDOPackageUnit> newPackageUnits = analyzeNewPackages();
 
       newObjects = filterCommittables(transaction.getNewObjects());
-      List<CDOIDAndVersion> revisions = new ArrayList<CDOIDAndVersion>(newObjects.size());
+      List<CDOIDAndVersion> revisions = new ArrayList<>(newObjects.size());
       for (CDOObject newObject : newObjects.values())
       {
         revisions.add(newObject.cdoRevision());
@@ -4456,14 +4456,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       revisionDeltas = filterCommittables(transaction.getRevisionDeltas());
-      List<CDORevisionKey> deltas = new ArrayList<CDORevisionKey>(revisionDeltas.size());
+      List<CDORevisionKey> deltas = new ArrayList<>(revisionDeltas.size());
       for (CDORevisionDelta delta : revisionDeltas.values())
       {
         deltas.add(delta);
       }
 
       detachedObjects = filterCommittables(transaction.getDetachedObjects());
-      List<CDOIDAndVersion> detached = new ArrayList<CDOIDAndVersion>(detachedObjects.size());
+      List<CDOIDAndVersion> detached = new ArrayList<>(detachedObjects.size());
       for (Entry<CDOID, CDOObject> entry : detachedObjects.entrySet())
       {
         CDOObject object = entry.getValue();
@@ -4880,7 +4880,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         return null;
       }
 
-      List<CDOLockState> objectsToUnlock = new ArrayList<CDOLockState>();
+      List<CDOLockState> objectsToUnlock = new ArrayList<>();
 
       for (Map.Entry<CDOObject, CDOLockState> entry : lockStates.entrySet())
       {
@@ -5087,13 +5087,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     private CDOUndoDetector undoDetector = DEFAULT_UNDO_DETECTOR;
 
-    private final List<CDOConflictResolver> conflictResolvers = new ArrayList<CDOConflictResolver>();
+    private final List<CDOConflictResolver> conflictResolvers = new ArrayList<>();
 
     private CDOStaleReferenceCleaner staleReferenceCleaner = CDOStaleReferenceCleaner.DEFAULT;
 
     private boolean autoReleaseLocksEnabled = true;
 
-    private final Map<EObject, Boolean> autoReleaseLocksExemptions = new WeakHashMap<EObject, Boolean>();
+    private final Map<EObject, Boolean> autoReleaseLocksExemptions = new WeakHashMap<>();
 
     private long commitInfoTimeout = DEFAULT_COMMIT_INFO_TIMEOUT;
 
@@ -5361,7 +5361,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
         try
         {
-          return new HashSet<EObject>(autoReleaseLocksExemptions.keySet());
+          return new HashSet<>(autoReleaseLocksExemptions.keySet());
         }
         finally
         {

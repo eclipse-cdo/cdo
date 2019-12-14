@@ -49,7 +49,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
 {
   private final int originSize;
 
-  private final List<CDOFeatureDelta> listChanges = new ArrayList<CDOFeatureDelta>();
+  private final List<CDOFeatureDelta> listChanges = new ArrayList<>();
 
   private transient int[] cachedIndices;
 
@@ -82,7 +82,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     Map<CDOFeatureDelta, CDOFeatureDelta> map = null;
     if (cachedSources != null || unprocessedFeatureDeltas != null)
     {
-      map = new HashMap<CDOFeatureDelta, CDOFeatureDelta>();
+      map = new HashMap<>();
     }
 
     for (CDOFeatureDelta delta : listChanges)
@@ -118,7 +118,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     if (unprocessedFeatureDeltas != null)
     {
       int size = unprocessedFeatureDeltas.size();
-      result.unprocessedFeatureDeltas = new ArrayList<CDOFeatureDelta>(size);
+      result.unprocessedFeatureDeltas = new ArrayList<>(size);
       for (CDOFeatureDelta oldDelta : unprocessedFeatureDeltas)
       {
         CDOFeatureDelta newDelta = map.get(oldDelta);
@@ -260,7 +260,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     {
       if (unprocessedFeatureDeltas == null)
       {
-        unprocessedFeatureDeltas = new ArrayList<CDOFeatureDelta>();
+        unprocessedFeatureDeltas = new ArrayList<>();
       }
 
       unprocessedFeatureDeltas.add(featureDelta);
@@ -491,7 +491,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     }
 
     int size = listChanges.size();
-    List<DeltaProxy> proxies = new ArrayList<DeltaProxy>();
+    List<DeltaProxy> proxies = new ArrayList<>();
 
     for (int i = 0; i < size; i++)
     {

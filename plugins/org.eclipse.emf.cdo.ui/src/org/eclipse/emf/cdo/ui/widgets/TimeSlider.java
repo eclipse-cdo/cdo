@@ -53,7 +53,7 @@ public class TimeSlider extends Scale implements IListener, ITreeViewerListener
 
   private static final double FACTOR = MAX - MIN;
 
-  private final Set<CDOID> expandedIDs = new HashSet<CDOID>();
+  private final Set<CDOID> expandedIDs = new HashSet<>();
 
   private long startTimeStamp;
 

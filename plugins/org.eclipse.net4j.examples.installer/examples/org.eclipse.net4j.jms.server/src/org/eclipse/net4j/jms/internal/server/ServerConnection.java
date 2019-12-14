@@ -25,7 +25,7 @@ public class ServerConnection implements IConnection
 
   private String userName;
 
-  private List<ServerSession> sessions = new ArrayList<ServerSession>(0);
+  private List<ServerSession> sessions = new ArrayList<>(0);
 
   private JMSServerProtocol protocol;
 
@@ -82,7 +82,7 @@ public class ServerConnection implements IConnection
 
   public ServerSession[] getSessions()
   {
-    List<ServerSession> result = new ArrayList<ServerSession>(sessions.size());
+    List<ServerSession> result = new ArrayList<>(sessions.size());
     synchronized (sessions)
     {
       for (ServerSession session : sessions)

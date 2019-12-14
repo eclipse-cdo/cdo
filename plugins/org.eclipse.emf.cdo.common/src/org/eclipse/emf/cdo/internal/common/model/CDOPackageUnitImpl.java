@@ -197,7 +197,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
   @Override
   public EPackage[] getEPackages(boolean loadOnDemand)
   {
-    List<EPackage> result = new ArrayList<EPackage>();
+    List<EPackage> result = new ArrayList<>();
     for (InternalCDOPackageInfo packageInfo : packageInfos)
     {
       EPackage ePackage = packageInfo.getEPackage(loadOnDemand);
@@ -226,7 +226,7 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
   public void init(EPackage ePackage)
   {
     EPackage topLevelPackage = EMFUtil.getTopLevelPackage(ePackage);
-    List<InternalCDOPackageInfo> result = new ArrayList<InternalCDOPackageInfo>();
+    List<InternalCDOPackageInfo> result = new ArrayList<>();
     initPackageInfos(topLevelPackage, result);
     packageInfos = result.toArray(new InternalCDOPackageInfo[result.size()]);
 

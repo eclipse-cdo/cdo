@@ -395,7 +395,7 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
         @Override
         protected List<CDORevision> getResult(ResultSet resultSet) throws Exception
         {
-          final List<CDORevision> revisionList = new ArrayList<CDORevision>();
+          final List<CDORevision> revisionList = new ArrayList<>();
 
           do
           {

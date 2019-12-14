@@ -34,7 +34,7 @@ public class NodeManager extends Container<Object>
 {
   private static final String NODE_PROPERTIES = "node.properties";
 
-  private final Map<String, Node> nodes = new HashMap<String, Node>();
+  private final Map<String, Node> nodes = new HashMap<>();
 
   private final NodeType.Client client = new NodeType.Client(this);
 
@@ -62,7 +62,7 @@ public class NodeManager extends Container<Object>
       throw new IllegalStateException("Problem with root folder: " + root);
     }
 
-    List<Node> result = new ArrayList<Node>();
+    List<Node> result = new ArrayList<>();
     for (File folder : root.listFiles())
     {
       if (folder.isDirectory())

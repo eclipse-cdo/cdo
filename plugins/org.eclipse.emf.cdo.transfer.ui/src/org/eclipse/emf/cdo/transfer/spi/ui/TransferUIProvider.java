@@ -75,7 +75,7 @@ public interface TransferUIProvider
 
     public static TransferUIProvider[] getAll(IManagedContainer container)
     {
-      List<TransferUIProvider> uiProviders = new ArrayList<TransferUIProvider>();
+      List<TransferUIProvider> uiProviders = new ArrayList<>();
       for (String type : container.getFactoryTypes(PRODUCT_GROUP))
       {
         uiProviders.add((TransferUIProvider)container.getElement(PRODUCT_GROUP, type, null));

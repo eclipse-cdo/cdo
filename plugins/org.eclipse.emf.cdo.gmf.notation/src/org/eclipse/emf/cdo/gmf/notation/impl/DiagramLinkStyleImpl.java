@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -70,6 +70,7 @@ public class DiagramLinkStyleImpl extends CDOObjectImpl implements DiagramLinkSt
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Diagram getDiagramLink()
   {
     return (Diagram)eDynamicGet(NotationPackage.DIAGRAM_LINK_STYLE__DIAGRAM_LINK, NotationPackage.Literals.DIAGRAM_LINK_STYLE__DIAGRAM_LINK, true, true);
@@ -90,6 +91,7 @@ public class DiagramLinkStyleImpl extends CDOObjectImpl implements DiagramLinkSt
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDiagramLink(Diagram newDiagramLink)
   {
     eDynamicSet(NotationPackage.DIAGRAM_LINK_STYLE__DIAGRAM_LINK, NotationPackage.Literals.DIAGRAM_LINK_STYLE__DIAGRAM_LINK, newDiagramLink);

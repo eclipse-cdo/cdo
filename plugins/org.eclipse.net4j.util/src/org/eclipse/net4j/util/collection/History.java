@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class History<T> extends Notifier implements IHistory<T>
 {
-  protected List<IHistoryElement<T>> elements = new ArrayList<IHistoryElement<T>>(0);
+  protected List<IHistoryElement<T>> elements = new ArrayList<>(0);
 
   private boolean loaded;
 
@@ -40,7 +40,7 @@ public class History<T> extends Notifier implements IHistory<T>
   {
     if (newElements == null)
     {
-      newElements = new ArrayList<IHistoryElement<T>>(0);
+      newElements = new ArrayList<>(0);
     }
 
     if (!elements.equals(newElements))

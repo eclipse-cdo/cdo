@@ -262,7 +262,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
     // Obtain or create and register package
     ExpressionsPackageImpl theExpressionsPackage = (ExpressionsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ExpressionsPackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ExpressionsPackageImpl());
+        ? EPackage.Registry.INSTANCE.get(eNS_URI)
+        : new ExpressionsPackageImpl());
 
     isInited = true;
 

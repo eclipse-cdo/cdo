@@ -76,6 +76,7 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isCollapsed()
   {
     return ((Boolean)eDynamicGet(NotationPackage.BASIC_SEMANTIC_COMPARTMENT__COLLAPSED - ESTATIC_FEATURE_COUNT,
@@ -87,6 +88,7 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setCollapsed(boolean newCollapsed)
   {
     eDynamicSet(NotationPackage.BASIC_SEMANTIC_COMPARTMENT__COLLAPSED - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.DRAWER_STYLE__COLLAPSED,

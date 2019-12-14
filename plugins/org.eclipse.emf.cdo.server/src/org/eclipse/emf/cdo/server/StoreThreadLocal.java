@@ -25,11 +25,11 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
  */
 public final class StoreThreadLocal
 {
-  private static final ThreadLocal<InternalSession> SESSION = new InheritableThreadLocal<InternalSession>();
+  private static final ThreadLocal<InternalSession> SESSION = new InheritableThreadLocal<>();
 
-  private static final ThreadLocal<IStoreAccessor> ACCESSOR = new InheritableThreadLocal<IStoreAccessor>();
+  private static final ThreadLocal<IStoreAccessor> ACCESSOR = new InheritableThreadLocal<>();
 
-  private static final ThreadLocal<IStoreAccessor.CommitContext> COMMIT_CONTEXT = new InheritableThreadLocal<IStoreAccessor.CommitContext>();
+  private static final ThreadLocal<IStoreAccessor.CommitContext> COMMIT_CONTEXT = new InheritableThreadLocal<>();
 
   private StoreThreadLocal()
   {

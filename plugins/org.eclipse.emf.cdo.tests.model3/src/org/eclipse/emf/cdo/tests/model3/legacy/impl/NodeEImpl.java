@@ -188,7 +188,7 @@ public class NodeEImpl extends EObjectImpl implements NodeE
   {
     if (otherNodes == null)
     {
-      otherNodes = new EObjectResolvingEList<NodeA>(NodeA.class, this, Model3Package.NODE_E__OTHER_NODES);
+      otherNodes = new EObjectResolvingEList<>(NodeA.class, this, Model3Package.NODE_E__OTHER_NODES);
     }
     return otherNodes;
   }

@@ -97,7 +97,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
   private IStreamWrapper streamWrapper;
 
-  private Map<Integer, Signal> signals = new HashMap<Integer, Signal>();
+  private Map<Integer, Signal> signals = new HashMap<>();
 
   private int nextCorrelationID = MIN_CORRELATION_ID;
 
@@ -608,7 +608,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     IListener[] listeners = getListeners();
     if (listeners != null)
     {
-      IEvent event = new SignalScheduledEvent<INFRA_STRUCTURE>(this, signal);
+      IEvent event = new SignalScheduledEvent<>(this, signal);
       fireEvent(event, listeners);
     }
   }
@@ -618,7 +618,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     IListener[] listeners = getListeners();
     if (listeners != null)
     {
-      IEvent event = new SignalFinishedEvent<INFRA_STRUCTURE>(this, signal, exception);
+      IEvent event = new SignalFinishedEvent<>(this, signal, exception);
       fireEvent(event, listeners);
     }
   }

@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -103,6 +103,7 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Filtering getFiltering()
   {
     return (Filtering)eDynamicGet(NotationPackage.FILTERING_STYLE__FILTERING, NotationPackage.Literals.FILTERING_STYLE__FILTERING, true, true);
@@ -113,6 +114,7 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setFiltering(Filtering newFiltering)
   {
     eDynamicSet(NotationPackage.FILTERING_STYLE__FILTERING, NotationPackage.Literals.FILTERING_STYLE__FILTERING, newFiltering);
@@ -123,6 +125,7 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public List getFilteringKeys()
   {
     return Collections.unmodifiableList(getFilteringKeysGen());
@@ -143,6 +146,7 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public void setFilteringKeys(List newFilteringKeys)
   {
     if (newFilteringKeys == null)
@@ -185,6 +189,7 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public EList getFilteredObjects()
   {
     return (EList)eDynamicGet(NotationPackage.FILTERING_STYLE__FILTERED_OBJECTS, NotationPackage.Literals.FILTERING_STYLE__FILTERED_OBJECTS, true, true);

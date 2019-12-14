@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -106,6 +106,7 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getFillColor()
   {
     return ((Integer)eDynamicGet(NotationPackage.FILL_STYLE__FILL_COLOR, NotationPackage.Literals.FILL_STYLE__FILL_COLOR, true, true)).intValue();
@@ -116,6 +117,7 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setFillColor(int newFillColor)
   {
     eDynamicSet(NotationPackage.FILL_STYLE__FILL_COLOR, NotationPackage.Literals.FILL_STYLE__FILL_COLOR, new Integer(newFillColor));
@@ -126,6 +128,7 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getTransparency()
   {
     return ((Integer)eDynamicGet(NotationPackage.FILL_STYLE__TRANSPARENCY, NotationPackage.Literals.FILL_STYLE__TRANSPARENCY, true, true)).intValue();
@@ -136,6 +139,7 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setTransparency(int newTransparency)
   {
     eDynamicSet(NotationPackage.FILL_STYLE__TRANSPARENCY, NotationPackage.Literals.FILL_STYLE__TRANSPARENCY, new Integer(newTransparency));
@@ -146,6 +150,7 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public GradientData getGradient()
   {
     return (GradientData)eDynamicGet(NotationPackage.FILL_STYLE__GRADIENT, NotationPackage.Literals.FILL_STYLE__GRADIENT, true, true);
@@ -156,6 +161,7 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setGradient(GradientData newGradient)
   {
     eDynamicSet(NotationPackage.FILL_STYLE__GRADIENT, NotationPackage.Literals.FILL_STYLE__GRADIENT, newGradient);

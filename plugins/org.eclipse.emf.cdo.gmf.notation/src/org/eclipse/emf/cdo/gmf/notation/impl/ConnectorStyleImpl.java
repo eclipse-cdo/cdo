@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -87,6 +87,7 @@ public class ConnectorStyleImpl extends RoutingStyleImpl implements ConnectorSty
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getLineColor()
   {
     return ((Integer)eDynamicGet(NotationPackage.CONNECTOR_STYLE__LINE_COLOR, NotationPackage.Literals.LINE_STYLE__LINE_COLOR, true, true)).intValue();
@@ -97,6 +98,7 @@ public class ConnectorStyleImpl extends RoutingStyleImpl implements ConnectorSty
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setLineColor(int newLineColor)
   {
     eDynamicSet(NotationPackage.CONNECTOR_STYLE__LINE_COLOR, NotationPackage.Literals.LINE_STYLE__LINE_COLOR, new Integer(newLineColor));
@@ -107,6 +109,7 @@ public class ConnectorStyleImpl extends RoutingStyleImpl implements ConnectorSty
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getLineWidth()
   {
     return ((Integer)eDynamicGet(NotationPackage.CONNECTOR_STYLE__LINE_WIDTH, NotationPackage.Literals.LINE_STYLE__LINE_WIDTH, true, true)).intValue();
@@ -117,6 +120,7 @@ public class ConnectorStyleImpl extends RoutingStyleImpl implements ConnectorSty
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setLineWidth(int newLineWidth)
   {
     eDynamicSet(NotationPackage.CONNECTOR_STYLE__LINE_WIDTH, NotationPackage.Literals.LINE_STYLE__LINE_WIDTH, new Integer(newLineWidth));

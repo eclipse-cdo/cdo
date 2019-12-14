@@ -51,11 +51,11 @@ public class CollaborationsPane extends Composite implements IListener
 
   private IBuddyCollaboration activeCollaboration;
 
-  private Map<IBuddyCollaboration, IFacility> activeFacilities = new HashMap<IBuddyCollaboration, IFacility>();
+  private Map<IBuddyCollaboration, IFacility> activeFacilities = new HashMap<>();
 
-  private Map<IFacility, FacilityPane> facilityPanes = new HashMap<IFacility, FacilityPane>();
+  private Map<IFacility, FacilityPane> facilityPanes = new HashMap<>();
 
-  private List<ActivateFacilityAction> activateFacilityActions = new ArrayList<ActivateFacilityAction>();
+  private List<ActivateFacilityAction> activateFacilityActions = new ArrayList<>();
 
   private StackLayout paneStack;
 

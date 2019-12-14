@@ -45,7 +45,7 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
   @Override
   public List<T> asList()
   {
-    List<Object> result = new ArrayList<Object>();
+    List<Object> result = new ArrayList<>();
     while (super.hasNext())
     {
       result.add(super.next());

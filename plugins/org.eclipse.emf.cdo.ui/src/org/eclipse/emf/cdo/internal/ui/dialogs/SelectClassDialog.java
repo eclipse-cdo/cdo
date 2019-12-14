@@ -287,7 +287,7 @@ public class SelectClassDialog extends TitleAreaDialog
       {
         final EPackage.Registry registry = (EPackage.Registry)input;
 
-        List<String> nsURIs = new ArrayList<String>();
+        List<String> nsURIs = new ArrayList<>();
         for (String nsURI : registry.keySet())
         {
           if (filter == null || nsURI.toLowerCase().contains(filter))
@@ -389,7 +389,7 @@ public class SelectClassDialog extends TitleAreaDialog
       {
         EPackage ePackage = (EPackage)input;
 
-        List<EClass> eClasses = new ArrayList<EClass>();
+        List<EClass> eClasses = new ArrayList<>();
         for (EClassifier eClassifier : ePackage.getEClassifiers())
         {
           if (eClassifier instanceof EClass)

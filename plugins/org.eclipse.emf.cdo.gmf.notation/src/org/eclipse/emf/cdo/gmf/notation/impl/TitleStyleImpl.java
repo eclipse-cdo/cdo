@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -83,6 +83,7 @@ public class TitleStyleImpl extends CDOObjectImpl implements TitleStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public boolean isShowTitle()
   {
     return ((Boolean)eDynamicGet(NotationPackage.TITLE_STYLE__SHOW_TITLE, NotationPackage.Literals.TITLE_STYLE__SHOW_TITLE, true, true)).booleanValue();
@@ -93,6 +94,7 @@ public class TitleStyleImpl extends CDOObjectImpl implements TitleStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setShowTitle(boolean newShowTitle)
   {
     eDynamicSet(NotationPackage.TITLE_STYLE__SHOW_TITLE, NotationPackage.Literals.TITLE_STYLE__SHOW_TITLE, new Boolean(newShowTitle));

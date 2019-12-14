@@ -108,7 +108,7 @@ public class NodeAImpl extends EObjectImpl implements NodeA
   {
     if (children == null)
     {
-      children = new EObjectContainmentEList<NodeA>(NodeA.class, this, Model3Package.NODE_A__CHILDREN);
+      children = new EObjectContainmentEList<>(NodeA.class, this, Model3Package.NODE_A__CHILDREN);
     }
     return children;
   }
@@ -147,7 +147,7 @@ public class NodeAImpl extends EObjectImpl implements NodeA
   {
     if (otherNodes == null)
     {
-      otherNodes = new EObjectResolvingEList<NodeA>(NodeA.class, this, Model3Package.NODE_A__OTHER_NODES);
+      otherNodes = new EObjectResolvingEList<>(NodeA.class, this, Model3Package.NODE_A__OTHER_NODES);
     }
     return otherNodes;
   }

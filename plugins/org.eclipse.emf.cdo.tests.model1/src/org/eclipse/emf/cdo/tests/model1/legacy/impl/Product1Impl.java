@@ -161,7 +161,9 @@ public class Product1Impl extends EObjectImpl implements Product1
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.PRODUCT1__NAME, oldName, name));
+    }
   }
 
   /**
@@ -173,7 +175,7 @@ public class Product1Impl extends EObjectImpl implements Product1
   {
     if (orderDetails == null)
     {
-      orderDetails = new EObjectWithInverseResolvingEList<OrderDetail>(OrderDetail.class, this, Model1Package.PRODUCT1__ORDER_DETAILS,
+      orderDetails = new EObjectWithInverseResolvingEList<>(OrderDetail.class, this, Model1Package.PRODUCT1__ORDER_DETAILS,
           Model1Package.ORDER_DETAIL__PRODUCT);
     }
     return orderDetails;
@@ -199,7 +201,9 @@ public class Product1Impl extends EObjectImpl implements Product1
     VAT oldVat = vat;
     vat = newVat == null ? VAT_EDEFAULT : newVat;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.PRODUCT1__VAT, oldVat, vat));
+    }
   }
 
   /**
@@ -212,7 +216,7 @@ public class Product1Impl extends EObjectImpl implements Product1
   {
     if (otherVATs == null)
     {
-      otherVATs = new EDataTypeUniqueEList<VAT>(VAT.class, this, Model1Package.PRODUCT1__OTHER_VA_TS);
+      otherVATs = new EDataTypeUniqueEList<>(VAT.class, this, Model1Package.PRODUCT1__OTHER_VA_TS);
     }
     return otherVATs;
   }
@@ -237,7 +241,9 @@ public class Product1Impl extends EObjectImpl implements Product1
     String oldDescription = description;
     description = newDescription;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.PRODUCT1__DESCRIPTION, oldDescription, description));
+    }
   }
 
   /**
@@ -384,7 +390,9 @@ public class Product1Impl extends EObjectImpl implements Product1
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (name: ");

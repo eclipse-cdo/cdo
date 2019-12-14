@@ -31,7 +31,7 @@ import java.text.MessageFormat;
  */
 public class CDOSetFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl implements CDOSetFeatureDelta, ListTargetAdding
 {
-  private static final ThreadLocal<Boolean> TRANSFER_OLD_VALUE = new ThreadLocal<Boolean>();
+  private static final ThreadLocal<Boolean> TRANSFER_OLD_VALUE = new ThreadLocal<>();
 
   private Object oldValue = UNKNOWN_VALUE;
 

@@ -46,7 +46,7 @@ public class Bugzilla_250036_Test extends AbstractCDOTest
 
     GenRefMapNonContained elementA = getModel4Factory().createGenRefMapNonContained();
     resource1.getContents().add(elementA);
-    List<EObject> expectedValue = new ArrayList<EObject>();
+    List<EObject> expectedValue = new ArrayList<>();
     for (int i = 0; i < 10; i++)
     {
       GenRefSingleContained value = getModel4Factory().createGenRefSingleContained();

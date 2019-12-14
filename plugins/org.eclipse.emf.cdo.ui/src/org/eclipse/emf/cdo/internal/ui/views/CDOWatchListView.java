@@ -169,13 +169,13 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
   private void createActions()
   {
     ISharedImages platformImages = PlatformUI.getWorkbench().getSharedImages();
-    removeAction = new RemoveContainerItemAction<CDOObject>(container, viewer);
+    removeAction = new RemoveContainerItemAction<>(container, viewer);
     removeAction.setText(Messages.getString("CDOWatchListView.4")); //$NON-NLS-1$
     removeAction.setImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
     removeAction.setDisabledImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE_DISABLED));
     removeAction.setToolTipText(Messages.getString("CDOWatchListView.5")); //$NON-NLS-1$
 
-    removeAllAction = new RemoveAllContainerItemAction<CDOObject>(container);
+    removeAllAction = new RemoveAllContainerItemAction<>(container);
     removeAllAction.setText(Messages.getString("CDOWatchListView.6")); //$NON-NLS-1$
     removeAllAction.setImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
     removeAllAction.setToolTipText(Messages.getString("CDOWatchListView.7")); //$NON-NLS-1$
@@ -406,7 +406,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
    */
   private final class CDOObjectContainer extends Container<CDOObject> implements IContainer.Modifiable<CDOObject>
   {
-    private Set<CDOObject> watchedObjects = new HashSet<CDOObject>();
+    private Set<CDOObject> watchedObjects = new HashSet<>();
 
     private CDOSubscriptionAdapter subscriptionAdapter = new CDOSubscriptionAdapter();
 
@@ -470,7 +470,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     @Override
     public boolean addAllElements(Collection<CDOObject> elements)
     {
-      ArrayList<CDOObject> addedElements = new ArrayList<CDOObject>();
+      ArrayList<CDOObject> addedElements = new ArrayList<>();
       for (CDOObject cdoObject : elements)
       {
         if (watchedObjects.add(cdoObject))
@@ -495,7 +495,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     @Override
     public boolean removeAllElements(Collection<CDOObject> elements)
     {
-      ArrayList<CDOObject> removedElements = new ArrayList<CDOObject>();
+      ArrayList<CDOObject> removedElements = new ArrayList<>();
       for (CDOObject cdoObject : elements)
       {
         if (watchedObjects.remove(cdoObject))
@@ -573,7 +573,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
         {
           if (((ILifecycleEvent)event).getKind() == ILifecycleEvent.Kind.ABOUT_TO_DEACTIVATE)
           {
-            List<CDOObject> aboutToRemove = new ArrayList<CDOObject>();
+            List<CDOObject> aboutToRemove = new ArrayList<>();
             for (CDOObject object : getElements())
             {
               if (object.cdoView().equals(event.getSource()))
@@ -594,7 +594,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
    */
   private final class CDOViewReferenceCounterManager
   {
-    private List<CDOViewReferenceCounter> viewReferences = new ArrayList<CDOViewReferenceCounter>();
+    private List<CDOViewReferenceCounter> viewReferences = new ArrayList<>();
 
     public CDOViewReferenceCounterManager()
     {
@@ -658,7 +658,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
    */
   private final class WatchedObjectsDataRegistry extends org.eclipse.net4j.util.event.Notifier implements IListener
   {
-    private Map<Object, WatchedObjectData> registry = new HashMap<Object, WatchedObjectData>();
+    private Map<Object, WatchedObjectData> registry = new HashMap<>();
 
     private final IEvent dataRegistryEvent = new IEvent()
     {
@@ -992,7 +992,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     @Override
     protected void doRun(IProgressMonitor progressMonitor) throws Exception
     {
-      ArrayList<Object> aboutToReset = new ArrayList<Object>();
+      ArrayList<Object> aboutToReset = new ArrayList<>();
       for (CDOObject cdoObject : container.getElements())
       {
         aboutToReset.add(cdoObject);

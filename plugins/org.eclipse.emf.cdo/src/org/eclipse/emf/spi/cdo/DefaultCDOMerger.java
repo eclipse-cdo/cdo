@@ -144,7 +144,7 @@ public class DefaultCDOMerger implements CDOMerger
     targetMap = createMap(target);
     sourceMap = createMap(source);
 
-    Set<CDOID> taken = new HashSet<CDOID>();
+    Set<CDOID> taken = new HashSet<>();
     for (Entry<CDOID, Object> entry : targetMap.entrySet())
     {
       CDOID id = entry.getKey();
@@ -741,7 +741,7 @@ public class DefaultCDOMerger implements CDOMerger
           boolean treatAsUnique = treatAsUnique(feature);
 
           // Copy the target deltas and build a map from original indices to the relevant target deltas.
-          List<CDOFeatureDelta> targetDeltas = new ArrayList<CDOFeatureDelta>();
+          List<CDOFeatureDelta> targetDeltas = new ArrayList<>();
           TargetCopyProcessor targetProcessor = new TargetCopyProcessor(treatAsUnique);
           copy(originalTargetDeltas, originSize, targetDeltas, targetProcessor);
 
@@ -877,13 +877,13 @@ public class DefaultCDOMerger implements CDOMerger
        */
       private static final class TargetCopyProcessor implements CopyProcessor
       {
-        private final Map<Object, Object> targetMap = new HashMap<Object, Object>();
+        private final Map<Object, Object> targetMap = new HashMap<>();
 
         private final Map<Object, Integer> targetAdditions;
 
         public TargetCopyProcessor(boolean treatAsUnique)
         {
-          targetAdditions = treatAsUnique ? new HashMap<Object, Integer>() : null;
+          targetAdditions = treatAsUnique ? new HashMap<>() : null;
         }
 
         public Map<Object, Object> getTargetMap()
@@ -919,7 +919,7 @@ public class DefaultCDOMerger implements CDOMerger
           }
           else if (positions instanceof Integer)
           {
-            List<Integer> list = new ArrayList<Integer>(2);
+            List<Integer> list = new ArrayList<>(2);
             list.add((Integer)positions);
             list.add(deltaPosition);
             targetMap.put(projectedIndex, list);
@@ -1159,16 +1159,15 @@ public class DefaultCDOMerger implements CDOMerger
         {
           // Initialize work lists with virtual elements
           int originSize = ((CDOListFeatureDelta)sourceFeatureDelta.copy()).getOriginSize();
-          BasicEList<Element> ancestorList = new BasicEList<Element>(originSize);
-          PerSide<BasicEList<Element>> listPerSide = new PerSide<BasicEList<Element>>();
+          BasicEList<Element> ancestorList = new BasicEList<>(originSize);
+          PerSide<BasicEList<Element>> listPerSide = new PerSide<>();
 
           initWorkLists(originSize, ancestorList, listPerSide);
 
           // Apply list changes to source and target work lists
-          PerSide<List<CDOFeatureDelta>> changesPerSide = new PerSide<List<CDOFeatureDelta>>(copyListChanges(sourceFeatureDelta),
-              copyListChanges(targetFeatureDelta));
-          Map<Object, List<Element>> additions = new HashMap<Object, List<Element>>();
-          Map<CDOFeatureDelta, Element> allElements = new HashMap<CDOFeatureDelta, Element>();
+          PerSide<List<CDOFeatureDelta>> changesPerSide = new PerSide<>(copyListChanges(sourceFeatureDelta), copyListChanges(targetFeatureDelta));
+          Map<Object, List<Element>> additions = new HashMap<>();
+          Map<CDOFeatureDelta, Element> allElements = new HashMap<>();
 
           applyChangesToWorkList(Side.SOURCE, listPerSide, changesPerSide, allElements, additions);
           applyChangesToWorkList(Side.TARGET, listPerSide, changesPerSide, allElements, additions);
@@ -1188,8 +1187,8 @@ public class DefaultCDOMerger implements CDOMerger
 
       private void initWorkLists(int originSize, BasicEList<Element> ancestorList, PerSide<BasicEList<Element>> listPerSide)
       {
-        BasicEList<Element> sourceList = new BasicEList<Element>(originSize);
-        BasicEList<Element> targetList = new BasicEList<Element>(originSize);
+        BasicEList<Element> sourceList = new BasicEList<>(originSize);
+        BasicEList<Element> targetList = new BasicEList<>(originSize);
 
         for (int i = 0; i < originSize; i++)
         {
@@ -1227,7 +1226,7 @@ public class DefaultCDOMerger implements CDOMerger
       {
         EStructuralFeature feature = listFeatureDelta.getFeature();
         int originSize = listFeatureDelta.getOriginSize();
-        List<CDOFeatureDelta> expandedDeltas = new ArrayList<CDOFeatureDelta>(originSize);
+        List<CDOFeatureDelta> expandedDeltas = new ArrayList<>(originSize);
 
         for (int i = 0; i < originSize; i++)
         {
@@ -1316,7 +1315,7 @@ public class DefaultCDOMerger implements CDOMerger
         List<Element> additionsList = additions.get(value);
         if (additionsList == null)
         {
-          additionsList = new ArrayList<Element>(1);
+          additionsList = new ArrayList<>(1);
           additions.put(value, additionsList);
         }
 

@@ -33,7 +33,7 @@ public class ServerSession extends Lifecycle implements ISession
 
   private int id;
 
-  private ConcurrentMap<Long, ServerConsumer> consumers = new ConcurrentHashMap<Long, ServerConsumer>();
+  private ConcurrentMap<Long, ServerConsumer> consumers = new ConcurrentHashMap<>();
 
   public ServerSession(ServerConnection connection, int id)
   {

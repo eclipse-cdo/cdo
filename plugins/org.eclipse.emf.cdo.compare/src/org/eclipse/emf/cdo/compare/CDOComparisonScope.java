@@ -199,7 +199,7 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
       super(getRoot(leftView), getRoot(rightView), getRoot(originView));
       this.ids = ids;
 
-      Set<CDOID> requiredParentIDs = new HashSet<CDOID>();
+      Set<CDOID> requiredParentIDs = new HashSet<>();
       for (CDOID id : ids)
       {
         collectRequiredParentID(leftView, id, requiredParentIDs);
@@ -232,7 +232,7 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
             return Iterators.filter(iterator, Minimal.this);
           }
 
-          Iterator<EObject> iterator = new ProperContentIterator<EObject>((EObject)object, isResolveProxies());
+          Iterator<EObject> iterator = new ProperContentIterator<>((EObject)object, isResolveProxies());
           return Iterators.filter(iterator, Minimal.this);
         }
       };
@@ -363,7 +363,7 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
       CDOBranchPoint lastUpdate = transaction.getBranch().getPoint(transaction.getLastUpdateTime());
       CDOView lastView = viewOpener.openView(lastUpdate, new ResourceSetImpl());
 
-      Set<CDOID> ids = new HashSet<CDOID>();
+      Set<CDOID> ids = new HashSet<>();
       ids.addAll(transaction.getNewObjects().keySet());
       ids.addAll(transaction.getDirtyObjects().keySet());
       ids.addAll(transaction.getDetachedObjects().keySet());
@@ -381,7 +381,7 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
       }
 
       CDOChangeSetData changeSetData = leftView.compareRevisions(rightView);
-      return new HashSet<CDOID>(changeSetData.getChangeKinds().keySet());
+      return new HashSet<>(changeSetData.getChangeKinds().keySet());
     }
 
     private static void addDirtyIDs(Set<CDOID> ids, CDOView view)

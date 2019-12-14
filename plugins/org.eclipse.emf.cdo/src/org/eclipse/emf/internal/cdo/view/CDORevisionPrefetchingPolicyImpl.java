@@ -48,7 +48,7 @@ public class CDORevisionPrefetchingPolicyImpl implements CDORevisionPrefetchingP
       int fromIndex = accessIndex;
       int toIndex = Math.min(accessIndex + chunkSize, list.size()) - 1;
 
-      Set<CDOID> notRegistered = new HashSet<CDOID>();
+      Set<CDOID> notRegistered = new HashSet<>();
       for (int i = fromIndex; i <= toIndex; i++)
       {
         Object element = list.get(i);
@@ -68,7 +68,7 @@ public class CDORevisionPrefetchingPolicyImpl implements CDORevisionPrefetchingP
         }
       }
 
-      return new ArrayList<CDOID>(notRegistered);
+      return new ArrayList<>(notRegistered);
     }
 
     return Collections.emptyList();

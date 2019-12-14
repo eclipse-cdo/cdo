@@ -76,7 +76,7 @@ public class GenRefMultiContainedImpl extends EObjectImpl implements GenRefMulti
   {
     if (elements == null)
     {
-      elements = new EObjectContainmentEList<EObject>(EObject.class, this, model4Package.GEN_REF_MULTI_CONTAINED__ELEMENTS);
+      elements = new EObjectContainmentEList<>(EObject.class, this, model4Package.GEN_REF_MULTI_CONTAINED__ELEMENTS);
     }
     return elements;
   }

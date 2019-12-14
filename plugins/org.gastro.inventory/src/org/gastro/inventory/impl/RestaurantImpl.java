@@ -141,7 +141,7 @@ public class RestaurantImpl extends CDOObjectImpl implements Restaurant
   @Override
   public EList<Station> getStations()
   {
-    EList<Station> stations = new BasicEList<Station>();
+    EList<Station> stations = new BasicEList<>();
     for (Department department : getDepartments())
     {
       stations.add(department);

@@ -197,7 +197,7 @@ public class OrdersView extends ViewPart
           if (object instanceof BusinessDay)
           {
             BusinessDay businessDay = (BusinessDay)object;
-            List<Object> result = new ArrayList<Object>();
+            List<Object> result = new ArrayList<>();
             for (Order order : businessDay.getOrders())
             {
               for (OrderDetail orderDetail : order.getOrderDetails())
@@ -225,7 +225,7 @@ public class OrdersView extends ViewPart
           if (object instanceof Order)
           {
             Order order = (Order)object;
-            List<Object> result = new ArrayList<Object>();
+            List<Object> result = new ArrayList<>();
             for (OrderDetail orderDetail : order.getOrderDetails())
             {
               Product product = orderDetail.getOffering().getProduct();

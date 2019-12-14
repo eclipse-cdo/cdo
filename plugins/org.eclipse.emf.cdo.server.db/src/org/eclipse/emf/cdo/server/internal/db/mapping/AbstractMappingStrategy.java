@@ -115,7 +115,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public AbstractMappingStrategy()
   {
-    classMappings = new ConcurrentHashMap<EClass, IClassMapping>();
+    classMappings = new ConcurrentHashMap<>();
   }
 
   // -- property related methods -----------------------------------------
@@ -125,7 +125,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   {
     if (properties == null)
     {
-      properties = new HashMap<String, String>();
+      properties = new HashMap<>();
     }
 
     return properties;
@@ -220,7 +220,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   @Override
   public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, OMMonitor monitor, CDOChangeSetSegment[] segments)
   {
-    Set<CDOID> result = new HashSet<CDOID>();
+    Set<CDOID> result = new HashSet<>();
     Collection<IClassMapping> classMappings = getClassMappings().values();
 
     monitor.begin(classMappings.size());
@@ -504,7 +504,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   protected Set<IClassMapping> mapPackageUnits(InternalCDOPackageUnit[] packageUnits, Connection connection, boolean unmap)
   {
-    Set<IClassMapping> classMappings = new HashSet<IClassMapping>();
+    Set<IClassMapping> classMappings = new HashSet<>();
 
     if (packageUnits != null && packageUnits.length != 0)
     {

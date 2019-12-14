@@ -86,9 +86,9 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   private static final boolean SET_USER_NAME = OMPlatform.INSTANCE.isProperty("cdo.explorer.setUserName");
 
-  private final Set<CDOCheckout> checkouts = new HashSet<CDOCheckout>();
+  private final Set<CDOCheckout> checkouts = new HashSet<>();
 
-  private final Set<CDOCheckout> openCheckouts = new HashSet<CDOCheckout>();
+  private final Set<CDOCheckout> openCheckouts = new HashSet<>();
 
   private final IListener branchManagerListener = new IListener()
   {
@@ -120,7 +120,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
         @SuppressWarnings("unchecked")
         IContainerEvent<CDOBranch> e = (IContainerEvent<CDOBranch>)event;
 
-        fireEvent(new ContainerEvent<CDOBranch>(CDORepositoryImpl.this, Arrays.asList(e.getDeltas())));
+        fireEvent(new ContainerEvent<>(CDORepositoryImpl.this, Arrays.asList(e.getDeltas())));
       }
     }
   };
@@ -660,7 +660,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
         {
           if (counters == null)
           {
-            counters = new HashMap<EClass, AtomicInteger>();
+            counters = new HashMap<>();
             CDOView view = CDOUtil.getView(object);
             view.getSession().getRevisionManager().handleRevisions(null, null, false, CDOBranchPoint.UNSPECIFIED_DATE, false, new CDORevisionHandler()
             {
@@ -776,7 +776,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   private static ISecurePreferences getSecurePreferences() throws IOException
   {
-    Map<Object, Object> options = new HashMap<Object, Object>();
+    Map<Object, Object> options = new HashMap<>();
     options.put(IProviderHints.PROMPT_USER, Boolean.FALSE);
 
     return SecurePreferencesFactory.open(null, options);

@@ -58,7 +58,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   private List<IElementProcessor> postProcessors;
 
-  private IRegistry<ElementKey, Object> elementRegistry = new HashMapRegistry<ElementKey, Object>();
+  private IRegistry<ElementKey, Object> elementRegistry = new HashMapRegistry<>();
 
   @ExcludeFromDump
   private transient long maxElementID;
@@ -163,7 +163,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   {
     if (processExistingElements)
     {
-      ContainerEvent<Object> event = new ContainerEvent<Object>(this);
+      ContainerEvent<Object> event = new ContainerEvent<>(this);
       for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
       {
         ElementKey key = entry.getKey();
@@ -207,7 +207,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   public Set<String> getProductGroups()
   {
     checkActive();
-    Set<String> result = new HashSet<String>();
+    Set<String> result = new HashSet<>();
     for (IFactoryKey key : factoryRegistry.keySet())
     {
       result.add(key.getProductGroup());
@@ -225,7 +225,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   public Set<String> getFactoryTypes(String productGroup)
   {
     checkActive();
-    Set<String> result = new HashSet<String>();
+    Set<String> result = new HashSet<>();
     for (IFactoryKey key : factoryRegistry.keySet())
     {
       if (ObjectUtil.equals(key.getProductGroup(), productGroup))
@@ -296,7 +296,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   public Object[] getElements(String productGroup)
   {
     checkActive();
-    List<Object> result = new ArrayList<Object>();
+    List<Object> result = new ArrayList<>();
     for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
     {
       ElementKey key = entry.getKey();
@@ -313,7 +313,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   public Object[] getElements(String productGroup, String factoryType)
   {
     checkActive();
-    List<Object> result = new ArrayList<Object>();
+    List<Object> result = new ArrayList<>();
     for (Entry<ElementKey, Object> entry : getElementRegistryEntries())
     {
       ElementKey key = entry.getKey();
@@ -400,7 +400,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   protected Object putElement(ElementKey key, Object element)
   {
-    ContainerEvent<Object> event = new ContainerEvent<Object>(this);
+    ContainerEvent<Object> event = new ContainerEvent<>(this);
     Object oldElement;
     synchronized (elementRegistry)
     {
@@ -449,7 +449,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     if (element != null)
     {
       EventUtil.removeListener(element, elementListener);
-      fireEvent(new SingleDeltaContainerEvent<Object>(this, element, IContainerDelta.Kind.REMOVED));
+      fireEvent(new SingleDeltaContainerEvent<>(this, element, IContainerDelta.Kind.REMOVED));
 
       if (element instanceof ContainerAware)
       {
@@ -469,7 +469,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     {
       if (!elementRegistry.isEmpty())
       {
-        event = new ContainerEvent<Object>(this);
+        event = new ContainerEvent<>(this);
         for (Object element : elementRegistry.values())
         {
           EventUtil.removeListener(element, elementListener);
@@ -525,7 +525,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     synchronized (elementRegistry)
     {
       ObjectOutputStream oos = new ObjectOutputStream(stream);
-      List<Entry<ElementKey, Object>> entries = new ArrayList<Entry<ElementKey, Object>>(elementRegistry.entrySet());
+      List<Entry<ElementKey, Object>> entries = new ArrayList<>(elementRegistry.entrySet());
       Collections.sort(entries, new EntryComparator());
 
       oos.writeInt(entries.size());
@@ -574,12 +574,12 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   protected IRegistry<IFactoryKey, IFactory> createFactoryRegistry()
   {
-    return new HashMapRegistry<IFactoryKey, IFactory>();
+    return new HashMapRegistry<>();
   }
 
   protected List<IElementProcessor> createPostProcessors()
   {
-    return new ArrayList<IElementProcessor>();
+    return new ArrayList<>();
   }
 
   /**

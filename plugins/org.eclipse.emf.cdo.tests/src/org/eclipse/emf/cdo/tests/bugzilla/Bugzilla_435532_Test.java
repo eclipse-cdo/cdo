@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2014-2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -88,8 +88,8 @@ public class Bugzilla_435532_Test extends AbstractCDOTest
   private void doTestDragChildren(int oldPosition, int newPosition) throws ConcurrentAccessException, CommitException
   {
     // Step 1: get children to move
-    List<Category> childrenToMove = new ArrayList<Category>(root.getCategories().subList(oldPosition, oldPosition + CHILDREN_TO_MOVE_NUMBER));
-    List<CDOID> childrenToMoveIds = new ArrayList<CDOID>();
+    List<Category> childrenToMove = new ArrayList<>(root.getCategories().subList(oldPosition, oldPosition + CHILDREN_TO_MOVE_NUMBER));
+    List<CDOID> childrenToMoveIds = new ArrayList<>();
     for (Category child : childrenToMove)
     {
       childrenToMoveIds.add(CDOUtil.getCDOObject(child).cdoID());
@@ -111,7 +111,7 @@ public class Bugzilla_435532_Test extends AbstractCDOTest
     cdoSession = openSession();
     cdoTransaction = cdoSession.openTransaction();
     root = (Company)cdoTransaction.getResource(getResourcePath("resource")).getContents().get(0);
-    childrenToMove = new ArrayList<Category>();
+    childrenToMove = new ArrayList<>();
     for (CDOID childID : childrenToMoveIds)
     {
       childrenToMove.add((Category)CDOUtil.getEObject(cdoTransaction.getObject(childID)));

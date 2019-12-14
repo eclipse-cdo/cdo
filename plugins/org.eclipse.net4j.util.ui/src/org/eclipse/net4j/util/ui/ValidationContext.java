@@ -28,7 +28,7 @@ public interface ValidationContext
   {
     private ValidationContext delegate;
 
-    private Map<Object, String> messages = new WeakHashMap<Object, String>();
+    private Map<Object, String> messages = new WeakHashMap<>();
 
     public Aggregator(ValidationContext delegate)
     {

@@ -396,7 +396,7 @@ public class IndexReader implements IDBConnectionProvider
       index.trace(TRACER, loadSubBranchesStatement);
       resultSet = loadSubBranchesStatement.executeQuery();
 
-      List<SubBranchInfo> result = new ArrayList<SubBranchInfo>();
+      List<SubBranchInfo> result = new ArrayList<>();
       while (resultSet.next())
       {
         index.trace(TRACER, resultSet);

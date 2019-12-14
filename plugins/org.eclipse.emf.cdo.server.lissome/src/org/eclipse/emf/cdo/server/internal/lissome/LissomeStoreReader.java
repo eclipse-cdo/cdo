@@ -255,7 +255,7 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
   {
     QueryResourcesContext context = new DelegatingQueryResourcesContext()
     {
-      private Set<CDOID> queried = new HashSet<CDOID>();
+      private Set<CDOID> queried = new HashSet<>();
 
       @Override
       protected QueryResourcesContext getDelegate()

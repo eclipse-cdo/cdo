@@ -70,7 +70,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
   @Override
   protected void doSetUp() throws Exception
   {
-    exceptions = new ArrayList<Exception>();
+    exceptions = new ArrayList<>();
     createRepository();
     super.doSetUp();
   }

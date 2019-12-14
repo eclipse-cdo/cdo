@@ -201,7 +201,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   private static List<String> prefixExtensions(List<String> extensions, String prefix)
   {
-    List<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<>();
     for (String extension : extensions)
     {
       result.add(prefix + extension);
@@ -300,7 +300,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * <!-- end-user-doc -->
    * @generated
    */
-  protected List<PropertySheetPage> propertySheetPages = new ArrayList<PropertySheetPage>();
+  protected List<PropertySheetPage> propertySheetPages = new ArrayList<>();
 
   /**
    * This is the viewer that shadows the selection in the content outline.
@@ -329,7 +329,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected Collection<ISelectionChangedListener> selectionChangedListeners = new ArrayList<ISelectionChangedListener>();
+  protected Collection<ISelectionChangedListener> selectionChangedListeners = new ArrayList<>();
 
   /**
    * This keeps track of the selection of the editor as a whole.
@@ -401,28 +401,28 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected Collection<Resource> removedResources = new ArrayList<Resource>();
+  protected Collection<Resource> removedResources = new ArrayList<>();
 
   /**
    * Resources that have been changed since last activation.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected Collection<Resource> changedResources = new ArrayList<Resource>();
+  protected Collection<Resource> changedResources = new ArrayList<>();
 
   /**
    * Resources that have been saved.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected Collection<Resource> savedResources = new ArrayList<Resource>();
+  protected Collection<Resource> savedResources = new ArrayList<>();
 
   /**
    * Map to store the diagnostic associated with a resource.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected Map<Resource, Diagnostic> resourceToDiagnosticMap = new LinkedHashMap<Resource, Diagnostic>();
+  protected Map<Resource, Diagnostic> resourceToDiagnosticMap = new LinkedHashMap<>();
 
   /**
    * Controls whether the problem indication should be updated.
@@ -1842,7 +1842,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         //
         Object selectedElement = selectedElements.next();
 
-        ArrayList<Object> selectionList = new ArrayList<Object>();
+        ArrayList<Object> selectionList = new ArrayList<>();
         selectionList.add(selectedElement);
         while (selectedElements.hasNext())
         {
@@ -1878,7 +1878,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     // Save only resources that have actually changed.
     //
-    final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
+    final Map<Object, Object> saveOptions = new HashMap<>();
     saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
 
     // Do the work within an operation because this is a long running activity that modifies the workbench.
@@ -1947,7 +1947,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     Display.getCurrent().asyncExec(null);
     // Save only resources that have actually changed.
     //
-    final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
+    final Map<Object, Object> saveOptions = new HashMap<>();
     saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
 
     IRunnableWithProgress operation = new IRunnableWithProgress()
@@ -2382,7 +2382,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       if (element instanceof EObject)
       {
         final EObject object = (EObject)element;
-        final List<EReference> features = new ArrayList<EReference>();
+        final List<EReference> features = new ArrayList<>();
         for (EReference containment : object.eClass().getEAllContainments())
         {
           if (containment.isMany())
@@ -2419,7 +2419,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
                 @Override
                 protected void doRun(IProgressMonitor progressMonitor) throws Exception
                 {
-                  List<EObject> children = new ArrayList<EObject>();
+                  List<EObject> children = new ArrayList<>();
                   for (int i = 0; i < instances; i++)
                   {
                     EObject child = EcoreUtil.create(feature.getEReferenceType());
@@ -2966,7 +2966,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     protected void populateSubMenu(EPackage ePackage, final IMenuManager submenuManager)
     {
-      List<EObject> objects = new ArrayList<EObject>();
+      List<EObject> objects = new ArrayList<>();
       for (EClassifier eClassifier : ePackage.getEClassifiers())
       {
         if (eClassifier instanceof EClass)

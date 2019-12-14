@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2014-2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -42,7 +42,7 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
 {
   public void testUnsetOnUnsettableMultiValuedFeatureXMIResource() throws Exception
   {
-    List<EObject> objectsToAdd = new ArrayList<EObject>();
+    List<EObject> objectsToAdd = new ArrayList<>();
     objectsToAdd.add(getModel3SubpackageFactory().createClass2());
     objectsToAdd.add(getModel3SubpackageFactory().createClass2());
     performUnsetOnMultiValuedFeature(getXMIResource(), getModel3Factory().createClass1(), getModel3Package().getClass1_Class2(), true, objectsToAdd);
@@ -50,7 +50,7 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
 
   public void testUnsetOnUnsettableMultiValuedFeatureCDOResource() throws Exception
   {
-    List<EObject> objectsToAdd = new ArrayList<EObject>();
+    List<EObject> objectsToAdd = new ArrayList<>();
     objectsToAdd.add(getModel3SubpackageFactory().createClass2());
     objectsToAdd.add(getModel3SubpackageFactory().createClass2());
     performUnsetOnMultiValuedFeature(getCDOResource(), getModel3Factory().createClass1(), getModel3Package().getClass1_Class2(), true, objectsToAdd);
@@ -58,7 +58,7 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
 
   public void testUnsetOnNonUnsettableMultiValuedFeatureXMIResource() throws Exception
   {
-    List<EObject> objectsToAdd = new ArrayList<EObject>();
+    List<EObject> objectsToAdd = new ArrayList<>();
     objectsToAdd.add(getModel6Factory().createBaseObject());
     objectsToAdd.add(getModel6Factory().createBaseObject());
     performUnsetOnMultiValuedFeature(getXMIResource(), getModel6Factory().createReferenceObject(), getModel6Package().getReferenceObject_ReferenceList(), false,
@@ -67,7 +67,7 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
 
   public void testUnsetOnNonUnsettableMultiValuedFeatureCDOResource() throws Exception
   {
-    List<EObject> objectsToAdd = new ArrayList<EObject>();
+    List<EObject> objectsToAdd = new ArrayList<>();
     objectsToAdd.add(getModel6Factory().createBaseObject());
     objectsToAdd.add(getModel6Factory().createBaseObject());
     performUnsetOnMultiValuedFeature(getCDOResource(), getModel6Factory().createReferenceObject(), getModel6Package().getReferenceObject_ReferenceList(), false,
@@ -209,7 +209,7 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
    */
   private static final class NotificationAsserter extends EContentAdapter
   {
-    private final List<Notification> notifications = new ArrayList<Notification>();
+    private final List<Notification> notifications = new ArrayList<>();
 
     @Override
     public void notifyChanged(Notification notification)

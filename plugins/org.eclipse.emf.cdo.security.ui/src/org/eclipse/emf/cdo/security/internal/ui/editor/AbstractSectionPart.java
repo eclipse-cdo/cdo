@@ -90,7 +90,7 @@ public abstract class AbstractSectionPart<T extends EObject> extends AbstractFor
   protected void initDatabindings()
   {
     context = new EMFDataBindingContext();
-    value = new WritableValue<Object>(context.getValidationRealm());
+    value = new WritableValue<>(context.getValidationRealm());
   }
 
   @Override
@@ -174,7 +174,7 @@ public abstract class AbstractSectionPart<T extends EObject> extends AbstractFor
 
   protected ISWTObservableValue<?> observeText(Text text)
   {
-    return WidgetProperties.text(new int[] { SWT.DefaultSelection, SWT.FocusOut }).observe(text);
+    return WidgetProperties.text(SWT.DefaultSelection, SWT.FocusOut).observe(text);
   }
 
   public void createContents(Composite parent)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -94,7 +94,7 @@ public class ImportRootsAction extends EditingDomainAction
     List<Resource> resources = getSourceResources();
     for (Resource resource : resources)
     {
-      List<EObject> contents = new ArrayList<EObject>(resource.getContents());
+      List<EObject> contents = new ArrayList<>(resource.getContents());
       for (EObject root : contents)
       {
         targetContents.add(root);
@@ -105,7 +105,7 @@ public class ImportRootsAction extends EditingDomainAction
   protected List<Resource> getSourceResources()
   {
     ResourceSetImpl resourceSet = createSourceResourceSet();
-    List<Resource> resources = new ArrayList<Resource>(uris.size());
+    List<Resource> resources = new ArrayList<>(uris.size());
     for (URI uri : uris)
     {
       Resource resource = resourceSet.getResource(uri, true);

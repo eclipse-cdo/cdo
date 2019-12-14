@@ -111,7 +111,7 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
   @Override
   public IBuddy[] invite(String... userIDs)
   {
-    List<IBuddy> buddies = new ArrayList<IBuddy>();
+    List<IBuddy> buddies = new ArrayList<>();
     for (String userID : userIDs)
     {
       IBuddy buddy = session.getBuddy(userID);
@@ -126,7 +126,7 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
   @Override
   public void invite(IBuddy... buddies)
   {
-    List<IBuddy> invitations = new ArrayList<IBuddy>();
+    List<IBuddy> invitations = new ArrayList<>();
     for (IBuddy buddy : buddies)
     {
       if (getMembership(buddy) == null)

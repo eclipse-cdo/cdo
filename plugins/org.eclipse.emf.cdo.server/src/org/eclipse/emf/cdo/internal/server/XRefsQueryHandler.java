@@ -200,7 +200,7 @@ public class XRefsQueryHandler implements IQueryHandler
       List<EReference> list = sourceCandidates.get(eClass);
       if (list == null)
       {
-        list = new ArrayList<EReference>();
+        list = new ArrayList<>();
         sourceCandidates.put(eClass, list);
       }
 
@@ -323,7 +323,7 @@ public class XRefsQueryHandler implements IQueryHandler
     {
       if (sourceCandidates == null)
       {
-        sourceCandidates = new HashMap<EClass, List<EReference>>();
+        sourceCandidates = new HashMap<>();
         Collection<EClass> concreteTypes = getTargetObjects().values();
         EReference[] sourceReferences = getSourceReferences();
 
@@ -379,7 +379,7 @@ public class XRefsQueryHandler implements IQueryHandler
 
     private EReference[] parseSourceReferences()
     {
-      List<EReference> result = new ArrayList<EReference>();
+      List<EReference> result = new ArrayList<>();
       CDOPackageRegistry packageRegistry = getRepository().getPackageRegistry();
 
       String params = (String)info.getParameters().get(CDOProtocolConstants.QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES);
@@ -411,7 +411,7 @@ public class XRefsQueryHandler implements IQueryHandler
   {
     private final CDOBranchPoint originalBranchPoint;
 
-    private final Set<CDOID> ignoredObjects = new HashSet<CDOID>();
+    private final Set<CDOID> ignoredObjects = new HashSet<>();
 
     public QueryContextBranching(CDOQueryInfo info, IQueryContext context)
     {

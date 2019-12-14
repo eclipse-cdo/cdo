@@ -558,7 +558,7 @@ public final class DBUtil
   @Deprecated
   public static List<String> getAllSchemaTableNames(DatabaseMetaData metaData)
   {
-    return new ArrayList<String>(getAllSchemaNames(metaData));
+    return new ArrayList<>(getAllSchemaNames(metaData));
   }
 
   /**
@@ -569,7 +569,7 @@ public final class DBUtil
     try
     {
       DatabaseMetaData metaData = connection.getMetaData();
-      return new ArrayList<String>(getAllSchemaNames(metaData));
+      return new ArrayList<>(getAllSchemaNames(metaData));
     }
     catch (SQLException ex)
     {
@@ -586,7 +586,7 @@ public final class DBUtil
 
     try
     {
-      Set<String> names = new HashSet<String>();
+      Set<String> names = new HashSet<>();
       schemas = metaData.getSchemas();
       while (schemas.next())
       {
@@ -612,7 +612,7 @@ public final class DBUtil
 
     try
     {
-      List<String> names = new ArrayList<String>();
+      List<String> names = new ArrayList<>();
       DatabaseMetaData metaData = connection.getMetaData();
       if (dbName != null)
       {
@@ -658,7 +658,7 @@ public final class DBUtil
     try
     {
       statement = connection.createStatement();
-      List<Exception> exceptions = new ArrayList<Exception>();
+      List<Exception> exceptions = new ArrayList<>();
 
       for (String tableName : getAllTableNames(connection, dbName))
       {

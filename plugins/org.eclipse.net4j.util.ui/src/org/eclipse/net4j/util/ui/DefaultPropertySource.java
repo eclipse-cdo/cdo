@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class DefaultPropertySource<RECEIVER> implements IPropertySource
 {
-  private Map<Object, IPropertyDescriptor> descriptors = new LinkedHashMap<Object, IPropertyDescriptor>();
+  private Map<Object, IPropertyDescriptor> descriptors = new LinkedHashMap<>();
 
   private RECEIVER receiver;
 
@@ -86,7 +86,7 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
     {
       if (property.getLabel() != null)
       {
-        DelegatingPropertyDescriptor<RECEIVER> descriptor = new DelegatingPropertyDescriptor<RECEIVER>(property);
+        DelegatingPropertyDescriptor<RECEIVER> descriptor = new DelegatingPropertyDescriptor<>(property);
         addDescriptor(descriptor);
       }
     }
@@ -164,7 +164,7 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
    */
   public static abstract class Augmented<RECEIVER, AUGMENTING_RECEIVER> extends DefaultPropertySource<RECEIVER>
   {
-    private final Map<String, Object> propertyValues = new HashMap<String, Object>();
+    private final Map<String, Object> propertyValues = new HashMap<>();
 
     public Augmented(RECEIVER object, IPropertyProvider<RECEIVER> provider, AUGMENTING_RECEIVER augmentingObject)
     {

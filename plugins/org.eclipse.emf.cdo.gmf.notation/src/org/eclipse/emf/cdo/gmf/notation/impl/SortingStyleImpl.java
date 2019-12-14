@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -104,6 +104,7 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Sorting getSorting()
   {
     return (Sorting)eDynamicGet(NotationPackage.SORTING_STYLE__SORTING, NotationPackage.Literals.SORTING_STYLE__SORTING, true, true);
@@ -114,6 +115,7 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setSorting(Sorting newSorting)
   {
     eDynamicSet(NotationPackage.SORTING_STYLE__SORTING, NotationPackage.Literals.SORTING_STYLE__SORTING, newSorting);
@@ -124,6 +126,7 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public Map getSortingKeys()
   {
     return Collections.unmodifiableMap(getSortingKeysGen());
@@ -144,6 +147,7 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public void setSortingKeys(Map newSortingKeys)
   {
     if (newSortingKeys == null)
@@ -191,6 +195,7 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public EList getSortedObjects()
   {
     return (EList)eDynamicGet(NotationPackage.SORTING_STYLE__SORTED_OBJECTS, NotationPackage.Literals.SORTING_STYLE__SORTED_OBJECTS, true, true);

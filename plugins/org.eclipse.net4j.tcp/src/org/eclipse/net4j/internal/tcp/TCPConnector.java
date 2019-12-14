@@ -56,7 +56,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   @ExcludeFromDump
   private SelectionKey selectionKey;
 
-  private BlockingQueue<InternalChannel> writeQueue = new RoundRobinBlockingQueue<InternalChannel>();
+  private BlockingQueue<InternalChannel> writeQueue = new RoundRobinBlockingQueue<>();
 
   private IBuffer inputBuffer;
 

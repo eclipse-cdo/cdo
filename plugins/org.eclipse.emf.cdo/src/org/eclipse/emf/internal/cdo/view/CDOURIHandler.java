@@ -118,7 +118,7 @@ public class CDOURIHandler implements URIHandler
   @SuppressWarnings("unchecked")
   public Map<String, ?> getAttributes(URI uri, Map<?, ?> options)
   {
-    Map<String, Object> result = new HashMap<String, Object>();
+    Map<String, Object> result = new HashMap<>();
     String path = CDOURIUtil.extractResourcePath(uri);
     CDOResourceNode node = view.getResourceNode(path);
     if (node != null)

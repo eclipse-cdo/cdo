@@ -60,7 +60,7 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
 
   private boolean writeBulk = true;
 
-  private List<LogLine> queue = new ArrayList<LogLine>();
+  private List<LogLine> queue = new ArrayList<>();
 
   public RollingLog(String logFile, long logSize, boolean append)
   {
@@ -164,11 +164,11 @@ public class RollingLog extends Worker implements Log, Iterable<LogLine>
       if (writeBulk)
       {
         logLines = queue;
-        queue = new ArrayList<LogLine>();
+        queue = new ArrayList<>();
       }
       else
       {
-        logLines = new ArrayList<LogLine>();
+        logLines = new ArrayList<>();
         logLines.add(queue.remove(0));
       }
     }

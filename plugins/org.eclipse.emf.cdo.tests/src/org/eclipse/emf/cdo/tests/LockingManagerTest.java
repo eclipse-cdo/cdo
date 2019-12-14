@@ -53,9 +53,9 @@ public class LockingManagerTest extends AbstractLockingTest
 {
   public void testUnlockAll() throws Exception
   {
-    final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<Integer, Integer>();
+    final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<>();
 
-    Set<Integer> keys = new HashSet<Integer>();
+    Set<Integer> keys = new HashSet<>();
     keys.add(1);
     keys.add(2);
     keys.add(3);
@@ -66,9 +66,9 @@ public class LockingManagerTest extends AbstractLockingTest
 
   public void testWriteOptions() throws Exception
   {
-    final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<Integer, Integer>();
+    final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<>();
 
-    Set<Integer> keys = new HashSet<Integer>();
+    Set<Integer> keys = new HashSet<>();
     keys.add(1);
     lockingManager.lock(LockType.OPTION, 1, keys, 100);
 
@@ -164,14 +164,14 @@ public class LockingManagerTest extends AbstractLockingTest
 
   public void testBasicUpgradeFromReadToWriteLock() throws Exception
   {
-    final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<Integer, Integer>();
+    final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<>();
 
     Runnable step1 = new Runnable()
     {
       @Override
       public void run()
       {
-        Set<Integer> keys = new HashSet<Integer>();
+        Set<Integer> keys = new HashSet<>();
         keys.add(1);
         try
         {
@@ -185,7 +185,7 @@ public class LockingManagerTest extends AbstractLockingTest
     };
 
     ExecutorService executors = getExecutorService();
-    Set<Integer> keys = new HashSet<Integer>();
+    Set<Integer> keys = new HashSet<>();
     keys.add(1);
     keys.add(2);
     keys.add(3);
@@ -254,8 +254,8 @@ public class LockingManagerTest extends AbstractLockingTest
 
   public void testBasicWrongUnlock() throws Exception
   {
-    final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<Integer, Integer>();
-    Set<Integer> keys = new HashSet<Integer>();
+    final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<>();
+    Set<Integer> keys = new HashSet<>();
     keys.add(1);
     lockingManager.lock(LockType.READ, 1, keys, 10000);
     lockingManager.unlock(LockType.READ, 1, keys);
@@ -485,7 +485,7 @@ public class LockingManagerTest extends AbstractLockingTest
   public void testWriteLockMultiple() throws Exception
   {
     Company company = getModel1Factory().createCompany();
-    List<CDOObject> objects = new ArrayList<CDOObject>();
+    List<CDOObject> objects = new ArrayList<>();
 
     addCategory(company, objects);
     addCategory(company, objects);
@@ -517,7 +517,7 @@ public class LockingManagerTest extends AbstractLockingTest
   public void testWriteUnlockMultiple() throws Exception
   {
     Company company = getModel1Factory().createCompany();
-    List<CDOObject> objects = new ArrayList<CDOObject>();
+    List<CDOObject> objects = new ArrayList<>();
 
     addCategory(company, objects);
     addCategory(company, objects);
@@ -559,7 +559,7 @@ public class LockingManagerTest extends AbstractLockingTest
   public void testReadLockMultiple() throws Exception
   {
     Company company = getModel1Factory().createCompany();
-    List<CDOObject> objects = new ArrayList<CDOObject>();
+    List<CDOObject> objects = new ArrayList<>();
 
     addCategory(company, objects);
     addCategory(company, objects);
@@ -591,7 +591,7 @@ public class LockingManagerTest extends AbstractLockingTest
   public void testReadUnlockMultiple() throws Exception
   {
     Company company = getModel1Factory().createCompany();
-    List<CDOObject> objects = new ArrayList<CDOObject>();
+    List<CDOObject> objects = new ArrayList<>();
 
     addCategory(company, objects);
     addCategory(company, objects);

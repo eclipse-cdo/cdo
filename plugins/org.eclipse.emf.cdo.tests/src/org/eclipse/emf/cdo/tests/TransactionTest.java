@@ -168,9 +168,9 @@ public class TransactionTest extends AbstractCDOTest
     final long TIMEOUT = 2 * 120L;
     final int THREADS = 5;
 
-    final List<Exception> exceptions = new ArrayList<Exception>();
+    final List<Exception> exceptions = new ArrayList<>();
     final CountDownLatch latch = new CountDownLatch(THREADS);
-    List<Thread> threadList = new ArrayList<Thread>();
+    List<Thread> threadList = new ArrayList<>();
     for (int i = 0; i < THREADS; i++)
     {
       final int id = i;
@@ -257,7 +257,7 @@ public class TransactionTest extends AbstractCDOTest
       System.out.println("RUN " + run);
 
       CountDownLatch latch = new CountDownLatch(THREADS);
-      List<Thread> threadList = new ArrayList<Thread>();
+      List<Thread> threadList = new ArrayList<>();
 
       for (int thread = 0; thread < THREADS; thread++)
       {

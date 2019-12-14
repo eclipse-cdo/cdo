@@ -124,6 +124,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Sorting getSorting()
   {
     return (Sorting)eDynamicGet(NotationPackage.SEMANTIC_LIST_COMPARTMENT__SORTING - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.SORTING_STYLE__SORTING,
@@ -135,6 +136,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setSorting(Sorting newSorting)
   {
     eDynamicSet(NotationPackage.SEMANTIC_LIST_COMPARTMENT__SORTING - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.SORTING_STYLE__SORTING, newSorting);
@@ -145,6 +147,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Map getSortingKeys()
   {
     return (Map)eDynamicGet(NotationPackage.SEMANTIC_LIST_COMPARTMENT__SORTING_KEYS - ESTATIC_FEATURE_COUNT,
@@ -156,6 +159,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setSortingKeys(Map newSortingKeys)
   {
     eDynamicSet(NotationPackage.SEMANTIC_LIST_COMPARTMENT__SORTING_KEYS - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.SORTING_STYLE__SORTING_KEYS,
@@ -167,6 +171,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList getSortedObjects()
   {
     return (EList)eDynamicGet(NotationPackage.SEMANTIC_LIST_COMPARTMENT__SORTED_OBJECTS - ESTATIC_FEATURE_COUNT,
@@ -178,6 +183,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Filtering getFiltering()
   {
     return (Filtering)eDynamicGet(NotationPackage.SEMANTIC_LIST_COMPARTMENT__FILTERING - ESTATIC_FEATURE_COUNT,
@@ -189,6 +195,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setFiltering(Filtering newFiltering)
   {
     eDynamicSet(NotationPackage.SEMANTIC_LIST_COMPARTMENT__FILTERING - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FILTERING_STYLE__FILTERING,
@@ -200,6 +207,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public List getFilteringKeys()
   {
     return (List)eDynamicGet(NotationPackage.SEMANTIC_LIST_COMPARTMENT__FILTERING_KEYS - ESTATIC_FEATURE_COUNT,
@@ -211,6 +219,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setFilteringKeys(List newFilteringKeys)
   {
     eDynamicSet(NotationPackage.SEMANTIC_LIST_COMPARTMENT__FILTERING_KEYS - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.FILTERING_STYLE__FILTERING_KEYS,
@@ -222,6 +231,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList getFilteredObjects()
   {
     return (EList)eDynamicGet(NotationPackage.SEMANTIC_LIST_COMPARTMENT__FILTERED_OBJECTS - ESTATIC_FEATURE_COUNT,
@@ -233,6 +243,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isShowTitle()
   {
     return ((Boolean)eDynamicGet(NotationPackage.SEMANTIC_LIST_COMPARTMENT__SHOW_TITLE - ESTATIC_FEATURE_COUNT,
@@ -244,6 +255,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setShowTitle(boolean newShowTitle)
   {
     eDynamicSet(NotationPackage.SEMANTIC_LIST_COMPARTMENT__SHOW_TITLE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.TITLE_STYLE__SHOW_TITLE,

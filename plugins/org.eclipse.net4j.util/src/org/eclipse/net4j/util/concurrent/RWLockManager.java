@@ -115,7 +115,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     }
   };
 
-  private Map<OBJECT, LockEntry<OBJECT, CONTEXT>> lockEntries = new HashMap<OBJECT, LockEntry<OBJECT, CONTEXT>>();
+  private Map<OBJECT, LockEntry<OBJECT, CONTEXT>> lockEntries = new HashMap<>();
 
   private LockChanged lockChanged = new LockChanged();
 
@@ -161,8 +161,8 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   {
     synchronized (lockChanged)
     {
-      List<LockEntry<OBJECT, CONTEXT>> lockEntrysToRemove = new ArrayList<LockEntry<OBJECT, CONTEXT>>();
-      List<LockEntry<OBJECT, CONTEXT>> lockEntrysToAdd = new ArrayList<LockEntry<OBJECT, CONTEXT>>();
+      List<LockEntry<OBJECT, CONTEXT>> lockEntrysToRemove = new ArrayList<>();
+      List<LockEntry<OBJECT, CONTEXT>> lockEntrysToAdd = new ArrayList<>();
 
       for (Entry<OBJECT, LockEntry<OBJECT, CONTEXT>> entry : lockEntries.entrySet())
       {
@@ -290,8 +290,8 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   {
     synchronized (lockChanged)
     {
-      List<LockEntry<OBJECT, CONTEXT>> lockEntrysToRemove = new ArrayList<LockEntry<OBJECT, CONTEXT>>();
-      List<LockEntry<OBJECT, CONTEXT>> lockEntrysToAdd = new ArrayList<LockEntry<OBJECT, CONTEXT>>();
+      List<LockEntry<OBJECT, CONTEXT>> lockEntrysToRemove = new ArrayList<>();
+      List<LockEntry<OBJECT, CONTEXT>> lockEntrysToAdd = new ArrayList<>();
       for (OBJECT objectToLock : objectsToLock)
       {
         LockEntry<OBJECT, CONTEXT> entry = lockEntries.get(objectToLock);
@@ -368,13 +368,13 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
 
   private OBJECT obtainLock(LockStrategy<OBJECT, CONTEXT> lockingStrategy, CONTEXT context, Collection<? extends OBJECT> objectsToLock)
   {
-    List<LockEntry<OBJECT, CONTEXT>> lockEntrys = new ArrayList<LockEntry<OBJECT, CONTEXT>>();
+    List<LockEntry<OBJECT, CONTEXT>> lockEntrys = new ArrayList<>();
     for (OBJECT objectToLock : objectsToLock)
     {
       LockEntry<OBJECT, CONTEXT> entry = lockEntries.get(objectToLock);
       if (entry == null)
       {
-        entry = new NoLockEntry<OBJECT, CONTEXT>(objectToLock);
+        entry = new NoLockEntry<>(objectToLock);
       }
 
       if (lockingStrategy.canObtainLock(entry, context))
@@ -477,7 +477,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   {
     private OBJECT object;
 
-    private Set<CONTEXT> contexts = new HashBag<CONTEXT>();
+    private Set<CONTEXT> contexts = new HashBag<>();
 
     public ReadLockEntry(OBJECT objectToLock, CONTEXT context)
     {
@@ -542,7 +542,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     @Override
     public LockEntry<OBJECT, CONTEXT> writeLock(CONTEXT context)
     {
-      return new WriteLockEntry<OBJECT, CONTEXT>(object, context, this);
+      return new WriteLockEntry<>(object, context, this);
     }
 
     @Override
@@ -729,7 +729,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     {
       if (readLock == null)
       {
-        readLock = new ReadLockEntry<OBJECT, CONTEXT>(object, context);
+        readLock = new ReadLockEntry<>(object, context);
       }
 
       return readLock;
@@ -793,13 +793,13 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     @Override
     public LockEntry<OBJECT, CONTEXT> readLock(CONTEXT context)
     {
-      return new ReadLockEntry<OBJECT, CONTEXT>(object, context);
+      return new ReadLockEntry<>(object, context);
     }
 
     @Override
     public LockEntry<OBJECT, CONTEXT> writeLock(CONTEXT context)
     {
-      return new WriteLockEntry<OBJECT, CONTEXT>(object, context, null);
+      return new WriteLockEntry<>(object, context, null);
     }
 
     @Override

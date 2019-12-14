@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class SynchronizingCorrelator<CORRELATION, RESULT> implements ICorrelator<CORRELATION, ISynchronizer<RESULT>>
 {
-  private ConcurrentMap<CORRELATION, ISynchronizer<RESULT>> map = new ConcurrentHashMap<CORRELATION, ISynchronizer<RESULT>>(0);
+  private ConcurrentMap<CORRELATION, ISynchronizer<RESULT>> map = new ConcurrentHashMap<>(0);
 
   /**
    * @since 3.0
@@ -100,7 +100,7 @@ public class SynchronizingCorrelator<CORRELATION, RESULT> implements ICorrelator
     // TODO Make top level class
     return new ISynchronizer<RESULT>()
     {
-      private ISynchronizer<RESULT> delegate = new ResultSynchronizer<RESULT>();
+      private ISynchronizer<RESULT> delegate = new ResultSynchronizer<>();
 
       @Override
       public RESULT get(long timeout)

@@ -28,7 +28,7 @@ public class Account implements IAccount, Serializable
 
   private transient String password;
 
-  private Map<String, String> properties = new HashMap<String, String>();
+  private Map<String, String> properties = new HashMap<>();
 
   private long timeStamp;
 

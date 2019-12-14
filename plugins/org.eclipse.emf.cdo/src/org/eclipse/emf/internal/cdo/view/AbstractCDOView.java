@@ -154,7 +154,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   private static final String SAFE_RENAME = "~renamed";
 
-  private static final ThreadLocal<Lock> NEXT_VIEW_LOCK = new ThreadLocal<Lock>();
+  private static final ThreadLocal<Lock> NEXT_VIEW_LOCK = new ThreadLocal<>();
 
   private final ViewAndState[] viewAndStates = ViewAndState.create(this);
 
@@ -210,7 +210,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   };
 
   @ExcludeFromDump
-  private transient Map<String, CDOID> resourcePathCache = new HashMap<String, CDOID>();
+  private transient Map<String, CDOID> resourcePathCache = new HashMap<>();
 
   @ExcludeFromDump
   private transient CDOID lastLookupID;
@@ -686,7 +686,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   @Override
   public CDOResourceNode[] getElements()
   {
-    List<CDOResourceNode> elements = new ArrayList<CDOResourceNode>();
+    List<CDOResourceNode> elements = new ArrayList<>();
     synchronized (getViewMonitor())
     {
       lockView();
@@ -1365,7 +1365,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   @Override
   public CDOLockState[] getLockStatesOfObjects(Collection<? extends CDOObject> objects)
   {
-    List<CDOID> ids = new ArrayList<CDOID>();
+    List<CDOID> ids = new ArrayList<>();
     for (CDOObject object : objects)
     {
       CDOID id = getID((InternalCDOObject)object, true);
@@ -1387,7 +1387,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
       try
       {
-        List<InternalCDOObject> result = new ArrayList<InternalCDOObject>();
+        List<InternalCDOObject> result = new ArrayList<>();
         for (InternalCDOObject value : objects.values())
         {
           if (value != null)
@@ -1518,7 +1518,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
         try
         {
-          List<CDOResourceNode> result = new ArrayList<CDOResourceNode>();
+          List<CDOResourceNode> result = new ArrayList<>();
 
           while (it.hasNext())
           {
@@ -1585,7 +1585,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
         try
         {
-          List<T> result = new ArrayList<T>();
+          List<T> result = new ArrayList<>();
 
           while (it.hasNext())
           {
@@ -1674,7 +1674,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
         try
         {
-          List<CDOObjectReference> result = new ArrayList<CDOObjectReference>();
+          List<CDOObjectReference> result = new ArrayList<>();
 
           while (it.hasNext())
           {
@@ -2771,7 +2771,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         {
           if (conflicts == null)
           {
-            conflicts = new HashMap<CDOObject, Pair<CDORevision, CDORevisionDelta>>();
+            conflicts = new HashMap<>();
           }
 
           conflicts.put(detachedObject, Pair.create(oldRevision, CDORevisionDelta.DETACHED));
@@ -2838,7 +2838,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         {
           if (conflicts == null)
           {
-            conflicts = new HashMap<CDOObject, Pair<CDORevision, CDORevisionDelta>>();
+            conflicts = new HashMap<>();
           }
 
           conflicts.put(changedObject, Pair.create(oldRevision, delta));
@@ -2914,7 +2914,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         Collection<InternalCDOObject> internalObjects;
         if (objects != null && objects.length != 0)
         {
-          internalObjects = new ArrayList<InternalCDOObject>(objects.length);
+          internalObjects = new ArrayList<>(objects.length);
           for (CDOObject object : objects)
           {
             if (object instanceof InternalCDOObject)
@@ -2925,7 +2925,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         }
         else
         {
-          internalObjects = new ArrayList<InternalCDOObject>(this.objects.values());
+          internalObjects = new ArrayList<>(this.objects.values());
         }
 
         int result = internalObjects.size();
@@ -3353,7 +3353,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       switch (eventType)
       {
       case Notification.ADD:
-        event = new SingleDeltaContainerEvent<CDOResourceNode>(AbstractCDOView.this, (CDOResourceNode)msg.getNewValue(), IContainerDelta.Kind.ADDED);
+        event = new SingleDeltaContainerEvent<>(AbstractCDOView.this, (CDOResourceNode)msg.getNewValue(), IContainerDelta.Kind.ADDED);
         break;
 
       case Notification.ADD_MANY:
@@ -3361,7 +3361,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         break;
 
       case Notification.REMOVE:
-        event = new SingleDeltaContainerEvent<CDOResourceNode>(AbstractCDOView.this, (CDOResourceNode)msg.getOldValue(), IContainerDelta.Kind.REMOVED);
+        event = new SingleDeltaContainerEvent<>(AbstractCDOView.this, (CDOResourceNode)msg.getOldValue(), IContainerDelta.Kind.REMOVED);
         break;
 
       case Notification.REMOVE_MANY:

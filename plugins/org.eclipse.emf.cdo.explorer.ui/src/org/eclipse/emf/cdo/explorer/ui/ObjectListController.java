@@ -51,9 +51,9 @@ public class ObjectListController
 
   private final AtomicBoolean refreshing = new AtomicBoolean();
 
-  private final Set<EObject> objects = new HashSet<EObject>();
+  private final Set<EObject> objects = new HashSet<>();
 
-  private final List<Wrapper> wrappers = new ArrayList<Wrapper>();
+  private final List<Wrapper> wrappers = new ArrayList<>();
 
   private final CDOCheckout checkout;
 

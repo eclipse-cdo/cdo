@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -275,7 +275,7 @@ public abstract class ChannelTest extends AbstractProtocolTest
     super.doSetUp();
     startTransport();
     getConnector().setOpenChannelTimeout(TIMEOUT);
-    protocols = new ArrayList<TestSignalProtocol>();
+    protocols = new ArrayList<>();
   }
 
   @Override
@@ -321,7 +321,7 @@ public abstract class ChannelTest extends AbstractProtocolTest
    */
   private static class DeactivationListener extends LifecycleEventAdapter
   {
-    private Set<ILifecycle> deactivatedSet = new HashSet<ILifecycle>();
+    private Set<ILifecycle> deactivatedSet = new HashSet<>();
 
     public DeactivationListener()
     {

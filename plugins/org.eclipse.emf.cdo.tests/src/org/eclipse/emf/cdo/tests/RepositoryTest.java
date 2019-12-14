@@ -50,7 +50,7 @@ public class RepositoryTest extends AbstractCDOTest
 {
   public void testInsertProperties() throws Exception
   {
-    Map<String, String> expected = new HashMap<String, String>();
+    Map<String, String> expected = new HashMap<>();
     expected.put("BOOLEAN", "true");
     expected.put("INTEGER", "1234567");
     expected.put("LONG", "12345671234567");
@@ -66,7 +66,7 @@ public class RepositoryTest extends AbstractCDOTest
 
   public void testUpdateProperties() throws Exception
   {
-    Map<String, String> expected = new HashMap<String, String>();
+    Map<String, String> expected = new HashMap<>();
     expected.put("BOOLEAN", "true");
     expected.put("INTEGER", "1234567");
     expected.put("LONG", "12345671234567");
@@ -89,7 +89,7 @@ public class RepositoryTest extends AbstractCDOTest
 
   public void testRemoveProperties() throws Exception
   {
-    Map<String, String> expected = new HashMap<String, String>();
+    Map<String, String> expected = new HashMap<>();
     expected.put("BOOLEAN", "true");
     expected.put("INTEGER", "1234567");
     expected.put("LONG", "12345671234567");
@@ -102,7 +102,7 @@ public class RepositoryTest extends AbstractCDOTest
     Map<String, String> actual = store.getPersistentProperties(expected.keySet());
     assertEquals(expected, actual);
 
-    Set<String> names = new HashSet<String>(Arrays.asList(new String[] { "INTEGER", "DOUBLE" }));
+    Set<String> names = new HashSet<>(Arrays.asList("INTEGER", "DOUBLE"));
     store.removePersistentProperties(names);
 
     expected.remove("INTEGER");

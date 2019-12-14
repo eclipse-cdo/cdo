@@ -118,7 +118,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     setViewSet(resourceSet);
 
     Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
-    setObjects(new ReferenceValueMap2.Weak<CDOID, InternalCDOObject>(map));
+    setObjects(new ReferenceValueMap2.Weak<>(map));
 
     activate();
   }

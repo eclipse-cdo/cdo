@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -56,7 +56,7 @@ public class MapTest extends AbstractCDOTest
 {
   protected static EClass mapContainerEClass;
 
-  protected static Map<EDataType, List> dummyData = new HashMap<EDataType, List>();
+  protected static Map<EDataType, List> dummyData = new HashMap<>();
 
   protected static int count;
 
@@ -84,7 +84,7 @@ public class MapTest extends AbstractCDOTest
 
   public void testIntegerStringMap() throws Exception
   {
-    Map<Integer, String> objects = new HashMap<Integer, String>();
+    Map<Integer, String> objects = new HashMap<>();
     objects.put(1, "1");
     objects.put(2, "2");
     objects.put(3, "3");
@@ -95,7 +95,7 @@ public class MapTest extends AbstractCDOTest
 
   public void testStringStringMap() throws Exception
   {
-    Map<String, String> objects = new HashMap<String, String>();
+    Map<String, String> objects = new HashMap<>();
     objects.put("Eike", "Stepper");
     objects.put("Simon", "McDuff");
     objects.put("Stefan", "Winkler");
@@ -111,7 +111,7 @@ public class MapTest extends AbstractCDOTest
 
   public void testStringVATMap() throws Exception
   {
-    Map<String, VAT> objects = new HashMap<String, VAT>();
+    Map<String, VAT> objects = new HashMap<>();
     objects.put("VAT0", VAT.VAT0);
     objects.put("VAT7", VAT.VAT7);
     objects.put("VAT15", VAT.VAT15);
@@ -121,7 +121,7 @@ public class MapTest extends AbstractCDOTest
 
   public void testStringToAddressContainmentMap() throws Exception
   {
-    Map<String, Address> objects = new HashMap<String, Address>();
+    Map<String, Address> objects = new HashMap<>();
 
     objects.put("address1", getModel1Factory().createAddress());
     objects.put("address2", getModel1Factory().createAddress());
@@ -132,7 +132,7 @@ public class MapTest extends AbstractCDOTest
 
   public void testStringToAddressReferenceMap() throws Exception
   {
-    Map<String, Address> objects = new HashMap<String, Address>();
+    Map<String, Address> objects = new HashMap<>();
 
     objects.put("address1", getModel1Factory().createAddress());
     objects.put("address2", getModel1Factory().createAddress());
@@ -143,7 +143,7 @@ public class MapTest extends AbstractCDOTest
 
   public void testEObjectToEObjectMap() throws Exception
   {
-    Map<Order, OrderDetail> objects = new HashMap<Order, OrderDetail>();
+    Map<Order, OrderDetail> objects = new HashMap<>();
 
     objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
     objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
@@ -154,7 +154,7 @@ public class MapTest extends AbstractCDOTest
 
   public void testEObjectToEObjectKeyContainedMap() throws Exception
   {
-    Map<Order, OrderDetail> objects = new HashMap<Order, OrderDetail>();
+    Map<Order, OrderDetail> objects = new HashMap<>();
 
     objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
     objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
@@ -165,7 +165,7 @@ public class MapTest extends AbstractCDOTest
 
   public void testEObjectToEObjectValueContainedMap() throws Exception
   {
-    Map<Order, OrderDetail> objects = new HashMap<Order, OrderDetail>();
+    Map<Order, OrderDetail> objects = new HashMap<>();
 
     objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
     objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
@@ -176,7 +176,7 @@ public class MapTest extends AbstractCDOTest
 
   public void testEObjectToEObjectBothContainedMap() throws Exception
   {
-    Map<Order, OrderDetail> objects = new HashMap<Order, OrderDetail>();
+    Map<Order, OrderDetail> objects = new HashMap<>();
 
     objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
     objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
@@ -472,7 +472,7 @@ public class MapTest extends AbstractCDOTest
 
     // ++++++++++++++ create dynamic
     // TODO provide Reference mapping
-    Map<EDataType, Boolean> dataTypes = new HashMap<EDataType, Boolean>();
+    Map<EDataType, Boolean> dataTypes = new HashMap<>();
     dataTypes.put(theCorePackage.getEBigDecimal(), true);
     dataTypes.put(theCorePackage.getEBigInteger(), true);
     dataTypes.put(theCorePackage.getEBoolean(), true);

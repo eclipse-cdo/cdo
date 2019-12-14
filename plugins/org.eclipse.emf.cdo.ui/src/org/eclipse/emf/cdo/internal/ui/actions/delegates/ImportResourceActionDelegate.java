@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -87,7 +87,7 @@ public class ImportResourceActionDelegate extends NewResourceActionDelegate
 
     // Source Resource
     Resource source = sourceSet.getResource(sourceURI, true);
-    List<EObject> sourceContents = new ArrayList<EObject>(source.getContents());
+    List<EObject> sourceContents = new ArrayList<>(source.getContents());
 
     // Target Resource
     EList<EObject> targetContents = resource.getContents();

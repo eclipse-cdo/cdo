@@ -160,9 +160,9 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
   private CDOSessionConfigurationFactory remoteSessionConfigurationFactory;
 
-  private Map<InternalCDOSession, Closeable> closeables = new ConcurrentHashMap<InternalCDOSession, Closeable>();
+  private Map<InternalCDOSession, Closeable> closeables = new ConcurrentHashMap<>();
 
-  private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
+  private Set<InternalCDOView> views = new HashSet<>();
 
   /**
    * Checkout.
@@ -464,7 +464,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       @Override
       public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
       {
-        Set<CDOID> changedIDs = new HashSet<CDOID>();
+        Set<CDOID> changedIDs = new HashSet<>();
 
         InternalCDOTransaction tx = (InternalCDOTransaction)transaction;
         InternalCDOSavepoint lastSavepoint = tx.getLastSavepoint();
@@ -557,7 +557,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       {
         CDOMerger2 merger2 = (CDOMerger2)merger;
 
-        Set<CDOID> affectedIDs = new HashSet<CDOID>();
+        Set<CDOID> affectedIDs = new HashSet<>();
         addIDs(affectedIDs, remoteData);
         addIDs(affectedIDs, localData);
 
@@ -718,7 +718,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
       private Set<CDOID> getAffectedIDs(CDOCommitContext commitContext, final CDOChangeSetData remoteData)
       {
-        Set<CDOID> affectedIDs = new HashSet<CDOID>();
+        Set<CDOID> affectedIDs = new HashSet<>();
         addIDs(affectedIDs, base.getIDs()); // Base IDs
         addIDs(affectedIDs, remoteData.getChangeKinds()); // Remote IDs
         addIDs(affectedIDs, commitContext); // Local IDs
@@ -780,7 +780,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     final CDOBranch localBranch = localSessionHead.getBranch();
     IStoreAccessor.Raw accessor = beginRawAccess(null);
 
-    final List<InternalCDORevision> changedRevisions = new ArrayList<InternalCDORevision>();
+    final List<InternalCDORevision> changedRevisions = new ArrayList<>();
     for (CDORevisionKey key : revertData.getChangedObjects())
     {
       CDOID id = key.getID();
@@ -801,7 +801,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       accessor.rawStore(baseRevision, new Monitor());
     }
 
-    final List<CDORevisionKey> detachedRevisions = new ArrayList<CDORevisionKey>();
+    final List<CDORevisionKey> detachedRevisions = new ArrayList<>();
     for (CDOIDAndVersion key : revertData.getDetachedObjects())
     {
       CDOID id = key.getID();
@@ -970,7 +970,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
   protected Set<CDOID> checkinPostProcessing(InternalCDOTransaction remoteTransaction, List<CDORevisionKey> changedObjects)
   {
-    Set<CDOID> ids = new HashSet<CDOID>();
+    Set<CDOID> ids = new HashSet<>();
     IStoreAccessor.Raw accessor = null;
 
     try
@@ -1263,7 +1263,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
   protected InternalRepository createLocalRepository(String localRepositoryName, IStore store)
   {
-    Map<String, String> props = new HashMap<String, String>();
+    Map<String, String> props = new HashMap<>();
     props.put(Props.OVERRIDE_UUID, ""); // UUID := name !!!
     props.put(Props.SUPPORTING_AUDITS, "false");
     props.put(Props.SUPPORTING_BRANCHES, "false");
@@ -1412,7 +1412,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
   protected void setTimeStamp(long timeStamp)
   {
-    Map<String, String> props = new HashMap<String, String>();
+    Map<String, String> props = new HashMap<>();
     props.put(PROP_TIME_STAMP, String.valueOf(timeStamp));
     localRepository.getStore().setPersistentProperties(props);
 
@@ -1421,7 +1421,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
   protected void saveProperties()
   {
-    Map<String, String> props = new HashMap<String, String>();
+    Map<String, String> props = new HashMap<>();
     props.put(PROP_BRANCH_ID, String.valueOf(branchID));
     props.put(PROP_BRANCH_PATH, branchPath);
     props.put(PROP_TIME_STAMP, String.valueOf(timeStamp));
@@ -1431,7 +1431,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
   protected void loadProperties()
   {
-    Set<String> names = new HashSet<String>(Arrays.asList(PROP_BRANCH_ID, PROP_BRANCH_PATH, PROP_TIME_STAMP, PROP_FIXED));
+    Set<String> names = new HashSet<>(Arrays.asList(PROP_BRANCH_ID, PROP_BRANCH_PATH, PROP_TIME_STAMP, PROP_FIXED));
     Map<String, String> props = localRepository.getStore().getPersistentProperties(names);
     String prop = props.get(PROP_BRANCH_ID);
     branchID = prop == null ? InternalCDOWorkspace.NO_BRANCH_ID : Integer.parseInt(prop);

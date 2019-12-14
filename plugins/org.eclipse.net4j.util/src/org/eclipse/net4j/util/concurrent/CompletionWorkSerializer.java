@@ -32,12 +32,12 @@ public class CompletionWorkSerializer implements IWorkSerializer
 
   public CompletionWorkSerializer(Executor executor, BlockingQueue<Future<Object>> completionQueue)
   {
-    this(new ExecutorCompletionService<Object>(executor, completionQueue));
+    this(new ExecutorCompletionService<>(executor, completionQueue));
   }
 
   public CompletionWorkSerializer(Executor executor)
   {
-    this(new ExecutorCompletionService<Object>(executor));
+    this(new ExecutorCompletionService<>(executor));
   }
 
   public CompletionWorkSerializer()

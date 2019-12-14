@@ -78,7 +78,7 @@ public class MyEnumListUnsettableImpl extends EObjectImpl implements MyEnumListU
   {
     if (myEnum == null)
     {
-      myEnum = new EDataTypeUniqueEList.Unsettable<MyEnum>(MyEnum.class, this, Model6Package.MY_ENUM_LIST_UNSETTABLE__MY_ENUM);
+      myEnum = new EDataTypeUniqueEList.Unsettable<>(MyEnum.class, this, Model6Package.MY_ENUM_LIST_UNSETTABLE__MY_ENUM);
     }
     return myEnum;
   }

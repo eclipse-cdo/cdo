@@ -178,7 +178,7 @@ public class DefaultCDOAdminHandler implements CDOAdminHandler2, ContainerAware
   protected Document getConfiguration(String name, Map<String, Object> properties) throws Exception
   {
     // Make a copy that we can modify
-    properties = new java.util.HashMap<String, Object>(properties);
+    properties = new java.util.HashMap<>(properties);
 
     DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 

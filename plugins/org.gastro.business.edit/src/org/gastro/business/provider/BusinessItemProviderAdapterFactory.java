@@ -65,7 +65,7 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
    *
    * @generated
    */
-  protected Collection<Object> supportedTypes = new ArrayList<Object>();
+  protected Collection<Object> supportedTypes = new ArrayList<>();
 
   /**
    * This constructs an instance.

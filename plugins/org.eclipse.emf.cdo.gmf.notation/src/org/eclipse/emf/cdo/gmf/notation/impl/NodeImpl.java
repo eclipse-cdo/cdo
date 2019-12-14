@@ -67,6 +67,7 @@ public class NodeImpl extends ViewImpl implements Node
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public LayoutConstraint getLayoutConstraint()
   {
     return (LayoutConstraint)eDynamicGet(NotationPackage.NODE__LAYOUT_CONSTRAINT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.NODE__LAYOUT_CONSTRAINT,
@@ -89,6 +90,7 @@ public class NodeImpl extends ViewImpl implements Node
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setLayoutConstraint(LayoutConstraint newLayoutConstraint)
   {
     eDynamicSet(NotationPackage.NODE__LAYOUT_CONSTRAINT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.NODE__LAYOUT_CONSTRAINT, newLayoutConstraint);
@@ -98,6 +100,7 @@ public class NodeImpl extends ViewImpl implements Node
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    */
+  @Override
   public LayoutConstraint createLayoutConstraint(EClass eClass)
   {
     LayoutConstraint newLayoutConstraint = (LayoutConstraint)eClass.getEPackage().getEFactoryInstance().create(eClass);

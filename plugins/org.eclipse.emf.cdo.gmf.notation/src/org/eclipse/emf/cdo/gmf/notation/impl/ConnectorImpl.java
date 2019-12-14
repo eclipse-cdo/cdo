@@ -180,6 +180,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Routing getRouting()
   {
     return (Routing)eDynamicGet(NotationPackage.CONNECTOR__ROUTING - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.ROUTING_STYLE__ROUTING, true, true);
@@ -190,6 +191,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setRouting(Routing newRouting)
   {
     eDynamicSet(NotationPackage.CONNECTOR__ROUTING - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.ROUTING_STYLE__ROUTING, newRouting);
@@ -200,6 +202,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Smoothness getSmoothness()
   {
     return (Smoothness)eDynamicGet(NotationPackage.CONNECTOR__SMOOTHNESS - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.ROUTING_STYLE__SMOOTHNESS, true,
@@ -211,6 +214,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setSmoothness(Smoothness newSmoothness)
   {
     eDynamicSet(NotationPackage.CONNECTOR__SMOOTHNESS - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.ROUTING_STYLE__SMOOTHNESS, newSmoothness);
@@ -221,6 +225,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isAvoidObstructions()
   {
     return ((Boolean)eDynamicGet(NotationPackage.CONNECTOR__AVOID_OBSTRUCTIONS - ESTATIC_FEATURE_COUNT,
@@ -232,6 +237,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setAvoidObstructions(boolean newAvoidObstructions)
   {
     eDynamicSet(NotationPackage.CONNECTOR__AVOID_OBSTRUCTIONS - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.ROUTING_STYLE__AVOID_OBSTRUCTIONS,
@@ -243,6 +249,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isClosestDistance()
   {
     return ((Boolean)eDynamicGet(NotationPackage.CONNECTOR__CLOSEST_DISTANCE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.ROUTING_STYLE__CLOSEST_DISTANCE,
@@ -254,6 +261,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setClosestDistance(boolean newClosestDistance)
   {
     eDynamicSet(NotationPackage.CONNECTOR__CLOSEST_DISTANCE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.ROUTING_STYLE__CLOSEST_DISTANCE,
@@ -265,6 +273,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public JumpLinkStatus getJumpLinkStatus()
   {
     return (JumpLinkStatus)eDynamicGet(NotationPackage.CONNECTOR__JUMP_LINK_STATUS - ESTATIC_FEATURE_COUNT,
@@ -276,6 +285,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setJumpLinkStatus(JumpLinkStatus newJumpLinkStatus)
   {
     eDynamicSet(NotationPackage.CONNECTOR__JUMP_LINK_STATUS - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.ROUTING_STYLE__JUMP_LINK_STATUS,
@@ -287,6 +297,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public JumpLinkType getJumpLinkType()
   {
     return (JumpLinkType)eDynamicGet(NotationPackage.CONNECTOR__JUMP_LINK_TYPE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.ROUTING_STYLE__JUMP_LINK_TYPE,
@@ -298,6 +309,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setJumpLinkType(JumpLinkType newJumpLinkType)
   {
     eDynamicSet(NotationPackage.CONNECTOR__JUMP_LINK_TYPE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.ROUTING_STYLE__JUMP_LINK_TYPE, newJumpLinkType);
@@ -308,6 +320,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isJumpLinksReverse()
   {
     return ((Boolean)eDynamicGet(NotationPackage.CONNECTOR__JUMP_LINKS_REVERSE - ESTATIC_FEATURE_COUNT,
@@ -319,6 +332,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setJumpLinksReverse(boolean newJumpLinksReverse)
   {
     eDynamicSet(NotationPackage.CONNECTOR__JUMP_LINKS_REVERSE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.ROUTING_STYLE__JUMP_LINKS_REVERSE,
@@ -330,6 +344,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getRoundedBendpointsRadius()
   {
     return ((Integer)eDynamicGet(NotationPackage.CONNECTOR__ROUNDED_BENDPOINTS_RADIUS - ESTATIC_FEATURE_COUNT,
@@ -341,6 +356,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setRoundedBendpointsRadius(int newRoundedBendpointsRadius)
   {
     eDynamicSet(NotationPackage.CONNECTOR__ROUNDED_BENDPOINTS_RADIUS - ESTATIC_FEATURE_COUNT,
@@ -352,6 +368,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getLineColor()
   {
     return ((Integer)eDynamicGet(NotationPackage.CONNECTOR__LINE_COLOR - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.LINE_STYLE__LINE_COLOR, true, true))
@@ -363,6 +380,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setLineColor(int newLineColor)
   {
     eDynamicSet(NotationPackage.CONNECTOR__LINE_COLOR - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.LINE_STYLE__LINE_COLOR, new Integer(newLineColor));
@@ -373,6 +391,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getLineWidth()
   {
     return ((Integer)eDynamicGet(NotationPackage.CONNECTOR__LINE_WIDTH - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.LINE_STYLE__LINE_WIDTH, true, true))
@@ -384,6 +403,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setLineWidth(int newLineWidth)
   {
     eDynamicSet(NotationPackage.CONNECTOR__LINE_WIDTH - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.LINE_STYLE__LINE_WIDTH, new Integer(newLineWidth));

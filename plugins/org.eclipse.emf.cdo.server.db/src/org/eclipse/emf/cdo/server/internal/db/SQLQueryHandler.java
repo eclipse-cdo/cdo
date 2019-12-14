@@ -95,7 +95,7 @@ public class SQLQueryHandler implements IQueryHandler
       throw new IllegalArgumentException("Unsupported query language: " + language);
     }
 
-    HashMap<String, List<Integer>> paramMap = new HashMap<String, List<Integer>>();
+    HashMap<String, List<Integer>> paramMap = new HashMap<>();
     String query = parse(info.getQueryString(), paramMap);
 
     int firstResult = -1;
@@ -297,7 +297,7 @@ public class SQLQueryHandler implements IQueryHandler
 
   private Map<String, Object> toMap(String[] columnNames, Object[] results)
   {
-    Map<String, Object> ret = new HashMap<String, Object>();
+    Map<String, Object> ret = new HashMap<>();
 
     for (int i = 0; i < columnNames.length; i++)
     {
@@ -359,7 +359,7 @@ public class SQLQueryHandler implements IQueryHandler
           List<Integer> indexList = paramMap.get(name);
           if (indexList == null)
           {
-            indexList = new ArrayList<Integer>();
+            indexList = new ArrayList<>();
             paramMap.put(name, indexList);
           }
 

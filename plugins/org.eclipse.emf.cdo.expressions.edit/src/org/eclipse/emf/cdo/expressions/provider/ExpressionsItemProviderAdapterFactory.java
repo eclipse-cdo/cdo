@@ -84,7 +84,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
    * <!-- end-user-doc -->
    * @generated
    */
-  protected Collection<Object> supportedTypes = new ArrayList<Object>();
+  protected Collection<Object> supportedTypes = new ArrayList<>();
 
   /**
    * This constructs an instance.

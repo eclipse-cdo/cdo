@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -64,7 +64,7 @@ public class Bugzilla_335772_Test extends AbstractCDOTest
     order2 = factory.createSalesOrder();
     order2.setId(2);
 
-    map = new HashMap<Product1, SalesOrder>();
+    map = new HashMap<>();
     map.put(product1, order1);
     customer.eSet(getModel1Package().getCustomer_OrderByProduct(), map);
 

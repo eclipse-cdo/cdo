@@ -111,9 +111,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CDOCheckoutContentProvider implements ICommonContentProvider, IPropertySourceProvider, IOpenListener
 {
-  private static final Map<String, CDOCheckoutContentProvider> INSTANCES = new HashMap<String, CDOCheckoutContentProvider>();
+  private static final Map<String, CDOCheckoutContentProvider> INSTANCES = new HashMap<>();
 
-  private static final Set<Object> LOADING_OBJECTS = new HashSet<Object>();
+  private static final Set<Object> LOADING_OBJECTS = new HashSet<>();
 
   private static final Method GET_CHILDREN_FEATURES_METHOD = getMethod(ItemProviderAdapter.class, "getChildrenFeatures", Object.class);
 
@@ -269,7 +269,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
 
   private final CDOCheckoutStateManager stateManager = new CDOCheckoutStateManager(this);
 
-  private final Map<Object, Object[]> childrenCache = new ConcurrentHashMap<Object, Object[]>();
+  private final Map<Object, Object[]> childrenCache = new ConcurrentHashMap<>();
 
   private String viewerID;
 
@@ -530,8 +530,8 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
         return ItemProvider.NO_ELEMENTS;
       }
 
-      final List<CDORevision> loadedRevisions = new ArrayList<CDORevision>();
-      final List<CDOID> missingIDs = new ArrayList<CDOID>();
+      final List<CDORevision> loadedRevisions = new ArrayList<>();
+      final List<CDOID> missingIDs = new ArrayList<>();
 
       if (openingCheckout == null)
       {
@@ -663,7 +663,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
             int childCount = childItems.length;
             if (childCount != 0)
             {
-              List<Object> result = new ArrayList<Object>();
+              List<Object> result = new ArrayList<>();
               for (int i = 0; i < childCount; i++)
               {
                 TreeItem childItem = childItems[i];
@@ -851,7 +851,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
 
           for (Object object : objects)
           {
-            LinkedList<Object> path = new LinkedList<Object>();
+            LinkedList<Object> path = new LinkedList<>();
             CDOCheckout checkout = CDOExplorerUtil.walkUp(object, path);
             if (checkout != null)
             {
@@ -877,8 +877,8 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
           viewer.setSelection(new StructuredSelection(objects), true);
           IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
 
-          Set<Object> actual = new HashSet<Object>(Arrays.asList(selection.toArray()));
-          Set<Object> expected = new HashSet<Object>(Arrays.asList(objects));
+          Set<Object> actual = new HashSet<>(Arrays.asList(selection.toArray()));
+          Set<Object> expected = new HashSet<>(Arrays.asList(objects));
 
           if (!actual.equals(expected))
           {
@@ -1074,7 +1074,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
       @Override
       public Object[] getChildren(Object element)
       {
-        List<Object> children = new ArrayList<Object>();
+        List<Object> children = new ArrayList<>();
         for (Object child : doGetChildren(element))
         {
           if (child instanceof CDOCheckout || child instanceof CDOResourceFolder)

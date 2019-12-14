@@ -32,7 +32,7 @@ public class CDOFeatureAnalyzerUI extends CDOAbstractFeatureRuleAnalyzer
 {
   private static final long ELAPSE_TIME = 400L;
 
-  private Map<CDOClusterOfFetchRule, CDOClusterOfFetchRule> featureRules = new HashMap<CDOClusterOfFetchRule, CDOClusterOfFetchRule>();
+  private Map<CDOClusterOfFetchRule, CDOClusterOfFetchRule> featureRules = new HashMap<>();
 
   private CDOClusterOfFetchRule currentClusterOfFetchRule;
 
@@ -75,7 +75,7 @@ public class CDOFeatureAnalyzerUI extends CDOAbstractFeatureRuleAnalyzer
   @Override
   public List<CDOFetchRule> getFetchRules(Collection<CDOID> ids)
   {
-    List<CDOFetchRule> list = new ArrayList<CDOFetchRule>();
+    List<CDOFetchRule> list = new ArrayList<>();
 
     boolean addRootFeature = true;
     if (lastTraverseFeature != null)

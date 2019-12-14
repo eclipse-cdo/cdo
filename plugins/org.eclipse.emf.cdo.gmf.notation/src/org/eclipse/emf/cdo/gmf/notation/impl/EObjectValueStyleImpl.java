@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -57,6 +57,7 @@ public class EObjectValueStyleImpl extends NamedStyleImpl implements EObjectValu
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EObject getEObjectValue()
   {
     return (EObject)eDynamicGet(NotationPackage.EOBJECT_VALUE_STYLE__EOBJECT_VALUE, NotationPackage.Literals.EOBJECT_VALUE_STYLE__EOBJECT_VALUE, true, true);
@@ -77,6 +78,7 @@ public class EObjectValueStyleImpl extends NamedStyleImpl implements EObjectValu
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setEObjectValue(EObject newEObjectValue)
   {
     eDynamicSet(NotationPackage.EOBJECT_VALUE_STYLE__EOBJECT_VALUE, NotationPackage.Literals.EOBJECT_VALUE_STYLE__EOBJECT_VALUE, newEObjectValue);

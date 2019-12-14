@@ -75,7 +75,7 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
   {
     if (elements == null)
     {
-      elements = new EcoreEMap<String, EObject>(model4Package.eINSTANCE.getStringToEObject(), StringToEObjectImpl.class, this,
+      elements = new EcoreEMap<>(model4Package.eINSTANCE.getStringToEObject(), StringToEObjectImpl.class, this,
           model4Package.GEN_REF_MAP_NON_CONTAINED__ELEMENTS);
     }
     return elements;

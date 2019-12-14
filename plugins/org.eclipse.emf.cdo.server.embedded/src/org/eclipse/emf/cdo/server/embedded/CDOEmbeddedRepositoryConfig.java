@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -78,7 +78,7 @@ public abstract class CDOEmbeddedRepositoryConfig extends Lifecycle
    */
   public void initPackages(IRepository repository, List<EPackage> packages)
   {
-    for (String nsURI : new HashSet<String>(EPackage.Registry.INSTANCE.keySet()))
+    for (String nsURI : new HashSet<>(EPackage.Registry.INSTANCE.keySet()))
     {
       if (isInitialPackage(repository, nsURI))
       {
@@ -175,7 +175,7 @@ public abstract class CDOEmbeddedRepositoryConfig extends Lifecycle
     IStore store = createStore(container);
 
     // Initialize properties.
-    Map<String, String> properties = new HashMap<String, String>();
+    Map<String, String> properties = new HashMap<>();
     properties.put(IRepository.Props.OVERRIDE_UUID, "");
     initProperties(container, properties);
 

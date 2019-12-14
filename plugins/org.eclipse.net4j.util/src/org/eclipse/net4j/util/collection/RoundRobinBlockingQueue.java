@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
 {
-  private BlockingQueue<Entry<E>> list = new LinkedBlockingQueue<Entry<E>>();
+  private BlockingQueue<Entry<E>> list = new LinkedBlockingQueue<>();
 
   public RoundRobinBlockingQueue()
   {
@@ -76,7 +76,7 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
         }
       }
 
-      return list.add(new Entry<E>(e));
+      return list.add(new Entry<>(e));
     }
   }
 
@@ -233,7 +233,7 @@ public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
   @Override
   public Iterator<E> iterator()
   {
-    List<E> copy = new ArrayList<E>();
+    List<E> copy = new ArrayList<>();
 
     synchronized (list)
     {

@@ -72,7 +72,7 @@ public final class CDOModelUtil implements CDOModelConstants
 
   static
   {
-    List<CDOType> types = new ArrayList<CDOType>();
+    List<CDOType> types = new ArrayList<>();
     registerCoreType(types, EcorePackage.eINSTANCE.getEBigDecimal(), CDOType.BIG_DECIMAL);
     registerCoreType(types, EcorePackage.eINSTANCE.getEBigInteger(), CDOType.BIG_INTEGER);
     registerCoreType(types, EcorePackage.eINSTANCE.getEBooleanObject(), CDOType.BOOLEAN_OBJECT);
@@ -726,7 +726,7 @@ public final class CDOModelUtil implements CDOModelConstants
    */
   public static Map<EClass, List<EClass>> getSubTypes(EPackage.Registry packageRegistry)
   {
-    Map<EClass, List<EClass>> result = new HashMap<EClass, List<EClass>>();
+    Map<EClass, List<EClass>> result = new HashMap<>();
     for (String nsURI : packageRegistry.keySet())
     {
       EPackage ePackage = packageRegistry.getEPackage(nsURI);
@@ -764,7 +764,7 @@ public final class CDOModelUtil implements CDOModelConstants
     List<EClass> list = result.get(eSuperType);
     if (list == null)
     {
-      list = new ArrayList<EClass>();
+      list = new ArrayList<>();
       result.put(eSuperType, list);
     }
 

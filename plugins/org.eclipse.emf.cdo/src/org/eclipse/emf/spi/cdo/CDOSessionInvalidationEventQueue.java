@@ -55,7 +55,7 @@ public class CDOSessionInvalidationEventQueue
     }
   };
 
-  private Queue<CDOSessionInvalidationEvent> queue = new LinkedList<CDOSessionInvalidationEvent>();
+  private Queue<CDOSessionInvalidationEvent> queue = new LinkedList<>();
 
   public CDOSessionInvalidationEventQueue(CDOSession session)
   {

@@ -50,7 +50,7 @@ public class ResourceManager extends SWTResourceManager
   // Image
   //
   // //////////////////////////////////////////////////////////////////////////
-  private static Map<ImageDescriptor, Image> m_descriptorImageMap = new HashMap<ImageDescriptor, Image>();
+  private static Map<ImageDescriptor, Image> m_descriptorImageMap = new HashMap<>();
 
   /**
    * Returns an {@link ImageDescriptor} stored in the file at the specified path relative to the specified
@@ -148,13 +148,13 @@ public class ResourceManager extends SWTResourceManager
     Map<Image, Map<Image, Image>> cornerDecoratedImageMap = m_decoratedImageMap[corner];
     if (cornerDecoratedImageMap == null)
     {
-      cornerDecoratedImageMap = new HashMap<Image, Map<Image, Image>>();
+      cornerDecoratedImageMap = new HashMap<>();
       m_decoratedImageMap[corner] = cornerDecoratedImageMap;
     }
     Map<Image, Image> decoratedMap = cornerDecoratedImageMap.get(baseImage);
     if (decoratedMap == null)
     {
-      decoratedMap = new HashMap<Image, Image>();
+      decoratedMap = new HashMap<>();
       cornerDecoratedImageMap.put(baseImage, decoratedMap);
     }
     //
@@ -251,7 +251,7 @@ public class ResourceManager extends SWTResourceManager
   /**
    * Maps URL to images.
    */
-  private static Map<String, Image> m_URLImageMap = new HashMap<String, Image>();
+  private static Map<String, Image> m_URLImageMap = new HashMap<>();
 
   /**
    * Provider for plugin resources, used by WindowBuilder at design time.
@@ -459,17 +459,17 @@ public class ResourceManager extends SWTResourceManager
       Class<?> BundleContextClass = Class.forName("org.osgi.framework.BundleContext"); //$NON-NLS-1$
       if (BundleContextClass.isAssignableFrom(plugin.getClass()))
       {
-        Method getBundleMethod = BundleContextClass.getMethod("getBundle", new Class[0]); //$NON-NLS-1$
-        Object bundle = getBundleMethod.invoke(plugin, new Object[0]);
+        Method getBundleMethod = BundleContextClass.getMethod("getBundle"); //$NON-NLS-1$
+        Object bundle = getBundleMethod.invoke(plugin);
         //
         Class<?> PathClass = Class.forName("org.eclipse.core.runtime.Path"); //$NON-NLS-1$
-        Constructor<?> pathConstructor = PathClass.getConstructor(new Class[] { String.class });
-        Object path = pathConstructor.newInstance(new Object[] { name });
+        Constructor<?> pathConstructor = PathClass.getConstructor(String.class);
+        Object path = pathConstructor.newInstance(name);
         //
         Class<?> IPathClass = Class.forName("org.eclipse.core.runtime.IPath"); //$NON-NLS-1$
         Class<?> PlatformClass = Class.forName("org.eclipse.core.runtime.Platform"); //$NON-NLS-1$
-        Method findMethod = PlatformClass.getMethod("find", new Class[] { BundleClass, IPathClass }); //$NON-NLS-1$
-        return (URL)findMethod.invoke(null, new Object[] { bundle, path });
+        Method findMethod = PlatformClass.getMethod("find", BundleClass, IPathClass); //$NON-NLS-1$
+        return (URL)findMethod.invoke(null, bundle, path);
       }
     }
     catch (Throwable e)
@@ -483,12 +483,12 @@ public class ResourceManager extends SWTResourceManager
       {
         //
         Class<?> PathClass = Class.forName("org.eclipse.core.runtime.Path"); //$NON-NLS-1$
-        Constructor<?> pathConstructor = PathClass.getConstructor(new Class[] { String.class });
-        Object path = pathConstructor.newInstance(new Object[] { name });
+        Constructor<?> pathConstructor = PathClass.getConstructor(String.class);
+        Object path = pathConstructor.newInstance(name);
         //
         Class<?> IPathClass = Class.forName("org.eclipse.core.runtime.IPath"); //$NON-NLS-1$
-        Method findMethod = PluginClass.getMethod("find", new Class[] { IPathClass }); //$NON-NLS-1$
-        return (URL)findMethod.invoke(plugin, new Object[] { path });
+        Method findMethod = PluginClass.getMethod("find", IPathClass); //$NON-NLS-1$
+        return (URL)findMethod.invoke(plugin, path);
       }
     }
     return null;

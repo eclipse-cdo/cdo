@@ -470,7 +470,7 @@ public interface Session extends Runnable
   *                         due to some internal error.
   * @exception InvalidDestinationException if an invalid destination
   * is specified.
-  
+
   * @exception InvalidSelectorException if the message selector is invalid.
   *
   * @since 1.1
@@ -508,7 +508,7 @@ public interface Session extends Runnable
    *                         due to some internal error.
    * @exception InvalidDestinationException if an invalid destination
     * is specified.
-  
+
    * @exception InvalidSelectorException if the message selector is invalid.
    *
    * @since 1.1

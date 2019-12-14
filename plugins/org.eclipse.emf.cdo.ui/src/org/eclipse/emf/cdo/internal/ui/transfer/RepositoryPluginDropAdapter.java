@@ -71,7 +71,7 @@ public class RepositoryPluginDropAdapter implements IDropActionDelegate
     CDOView view = nodes.get(0).cdoView();
     CDOTransferSystem sourceSystem = new RepositoryTransferSystem(view);
 
-    List<CDOTransferElement> sourceElements = new ArrayList<CDOTransferElement>(nodes.size());
+    List<CDOTransferElement> sourceElements = new ArrayList<>(nodes.size());
     for (CDOResourceNode node : nodes)
     {
       sourceElements.add(sourceSystem.getElement(node.getPath()));
@@ -115,7 +115,7 @@ public class RepositoryPluginDropAdapter implements IDropActionDelegate
         return null;
       }
 
-      List<CDOResourceNode> nodes = new ArrayList<CDOResourceNode>();
+      List<CDOResourceNode> nodes = new ArrayList<>();
       for (;;)
       {
         String path = in.readString();

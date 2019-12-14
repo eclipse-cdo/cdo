@@ -64,7 +64,7 @@ public final class CDOEditorUtil
 
   private static final IEditorRegistry EDITOR_REGISTRY = PlatformUI.getWorkbench().getEditorRegistry();
 
-  private static final Map<CDOResourceLeaf, String> EDITOR_OVERRIDES = new WeakHashMap<CDOResourceLeaf, String>();
+  private static final Map<CDOResourceLeaf, String> EDITOR_OVERRIDES = new WeakHashMap<>();
 
   private static String editorID = EDITOR_ID;
 
@@ -211,7 +211,7 @@ public final class CDOEditorUtil
    */
   public static IEditorReference[] findEditor(IWorkbenchPage page, CDOView view, String resourcePath)
   {
-    List<IEditorReference> result = new ArrayList<IEditorReference>();
+    List<IEditorReference> result = new ArrayList<>();
     IEditorReference[] editorReferences = page.getEditorReferences();
     for (IEditorReference editorReference : editorReferences)
     {
@@ -299,7 +299,7 @@ public final class CDOEditorUtil
    */
   public static String[] getAllEditorIDs(CDOResourceLeaf resource)
   {
-    List<String> editorIDs = new ArrayList<String>();
+    List<String> editorIDs = new ArrayList<>();
     if (resource instanceof CDOResource)
     {
       editorIDs.add(EDITOR_ID);

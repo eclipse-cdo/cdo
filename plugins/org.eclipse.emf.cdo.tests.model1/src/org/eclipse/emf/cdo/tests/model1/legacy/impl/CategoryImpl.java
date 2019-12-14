@@ -119,7 +119,9 @@ public class CategoryImpl extends EObjectImpl implements Category
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.CATEGORY__NAME, oldName, name));
+    }
   }
 
   /**
@@ -131,7 +133,7 @@ public class CategoryImpl extends EObjectImpl implements Category
   {
     if (categories == null)
     {
-      categories = new EObjectContainmentEList.Resolving<Category>(Category.class, this, Model1Package.CATEGORY__CATEGORIES);
+      categories = new EObjectContainmentEList.Resolving<>(Category.class, this, Model1Package.CATEGORY__CATEGORIES);
     }
     return categories;
   }
@@ -145,7 +147,7 @@ public class CategoryImpl extends EObjectImpl implements Category
   {
     if (products == null)
     {
-      products = new EObjectContainmentEList.Resolving<Product1>(Product1.class, this, Model1Package.CATEGORY__PRODUCTS);
+      products = new EObjectContainmentEList.Resolving<>(Product1.class, this, Model1Package.CATEGORY__PRODUCTS);
     }
     return products;
   }
@@ -260,7 +262,9 @@ public class CategoryImpl extends EObjectImpl implements Category
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (name: ");

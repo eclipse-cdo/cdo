@@ -945,7 +945,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
 
-    List<CDOCommitInfo> expected = new ArrayList<CDOCommitInfo>();
+    List<CDOCommitInfo> expected = new ArrayList<>();
     final int COMMITS = 20;
     for (int i = 0; i < COMMITS; i++)
     {
@@ -974,7 +974,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
 
-    List<CDOCommitInfo> expected = new ArrayList<CDOCommitInfo>();
+    List<CDOCommitInfo> expected = new ArrayList<>();
     final int COMMITS = 20;
     for (int i = 0; i < COMMITS; i++)
     {
@@ -1005,7 +1005,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
 
-    List<CDOCommitInfo> expected = new ArrayList<CDOCommitInfo>();
+    List<CDOCommitInfo> expected = new ArrayList<>();
     final int COMMITS = 20;
     for (int i = 0; i < COMMITS; i++)
     {
@@ -1145,7 +1145,7 @@ public class CommitInfoTest extends AbstractCDOTest
    */
   private static final class Handler implements CDOCommitInfoHandler
   {
-    private List<CDOCommitInfo> infos = new ArrayList<CDOCommitInfo>();
+    private List<CDOCommitInfo> infos = new ArrayList<>();
 
     public List<CDOCommitInfo> getInfos()
     {

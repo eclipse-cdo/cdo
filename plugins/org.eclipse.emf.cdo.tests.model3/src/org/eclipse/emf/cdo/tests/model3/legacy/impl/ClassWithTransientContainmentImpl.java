@@ -232,7 +232,7 @@ public class ClassWithTransientContainmentImpl extends EObjectImpl implements Cl
   {
     if (transientChildren == null)
     {
-      transientChildren = new EObjectContainmentEList<ClassWithTransientContainment>(ClassWithTransientContainment.class, this,
+      transientChildren = new EObjectContainmentEList<>(ClassWithTransientContainment.class, this,
           Model3Package.CLASS_WITH_TRANSIENT_CONTAINMENT__TRANSIENT_CHILDREN);
     }
     return transientChildren;
@@ -318,7 +318,7 @@ public class ClassWithTransientContainmentImpl extends EObjectImpl implements Cl
   {
     if (persistentChildren == null)
     {
-      persistentChildren = new EObjectContainmentEList<ClassWithTransientContainment>(ClassWithTransientContainment.class, this,
+      persistentChildren = new EObjectContainmentEList<>(ClassWithTransientContainment.class, this,
           Model3Package.CLASS_WITH_TRANSIENT_CONTAINMENT__PERSISTENT_CHILDREN);
     }
     return persistentChildren;

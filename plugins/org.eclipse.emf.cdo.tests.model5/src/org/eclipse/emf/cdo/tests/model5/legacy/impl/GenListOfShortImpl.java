@@ -72,7 +72,7 @@ public class GenListOfShortImpl extends EObjectImpl implements GenListOfShort
   {
     if (elements == null)
     {
-      elements = new EDataTypeUniqueEList<Short>(Short.class, this, Model5Package.GEN_LIST_OF_SHORT__ELEMENTS);
+      elements = new EDataTypeUniqueEList<>(Short.class, this, Model5Package.GEN_LIST_OF_SHORT__ELEMENTS);
     }
     return elements;
   }

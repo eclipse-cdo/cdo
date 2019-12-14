@@ -34,7 +34,7 @@ public class Preferences extends Notifier implements OMPreferences
 {
   private AbstractBundle bundle;
 
-  private Map<String, Preference<?>> prefs = new HashMap<String, Preference<?>>();
+  private Map<String, Preference<?>> prefs = new HashMap<>();
 
   private boolean loaded;
 
@@ -299,7 +299,7 @@ public class Preferences extends Notifier implements OMPreferences
     IListener[] listeners = getListeners();
     if (listeners != null)
     {
-      fireEvent(new PreferencesChangeEvent<T>(preference, oldValue, newValue), listeners);
+      fireEvent(new PreferencesChangeEvent<>(preference, oldValue, newValue), listeners);
     }
   }
 

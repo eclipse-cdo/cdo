@@ -72,7 +72,7 @@ public class GenListOfIntegerImpl extends EObjectImpl implements GenListOfIntege
   {
     if (elements == null)
     {
-      elements = new EDataTypeUniqueEList<Integer>(Integer.class, this, Model5Package.GEN_LIST_OF_INTEGER__ELEMENTS);
+      elements = new EDataTypeUniqueEList<>(Integer.class, this, Model5Package.GEN_LIST_OF_INTEGER__ELEMENTS);
     }
     return elements;
   }

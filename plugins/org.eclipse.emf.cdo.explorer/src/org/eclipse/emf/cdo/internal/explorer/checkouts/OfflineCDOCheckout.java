@@ -78,7 +78,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
       {
         ObjectStatesChangedEvent e = (ObjectStatesChangedEvent)event;
 
-        Set<Object> objects = new HashSet<Object>();
+        Set<Object> objects = new HashSet<>();
         CDOView view = getView();
 
         for (CDOID id : e.getChangedIDs())
@@ -235,7 +235,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
     JdbcDataSource dataSource = new JdbcDataSource();
     dataSource.setURL("jdbc:h2:" + dbPrefix);
 
-    Map<String, String> props = new HashMap<String, String>();
+    Map<String, String> props = new HashMap<>();
     props.put(IMappingStrategy.Props.QUALIFIED_NAMES, "true");
 
     IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(true, true, false);

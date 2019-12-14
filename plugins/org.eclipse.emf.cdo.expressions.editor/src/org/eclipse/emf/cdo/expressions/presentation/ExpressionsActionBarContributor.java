@@ -323,7 +323,7 @@ public class ExpressionsActionBarContributor extends EditingDomainActionBarContr
    */
   protected Collection<IAction> generateCreateChildActions(Collection<?> descriptors, ISelection selection)
   {
-    Collection<IAction> actions = new ArrayList<IAction>();
+    Collection<IAction> actions = new ArrayList<>();
     if (descriptors != null)
     {
       for (Object descriptor : descriptors)
@@ -343,7 +343,7 @@ public class ExpressionsActionBarContributor extends EditingDomainActionBarContr
    */
   protected Collection<IAction> generateCreateSiblingActions(Collection<?> descriptors, ISelection selection)
   {
-    Collection<IAction> actions = new ArrayList<IAction>();
+    Collection<IAction> actions = new ArrayList<>();
     if (descriptors != null)
     {
       for (Object descriptor : descriptors)

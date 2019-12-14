@@ -50,7 +50,7 @@ public class Bugzilla_368223_Test extends AbstractCDOTest
     transaction.createResource(getResourcePath("/test1"));
     transaction.commit();
 
-    AtomicReference<Throwable> exception = new AtomicReference<Throwable>();
+    AtomicReference<Throwable> exception = new AtomicReference<>();
     long start = System.currentTimeMillis();
 
     Creator creator = new Creator(exception);
@@ -140,7 +140,7 @@ public class Bugzilla_368223_Test extends AbstractCDOTest
       transaction.options().setStaleReferencePolicy(CDOStaleReferencePolicy.EXCEPTION);
 
       final CDOResource resource = transaction.getResource(getResourcePath("/test1"));
-      final List<Company> listOfCompanies = new ArrayList<Company>();
+      final List<Company> listOfCompanies = new ArrayList<>();
 
       int loop = 5;
       while (exception.get() == null && --loop != 0)

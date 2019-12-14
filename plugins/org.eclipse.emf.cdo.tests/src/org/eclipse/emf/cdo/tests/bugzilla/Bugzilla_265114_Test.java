@@ -138,7 +138,7 @@ public class Bugzilla_265114_Test extends AbstractCDOTest
    */
   public static class TransactionEditingDomainSimulatedAdapter extends AdapterImpl
   {
-    private List<EObject> listOfContent = new ArrayList<EObject>();
+    private List<EObject> listOfContent = new ArrayList<>();
 
     @Override
     public void notifyChanged(Notification msg)

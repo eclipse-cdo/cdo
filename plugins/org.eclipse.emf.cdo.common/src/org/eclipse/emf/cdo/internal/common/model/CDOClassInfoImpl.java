@@ -285,9 +285,9 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
     EList<EStructuralFeature> allFeatures = eClass.getEAllStructuralFeatures();
     int featureCount = eClass.getFeatureCount();
 
-    List<EStructuralFeature> persistentFeatures = new ArrayList<EStructuralFeature>();
-    List<EReference> persistentReferences = new ArrayList<EReference>();
-    List<EStructuralFeature> persistentContainments = new ArrayList<EStructuralFeature>();
+    List<EStructuralFeature> persistentFeatures = new ArrayList<>();
+    List<EReference> persistentReferences = new ArrayList<>();
+    List<EStructuralFeature> persistentContainments = new ArrayList<>();
 
     // Used for tests for containment
     EStructuralFeature[] containments = ((EClassImpl.FeatureSubsetSupplier)eClass.getEAllStructuralFeatures()).containments();

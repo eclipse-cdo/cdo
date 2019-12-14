@@ -94,7 +94,7 @@ public class ListConstructionImpl extends CDOObjectImpl implements ListConstruct
   @Override
   public Object evaluate(EvaluationContext context)
   {
-    EList<Object> result = new BasicEList<Object>();
+    EList<Object> result = new BasicEList<>();
     for (Expression element : getElements())
     {
       result.add(element.evaluate(context));

@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,6 +66,7 @@ public class ByteArrayValueStyleImpl extends NamedStyleImpl implements ByteArray
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public byte[] getByteArrayValue()
   {
     return (byte[])eDynamicGet(NotationPackage.BYTE_ARRAY_VALUE_STYLE__BYTE_ARRAY_VALUE, NotationPackage.Literals.BYTE_ARRAY_VALUE_STYLE__BYTE_ARRAY_VALUE,
@@ -77,6 +78,7 @@ public class ByteArrayValueStyleImpl extends NamedStyleImpl implements ByteArray
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setByteArrayValue(byte[] newByteArrayValue)
   {
     eDynamicSet(NotationPackage.BYTE_ARRAY_VALUE_STYLE__BYTE_ARRAY_VALUE, NotationPackage.Literals.BYTE_ARRAY_VALUE_STYLE__BYTE_ARRAY_VALUE, newByteArrayValue);

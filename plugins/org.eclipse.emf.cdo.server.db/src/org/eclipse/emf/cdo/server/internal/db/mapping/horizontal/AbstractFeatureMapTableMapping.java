@@ -87,7 +87,7 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
   /**
    * Column names.
    */
-  private List<String> columnNames = new ArrayList<String>();
+  private List<String> columnNames = new ArrayList<>();
 
   /**
    * The type mappings for the value fields.
@@ -115,7 +115,7 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
   {
     // TODO add annotation processing here ...
     ITypeMapping.Registry registry = getTypeMappingRegistry();
-    dbTypes = new ArrayList<DBType>(registry.getDefaultFeatureMapDBTypes());
+    dbTypes = new ArrayList<>(registry.getDefaultFeatureMapDBTypes());
   }
 
   protected ITypeMapping.Registry getTypeMappingRegistry()
@@ -255,7 +255,7 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
   {
     if (keyFields == null)
     {
-      List<FieldInfo> list = new ArrayList<FieldInfo>(3);
+      List<FieldInfo> list = new ArrayList<>(3);
 
       IDBStore store = getMappingStrategy().getStore();
       DBType type = store.getIDHandler().getDBType();
@@ -596,7 +596,8 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
   public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere, QueryXRefsContext context, String idString)
   {
     /*
-     * must never be called (a feature map is not associated with an EReference feature, so XRefs are nor supported here)
+     * must never be called (a feature map is not associated with an EReference feature, so XRefs are nor supported
+     * here)
      */
     throw new ImplementationError("Should never be called!");
   }

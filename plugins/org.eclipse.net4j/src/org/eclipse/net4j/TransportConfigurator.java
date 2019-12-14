@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -75,7 +75,7 @@ public class TransportConfigurator
       TRACER.trace("Configuring Net4j server from " + configFile.getAbsolutePath()); //$NON-NLS-1$
     }
 
-    List<IAcceptor> acceptors = new ArrayList<IAcceptor>();
+    List<IAcceptor> acceptors = new ArrayList<>();
     Document document = getDocument(configFile);
 
     NodeList acceptorConfigs = document.getElementsByTagName("acceptor"); //$NON-NLS-1$
@@ -181,7 +181,7 @@ public class TransportConfigurator
 
   public static Map<String, String> getProperties(Element element, int levels)
   {
-    Map<String, String> properties = new HashMap<String, String>();
+    Map<String, String> properties = new HashMap<>();
     collectProperties(element, "", properties, levels); //$NON-NLS-1$
     return properties;
   }

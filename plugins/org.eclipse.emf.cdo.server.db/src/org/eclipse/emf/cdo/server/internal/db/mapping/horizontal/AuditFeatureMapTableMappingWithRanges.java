@@ -104,7 +104,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
   /**
    * Column names.
    */
-  private List<String> columnNames = new ArrayList<String>();
+  private List<String> columnNames = new ArrayList<>();
 
   /**
    * The type mappings for the value fields.
@@ -149,7 +149,7 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
   {
     // TODO add annotation processing here ...
     ITypeMapping.Registry registry = ITypeMapping.Registry.INSTANCE;
-    dbTypes = new ArrayList<DBType>(registry.getDefaultFeatureMapDBTypes());
+    dbTypes = new ArrayList<>(registry.getDefaultFeatureMapDBTypes());
   }
 
   private void initTable()
@@ -705,8 +705,8 @@ public class AuditFeatureMapTableMappingWithRanges extends AbstractBasicListTabl
     CDOBranch main = getMappingStrategy().getStore().getRepository().getBranchManager().getMainBranch();
 
     // get revision from cache to find out version number
-    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id, main.getHead(), /* chunksize = */0,
-        CDORevision.DEPTH_NONE, true);
+    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id, main.getHead(),
+        /* chunksize = */0, CDORevision.DEPTH_NONE, true);
 
     // set cdo_revision_removed for all list items (so we have no NULL values)
     clearList(accessor, id, revision.getVersion(), FINAL_VERSION);

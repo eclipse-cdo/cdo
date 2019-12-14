@@ -72,7 +72,7 @@ public class GenListOfBooleanImpl extends EObjectImpl implements GenListOfBoolea
   {
     if (elements == null)
     {
-      elements = new EDataTypeEList<Boolean>(Boolean.class, this, Model5Package.GEN_LIST_OF_BOOLEAN__ELEMENTS);
+      elements = new EDataTypeEList<>(Boolean.class, this, Model5Package.GEN_LIST_OF_BOOLEAN__ELEMENTS);
     }
     return elements;
   }

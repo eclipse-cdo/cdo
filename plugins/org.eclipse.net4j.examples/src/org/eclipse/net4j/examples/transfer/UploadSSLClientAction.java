@@ -112,7 +112,7 @@ public class UploadSSLClientAction implements IWorkbenchWindowActionDelegate, Up
       IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "ssl", "localhost:2036");
 
       // Open a virtual channel with the ECHO protocol, send an ECHO request and close the channel
-      protocol = new SignalProtocol<Object>(PROTOCOL_NAME);
+      protocol = new SignalProtocol<>(PROTOCOL_NAME);
       protocol.open(connector);
 
       UploadRequest request = new UploadRequest(protocol, file);

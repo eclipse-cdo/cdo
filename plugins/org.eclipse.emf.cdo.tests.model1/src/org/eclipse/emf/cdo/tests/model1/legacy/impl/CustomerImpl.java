@@ -89,7 +89,7 @@ public class CustomerImpl extends AddressImpl implements Customer
   {
     if (salesOrders == null)
     {
-      salesOrders = new EObjectWithInverseResolvingEList<SalesOrder>(SalesOrder.class, this, Model1Package.CUSTOMER__SALES_ORDERS,
+      salesOrders = new EObjectWithInverseResolvingEList<>(SalesOrder.class, this, Model1Package.CUSTOMER__SALES_ORDERS,
           Model1Package.SALES_ORDER__CUSTOMER);
     }
     return salesOrders;
@@ -104,7 +104,7 @@ public class CustomerImpl extends AddressImpl implements Customer
   {
     if (orderByProduct == null)
     {
-      orderByProduct = new EcoreEMap<Product1, SalesOrder>(Model1Package.eINSTANCE.getProductToOrder(), ProductToOrderImpl.class, this,
+      orderByProduct = new EcoreEMap<>(Model1Package.eINSTANCE.getProductToOrder(), ProductToOrderImpl.class, this,
           Model1Package.CUSTOMER__ORDER_BY_PRODUCT);
     }
     return orderByProduct;
@@ -156,9 +156,13 @@ public class CustomerImpl extends AddressImpl implements Customer
       return getSalesOrders();
     case Model1Package.CUSTOMER__ORDER_BY_PRODUCT:
       if (coreType)
+      {
         return getOrderByProduct();
+      }
       else
+      {
         return getOrderByProduct().map();
+      }
     }
     return super.eGet(featureID, resolve, coreType);
   }

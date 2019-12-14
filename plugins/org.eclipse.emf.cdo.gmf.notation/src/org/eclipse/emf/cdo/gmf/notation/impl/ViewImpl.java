@@ -135,6 +135,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public boolean isVisible()
   {
     return ((Boolean)eDynamicGet(NotationPackage.VIEW__VISIBLE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__VISIBLE, true, true)).booleanValue();
@@ -144,6 +145,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setVisible(boolean newVisible)
   {
     eDynamicSet(NotationPackage.VIEW__VISIBLE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__VISIBLE, new Boolean(newVisible));
@@ -153,6 +155,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public String getType()
   {
     return (String)eDynamicGet(NotationPackage.VIEW__TYPE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__TYPE, true, true);
@@ -163,6 +166,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
    *
    * @generated NOT
    */
+  @Override
   public void setType(String newType)
   {
     setTypeGen(newType == null ? null : newType.intern());
@@ -181,6 +185,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public boolean isMutable()
   {
     return ((Boolean)eDynamicGet(NotationPackage.VIEW__MUTABLE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__MUTABLE, true, true)).booleanValue();
@@ -190,6 +195,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setMutable(boolean newMutable)
   {
     eDynamicSet(NotationPackage.VIEW__MUTABLE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__MUTABLE, new Boolean(newMutable));
@@ -199,6 +205,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public EList getSourceEdges()
   {
     return (EList)eDynamicGet(NotationPackage.VIEW__SOURCE_EDGES - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__SOURCE_EDGES, true, true);
@@ -208,6 +215,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public EList getTargetEdges()
   {
     return (EList)eDynamicGet(NotationPackage.VIEW__TARGET_EDGES - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__TARGET_EDGES, true, true);
@@ -217,6 +225,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public EList getPersistedChildren()
   {
     return (EList)eDynamicGet(NotationPackage.VIEW__PERSISTED_CHILDREN - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__PERSISTED_CHILDREN, true, true);
@@ -225,6 +234,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public EList getChildren()
   {
     return new EContentsEList(this, childrenFeatures);
@@ -238,6 +248,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public EList getStyles()
   {
     return (EList)eDynamicGet(NotationPackage.VIEW__STYLES - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__STYLES, true, true);
@@ -248,6 +259,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
    *
    * @generated NOT
    */
+  @Override
   public EObject getElement()
   {
     if (!isSetElement())
@@ -285,6 +297,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setElement(EObject newElement)
   {
     eDynamicSet(NotationPackage.VIEW__ELEMENT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__ELEMENT, newElement);
@@ -295,6 +308,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void unsetElement()
   {
     eDynamicUnset(NotationPackage.VIEW__ELEMENT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__ELEMENT);
@@ -305,6 +319,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public boolean isSetElement()
   {
     return eDynamicIsSet(NotationPackage.VIEW__ELEMENT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__ELEMENT);
@@ -314,6 +329,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Diagram getDiagram()
   {
     Diagram diagram = basicGetDiagram();
@@ -339,6 +355,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public EList getTransientChildren()
   {
     return (EList)eDynamicGet(NotationPackage.VIEW__TRANSIENT_CHILDREN - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__TRANSIENT_CHILDREN, true, true);
@@ -347,6 +364,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public Style getStyle(EClass eClass)
   {
     if (eClass != null && NotationPackage.eINSTANCE.getStyle().isSuperTypeOf(eClass))
@@ -373,6 +391,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public Node createChild(EClass eClass)
   {
     Node newChild = (Node)eClass.getEPackage().getEFactoryInstance().create(eClass);
@@ -383,6 +402,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public Style createStyle(EClass eClass)
   {
     Style newStyle = (Style)eClass.getEPackage().getEFactoryInstance().create(eClass);
@@ -395,6 +415,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   * <!-- end-user-doc -->
   * @generated NOT
   */
+  @Override
   public NamedStyle getNamedStyle(EClass eClass, String name)
   {
     if (eClass != null && eIsSet(NotationPackage.Literals.VIEW__STYLES) && NotationPackage.eINSTANCE.getNamedStyle().isSuperTypeOf(eClass))
@@ -632,6 +653,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public void persistChildren()
   {
     if (eIsSet(NotationPackage.VIEW__TRANSIENT_CHILDREN))
@@ -643,6 +665,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public void insertChild(View child)
   {
     persistChildren();
@@ -652,6 +675,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public void insertChildAt(View child, int index)
   {
     persistChildren();
@@ -664,6 +688,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public void insertChild(View child, boolean persisted)
   {
     List children = null;
@@ -681,6 +706,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public void removeChild(View child)
   {
     if (child.eContainer() == this)
@@ -700,6 +726,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public void persist()
   {
     EObject eContainer = eContainer();
@@ -717,6 +744,7 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public EList getVisibleChildren()
   {
     boolean persistedChildrenSet = eIsSet(NotationPackage.VIEW__PERSISTED_CHILDREN);

@@ -76,7 +76,7 @@ public class Class2Impl extends EObjectImpl implements Class2
   {
     if (class1 == null)
     {
-      class1 = new EObjectWithInverseResolvingEList.ManyInverse<Class1>(Class1.class, this, SubpackagePackage.CLASS2__CLASS1, Model3Package.CLASS1__CLASS2);
+      class1 = new EObjectWithInverseResolvingEList.ManyInverse<>(Class1.class, this, SubpackagePackage.CLASS2__CLASS1, Model3Package.CLASS1__CLASS2);
     }
     return class1;
   }

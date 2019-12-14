@@ -72,7 +72,7 @@ public class UserImpl extends AssigneeImpl implements User
     @Override
     protected Object[] getData()
     {
-      Set<Group> result = new HashSet<Group>();
+      Set<Group> result = new HashSet<>();
 
       for (Group group : getGroups())
       {
@@ -101,7 +101,7 @@ public class UserImpl extends AssigneeImpl implements User
     @Override
     protected Object[] getData()
     {
-      Set<Role> result = new HashSet<Role>();
+      Set<Role> result = new HashSet<>();
       result.addAll(getRoles());
 
       for (Group group : getAllGroups())
@@ -130,7 +130,7 @@ public class UserImpl extends AssigneeImpl implements User
     @Override
     protected Object[] getData()
     {
-      BasicEList<Permission> result = new BasicEList<Permission>();
+      BasicEList<Permission> result = new BasicEList<>();
 
       for (Role role : getAllRoles())
       {
@@ -158,7 +158,7 @@ public class UserImpl extends AssigneeImpl implements User
     @Override
     protected Object[] getData()
     {
-      Set<Role> result = new HashSet<Role>();
+      Set<Role> result = new HashSet<>();
 
       Realm realm = getRealm();
       if (realm != null)

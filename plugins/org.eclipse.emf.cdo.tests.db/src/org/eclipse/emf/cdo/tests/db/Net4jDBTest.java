@@ -49,7 +49,7 @@ public class Net4jDBTest extends AbstractCDOTest
 {
   private static final String FIELD_NAME = "testField";
 
-  private transient ArrayList<Pair<DBType, Object>> columns = new ArrayList<Pair<DBType, Object>>();
+  private transient ArrayList<Pair<DBType, Object>> columns = new ArrayList<>();
 
   @Override
   protected void doTearDown() throws Exception

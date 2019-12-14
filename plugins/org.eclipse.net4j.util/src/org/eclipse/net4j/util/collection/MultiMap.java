@@ -285,7 +285,7 @@ public abstract class MultiMap<K, V> implements Map<K, V>
 
     protected List<Map<K, V>> createDelegates()
     {
-      return new ArrayList<Map<K, V>>();
+      return new ArrayList<>();
     }
   }
 

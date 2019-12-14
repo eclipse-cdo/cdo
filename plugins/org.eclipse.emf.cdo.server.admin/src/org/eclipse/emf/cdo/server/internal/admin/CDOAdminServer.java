@@ -78,7 +78,7 @@ public class CDOAdminServer extends AbstractCDOAdmin
     }
   };
 
-  private final Set<CDOAdminServerProtocol> protocols = new HashSet<CDOAdminServerProtocol>();
+  private final Set<CDOAdminServerProtocol> protocols = new HashSet<>();
 
   public CDOAdminServer(IManagedContainer container, long timeout)
   {

@@ -35,9 +35,9 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
 {
   private static final long serialVersionUID = 1L;
 
-  private Map<String, IDBFieldDelta> fieldDeltas = new HashMap<String, IDBFieldDelta>();
+  private Map<String, IDBFieldDelta> fieldDeltas = new HashMap<>();
 
-  private Map<String, IDBIndexDelta> indexDeltas = new HashMap<String, IDBIndexDelta>();
+  private Map<String, IDBIndexDelta> indexDeltas = new HashMap<>();
 
   public DBTableDelta(DBDelta parent, String name, ChangeKind changeKind)
   {

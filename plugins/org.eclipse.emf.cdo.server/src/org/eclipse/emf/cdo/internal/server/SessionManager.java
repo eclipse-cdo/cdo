@@ -73,11 +73,11 @@ public class SessionManager extends Container<ISession> implements InternalSessi
 
   private IPermissionManager permissionManager;
 
-  private final Map<Integer, InternalSession> sessions = new HashMap<Integer, InternalSession>();
+  private final Map<Integer, InternalSession> sessions = new HashMap<>();
 
   private final AtomicInteger lastSessionID = new AtomicInteger();
 
-  private final Map<InternalSession, List<CommitNotificationInfo>> commitNotificationInfoQueues = new HashMap<InternalSession, List<CommitNotificationInfo>>();
+  private final Map<InternalSession, List<CommitNotificationInfo>> commitNotificationInfoQueues = new HashMap<>();
 
   private final IListener sessionListener = new LifecycleEventAdapter()
   {
@@ -399,7 +399,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       List<CommitNotificationInfo> queue = commitNotificationInfoQueues.get(session);
       if (queue == null)
       {
-        queue = new ArrayList<CommitNotificationInfo>();
+        queue = new ArrayList<>();
         commitNotificationInfoQueues.put(session, queue);
 
         session.addListener(sessionListener);
@@ -481,7 +481,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   @Override
   public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message, int[] recipients)
   {
-    List<Integer> result = new ArrayList<Integer>();
+    List<Integer> result = new ArrayList<>();
     for (int i = 0; i < recipients.length; i++)
     {
       InternalSession recipient = getSession(recipients[i]);

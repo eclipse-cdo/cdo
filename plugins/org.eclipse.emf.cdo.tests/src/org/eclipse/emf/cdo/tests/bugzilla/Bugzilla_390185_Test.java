@@ -40,7 +40,7 @@ public class Bugzilla_390185_Test extends AbstractCDOTest
     CDOSession session = openSession();
 
     CountDownLatch latch = new CountDownLatch(THREADS);
-    List<Actor> actors = new ArrayList<Actor>(THREADS);
+    List<Actor> actors = new ArrayList<>(THREADS);
     for (int i = 0; i < THREADS; i++)
     {
       Actor actor = new Actor(session, latch, i);

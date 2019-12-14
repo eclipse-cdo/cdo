@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -86,7 +86,7 @@ public abstract class OM
       IDBConnectionProvider dbConnectionProvider = dbAdapter.createConnectionProvider(dataSource);
       IStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
 
-      Map<String, String> props = new HashMap<String, String>();
+      Map<String, String> props = new HashMap<>();
       props.put(IRepository.Props.OVERRIDE_UUID, "gastro");
       props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
       props.put(IRepository.Props.SUPPORTING_BRANCHES, "false");

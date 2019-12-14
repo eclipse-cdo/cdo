@@ -183,7 +183,7 @@ public class Bugzilla_547640_Test extends AbstractCDOTest
     public synchronized void suspend()
     {
       IOUtil.OUT().println("Suspending commit notifications");
-      queue = new ArrayList<CommitNotificationInfo>();
+      queue = new ArrayList<>();
     }
 
     public synchronized void resume()

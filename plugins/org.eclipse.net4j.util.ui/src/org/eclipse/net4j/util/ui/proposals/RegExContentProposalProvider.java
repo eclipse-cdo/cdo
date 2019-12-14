@@ -117,8 +117,8 @@ public class RegExContentProposalProvider implements IContentProposalProvider
     {
       fExpression = contents;
       fDocumentOffset = position;
-      fPriorityProposals = new ArrayList<Proposal>();
-      fProposals = new ArrayList<Proposal>();
+      fPriorityProposals = new ArrayList<>();
+      fProposals = new ArrayList<>();
 
       boolean isEscape = false;
       esc: for (int i = position - 1; i >= 0; i--)

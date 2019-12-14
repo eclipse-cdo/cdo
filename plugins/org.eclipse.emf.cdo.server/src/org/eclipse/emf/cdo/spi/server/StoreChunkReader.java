@@ -33,7 +33,7 @@ public abstract class StoreChunkReader implements IStoreChunkReader
 
   private EStructuralFeature feature;
 
-  private List<Chunk> chunks = new ArrayList<Chunk>(0);
+  private List<Chunk> chunks = new ArrayList<>(0);
 
   public StoreChunkReader(IStoreAccessor accessor, CDORevision revision, EStructuralFeature feature)
   {

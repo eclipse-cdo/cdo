@@ -30,7 +30,7 @@ public class DBStatement implements IDBStatement
 
   private List<DBParameter> parameters;
 
-  private List<Object> sequence = new ArrayList<Object>();
+  private List<Object> sequence = new ArrayList<>();
 
   @Override
   public IDBParameter addParameter(DBType type)
@@ -38,7 +38,7 @@ public class DBStatement implements IDBStatement
     int position = 0;
     if (parameters == null)
     {
-      parameters = new ArrayList<DBParameter>();
+      parameters = new ArrayList<>();
     }
     else
     {

@@ -167,7 +167,7 @@ public class NewWizardPage extends WizardPage
   {
     if (parent != null)
     {
-      List<Object> segments = new ArrayList<Object>();
+      List<Object> segments = new ArrayList<>();
       fillSegments(segments, parent);
 
       for (int i = 0; i < segments.size() - 1; i++)
@@ -267,7 +267,7 @@ public class NewWizardPage extends WizardPage
 
   private String getUniqueName()
   {
-    Set<String> names = new HashSet<String>();
+    Set<String> names = new HashSet<>();
     for (EObject eObject : getChildrenOfParent())
     {
       if (eObject instanceof CDOResourceNode)

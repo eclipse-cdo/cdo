@@ -36,9 +36,9 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
 
   private IDBSchema schema;
 
-  private List<IDBField> fields = new ArrayList<IDBField>();
+  private List<IDBField> fields = new ArrayList<>();
 
-  private List<IDBIndex> indices = new ArrayList<IDBIndex>();
+  private List<IDBIndex> indices = new ArrayList<>();
 
   public DBTable(IDBSchema schema, String name)
   {
@@ -186,7 +186,7 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
   @Override
   public IDBField[] getFields(String... fieldNames) throws SchemaElementNotFoundException
   {
-    List<IDBField> result = new ArrayList<IDBField>();
+    List<IDBField> result = new ArrayList<>();
     for (String fieldName : fieldNames)
     {
       IDBField field = getFieldSafe(fieldName);

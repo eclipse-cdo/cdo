@@ -64,14 +64,14 @@ public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Ses
 
   private int acknowledgeMode;
 
-  private Map<Long, MessageConsumerImpl> consumers = new HashMap<Long, MessageConsumerImpl>();
+  private Map<Long, MessageConsumerImpl> consumers = new HashMap<>();
 
   /**
    * Outgoing transacted messages
    */
-  private List<MessageImpl> messages = new ArrayList<MessageImpl>();
+  private List<MessageImpl> messages = new ArrayList<>();
 
-  private Set<MessageProducerImpl> producers = new HashSet<MessageProducerImpl>();
+  private Set<MessageProducerImpl> producers = new HashSet<>();
 
   public SessionImpl(ConnectionImpl connection, int id, boolean transacted, int acknowledgeMode) throws JMSException
   {

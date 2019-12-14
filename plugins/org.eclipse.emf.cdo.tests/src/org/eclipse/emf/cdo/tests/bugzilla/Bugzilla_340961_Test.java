@@ -117,7 +117,7 @@ public class Bugzilla_340961_Test extends AbstractCDOTest
       assertEquals(1, closedCategory.getCategories().size());
       closedCdoID = CDOUtil.getCDOObject(closedCategory).cdoID();
       rootObjectID = CDOUtil.getCDOObject(rootObject).cdoID();
-      handler.setProtectedIDs(Arrays.asList(new CDOID[] { closedCdoID }));
+      handler.setProtectedIDs(Arrays.asList(closedCdoID));
       session.close();
     }
 
@@ -180,7 +180,7 @@ public class Bugzilla_340961_Test extends AbstractCDOTest
       assertEquals("ProtectedName", closedCategory.getName());
       assertEquals(1, closedCategory.getCategories().size());
       closedCdoID = CDOUtil.getCDOObject(closedCategory).cdoID();
-      handler.setProtectedIDs(Arrays.asList(new CDOID[] { closedCdoID }));
+      handler.setProtectedIDs(Arrays.asList(closedCdoID));
       session.close();
     }
 
@@ -202,7 +202,7 @@ public class Bugzilla_340961_Test extends AbstractCDOTest
 
     {
       // opening closed object and checking if another user can see it
-      handler.setProtectedIDs(Arrays.asList(new CDOID[] {}));
+      handler.setProtectedIDs(Arrays.asList());
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource openResource = transaction.getResource(getResourcePath("test"));

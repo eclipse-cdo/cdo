@@ -51,7 +51,7 @@ public class Bugzilla_343084_Test extends AbstractCDOTest
 
   private static final char[] PASSWORD = "eike2010".toCharArray();
 
-  private Map<EClass, CDOPermission> permissions = new HashMap<EClass, CDOPermission>();
+  private Map<EClass, CDOPermission> permissions = new HashMap<>();
 
   @Override
   protected void doSetUp() throws Exception

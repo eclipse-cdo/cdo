@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class Transaction<CONTEXT> implements ITransaction<CONTEXT>
 {
-  private List<ITransactionalOperation<CONTEXT>> operations = new ArrayList<ITransactionalOperation<CONTEXT>>();
+  private List<ITransactionalOperation<CONTEXT>> operations = new ArrayList<>();
 
   private CONTEXT context;
 

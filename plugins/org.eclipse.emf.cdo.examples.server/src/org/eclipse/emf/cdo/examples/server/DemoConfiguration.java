@@ -138,7 +138,7 @@ public class DemoConfiguration extends Lifecycle
 
     IDBStore store = createStore();
 
-    Map<String, String> props = new HashMap<String, String>();
+    Map<String, String> props = new HashMap<>();
     props.put(IRepository.Props.OVERRIDE_UUID, ""); // Use repo name
     props.put(IRepository.Props.SUPPORTING_AUDITS, mode == Mode.NORMAL ? "false" : "true");
     props.put(IRepository.Props.SUPPORTING_BRANCHES, mode == Mode.BRANCHING ? "true" : "false");

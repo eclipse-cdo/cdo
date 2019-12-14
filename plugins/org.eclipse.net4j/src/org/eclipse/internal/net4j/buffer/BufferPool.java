@@ -40,7 +40,7 @@ public class BufferPool extends BufferProvider implements IBufferPool.Introspect
   private int pooledBuffers;
 
   @ExcludeFromDump
-  private final Queue<BufferRef> buffers = new ConcurrentLinkedQueue<BufferRef>();
+  private final Queue<BufferRef> buffers = new ConcurrentLinkedQueue<>();
 
   @ExcludeFromDump
   private final CleanableReferenceQueue<IBuffer> referenceQueue = new CleanableReferenceQueue<IBuffer>()

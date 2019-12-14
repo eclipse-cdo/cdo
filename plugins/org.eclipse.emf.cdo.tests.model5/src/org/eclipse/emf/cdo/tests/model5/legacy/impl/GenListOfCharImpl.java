@@ -72,7 +72,7 @@ public class GenListOfCharImpl extends EObjectImpl implements GenListOfChar
   {
     if (elements == null)
     {
-      elements = new EDataTypeUniqueEList<Character>(Character.class, this, Model5Package.GEN_LIST_OF_CHAR__ELEMENTS);
+      elements = new EDataTypeUniqueEList<>(Character.class, this, Model5Package.GEN_LIST_OF_CHAR__ELEMENTS);
     }
     return elements;
   }

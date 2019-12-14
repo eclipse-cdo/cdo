@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -140,6 +140,7 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Routing getRouting()
   {
     return (Routing)eDynamicGet(NotationPackage.ROUTING_STYLE__ROUTING, NotationPackage.Literals.ROUTING_STYLE__ROUTING, true, true);
@@ -150,6 +151,7 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setRouting(Routing newRouting)
   {
     eDynamicSet(NotationPackage.ROUTING_STYLE__ROUTING, NotationPackage.Literals.ROUTING_STYLE__ROUTING, newRouting);
@@ -160,6 +162,7 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Smoothness getSmoothness()
   {
     return (Smoothness)eDynamicGet(NotationPackage.ROUTING_STYLE__SMOOTHNESS, NotationPackage.Literals.ROUTING_STYLE__SMOOTHNESS, true, true);
@@ -170,6 +173,7 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setSmoothness(Smoothness newSmoothness)
   {
     eDynamicSet(NotationPackage.ROUTING_STYLE__SMOOTHNESS, NotationPackage.Literals.ROUTING_STYLE__SMOOTHNESS, newSmoothness);
@@ -180,6 +184,7 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public boolean isAvoidObstructions()
   {
     return ((Boolean)eDynamicGet(NotationPackage.ROUTING_STYLE__AVOID_OBSTRUCTIONS, NotationPackage.Literals.ROUTING_STYLE__AVOID_OBSTRUCTIONS, true, true))
@@ -191,6 +196,7 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setAvoidObstructions(boolean newAvoidObstructions)
   {
     eDynamicSet(NotationPackage.ROUTING_STYLE__AVOID_OBSTRUCTIONS, NotationPackage.Literals.ROUTING_STYLE__AVOID_OBSTRUCTIONS,
@@ -202,6 +208,7 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public boolean isClosestDistance()
   {
     return ((Boolean)eDynamicGet(NotationPackage.ROUTING_STYLE__CLOSEST_DISTANCE, NotationPackage.Literals.ROUTING_STYLE__CLOSEST_DISTANCE, true, true))
@@ -213,6 +220,7 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setClosestDistance(boolean newClosestDistance)
   {
     eDynamicSet(NotationPackage.ROUTING_STYLE__CLOSEST_DISTANCE, NotationPackage.Literals.ROUTING_STYLE__CLOSEST_DISTANCE, new Boolean(newClosestDistance));
@@ -223,6 +231,7 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public JumpLinkStatus getJumpLinkStatus()
   {
     return (JumpLinkStatus)eDynamicGet(NotationPackage.ROUTING_STYLE__JUMP_LINK_STATUS, NotationPackage.Literals.ROUTING_STYLE__JUMP_LINK_STATUS, true, true);
@@ -233,6 +242,7 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setJumpLinkStatus(JumpLinkStatus newJumpLinkStatus)
   {
     eDynamicSet(NotationPackage.ROUTING_STYLE__JUMP_LINK_STATUS, NotationPackage.Literals.ROUTING_STYLE__JUMP_LINK_STATUS, newJumpLinkStatus);
@@ -243,6 +253,7 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public JumpLinkType getJumpLinkType()
   {
     return (JumpLinkType)eDynamicGet(NotationPackage.ROUTING_STYLE__JUMP_LINK_TYPE, NotationPackage.Literals.ROUTING_STYLE__JUMP_LINK_TYPE, true, true);
@@ -253,6 +264,7 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setJumpLinkType(JumpLinkType newJumpLinkType)
   {
     eDynamicSet(NotationPackage.ROUTING_STYLE__JUMP_LINK_TYPE, NotationPackage.Literals.ROUTING_STYLE__JUMP_LINK_TYPE, newJumpLinkType);
@@ -263,6 +275,7 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public boolean isJumpLinksReverse()
   {
     return ((Boolean)eDynamicGet(NotationPackage.ROUTING_STYLE__JUMP_LINKS_REVERSE, NotationPackage.Literals.ROUTING_STYLE__JUMP_LINKS_REVERSE, true, true))
@@ -274,6 +287,7 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setJumpLinksReverse(boolean newJumpLinksReverse)
   {
     eDynamicSet(NotationPackage.ROUTING_STYLE__JUMP_LINKS_REVERSE, NotationPackage.Literals.ROUTING_STYLE__JUMP_LINKS_REVERSE,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2014-2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2014-2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -90,7 +90,7 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
       out.writeXInt(prefetchDepth);
     }
 
-    Collection<CDOID> ids = new ArrayList<CDOID>(size);
+    Collection<CDOID> ids = new ArrayList<>(size);
     for (RevisionInfo info : infos)
     {
       if (TRACER.isEnabled())
@@ -149,7 +149,7 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
         TRACER.format("Reading {0} additional revision infos", additionalSize); //$NON-NLS-1$
       }
 
-      additionalRevisionInfos = new ArrayList<RevisionInfo>(additionalSize);
+      additionalRevisionInfos = new ArrayList<>(additionalSize);
       for (int i = 0; i < additionalSize; i++)
       {
         RevisionInfo info = RevisionInfo.read(in, branchPoint);

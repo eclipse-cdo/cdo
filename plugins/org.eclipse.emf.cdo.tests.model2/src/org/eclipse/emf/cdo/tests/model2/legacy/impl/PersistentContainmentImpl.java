@@ -145,7 +145,7 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
   {
     if (children == null)
     {
-      children = new EObjectContainmentWithInverseEList<TransientContainer>(TransientContainer.class, this, Model2Package.PERSISTENT_CONTAINMENT__CHILDREN,
+      children = new EObjectContainmentWithInverseEList<>(TransientContainer.class, this, Model2Package.PERSISTENT_CONTAINMENT__CHILDREN,
           Model2Package.TRANSIENT_CONTAINER__PARENT);
     }
     return children;

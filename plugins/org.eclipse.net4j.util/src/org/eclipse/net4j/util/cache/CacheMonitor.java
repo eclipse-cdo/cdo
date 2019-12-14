@@ -46,7 +46,7 @@ public class CacheMonitor extends Worker implements ICacheMonitor
 
   private Condition condition;
 
-  private Map<ICache, ICacheRegistration> registrations = new HashMap<ICache, ICacheRegistration>();
+  private Map<ICache, ICacheRegistration> registrations = new HashMap<>();
 
   public CacheMonitor()
   {

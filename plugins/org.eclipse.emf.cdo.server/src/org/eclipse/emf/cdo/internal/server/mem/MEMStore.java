@@ -104,23 +104,23 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
 
   private long creationTime;
 
-  private Map<String, String> properties = new HashMap<String, String>();
+  private Map<String, String> properties = new HashMap<>();
 
-  private Map<Integer, BranchInfo> branchInfos = new HashMap<Integer, BranchInfo>();
+  private Map<Integer, BranchInfo> branchInfos = new HashMap<>();
 
   private int lastBranchID;
 
   private int lastLocalBranchID;
 
-  private Map<Object, List<InternalCDORevision>> revisions = new HashMap<Object, List<InternalCDORevision>>();
+  private Map<Object, List<InternalCDORevision>> revisions = new HashMap<>();
 
-  private List<CommitInfo> commitInfos = new ArrayList<CommitInfo>();
+  private List<CommitInfo> commitInfos = new ArrayList<>();
 
   private Map<CDOID, EClass> objectTypes = CDOIDUtil.createMap();
 
-  private Map<String, LockArea> lockAreas = new HashMap<String, LockArea>();
+  private Map<String, LockArea> lockAreas = new HashMap<>();
 
-  private Map<String, Object> lobs = new HashMap<String, Object>();
+  private Map<String, Object> lobs = new HashMap<>();
 
   private int listLimit;
 
@@ -181,10 +181,10 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
   {
     if (names == null || names.isEmpty())
     {
-      return new HashMap<String, String>(properties);
+      return new HashMap<>(properties);
     }
 
-    Map<String, String> result = new HashMap<String, String>();
+    Map<String, String> result = new HashMap<>();
     for (String name : names)
     {
       String value = properties.get(name);
@@ -237,7 +237,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
   @Override
   public synchronized SubBranchInfo[] loadSubBranches(int branchID)
   {
-    List<SubBranchInfo> result = new ArrayList<SubBranchInfo>();
+    List<SubBranchInfo> result = new ArrayList<>();
     for (Entry<Integer, BranchInfo> entry : branchInfos.entrySet())
     {
       BranchInfo branchInfo = entry.getValue();
@@ -345,7 +345,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     }
 
     ListIterator<CommitInfo> listIterator = commitInfos.listIterator(startIndex);
-    Iterator<CommitInfo> iterator = new BidirectionalIterator<CommitInfo>(listIterator, !forward);
+    Iterator<CommitInfo> iterator = new BidirectionalIterator<>(listIterator, !forward);
 
     if (branch != null)
     {
@@ -361,12 +361,12 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
 
     if (counting)
     {
-      iterator = new LimitedIterator<CommitInfo>(iterator, Math.abs(count));
+      iterator = new LimitedIterator<>(iterator, Math.abs(count));
     }
     else if (startTime != CDOBranchPoint.UNSPECIFIED_DATE || endTime != CDOBranchPoint.UNSPECIFIED_DATE)
     {
       Predicate<CDOTimeProvider> predicate = forward ? new UpTo(endTime) : new DownTo(endTime);
-      iterator = new PredicateIterator<CommitInfo>(iterator, predicate);
+      iterator = new PredicateIterator<>(iterator, predicate);
     }
 
     while (iterator.hasNext())
@@ -378,7 +378,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
 
   public synchronized Set<CDOID> readChangeSet(CDOChangeSetSegment[] segments)
   {
-    Set<CDOID> ids = new HashSet<CDOID>();
+    Set<CDOID> ids = new HashSet<>();
     for (CDOChangeSetSegment segment : segments)
     {
       for (List<InternalCDORevision> list : revisions.values())
@@ -498,7 +498,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
    */
   public synchronized List<InternalCDORevision> getCurrentRevisions()
   {
-    ArrayList<InternalCDORevision> simpleRevisions = new ArrayList<InternalCDORevision>();
+    ArrayList<InternalCDORevision> simpleRevisions = new ArrayList<>();
     Iterator<List<InternalCDORevision>> itr = revisions.values().iterator();
     while (itr.hasNext())
     {
@@ -565,7 +565,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     List<InternalCDORevision> list = revisions.get(listKey);
     if (list == null)
     {
-      list = new ArrayList<InternalCDORevision>();
+      list = new ArrayList<>();
       revisions.put(listKey, list);
     }
 
@@ -647,7 +647,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     int version;
     if (list == null)
     {
-      list = new ArrayList<InternalCDORevision>();
+      list = new ArrayList<>();
       revisions.put(listKey, list);
       version = CDOBranchVersion.FIRST_VERSION;
     }
@@ -1086,7 +1086,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
   @Override
   public synchronized Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
-    Map<CDOBranch, List<CDORevision>> result = new HashMap<CDOBranch, List<CDORevision>>();
+    Map<CDOBranch, List<CDORevision>> result = new HashMap<>();
     InternalCDOBranchManager branchManager = getRepository().getBranchManager();
     result.put(branchManager.getMainBranch(), new ArrayList<CDORevision>());
 

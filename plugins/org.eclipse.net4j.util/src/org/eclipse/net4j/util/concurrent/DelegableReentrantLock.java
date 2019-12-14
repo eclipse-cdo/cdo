@@ -49,7 +49,7 @@ public class DelegableReentrantLock extends NonFairReentrantLock implements ILif
     }
   };
 
-  private final List<DelegateDetector> delegateDetectors = new CopyOnWriteArrayList<DelegateDetector>();
+  private final List<DelegateDetector> delegateDetectors = new CopyOnWriteArrayList<>();
 
   private volatile boolean active;
 

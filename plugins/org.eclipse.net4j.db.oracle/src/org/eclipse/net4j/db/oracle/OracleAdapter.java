@@ -56,7 +56,7 @@ public class OracleAdapter extends DBAdapter
   @Override
   public String[] getReservedWords()
   {
-    List<String> list = new ArrayList<String>(Arrays.asList(getSQL92ReservedWords()));
+    List<String> list = new ArrayList<>(Arrays.asList(getSQL92ReservedWords()));
     list.add("INDEX");
     list.add("COMMENT");
     list.add("ACCESS");

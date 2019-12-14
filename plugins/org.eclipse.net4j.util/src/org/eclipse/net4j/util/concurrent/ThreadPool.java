@@ -495,7 +495,7 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
         //$FALL-THROUGH$
       }
 
-      return new LinkedBlockingQueue<Runnable>();
+      return new LinkedBlockingQueue<>();
     }
   }
 
@@ -506,7 +506,7 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
   {
     public static final DeadlockDetector INSTANCE = new DeadlockDetector();
 
-    private volatile ArrayList<ThreadPool> pools = new ArrayList<ThreadPool>();
+    private volatile ArrayList<ThreadPool> pools = new ArrayList<>();
 
     private DeadlockDetector()
     {
@@ -516,14 +516,14 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
 
     public void register(ThreadPool pool)
     {
-      ArrayList<ThreadPool> newList = new ArrayList<ThreadPool>(pools);
+      ArrayList<ThreadPool> newList = new ArrayList<>(pools);
       newList.add(pool);
       pools = newList;
     }
 
     private void unregister(ThreadPool pool)
     {
-      ArrayList<ThreadPool> newList = new ArrayList<ThreadPool>(pools);
+      ArrayList<ThreadPool> newList = new ArrayList<>(pools);
       newList.remove(pool);
       pools = newList;
     }

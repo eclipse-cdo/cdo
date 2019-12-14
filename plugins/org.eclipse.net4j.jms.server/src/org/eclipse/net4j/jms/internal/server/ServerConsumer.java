@@ -38,7 +38,7 @@ public class ServerConsumer implements IServerConsumer
 
   private boolean durable;
 
-  private ConcurrentMap<String, MessageImpl> messages = new ConcurrentHashMap<String, MessageImpl>();
+  private ConcurrentMap<String, MessageImpl> messages = new ConcurrentHashMap<>();
 
   public ServerConsumer(long id, ServerDestination destination, String messageSelector, boolean noLocal, boolean durable)
   {

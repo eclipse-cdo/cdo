@@ -65,7 +65,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   @Override
   public boolean addAll(Collection<? extends E> c)
   {
-    ContainerEvent<E> event = new ContainerEvent<E>(this);
+    ContainerEvent<E> event = new ContainerEvent<>(this);
     for (E e : c)
     {
       boolean modified = getDelegate().add(e);
@@ -118,7 +118,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   @SuppressWarnings("unchecked")
   public boolean removeAll(Collection<?> c)
   {
-    ContainerEvent<E> event = new ContainerEvent<E>(this);
+    ContainerEvent<E> event = new ContainerEvent<>(this);
     for (Object o : c)
     {
       boolean modified = getDelegate().remove(o);
@@ -138,7 +138,7 @@ public class ContainerCollection<E> extends AbstractDelegator<E> implements ICon
   @SuppressWarnings("unchecked")
   public boolean retainAll(Collection<?> c)
   {
-    ContainerEvent<E> event = new ContainerEvent<E>(this);
+    ContainerEvent<E> event = new ContainerEvent<>(this);
     for (Object o : getDelegate())
     {
       if (!c.contains(o))

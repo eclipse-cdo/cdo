@@ -39,9 +39,9 @@ import java.util.Set;
  */
 public class DBIndex extends DBSchemaElement implements InternalDBIndex
 {
-  public static final ThreadLocal<Boolean> FIX_NULLABLE_INDEX_COLUMNS = new InheritableThreadLocal<Boolean>();
+  public static final ThreadLocal<Boolean> FIX_NULLABLE_INDEX_COLUMNS = new InheritableThreadLocal<>();
 
-  public static final ThreadLocal<Set<IDBField>> NULLABLE_INDEX_FIELDS = new InheritableThreadLocal<Set<IDBField>>();
+  public static final ThreadLocal<Set<IDBField>> NULLABLE_INDEX_FIELDS = new InheritableThreadLocal<>();
 
   private static final boolean DISABLE_NULLABLE_CHECK = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.db.DisableNullableCheck", true);
 
@@ -51,7 +51,7 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
 
   private Type type;
 
-  private List<IDBIndexField> indexFields = new ArrayList<IDBIndexField>();
+  private List<IDBIndexField> indexFields = new ArrayList<>();
 
   private boolean optional;
 
@@ -155,7 +155,7 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
       Set<IDBField> nullableIndexFields = NULLABLE_INDEX_FIELDS.get();
       if (nullableIndexFields == null)
       {
-        nullableIndexFields = new HashSet<IDBField>();
+        nullableIndexFields = new HashSet<>();
         NULLABLE_INDEX_FIELDS.set(nullableIndexFields);
       }
 

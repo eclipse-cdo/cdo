@@ -75,9 +75,9 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
 
   private InternalRepository repository;
 
-  private Map<String, InternalView> openDurableViews = new HashMap<String, InternalView>();
+  private Map<String, InternalView> openDurableViews = new HashMap<>();
 
-  private Map<String, DurableView> durableViews = new HashMap<String, DurableView>();
+  private Map<String, DurableView> durableViews = new HashMap<>();
 
   private ConcurrentArray<DurableViewHandler> durableViewHandlers = new ConcurrentArray<DurableViewHandler>()
   {
@@ -251,7 +251,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   @Override
   public void lock(LockType type, IView context, Object objectToLock, long timeout) throws InterruptedException
   {
-    Collection<Object> objectsToLock = new LinkedHashSet<Object>();
+    Collection<Object> objectsToLock = new LinkedHashSet<>();
     objectsToLock.add(objectToLock);
     lock2(false, type, context, objectsToLock, false, timeout);
   }
@@ -271,7 +271,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     CDORevisionManager revisionManager = view.getSession().getManager().getRepository().getRevisionManager();
     CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, branch.getHead());
 
-    Set<Object> contents = new HashSet<Object>();
+    Set<Object> contents = new HashSet<>();
 
     for (Object objectToLock : objectsToLock)
     {
@@ -847,9 +847,9 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
         durableViews.put(durableLockingID, (DurableView)view);
       }
 
-      Collection<Object> readLocks = new ArrayList<Object>();
-      Collection<Object> writeLocks = new ArrayList<Object>();
-      Collection<Object> writeOptions = new ArrayList<Object>();
+      Collection<Object> readLocks = new ArrayList<>();
+      Collection<Object> writeLocks = new ArrayList<>();
+      Collection<Object> writeOptions = new ArrayList<>();
       for (Entry<CDOID, LockGrade> entry : area.getLocks().entrySet())
       {
         Object key = getLockKey(entry.getKey(), area.getBranch());

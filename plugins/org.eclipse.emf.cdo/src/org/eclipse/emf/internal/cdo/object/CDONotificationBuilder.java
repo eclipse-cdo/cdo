@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -203,7 +203,7 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
       List<Object> list = (List<Object>)oldValue;
       if (!list.isEmpty())
       {
-        list = new ArrayList<Object>(list); // Copy the list so that it.set() does not change the frozen oldRevision
+        list = new ArrayList<>(list); // Copy the list so that it.set() does not change the frozen oldRevision
         boolean changed = false;
 
         for (ListIterator<Object> it = list.listIterator(); it.hasNext();)

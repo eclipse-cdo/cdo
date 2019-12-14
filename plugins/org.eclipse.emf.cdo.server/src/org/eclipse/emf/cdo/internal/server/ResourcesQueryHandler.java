@@ -75,7 +75,7 @@ public class ResourcesQueryHandler implements IQueryHandler
 
     private CDOBranchPoint branchPoint;
 
-    private Set<CDOID> resourceIDs = new HashSet<CDOID>();
+    private Set<CDOID> resourceIDs = new HashSet<>();
 
     public QueryContext(CDOQueryInfo info, IQueryContext context)
     {

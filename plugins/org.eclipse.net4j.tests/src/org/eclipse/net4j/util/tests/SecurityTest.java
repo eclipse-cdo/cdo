@@ -162,7 +162,7 @@ public class SecurityTest extends AbstractOMTest
 
     private String userID;
 
-    private BlockingQueue<ByteBuffer> queue = new LinkedBlockingQueue<ByteBuffer>();
+    private BlockingQueue<ByteBuffer> queue = new LinkedBlockingQueue<>();
 
     private boolean running;
 

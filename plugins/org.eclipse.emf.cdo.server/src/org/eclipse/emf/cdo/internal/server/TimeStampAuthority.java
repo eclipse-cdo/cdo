@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -60,12 +60,12 @@ class TimeStampAuthority
    * An ordered list of timestamps that have been issued but have not (yet) been reported finished. (It is ordered
    * because the timestamps are added sequentially.)
    */
-  private List<Long> runningTransactions = new LinkedList<Long>();
+  private List<Long> runningTransactions = new LinkedList<>();
 
   /**
    * A set of timestamps that have been reported finished but have not yet been
    */
-  private SortedSet<Long> finishedTransactions = new TreeSet<Long>();
+  private SortedSet<Long> finishedTransactions = new TreeSet<>();
 
   TimeStampAuthority(InternalRepository repository)
   {

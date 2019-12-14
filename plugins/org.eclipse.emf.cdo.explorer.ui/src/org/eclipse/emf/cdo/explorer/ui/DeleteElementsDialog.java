@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -100,7 +100,7 @@ public class DeleteElementsDialog extends TitleAreaDialog
       text = new Text(container, SWT.BORDER | SWT.READ_ONLY | SWT.V_SCROLL | SWT.MULTI);
       text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-      List<String> contents = new ArrayList<String>();
+      List<String> contents = new ArrayList<>();
       for (AbstractElement element : elements)
       {
         collectContents(contents, element.getFolder());

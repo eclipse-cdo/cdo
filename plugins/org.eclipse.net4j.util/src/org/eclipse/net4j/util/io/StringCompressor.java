@@ -53,9 +53,9 @@ public class StringCompressor implements StringIO
 
   private int lastID;
 
-  private Map<String, ID> stringToID = new HashMap<String, ID>();
+  private Map<String, ID> stringToID = new HashMap<>();
 
-  private Map<Integer, String> idToString = new HashMap<Integer, String>();
+  private Map<Integer, String> idToString = new HashMap<>();
 
   private Collection<Integer> pendingAcknowledgements = createAcknowledgementCollection();
 
@@ -437,7 +437,7 @@ public class StringCompressor implements StringIO
 
   private static Collection<Integer> createAcknowledgementCollection()
   {
-    return new HashSet<Integer>();
+    return new HashSet<>();
   }
 
   /**

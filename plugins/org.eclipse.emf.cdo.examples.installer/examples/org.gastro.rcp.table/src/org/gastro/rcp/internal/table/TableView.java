@@ -76,7 +76,7 @@ public class TableView extends ViewPart
 
   private static final AdapterFactory FACTORY = IModel.INSTANCE.getAdapterFactory();
 
-  private static final Map<String, String> fakeImages = new ReferenceValueMap.Soft<String, String>();
+  private static final Map<String, String> fakeImages = new ReferenceValueMap.Soft<>();
 
   private static int fakeImageID;
 
@@ -694,7 +694,7 @@ public class TableView extends ViewPart
   private EList<EObject> getAllMenuItems()
   {
     MenuCard menuCard = (MenuCard)menuViewer.getInput();
-    EList<EObject> result = new BasicEList<EObject>();
+    EList<EObject> result = new BasicEList<>();
     for (Iterator<EObject> it = menuCard.eAllContents(); it.hasNext();)
     {
       result.add(it.next());

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -149,7 +149,7 @@ public abstract class StoreType
     @Override
     protected String fillTemplate(String xmlTemplate, Map<String, Object> storeProperties)
     {
-      Map<String, String> variables = new java.util.HashMap<String, String>();
+      Map<String, String> variables = new java.util.HashMap<>();
       variables.put("adapter", getAdapter()); //$NON-NLS-1$
       variables.put("dataSource.class", getDataSourceClassName()); //$NON-NLS-1$
       variables.put("dataSource.url", getDataSourceURL((String)storeProperties.get(PROPERTY_PATH))); //$NON-NLS-1$

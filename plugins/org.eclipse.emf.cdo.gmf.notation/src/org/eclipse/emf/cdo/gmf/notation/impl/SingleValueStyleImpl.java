@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -67,6 +67,7 @@ public class SingleValueStyleImpl extends DataTypeStyleImpl implements SingleVal
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getRawValue()
   {
     return (String)eDynamicGet(NotationPackage.SINGLE_VALUE_STYLE__RAW_VALUE, NotationPackage.Literals.SINGLE_VALUE_STYLE__RAW_VALUE, true, true);
@@ -77,6 +78,7 @@ public class SingleValueStyleImpl extends DataTypeStyleImpl implements SingleVal
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public void setRawValue(String newRawValue)
   {
     if (getInstanceType() != null)
@@ -110,6 +112,7 @@ public class SingleValueStyleImpl extends DataTypeStyleImpl implements SingleVal
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public Object getValue()
   {
     return getObjectFromString(getRawValue());
@@ -120,6 +123,7 @@ public class SingleValueStyleImpl extends DataTypeStyleImpl implements SingleVal
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public void setValue(Object newValue)
   {
     setRawValue(getStringFromObject(newValue));

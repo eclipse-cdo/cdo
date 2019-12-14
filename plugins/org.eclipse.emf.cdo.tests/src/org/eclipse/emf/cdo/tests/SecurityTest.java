@@ -243,7 +243,7 @@ public class SecurityTest extends AbstractCDOTest
   {
     private static final long serialVersionUID = 1L;
 
-    private final Map<String, CDORevisionImpl> resourceNodes = new HashMap<String, CDORevisionImpl>();
+    private final Map<String, CDORevisionImpl> resourceNodes = new HashMap<>();
 
     private long lastID;
 
@@ -266,7 +266,7 @@ public class SecurityTest extends AbstractCDOTest
 
     public CDORevisionImpl[] addResourceNode(String resourcePath, EClass type)
     {
-      List<CDORevisionImpl> result = new ArrayList<CDORevisionImpl>();
+      List<CDORevisionImpl> result = new ArrayList<>();
       CDORevisionImpl revision = null;
       EClass segmentType = RESOURCE;
 

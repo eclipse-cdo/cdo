@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -94,6 +94,7 @@ public class LocationImpl extends CDOObjectImpl implements Location
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getX()
   {
     return ((Integer)eDynamicGet(NotationPackage.LOCATION__X, NotationPackage.Literals.LOCATION__X, true, true)).intValue();
@@ -104,6 +105,7 @@ public class LocationImpl extends CDOObjectImpl implements Location
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setX(int newX)
   {
     eDynamicSet(NotationPackage.LOCATION__X, NotationPackage.Literals.LOCATION__X, new Integer(newX));
@@ -114,6 +116,7 @@ public class LocationImpl extends CDOObjectImpl implements Location
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getY()
   {
     return ((Integer)eDynamicGet(NotationPackage.LOCATION__Y, NotationPackage.Literals.LOCATION__Y, true, true)).intValue();
@@ -124,6 +127,7 @@ public class LocationImpl extends CDOObjectImpl implements Location
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setY(int newY)
   {
     eDynamicSet(NotationPackage.LOCATION__Y, NotationPackage.Literals.LOCATION__Y, new Integer(newY));

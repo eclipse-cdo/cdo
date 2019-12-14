@@ -176,7 +176,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private CommitData originalCommmitData;
 
-  private Set<Object> lockedObjects = new HashSet<Object>();
+  private Set<Object> lockedObjects = new HashSet<>();
 
   private List<CDOID> lockedTargets;
 
@@ -208,7 +208,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private CDOLockChangeInfo lockChangeInfo;
 
-  private final List<LockState<Object, IView>> postCommitLockStates = new ArrayList<LockState<Object, IView>>();
+  private final List<LockState<Object, IView>> postCommitLockStates = new ArrayList<>();
 
   public TransactionCommitContext(InternalTransaction transaction)
   {
@@ -730,7 +730,7 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     if (data == null)
     {
-      data = new HashMap<Object, Object>();
+      data = new HashMap<>();
     }
 
     @SuppressWarnings("unchecked")
@@ -746,7 +746,7 @@ public class TransactionCommitContext implements InternalCommitContext
       packageRegistryLocked = true;
     }
 
-    List<InternalCDOPackageUnit> noDuplicates = new ArrayList<InternalCDOPackageUnit>();
+    List<InternalCDOPackageUnit> noDuplicates = new ArrayList<>();
     for (InternalCDOPackageUnit packageUnit : packageUnits)
     {
       String id = packageUnit.getID();
@@ -1102,7 +1102,7 @@ public class TransactionCommitContext implements InternalCommitContext
       CDOFeatureDeltaVisitor deltaTargetLocker = null;
       if (ensuringReferentialIntegrity && !serializingCommits)
       {
-        final Set<CDOID> newIDs = new HashSet<CDOID>();
+        final Set<CDOID> newIDs = new HashSet<>();
         for (int i = 0; i < newObjects.length; i++)
         {
           InternalCDORevision newRevision = newObjects[i];
@@ -1237,7 +1237,7 @@ public class TransactionCommitContext implements InternalCommitContext
       // Let this object be checked for existance after it has been locked
       if (lockedTargets == null)
       {
-        lockedTargets = new ArrayList<CDOID>();
+        lockedTargets = new ArrayList<>();
       }
 
       lockedTargets.add(id);
@@ -1249,7 +1249,7 @@ public class TransactionCommitContext implements InternalCommitContext
     try
     {
       monitor.begin(dirtyObjectDeltas.length);
-      List<InternalCDORevisionDelta> conflicts = new ArrayList<InternalCDORevisionDelta>();
+      List<InternalCDORevisionDelta> conflicts = new ArrayList<>();
 
       for (int i = 0; i < dirtyObjectDeltas.length; i++)
       {
@@ -1345,7 +1345,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
         // Apply new objects.
         {
-          List<InternalCDORevision> newObjectsList = new ArrayList<InternalCDORevision>();
+          List<InternalCDORevision> newObjectsList = new ArrayList<>();
 
           List<CDOIDAndVersion> idAndVersions = result.getNewObjects();
           if (idAndVersions != null)
@@ -1368,9 +1368,9 @@ public class TransactionCommitContext implements InternalCommitContext
 
         // Apply detached objects.
         {
-          List<CDOID> detachedObjectsList = new ArrayList<CDOID>();
-          List<CDOBranchVersion> detachedObjectVersionsList = new ArrayList<CDOBranchVersion>();
-          detachedObjectTypes = new HashMap<CDOID, EClass>();
+          List<CDOID> detachedObjectsList = new ArrayList<>();
+          List<CDOBranchVersion> detachedObjectVersionsList = new ArrayList<>();
+          detachedObjectTypes = new HashMap<>();
 
           List<CDOIDAndVersion> idAndVersions = result.getDetachedObjects();
           if (idAndVersions != null)
@@ -1395,8 +1395,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
         // Apply changed objects.
         {
-          List<InternalCDORevisionDelta> dirtyObjectDeltasList = new ArrayList<InternalCDORevisionDelta>();
-          List<InternalCDORevision> dirtyObjectsList = new ArrayList<InternalCDORevision>();
+          List<InternalCDORevisionDelta> dirtyObjectDeltasList = new ArrayList<>();
+          List<InternalCDORevision> dirtyObjectsList = new ArrayList<>();
           InternalCDORevisionManager revisionManager = repository.getRevisionManager();
 
           List<CDORevisionKey> revisionKeys = result.getChangedObjects();
@@ -1452,7 +1452,7 @@ public class TransactionCommitContext implements InternalCommitContext
       return;
     }
 
-    Set<CDOID> objectsThatReachTheRoot = new HashSet<CDOID>();
+    Set<CDOID> objectsThatReachTheRoot = new HashSet<>();
     for (int i = 0; i < dirtyObjectDeltas.length; i++)
     {
       InternalCDORevisionDelta revisionDelta = dirtyObjectDeltas[i];
@@ -1655,7 +1655,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   protected void autoReleaseExplicitLocks() throws InterruptedException
   {
-    List<Object> targets = new ArrayList<Object>();
+    List<Object> targets = new ArrayList<>();
 
     // Release locks that have been sent from the client.
     for (CDOID id : idsToUnlock)
@@ -1893,13 +1893,13 @@ public class TransactionCommitContext implements InternalCommitContext
    */
   private final class XRefContext implements QueryXRefsContext
   {
-    private Map<EClass, List<EReference>> sourceCandidates = new HashMap<EClass, List<EReference>>();
+    private Map<EClass, List<EReference>> sourceCandidates = new HashMap<>();
 
-    private Set<CDOID> detachedIDs = new HashSet<CDOID>();
+    private Set<CDOID> detachedIDs = new HashSet<>();
 
-    private Set<CDOID> dirtyIDs = new HashSet<CDOID>();
+    private Set<CDOID> dirtyIDs = new HashSet<>();
 
-    private List<CDOIDReference> result = new ArrayList<CDOIDReference>();
+    private List<CDOIDReference> result = new ArrayList<>();
 
     public XRefContext()
     {

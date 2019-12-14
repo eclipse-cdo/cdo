@@ -34,7 +34,7 @@ public abstract class AbstractRange implements Range
   @Override
   public Set<Cell> set()
   {
-    Set<Cell> set = new HashSet<Cell>();
+    Set<Cell> set = new HashSet<>();
     fillCells(set);
     return set;
   }
@@ -42,7 +42,7 @@ public abstract class AbstractRange implements Range
   @Override
   public List<Cell> list()
   {
-    List<Cell> list = new ArrayList<Cell>();
+    List<Cell> list = new ArrayList<>();
     fillCells(list);
     return list;
   }

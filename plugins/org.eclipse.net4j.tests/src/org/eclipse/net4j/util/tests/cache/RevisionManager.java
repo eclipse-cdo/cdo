@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class RevisionManager extends Cache<Revision>
 {
-  private Map<Integer, TimeLine> timeLines = new HashMap<Integer, TimeLine>();
+  private Map<Integer, TimeLine> timeLines = new HashMap<>();
 
   public RevisionManager()
   {
@@ -79,7 +79,7 @@ public class RevisionManager extends Cache<Revision>
   {
     private int id;
 
-    private List<Reference<Revision>> revisions = new ArrayList<Reference<Revision>>();
+    private List<Reference<Revision>> revisions = new ArrayList<>();
 
     public TimeLine(int id)
     {

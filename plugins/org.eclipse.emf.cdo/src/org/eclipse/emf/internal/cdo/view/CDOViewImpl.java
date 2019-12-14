@@ -157,7 +157,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
   private CDOLockOwner lockOwner;
 
-  private Map<CDOObject, CDOLockState> lockStates = new WeakHashMap<CDOObject, CDOLockState>();
+  private Map<CDOObject, CDOLockState> lockStates = new WeakHashMap<>();
 
   private ViewInvalidator invalidator = new ViewInvalidator();
 
@@ -266,8 +266,8 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         }
 
         Map<CDOID, InternalCDORevision> oldRevisions = CDOIDUtil.createMap();
-        List<CDORevisionKey> allChangedObjects = new ArrayList<CDORevisionKey>();
-        List<CDOIDAndVersion> allDetachedObjects = new ArrayList<CDOIDAndVersion>();
+        List<CDORevisionKey> allChangedObjects = new ArrayList<>();
+        List<CDOIDAndVersion> allDetachedObjects = new ArrayList<>();
 
         List<InternalCDOObject> invalidObjects = getInvalidObjects(branchPoint);
         for (InternalCDOObject object : invalidObjects)
@@ -320,7 +320,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
   private List<InternalCDOObject> getInvalidObjects(CDOBranchPoint branchPoint)
   {
-    List<InternalCDOObject> result = new ArrayList<InternalCDOObject>();
+    List<InternalCDOObject> result = new ArrayList<>();
     for (InternalCDOObject object : getModifiableObjects().values())
     {
       CDORevision revision = object.cdoRevision(false);
@@ -367,8 +367,8 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         Set<? extends CDOObject> uniqueObjects = getSet(objects);
         int size = uniqueObjects.size();
 
-        List<CDORevisionKey> revisionKeys = new ArrayList<CDORevisionKey>(size);
-        List<CDOLockState> locksOnNewObjects = new ArrayList<CDOLockState>(size);
+        List<CDORevisionKey> revisionKeys = new ArrayList<>(size);
+        List<CDOLockState> locksOnNewObjects = new ArrayList<>(size);
 
         for (CDOObject object : uniqueObjects)
         {
@@ -639,11 +639,11 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       try
       {
         List<CDOID> objectIDs = null;
-        List<CDOLockState> locksOnNewObjects = new LinkedList<CDOLockState>();
+        List<CDOLockState> locksOnNewObjects = new LinkedList<>();
 
         if (objects != null)
         {
-          objectIDs = new ArrayList<CDOID>();
+          objectIDs = new ArrayList<>();
 
           for (CDOObject object : getSet(objects))
           {
@@ -1033,9 +1033,9 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
       try
       {
-        List<CDOLockState> result = new ArrayList<CDOLockState>();
-        List<CDOLockState> lockStatesToUpdate = new ArrayList<CDOLockState>();
-        Set<CDOID> missingIDs = new LinkedHashSet<CDOID>();
+        List<CDOLockState> result = new ArrayList<>();
+        List<CDOLockState> lockStatesToUpdate = new ArrayList<>();
+        Set<CDOID> missingIDs = new LinkedHashSet<>();
 
         for (CDOID id : ids)
         {
@@ -1241,9 +1241,9 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
           clearResourcePathCacheIfNecessary(null);
         }
 
-        List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>();
-        Map<CDOObject, CDORevisionDelta> revisionDeltas = new HashMap<CDOObject, CDORevisionDelta>();
-        Set<CDOObject> detachedObjects = new HashSet<CDOObject>();
+        List<CDORevisionDelta> deltas = new ArrayList<>();
+        Map<CDOObject, CDORevisionDelta> revisionDeltas = new HashMap<>();
+        Set<CDOObject> detachedObjects = new HashSet<>();
         Map<CDOID, InternalCDORevision> oldRevisions = invalidationData.getOldRevisions();
         if (oldRevisions == null)
         {
@@ -1700,7 +1700,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
         if (session.isActive() && !lockStates.isEmpty())
         {
-          List<CDOLockState> result = new ArrayList<CDOLockState>();
+          List<CDOLockState> result = new ArrayList<>();
           for (CDOLockState lockState : lockStates.values())
           {
             if (((InternalCDOLockState)lockState).removeOwner(lockOwner))
@@ -1916,9 +1916,9 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
    */
   public final class CDOUnitManagerImpl extends Container<CDOUnit> implements CDOUnitManager
   {
-    private final Map<EObject, CDOUnit> unitPerRoot = new HashMap<EObject, CDOUnit>();
+    private final Map<EObject, CDOUnit> unitPerRoot = new HashMap<>();
 
-    private final Map<EObject, CDOUnit> unitPerObject = new HashMap<EObject, CDOUnit>();
+    private final Map<EObject, CDOUnit> unitPerObject = new HashMap<>();
 
     private CDOUnitImpl openingUnit;
 
@@ -2093,7 +2093,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     {
       if (enabled)
       {
-        resourceUnits = new HashMap<CDOResource, CDOUnit>();
+        resourceUnits = new HashMap<>();
       }
       else
       {
@@ -2204,11 +2204,11 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
           CDOID rootID = getCDORoot(root).cdoID();
 
           CDORevisionHandler revisionHandler = null;
-          final List<CDORevision> revisions = new ArrayList<CDORevision>();
+          final List<CDORevision> revisions = new ArrayList<>();
 
           if (opcode.isOpen())
           {
-            openingIDs = new HashSet<CDOID>();
+            openingIDs = new HashSet<>();
 
             revisionHandler = new CDORevisionHandler()
             {
@@ -2363,7 +2363,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
    */
   protected final class AdapterManager
   {
-    private Set<CDOObject> objects = new HashBag<CDOObject>();
+    private Set<CDOObject> objects = new HashBag<>();
 
     public AdapterManager()
     {
@@ -2434,7 +2434,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     {
       // Keep the objects in memory
       Set<CDOObject> oldObjects = objects;
-      objects = new HashBag<CDOObject>();
+      objects = new HashBag<>();
       if (options().getStrongReferencePolicy() != CDOAdapterPolicy.NONE)
       {
         for (InternalCDOObject object : getObjectsList())
@@ -2482,7 +2482,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     {
       boolean policiesPresent = options().hasChangeSubscriptionPolicies();
       subscriptions.clear();
-      List<CDOID> ids = new ArrayList<CDOID>();
+      List<CDOID> ids = new ArrayList<>();
       if (policiesPresent)
       {
         for (InternalCDOObject object : getObjectsList())
@@ -2727,7 +2727,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
     private void updateCDOViewObjectsCache(CDORevisionsLoadedEvent revisionsLoadedEvent)
     {
-      Set<CDOID> ids = new HashSet<CDOID>();
+      Set<CDOID> ids = new HashSet<>();
       CDOLockStateLoadingPolicy lockStateLoadingPolicy = options().getLockStateLoadingPolicy();
 
       for (CDORevision revision : revisionsLoadedEvent.getPrimaryLoadedRevisions())
@@ -2761,7 +2761,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         updateLockStatesForAllViews(lockStates, true);
 
         // add missing lock states
-        List<CDOLockState> missingLockStates = new ArrayList<CDOLockState>();
+        List<CDOLockState> missingLockStates = new ArrayList<>();
         for (CDOID id : ids)
         {
           InternalCDOObject object = getObject(id, false);
@@ -2943,7 +2943,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     @Override
     public EObject[] getAffectedObjects()
     {
-      List<EObject> objects = new ArrayList<EObject>();
+      List<EObject> objects = new ArrayList<>();
       CDOView view = getSource();
 
       CDOLockState[] lockStates = getLockStates();
@@ -3051,7 +3051,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
     private CDOStaleReferencePolicy staleReferencePolicy = CDOStaleReferencePolicy.DEFAULT;
 
-    private HashBag<CDOAdapterPolicy> changeSubscriptionPolicies = new HashBag<CDOAdapterPolicy>();
+    private HashBag<CDOAdapterPolicy> changeSubscriptionPolicies = new HashBag<>();
 
     private CDOAdapterPolicy strongReferencePolicy = CDOAdapterPolicy.ALL;
 

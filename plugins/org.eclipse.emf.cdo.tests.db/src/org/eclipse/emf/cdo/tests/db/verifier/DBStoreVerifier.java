@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -103,7 +103,7 @@ public abstract class DBStoreVerifier
 
   protected List<IClassMapping> getClassMappings()
   {
-    ArrayList<IClassMapping> result = new ArrayList<IClassMapping>();
+    ArrayList<IClassMapping> result = new ArrayList<>();
     InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)repository.getPackageRegistry();
     for (InternalCDOPackageInfo packageInfo : packageRegistry.getPackageInfos())
     {
@@ -343,7 +343,7 @@ public abstract class DBStoreVerifier
       String tableName = mapping.getDBTables().iterator().next().getName();
       String sql = "SELECT " + IMappingConstants.ATTRIBUTES_ID + ", " + IMappingConstants.ATTRIBUTES_VERSION + " FROM " + tableName;
 
-      ArrayList<Pair<Long, Integer>> idVersions = new ArrayList<Pair<Long, Integer>>();
+      ArrayList<Pair<Long, Integer>> idVersions = new ArrayList<>();
 
       ResultSet resultSet = getStatement().executeQuery(sql);
       try
@@ -488,7 +488,7 @@ public abstract class DBStoreVerifier
       String tableName = mapping.getDBTables().iterator().next().getName();
       String sql = "SELECT " + IMappingConstants.ATTRIBUTES_ID + ", " + IMappingConstants.ATTRIBUTES_VERSION + " FROM " + tableName;
 
-      ArrayList<Pair<Long, Integer>> idVersions = new ArrayList<Pair<Long, Integer>>();
+      ArrayList<Pair<Long, Integer>> idVersions = new ArrayList<>();
 
       ResultSet resultSet = getStatement().executeQuery(sql);
       try

@@ -835,7 +835,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, CDOChangeSetSegment[] segments)
   {
-    Set<CDOID> result = new HashSet<CDOID>();
+    Set<CDOID> result = new HashSet<>();
     if (getTable() == null)
     {
       return result;

@@ -704,7 +704,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
 
   protected void testStoreDelta(ListManipulator manipulator)
   {
-    BasicEList<Company> reference = new BasicEList<Company>();
+    BasicEList<Company> reference = new BasicEList<>();
 
     {
       CDOSession session = openSession();

@@ -45,7 +45,7 @@ public class Collaboration extends MembershipContainer implements ICollaboration
 
   private Visibility visibility = Visibility.PRIVATE;
 
-  private ConcurrentMap<String, IFacility> facilities = new ConcurrentHashMap<String, IFacility>();
+  private ConcurrentMap<String, IFacility> facilities = new ConcurrentHashMap<>();
 
   public Collaboration(long id)
   {
@@ -126,7 +126,7 @@ public class Collaboration extends MembershipContainer implements ICollaboration
   @Override
   public IBuddy[] getBuddies()
   {
-    List<IBuddy> buddies = new ArrayList<IBuddy>();
+    List<IBuddy> buddies = new ArrayList<>();
     for (IMembership membership : getMemberships())
     {
       IBuddy buddy = membership.getBuddy();

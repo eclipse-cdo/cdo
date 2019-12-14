@@ -91,7 +91,7 @@ public class HolderImpl extends HoldableImpl implements Holder
   {
     if (held == null)
     {
-      held = new EObjectResolvingEList<Holdable>(Holdable.class, this, Model6Package.HOLDER__HELD);
+      held = new EObjectResolvingEList<>(Holdable.class, this, Model6Package.HOLDER__HELD);
     }
     return held;
   }
@@ -106,7 +106,7 @@ public class HolderImpl extends HoldableImpl implements Holder
   {
     if (owned == null)
     {
-      owned = new EObjectContainmentEList.Resolving<Holdable>(Holdable.class, this, Model6Package.HOLDER__OWNED);
+      owned = new EObjectContainmentEList.Resolving<>(Holdable.class, this, Model6Package.HOLDER__OWNED);
     }
     return owned;
   }

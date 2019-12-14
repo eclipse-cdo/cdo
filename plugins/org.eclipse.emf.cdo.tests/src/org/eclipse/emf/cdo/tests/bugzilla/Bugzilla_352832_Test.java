@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -24,7 +24,6 @@ import org.eclipse.emf.cdo.util.CommitIntegrityException;
 
 import org.eclipse.emf.internal.cdo.util.CommitIntegrityCheck;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.CDOStore;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
@@ -54,7 +53,7 @@ public class Bugzilla_352832_Test extends AbstractCDOTest
     // here is real Java NULL
     assertEquals(null, cdoRevision.data().get(getModel4Package().getSingleNonContainedElement_Parent(), CDOStore.NO_INDEX));
     singleNonContainedElement.setParent(refSingleNonContained);
-    transaction1.setCommittables(new HashSet<EObject>(Arrays.asList(new EObject[] { singleNonContainedElement, refSingleNonContained })));
+    transaction1.setCommittables(new HashSet<>(Arrays.asList(singleNonContainedElement, refSingleNonContained)));
     checkPartialCommitIntegrity((InternalCDOTransaction)transaction1);
     transaction1.commit();
 
@@ -68,7 +67,7 @@ public class Bugzilla_352832_Test extends AbstractCDOTest
     cdoRevision = CDOUtil.getCDOObject(singleNonContainedElement2).cdoRevision();
     // here is real Java NULL after setting
     assertEquals(null, cdoRevision.data().get(getModel4Package().getSingleNonContainedElement_Parent(), CDOStore.NO_INDEX));
-    transaction2.setCommittables(new HashSet<EObject>(Arrays.asList(new EObject[] { singleNonContainedElement2, refSingleNonContained2 })));
+    transaction2.setCommittables(new HashSet<>(Arrays.asList(singleNonContainedElement2, refSingleNonContained2)));
     checkPartialCommitIntegrity(transaction2);
     transaction2.commit();
     session2.close();
@@ -84,7 +83,7 @@ public class Bugzilla_352832_Test extends AbstractCDOTest
     // STEP 1
     assertEquals(CDOID.NULL, cdoRevision.data().get(getModel4Package().getSingleNonContainedElement_Parent(), CDOStore.NO_INDEX));
     singleNonContainedElement2.setParent(refSingleNonContained2);
-    transaction2.setCommittables(new HashSet<EObject>(Arrays.asList(new EObject[] { singleNonContainedElement2, refSingleNonContained2 })));
+    transaction2.setCommittables(new HashSet<>(Arrays.asList(singleNonContainedElement2, refSingleNonContained2)));
     checkPartialCommitIntegrity(transaction2);
     transaction2.commit();
 

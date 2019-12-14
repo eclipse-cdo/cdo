@@ -63,7 +63,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
 
   private final Map<CDOID, UnitInitializer> unitInitializers = CDOIDUtil.createMap();
 
-  private final Set<ObjectAttacher> objectAttachers = new HashSet<ObjectAttacher>();
+  private final Set<ObjectAttacher> objectAttachers = new HashSet<>();
 
   private final ReentrantReadWriteLock managerLock = new ReentrantReadWriteLock();
 
@@ -279,7 +279,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
 
     try
     {
-      Map<CDOID, CDOID> units = new HashMap<CDOID, CDOID>();
+      Map<CDOID, CDOID> units = new HashMap<>();
 
       Set<CDOID> rootIDs = getRootIDs();
       if (!rootIDs.isEmpty())
@@ -311,7 +311,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
 
     try
     {
-      List<InternalCDORevisionDelta> unitMoves = new ArrayList<InternalCDORevisionDelta>();
+      List<InternalCDORevisionDelta> unitMoves = new ArrayList<>();
 
       Set<CDOID> rootIDs = getRootIDs();
       if (!rootIDs.isEmpty())
@@ -373,7 +373,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
       Set<CDOID> rootIDs = getRootIDs();
       boolean checkUnits = !rootIDs.isEmpty();
 
-      List<InternalCDORevision> unmappedRevisions = new ArrayList<InternalCDORevision>();
+      List<InternalCDORevision> unmappedRevisions = new ArrayList<>();
       for (InternalCDORevision revision : commitContext.getNewObjects())
       {
         if (checkUnits)
@@ -494,7 +494,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
 
   private Set<CDOID> getRootIDs()
   {
-    Set<CDOID> rootIDs = new HashSet<CDOID>();
+    Set<CDOID> rootIDs = new HashSet<>();
 
     // No need to synchronize on units because all other modifiers hold the manager write lock.
     rootIDs.addAll(units.keySet());
@@ -534,7 +534,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
   {
     private final CDOID rootID;
 
-    private final Set<IView> views = new HashSet<IView>();
+    private final Set<IView> views = new HashSet<>();
 
     public Unit(CDOID rootID)
     {
@@ -608,10 +608,10 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
 
       try
       {
-        Set<CDOID> initializedIDs = new HashSet<CDOID>();
+        Set<CDOID> initializedIDs = new HashSet<>();
         Object initResult = storeAccessor.initUnit(view, rootID, revisionHandler, initializedIDs, timeStamp, monitor);
 
-        List<CDOID> ids = new ArrayList<CDOID>();
+        List<CDOID> ids = new ArrayList<>();
         for (Entry<ObjectAttacher, List<CDOID>> entry : objectAttachers.entrySet())
         {
           ObjectAttacher objectAttacher = entry.getKey();
@@ -643,7 +643,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
   {
     private final long timeStamp = repository.getTimeStamp();
 
-    private final Map<ObjectAttacher, List<CDOID>> concurrentObjectAttachers = new HashMap<ObjectAttacher, List<CDOID>>();
+    private final Map<ObjectAttacher, List<CDOID>> concurrentObjectAttachers = new HashMap<>();
 
     private final CountDownLatch unitInitialized = new CountDownLatch(1);
 
@@ -653,7 +653,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
 
     private final CDORevisionHandler revisionHandler;
 
-    private final List<CDORevisionHandler> hookedRevisionHandlers = new CopyOnWriteArrayList<CDORevisionHandler>();
+    private final List<CDORevisionHandler> hookedRevisionHandlers = new CopyOnWriteArrayList<>();
 
     private volatile boolean hasHookedRevisionHandlers;
 
@@ -686,7 +686,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
      */
     public IUnit hook(CDOID rootID, IView view, final CDORevisionHandler revisionHandler, OMMonitor monitor)
     {
-      final Set<CDOID> ids = new HashSet<CDOID>();
+      final Set<CDOID> ids = new HashSet<>();
       hookedRevisionHandlers.add(new CDORevisionHandler()
       {
         @Override
@@ -828,7 +828,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
      */
     public List<CDOID> removeUnmappedRevisionsFor(UnitInitializer unitInitializer)
     {
-      List<CDOID> ids = new ArrayList<CDOID>();
+      List<CDOID> ids = new ArrayList<>();
 
       Set<CDOID> rootIDs = Collections.singleton(unitInitializer.getRootID());
       for (Iterator<InternalCDORevision> it = unmappedRevisions.iterator(); it.hasNext();)

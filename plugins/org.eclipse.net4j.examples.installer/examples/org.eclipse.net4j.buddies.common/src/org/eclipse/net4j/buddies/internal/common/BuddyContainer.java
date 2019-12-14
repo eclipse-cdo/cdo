@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public class BuddyContainer extends Lifecycle implements IBuddyContainer, IListener
 {
-  private Map<String, IBuddy> buddies = new HashMap<String, IBuddy>();
+  private Map<String, IBuddy> buddies = new HashMap<>();
 
   public BuddyContainer(Collection<IBuddy> buddies)
   {
@@ -58,7 +58,7 @@ public class BuddyContainer extends Lifecycle implements IBuddyContainer, IListe
         IListener[] listeners = getListeners();
         if (listeners != null)
         {
-          fireEvent(new SingleDeltaContainerEvent<IBuddy>(this, buddy, IContainerDelta.Kind.ADDED), listeners);
+          fireEvent(new SingleDeltaContainerEvent<>(this, buddy, IContainerDelta.Kind.ADDED), listeners);
         }
 
         buddy.addListener(this);
@@ -83,7 +83,7 @@ public class BuddyContainer extends Lifecycle implements IBuddyContainer, IListe
       IListener[] listeners = getListeners();
       if (listeners != null)
       {
-        fireEvent(new SingleDeltaContainerEvent<IBuddy>(this, buddy, IContainerDelta.Kind.REMOVED), listeners);
+        fireEvent(new SingleDeltaContainerEvent<>(this, buddy, IContainerDelta.Kind.REMOVED), listeners);
       }
     }
 

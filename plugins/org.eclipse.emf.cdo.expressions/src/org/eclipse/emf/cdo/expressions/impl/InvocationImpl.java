@@ -146,7 +146,7 @@ public abstract class InvocationImpl extends CDOObjectImpl implements Invocation
       evaluatedArguments[i] = argument.evaluate(context);
     }
 
-    List<Invocable> invocables = new BasicEList<Invocable>();
+    List<Invocable> invocables = new BasicEList<>();
     collectInvocables(context, name, invocables);
 
     Invocable invocable = selectInvocable(invocables, evaluatedArguments);

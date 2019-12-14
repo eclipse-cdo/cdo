@@ -73,7 +73,7 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
   {
     if (elements == null)
     {
-      elements = new EObjectResolvingEList<EObject>(EObject.class, this, model4Package.GEN_REF_MULTI_NON_CONTAINED__ELEMENTS);
+      elements = new EObjectResolvingEList<>(EObject.class, this, model4Package.GEN_REF_MULTI_NON_CONTAINED__ELEMENTS);
     }
     return elements;
   }

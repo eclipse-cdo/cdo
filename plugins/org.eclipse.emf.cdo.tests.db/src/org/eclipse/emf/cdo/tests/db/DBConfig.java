@@ -187,7 +187,7 @@ public abstract class DBConfig extends RepositoryConfig
     DataSource dataSource = createDataSource(repoName);
     IDBConnectionProvider connectionProvider = dbAdapter.createConnectionProvider(dataSource);
 
-    Map<String, String> props = new HashMap<String, String>();
+    Map<String, String> props = new HashMap<>();
     // props.put(IDBStore.Props.ID_COLUMN_LENGTH, "66");
 
     return CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider, props);
@@ -195,7 +195,7 @@ public abstract class DBConfig extends RepositoryConfig
 
   protected Map<String, String> createMappingStrategyProperties()
   {
-    Map<String, String> props = new HashMap<String, String>();
+    Map<String, String> props = new HashMap<>();
     props.put(IMappingStrategy.Props.QUALIFIED_NAMES, "true");
     props.put(IMappingStrategy.Props.FORCE_INDEXES, "XREF");
     props.put(CDODBUtil.PROP_COPY_ON_BRANCH, Boolean.toString(copyOnBranch));

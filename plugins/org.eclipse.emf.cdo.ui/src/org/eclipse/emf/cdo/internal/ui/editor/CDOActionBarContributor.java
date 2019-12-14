@@ -405,7 +405,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    */
   protected Collection<IAction> generateCreateChildActions(Collection<?> descriptors, ISelection selection)
   {
-    Collection<IAction> actions = new ArrayList<IAction>();
+    Collection<IAction> actions = new ArrayList<>();
     if (descriptors != null)
     {
       for (Object descriptor : descriptors)
@@ -425,7 +425,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    */
   protected Collection<IAction> generateCreateSiblingActions(Collection<?> descriptors, ISelection selection)
   {
-    Collection<IAction> actions = new ArrayList<IAction>();
+    Collection<IAction> actions = new ArrayList<>();
     if (descriptors != null)
     {
       for (Object descriptor : descriptors)

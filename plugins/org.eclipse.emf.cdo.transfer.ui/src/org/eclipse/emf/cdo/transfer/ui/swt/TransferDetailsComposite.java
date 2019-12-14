@@ -534,7 +534,7 @@ public class TransferDetailsComposite extends Composite implements IListener
 
   protected void initTransferTypes(final CDOTransfer transfer)
   {
-    Set<CDOTransferType> set = new HashSet<CDOTransferType>(CDOTransferType.REGISTRY.values());
+    Set<CDOTransferType> set = new HashSet<>(CDOTransferType.REGISTRY.values());
     set.remove(CDOTransferType.FOLDER);
 
     transferTypes = set.toArray(new CDOTransferType[set.size()]);

@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class Chat extends Facility implements IChat
 {
-  private List<IComment> comments = new ArrayList<IComment>();
+  private List<IComment> comments = new ArrayList<>();
 
   public Chat()
   {

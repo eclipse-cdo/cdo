@@ -378,7 +378,7 @@ public class CDOCommandProvider implements CommandProvider
     {
       builder.append("---CDO commands---" + NEW_LINE);
 
-      List<CDOCommand> commands = new ArrayList<CDOCommand>(getCommands().values());
+      List<CDOCommand> commands = new ArrayList<>(getCommands().values());
       Collections.sort(commands, new Comparator<CDOCommand>()
       {
         @Override
@@ -414,7 +414,7 @@ public class CDOCommandProvider implements CommandProvider
 
   public synchronized Map<String, CDOCommand> getCommands()
   {
-    Map<String, CDOCommand> commands = new HashMap<String, CDOCommand>();
+    Map<String, CDOCommand> commands = new HashMap<>();
     addCommand(commands, list);
     addCommand(commands, start);
     addCommand(commands, stop);

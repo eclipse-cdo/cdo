@@ -99,7 +99,7 @@ public class Session extends Container<IView> implements InternalSession
   @ExcludeFromDump
   private Object lastUpdateTimeLock = new Object();
 
-  private Map<Integer, InternalView> views = new HashMap<Integer, InternalView>();
+  private Map<Integer, InternalView> views = new HashMap<>();
 
   private AtomicInteger lastTempViewID = new AtomicInteger();
 

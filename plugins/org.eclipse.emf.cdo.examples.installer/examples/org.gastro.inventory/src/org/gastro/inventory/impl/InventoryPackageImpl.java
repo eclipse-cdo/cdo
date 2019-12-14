@@ -179,7 +179,8 @@ public class InventoryPackageImpl extends EPackageImpl implements InventoryPacka
 
     // Obtain or create and register package
     InventoryPackageImpl theInventoryPackage = (InventoryPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof InventoryPackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new InventoryPackageImpl());
+        ? EPackage.Registry.INSTANCE.get(eNS_URI)
+        : new InventoryPackageImpl());
 
     isInited = true;
 

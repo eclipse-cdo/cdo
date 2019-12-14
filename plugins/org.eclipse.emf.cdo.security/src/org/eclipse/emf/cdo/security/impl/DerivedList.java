@@ -39,7 +39,7 @@ abstract class DerivedList<E extends EObject> implements InternalEList<E>, EStru
     EStructuralFeature feature = getFeature();
     Object[] data = getData();
 
-    return new EcoreEList.UnmodifiableEList.FastCompare<E>(owner, feature, data.length, data);
+    return new EcoreEList.UnmodifiableEList.FastCompare<>(owner, feature, data.length, data);
   }
 
   protected abstract InternalEObject getOwner();
@@ -369,8 +369,8 @@ abstract class DerivedList<E extends EObject> implements InternalEList<E>, EStru
       @SuppressWarnings("unchecked")
       O start = (O)getOwner();
 
-      Set<Object> visited = new HashSet<Object>();
-      Set<E> result = new HashSet<E>();
+      Set<Object> visited = new HashSet<>();
+      Set<E> result = new HashSet<>();
 
       getData(start, visited, result);
       return result.toArray();

@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,6 +66,7 @@ public class IntValueStyleImpl extends NamedStyleImpl implements IntValueStyle
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getIntValue()
   {
     return ((Integer)eDynamicGet(NotationPackage.INT_VALUE_STYLE__INT_VALUE, NotationPackage.Literals.INT_VALUE_STYLE__INT_VALUE, true, true)).intValue();
@@ -76,6 +77,7 @@ public class IntValueStyleImpl extends NamedStyleImpl implements IntValueStyle
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setIntValue(int newIntValue)
   {
     eDynamicSet(NotationPackage.INT_VALUE_STYLE__INT_VALUE, NotationPackage.Literals.INT_VALUE_STYLE__INT_VALUE, new Integer(newIntValue));

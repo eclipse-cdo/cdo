@@ -43,7 +43,7 @@ public class CDOChangeSubscriptionAdapter extends AdapterImpl
     }
   };
 
-  private Set<CDOObject> notifiers = new HashSet<CDOObject>();
+  private Set<CDOObject> notifiers = new HashSet<>();
 
   public CDOChangeSubscriptionAdapter(CDOView view)
   {

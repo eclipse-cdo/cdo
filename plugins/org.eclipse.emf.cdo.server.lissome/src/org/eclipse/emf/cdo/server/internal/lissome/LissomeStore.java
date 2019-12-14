@@ -113,9 +113,9 @@ public class LissomeStore extends Store
 
   private int lastMetaID;
 
-  private Map<Integer, Object> metaObjects = new HashMap<Integer, Object>();
+  private Map<Integer, Object> metaObjects = new HashMap<>();
 
-  private Map<Object, Integer> metaIDs = new HashMap<Object, Integer>();
+  private Map<Object, Integer> metaIDs = new HashMap<>();
 
   public LissomeStore()
   {
@@ -156,7 +156,7 @@ public class LissomeStore extends Store
   @Override
   public Map<String, String> getPersistentProperties(Set<String> names)
   {
-    Map<String, String> properties = new HashMap<String, String>();
+    Map<String, String> properties = new HashMap<>();
 
     synchronized (persistentProperties)
     {
@@ -293,7 +293,7 @@ public class LissomeStore extends Store
   @Override
   public Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
-    final Map<CDOBranch, List<CDORevision>> result = new HashMap<CDOBranch, List<CDORevision>>();
+    final Map<CDOBranch, List<CDORevision>> result = new HashMap<>();
     ILissomeStoreAccessor accessor = getReader(null);
     StoreThreadLocal.setAccessor(accessor);
 
@@ -308,7 +308,7 @@ public class LissomeStore extends Store
           List<CDORevision> list = result.get(branch);
           if (list == null)
           {
-            list = new ArrayList<CDORevision>();
+            list = new ArrayList<>();
             result.put(branch, list);
           }
 
@@ -336,7 +336,7 @@ public class LissomeStore extends Store
   {
     this.creationTime = creationTime;
 
-    Map<String, String> map = new HashMap<String, String>();
+    Map<String, String> map = new HashMap<>();
     map.put(PROP_REPOSITORY_CREATED, Long.toString(creationTime));
     setPersistentProperties(map);
   }
@@ -390,7 +390,7 @@ public class LissomeStore extends Store
   @Override
   protected void doDeactivate() throws Exception
   {
-    Map<String, String> map = new HashMap<String, String>();
+    Map<String, String> map = new HashMap<>();
     map.put(PROP_GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
     map.put(PROP_REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
 
@@ -429,7 +429,7 @@ public class LissomeStore extends Store
 
   protected void reStart() throws IOException
   {
-    Set<String> names = new HashSet<String>();
+    Set<String> names = new HashSet<>();
     names.add(PROP_REPOSITORY_CREATED);
     names.add(PROP_GRACEFULLY_SHUT_DOWN);
 

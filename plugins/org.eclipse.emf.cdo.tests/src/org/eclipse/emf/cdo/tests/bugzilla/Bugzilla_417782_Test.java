@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2014, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -52,7 +52,7 @@ public class Bugzilla_417782_Test extends AbstractCDOTest
 
     transaction.commit();
 
-    List<CDOObjectReference> rc = transaction.queryXRefs(CDOUtil.getCDOObject(itemA), new EReference[] {});
+    List<CDOObjectReference> rc = transaction.queryXRefs(CDOUtil.getCDOObject(itemA));
 
     assertEquals(1, rc.size());
     Collection<Setting> rc2 = EcoreUtil.UsageCrossReferencer.find(itemA, (Resource)resource);

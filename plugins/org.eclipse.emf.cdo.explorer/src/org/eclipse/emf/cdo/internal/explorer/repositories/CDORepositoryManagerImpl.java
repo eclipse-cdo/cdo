@@ -32,7 +32,7 @@ public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> imp
 
   private static final String PROPERTIES_FILE = "repository.properties";
 
-  private final Map<CDOSession, CDORepository> sessionMap = new ConcurrentHashMap<CDOSession, CDORepository>();
+  private final Map<CDOSession, CDORepository> sessionMap = new ConcurrentHashMap<>();
 
   public CDORepositoryManagerImpl(File folder)
   {

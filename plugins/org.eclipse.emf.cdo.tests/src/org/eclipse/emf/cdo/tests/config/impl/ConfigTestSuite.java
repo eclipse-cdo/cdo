@@ -41,7 +41,7 @@ public abstract class ConfigTestSuite implements IConstants
 {
   private static final boolean DISABLE_MAIN_SUITE_FINISHED = OMPlatform.INSTANCE.isProperty("disable.main.suite.finished");
 
-  private final List<IScenario> scenarios = new ArrayList<IScenario>();
+  private final List<IScenario> scenarios = new ArrayList<>();
 
   public ConfigTestSuite()
   {
@@ -70,7 +70,7 @@ public abstract class ConfigTestSuite implements IConstants
     {
       TestSuite scenarioSuite = new TestSuite(scenario.toString());
 
-      List<Class<? extends ConfigTest>> testClasses = new ArrayList<Class<? extends ConfigTest>>();
+      List<Class<? extends ConfigTest>> testClasses = new ArrayList<>();
       initTestClasses(testClasses, scenario);
 
       for (Class<? extends ConfigTest> testClass : testClasses)
@@ -96,7 +96,7 @@ public abstract class ConfigTestSuite implements IConstants
 
   protected List<Class<? extends ConfigTest>> getTestClasses(OMBundle bundle, String packageName)
   {
-    List<Class<? extends ConfigTest>> result = new ArrayList<Class<? extends ConfigTest>>();
+    List<Class<? extends ConfigTest>> result = new ArrayList<>();
 
     for (Iterator<Class<?>> it = bundle.getClasses(); it.hasNext();)
     {
@@ -180,7 +180,7 @@ public abstract class ConfigTestSuite implements IConstants
       // super(testClass, testClass.getName()); // Important for the UI to set the *qualified* class name!
       this.scenario = scenario;
 
-      List<Test> tests = new ArrayList<Test>();
+      List<Test> tests = new ArrayList<>();
       addTestsFromTestCase(testClass, suite, tests);
 
       Collections.sort(tests, new Comparator<Test>()
@@ -270,7 +270,7 @@ public abstract class ConfigTestSuite implements IConstants
         superClass = superClass.getSuperclass();
       }
 
-      List<String> names = new ArrayList<String>();
+      List<String> names = new ArrayList<>();
 
       superClass = theClass;
       while (Test.class.isAssignableFrom(superClass))

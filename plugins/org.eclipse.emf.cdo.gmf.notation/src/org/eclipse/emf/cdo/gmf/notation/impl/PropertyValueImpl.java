@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -82,6 +82,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getRawValue()
   {
     return (String)eDynamicGet(NotationPackage.PROPERTY_VALUE__RAW_VALUE, NotationPackage.Literals.PROPERTY_VALUE__RAW_VALUE, true, true);
@@ -92,6 +93,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public void setRawValue(String newRawValue)
   {
     if (getInstanceType() != null)
@@ -125,6 +127,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getInstanceType()
   {
     return (EDataType)eDynamicGet(NotationPackage.PROPERTY_VALUE__INSTANCE_TYPE, NotationPackage.Literals.PROPERTY_VALUE__INSTANCE_TYPE, true, true);
@@ -145,6 +148,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setInstanceType(EDataType newInstanceType)
   {
     eDynamicSet(NotationPackage.PROPERTY_VALUE__INSTANCE_TYPE, NotationPackage.Literals.PROPERTY_VALUE__INSTANCE_TYPE, newInstanceType);
@@ -155,6 +159,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public Object getValue()
   {
     return getObjectFromString(getRawValue());
@@ -165,6 +170,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public void setValue(Object newValue)
   {
     setRawValue(getStringFromObject(newValue));
@@ -175,6 +181,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public String getStringFromObject(Object objectValue)
   {
     if (getInstanceType() == null && objectValue instanceof String)
@@ -189,6 +196,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public Object getObjectFromString(String stringValue)
   {
     if (getInstanceType() == null)

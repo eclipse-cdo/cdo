@@ -92,7 +92,7 @@ public class DiagramImpl extends EObjectImpl implements Diagram
   {
     if (edges == null)
     {
-      edges = new EObjectContainmentEList<Edge>(Edge.class, this, Model3Package.DIAGRAM__EDGES);
+      edges = new EObjectContainmentEList<>(Edge.class, this, Model3Package.DIAGRAM__EDGES);
     }
     return edges;
   }
@@ -107,7 +107,7 @@ public class DiagramImpl extends EObjectImpl implements Diagram
   {
     if (edgeTargets == null)
     {
-      edgeTargets = new EObjectContainmentEList<EdgeTarget>(EdgeTarget.class, this, Model3Package.DIAGRAM__EDGE_TARGETS);
+      edgeTargets = new EObjectContainmentEList<>(EdgeTarget.class, this, Model3Package.DIAGRAM__EDGE_TARGETS);
     }
     return edgeTargets;
   }

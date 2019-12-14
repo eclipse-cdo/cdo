@@ -133,7 +133,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   {
     if (orderDetails == null)
     {
-      orderDetails = new EObjectContainmentWithInverseEList.Resolving<OrderDetail>(OrderDetail.class, this, Model1Package.ORDER_ADDRESS__ORDER_DETAILS,
+      orderDetails = new EObjectContainmentWithInverseEList.Resolving<>(OrderDetail.class, this, Model1Package.ORDER_ADDRESS__ORDER_DETAILS,
           Model1Package.ORDER_DETAIL__ORDER);
     }
     return orderDetails;
@@ -147,7 +147,9 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   public Order getOrder()
   {
     if (eContainerFeatureID() != Model1Package.ORDER_ADDRESS__ORDER)
+    {
       return null;
+    }
     return (Order)eContainer();
   }
 
@@ -159,7 +161,9 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   public Order basicGetOrder()
   {
     if (eContainerFeatureID() != Model1Package.ORDER_ADDRESS__ORDER)
+    {
       return null;
+    }
     return (Order)eInternalContainer();
   }
 
@@ -180,21 +184,31 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   @Override
   public void setOrder(Order newOrder)
   {
-    if (newOrder != eInternalContainer() || (eContainerFeatureID() != Model1Package.ORDER_ADDRESS__ORDER && newOrder != null))
+    if (newOrder != eInternalContainer() || eContainerFeatureID() != Model1Package.ORDER_ADDRESS__ORDER && newOrder != null)
     {
       if (EcoreUtil.isAncestor(this, newOrder))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newOrder != null)
+      {
         msgs = ((InternalEObject)newOrder).eInverseAdd(this, Model1Package.ORDER__ORDER_DETAILS, Order.class, msgs);
+      }
       msgs = basicSetOrder(newOrder, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__ORDER, newOrder, newOrder));
+    }
   }
 
   /**
@@ -211,7 +225,9 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
       if (product != oldProduct)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.ORDER_ADDRESS__PRODUCT, oldProduct, product));
+        }
       }
     }
     return product;
@@ -238,9 +254,13 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     {
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__PRODUCT, oldProduct, newProduct);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -256,15 +276,23 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     {
       NotificationChain msgs = null;
       if (product != null)
+      {
         msgs = ((InternalEObject)product).eInverseRemove(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class, msgs);
+      }
       if (newProduct != null)
+      {
         msgs = ((InternalEObject)newProduct).eInverseAdd(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class, msgs);
+      }
       msgs = basicSetProduct(newProduct, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__PRODUCT, newProduct, newProduct));
+    }
   }
 
   /**
@@ -287,7 +315,9 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     float oldPrice = price;
     price = newPrice;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__PRICE, oldPrice, price));
+    }
   }
 
   /**
@@ -310,7 +340,9 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     boolean oldTestAttribute = testAttribute;
     testAttribute = newTestAttribute;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__TEST_ATTRIBUTE, oldTestAttribute, testAttribute));
+    }
   }
 
   /**
@@ -327,11 +359,15 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getOrderDetails()).basicAdd(otherEnd, msgs);
     case Model1Package.ORDER_ADDRESS__ORDER:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetOrder((Order)otherEnd, msgs);
     case Model1Package.ORDER_ADDRESS__PRODUCT:
       if (product != null)
+      {
         msgs = ((InternalEObject)product).eInverseRemove(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class, msgs);
+      }
       return basicSetProduct((Product1)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -384,11 +420,15 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
       return getOrderDetails();
     case Model1Package.ORDER_ADDRESS__ORDER:
       if (resolve)
+      {
         return getOrder();
+      }
       return basicGetOrder();
     case Model1Package.ORDER_ADDRESS__PRODUCT:
       if (resolve)
+      {
         return getProduct();
+      }
       return basicGetProduct();
     case Model1Package.ORDER_ADDRESS__PRICE:
       return getPrice();
@@ -555,7 +595,9 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (price: ");

@@ -239,9 +239,9 @@ public final class CDORevisionUtil
   public static CDOChangeSetData createChangeSetData(Set<CDOID> ids, CDORevisionProvider startProvider, CDORevisionProvider endProvider,
       boolean useStartVersions)
   {
-    List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>();
-    List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
-    List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>();
+    List<CDOIDAndVersion> newObjects = new ArrayList<>();
+    List<CDORevisionKey> changedObjects = new ArrayList<>();
+    List<CDOIDAndVersion> detachedObjects = new ArrayList<>();
     for (CDOID id : ids)
     {
       CDORevision startRevision = startProvider.getRevision(id);
@@ -438,7 +438,7 @@ public final class CDORevisionUtil
    */
   public static List<CDORevision> getChildRevisions(CDORevision container, CDORevisionProvider provider, boolean onlyProperContents)
   {
-    List<CDORevision> children = new ArrayList<CDORevision>();
+    List<CDORevision> children = new ArrayList<>();
 
     InternalCDORevision revisionData = (InternalCDORevision)container;
     CDOClassInfo classInfo = revisionData.getClassInfo();
@@ -645,7 +645,7 @@ public final class CDORevisionUtil
 
     public void dump()
     {
-      ArrayList<CDOBranch> branches = new ArrayList<CDOBranch>(map.keySet());
+      ArrayList<CDOBranch> branches = new ArrayList<>(map.keySet());
       Collections.sort(branches);
 
       dumpStart(branches);

@@ -35,7 +35,7 @@ public class MessageImpl implements Message, Comparable<MessageImpl>
   private static final String[] KEYWORDS = { "and", "between", "escape", "in", "is", "like", "false", "null", "or", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
       "not", "true" }; //$NON-NLS-1$ //$NON-NLS-2$
 
-  private Map<String, Object> properties = new HashMap<String, Object>();
+  private Map<String, Object> properties = new HashMap<>();
 
   private byte[] correlationID;
 

@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class CDOExtentMap implements Map<EClass, Set<? extends EObject>>
 {
-  private final Map<EClass, Set<? extends EObject>> delegate = new java.util.HashMap<EClass, Set<? extends EObject>>();
+  private final Map<EClass, Set<? extends EObject>> delegate = new java.util.HashMap<>();
 
   private final OCLExtentCreator extentCreator;
 

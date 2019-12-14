@@ -102,7 +102,7 @@ public interface Connection
    * @see Session#AUTO_ACKNOWLEDGE
    * @see Session#CLIENT_ACKNOWLEDGE
    * @see Session#DUPS_OK_ACKNOWLEDGE
-  
+
    */
 
   Session createSession(boolean transacted, int acknowledgeMode) throws JMSException;

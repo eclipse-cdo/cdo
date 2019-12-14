@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -193,7 +193,7 @@ public class DawnResourceHelper
 
     resource.setXMLVersion("1.0");
 
-    Map<Object, Object> saveOptions = new HashMap<Object, Object>();
+    Map<Object, Object> saveOptions = new HashMap<>();
     // options.put(XMLResource.OPTION_EXTENDED_META_DATA, Boolean.TRUE);
     // options.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
     // options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, Boolean.TRUE);
@@ -622,7 +622,7 @@ public class DawnResourceHelper
       }
     }
 
-    ArrayList<EObject> tempDeletionList = new ArrayList<EObject>();
+    ArrayList<EObject> tempDeletionList = new ArrayList<>();
 
     for (Object leftChild : leftObject.eContents())
     {

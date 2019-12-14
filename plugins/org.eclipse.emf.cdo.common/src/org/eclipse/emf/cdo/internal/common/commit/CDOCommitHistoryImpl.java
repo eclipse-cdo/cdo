@@ -49,7 +49,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
 
   private final CDOBranch branch;
 
-  private final GrowingRandomAccessList<CDOCommitInfo> commitInfos = new GrowingRandomAccessList<CDOCommitInfo>(CDOCommitInfo.class, DEFAULT_LOAD_COUNT);
+  private final GrowingRandomAccessList<CDOCommitInfo> commitInfos = new GrowingRandomAccessList<>(CDOCommitInfo.class, DEFAULT_LOAD_COUNT);
 
   private final Object loadLock = new Object();
 
@@ -393,7 +393,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
         @Override
         public void run()
         {
-          final List<CDOCommitInfo> addedCommitInfos = new ArrayList<CDOCommitInfo>();
+          final List<CDOCommitInfo> addedCommitInfos = new ArrayList<>();
 
           try
           {

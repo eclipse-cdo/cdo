@@ -79,7 +79,7 @@ public class Journal extends LissomeFile
 
   private static final boolean ZIP_PACKAGE_BYTES = true;
 
-  private Map<String, Long> ePackagePointers = new HashMap<String, Long>();
+  private Map<String, Long> ePackagePointers = new HashMap<>();
 
   private long commitPointer;
 
@@ -161,7 +161,7 @@ public class Journal extends LissomeFile
 
     try
     {
-      List<InternalCDOPackageUnit> result = new ArrayList<InternalCDOPackageUnit>();
+      List<InternalCDOPackageUnit> result = new ArrayList<>();
       InternalCDOPackageRegistry packageRegistry = getStore().getRepository().getPackageRegistry();
 
       ResourceSet resourceSet = new ResourceSetImpl();

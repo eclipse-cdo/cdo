@@ -81,6 +81,7 @@ public class DiagramStyleImpl extends PageStyleImpl implements DiagramStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public EList getHorizontalGuides()
   {
     return (EList)eDynamicGet(NotationPackage.DIAGRAM_STYLE__HORIZONTAL_GUIDES, NotationPackage.Literals.GUIDE_STYLE__HORIZONTAL_GUIDES, true, true);
@@ -91,6 +92,7 @@ public class DiagramStyleImpl extends PageStyleImpl implements DiagramStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public EList getVerticalGuides()
   {
     return (EList)eDynamicGet(NotationPackage.DIAGRAM_STYLE__VERTICAL_GUIDES, NotationPackage.Literals.GUIDE_STYLE__VERTICAL_GUIDES, true, true);
@@ -101,6 +103,7 @@ public class DiagramStyleImpl extends PageStyleImpl implements DiagramStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public String getDescription()
   {
     return (String)eDynamicGet(NotationPackage.DIAGRAM_STYLE__DESCRIPTION, NotationPackage.Literals.DESCRIPTION_STYLE__DESCRIPTION, true, true);
@@ -111,6 +114,7 @@ public class DiagramStyleImpl extends PageStyleImpl implements DiagramStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setDescription(String newDescription)
   {
     eDynamicSet(NotationPackage.DIAGRAM_STYLE__DESCRIPTION, NotationPackage.Literals.DESCRIPTION_STYLE__DESCRIPTION, newDescription);

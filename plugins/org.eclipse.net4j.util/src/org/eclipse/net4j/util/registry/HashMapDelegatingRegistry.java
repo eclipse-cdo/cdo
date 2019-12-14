@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -23,25 +23,25 @@ public class HashMapDelegatingRegistry<K, V> extends DelegatingRegistry<K, V>
   public HashMapDelegatingRegistry(IRegistry<K, V> delegate)
   {
     super(delegate);
-    map = new HashMap<K, V>();
+    map = new HashMap<>();
   }
 
   public HashMapDelegatingRegistry(IRegistry<K, V> delegate, int initialCapacity)
   {
     super(delegate);
-    map = new HashMap<K, V>(initialCapacity);
+    map = new HashMap<>(initialCapacity);
   }
 
   public HashMapDelegatingRegistry(IRegistry<K, V> delegate, int initialCapacity, float loadFactor)
   {
     super(delegate);
-    map = new HashMap<K, V>(initialCapacity, loadFactor);
+    map = new HashMap<>(initialCapacity, loadFactor);
   }
 
   public HashMapDelegatingRegistry(IRegistry<K, V> delegate, Map<? extends K, ? extends V> m)
   {
     super(delegate);
-    map = new HashMap<K, V>(m);
+    map = new HashMap<>(m);
   }
 
   @Override

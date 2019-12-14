@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -393,6 +393,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Edge createEdge()
   {
     EdgeImpl edge = new EdgeImpl();
@@ -404,6 +405,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Node createNode()
   {
     NodeImpl node = new NodeImpl();
@@ -415,6 +417,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public FillStyle createFillStyle()
   {
     FillStyleImpl fillStyle = new FillStyleImpl();
@@ -426,6 +429,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public LineStyle createLineStyle()
   {
     LineStyleImpl lineStyle = new LineStyleImpl();
@@ -437,6 +441,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public FontStyle createFontStyle()
   {
     FontStyleImpl fontStyle = new FontStyleImpl();
@@ -448,6 +453,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public TitleStyle createTitleStyle()
   {
     TitleStyleImpl titleStyle = new TitleStyleImpl();
@@ -459,6 +465,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public SortingStyle createSortingStyle()
   {
     SortingStyleImpl sortingStyle = new SortingStyleImpl();
@@ -470,6 +477,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public DescriptionStyle createDescriptionStyle()
   {
     DescriptionStyleImpl descriptionStyle = new DescriptionStyleImpl();
@@ -481,6 +489,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Size createSize()
   {
     SizeImpl size = new SizeImpl();
@@ -492,6 +501,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Location createLocation()
   {
     LocationImpl location = new LocationImpl();
@@ -503,6 +513,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Bounds createBounds()
   {
     BoundsImpl bounds = new BoundsImpl();
@@ -514,6 +525,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Ratio createRatio()
   {
     RatioImpl ratio = new RatioImpl();
@@ -525,6 +537,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public IdentityAnchor createIdentityAnchor()
   {
     IdentityAnchorImpl identityAnchor = new IdentityAnchorImpl();
@@ -536,6 +549,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public RoutingStyle createRoutingStyle()
   {
     RoutingStyleImpl routingStyle = new RoutingStyleImpl();
@@ -547,6 +561,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public RelativeBendpoints createRelativeBendpoints()
   {
     RelativeBendpointsImpl relativeBendpoints = new RelativeBendpointsImpl();
@@ -558,6 +573,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public CanonicalStyle createCanonicalStyle()
   {
     CanonicalStyleImpl canonicalStyle = new CanonicalStyleImpl();
@@ -569,6 +585,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public ShapeStyle createShapeStyle()
   {
     ShapeStyleImpl shapeStyle = new ShapeStyleImpl();
@@ -580,6 +597,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public ConnectorStyle createConnectorStyle()
   {
     ConnectorStyleImpl connectorStyle = new ConnectorStyleImpl();
@@ -591,6 +609,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Diagram createDiagram()
   {
     DiagramImpl diagram = new DiagramImpl();
@@ -602,6 +621,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Image createImage()
   {
     ImageImpl image = new ImageImpl();
@@ -613,6 +633,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public PageStyle createPageStyle()
   {
     PageStyleImpl pageStyle = new PageStyleImpl();
@@ -624,6 +645,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public DrawerStyle createDrawerStyle()
   {
     DrawerStyleImpl drawerStyle = new DrawerStyleImpl();
@@ -635,6 +657,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public GuideStyle createGuideStyle()
   {
     GuideStyleImpl guideStyle = new GuideStyleImpl();
@@ -646,6 +669,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Guide createGuide()
   {
     GuideImpl guide = new GuideImpl();
@@ -668,6 +692,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public FilteringStyle createFilteringStyle()
   {
     FilteringStyleImpl filteringStyle = new FilteringStyleImpl();
@@ -679,6 +704,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public DiagramStyle createDiagramStyle()
   {
     DiagramStyleImpl diagramStyle = new DiagramStyleImpl();
@@ -690,6 +716,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public ImageStyle createImageStyle()
   {
     ImageStyleImpl imageStyle = new ImageStyleImpl();
@@ -701,6 +728,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public ImageBufferStyle createImageBufferStyle()
   {
     ImageBufferStyleImpl imageBufferStyle = new ImageBufferStyleImpl();
@@ -712,6 +740,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public PropertiesSetStyle createPropertiesSetStyle()
   {
     PropertiesSetStyleImpl propertiesSetStyle = new PropertiesSetStyleImpl();
@@ -734,6 +763,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public PropertyValue createPropertyValue()
   {
     PropertyValueImpl propertyValue = new PropertyValueImpl();
@@ -745,6 +775,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public SingleValueStyle createSingleValueStyle()
   {
     SingleValueStyleImpl singleValueStyle = new SingleValueStyleImpl();
@@ -756,6 +787,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public ListValueStyle createListValueStyle()
   {
     ListValueStyleImpl listValueStyle = new ListValueStyleImpl();
@@ -767,6 +799,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public NamedStyle createNamedStyle()
   {
     NamedStyleImpl namedStyle = new NamedStyleImpl();
@@ -778,6 +811,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public DataTypeStyle createDataTypeStyle()
   {
     DataTypeStyleImpl dataTypeStyle = new DataTypeStyleImpl();
@@ -789,6 +823,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public IntValueStyle createIntValueStyle()
   {
     IntValueStyleImpl intValueStyle = new IntValueStyleImpl();
@@ -800,6 +835,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public IntListValueStyle createIntListValueStyle()
   {
     IntListValueStyleImpl intListValueStyle = new IntListValueStyleImpl();
@@ -811,6 +847,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public BooleanValueStyle createBooleanValueStyle()
   {
     BooleanValueStyleImpl booleanValueStyle = new BooleanValueStyleImpl();
@@ -822,6 +859,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public DoubleValueStyle createDoubleValueStyle()
   {
     DoubleValueStyleImpl doubleValueStyle = new DoubleValueStyleImpl();
@@ -833,6 +871,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public DoubleListValueStyle createDoubleListValueStyle()
   {
     DoubleListValueStyleImpl doubleListValueStyle = new DoubleListValueStyleImpl();
@@ -844,6 +883,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public StringValueStyle createStringValueStyle()
   {
     StringValueStyleImpl stringValueStyle = new StringValueStyleImpl();
@@ -855,6 +895,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public StringListValueStyle createStringListValueStyle()
   {
     StringListValueStyleImpl stringListValueStyle = new StringListValueStyleImpl();
@@ -866,6 +907,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public EObjectValueStyle createEObjectValueStyle()
   {
     EObjectValueStyleImpl eObjectValueStyle = new EObjectValueStyleImpl();
@@ -877,6 +919,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public EObjectListValueStyle createEObjectListValueStyle()
   {
     EObjectListValueStyleImpl eObjectListValueStyle = new EObjectListValueStyleImpl();
@@ -888,6 +931,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public ByteArrayValueStyle createByteArrayValueStyle()
   {
     ByteArrayValueStyleImpl byteArrayValueStyle = new ByteArrayValueStyleImpl();
@@ -899,6 +943,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public BooleanListValueStyle createBooleanListValueStyle()
   {
     BooleanListValueStyleImpl booleanListValueStyle = new BooleanListValueStyleImpl();
@@ -910,6 +955,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public HintedDiagramLinkStyle createHintedDiagramLinkStyle()
   {
     HintedDiagramLinkStyleImpl hintedDiagramLinkStyle = new HintedDiagramLinkStyleImpl();
@@ -921,6 +967,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public DiagramLinkStyle createDiagramLinkStyle()
   {
     DiagramLinkStyleImpl diagramLinkStyle = new DiagramLinkStyleImpl();
@@ -932,6 +979,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public MultiDiagramLinkStyle createMultiDiagramLinkStyle()
   {
     MultiDiagramLinkStyleImpl multiDiagramLinkStyle = new MultiDiagramLinkStyleImpl();
@@ -943,6 +991,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public TextStyle createTextStyle()
   {
     TextStyleImpl textStyle = new TextStyleImpl();
@@ -954,6 +1003,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public LineTypeStyle createLineTypeStyle()
   {
     LineTypeStyleImpl lineTypeStyle = new LineTypeStyleImpl();
@@ -965,6 +1015,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public ArrowStyle createArrowStyle()
   {
     ArrowStyleImpl arrowStyle = new ArrowStyleImpl();
@@ -976,6 +1027,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Shape createShape()
   {
     ShapeImpl shape = new ShapeImpl();
@@ -987,6 +1039,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Compartment createCompartment()
   {
     CompartmentImpl compartment = new CompartmentImpl();
@@ -998,6 +1051,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public ListCompartment createListCompartment()
   {
     ListCompartmentImpl listCompartment = new ListCompartmentImpl();
@@ -1009,6 +1063,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Connector createConnector()
   {
     ConnectorImpl connector = new ConnectorImpl();
@@ -1020,6 +1075,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public StandardDiagram createStandardDiagram()
   {
     StandardDiagramImpl standardDiagram = new StandardDiagramImpl();
@@ -1031,6 +1087,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public DecorationNode createDecorationNode()
   {
     DecorationNodeImpl decorationNode = new DecorationNodeImpl();
@@ -1042,6 +1099,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public BasicDecorationNode createBasicDecorationNode()
   {
     BasicDecorationNodeImpl basicDecorationNode = new BasicDecorationNodeImpl();
@@ -1053,6 +1111,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public BasicCompartment createBasicCompartment()
   {
     BasicCompartmentImpl basicCompartment = new BasicCompartmentImpl();
@@ -1064,6 +1123,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public BasicSemanticCompartment createBasicSemanticCompartment()
   {
     BasicSemanticCompartmentImpl basicSemanticCompartment = new BasicSemanticCompartmentImpl();
@@ -1075,6 +1135,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public SemanticListCompartment createSemanticListCompartment()
   {
     SemanticListCompartmentImpl semanticListCompartment = new SemanticListCompartmentImpl();
@@ -1086,6 +1147,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public RoundedCornersStyle createRoundedCornersStyle()
   {
     RoundedCornersStyleImpl roundedCornersStyle = new RoundedCornersStyleImpl();
@@ -1610,6 +1672,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public NotationPackage getNotationPackage()
   {
     return (NotationPackage)getEPackage();

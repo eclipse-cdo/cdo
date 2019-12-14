@@ -28,7 +28,7 @@ public abstract class Cache<E> extends Worker implements ICache
 
   private ICacheProbe cacheProbe;
 
-  private ReferenceQueue<E> referenceQueue = new ReferenceQueue<E>();
+  private ReferenceQueue<E> referenceQueue = new ReferenceQueue<>();
 
   public Cache()
   {

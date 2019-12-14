@@ -87,7 +87,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   // @Singleton
   public static final CDOStateMachine INSTANCE = new CDOStateMachine();
 
-  static final ThreadLocal<Boolean> SWITCHING_TARGET = new InheritableThreadLocal<Boolean>();
+  static final ThreadLocal<Boolean> SWITCHING_TARGET = new InheritableThreadLocal<>();
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_STATEMACHINE, CDOStateMachine.class);
 
@@ -219,7 +219,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       {
         object.cdoInternalPreAttach();
 
-        List<InternalCDOObject> contents = new ArrayList<InternalCDOObject>();
+        List<InternalCDOObject> contents = new ArrayList<>();
         prepare(object, Pair.create(transaction, contents));
 
         attachOrReattach(object, transaction);
@@ -303,7 +303,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           trace(object, CDOEvent.DETACH);
         }
 
-        List<InternalCDOObject> objectsToDetach = new ArrayList<InternalCDOObject>();
+        List<InternalCDOObject> objectsToDetach = new ArrayList<>();
         InternalCDOTransaction transaction = (InternalCDOTransaction)object.cdoView();
 
         // Accumulate objects that needs to be detached
@@ -897,7 +897,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     private Iterator<InternalEObject> getPersistentContents(InternalCDOObject object)
     {
       EStructuralFeature[] features = object.cdoClassInfo().getAllPersistentContainments();
-      return new EContentsEList.ResolvingFeatureIteratorImpl<InternalEObject>(object, features);
+      return new EContentsEList.ResolvingFeatureIteratorImpl<>(object, features);
     }
 
     private void checkPackageRegistrationProblems(InternalCDOSession session, EClass eClass)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2014, 2016-2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2014, 2016-2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -56,7 +56,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
 
   private int prefetchDepth;
 
-  private Map<EClass, CDOFetchRule> fetchRules = new HashMap<EClass, CDOFetchRule>();
+  private Map<EClass, CDOFetchRule> fetchRules = new HashMap<>();
 
   private CDOID contextID = CDOID.NULL;
 
@@ -136,9 +136,9 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    List<CDORevision> additionalRevisions = new ArrayList<CDORevision>();
-    List<RevisionInfo> additionalRevisionInfos = new ArrayList<RevisionInfo>();
-    Set<CDOID> revisionIDs = new HashSet<CDOID>();
+    List<CDORevision> additionalRevisions = new ArrayList<>();
+    List<RevisionInfo> additionalRevisionInfos = new ArrayList<>();
+    Set<CDOID> revisionIDs = new HashSet<>();
     int size = infos.length;
     if (TRACER.isEnabled())
     {
@@ -151,7 +151,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
     }
 
     // Need to fetch the rule first.
-    Set<CDOFetchRule> visitedFetchRules = new HashSet<CDOFetchRule>();
+    Set<CDOFetchRule> visitedFetchRules = new HashSet<>();
     if (!CDOIDUtil.isNull(contextID) && fetchRules.size() > 0)
     {
       if (TRACER.isEnabled())

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -28,7 +28,7 @@ public final class CollectionUtil
 
   public static <T> Iterator<T> dump(Iterator<T> it)
   {
-    List<T> list = new ArrayList<T>();
+    List<T> list = new ArrayList<>();
     while (it.hasNext())
     {
       list.add(it.next());

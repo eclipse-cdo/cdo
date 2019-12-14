@@ -115,7 +115,7 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
   @Override
   public ICollaboration[] getCollaborations()
   {
-    List<ICollaboration> collaborations = new ArrayList<ICollaboration>();
+    List<ICollaboration> collaborations = new ArrayList<>();
     for (IMembership membership : getMemberships())
     {
       ICollaboration collaboration = membership.getCollaboration();
@@ -134,7 +134,7 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
   @Override
   public IMembership initiate(IBuddy buddy)
   {
-    HashSet<IBuddy> buddies = new HashSet<IBuddy>();
+    HashSet<IBuddy> buddies = new HashSet<>();
     if (buddy != null)
     {
       buddies.add(buddy);

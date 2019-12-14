@@ -68,7 +68,7 @@ public class Self extends Buddy
       collaboration.activate();
       Membership.create(this, collaboration);
 
-      List<IMembership> memberships = new ArrayList<IMembership>();
+      List<IMembership> memberships = new ArrayList<>();
       for (IBuddy buddy : buddies)
       {
         IMembership membership = Membership.create(buddy, collaboration);

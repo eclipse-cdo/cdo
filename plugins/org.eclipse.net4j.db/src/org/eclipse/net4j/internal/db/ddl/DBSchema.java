@@ -46,7 +46,7 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
 
   private static int indexCounter;
 
-  private Map<String, IDBTable> tables = new HashMap<String, IDBTable>();
+  private Map<String, IDBTable> tables = new HashMap<>();
 
   private transient boolean locked;
 

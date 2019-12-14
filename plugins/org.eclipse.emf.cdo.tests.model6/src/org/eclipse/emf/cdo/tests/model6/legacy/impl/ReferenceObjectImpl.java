@@ -137,7 +137,7 @@ public class ReferenceObjectImpl extends BaseObjectImpl implements ReferenceObje
   {
     if (referenceList == null)
     {
-      referenceList = new EObjectResolvingEList<BaseObject>(BaseObject.class, this, Model6Package.REFERENCE_OBJECT__REFERENCE_LIST);
+      referenceList = new EObjectResolvingEList<>(BaseObject.class, this, Model6Package.REFERENCE_OBJECT__REFERENCE_LIST);
     }
     return referenceList;
   }

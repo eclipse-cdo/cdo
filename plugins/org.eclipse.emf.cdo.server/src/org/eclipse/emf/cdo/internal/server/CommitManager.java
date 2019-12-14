@@ -47,7 +47,7 @@ public class CommitManager extends Lifecycle implements InternalCommitManager
   private boolean shutdownExecutorService;
 
   @ExcludeFromDump
-  private transient Map<InternalTransaction, TransactionCommitContextEntry> contextEntries = new ConcurrentHashMap<InternalTransaction, TransactionCommitContextEntry>();
+  private transient Map<InternalTransaction, TransactionCommitContextEntry> contextEntries = new ConcurrentHashMap<>();
 
   public CommitManager()
   {

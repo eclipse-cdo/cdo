@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -32,7 +32,8 @@ public abstract class TrackableTimerTask extends TimerTask
   public static final boolean TRACK_TIMER_TASKS = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.util.concurrent.TrackTimerTasks");
 
   private static final Map<TrackableTimerTask, ConstructionInfo> CONSTRUCTION_INFOS = TRACK_TIMER_TASKS
-      ? new WeakHashMap<TrackableTimerTask, ConstructionInfo>() : null;
+      ? new WeakHashMap<>()
+      : null;
 
   protected TrackableTimerTask()
   {
@@ -67,7 +68,7 @@ public abstract class TrackableTimerTask extends TimerTask
     }
 
     long maxTimeStamp = System.currentTimeMillis() - minLifeTimeMillis;
-    Collection<Exception> result = new ArrayList<Exception>();
+    Collection<Exception> result = new ArrayList<>();
 
     synchronized (CONSTRUCTION_INFOS)
     {

@@ -76,7 +76,7 @@ public class RefMultiContainedImpl extends EObjectImpl implements RefMultiContai
   {
     if (elements == null)
     {
-      elements = new EObjectContainmentWithInverseEList<MultiContainedElement>(MultiContainedElement.class, this, model4Package.REF_MULTI_CONTAINED__ELEMENTS,
+      elements = new EObjectContainmentWithInverseEList<>(MultiContainedElement.class, this, model4Package.REF_MULTI_CONTAINED__ELEMENTS,
           model4Package.MULTI_CONTAINED_ELEMENT__PARENT);
     }
     return elements;

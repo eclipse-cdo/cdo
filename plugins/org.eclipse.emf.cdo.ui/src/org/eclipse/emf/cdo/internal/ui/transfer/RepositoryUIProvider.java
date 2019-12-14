@@ -88,7 +88,7 @@ public class RepositoryUIProvider implements TransferUIProvider
   @Override
   public Object convertSelection(IStructuredSelection selection)
   {
-    List<CDOResourceNode> result = new ArrayList<CDOResourceNode>();
+    List<CDOResourceNode> result = new ArrayList<>();
     for (Iterator<?> it = selection.iterator(); it.hasNext();)
     {
       Object object = it.next();

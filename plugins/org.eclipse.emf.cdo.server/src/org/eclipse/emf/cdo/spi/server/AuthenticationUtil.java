@@ -20,7 +20,7 @@ import java.util.concurrent.Callable;
  */
 public final class AuthenticationUtil
 {
-  private static final ThreadLocal<IAuthenticationProtocol> AUTHENTICATION_PROTOCOL = new ThreadLocal<IAuthenticationProtocol>();
+  private static final ThreadLocal<IAuthenticationProtocol> AUTHENTICATION_PROTOCOL = new ThreadLocal<>();
 
   // Not instantiable by clients.
   private AuthenticationUtil()

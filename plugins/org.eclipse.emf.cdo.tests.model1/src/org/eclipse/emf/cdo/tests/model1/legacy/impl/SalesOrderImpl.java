@@ -118,7 +118,9 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
     int oldId = id;
     id = newId;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.SALES_ORDER__ID, oldId, id));
+    }
   }
 
   /**
@@ -135,7 +137,9 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
       if (customer != oldCustomer)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.SALES_ORDER__CUSTOMER, oldCustomer, customer));
+        }
       }
     }
     return customer;
@@ -162,9 +166,13 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
     {
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, Model1Package.SALES_ORDER__CUSTOMER, oldCustomer, newCustomer);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -180,15 +188,23 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
     {
       NotificationChain msgs = null;
       if (customer != null)
+      {
         msgs = ((InternalEObject)customer).eInverseRemove(this, Model1Package.CUSTOMER__SALES_ORDERS, Customer.class, msgs);
+      }
       if (newCustomer != null)
+      {
         msgs = ((InternalEObject)newCustomer).eInverseAdd(this, Model1Package.CUSTOMER__SALES_ORDERS, Customer.class, msgs);
+      }
       msgs = basicSetCustomer(newCustomer, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.SALES_ORDER__CUSTOMER, newCustomer, newCustomer));
+    }
   }
 
   /**
@@ -201,7 +217,7 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   {
     if (purchaseOrders == null)
     {
-      purchaseOrders = new EObjectWithInverseResolvingEList.ManyInverse<PurchaseOrder>(PurchaseOrder.class, this, Model1Package.SALES_ORDER__PURCHASE_ORDERS,
+      purchaseOrders = new EObjectWithInverseResolvingEList.ManyInverse<>(PurchaseOrder.class, this, Model1Package.SALES_ORDER__PURCHASE_ORDERS,
           Model1Package.PURCHASE_ORDER__SALES_ORDERS);
     }
     return purchaseOrders;
@@ -219,7 +235,9 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
     {
     case Model1Package.SALES_ORDER__CUSTOMER:
       if (customer != null)
+      {
         msgs = ((InternalEObject)customer).eInverseRemove(this, Model1Package.CUSTOMER__SALES_ORDERS, Customer.class, msgs);
+      }
       return basicSetCustomer((Customer)otherEnd, msgs);
     case Model1Package.SALES_ORDER__PURCHASE_ORDERS:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getPurchaseOrders()).basicAdd(otherEnd, msgs);
@@ -257,7 +275,9 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
       return getId();
     case Model1Package.SALES_ORDER__CUSTOMER:
       if (resolve)
+      {
         return getCustomer();
+      }
       return basicGetCustomer();
     case Model1Package.SALES_ORDER__PURCHASE_ORDERS:
       return getPurchaseOrders();
@@ -338,7 +358,9 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (id: ");

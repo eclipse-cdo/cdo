@@ -315,7 +315,8 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
 
     // Obtain or create and register package
     SecurityPackageImpl theSecurityPackage = (SecurityPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof SecurityPackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new SecurityPackageImpl());
+        ? EPackage.Registry.INSTANCE.get(eNS_URI)
+        : new SecurityPackageImpl());
 
     isInited = true;
 

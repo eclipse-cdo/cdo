@@ -55,7 +55,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
 
   private int maxIdleTime = DEFAULT_MAX_IDLE_TIME;
 
-  private Map<String, HTTPServerConnector> httpConnectors = new HashMap<String, HTTPServerConnector>();
+  private Map<String, HTTPServerConnector> httpConnectors = new HashMap<>();
 
   private Worker cleaner = new Worker()
   {
@@ -130,7 +130,7 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
 
   public IHTTPConnector[] getHTTPConnectors()
   {
-    List<IHTTPConnector> result = new ArrayList<IHTTPConnector>();
+    List<IHTTPConnector> result = new ArrayList<>();
     for (IConnector acceptedConnector : getAcceptedConnectors())
     {
       IHTTPConnector connector = (IHTTPConnector)acceptedConnector;

@@ -45,7 +45,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
   private final boolean tracerEnabled;
 
-  private BlockingQueue<IBuffer> buffers = new LinkedBlockingQueue<IBuffer>();
+  private BlockingQueue<IBuffer> buffers = new LinkedBlockingQueue<>();
 
   private IBuffer currentBuffer;
 

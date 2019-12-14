@@ -79,7 +79,7 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
 
   private static final boolean RECORD_VIEWS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.test.recorder.recordViews");
 
-  private static final Map<Object, String> TYPES = new HashMap<Object, String>();
+  private static final Map<Object, String> TYPES = new HashMap<>();
   static
   {
     TYPES.put("mango", "getMangoFactory()");
@@ -97,9 +97,9 @@ public final class TestRecorder implements CDOTransactionHandler1.WithUndo
     TYPES.put(EresourcePackage.Literals.CDO_BINARY_RESOURCE, "file");
   }
 
-  private final Map<Object, Variable> variables = new HashMap<Object, Variable>();
+  private final Map<Object, Variable> variables = new HashMap<>();
 
-  private final Map<String, AtomicInteger> typeCounters = new HashMap<String, AtomicInteger>();
+  private final Map<String, AtomicInteger> typeCounters = new HashMap<>();
 
   private PrintStream out;
 

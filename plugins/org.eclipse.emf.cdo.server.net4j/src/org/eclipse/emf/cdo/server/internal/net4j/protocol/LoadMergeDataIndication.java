@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2016, 2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2016, 2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -129,7 +129,7 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
       MergeDataResult result = repository.getMergeData2(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo, monitor.fork());
 
       Set<CDOID> targetIDs = result.getTargetIDs();
-      Set<CDOID> targetAndSourceIDs = new HashSet<CDOID>();
+      Set<CDOID> targetAndSourceIDs = new HashSet<>();
       Set<CDOID> sourceIDs = result.getSourceIDs();
 
       // Write IDs of objects that are changed only in target.
@@ -179,7 +179,7 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
         }
       }
 
-      Set<CDORevisionKey> writtenRevisions = new HashSet<CDORevisionKey>();
+      Set<CDORevisionKey> writtenRevisions = new HashSet<>();
       writeRevisionAvailabilityInfo(out, targetInfo, writtenRevisions, monitor.fork());
       writeRevisionAvailabilityInfo(out, sourceInfo, writtenRevisions, monitor.fork());
 

@@ -330,7 +330,7 @@ public final class CDOServerUtil
     @Override
     public void handleRevisionsBeforeSending(ISession session, CDORevision[] revisions, List<CDORevision> additionalRevisions) throws RuntimeException
     {
-      List<String> violations = new ArrayList<String>();
+      List<String> violations = new ArrayList<>();
       for (CDORevision revision : revisions)
       {
         String violation = validate(session, revision);

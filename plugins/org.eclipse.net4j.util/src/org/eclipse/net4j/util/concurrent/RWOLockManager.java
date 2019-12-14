@@ -40,7 +40,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CONCURRENCY, RWOLockManager.class);
 
-  private static final ThreadLocal<Boolean> UNLOCK_ALL = new ThreadLocal<Boolean>();
+  private static final ThreadLocal<Boolean> UNLOCK_ALL = new ThreadLocal<>();
 
   private static final LockType[] ALL_LOCK_TYPES = LockType.values();
 
@@ -141,7 +141,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       TRACER.format("Unlock: {0} --> {1}", context, objectsToUnlock); //$NON-NLS-1$
     }
 
-    Set<LockState<OBJECT, CONTEXT>> result = new HashSet<LockState<OBJECT, CONTEXT>>();
+    Set<LockState<OBJECT, CONTEXT>> result = new HashSet<>();
     boolean unlockAll = UNLOCK_ALL.get() == Boolean.TRUE;
 
     synchronized (this)
@@ -183,7 +183,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       notifyAll();
     }
 
-    return new LinkedList<RWOLockManager.LockState<OBJECT, CONTEXT>>(result);
+    return new LinkedList<>(result);
   }
 
   @Override
@@ -206,7 +206,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       TRACER.format("Unlock: {0} --> {1}", context, lockStates); //$NON-NLS-1$
     }
 
-    List<OBJECT> objectsWithoutLocks = new LinkedList<OBJECT>();
+    List<OBJECT> objectsWithoutLocks = new LinkedList<>();
 
     for (LockState<OBJECT, CONTEXT> lockState : lockStates)
     {
@@ -273,12 +273,12 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
   protected Map<OBJECT, LockState<OBJECT, CONTEXT>> createObjectToLocksMap()
   {
-    return new HashMap<OBJECT, LockState<OBJECT, CONTEXT>>();
+    return new HashMap<>();
   }
 
   protected Map<CONTEXT, Set<LockState<OBJECT, CONTEXT>>> createContextToLocksMap()
   {
-    return new HashMap<CONTEXT, Set<LockState<OBJECT, CONTEXT>>>();
+    return new HashMap<>();
   }
 
   /**
@@ -307,7 +307,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
    */
   public synchronized List<LockState<OBJECT, CONTEXT>> getLockStates()
   {
-    return new ArrayList<RWOLockManager.LockState<OBJECT, CONTEXT>>(objectToLockStateMap.values());
+    return new ArrayList<>(objectToLockStateMap.values());
   }
 
   public synchronized void setLockState(OBJECT key, LockState<OBJECT, CONTEXT> lockState)
@@ -337,7 +337,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(o);
     if (lockState == null)
     {
-      lockState = new LockState<OBJECT, CONTEXT>(o);
+      lockState = new LockState<>(o);
       objectToLockStateMap.put(o, lockState);
     }
 
@@ -347,7 +347,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
   private ArrayList<LockState<OBJECT, CONTEXT>> getLockStatesForContext(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock)
   {
     int count = objectsToLock.size();
-    ArrayList<LockState<OBJECT, CONTEXT>> lockStates = new ArrayList<LockState<OBJECT, CONTEXT>>(count);
+    ArrayList<LockState<OBJECT, CONTEXT>> lockStates = new ArrayList<>(count);
 
     Iterator<? extends OBJECT> it = objectsToLock.iterator();
 
@@ -371,7 +371,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
     if (lockStates == null)
     {
-      lockStates = new HashSet<LockState<OBJECT, CONTEXT>>();
+      lockStates = new HashSet<>();
       contextToLockStates.put(context, lockStates);
     }
 
@@ -420,7 +420,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       return (List<LockState<OBJECT, CONTEXT>>)lockStates;
     }
 
-    List<LockState<OBJECT, CONTEXT>> list = new LinkedList<LockState<OBJECT, CONTEXT>>();
+    List<LockState<OBJECT, CONTEXT>> list = new LinkedList<>();
     for (LockState<OBJECT, CONTEXT> lockState : lockStates)
     {
       list.add(lockState);
@@ -465,7 +465,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
   {
     private final OBJECT lockedObject;
 
-    private final HashBag<CONTEXT> readLockOwners = new HashBag<CONTEXT>();
+    private final HashBag<CONTEXT> readLockOwners = new HashBag<>();
 
     private CONTEXT writeLockOwner;
 

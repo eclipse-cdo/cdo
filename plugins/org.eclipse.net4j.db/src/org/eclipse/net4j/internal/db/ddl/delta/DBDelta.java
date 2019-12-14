@@ -116,7 +116,7 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
   {
     if (elements == null)
     {
-      List<IDBDelta> result = new ArrayList<IDBDelta>();
+      List<IDBDelta> result = new ArrayList<>();
       collectElements(result);
 
       if (result.isEmpty())

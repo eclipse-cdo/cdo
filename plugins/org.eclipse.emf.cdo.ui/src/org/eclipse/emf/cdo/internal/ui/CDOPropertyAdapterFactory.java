@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, 2015, 2016, 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011-2013, 2015, 2016, 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -56,13 +56,13 @@ import java.util.Map;
  */
 public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
 {
-  private static final IActionFilter REPOSITORY_ACTION_FILTER = new DefaultActionFilter<CDOCommonRepository>(RepositoryProperties.INSTANCE);
+  private static final IActionFilter REPOSITORY_ACTION_FILTER = new DefaultActionFilter<>(RepositoryProperties.INSTANCE);
 
-  private static final IActionFilter SESSION_ACTION_FILTER = new DefaultActionFilter<CDOSession>(SessionProperties.INSTANCE);
+  private static final IActionFilter SESSION_ACTION_FILTER = new DefaultActionFilter<>(SessionProperties.INSTANCE);
 
-  private static final IActionFilter VIEW_ACTION_FILTER = new DefaultActionFilter<CDOView>(ViewProperties.INSTANCE);
+  private static final IActionFilter VIEW_ACTION_FILTER = new DefaultActionFilter<>(ViewProperties.INSTANCE);
 
-  private static final IActionFilter OBJECT_ACTION_FILTER = new DefaultActionFilter<EObject>(ObjectProperties.INSTANCE);
+  private static final IActionFilter OBJECT_ACTION_FILTER = new DefaultActionFilter<>(ObjectProperties.INSTANCE);
 
   public CDOPropertyAdapterFactory()
   {
@@ -75,17 +75,17 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
     {
       if (object instanceof CDOCommonRepository)
       {
-        return new DefaultPropertySource<CDOCommonRepository>((CDOCommonRepository)object, RepositoryProperties.INSTANCE);
+        return new DefaultPropertySource<>((CDOCommonRepository)object, RepositoryProperties.INSTANCE);
       }
 
       if (object instanceof CDOSession)
       {
-        return new DefaultPropertySource<CDOSession>((CDOSession)object, SessionProperties.INSTANCE);
+        return new DefaultPropertySource<>((CDOSession)object, SessionProperties.INSTANCE);
       }
 
       if (object instanceof CDOView)
       {
-        return new DefaultPropertySource<CDOView>((CDOView)object, ViewProperties.INSTANCE);
+        return new DefaultPropertySource<>((CDOView)object, ViewProperties.INSTANCE);
       }
 
       if (object instanceof CDOElement)
@@ -99,7 +99,7 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
         InternalCDOObject cdoObject = (InternalCDOObject)CDOUtil.getCDOObject(eObject, false);
         if (cdoObject != null)
         {
-          final Map<String, Object> emfProperties = new HashMap<String, Object>();
+          final Map<String, Object> emfProperties = new HashMap<>();
           DefaultPropertySource<EObject> result = new DefaultPropertySource<EObject>(cdoObject, ObjectProperties.INSTANCE)
           {
             @Override
@@ -241,7 +241,7 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
   public static String getTypeText(ComposedAdapterFactory adapterFactory, EObject eObject)
   {
     String typeKey = eObject.eClass().getName();
-    List<Adapter> originalAdapters = new ArrayList<Adapter>(eObject.eAdapters());
+    List<Adapter> originalAdapters = new ArrayList<>(eObject.eAdapters());
 
     try
     {

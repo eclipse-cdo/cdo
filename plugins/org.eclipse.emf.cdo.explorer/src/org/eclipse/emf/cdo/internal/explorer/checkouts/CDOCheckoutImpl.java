@@ -90,9 +90,9 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   private static final String BRANCH_AND_POINT_SEPARATOR = "_";
 
-  private final Set<CDOView> views = new HashSet<CDOView>();
+  private final Set<CDOView> views = new HashSet<>();
 
-  private final Map<CDOID, String> editorIDs = new WeakHashMap<CDOID, String>();
+  private final Map<CDOID, String> editorIDs = new WeakHashMap<>();
 
   private CDORepository repository;
 
@@ -235,7 +235,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   {
     if (branchPoints != null && isOpen())
     {
-      List<CDOBranchPoint> result = new ArrayList<CDOBranchPoint>();
+      List<CDOBranchPoint> result = new ArrayList<>();
       CDOBranchManager branchManager = view.getSession().getBranchManager();
 
       for (String token : branchPoints.split(BRANCH_POINT_SEPARATOR))

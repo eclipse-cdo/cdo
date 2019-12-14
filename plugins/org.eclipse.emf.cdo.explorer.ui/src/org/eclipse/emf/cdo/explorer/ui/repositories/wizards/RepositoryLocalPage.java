@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -43,7 +43,7 @@ import java.util.Set;
  */
 public class RepositoryLocalPage extends AbstractRepositoryPage
 {
-  private final Set<Integer> configuredPorts = new HashSet<Integer>();
+  private final Set<Integer> configuredPorts = new HashSet<>();
 
   private Text nameText;
 
@@ -247,7 +247,7 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
 
   public static String getUniqueRepositoryName()
   {
-    Set<String> names = new HashSet<String>();
+    Set<String> names = new HashSet<>();
 
     CDORepositoryManager repositoryManager = CDOExplorerUtil.getRepositoryManager();
     for (CDORepository repository : repositoryManager.getRepositories())

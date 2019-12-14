@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public class CollaborationContainer extends Lifecycle implements ICollaborationContainer, IListener
 {
-  private Map<Long, ICollaboration> collaborations = new HashMap<Long, ICollaboration>();
+  private Map<Long, ICollaboration> collaborations = new HashMap<>();
 
   public CollaborationContainer(Collection<ICollaboration> collaborations)
   {
@@ -61,7 +61,7 @@ public class CollaborationContainer extends Lifecycle implements ICollaborationC
     IListener[] listeners = getListeners();
     if (listeners != null)
     {
-      fireEvent(new SingleDeltaContainerEvent<ICollaboration>(this, collaboration, IContainerDelta.Kind.ADDED), listeners);
+      fireEvent(new SingleDeltaContainerEvent<>(this, collaboration, IContainerDelta.Kind.ADDED), listeners);
     }
 
     collaboration.addListener(this);
@@ -81,7 +81,7 @@ public class CollaborationContainer extends Lifecycle implements ICollaborationC
       IListener[] listeners = getListeners();
       if (listeners != null)
       {
-        fireEvent(new SingleDeltaContainerEvent<ICollaboration>(this, collaboration, IContainerDelta.Kind.REMOVED), listeners);
+        fireEvent(new SingleDeltaContainerEvent<>(this, collaboration, IContainerDelta.Kind.REMOVED), listeners);
       }
     }
 

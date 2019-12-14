@@ -22,7 +22,6 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EAdapterList;
 import org.eclipse.emf.common.util.Logger;
@@ -128,7 +127,7 @@ public interface CDOStaleReferencePolicy
 
           if (name.equals("eAdapters")) //$NON-NLS-1$
           {
-            return new EAdapterList<Adapter>((Notifier)proxy);
+            return new EAdapterList<>((Notifier)proxy);
           }
 
           if (name.equals("eContainer")) //$NON-NLS-1$
@@ -161,7 +160,7 @@ public interface CDOStaleReferencePolicy
             EStructuralFeature featureParam = (EStructuralFeature)args[0];
             if (featureParam.isMany())
             {
-              return new BasicInternalEList<Object>(Object.class);
+              return new BasicInternalEList<>(Object.class);
             }
 
             return featureParam.getDefaultValue();
@@ -248,7 +247,7 @@ public interface CDOStaleReferencePolicy
 
           if (List.class.isAssignableFrom(returnType))
           {
-            return new BasicInternalEList<Object>(Object.class);
+            return new BasicInternalEList<>(Object.class);
           }
 
           return null;
@@ -303,7 +302,7 @@ public interface CDOStaleReferencePolicy
      */
     public static class Enhanced extends DynamicProxy implements CDOObjectHandler
     {
-      private final ConcurrentMap<CDOID, EClassifier> types = new ConcurrentHashMap<CDOID, EClassifier>();
+      private final ConcurrentMap<CDOID, EClassifier> types = new ConcurrentHashMap<>();
 
       private final CDOView view;
 

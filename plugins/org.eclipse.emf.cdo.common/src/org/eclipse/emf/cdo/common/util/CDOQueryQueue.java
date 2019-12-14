@@ -33,9 +33,9 @@ import java.util.concurrent.atomic.AtomicLong;
 public class CDOQueryQueue<E> implements Queue<E>, Closeable
 {
   // Static not allowed due to <E>
-  private final QueueEntry<E> QUEUE_CLOSED = new QueueEntry<E>();
+  private final QueueEntry<E> QUEUE_CLOSED = new QueueEntry<>();
 
-  private PriorityBlockingQueue<QueueEntry<E>> queue = new PriorityBlockingQueue<QueueEntry<E>>(10);
+  private PriorityBlockingQueue<QueueEntry<E>> queue = new PriorityBlockingQueue<>(10);
 
   private boolean closed;
 
@@ -74,7 +74,7 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
   @Override
   public boolean add(E e)
   {
-    QueueEntry<E> entry = new QueueEntry<E>(e);
+    QueueEntry<E> entry = new QueueEntry<>(e);
     return queue.add(entry);
   }
 
@@ -122,13 +122,13 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
 
   public boolean offer(E e, long timeout, TimeUnit unit)
   {
-    return queue.offer(new QueueEntry<E>(e), timeout, unit);
+    return queue.offer(new QueueEntry<>(e), timeout, unit);
   }
 
   @Override
   public boolean offer(E e)
   {
-    return queue.offer(new QueueEntry<E>(e));
+    return queue.offer(new QueueEntry<>(e));
   }
 
   @Override
@@ -144,7 +144,7 @@ public class CDOQueryQueue<E> implements Queue<E>, Closeable
 
   public void put(E e)
   {
-    queue.put(new QueueEntry<E>(e));
+    queue.put(new QueueEntry<>(e));
   }
 
   public int remainingCapacity()

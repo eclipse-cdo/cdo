@@ -214,7 +214,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   private CDOFetchRuleManager fetchRuleManager;
 
-  private IRWOLockManager<CDOSessionImpl, Object> lockManager = new RWOLockManager<CDOSessionImpl, Object>();
+  private IRWOLockManager<CDOSessionImpl, Object> lockManager = new RWOLockManager<>();
 
   @ExcludeFromDump
   private Set<CDOSessionImpl> singletonCollection = Collections.singleton(this);
@@ -677,8 +677,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   @Override
   public long refresh(RefreshSessionResult.Provider provider)
   {
-    Map<CDOBranch, List<InternalCDOView>> views = new HashMap<CDOBranch, List<InternalCDOView>>();
-    Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions = new HashMap<CDOBranch, Map<CDOID, InternalCDORevision>>();
+    Map<CDOBranch, List<InternalCDOView>> views = new HashMap<>();
+    Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions = new HashMap<>();
     collectViewedRevisions(views, viewedRevisions);
     cleanupRevisionCache(viewedRevisions);
 
@@ -721,7 +721,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     Map<CDOID, InternalCDORevision> oldRevisions = viewedRevisions.get(branch);
 
     InternalCDORevisionManager revisionManager = getRevisionManager();
-    List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
+    List<CDORevisionKey> changedObjects = new ArrayList<>();
     List<InternalCDORevision> newRevisions = result.getChangedObjects(branch);
 
     for (InternalCDORevision newRevision : newRevisions)
@@ -776,7 +776,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           List<InternalCDOView> list = views.get(branch);
           if (list == null)
           {
-            list = new ArrayList<InternalCDOView>();
+            list = new ArrayList<>();
             views.put(branch, list);
           }
 
@@ -793,7 +793,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   private void cleanupRevisionCache(Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
   {
-    Set<InternalCDORevision> set = new HashSet<InternalCDORevision>();
+    Set<InternalCDORevision> set = new HashSet<>();
     for (Map<CDOID, InternalCDORevision> revisions : viewedRevisions.values())
     {
       for (InternalCDORevision revision : revisions.values())
@@ -1095,7 +1095,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         List<Object> list = (List<Object>)((InternalCDORevision)oldRevision).getValue(deltas.getFeature());
         if (list != null)
         {
-          workList = new ArrayList<Object>(list);
+          workList = new ArrayList<>(list);
           super.visit(deltas);
         }
       }
@@ -1946,9 +1946,9 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     private static final boolean DEBUG = false;
 
-    private final Set<Object> unfinishedLocalCommits = new HashSet<Object>();
+    private final Set<Object> unfinishedLocalCommits = new HashSet<>();
 
-    private final List<SessionInvalidation> reorderQueue = new ArrayList<SessionInvalidation>();
+    private final List<SessionInvalidation> reorderQueue = new ArrayList<>();
 
     private int lastCommitNumber;
 
@@ -2142,7 +2142,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       if (permissionUpdater != null)
       {
         CDOBranchPoint head = getBranchManager().getMainBranch().getHead();
-        Set<InternalCDORevision> revisions = new HashSet<InternalCDORevision>();
+        Set<InternalCDORevision> revisions = new HashSet<>();
 
         for (int i = 0; i < views.length; i++)
         {

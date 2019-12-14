@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -45,7 +45,7 @@ public class DawnEditPartStylizerRegistry
 
   public static DawnEditPartStylizerRegistry instance = new DawnEditPartStylizerRegistry();
 
-  private Map<String, DawnEditPartStylizer> registeredStylizers = new HashMap<String, DawnEditPartStylizer>();
+  private Map<String, DawnEditPartStylizer> registeredStylizers = new HashMap<>();
 
   /**
    * @since 2.0

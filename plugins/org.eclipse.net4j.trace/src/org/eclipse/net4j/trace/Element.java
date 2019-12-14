@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2018, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -25,7 +25,7 @@ import java.util.WeakHashMap;
  */
 public class Element
 {
-  private static final Map<Object, Element> ELEMENTS = new WeakHashMap<Object, Element>();
+  private static final Map<Object, Element> ELEMENTS = new WeakHashMap<>();
 
   private final int id;
 

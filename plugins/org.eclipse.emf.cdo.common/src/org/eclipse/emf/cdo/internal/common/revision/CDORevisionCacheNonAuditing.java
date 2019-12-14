@@ -112,7 +112,7 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
   @Override
   public List<CDORevision> getCurrentRevisions()
   {
-    List<CDORevision> currentRevisions = new ArrayList<CDORevision>();
+    List<CDORevision> currentRevisions = new ArrayList<>();
     synchronized (revisions)
     {
       for (Reference<InternalCDORevision> ref : revisions.values())
@@ -131,10 +131,10 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
   @Override
   public Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
-    Map<CDOBranch, List<CDORevision>> result = new HashMap<CDOBranch, List<CDORevision>>();
+    Map<CDOBranch, List<CDORevision>> result = new HashMap<>();
     synchronized (revisions)
     {
-      List<CDORevision> list = new ArrayList<CDORevision>();
+      List<CDORevision> list = new ArrayList<>();
       for (Reference<InternalCDORevision> ref : revisions.values())
       {
         InternalCDORevision revision = ref.get();
@@ -170,7 +170,7 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
   public List<CDORevision> getRevisions(CDOBranchPoint branchPoint)
   {
     checkBranch(branchPoint.getBranch());
-    List<CDORevision> result = new ArrayList<CDORevision>();
+    List<CDORevision> result = new ArrayList<>();
 
     synchronized (revisions)
     {

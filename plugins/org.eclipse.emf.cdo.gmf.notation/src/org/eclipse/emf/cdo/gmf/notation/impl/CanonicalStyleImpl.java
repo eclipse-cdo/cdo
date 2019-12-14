@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -83,6 +83,7 @@ public class CanonicalStyleImpl extends CDOObjectImpl implements CanonicalStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public boolean isCanonical()
   {
     return ((Boolean)eDynamicGet(NotationPackage.CANONICAL_STYLE__CANONICAL, NotationPackage.Literals.CANONICAL_STYLE__CANONICAL, true, true)).booleanValue();
@@ -93,6 +94,7 @@ public class CanonicalStyleImpl extends CDOObjectImpl implements CanonicalStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setCanonical(boolean newCanonical)
   {
     eDynamicSet(NotationPackage.CANONICAL_STYLE__CANONICAL, NotationPackage.Literals.CANONICAL_STYLE__CANONICAL, new Boolean(newCanonical));

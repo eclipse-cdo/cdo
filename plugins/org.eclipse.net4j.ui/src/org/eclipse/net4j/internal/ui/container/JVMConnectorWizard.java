@@ -45,7 +45,7 @@ public class JVMConnectorWizard extends ElementWizard
   @Override
   protected void create(Composite parent)
   {
-    List<String> choices = new ArrayList<String>();
+    List<String> choices = new ArrayList<>();
 
     try
     {

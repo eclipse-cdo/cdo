@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -98,6 +98,7 @@ public class ImageStyleImpl extends CDOObjectImpl implements ImageStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Boolean getAntiAlias()
   {
     return (Boolean)eDynamicGet(NotationPackage.IMAGE_STYLE__ANTI_ALIAS, NotationPackage.Literals.IMAGE_STYLE__ANTI_ALIAS, true, true);
@@ -108,6 +109,7 @@ public class ImageStyleImpl extends CDOObjectImpl implements ImageStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setAntiAlias(Boolean newAntiAlias)
   {
     eDynamicSet(NotationPackage.IMAGE_STYLE__ANTI_ALIAS, NotationPackage.Literals.IMAGE_STYLE__ANTI_ALIAS, newAntiAlias);
@@ -118,6 +120,7 @@ public class ImageStyleImpl extends CDOObjectImpl implements ImageStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Boolean getMaintainAspectRatio()
   {
     return (Boolean)eDynamicGet(NotationPackage.IMAGE_STYLE__MAINTAIN_ASPECT_RATIO, NotationPackage.Literals.IMAGE_STYLE__MAINTAIN_ASPECT_RATIO, true, true);
@@ -128,6 +131,7 @@ public class ImageStyleImpl extends CDOObjectImpl implements ImageStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setMaintainAspectRatio(Boolean newMaintainAspectRatio)
   {
     eDynamicSet(NotationPackage.IMAGE_STYLE__MAINTAIN_ASPECT_RATIO, NotationPackage.Literals.IMAGE_STYLE__MAINTAIN_ASPECT_RATIO, newMaintainAspectRatio);
@@ -138,6 +142,7 @@ public class ImageStyleImpl extends CDOObjectImpl implements ImageStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Bounds getCropBound()
   {
     return (Bounds)eDynamicGet(NotationPackage.IMAGE_STYLE__CROP_BOUND, NotationPackage.Literals.IMAGE_STYLE__CROP_BOUND, true, true);
@@ -159,6 +164,7 @@ public class ImageStyleImpl extends CDOObjectImpl implements ImageStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setCropBound(Bounds newCropBound)
   {
     eDynamicSet(NotationPackage.IMAGE_STYLE__CROP_BOUND, NotationPackage.Literals.IMAGE_STYLE__CROP_BOUND, newCropBound);

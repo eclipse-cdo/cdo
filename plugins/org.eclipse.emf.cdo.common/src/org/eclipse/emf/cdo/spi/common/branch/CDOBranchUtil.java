@@ -257,7 +257,7 @@ public final class CDOBranchUtil
 
   public static CDOBranchPoint[] getPath(CDOBranchPoint point)
   {
-    List<CDOBranchPoint> result = new ArrayList<CDOBranchPoint>();
+    List<CDOBranchPoint> result = new ArrayList<>();
     getPath(point, result);
     return result.toArray(new CDOBranchPoint[result.size()]);
   }

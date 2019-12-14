@@ -40,7 +40,7 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
 {
   private static final long serialVersionUID = 1L;
 
-  private Map<String, IDBTableDelta> tableDeltas = new HashMap<String, IDBTableDelta>();
+  private Map<String, IDBTableDelta> tableDeltas = new HashMap<>();
 
   public DBSchemaDelta(String name, ChangeKind changeKind)
   {

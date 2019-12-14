@@ -66,7 +66,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
    */
   public static final Image ERROR_IMAGE = SharedIcons.getImage(SharedIcons.OBJ_ERROR);
 
-  private Map<Object, Node> nodes = new HashMap<Object, Node>();
+  private Map<Object, Node> nodes = new HashMap<>();
 
   private Node root;
 
@@ -680,7 +680,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
     protected List<Node> createChildren()
     {
-      final List<Node> children = new ArrayList<Node>();
+      final List<Node> children = new ArrayList<>();
       final IContainer<Object> container = getContainer();
 
       if (isSlow(container))

@@ -84,10 +84,10 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     CDOQueryInfoImpl queryInfo = createQueryInfo();
     if (CDOID.class.equals(type))
     {
-      return new CDOQueryCDOIDIteratorImpl<T>(view, queryInfo);
+      return new CDOQueryCDOIDIteratorImpl<>(view, queryInfo);
     }
 
-    return new CDOQueryResultIteratorImpl<T>(view, queryInfo);
+    return new CDOQueryResultIteratorImpl<>(view, queryInfo);
   }
 
   @Override

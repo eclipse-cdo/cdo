@@ -77,7 +77,7 @@ public class MyEnumListImpl extends EObjectImpl implements MyEnumList
   {
     if (myEnum == null)
     {
-      myEnum = new EDataTypeUniqueEList<MyEnum>(MyEnum.class, this, Model6Package.MY_ENUM_LIST__MY_ENUM);
+      myEnum = new EDataTypeUniqueEList<>(MyEnum.class, this, Model6Package.MY_ENUM_LIST__MY_ENUM);
     }
     return myEnum;
   }

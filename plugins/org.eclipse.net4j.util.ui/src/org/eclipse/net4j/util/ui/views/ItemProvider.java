@@ -39,7 +39,7 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
 {
   public static final Object[] NO_ELEMENTS = {};
 
-  private List<ILabelProviderListener> listeners = new ArrayList<ILabelProviderListener>(0);
+  private List<ILabelProviderListener> listeners = new ArrayList<>(0);
 
   public ItemProvider()
   {

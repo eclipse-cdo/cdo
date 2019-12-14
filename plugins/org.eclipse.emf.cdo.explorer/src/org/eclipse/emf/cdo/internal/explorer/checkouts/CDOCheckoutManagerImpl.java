@@ -31,7 +31,7 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> impleme
 {
   private static final String PROPERTIES_FILE = "checkout.properties";
 
-  private final Map<CDOView, CDOCheckout> viewMap = new ConcurrentHashMap<CDOView, CDOCheckout>();
+  private final Map<CDOView, CDOCheckout> viewMap = new ConcurrentHashMap<>();
 
   public CDOCheckoutManagerImpl(File folder)
   {

@@ -97,7 +97,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
   {
     if (purchaseOrders == null)
     {
-      purchaseOrders = new EObjectWithInverseResolvingEList<PurchaseOrder>(PurchaseOrder.class, this, Model1Package.SUPPLIER__PURCHASE_ORDERS,
+      purchaseOrders = new EObjectWithInverseResolvingEList<>(PurchaseOrder.class, this, Model1Package.SUPPLIER__PURCHASE_ORDERS,
           Model1Package.PURCHASE_ORDER__SUPPLIER);
     }
     return purchaseOrders;
@@ -123,7 +123,9 @@ public class SupplierImpl extends AddressImpl implements Supplier
     boolean oldPreferred = preferred;
     preferred = newPreferred;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.SUPPLIER__PREFERRED, oldPreferred, preferred));
+    }
   }
 
   /**
@@ -239,7 +241,9 @@ public class SupplierImpl extends AddressImpl implements Supplier
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (preferred: ");

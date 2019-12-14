@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -84,7 +84,7 @@ public abstract class AbstractObjectHandler extends AbstractBaseHandler<EObject>
     List<Object> elements = UIUtil.getElements(selection);
     if (elements != null)
     {
-      List<Object> result = new ArrayList<Object>();
+      List<Object> result = new ArrayList<>();
 
       for (Object element : elements)
       {
@@ -115,7 +115,7 @@ public abstract class AbstractObjectHandler extends AbstractBaseHandler<EObject>
 
     try
     {
-      List<EObject> transactionalElements = new ArrayList<EObject>();
+      List<EObject> transactionalElements = new ArrayList<>();
       for (EObject element : elements)
       {
         if (monitor.isCanceled())

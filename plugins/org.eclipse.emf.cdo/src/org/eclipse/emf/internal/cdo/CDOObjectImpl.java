@@ -1325,7 +1325,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    */
   protected final CDOStoreUnorderedEList<Object> createUnorderedList(EStructuralFeature eStructuralFeature)
   {
-    return new CDOStoreUnorderedEList<Object>(eStructuralFeature);
+    return new CDOStoreUnorderedEList<>(eStructuralFeature);
   }
 
   /**
@@ -1571,7 +1571,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       EList<Object> result = (EList<Object>)settings[transientIndex];
       if (result == null)
       {
-        result = new BasicEList<Object>();
+        result = new BasicEList<>();
         settings[transientIndex] = result;
       }
 

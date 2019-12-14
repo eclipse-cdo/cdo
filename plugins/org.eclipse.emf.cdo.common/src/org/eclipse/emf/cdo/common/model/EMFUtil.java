@@ -203,7 +203,7 @@ public final class EMFUtil
    */
   public static URI getPositionalURI(InternalEObject internalEObject)
   {
-    List<String> uriFragmentPath = new ArrayList<String>();
+    List<String> uriFragmentPath = new ArrayList<>();
     Resource resource;
     for (InternalEObject container = internalEObject.eInternalContainer(); (resource = internalEObject.eDirectResource()) == null
         && container != null; container = internalEObject.eInternalContainer())
@@ -297,7 +297,7 @@ public final class EMFUtil
    */
   public static EList<EAnnotation> getAnnotations(EClass eClass, String sourceURI)
   {
-    EList<EAnnotation> annotations = new BasicEList<EAnnotation>();
+    EList<EAnnotation> annotations = new BasicEList<>();
     getAnnotations(eClass, sourceURI, annotations, new HashSet<EClass>());
     return annotations;
   }
@@ -383,7 +383,7 @@ public final class EMFUtil
    */
   public static EClass[] getConcreteClasses(EPackage ePackage)
   {
-    List<EClass> result = new ArrayList<EClass>(0);
+    List<EClass> result = new ArrayList<>(0);
     for (EClassifier classifier : ePackage.getEClassifiers())
     {
       if (classifier instanceof EClass)
@@ -401,7 +401,7 @@ public final class EMFUtil
 
   public static EClass[] getPersistentClasses(EPackage ePackage)
   {
-    List<EClass> result = new ArrayList<EClass>();
+    List<EClass> result = new ArrayList<>();
     for (EClassifier classifier : ePackage.getEClassifiers())
     {
       if (classifier instanceof EClass)
@@ -421,7 +421,7 @@ public final class EMFUtil
   @Deprecated
   public static List<EStructuralFeature> getPersistentFeatures(EList<EStructuralFeature> eFeatures)
   {
-    List<EStructuralFeature> result = new ArrayList<EStructuralFeature>();
+    List<EStructuralFeature> result = new ArrayList<>();
     for (EStructuralFeature feature : eFeatures)
     {
       if (isPersistent(feature))
@@ -563,7 +563,7 @@ public final class EMFUtil
 
   private static Map<String, Object> createResourceOptions(boolean zipped)
   {
-    Map<String, Object> options = new HashMap<String, Object>();
+    Map<String, Object> options = new HashMap<>();
     if (zipped)
     {
       options.put(Resource.OPTION_ZIP, true);
@@ -596,7 +596,7 @@ public final class EMFUtil
 
   public static EPackage[] getAllPackages(EPackage ePackage)
   {
-    List<EPackage> result = new ArrayList<EPackage>();
+    List<EPackage> result = new ArrayList<>();
     getAllPackages(ePackage, result);
     return result.toArray(new EPackage[result.size()]);
   }

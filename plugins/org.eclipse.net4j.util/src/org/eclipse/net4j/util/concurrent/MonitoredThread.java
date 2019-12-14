@@ -123,7 +123,7 @@ public abstract class MonitoredThread extends Thread
 
     private CountDownLatch startLatch;
 
-    private List<MonitoredThread> threads = new ArrayList<MonitoredThread>();
+    private List<MonitoredThread> threads = new ArrayList<>();
 
     /**
      * @param idleTimeOut
@@ -200,7 +200,7 @@ public abstract class MonitoredThread extends Thread
 
       for (;;)
       {
-        List<MonitoredThread> idleThreads = new ArrayList<MonitoredThread>();
+        List<MonitoredThread> idleThreads = new ArrayList<>();
         synchronized (threads)
         {
           if (threads.isEmpty())

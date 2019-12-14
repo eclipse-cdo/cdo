@@ -62,7 +62,7 @@ public class WorkspaceUIProvider implements TransferUIProvider
     if (data instanceof IResource[])
     {
       IResource[] resources = (IResource[])data;
-      List<CDOTransferElement> result = new ArrayList<CDOTransferElement>(resources.length);
+      List<CDOTransferElement> result = new ArrayList<>(resources.length);
       for (int i = 0; i < resources.length; i++)
       {
         IResource resource = resources[i];

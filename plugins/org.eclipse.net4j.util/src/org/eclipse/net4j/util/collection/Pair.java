@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2009, 2011-2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2009, 2011-2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -103,7 +103,7 @@ public class Pair<T1, T2>
    */
   public Pair<T1, T2> copy()
   {
-    return new Pair<T1, T2>(this);
+    return new Pair<>(this);
   }
 
   /**
@@ -111,7 +111,7 @@ public class Pair<T1, T2>
    */
   public static <T1, T2> Pair<T1, T2> create()
   {
-    return new Pair<T1, T2>();
+    return new Pair<>();
   }
 
   /**
@@ -119,6 +119,6 @@ public class Pair<T1, T2>
    */
   public static <T1, T2> Pair<T1, T2> create(T1 element1, T2 element2)
   {
-    return new Pair<T1, T2>(element1, element2);
+    return new Pair<>(element1, element2);
   }
 }

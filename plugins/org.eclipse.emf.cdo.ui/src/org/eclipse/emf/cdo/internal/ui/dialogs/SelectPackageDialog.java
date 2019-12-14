@@ -48,9 +48,9 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
 {
   private static final Set<String> NO_URIS = Collections.emptySet();
 
-  private Set<String> excludedURIs = new HashSet<String>();
+  private Set<String> excludedURIs = new HashSet<>();
 
-  private Set<String> checkedURIs = new HashSet<String>();
+  private Set<String> checkedURIs = new HashSet<>();
 
   public SelectPackageDialog(Shell shell, String title, String message, Set<String> excludedURIs)
   {
@@ -121,10 +121,10 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
     @Override
     public Object[] getElements(Object inputElement)
     {
-      Set<String> uris = new HashSet<String>(EPackage.Registry.INSTANCE.keySet());
+      Set<String> uris = new HashSet<>(EPackage.Registry.INSTANCE.keySet());
       uris.removeAll(excludedURIs);
 
-      List<String> elements = new ArrayList<String>(uris);
+      List<String> elements = new ArrayList<>(uris);
       Collections.sort(elements);
       return elements.toArray();
     }

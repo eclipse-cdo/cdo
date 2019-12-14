@@ -38,7 +38,7 @@ public class TestListener2 implements IListener
 
   private static final long DEFAULT_TIMEOUT = 3000; // 3 seconds
 
-  private final Map<IEvent, Long> events = new LinkedHashMap<IEvent, Long>();
+  private final Map<IEvent, Long> events = new LinkedHashMap<>();
 
   private final Collection<Class<? extends IEvent>> eventClasses;
 
@@ -110,7 +110,7 @@ public class TestListener2 implements IListener
   {
     synchronized (this)
     {
-      return new ArrayList<IEvent>(events.keySet());
+      return new ArrayList<>(events.keySet());
     }
   }
 
@@ -243,7 +243,7 @@ public class TestListener2 implements IListener
 
   private static Set<Class<? extends IEvent>> singleton(Class<? extends IEvent> eventClass)
   {
-    Set<Class<? extends IEvent>> singleton = new HashSet<Class<? extends IEvent>>();
+    Set<Class<? extends IEvent>> singleton = new HashSet<>();
     singleton.add(eventClass);
     return singleton;
   }

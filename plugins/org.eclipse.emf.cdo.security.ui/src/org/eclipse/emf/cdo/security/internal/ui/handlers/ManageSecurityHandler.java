@@ -232,7 +232,7 @@ public class ManageSecurityHandler extends LongRunningHandler
     {
       private final IEditorInput input = editor.getEditorInput();
 
-      private final Set<IEditorPart> openEditors = new java.util.HashSet<IEditorPart>();
+      private final Set<IEditorPart> openEditors = new java.util.HashSet<>();
 
       {
         openEditors.add(editor);

@@ -50,7 +50,7 @@ public class FailoverMonitor extends Container<AgentProtocol>
 
   private String group;
 
-  private List<AgentProtocol> agents = new ArrayList<AgentProtocol>();
+  private List<AgentProtocol> agents = new ArrayList<>();
 
   private AgentProtocol masterAgent;
 

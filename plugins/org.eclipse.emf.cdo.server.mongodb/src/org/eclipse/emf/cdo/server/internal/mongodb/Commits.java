@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2016-2018 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2016-2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -222,7 +222,7 @@ public class Commits extends Coll
 
   public Collection<InternalCDOPackageUnit> readPackageUnits()
   {
-    final Collection<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
+    final Collection<InternalCDOPackageUnit> packageUnits = new ArrayList<>();
 
     DBObject query = new BasicDBObject();
     query.put(UNITS, new BasicDBObject("$exists", true));
@@ -391,7 +391,7 @@ public class Commits extends Coll
       accessor.addIDMappings(context, monitor.fork());
       context.applyIDMappings(monitor.fork());
 
-      List<DBObject> docs = new ArrayList<DBObject>();
+      List<DBObject> docs = new ArrayList<>();
       marshalRevisions(docs, context, context.getNewObjects(), CDOChangeKind.NEW);
       marshalRevisions(docs, context, context.getDirtyObjects(), CDOChangeKind.CHANGED);
       marshalRevisions(docs, context, context.getDetachedRevisions(), CDOChangeKind.DETACHED);

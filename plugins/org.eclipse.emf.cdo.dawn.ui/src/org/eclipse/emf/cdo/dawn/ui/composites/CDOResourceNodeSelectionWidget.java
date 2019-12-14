@@ -107,7 +107,7 @@ public class CDOResourceNodeSelectionWidget extends Composite
 
   protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
   {
-    return new DawnWizardPageItemProvider<IContainer<Object>>(new IElementFilter()
+    return new DawnWizardPageItemProvider<>(new IElementFilter()
     {
       @Override
       public boolean filter(Object element)

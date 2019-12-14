@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -59,6 +59,7 @@ public class IntListValueStyleImpl extends NamedStyleImpl implements IntListValu
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList getIntListValue()
   {
     return (EList)eDynamicGet(NotationPackage.INT_LIST_VALUE_STYLE__INT_LIST_VALUE, NotationPackage.Literals.INT_LIST_VALUE_STYLE__INT_LIST_VALUE, true, true);

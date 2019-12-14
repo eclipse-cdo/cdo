@@ -51,7 +51,7 @@ public final class ReflectUtil
 
   private static final Method HASH_CODE_METHOD = lookupHashCodeMethod();
 
-  private static final Map<Object, Long> ids = new WeakHashMap<Object, Long>();
+  private static final Map<Object, Long> ids = new WeakHashMap<>();
 
   private static final Long FAKE_ID = 0L;
 
@@ -404,7 +404,7 @@ public final class ReflectUtil
   @SuppressWarnings("unchecked")
   public static Pair<Field, Object>[] dumpToArray(Object object)
   {
-    List<Field> fields = new ArrayList<Field>();
+    List<Field> fields = new ArrayList<>();
     collectFields(object.getClass(), fields);
     Pair<Field, Object>[] result = new Pair[fields.size()];
     int i = 0;
@@ -433,7 +433,7 @@ public final class ReflectUtil
     }
 
     String className = null;
-    Map<String, Object> values = new HashMap<String, Object>();
+    Map<String, Object> values = new HashMap<>();
     for (Entry<Object, Object> entry : properties.entrySet())
     {
       if (entry.getKey() instanceof String)
@@ -684,7 +684,7 @@ public final class ReflectUtil
     VOID(void.class), //
     NONE(null);
 
-    private static final Map<Class<?>, PrimitiveType> INSTANCES = new HashMap<Class<?>, PrimitiveType>();
+    private static final Map<Class<?>, PrimitiveType> INSTANCES = new HashMap<>();
 
     private final Class<?> type;
 

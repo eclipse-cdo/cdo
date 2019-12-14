@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class Properties<RECEIVER> implements IProperties<RECEIVER>
 {
-  private final List<Property<RECEIVER>> properties = new ArrayList<Property<RECEIVER>>();
+  private final List<Property<RECEIVER>> properties = new ArrayList<>();
 
   private final Class<RECEIVER> receiverType;
 

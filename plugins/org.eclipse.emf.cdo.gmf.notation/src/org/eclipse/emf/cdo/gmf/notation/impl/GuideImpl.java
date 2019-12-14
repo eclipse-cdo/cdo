@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -89,6 +89,7 @@ public class GuideImpl extends CDOObjectImpl implements Guide
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getPosition()
   {
     return ((Integer)eDynamicGet(NotationPackage.GUIDE__POSITION, NotationPackage.Literals.GUIDE__POSITION, true, true)).intValue();
@@ -99,6 +100,7 @@ public class GuideImpl extends CDOObjectImpl implements Guide
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setPosition(int newPosition)
   {
     eDynamicSet(NotationPackage.GUIDE__POSITION, NotationPackage.Literals.GUIDE__POSITION, new Integer(newPosition));
@@ -109,6 +111,7 @@ public class GuideImpl extends CDOObjectImpl implements Guide
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public EMap getNodeMap()
   {
     return (EMap)eDynamicGet(NotationPackage.GUIDE__NODE_MAP, NotationPackage.Literals.GUIDE__NODE_MAP, true, true);

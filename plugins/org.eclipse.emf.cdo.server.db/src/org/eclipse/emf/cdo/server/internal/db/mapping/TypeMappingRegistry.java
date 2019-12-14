@@ -125,10 +125,10 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
       }
     });
 
-    defaultFeatureMapDBTypes = new HashSet<DBType>();
-    typeMappingsById = new HashMap<String, ITypeMapping.Descriptor>();
-    typeMappingByTypes = new HashMap<Pair<EClassifier, DBType>, ITypeMapping.Descriptor>();
-    classifierDefaultMapping = new HashMap<EClassifier, DBType>();
+    defaultFeatureMapDBTypes = new HashSet<>();
+    typeMappingsById = new HashMap<>();
+    typeMappingByTypes = new HashMap<>();
+    classifierDefaultMapping = new HashMap<>();
 
     registerCoreTypeMappings();
     populator.connect();

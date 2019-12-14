@@ -33,11 +33,11 @@ public class BufferTracer
     @Override
     protected Stack<Call> initialValue()
     {
-      return new Stack<Call>();
+      return new Stack<>();
     }
   };
 
-  private static final ThreadLocal<Boolean> EXECUTION = new ThreadLocal<Boolean>();
+  private static final ThreadLocal<Boolean> EXECUTION = new ThreadLocal<>();
 
   public static void setThreadName(Thread thread, String name)
   {
@@ -109,7 +109,8 @@ public class BufferTracer
   private static void handleBuffer(IBuffer buffer, Object caller, String callingMethod, String calledMethod)
   {
     // System.out.println(
-    // "---- [" + Thread.currentThread().getName() + "] " + caller.getClass().getSimpleName() + "." + callingMethod + "()
+    // "---- [" + Thread.currentThread().getName() + "] " + caller.getClass().getSimpleName() + "." + callingMethod +
+    // "()
     // --> " + calledMethod + "()");
 
     BufferElement element = Element.get(buffer);

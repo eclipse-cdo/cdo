@@ -125,6 +125,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getPageX()
   {
     return ((Integer)eDynamicGet(NotationPackage.STANDARD_DIAGRAM__PAGE_X - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.PAGE_STYLE__PAGE_X, true, true))
@@ -136,6 +137,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setPageX(int newPageX)
   {
     eDynamicSet(NotationPackage.STANDARD_DIAGRAM__PAGE_X - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.PAGE_STYLE__PAGE_X, new Integer(newPageX));
@@ -146,6 +148,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getPageY()
   {
     return ((Integer)eDynamicGet(NotationPackage.STANDARD_DIAGRAM__PAGE_Y - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.PAGE_STYLE__PAGE_Y, true, true))
@@ -157,6 +160,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setPageY(int newPageY)
   {
     eDynamicSet(NotationPackage.STANDARD_DIAGRAM__PAGE_Y - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.PAGE_STYLE__PAGE_Y, new Integer(newPageY));
@@ -167,6 +171,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getPageWidth()
   {
     return ((Integer)eDynamicGet(NotationPackage.STANDARD_DIAGRAM__PAGE_WIDTH - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.PAGE_STYLE__PAGE_WIDTH, true,
@@ -178,6 +183,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setPageWidth(int newPageWidth)
   {
     eDynamicSet(NotationPackage.STANDARD_DIAGRAM__PAGE_WIDTH - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.PAGE_STYLE__PAGE_WIDTH,
@@ -189,6 +195,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getPageHeight()
   {
     return ((Integer)eDynamicGet(NotationPackage.STANDARD_DIAGRAM__PAGE_HEIGHT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.PAGE_STYLE__PAGE_HEIGHT, true,
@@ -200,6 +207,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setPageHeight(int newPageHeight)
   {
     eDynamicSet(NotationPackage.STANDARD_DIAGRAM__PAGE_HEIGHT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.PAGE_STYLE__PAGE_HEIGHT,
@@ -211,6 +219,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList getHorizontalGuides()
   {
     return (EList)eDynamicGet(NotationPackage.STANDARD_DIAGRAM__HORIZONTAL_GUIDES - ESTATIC_FEATURE_COUNT,
@@ -222,6 +231,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList getVerticalGuides()
   {
     return (EList)eDynamicGet(NotationPackage.STANDARD_DIAGRAM__VERTICAL_GUIDES - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.GUIDE_STYLE__VERTICAL_GUIDES,
@@ -233,6 +243,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getDescription()
   {
     return (String)eDynamicGet(NotationPackage.STANDARD_DIAGRAM__DESCRIPTION - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.DESCRIPTION_STYLE__DESCRIPTION,
@@ -244,6 +255,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDescription(String newDescription)
   {
     eDynamicSet(NotationPackage.STANDARD_DIAGRAM__DESCRIPTION - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.DESCRIPTION_STYLE__DESCRIPTION, newDescription);

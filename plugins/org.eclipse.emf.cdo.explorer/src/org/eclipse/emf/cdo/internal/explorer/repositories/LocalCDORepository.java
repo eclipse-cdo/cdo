@@ -156,7 +156,7 @@ public class LocalCDORepository extends CDORepositoryImpl
 
   protected Map<String, String> getRepositoryProperties()
   {
-    Map<String, String> props = new HashMap<String, String>();
+    Map<String, String> props = new HashMap<>();
     props.put(IRepository.Props.OVERRIDE_UUID, "");
     props.put(IRepository.Props.SUPPORTING_AUDITS, Boolean.toString(getVersioningMode().isSupportingAudits()));
     props.put(IRepository.Props.SUPPORTING_BRANCHES, Boolean.toString(getVersioningMode().isSupportingBranches()));
@@ -166,7 +166,7 @@ public class LocalCDORepository extends CDORepositoryImpl
 
   protected Map<String, String> getMappingStrategyProperties()
   {
-    Map<String, String> props = new HashMap<String, String>();
+    Map<String, String> props = new HashMap<>();
     props.put(IMappingStrategy.Props.QUALIFIED_NAMES, "true");
     props.put(CDODBUtil.PROP_COPY_ON_BRANCH, "true");
     return props;

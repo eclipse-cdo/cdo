@@ -115,7 +115,7 @@ public class ParentImpl extends EObjectImpl implements Parent
   {
     if (children == null)
     {
-      children = new EObjectContainmentWithInverseEList<Child>(Child.class, this, Model5Package.PARENT__CHILDREN, Model5Package.CHILD__PARENT);
+      children = new EObjectContainmentWithInverseEList<>(Child.class, this, Model5Package.PARENT__CHILDREN, Model5Package.CHILD__PARENT);
     }
     return children;
   }

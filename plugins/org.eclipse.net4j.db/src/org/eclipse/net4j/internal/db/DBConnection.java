@@ -34,7 +34,7 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
 {
   private static final boolean VALIDATE_CHECKOUTS = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.internal.db.DBConnection.VALIDATE_CHECKOUTS");
 
-  private final TreeMap<String, DBPreparedStatement> cache = new TreeMap<String, DBPreparedStatement>();
+  private final TreeMap<String, DBPreparedStatement> cache = new TreeMap<>();
 
   private HashBag<DBPreparedStatement> checkOuts;
 
@@ -53,7 +53,7 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
 
     if (VALIDATE_CHECKOUTS)
     {
-      checkOuts = new HashBag<DBPreparedStatement>();
+      checkOuts = new HashBag<>();
     }
 
     try

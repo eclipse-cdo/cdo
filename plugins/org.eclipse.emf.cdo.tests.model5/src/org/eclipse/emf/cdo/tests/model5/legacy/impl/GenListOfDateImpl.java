@@ -73,7 +73,7 @@ public class GenListOfDateImpl extends EObjectImpl implements GenListOfDate
   {
     if (elements == null)
     {
-      elements = new EDataTypeUniqueEList<Date>(Date.class, this, Model5Package.GEN_LIST_OF_DATE__ELEMENTS);
+      elements = new EDataTypeUniqueEList<>(Date.class, this, Model5Package.GEN_LIST_OF_DATE__ELEMENTS);
     }
     return elements;
   }

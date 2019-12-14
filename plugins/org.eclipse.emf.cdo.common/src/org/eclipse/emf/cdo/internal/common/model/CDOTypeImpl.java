@@ -909,7 +909,7 @@ public abstract class CDOTypeImpl implements CDOType
     @Override
     protected Map<Object, Object> doReadValue(CDODataInput in) throws IOException
     {
-      Map<Object, Object> result = new HashMap<Object, Object>();
+      Map<Object, Object> result = new HashMap<>();
       int size = in.readXInt();
       for (int i = 0; i < size; i++)
       {
@@ -939,7 +939,7 @@ public abstract class CDOTypeImpl implements CDOType
     @Override
     protected Set<Object> doReadValue(CDODataInput in) throws IOException
     {
-      Set<Object> result = new HashSet<Object>();
+      Set<Object> result = new HashSet<>();
       int size = in.readXInt();
       for (int i = 0; i < size; i++)
       {
@@ -968,7 +968,7 @@ public abstract class CDOTypeImpl implements CDOType
     @Override
     protected List<Object> doReadValue(CDODataInput in) throws IOException
     {
-      List<Object> result = new ArrayList<Object>();
+      List<Object> result = new ArrayList<>();
       int size = in.readXInt();
       for (int i = 0; i < size; i++)
       {

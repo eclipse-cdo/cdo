@@ -35,9 +35,9 @@ import java.util.List;
 @Deprecated
 public abstract class AbstractLockObjectsAction extends EditingDomainAction
 {
-  private List<InternalCDOObject> objects = new ArrayList<InternalCDOObject>();
+  private List<InternalCDOObject> objects = new ArrayList<>();
 
-  private List<InternalCDOObject> lockObjects = new ArrayList<InternalCDOObject>();
+  private List<InternalCDOObject> lockObjects = new ArrayList<>();
 
   private Boolean lock;
 

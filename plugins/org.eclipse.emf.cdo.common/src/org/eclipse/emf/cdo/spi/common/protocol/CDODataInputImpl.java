@@ -253,7 +253,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   public CDOChangeSetData readCDOChangeSetData() throws IOException
   {
     int size1 = readXInt();
-    List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>(size1);
+    List<CDOIDAndVersion> newObjects = new ArrayList<>(size1);
     for (int i = 0; i < size1; i++)
     {
       boolean revision = readBoolean();
@@ -262,7 +262,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     }
 
     int size2 = readXInt();
-    List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>(size2);
+    List<CDORevisionKey> changedObjects = new ArrayList<>(size2);
     for (int i = 0; i < size2; i++)
     {
       boolean delta = readBoolean();
@@ -271,7 +271,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     }
 
     int size3 = readXInt();
-    List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>(size3);
+    List<CDOIDAndVersion> detachedObjects = new ArrayList<>(size3);
     for (int i = 0; i < size3; i++)
     {
       CDOID id = readCDOID();
@@ -302,7 +302,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     resourceSet.setPackageRegistry(packageRegistry);
 
     int size = readXInt();
-    List<CDOPackageUnit> newPackageUnits = new ArrayList<CDOPackageUnit>(size);
+    List<CDOPackageUnit> newPackageUnits = new ArrayList<>(size);
     for (int i = 0; i < size; i++)
     {
       CDOPackageUnit data = readCDOPackageUnit(resourceSet);

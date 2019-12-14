@@ -72,7 +72,7 @@ public class GenListOfIntArrayImpl extends EObjectImpl implements GenListOfIntAr
   {
     if (elements == null)
     {
-      elements = new EDataTypeUniqueEList<int[]>(int[].class, this, Model5Package.GEN_LIST_OF_INT_ARRAY__ELEMENTS);
+      elements = new EDataTypeUniqueEList<>(int[].class, this, Model5Package.GEN_LIST_OF_INT_ARRAY__ELEMENTS);
     }
     return elements;
   }

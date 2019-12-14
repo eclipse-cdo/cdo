@@ -23,7 +23,7 @@ public class JVMAcceptorManager implements IJVMAcceptorManager
   // @Singleton
   public static final JVMAcceptorManager INSTANCE = new JVMAcceptorManager();
 
-  private IRegistry<String, IJVMAcceptor> acceptorRegistry = new HashMapRegistry<String, IJVMAcceptor>();
+  private IRegistry<String, IJVMAcceptor> acceptorRegistry = new HashMapRegistry<>();
 
   @Override
   public IRegistry<String, IJVMAcceptor> getAcceptorRegistry()

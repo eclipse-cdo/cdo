@@ -542,7 +542,7 @@ public interface IDBDeltaVisitor
 
       private static final long serialVersionUID = 1L;
 
-      private Map<Object, Object> clauses = new HashMap<Object, Object>();
+      private Map<Object, Object> clauses = new HashMap<>();
 
       private transient boolean frozen;
 

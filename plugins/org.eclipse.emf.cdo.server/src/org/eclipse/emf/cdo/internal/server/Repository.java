@@ -216,9 +216,9 @@ public class Repository extends Container<Object> implements InternalRepository,
 
   private IManagedContainer container;
 
-  private final List<ReadAccessHandler> readAccessHandlers = new ArrayList<ReadAccessHandler>();
+  private final List<ReadAccessHandler> readAccessHandlers = new ArrayList<>();
 
-  private final List<WriteAccessHandler> writeAccessHandlers = new ArrayList<WriteAccessHandler>();
+  private final List<WriteAccessHandler> writeAccessHandlers = new ArrayList<>();
 
   // Bug 297940
   private final TimeStampAuthority timeStampAuthority = new TimeStampAuthority(this);
@@ -336,7 +336,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   {
     if (properties == null)
     {
-      properties = new HashMap<String, String>();
+      properties = new HashMap<>();
     }
 
     return properties;
@@ -1472,7 +1472,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   @Override
   public Set<Handler> getHandlers()
   {
-    Set<Handler> handlers = new HashSet<Handler>();
+    Set<Handler> handlers = new HashSet<>();
 
     synchronized (readAccessHandlers)
     {
@@ -1941,7 +1941,7 @@ public class Repository extends Container<Object> implements InternalRepository,
 
       wrapper = new CDORevisionHandler()
       {
-        private Set<CDOID> handled = new HashSet<CDOID>();
+        private Set<CDOID> handled = new HashSet<>();
 
         @Override
         public boolean handleRevision(CDORevision revision)
@@ -1974,7 +1974,7 @@ public class Repository extends Container<Object> implements InternalRepository,
 
   public static List<Object> revisionKeysToObjects(List<CDORevisionKey> revisionKeys, CDOBranch viewedBranch, boolean isSupportingBranches)
   {
-    List<Object> lockables = new ArrayList<Object>();
+    List<Object> lockables = new ArrayList<>();
     for (CDORevisionKey revKey : revisionKeys)
     {
       CDOID id = revKey.getID();
@@ -2049,7 +2049,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   private CDORevisionKey[] checkStaleRevisions(InternalView view, List<CDORevisionKey> revisionKeys, List<Object> objectsToLock, LockType lockType,
       long[] requiredTimestamp)
   {
-    List<CDORevisionKey> staleRevisions = new LinkedList<CDORevisionKey>();
+    List<CDORevisionKey> staleRevisions = new LinkedList<>();
     if (revisionKeys != null)
     {
       InternalCDORevisionManager revManager = getRevisionManager();
@@ -2108,7 +2108,7 @@ public class Repository extends Container<Object> implements InternalRepository,
     List<Object> unlockables = null;
     if (objectIDs != null)
     {
-      unlockables = new ArrayList<Object>(objectIDs.size());
+      unlockables = new ArrayList<>(objectIDs.size());
       CDOBranch branch = view.getBranch();
       for (CDOID id : objectIDs)
       {
@@ -2263,7 +2263,7 @@ public class Repository extends Container<Object> implements InternalRepository,
   @Override
   public void initSystemPackages(final boolean firstStart)
   {
-    final List<InternalCDOPackageUnit> list = new ArrayList<InternalCDOPackageUnit>();
+    final List<InternalCDOPackageUnit> list = new ArrayList<>();
     IStoreAccessor writer = store.getWriter(null);
     StoreThreadLocal.setAccessor(writer);
 

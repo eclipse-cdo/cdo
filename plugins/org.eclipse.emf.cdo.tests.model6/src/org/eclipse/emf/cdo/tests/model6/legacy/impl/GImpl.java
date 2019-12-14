@@ -88,7 +88,7 @@ public class GImpl extends EObjectImpl implements G
   /**
    * @ADDED
    */
-  private List<Notification> notifications = new ArrayList<Notification>();
+  private List<Notification> notifications = new ArrayList<>();
 
   /**
    * @ADDED
@@ -243,7 +243,7 @@ public class GImpl extends EObjectImpl implements G
   {
     if (list == null)
     {
-      list = new EObjectResolvingEList<BaseObject>(BaseObject.class, this, Model6Package.G__LIST);
+      list = new EObjectResolvingEList<>(BaseObject.class, this, Model6Package.G__LIST);
     }
     return list;
   }

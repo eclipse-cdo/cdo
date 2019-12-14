@@ -80,7 +80,8 @@ public class ReferencePackageImpl extends EPackageImpl implements ReferencePacka
 
     // Obtain or create and register package
     ReferencePackageImpl theReferencePackage = (ReferencePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ReferencePackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ReferencePackageImpl());
+        ? EPackage.Registry.INSTANCE.get(eNS_URI)
+        : new ReferencePackageImpl());
 
     isInited = true;
 

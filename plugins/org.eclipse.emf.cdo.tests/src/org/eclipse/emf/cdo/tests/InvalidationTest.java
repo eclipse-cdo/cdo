@@ -101,7 +101,7 @@ public class InvalidationTest extends AbstractCDOTest
       }
     }
 
-    List<Thread> threads = new ArrayList<Thread>();
+    List<Thread> threads = new ArrayList<>();
     for (int i = 0; i < 20; i++)
     {
       threads.add(new Thread(new MyTransTest(i + 1)));

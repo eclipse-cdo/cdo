@@ -29,7 +29,7 @@ public class RemoteTraceManager extends Lifecycle implements Listener
 
   private RemoteTraceServer server;
 
-  private List<Event> events = new ArrayList<Event>();
+  private List<Event> events = new ArrayList<>();
 
   public RemoteTraceManager()
   {

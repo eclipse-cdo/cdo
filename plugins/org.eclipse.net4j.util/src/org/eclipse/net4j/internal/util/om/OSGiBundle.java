@@ -68,7 +68,7 @@ public class OSGiBundle extends AbstractBundle
   @Override
   public Iterator<Class<?>> getClasses()
   {
-    final Queue<String> folders = new LinkedList<String>();
+    final Queue<String> folders = new LinkedList<>();
     folders.offer("/");
 
     return new AbstractIterator<Class<?>>()

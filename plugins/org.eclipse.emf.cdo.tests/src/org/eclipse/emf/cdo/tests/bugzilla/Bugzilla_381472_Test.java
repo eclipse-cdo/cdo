@@ -505,7 +505,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
   public void testCreateRepoWithPropertiesPrimitive() throws Exception
   {
-    Map<String, Object> properties = new HashMap<String, Object>();
+    Map<String, Object> properties = new HashMap<>();
     properties.put("key", 4711);
 
     CDOAdmin admin = openAdmin(properties);
@@ -541,7 +541,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
   public void testCreateRepoWithPropertiesCDOID() throws Exception
   {
-    Map<String, Object> properties = new HashMap<String, Object>();
+    Map<String, Object> properties = new HashMap<>();
     properties.put("key", CDOIDUtil.createLong(4711));
 
     CDOAdmin admin = openAdmin(properties);

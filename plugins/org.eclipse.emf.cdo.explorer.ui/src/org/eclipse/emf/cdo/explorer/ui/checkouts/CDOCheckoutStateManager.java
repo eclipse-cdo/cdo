@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -34,7 +34,7 @@ public final class CDOCheckoutStateManager
 {
   private final ResourceManager resourceManager = new LocalResourceManager(JFaceResources.getResources());
 
-  private final Map<CDOCheckout, CDOCheckoutState> states = new HashMap<CDOCheckout, CDOCheckoutState>();
+  private final Map<CDOCheckout, CDOCheckoutState> states = new HashMap<>();
 
   private final CDOCheckoutContentProvider mainContentProvider;
 

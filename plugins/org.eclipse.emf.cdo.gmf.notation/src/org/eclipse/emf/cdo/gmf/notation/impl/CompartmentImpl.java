@@ -83,6 +83,7 @@ public class CompartmentImpl extends BasicCompartmentImpl implements Compartment
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isCanonical()
   {
     return ((Boolean)eDynamicGet(NotationPackage.COMPARTMENT__CANONICAL - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.CANONICAL_STYLE__CANONICAL, true,
@@ -94,6 +95,7 @@ public class CompartmentImpl extends BasicCompartmentImpl implements Compartment
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setCanonical(boolean newCanonical)
   {
     eDynamicSet(NotationPackage.COMPARTMENT__CANONICAL - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.CANONICAL_STYLE__CANONICAL, new Boolean(newCanonical));
@@ -104,6 +106,7 @@ public class CompartmentImpl extends BasicCompartmentImpl implements Compartment
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isShowTitle()
   {
     return ((Boolean)eDynamicGet(NotationPackage.COMPARTMENT__SHOW_TITLE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.TITLE_STYLE__SHOW_TITLE, true, true))
@@ -115,6 +118,7 @@ public class CompartmentImpl extends BasicCompartmentImpl implements Compartment
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setShowTitle(boolean newShowTitle)
   {
     eDynamicSet(NotationPackage.COMPARTMENT__SHOW_TITLE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.TITLE_STYLE__SHOW_TITLE, new Boolean(newShowTitle));

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -29,7 +29,7 @@ public abstract class AbstractQueryIterator<T> extends AbstractQueryResult<T>
 {
   private static final int UNDEFINED_QUERY_ID = -1;
 
-  private ConcurrentValue<Boolean> queryIDSet = new ConcurrentValue<Boolean>(false);
+  private ConcurrentValue<Boolean> queryIDSet = new ConcurrentValue<>(false);
 
   /**
    * @since 3.0

@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -225,6 +225,7 @@ public class NodeEntryImpl extends CDOObjectImpl implements BasicEMap.Entry
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getHash()
   {
     if (hash == -1)
@@ -240,6 +241,7 @@ public class NodeEntryImpl extends CDOObjectImpl implements BasicEMap.Entry
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setHash(int hash)
   {
     this.hash = hash;
@@ -250,6 +252,7 @@ public class NodeEntryImpl extends CDOObjectImpl implements BasicEMap.Entry
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Object getKey()
   {
     return getTypedKey();
@@ -260,6 +263,7 @@ public class NodeEntryImpl extends CDOObjectImpl implements BasicEMap.Entry
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setKey(Object key)
   {
     setTypedKey((Node)key);
@@ -270,6 +274,7 @@ public class NodeEntryImpl extends CDOObjectImpl implements BasicEMap.Entry
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Object getValue()
   {
     return getTypedValue();
@@ -280,6 +285,7 @@ public class NodeEntryImpl extends CDOObjectImpl implements BasicEMap.Entry
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Object setValue(Object value)
   {
     Object oldValue = getValue();

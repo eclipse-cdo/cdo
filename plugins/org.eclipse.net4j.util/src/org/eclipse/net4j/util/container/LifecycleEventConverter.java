@@ -81,8 +81,8 @@ public class LifecycleEventConverter<E> implements IListener
 
   protected IContainerEvent<E> createContainerEvent(IContainer<E> container, E element, IContainerDelta.Kind kind)
   {
-    ContainerEvent<E> event = new ContainerEvent<E>(container);
-    event.addDelta(new ContainerDelta<E>(element, kind));
+    ContainerEvent<E> event = new ContainerEvent<>(container);
+    event.addDelta(new ContainerDelta<>(element, kind));
     return event;
   }
 }

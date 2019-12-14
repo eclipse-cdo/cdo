@@ -190,7 +190,7 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
   {
     checkActive();
 
-    Map<String, IRepository> result = new java.util.HashMap<String, IRepository>();
+    Map<String, IRepository> result = new java.util.HashMap<>();
     if (catalog != null)
     {
       for (RepositoryConfiguration configuration : catalog.getRepositories())
@@ -354,7 +354,7 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
 
   private void startExtensions(IRepository repository, RepositoryConfiguration configuration)
   {
-    final List<IAppExtension2> extensions = new ArrayList<IAppExtension2>(3);
+    final List<IAppExtension2> extensions = new ArrayList<>(3);
 
     IExtensionRegistry registry = Platform.getExtensionRegistry();
     @SuppressWarnings("restriction")

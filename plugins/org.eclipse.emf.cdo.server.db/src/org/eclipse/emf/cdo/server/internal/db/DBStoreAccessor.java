@@ -1048,7 +1048,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       stmt.setInt(1, baseID);
 
       resultSet = stmt.executeQuery();
-      List<SubBranchInfo> result = new ArrayList<SubBranchInfo>();
+      List<SubBranchInfo> result = new ArrayList<>();
       while (resultSet.next())
       {
         int id = resultSet.getInt(1);
@@ -1237,7 +1237,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     int commitWork = 5;
     monitor.begin(commitWork + size + commitWork);
 
-    Collection<InternalCDOPackageUnit> packageUnits = new HashSet<InternalCDOPackageUnit>();
+    Collection<InternalCDOPackageUnit> packageUnits = new HashSet<>();
     Connection connection = getConnection();
 
     try
@@ -1566,7 +1566,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   {
     if (createdTables == null)
     {
-      createdTables = new ArrayList<IDBTable>();
+      createdTables = new ArrayList<>();
     }
 
     createdTables.add(table);

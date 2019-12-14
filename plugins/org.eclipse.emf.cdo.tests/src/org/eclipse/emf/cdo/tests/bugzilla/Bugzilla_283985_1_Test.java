@@ -549,7 +549,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
     @Override
     public Collection<OrderDetail> pickDetails(OrderDetail[] orderDetails)
     {
-      List<OrderDetail> details = new LinkedList<OrderDetail>();
+      List<OrderDetail> details = new LinkedList<>();
       details.add(orderDetails[0]);
       details.add(orderDetails[1]);
       return details;
@@ -564,7 +564,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
     @Override
     public Collection<OrderDetail> pickDetails(OrderDetail[] orderDetails)
     {
-      List<OrderDetail> details = new LinkedList<OrderDetail>();
+      List<OrderDetail> details = new LinkedList<>();
       details.add(orderDetails[1]);
       details.add(orderDetails[2]);
       details.add(orderDetails[5]);

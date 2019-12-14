@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,6 +66,7 @@ public class StringValueStyleImpl extends NamedStyleImpl implements StringValueS
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getStringValue()
   {
     return (String)eDynamicGet(NotationPackage.STRING_VALUE_STYLE__STRING_VALUE, NotationPackage.Literals.STRING_VALUE_STYLE__STRING_VALUE, true, true);
@@ -76,6 +77,7 @@ public class StringValueStyleImpl extends NamedStyleImpl implements StringValueS
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setStringValue(String newStringValue)
   {
     eDynamicSet(NotationPackage.STRING_VALUE_STYLE__STRING_VALUE, NotationPackage.Literals.STRING_VALUE_STYLE__STRING_VALUE, newStringValue);

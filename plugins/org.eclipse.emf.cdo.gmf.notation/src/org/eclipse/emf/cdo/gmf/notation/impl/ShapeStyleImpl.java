@@ -153,6 +153,7 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getDescription()
   {
     return (String)eDynamicGet(NotationPackage.SHAPE_STYLE__DESCRIPTION, NotationPackage.Literals.DESCRIPTION_STYLE__DESCRIPTION, true, true);
@@ -163,6 +164,7 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setDescription(String newDescription)
   {
     eDynamicSet(NotationPackage.SHAPE_STYLE__DESCRIPTION, NotationPackage.Literals.DESCRIPTION_STYLE__DESCRIPTION, newDescription);
@@ -173,6 +175,7 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getFillColor()
   {
     return ((Integer)eDynamicGet(NotationPackage.SHAPE_STYLE__FILL_COLOR, NotationPackage.Literals.FILL_STYLE__FILL_COLOR, true, true)).intValue();
@@ -183,6 +186,7 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setFillColor(int newFillColor)
   {
     eDynamicSet(NotationPackage.SHAPE_STYLE__FILL_COLOR, NotationPackage.Literals.FILL_STYLE__FILL_COLOR, new Integer(newFillColor));
@@ -193,6 +197,7 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getTransparency()
   {
     return ((Integer)eDynamicGet(NotationPackage.SHAPE_STYLE__TRANSPARENCY, NotationPackage.Literals.FILL_STYLE__TRANSPARENCY, true, true)).intValue();
@@ -203,6 +208,7 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setTransparency(int newTransparency)
   {
     eDynamicSet(NotationPackage.SHAPE_STYLE__TRANSPARENCY, NotationPackage.Literals.FILL_STYLE__TRANSPARENCY, new Integer(newTransparency));
@@ -213,6 +219,7 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public GradientData getGradient()
   {
     return (GradientData)eDynamicGet(NotationPackage.SHAPE_STYLE__GRADIENT, NotationPackage.Literals.FILL_STYLE__GRADIENT, true, true);
@@ -223,6 +230,7 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setGradient(GradientData newGradient)
   {
     eDynamicSet(NotationPackage.SHAPE_STYLE__GRADIENT, NotationPackage.Literals.FILL_STYLE__GRADIENT, newGradient);
@@ -233,6 +241,7 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getLineColor()
   {
     return ((Integer)eDynamicGet(NotationPackage.SHAPE_STYLE__LINE_COLOR, NotationPackage.Literals.LINE_STYLE__LINE_COLOR, true, true)).intValue();
@@ -243,6 +252,7 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setLineColor(int newLineColor)
   {
     eDynamicSet(NotationPackage.SHAPE_STYLE__LINE_COLOR, NotationPackage.Literals.LINE_STYLE__LINE_COLOR, new Integer(newLineColor));
@@ -253,6 +263,7 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getLineWidth()
   {
     return ((Integer)eDynamicGet(NotationPackage.SHAPE_STYLE__LINE_WIDTH, NotationPackage.Literals.LINE_STYLE__LINE_WIDTH, true, true)).intValue();
@@ -263,6 +274,7 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setLineWidth(int newLineWidth)
   {
     eDynamicSet(NotationPackage.SHAPE_STYLE__LINE_WIDTH, NotationPackage.Literals.LINE_STYLE__LINE_WIDTH, new Integer(newLineWidth));
@@ -273,6 +285,7 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getRoundedBendpointsRadius()
   {
     return ((Integer)eDynamicGet(NotationPackage.SHAPE_STYLE__ROUNDED_BENDPOINTS_RADIUS,
@@ -284,6 +297,7 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setRoundedBendpointsRadius(int newRoundedBendpointsRadius)
   {
     eDynamicSet(NotationPackage.SHAPE_STYLE__ROUNDED_BENDPOINTS_RADIUS, NotationPackage.Literals.ROUNDED_CORNERS_STYLE__ROUNDED_BENDPOINTS_RADIUS,

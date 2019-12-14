@@ -95,7 +95,7 @@ public abstract class AbstractOMTest extends TestCase
 
   private static String testName;
 
-  private transient final List<File> filesToDelete = new ArrayList<File>();
+  private transient final List<File> filesToDelete = new ArrayList<>();
 
   private transient String codeLink;
 
@@ -780,7 +780,7 @@ public abstract class AbstractOMTest extends TestCase
 
   public static void triggerGC()
   {
-    List<byte[]> bigdata = new ArrayList<byte[]>();
+    List<byte[]> bigdata = new ArrayList<>();
 
     try
     {

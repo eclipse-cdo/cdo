@@ -62,13 +62,13 @@ public class CommitTransactionTask implements OptimizerTask
 
   protected final CDOBranchVersion[] detachedObjectVersions;
 
-  protected final List<byte[]> lobs = new ArrayList<byte[]>();
+  protected final List<byte[]> lobs = new ArrayList<>();
 
   private long newCommitPointer;
 
   private long newPackageUnitPointer;
 
-  private Map<CDORevision, Long> newObjectPointers = new HashMap<CDORevision, Long>();
+  private Map<CDORevision, Long> newObjectPointers = new HashMap<>();
 
   private InternalCDORevision[] detachedRevisions;
 

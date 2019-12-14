@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -48,11 +48,11 @@ public class Net
 
   private Track[] tracks = {};
 
-  private final Map<CDOBranch, Branch> branches = new HashMap<CDOBranch, Branch>();
+  private final Map<CDOBranch, Branch> branches = new HashMap<>();
 
-  private final Map<CDOCommitInfo, Commit> commits = new WeakHashMap<CDOCommitInfo, Commit>();
+  private final Map<CDOCommitInfo, Commit> commits = new WeakHashMap<>();
 
-  private final Map<CDOCommitInfo, List<Commit>> danglingMergeTargets = new WeakHashMap<CDOCommitInfo, List<Commit>>();
+  private final Map<CDOCommitInfo, List<Commit>> danglingMergeTargets = new WeakHashMap<>();
 
   private int commitCounter;
 
@@ -476,7 +476,7 @@ public class Net
     List<Commit> mergeTargets = danglingMergeTargets.get(mergedCommitInfo);
     if (mergeTargets == null)
     {
-      mergeTargets = new ArrayList<Commit>(1);
+      mergeTargets = new ArrayList<>(1);
       danglingMergeTargets.put(mergedCommitInfo, mergeTargets);
     }
 

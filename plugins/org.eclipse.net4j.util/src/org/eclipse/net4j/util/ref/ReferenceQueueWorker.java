@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2010-2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2010-2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -37,7 +37,7 @@ public abstract class ReferenceQueueWorker<T> extends Worker
    */
   public static final int DEFAULT_POLL_MILLIS = 1000 * 60; // One minute
 
-  private ReferenceQueue<T> queue = new ReferenceQueue<T>();
+  private ReferenceQueue<T> queue = new ReferenceQueue<>();
 
   private long pollMillis;
 

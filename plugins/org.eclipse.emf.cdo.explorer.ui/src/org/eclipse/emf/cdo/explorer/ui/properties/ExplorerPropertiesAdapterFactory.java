@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -32,9 +32,9 @@ import org.eclipse.ui.views.properties.IPropertySource;
  */
 public class ExplorerPropertiesAdapterFactory extends AbstractPropertyAdapterFactory
 {
-  private static final IActionFilter REPOSITORY_ACTION_FILTER = new DefaultActionFilter<CDORepository>(CDORepositoryProperties.INSTANCE);
+  private static final IActionFilter REPOSITORY_ACTION_FILTER = new DefaultActionFilter<>(CDORepositoryProperties.INSTANCE);
 
-  private static final IActionFilter CHECKOUT_ACTION_FILTER = new DefaultActionFilter<CDOCheckout>(CDOCheckoutProperties.INSTANCE);
+  private static final IActionFilter CHECKOUT_ACTION_FILTER = new DefaultActionFilter<>(CDOCheckoutProperties.INSTANCE);
 
   public ExplorerPropertiesAdapterFactory()
   {
@@ -53,7 +53,7 @@ public class ExplorerPropertiesAdapterFactory extends AbstractPropertyAdapterFac
         @Override
         protected IPropertySource createAugmentingPropertySource(CDOSession session)
         {
-          return new DefaultPropertySource<CDOSession>(session, SessionProperties.INSTANCE);
+          return new DefaultPropertySource<>(session, SessionProperties.INSTANCE);
         }
       };
 
@@ -69,7 +69,7 @@ public class ExplorerPropertiesAdapterFactory extends AbstractPropertyAdapterFac
         @Override
         protected IPropertySource createAugmentingPropertySource(CDOView view)
         {
-          return new DefaultPropertySource<CDOView>(view, ViewProperties.INSTANCE);
+          return new DefaultPropertySource<>(view, ViewProperties.INSTANCE);
         }
       };
     }

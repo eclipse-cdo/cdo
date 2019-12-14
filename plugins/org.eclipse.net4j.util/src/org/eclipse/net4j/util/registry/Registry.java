@@ -302,12 +302,12 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
 
     public void rememberRegistered(K key, V value)
     {
-      event.addDelta(new Element<K, V>(key, value), IContainerDelta.Kind.ADDED);
+      event.addDelta(new Element<>(key, value), IContainerDelta.Kind.ADDED);
     }
 
     public void rememberDeregistered(K key, V value)
     {
-      event.addDelta(new Element<K, V>(key, value), IContainerDelta.Kind.REMOVED);
+      event.addDelta(new Element<>(key, value), IContainerDelta.Kind.REMOVED);
     }
   }
 

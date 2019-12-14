@@ -154,7 +154,7 @@ public interface CDOEditorOpener
     @Override
     public IEditorPart openEditor(final IWorkbenchPage page, URI uri)
     {
-      final Set<IEditorPart> editors = new HashSet<IEditorPart>();
+      final Set<IEditorPart> editors = new HashSet<>();
       final IEditorPart[] editor = { null };
 
       IPartListener partListener = new IPartListener()
@@ -237,7 +237,7 @@ public interface CDOEditorOpener
 
     private static final String EXT_POINT = "editorOpeners"; //$NON-NLS-1$
 
-    private final Map<String, CDOEditorOpener> editorOpeners = new HashMap<String, CDOEditorOpener>();
+    private final Map<String, CDOEditorOpener> editorOpeners = new HashMap<>();
 
     public Registry()
     {
@@ -272,7 +272,7 @@ public interface CDOEditorOpener
 
     public CDOEditorOpener[] getEditorOpeners(URI uri)
     {
-      List<CDOEditorOpener> result = new ArrayList<CDOEditorOpener>();
+      List<CDOEditorOpener> result = new ArrayList<>();
 
       synchronized (editorOpeners)
       {

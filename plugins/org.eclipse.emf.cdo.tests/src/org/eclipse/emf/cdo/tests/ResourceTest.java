@@ -1832,7 +1832,7 @@ public class ResourceTest extends AbstractCDOTest
     CDOResource rootResource = transaction.getRootResource();
     assertSame(rootResource, rootResource.eResource());
     String path = "";
-    List<String> names = new ArrayList<String>();
+    List<String> names = new ArrayList<>();
     for (int i = 0; i < depth; i++)
     {
       String name = "test" + String.valueOf(i + 1);
@@ -1845,7 +1845,7 @@ public class ResourceTest extends AbstractCDOTest
     assertEquals(names.get(names.size() - 1), resource.getName());
 
     transaction.commit();
-    List<CDOResourceNode> nodesList = new ArrayList<CDOResourceNode>();
+    List<CDOResourceNode> nodesList = new ArrayList<>();
     CDOResource resourceByLookup = null;
     CDOResourceNode next = null;
     for (int i = 0; i < depth; i++)

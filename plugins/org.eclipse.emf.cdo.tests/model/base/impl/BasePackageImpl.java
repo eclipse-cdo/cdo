@@ -93,7 +93,8 @@ public class BasePackageImpl extends EPackageImpl implements BasePackage
 
     // Obtain or create and register package
     BasePackageImpl theBasePackage = (BasePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof BasePackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new BasePackageImpl());
+        ? EPackage.Registry.INSTANCE.get(eNS_URI)
+        : new BasePackageImpl());
 
     isInited = true;
 

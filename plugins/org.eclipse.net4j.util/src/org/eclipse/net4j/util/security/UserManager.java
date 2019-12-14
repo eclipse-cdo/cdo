@@ -24,7 +24,7 @@ import java.util.Map;
 public class UserManager extends Lifecycle implements IUserManager, IAuthenticator
 {
   @ExcludeFromDump
-  protected transient Map<String, char[]> users = new HashMap<String, char[]>();
+  protected transient Map<String, char[]> users = new HashMap<>();
 
   public UserManager()
   {

@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -83,6 +83,7 @@ public class ImageImpl extends CDOObjectImpl implements Image
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public byte[] getData()
   {
     return (byte[])eDynamicGet(NotationPackage.IMAGE__DATA, NotationPackage.Literals.IMAGE__DATA, true, true);
@@ -93,6 +94,7 @@ public class ImageImpl extends CDOObjectImpl implements Image
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setData(byte[] newData)
   {
     eDynamicSet(NotationPackage.IMAGE__DATA, NotationPackage.Literals.IMAGE__DATA, newData);

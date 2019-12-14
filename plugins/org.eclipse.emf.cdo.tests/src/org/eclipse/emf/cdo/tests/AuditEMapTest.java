@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2012, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -69,7 +69,7 @@ public class AuditEMapTest extends AbstractCDOTest
 
   private Map<Long, Map<String, Integer>> createTestSet(CDOSession session) throws CommitException
   {
-    final Map<Long, Map<String, Integer>> result = new HashMap<Long, Map<String, Integer>>();
+    final Map<Long, Map<String, Integer>> result = new HashMap<>();
 
     disableConsole();
     CDOTransaction transaction = session.openTransaction();
@@ -117,7 +117,7 @@ public class AuditEMapTest extends AbstractCDOTest
 
   private Map<String, Integer> getResultMap(EMap<Product1, SalesOrder> orderByProduct)
   {
-    final Map<String, Integer> result = new HashMap<String, Integer>();
+    final Map<String, Integer> result = new HashMap<>();
     for (Product1 p : orderByProduct.keySet())
     {
       result.put(p.getName(), orderByProduct.get(p).getId());

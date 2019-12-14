@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -81,7 +81,7 @@ public class Bugzilla_468268_Test extends AbstractCDOTest
 
   private Set<Field> getFields(EObject eObject)
   {
-    Set<Field> allFields = new HashSet<Field>();
+    Set<Field> allFields = new HashSet<>();
     Field[] fields = eObject.getClass().getDeclaredFields();
     allFields.addAll(Arrays.asList(fields));
     Class<?> currentClass = eObject.getClass().getSuperclass();

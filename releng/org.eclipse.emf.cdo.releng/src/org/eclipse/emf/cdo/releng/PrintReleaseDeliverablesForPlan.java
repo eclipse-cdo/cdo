@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -26,7 +26,7 @@ public class PrintReleaseDeliverablesForPlan
 {
   public static void main(String[] args) throws IOException
   {
-    List<String> lines = new ArrayList<String>();
+    List<String> lines = new ArrayList<>();
     for (File featureFolder : new File("../../features").listFiles())
     {
       String folderName = featureFolder.getName();

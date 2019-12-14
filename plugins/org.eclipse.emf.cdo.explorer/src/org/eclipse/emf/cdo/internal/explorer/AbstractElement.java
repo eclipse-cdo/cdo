@@ -349,7 +349,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
   public static AbstractElement[] collect(Collection<?> c)
   {
-    List<AbstractElement> result = new ArrayList<AbstractElement>();
+    List<AbstractElement> result = new ArrayList<>();
     for (Object object : c)
     {
       if (object instanceof AbstractElement)

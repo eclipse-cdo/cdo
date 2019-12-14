@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -80,6 +80,7 @@ public class TextStyleImpl extends CDOObjectImpl implements TextStyle
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public TextAlignment getTextAlignment()
   {
     return (TextAlignment)eDynamicGet(NotationPackage.TEXT_STYLE__TEXT_ALIGNMENT, NotationPackage.Literals.TEXT_STYLE__TEXT_ALIGNMENT, true, true);
@@ -90,6 +91,7 @@ public class TextStyleImpl extends CDOObjectImpl implements TextStyle
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setTextAlignment(TextAlignment newTextAlignment)
   {
     eDynamicSet(NotationPackage.TEXT_STYLE__TEXT_ALIGNMENT, NotationPackage.Literals.TEXT_STYLE__TEXT_ALIGNMENT, newTextAlignment);

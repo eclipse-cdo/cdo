@@ -66,7 +66,7 @@ public class ValueNotifier<VALUE> extends Notifier
     if (!ObjectUtil.equals(value, oldValue))
     {
       this.value = value;
-      fireEvent(new ValueEvent<VALUE>(this, oldValue, value));
+      fireEvent(new ValueEvent<>(this, oldValue, value));
     }
   }
 }

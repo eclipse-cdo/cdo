@@ -33,7 +33,7 @@ public class ServerDestination implements IDestination
 
   private Type type;
 
-  private RoundRobinList<ServerConsumer> consumers = new RoundRobinList<ServerConsumer>();
+  private RoundRobinList<ServerConsumer> consumers = new RoundRobinList<>();
 
   public ServerDestination(String name, Type type)
   {

@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class CDOFetchRuleManagerThreadLocal implements CDOFetchRuleManager
 {
-  private static final ThreadLocal<CDOFetchRuleManager> threadLocal = new ThreadLocal<CDOFetchRuleManager>();
+  private static final ThreadLocal<CDOFetchRuleManager> threadLocal = new ThreadLocal<>();
 
   public CDOFetchRuleManagerThreadLocal()
   {

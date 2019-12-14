@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
@@ -377,7 +376,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private String storeType;
 
-    private final Set<CDOID.ObjectType> objectIDTypes = new HashSet<ObjectType>();
+    private final Set<CDOID.ObjectType> objectIDTypes = new HashSet<>();
 
     private long repositoryCreationTime;
 
@@ -399,7 +398,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private boolean ensuringReferentialIntegrity;
 
-    private final List<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
+    private final List<InternalCDOPackageUnit> packageUnits = new ArrayList<>();
 
     private IDGenerationLocation idGenerationLocation;
 
@@ -784,11 +783,11 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   {
     private long lastUpdateTime;
 
-    private List<CDOPackageUnit> packageUnits = new ArrayList<CDOPackageUnit>();
+    private List<CDOPackageUnit> packageUnits = new ArrayList<>();
 
-    private Map<CDOBranch, List<InternalCDORevision>> changedObjects = new HashMap<CDOBranch, List<InternalCDORevision>>();
+    private Map<CDOBranch, List<InternalCDORevision>> changedObjects = new HashMap<>();
 
-    private Map<CDOBranch, List<CDOIDAndVersion>> detachedObjects = new HashMap<CDOBranch, List<CDOIDAndVersion>>();
+    private Map<CDOBranch, List<CDOIDAndVersion>> detachedObjects = new HashMap<>();
 
     public RefreshSessionResult(long lastUpdateTime)
     {
@@ -838,7 +837,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       List<InternalCDORevision> list = changedObjects.get(branch);
       if (list == null)
       {
-        list = new ArrayList<InternalCDORevision>();
+        list = new ArrayList<>();
         changedObjects.put(branch, list);
       }
 
@@ -851,7 +850,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       List<CDOIDAndVersion> list = detachedObjects.get(branch);
       if (list == null)
       {
-        list = new ArrayList<CDOIDAndVersion>();
+        list = new ArrayList<>();
         detachedObjects.put(branch, list);
       }
 
@@ -958,9 +957,9 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    */
   public static final class MergeDataResult
   {
-    private final Set<CDOID> targetIDs = new HashSet<CDOID>();
+    private final Set<CDOID> targetIDs = new HashSet<>();
 
-    private final Set<CDOID> sourceIDs = new HashSet<CDOID>();
+    private final Set<CDOID> sourceIDs = new HashSet<>();
 
     private CDOBranchPoint resultBase;
 

@@ -72,7 +72,7 @@ public class GenListOfStringImpl extends EObjectImpl implements GenListOfString
   {
     if (elements == null)
     {
-      elements = new EDataTypeUniqueEList<String>(String.class, this, Model5Package.GEN_LIST_OF_STRING__ELEMENTS);
+      elements = new EDataTypeUniqueEList<>(String.class, this, Model5Package.GEN_LIST_OF_STRING__ELEMENTS);
     }
     return elements;
   }

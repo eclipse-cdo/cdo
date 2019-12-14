@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -811,6 +811,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getEdge()
   {
     return edgeEClass;
@@ -821,6 +822,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEdge_Source()
   {
     return (EReference)edgeEClass.getEStructuralFeatures().get(0);
@@ -831,6 +833,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEdge_Target()
   {
     return (EReference)edgeEClass.getEStructuralFeatures().get(1);
@@ -841,6 +844,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEdge_Bendpoints()
   {
     return (EReference)edgeEClass.getEStructuralFeatures().get(2);
@@ -851,6 +855,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEdge_SourceAnchor()
   {
     return (EReference)edgeEClass.getEStructuralFeatures().get(3);
@@ -861,6 +866,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEdge_TargetAnchor()
   {
     return (EReference)edgeEClass.getEStructuralFeatures().get(4);
@@ -871,6 +877,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNode()
   {
     return nodeEClass;
@@ -881,6 +888,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNode_LayoutConstraint()
   {
     return (EReference)nodeEClass.getEStructuralFeatures().get(0);
@@ -891,6 +899,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getStyle()
   {
     return styleEClass;
@@ -901,6 +910,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getFillStyle()
   {
     return fillStyleEClass;
@@ -911,6 +921,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getFillStyle_FillColor()
   {
     return (EAttribute)fillStyleEClass.getEStructuralFeatures().get(0);
@@ -921,6 +932,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getFillStyle_Transparency()
   {
     return (EAttribute)fillStyleEClass.getEStructuralFeatures().get(1);
@@ -931,6 +943,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getFillStyle_Gradient()
   {
     return (EAttribute)fillStyleEClass.getEStructuralFeatures().get(2);
@@ -941,6 +954,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getLineStyle()
   {
     return lineStyleEClass;
@@ -951,6 +965,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getLineStyle_LineColor()
   {
     return (EAttribute)lineStyleEClass.getEStructuralFeatures().get(0);
@@ -961,6 +976,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getLineStyle_LineWidth()
   {
     return (EAttribute)lineStyleEClass.getEStructuralFeatures().get(1);
@@ -971,6 +987,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getFontStyle()
   {
     return fontStyleEClass;
@@ -981,6 +998,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getFontStyle_FontColor()
   {
     return (EAttribute)fontStyleEClass.getEStructuralFeatures().get(0);
@@ -991,6 +1009,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getFontStyle_FontName()
   {
     return (EAttribute)fontStyleEClass.getEStructuralFeatures().get(1);
@@ -1001,6 +1020,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getFontStyle_FontHeight()
   {
     return (EAttribute)fontStyleEClass.getEStructuralFeatures().get(2);
@@ -1011,6 +1031,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getFontStyle_Bold()
   {
     return (EAttribute)fontStyleEClass.getEStructuralFeatures().get(3);
@@ -1021,6 +1042,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getFontStyle_Italic()
   {
     return (EAttribute)fontStyleEClass.getEStructuralFeatures().get(4);
@@ -1031,6 +1053,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getFontStyle_Underline()
   {
     return (EAttribute)fontStyleEClass.getEStructuralFeatures().get(5);
@@ -1041,6 +1064,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getFontStyle_StrikeThrough()
   {
     return (EAttribute)fontStyleEClass.getEStructuralFeatures().get(6);
@@ -1051,6 +1075,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getTitleStyle()
   {
     return titleStyleEClass;
@@ -1061,6 +1086,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getTitleStyle_ShowTitle()
   {
     return (EAttribute)titleStyleEClass.getEStructuralFeatures().get(0);
@@ -1071,6 +1097,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getSortingStyle()
   {
     return sortingStyleEClass;
@@ -1081,6 +1108,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getSortingStyle_Sorting()
   {
     return (EAttribute)sortingStyleEClass.getEStructuralFeatures().get(0);
@@ -1091,6 +1119,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getSortingStyle_SortingKeys()
   {
     return (EAttribute)sortingStyleEClass.getEStructuralFeatures().get(1);
@@ -1101,6 +1130,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getSortingStyle_SortedObjects()
   {
     return (EReference)sortingStyleEClass.getEStructuralFeatures().get(2);
@@ -1111,6 +1141,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getDescriptionStyle()
   {
     return descriptionStyleEClass;
@@ -1121,6 +1152,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getDescriptionStyle_Description()
   {
     return (EAttribute)descriptionStyleEClass.getEStructuralFeatures().get(0);
@@ -1131,6 +1163,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getLayoutConstraint()
   {
     return layoutConstraintEClass;
@@ -1141,6 +1174,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getSize()
   {
     return sizeEClass;
@@ -1151,6 +1185,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getSize_Width()
   {
     return (EAttribute)sizeEClass.getEStructuralFeatures().get(0);
@@ -1161,6 +1196,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getSize_Height()
   {
     return (EAttribute)sizeEClass.getEStructuralFeatures().get(1);
@@ -1171,6 +1207,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getLocation()
   {
     return locationEClass;
@@ -1181,6 +1218,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getLocation_X()
   {
     return (EAttribute)locationEClass.getEStructuralFeatures().get(0);
@@ -1191,6 +1229,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getLocation_Y()
   {
     return (EAttribute)locationEClass.getEStructuralFeatures().get(1);
@@ -1201,6 +1240,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getBounds()
   {
     return boundsEClass;
@@ -1211,6 +1251,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRatio()
   {
     return ratioEClass;
@@ -1221,6 +1262,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getRatio_Value()
   {
     return (EAttribute)ratioEClass.getEStructuralFeatures().get(0);
@@ -1231,6 +1273,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getAnchor()
   {
     return anchorEClass;
@@ -1241,6 +1284,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getBendpoints()
   {
     return bendpointsEClass;
@@ -1251,6 +1295,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getIdentityAnchor()
   {
     return identityAnchorEClass;
@@ -1261,6 +1306,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getIdentityAnchor_Id()
   {
     return (EAttribute)identityAnchorEClass.getEStructuralFeatures().get(0);
@@ -1271,6 +1317,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRoutingStyle()
   {
     return routingStyleEClass;
@@ -1281,6 +1328,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getRoutingStyle_Routing()
   {
     return (EAttribute)routingStyleEClass.getEStructuralFeatures().get(0);
@@ -1291,6 +1339,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getRoutingStyle_Smoothness()
   {
     return (EAttribute)routingStyleEClass.getEStructuralFeatures().get(1);
@@ -1301,6 +1350,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getRoutingStyle_AvoidObstructions()
   {
     return (EAttribute)routingStyleEClass.getEStructuralFeatures().get(2);
@@ -1311,6 +1361,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getRoutingStyle_ClosestDistance()
   {
     return (EAttribute)routingStyleEClass.getEStructuralFeatures().get(3);
@@ -1321,6 +1372,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getRoutingStyle_JumpLinkStatus()
   {
     return (EAttribute)routingStyleEClass.getEStructuralFeatures().get(4);
@@ -1331,6 +1383,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getRoutingStyle_JumpLinkType()
   {
     return (EAttribute)routingStyleEClass.getEStructuralFeatures().get(5);
@@ -1341,6 +1394,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getRoutingStyle_JumpLinksReverse()
   {
     return (EAttribute)routingStyleEClass.getEStructuralFeatures().get(6);
@@ -1350,6 +1404,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * Left in for backwards compatibility
    * @deprecated Use getRoundedCornersStyle_RoundedBendpointsRadius()
    */
+  @Override
   @Deprecated
   public EAttribute getRoutingStyle_RoundedBendpointsRadius()
   {
@@ -1361,6 +1416,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getView()
   {
     return viewEClass;
@@ -1371,6 +1427,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getView_Visible()
   {
     return (EAttribute)viewEClass.getEStructuralFeatures().get(0);
@@ -1381,6 +1438,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getView_Type()
   {
     return (EAttribute)viewEClass.getEStructuralFeatures().get(1);
@@ -1391,6 +1449,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getView_Mutable()
   {
     return (EAttribute)viewEClass.getEStructuralFeatures().get(2);
@@ -1401,6 +1460,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getView_SourceEdges()
   {
     return (EReference)viewEClass.getEStructuralFeatures().get(3);
@@ -1411,6 +1471,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getView_TargetEdges()
   {
     return (EReference)viewEClass.getEStructuralFeatures().get(4);
@@ -1421,6 +1482,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getView_PersistedChildren()
   {
     return (EReference)viewEClass.getEStructuralFeatures().get(5);
@@ -1431,6 +1493,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getView_Styles()
   {
     return (EReference)viewEClass.getEStructuralFeatures().get(6);
@@ -1441,6 +1504,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getView_Element()
   {
     return (EReference)viewEClass.getEStructuralFeatures().get(7);
@@ -1451,6 +1515,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getView_Diagram()
   {
     return (EReference)viewEClass.getEStructuralFeatures().get(8);
@@ -1461,6 +1526,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getView_TransientChildren()
   {
     return (EReference)viewEClass.getEStructuralFeatures().get(9);
@@ -1471,6 +1537,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRelativeBendpoints()
   {
     return relativeBendpointsEClass;
@@ -1481,6 +1548,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getRelativeBendpoints_Points()
   {
     return (EAttribute)relativeBendpointsEClass.getEStructuralFeatures().get(0);
@@ -1491,6 +1559,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getDiagram()
   {
     return diagramEClass;
@@ -1501,6 +1570,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getDiagram_Name()
   {
     return (EAttribute)diagramEClass.getEStructuralFeatures().get(0);
@@ -1511,6 +1581,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getDiagram_MeasurementUnit()
   {
     return (EAttribute)diagramEClass.getEStructuralFeatures().get(1);
@@ -1521,6 +1592,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getDiagram_PersistedEdges()
   {
     return (EReference)diagramEClass.getEStructuralFeatures().get(2);
@@ -1531,6 +1603,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getDiagram_TransientEdges()
   {
     return (EReference)diagramEClass.getEStructuralFeatures().get(3);
@@ -1541,6 +1614,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImage()
   {
     return imageEClass;
@@ -1551,6 +1625,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getImage_Data()
   {
     return (EAttribute)imageEClass.getEStructuralFeatures().get(0);
@@ -1561,6 +1636,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCanonicalStyle()
   {
     return canonicalStyleEClass;
@@ -1571,6 +1647,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCanonicalStyle_Canonical()
   {
     return (EAttribute)canonicalStyleEClass.getEStructuralFeatures().get(0);
@@ -1581,6 +1658,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getShapeStyle()
   {
     return shapeStyleEClass;
@@ -1591,6 +1669,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getConnectorStyle()
   {
     return connectorStyleEClass;
@@ -1601,6 +1680,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPageStyle()
   {
     return pageStyleEClass;
@@ -1611,6 +1691,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPageStyle_PageX()
   {
     return (EAttribute)pageStyleEClass.getEStructuralFeatures().get(0);
@@ -1621,6 +1702,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPageStyle_PageY()
   {
     return (EAttribute)pageStyleEClass.getEStructuralFeatures().get(1);
@@ -1631,6 +1713,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPageStyle_PageWidth()
   {
     return (EAttribute)pageStyleEClass.getEStructuralFeatures().get(2);
@@ -1641,6 +1724,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPageStyle_PageHeight()
   {
     return (EAttribute)pageStyleEClass.getEStructuralFeatures().get(3);
@@ -1651,6 +1735,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getDrawerStyle()
   {
     return drawerStyleEClass;
@@ -1661,6 +1746,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getDrawerStyle_Collapsed()
   {
     return (EAttribute)drawerStyleEClass.getEStructuralFeatures().get(0);
@@ -1671,6 +1757,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGuideStyle()
   {
     return guideStyleEClass;
@@ -1681,6 +1768,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getGuideStyle_HorizontalGuides()
   {
     return (EReference)guideStyleEClass.getEStructuralFeatures().get(0);
@@ -1691,6 +1779,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getGuideStyle_VerticalGuides()
   {
     return (EReference)guideStyleEClass.getEStructuralFeatures().get(1);
@@ -1701,6 +1790,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getGuide()
   {
     return guideEClass;
@@ -1711,6 +1801,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getGuide_Position()
   {
     return (EAttribute)guideEClass.getEStructuralFeatures().get(0);
@@ -1721,6 +1812,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getGuide_NodeMap()
   {
     return (EReference)guideEClass.getEStructuralFeatures().get(1);
@@ -1731,6 +1823,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNodeEntry()
   {
     return nodeEntryEClass;
@@ -1741,6 +1834,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNodeEntry_Value()
   {
     return (EAttribute)nodeEntryEClass.getEStructuralFeatures().get(0);
@@ -1751,6 +1845,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeEntry_Key()
   {
     return (EReference)nodeEntryEClass.getEStructuralFeatures().get(1);
@@ -1761,6 +1856,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getFilteringStyle()
   {
     return filteringStyleEClass;
@@ -1771,6 +1867,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getFilteringStyle_Filtering()
   {
     return (EAttribute)filteringStyleEClass.getEStructuralFeatures().get(0);
@@ -1781,6 +1878,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getFilteringStyle_FilteringKeys()
   {
     return (EAttribute)filteringStyleEClass.getEStructuralFeatures().get(1);
@@ -1791,6 +1889,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getFilteringStyle_FilteredObjects()
   {
     return (EReference)filteringStyleEClass.getEStructuralFeatures().get(2);
@@ -1801,6 +1900,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getDiagramStyle()
   {
     return diagramStyleEClass;
@@ -1811,6 +1911,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImageStyle()
   {
     return imageStyleEClass;
@@ -1821,6 +1922,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getImageStyle_AntiAlias()
   {
     return (EAttribute)imageStyleEClass.getEStructuralFeatures().get(0);
@@ -1831,6 +1933,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getImageStyle_MaintainAspectRatio()
   {
     return (EAttribute)imageStyleEClass.getEStructuralFeatures().get(1);
@@ -1841,6 +1944,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getImageStyle_CropBound()
   {
     return (EReference)imageStyleEClass.getEStructuralFeatures().get(2);
@@ -1851,6 +1955,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getImageBufferStyle()
   {
     return imageBufferStyleEClass;
@@ -1861,6 +1966,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getImageBufferStyle_ImageBuffer()
   {
     return (EReference)imageBufferStyleEClass.getEStructuralFeatures().get(0);
@@ -1871,6 +1977,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPropertiesSetStyle()
   {
     return propertiesSetStyleEClass;
@@ -1881,6 +1988,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPropertiesSetStyle_PropertiesMap()
   {
     return (EReference)propertiesSetStyleEClass.getEStructuralFeatures().get(0);
@@ -1891,6 +1999,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getStringToPropertyValueMapEntry()
   {
     return stringToPropertyValueMapEntryEClass;
@@ -1901,6 +2010,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getStringToPropertyValueMapEntry_Key()
   {
     return (EAttribute)stringToPropertyValueMapEntryEClass.getEStructuralFeatures().get(0);
@@ -1911,6 +2021,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getStringToPropertyValueMapEntry_Value()
   {
     return (EReference)stringToPropertyValueMapEntryEClass.getEStructuralFeatures().get(1);
@@ -1921,6 +2032,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPropertyValue()
   {
     return propertyValueEClass;
@@ -1931,6 +2043,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPropertyValue_RawValue()
   {
     return (EAttribute)propertyValueEClass.getEStructuralFeatures().get(0);
@@ -1941,6 +2054,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPropertyValue_InstanceType()
   {
     return (EReference)propertyValueEClass.getEStructuralFeatures().get(1);
@@ -1951,6 +2065,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getSingleValueStyle()
   {
     return singleValueStyleEClass;
@@ -1961,6 +2076,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getSingleValueStyle_RawValue()
   {
     return (EAttribute)singleValueStyleEClass.getEStructuralFeatures().get(0);
@@ -1971,6 +2087,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getListValueStyle()
   {
     return listValueStyleEClass;
@@ -1981,6 +2098,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getListValueStyle_RawValuesList()
   {
     return (EAttribute)listValueStyleEClass.getEStructuralFeatures().get(0);
@@ -1991,6 +2109,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNamedStyle()
   {
     return namedStyleEClass;
@@ -2001,6 +2120,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNamedStyle_Name()
   {
     return (EAttribute)namedStyleEClass.getEStructuralFeatures().get(0);
@@ -2011,6 +2131,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getStringObjectConverter()
   {
     return stringObjectConverterEClass;
@@ -2021,6 +2142,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getDataTypeStyle()
   {
     return dataTypeStyleEClass;
@@ -2031,6 +2153,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getDataTypeStyle_InstanceType()
   {
     return (EReference)dataTypeStyleEClass.getEStructuralFeatures().get(0);
@@ -2041,6 +2164,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getIntValueStyle()
   {
     return intValueStyleEClass;
@@ -2051,6 +2175,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getIntValueStyle_IntValue()
   {
     return (EAttribute)intValueStyleEClass.getEStructuralFeatures().get(0);
@@ -2061,6 +2186,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getIntListValueStyle()
   {
     return intListValueStyleEClass;
@@ -2071,6 +2197,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getIntListValueStyle_IntListValue()
   {
     return (EAttribute)intListValueStyleEClass.getEStructuralFeatures().get(0);
@@ -2081,6 +2208,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getBooleanValueStyle()
   {
     return booleanValueStyleEClass;
@@ -2091,6 +2219,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getBooleanValueStyle_BooleanValue()
   {
     return (EAttribute)booleanValueStyleEClass.getEStructuralFeatures().get(0);
@@ -2101,6 +2230,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getDoubleValueStyle()
   {
     return doubleValueStyleEClass;
@@ -2111,6 +2241,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getDoubleValueStyle_DoubleValue()
   {
     return (EAttribute)doubleValueStyleEClass.getEStructuralFeatures().get(0);
@@ -2121,6 +2252,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getDoubleListValueStyle()
   {
     return doubleListValueStyleEClass;
@@ -2131,6 +2263,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getDoubleListValueStyle_DoubleListValue()
   {
     return (EAttribute)doubleListValueStyleEClass.getEStructuralFeatures().get(0);
@@ -2141,6 +2274,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getStringValueStyle()
   {
     return stringValueStyleEClass;
@@ -2151,6 +2285,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getStringValueStyle_StringValue()
   {
     return (EAttribute)stringValueStyleEClass.getEStructuralFeatures().get(0);
@@ -2161,6 +2296,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getStringListValueStyle()
   {
     return stringListValueStyleEClass;
@@ -2171,6 +2307,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getStringListValueStyle_StringListValue()
   {
     return (EAttribute)stringListValueStyleEClass.getEStructuralFeatures().get(0);
@@ -2181,6 +2318,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getEObjectValueStyle()
   {
     return eObjectValueStyleEClass;
@@ -2191,6 +2329,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEObjectValueStyle_EObjectValue()
   {
     return (EReference)eObjectValueStyleEClass.getEStructuralFeatures().get(0);
@@ -2201,6 +2340,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getEObjectListValueStyle()
   {
     return eObjectListValueStyleEClass;
@@ -2211,6 +2351,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEObjectListValueStyle_EObjectListValue()
   {
     return (EReference)eObjectListValueStyleEClass.getEStructuralFeatures().get(0);
@@ -2221,6 +2362,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getByteArrayValueStyle()
   {
     return byteArrayValueStyleEClass;
@@ -2231,6 +2373,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getByteArrayValueStyle_ByteArrayValue()
   {
     return (EAttribute)byteArrayValueStyleEClass.getEStructuralFeatures().get(0);
@@ -2241,6 +2384,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getBooleanListValueStyle()
   {
     return booleanListValueStyleEClass;
@@ -2251,6 +2395,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getBooleanListValueStyle_BooleanListValue()
   {
     return (EAttribute)booleanListValueStyleEClass.getEStructuralFeatures().get(0);
@@ -2261,6 +2406,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getHintedDiagramLinkStyle()
   {
     return hintedDiagramLinkStyleEClass;
@@ -2271,6 +2417,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getHintedDiagramLinkStyle_Hint()
   {
     return (EAttribute)hintedDiagramLinkStyleEClass.getEStructuralFeatures().get(0);
@@ -2281,6 +2428,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getDiagramLinkStyle()
   {
     return diagramLinkStyleEClass;
@@ -2291,6 +2439,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getDiagramLinkStyle_DiagramLink()
   {
     return (EReference)diagramLinkStyleEClass.getEStructuralFeatures().get(0);
@@ -2301,6 +2450,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getMultiDiagramLinkStyle()
   {
     return multiDiagramLinkStyleEClass;
@@ -2311,6 +2461,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getMultiDiagramLinkStyle_DiagramLinks()
   {
     return (EReference)multiDiagramLinkStyleEClass.getEStructuralFeatures().get(0);
@@ -2321,6 +2472,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getTextStyle()
   {
     return textStyleEClass;
@@ -2331,6 +2483,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getTextStyle_TextAlignment()
   {
     return (EAttribute)textStyleEClass.getEStructuralFeatures().get(0);
@@ -2341,6 +2494,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getLineTypeStyle()
   {
     return lineTypeStyleEClass;
@@ -2351,6 +2505,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getLineTypeStyle_LineType()
   {
     return (EAttribute)lineTypeStyleEClass.getEStructuralFeatures().get(0);
@@ -2361,6 +2516,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getArrowStyle()
   {
     return arrowStyleEClass;
@@ -2371,6 +2527,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getArrowStyle_ArrowSource()
   {
     return (EAttribute)arrowStyleEClass.getEStructuralFeatures().get(0);
@@ -2381,6 +2538,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getArrowStyle_ArrowTarget()
   {
     return (EAttribute)arrowStyleEClass.getEStructuralFeatures().get(1);
@@ -2391,6 +2549,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getShape()
   {
     return shapeEClass;
@@ -2401,6 +2560,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCompartment()
   {
     return compartmentEClass;
@@ -2411,6 +2571,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getListCompartment()
   {
     return listCompartmentEClass;
@@ -2421,6 +2582,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getConnector()
   {
     return connectorEClass;
@@ -2431,6 +2593,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getStandardDiagram()
   {
     return standardDiagramEClass;
@@ -2441,6 +2604,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getDecorationNode()
   {
     return decorationNodeEClass;
@@ -2451,6 +2615,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getBasicDecorationNode()
   {
     return basicDecorationNodeEClass;
@@ -2461,6 +2626,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getBasicCompartment()
   {
     return basicCompartmentEClass;
@@ -2471,6 +2637,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getBasicSemanticCompartment()
   {
     return basicSemanticCompartmentEClass;
@@ -2481,6 +2648,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getSemanticListCompartment()
   {
     return semanticListCompartmentEClass;
@@ -2491,6 +2659,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getRoundedCornersStyle()
   {
     return roundedCornersStyleEClass;
@@ -2501,6 +2670,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getRoundedCornersStyle_RoundedBendpointsRadius()
   {
     return (EAttribute)roundedCornersStyleEClass.getEStructuralFeatures().get(0);
@@ -2511,6 +2681,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getSorting()
   {
     return sortingEEnum;
@@ -2521,6 +2692,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getFiltering()
   {
     return filteringEEnum;
@@ -2531,6 +2703,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getRouting()
   {
     return routingEEnum;
@@ -2541,6 +2714,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getSmoothness()
   {
     return smoothnessEEnum;
@@ -2551,6 +2725,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getJumpLinkStatus()
   {
     return jumpLinkStatusEEnum;
@@ -2561,6 +2736,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getJumpLinkType()
   {
     return jumpLinkTypeEEnum;
@@ -2571,6 +2747,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getAlignment()
   {
     return alignmentEEnum;
@@ -2581,6 +2758,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getSortingDirection()
   {
     return sortingDirectionEEnum;
@@ -2591,6 +2769,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getMeasurementUnit()
   {
     return measurementUnitEEnum;
@@ -2601,6 +2780,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getTextAlignment()
   {
     return textAlignmentEEnum;
@@ -2611,6 +2791,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getLineType()
   {
     return lineTypeEEnum;
@@ -2621,6 +2802,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getArrowType()
   {
     return arrowTypeEEnum;
@@ -2631,6 +2813,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getGradientStyle()
   {
     return gradientStyleEEnum;
@@ -2641,6 +2824,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getRelativeBendpointList()
   {
     return relativeBendpointListEDataType;
@@ -2651,6 +2835,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getFilterKeyList()
   {
     return filterKeyListEDataType;
@@ -2661,6 +2846,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getSortKeyMap()
   {
     return sortKeyMapEDataType;
@@ -2671,6 +2857,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EDataType getGradientData()
   {
     return gradientDataEDataType;
@@ -2681,6 +2868,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NotationFactory getNotationFactory()
   {
     return (NotationFactory)getEFactoryInstance();

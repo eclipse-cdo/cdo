@@ -81,7 +81,7 @@ public class LegacyBundle extends AbstractBundle
   @Override
   public Iterator<Class<?>> getClasses()
   {
-    List<Class<?>> result = new ArrayList<Class<?>>();
+    List<Class<?>> result = new ArrayList<>();
 
     if (isArchiveProtocol(baseURL.getProtocol()))
     {

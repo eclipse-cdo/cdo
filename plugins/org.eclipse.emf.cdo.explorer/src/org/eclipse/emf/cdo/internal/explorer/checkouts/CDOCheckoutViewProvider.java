@@ -116,7 +116,7 @@ public class CDOCheckoutViewProvider extends AbstractCDOViewProvider
    */
   private static final class CheckoutViewProviderAdapter extends AdapterImpl
   {
-    private final Map<CDOCheckout, CDOView> views = new HashMap<CDOCheckout, CDOView>();
+    private final Map<CDOCheckout, CDOView> views = new HashMap<>();
 
     private CheckoutViewProviderAdapter()
     {

@@ -73,7 +73,7 @@ public class RefMultiNonContainedNPLImpl extends EObjectImpl implements RefMulti
   {
     if (elements == null)
     {
-      elements = new EObjectResolvingEList<ContainedElementNoOpposite>(ContainedElementNoOpposite.class, this,
+      elements = new EObjectResolvingEList<>(ContainedElementNoOpposite.class, this,
           model4Package.REF_MULTI_NON_CONTAINED_NPL__ELEMENTS);
     }
     return elements;

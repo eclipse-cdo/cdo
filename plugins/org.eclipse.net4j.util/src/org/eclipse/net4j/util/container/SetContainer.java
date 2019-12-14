@@ -136,7 +136,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
   @Override
   public boolean addAllElements(Collection<E> elements)
   {
-    List<E> validElements = new ArrayList<E>();
+    List<E> validElements = new ArrayList<>();
     for (E element : elements)
     {
       if (validateElement(element))

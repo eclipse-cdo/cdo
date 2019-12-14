@@ -91,7 +91,7 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
 
   public List<CDOID> readUnitRoots(IDBStoreAccessor accessor)
   {
-    List<CDOID> rootIDs = new ArrayList<CDOID>();
+    List<CDOID> rootIDs = new ArrayList<>();
     IIDHandler idHandler = mappingStrategy.getStore().getIDHandler();
     Statement stmt = null;
 

@@ -60,7 +60,7 @@ public class ControlChannel extends Channel
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, ControlChannel.class);
 
-  private SynchronizingCorrelator<Short, String> acknowledgements = new SynchronizingCorrelator<Short, String>();
+  private SynchronizingCorrelator<Short, String> acknowledgements = new SynchronizingCorrelator<>();
 
   public ControlChannel(TCPConnector connector)
   {

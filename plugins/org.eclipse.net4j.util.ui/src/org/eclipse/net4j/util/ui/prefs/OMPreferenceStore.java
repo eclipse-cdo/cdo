@@ -31,7 +31,7 @@ public class OMPreferenceStore implements IPreferenceStore
 {
   private OMPreferences preferences;
 
-  private List<IPropertyChangeListener> listeners = new ArrayList<IPropertyChangeListener>(0);
+  private List<IPropertyChangeListener> listeners = new ArrayList<>(0);
 
   private IListener preferencesListener = new IListener()
   {

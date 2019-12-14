@@ -60,9 +60,9 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
 
   private InternalCDOCommitContext delegateCommitContext;
 
-  private Map<CDOIDTempObjectExternalImpl, InternalCDOTransaction> requestedIDs = new HashMap<CDOIDTempObjectExternalImpl, InternalCDOTransaction>();
+  private Map<CDOIDTempObjectExternalImpl, InternalCDOTransaction> requestedIDs = new HashMap<>();
 
-  private Map<InternalCDOObject, CDOIDTempObjectExternalImpl> objectToID = new HashMap<InternalCDOObject, CDOIDTempObjectExternalImpl>();
+  private Map<InternalCDOObject, CDOIDTempObjectExternalImpl> objectToID = new HashMap<>();
 
   public CDOXACommitContextImpl(InternalCDOXATransaction manager, InternalCDOCommitContext commitContext)
   {

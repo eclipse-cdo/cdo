@@ -61,7 +61,7 @@ public class CDOAdminClientManagerImpl extends SetContainer<CDOAdminClient> impl
   @Override
   public List<String> getConnectionURLs()
   {
-    List<String> urls = new ArrayList<String>();
+    List<String> urls = new ArrayList<>();
     for (CDOAdminClient connection : getConnections())
     {
       urls.add(connection.getURL());

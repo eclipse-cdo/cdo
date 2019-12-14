@@ -73,7 +73,7 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
   {
     if (points == null)
     {
-      points = new EDataTypeEList<Point>(Point.class, this, Model3Package.POLYGON_WITH_DUPLICATES__POINTS);
+      points = new EDataTypeEList<>(Point.class, this, Model3Package.POLYGON_WITH_DUPLICATES__POINTS);
     }
     return points;
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -116,7 +116,7 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
     CDOID childID = child.cdoID();
 
     // Step 2: lock the root and its child
-    Collection<CDOObject> objectsToLock = new LinkedHashSet<CDOObject>();
+    Collection<CDOObject> objectsToLock = new LinkedHashSet<>();
     objectsToLock.add(container);
     objectsToLock.add(child);
 
@@ -186,7 +186,7 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
     }
 
     // Step 2: check lock
-    ArrayList<CDOID> elementIDs = new ArrayList<CDOID>();
+    ArrayList<CDOID> elementIDs = new ArrayList<>();
     elementIDs.add(elementID);
 
     CDOLockState cdoLockState = tx.getLockStates(elementIDs)[0];

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -26,7 +26,7 @@ public class MultiMapTest extends AbstractOMTest
 {
   public void testListBased() throws Exception
   {
-    ListBased<Integer, String> multiMap = new ListBased<Integer, String>();
+    ListBased<Integer, String> multiMap = new ListBased<>();
     assertEquals(true, multiMap.isEmpty());
     assertEquals(0, multiMap.size());
     assertEquals(false, multiMap.containsKey(1));
@@ -71,39 +71,39 @@ public class MultiMapTest extends AbstractOMTest
 
   public void testEntrySet() throws Exception
   {
-    ListBased<Integer, String> multiMap = new ListBased<Integer, String>();
+    ListBased<Integer, String> multiMap = new ListBased<>();
     assertEquals(true, multiMap.entrySet().isEmpty());
     assertEquals(0, multiMap.entrySet().size());
-    assertEquals(false, multiMap.entrySet().contains(new MapEntry<Integer, String>(1, "value1"))); //$NON-NLS-1$
+    assertEquals(false, multiMap.entrySet().contains(new MapEntry<>(1, "value1"))); //$NON-NLS-1$
 
     addDelegate(multiMap, 0, 0);
     assertEquals(true, multiMap.entrySet().isEmpty());
     assertEquals(0, multiMap.entrySet().size());
-    assertEquals(false, multiMap.entrySet().contains(new MapEntry<Integer, String>(1, "value1"))); //$NON-NLS-1$
+    assertEquals(false, multiMap.entrySet().contains(new MapEntry<>(1, "value1"))); //$NON-NLS-1$
 
     addDelegate(multiMap, 1, 10);
     addDelegate(multiMap, 11, 10);
     addDelegate(multiMap, 21, 10);
     assertEquals(false, multiMap.entrySet().isEmpty());
     assertEquals(30, multiMap.entrySet().size());
-    assertEquals(true, multiMap.entrySet().contains(new MapEntry<Integer, String>(1, "value1"))); //$NON-NLS-1$
+    assertEquals(true, multiMap.entrySet().contains(new MapEntry<>(1, "value1"))); //$NON-NLS-1$
 
     addDelegate(multiMap, 6, 10);
     assertEquals(false, multiMap.entrySet().isEmpty());
     assertEquals(30, multiMap.entrySet().size());
-    assertEquals(true, multiMap.entrySet().contains(new MapEntry<Integer, String>(1, "value1"))); //$NON-NLS-1$
-    assertEquals(false, multiMap.entrySet().contains(new MapEntry<Integer, String>(35, "value35"))); //$NON-NLS-1$
+    assertEquals(true, multiMap.entrySet().contains(new MapEntry<>(1, "value1"))); //$NON-NLS-1$
+    assertEquals(false, multiMap.entrySet().contains(new MapEntry<>(35, "value35"))); //$NON-NLS-1$
 
     addDelegate(multiMap, 26, 10);
     assertEquals(false, multiMap.entrySet().isEmpty());
     assertEquals(35, multiMap.entrySet().size());
-    assertEquals(true, multiMap.entrySet().contains(new MapEntry<Integer, String>(1, "value1"))); //$NON-NLS-1$
-    assertEquals(true, multiMap.entrySet().contains(new MapEntry<Integer, String>(35, "value35"))); //$NON-NLS-1$
+    assertEquals(true, multiMap.entrySet().contains(new MapEntry<>(1, "value1"))); //$NON-NLS-1$
+    assertEquals(true, multiMap.entrySet().contains(new MapEntry<>(35, "value35"))); //$NON-NLS-1$
   }
 
   public void testKeySet() throws Exception
   {
-    ListBased<Integer, String> multiMap = new ListBased<Integer, String>();
+    ListBased<Integer, String> multiMap = new ListBased<>();
     assertEquals(true, multiMap.keySet().isEmpty());
     assertEquals(0, multiMap.keySet().size());
     assertEquals(false, multiMap.keySet().contains(1));
@@ -135,7 +135,7 @@ public class MultiMapTest extends AbstractOMTest
 
   public void testValues() throws Exception
   {
-    ListBased<Integer, String> multiMap = new ListBased<Integer, String>();
+    ListBased<Integer, String> multiMap = new ListBased<>();
     assertEquals(true, multiMap.values().isEmpty());
     assertEquals(0, multiMap.values().size());
     assertEquals(false, multiMap.values().contains("value1")); //$NON-NLS-1$
@@ -167,11 +167,11 @@ public class MultiMapTest extends AbstractOMTest
 
   public void testEntrySetIterator() throws Exception
   {
-    ListBased<Integer, String> multiMap = new ListBased<Integer, String>();
-    assertIterator(new HashSet<Object>(), multiMap.entrySet());
+    ListBased<Integer, String> multiMap = new ListBased<>();
+    assertIterator(new HashSet<>(), multiMap.entrySet());
 
     addDelegate(multiMap, 0, 0);
-    assertIterator(new HashSet<Object>(), multiMap.entrySet());
+    assertIterator(new HashSet<>(), multiMap.entrySet());
 
     addDelegate(multiMap, 1, 10);
     addDelegate(multiMap, 11, 10);
@@ -187,11 +187,11 @@ public class MultiMapTest extends AbstractOMTest
 
   public void testKeySetIterator() throws Exception
   {
-    ListBased<Integer, String> multiMap = new ListBased<Integer, String>();
-    assertIterator(new HashSet<Object>(), multiMap.keySet());
+    ListBased<Integer, String> multiMap = new ListBased<>();
+    assertIterator(new HashSet<>(), multiMap.keySet());
 
     addDelegate(multiMap, 0, 0);
-    assertIterator(new HashSet<Object>(), multiMap.keySet());
+    assertIterator(new HashSet<>(), multiMap.keySet());
 
     addDelegate(multiMap, 1, 10);
     addDelegate(multiMap, 11, 10);
@@ -207,11 +207,11 @@ public class MultiMapTest extends AbstractOMTest
 
   public void testValuesIterator() throws Exception
   {
-    ListBased<Integer, String> multiMap = new ListBased<Integer, String>();
-    assertIterator(new HashSet<Object>(), multiMap.values());
+    ListBased<Integer, String> multiMap = new ListBased<>();
+    assertIterator(new HashSet<>(), multiMap.values());
 
     addDelegate(multiMap, 0, 0);
-    assertIterator(new HashSet<Object>(), multiMap.values());
+    assertIterator(new HashSet<>(), multiMap.values());
 
     addDelegate(multiMap, 1, 10);
     addDelegate(multiMap, 11, 10);
@@ -227,7 +227,7 @@ public class MultiMapTest extends AbstractOMTest
 
   private void addDelegate(ListBased<Integer, String> multiMap, int start, int count)
   {
-    Map<Integer, String> map = new HashMap<Integer, String>();
+    Map<Integer, String> map = new HashMap<>();
     for (int i = 0; i < count; i++)
     {
       int key = start + i;
@@ -255,11 +255,11 @@ public class MultiMapTest extends AbstractOMTest
 
   private Set<Object> createMapEntries(int start, int count)
   {
-    Set<Object> result = new HashSet<Object>();
+    Set<Object> result = new HashSet<>();
     for (int i = 0; i < count; i++)
     {
       int key = start + i;
-      result.add(new MapEntry<Integer, String>(key, "value" + key)); //$NON-NLS-1$
+      result.add(new MapEntry<>(key, "value" + key)); //$NON-NLS-1$
     }
 
     return result;
@@ -267,7 +267,7 @@ public class MultiMapTest extends AbstractOMTest
 
   private Set<Object> createKeys(int start, int count)
   {
-    Set<Object> result = new HashSet<Object>();
+    Set<Object> result = new HashSet<>();
     for (int i = 0; i < count; i++)
     {
       int key = start + i;
@@ -279,7 +279,7 @@ public class MultiMapTest extends AbstractOMTest
 
   private Set<Object> createValues(int start, int count)
   {
-    Set<Object> result = new HashSet<Object>();
+    Set<Object> result = new HashSet<>();
     for (int i = 0; i < count; i++)
     {
       int key = start + i;

@@ -369,7 +369,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     int size = in.readXInt();
     if (size != 0)
     {
-      List<CDOObjectReference> xRefs = new ArrayList<CDOObjectReference>(size);
+      List<CDOObjectReference> xRefs = new ArrayList<>(size);
       result.setXRefs(xRefs);
 
       for (int i = 0; i < size; i++)

@@ -80,11 +80,11 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
   @ExcludeFromDump
   private transient Map<EClass, List<EClass>> subTypes;
 
-  private Map<Enumerator, EEnumLiteral> enumLiterals = new HashMap<Enumerator, EEnumLiteral>();
+  private Map<Enumerator, EEnumLiteral> enumLiterals = new HashMap<>();
 
-  private Set<CDOPackageInfo> visitedPackages = new HashSet<CDOPackageInfo>();
+  private Set<CDOPackageInfo> visitedPackages = new HashSet<>();
 
-  private Map<EPackage, InternalCDOPackageInfo> packageInfoMap = new HashMap<EPackage, InternalCDOPackageInfo>();
+  private Map<EPackage, InternalCDOPackageInfo> packageInfoMap = new HashMap<>();
 
   public CDOPackageRegistryImpl()
   {
@@ -140,7 +140,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
   public synchronized Set<String> getAllKeys()
   {
     LifecycleUtil.checkActive(this);
-    Set<String> result = new HashSet<String>();
+    Set<String> result = new HashSet<>();
     result.addAll(keySet());
     if (delegateRegistry != null)
     {
@@ -326,7 +326,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     LifecycleUtil.checkActive(this);
     if (packageInfos == null)
     {
-      List<InternalCDOPackageInfo> result = new ArrayList<InternalCDOPackageInfo>();
+      List<InternalCDOPackageInfo> result = new ArrayList<>();
       for (Object value : values())
       {
         if (value instanceof InternalCDOPackageInfo)
@@ -406,7 +406,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
       endTime = Long.MAX_VALUE;
     }
 
-    Set<InternalCDOPackageUnit> result = new HashSet<InternalCDOPackageUnit>();
+    Set<InternalCDOPackageUnit> result = new HashSet<>();
     for (Object value : values())
     {
       InternalCDOPackageUnit packageUnit = null;
@@ -458,7 +458,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
 
   private InternalCDOPackageUnit[] collectPackageUnits(boolean withSystemPackages)
   {
-    Set<InternalCDOPackageUnit> result = new HashSet<InternalCDOPackageUnit>();
+    Set<InternalCDOPackageUnit> result = new HashSet<>();
     for (Object value : values())
     {
       InternalCDOPackageUnit packageUnit = collectPackageUnit(value);
@@ -495,7 +495,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
   public synchronized EPackage[] getEPackages()
   {
     LifecycleUtil.checkActive(this);
-    List<EPackage> result = new ArrayList<EPackage>();
+    List<EPackage> result = new ArrayList<>();
     for (String packageURI : keySet())
     {
       EPackage ePackage = getEPackage(packageURI);

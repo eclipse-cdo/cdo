@@ -322,7 +322,7 @@ public class FolderCDOWorkspaceBase extends AbstractCDOWorkspaceBase
 
   private Set<CDOID> doGetIDs(File folder)
   {
-    Set<CDOID> ids = new HashSet<CDOID>();
+    Set<CDOID> ids = new HashSet<>();
 
     if (folder.isDirectory())
     {

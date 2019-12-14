@@ -28,9 +28,9 @@ public class CDOViewRegistryImpl extends Container<Registration> implements CDOV
 {
   public static final CDOViewRegistryImpl INSTANCE = new CDOViewRegistryImpl();
 
-  private final Map<Integer, Registration> ids = new HashMap<Integer, Registration>();
+  private final Map<Integer, Registration> ids = new HashMap<>();
 
-  private final Map<CDOView, Registration> views = new HashMap<CDOView, Registration>();
+  private final Map<CDOView, Registration> views = new HashMap<>();
 
   private int lastID;
 

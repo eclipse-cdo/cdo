@@ -210,7 +210,7 @@ public class BranchingTest extends AbstractCDOTest
     CDOSession session1 = openSession1();
     CDOSession session2 = openSession2();
 
-    final AsyncResult<CDOBranch> result = new AsyncResult<CDOBranch>();
+    final AsyncResult<CDOBranch> result = new AsyncResult<>();
     session2.getBranchManager().addListener(new IListener()
     {
       @Override
@@ -992,7 +992,7 @@ public class BranchingTest extends AbstractCDOTest
     mainBranch = branchManager.getMainBranch();
     subBranch = mainBranch.getBranch(name);
 
-    final List<CDORevision> revisions = new ArrayList<CDORevision>();
+    final List<CDORevision> revisions = new ArrayList<>();
 
     CDOSessionProtocol sessionProtocol = ((InternalCDOSession)session).getSessionProtocol();
     sessionProtocol.handleRevisions(null, subBranch, false, CDOBranchPoint.UNSPECIFIED_DATE, false, new CDORevisionHandler()

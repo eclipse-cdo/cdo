@@ -44,9 +44,9 @@ public class CDOTreeExpansionAgent
 {
   private final Listener listener = new Listener();
 
-  private final Set<CDOID> expandedIDs = new HashSet<CDOID>();
+  private final Set<CDOID> expandedIDs = new HashSet<>();
 
-  private final Set<CDOID> expandedWrappers = new HashSet<CDOID>();
+  private final Set<CDOID> expandedWrappers = new HashSet<>();
 
   private final CDOView view;
 

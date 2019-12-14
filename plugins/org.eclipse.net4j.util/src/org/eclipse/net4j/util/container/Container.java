@@ -83,7 +83,7 @@ public abstract class Container<E> extends ShareableLifecycle implements IContai
    */
   public void fireContainerEvent(E[] elements, Kind kind)
   {
-    ContainerEvent<E> event = new ContainerEvent<E>(this);
+    ContainerEvent<E> event = new ContainerEvent<>(this);
     for (E element : elements)
     {
       event.addDelta(element, kind);
@@ -110,16 +110,16 @@ public abstract class Container<E> extends ShareableLifecycle implements IContai
 
   public void fireContainerEvent(List<IContainerDelta<E>> deltas)
   {
-    fireEvent(new ContainerEvent<E>(this, deltas));
+    fireEvent(new ContainerEvent<>(this, deltas));
   }
 
   protected SingleDeltaContainerEvent<E> newContainerEvent(E element, IContainerDelta.Kind kind)
   {
-    return new SingleDeltaContainerEvent<E>(this, element, kind);
+    return new SingleDeltaContainerEvent<>(this, element, kind);
   }
 
   protected ContainerEvent<E> newContainerEvent()
   {
-    return new ContainerEvent<E>(this);
+    return new ContainerEvent<>(this);
   }
 }

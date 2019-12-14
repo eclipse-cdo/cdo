@@ -105,7 +105,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
 
   private final NodeManager manager;
 
-  private final List<Property> properties = new ArrayList<Property>();
+  private final List<Property> properties = new ArrayList<>();
 
   private final Properties settings = new Properties();
 
@@ -319,7 +319,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     IDBConnectionProvider dbConnectionProvider = dbAdapter.createConnectionProvider(dataSource);
     IStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
 
-    Map<String, String> props = new HashMap<String, String>();
+    Map<String, String> props = new HashMap<>();
     props.put(IRepository.Props.OVERRIDE_UUID, REPOSITORY_NAME);
     props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
     props.put(IRepository.Props.SUPPORTING_BRANCHES, "true");
@@ -468,7 +468,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
           @Override
           public Object[] getElements(Object inputElement)
           {
-            List<Node> result = new ArrayList<Node>();
+            List<Node> result = new ArrayList<>();
             Node[] nodes = getContainer().getManager().getNodes();
             for (Node node : nodes)
             {

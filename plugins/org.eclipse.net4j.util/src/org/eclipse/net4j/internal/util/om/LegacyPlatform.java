@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class LegacyPlatform extends AbstractPlatform
 {
-  private Map<String, String> debugOptions = new ConcurrentHashMap<String, String>(0);
+  private Map<String, String> debugOptions = new ConcurrentHashMap<>(0);
 
   public LegacyPlatform()
   {

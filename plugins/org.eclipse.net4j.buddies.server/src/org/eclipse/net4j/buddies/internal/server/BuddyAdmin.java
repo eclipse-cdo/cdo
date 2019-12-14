@@ -52,9 +52,9 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, BuddyAdmin.class);
 
-  private ConcurrentMap<String, IAccount> accounts = new ConcurrentHashMap<String, IAccount>();
+  private ConcurrentMap<String, IAccount> accounts = new ConcurrentHashMap<>();
 
-  private ConcurrentMap<String, ISession> sessions = new ConcurrentHashMap<String, ISession>();
+  private ConcurrentMap<String, ISession> sessions = new ConcurrentHashMap<>();
 
   private long lastCollaborationID;
 
@@ -90,7 +90,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin
   @Override
   public IBuddy[] getBuddies()
   {
-    List<IBuddy> buddies = new ArrayList<IBuddy>();
+    List<IBuddy> buddies = new ArrayList<>();
     for (ISession session : sessions.values())
     {
       buddies.add(session.getSelf());
@@ -166,7 +166,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin
     collaboration.activate();
     Membership.create(initiator, collaboration);
 
-    Set<IBuddy> buddies = new HashSet<IBuddy>();
+    Set<IBuddy> buddies = new HashSet<>();
     buddies.add(initiator);
     for (String userID : userIDs)
     {
@@ -180,7 +180,7 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin
 
     addCollaboration(collaboration);
 
-    Set<IBuddy> invitations = new HashSet<IBuddy>(buddies);
+    Set<IBuddy> invitations = new HashSet<>(buddies);
     for (IBuddy buddy : buddies)
     {
       if (buddy != initiator)

@@ -483,7 +483,7 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
       path = path.substring(0, userTokenPos) + user + path.substring(userTokenPos + USER_TOKEN.length());
     }
 
-    BasicEList<Matcher> list = new BasicEList<Matcher>(1);
+    BasicEList<Matcher> list = new BasicEList<>(1);
     getMatchers(list, path, patternStyle, includeParents);
 
     if (userTokenPos == USER_TOKEN_NONE)

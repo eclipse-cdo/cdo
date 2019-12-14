@@ -108,7 +108,7 @@ public abstract class DBSchemaElement extends DBNamedElement implements Internal
   {
     if (elements == null)
     {
-      List<IDBSchemaElement> result = new ArrayList<IDBSchemaElement>();
+      List<IDBSchemaElement> result = new ArrayList<>();
       collectElements(result);
 
       if (result.isEmpty())

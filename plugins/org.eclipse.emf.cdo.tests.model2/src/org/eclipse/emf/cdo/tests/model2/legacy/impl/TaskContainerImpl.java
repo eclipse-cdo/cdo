@@ -75,7 +75,7 @@ public class TaskContainerImpl extends EObjectImpl implements TaskContainer
   {
     if (tasks == null)
     {
-      tasks = new EObjectContainmentWithInverseEList<Task>(Task.class, this, Model2Package.TASK_CONTAINER__TASKS, Model2Package.TASK__TASK_CONTAINER);
+      tasks = new EObjectContainmentWithInverseEList<>(Task.class, this, Model2Package.TASK_CONTAINER__TASKS, Model2Package.TASK__TASK_CONTAINER);
     }
     return tasks;
   }

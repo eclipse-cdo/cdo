@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -94,6 +94,7 @@ public class SizeImpl extends CDOObjectImpl implements Size
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getWidth()
   {
     return ((Integer)eDynamicGet(NotationPackage.SIZE__WIDTH, NotationPackage.Literals.SIZE__WIDTH, true, true)).intValue();
@@ -104,6 +105,7 @@ public class SizeImpl extends CDOObjectImpl implements Size
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setWidth(int newWidth)
   {
     eDynamicSet(NotationPackage.SIZE__WIDTH, NotationPackage.Literals.SIZE__WIDTH, new Integer(newWidth));
@@ -114,6 +116,7 @@ public class SizeImpl extends CDOObjectImpl implements Size
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getHeight()
   {
     return ((Integer)eDynamicGet(NotationPackage.SIZE__HEIGHT, NotationPackage.Literals.SIZE__HEIGHT, true, true)).intValue();
@@ -124,6 +127,7 @@ public class SizeImpl extends CDOObjectImpl implements Size
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setHeight(int newHeight)
   {
     eDynamicSet(NotationPackage.SIZE__HEIGHT, NotationPackage.Literals.SIZE__HEIGHT, new Integer(newHeight));

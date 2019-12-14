@@ -189,7 +189,7 @@ public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOM
   {
     final EReference feature = EcorePackage.Literals.EPACKAGE__ECLASSIFIERS;
 
-    List<CDOFeatureDelta> deltas = new ArrayList<CDOFeatureDelta>();
+    List<CDOFeatureDelta> deltas = new ArrayList<>();
     deltas.add(new CDOMoveFeatureDeltaImpl(feature, 7, 1));
     // deltas.add(new CDORemoveFeatureDeltaImpl(feature, 1));
     // deltas.add(new CDORemoveFeatureDeltaImpl(feature, 1));

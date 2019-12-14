@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2013, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,11 +21,11 @@ import java.util.Map;
  */
 public final class PermissionUtil
 {
-  private static final ThreadLocal<String> USER = new ThreadLocal<String>();
+  private static final ThreadLocal<String> USER = new ThreadLocal<>();
 
-  private static final ThreadLocal<ViewCreator> VIEW_CREATOR = new ThreadLocal<ViewCreator>();
+  private static final ThreadLocal<ViewCreator> VIEW_CREATOR = new ThreadLocal<>();
 
-  private static final ThreadLocal<Map<CDORevisionProvider, CDOView>> VIEWS = new ThreadLocal<Map<CDORevisionProvider, CDOView>>();
+  private static final ThreadLocal<Map<CDORevisionProvider, CDOView>> VIEWS = new ThreadLocal<>();
 
   private PermissionUtil()
   {
@@ -53,7 +53,7 @@ public final class PermissionUtil
     Map<CDORevisionProvider, CDOView> views = VIEWS.get();
     if (views == null)
     {
-      views = new HashMap<CDORevisionProvider, CDOView>();
+      views = new HashMap<>();
       VIEWS.set(views);
     }
 

@@ -36,9 +36,9 @@ public class CachingCDOWorkspaceBase extends FolderCDOWorkspaceBase
     }
   };
 
-  private final Map<CDOID, CDORevision> revisions = new LinkedHashMap<CDOID, CDORevision>();
+  private final Map<CDOID, CDORevision> revisions = new LinkedHashMap<>();
 
-  private final Map<CDOID, Integer> detachedVersions = new LinkedHashMap<CDOID, Integer>();
+  private final Map<CDOID, Integer> detachedVersions = new LinkedHashMap<>();
 
   public CachingCDOWorkspaceBase(File folder)
   {

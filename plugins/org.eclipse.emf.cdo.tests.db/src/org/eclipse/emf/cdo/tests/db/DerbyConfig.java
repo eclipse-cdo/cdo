@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015-2017 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015-2017, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -35,9 +35,9 @@ public class DerbyConfig extends DBConfig
 
   private static final long serialVersionUID = 1L;
 
-  private static HashMap<String, File> dbFolders = new HashMap<String, File>();
+  private static HashMap<String, File> dbFolders = new HashMap<>();
 
-  private static HashMap<File, EmbeddedDataSource> dataSources = new HashMap<File, EmbeddedDataSource>();
+  private static HashMap<File, EmbeddedDataSource> dataSources = new HashMap<>();
 
   public DerbyConfig()
   {

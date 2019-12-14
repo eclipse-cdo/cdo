@@ -141,7 +141,7 @@ public abstract class DBOfflineConfig extends OfflineConfig
 
   protected Map<String, String> createMappingStrategyProperties()
   {
-    Map<String, String> props = new HashMap<String, String>();
+    Map<String, String> props = new HashMap<>();
     props.put(IMappingStrategy.Props.QUALIFIED_NAMES, "true");
     props.put(CDODBUtil.PROP_COPY_ON_BRANCH, Boolean.toString(copyOnBranch));
     return props;

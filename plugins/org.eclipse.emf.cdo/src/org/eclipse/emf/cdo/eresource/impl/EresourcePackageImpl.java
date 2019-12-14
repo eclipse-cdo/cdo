@@ -146,7 +146,8 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
     // Obtain or create and register package
     EresourcePackageImpl theEresourcePackage = (EresourcePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof EresourcePackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new EresourcePackageImpl());
+        ? EPackage.Registry.INSTANCE.get(eNS_URI)
+        : new EresourcePackageImpl());
 
     isInited = true;
 

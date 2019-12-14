@@ -165,7 +165,7 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
   {
     if (attributeList == null)
     {
-      attributeList = new EDataTypeUniqueEList<String>(String.class, this, Model6Package.BASE_OBJECT__ATTRIBUTE_LIST);
+      attributeList = new EDataTypeUniqueEList<>(String.class, this, Model6Package.BASE_OBJECT__ATTRIBUTE_LIST);
     }
     return attributeList;
   }

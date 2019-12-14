@@ -70,7 +70,7 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
 
   private static final int ORDER_DETAILS = SALES_ORDERS * PRODUCTS;
 
-  private List<CDOWorkspace> workspaces = new ArrayList<CDOWorkspace>();
+  private List<CDOWorkspace> workspaces = new ArrayList<>();
 
   private CDOTransaction transaction;
 
@@ -104,10 +104,10 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
     CDOSession session = openSession();
     transaction = session.openTransaction();
 
-    products = new ArrayList<Product1>();
-    customers = new ArrayList<Customer>();
-    orderDetails = new ArrayList<OrderDetail>();
-    salesOrders = new ArrayList<SalesOrder>();
+    products = new ArrayList<>();
+    customers = new ArrayList<>();
+    orderDetails = new ArrayList<>();
+    salesOrders = new ArrayList<>();
 
     createTestSet(transaction);
     assertEquals(PRODUCTS, products.size());

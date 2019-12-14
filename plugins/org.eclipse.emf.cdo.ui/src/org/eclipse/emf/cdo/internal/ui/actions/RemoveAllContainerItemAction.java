@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2009, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -31,7 +31,7 @@ public class RemoveAllContainerItemAction<E> extends AbstractContainerAction<E>
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
     Modifiable<E> container = getContainer();
-    ArrayList<E> elementsToRemove = new ArrayList<E>();
+    ArrayList<E> elementsToRemove = new ArrayList<>();
     for (E element : container.getElements())
     {
       elementsToRemove.add(element);

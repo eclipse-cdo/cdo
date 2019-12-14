@@ -75,7 +75,7 @@ public abstract class OrderImpl extends EObjectImpl implements Order
   {
     if (orderDetails == null)
     {
-      orderDetails = new EObjectContainmentWithInverseEList.Resolving<OrderDetail>(OrderDetail.class, this, Model1Package.ORDER__ORDER_DETAILS,
+      orderDetails = new EObjectContainmentWithInverseEList.Resolving<>(OrderDetail.class, this, Model1Package.ORDER__ORDER_DETAILS,
           Model1Package.ORDER_DETAIL__ORDER);
     }
     return orderDetails;

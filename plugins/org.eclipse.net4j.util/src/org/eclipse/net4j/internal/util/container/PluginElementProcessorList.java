@@ -31,7 +31,7 @@ public class PluginElementProcessorList extends Lifecycle implements List<IEleme
 
   public static final String EXT_POINT = "elementProcessors"; //$NON-NLS-1$
 
-  private List<IElementProcessor> processors = new ArrayList<IElementProcessor>();
+  private List<IElementProcessor> processors = new ArrayList<>();
 
   private Object extensionRegistryListener;
 

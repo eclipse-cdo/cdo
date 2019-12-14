@@ -34,9 +34,9 @@ public class ActionBarsHelper
 {
   private final IActionBars bars;
 
-  private final Map<String, IAction> globalActions = new java.util.HashMap<String, IAction>();
+  private final Map<String, IAction> globalActions = new java.util.HashMap<>();
 
-  private final Map<String, IAction> previousActions = new java.util.HashMap<String, IAction>();
+  private final Map<String, IAction> previousActions = new java.util.HashMap<>();
 
   public ActionBarsHelper(IActionBars actionBars)
   {

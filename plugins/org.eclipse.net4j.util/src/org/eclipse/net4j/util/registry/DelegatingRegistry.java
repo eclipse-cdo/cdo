@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -114,7 +114,7 @@ public abstract class DelegatingRegistry<K, V> extends Registry<K, V>
 
   protected Set<Entry<K, V>> mergedEntrySet()
   {
-    final Map<K, V> merged = new HashMap<K, V>();
+    final Map<K, V> merged = new HashMap<>();
     if (delegate != null)
     {
       merged.putAll(delegate);
@@ -126,7 +126,7 @@ public abstract class DelegatingRegistry<K, V> extends Registry<K, V>
 
   protected Set<K> mergedKeySet()
   {
-    final Set<K> merged = new HashSet<K>();
+    final Set<K> merged = new HashSet<>();
     if (delegate != null)
     {
       merged.addAll(delegate.keySet());
@@ -138,7 +138,7 @@ public abstract class DelegatingRegistry<K, V> extends Registry<K, V>
 
   protected Collection<V> mergedValues()
   {
-    final List<V> result = new ArrayList<V>();
+    final List<V> result = new ArrayList<>();
     for (K key : keySet())
     {
       result.add(get(key));

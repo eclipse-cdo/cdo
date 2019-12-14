@@ -41,7 +41,7 @@ public abstract class PackageClosure implements IPackageClosure
       return EMPTY_CLOSURE;
     }
 
-    Set<EPackage> visited = new HashSet<EPackage>();
+    Set<EPackage> visited = new HashSet<>();
     for (EPackage ePackage : ePackages)
     {
       doCollectContents(ePackage, visited);

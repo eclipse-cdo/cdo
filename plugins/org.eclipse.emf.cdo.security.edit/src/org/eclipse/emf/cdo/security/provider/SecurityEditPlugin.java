@@ -92,7 +92,7 @@ public final class SecurityEditPlugin extends EMFPlugin
    */
   public static List<EPackage> getSortedPackages(CDOView view)
   {
-    List<EPackage> result = new ArrayList<EPackage>();
+    List<EPackage> result = new ArrayList<>();
     for (CDOPackageInfo packageInfo : view.getSession().getPackageRegistry().getPackageInfos())
     {
       result.add(packageInfo.getEPackage());
@@ -115,7 +115,7 @@ public final class SecurityEditPlugin extends EMFPlugin
    */
   public static List<EClass> getSortedClasses(CDOView view)
   {
-    List<EClass> result = new ArrayList<EClass>();
+    List<EClass> result = new ArrayList<>();
     for (CDOPackageInfo packageInfo : view.getSession().getPackageRegistry().getPackageInfos())
     {
       for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())

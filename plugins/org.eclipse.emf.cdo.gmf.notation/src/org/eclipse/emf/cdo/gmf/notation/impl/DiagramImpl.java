@@ -99,6 +99,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public String getName()
   {
     return (String)eDynamicGet(NotationPackage.DIAGRAM__NAME - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.DIAGRAM__NAME, true, true);
@@ -108,6 +109,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setName(String newName)
   {
     eDynamicSet(NotationPackage.DIAGRAM__NAME - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.DIAGRAM__NAME, newName);
@@ -118,6 +120,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public MeasurementUnit getMeasurementUnit()
   {
     return (MeasurementUnit)eDynamicGet(NotationPackage.DIAGRAM__MEASUREMENT_UNIT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.DIAGRAM__MEASUREMENT_UNIT,
@@ -130,6 +133,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
    * value if it was already set <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public void setMeasurementUnit(MeasurementUnit newMeasurementUnit)
   {
     if (!isSetMeasurementUnit())
@@ -154,6 +158,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public void unsetMeasurementUnit()
   {
     /* throw new UnsupportedOperationException(); */
@@ -164,6 +169,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public boolean isSetMeasurementUnit()
   {
     return eDynamicIsSet(NotationPackage.DIAGRAM__MEASUREMENT_UNIT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.DIAGRAM__MEASUREMENT_UNIT);
@@ -172,6 +178,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
   /**
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   */
+  @Override
   public EList getEdges()
   {
     if (allEdges == null)
@@ -185,6 +192,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public EList getPersistedEdges()
   {
     return (EList)eDynamicGet(NotationPackage.DIAGRAM__PERSISTED_EDGES - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.DIAGRAM__PERSISTED_EDGES, true, true);
@@ -194,6 +202,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
   * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public EList getTransientEdges()
   {
     return (EList)eDynamicGet(NotationPackage.DIAGRAM__TRANSIENT_EDGES - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.DIAGRAM__TRANSIENT_EDGES, true, true);
@@ -202,6 +211,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public Edge createEdge(EClass eClass)
   {
     Edge newEdge = (Edge)eClass.getEPackage().getEFactoryInstance().create(eClass);
@@ -454,6 +464,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public void insertEdge(Edge edge)
   {
     persistEdges();
@@ -463,6 +474,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public void insertEdgeAt(Edge edge, int index)
   {
     persistEdges();
@@ -475,6 +487,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public void insertEdge(Edge edge, boolean persisted)
   {
     List edges = null;
@@ -492,6 +505,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public void persistEdges()
   {
     if (eIsSet(NotationPackage.DIAGRAM__TRANSIENT_EDGES))
@@ -543,6 +557,7 @@ public class DiagramImpl extends ViewImpl implements Diagram
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
+  @Override
   public void removeEdge(Edge edge)
   {
     if (edge.eContainer() == this)

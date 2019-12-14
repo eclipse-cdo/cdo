@@ -73,6 +73,7 @@ public class EdgeImpl extends ViewImpl implements Edge
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public View getSource()
   {
     return (View)eDynamicGet(NotationPackage.EDGE__SOURCE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.EDGE__SOURCE, true, true);
@@ -116,6 +117,7 @@ public class EdgeImpl extends ViewImpl implements Edge
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setSource(View newSource)
   {
     eDynamicSet(NotationPackage.EDGE__SOURCE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.EDGE__SOURCE, newSource);
@@ -126,6 +128,7 @@ public class EdgeImpl extends ViewImpl implements Edge
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public View getTarget()
   {
     return (View)eDynamicGet(NotationPackage.EDGE__TARGET - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.EDGE__TARGET, true, true);
@@ -169,6 +172,7 @@ public class EdgeImpl extends ViewImpl implements Edge
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setTarget(View newTarget)
   {
     eDynamicSet(NotationPackage.EDGE__TARGET - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.EDGE__TARGET, newTarget);
@@ -179,6 +183,7 @@ public class EdgeImpl extends ViewImpl implements Edge
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Bendpoints getBendpoints()
   {
     return (Bendpoints)eDynamicGet(NotationPackage.EDGE__BENDPOINTS - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.EDGE__BENDPOINTS, true, true);
@@ -200,6 +205,7 @@ public class EdgeImpl extends ViewImpl implements Edge
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setBendpoints(Bendpoints newBendpoints)
   {
     eDynamicSet(NotationPackage.EDGE__BENDPOINTS - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.EDGE__BENDPOINTS, newBendpoints);
@@ -210,6 +216,7 @@ public class EdgeImpl extends ViewImpl implements Edge
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Anchor getSourceAnchor()
   {
     return (Anchor)eDynamicGet(NotationPackage.EDGE__SOURCE_ANCHOR - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.EDGE__SOURCE_ANCHOR, true, true);
@@ -231,6 +238,7 @@ public class EdgeImpl extends ViewImpl implements Edge
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setSourceAnchor(Anchor newSourceAnchor)
   {
     eDynamicSet(NotationPackage.EDGE__SOURCE_ANCHOR - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.EDGE__SOURCE_ANCHOR, newSourceAnchor);
@@ -241,6 +249,7 @@ public class EdgeImpl extends ViewImpl implements Edge
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public Anchor getTargetAnchor()
   {
     return (Anchor)eDynamicGet(NotationPackage.EDGE__TARGET_ANCHOR - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.EDGE__TARGET_ANCHOR, true, true);
@@ -262,6 +271,7 @@ public class EdgeImpl extends ViewImpl implements Edge
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setTargetAnchor(Anchor newTargetAnchor)
   {
     eDynamicSet(NotationPackage.EDGE__TARGET_ANCHOR - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.EDGE__TARGET_ANCHOR, newTargetAnchor);
@@ -272,6 +282,7 @@ public class EdgeImpl extends ViewImpl implements Edge
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public Bendpoints createBendpoints(EClass eClass)
   {
     Bendpoints newBendpoints = (Bendpoints)eClass.getEPackage().getEFactoryInstance().create(eClass);
@@ -283,6 +294,7 @@ public class EdgeImpl extends ViewImpl implements Edge
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    */
+  @Override
   public Anchor createSourceAnchor(EClass eClass)
   {
     Anchor newAnchor = (Anchor)eClass.getEPackage().getEFactoryInstance().create(eClass);
@@ -294,6 +306,7 @@ public class EdgeImpl extends ViewImpl implements Edge
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    */
+  @Override
   public Anchor createTargetAnchor(EClass eClass)
   {
     Anchor newAnchor = (Anchor)eClass.getEPackage().getEFactoryInstance().create(eClass);

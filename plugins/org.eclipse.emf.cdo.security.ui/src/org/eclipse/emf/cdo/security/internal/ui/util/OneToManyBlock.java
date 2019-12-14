@@ -131,7 +131,7 @@ public class OneToManyBlock
     this.domain = domain;
     this.adapterFactory = adapterFactory;
     configuration = blockConfig;
-    input = new WritableValue<Object>(context.getValidationRealm());
+    input = new WritableValue<>(context.getValidationRealm());
     supportedContentFilter = SecurityUIUtil.getSupportedElementFilter(configuration.getItemType());
   }
 
@@ -186,7 +186,7 @@ public class OneToManyBlock
       viewer.setLabelProvider(labels);
     }
 
-    viewer.setContentProvider(new ObservableListContentProvider<Object>());
+    viewer.setContentProvider(new ObservableListContentProvider<>());
     SecurityUIUtil.applySupportedElementFilter(viewer, itemType);
     if (itemType != reference.getEReferenceType())
     {
@@ -303,7 +303,7 @@ public class OneToManyBlock
           if (directory != null)
           {
             // Get the available items not already in our input's reference list
-            List<?> available = new ArrayList<Object>(EcoreUtil.getObjectsByType(directory.getItems(), itemType));
+            List<?> available = new ArrayList<>(EcoreUtil.getObjectsByType(directory.getItems(), itemType));
             available.removeAll(value);
             SecurityUIUtil.applySupportedElementFilter(available, itemType);
 

@@ -190,7 +190,7 @@ public final class ApiReportsGenerator
       }
     }
 
-    List<Object> result = new ArrayList<Object>();
+    List<Object> result = new ArrayList<>();
     for (IProject project : ResourcesPlugin.getWorkspace().getRoot().getProjects())
     {
       if (project.isAccessible())

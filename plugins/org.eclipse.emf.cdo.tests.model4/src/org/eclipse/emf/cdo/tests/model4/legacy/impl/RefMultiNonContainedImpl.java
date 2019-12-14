@@ -76,7 +76,7 @@ public class RefMultiNonContainedImpl extends EObjectImpl implements RefMultiNon
   {
     if (elements == null)
     {
-      elements = new EObjectWithInverseResolvingEList<MultiNonContainedElement>(MultiNonContainedElement.class, this,
+      elements = new EObjectWithInverseResolvingEList<>(MultiNonContainedElement.class, this,
           model4Package.REF_MULTI_NON_CONTAINED__ELEMENTS, model4Package.MULTI_NON_CONTAINED_ELEMENT__PARENT);
     }
     return elements;

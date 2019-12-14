@@ -26,7 +26,7 @@ import java.util.concurrent.Executor;
 @Deprecated
 public class ExecutorWorkSerializer extends Lifecycle implements IWorkSerializer
 {
-  private final Queue<Runnable> workQueue = new LinkedList<Runnable>();
+  private final Queue<Runnable> workQueue = new LinkedList<>();
 
   private Executor executor;
 

@@ -75,7 +75,7 @@ public class FImpl extends EObjectImpl implements F
   {
     if (ownedEs == null)
     {
-      ownedEs = new EObjectContainmentEList.Resolving<E>(E.class, this, Model6Package.F__OWNED_ES);
+      ownedEs = new EObjectContainmentEList.Resolving<>(E.class, this, Model6Package.F__OWNED_ES);
     }
     return ownedEs;
   }

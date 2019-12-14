@@ -30,7 +30,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class MembershipContainer extends Lifecycle implements IMembershipContainer, IListener
 {
-  private ConcurrentMap<IMembershipKey, IMembership> memberships = new ConcurrentHashMap<IMembershipKey, IMembership>();
+  private ConcurrentMap<IMembershipKey, IMembership> memberships = new ConcurrentHashMap<>();
 
   public MembershipContainer()
   {
@@ -43,7 +43,7 @@ public class MembershipContainer extends Lifecycle implements IMembershipContain
       IListener[] listeners = getListeners();
       if (listeners != null)
       {
-        fireEvent(new SingleDeltaContainerEvent<IMembership>(this, membership, IContainerDelta.Kind.ADDED), listeners);
+        fireEvent(new SingleDeltaContainerEvent<>(this, membership, IContainerDelta.Kind.ADDED), listeners);
       }
 
       membership.addListener(this);
@@ -69,7 +69,7 @@ public class MembershipContainer extends Lifecycle implements IMembershipContain
       IListener[] listeners = getListeners();
       if (listeners != null)
       {
-        fireEvent(new SingleDeltaContainerEvent<IMembership>(this, membership, IContainerDelta.Kind.REMOVED), listeners);
+        fireEvent(new SingleDeltaContainerEvent<>(this, membership, IContainerDelta.Kind.REMOVED), listeners);
       }
     }
 

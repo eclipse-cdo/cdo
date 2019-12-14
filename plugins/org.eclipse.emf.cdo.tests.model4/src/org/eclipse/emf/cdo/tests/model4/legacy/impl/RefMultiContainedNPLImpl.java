@@ -76,7 +76,7 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
   {
     if (elements == null)
     {
-      elements = new EObjectContainmentEList<ContainedElementNoOpposite>(ContainedElementNoOpposite.class, this,
+      elements = new EObjectContainmentEList<>(ContainedElementNoOpposite.class, this,
           model4Package.REF_MULTI_CONTAINED_NPL__ELEMENTS);
     }
     return elements;

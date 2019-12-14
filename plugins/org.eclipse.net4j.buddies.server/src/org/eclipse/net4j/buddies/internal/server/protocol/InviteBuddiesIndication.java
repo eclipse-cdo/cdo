@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2008, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2008, 2011, 2012, 2015, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -47,7 +47,7 @@ public class InviteBuddiesIndication extends Indication
     Collaboration collaboration = (Collaboration)BuddyAdmin.INSTANCE.getCollaboration(collaborationID);
     if (collaboration != null)
     {
-      Set<IBuddy> added = new HashSet<IBuddy>();
+      Set<IBuddy> added = new HashSet<>();
       for (String userID : userIDs)
       {
         IBuddy buddy = BuddyAdmin.INSTANCE.getBuddy(userID);
@@ -62,7 +62,7 @@ public class InviteBuddiesIndication extends Indication
       for (IBuddy buddy : buddies)
       {
         String[] facilityTypes = null;
-        Set<IBuddy> set = new HashSet<IBuddy>();
+        Set<IBuddy> set = new HashSet<>();
         if (added.contains(buddy))
         {
           set.addAll(buddies);

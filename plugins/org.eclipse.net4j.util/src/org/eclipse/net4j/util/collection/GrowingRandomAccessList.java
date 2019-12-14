@@ -30,7 +30,7 @@ public class GrowingRandomAccessList<E> extends AbstractList<E> implements Queue
 
   private final int pageCapacity;
 
-  private List<E[]> pages = new ArrayList<E[]>();
+  private List<E[]> pages = new ArrayList<>();
 
   private int firstFree;
 
@@ -145,7 +145,7 @@ public class GrowingRandomAccessList<E> extends AbstractList<E> implements Queue
     }
     else
     {
-      GrowingRandomAccessList<E> result = new GrowingRandomAccessList<E>(componentType, pageCapacity);
+      GrowingRandomAccessList<E> result = new GrowingRandomAccessList<>(componentType, pageCapacity);
       for (int i = 0; i < size; i++)
       {
         E e = get(i);
@@ -315,7 +315,7 @@ public class GrowingRandomAccessList<E> extends AbstractList<E> implements Queue
   public Iterator<E> descendingIterator()
   {
     ListIterator<E> delegate = listIterator(size() - 1);
-    return new BidirectionalIterator<E>(delegate, true);
+    return new BidirectionalIterator<>(delegate, true);
   }
 
   protected E[] createPage()

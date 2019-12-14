@@ -54,7 +54,7 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
 
   private final Image imageRepoDisconnected = new Image(UIUtil.getDisplay(), REPOSITORY_IMAGE, SWT.IMAGE_GRAY);
 
-  private final Map<CDORepository, CDORepository> connectingRepositories = new ConcurrentHashMap<CDORepository, CDORepository>();
+  private final Map<CDORepository, CDORepository> connectingRepositories = new ConcurrentHashMap<>();
 
   private final IListener repositoryManagerListener = new IListener()
   {
@@ -194,7 +194,7 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
     }
     else if (element instanceof CDORepositoryManager)
     {
-      List<CDORepository> repositories = new ArrayList<CDORepository>();
+      List<CDORepository> repositories = new ArrayList<>();
 
       Object[] children = super.getChildren(element);
       for (Object child : children)
@@ -209,8 +209,8 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
       return repositories.toArray();
     }
 
-    List<CDOTimeProvider> timeProviders = new ArrayList<CDOTimeProvider>();
-    List<Object> otherObjects = new ArrayList<Object>();
+    List<CDOTimeProvider> timeProviders = new ArrayList<>();
+    List<Object> otherObjects = new ArrayList<>();
 
     Object[] children = super.getChildren(element);
     for (Object child : children)

@@ -51,11 +51,11 @@ public class Server extends QueueWorker<MessageImpl> implements IServer
 
   private Context jndiContext;
 
-  private ConcurrentMap<String, ServerDestination> destinations = new ConcurrentHashMap<String, ServerDestination>();
+  private ConcurrentMap<String, ServerDestination> destinations = new ConcurrentHashMap<>();
 
-  private Set<ServerConnection> connections = new HashSet<ServerConnection>();
+  private Set<ServerConnection> connections = new HashSet<>();
 
-  private ConcurrentMap<Long, ServerConsumer> consumers = new ConcurrentHashMap<Long, ServerConsumer>();
+  private ConcurrentMap<Long, ServerConsumer> consumers = new ConcurrentHashMap<>();
 
   public Server()
   {

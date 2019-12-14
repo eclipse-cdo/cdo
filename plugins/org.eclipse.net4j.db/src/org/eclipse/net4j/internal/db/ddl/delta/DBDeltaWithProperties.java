@@ -28,7 +28,7 @@ public abstract class DBDeltaWithProperties extends DBDelta implements IDBDeltaW
 {
   private static final long serialVersionUID = 1L;
 
-  private Map<String, IDBPropertyDelta<?>> propertyDeltas = new HashMap<String, IDBPropertyDelta<?>>();
+  private Map<String, IDBPropertyDelta<?>> propertyDeltas = new HashMap<>();
 
   public DBDeltaWithProperties(DBDelta parent, String name, ChangeKind changeKind)
   {

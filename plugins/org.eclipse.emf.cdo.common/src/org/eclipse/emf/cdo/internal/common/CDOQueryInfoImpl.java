@@ -35,7 +35,7 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
 
   protected Object context;
 
-  protected Map<String, Object> parameters = new HashMap<String, Object>();
+  protected Map<String, Object> parameters = new HashMap<>();
 
   protected int maxResults = UNLIMITED_RESULTS;
 

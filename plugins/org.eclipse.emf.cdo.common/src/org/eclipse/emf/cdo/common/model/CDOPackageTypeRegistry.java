@@ -42,9 +42,9 @@ public final class CDOPackageTypeRegistry
 
   private static final String MARKER_FILE = "META-INF/CDO.MF"; //$NON-NLS-1$
 
-  private Map<String, CDOPackageUnit.Type> types = new HashMap<String, CDOPackageUnit.Type>();
+  private Map<String, CDOPackageUnit.Type> types = new HashMap<>();
 
-  private Map<String, CDOPackageUnit.Type> bundles = new HashMap<String, CDOPackageUnit.Type>();
+  private Map<String, CDOPackageUnit.Type> bundles = new HashMap<>();
 
   private CDOPackageTypeRegistry()
   {

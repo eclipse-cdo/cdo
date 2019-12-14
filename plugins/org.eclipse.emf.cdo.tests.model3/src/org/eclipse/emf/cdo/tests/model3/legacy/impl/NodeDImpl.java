@@ -121,7 +121,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
   {
     if (children == null)
     {
-      children = new EObjectContainmentWithInverseEList<NodeD>(NodeD.class, this, Model3Package.NODE_D__CHILDREN, Model3Package.NODE_D__PARENT);
+      children = new EObjectContainmentWithInverseEList<>(NodeD.class, this, Model3Package.NODE_D__CHILDREN, Model3Package.NODE_D__PARENT);
     }
     return children;
   }
@@ -218,7 +218,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
   {
     if (otherNodes == null)
     {
-      otherNodes = new EObjectWithInverseResolvingEList<NodeD>(NodeD.class, this, Model3Package.NODE_D__OTHER_NODES, Model3Package.NODE_D__OPPOSITE_NODE);
+      otherNodes = new EObjectWithInverseResolvingEList<>(NodeD.class, this, Model3Package.NODE_D__OTHER_NODES, Model3Package.NODE_D__OPPOSITE_NODE);
     }
     return otherNodes;
   }

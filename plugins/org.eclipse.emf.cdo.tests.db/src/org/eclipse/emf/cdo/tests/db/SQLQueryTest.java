@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2013, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2009-2013, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -205,7 +205,7 @@ public class SQLQueryTest extends AbstractCDOTest
       msg("Query for products in pages");
       int pageSize = 5;
       int numOfPages = NUM_OF_PRODUCTS / pageSize;
-      final List<Product1> allProducts = new ArrayList<Product1>();
+      final List<Product1> allProducts = new ArrayList<>();
       for (int page = 0; page < numOfPages; page++)
       {
         CDOQuery productQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM MODEL1_PRODUCT1");
@@ -274,7 +274,7 @@ public class SQLQueryTest extends AbstractCDOTest
       msg("Query for customer street strings.");
       CDOQuery query = transaction.createQuery("sql", "SELECT STREET FROM MODEL1_CUSTOMER");
       query.setParameter("cdoObjectQuery", false);
-      List<String> streets = new ArrayList<String>(query.getResult(String.class));
+      List<String> streets = new ArrayList<>(query.getResult(String.class));
       for (int i = 0; i < 5; i++)
       {
         assertEquals(true, streets.contains("Street " + i));
@@ -296,7 +296,7 @@ public class SQLQueryTest extends AbstractCDOTest
       msg("Query for customer city strings.");
       CDOQuery query = transaction.createQuery("sql", "SELECT CITY FROM MODEL1_CUSTOMER");
       query.setParameter("cdoObjectQuery", false);
-      List<String> cities = new ArrayList<String>(query.getResult(String.class));
+      List<String> cities = new ArrayList<>(query.getResult(String.class));
 
       assertEquals(true, cities.contains(null));
       for (int i = 1; i < 5; i++)
@@ -399,7 +399,7 @@ public class SQLQueryTest extends AbstractCDOTest
   private void fillResource(CDOResource resource)
   {
     msg("Creating Testset");
-    final List<Product1> products = new ArrayList<Product1>();
+    final List<Product1> products = new ArrayList<>();
     for (int i = 0; i < NUM_OF_PRODUCTS; i++)
     {
       products.add(createProduct(i));
@@ -447,7 +447,7 @@ public class SQLQueryTest extends AbstractCDOTest
 
   private List<OrderDetail> createOrderDetail(Order order, int index, List<Product1> products)
   {
-    final List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
+    final List<OrderDetail> orderDetails = new ArrayList<>();
     int count = 0;
     for (Product1 product : products)
     {

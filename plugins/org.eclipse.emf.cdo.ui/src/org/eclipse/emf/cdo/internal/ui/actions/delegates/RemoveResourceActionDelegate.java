@@ -80,7 +80,7 @@ public class RemoveResourceActionDelegate implements IObjectActionDelegate
         @Override
         protected IStatus run(IProgressMonitor monitor)
         {
-          Map<Integer, CDOTransaction> repositoryToTransaction = new HashMap<Integer, CDOTransaction>();
+          Map<Integer, CDOTransaction> repositoryToTransaction = new HashMap<>();
           for (CDOResourceNode node : nodes)
           {
             CDOSession session = node.cdoView().getSession();

@@ -279,7 +279,7 @@ public abstract class DBAdapter implements IDBAdapter
     {
       String indexName = null;
       IDBIndex.Type indexType = null;
-      List<FieldInfo> fieldInfos = new ArrayList<FieldInfo>();
+      List<FieldInfo> fieldInfos = new ArrayList<>();
 
       while (resultSet.next())
       {
@@ -648,7 +648,7 @@ public abstract class DBAdapter implements IDBAdapter
   @Override
   public Set<IDBTable> createTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException
   {
-    Set<IDBTable> createdTables = new HashSet<IDBTable>();
+    Set<IDBTable> createdTables = new HashSet<>();
 
     for (IDBTable table : tables)
     {
@@ -700,7 +700,7 @@ public abstract class DBAdapter implements IDBAdapter
   @Override
   public Collection<IDBTable> dropTables(Iterable<? extends IDBTable> tables, Connection connection) throws DBException
   {
-    List<IDBTable> droppedTables = new ArrayList<IDBTable>();
+    List<IDBTable> droppedTables = new ArrayList<>();
 
     for (IDBTable table : tables)
     {
@@ -987,7 +987,7 @@ public abstract class DBAdapter implements IDBAdapter
   {
     if (reservedWords == null)
     {
-      reservedWords = new HashSet<String>();
+      reservedWords = new HashSet<>();
       for (String reservedWord : getReservedWords())
       {
         reservedWords.add(reservedWord.toUpperCase());

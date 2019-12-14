@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2012, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,7 +21,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
   public void testPutConsumerFirst() throws Exception
   {
     final Boolean[] result = { false };
-    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
+    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<>();
     final Thread consumer = new Thread()
     {
       @Override
@@ -52,7 +52,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
   public void testBlockingPutConsumerFirst() throws Exception
   {
     final Boolean[] result = { false };
-    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
+    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<>();
     final Thread consumer = new Thread()
     {
       @Override
@@ -86,7 +86,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
   public void _testPutProducerFirst() throws Exception
   {
     final Boolean[] result = { false };
-    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
+    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<>();
     correlator.put("eike", true, DEFAULT_TIMEOUT); //$NON-NLS-1$
 
     final Thread consumer = new Thread()
@@ -118,7 +118,7 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
   public void testBlockingPutProducerFirst() throws Exception
   {
     final Boolean[] result = { false };
-    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
+    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<>();
     boolean consumed = correlator.put("eike", true, 50); //$NON-NLS-1$
     msg("Consumed: " + consumed); //$NON-NLS-1$
     assertEquals(false, consumed);

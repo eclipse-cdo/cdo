@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -51,7 +51,7 @@ public class DeleteResourceAction extends SafeAction
   {
     super(Messages.getString("DeleteResourceAction_1"), Messages.getString("DeleteResourceAction_5"), SharedIcons.getDescriptor(SharedIcons.ETOOL_DELETE));
     this.shell = shell;
-    this.nodes = new HashSet<CDOResourceNode>(nodes);
+    this.nodes = new HashSet<>(nodes);
   }
 
   @Override
@@ -65,7 +65,7 @@ public class DeleteResourceAction extends SafeAction
         @Override
         protected IStatus run(IProgressMonitor monitor)
         {
-          Set<CDOResourceNode> nestedNodes = new HashSet<CDOResourceNode>();
+          Set<CDOResourceNode> nestedNodes = new HashSet<>();
           for (CDOResourceNode node : nodes)
           {
             if (isNested(node))
@@ -76,7 +76,7 @@ public class DeleteResourceAction extends SafeAction
 
           nodes.removeAll(nestedNodes);
 
-          Map<Integer, CDOTransaction> repositoryToTransaction = new HashMap<Integer, CDOTransaction>();
+          Map<Integer, CDOTransaction> repositoryToTransaction = new HashMap<>();
           for (CDOResourceNode node : nodes)
           {
             CDOSession session = node.cdoView().getSession();

@@ -30,9 +30,9 @@ import java.util.List;
  */
 public class SwitchTargetIndication extends CDOServerReadIndicationWithMonitoring
 {
-  private List<CDORevisionDelta> allChangedObjects = new ArrayList<CDORevisionDelta>();
+  private List<CDORevisionDelta> allChangedObjects = new ArrayList<>();
 
-  private List<CDOID> allDetachedObjects = new ArrayList<CDOID>();
+  private List<CDOID> allDetachedObjects = new ArrayList<>();
 
   public SwitchTargetIndication(CDOServerProtocol protocol)
   {
@@ -59,7 +59,7 @@ public class SwitchTargetIndication extends CDOServerReadIndicationWithMonitorin
         CDOBranchPoint branchPoint = in.readCDOBranchPoint();
 
         int size = in.readXInt();
-        List<CDOID> invalidObjects = new ArrayList<CDOID>(size);
+        List<CDOID> invalidObjects = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
         {
           CDOID id = in.readCDOID();

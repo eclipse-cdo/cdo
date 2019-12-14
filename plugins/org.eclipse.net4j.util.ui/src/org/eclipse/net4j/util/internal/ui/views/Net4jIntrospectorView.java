@@ -81,7 +81,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
 
   private TableViewer mapViewer;
 
-  private Stack<Object> elements = new Stack<Object>();
+  private Stack<Object> elements = new Stack<>();
 
   private Text classLabel;
 
@@ -690,7 +690,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
         Object element = elements.peek();
         if (element instanceof Iterable<?>)
         {
-          List<Object> result = new ArrayList<Object>();
+          List<Object> result = new ArrayList<>();
           for (Object object : (Iterable<?>)element)
           {
             result.add(object);

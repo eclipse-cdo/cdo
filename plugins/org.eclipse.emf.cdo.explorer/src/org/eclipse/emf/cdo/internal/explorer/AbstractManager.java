@@ -45,7 +45,7 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
 
   private final File folder;
 
-  private final Map<String, T> elementMap = new HashMap<String, T>();
+  private final Map<String, T> elementMap = new HashMap<>();
 
   public AbstractManager(Class<T> componentType, File folder)
   {
@@ -84,7 +84,7 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
   @Override
   public String getUniqueLabel(String label)
   {
-    Set<String> names = new HashSet<String>();
+    Set<String> names = new HashSet<>();
 
     for (T element : getElements())
     {
@@ -251,7 +251,7 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
     public ElementsChangedImpl(CDOExplorerManager<?> manager, StructuralImpact structuralImpact, Object[] objects)
     {
       super(manager);
-      this.changedElements = objects;
+      changedElements = objects;
       this.structuralImpact = structuralImpact;
     }
 

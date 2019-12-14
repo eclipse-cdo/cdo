@@ -235,7 +235,7 @@ public abstract class FailoverExample
 
   protected Map<String, String> createProperties()
   {
-    Map<String, String> props = new HashMap<String, String>();
+    Map<String, String> props = new HashMap<>();
     props.put(IRepository.Props.OVERRIDE_UUID, name);
     props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
     props.put(IRepository.Props.SUPPORTING_BRANCHES, "true");

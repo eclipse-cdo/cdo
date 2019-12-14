@@ -26,7 +26,7 @@ import java.util.WeakHashMap;
  */
 public class ResourceGroupModifier implements CDOCheckoutContentModifier
 {
-  private static final Map<CDOResourceNode, ResourceGroup> RESOURCE_GROUPS = new WeakHashMap<CDOResourceNode, ResourceGroup>();
+  private static final Map<CDOResourceNode, ResourceGroup> RESOURCE_GROUPS = new WeakHashMap<>();
 
   private final String suffix;
 
@@ -55,7 +55,7 @@ public class ResourceGroupModifier implements CDOCheckoutContentModifier
         {
           if (resourceGroups == null)
           {
-            resourceGroups = new HashMap<String, ResourceGroup>();
+            resourceGroups = new HashMap<>();
           }
 
           String groupName = name.substring(0, name.length() - suffix.length());
@@ -67,7 +67,7 @@ public class ResourceGroupModifier implements CDOCheckoutContentModifier
 
     if (resourceGroups != null)
     {
-      List<Object> result = new ArrayList<Object>();
+      List<Object> result = new ArrayList<>();
       for (Object child : children)
       {
         child = replacement(resourceGroups, child);

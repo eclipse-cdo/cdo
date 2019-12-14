@@ -54,7 +54,7 @@ public class ReplicateRepositoryIndication extends CDOServerReadIndication
 
   private Set<String> createLockAreaIDSet()
   {
-    Set<String> idSet = new HashSet<String>(lockAreaIDs.length);
+    Set<String> idSet = new HashSet<>(lockAreaIDs.length);
     for (String id : lockAreaIDs)
     {
       idSet.add(id);

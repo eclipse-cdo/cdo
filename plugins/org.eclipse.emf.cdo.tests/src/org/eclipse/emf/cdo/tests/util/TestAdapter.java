@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class TestAdapter implements Adapter
 {
-  private final List<Notification> notifications = new ArrayList<Notification>();
+  private final List<Notification> notifications = new ArrayList<>();
 
   private Notifier notifier;
 

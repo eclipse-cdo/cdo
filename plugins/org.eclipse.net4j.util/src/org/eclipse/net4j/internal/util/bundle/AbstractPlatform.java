@@ -48,7 +48,7 @@ public abstract class AbstractPlatform implements OMPlatform
 
   private static ContextTracer __TRACER__;
 
-  private Map<String, AbstractBundle> bundles = new ConcurrentHashMap<String, AbstractBundle>(0);
+  private Map<String, AbstractBundle> bundles = new ConcurrentHashMap<>(0);
 
   private ConcurrentArray<OMLogFilter> logFilters = new ConcurrentArray.Unique<OMLogFilter>()
   {

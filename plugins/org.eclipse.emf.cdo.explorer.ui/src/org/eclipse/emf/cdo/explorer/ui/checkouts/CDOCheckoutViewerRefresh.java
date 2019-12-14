@@ -75,7 +75,7 @@ public final class CDOCheckoutViewerRefresh extends ViewerRefresh
       List<Runnable> list = n.getRunnables();
       if (!list.isEmpty())
       {
-        runnables = new ArrayList<Runnable>(list);
+        runnables = new ArrayList<>(list);
       }
     }
 
@@ -87,7 +87,7 @@ public final class CDOCheckoutViewerRefresh extends ViewerRefresh
       {
         if (runnables == null)
         {
-          runnables = new ArrayList<Runnable>(list);
+          runnables = new ArrayList<>(list);
         }
         else
         {
@@ -135,7 +135,7 @@ public final class CDOCheckoutViewerRefresh extends ViewerRefresh
    */
   private static final class RunnableViewerNotification implements IViewerNotification, Runnable
   {
-    private final List<Runnable> runnables = new ArrayList<Runnable>();
+    private final List<Runnable> runnables = new ArrayList<>();
 
     private final Object element;
 

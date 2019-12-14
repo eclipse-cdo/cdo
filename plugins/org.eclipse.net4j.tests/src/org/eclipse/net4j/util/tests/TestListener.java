@@ -23,7 +23,7 @@ import junit.framework.AssertionFailedError;
  */
 public class TestListener implements IListener
 {
-  private List<IEvent> events = new ArrayList<IEvent>();
+  private List<IEvent> events = new ArrayList<>();
 
   private int nextAssertion;
 

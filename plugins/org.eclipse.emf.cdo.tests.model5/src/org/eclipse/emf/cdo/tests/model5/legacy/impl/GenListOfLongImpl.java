@@ -72,7 +72,7 @@ public class GenListOfLongImpl extends EObjectImpl implements GenListOfLong
   {
     if (elements == null)
     {
-      elements = new EDataTypeUniqueEList<Long>(Long.class, this, Model5Package.GEN_LIST_OF_LONG__ELEMENTS);
+      elements = new EDataTypeUniqueEList<>(Long.class, this, Model5Package.GEN_LIST_OF_LONG__ELEMENTS);
     }
     return elements;
   }

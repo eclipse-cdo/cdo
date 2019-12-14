@@ -28,7 +28,7 @@ import java.util.WeakHashMap;
  */
 public abstract class CDOCommitHistoryProviderImpl<KEY, HISTORY extends CDOCommitHistory> extends Lifecycle implements CDOCommitHistory.Provider<KEY, HISTORY>
 {
-  private Map<CDOCommitHistory, KEY> histories = new WeakHashMap<CDOCommitHistory, KEY>();
+  private Map<CDOCommitHistory, KEY> histories = new WeakHashMap<>();
 
   private IListener historyListener = new LifecycleEventAdapter()
   {

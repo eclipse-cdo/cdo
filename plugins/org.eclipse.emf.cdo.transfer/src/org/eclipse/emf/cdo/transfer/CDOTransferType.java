@@ -31,7 +31,7 @@ public class CDOTransferType implements Comparable<CDOTransferType>
   /**
    * Must be declared/initialized <b>before</b> any transfer types!
    */
-  private static final Map<String, CDOTransferType> MAP = new HashMap<String, CDOTransferType>();
+  private static final Map<String, CDOTransferType> MAP = new HashMap<>();
 
   public static final CDOTransferType FOLDER = new CDOTransferType()
   {

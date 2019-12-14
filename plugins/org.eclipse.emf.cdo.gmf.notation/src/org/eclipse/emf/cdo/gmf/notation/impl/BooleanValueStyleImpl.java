@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -66,6 +66,7 @@ public class BooleanValueStyleImpl extends NamedStyleImpl implements BooleanValu
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isBooleanValue()
   {
     return ((Boolean)eDynamicGet(NotationPackage.BOOLEAN_VALUE_STYLE__BOOLEAN_VALUE, NotationPackage.Literals.BOOLEAN_VALUE_STYLE__BOOLEAN_VALUE, true, true))
@@ -77,6 +78,7 @@ public class BooleanValueStyleImpl extends NamedStyleImpl implements BooleanValu
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setBooleanValue(boolean newBooleanValue)
   {
     eDynamicSet(NotationPackage.BOOLEAN_VALUE_STYLE__BOOLEAN_VALUE, NotationPackage.Literals.BOOLEAN_VALUE_STYLE__BOOLEAN_VALUE, new Boolean(newBooleanValue));

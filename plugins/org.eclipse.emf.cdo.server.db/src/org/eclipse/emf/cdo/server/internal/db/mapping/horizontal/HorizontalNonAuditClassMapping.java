@@ -529,9 +529,9 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
    */
   private final class FeatureDeltaWriter extends AbstractFeatureDeltaWriter
   {
-    private final List<Pair<ITypeMapping, Object>> attributeChanges = new ArrayList<Pair<ITypeMapping, Object>>();
+    private final List<Pair<ITypeMapping, Object>> attributeChanges = new ArrayList<>();
 
-    private final List<Pair<EStructuralFeature, Integer>> listSizeChanges = new ArrayList<Pair<EStructuralFeature, Integer>>();
+    private final List<Pair<EStructuralFeature, Integer>> listSizeChanges = new ArrayList<>();
 
     private int oldVersion;
 

@@ -38,7 +38,7 @@ public abstract class PropertiesFactory extends Factory
   @Override
   public Object create(String description) throws ProductCreationException
   {
-    Map<String, String> properties = new HashMap<String, String>();
+    Map<String, String> properties = new HashMap<>();
 
     if (!StringUtil.isEmpty(description))
     {

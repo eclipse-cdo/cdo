@@ -149,6 +149,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public String getFontName()
   {
     return (String)eDynamicGet(NotationPackage.FONT_STYLE__FONT_NAME, NotationPackage.Literals.FONT_STYLE__FONT_NAME, true, true);
@@ -159,6 +160,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public void setFontName(String newFontName)
   {
     setFontNameGen(newFontName == null ? null : newFontName.intern());
@@ -179,6 +181,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getFontHeight()
   {
     return ((Integer)eDynamicGet(NotationPackage.FONT_STYLE__FONT_HEIGHT, NotationPackage.Literals.FONT_STYLE__FONT_HEIGHT, true, true)).intValue();
@@ -189,6 +192,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setFontHeight(int newFontHeight)
   {
     eDynamicSet(NotationPackage.FONT_STYLE__FONT_HEIGHT, NotationPackage.Literals.FONT_STYLE__FONT_HEIGHT, new Integer(newFontHeight));
@@ -199,6 +203,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public boolean isBold()
   {
     return ((Boolean)eDynamicGet(NotationPackage.FONT_STYLE__BOLD, NotationPackage.Literals.FONT_STYLE__BOLD, true, true)).booleanValue();
@@ -209,6 +214,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setBold(boolean newBold)
   {
     eDynamicSet(NotationPackage.FONT_STYLE__BOLD, NotationPackage.Literals.FONT_STYLE__BOLD, new Boolean(newBold));
@@ -219,6 +225,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public boolean isItalic()
   {
     return ((Boolean)eDynamicGet(NotationPackage.FONT_STYLE__ITALIC, NotationPackage.Literals.FONT_STYLE__ITALIC, true, true)).booleanValue();
@@ -229,6 +236,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setItalic(boolean newItalic)
   {
     eDynamicSet(NotationPackage.FONT_STYLE__ITALIC, NotationPackage.Literals.FONT_STYLE__ITALIC, new Boolean(newItalic));
@@ -239,6 +247,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public boolean isUnderline()
   {
     return ((Boolean)eDynamicGet(NotationPackage.FONT_STYLE__UNDERLINE, NotationPackage.Literals.FONT_STYLE__UNDERLINE, true, true)).booleanValue();
@@ -249,6 +258,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setUnderline(boolean newUnderline)
   {
     eDynamicSet(NotationPackage.FONT_STYLE__UNDERLINE, NotationPackage.Literals.FONT_STYLE__UNDERLINE, new Boolean(newUnderline));
@@ -259,6 +269,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public boolean isStrikeThrough()
   {
     return ((Boolean)eDynamicGet(NotationPackage.FONT_STYLE__STRIKE_THROUGH, NotationPackage.Literals.FONT_STYLE__STRIKE_THROUGH, true, true)).booleanValue();
@@ -269,6 +280,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setStrikeThrough(boolean newStrikeThrough)
   {
     eDynamicSet(NotationPackage.FONT_STYLE__STRIKE_THROUGH, NotationPackage.Literals.FONT_STYLE__STRIKE_THROUGH, new Boolean(newStrikeThrough));
@@ -406,6 +418,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public int getFontColor()
   {
     return ((Integer)eDynamicGet(NotationPackage.FONT_STYLE__FONT_COLOR, NotationPackage.Literals.FONT_STYLE__FONT_COLOR, true, true)).intValue();
@@ -416,6 +429,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   * <!-- end-user-doc -->
   * @generated
   */
+  @Override
   public void setFontColor(int newFontColor)
   {
     eDynamicSet(NotationPackage.FONT_STYLE__FONT_COLOR, NotationPackage.Literals.FONT_STYLE__FONT_COLOR, new Integer(newFontColor));

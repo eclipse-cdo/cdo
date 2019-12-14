@@ -236,7 +236,7 @@ class CDOTransferMappingImpl implements CDOTransferMapping
   {
     if (children == null)
     {
-      children = new ArrayList<CDOTransferMapping>();
+      children = new ArrayList<>();
     }
   }
 

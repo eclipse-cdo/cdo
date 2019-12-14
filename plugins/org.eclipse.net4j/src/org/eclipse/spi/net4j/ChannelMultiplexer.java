@@ -58,10 +58,10 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
 
   private long openChannelTimeout = IChannelMultiplexer.DEFAULT_OPEN_CHANNEL_TIMEOUT;
 
-  private ConcurrentMap<Short, IChannel> channels = new ConcurrentHashMap<Short, IChannel>();
+  private ConcurrentMap<Short, IChannel> channels = new ConcurrentHashMap<>();
 
   @ExcludeFromDump
-  private transient Set<Short> channelIDs = new HashSet<Short>();
+  private transient Set<Short> channelIDs = new HashSet<>();
 
   @ExcludeFromDump
   private transient int lastChannelID;
@@ -131,7 +131,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   @Override
   public IChannel[] getElements()
   {
-    List<IChannel> list = new ArrayList<IChannel>(getChannels());
+    List<IChannel> list = new ArrayList<>(getChannels());
     return list.toArray(new IChannel[list.size()]);
   }
 

@@ -30,7 +30,7 @@ public final class SignalCounter implements IListener
 {
   private static final boolean fullyQualifiedNames = Boolean.getBoolean("org.eclipse.net4j.signal.SignalCounter.fullyQualifiedNames");
 
-  private HashBag<Class<? extends Signal>> signals = new HashBag<Class<? extends Signal>>();
+  private HashBag<Class<? extends Signal>> signals = new HashBag<>();
 
   private final ISignalProtocol<?> protocol;
 
@@ -99,7 +99,7 @@ public final class SignalCounter implements IListener
   {
     synchronized (signals)
     {
-      Map<String, Class<? extends Signal>> signalTypes = new HashMap<String, Class<? extends Signal>>();
+      Map<String, Class<? extends Signal>> signalTypes = new HashMap<>();
 
       for (Class<? extends Signal> signalType : signals)
       {

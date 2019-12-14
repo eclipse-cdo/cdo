@@ -376,7 +376,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   @Override
   public Map<String, String> getRepositoryProperties()
   {
-    Map<String, String> repositoryProperties = new HashMap<String, String>();
+    Map<String, String> repositoryProperties = new HashMap<>();
     initRepositoryProperties(repositoryProperties);
 
     Map<String, Object> testProperties = getTestProperties();
@@ -402,7 +402,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public String getRepositoryPropertiesDigest()
   {
     Map<String, String> repositoryProperties = getRepositoryProperties();
-    List<Map.Entry<String, String>> list = new ArrayList<Map.Entry<String, String>>(repositoryProperties.entrySet());
+    List<Map.Entry<String, String>> list = new ArrayList<>(repositoryProperties.entrySet());
     Collections.sort(list, new Comparator<Map.Entry<String, String>>()
     {
       @Override
@@ -578,7 +578,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     if (repositories == null)
     {
-      repositories = new HashMap<String, InternalRepository>();
+      repositories = new HashMap<>();
     }
 
     IManagedContainer serverContainer = getCurrentTest().getServerContainer();
@@ -900,7 +900,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   {
     Class<? extends ConfigTest> testClass = getCurrentTest().getClass();
     String methodName = getCurrentTest().getTestMethodName();
-    Method method = ReflectUtil.getMethod(testClass, methodName, new Class[0]);
+    Method method = ReflectUtil.getMethod(testClass, methodName);
     if (method.getAnnotation(annotationClass) != null)
     {
       return true;

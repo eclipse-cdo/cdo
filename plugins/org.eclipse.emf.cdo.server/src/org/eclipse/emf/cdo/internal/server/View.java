@@ -65,9 +65,9 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
 
   private final InternalRepository repository;
 
-  private final Set<CDOID> changeSubscriptionIDs = new HashSet<CDOID>();
+  private final Set<CDOID> changeSubscriptionIDs = new HashSet<>();
 
-  private final Set<CDOID> openUnitRoots = new HashSet<CDOID>();
+  private final Set<CDOID> openUnitRoots = new HashSet<>();
 
   private boolean lockNotificationsEnabled;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2009, 2011, 2012, 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007, 2009, 2011, 2012, 2015, 2016, 2019 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -26,14 +26,14 @@ public class SensitiveProtoTest extends AbstractOMTest
   public void testSensitiveCacheWithEvictionPolicy() throws Exception
   {
     ConcurrentMap<Integer, KeyedAndValuedWeakReference<Integer, String>> map //
-        = new ConcurrentHashMap<Integer, KeyedAndValuedWeakReference<Integer, String>>();
+        = new ConcurrentHashMap<>();
 
     ReferenceQueue<String> queue //
-        = new ReferenceQueue<String>();
+        = new ReferenceQueue<>();
 
     for (int i = 0; i < 20; i++)
     {
-      map.put(i, new KeyedAndValuedWeakReference<Integer, String>(i, String.valueOf(i), queue));
+      map.put(i, new KeyedAndValuedWeakReference<>(i, String.valueOf(i), queue));
     }
 
     for (int gc = 0; gc < 10; gc++)
@@ -49,7 +49,7 @@ public class SensitiveProtoTest extends AbstractOMTest
       System.out.println("Dequeued i=" + i); //$NON-NLS-1$
       if (i < 10)
       {
-        map.put(i, new KeyedAndValuedWeakReference<Integer, String>(i, ref.getValue(), queue));
+        map.put(i, new KeyedAndValuedWeakReference<>(i, ref.getValue(), queue));
       }
       else
       {

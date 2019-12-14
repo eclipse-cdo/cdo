@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (c) 2018 IBM Corporation and others.
+ * Copyright (c) 2018, 2019 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -67,6 +67,7 @@ public class HintedDiagramLinkStyleImpl extends DiagramLinkStyleImpl implements 
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getHint()
   {
     return (String)eDynamicGet(NotationPackage.HINTED_DIAGRAM_LINK_STYLE__HINT, NotationPackage.Literals.HINTED_DIAGRAM_LINK_STYLE__HINT, true, true);
@@ -77,6 +78,7 @@ public class HintedDiagramLinkStyleImpl extends DiagramLinkStyleImpl implements 
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setHint(String newHint)
   {
     eDynamicSet(NotationPackage.HINTED_DIAGRAM_LINK_STYLE__HINT, NotationPackage.Literals.HINTED_DIAGRAM_LINK_STYLE__HINT, newHint);

@@ -80,7 +80,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
     }
     else
     {
-      readLockOwners = new HashSet<CDOLockOwner>(owners);
+      readLockOwners = new HashSet<>(owners);
     }
 
     writeLockOwner = source.getWriteLockOwner();
@@ -164,7 +164,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
     if (readLockOwners == null)
     {
-      readLockOwners = new HashSet<CDOLockOwner>();
+      readLockOwners = new HashSet<>();
     }
 
     readLockOwners.add(lockOwner);

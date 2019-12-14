@@ -44,7 +44,6 @@ import org.eclipse.emf.cdo.view.CDOViewSet;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.AdapterUtil;
-import org.eclipse.net4j.util.Predicate;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IListener;
@@ -286,7 +285,15 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   }
 
   @Override
-  public <T> CommitResult<T> commit(Callable<T> callable, Predicate<Long> retry, IProgressMonitor monitor)
+  @Deprecated
+  public <T> CommitResult<T> commit(Callable<T> callable, org.eclipse.net4j.util.Predicate<Long> retry, IProgressMonitor monitor)
+      throws ConcurrentAccessException, CommitException, Exception
+  {
+    return delegate.commit(callable, retry, monitor);
+  }
+
+  @Override
+  public <T> CommitResult<T> commit(Callable<T> callable, java.util.function.Predicate<Long> retry, IProgressMonitor monitor)
       throws ConcurrentAccessException, CommitException, Exception
   {
     return delegate.commit(callable, retry, monitor);
@@ -299,7 +306,16 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   }
 
   @Override
-  public CDOCommitInfo commit(Runnable runnable, Predicate<Long> retry, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException
+  @Deprecated
+  public CDOCommitInfo commit(Runnable runnable, org.eclipse.net4j.util.Predicate<Long> retry, IProgressMonitor monitor)
+      throws ConcurrentAccessException, CommitException
+  {
+    return delegate.commit(runnable, retry, monitor);
+  }
+
+  @Override
+  public CDOCommitInfo commit(Runnable runnable, java.util.function.Predicate<Long> retry, IProgressMonitor monitor)
+      throws ConcurrentAccessException, CommitException
   {
     return delegate.commit(runnable, retry, monitor);
   }

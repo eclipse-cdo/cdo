@@ -247,6 +247,24 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/revision/CDORevisionData.java" type="org.eclipse.emf.cdo.common.revision.CDORevisionData">
+        <filter id="1209008130">
+            <message_arguments>
+                <message_argument value="4.2"/>
+                <message_argument value="4.9"/>
+                <message_argument value="accept(CDORevisionValueVisitor, Predicate&lt;EStructuralFeature&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.java" type="org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta">
+        <filter id="1209008130">
+            <message_arguments>
+                <message_argument value="4.2"/>
+                <message_argument value="4.9"/>
+                <message_argument value="accept(CDOFeatureDeltaVisitor, Predicate&lt;EStructuralFeature&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/common/util/RepositoryStateChangedEvent.java" type="org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent">
         <filter id="576725006">
             <message_arguments>
@@ -364,12 +382,26 @@
                 <message_argument value="AbstractCDORevision"/>
             </message_arguments>
         </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="4.2"/>
+                <message_argument value="4.9"/>
+                <message_argument value="accept(CDORevisionValueVisitor, Predicate&lt;EStructuralFeature&gt;)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/common/revision/DelegatingCDORevision.java" type="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevision">
         <filter id="576725006">
             <message_arguments>
                 <message_argument value="InternalCDORevision"/>
                 <message_argument value="DelegatingCDORevision"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="4.2"/>
+                <message_argument value="4.9"/>
+                <message_argument value="accept(CDORevisionValueVisitor, Predicate&lt;EStructuralFeature&gt;)"/>
             </message_arguments>
         </filter>
     </resource>

@@ -27,8 +27,6 @@ import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
-import org.eclipse.net4j.util.Predicate;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -522,7 +520,17 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
    * @since 4.2
    */
   @Override
-  public void accept(CDORevisionValueVisitor visitor, Predicate<EStructuralFeature> filter)
+  @Deprecated
+  public void accept(CDORevisionValueVisitor visitor, org.eclipse.net4j.util.Predicate<EStructuralFeature> filter)
+  {
+    getDelegate().accept(visitor, filter);
+  }
+
+  /**
+   * @since 4.2
+   */
+  @Override
+  public void accept(CDORevisionValueVisitor visitor, java.util.function.Predicate<EStructuralFeature> filter)
   {
     getDelegate().accept(visitor, filter);
   }

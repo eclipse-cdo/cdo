@@ -12,8 +12,6 @@ package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 
-import org.eclipse.net4j.util.Predicate;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Internal.DynamicValueHolder;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
@@ -118,6 +116,13 @@ public interface CDORevisionData
 
   /**
    * @since 4.2
+   * @deprecated As of 4.9 use {@link #accept(CDORevisionValueVisitor, java.util.function.Predicate)}.
    */
-  public void accept(CDORevisionValueVisitor visitor, Predicate<EStructuralFeature> filter);
+  @Deprecated
+  public void accept(CDORevisionValueVisitor visitor, org.eclipse.net4j.util.Predicate<EStructuralFeature> filter);
+
+  /**
+   * @since 4.9
+   */
+  public void accept(CDORevisionValueVisitor visitor, java.util.function.Predicate<EStructuralFeature> filter);
 }

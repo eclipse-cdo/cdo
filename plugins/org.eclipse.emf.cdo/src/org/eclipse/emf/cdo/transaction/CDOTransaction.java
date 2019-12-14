@@ -37,7 +37,6 @@ import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.util.Predicate;
 import org.eclipse.net4j.util.options.IOptionsEvent;
 
 import org.eclipse.emf.common.util.URI;
@@ -268,8 +267,16 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
 
   /**
    * @since 4.8
+   * @deprecated As of 4.9 use {@link #commit(Callable, java.util.function.Predicate, IProgressMonitor)}.
    */
-  public <T> CommitResult<T> commit(Callable<T> callable, Predicate<Long> retry, IProgressMonitor monitor)
+  @Deprecated
+  public <T> CommitResult<T> commit(Callable<T> callable, org.eclipse.net4j.util.Predicate<Long> retry, IProgressMonitor monitor)
+      throws ConcurrentAccessException, CommitException, Exception;
+
+  /**
+   * @since 4.9
+   */
+  public <T> CommitResult<T> commit(Callable<T> callable, java.util.function.Predicate<Long> retry, IProgressMonitor monitor)
       throws ConcurrentAccessException, CommitException, Exception;
 
   /**
@@ -278,9 +285,18 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
   public <T> CommitResult<T> commit(Callable<T> callable, int attempts, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException, Exception;
 
   /**
-  * @since 4.8
-  */
-  public CDOCommitInfo commit(Runnable runnable, Predicate<Long> retry, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException;
+   * @since 4.8
+   * @deprecated As of 4.9 use {@link #commit(Runnable, java.util.function.Predicate, IProgressMonitor)}.
+   */
+  @Deprecated
+  public CDOCommitInfo commit(Runnable runnable, org.eclipse.net4j.util.Predicate<Long> retry, IProgressMonitor monitor)
+      throws ConcurrentAccessException, CommitException;
+
+  /**
+   * @since 4.9
+   */
+  public CDOCommitInfo commit(Runnable runnable, java.util.function.Predicate<Long> retry, IProgressMonitor monitor)
+      throws ConcurrentAccessException, CommitException;
 
   /**
    * @since 4.8

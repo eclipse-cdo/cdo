@@ -28,8 +28,6 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.Predicate;
-import org.eclipse.net4j.util.Predicates;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -193,18 +191,28 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   @Override
   public void accept(CDORevisionValueVisitor visitor)
   {
-    accept(visitor, Predicates.<EStructuralFeature> alwaysTrue());
+    accept(visitor, (java.util.function.Predicate<EStructuralFeature>)t -> true);
   }
 
   /**
    * @since 4.2
    */
   @Override
-  public void accept(CDORevisionValueVisitor visitor, Predicate<EStructuralFeature> filter)
+  @Deprecated
+  public void accept(CDORevisionValueVisitor visitor, org.eclipse.net4j.util.Predicate<EStructuralFeature> filter)
+  {
+    accept(visitor, org.eclipse.net4j.util.Predicates.toJava8(filter));
+  }
+
+  /**
+   * @since 4.9
+   */
+  @Override
+  public void accept(CDORevisionValueVisitor visitor, java.util.function.Predicate<EStructuralFeature> filter)
   {
     for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
     {
-      if (filter.apply(feature))
+      if (filter.test(feature))
       {
         if (feature.isMany())
         {

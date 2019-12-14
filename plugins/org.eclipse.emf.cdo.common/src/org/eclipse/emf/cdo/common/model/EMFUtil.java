@@ -16,7 +16,6 @@ package org.eclipse.emf.cdo.common.model;
 
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 
-import org.eclipse.net4j.util.Predicate;
 import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -118,8 +117,10 @@ public final class EMFUtil
 
   /**
    * @since 4.2
+   * @deprecated As of 4.9 use {@link EMFPredicates#ATTRIBUTES}.
    */
-  public static final Predicate<EStructuralFeature> ATTRIBUTES = new Predicate<EStructuralFeature>()
+  @Deprecated
+  public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> ATTRIBUTES = new org.eclipse.net4j.util.Predicate<EStructuralFeature>()
   {
     @Override
     public boolean apply(EStructuralFeature feature)
@@ -130,8 +131,10 @@ public final class EMFUtil
 
   /**
    * @since 4.2
+   * @deprecated As of 4.9 use {@link EMFPredicates#REFERENCES}.
    */
-  public static final Predicate<EStructuralFeature> REFERENCES = new Predicate<EStructuralFeature>()
+  @Deprecated
+  public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> REFERENCES = new org.eclipse.net4j.util.Predicate<EStructuralFeature>()
   {
     @Override
     public boolean apply(EStructuralFeature feature)
@@ -142,8 +145,10 @@ public final class EMFUtil
 
   /**
    * @since 4.2
+   * @deprecated As of 4.9 use {@link EMFPredicates#CONTAINER_REFERENCES}.
    */
-  public static final Predicate<EStructuralFeature> CONTAINER_REFERENCES = new Predicate<EStructuralFeature>()
+  @Deprecated
+  public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> CONTAINER_REFERENCES = new org.eclipse.net4j.util.Predicate<EStructuralFeature>()
   {
     @Override
     public boolean apply(EStructuralFeature feature)
@@ -160,8 +165,10 @@ public final class EMFUtil
 
   /**
    * @since 4.2
+   * @deprecated As of 4.9 use {@link EMFPredicates#CROSS_REFERENCES}.
    */
-  public static final Predicate<EStructuralFeature> CROSS_REFERENCES = new Predicate<EStructuralFeature>()
+  @Deprecated
+  public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> CROSS_REFERENCES = new org.eclipse.net4j.util.Predicate<EStructuralFeature>()
   {
     @Override
     public boolean apply(EStructuralFeature feature)
@@ -178,8 +185,10 @@ public final class EMFUtil
 
   /**
    * @since 4.2
+   * @deprecated As of 4.9 use {@link EMFPredicates#CONTAINMENT_REFERENCES}.
    */
-  public static final Predicate<EStructuralFeature> CONTAINMENT_REFERENCES = new Predicate<EStructuralFeature>()
+  @Deprecated
+  public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> CONTAINMENT_REFERENCES = new org.eclipse.net4j.util.Predicate<EStructuralFeature>()
   {
     @Override
     public boolean apply(EStructuralFeature feature)

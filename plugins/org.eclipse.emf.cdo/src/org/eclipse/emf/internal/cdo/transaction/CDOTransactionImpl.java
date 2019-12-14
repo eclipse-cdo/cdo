@@ -139,7 +139,6 @@ import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.Predicate;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.AbstractCloseableIterator;
 import org.eclipse.net4j.util.collection.ByteArrayWrapper;
@@ -209,6 +208,7 @@ import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Predicate;
 
 /**
  * @author Eike Stepper
@@ -1743,7 +1743,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
-  public <T> CommitResult<T> commit(final Callable<T> callable, Predicate<Long> retry, IProgressMonitor monitor)
+  @Deprecated
+  public <T> CommitResult<T> commit(final Callable<T> callable, org.eclipse.net4j.util.Predicate<Long> retry, IProgressMonitor monitor)
+      throws ConcurrentAccessException, CommitException, Exception
+  {
+    return commit(callable, org.eclipse.net4j.util.Predicates.toJava8(retry), monitor);
+  }
+
+  @Override
+  public <T> CommitResult<T> commit(Callable<T> callable, java.util.function.Predicate<Long> retry, IProgressMonitor monitor)
       throws ConcurrentAccessException, CommitException, Exception
   {
     final Object[] result = { null };
@@ -1788,7 +1796,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
-  public CDOCommitInfo commit(Runnable runnable, Predicate<Long> retry, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException
+  @Deprecated
+  public CDOCommitInfo commit(Runnable runnable, org.eclipse.net4j.util.Predicate<Long> retry, IProgressMonitor monitor)
+      throws ConcurrentAccessException, CommitException
+  {
+    return commit(runnable, org.eclipse.net4j.util.Predicates.toJava8(retry), monitor);
+  }
+
+  @Override
+  public CDOCommitInfo commit(Runnable runnable, java.util.function.Predicate<Long> retry, IProgressMonitor monitor)
+      throws ConcurrentAccessException, CommitException
   {
     long start = System.currentTimeMillis();
     SubMonitor subMonitor = SubMonitor.convert(monitor);
@@ -1809,7 +1826,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
         catch (ConcurrentAccessException ex)
         {
-          if (retry.apply(System.currentTimeMillis() - start))
+          if (retry.test(System.currentTimeMillis() - start))
           {
             rollback();
             continue;
@@ -5073,7 +5090,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     @Override
-    public boolean apply(Long startMillis)
+    public boolean test(Long startMillis)
     {
       return ++attempt < attempts;
     }

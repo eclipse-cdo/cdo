@@ -17,7 +17,9 @@ import java.util.Iterator;
 /**
  * @author Eike Stepper
  * @since 3.3
+ * @deprecated As of 3.10 use {@link AbstractFilteredIterator.Predicated}.
  */
+@Deprecated
 public class PredicateIterator<T> extends AbstractFilteredIterator<T>
 {
   private final Predicate<? super T> predicate;

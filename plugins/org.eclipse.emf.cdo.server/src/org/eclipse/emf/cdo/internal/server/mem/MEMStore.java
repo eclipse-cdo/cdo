@@ -57,13 +57,11 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 
 import org.eclipse.net4j.util.HexUtil;
-import org.eclipse.net4j.util.Predicate;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.AbstractFilteredIterator;
 import org.eclipse.net4j.util.collection.BidirectionalIterator;
 import org.eclipse.net4j.util.collection.LimitedIterator;
 import org.eclipse.net4j.util.collection.Pair;
-import org.eclipse.net4j.util.collection.PredicateIterator;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -94,6 +92,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * @author Simon McDuff
@@ -366,7 +365,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     else if (startTime != CDOBranchPoint.UNSPECIFIED_DATE || endTime != CDOBranchPoint.UNSPECIFIED_DATE)
     {
       Predicate<CDOTimeProvider> predicate = forward ? new UpTo(endTime) : new DownTo(endTime);
-      iterator = new PredicateIterator<>(iterator, predicate);
+      iterator = new AbstractFilteredIterator.Predicated<>(iterator, predicate);
     }
 
     while (iterator.hasNext())
@@ -1322,7 +1321,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     }
 
     @Override
-    public boolean apply(CDOTimeProvider commitInfo)
+    public boolean test(CDOTimeProvider commitInfo)
     {
       return commitInfo.getTimeStamp() <= timeStamp;
     }
@@ -1341,7 +1340,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     }
 
     @Override
-    public boolean apply(CDOTimeProvider commitInfo)
+    public boolean test(CDOTimeProvider commitInfo)
     {
       return commitInfo.getTimeStamp() >= timeStamp;
     }

@@ -344,6 +344,13 @@
                 <message_argument value="CDOTransaction"/>
             </message_arguments>
         </filter>
+        <filter id="1209008130">
+            <message_arguments>
+                <message_argument value="4.8"/>
+                <message_argument value="4.9"/>
+                <message_argument value="commit(Runnable, Predicate&lt;Long&gt;, IProgressMonitor)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/util/CDOUtil.java" type="org.eclipse.emf.cdo.util.CDOUtil">
         <filter id="421662840">

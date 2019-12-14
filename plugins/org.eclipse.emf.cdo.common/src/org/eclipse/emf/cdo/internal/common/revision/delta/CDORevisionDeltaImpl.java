@@ -41,8 +41,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
-import org.eclipse.net4j.util.Predicate;
-import org.eclipse.net4j.util.Predicates;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.common.util.ECollections;
@@ -370,16 +368,23 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
   @Override
   public void accept(CDOFeatureDeltaVisitor visitor)
   {
-    accept(visitor, Predicates.<EStructuralFeature> alwaysTrue());
+    accept(visitor, (java.util.function.Predicate<EStructuralFeature>)t -> true);
   }
 
   @Override
-  public void accept(CDOFeatureDeltaVisitor visitor, Predicate<EStructuralFeature> filter)
+  @Deprecated
+  public void accept(CDOFeatureDeltaVisitor visitor, org.eclipse.net4j.util.Predicate<EStructuralFeature> filter)
+  {
+    accept(visitor, org.eclipse.net4j.util.Predicates.toJava8(filter));
+  }
+
+  @Override
+  public void accept(CDOFeatureDeltaVisitor visitor, java.util.function.Predicate<EStructuralFeature> filter)
   {
     for (CDOFeatureDelta featureDelta : featureDeltas.values())
     {
       EStructuralFeature feature = featureDelta.getFeature();
-      if (filter.apply(feature))
+      if (filter.test(feature))
       {
         ((CDOFeatureDeltaImpl)featureDelta).accept(visitor);
       }

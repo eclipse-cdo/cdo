@@ -16,11 +16,43 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  * @since 3.3
+ * @deprecated As of 3.10 use {@link java.util.function.Predicate}.
  */
+@Deprecated
 public final class Predicates
 {
   private Predicates()
   {
+  }
+
+  /**
+   * @since 3.10
+   */
+  public static <T> java.util.function.Predicate<T> toJava8(Predicate<T> from)
+  {
+    return new java.util.function.Predicate<T>()
+    {
+      @Override
+      public boolean test(T t)
+      {
+        return from.apply(t);
+      }
+    };
+  }
+
+  /**
+   * @since 3.10
+   */
+  public static <T> Predicate<T> fromJava8(java.util.function.Predicate<T> from)
+  {
+    return new Predicate<T>()
+    {
+      @Override
+      public boolean apply(T t)
+      {
+        return from.test(t);
+      }
+    };
   }
 
   /**

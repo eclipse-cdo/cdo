@@ -43,4 +43,36 @@ public abstract class AbstractFilteredIterator<T> extends AbstractIterator<T>
   }
 
   protected abstract boolean isValid(T element);
+
+  /**
+   * @author Eike Stepper
+   * @since 3.10
+   */
+  public static class Predicated<T> extends AbstractFilteredIterator<T>
+  {
+    private final java.util.function.Predicate<? super T> predicate;
+
+    public Predicated(Iterator<T> delegate, java.util.function.Predicate<? super T> predicate)
+    {
+      super(delegate);
+      this.predicate = predicate;
+    }
+
+    public Predicated(java.util.function.Predicate<? super T> predicate, Iterator<T> delegate)
+    {
+      super(delegate);
+      this.predicate = predicate;
+    }
+
+    public java.util.function.Predicate<? super T> getPredicate()
+    {
+      return predicate;
+    }
+
+    @Override
+    protected boolean isValid(T element)
+    {
+      return predicate.test(element);
+    }
+  }
 }

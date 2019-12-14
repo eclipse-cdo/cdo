@@ -10,10 +10,9 @@
  */
 package org.eclipse.net4j.internal.util.table;
 
-import org.eclipse.net4j.util.Predicates;
+import org.eclipse.net4j.util.collection.AbstractFilteredIterator;
 import org.eclipse.net4j.util.collection.AbstractIterator;
 import org.eclipse.net4j.util.collection.ComposedIterator;
-import org.eclipse.net4j.util.collection.PredicateIterator;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -85,10 +84,11 @@ final class ComposedRange extends AbstractRange
         }
       }
 
-      iterator = new PredicateIterator<>(Predicates.excluded(excludedCells), iterator);
+      iterator = new AbstractFilteredIterator.Predicated<>(t -> !excludedCells.contains(t), iterator);
     }
 
-    return new PredicateIterator<>(Predicates.unique(), iterator);
+    Set<Cell> tested = new HashSet<>();
+    return new AbstractFilteredIterator.Predicated<>(t -> tested.add(t), iterator);
   }
 
   private static void addRanges(List<Range> list, Range... ranges)

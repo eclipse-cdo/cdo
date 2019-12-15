@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated from CDO" sequenceNumber="27">
+<target name="Generated from CDO" sequenceNumber="28">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="com.mysql.jdbc" version="0.0.0"/>
@@ -26,7 +26,6 @@
       <unit id="org.eclipse.orbit.mongodb" version="0.0.0"/>
       <unit id="org.eclipse.pde.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.platform.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.uml2.uml" version="0.0.0"/>
       <unit id="org.h2" version="0.0.0"/>
       <unit id="org.hsqldb" version="0.0.0"/>
       <unit id="org.postgresql" version="0.0.0"/>

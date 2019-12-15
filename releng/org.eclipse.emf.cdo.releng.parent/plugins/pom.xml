@@ -88,7 +88,6 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.emf.cdo.tests.model5</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests.model6</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests.mongodb</module>
-    <module>../../../plugins/org.eclipse.emf.cdo.tests.uml</module>
     <module>../../../plugins/org.eclipse.emf.cdo.transfer</module>
     <module>../../../plugins/org.eclipse.emf.cdo.transfer.repository</module>
     <module>../../../plugins/org.eclipse.emf.cdo.transfer.ui</module>

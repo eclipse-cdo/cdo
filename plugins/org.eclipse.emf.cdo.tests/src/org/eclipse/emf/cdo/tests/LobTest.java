@@ -50,7 +50,7 @@ public class LobTest extends AbstractCDOTest
 
     try
     {
-      inputStream = OM.BUNDLE.getInputStream("uml2/Ecore.uml");
+      inputStream = OM.BUNDLE.getInputStream("backup-tests/Ecore.uml");
       CDOBlob blob = new CDOBlob(inputStream);
 
       Image image = getModel3Factory().createImage();
@@ -105,7 +105,7 @@ public class LobTest extends AbstractCDOTest
 
     try
     {
-      inputStream = OM.BUNDLE.getInputStream("uml2/Ecore.uml");
+      inputStream = OM.BUNDLE.getInputStream("backup-tests/Ecore.uml");
       CDOClob clob = new CDOClob(new InputStreamReader(inputStream));
 
       File file = getModel3Factory().createFile();

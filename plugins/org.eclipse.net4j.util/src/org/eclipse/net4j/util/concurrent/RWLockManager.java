@@ -473,6 +473,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   /**
    * @author Simon McDuff
    */
+  @Deprecated
   private static final class ReadLockEntry<OBJECT, CONTEXT> implements LockEntry<OBJECT, CONTEXT>
   {
     private OBJECT object;
@@ -739,6 +740,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   /**
    * @author Simon McDuff
    */
+  @Deprecated
   private static final class NoLockEntry<OBJECT, CONTEXT> implements LockEntry<OBJECT, CONTEXT>
   {
     private OBJECT object;
@@ -842,6 +844,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   /**
    * @author Eike Stepper
    */
+  @Deprecated
   private static final class LockChanged
   {
   }

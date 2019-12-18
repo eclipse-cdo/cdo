@@ -184,7 +184,7 @@
         </detail>
         <detail
             key="extraUnits">
-          <value>org.eclipse.orbit.mongodb, org.h2, org.slf4j.api, org.apache.commons.lang, org.apache.log4j, org.dom4j</value>
+          <value>org.eclipse.orbit.mongodb, org.h2, org.slf4j.api, org.apache.commons.lang, org.apache.log4j</value>
         </detail>
         <detail
             key="generateImplicitUnits">
@@ -236,7 +236,7 @@
       <repositoryList
           name="2020-03">
         <repository
-            url="http://download.eclipse.org/releases/2020-03"/>
+            url="http://download.eclipse.org/releases/2019-12"/>
         <repository
             url="http://download.eclipse.org/eclipse/updates/I-builds"/>
         <repository
@@ -257,11 +257,11 @@
         <repository
             url="http://download.eclipse.org/releases/2019-12"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/I-builds"/>
+            url="http://download.eclipse.org/eclipse/updates/4.14"/>
         <repository
-            url="http://download.eclipse.org/tools/orbit/downloads/latest-I"/>
+            url="http://download.eclipse.org/tools/orbit/downloads/R20191126223242"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/latest"/>
+            url="http://download.eclipse.org/nebula/releases/2.2.0"/>
         <repository
             url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
@@ -742,7 +742,7 @@
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.target.platform"
-        value="2019-12"/>
+        value="2020-03"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.bugzilla.version"

@@ -44,7 +44,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
-import org.eclipse.net4j.util.Handler;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -66,6 +65,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Exports the complete contents of a {@link IRepository repository} in a format suitable for {@link CDOServerImporter
@@ -396,15 +396,28 @@ public abstract class CDOServerExporter<OUT>
 
     public long commits;
 
-    public void dump(Handler<String> handler)
+    /**
+     * @deprecated As of 4.9 use {@link #dumpStrings(Consumer)}.
+     */
+    @Deprecated
+    @SuppressWarnings("deprecation")
+    public void dump(org.eclipse.net4j.util.Handler<String> handler)
     {
-      handler.handle("Package Units: " + packageUnits);
-      handler.handle("Package Infos: " + packageInfos);
-      handler.handle("Branches:      " + branches);
-      handler.handle("Revisions:     " + revisions);
-      handler.handle("Blobs:         " + blobs);
-      handler.handle("Clobs:         " + clobs);
-      handler.handle("Commits:       " + commits);
+      dumpStrings((Consumer<String>)string -> handler.handle(string));
+    }
+
+    /**
+     * @since 4.9
+     */
+    public void dumpStrings(Consumer<String> consumer)
+    {
+      consumer.accept("Package Units: " + packageUnits);
+      consumer.accept("Package Infos: " + packageInfos);
+      consumer.accept("Branches:      " + branches);
+      consumer.accept("Revisions:     " + revisions);
+      consumer.accept("Blobs:         " + blobs);
+      consumer.accept("Clobs:         " + clobs);
+      consumer.accept("Commits:       " + commits);
     }
   }
 

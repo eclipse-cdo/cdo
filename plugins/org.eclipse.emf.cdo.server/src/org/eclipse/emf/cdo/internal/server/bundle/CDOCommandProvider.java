@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
-import org.eclipse.net4j.util.Handler;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -181,15 +180,7 @@ public class CDOCommandProvider implements CommandProvider
         exporter.exportRepository(out);
 
         println("Repository exported.");
-        exporter.getStatistics().dump(new Handler<String>()
-        {
-          @Override
-          public void handle(String line)
-          {
-            println(line);
-          }
-        });
-
+        exporter.getStatistics().dumpStrings(line -> println(line));
         println("Took " + duration());
       }
       finally
@@ -222,15 +213,7 @@ public class CDOCommandProvider implements CommandProvider
         CDOServerUtil.addRepository(container, repository);
 
         println("Repository imported.");
-        importer.getStatistics().dump(new Handler<String>()
-        {
-          @Override
-          public void handle(String line)
-          {
-            println(line);
-          }
-        });
-
+        importer.getStatistics().dumpStrings(line -> println(line));
         println("Took " + duration());
       }
       finally

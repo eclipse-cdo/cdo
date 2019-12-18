@@ -10,10 +10,14 @@
  */
 package org.eclipse.net4j.util;
 
+import java.util.function.Consumer;
+
 /**
  * @author Eike Stepper
  * @since 3.9
+ * @deprecated As of 3.10 use {@link Consumer}.
  */
+@Deprecated
 public interface Handler<T>
 {
   public void handle(T object);

@@ -35,6 +35,7 @@ import java.util.Set;
  * @deprecated As of 3.2 use {@link RWOLockManager}.
  */
 @Deprecated
+@SuppressWarnings("all")
 public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLockManager<OBJECT, CONTEXT>
 {
   private LockStrategy<OBJECT, CONTEXT> readLockStrategy = new LockStrategy<OBJECT, CONTEXT>()

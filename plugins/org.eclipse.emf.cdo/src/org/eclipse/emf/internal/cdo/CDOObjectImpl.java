@@ -1888,7 +1888,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -1912,7 +1912,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -1937,7 +1937,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -1962,7 +1962,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -1986,7 +1986,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2010,7 +2010,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2034,7 +2034,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2059,7 +2059,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2084,7 +2084,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2108,7 +2108,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2132,7 +2132,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2157,7 +2157,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2182,7 +2182,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2206,7 +2206,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2230,7 +2230,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2255,7 +2255,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2279,7 +2279,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2303,7 +2303,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2327,7 +2327,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2351,7 +2351,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2375,7 +2375,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2399,7 +2399,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2424,7 +2424,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2449,7 +2449,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2473,7 +2473,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2565,7 +2565,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2589,7 +2589,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2613,7 +2613,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2638,7 +2638,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2664,7 +2664,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2689,7 +2689,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2713,7 +2713,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2737,7 +2737,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2761,7 +2761,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2785,7 +2785,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2809,7 +2809,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2833,7 +2833,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2857,7 +2857,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2881,7 +2881,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2906,7 +2906,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2930,7 +2930,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2954,7 +2954,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -2978,7 +2978,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -3002,7 +3002,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -3026,7 +3026,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -3050,7 +3050,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -3074,7 +3074,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -3099,7 +3099,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -3123,7 +3123,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -3147,7 +3147,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -3172,7 +3172,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }
@@ -3212,7 +3212,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
         finally
         {
-          view.lockView();
+          view.unlockView();
         }
       }
     }

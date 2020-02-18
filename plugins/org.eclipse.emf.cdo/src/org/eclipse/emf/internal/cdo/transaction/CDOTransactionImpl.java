@@ -1648,24 +1648,31 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private CDOCommitInfo commitSynced(IProgressMonitor progressMonitor) throws DanglingIntegrityException, CommitException
   {
+    try
+    {
+      checkActive();
+    }
+    catch (Exception ex)
+    {
+      throw new CommitException(ex);
+    }
+
+    InternalCDOSession session = getSession();
+    commitToken = (CommitToken)session.startLocalCommit();
+
     synchronized (getViewMonitor())
     {
       lockView();
 
       try
       {
-        InternalCDOSession session = getSession();
+        if (hasConflict())
+        {
+          throw new LocalCommitConflictException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
+        }
 
         try
         {
-          checkActive();
-          if (hasConflict())
-          {
-            throw new LocalCommitConflictException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
-          }
-
-          commitToken = (CommitToken)session.startLocalCommit();
-
           CDOTransactionStrategy transactionStrategy = getTransactionStrategy();
           CDOCommitInfo info = transactionStrategy.commit(this, progressMonitor);
           if (info != null)

@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EClass;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -33,7 +34,7 @@ public class NOOPRevisionCache extends Lifecycle implements InternalCDORevisionC
 {
   public static final NOOPRevisionCache INSTANCE = new NOOPRevisionCache();
 
-  private static final List<CDORevision> EMPTY = Collections.emptyList();
+  private static final List<CDORevision> EMPTY_LIST = Collections.emptyList();
 
   public NOOPRevisionCache()
   {
@@ -59,7 +60,13 @@ public class NOOPRevisionCache extends Lifecycle implements InternalCDORevisionC
   @Override
   public List<CDORevision> getCurrentRevisions()
   {
-    return EMPTY;
+    return EMPTY_LIST;
+  }
+
+  @Override
+  public void forEachCurrentRevision(Consumer<CDORevision> consumer)
+  {
+    // Do nothing.
   }
 
   public InternalCDORevision getRevision(CDOID id)

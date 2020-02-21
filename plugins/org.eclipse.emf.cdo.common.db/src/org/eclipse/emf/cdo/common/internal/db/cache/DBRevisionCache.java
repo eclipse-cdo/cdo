@@ -57,6 +57,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * A JDBC-based {@link CDORevisionCache}.
@@ -422,9 +423,14 @@ public class DBRevisionCache extends Lifecycle implements InternalCDORevisionCac
   }
 
   @Override
+  public void forEachCurrentRevision(Consumer<CDORevision> consumer)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   public void getAllRevisions(List<InternalCDORevision> result)
   {
-    // TODO: implement DBRevisionCache.enclosing_method(enclosing_method_arguments)
     throw new UnsupportedOperationException();
   }
 

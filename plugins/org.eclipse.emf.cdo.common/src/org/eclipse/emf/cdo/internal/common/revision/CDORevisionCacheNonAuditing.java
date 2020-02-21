@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -113,6 +114,13 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
   public List<CDORevision> getCurrentRevisions()
   {
     List<CDORevision> currentRevisions = new ArrayList<>();
+    forEachCurrentRevision(r -> currentRevisions.add(r));
+    return currentRevisions;
+  }
+
+  @Override
+  public void forEachCurrentRevision(Consumer<CDORevision> consumer)
+  {
     synchronized (revisions)
     {
       for (Reference<InternalCDORevision> ref : revisions.values())
@@ -120,12 +128,10 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
         InternalCDORevision revision = ref.get();
         if (revision != null && !revision.isHistorical())
         {
-          currentRevisions.add(revision);
+          consumer.accept(revision);
         }
       }
     }
-
-    return currentRevisions;
   }
 
   @Override

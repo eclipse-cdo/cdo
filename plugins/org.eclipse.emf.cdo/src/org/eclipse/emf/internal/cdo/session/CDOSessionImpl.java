@@ -16,7 +16,6 @@
  */
 package org.eclipse.emf.internal.cdo.session;
 
-import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -113,6 +112,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.OptionsEvent;
@@ -129,7 +129,6 @@ import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.MergeDataResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
-import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionInvalidationEvent;
@@ -163,6 +162,8 @@ import java.util.concurrent.ExecutorService;
 public abstract class CDOSessionImpl extends CDOTransactionContainerImpl implements InternalCDOSession, IExecutorServiceProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
+
+  private static final boolean DEBUG_INVALIDATION = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.internal.cdo.session.CDOSessionImpl.DEBUG_INVALIDATION");
 
   private ExceptionHandler exceptionHandler;
 
@@ -657,6 +658,19 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   protected CDOBranch getMainBranch()
   {
     return getBranchManager().getMainBranch();
+  }
+
+  protected Map<CDORevision, CDOPermission> updatePermissions(CDOCommitInfo commitInfo, InternalCDOView[] views)
+  {
+    CDOPermissionUpdater permissionUpdater = options().getPermissionUpdater();
+    if (permissionUpdater != null)
+    {
+      Set<InternalCDORevision> revisions = new HashSet<>();
+      revisionManager.getCache().forEachCurrentRevision(r -> revisions.add((InternalCDORevision)r));
+      return permissionUpdater.updatePermissions(CDOSessionImpl.this, revisions);
+    }
+
+    return null;
   }
 
   /**
@@ -1944,8 +1958,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
    */
   private final class SessionInvalidator extends SerializingExecutor
   {
-    private static final boolean DEBUG = false;
-
     private final Set<Object> unfinishedLocalCommits = new HashSet<>();
 
     private final List<SessionInvalidation> reorderQueue = new ArrayList<>();
@@ -1965,7 +1977,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
       CommitToken token = new CommitToken(++lastCommitNumber, Thread.currentThread().getName());
 
-      if (DEBUG)
+      if (DEBUG_INVALIDATION)
       {
         IOUtil.OUT().println(CDOSessionImpl.this + " [" + getLastUpdateTime() % 10000 + "] startLocalCommit: " + token);
       }
@@ -1976,7 +1988,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     public synchronized void endLocalCommit(Object token)
     {
-      if (DEBUG)
+      if (DEBUG_INVALIDATION)
       {
         IOUtil.OUT().println(CDOSessionImpl.this + " [" + getLastUpdateTime() % 10000 + "] endLocalCommit: " + token);
       }
@@ -1991,7 +2003,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       reorderQueue.add(invalidation);
       Collections.sort(reorderQueue);
 
-      if (DEBUG)
+      if (DEBUG_INVALIDATION)
       {
         IOUtil.OUT().println(CDOSessionImpl.this + " [" + getLastUpdateTime() % 10000 + "] " + invalidation.getPreviousTimeStamp() % 10000 + " --> "
             + invalidation.getTimeStamp() % 10000 + "    reorderQueue=" + reorderQueue + "    unfinishedLocalCommits=" + unfinishedLocalCommits);
@@ -2070,7 +2082,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     {
       long timeStamp = getTimeStamp();
 
-      if (SessionInvalidator.DEBUG)
+      if (DEBUG_INVALIDATION)
       {
         IOUtil.OUT().println(CDOSessionImpl.this + " [" + getLastUpdateTime() % 10000 + "] " + timeStamp % 10000 + "    INVALIDATE");
       }
@@ -2089,7 +2101,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
           if (invalidationData.getSecurityImpact() != CommitNotificationInfo.IMPACT_NONE)
           {
-            oldPermissions = updatePermissions(views);
+            oldPermissions = updatePermissions(commitInfo, views);
           }
 
           commitInfoManager.setLastCommitOfBranch(branch, timeStamp);
@@ -2134,56 +2146,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         // Give the Invalidator another chance to schedule Invalidations.
         invalidator.scheduleInvalidations();
       }
-    }
-
-    private Map<CDORevision, CDOPermission> updatePermissions(InternalCDOView[] views)
-    {
-      CDOPermissionUpdater permissionUpdater = options().getPermissionUpdater();
-      if (permissionUpdater != null)
-      {
-        CDOBranchPoint head = getBranchManager().getMainBranch().getHead();
-        Set<InternalCDORevision> revisions = new HashSet<>();
-
-        for (int i = 0; i < views.length; i++)
-        {
-          InternalCDOView view = views[i];
-          if (!head.equals(view))
-          {
-            throw new IllegalStateException("Security not supported with auditing or branching");
-          }
-
-          for (InternalCDOObject object : view.getObjects().values())
-          {
-            InternalCDORevision revision;
-
-            CDOState state = object.cdoState();
-            switch (state)
-            {
-            case CLEAN:
-              revision = object.cdoRevision();
-              break;
-
-            case DIRTY:
-            case CONFLICT:
-              CDOID id = object.cdoID();
-              revision = getRevisionManager().getRevision(id, head, 0, CDORevision.DEPTH_NONE, false);
-              break;
-
-            default:
-              continue;
-            }
-
-            if (revision != null && !commitInfo.getDetachedObjects().contains(CDOIDUtil.createIDAndVersion(revision)))
-            {
-              revisions.add(revision);
-            }
-          }
-        }
-
-        return permissionUpdater.updatePermissions(CDOSessionImpl.this, revisions);
-      }
-
-      return null;
     }
 
     private Map<CDOID, InternalCDORevision> reviseRevisions()
@@ -2285,8 +2247,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     {
       try
       {
+        byte securityImpact = invalidationData.getSecurityImpact();
+
         ViewInvalidationData invalidationData = new ViewInvalidationData();
         invalidationData.setLastUpdateTime(getTimeStamp());
+        invalidationData.setSecurityImpact(securityImpact);
         invalidationData.setAsync(true);
 
         // The committing view (sender) is already valid, just the timestamp must be set "in sequence".

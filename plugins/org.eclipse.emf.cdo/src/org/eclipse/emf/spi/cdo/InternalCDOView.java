@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -294,6 +295,8 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
 
     private CDOLockChangeInfo lockChangeInfo;
 
+    private byte securityImpact = CommitNotificationInfo.IMPACT_NONE;
+
     public ViewInvalidationData()
     {
     }
@@ -378,6 +381,22 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
       this.lockChangeInfo = lockChangeInfo;
     }
 
+    /**
+     * @since 4.9
+     */
+    public byte getSecurityImpact()
+    {
+      return securityImpact;
+    }
+
+    /**
+     * @since 4.9
+     */
+    public void setSecurityImpact(byte securityImpact)
+    {
+      this.securityImpact = securityImpact;
+    }
+
     @Override
     public String toString()
     {
@@ -398,6 +417,8 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
       builder.append(clearResourcePathCache);
       builder.append(", lockChangeInfo=");
       builder.append(lockChangeInfo);
+      builder.append(", securityImpact=");
+      builder.append(securityImpact);
       builder.append("]");
       return builder.toString();
     }

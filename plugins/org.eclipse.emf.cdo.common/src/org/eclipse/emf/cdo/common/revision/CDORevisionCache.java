@@ -21,6 +21,7 @@ import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.emf.ecore.EClass;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Caches {@link CDORevision revisions} and possibly {@link EvictionEvent evicts} those that are no longer strongly
@@ -56,6 +57,13 @@ public interface CDORevisionCache extends CDORevisionCacheAdder, INotifier
    * @since 3.0
    */
   public List<CDORevision> getCurrentRevisions();
+
+  /**
+   * Passes each {@link CDORevision revision} that is current into the given consumer.
+   *
+   * @since 4.9
+   */
+  public void forEachCurrentRevision(Consumer<CDORevision> consumer);
 
   /**
    * An {@link IEvent event} fired from a {@link CDORevisionCache revision cache} for {@link CDORevision revisions} that

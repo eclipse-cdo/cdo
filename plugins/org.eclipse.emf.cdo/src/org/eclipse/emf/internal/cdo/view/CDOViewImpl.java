@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
@@ -1223,6 +1224,15 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
   private void doInvalidateSynced(ViewInvalidationData invalidationData)
   {
+    if (invalidationData.getSecurityImpact() != CommitNotificationInfo.IMPACT_NONE)
+    {
+      CDOBranchPoint head = session.getBranchManager().getMainBranch().getHead();
+      if (!head.equals(this))
+      {
+        throw new IllegalStateException("Security not supported with auditing or branching");
+      }
+    }
+
     if (getTimeStamp() != UNSPECIFIED_DATE && CDOStateMachine.SWITCHING_TARGET.get() != Boolean.TRUE)
     {
       // Don't invalidate historical views unless during a branch point switch.

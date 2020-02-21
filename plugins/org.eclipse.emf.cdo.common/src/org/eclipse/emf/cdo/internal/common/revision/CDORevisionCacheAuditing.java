@@ -35,6 +35,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -108,6 +109,13 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
   public List<CDORevision> getCurrentRevisions()
   {
     List<CDORevision> currentRevisions = new ArrayList<>();
+    forEachCurrentRevision(r -> currentRevisions.add(r));
+    return currentRevisions;
+  }
+
+  @Override
+  public void forEachCurrentRevision(Consumer<CDORevision> consumer)
+  {
     synchronized (revisionLists)
     {
       for (RevisionList revisionList : revisionLists.values())
@@ -115,12 +123,10 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
         InternalCDORevision revision = revisionList.getRevision(CDORevision.UNSPECIFIED_DATE);
         if (revision != null)
         {
-          currentRevisions.add(revision);
+          consumer.accept(revision);
         }
       }
     }
-
-    return currentRevisions;
   }
 
   @Override

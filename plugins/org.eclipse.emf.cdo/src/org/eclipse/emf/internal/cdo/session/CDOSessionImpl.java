@@ -660,13 +660,14 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return getBranchManager().getMainBranch();
   }
 
-  protected Map<CDORevision, CDOPermission> updatePermissions(CDOCommitInfo commitInfo, InternalCDOView[] views)
+  protected Map<CDORevision, CDOPermission> updatePermissions(CDOCommitInfo commitInfo)
   {
     CDOPermissionUpdater permissionUpdater = options().getPermissionUpdater();
     if (permissionUpdater != null)
     {
       Set<InternalCDORevision> revisions = new HashSet<>();
       revisionManager.getCache().forEachCurrentRevision(r -> revisions.add((InternalCDORevision)r));
+
       return permissionUpdater.updatePermissions(CDOSessionImpl.this, revisions);
     }
 
@@ -2101,7 +2102,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
           if (invalidationData.getSecurityImpact() != CommitNotificationInfo.IMPACT_NONE)
           {
-            oldPermissions = updatePermissions(commitInfo, views);
+            oldPermissions = updatePermissions(commitInfo);
           }
 
           commitInfoManager.setLastCommitOfBranch(branch, timeStamp);

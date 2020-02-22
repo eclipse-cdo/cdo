@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
@@ -30,6 +31,7 @@ import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -38,13 +40,12 @@ import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.PasswordCredentials;
 
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
-import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Bug 560280 - Possible deadlock during the session invalidation.
@@ -85,12 +86,13 @@ public class Bugzilla_560280_Test extends AbstractCDOTest
 
   public void testDeadlockBetweenInvalidationAndCommit() throws Exception
   {
-    CDOSession session1 = openSession();
-    CDOTransaction transaction1 = session1.openTransaction();
-    Realm realm1 = getRealm(transaction1);
-    Group group1 = realm1.getGroup("Users");
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    Realm realm = getRealm(transaction);
+    Group groupToBeChanged = realm.getGroup("Users");
+    Group groupToBeDeleted = realm.addGroup("GroupToBeDeleted");
+    transaction.commit(); // Commit "GroupToBeDeleted".
 
-    AtomicReference<CDOTransaction> transactionUnderTest = new AtomicReference<>();
     AtomicBoolean controlUpdatePermissions = new AtomicBoolean();
     CountDownLatch reachedUpdatePermissions = new CountDownLatch(1);
     CountDownLatch allowUpdatePermissions = new CountDownLatch(1);
@@ -103,7 +105,7 @@ public class Bugzilla_560280_Test extends AbstractCDOTest
         return new CDONet4jSessionImpl()
         {
           @Override
-          protected Map<CDORevision, CDOPermission> updatePermissions(CDOCommitInfo commitInfo, InternalCDOView[] views)
+          protected Map<CDORevision, CDOPermission> updatePermissions(CDOCommitInfo commitInfo)
           {
             if (controlUpdatePermissions.get())
             {
@@ -111,7 +113,7 @@ public class Bugzilla_560280_Test extends AbstractCDOTest
               await(allowUpdatePermissions);
             }
 
-            return super.updatePermissions(commitInfo, views);
+            return super.updatePermissions(commitInfo);
           }
         };
       }
@@ -126,7 +128,8 @@ public class Bugzilla_560280_Test extends AbstractCDOTest
     getTestProperties().put(SessionConfig.PROP_TEST_SESSION_CONFIGURATION, configuration);
 
     CDOSession sessionUnderTest = openSession();
-    transactionUnderTest.set(sessionUnderTest.openTransaction());
+    CDOTransaction transactionUnderTest = sessionUnderTest.openTransaction();
+    Group groupUnderTest = transactionUnderTest.getObject(groupToBeDeleted);
 
     /*
      * Test Logic:
@@ -134,10 +137,11 @@ public class Bugzilla_560280_Test extends AbstractCDOTest
 
     controlUpdatePermissions.set(true);
 
-    group1.setId("ModernUsers");
-    transaction1.commit();
+    groupToBeChanged.setId("ModernUsers");
+    EcoreUtil.delete(groupToBeDeleted);
+    transaction.commit();
 
-    // Execute transactionUndertTest.commit() on a separate thread so that the deadlock doesn't freeze the test suite.
+    // Execute transactionUnderTest.commit() on a separate thread so that the deadlock doesn't freeze the test suite.
     CountDownLatch commitFinished = new CountDownLatch(1);
     new Thread("CommitterUnderTest")
     {
@@ -146,17 +150,15 @@ public class Bugzilla_560280_Test extends AbstractCDOTest
       {
         await(reachedUpdatePermissions);
 
-        CDOTransaction tx = transactionUnderTest.get();
-        tx.syncExec(() -> {
+        transactionUnderTest.syncExec(() -> {
           allowUpdatePermissions.countDown();
 
           try
           {
-            Realm realmUnderTest = getRealm(tx);
+            Realm realmUnderTest = getRealm(transactionUnderTest);
             realmUnderTest.addUser("UserUnderTest", "abc");
 
-            tx.commit();
-            commitFinished.countDown();
+            transactionUnderTest.commit();
           }
           catch (CommitException ex)
           {
@@ -164,6 +166,11 @@ public class Bugzilla_560280_Test extends AbstractCDOTest
             ex.printStackTrace();
           }
         });
+
+        CDOObject cdoObject = CDOUtil.getCDOObject(groupUnderTest);
+        System.out.println("GroupToBeDeleted: " + cdoObject.cdoState());
+
+        commitFinished.countDown();
       }
     }.start();
 

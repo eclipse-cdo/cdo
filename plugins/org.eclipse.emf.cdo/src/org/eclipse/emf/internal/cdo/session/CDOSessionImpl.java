@@ -152,7 +152,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -1952,7 +1954,9 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     private final Set<Object> unfinishedLocalCommits = new HashSet<>();
 
-    private final List<SessionInvalidation> reorderQueue = new ArrayList<>();
+    private final List<SessionInvalidation> invalidationQueue = new ArrayList<>();
+
+    private final Queue<Runnable> postInvalidationQueue = new ConcurrentLinkedQueue<>();
 
     private int lastCommitNumber;
 
@@ -1988,23 +1992,44 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       unfinishedLocalCommits.remove(token);
     }
 
-    public synchronized void scheduleInvalidations(InvalidationData invalidationData)
+    public void scheduleInvalidations(InvalidationData invalidationData)
     {
       SessionInvalidation invalidation = new SessionInvalidation(invalidationData);
 
-      reorderQueue.add(invalidation);
-      Collections.sort(reorderQueue);
-
-      if (DEBUG_INVALIDATION)
+      synchronized (this)
       {
-        IOUtil.OUT().println(CDOSessionImpl.this + " [" + getLastUpdateTime() % 10000 + "] " + invalidation.getPreviousTimeStamp() % 10000 + " --> "
-            + invalidation.getTimeStamp() % 10000 + "    reorderQueue=" + reorderQueue + "    unfinishedLocalCommits=" + unfinishedLocalCommits);
+        invalidationQueue.add(invalidation);
+        Collections.sort(invalidationQueue);
+
+        if (DEBUG_INVALIDATION)
+        {
+          IOUtil.OUT().println(CDOSessionImpl.this + " [" + getLastUpdateTime() % 10000 + "] " + invalidation.getPreviousTimeStamp() % 10000 + " --> "
+              + invalidation.getTimeStamp() % 10000 + "    reorderQueue=" + invalidationQueue + "    unfinishedLocalCommits=" + unfinishedLocalCommits);
+        }
       }
 
-      while (isActive() && !reorderQueue.isEmpty() && canProcess(reorderQueue.get(0)))
+      while (isActive())
       {
-        SessionInvalidation invalidation0 = reorderQueue.remove(0);
-        invalidation0.process();
+        synchronized (this)
+        {
+          if (invalidationQueue.isEmpty() || !canProcess(invalidationQueue.get(0)))
+          {
+            break;
+          }
+
+          SessionInvalidation invalidation0 = invalidationQueue.remove(0);
+          Runnable postInvalidationRunnable = invalidation0.process();
+          if (postInvalidationRunnable != null)
+          {
+            postInvalidationQueue.add(postInvalidationRunnable);
+          }
+        }
+
+        Runnable postInvalidationRunnable;
+        while ((postInvalidationRunnable = postInvalidationQueue.poll()) != null)
+        {
+          postInvalidationRunnable.run();
+        }
       }
     }
 
@@ -2058,7 +2083,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       return Long.toString(getTimeStamp() % 10000);
     }
 
-    public void process()
+    public Runnable process()
     {
       long timeStamp = getTimeStamp();
 
@@ -2092,21 +2117,26 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           setLastUpdateTime(timeStamp);
         }
 
-        CDOLockChangeInfo lockChangeInfo = invalidationData.getLockChangeInfo();
-        InternalCDOTransaction sender = invalidationData.getSender();
+        Map<CDORevision, CDOPermission> oldPermissionsFinal = oldPermissions;
+        Map<CDOID, InternalCDORevision> oldRevisionsFinal = oldRevisions;
 
-        if (success)
-        {
-          fireEvent(new SessionInvalidationEvent(sender, commitInfo, invalidationData.getSecurityImpact(), oldPermissions));
-          fireEvent(new SessionLocksChangedEvent(sender, lockChangeInfo));
+        return () -> {
+          CDOLockChangeInfo lockChangeInfo = invalidationData.getLockChangeInfo();
+          InternalCDOTransaction sender = invalidationData.getSender();
 
-          commitInfoManager.notifyCommitInfoHandlers(commitInfo);
-        }
+          if (success)
+          {
+            fireEvent(new SessionInvalidationEvent(sender, commitInfo, invalidationData.getSecurityImpact(), oldPermissionsFinal));
+            fireEvent(new SessionLocksChangedEvent(sender, lockChangeInfo));
 
-        for (InternalCDOView view : views)
-        {
-          invalidateView(commitInfo, view, sender, oldRevisions, invalidationData.isClearResourcePathCache(), lockChangeInfo);
-        }
+            commitInfoManager.notifyCommitInfoHandlers(commitInfo);
+          }
+
+          for (InternalCDOView view : views)
+          {
+            invalidateView(commitInfo, view, sender, oldRevisionsFinal, invalidationData.isClearResourcePathCache(), lockChangeInfo);
+          }
+        };
       }
       catch (RuntimeException ex)
       {
@@ -2120,12 +2150,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           TRACER.trace(Messages.getString("CDOSessionImpl.2")); //$NON-NLS-1$
         }
       }
-      finally
-      {
-        // setLastUpdateTime() is not synchronized with the Invalidator.
-        // Give the Invalidator another chance to schedule Invalidations.
-        // invalidator.scheduleInvalidations();
-      }
+
+      return null;
     }
 
     private Map<CDOID, InternalCDORevision> reviseRevisions()

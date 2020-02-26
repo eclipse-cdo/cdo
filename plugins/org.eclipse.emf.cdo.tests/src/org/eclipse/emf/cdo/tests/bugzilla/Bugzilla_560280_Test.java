@@ -44,6 +44,7 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.PasswordCredentials;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.util.Map;
@@ -136,6 +137,7 @@ public class Bugzilla_560280_Test extends AbstractCDOTest
 
     CDOSession sessionUnderTest = openSession();
     CDOTransaction transactionUnderTest = sessionUnderTest.openTransaction();
+    transactionUnderTest.options().addConflictResolver(new CDOMergingConflictResolver());
 
     try
     {

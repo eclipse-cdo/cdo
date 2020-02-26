@@ -80,6 +80,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
@@ -666,7 +667,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     if (permissionUpdater != null)
     {
       Set<InternalCDORevision> revisions = new HashSet<>();
-      revisionManager.getCache().forEachCurrentRevision(r -> revisions.add((InternalCDORevision)r));
+      revisionManager.getCache().forEachCurrentRevision(r -> {
+        if (!(r instanceof SyntheticCDORevision))
+        {
+          revisions.add((InternalCDORevision)r);
+        }
+      });
 
       return permissionUpdater.updatePermissions(CDOSessionImpl.this, revisions);
     }
@@ -2018,7 +2024,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       while (!reorderQueue.isEmpty() && canProcess(reorderQueue.get(0)))
       {
         SessionInvalidation invalidation0 = reorderQueue.remove(0);
-        execute(invalidation0);
+        invalidation0.run();
+        // execute(invalidation0);
       }
     }
 
@@ -2145,7 +2152,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       {
         // setLastUpdateTime() is not synchronized with the Invalidator.
         // Give the Invalidator another chance to schedule Invalidations.
-        invalidator.scheduleInvalidations();
+        // invalidator.scheduleInvalidations();
       }
     }
 

@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
 import org.eclipse.emf.cdo.server.security.SecurityManagerUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
@@ -33,6 +35,7 @@ import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -90,8 +93,12 @@ public class Bugzilla_560280_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     Realm realm = getRealm(transaction);
     Group groupToBeChanged = realm.getGroup("Users");
+
     Group groupToBeDeleted = realm.addGroup("GroupToBeDeleted");
-    transaction.commit(); // Commit "GroupToBeDeleted".
+    transaction.commit(); // Add "GroupToBeDeleted".
+    CDOID idOfDeletedGroup = CDOUtil.getCDOObject(groupToBeDeleted).cdoID();
+    EcoreUtil.delete(groupToBeDeleted);
+    transaction.commit(); // Delete "GroupToBeDeleted".
 
     AtomicBoolean controlUpdatePermissions = new AtomicBoolean();
     CountDownLatch reachedUpdatePermissions = new CountDownLatch(1);
@@ -129,7 +136,26 @@ public class Bugzilla_560280_Test extends AbstractCDOTest
 
     CDOSession sessionUnderTest = openSession();
     CDOTransaction transactionUnderTest = sessionUnderTest.openTransaction();
-    Group groupUnderTest = transactionUnderTest.getObject(groupToBeDeleted);
+
+    try
+    {
+      transactionUnderTest.getObject(idOfDeletedGroup);
+      fail("ObjectNotFoundException expected");
+    }
+    catch (ObjectNotFoundException expected)
+    {
+      // SUCCESS.
+    }
+
+    boolean detached[] = { false };
+    ((InternalCDORevisionManager)sessionUnderTest.getRevisionManager()).getCache().forEachCurrentRevision(r -> {
+      if (r instanceof DetachedCDORevision)
+      {
+        detached[0] = true;
+      }
+    });
+
+    assertTrue(detached[0]);
 
     /*
      * Test Logic:
@@ -138,7 +164,6 @@ public class Bugzilla_560280_Test extends AbstractCDOTest
     controlUpdatePermissions.set(true);
 
     groupToBeChanged.setId("ModernUsers");
-    EcoreUtil.delete(groupToBeDeleted);
     transaction.commit();
 
     // Execute transactionUnderTest.commit() on a separate thread so that the deadlock doesn't freeze the test suite.
@@ -166,9 +191,6 @@ public class Bugzilla_560280_Test extends AbstractCDOTest
             ex.printStackTrace();
           }
         });
-
-        CDOObject cdoObject = CDOUtil.getCDOObject(groupUnderTest);
-        System.out.println("GroupToBeDeleted: " + cdoObject.cdoState());
 
         commitFinished.countDown();
       }

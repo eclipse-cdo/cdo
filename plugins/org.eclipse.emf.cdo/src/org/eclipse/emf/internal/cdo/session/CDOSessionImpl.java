@@ -103,7 +103,6 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.concurrent.RunnableWithName;
-import org.eclipse.net4j.util.concurrent.SerializingExecutor;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
@@ -154,7 +153,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -1197,12 +1195,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   @Override
   public void invalidate(InvalidationData invalidationData)
   {
-    invalidator.reorderInvalidations(invalidationData);
-  }
-
-  public Executor getInvalidator()
-  {
-    return invalidator;
+    invalidator.scheduleInvalidations(invalidationData);
   }
 
   @Override
@@ -1466,16 +1459,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   }
 
   @Override
-  protected void doAfterActivate() throws Exception
-  {
-    super.doAfterActivate();
-    LifecycleUtil.activate(invalidator);
-  }
-
-  @Override
   protected void doDeactivate() throws Exception
   {
-    LifecycleUtil.deactivate(invalidator);
     super.doDeactivate();
 
     unhookSessionProtocol();
@@ -1963,7 +1948,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   /**
    * @author Eike Stepper
    */
-  private final class SessionInvalidator extends SerializingExecutor
+  private final class SessionInvalidator
   {
     private final Set<Object> unfinishedLocalCommits = new HashSet<>();
 
@@ -2003,7 +1988,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       unfinishedLocalCommits.remove(token);
     }
 
-    public synchronized void reorderInvalidations(InvalidationData invalidationData)
+    public synchronized void scheduleInvalidations(InvalidationData invalidationData)
     {
       SessionInvalidation invalidation = new SessionInvalidation(invalidationData);
 
@@ -2016,20 +2001,14 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
             + invalidation.getTimeStamp() % 10000 + "    reorderQueue=" + reorderQueue + "    unfinishedLocalCommits=" + unfinishedLocalCommits);
       }
 
-      scheduleInvalidations();
-    }
-
-    public synchronized void scheduleInvalidations()
-    {
-      while (!reorderQueue.isEmpty() && canProcess(reorderQueue.get(0)))
+      while (isActive() && !reorderQueue.isEmpty() && canProcess(reorderQueue.get(0)))
       {
         SessionInvalidation invalidation0 = reorderQueue.remove(0);
-        invalidation0.run();
-        // execute(invalidation0);
+        invalidation0.process();
       }
     }
 
-    protected boolean canProcess(SessionInvalidation invalidation)
+    private boolean canProcess(SessionInvalidation invalidation)
     {
       if (options().isPassiveUpdateEnabled())
       {
@@ -2045,7 +2024,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   /**
    * @author Eike Stepper
    */
-  private final class SessionInvalidation extends RunnableWithName implements Comparable<SessionInvalidation>
+  private final class SessionInvalidation implements Comparable<SessionInvalidation>
   {
     private final InvalidationData invalidationData;
 
@@ -2079,14 +2058,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       return Long.toString(getTimeStamp() % 10000);
     }
 
-    @Override
-    public String getName()
-    {
-      return "CDOSessionInvalidator-" + CDOSessionImpl.this;
-    }
-
-    @Override
-    protected void doRun()
+    public void process()
     {
       long timeStamp = getTimeStamp();
 

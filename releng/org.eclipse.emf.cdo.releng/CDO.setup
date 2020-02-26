@@ -236,13 +236,13 @@
       <repositoryList
           name="2020-03">
         <repository
-            url="http://download.eclipse.org/releases/2019-12"/>
+            url="http://download.eclipse.org/releases/2020-03"/>
         <repository
             url="http://download.eclipse.org/eclipse/updates/I-builds"/>
         <repository
             url="http://download.eclipse.org/tools/orbit/downloads/latest-I"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/latest"/>
+            url="http://download.eclipse.org/nebula/snapshot"/>
         <repository
             url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
@@ -470,7 +470,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets.1 //@setupTasks.15/@workingSets.2 //@setupTasks.15/@workingSets.3 //@setupTasks.15/@workingSets.4 //@setupTasks.15/@workingSets.5"/>
+            excludedWorkingSet="//@setupTasks.15/@workingSets[name='CDO%20Tests'] //@setupTasks.15/@workingSets[name='CDO%20Examples'] //@setupTasks.15/@workingSets[name='CDO%20Dawn'] //@setupTasks.15/@workingSets[name='CDO%20Features'] //@setupTasks.15/@workingSets[name='CDO%20Releng']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -483,7 +483,7 @@
             pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets.4"/>
+            excludedWorkingSet="//@setupTasks.15/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -502,7 +502,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets.4"/>
+            excludedWorkingSet="//@setupTasks.15/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -515,7 +515,7 @@
             pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets.4"/>
+            excludedWorkingSet="//@setupTasks.15/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -544,7 +544,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets.4 //@setupTasks.15/@workingSets.9"/>
+            excludedWorkingSet="//@setupTasks.15/@workingSets[name='CDO%20Features'] //@setupTasks.15/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -557,7 +557,7 @@
             pattern="org\.eclipse\.net4j.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets.7 //@setupTasks.15/@workingSets.8 //@setupTasks.15/@workingSets.9"/>
+            excludedWorkingSet="//@setupTasks.15/@workingSets[name='Net4j%20DB'] //@setupTasks.15/@workingSets[name='Net4j%20Examples'] //@setupTasks.15/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -570,7 +570,7 @@
             pattern="org\.eclipse\.net4j\.db.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets.9"/>
+            excludedWorkingSet="//@setupTasks.15/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -592,7 +592,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.15/@workingSets.9"/>
+            excludedWorkingSet="//@setupTasks.15/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet

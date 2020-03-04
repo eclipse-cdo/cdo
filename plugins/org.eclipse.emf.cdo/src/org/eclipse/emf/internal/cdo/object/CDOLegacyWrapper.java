@@ -495,95 +495,92 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   protected void revisionToInstance()
   {
-    synchronized (recursionCounter)
+    if (underConstruction)
     {
-      if (underConstruction)
+      // Return if revisionToInstance was called before to avoid doubled calls
+      return;
+    }
+
+    underConstruction = true;
+    InternalCDORevision revision = cdoRevision();
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Transfering revision to instance: {0} --> {1}", revision, instance); //$NON-NLS-1$
+    }
+
+    boolean deliver = instance.eDeliver();
+    if (deliver)
+    {
+      instance.eSetDeliver(false);
+    }
+
+    Counter counter = recursionCounter.get();
+    if (counter == null)
+    {
+      counter = new Counter();
+      recursionCounter.set(counter);
+    }
+
+    InternalCDOResource resource = null;
+    boolean bypassPermissionChecks = revision.bypassPermissionChecks(true);
+
+    try
+    {
+      registerWrapper(this);
+      counter.increment();
+      viewAndState.view.registerObject(this);
+
+      revisionToInstanceResource();
+      revisionToInstanceContainer();
+
+      Resource eResource = instance.eResource();
+      if (eResource instanceof InternalCDOResource)
       {
-        // Return if revisionToInstance was called before to avoid doubled calls
-        return;
+        resource = (InternalCDOResource)eResource;
+        resource.cdoInternalLoading(instance);
       }
 
-      underConstruction = true;
-      InternalCDORevision revision = cdoRevision();
-
-      if (TRACER.isEnabled())
+      for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
       {
-        TRACER.format("Transfering revision to instance: {0} --> {1}", revision, instance); //$NON-NLS-1$
+        revisionToInstanceFeature(feature);
       }
-
-      boolean deliver = instance.eDeliver();
-      if (deliver)
-      {
-        instance.eSetDeliver(false);
-      }
-
-      Counter counter = recursionCounter.get();
-      if (counter == null)
-      {
-        counter = new Counter();
-        recursionCounter.set(counter);
-      }
-
-      InternalCDOResource resource = null;
-      boolean bypassPermissionChecks = revision.bypassPermissionChecks(true);
-
+    }
+    catch (RuntimeException ex)
+    {
+      OM.LOG.error(ex);
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      throw new CDOException(ex);
+    }
+    finally
+    {
       try
       {
-        registerWrapper(this);
-        counter.increment();
-        viewAndState.view.registerObject(this);
+        revision.bypassPermissionChecks(bypassPermissionChecks);
 
-        revisionToInstanceResource();
-        revisionToInstanceContainer();
-
-        Resource eResource = instance.eResource();
-        if (eResource instanceof InternalCDOResource)
+        if (resource != null)
         {
-          resource = (InternalCDOResource)eResource;
-          resource.cdoInternalLoading(instance);
+          resource.cdoInternalLoadingDone(instance);
         }
 
-        for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
+        if (deliver)
         {
-          revisionToInstanceFeature(feature);
+          instance.eSetDeliver(true);
         }
-      }
-      catch (RuntimeException ex)
-      {
-        OM.LOG.error(ex);
-        throw ex;
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
-        throw new CDOException(ex);
       }
       finally
       {
-        try
+        if (counter.decrement() == 0)
         {
-          revision.bypassPermissionChecks(bypassPermissionChecks);
-
-          if (resource != null)
-          {
-            resource.cdoInternalLoadingDone(instance);
-          }
-
-          if (deliver)
-          {
-            instance.eSetDeliver(true);
-          }
+          recursionCounter.remove();
         }
-        finally
-        {
-          if (counter.decrement() == 0)
-          {
-            recursionCounter.remove();
-          }
 
-          unregisterWrapper(this);
-          underConstruction = false;
-        }
+        unregisterWrapper(this);
+        underConstruction = false;
       }
     }
   }

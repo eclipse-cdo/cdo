@@ -60,7 +60,6 @@ public abstract class OM
     OM.lastURL = lastURL;
   }
 
-  @SuppressWarnings("deprecation")
   public static ImageDescriptor getImageDescriptor(String imageFilePath)
   {
     return Activator.imageDescriptorFromPlugin(BUNDLE_ID, imageFilePath);

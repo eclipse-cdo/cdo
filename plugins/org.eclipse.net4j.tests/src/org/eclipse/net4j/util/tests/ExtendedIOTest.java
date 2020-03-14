@@ -22,7 +22,6 @@ import java.util.HashMap;
 /**
  * @author Eike Stepper
  */
-@SuppressWarnings("resource")
 public class ExtendedIOTest extends AbstractOMTest
 {
   @SuppressWarnings("unchecked")

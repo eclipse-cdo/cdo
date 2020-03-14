@@ -443,7 +443,6 @@ public interface CDOEditorOpener
         return value;
       }
 
-      @SuppressWarnings("deprecation")
       private static ImageDescriptor getIcon(IConfigurationElement element)
       {
         String icon = element.getAttribute("icon"); //$NON-NLS-1$

@@ -78,7 +78,6 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     doRequest(req, resp);
   }
 
-  @SuppressWarnings("resource")
   protected void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
   {
     if (requestHandler == null)

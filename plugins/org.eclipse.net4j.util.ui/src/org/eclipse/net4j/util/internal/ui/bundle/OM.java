@@ -33,7 +33,6 @@ public abstract class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  @SuppressWarnings("deprecation")
   public static ImageDescriptor getImageDescriptor(String imageFilePath)
   {
     return Activator.imageDescriptorFromPlugin(BUNDLE_ID, imageFilePath);

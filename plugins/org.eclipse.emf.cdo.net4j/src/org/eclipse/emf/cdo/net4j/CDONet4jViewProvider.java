@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.net4j;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.util.CDOURIData;
+import org.eclipse.emf.cdo.util.InvalidURIException;
 import org.eclipse.emf.cdo.view.AbstractCDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
@@ -30,6 +31,7 @@ import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
 import java.text.SimpleDateFormat;
@@ -43,7 +45,10 @@ import java.util.Date;
  */
 public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
 {
-  private String transport;
+  /**
+   * @since 4.3
+   */
+  protected final String transport;
 
   public CDONet4jViewProvider(String transport, int priority)
   {
@@ -54,7 +59,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   @Override
   public CDOView getView(URI uri, ResourceSet resourceSet)
   {
-    CDOURIData data = new CDOURIData(uri);
+    CDOURIData data = createURIData(uri);
 
     IConnector connector = getConnector(data.getAuthority());
     CDONet4jSession session = getNet4jSession(connector, data.getUserName(), data.getPassWord(), data.getRepositoryName());
@@ -91,7 +96,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   @Override
   public URI getViewURI(URI uri)
   {
-    CDOURIData uriData = new CDOURIData(uri);
+    CDOURIData uriData = createURIData(uri);
     uriData.setResourcePath(null);
     uriData.setExtraParameters(null);
     return uriData.toURI();
@@ -129,6 +134,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     {
       return null;
     }
+
     IConnector connector = (IConnector)channel.getMultiplexer();
     String repositoryName = session.getRepositoryInfo().getName();
     append(builder, connector, repositoryName);
@@ -171,6 +177,14 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     }
 
     return URI.createURI(builder.toString());
+  }
+
+  /**
+   * @since 4.3
+   */
+  protected CDOURIData createURIData(URI uri)
+  {
+    return new CDOURIData(uri);
   }
 
   protected String getURIAuthority(IConnector connector)
@@ -281,6 +295,24 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   }
 
   /**
+   * A JVM-based {@link CDONet4jViewProvider view provider}.
+   *
+   * @author Eike Stepper
+   */
+  public static class JVM extends CDONet4jViewProvider
+  {
+    public JVM(int priority)
+    {
+      super("jvm", priority);
+    }
+
+    public JVM()
+    {
+      this(DEFAULT_PRIORITY);
+    }
+  }
+
+  /**
    * A TCP-based {@link CDONet4jViewProvider view provider}.
    *
    * @author Eike Stepper
@@ -319,20 +351,88 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   }
 
   /**
-   * A JVM-based {@link CDONet4jViewProvider view provider}.
+   * A WS-based {@link CDONet4jViewProvider view provider}.
    *
    * @author Eike Stepper
+   * @since 4.3
    */
-  public static class JVM extends CDONet4jViewProvider
+  public static class WS extends CDONet4jViewProvider
   {
-    public JVM(int priority)
+    public static final String ACCEPTOR_NAME_PREFIX = "@";
+
+    public WS(int priority)
     {
-      super("jvm", priority);
+      super("ws", priority);
     }
 
-    public JVM()
+    public WS()
     {
       this(DEFAULT_PRIORITY);
+    }
+
+    @Override
+    public String getPath(URI uri)
+    {
+      IPath path = new Path(uri.path());
+
+      int index = getAcceptorSegmentIndex(path);
+      if (index == -1)
+      {
+        throw new InvalidURIException(uri);
+      }
+
+      return path.makeAbsolute().removeFirstSegments(index + 2).toString();
+    }
+
+    @Override
+    protected String getURIAuthority(IConnector connector)
+    {
+      String url = connector.getURL().toString();
+
+      String prefix = transport + "://";
+      if (url.startsWith(prefix))
+      {
+        url = url.substring(prefix.length());
+      }
+
+      return url;
+    }
+
+    @Override
+    protected CDOURIData createURIData(URI uri)
+    {
+      CDOURIData data = super.createURIData(uri);
+      IPath path = new Path(data.getRepositoryName()).append(data.getResourcePath());
+
+      int index = getAcceptorSegmentIndex(path);
+      if (index == -1)
+      {
+        throw new InvalidURIException(uri);
+      }
+
+      String authority = data.getAuthority();
+      for (int j = 0; j <= index; j++)
+      {
+        authority += "/" + path.segment(j);
+      }
+
+      data.setAuthority(authority);
+      data.setRepositoryName(path.segment(index + 1));
+      data.setResourcePath(path.removeFirstSegments(index + 2));
+      return data;
+    }
+
+    protected int getAcceptorSegmentIndex(IPath path)
+    {
+      for (int i = 0; i < path.segmentCount(); i++)
+      {
+        if (path.segment(i).startsWith(ACCEPTOR_NAME_PREFIX))
+        {
+          return i;
+        }
+      }
+
+      return -1;
     }
   }
 }

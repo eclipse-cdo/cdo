@@ -12,6 +12,7 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.signal.RemoteException;
+import org.eclipse.net4j.tests.config.AbstractConfigTest;
 import org.eclipse.net4j.tests.signal.ExceptionRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -22,13 +23,13 @@ import java.rmi.AlreadyBoundException;
 /**
  * @author Eike Stepper
  */
-public class ExceptionTest extends AbstractProtocolTest
+public class ExceptionTest extends AbstractConfigTest
 {
   public ExceptionTest()
   {
   }
 
-  public void testExceptionInIRequesting() throws Exception
+  public void testExceptionInRequesting() throws Exception
   {
     exceptionInPhase(1, false);
   }
@@ -126,42 +127,6 @@ public class ExceptionTest extends AbstractProtocolTest
         AlreadyBoundException abe = (AlreadyBoundException)cnfe.getCause();
         assertEquals(TestSignalProtocol.SIMULATED_EXCEPTION, abe.getMessage());
       }
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class TCP extends ExceptionTest
-  {
-    @Override
-    protected boolean useJVMTransport()
-    {
-      return false;
-    }
-
-    @Override
-    protected boolean useSSLTransport()
-    {
-      return false;
-    }
-  }
-
-  /**
-   * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
-   */
-  public static final class SSL extends ExceptionTest
-  {
-    @Override
-    protected boolean useJVMTransport()
-    {
-      return false;
-    }
-
-    @Override
-    protected boolean useSSLTransport()
-    {
-      return true;
     }
   }
 }

@@ -10,6 +10,7 @@
  */
 package org.eclipse.internal.net4j.buffer;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 
 import java.io.ByteArrayInputStream;
@@ -36,6 +37,8 @@ public final class BufferUtil
   private static final byte FALSE = (byte)0;
 
   private static final byte TRUE = (byte)1;
+
+  private static final short NULL_STRING = -1;
 
   private BufferUtil()
   {
@@ -157,7 +160,7 @@ public final class BufferUtil
   public static void putString(ByteBuffer byteBuffer, String str, boolean bestEffort)
   {
     int sizePosition = byteBuffer.position();
-    byteBuffer.putShort((short)-1); // Placeholder for size
+    byteBuffer.putShort(NULL_STRING); // Placeholder for size
 
     if (str != null)
     {
@@ -186,7 +189,7 @@ public final class BufferUtil
             if (max > 0)
             {
               str = str.substring(0, max);
-              byteBuffer.position(start);
+              ((java.nio.Buffer)byteBuffer).position(start);
               continue;
             }
           }
@@ -207,23 +210,23 @@ public final class BufferUtil
       int end = byteBuffer.position();
       short size = (short)Math.abs(end - start);
 
-      byteBuffer.position(sizePosition);
+      ((java.nio.Buffer)byteBuffer).position(sizePosition);
       byteBuffer.putShort(size);
-      byteBuffer.position(end);
+      ((java.nio.Buffer)byteBuffer).position(end);
     }
   }
 
   public static String getString(ByteBuffer byteBuffer)
   {
     short size = byteBuffer.getShort();
-    if (size == -1)
+    if (size == NULL_STRING)
     {
       return null;
     }
 
     if (size == 0)
     {
-      return "";
+      return StringUtil.EMPTY;
     }
 
     byte[] bytes = new byte[size];

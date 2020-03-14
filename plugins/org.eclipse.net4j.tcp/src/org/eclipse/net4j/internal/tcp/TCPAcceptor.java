@@ -268,7 +268,12 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
 
     cancelSelectionKey();
 
-    IOUtil.closeSilent(serverSocketChannel);
+    Exception ex = IOUtil.closeSilent(serverSocketChannel);
+    if (ex != null && TRACER.isEnabled())
+    {
+      TRACER.trace(ex);
+    }
+
     serverSocketChannel = null;
     super.doDeactivate();
   }

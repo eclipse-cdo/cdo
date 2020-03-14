@@ -18,8 +18,8 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * A utility class with static convenience methods.
@@ -222,12 +222,12 @@ public final class TCPUtil
       {
         try
         {
-          URL url = parse(description);
-          userID = url.getUserInfo();
-          host = url.getHost();
-          port = url.getPort();
+          URI uri = parse(description);
+          userID = uri.getUserInfo();
+          host = uri.getHost();
+          port = uri.getPort();
         }
-        catch (MalformedURLException ex)
+        catch (URISyntaxException ex)
         {
           throw new ProductCreationException(ex);
         }
@@ -338,10 +338,9 @@ public final class TCPUtil
       return result;
     }
 
-    private static URL parse(String description) throws MalformedURLException
+    private static URI parse(String description) throws URISyntaxException
     {
-      // Scheme "tcp://" would be rejected!
-      return new URL("http://" + description); // TODO Don't use URL
+      return new URI("tcp://" + description);
     }
   }
 }

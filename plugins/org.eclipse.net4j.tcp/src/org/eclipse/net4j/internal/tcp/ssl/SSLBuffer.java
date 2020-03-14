@@ -88,8 +88,6 @@ public class SSLBuffer extends Buffer
         payloadSize = (short)-payloadSize;
       }
 
-      payloadSize -= MAKE_PAYLOAD_SIZE_NON_ZERO;
-
       setPosition(IBuffer.HEADER_SIZE);
       setState(BufferState.READING_HEADER);
 
@@ -118,7 +116,6 @@ public class SSLBuffer extends Buffer
   {
     try
     {
-
       if (sslEngineManager.getPacketSendBuf().position() > 0)
       {
         sslEngineManager.handleWrite(socketChannel);
@@ -146,8 +143,9 @@ public class SSLBuffer extends Buffer
           throw new IllegalStateException("channelID == NO_CHANNEL"); //$NON-NLS-1$
         }
 
-        int payloadSize = getPosition() - IBuffer.HEADER_SIZE + MAKE_PAYLOAD_SIZE_NON_ZERO;
-        if (isEOS())
+        int payloadSize = getPosition() - HEADER_SIZE;
+        boolean eos = isEOS();
+        if (eos)
         {
           payloadSize = -payloadSize;
         }
@@ -155,7 +153,7 @@ public class SSLBuffer extends Buffer
         if (TRACER.isEnabled())
         {
           TRACER.trace("Writing " + (Math.abs(payloadSize) - 1) + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
-              + (isEOS() ? " (EOS)" : "") + StringUtil.NL + formatContent(false)); //$NON-NLS-1$ //$NON-NLS-2$
+              + (eos ? " (EOS)" : "") + StringUtil.NL + formatContent(false)); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         getByteBuffer().flip();

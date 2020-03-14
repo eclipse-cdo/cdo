@@ -43,6 +43,8 @@ public interface IConstants
 
   public static final SessionConfig SSL = Net4j.SSL.INSTANCE;
 
+  public static final SessionConfig WS = Net4j.WS.INSTANCE;
+
   public static final ModelConfig NATIVE = ModelConfig.Native.INSTANCE;
 
   public static final ModelConfig LEGACY = ModelConfig.Legacy.INSTANCE;

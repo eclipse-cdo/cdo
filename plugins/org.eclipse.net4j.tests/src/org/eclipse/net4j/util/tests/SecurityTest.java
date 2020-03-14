@@ -64,13 +64,13 @@ public class SecurityTest extends AbstractOMTest
     PeerNegotiationContext challengeContext = new PeerNegotiationContext();
     PeerNegotiationContext responseContext = new PeerNegotiationContext();
 
-    // Prepare challenge context
     challengeContext.setPeer(responseContext);
+    responseContext.setPeer(challengeContext);
+
+    // Start negotiation threads
     Thread challengeThread = new Thread(challengeContext, "challengeThread"); //$NON-NLS-1$
     challengeThread.start();
 
-    // Prepare response context
-    responseContext.setPeer(challengeContext);
     Thread responseThread = new Thread(responseContext, "responseThread"); //$NON-NLS-1$
     responseThread.start();
 
@@ -116,13 +116,13 @@ public class SecurityTest extends AbstractOMTest
     PeerNegotiationContext challengeContext = new PeerNegotiationContext();
     PeerNegotiationContext responseContext = new PeerNegotiationContext();
 
-    // Prepare challenge context
     challengeContext.setPeer(responseContext);
+    responseContext.setPeer(challengeContext);
+
+    // Start negotiation threads
     Thread challengeThread = new Thread(challengeContext, "challengeThread"); //$NON-NLS-1$
     challengeThread.start();
 
-    // Prepare response context
-    responseContext.setPeer(challengeContext);
     Thread responseThread = new Thread(responseContext, "responseThread"); //$NON-NLS-1$
     responseThread.start();
 
@@ -158,13 +158,13 @@ public class SecurityTest extends AbstractOMTest
    */
   private final class PeerNegotiationContext extends NegotiationContext implements Runnable
   {
-    private PeerNegotiationContext peer;
+    private final BlockingQueue<ByteBuffer> queue = new LinkedBlockingQueue<>();
 
-    private String userID;
+    private volatile PeerNegotiationContext peer;
 
-    private BlockingQueue<ByteBuffer> queue = new LinkedBlockingQueue<>();
+    private volatile String userID;
 
-    private boolean running;
+    private volatile boolean running;
 
     public PeerNegotiationContext()
     {
@@ -226,7 +226,7 @@ public class SecurityTest extends AbstractOMTest
 
             try
             {
-              buffer = queue.poll(20, TimeUnit.MILLISECONDS);
+              buffer = queue.poll(50, TimeUnit.MILLISECONDS);
             }
             catch (InterruptedException ex)
             {

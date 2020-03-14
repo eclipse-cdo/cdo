@@ -62,9 +62,8 @@ public class Bugzilla_458149_Test extends AbstractCDOTest
    */
   public void testXMIResource_getURI() throws Exception
   {
-    Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
-    registry.getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
     ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
 
     URI localResourceURI = URI.createFileURI(createTempFile(getName(), ".model1").getCanonicalPath());
     Resource localResource = resourceSet.createResource(localResourceURI);

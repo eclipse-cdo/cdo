@@ -234,7 +234,8 @@ public final class LifecycleUtil
     {
       return ((IDeactivateable)object).deactivate();
     }
-    else if (object != null && useAnnotation)
+
+    if (object != null && useAnnotation)
     {
       // TODO Handle evtl. return value (exception)
       invokeAnnotation(object, Deactivator.class);
@@ -267,7 +268,8 @@ public final class LifecycleUtil
     {
       throw (RuntimeException)ex;
     }
-    else if (ex != null)
+
+    if (ex != null)
     {
       throw new LifecycleException(ex);
     }

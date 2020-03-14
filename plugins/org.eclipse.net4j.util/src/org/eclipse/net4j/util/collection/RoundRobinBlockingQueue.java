@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class RoundRobinBlockingQueue<E> implements BlockingQueue<E>
 {
-  private BlockingQueue<Entry<E>> list = new LinkedBlockingQueue<>();
+  private final BlockingQueue<Entry<E>> list = new LinkedBlockingQueue<>();
 
   public RoundRobinBlockingQueue()
   {

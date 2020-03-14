@@ -46,11 +46,20 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
+import org.eclipse.net4j.ws.WSUtil;
+import org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -449,6 +458,127 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     /**
      * @author Eike Stepper
      */
+    public static class JVM extends SessionConfig.Net4j
+    {
+      public static final String NAME = "JVM";
+
+      public static final JVM INSTANCE = new JVM();
+
+      public static final String ACCEPTOR_NAME = "default";
+
+      private static final long serialVersionUID = 1L;
+
+      public JVM(String name)
+      {
+        super(name);
+      }
+
+      public JVM()
+      {
+        this(NAME);
+      }
+
+      @Override
+      public void initCapabilities(Set<String> capabilities)
+      {
+        super.initCapabilities(capabilities);
+        capabilities.add(CAPABILITY_NET4J_JVM);
+      }
+
+      @Override
+      public String getURIPrefix()
+      {
+        return getURIProtocol() + "://" + ACCEPTOR_NAME;
+      }
+
+      @Override
+      public IAcceptor getAcceptor()
+      {
+        return JVMUtil.getAcceptor(getServerContainer(), ACCEPTOR_NAME);
+      }
+
+      @Override
+      public IConnector getConnector()
+      {
+        return JVMUtil.getConnector(getClientContainer(), ACCEPTOR_NAME);
+      }
+
+      @Override
+      public void setUp() throws Exception
+      {
+        super.setUp();
+        JVMUtil.prepareContainer(getClientContainer());
+      }
+
+      @Override
+      protected boolean usesServerContainer()
+      {
+        return true;
+      }
+
+      @Override
+      public CDOViewProvider createViewProvider(final IManagedContainer container)
+      {
+        return new CDONet4jViewProvider.JVM()
+        {
+          @Override
+          protected IManagedContainer getContainer()
+          {
+            return container;
+          }
+        };
+      }
+
+      /**
+       * @author Eike Stepper
+       */
+      public static final class Embedded extends SessionConfig.Net4j.JVM
+      {
+        public static final String NAME = "JVMEmbedded";
+
+        public static final Embedded INSTANCE = new Embedded();
+
+        private static final long serialVersionUID = 1L;
+
+        public Embedded()
+        {
+          super(NAME);
+        }
+
+        @Override
+        public void initCapabilities(Set<String> capabilities)
+        {
+          super.initCapabilities(capabilities);
+          capabilities.add(CAPABILITY_NET4J_EMBEDDED);
+        }
+
+        @Override
+        public CDOSessionConfiguration createSessionConfiguration(String repositoryName)
+        {
+          InternalRepository repository = getCurrentTest().getRepository(repositoryName);
+          CDOBranchManager branchManager = new ClientBranchManager(repository.getBranchManager());
+          CDORevisionManager revisionManager = new ClientRevisionManager(repository.getRevisionManager());
+
+          CDONet4jSessionConfiguration configuration = (CDONet4jSessionConfiguration)super.createSessionConfiguration(repositoryName);
+          configuration.setBranchManager(branchManager);
+          configuration.setRevisionManager(revisionManager);
+          configuration.setSignalTimeout(Integer.MAX_VALUE);
+
+          return configuration;
+        }
+
+        @Override
+        public void configureSession(CDOSession session)
+        {
+          super.configureSession(session);
+          ((CDONet4jSession)session).options().setCommitTimeout(Integer.MAX_VALUE);
+        }
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
     public static final class TCP extends SessionConfig.Net4j
     {
       public static final String NAME = "TCP";
@@ -587,73 +717,101 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     /**
      * @author Eike Stepper
      */
-    public static class JVM extends SessionConfig.Net4j
+    public static final class WS extends SessionConfig.Net4j
     {
-      public static final String NAME = "JVM";
+      public static final String NAME = "WS";
 
-      public static final JVM INSTANCE = new JVM();
+      public static final WS INSTANCE = new WS();
+
+      public static final int HTTP_PORT = 8087;
+
+      public static final String SERVICE_URI = "ws://localhost:" + HTTP_PORT + "/net4j";
 
       public static final String ACCEPTOR_NAME = "default";
 
       private static final long serialVersionUID = 1L;
 
-      public JVM(String name)
-      {
-        super(name);
-      }
+      private static Server server;
 
-      public JVM()
+      public WS()
       {
-        this(NAME);
+        super(NAME);
       }
 
       @Override
       public void initCapabilities(Set<String> capabilities)
       {
         super.initCapabilities(capabilities);
-        capabilities.add(CAPABILITY_NET4J_JVM);
+        capabilities.add(CAPABILITY_NET4J_WS);
       }
 
       @Override
       public String getURIPrefix()
       {
-        return getURIProtocol() + "://" + ACCEPTOR_NAME;
+        return getURIProtocol() + "://localhost:" + HTTP_PORT + "/net4j/@" + ACCEPTOR_NAME;
       }
 
       @Override
       public IAcceptor getAcceptor()
       {
-        return JVMUtil.getAcceptor(getServerContainer(), ACCEPTOR_NAME);
+        return WSUtil.getAcceptor(getServerContainer(), ACCEPTOR_NAME);
       }
 
       @Override
       public IConnector getConnector()
       {
-        return JVMUtil.getConnector(getClientContainer(), ACCEPTOR_NAME);
+        try
+        {
+          return WSUtil.getConnector(getClientContainer(), new URI(SERVICE_URI), ACCEPTOR_NAME);
+        }
+        catch (URISyntaxException ex)
+        {
+          throw new RuntimeException(ex);
+        }
       }
 
       @Override
       public void setUp() throws Exception
       {
         super.setUp();
+        WSUtil.prepareContainer(getClientContainer());
+
         if (!usesServerContainer())
         {
-          JVMUtil.prepareContainer(getServerContainer());
+          WSUtil.prepareContainer(getServerContainer());
         }
 
-        JVMUtil.prepareContainer(getClientContainer());
+        if (server == null)
+        {
+          System.out.println("Starting Jetty...");
+          server = new Server();
+
+          ServerConnector connector = new ServerConnector(server);
+          connector.setPort(HTTP_PORT);
+          server.addConnector(connector);
+
+          ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
+          handler.setContextPath("/");
+          handler.addServlet(new ServletHolder("net4j", Net4jWebSocketServlet.class), "/net4j");
+          server.setHandler(handler);
+          server.start();
+        }
       }
 
       @Override
-      protected boolean usesServerContainer()
+      public void mainSuiteFinished() throws Exception
       {
-        return true;
+        super.mainSuiteFinished();
+
+        System.out.println("Stopping Jetty...");
+        server.stop();
+        server = null;
       }
 
       @Override
       public CDOViewProvider createViewProvider(final IManagedContainer container)
       {
-        return new CDONet4jViewProvider.JVM()
+        return new CDONet4jViewProvider.WS()
         {
           @Override
           protected IManagedContainer getContainer()
@@ -661,52 +819,6 @@ public abstract class SessionConfig extends Config implements ISessionConfig
             return container;
           }
         };
-      }
-
-      /**
-       * @author Eike Stepper
-       */
-      public static final class Embedded extends SessionConfig.Net4j.JVM
-      {
-        public static final String NAME = "JVMEmbedded";
-
-        public static final Embedded INSTANCE = new Embedded();
-
-        private static final long serialVersionUID = 1L;
-
-        public Embedded()
-        {
-          super(NAME);
-        }
-
-        @Override
-        public void initCapabilities(Set<String> capabilities)
-        {
-          super.initCapabilities(capabilities);
-          capabilities.add(CAPABILITY_NET4J_EMBEDDED);
-        }
-
-        @Override
-        public CDOSessionConfiguration createSessionConfiguration(String repositoryName)
-        {
-          InternalRepository repository = getCurrentTest().getRepository(repositoryName);
-          CDOBranchManager branchManager = new ClientBranchManager(repository.getBranchManager());
-          CDORevisionManager revisionManager = new ClientRevisionManager(repository.getRevisionManager());
-
-          CDONet4jSessionConfiguration configuration = (CDONet4jSessionConfiguration)super.createSessionConfiguration(repositoryName);
-          configuration.setBranchManager(branchManager);
-          configuration.setRevisionManager(revisionManager);
-          configuration.setSignalTimeout(Integer.MAX_VALUE);
-
-          return configuration;
-        }
-
-        @Override
-        public void configureSession(CDOSession session)
-        {
-          super.configureSession(session);
-          ((CDONet4jSession)session).options().setCommitTimeout(Integer.MAX_VALUE);
-        }
       }
     }
   }

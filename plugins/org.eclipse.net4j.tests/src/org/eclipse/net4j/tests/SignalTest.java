@@ -11,26 +11,22 @@
  */
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.internal.tcp.TCPConnector;
+import org.eclipse.net4j.tests.config.AbstractConfigTest;
 import org.eclipse.net4j.tests.data.TinyData;
 import org.eclipse.net4j.tests.signal.ArrayRequest;
 import org.eclipse.net4j.tests.signal.AsyncRequest;
 import org.eclipse.net4j.tests.signal.IntRequest;
 import org.eclipse.net4j.tests.signal.StringRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
-import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.om.OMPlatform;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.nio.channels.SocketChannel;
 import java.util.Arrays;
 
 /**
  * @author Eike Stepper
  */
-public class SignalTest extends AbstractProtocolTest
+public class SignalTest extends AbstractConfigTest
 {
   public void testInteger() throws Exception
   {
@@ -101,7 +97,7 @@ public class SignalTest extends AbstractProtocolTest
     }
   }
 
-  public void testCloseSocketChannel() throws Exception
+  public void testCloseUnderlyingConnection() throws Exception
   {
     TestSignalProtocol protocol = null;
 
@@ -111,7 +107,7 @@ public class SignalTest extends AbstractProtocolTest
       protocol = new TestSignalProtocol(getConnector());
       final ILifecycle lifecycle = protocol;
 
-      closeSocketChannel((TCPConnector)getAcceptor().getAcceptedConnectors()[0]);
+      config.closeUnderlyingConnection(getServerConnector());
       new PollingTimeOuter()
       {
         @Override
@@ -127,49 +123,6 @@ public class SignalTest extends AbstractProtocolTest
       {
         protocol.close();
       }
-    }
-  }
-
-  private static void closeSocketChannel(TCPConnector connector) throws IOException
-  {
-    Field field = ReflectUtil.getField(TCPConnector.class, "socketChannel");
-    SocketChannel socketChannel = (SocketChannel)ReflectUtil.getValue(field, connector);
-    socketChannel.close();
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class TCP extends SignalTest
-  {
-    @Override
-    protected boolean useJVMTransport()
-    {
-      return false;
-    }
-
-    @Override
-    protected boolean useSSLTransport()
-    {
-      return false;
-    }
-  }
-
-  /**
-   * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
-   */
-  public static final class SSL extends SignalTest
-  {
-    @Override
-    protected boolean useJVMTransport()
-    {
-      return false;
-    }
-
-    @Override
-    protected boolean useSSLTransport()
-    {
-      return true;
     }
   }
 }

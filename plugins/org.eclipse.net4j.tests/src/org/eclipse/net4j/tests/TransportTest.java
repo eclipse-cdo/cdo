@@ -11,24 +11,25 @@
  */
 package org.eclipse.net4j.tests;
 
-import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.ITransportConfigAware;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.channel.ChannelInputStream;
 import org.eclipse.net4j.channel.ChannelOutputStream;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.tests.config.AbstractConfigTest;
 import org.eclipse.net4j.tests.data.HugeData;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.spi.net4j.ClientProtocolFactory;
-import org.eclipse.spi.net4j.Connector;
+import org.eclipse.spi.net4j.InternalChannelMultiplexer;
 import org.eclipse.spi.net4j.Protocol;
 import org.eclipse.spi.net4j.ServerProtocolFactory;
 
@@ -46,64 +47,25 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Eike Stepper
  */
-public abstract class TransportTest extends AbstractProtocolTest
+public class TransportTest extends AbstractConfigTest
 {
   public TransportTest()
   {
   }
-
-  @Override
-  protected abstract boolean useJVMTransport();
 
   protected IBuffer provideBuffer()
   {
     return provideBuffer(null);
   }
 
-  protected IBuffer provideBuffer(IConnector iConnector)
+  protected IBuffer provideBuffer(IConnector connector)
   {
-    IBuffer buffer = null;
-    if (!useJVMTransport() && useSSLTransport())
-    {
-      // cannot use buffer provider from net4j need to use SSL Buffer inside the SSLConnector.
-      buffer = ((Connector)iConnector).provideBuffer();
-    }
-    else
-    {
-      IBufferProvider bufferProvider = Net4jUtil.getBufferProvider(container);
-      buffer = bufferProvider.provideBuffer();
-    }
-
-    return buffer;
+    return ((InternalChannelMultiplexer)connector).provideBuffer();
   }
 
-  private void registerClientFactory(IFactory factory)
+  protected IBufferProvider provideBufferProvider(IConnector connector)
   {
-    if (!useJVMTransport() && useSSLTransport())
-    {
-      // need separate container between client and server for SSL.
-      separateContainer.registerFactory(factory);
-    }
-    else
-    {
-      container.registerFactory(factory);
-    }
-  }
-
-  protected IBufferProvider provideBufferProvider(IConnector iConnector)
-  {
-    IBufferProvider bufferProvider = null;
-    if (!useJVMTransport() && useSSLTransport())
-    {
-      // cannot use buffer provider from net4j need to use SSL Buffer inside the SSLConnector.
-      bufferProvider = ((Connector)iConnector).getConfig().getBufferProvider();
-    }
-    else
-    {
-      bufferProvider = Net4jUtil.getBufferProvider(container);
-    }
-
-    return bufferProvider;
+    return ((ITransportConfigAware)connector).getConfig().getBufferProvider();
   }
 
   public void testConnect() throws Exception
@@ -114,11 +76,11 @@ public abstract class TransportTest extends AbstractProtocolTest
   public void testSendBuffer() throws Exception
   {
     startTransport();
-    IConnector connecter = getConnector();
-    IChannel channel = connecter.openChannel();
+    IConnector connector = getConnector();
+    IChannel channel = connector.openChannel();
     for (int i = 0; i < 3; i++)
     {
-      IBuffer buffer = provideBuffer(connecter);
+      IBuffer buffer = provideBuffer(connector);
 
       ByteBuffer byteBuffer = buffer.startPutting(channel.getID());
       byteBuffer.putInt(1970);
@@ -129,25 +91,31 @@ public abstract class TransportTest extends AbstractProtocolTest
   public void testSendEmptyBuffer() throws Exception
   {
     startTransport();
-    IConnector connecter = getConnector();
-    IChannel channel = connecter.openChannel();
+    IConnector connector = getConnector();
+    IChannel channel = connector.openChannel();
     for (int i = 0; i < 3; i++)
     {
-      IBuffer buffer = provideBuffer(connecter);
+      IBuffer buffer = provideBuffer(connector);
       buffer.startPutting(channel.getID());
       channel.sendBuffer(buffer);
     }
   }
 
-  public void testSendEmptyBuffer2() throws Exception
+  public void testSendEmptyBufferWithoutStartPutting() throws Exception
   {
     startTransport();
-    IConnector connecter = getConnector();
-    IChannel channel = connecter.openChannel();
-    for (int i = 0; i < 3; i++)
+    IConnector connector = getConnector();
+    IChannel channel = connector.openChannel();
+    IBuffer buffer = provideBuffer(connector);
+
+    try
     {
-      IBuffer buffer = provideBuffer(connecter);
       channel.sendBuffer(buffer);
+      fail("ChannelException expected because buffer is not in state PUTTING");
+    }
+    catch (ChannelException expected)
+    {
+      // SUCCESS
     }
   }
 
@@ -155,15 +123,14 @@ public abstract class TransportTest extends AbstractProtocolTest
   {
     final int COUNT = 3;
     final CountDownLatch counter = new CountDownLatch(COUNT);
-    container.registerFactory(new TestProtocol.ServerFactory(counter));
-    // need to handle about separating container between client and server for SSL.
-    registerClientFactory(new TestProtocol.ClientFactory());
+    acceptorContainer.registerFactory(new TestProtocol.ServerFactory(counter));
+    connectorContainer.registerFactory(new TestProtocol.ClientFactory());
     startTransport();
-    IConnector iConnecter = getConnector();
-    IChannel channel = iConnecter.openChannel(TestProtocol.ClientFactory.TYPE, null);
+    IConnector connector = getConnector();
+    IChannel channel = connector.openChannel(TransportTest.TestProtocol.TYPE, null);
     for (int i = 0; i < COUNT; i++)
     {
-      IBuffer buffer = provideBuffer(iConnecter);
+      IBuffer buffer = provideBuffer(connector);
       ByteBuffer byteBuffer = buffer.startPutting(channel.getID());
       byteBuffer.putInt(1970);
       channel.sendBuffer(buffer);
@@ -177,43 +144,47 @@ public abstract class TransportTest extends AbstractProtocolTest
   {
     final int COUNT = 3;
     final CountDownLatch counter = new CountDownLatch(COUNT);
-    container.registerFactory(new TestProtocol.ServerFactory(counter));
-    // need to handle about separating container between client and server for SSL.
-    registerClientFactory(new TestProtocol.ClientFactory());
+    acceptorContainer.registerFactory(new TestProtocol.ServerFactory(counter));
+    connectorContainer.registerFactory(new TestProtocol.ClientFactory());
 
     startTransport();
-    IConnector connecter = getConnector();
-    IChannel channel = connecter.openChannel(TestProtocol.ClientFactory.TYPE, null);
+    IConnector connector = getConnector();
+    IChannel channel = connector.openChannel(TransportTest.TestProtocol.TYPE, null);
     for (int i = 0; i < COUNT; i++)
     {
-      IBuffer buffer = provideBuffer(connecter);
+      IBuffer buffer = provideBuffer(connector);
       buffer.startPutting(channel.getID());
       channel.sendBuffer(buffer);
-      sleep(50);
     }
 
+    sleep(100);
+
+    // Assert that no buffer was received.
     assertEquals(COUNT, counter.getCount());
   }
 
-  public void testHandleEmptyBuffer2() throws Exception
+  public void testHandleEmptyBufferWithEOS() throws Exception
   {
     final int COUNT = 3;
     final CountDownLatch counter = new CountDownLatch(COUNT);
-    container.registerFactory(new TestProtocol.ServerFactory(counter));
-    // need to handle about separating container between client and server for SSL.
-    registerClientFactory(new TestProtocol.ClientFactory());
+    acceptorContainer.registerFactory(new TestProtocol.ServerFactory(counter));
+    connectorContainer.registerFactory(new TestProtocol.ClientFactory());
 
     startTransport();
-    IConnector connecter = getConnector();
-    IChannel channel = connecter.openChannel(TestProtocol.ClientFactory.TYPE, null);
+    IConnector connector = getConnector();
+    IChannel channel = connector.openChannel(TransportTest.TestProtocol.TYPE, null);
     for (int i = 0; i < COUNT; i++)
     {
-      IBuffer buffer = provideBuffer(connecter);
+      IBuffer buffer = provideBuffer(connector);
+      buffer.startPutting(channel.getID());
+      buffer.setEOS(true);
       channel.sendBuffer(buffer);
-      sleep(50);
     }
 
-    assertEquals(COUNT, counter.getCount());
+    sleep(100);
+
+    // Assert that all buffers were received.
+    assertEquals(0, counter.getCount());
   }
 
   public void testStreaming() throws Exception
@@ -268,7 +239,7 @@ public abstract class TransportTest extends AbstractProtocolTest
       String line;
       while ((line = reader.readLine()) != null)
       {
-        msg(line);
+        System.out.println(line);
       }
 
       isr.close();
@@ -501,9 +472,11 @@ public abstract class TransportTest extends AbstractProtocolTest
    */
   public static final class TestProtocol extends Protocol<CountDownLatch>
   {
+    public static final String TYPE = "test.protocol"; //$NON-NLS-1$
+
     public TestProtocol(CountDownLatch counter)
     {
-      super(ServerFactory.TYPE);
+      super(TestProtocol.TYPE);
       setInfraStructure(counter);
     }
 
@@ -520,8 +493,6 @@ public abstract class TransportTest extends AbstractProtocolTest
      */
     public static class ServerFactory extends ServerProtocolFactory
     {
-      public static final String TYPE = "test.protocol"; //$NON-NLS-1$
-
       private CountDownLatch counter;
 
       public ServerFactory(CountDownLatch counter)
@@ -542,8 +513,6 @@ public abstract class TransportTest extends AbstractProtocolTest
      */
     public static class ClientFactory extends ClientProtocolFactory
     {
-      public static final String TYPE = ServerFactory.TYPE;
-
       public ClientFactory()
       {
         super(TYPE);
@@ -554,60 +523,6 @@ public abstract class TransportTest extends AbstractProtocolTest
       {
         return new TestProtocol(null);
       }
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class TCP extends TransportTest
-  {
-    @Override
-    protected boolean useJVMTransport()
-    {
-      return false;
-    }
-
-    @Override
-    protected boolean useSSLTransport()
-    {
-      return false;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class JVM extends TransportTest
-  {
-    @Override
-    protected boolean useJVMTransport()
-    {
-      return true;
-    }
-
-    @Override
-    protected boolean useSSLTransport()
-    {
-      return false;
-    }
-  }
-
-  /**
-   * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
-   */
-  public static final class SSL extends TransportTest
-  {
-    @Override
-    protected boolean useJVMTransport()
-    {
-      return false;
-    }
-
-    @Override
-    protected boolean useSSLTransport()
-    {
-      return true;
     }
   }
 }

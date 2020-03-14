@@ -37,8 +37,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Buffer implements InternalBuffer
 {
-  public static final int MAKE_PAYLOAD_SIZE_NON_ZERO = 1;
-
   private static final byte FLAG_EOS = 1 << 0;
 
   private static final byte FLAG_CCAM = 1 << 1;
@@ -53,13 +51,13 @@ public class Buffer implements InternalBuffer
 
   private IBufferProvider bufferProvider;
 
-  private short channelID;
-
-  private byte flags;
+  private ByteBuffer byteBuffer;
 
   private BufferState state = BufferState.INITIAL;
 
-  private ByteBuffer byteBuffer;
+  private short channelID;
+
+  private byte flags;
 
   public Buffer(IBufferProvider provider, short capacity)
   {
@@ -216,27 +214,31 @@ public class Buffer implements InternalBuffer
       if (state == BufferState.READING_HEADER)
       {
         readChannel(socketChannel, byteBuffer);
+
         if (byteBuffer.hasRemaining())
         {
+          // Limit is set to HEADER_SIZE.
+          // Header is not fully received, yet.
           return null;
         }
 
-        byteBuffer.flip();
-        channelID = byteBuffer.getShort();
-        short payloadSize = byteBuffer.getShort();
-        if (payloadSize < 0)
+        // Header is fully received.
+        channelID = byteBuffer.getShort(CHANNEL_ID_POS);
+        short payloadSize = byteBuffer.getShort(PAYLOAD_SIZE_POS);
+
+        if (payloadSize == 0)
+        {
+          setEOS(true);
+        }
+        else if (payloadSize < 0)
         {
           setEOS(true);
           payloadSize = (short)-payloadSize;
         }
 
-        payloadSize -= MAKE_PAYLOAD_SIZE_NON_ZERO;
-
-        byteBuffer.clear();
-
         try
         {
-          byteBuffer.limit(payloadSize);
+          byteBuffer.limit(HEADER_SIZE + payloadSize);
         }
         catch (IllegalArgumentException ex)
         {
@@ -269,7 +271,7 @@ public class Buffer implements InternalBuffer
             + (isEOS() ? " (EOS)" : "") + StringUtil.NL + formatContent(false)); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
-      byteBuffer.flip();
+      byteBuffer.position(HEADER_SIZE);
       state = BufferState.GETTING;
       return byteBuffer;
     }
@@ -337,12 +339,6 @@ public class Buffer implements InternalBuffer
   {
     try
     {
-      if (byteBuffer.position() == HEADER_SIZE)
-      {
-        clear();
-        return true; // *Pretend* that this empty buffer has been written
-      }
-
       if (state != BufferState.PUTTING && state != BufferState.WRITING)
       {
         throw new IllegalStateException(toString());
@@ -355,8 +351,7 @@ public class Buffer implements InternalBuffer
           throw new IllegalStateException(toString() + ": channelID == NO_CHANNEL"); //$NON-NLS-1$
         }
 
-        int payloadSize = byteBuffer.position() - HEADER_SIZE + MAKE_PAYLOAD_SIZE_NON_ZERO;
-
+        int payloadSize = byteBuffer.position() - HEADER_SIZE;
         boolean eos = isEOS();
         if (eos)
         {
@@ -590,11 +585,12 @@ public class Buffer implements InternalBuffer
     }
   }
 
-  private void readChannel(SocketChannel socketChannel, ByteBuffer buffer) throws ClosedChannelException
+  private void readChannel(SocketChannel socketChannel, ByteBuffer byteBuffer) throws ClosedChannelException
   {
     try
     {
-      if (socketChannel.read(buffer) == -1)
+      int numBytes = socketChannel.read(byteBuffer);
+      if (numBytes == -1)
       {
         throw new IOException(toString() + ": Channel has reached end-of-stream");
       }
@@ -643,8 +639,6 @@ public class Buffer implements InternalBuffer
       eos = true;
     }
 
-    payloadSize -= MAKE_PAYLOAD_SIZE_NON_ZERO;
-
     System.out.println("channelID:     " + channelID);
     System.out.println("payloadSize:   " + payloadSize);
     System.out.println("eos:           " + eos);
@@ -665,6 +659,22 @@ public class Buffer implements InternalBuffer
     System.out.println("correlationID: " + correlationID);
     System.out.println("type:          " + type);
     System.out.println();
+  }
+
+  public static String dump(ByteBuffer byteBuffer)
+  {
+    final int position = byteBuffer.position();
+    final int limit = byteBuffer.limit();
+
+    StringBuilder builder = new StringBuilder();
+    for (int i = 0; i < limit; i++)
+    {
+      byte b = byteBuffer.get(i);
+      builder.append(' ');
+      builder.append(Byte.toString(b));
+    }
+
+    return "pos " + position + "/" + limit + ":" + builder;
   }
 
   public static void main(String[] args) throws Exception

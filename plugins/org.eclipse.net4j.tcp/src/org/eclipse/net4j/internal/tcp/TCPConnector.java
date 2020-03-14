@@ -311,6 +311,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
             IBuffer buffer = channelSendQueue.peek();
             if (buffer != null)
             {
+              // The CCAM flag must be remembered *before* the buffer.write() call below!
               boolean closeChannelAfterMe = buffer.isCCAM();
 
               if (buffer.write(socketChannel))
@@ -318,11 +319,11 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
                 writeQueue.poll();
                 channelSendQueue.poll();
                 buffer.release();
-              }
 
-              if (closeChannelAfterMe)
-              {
-                channel.close();
+                if (closeChannelAfterMe)
+                {
+                  channel.close();
+                }
               }
             }
           }

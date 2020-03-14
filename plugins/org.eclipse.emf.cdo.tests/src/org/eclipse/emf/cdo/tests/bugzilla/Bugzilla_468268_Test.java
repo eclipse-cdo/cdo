@@ -35,9 +35,9 @@ public class Bugzilla_468268_Test extends AbstractCDOTest
 {
   public void testHashCodeCallOnAllFields() throws Exception
   {
-    Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
-    registry.getExtensionToFactoryMap().put("model6", new XMIResourceFactoryImpl());
     ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("model6", new XMIResourceFactoryImpl());
+
     URI localResourceURI = URI.createFileURI(createTempFile("main", ".model6").getCanonicalPath());
     Resource localResource = resourceSet.createResource(localResourceURI);
 
@@ -47,12 +47,12 @@ public class Bugzilla_468268_Test extends AbstractCDOTest
     testHashCodeOnAllFieds(mainContainmentObject);
     localResource.save(Collections.emptyMap());
     testHashCodeOnAllFieds(mainContainmentObject);
-
   }
 
   private void testHashCodeOnAllFieds(EObject eObject) throws Exception
   {
     Set<Field> fields = getFields(eObject);
+
     for (Field field : fields)
     {
       Object value = getValue(field, eObject);
@@ -67,6 +67,7 @@ public class Bugzilla_468268_Test extends AbstractCDOTest
   {
     Object value;
     final boolean oldAccessible = field.isAccessible();
+
     try
     {
       field.setAccessible(true);
@@ -76,6 +77,7 @@ public class Bugzilla_468268_Test extends AbstractCDOTest
     {
       field.setAccessible(oldAccessible);
     }
+
     return value;
   }
 
@@ -85,13 +87,14 @@ public class Bugzilla_468268_Test extends AbstractCDOTest
     Field[] fields = eObject.getClass().getDeclaredFields();
     allFields.addAll(Arrays.asList(fields));
     Class<?> currentClass = eObject.getClass().getSuperclass();
+
     while (currentClass != Object.class)
     {
       fields = currentClass.getDeclaredFields();
       allFields.addAll(Arrays.asList(fields));
       currentClass = currentClass.getSuperclass();
     }
+
     return allFields;
   }
-
 }

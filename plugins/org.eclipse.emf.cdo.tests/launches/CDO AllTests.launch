@@ -33,8 +33,9 @@
 <booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>
 <stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit3"/>
+<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.emf.cdo.tests.AllTests"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.emf.cdo.tests"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx1g&#13;&#10;-Dorg.eclipse.net4j.util.om.trace.disable=true&#13;&#10;-Dorg.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser=false&#10;-Dorg.eclipse.net4j.db.close.noisy=true"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx4g&#13;&#10;-Dorg.eclipse.net4j.util.om.trace.disable=true&#13;&#10;-Dorg.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser=false&#13;&#10;-Dorg.eclipse.net4j.db.close.noisy=true"/>
 <stringAttribute key="yk-options" value="&#13;&#10;additional-options=&#13;&#10;snapshots-dir=&#13;&#10;"/>
 </launchConfiguration>

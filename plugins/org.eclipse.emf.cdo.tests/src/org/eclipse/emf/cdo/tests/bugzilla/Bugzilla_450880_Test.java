@@ -60,11 +60,12 @@ public class Bugzilla_450880_Test extends AbstractCDOTest
 
   public void testCDODeltaNotificationGetValueWithEnumTypedAttributeOnXMIResource() throws Exception
   {
-    Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
-    registry.getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
     ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
+
     URI localMainResourceURI = URI.createFileURI(createTempFile(getName(), ".model1").getCanonicalPath());
     Resource resource1 = resourceSet.createResource(localMainResourceURI);
+
     testCDODeltaNotificationGetValueWithEnumTypedAttribute(resource1);
   }
 
@@ -81,5 +82,4 @@ public class Bugzilla_450880_Test extends AbstractCDOTest
     assertEquals(getModel1Package().getProduct1_OtherVATs().getDefaultValue(), notification.getOldValue());
     assertEquals(newValue, notification.getNewValue());
   }
-
 }

@@ -22,15 +22,14 @@ import org.eclipse.net4j.util.security.INegotiationContext;
 
 import org.eclipse.spi.net4j.Connector;
 import org.eclipse.spi.net4j.InternalChannel;
-
-import java.util.Queue;
+import org.eclipse.spi.net4j.InternalChannelMultiplexer.BufferMultiplexer;
 
 /**
  * TODO Remove peer channels
  *
  * @author Eike Stepper
  */
-public abstract class JVMConnector extends Connector implements IJVMConnector
+public abstract class JVMConnector extends Connector implements IJVMConnector, BufferMultiplexer
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, JVMConnector.class);
 
@@ -70,32 +69,23 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
   }
 
   @Override
-  public void multiplexChannel(InternalChannel localChannel)
+  public void multiplexBuffer(InternalChannel channel, IBuffer buffer)
   {
-    short channelID = localChannel.getID();
-    InternalChannel peerChannel = peer.getChannel(channelID);
-    if (peerChannel == null)
-    {
-      throw new IllegalStateException("peerChannel == null"); //$NON-NLS-1$
-    }
-
-    Queue<IBuffer> localQueue = localChannel.getSendQueue();
-    IBuffer buffer = localQueue.poll();
-
-    if (buffer.getPosition() == IBuffer.HEADER_SIZE)
-    {
-      // Just release this empty buffer has been written
-      buffer.release();
-      return;
-    }
-
     if (TRACER.isEnabled())
     {
       TRACER.trace("Multiplexing " + buffer.formatContent(true)); //$NON-NLS-1$
     }
 
     buffer.flip();
+
+    InternalChannel peerChannel = ((JVMChannel)channel).getPeer();
     peerChannel.handleBufferFromMultiplexer(buffer);
+  }
+
+  @Override
+  public void multiplexChannel(InternalChannel localChannel)
+  {
+    throw new UnsupportedOperationException();
   }
 
   @Override

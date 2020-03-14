@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
@@ -25,6 +24,7 @@ import org.eclipse.emf.internal.cdo.object.CDOLegacyAdapter;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.ECrossReferenceAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
@@ -36,7 +36,9 @@ import java.util.Collections;
  */
 public class Bugzilla_362270b_Test extends AbstractCDOTest
 {
-  private static final String REMOTE_RESOURCE_PATH = "sharedResource.model1";
+  private static final String EXTENSION = "model1";
+
+  private static final String REMOTE_RESOURCE_PATH = "sharedResource." + EXTENSION;
 
   private CDOTransaction cdoTransaction;
 
@@ -48,23 +50,22 @@ public class Bugzilla_362270b_Test extends AbstractCDOTest
 
   private RefSingleNonContainedNPL refSingleNonContainedNPL2;
 
+  private void registerResourceFactories(ResourceSet resourceSet)
+  {
+    Resource.Factory.Registry registry = resourceSet.getResourceFactoryRegistry();
+    registry.getExtensionToFactoryMap().put(EXTENSION, new XMIResourceFactoryImpl());
+  }
+
   @Override
   public void setUp() throws Exception
   {
     super.setUp();
 
-    Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
-    registry.getProtocolToFactoryMap().put("cdo.net4j.tcp", CDOResourceFactory.INSTANCE);
-    registry.getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
-
     CDOSession session = openSession();
     cdoTransaction = session.openTransaction();
-    init(cdoTransaction);
-  }
+    registerResourceFactories(cdoTransaction.getResourceSet());
 
-  private void init(CDOTransaction cdoTransaction) throws Exception
-  {
-    URI localResourceURI = URI.createFileURI(createTempFile(getName(), ".model1").getCanonicalPath());
+    URI localResourceURI = URI.createFileURI(createTempFile(getName(), "." + EXTENSION).getCanonicalPath());
     Resource remoteResource = cdoTransaction.createResource(getResourcePath(REMOTE_RESOURCE_PATH));
     Resource localResource = cdoTransaction.getResourceSet().createResource(localResourceURI);
 
@@ -88,6 +89,17 @@ public class Bugzilla_362270b_Test extends AbstractCDOTest
     remoteResource.save(Collections.emptyMap());
 
     genRefMultiContained.eAdapters().add(new ECrossReferenceAdapter());
+  }
+
+  @Override
+  public void tearDown() throws Exception
+  {
+    cdoTransaction = null;
+    containedElementNoOpposite1 = null;
+    containedElementNoOpposite2 = null;
+    refSingleNonContainedNPL1 = null;
+    refSingleNonContainedNPL2 = null;
+    super.tearDown();
   }
 
   public void testRollback() throws Exception
@@ -123,6 +135,7 @@ public class Bugzilla_362270b_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       transaction = session.openTransaction();
+      registerResourceFactories(transaction.getResourceSet());
       sharedResource = transaction.getResource(getResourcePath(REMOTE_RESOURCE_PATH));
     }
 
@@ -131,16 +144,5 @@ public class Bugzilla_362270b_Test extends AbstractCDOTest
       genRefMultiContained = (GenRefMultiContained)sharedResource.getContents().get(0);
       genRefMultiContained.eAdapters().add(new ECrossReferenceAdapter());
     }
-  }
-
-  @Override
-  public void tearDown() throws Exception
-  {
-    cdoTransaction = null;
-    containedElementNoOpposite1 = null;
-    containedElementNoOpposite2 = null;
-    refSingleNonContainedNPL1 = null;
-    refSingleNonContainedNPL2 = null;
-    super.tearDown();
   }
 }

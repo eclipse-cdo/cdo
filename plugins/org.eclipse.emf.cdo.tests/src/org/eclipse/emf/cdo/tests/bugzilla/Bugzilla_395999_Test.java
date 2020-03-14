@@ -30,65 +30,36 @@ public class Bugzilla_395999_Test extends AbstractCDOTest
 {
   public void testTwiceGetCDOResourceOnResourceSetImpl() throws Exception
   {
-    Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
-    Object oldFactory = registry.getProtocolToFactoryMap().put(getURIProtocol(), CDOResourceFactory.INSTANCE);
+    URI uri = URI.createURI(getURIPrefix() + "/" + getRepository().getName() + getResourcePath("/res1") + "?transactional=true");
 
-    try
-    {
-      URI uri = URI.createURI(getURIPrefix() + "/" + getRepository().getName() + getResourcePath("/res1") + "?transactional=true");
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(getURIProtocol(), CDOResourceFactory.INSTANCE);
 
-      ResourceSet resourceSet = new ResourceSetImpl();
-      Resource resource = resourceSet.createResource(uri);
-      resource.save(Collections.emptyMap());
+    Resource resource = resourceSet.createResource(uri);
+    resource.save(Collections.emptyMap());
 
-      loadTwiceAndSaveResource(uri);
-    }
-    finally
-    {
-      if (oldFactory == null)
-      {
-        registry.getExtensionToFactoryMap().remove(getURIProtocol());
-      }
-      else
-      {
-        registry.getExtensionToFactoryMap().put(getURIProtocol(), oldFactory);
-      }
-    }
+    loadTwiceAndSaveResource(uri);
   }
 
   public void testTwiceGetXMIResourceOnResourceSetImpl() throws Exception
   {
-    Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
-    Object oldFactory = registry.getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
 
-    try
-    {
-      ResourceSet resourceSet = new ResourceSetImpl();
+    URI uri = URI.createFileURI(createTempFile(getName(), ".model1").getCanonicalPath());
+    Resource resource = resourceSet.createResource(uri);
+    resource.save(Collections.emptyMap());
 
-      URI uri = URI.createFileURI(createTempFile(getName(), ".model1").getCanonicalPath());
-      Resource resource = resourceSet.createResource(uri);
-      resource.save(Collections.emptyMap());
-
-      loadTwiceAndSaveResource(uri);
-    }
-    finally
-    {
-      if (oldFactory == null)
-      {
-        registry.getExtensionToFactoryMap().remove("model1");
-      }
-      else
-      {
-        registry.getExtensionToFactoryMap().put("model1", oldFactory);
-      }
-    }
+    loadTwiceAndSaveResource(uri);
   }
 
   private void loadTwiceAndSaveResource(URI resourceURI) throws Exception
   {
     ResourceSet resourceSet = new ResourceSetImpl();
-    Resource resource = resourceSet.getResource(resourceURI, true);
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(getURIProtocol(), CDOResourceFactory.INSTANCE);
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
 
+    Resource resource = resourceSet.getResource(resourceURI, true);
     assertEquals("The ResourceSetImpl should returns the same Resource as in the first call", resource, resourceSet.getResource(resourceURI, true));
 
     resource.save(Collections.emptyMap());

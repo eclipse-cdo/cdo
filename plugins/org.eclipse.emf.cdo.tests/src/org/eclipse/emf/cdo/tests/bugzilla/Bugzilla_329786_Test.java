@@ -43,25 +43,13 @@ public class Bugzilla_329786_Test extends AbstractCDOTest
   {
     getRepository();
 
-    Registry registry = Resource.Factory.Registry.INSTANCE;
-    registry.getProtocolToFactoryMap().put(CDONet4jUtil.PROTOCOL_TCP, CDOResourceFactory.INSTANCE);
-    registry.getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
-
-    try
-    {
-      URI localURI = createLocalAndRemoteResource();
-      accessRemoteObjectByLocalReferences(localURI);
-    }
-    finally
-    {
-      registry.getProtocolToFactoryMap().remove(CDONet4jUtil.PROTOCOL_TCP);
-      registry.getExtensionToFactoryMap().remove("model1");
-    }
+    URI localURI = createLocalAndRemoteResource();
+    accessRemoteObjectByLocalReferences(localURI);
   }
 
   private URI createLocalAndRemoteResource() throws Exception
   {
-    ResourceSet resourceSet = new ResourceSetImpl();
+    ResourceSet resourceSet = createResourceSet();
 
     URI sharedURI = URI.createURI(CDONet4jUtil.PROTOCOL_TCP + "://localhost:2036/" + RepositoryConfig.REPOSITORY_NAME + getResourcePath("/sharedResource"))
         .appendQuery(CDOURIData.TRANSACTIONAL_PARAMETER + "=true");
@@ -118,7 +106,7 @@ public class Bugzilla_329786_Test extends AbstractCDOTest
 
   private void accessRemoteObjectByLocalReferences(URI localURI)
   {
-    ResourceSet resourceSet = new ResourceSetImpl();
+    ResourceSet resourceSet = createResourceSet();
     Resource localResource = resourceSet.getResource(localURI, true);
     assertEquals(true, localResource.getContents().get(0) instanceof Company);
 
@@ -136,5 +124,14 @@ public class Bugzilla_329786_Test extends AbstractCDOTest
 
     PurchaseOrder sharedPurchaseOrder = localSupplier.getPurchaseOrders().get(0);
     assertEquals(true, sharedPurchaseOrder.eResource() instanceof CDOResource);
+  }
+
+  private static ResourceSet createResourceSet()
+  {
+    ResourceSet resourceSet = new ResourceSetImpl();
+    Registry registry = resourceSet.getResourceFactoryRegistry();
+    registry.getProtocolToFactoryMap().put(CDONet4jUtil.PROTOCOL_TCP, CDOResourceFactory.INSTANCE);
+    registry.getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
+    return resourceSet;
   }
 }

@@ -238,7 +238,6 @@ public class TransactionTest extends AbstractCDOTest
   {
     final int RUNS = 1;
     final int THREADS = 100;
-    final int TIMEOUT = 10; // Minutes.
     final boolean pessimistic = true;
 
     CDOSession session = openSession();
@@ -262,8 +261,6 @@ public class TransactionTest extends AbstractCDOTest
       for (int thread = 0; thread < THREADS; thread++)
       {
         final CDOTransaction transaction = session.openTransaction();
-        // transaction.options().setCommitInfoTimeout(1000000);
-
         final Company company = transaction.getObject(initialCompany);
         final Customer newCustomer = Model1Factory.eINSTANCE.createCustomer();
 
@@ -274,7 +271,7 @@ public class TransactionTest extends AbstractCDOTest
           {
             if (pessimistic)
             {
-              CDOUtil.getCDOObject(company).cdoWriteLock().lock(TIMEOUT, TimeUnit.MINUTES);
+              CDOUtil.getCDOObject(company).cdoWriteLock().lock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
             }
 
             company.getCustomers().add(newCustomer);
@@ -288,11 +285,7 @@ public class TransactionTest extends AbstractCDOTest
         thread.start();
       }
 
-      if (!latch.await(TIMEOUT, TimeUnit.MINUTES))
-      {
-        fail("Timeout after " + TIMEOUT + " seconds");
-      }
-
+      await(latch);
       signalCounter.dump(IOUtil.OUT(), true);
     }
   }

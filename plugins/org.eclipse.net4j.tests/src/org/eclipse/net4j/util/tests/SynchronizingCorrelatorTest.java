@@ -13,6 +13,8 @@ package org.eclipse.net4j.util.tests;
 import org.eclipse.net4j.util.concurrent.ISynchronizer;
 import org.eclipse.net4j.util.concurrent.SynchronizingCorrelator;
 
+import java.util.concurrent.CountDownLatch;
+
 /**
  * @author Eike Stepper
  */
@@ -20,30 +22,34 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
 {
   public void testPutConsumerFirst() throws Exception
   {
+    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
+    final CountDownLatch correlationEstablished = new CountDownLatch(1);
     final Boolean[] result = { false };
-    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<>();
+
     final Thread consumer = new Thread()
     {
       @Override
       public void run()
       {
         ISynchronizer<Boolean> eike = correlator.correlate("eike"); //$NON-NLS-1$
+        correlationEstablished.countDown();
+
         result[0] = eike.get(5000);
         msg("RESULT: " + result[0]); //$NON-NLS-1$
       }
     };
 
     consumer.start();
-    sleep(100);
+    await(correlationEstablished);
 
     correlator.put("eike", true, DEFAULT_TIMEOUT); //$NON-NLS-1$
     consumer.join(DEFAULT_TIMEOUT);
     assertEquals(Boolean.TRUE, result[0]);
   }
 
-  public void testPutConsumerFirst10() throws Exception
+  public void testPutConsumerFirst1000() throws Exception
   {
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 1000; i++)
     {
       testPutConsumerFirst();
     }
@@ -51,21 +57,25 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
 
   public void testBlockingPutConsumerFirst() throws Exception
   {
+    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<String, Boolean>();
+    final CountDownLatch correlationEstablished = new CountDownLatch(1);
     final Boolean[] result = { false };
-    final SynchronizingCorrelator<String, Boolean> correlator = new SynchronizingCorrelator<>();
+
     final Thread consumer = new Thread()
     {
       @Override
       public void run()
       {
         ISynchronizer<Boolean> eike = correlator.correlate("eike"); //$NON-NLS-1$
+        correlationEstablished.countDown();
+
         result[0] = eike.get(5000);
         msg("RESULT: " + result[0]); //$NON-NLS-1$
       }
     };
 
     consumer.start();
-    Thread.sleep(10);
+    await(correlationEstablished);
 
     boolean consumed = correlator.put("eike", true, 1000); //$NON-NLS-1$
     msg("Consumed: " + consumed); //$NON-NLS-1$
@@ -75,9 +85,9 @@ public class SynchronizingCorrelatorTest extends AbstractOMTest
     assertEquals(Boolean.TRUE, result[0]);
   }
 
-  public void testBlockingPutConsumerFirst10() throws Exception
+  public void testBlockingPutConsumerFirst1000() throws Exception
   {
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 1000; i++)
     {
       testBlockingPutConsumerFirst();
     }

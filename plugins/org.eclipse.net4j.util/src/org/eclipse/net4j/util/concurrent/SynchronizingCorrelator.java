@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class SynchronizingCorrelator<CORRELATION, RESULT> implements ICorrelator<CORRELATION, ISynchronizer<RESULT>>
 {
-  private ConcurrentMap<CORRELATION, ISynchronizer<RESULT>> map = new ConcurrentHashMap<>(0);
+  private final ConcurrentMap<CORRELATION, ISynchronizer<RESULT>> map = new ConcurrentHashMap<>(0);
 
   /**
    * @since 3.0

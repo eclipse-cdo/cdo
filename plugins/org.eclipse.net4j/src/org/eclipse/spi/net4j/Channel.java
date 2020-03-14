@@ -14,6 +14,7 @@ package org.eclipse.spi.net4j;
 import org.eclipse.net4j.buffer.BufferState;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferHandler;
+import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
@@ -30,6 +31,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.internal.net4j.bundle.OM;
 
 import org.eclipse.spi.net4j.InternalChannel.SendQueueEvent.Type;
+import org.eclipse.spi.net4j.InternalChannelMultiplexer.BufferMultiplexer;
 
 import java.text.MessageFormat;
 import java.util.Queue;
@@ -110,6 +112,7 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   @Override
   public void setMultiplexer(IChannelMultiplexer channelMultiplexer)
   {
+    checkInactive();
     this.channelMultiplexer = (InternalChannelMultiplexer)channelMultiplexer;
   }
 
@@ -122,6 +125,7 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   @Override
   public void setID(short id)
   {
+    checkInactive();
     checkArg(id != IBuffer.NO_CHANNEL, "id == IBuffer.NO_CHANNEL"); //$NON-NLS-1$
     this.id = id;
   }
@@ -205,8 +209,7 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
     BufferState state = buffer.getState();
     if (state != BufferState.PUTTING)
     {
-      OM.LOG.warn("Ignoring buffer in state == " + state + ": " + this); //$NON-NLS-1$ //$NON-NLS-2$
-      return;
+      throw new ChannelException("Can't send buffer in state == " + state + ": " + this); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     if (TRACER.isEnabled())
@@ -214,20 +217,50 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
       TRACER.format("Handling buffer: {0} --> {1}", buffer, this); //$NON-NLS-1$
     }
 
-    if (sendQueue == null)
+    if (isClosed())
     {
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Ignoring buffer because sendQueue == null: " + this); //$NON-NLS-1$
+        TRACER.trace("Ignoring buffer because channel is closed: " + this); //$NON-NLS-1$
       }
 
       buffer.release();
+      return;
+    }
+
+    if (buffer.getPosition() == IBuffer.HEADER_SIZE && !buffer.isEOS())
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Ignoring empty buffer: " + this); //$NON-NLS-1$
+      }
+
+      if (buffer.isCCAM())
+      {
+        if (channelMultiplexer instanceof ChannelMultiplexer)
+        {
+          ((ChannelMultiplexer)channelMultiplexer).inverseCloseChannel(id);
+        }
+        else
+        {
+          deactivate();
+        }
+      }
+
+      buffer.release();
+      return;
+    }
+
+    ++sentBuffers;
+
+    if (sendQueue != null)
+    {
+      sendQueue.add(buffer);
+      channelMultiplexer.multiplexChannel(this);
     }
     else
     {
-      sendQueue.add(buffer);
-      ++sentBuffers;
-      channelMultiplexer.multiplexChannel(this);
+      ((BufferMultiplexer)channelMultiplexer).multiplexBuffer(this, buffer);
     }
   }
 
@@ -305,7 +338,12 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    sendQueue = new SendQueue();
+
+    if (!(channelMultiplexer instanceof BufferMultiplexer))
+    {
+      sendQueue = new SendQueue();
+    }
+
     LifecycleUtil.activate(receiveSerializer);
   }
 

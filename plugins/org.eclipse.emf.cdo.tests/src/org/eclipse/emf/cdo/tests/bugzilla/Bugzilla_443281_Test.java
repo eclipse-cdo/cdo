@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
@@ -32,16 +33,21 @@ import java.io.File;
  */
 public class Bugzilla_443281_Test extends AbstractCDOTest
 {
-  private Object oldResourceFactory;
-
-  private ResourceSetImpl resourceSet;
+  private ResourceSet resourceSet;
 
   @Override
   public void setUp() throws Exception
   {
     super.setUp();
-    oldResourceFactory = Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
     resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
+  }
+
+  @Override
+  public void tearDown() throws Exception
+  {
+    resourceSet = null;
+    super.tearDown();
   }
 
   public void testCDOResource_setURI() throws Exception
@@ -93,15 +99,5 @@ public class Bugzilla_443281_Test extends AbstractCDOTest
     assertEquals(Notification.SET, notification.getEventType());
     assertEquals(uri, notification.getOldValue());
     assertEquals(newURI, notification.getNewValue());
-  }
-
-  @Override
-  public void tearDown() throws Exception
-  {
-    resourceSet = null;
-    Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*", oldResourceFactory);
-    oldResourceFactory = null;
-    resourceSet = null;
-    super.tearDown();
   }
 }

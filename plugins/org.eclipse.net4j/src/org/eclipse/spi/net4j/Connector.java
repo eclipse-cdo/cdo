@@ -149,8 +149,8 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
         break;
 
       case NEGOTIATING:
-        finishedConnecting.countDown();
         negotiationContext = createNegotiationContext();
+        finishedConnecting.countDown();
         getNegotiator().negotiate(negotiationContext);
         break;
 
@@ -215,7 +215,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
   @Override
   public void waitForConnection(long timeout) throws ConnectorException
   {
-    String message = "Connection timeout after " + timeout + " milliseconds";
+    long totalTimeout = timeout;
     final long MAX_POLL_INTERVAL = 100L;
     boolean withTimeout = timeout != NO_TIMEOUT;
 
@@ -253,7 +253,7 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
 
       if (!isConnected())
       {
-        throw new ConnectorException(message);
+        throw new ConnectorException("Connection timeout after " + totalTimeout + " milliseconds");
       }
     }
     catch (ConnectorException ex)

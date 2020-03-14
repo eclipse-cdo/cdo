@@ -473,7 +473,7 @@ public class SessionTest extends AbstractCDOTest
     }
 
     assertEquals(null, session);
-    sleep(700);
+    sleep(500);
 
     Net4j sessionConfig = (Net4j)getSessionConfig();
     IAcceptor acceptor = sessionConfig.getAcceptor();

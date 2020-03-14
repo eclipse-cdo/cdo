@@ -44,7 +44,6 @@ import org.eclipse.core.runtime.Status;
 import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -59,6 +58,7 @@ public class Bugzilla_362270c_Test extends AbstractCDOTest
   {
     TransactionalEditingDomain domain = TransactionalEditingDomain.Factory.INSTANCE.createEditingDomain();
     ResourceSet resourceSet = domain.getResourceSet();
+    configureResourceSet(resourceSet);
 
     // 1. Create the CDOResource
     Company obeoCompany = getModel1Factory().createCompany();
@@ -76,10 +76,6 @@ public class Bugzilla_362270c_Test extends AbstractCDOTest
     resource.save(Collections.emptyMap());
 
     // 2. Create the local XMI resource
-    Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-    Map<String, Object> m = reg.getExtensionToFactoryMap();
-    m.put("model1", new XMIResourceFactoryImpl());
-
     Company martinCompany = getModel1Factory().createCompany();
     martinCompany.setName("Martin");
     martinCompany.setCity("Berlin");
@@ -89,7 +85,9 @@ public class Bugzilla_362270c_Test extends AbstractCDOTest
 
     File localResourceFile = createTempFile(getName(), ".model1");
     URI localResourceURI = URI.createFileURI(localResourceFile.getAbsolutePath());
-    Resource localResource = new ResourceSetImpl().createResource(localResourceURI);
+    ResourceSet localResourceSet = new ResourceSetImpl();
+    configureResourceSet(localResourceSet);
+    Resource localResource = localResourceSet.createResource(localResourceURI);
 
     localResource.getContents().add(martinCompany);
     localResource.save(Collections.emptyMap());
@@ -131,6 +129,12 @@ public class Bugzilla_362270c_Test extends AbstractCDOTest
     {
       assertNotInstanceOf(CDOLegacyWrapper.class, notifier);
     }
+  }
+
+  private static void configureResourceSet(ResourceSet resourceSet)
+  {
+    Resource.Factory.Registry registry = resourceSet.getResourceFactoryRegistry();
+    registry.getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
   }
 
   /**

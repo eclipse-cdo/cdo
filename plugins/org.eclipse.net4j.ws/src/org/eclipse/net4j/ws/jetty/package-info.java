@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007, 2009, 2011, 2012 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2020 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,20 +8,8 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.tests;
-
-import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 /**
- * @author Eike Stepper
+ * Jetty-specific classes with support for Websocket connections.
  */
-public class TCPUnitTest extends AbstractOMTest
-{
-  public TCPUnitTest()
-  {
-  }
-
-  public void test()
-  {
-  }
-}
+package org.eclipse.net4j.ws.jetty;

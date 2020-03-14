@@ -36,21 +36,15 @@ import java.io.File;
  */
 public class Bugzilla_399470_Test extends AbstractCDOTest
 {
-  @Override
-  public void setUp() throws Exception
-  {
-    super.setUp();
-
-    Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
-    registry.getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
-  }
-
   public void testUnload() throws Exception
   {
     String folder = new File("./ecore/").getCanonicalPath();
     URI metamodelResourceURI = URI.createFileURI(new File(folder + "/component.ecore").getCanonicalPath());
     URI modelResourceURI = URI.createFileURI(new File(folder + "/component.xmi").getCanonicalPath());
+
     ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
+
     Resource metamodelResource = resourceSet.createResource(metamodelResourceURI);
     EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
     ePackage.setName("component");
@@ -63,6 +57,7 @@ public class Bugzilla_399470_Test extends AbstractCDOTest
     Resource modelResource = resourceSet.createResource(modelResourceURI);
     EObject eObject = EcoreUtil.create(eClass);
     modelResource.getContents().add(eObject);
+
     Copier copier = new Copier();
     copier.copyAll(metamodelResource.getContents());
     copier.copyAll(modelResource.getContents());
@@ -70,20 +65,24 @@ public class Bugzilla_399470_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
+    transaction.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION,
+        new XMIResourceFactoryImpl());
+
     CDOResource sharedMetamodelResource = transaction.createResource(getResourcePath(metamodelResourceURI.lastSegment()));
     for (EObject content : metamodelResource.getContents())
     {
       EObject copy = copier.get(content);
       sharedMetamodelResource.getContents().add(copy);
     }
+
     CDOResource sharedModelResource = transaction.createResource(getResourcePath(modelResourceURI.lastSegment()));
     for (EObject content : modelResource.getContents())
     {
       EObject copy = copier.get(content);
       sharedModelResource.getContents().add(copy);
     }
+
     transaction.commit();
     metamodelResource.unload();
   }
-
 }

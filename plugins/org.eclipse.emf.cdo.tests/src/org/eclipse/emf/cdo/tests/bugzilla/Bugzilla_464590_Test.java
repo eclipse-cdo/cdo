@@ -39,13 +39,14 @@ public class Bugzilla_464590_Test extends AbstractCDOTest
    */
   public void testEObjectEIsSetWithXMIResource() throws Exception
   {
-    Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
-    registry.getExtensionToFactoryMap().put("model6", new XMIResourceFactoryImpl());
     ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("model6", new XMIResourceFactoryImpl());
     resourceSet.eAdapters().add(new NonResolvingECrossReferenceAdapter());
+
     URI localFragmentResourceURI = URI.createFileURI(createTempFile("fragment", ".model6").getCanonicalPath());
-    URI localMainResourceURI = URI.createFileURI(createTempFile("main", ".model6").getCanonicalPath());
     Resource localFragmentResource = resourceSet.createResource(localFragmentResourceURI);
+
+    URI localMainResourceURI = URI.createFileURI(createTempFile("main", ".model6").getCanonicalPath());
     Resource localMainResource = resourceSet.createResource(localMainResourceURI);
 
     ContainmentObject mainContainmentObject = getModel6Factory().createContainmentObject();
@@ -72,9 +73,11 @@ public class Bugzilla_464590_Test extends AbstractCDOTest
 
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private static class NonResolvingECrossReferenceAdapter extends ECrossReferenceAdapter
   {
-
     @Override
     protected boolean resolve()
     {

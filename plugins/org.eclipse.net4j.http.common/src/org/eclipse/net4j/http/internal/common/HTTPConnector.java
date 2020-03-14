@@ -100,8 +100,8 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     HTTPChannel httpChannel = (HTTPChannel)channel;
     synchronized (httpChannel)
     {
-      Queue<IBuffer> channelQueue = httpChannel.getSendQueue();
-      buffer = channelQueue.poll();
+      Queue<IBuffer> channelSendQueue = httpChannel.getSendQueue();
+      buffer = channelSendQueue.poll();
       outputOperationCount = httpChannel.getOutputOperationCount();
       httpChannel.increaseOutputOperationCount();
     }

@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -40,6 +41,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.object.CDOLegacyWrapper;
 
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
@@ -56,8 +58,11 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceFactoryRegistryImpl;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 
+import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -66,6 +71,25 @@ import java.util.Map;
  */
 public abstract class AbstractCDOTest extends ConfigTest
 {
+  static
+  {
+    // Make sure that the Net4j resource factories are registered before registrations become impossible.
+    CDONet4jUtil.createNet4jSessionConfiguration();
+
+    makeUnmodifiable("protocolToFactoryMap");
+    makeUnmodifiable("extensionToFactoryMap");
+    makeUnmodifiable("contentTypeIdentifierToFactoryMap");
+  }
+
+  private static void makeUnmodifiable(String fieldName)
+  {
+    Field field = ReflectUtil.getField(ResourceFactoryRegistryImpl.class, fieldName);
+
+    @SuppressWarnings("unchecked")
+    Map<String, Object> map = (Map<String, Object>)ReflectUtil.getValue(field, Resource.Factory.Registry.INSTANCE);
+    ReflectUtil.setValue(field, Resource.Factory.Registry.INSTANCE, Collections.unmodifiableMap(map));
+  }
+
   @Override
   protected void doSetUp() throws Exception
   {

@@ -11,6 +11,7 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.signal.wrapping.XORStreamWrapperInjector;
+import org.eclipse.net4j.tests.config.AbstractConfigTest;
 import org.eclipse.net4j.tests.data.HugeData;
 import org.eclipse.net4j.tests.data.TinyData;
 import org.eclipse.net4j.tests.signal.ArrayRequest;
@@ -23,7 +24,7 @@ import java.util.Arrays;
 /**
  * @author Eike Stepper
  */
-public class SignalStreamWrappingTest extends AbstractProtocolTest
+public class SignalStreamWrappingTest extends AbstractConfigTest
 {
   private static final int[] KEY = { 1, 2, 3, 4, 5 };
 

@@ -64,6 +64,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.java" type="org.eclipse.emf.cdo.net4j.CDONet4jViewProvider$WS">
+        <filter id="572522506">
+            <message_arguments>
+                <message_argument value="InvalidURIException"/>
+                <message_argument value="WS"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/net4j/CDOSessionRecoveryEvent.java" type="org.eclipse.emf.cdo.net4j.CDOSessionRecoveryEvent">
         <filter id="571473929">
             <message_arguments>

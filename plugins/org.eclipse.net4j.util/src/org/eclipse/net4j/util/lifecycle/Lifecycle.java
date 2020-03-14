@@ -130,6 +130,8 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
         lifecycleState = LifecycleState.INACTIVE;
         unlock();
 
+        // Get listeners again because they could have changed since the first call to getListeners().
+        listeners = getListeners();
         if (listeners != null)
         {
           fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.DEACTIVATED), listeners);

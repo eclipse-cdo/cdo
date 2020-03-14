@@ -11,6 +11,7 @@
 package org.eclipse.spi.net4j;
 
 import org.eclipse.net4j.ITransportConfigAware;
+import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
@@ -34,8 +35,8 @@ public interface InternalChannelMultiplexer extends IChannelMultiplexer, IBuffer
   public static final short RESERVED_CHANNEL = 0;
 
   /**
-   * Called by an {@link IChannel} each time a new buffer is available for multiplexing. This or another buffer can be
-   * dequeued from the outputQueue of the {@link IChannel}.
+   * Called by a {@link IChannel channel} each time a new {@link IBuffer buffer} is available for multiplexing. This or another buffer can be
+   * dequeued from the {@link InternalChannel#getSendQueue() send queue} of the channel.
    */
   public void multiplexChannel(InternalChannel channel);
 
@@ -43,4 +44,16 @@ public interface InternalChannelMultiplexer extends IChannelMultiplexer, IBuffer
    * @since 2.0
    */
   public void closeChannel(InternalChannel channel);
+
+  /**
+   * @author Eike Stepper
+   * @since 4.10
+   */
+  public interface BufferMultiplexer
+  {
+    /**
+     * Called by a {@link IChannel channel} each time a new {@link IBuffer buffer} is available for multiplexing.
+     */
+    public void multiplexBuffer(InternalChannel channel, IBuffer buffer);
+  }
 }

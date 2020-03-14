@@ -18,12 +18,14 @@ package org.eclipse.net4j.buffer;
 public interface IBufferHandler
 {
   /**
-   * Handles an {@link IBuffer} and optionally releases it. The implementor of this method takes over the ownership of
+   * Handles an {@link IBuffer} and possibly releases it.
+   * <p>
+   * The implementor of this method takes over the ownership of
    * the buffer. Care must be taken to properly {@link IBuffer#release() release} the buffer if the ownership is not
-   * explicitly passed to some further party.
+   * explicitly passed on to some further party.
    *
    * @param buffer
-   *          The buffer to be handled and otionally released.
+   *          The buffer to be handled.
    */
   public void handleBuffer(IBuffer buffer);
 }

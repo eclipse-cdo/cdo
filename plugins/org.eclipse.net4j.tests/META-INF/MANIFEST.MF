@@ -10,16 +10,32 @@ Bundle-Activator: org.eclipse.net4j.tests.bundle.OM$Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";visibility:=reexport,
+ org.eclipse.net4j.ws;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,
  org.eclipse.net4j.tcp;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.net4j.jvm;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.net4j.http;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.net4j.http.server;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.apache.log4j;bundle-version="[1.2.0,2.0.0)",
- org.junit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
+ org.junit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
+ org.eclipse.jetty.server;bundle-version="[9.0.0,10.0.0)",
+ org.eclipse.jetty.servlet;bundle-version="[9.0.0,10.0.0)",
+ org.eclipse.jetty.security;bundle-version="[9.0.0,10.0.0)",
+ org.eclipse.jetty.client;bundle-version="[9.0.0,10.0.0)",
+ org.eclipse.jetty.http;bundle-version="[9.0.0,10.0.0)",
+ org.eclipse.jetty.util;bundle-version="[9.0.0,10.0.0)",
+ org.eclipse.jetty.io;bundle-version="[9.0.0,10.0.0)",
+ org.eclipse.jetty.websocket.common;bundle-version="[9.0.0,10.0.0)",
+ org.eclipse.jetty.websocket.servlet;bundle-version="[9.0.0,10.0.0)",
+ org.eclipse.jetty.websocket.server;bundle-version="[9.0.0,10.0.0)",
+ org.eclipse.jetty.websocket.client;bundle-version="[9.0.0,10.0.0)",
+ org.eclipse.jetty.websocket.api;bundle-version="[9.0.0,10.0.0)"
+Import-Package: javax.servlet;version="[2.3.0,4.0.0)",
+ javax.servlet.http;version="[2.3.0,4.0.0)"
 Export-Package: org.eclipse.net4j.tests;version="4.2.1",
  org.eclipse.net4j.tests.apps;version="4.2.1",
  org.eclipse.net4j.tests.bugzilla;version="4.2.1",
  org.eclipse.net4j.tests.bundle;version="4.2.1";x-internal:=true,
+ org.eclipse.net4j.tests.config;version="4.2.1",
  org.eclipse.net4j.tests.data;version="4.2.1",
  org.eclipse.net4j.tests.signal;version="4.2.1",
  org.eclipse.net4j.util.tests;version="4.1.500",

@@ -50,9 +50,8 @@ public class Bugzilla_467075_Test extends AbstractCDOTest
     Company company = getModel1Factory().createCompany();
     ECrossReferenceAdapter adapter = createAdapter();
 
-    Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
-    registry.getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
     ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
 
     URI uri = URI.createFileURI(createTempFile("resource", ".model1").getCanonicalPath());
     Resource resource = resourceSet.createResource(uri);

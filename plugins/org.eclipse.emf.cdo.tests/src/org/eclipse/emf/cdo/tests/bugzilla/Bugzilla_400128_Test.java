@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.util.ECrossReferenceAdapter;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import java.util.Collections;
-import java.util.Map;
 
 /**
  * @author Esteban Dugueperoux
@@ -41,34 +40,26 @@ public class Bugzilla_400128_Test extends AbstractCDOTest
 
   public void testUnload() throws Exception
   {
-    Map<String, Object> extensionToFactoryMap = Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap();
-    extensionToFactoryMap.put("model1", new XMIResourceFactoryImpl());
+    initModelWithCrossReferenceFromCDO2XMI();
 
-    try
-    {
-      initModelWithCrossReferenceFromCDO2XMI();
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
+    resourceSet.eAdapters().add(new ECrossReferenceAdapter());
 
-      ResourceSet resourceSet = new ResourceSetImpl();
-      resourceSet.eAdapters().add(new ECrossReferenceAdapter());
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction(resourceSet);
+    CDOResource cdoResource = transaction.getResource(getResourcePath(RESOURCE_PATH));
 
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction(resourceSet);
-      CDOResource cdoResource = transaction.getResource(getResourcePath(RESOURCE_PATH));
+    Resource xmiResource = resourceSet.getResource(xmiURI, true);
 
-      Resource xmiResource = resourceSet.getResource(xmiURI, true);
-
-      cdoResource.cdoView().close(); // Closes the transaction
-      xmiResource.unload();
-    }
-    finally
-    {
-      extensionToFactoryMap.remove("model1");
-    }
+    cdoResource.cdoView().close(); // Closes the transaction
+    xmiResource.unload();
   }
 
   private void initModelWithCrossReferenceFromCDO2XMI() throws Exception
   {
     ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction(resourceSet);

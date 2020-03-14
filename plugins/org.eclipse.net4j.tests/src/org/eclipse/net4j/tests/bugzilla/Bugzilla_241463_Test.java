@@ -11,7 +11,6 @@
  */
 package org.eclipse.net4j.tests.bugzilla;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.internal.jvm.JVMAcceptor;
 import org.eclipse.net4j.internal.jvm.JVMAcceptorFactory;
 import org.eclipse.net4j.internal.jvm.JVMClientConnector;
@@ -22,15 +21,14 @@ import org.eclipse.net4j.internal.tcp.TCPServerConnector;
 import org.eclipse.net4j.internal.tcp.ssl.SSLAcceptor;
 import org.eclipse.net4j.internal.tcp.ssl.SSLAcceptorFactory;
 import org.eclipse.net4j.internal.tcp.ssl.SSLServerConnector;
-import org.eclipse.net4j.jvm.JVMUtil;
+import org.eclipse.net4j.internal.ws.WSAcceptor;
+import org.eclipse.net4j.internal.ws.WSAcceptorFactory;
+import org.eclipse.net4j.internal.ws.WSServerConnector;
 import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tcp.ITCPSelector;
-import org.eclipse.net4j.tcp.TCPUtil;
-import org.eclipse.net4j.tcp.ssl.SSLUtil;
-import org.eclipse.net4j.tests.AbstractTransportTest;
+import org.eclipse.net4j.tests.config.AbstractConfigTest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.ManagedContainer;
 
 import org.eclipse.spi.net4j.InternalChannel;
 
@@ -43,22 +41,16 @@ import java.nio.channels.SocketChannel;
  *
  * @author Eike Stepper
  */
-public class Bugzilla_241463_Test extends AbstractTransportTest
+public class Bugzilla_241463_Test extends AbstractConfigTest
 {
   @Override
   protected IManagedContainer createContainer()
   {
-    IManagedContainer container = new ManagedContainer();
-    Net4jUtil.prepareContainer(container);
-    JVMUtil.prepareContainer(container);
-    TCPUtil.prepareContainer(container);
-    SSLUtil.prepareContainer(container);
-
+    IManagedContainer container = super.createContainer();
     container.registerFactory(new FakeJVMAcceptorFactory());
     container.registerFactory(new FakeTCPAcceptorFactory());
     container.registerFactory(new FakeSSLAcceptorFactory());
-
-    container.registerFactory(new TestSignalProtocol.Factory());
+    container.registerFactory(new FakeWSAcceptorFactory());
     return container;
   }
 
@@ -99,8 +91,8 @@ public class Bugzilla_241463_Test extends AbstractTransportTest
             }
           };
 
+          prepareConnector(connector);
           connector.setName(client.getName());
-          connector.setConfig(getConfig());
           connector.activate();
           addConnector(connector);
           return connector;
@@ -197,54 +189,27 @@ public class Bugzilla_241463_Test extends AbstractTransportTest
   /**
    * @author Eike Stepper
    */
-  public static final class JVM extends Bugzilla_241463_Test
+  private static final class FakeWSAcceptorFactory extends WSAcceptorFactory
   {
     @Override
-    protected boolean useJVMTransport()
+    protected WSAcceptor createAcceptor()
     {
-      return true;
-    }
+      return new WSAcceptor()
+      {
+        @Override
+        protected WSServerConnector createConnector()
+        {
+          return new WSServerConnector(this)
+          {
 
-    @Override
-    protected boolean useSSLTransport()
-    {
-      return false;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class TCP extends Bugzilla_241463_Test
-  {
-    @Override
-    protected boolean useJVMTransport()
-    {
-      return false;
-    }
-
-    @Override
-    protected boolean useSSLTransport()
-    {
-      return false;
-    }
-  }
-
-  /**
-   * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
-   */
-  public static final class SSL extends Bugzilla_241463_Test
-  {
-    @Override
-    protected boolean useJVMTransport()
-    {
-      return false;
-    }
-
-    @Override
-    protected boolean useSSLTransport()
-    {
-      return true;
+            @Override
+            public InternalChannel inverseOpenChannel(short channelID, String protocolID, int protocolVersion)
+            {
+              throw new RuntimeException("Simulated problem"); //$NON-NLS-1$
+            }
+          };
+        }
+      };
     }
   }
 }

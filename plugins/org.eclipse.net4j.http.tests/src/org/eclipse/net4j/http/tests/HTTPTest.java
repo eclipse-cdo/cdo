@@ -13,7 +13,7 @@ package org.eclipse.net4j.http.tests;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.http.HTTPUtil;
 import org.eclipse.net4j.internal.http.HTTPClientConnector;
-import org.eclipse.net4j.tests.AbstractTransportTest;
+import org.eclipse.net4j.tests.config.AbstractConfigTest;
 import org.eclipse.net4j.tests.signal.IntRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.WrappedException;
@@ -31,7 +31,7 @@ import java.io.OutputStream;
 /**
  * @author Eike Stepper
  */
-public class HTTPTest extends AbstractTransportTest
+public class HTTPTest extends AbstractConfigTest
 {
   public HTTPTest()
   {
@@ -132,7 +132,7 @@ public class HTTPTest extends AbstractTransportTest
 
   private HTTPClientConnector getHTTPConnector()
   {
-    return (HTTPClientConnector)Net4jUtil.getConnector(container, "http", //$NON-NLS-1$
+    return (HTTPClientConnector)Net4jUtil.getConnector(acceptorContainer, "http", //$NON-NLS-1$
         "http://localhost:8080/net4j"); //$NON-NLS-1$
   }
 }

@@ -44,42 +44,6 @@ public class ViewProviderTest extends AbstractCDOTest
 
   private URI uri;
 
-  private void checkURI(String uri, boolean valid)
-  {
-    URI uri1 = URI.createURI(uri);
-    CDOURIData data = new CDOURIData(uri1);
-    URI uri2 = data.toURI();
-    if (valid)
-    {
-      assertEquals(uri1, uri2);
-    }
-    else
-    {
-      assertNotSame(uri1, uri2);
-    }
-  }
-
-  public void testURIs() throws Exception
-  {
-    checkURI("cdo.net4j.tcp://eike:passw@127.0.0.1:2042/repo/folder/resource", true);
-    checkURI("cdo.net4j.tcp://eike@127.0.0.1:2042/repo/folder/resource", true);
-    checkURI("cdo.net4j.tcp://127.0.0.1:2042/repo/folder/resource", true);
-    checkURI("cdo.net4j.tcp://127.0.0.1:2042/repo/resource", true);
-    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource", true);
-    checkURI("cdo.net4j.xyz://127.0.0.1/repo/resource", true);
-
-    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1", true);
-    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&time=12345678987", true);
-    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&transactional=true", true);
-
-    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&time=12345&transactional=false", false);
-    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&transactional=false", false);
-    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&time=HEAD", false);
-    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN", false);
-    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN&time=HEAD", false);
-
-  }
-
   private void init() throws CommitException
   {
     Product1 product = getModel1Factory().createProduct1();
@@ -147,5 +111,41 @@ public class ViewProviderTest extends AbstractCDOTest
     msg("CHECK FOR: " + uri);
     msg(xmi);
     assertEquals(true, xmi.indexOf(uri.toString()) != -1);
+  }
+
+  public void testURIs() throws Exception
+  {
+    checkURI("cdo.net4j.tcp://eike:passw@127.0.0.1:2042/repo/folder/resource", true);
+    checkURI("cdo.net4j.tcp://eike@127.0.0.1:2042/repo/folder/resource", true);
+    checkURI("cdo.net4j.tcp://127.0.0.1:2042/repo/folder/resource", true);
+    checkURI("cdo.net4j.tcp://127.0.0.1:2042/repo/resource", true);
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource", true);
+    checkURI("cdo.net4j.xyz://127.0.0.1/repo/resource", true);
+  
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1", true);
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&time=12345678987", true);
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&transactional=true", true);
+  
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&time=12345&transactional=false", false);
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&transactional=false", false);
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN/team1&time=HEAD", false);
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN", false);
+    checkURI("cdo.net4j.tcp://127.0.0.1/repo/resource?branch=MAIN&time=HEAD", false);
+  
+  }
+
+  private static void checkURI(String uri, boolean valid)
+  {
+    URI uri1 = URI.createURI(uri);
+    CDOURIData data = new CDOURIData(uri1);
+    URI uri2 = data.toURI();
+    if (valid)
+    {
+      assertEquals(uri1, uri2);
+    }
+    else
+    {
+      assertNotSame(uri1, uri2);
+    }
   }
 }

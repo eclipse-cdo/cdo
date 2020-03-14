@@ -272,18 +272,25 @@ public abstract class ConfigTestSuite implements IConstants
 
       List<String> names = new ArrayList<>();
 
-      superClass = theClass;
-      while (Test.class.isAssignableFrom(superClass))
+      try
       {
-        for (Method method : superClass.getDeclaredMethods())
+        superClass = theClass;
+        while (Test.class.isAssignableFrom(superClass))
         {
-          if (validateConstraints(method, capabilities))
+          for (Method method : superClass.getDeclaredMethods())
           {
-            addTestMethod(method, names, theClass, suite, tests);
+            if (validateConstraints(method, capabilities))
+            {
+              addTestMethod(method, names, theClass, suite, tests);
+            }
           }
-        }
 
-        superClass = superClass.getSuperclass();
+          superClass = superClass.getSuperclass();
+        }
+      }
+      catch (Throwable ex)
+      {
+        tests.add(warning(ex.getMessage()));
       }
     }
 

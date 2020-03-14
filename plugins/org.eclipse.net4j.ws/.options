@@ -1,0 +1,3 @@
+# Debugging and tracing options
+
+org.eclipse.net4j.ws/debug = true

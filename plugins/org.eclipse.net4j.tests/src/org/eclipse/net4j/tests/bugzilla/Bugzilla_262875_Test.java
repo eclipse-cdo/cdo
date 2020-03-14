@@ -12,6 +12,7 @@
 package org.eclipse.net4j.tests.bugzilla;
 
 import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.signal.IndicationWithResponse;
@@ -39,8 +40,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class Bugzilla_262875_Test extends AbstractOMTest
 {
-  /** the length of the metadata sent in a buffer: channelID, correlationID */
-  private static final short BUFFER_METADATA_LENTGH = 10;
+  /**
+   * The length of the metadata sent in a buffer: channelID + payloadSize + correlationID + signalID
+   */
+  private static final short BUFFER_METADATA_LENTGH = IBuffer.HEADER_SIZE + Integer.BYTES + Short.BYTES;
 
   private IManagedContainer container;
 

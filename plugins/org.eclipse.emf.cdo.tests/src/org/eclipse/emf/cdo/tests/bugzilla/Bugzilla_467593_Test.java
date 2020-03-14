@@ -45,11 +45,12 @@ public class Bugzilla_467593_Test extends AbstractCDOTest
 
   public void testEListHashCodeOnRefBeforeCommitWithXMIResource() throws Exception
   {
-    Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
-    registry.getExtensionToFactoryMap().put("model6", new XMIResourceFactoryImpl());
     ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("model6", new XMIResourceFactoryImpl());
+
     URI localMainResourceURI = URI.createFileURI(createTempFile("main", ".model6").getCanonicalPath());
     Resource resource1 = resourceSet.createResource(localMainResourceURI);
+
     testEListHashCodeOnRefBeforeCommit(resource1);
   }
 
@@ -63,5 +64,4 @@ public class Bugzilla_467593_Test extends AbstractCDOTest
     resource.save(Collections.emptyMap());
     myEnum.hashCode();
   }
-
 }

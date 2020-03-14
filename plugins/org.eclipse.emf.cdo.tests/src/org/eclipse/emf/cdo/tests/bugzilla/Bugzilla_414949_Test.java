@@ -45,8 +45,6 @@ public class Bugzilla_414949_Test extends AbstractCDOTest
 
   private Resource localResource;
 
-  private Object oldResourceFactory;
-
   @Override
   protected void doSetUp() throws Exception
   {
@@ -68,7 +66,7 @@ public class Bugzilla_414949_Test extends AbstractCDOTest
     dDiagram.getOtherNodes().add(filterDescription1);
 
     ResourceSet resourceSet = new ResourceSetImpl();
-    oldResourceFactory = Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
     String path = new File("./" + LOCAL_RESOURCE_NAME).getCanonicalPath();
     URI localResourceURI = URI.createFileURI(path);
     localResource = resourceSet.createResource(localResourceURI);
@@ -82,23 +80,22 @@ public class Bugzilla_414949_Test extends AbstractCDOTest
     sharedResource.save(Collections.emptyMap());
   }
 
-  public void testEcoreUtilGetURIWithCDOLegacyWrapperBug() throws Exception
-  {
-
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource(getResourcePath(SHARED_RESOURCE_NAME));
-    EList<EObject> contents = resource.getContents();
-    contents.get(0);
-  }
-
   @Override
   protected void doTearDown() throws Exception
   {
     localResource.delete(Collections.emptyMap());
     localResource = null;
-    Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*", oldResourceFactory);
-    oldResourceFactory = null;
     super.doTearDown();
+  }
+
+  public void testEcoreUtilGetURIWithCDOLegacyWrapperBug() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    transaction.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
+
+    CDOResource resource = transaction.getResource(getResourcePath(SHARED_RESOURCE_NAME));
+    EList<EObject> contents = resource.getContents();
+    contents.get(0);
   }
 }

@@ -28,7 +28,6 @@ import org.eclipse.emf.cdo.util.CDOURIData;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
@@ -46,47 +45,34 @@ public class Bugzilla_412767_Test extends AbstractCDOTest
   {
     getRepository();
 
-    Registry registry = Resource.Factory.Registry.INSTANCE;
-    registry.getProtocolToFactoryMap().put(CDONet4jUtil.PROTOCOL_TCP, CDOResourceFactory.INSTANCE);
+    URI sharedResourceURI = createRemoteResource();
+    URI sharedResourceURIWithPrefetch = sharedResourceURI.appendQuery(sharedResourceURI.query() + "&" + CDOResource.PREFETCH_PARAMETER + "=true");
 
-    try
-    {
-      URI sharedResourceURI = createRemoteResource();
-      URI sharedResourceURIWithPrefetch = sharedResourceURI.appendQuery(sharedResourceURI.query() + "&" + CDOResource.PREFETCH_PARAMETER + "=true");
-      ResourceSet resourceSet = new ResourceSetImpl();
-      CDOResource sharedResource = (CDOResource)resourceSet.getResource(sharedResourceURIWithPrefetch, true);
-      assertEquals(CDOState.PROXY, sharedResource.cdoState());
-    }
-    finally
-    {
-      registry.getProtocolToFactoryMap().remove(CDONet4jUtil.PROTOCOL_TCP);
-    }
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put(CDONet4jUtil.PROTOCOL_TCP, CDOResourceFactory.INSTANCE);
+
+    CDOResource sharedResource = (CDOResource)resourceSet.getResource(sharedResourceURIWithPrefetch, true);
+    assertEquals(CDOState.PROXY, sharedResource.cdoState());
   }
 
   public void testConnectionAwareURIWithPrefetchAfter() throws Exception
   {
     getRepository();
 
-    Registry registry = Resource.Factory.Registry.INSTANCE;
-    registry.getProtocolToFactoryMap().put(CDONet4jUtil.PROTOCOL_TCP, CDOResourceFactory.INSTANCE);
+    URI sharedResourceURI = createRemoteResource();
 
-    try
-    {
-      URI sharedResourceURI = createRemoteResource();
-      ResourceSet resourceSet = new ResourceSetImpl();
-      CDOResource sharedResource = (CDOResource)resourceSet.getResource(sharedResourceURI, true);
-      sharedResource.cdoPrefetch(CDORevision.DEPTH_INFINITE);
-      assertEquals(CDOState.PROXY, sharedResource.cdoState());
-    }
-    finally
-    {
-      registry.getProtocolToFactoryMap().remove(CDONet4jUtil.PROTOCOL_TCP);
-    }
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put(CDONet4jUtil.PROTOCOL_TCP, CDOResourceFactory.INSTANCE);
+
+    CDOResource sharedResource = (CDOResource)resourceSet.getResource(sharedResourceURI, true);
+    sharedResource.cdoPrefetch(CDORevision.DEPTH_INFINITE);
+    assertEquals(CDOState.PROXY, sharedResource.cdoState());
   }
 
   private URI createRemoteResource() throws Exception
   {
     ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put(CDONet4jUtil.PROTOCOL_TCP, CDOResourceFactory.INSTANCE);
 
     URI sharedResourceURI = URI
         .createURI(CDONet4jUtil.PROTOCOL_TCP + "://localhost:2036/" + RepositoryConfig.REPOSITORY_NAME + getResourcePath("/sharedResource"))

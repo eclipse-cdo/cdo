@@ -692,7 +692,7 @@ public abstract class AbstractOMTest extends TestCase
     {
       if (!LifecycleUtil.isActive(object))
       {
-        timeOuter.countDown();
+        return;
       }
 
       timeOuter.assertNoTimeOut();

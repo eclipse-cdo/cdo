@@ -59,6 +59,7 @@ public class Revision
   }
 
   @Override
+  @Deprecated
   protected void finalize() throws Throwable
   {
     IOUtil.ERR().println("FINALIZE " + this); //$NON-NLS-1$

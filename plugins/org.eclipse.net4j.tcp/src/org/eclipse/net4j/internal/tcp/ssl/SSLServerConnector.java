@@ -11,6 +11,7 @@
  */
 package org.eclipse.net4j.internal.tcp.ssl;
 
+import org.eclipse.net4j.connector.IServerConnector;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.tcp.ITCPSelector;
 
@@ -25,7 +26,7 @@ import java.text.MessageFormat;
  * @author Caspar De Groot (No Magic Asia Ltd.)
  * @since 4.0
  */
-public class SSLServerConnector extends SSLConnector
+public class SSLServerConnector extends SSLConnector implements IServerConnector
 {
   private SSLAcceptor acceptor;
 

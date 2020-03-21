@@ -69,6 +69,8 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
 
   private EStructuralFeature[] allPersistentContainments;
 
+  private EStructuralFeature[] allPersistentMapFeatures;
+
   private int[] persistentFeatureIndices;
 
   private int settingsFeatureCount;
@@ -197,6 +199,12 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
   }
 
   @Override
+  public EStructuralFeature[] getAllPersistentMapFeatures()
+  {
+    return allPersistentMapFeatures;
+  }
+
+  @Override
   public int getPersistentFeatureIndex(EStructuralFeature feature) throws IllegalArgumentException
   {
     int featureID = eClass.getFeatureID(feature);
@@ -288,6 +296,7 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
     List<EStructuralFeature> persistentFeatures = new ArrayList<>();
     List<EReference> persistentReferences = new ArrayList<>();
     List<EStructuralFeature> persistentContainments = new ArrayList<>();
+    List<EStructuralFeature> persistentMapFeatures = new ArrayList<>();
 
     // Used for tests for containment
     EStructuralFeature[] containments = ((EClassImpl.FeatureSubsetSupplier)eClass.getEAllStructuralFeatures()).containments();
@@ -322,6 +331,11 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
           }
         }
 
+        if (isMap(feature))
+        {
+          persistentMapFeatures.add(feature);
+        }
+
         if (feature.isMany() || FeatureMapUtil.isFeatureMap(feature))
         {
           settingsFeatureIndices[i] = settingsFeatureCount++;
@@ -354,6 +368,7 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
     allPersistentFeatures = persistentFeatures.toArray(new EStructuralFeature[persistentFeatures.size()]);
     allPersistentReferences = persistentReferences.toArray(new EReference[persistentReferences.size()]);
     allPersistentContainments = persistentContainments.toArray(new EStructuralFeature[persistentContainments.size()]);
+    allPersistentMapFeatures = persistentMapFeatures.toArray(new EStructuralFeature[persistentMapFeatures.size()]);
 
     persistentFeatureIndices = new int[allFeatures.size()];
     Arrays.fill(persistentFeatureIndices, NO_SLOT);
@@ -451,6 +466,12 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
   public String toString()
   {
     return DEBUG ? getDump() : eClass.toString();
+  }
+
+  public static boolean isMap(EStructuralFeature eStructuralFeature)
+  {
+    // Java ensures that string constants are interned, so == is actually more efficient than equals().
+    return eStructuralFeature.getEType().getInstanceClassName() == "java.util.Map$Entry"; //$NON-NLS-1$
   }
 
   /**

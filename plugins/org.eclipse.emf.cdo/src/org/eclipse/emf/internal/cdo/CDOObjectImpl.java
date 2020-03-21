@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
+import org.eclipse.emf.cdo.internal.common.model.CDOClassInfoImpl;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo.PersistenceFilter;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -69,7 +70,6 @@ import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.spi.cdo.CDOStore;
 import org.eclipse.emf.spi.cdo.FSMUtil;
-import org.eclipse.emf.spi.cdo.InternalCDOLoadable;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOView.ViewAndState;
@@ -78,6 +78,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * The base class of all <em>native</em> {@link CDOObject objects}.
@@ -433,27 +434,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public final void cdoInternalPostLoad()
   {
-    // Reset EMAP objects
-    Object[] eSettings = eBasicSettings();
-    if (eSettings != null)
-    {
-      // Make sure transient features are kept but persisted values are not cached.
-      InternalCDOClassInfo classInfo = cdoClassInfo();
-      int featureCount = classInfo.getEClass().getFeatureCount();
-      for (int i = 0; i < featureCount; i++)
-      {
-        // We need to keep the existing list if possible.
-        int index = classInfo.getSettingsFeatureIndex(i);
-        if (index != InternalCDOClassInfo.NO_SLOT)
-        {
-          Object value = eSettings[index];
-          if (value instanceof InternalCDOLoadable)
-          {
-            ((InternalCDOLoadable)value).cdoInternalPostLoad();
-          }
-        }
-      }
-    }
+    forAllMapAttributes(map -> map.postLoad());
   }
 
   /**
@@ -463,6 +444,31 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   public final void cdoInternalPostInvalidate()
   {
     cdoInternalSetRevision(null);
+    forAllMapAttributes(map -> map.postInvalidate());
+  }
+
+  private void forAllMapAttributes(Consumer<CDOStoreEcoreEMap> consumer)
+  {
+    Object[] eSettings = eBasicSettings();
+    if (eSettings != null)
+    {
+      InternalCDOClassInfo classInfo = cdoClassInfo();
+      EStructuralFeature[] persistentMapFeatures = classInfo.getAllPersistentMapFeatures();
+      int length = persistentMapFeatures.length;
+
+      for (int i = 0; i < length; i++)
+      {
+        EStructuralFeature feature = persistentMapFeatures[i];
+        int featureID = feature.getFeatureID();
+        int index = classInfo.getSettingsFeatureIndex(featureID);
+
+        CDOStoreEcoreEMap map = (CDOStoreEcoreEMap)eSettings[index];
+        if (map != null)
+        {
+          consumer.accept(map);
+        }
+      }
+    }
   }
 
   /**
@@ -1299,7 +1305,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   protected EList<?> createList(EStructuralFeature eStructuralFeature)
   {
-    if (isMap(eStructuralFeature))
+    if (CDOClassInfoImpl.isMap(eStructuralFeature))
     {
       return createMap(eStructuralFeature);
     }
@@ -1334,12 +1340,6 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   protected final CDOStoreEcoreEMap createMap(EStructuralFeature eStructuralFeature)
   {
     return new CDOStoreEcoreEMap(eStructuralFeature);
-  }
-
-  private boolean isMap(EStructuralFeature eStructuralFeature)
-  {
-    // Java ensures that string constants are interned, so == is actually more efficient than equals().
-    return eStructuralFeature.getEType().getInstanceClassName() == "java.util.Map$Entry"; //$NON-NLS-1$
   }
 
   private boolean isRootResource()
@@ -1793,8 +1793,10 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    * @author Eike Stepper
    * @since 4.1
    */
-  private final class CDOStoreEcoreEMap extends EcoreEMap<Object, Object> implements InternalCDOLoadable
+  private final class CDOStoreEcoreEMap extends EcoreEMap<Object, Object>
   {
+    private static final int CHECK_LIST_FOR_READING = Integer.MAX_VALUE;
+
     private static final long serialVersionUID = 1L;
 
     public CDOStoreEcoreEMap(EStructuralFeature eStructuralFeature)
@@ -1803,10 +1805,6 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       delegateEList = new EStoreEObjectImpl.BasicEStoreEList<BasicEMap.Entry<Object, Object>>(CDOObjectImpl.this, eStructuralFeature)
       {
         private static final long serialVersionUID = 1L;
-
-        // {
-        // ensureEntryDataExists();
-        // }
 
         @Override
         public void unset()
@@ -1838,7 +1836,6 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         protected void didClear(int size, Object[] oldObjects)
         {
           CDOStoreEcoreEMap.this.doClear();
-          // ensureEntryDataExists();
         }
 
         @Override
@@ -1848,7 +1845,19 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
       };
 
+      size = CHECK_LIST_FOR_READING;
+    }
+
+    public void postLoad()
+    {
+      entryData = null;
       size = delegateEList.size();
+    }
+
+    public void postInvalidate()
+    {
+      entryData = null;
+      size = CHECK_LIST_FOR_READING;
     }
 
     private void checkListForReading()
@@ -1857,6 +1866,8 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       {
         CDOStateMachine.INSTANCE.read(CDOObjectImpl.this);
       }
+
+      size = delegateEList.size();
     }
 
     /**
@@ -2518,18 +2529,6 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       checkListForReading();
       return super.containsValue(value);
-    }
-
-    @Override
-    public void cdoInternalPreLoad()
-    {
-    }
-
-    @Override
-    public void cdoInternalPostLoad()
-    {
-      entryData = null;
-      size = delegateEList.size();
     }
   }
 

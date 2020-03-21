@@ -63,6 +63,11 @@ public interface CDOClassInfo extends Adapter
   public EStructuralFeature[] getAllPersistentContainments();
 
   /**
+   * @since 4.10
+   */
+  public EStructuralFeature[] getAllPersistentMapFeatures();
+
+  /**
    * @deprecated As of 4.2 pushed down to {@link InternalCDOClassInfo#getPersistentFeatureIndex(EStructuralFeature)}.
    */
   @Deprecated

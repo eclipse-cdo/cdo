@@ -16,6 +16,7 @@ package org.eclipse.net4j.util;
  * @author Eike Stepper
  * @since 2.0
  */
+@FunctionalInterface
 public interface IErrorHandler
 {
   public void handleError(Throwable t);

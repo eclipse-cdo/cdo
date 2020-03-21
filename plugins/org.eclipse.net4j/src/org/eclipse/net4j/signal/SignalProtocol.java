@@ -91,8 +91,6 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, SignalProtocol.class);
 
-  private static final ContextTracer STREAM_TRACER = new ContextTracer(OM.DEBUG_BUFFER_STREAM, SignalProtocol.class);
-
   private long timeout = DEFAULT_TIMEOUT;
 
   private IStreamWrapper streamWrapper;
@@ -725,19 +723,10 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
           IBuffer buffer = delegate.provideBuffer();
           ByteBuffer byteBuffer = buffer.startPutting(channel.getID());
-          if (STREAM_TRACER.isEnabled())
-          {
-            STREAM_TRACER.trace("Providing buffer for correlation " + correlationID); //$NON-NLS-1$
-          }
-
           byteBuffer.putInt(correlationID);
+
           if (firstBuffer)
           {
-            if (SignalProtocol.TRACER.isEnabled())
-            {
-              STREAM_TRACER.trace("Put signal id " + signalID); //$NON-NLS-1$
-            }
-
             byteBuffer.putShort(signalID);
           }
 

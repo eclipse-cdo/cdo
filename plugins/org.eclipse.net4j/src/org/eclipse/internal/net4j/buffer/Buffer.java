@@ -669,12 +669,12 @@ public class Buffer implements InternalBuffer
     StringBuilder builder = new StringBuilder();
     for (int i = 0; i < limit; i++)
     {
-      byte b = byteBuffer.get(i);
-      builder.append(' ');
-      builder.append(Byte.toString(b));
+      int b = byteBuffer.get(i) & 0xFF; // Dump unsigned int instead of signed byte.
+      builder.append('\u00A0'); // NO-BREAK SPACE. A bug in JDT's detail formatter hates normal spaces.
+      builder.append(b);
     }
 
-    return "pos " + position + "/" + limit + ":" + builder;
+    return "pos\u00A0" + position + "/" + limit + ":" + builder;
   }
 
   public static void main(String[] args) throws Exception

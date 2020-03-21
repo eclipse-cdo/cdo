@@ -11,6 +11,8 @@
  */
 package org.eclipse.net4j.tests;
 
+import static org.junit.Assert.assertArrayEquals;
+
 import org.eclipse.net4j.ITransportConfigAware;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
@@ -167,11 +169,25 @@ public class ChannelTest extends AbstractConfigTest
     assertActive(protocol);
 
     byte[] data = HugeData.getBytes();
-    for (int i = 0; i < 10000; i++)
+
+    // Warm-up
+    for (int i = 0; i < 1000; i++)
     {
       byte[] result = new ArrayRequest(protocol, data).send();
       assertEquals(true, Arrays.equals(data, result));
     }
+
+    final int SIGNALS = 10000;
+
+    long start = System.currentTimeMillis();
+    for (int i = 0; i < SIGNALS; i++)
+    {
+      byte[] result = new ArrayRequest(protocol, data).send();
+      assertArrayEquals(data, result);
+    }
+
+    long duration = System.currentTimeMillis() - start;
+    log("Millis for " + SIGNALS + " signals: " + duration);
 
     InternalChannel channel = (InternalChannel)protocol.getChannel();
     log("Sent buffers: " + channel.getSentBuffers());
@@ -301,7 +317,7 @@ public class ChannelTest extends AbstractConfigTest
     {
       if (protocols != null)
       {
-        for (TestSignalProtocol protocol : new ArrayList<TestSignalProtocol>(protocols))
+        for (TestSignalProtocol protocol : new ArrayList<>(protocols))
         {
           protocol.close();
         }

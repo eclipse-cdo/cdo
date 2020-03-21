@@ -31,8 +31,6 @@ public abstract class OM
 
   public static final OMTracer DEBUG_BUFFER = DEBUG.tracer("buffer"); //$NON-NLS-1$
 
-  public static final OMTracer DEBUG_BUFFER_STREAM = DEBUG_BUFFER.tracer("stream"); //$NON-NLS-1$
-
   public static final OMTracer DEBUG_CHANNEL = DEBUG.tracer("channel"); //$NON-NLS-1$
 
   public static final OMTracer DEBUG_ACCEPTOR = DEBUG.tracer("acceptor"); //$NON-NLS-1$

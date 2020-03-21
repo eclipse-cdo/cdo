@@ -11,17 +11,12 @@
  */
 package org.eclipse.net4j.buffer;
 
-import org.eclipse.net4j.util.HexUtil;
-import org.eclipse.net4j.util.IErrorHandler;
-import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
-
-import org.eclipse.internal.net4j.bundle.OM;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
 
 /**
  * An {@link OutputStream output stream} that fragments the written byte sequence into fixed-sized {@link IBuffer
@@ -33,13 +28,11 @@ public class BufferOutputStream extends OutputStream
 {
   public static final boolean DEFAULT_PROPAGATE_CLOSE = false;
 
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_BUFFER_STREAM, BufferOutputStream.class);
+  private static final boolean DISABLE_BULK_WRITE = Boolean.getBoolean("org.eclipse.net4j.buffer.BufferOutputStream.disableBulkWrite");
 
-  private final boolean tracerEnabled;
+  private final IBufferProvider bufferProvider;
 
-  private IBufferProvider bufferProvider;
-
-  private IBufferHandler bufferHandler;
+  private final IBufferHandler bufferHandler;
 
   private IBuffer currentBuffer;
 
@@ -47,32 +40,21 @@ public class BufferOutputStream extends OutputStream
 
   private Throwable error;
 
-  @ExcludeFromDump
-  private transient IErrorHandler errorHandler = new IErrorHandler()
-  {
-    @Override
-    public void handleError(Throwable t)
-    {
-      setError(t);
-    }
-  };
-
   public BufferOutputStream(IBufferHandler bufferHandler, IBufferProvider bufferProvider, short channelID)
   {
     if (bufferHandler == null)
     {
-      throw new IllegalArgumentException("bufferHandler == null"); //$NON-NLS-1$
+      throw new IllegalArgumentException("bufferHandler == null");
     }
 
     if (bufferProvider == null)
     {
-      throw new IllegalArgumentException("bufferProvider == null"); //$NON-NLS-1$
+      throw new IllegalArgumentException("bufferProvider == null");
     }
 
     this.bufferHandler = bufferHandler;
     this.bufferProvider = bufferProvider;
     this.channelID = channelID;
-    tracerEnabled = TRACER.isEnabled();
   }
 
   public BufferOutputStream(IBufferHandler bufferHandler, short channelID)
@@ -96,7 +78,6 @@ public class BufferOutputStream extends OutputStream
     this.error = error;
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   public void write(int b) throws IOException
   {
@@ -108,13 +89,42 @@ public class BufferOutputStream extends OutputStream
     // the implicit conversion prepended 24 leading 1's. We'll undo those.
     b = b & 0xFF;
 
-    if (tracerEnabled)
+    currentBuffer.put((byte)b);
+  }
+
+  @Override
+  public void write(byte[] b, int off, int len) throws IOException
+  {
+    if (DISABLE_BULK_WRITE)
     {
-      TRACER.trace("--> " + HexUtil.formatByte(b) //$NON-NLS-1$
-          + (b >= 32 ? " " + Character.toString((char)b) : "")); //$NON-NLS-1$ //$NON-NLS-2$
+      super.write(b, off, len);
+      return;
     }
 
-    currentBuffer.put((byte)b);
+    if (b == null)
+    {
+      throw new NullPointerException();
+    }
+
+    if (off < 0 || off > b.length || len < 0 || off + len > b.length || off + len < 0)
+    {
+      throw new IndexOutOfBoundsException();
+    }
+
+    while (len > 0)
+    {
+      throwExceptionOnError();
+      flushIfFilled();
+      ensureBufferPrivate();
+
+      ByteBuffer byteBuffer = currentBuffer.getByteBuffer();
+
+      int bytesToPut = Math.min(len, byteBuffer.remaining());
+      currentBuffer.put(b, off, bytesToPut);
+
+      off += bytesToPut;
+      len -= bytesToPut;
+    }
   }
 
   /**
@@ -183,8 +193,6 @@ public class BufferOutputStream extends OutputStream
     }
     finally
     {
-      bufferHandler = null;
-      bufferProvider = null;
       currentBuffer = null;
       super.close();
     }
@@ -193,7 +201,7 @@ public class BufferOutputStream extends OutputStream
   @Override
   public String toString()
   {
-    return "BufferOutputStream"; //$NON-NLS-1$
+    return "BufferOutputStream";
   }
 
   /**
@@ -215,7 +223,7 @@ public class BufferOutputStream extends OutputStream
     if (currentBuffer == null)
     {
       currentBuffer = bufferProvider.provideBuffer();
-      currentBuffer.setErrorHandler(errorHandler);
+      currentBuffer.setErrorHandler(throwable -> setError(throwable));
       currentBuffer.startPutting(channelID);
     }
   }
@@ -257,6 +265,6 @@ public class BufferOutputStream extends OutputStream
       return (IBufferProvider)bufferHandler;
     }
 
-    throw new IllegalArgumentException("Buffer handler unable to provide buffers"); //$NON-NLS-1$
+    throw new IllegalArgumentException("Buffer handler unable to provide buffers");
   }
 }

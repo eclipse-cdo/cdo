@@ -164,6 +164,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   protected final Condition viewLockCondition;
 
+  private final BranchPointLock branchPointLock = new BranchPointLock();
+
   private CDOBranchPoint branchPoint;
 
   private CDOBranchPoint normalizedBranchPoint;
@@ -275,18 +277,9 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   @Override
   public boolean isHistorical()
   {
-    synchronized (getViewMonitor())
+    synchronized (branchPointLock)
     {
-      lockView();
-
-      try
-      {
-        return branchPoint.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE;
-      }
-      finally
-      {
-        unlockView();
-      }
+      return branchPoint.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE;
     }
   }
 
@@ -760,108 +753,42 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   protected CDOBranchPoint getBranchPoint()
   {
-    synchronized (getViewMonitor())
+    synchronized (branchPointLock)
     {
-      lockView();
-
-      try
-      {
-        return branchPoint;
-      }
-      finally
-      {
-        unlockView();
-      }
+      return branchPoint;
     }
   }
 
   protected CDOBranchPoint getNormalizedBranchPoint()
   {
-    synchronized (getViewMonitor())
+    synchronized (branchPointLock)
     {
-      lockView();
-
-      try
-      {
-        return normalizedBranchPoint;
-      }
-      finally
-      {
-        unlockView();
-      }
+      return normalizedBranchPoint;
     }
   }
 
   @Override
   public boolean setBranch(CDOBranch branch)
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        return setBranchPoint(branch, getTimeStamp(), null);
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
+    return setBranchPoint(branch, getTimeStamp(), null);
   }
 
   @Override
   public boolean setBranch(CDOBranch branch, IProgressMonitor monitor)
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        return setBranchPoint(branch, getTimeStamp(), monitor);
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
+    return setBranchPoint(branch, getTimeStamp(), monitor);
   }
 
   @Override
   public boolean setTimeStamp(long timeStamp)
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        return setBranchPoint(getBranch(), timeStamp, null);
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
+    return setBranchPoint(getBranch(), timeStamp, null);
   }
 
   @Override
   public boolean setTimeStamp(long timeStamp, IProgressMonitor monitor)
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        return setBranchPoint(getBranch(), timeStamp, monitor);
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
+    return setBranchPoint(getBranch(), timeStamp, monitor);
   }
 
   @Override
@@ -885,20 +812,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   protected CDOBranchPoint basicSetBranchPoint(CDOBranchPoint branchPoint)
   {
-    synchronized (getViewMonitor())
+    synchronized (branchPointLock)
     {
-      lockView();
-
-      try
-      {
-        this.branchPoint = adjustBranchPoint(branchPoint);
-        normalizedBranchPoint = CDOBranchUtil.normalizeBranchPoint(this.branchPoint);
-        return this.branchPoint;
-      }
-      finally
-      {
-        unlockView();
-      }
+      this.branchPoint = adjustBranchPoint(branchPoint);
+      normalizedBranchPoint = CDOBranchUtil.normalizeBranchPoint(this.branchPoint);
+      return this.branchPoint;
     }
   }
 
@@ -923,36 +841,18 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   @Override
   public CDOBranch getBranch()
   {
-    synchronized (getViewMonitor())
+    synchronized (branchPointLock)
     {
-      lockView();
-
-      try
-      {
-        return branchPoint.getBranch();
-      }
-      finally
-      {
-        unlockView();
-      }
+      return branchPoint.getBranch();
     }
   }
 
   @Override
   public long getTimeStamp()
   {
-    synchronized (getViewMonitor())
+    synchronized (branchPointLock)
     {
-      lockView();
-
-      try
-      {
-        return branchPoint.getTimeStamp();
-      }
-      finally
-      {
-        unlockView();
-      }
+      return branchPoint.getTimeStamp();
     }
   }
 
@@ -2986,17 +2886,18 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     builder.append(" "); //$NON-NLS-1$
     builder.append(getViewID());
 
-    if (branchPoint != null)
+    CDOBranchPoint bp = branchPoint;
+    if (bp != null)
     {
       boolean brackets = false;
       if (getSession().getRepositoryInfo().isSupportingBranches())
       {
         brackets = true;
         builder.append(" ["); //$NON-NLS-1$
-        builder.append(branchPoint.getBranch().getPathName()); // Do not synchronize on this view!
+        builder.append(bp.getBranch().getPathName()); // Do not synchronize on this view!
       }
 
-      long timeStamp = branchPoint.getTimeStamp(); // Do not synchronize on this view!
+      long timeStamp = bp.getTimeStamp(); // Do not synchronize on this view!
       if (timeStamp != CDOView.UNSPECIFIED_DATE)
       {
         if (brackets)
@@ -3120,9 +3021,10 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
     LifecycleUtil.activate(viewLock);
 
-    if (branchPoint != null)
+    CDOBranchPoint bp = branchPoint;
+    if (bp != null)
     {
-      basicSetBranchPoint(branchPoint);
+      basicSetBranchPoint(bp);
     }
   }
 
@@ -3381,6 +3283,15 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         fireEvent(event, listeners);
       }
     }
+  }
+
+  /**
+   * For better debugging.
+   *
+   * @author Eike Stepper
+   */
+  private static final class BranchPointLock
+  {
   }
 
   /**

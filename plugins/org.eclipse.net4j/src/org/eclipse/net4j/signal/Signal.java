@@ -19,6 +19,7 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IOTimeoutException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
@@ -39,6 +40,8 @@ public abstract class Signal implements Runnable
    * @since 2.0
    */
   public static final long NO_TIMEOUT = BufferInputStream.NO_TIMEOUT;
+
+  private static final boolean DISABLE_LOG_EXCEPTIONS = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.signal.Signal.disableLogExceptions");
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, Signal.class);
 
@@ -167,9 +170,16 @@ public abstract class Signal implements Runnable
     }
     catch (Exception ex)
     {
-      if (TRACER.isEnabled())
+      if (DISABLE_LOG_EXCEPTIONS)
       {
-        TRACER.trace("Exception in signal", ex); //$NON-NLS-1$
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Exception in signal", ex); //$NON-NLS-1$
+        }
+      }
+      else
+      {
+        OM.LOG.error(ex);
       }
     }
     finally

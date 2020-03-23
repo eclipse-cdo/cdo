@@ -44,6 +44,8 @@ public abstract class CDOMigratorUtil
 
   public static final String PLUGIN_VARIABLE = "CDO=org.eclipse.emf.cdo"; //$NON-NLS-1$
 
+  public static final String EDIT_PLUGIN_VARIABLE = "CDO_EDIT=org.eclipse.emf.cdo.edit"; //$NON-NLS-1$
+
   public static final String PROVIDER_ROOT_EXTENDS_CLASS = "org.eclipse.emf.cdo.edit.CDOItemProviderAdapter"; //$NON-NLS-1$
 
   private CDOMigratorUtil()
@@ -142,6 +144,16 @@ public abstract class CDOMigratorUtil
       builder.append(Messages.getString("CDOMigratorUtil.10")); //$NON-NLS-1$
       builder.append(" "); //$NON-NLS-1$
       builder.append(PLUGIN_VARIABLE);
+      builder.append("\n"); //$NON-NLS-1$
+    }
+
+    EList<String> editPluginVariables = genModel.getEditPluginVariables();
+    if (!editPluginVariables.contains(EDIT_PLUGIN_VARIABLE))
+    {
+      editPluginVariables.add(EDIT_PLUGIN_VARIABLE);
+      builder.append(Messages.getString("CDOMigratorUtil.11")); //$NON-NLS-1$
+      builder.append(" "); //$NON-NLS-1$
+      builder.append(EDIT_PLUGIN_VARIABLE);
       builder.append("\n"); //$NON-NLS-1$
     }
 

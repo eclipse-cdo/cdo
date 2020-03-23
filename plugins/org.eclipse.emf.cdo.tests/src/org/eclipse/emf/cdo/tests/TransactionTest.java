@@ -285,7 +285,7 @@ public class TransactionTest extends AbstractCDOTest
         thread.start();
       }
 
-      await(latch);
+      await(latch, 2 * DEFAULT_TIMEOUT);
       signalCounter.dump(IOUtil.OUT(), true);
     }
   }

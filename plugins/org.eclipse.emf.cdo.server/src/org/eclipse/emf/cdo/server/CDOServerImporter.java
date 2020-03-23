@@ -88,7 +88,7 @@ import java.util.Map;
  * Imports the complete contents of a {@link IRepository repository} from the output created by a
  * {@link CDOServerExporter exporter} into a new repository.
  * <p>
- * Subtypes specifiy the actual exchange format.
+ * Subtypes specify the actual exchange format.
  *
  * @author Eike Stepper
  * @since 4.0

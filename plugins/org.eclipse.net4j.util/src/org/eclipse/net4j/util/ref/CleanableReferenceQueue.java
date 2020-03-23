@@ -73,7 +73,7 @@ public abstract class CleanableReferenceQueue<T> extends ReferenceQueue<T>
     if (cleaning.compareAndSet(false, true))
     {
       long now = System.currentTimeMillis();
-      if (lastPoll + pollMillis > now)
+      if (now >= lastPoll + pollMillis)
       {
         int count = maxWorkPerPoll;
         if (count == ALL_WORK_PER_POLL)

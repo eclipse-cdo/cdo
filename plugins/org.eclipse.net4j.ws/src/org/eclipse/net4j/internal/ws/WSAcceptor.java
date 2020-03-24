@@ -10,12 +10,17 @@
  */
 package org.eclipse.net4j.internal.ws;
 
+import org.eclipse.net4j.TransportConfigurator.AcceptorDescriptionParser;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.Worker;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.ws.IWSAcceptor;
+import org.eclipse.net4j.ws.WSUtil;
 import org.eclipse.net4j.ws.jetty.Net4jWebSocket;
 
 import org.eclipse.spi.net4j.Acceptor;
+
+import org.w3c.dom.Element;
 
 import java.text.MessageFormat;
 
@@ -89,5 +94,28 @@ public class WSAcceptor extends Acceptor implements IWSAcceptor
   {
     WSAcceptorManager.INSTANCE.deregisterAcceptor(this);
     super.doDeactivate();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class DescriptionParserFactory extends AcceptorDescriptionParser.Factory implements AcceptorDescriptionParser
+  {
+    public DescriptionParserFactory()
+    {
+      super(WSUtil.FACTORY_TYPE);
+    }
+
+    @Override
+    public AcceptorDescriptionParser create(String description) throws ProductCreationException
+    {
+      return this;
+    }
+
+    @Override
+    public String getAcceptorDescription(Element acceptorConfig)
+    {
+      return acceptorConfig.getAttribute("name"); //$NON-NLS-1$
+    }
   }
 }

@@ -10,10 +10,14 @@
  */
 package org.eclipse.net4j.internal.jvm;
 
+import org.eclipse.net4j.TransportConfigurator.AcceptorDescriptionParser;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.spi.net4j.Acceptor;
+
+import org.w3c.dom.Element;
 
 import java.text.MessageFormat;
 
@@ -77,5 +81,28 @@ public class JVMAcceptor extends Acceptor implements IJVMAcceptor
   {
     JVMAcceptorManager.INSTANCE.deregisterAcceptor(this);
     super.doDeactivate();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class DescriptionParserFactory extends AcceptorDescriptionParser.Factory implements AcceptorDescriptionParser
+  {
+    public DescriptionParserFactory()
+    {
+      super(JVMAcceptorFactory.TYPE);
+    }
+
+    @Override
+    public AcceptorDescriptionParser create(String description) throws ProductCreationException
+    {
+      return this;
+    }
+
+    @Override
+    public String getAcceptorDescription(Element acceptorConfig)
+    {
+      return acceptorConfig.getAttribute("name"); //$NON-NLS-1$
+    }
   }
 }

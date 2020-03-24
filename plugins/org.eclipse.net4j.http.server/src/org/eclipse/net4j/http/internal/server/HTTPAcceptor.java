@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.http.internal.server;
 
+import org.eclipse.net4j.TransportConfigurator.AcceptorDescriptionParser;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.http.common.IHTTPConnector;
 import org.eclipse.net4j.http.internal.common.HTTPConnector;
@@ -19,6 +20,7 @@ import org.eclipse.net4j.http.server.IHTTPAcceptor;
 import org.eclipse.net4j.http.server.INet4jTransportServlet;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.Worker;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -28,6 +30,8 @@ import org.eclipse.net4j.util.security.IRandomizer;
 
 import org.eclipse.spi.net4j.Acceptor;
 import org.eclipse.spi.net4j.InternalConnector;
+
+import org.w3c.dom.Element;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -268,5 +272,28 @@ public class HTTPAcceptor extends Acceptor implements IHTTPAcceptor, INet4jTrans
     }
 
     return maxIdleTime;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class DescriptionParserFactory extends AcceptorDescriptionParser.Factory implements AcceptorDescriptionParser
+  {
+    public DescriptionParserFactory()
+    {
+      super(HTTPAcceptorFactory.TYPE);
+    }
+
+    @Override
+    public AcceptorDescriptionParser create(String description) throws ProductCreationException
+    {
+      return this;
+    }
+
+    @Override
+    public String getAcceptorDescription(Element acceptorConfig)
+    {
+      return null;
+    }
   }
 }

@@ -15,8 +15,10 @@ import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.connector.IServerConnector;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.wrapping.StreamWrapperInjector;
+import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiator;
@@ -102,10 +104,23 @@ public class TransportConfigurator
   protected IAcceptor configureAcceptor(Element acceptorConfig)
   {
     String type = acceptorConfig.getAttribute("type"); //$NON-NLS-1$
-    // TODO Make the following dependent on the "type" attribute value
-    String listenAddr = acceptorConfig.getAttribute("listenAddr"); //$NON-NLS-1$
-    String port = acceptorConfig.getAttribute("port"); //$NON-NLS-1$
-    String description = (listenAddr == null ? "" : listenAddr) + (port == null ? "" : ":" + port); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    String description = acceptorConfig.getAttribute("description"); //$NON-NLS-1$
+    if (description == null || description.isEmpty())
+    {
+      try
+      {
+        AcceptorDescriptionParser parser = (AcceptorDescriptionParser)container.getElement(AcceptorDescriptionParser.Factory.PRODUCT_GROUP, type, null, true);
+        description = parser.getAcceptorDescription(acceptorConfig);
+      }
+      catch (FactoryNotFoundException | ProductCreationException ex)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(ex);
+        }
+      }
+    }
+
     Acceptor acceptor = (Acceptor)container.getElement(AcceptorFactory.PRODUCT_GROUP, type, description, false);
 
     NodeList negotiatorConfigs = acceptorConfig.getElementsByTagName("negotiator"); //$NON-NLS-1$
@@ -214,6 +229,31 @@ public class TransportConfigurator
   {
     Node parentNode = node.getParentNode();
     return parentNode != null ? getLevel(parentNode) + 1 : 0;
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.10
+   */
+  public interface AcceptorDescriptionParser
+  {
+    public String getAcceptorDescription(Element acceptorConfig);
+
+    /**
+     * @author Eike Stepper
+     */
+    public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
+    {
+      public static final String PRODUCT_GROUP = "org.eclipse.net4j.acceptorDescriptionParsers";
+
+      public Factory(String type)
+      {
+        super(PRODUCT_GROUP, type);
+      }
+
+      @Override
+      public abstract AcceptorDescriptionParser create(String description) throws ProductCreationException;
+    }
   }
 
   /**

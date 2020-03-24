@@ -11,16 +11,21 @@
  */
 package org.eclipse.net4j.internal.tcp;
 
+import org.eclipse.net4j.TransportConfigurator.AcceptorDescriptionParser;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tcp.ITCPPassiveSelectorListener;
 import org.eclipse.net4j.tcp.ITCPSelector;
+import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.concurrent.Worker;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.spi.net4j.Acceptor;
+
+import org.w3c.dom.Element;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -300,6 +305,31 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
     {
       selectionKey.cancel();
       selectionKey = null;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class DescriptionParserFactory extends AcceptorDescriptionParser.Factory implements AcceptorDescriptionParser
+  {
+    public DescriptionParserFactory()
+    {
+      super(TCPUtil.FACTORY_TYPE);
+    }
+
+    @Override
+    public AcceptorDescriptionParser create(String description) throws ProductCreationException
+    {
+      return this;
+    }
+
+    @Override
+    public String getAcceptorDescription(Element acceptorConfig)
+    {
+      String listenAddr = acceptorConfig.getAttribute("listenAddr"); //$NON-NLS-1$
+      String port = acceptorConfig.getAttribute("port"); //$NON-NLS-1$
+      return (listenAddr == null ? "" : listenAddr) + (port == null ? "" : ":" + port); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
   }
 }

@@ -16,6 +16,10 @@
    <extension
          point="org.eclipse.net4j.util.factories">
       <factory
+            class="org.eclipse.net4j.http.internal.server.HTTPAcceptor$DescriptionParserFactory"
+            productGroup="org.eclipse.net4j.acceptorDescriptionParsers"
+            type="jvm"/>
+      <factory
             class="org.eclipse.net4j.http.internal.server.HTTPAcceptorFactory"
             productGroup="org.eclipse.net4j.acceptors"
             type="http"/>

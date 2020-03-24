@@ -181,7 +181,7 @@ public abstract class AbstractPlatform implements OMPlatform
         try
         {
           URI uri = new URI(state);
-          state = new File(new File(uri), ".metadata").getAbsolutePath(); //$NON-NLS-1$ ;
+          state = new File(new File(uri), ".metadata").getAbsolutePath(); //$NON-NLS-1$
         }
         catch (Exception ex)
         {

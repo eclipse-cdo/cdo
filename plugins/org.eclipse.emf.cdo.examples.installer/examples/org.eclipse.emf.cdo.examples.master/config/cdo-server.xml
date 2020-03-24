@@ -8,6 +8,8 @@
   <acceptor type="tcp" listenAddr="0.0.0.0" port="2036"/>
 
   <!-- Examples:
+  		<acceptor type="ws" name="cdo_acceptor"/>
+  		<acceptor type="jvm" name="cdo_acceptor"/>
   		<acceptor type="ssl" listenAddr="0.0.0.0" port="2036"/>
 	  	<acceptor type="http"/>
   -->

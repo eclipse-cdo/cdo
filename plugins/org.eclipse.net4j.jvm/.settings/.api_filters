@@ -1,27 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.net4j.jvm" version="2">
-    <resource path="src/org/eclipse/net4j/internal/jvm/JVMAcceptor.java" type="org.eclipse.net4j.internal.jvm.JVMAcceptor">
-        <filter id="574619656">
-            <message_arguments>
-                <message_argument value="IJVMAcceptor"/>
-                <message_argument value="JVMAcceptor"/>
-            </message_arguments>
-        </filter>
-        <filter id="643842064">
-            <message_arguments>
-                <message_argument value="JVMServerConnector"/>
-                <message_argument value="JVMAcceptor"/>
-                <message_argument value="handleAccept(JVMClientConnector)"/>
-            </message_arguments>
-        </filter>
-        <filter id="643846161">
-            <message_arguments>
-                <message_argument value="JVMClientConnector"/>
-                <message_argument value="JVMAcceptor"/>
-                <message_argument value="handleAccept(JVMClientConnector)"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/net4j/internal/jvm/JVMAcceptorFactory.java" type="org.eclipse.net4j.internal.jvm.JVMAcceptorFactory">
         <filter id="643842064">
             <message_arguments>

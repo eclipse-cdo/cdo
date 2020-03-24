@@ -16,13 +16,13 @@
    <extension
          point="org.eclipse.net4j.util.factories">
       <factory
-            class="org.eclipse.net4j.internal.tcp.ssl.SSLAcceptorFactory"
-            productGroup="org.eclipse.net4j.acceptors"
-            type="ssl"/>
+            class="org.eclipse.net4j.internal.tcp.TCPSelectorFactory"
+            productGroup="org.eclipse.net4j.selectors"
+            type="tcp"/>
       <factory
-            class="org.eclipse.net4j.internal.tcp.ssl.SSLConnectorFactory"
-            productGroup="org.eclipse.net4j.connectors"
-            type="ssl"/>
+            class="org.eclipse.net4j.internal.tcp.TCPAcceptor$DescriptionParserFactory"
+            productGroup="org.eclipse.net4j.acceptorDescriptionParsers"
+            type="tcp"/>
       <factory
             class="org.eclipse.net4j.internal.tcp.TCPAcceptorFactory"
             productGroup="org.eclipse.net4j.acceptors"
@@ -32,9 +32,17 @@
             productGroup="org.eclipse.net4j.connectors"
             type="tcp"/>
       <factory
-            class="org.eclipse.net4j.internal.tcp.TCPSelectorFactory"
-            productGroup="org.eclipse.net4j.selectors"
-            type="tcp"/>
+            class="org.eclipse.net4j.internal.tcp.ssl.SSLAcceptor$DescriptionParserFactory"
+            productGroup="org.eclipse.net4j.acceptorDescriptionParsers"
+            type="ssl"/>
+      <factory
+            class="org.eclipse.net4j.internal.tcp.ssl.SSLAcceptorFactory"
+            productGroup="org.eclipse.net4j.acceptors"
+            type="ssl"/>
+      <factory
+            class="org.eclipse.net4j.internal.tcp.ssl.SSLConnectorFactory"
+            productGroup="org.eclipse.net4j.connectors"
+            type="ssl"/>
    </extension>
    
    <extension

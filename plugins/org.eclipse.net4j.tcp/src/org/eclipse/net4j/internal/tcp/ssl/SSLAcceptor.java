@@ -11,8 +11,12 @@
  */
 package org.eclipse.net4j.internal.tcp.ssl;
 
+import org.eclipse.net4j.TransportConfigurator.AcceptorDescriptionParser;
 import org.eclipse.net4j.internal.tcp.TCPAcceptor;
 import org.eclipse.net4j.internal.tcp.TCPConnector;
+import org.eclipse.net4j.util.factory.ProductCreationException;
+
+import org.w3c.dom.Element;
 
 import java.text.MessageFormat;
 
@@ -33,5 +37,30 @@ public class SSLAcceptor extends TCPAcceptor
   protected TCPConnector createConnector()
   {
     return new SSLServerConnector(this);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class DescriptionParserFactory extends AcceptorDescriptionParser.Factory implements AcceptorDescriptionParser
+  {
+    public DescriptionParserFactory()
+    {
+      super(SSLAcceptorFactory.TYPE);
+    }
+
+    @Override
+    public AcceptorDescriptionParser create(String description) throws ProductCreationException
+    {
+      return this;
+    }
+
+    @Override
+    public String getAcceptorDescription(Element acceptorConfig)
+    {
+      String listenAddr = acceptorConfig.getAttribute("listenAddr"); //$NON-NLS-1$
+      String port = acceptorConfig.getAttribute("port"); //$NON-NLS-1$
+      return (listenAddr == null ? "" : listenAddr) + (port == null ? "" : ":" + port); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    }
   }
 }

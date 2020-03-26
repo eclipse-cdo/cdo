@@ -20,7 +20,6 @@ import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.RunnableWithName;
-import org.eclipse.net4j.util.concurrent.SerializingExecutor;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -36,7 +35,6 @@ import org.eclipse.spi.net4j.InternalChannelMultiplexer.BufferMultiplexer;
 import java.text.MessageFormat;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -55,8 +53,6 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   private InternalChannelMultiplexer channelMultiplexer;
 
   private short id = IBuffer.NO_CHANNEL;
-
-  private final Executor receiveSerializer = new SerializingExecutor();
 
   /**
    * The external handler for buffers passed from the {@link #connector}.
@@ -280,20 +276,26 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
       }
 
       ++receivedBuffers;
-
-      ReceiverWork receiverWork = createReceiverWork(buffer);
-      receiveSerializer.execute(receiverWork);
+      receiveHandler.handleBuffer(buffer);
     }
     else
     {
-      // Shutting down
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Releasing buffer from multiplexer for lack of receive handler: {0} --> {1}", buffer, this); //$NON-NLS-1$
+      }
+
       buffer.release();
     }
   }
 
+  /**
+   * @deprecated As of 4.10 scheduled for future removal.
+   */
+  @Deprecated
   protected ReceiverWork createReceiverWork(IBuffer buffer)
   {
-    return new ReceiverWork(buffer);
+    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -343,15 +345,12 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
     {
       sendQueue = new SendQueue();
     }
-
-    LifecycleUtil.activate(receiveSerializer);
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
     unregisterFromMultiplexer();
-    LifecycleUtil.deactivate(receiveSerializer);
 
     if (sendQueue != null)
     {
@@ -407,7 +406,9 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
    * If the meaning of this type isn't clear, there really should be more of a description here...
    *
    * @author Eike Stepper
+   * @deprecated As of 4.10 scheduled for future removal.
    */
+  @Deprecated
   protected class ReceiverWork extends RunnableWithName
   {
     private final IBuffer buffer;

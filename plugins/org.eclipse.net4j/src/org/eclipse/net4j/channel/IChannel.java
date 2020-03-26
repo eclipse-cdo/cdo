@@ -103,4 +103,19 @@ public interface IChannel extends ILocationAware, IUserAware, IBufferHandler, IN
    * Sets the <code>IBufferHandler</code> to handle buffers received from the peer channel.
    */
   public void setReceiveHandler(IBufferHandler receiveHandler);
+
+  /**
+   * Returns the number of {@link IBuffer buffers} that are sent to the {@link IChannelMultiplexer multiplexer} of this channel.
+   *
+   * @since 4.10
+   */
+  public long getSentBuffers();
+
+  /**
+   * Returns the number of {@link IBuffer buffers} that are received from the {@link IChannelMultiplexer multiplexer} of this channel
+   * <b>and</b> are passed on to the {@link #getReceiveHandler() receive handler} of this channel.
+   *
+   * @since 4.10
+   */
+  public long getReceivedBuffers();
 }

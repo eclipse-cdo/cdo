@@ -56,16 +56,6 @@ public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle
 
   public void handleBufferFromMultiplexer(IBuffer buffer);
 
-  /**
-   * @since 3.0
-   */
-  public long getReceivedBuffers();
-
-  /**
-   * @since 3.0
-   */
-  public long getSentBuffers();
-
   public Queue<IBuffer> getSendQueue();
 
   /**

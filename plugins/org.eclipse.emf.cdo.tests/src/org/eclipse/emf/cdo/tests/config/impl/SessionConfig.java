@@ -803,9 +803,12 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       {
         super.mainSuiteFinished();
 
-        System.out.println("Stopping Jetty...");
-        server.stop();
-        server = null;
+        if (server != null)
+        {
+          System.out.println("Stopping Jetty...");
+          server.stop();
+          server = null;
+        }
       }
 
       @Override

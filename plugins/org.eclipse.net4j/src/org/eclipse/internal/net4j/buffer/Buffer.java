@@ -176,14 +176,29 @@ public class Buffer implements InternalBuffer
   @Override
   public void release()
   {
-    if (state != BufferState.RELEASED)
+    try
     {
-      state = BufferState.RELEASED;
-      errorHandler = null;
-      if (bufferProvider != null)
+      if (state != BufferState.RELEASED)
       {
-        bufferProvider.retainBuffer(this);
+        state = BufferState.RELEASED;
+        errorHandler = null;
+
+        if (bufferProvider != null)
+        {
+          bufferProvider.retainBuffer(this);
+        }
       }
+    }
+    catch (Error ex)
+    {
+      // Don't swallow errors.
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      // A normal exception can only occur if the buffer provider implementation is buggy.
+      // Do not simply continue in this case because it's not known in which state this buffer is then.
+      throw new Error("Implementation error in buffer provider " + bufferProvider, ex);
     }
   }
 
@@ -663,18 +678,50 @@ public class Buffer implements InternalBuffer
 
   public static String dump(ByteBuffer byteBuffer)
   {
+    return dump(byteBuffer, false);
+  }
+
+  public static String dump(ByteBuffer byteBuffer, boolean fullCapacity)
+  {
     final int position = byteBuffer.position();
     final int limit = byteBuffer.limit();
 
     StringBuilder builder = new StringBuilder();
     for (int i = 0; i < limit; i++)
     {
-      int b = byteBuffer.get(i) & 0xFF; // Dump unsigned int instead of signed byte.
-      builder.append('\u00A0'); // NO-BREAK SPACE. A bug in JDT's detail formatter hates normal spaces.
-      builder.append(b);
+      dumpByte(byteBuffer, builder, i);
+    }
+
+    if (fullCapacity)
+    {
+      int capacity = byteBuffer.capacity();
+      if (limit < capacity)
+      {
+        byteBuffer.limit(capacity);
+
+        try
+        {
+          builder.append("\n--");
+          for (int i = limit; i < capacity; i++)
+          {
+            dumpByte(byteBuffer, builder, i);
+          }
+        }
+        finally
+        {
+          byteBuffer.limit(limit);
+        }
+      }
     }
 
     return "pos\u00A0" + position + "/" + limit + ":" + builder;
+  }
+
+  private static void dumpByte(ByteBuffer byteBuffer, StringBuilder builder, int i)
+  {
+    int b = byteBuffer.get(i) & 0xFF; // Dump unsigned int instead of signed byte.
+    builder.append('\u00A0'); // NO-BREAK SPACE. A bug in JDT's detail formatter hates normal spaces.
+    builder.append(b);
   }
 
   public static void main(String[] args) throws Exception

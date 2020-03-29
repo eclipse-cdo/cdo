@@ -115,6 +115,10 @@ public class BufferInputStream extends InputStream implements IBufferHandler
     {
       buffers.add(buffer);
     }
+    else
+    {
+      buffer.release();
+    }
   }
 
   @Override
@@ -253,8 +257,13 @@ public class BufferInputStream extends InputStream implements IBufferHandler
   @Override
   public void close() throws IOException
   {
+    if (currentBuffer != null)
+    {
+      currentBuffer.release();
+      currentBuffer = null;
+    }
+
     buffers = null;
-    currentBuffer = null;
     super.close();
 
     if (ccam)

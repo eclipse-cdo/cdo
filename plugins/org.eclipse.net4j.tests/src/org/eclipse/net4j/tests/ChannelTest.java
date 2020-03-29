@@ -14,28 +14,38 @@ package org.eclipse.net4j.tests;
 import static org.junit.Assert.assertArrayEquals;
 
 import org.eclipse.net4j.ITransportConfigAware;
+import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.signal.SignalFinishedEvent;
+import org.eclipse.net4j.signal.SignalProtocol.InvalidSignalIDException;
 import org.eclipse.net4j.tests.config.AbstractConfigTest;
 import org.eclipse.net4j.tests.data.HugeData;
 import org.eclipse.net4j.tests.data.TinyData;
 import org.eclipse.net4j.tests.signal.ArrayRequest;
+import org.eclipse.net4j.tests.signal.PartialReadRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.concurrent.MonitoredThread;
 import org.eclipse.net4j.util.concurrent.MonitoredThread.MultiThreadMonitor;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
+import org.eclipse.internal.net4j.buffer.BufferPoolFactory;
+
 import org.eclipse.spi.net4j.InternalChannel;
 import org.eclipse.spi.net4j.InternalConnector;
 
+import java.nio.BufferUnderflowException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Eike Stepper
@@ -301,6 +311,142 @@ public class ChannelTest extends AbstractConfigTest
     enableConsole();
   }
 
+  /**
+   * This test case tests the following situation:
+   * <p>
+   * A client sends a signal
+   */
+  public void testStreamFitsInOneBuffer() throws Exception
+  {
+    CountDownLatch signalFinished = new CountDownLatch(1);
+    AtomicReference<BufferUnderflowException> exception = new AtomicReference<>();
+
+    acceptorContainer.registerFactory(new TestSignalProtocol.Factory()
+    {
+      @Override
+      public TestSignalProtocol create(String description) throws ProductCreationException
+      {
+        TestSignalProtocol protocol = new TestSignalProtocol()
+        {
+          private int receivedBuffers;
+
+          @Override
+          public void handleBuffer(IBuffer buffer)
+          {
+            System.out.println("Received buffer " + receivedBuffers + " --> eos=" + buffer.isEOS());
+
+            // After the first buffer wait until the signal has finished.
+            if (receivedBuffers++ == 1)
+            {
+              await(signalFinished);
+            }
+
+            try
+            {
+              super.handleBuffer(buffer);
+            }
+            catch (BufferUnderflowException ex)
+            {
+              ex.printStackTrace();
+              exception.set(ex);
+            }
+          }
+        };
+
+        protocol.setVersion(version);
+        return protocol;
+      }
+    });
+
+    TestSignalProtocol protocol = openTestSignalProtocol();
+
+    InternalConnector serverConnector = (InternalConnector)getAcceptor().getAcceptedConnectors()[0];
+    IChannel serverChannel = serverConnector.getChannels().iterator().next();
+    TestSignalProtocol serverProtocol = (TestSignalProtocol)serverChannel.getReceiveHandler();
+    serverProtocol.addListener(event -> {
+      if (event instanceof SignalFinishedEvent)
+      {
+        signalFinished.countDown();
+      }
+    });
+
+    byte[] hugeData = HugeData.getBytes();
+
+    int headerSize = IBuffer.HEADER_SIZE;
+    headerSize += 4; // Correlation ID.
+    headerSize += 2; // Signal ID.
+    headerSize += 4; // Array length.
+
+    byte[] data = new byte[BufferPoolFactory.BUFFER_CAPACITY - headerSize];
+    System.arraycopy(hugeData, 0, data, 0, data.length);
+
+    new ArrayRequest(protocol, data, true).send(); // <-- Flush without EOS!
+    assertSame(null, exception.get());
+  }
+
+  /**
+   * This test case tests the following situation:
+   * <p>
+   * A client sends a signal
+   */
+  public void testPartialRead() throws Exception
+  {
+    CountDownLatch signalFinished = new CountDownLatch(1);
+    AtomicReference<InvalidSignalIDException> exception = new AtomicReference<>();
+
+    acceptorContainer.registerFactory(new TestSignalProtocol.Factory()
+    {
+      @Override
+      public TestSignalProtocol create(String description) throws ProductCreationException
+      {
+        TestSignalProtocol protocol = new TestSignalProtocol()
+        {
+          private int receivedBuffers;
+
+          @Override
+          public void handleBuffer(IBuffer buffer)
+          {
+            System.out.println("Received buffer " + receivedBuffers + " --> eos=" + buffer.isEOS());
+
+            // After the first buffer wait until the signal has finished.
+            if (receivedBuffers++ == 1)
+            {
+              await(signalFinished);
+            }
+
+            try
+            {
+              super.handleBuffer(buffer);
+            }
+            catch (InvalidSignalIDException ex)
+            {
+              ex.printStackTrace();
+              exception.set(ex);
+            }
+          }
+        };
+
+        protocol.setVersion(version);
+        return protocol;
+      }
+    });
+
+    TestSignalProtocol protocol = openTestSignalProtocol();
+
+    InternalConnector serverConnector = (InternalConnector)getAcceptor().getAcceptedConnectors()[0];
+    IChannel serverChannel = serverConnector.getChannels().iterator().next();
+    TestSignalProtocol serverProtocol = (TestSignalProtocol)serverChannel.getReceiveHandler();
+    serverProtocol.addListener(event -> {
+      if (event instanceof SignalFinishedEvent)
+      {
+        signalFinished.countDown();
+      }
+    });
+
+    new PartialReadRequest(protocol).send();
+    assertSame(null, exception.get());
+  }
+
   @Override
   protected void doSetUp() throws Exception
   {
@@ -352,7 +498,12 @@ public class ChannelTest extends AbstractConfigTest
         {
           synchronized (protocols)
           {
-            protocol.getChannel().removeListener(this);
+            IChannel channel = protocol.getChannel();
+            if (channel != null)
+            {
+              channel.removeListener(this);
+            }
+
             boolean removed = protocols.remove(protocol);
             assertEquals(true, removed);
           }

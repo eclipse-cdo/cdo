@@ -11,45 +11,37 @@
 package org.eclipse.net4j.tests.signal;
 
 import org.eclipse.net4j.signal.RequestWithConfirmation;
-import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
 /**
  * @author Eike Stepper
  */
-public class ArrayRequest extends RequestWithConfirmation<byte[]>
+public class PartialReadRequest extends RequestWithConfirmation<Boolean>
 {
-  private byte[] data;
+  public static final int DATA = 4711;
 
-  private boolean flush;
-
-  public ArrayRequest(SignalProtocol<?> protocol, byte[] data)
+  public PartialReadRequest(TestSignalProtocol protocol)
   {
-    this(protocol, data, false);
-  }
-
-  public ArrayRequest(SignalProtocol<?> protocol, byte[] data, boolean flush)
-  {
-    super(protocol, TestSignalProtocol.SIGNAL_ARRAY);
-    this.data = data;
-    this.flush = flush;
+    super(protocol, TestSignalProtocol.SIGNAL_PARTIAL_READ);
   }
 
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
-    out.writeByteArray(data);
+    // This is the only data PartialReadIndication will read.
+    out.writeInt(DATA);
 
-    if (flush)
-    {
-      out.flush();
-    }
+    // This will cause the current buffer to be sent.
+    out.flush();
+
+    // This will be interpreted as the signalID of a new incoming indication by SignalProtocol.handleBuffer().
+    out.writeShort(Short.MAX_VALUE);
   }
 
   @Override
-  protected byte[] confirming(ExtendedDataInputStream in) throws Exception
+  protected Boolean confirming(ExtendedDataInputStream in) throws Exception
   {
-    return in.readByteArray();
+    return in.readBoolean();
   }
 }

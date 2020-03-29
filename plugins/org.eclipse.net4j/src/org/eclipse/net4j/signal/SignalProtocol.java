@@ -85,9 +85,18 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
    */
   public static final short SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS = -5;
 
-  private static final int MIN_CORRELATION_ID = 1;
+  /**
+   * Begin Of Signal.
+   */
+  private static final int BOS_BIT = 1;
 
-  private static final int MAX_CORRELATION_ID = Integer.MAX_VALUE;
+  private static final int BOS_MASK = ~BOS_BIT;
+
+  private static final int INC_CORRELATION_ID = 1 << BOS_BIT; // 2
+
+  private static final int MIN_CORRELATION_ID = INC_CORRELATION_ID;
+
+  private static final int MAX_CORRELATION_ID = Integer.MAX_VALUE & BOS_MASK; // 2147483646
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, SignalProtocol.class);
 
@@ -233,12 +242,27 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   {
     ByteBuffer byteBuffer = buffer.getByteBuffer();
     int correlationID = byteBuffer.getInt();
-    if (TRACER.isEnabled())
+
+    boolean beginOfSignal = false;
+    if ((correlationID & BOS_BIT) != 0)
     {
-      TRACER.trace("Received buffer for correlation " + correlationID); //$NON-NLS-1$
+      correlationID &= BOS_MASK;
+      beginOfSignal = true;
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Received first buffer for correlation " + correlationID); //$NON-NLS-1$
+      }
+    }
+    else
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Received buffer for correlation " + correlationID); //$NON-NLS-1$
+      }
     }
 
-    Signal signal;
+    Signal signal = null;
     boolean newSignalScheduled = false;
 
     synchronized (signals)
@@ -246,8 +270,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
       if (correlationID > 0)
       {
         // Incoming indication
-        signal = signals.get(-correlationID);
-        if (signal == null)
+        if (beginOfSignal)
         {
           short signalID = byteBuffer.getShort();
           if (TRACER.isEnabled())
@@ -269,6 +292,10 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
             getExecutorService().execute(signal);
             newSignalScheduled = true;
           }
+        }
+        else
+        {
+          signal = signals.get(-correlationID);
         }
       }
       else
@@ -388,7 +415,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
       SignalReactor signal = createSignalReactor(signalID);
       if (signal == null)
       {
-        throw new IllegalArgumentException("Invalid signalID " + signalID); //$NON-NLS-1$
+        throw new InvalidSignalIDException(signalID);
       }
 
       return signal;
@@ -436,7 +463,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     }
     else
     {
-      ++nextCorrelationID;
+      nextCorrelationID += INC_CORRELATION_ID;
     }
 
     return correlationID;
@@ -481,8 +508,10 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   void startSignal(SignalActor signalActor, long timeout) throws Exception
   {
     checkArg(signalActor.getProtocol() == this, "Wrong protocol"); //$NON-NLS-1$
+
     short signalID = signalActor.getID();
     int correlationID = signalActor.getCorrelationID();
+
     signalActor.setBufferOutputStream(new SignalOutputStream(correlationID, signalID, true));
     if (signalActor instanceof RequestWithConfirmation<?>)
     {
@@ -622,6 +651,28 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   }
 
   /**
+   * @author Eike Stepper
+   * @since 4.10
+   */
+  public static final class InvalidSignalIDException extends IllegalArgumentException
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final short signalID;
+
+    public InvalidSignalIDException(short signalID)
+    {
+      super("Invalid signal ID " + signalID);
+      this.signalID = signalID;
+    }
+
+    public short getSignalID()
+    {
+      return signalID;
+    }
+  }
+
+  /**
    * An {@link IEvent event} fired from a {@link ISignalProtocol signal protocol} when the protocol {@link ISignalProtocol#setTimeout(long) timeout}
    * has been changed.
    *
@@ -698,13 +749,15 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
    */
   class SignalOutputStream extends ChannelOutputStream
   {
-    public SignalOutputStream(final int correlationID, final short signalID, final boolean addSignalID)
+    public SignalOutputStream(int correlationID, short signalID, boolean request)
     {
       super(getChannel(), new IBufferProvider()
       {
         private IBufferProvider delegate = getBufferProvider();
 
-        private boolean firstBuffer = addSignalID;
+        private boolean beginOfSignal = true;
+
+        private boolean addSignalID = request;
 
         @Override
         public short getBufferCapacity()
@@ -723,14 +776,23 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
           IBuffer buffer = delegate.provideBuffer();
           ByteBuffer byteBuffer = buffer.startPutting(channel.getID());
-          byteBuffer.putInt(correlationID);
 
-          if (firstBuffer)
+          if (beginOfSignal)
           {
-            byteBuffer.putShort(signalID);
+            byteBuffer.putInt(correlationID | BOS_BIT);
+            beginOfSignal = false;
+
+            if (addSignalID)
+            {
+              byteBuffer.putShort(signalID);
+              addSignalID = false;
+            }
+          }
+          else
+          {
+            byteBuffer.putInt(correlationID);
           }
 
-          firstBuffer = false;
           return buffer;
         }
 

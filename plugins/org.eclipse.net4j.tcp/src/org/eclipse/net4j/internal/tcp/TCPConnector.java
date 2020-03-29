@@ -215,7 +215,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     {
       if (inputBuffer == null)
       {
-        inputBuffer = getConfig().getBufferProvider().provideBuffer();
+        inputBuffer = provideBuffer();
       }
 
       ByteBuffer byteBuffer = inputBuffer.startGetting(socketChannel);
@@ -416,7 +416,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   @Override
   protected void doDeactivate() throws Exception
   {
-    cancelSelectionKey();
+    cleanUp();
 
     LifecycleUtil.deactivate(controlChannel);
     controlChannel = null;
@@ -429,7 +429,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   protected void deactivateAsync()
   {
     // Cancel the selection immediately
-    cancelSelectionKey();
+    cleanUp();
 
     // Do the rest of the deactivation asynchronously
     getConfig().getReceiveExecutor().execute(new Runnable()
@@ -442,8 +442,14 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     });
   }
 
-  private void cancelSelectionKey()
+  private void cleanUp()
   {
+    if (inputBuffer != null)
+    {
+      inputBuffer.release();
+      inputBuffer = null;
+    }
+
     if (selectionKey != null)
     {
       selectionKey.cancel();
@@ -479,7 +485,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     @Override
     public ByteBuffer getBuffer()
     {
-      buffer = getConfig().getBufferProvider().provideBuffer();
+      buffer = provideBuffer();
       ByteBuffer byteBuffer = buffer.startPutting(ControlChannel.CONTROL_CHANNEL_INDEX);
       byteBuffer.put(ControlChannel.OPCODE_NEGOTIATION);
       return byteBuffer;

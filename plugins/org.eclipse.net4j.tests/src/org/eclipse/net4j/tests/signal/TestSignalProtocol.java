@@ -40,6 +40,8 @@ public class TestSignalProtocol extends SignalProtocol<Object>
 
   public static final short SIGNAL_EXCEPTION = 6;
 
+  public static final short SIGNAL_PARTIAL_READ = 7;
+
   public static final String SIMULATED_EXCEPTION = "Simulated exception"; //$NON-NLS-1$
 
   private int version = super.getVersion();
@@ -96,6 +98,9 @@ public class TestSignalProtocol extends SignalProtocol<Object>
     case SIGNAL_EXCEPTION:
       return new ExceptionIndication(this);
 
+    case SIGNAL_PARTIAL_READ:
+      return new PartialReadIndication(this);
+
     default:
       return super.createSignalReactor(signalID);
     }
@@ -128,17 +133,17 @@ public class TestSignalProtocol extends SignalProtocol<Object>
    */
   public static class Factory extends ServerProtocolFactory
   {
-    private int version = IProtocol2.UNSPECIFIED_VERSION;
-
-    public Factory(int version)
-    {
-      this();
-      this.version = version;
-    }
+    protected final int version;
 
     public Factory()
     {
+      this(IProtocol2.UNSPECIFIED_VERSION);
+    }
+
+    public Factory(int version)
+    {
       super(PROTOCOL_NAME);
+      this.version = version;
     }
 
     @Override

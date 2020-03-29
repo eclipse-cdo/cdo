@@ -172,6 +172,8 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
     {
       IDBTable table = delta.getSchemaElement(schema);
       table.remove();
+
+      stopRecursion();
     }
 
     @Override

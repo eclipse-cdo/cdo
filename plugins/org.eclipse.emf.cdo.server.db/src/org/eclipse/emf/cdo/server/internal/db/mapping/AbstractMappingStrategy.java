@@ -43,6 +43,8 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ImplementationError;
@@ -524,11 +526,11 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     {
       EPackage ePackage = packageInfo.getEPackage();
       EClass[] persistentClasses = EMFUtil.getPersistentClasses(ePackage);
-      mapClasses(connection, unmap, persistentClasses, classMappings);
+      mapClasses(persistentClasses, connection, unmap, classMappings);
     }
   }
 
-  private void mapClasses(Connection connection, boolean unmap, EClass[] eClasses, Set<IClassMapping> classMappings)
+  private void mapClasses(EClass[] eClasses, Connection connection, boolean unmap, Set<IClassMapping> classMappings)
   {
     for (EClass eClass : eClasses)
     {
@@ -542,7 +544,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
           continue;
         }
 
-        IClassMapping classMapping = unmap ? removeClassMapping(eClass) : createClassMapping(eClass);
+        IClassMapping classMapping = unmap ? removeClassMapping(eClass, connection) : createClassMapping(eClass);
         if (classMapping != null)
         {
           classMappings.add(classMapping);
@@ -562,15 +564,45 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     return classMapping;
   }
 
-  private IClassMapping removeClassMapping(EClass eClass)
+  private IClassMapping removeClassMapping(EClass eClass, Connection connection)
   {
     IClassMapping classMapping = classMappings.get(eClass);
     if (classMapping != null)
     {
-      IDBSchema schema = getStore().getDBSchema();
-      for (IDBTable table : classMapping.getDBTables())
+      IDBSchemaTransaction schemaTransaction = null;
+      IDBSchema workingCopy = null;
+
+      try
       {
-        schema.removeTable(table.getName());
+        for (IDBTable table : classMapping.getDBTables())
+        {
+          if (table != null)
+          {
+            String name = table.getName();
+            if (name != null)
+            {
+              if (workingCopy == null)
+              {
+                schemaTransaction = getStore().getDatabase().openSchemaTransaction((IDBConnection)connection);
+                workingCopy = schemaTransaction.getWorkingCopy();
+              }
+
+              workingCopy.removeTable(name);
+            }
+          }
+        }
+
+        if (schemaTransaction != null)
+        {
+          schemaTransaction.commit();
+        }
+      }
+      finally
+      {
+        if (schemaTransaction != null)
+        {
+          schemaTransaction.close();
+        }
       }
 
       classMappings.remove(eClass);

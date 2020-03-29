@@ -860,38 +860,40 @@ public class TransactionCommitContext implements InternalCommitContext
     return postCommitLockStates;
   }
 
-  protected void handleException(Throwable ex)
+  protected void handleException(Throwable throwable)
   {
     try
     {
-      if (TRACER.isEnabled())
+      if (throwable instanceof IRepository.WriteAccessHandler.TransactionValidationException)
       {
-        TRACER.trace(ex);
-      }
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(throwable);
+        }
 
-      if (ex instanceof IRepository.WriteAccessHandler.TransactionValidationException)
-      {
         rollbackReason = CDOProtocolConstants.ROLLBACK_REASON_VALIDATION_ERROR;
-        rollback(ex.getLocalizedMessage());
+        rollback(throwable.getLocalizedMessage());
       }
       else
       {
+        OM.LOG.error(throwable);
+
         String storeClass = repository.getStore().getClass().getSimpleName();
-        rollback("Rollback in " + storeClass + ": " + StringUtil.formatException(ex)); //$NON-NLS-1$ //$NON-NLS-2$
+        rollback("Rollback in " + storeClass + ": " + StringUtil.formatException(throwable)); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
-    catch (Exception ex1)
+    catch (Exception ex)
     {
       if (rollbackMessage == null)
       {
-        rollbackMessage = ex1.getMessage();
+        rollbackMessage = ex.getMessage();
       }
 
       try
       {
         if (TRACER.isEnabled())
         {
-          TRACER.trace(ex1);
+          TRACER.trace(ex);
         }
       }
       catch (Exception ignore)

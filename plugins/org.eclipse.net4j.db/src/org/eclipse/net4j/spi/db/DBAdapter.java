@@ -396,11 +396,19 @@ public abstract class DBAdapter implements IDBAdapter
           break;
 
         case CHANGE:
-          alterTable(connection, table, delta);
+          if (table != null)
+          {
+            alterTable(connection, table, delta);
+          }
+
           break;
 
         case REMOVE:
-          dropTable(connection, table, delta);
+          if (table != null)
+          {
+            dropTable(connection, table, delta);
+          }
+
           break;
 
         default:
@@ -428,25 +436,35 @@ public abstract class DBAdapter implements IDBAdapter
               throw ex;
             }
           }
+
           break;
 
         case CHANGE:
-          dropIndex(connection, index, delta);
-          try
+          if (index != null)
           {
-            createIndex(connection, index, delta);
-          }
-          catch (RuntimeException ex)
-          {
-            if (!index.isOptional())
+            dropIndex(connection, index, delta);
+
+            try
             {
-              throw ex;
+              createIndex(connection, index, delta);
+            }
+            catch (RuntimeException ex)
+            {
+              if (!index.isOptional())
+              {
+                throw ex;
+              }
             }
           }
+
           break;
 
         case REMOVE:
-          dropIndex(connection, index, delta);
+          if (index != null)
+          {
+            dropIndex(connection, index, delta);
+          }
+
           break;
 
         default:

@@ -72,7 +72,6 @@ import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnection;
-import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
@@ -819,35 +818,15 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     try
     {
       connection.rollback();
-
-      // Bug 298632: Must rollback DBSchema to its prior state and drop the tables
-      IMappingStrategy mappingStrategy = store.getMappingStrategy();
-      mappingStrategy.removeMapping(connection, commitContext.getNewPackageUnits());
-
-      if (createdTables != null)
-      {
-        IDBDatabase database = store.getDatabase();
-        IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
-
-        try
-        {
-          for (IDBTable table : createdTables)
-          {
-            table.remove();
-          }
-
-          schemaTransaction.commit();
-        }
-        finally
-        {
-          schemaTransaction.close();
-        }
-      }
     }
     catch (SQLException ex)
     {
       throw new DBException(ex);
     }
+
+    // Bug 298632: Must rollback DBSchema to its prior state and drop the tables
+    IMappingStrategy mappingStrategy = store.getMappingStrategy();
+    mappingStrategy.removeMapping(connection, commitContext.getNewPackageUnits());
   }
 
   @Override

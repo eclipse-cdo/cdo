@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.db;singleton:=true
-Bundle-Version: 4.8.0.qualifier
+Bundle-Version: 4.8.1.qualifier
 Bundle-Activator: org.eclipse.net4j.internal.db.bundle.OM$Activator
 Bundle-Vendor: %providerName
 Bundle-ClassPath: .
@@ -11,17 +11,17 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.net4j.util;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
  org.eclipse.net4j.db.jdbc;bundle-version="[4.0.0,5.0.0)"
-Export-Package: org.eclipse.net4j.db;version="4.8.0",
- org.eclipse.net4j.db.ddl;version="4.8.0",
- org.eclipse.net4j.db.ddl.delta;version="4.8.0",
- org.eclipse.net4j.db.dml;version="4.8.0",
- org.eclipse.net4j.internal.db;version="4.8.0";x-internal:=true,
- org.eclipse.net4j.internal.db.bundle;version="4.8.0";x-internal:=true,
- org.eclipse.net4j.internal.db.ddl;version="4.8.0";x-friends:="org.eclipse.emf.cdo.server.db",
- org.eclipse.net4j.internal.db.ddl.delta;version="4.8.0";x-internal:=true,
- org.eclipse.net4j.internal.db.dml;version="4.8.0";x-internal:=true,
- org.eclipse.net4j.spi.db;version="4.8.0",
- org.eclipse.net4j.spi.db.ddl;version="4.8.0"
+Export-Package: org.eclipse.net4j.db;version="4.8.1",
+ org.eclipse.net4j.db.ddl;version="4.8.1",
+ org.eclipse.net4j.db.ddl.delta;version="4.8.1",
+ org.eclipse.net4j.db.dml;version="4.8.1",
+ org.eclipse.net4j.internal.db;version="4.8.1";x-internal:=true,
+ org.eclipse.net4j.internal.db.bundle;version="4.8.1";x-internal:=true,
+ org.eclipse.net4j.internal.db.ddl;version="4.8.1";x-friends:="org.eclipse.emf.cdo.server.db",
+ org.eclipse.net4j.internal.db.ddl.delta;version="4.8.1";x-internal:=true,
+ org.eclipse.net4j.internal.db.dml;version="4.8.1";x-internal:=true,
+ org.eclipse.net4j.spi.db;version="4.8.1",
+ org.eclipse.net4j.spi.db.ddl;version="4.8.1"
 Bundle-ActivationPolicy: lazy
 Eclipse-BuddyPolicy: registered
 Automatic-Module-Name: org.eclipse.net4j.db

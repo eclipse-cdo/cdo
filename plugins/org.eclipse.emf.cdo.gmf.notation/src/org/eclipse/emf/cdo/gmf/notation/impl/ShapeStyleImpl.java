@@ -12,9 +12,7 @@
 
 package org.eclipse.emf.cdo.gmf.notation.impl;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.gmf.runtime.notation.DescriptionStyle;
 import org.eclipse.gmf.runtime.notation.FillStyle;
@@ -145,9 +143,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
+  * <!-- begin-user-doc --> <!-- end-user-doc -->
+  * @generated
+  */
   @Override
   public String getDescription()
   {

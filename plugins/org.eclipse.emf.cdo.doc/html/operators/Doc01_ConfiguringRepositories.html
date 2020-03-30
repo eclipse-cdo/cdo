@@ -175,9 +175,10 @@ function maximize(id)
 <tr><td></td><td>6.8&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_objectTypeCacheSize" title="Chapter in CDO Model Repository Documentation">Property objectTypeCacheSize</a></td></tr>
 <tr><td></td><td>6.9&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_columnTypeModifier" title="Chapter in CDO Model Repository Documentation">Property columnTypeModifier</a></td></tr>
 <tr><td></td><td>6.10&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_forceIndexes" title="Chapter in CDO Model Repository Documentation">Property forceIndexes</a></td></tr>
-<tr><td></td><td>6.11&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_withRanges" title="Chapter in CDO Model Repository Documentation">Property withRanges</a></td></tr>
-<tr><td></td><td>6.12&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_copyOnBranch" title="Chapter in CDO Model Repository Documentation">Property copyOnBranch</a></td></tr>
-<tr><td></td><td>6.13&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_forceZeroBasedIndex" title="Chapter in CDO Model Repository Documentation">Property forceZeroBasedIndex</a></td></tr>
+<tr><td></td><td>6.11&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_eagerTableCreation" title="Chapter in CDO Model Repository Documentation">Property eagerTableCreation</a></td></tr>
+<tr><td></td><td>6.12&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_withRanges" title="Chapter in CDO Model Repository Documentation">Property withRanges</a></td></tr>
+<tr><td></td><td>6.13&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_copyOnBranch" title="Chapter in CDO Model Repository Documentation">Property copyOnBranch</a></td></tr>
+<tr><td></td><td>6.14&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_forceZeroBasedIndex" title="Chapter in CDO Model Repository Documentation">Property forceZeroBasedIndex</a></td></tr>
 <tr><td>7&nbsp;</td><td class="te" colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_dbAdapter" title="Chapter in CDO Model Repository Documentation">Element dbAdapter</a></td></tr>
 <tr><td>8&nbsp;</td><td class="te" colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_dataSource" title="Chapter in CDO Model Repository Documentation">Element dataSource</a></td></tr>
 </table>
@@ -423,7 +424,17 @@ function maximize(id)
  <li> XREF
  </ul>
 
-<h3><a name="Property_withRanges"></a>6.11&nbsp;&nbsp;Property withRanges</h3>
+<h3><a name="Property_eagerTableCreation"></a>6.11&nbsp;&nbsp;Property eagerTableCreation</h3>
+<p>
+ Specifies whether all tables for a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>package</code></a> are created eagerly.
+ <p>
+ Possible configuration values are:
+ <ul>
+ <li> <code>false</code> (creates tables lazily, i.e., when they are actually needed for writing the first object; default value)
+ <li> <code>true</code> (creates tables eagerly, i.e., when a new <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>package</code></a> is committed)
+ </ul>
+
+<h3><a name="Property_withRanges"></a>6.12&nbsp;&nbsp;Property withRanges</h3>
 <p>
  Specifies whether new <a href="../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> create entire new copies of all their list <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>features</code></a>
  or whether just the list deltas are stored.
@@ -437,7 +448,7 @@ function maximize(id)
  This property is only applicable to horizontal mapping strategies in <a href="Doc01_ConfiguringRepositories.html#Property_supportingAudits" title="Chapter in CDO Model Repository Documentation">auditing</a>
  or <a href="Doc01_ConfiguringRepositories.html#Property_supportingBranches" title="Chapter in CDO Model Repository Documentation">branching</a> repositories.
 
-<h3><a name="Property_copyOnBranch"></a>6.12&nbsp;&nbsp;Property copyOnBranch</h3>
+<h3><a name="Property_copyOnBranch"></a>6.13&nbsp;&nbsp;Property copyOnBranch</h3>
 <p>
  Specifies whether <b>the first</b> new <a href="../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> in a <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> create entire new copies
  of all their list <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>features</code></a> or whether just the list deltas (relative to the base revisions in the parent branch) are stored.
@@ -451,7 +462,7 @@ function maximize(id)
  This property is only applicable to <a href="Doc01_ConfiguringRepositories.html#Property_withRanges" title="Chapter in CDO Model Repository Documentation">range-based</a> horizontal mapping strategies in
  <a href="Doc01_ConfiguringRepositories.html#Property_supportingBranches" title="Chapter in CDO Model Repository Documentation">branching</a> repositories.
 
-<h3><a name="Property_forceZeroBasedIndex"></a>6.13&nbsp;&nbsp;Property forceZeroBasedIndex</h3>
+<h3><a name="Property_forceZeroBasedIndex"></a>6.14&nbsp;&nbsp;Property forceZeroBasedIndex</h3>
 <p>
  Specifies whether element removals from the beginning of list <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>features</code></a> adjust the
  list indexes of all following elements or whether the first element is allowed to have a non-zero list index.

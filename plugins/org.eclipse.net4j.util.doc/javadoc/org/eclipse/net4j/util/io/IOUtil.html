@@ -1012,10 +1012,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>copyText</h4>
-<pre>public static&nbsp;void&nbsp;copyText(java.io.File&nbsp;source,
-                            java.io.File&nbsp;target,
-                            <a href="../../../../../org/eclipse/net4j/util/io/IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter</a>&lt;java.lang.String&gt;...&nbsp;lineFilters)
-                     throws <a href="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
+<pre>@SafeVarargs
+public static&nbsp;void&nbsp;copyText(java.io.File&nbsp;source,
+                                          java.io.File&nbsp;target,
+                                          <a href="../../../../../org/eclipse/net4j/util/io/IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter</a>&lt;java.lang.String&gt;...&nbsp;lineFilters)
+                                   throws <a href="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
@@ -1028,9 +1029,10 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>copyText</h4>
-<pre>public static&nbsp;void&nbsp;copyText(java.io.BufferedReader&nbsp;reader,
-                            java.io.BufferedWriter&nbsp;writer,
-                            <a href="../../../../../org/eclipse/net4j/util/io/IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter</a>&lt;java.lang.String&gt;...&nbsp;lineFilters)</pre>
+<pre>@SafeVarargs
+public static&nbsp;void&nbsp;copyText(java.io.BufferedReader&nbsp;reader,
+                                          java.io.BufferedWriter&nbsp;writer,
+                                          <a href="../../../../../org/eclipse/net4j/util/io/IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter</a>&lt;java.lang.String&gt;...&nbsp;lineFilters)</pre>
 </li>
 </ul>
 <a name="copyBinary-java.io.InputStream-java.io.OutputStream-">

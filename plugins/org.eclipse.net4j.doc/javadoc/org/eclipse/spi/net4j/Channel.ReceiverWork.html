@@ -18,8 +18,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var methods = {"i0":42,"i1":42};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -120,8 +120,12 @@ var activeTableTab = "activeTableTab";
 <dd><a href="../../../../org/eclipse/spi/net4j/Channel.html" title="class in org.eclipse.spi.net4j">Channel</a></dd>
 </dl>
 <hr>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 4.10 scheduled for future removal.</span></div>
+</div>
 <br>
-<pre>protected class <span class="typeNameLabel">Channel.ReceiverWork</span>
+<pre>@Deprecated
+protected class <span class="typeNameLabel">Channel.ReceiverWork</span>
 extends <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RunnableWithName.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">RunnableWithName</a></pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl>
@@ -146,7 +150,9 @@ extends <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclips
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html#ReceiverWork-org.eclipse.net4j.buffer.IBuffer-">ReceiverWork</a></span>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html#ReceiverWork-org.eclipse.net4j.buffer.IBuffer-">ReceiverWork</a></span>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -158,18 +164,22 @@ extends <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclips
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html#doRun--">doRun</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html#doRun--">doRun</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html#getName--">getName</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html#getName--">getName</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -207,6 +217,7 @@ extends <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclips
 <li class="blockList">
 <h4>ReceiverWork</h4>
 <pre>public&nbsp;ReceiverWork(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
@@ -228,6 +239,7 @@ extends <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclips
 <li class="blockList">
 <h4>getName</h4>
 <pre>public&nbsp;java.lang.String&nbsp;getName()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RunnableWithName.html?is-external=true#getName--" title="class or interface in org.eclipse.net4j.util.concurrent">getName</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RunnableWithName.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">RunnableWithName</a></code></dd>
@@ -243,6 +255,7 @@ extends <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclips
 <li class="blockList">
 <h4>doRun</h4>
 <pre>protected&nbsp;void&nbsp;doRun()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RunnableWithName.html?is-external=true#doRun--" title="class or interface in org.eclipse.net4j.util.concurrent">doRun</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RunnableWithName.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">RunnableWithName</a></code></dd>

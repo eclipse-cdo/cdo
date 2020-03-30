@@ -18,8 +18,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var methods = {"i0":38};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -49,7 +49,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../org/eclipse/net4j/util/ObjectUtil.html" title="class in org.eclipse.net4j.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../org/eclipse/net4j/util/Predicates.html" title="class in org.eclipse.net4j.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../org/eclipse/net4j/util/Predicate.DelegatingPredicate.html" title="class in org.eclipse.net4j.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/eclipse/net4j/util/Predicate.html" target="_top">Frames</a></li>
@@ -73,7 +73,7 @@ var activeTableTab = "activeTableTab";
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -100,11 +100,15 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../../org/eclipse/net4j/util/Predicates.ExcludedPredicate.html" title="class in org.eclipse.net4j.util">Predicates.ExcludedPredicate</a>, <a href="../../../../org/eclipse/net4j/util/Predicates.IncludedPredicate.html" title="class in org.eclipse.net4j.util">Predicates.IncludedPredicate</a>, <a href="../../../../org/eclipse/net4j/util/Predicates.UniquePredicate.html" title="class in org.eclipse.net4j.util">Predicates.UniquePredicate</a></dd>
+<dd><a href="../../../../org/eclipse/net4j/util/Predicate.DelegatingPredicate.html" title="class in org.eclipse.net4j.util">Predicate.DelegatingPredicate</a>, <a href="../../../../org/eclipse/net4j/util/Predicates.ExcludedPredicate.html" title="class in org.eclipse.net4j.util">Predicates.ExcludedPredicate</a>, <a href="../../../../org/eclipse/net4j/util/Predicates.IncludedPredicate.html" title="class in org.eclipse.net4j.util">Predicates.IncludedPredicate</a>, <a href="../../../../org/eclipse/net4j/util/Predicates.UniquePredicate.html" title="class in org.eclipse.net4j.util">Predicates.UniquePredicate</a></dd>
 </dl>
 <hr>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 3.10 use <code>Predicate</code>.</span></div>
+</div>
 <br>
-<pre>public interface <span class="typeNameLabel">Predicate&lt;T&gt;</span></pre>
+<pre>@Deprecated
+public interface <span class="typeNameLabel">Predicate&lt;T&gt;</span></pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.3</dd>
@@ -117,6 +121,29 @@ var activeTableTab = "activeTableTab";
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Interface and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/util/Predicate.DelegatingPredicate.html" title="class in org.eclipse.net4j.util">Predicate.DelegatingPredicate</a>&lt;<a href="../../../../org/eclipse/net4j/util/Predicate.DelegatingPredicate.html" title="type parameter in Predicate.DelegatingPredicate">T</a>&gt;</span></code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 3.10 use <code>Predicate</code>.</span></div>
+</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method.summary">
@@ -124,14 +151,16 @@ var activeTableTab = "activeTableTab";
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/util/Predicate.html#apply-T-">apply</a></span>(<a href="../../../../org/eclipse/net4j/util/Predicate.html" title="type parameter in Predicate">T</a>&nbsp;element)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/util/Predicate.html#apply-T-">apply</a></span>(<a href="../../../../org/eclipse/net4j/util/Predicate.html" title="type parameter in Predicate">T</a>&nbsp;element)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -157,6 +186,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>apply</h4>
 <pre>boolean&nbsp;apply(<a href="../../../../org/eclipse/net4j/util/Predicate.html" title="type parameter in Predicate">T</a>&nbsp;element)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>
 </li>
@@ -187,7 +217,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../org/eclipse/net4j/util/ObjectUtil.html" title="class in org.eclipse.net4j.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../org/eclipse/net4j/util/Predicates.html" title="class in org.eclipse.net4j.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../org/eclipse/net4j/util/Predicate.DelegatingPredicate.html" title="class in org.eclipse.net4j.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/eclipse/net4j/util/Predicate.html" target="_top">Frames</a></li>
@@ -211,7 +241,7 @@ var activeTableTab = "activeTableTab";
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

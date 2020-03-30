@@ -135,7 +135,7 @@ var activeTableTab = "activeTableTab";
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html#handleBuffer-org.eclipse.net4j.buffer.IBuffer-">handleBuffer</a></span>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
-<div class="block">Handles an <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> and optionally releases it.</div>
+<div class="block">Handles an <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> and possibly releases it.</div>
 </td>
 </tr>
 </table>
@@ -160,12 +160,14 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>handleBuffer</h4>
 <pre>void&nbsp;handleBuffer(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</pre>
-<div class="block">Handles an <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> and optionally releases it. The implementor of this method takes over the ownership of
+<div class="block">Handles an <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> and possibly releases it.
+ <p>
+ The implementor of this method takes over the ownership of
  the buffer. Care must be taken to properly <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#release--"><code>release</code></a> the buffer if the ownership is not
- explicitly passed to some further party.</div>
+ explicitly passed on to some further party.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>buffer</code> - The buffer to be handled and otionally released.</dd>
+<dd><code>buffer</code> - The buffer to be handled.</dd>
 </dl>
 </li>
 </ul>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright (c) 2011-2019 Eike Stepper (Loehne, Germany) and others.
+  Copyright (c) 2018 Eike Stepper (Loehne, Germany) and others.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
@@ -84,7 +84,7 @@
              classpathref="javadoc.classpath"
              additionalparam="-Xdoclint:missing"
              maxmemory="1024m"
-             source="1.5"
+             source="1.8"
              useexternalfile="true"
              failonerror="true"
              docfilessubdirs="true"
@@ -106,6 +106,8 @@
 				<include name="org.eclipse.net4j.tcp/src/org/eclipse/net4j/tcp/*.java" />
 				<include name="org.eclipse.net4j.tcp/src/org/eclipse/net4j/tcp/ssl/*.java" />
 				<include name="org.eclipse.net4j.ui/src/org/eclipse/net4j/ui/*.java" />
+				<include name="org.eclipse.net4j.ws/src/org/eclipse/net4j/ws/*.java" />
+				<include name="org.eclipse.net4j.ws/src/org/eclipse/net4j/ws/jetty/*.java" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/*.java" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/acceptor/*.java" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/buffer/*.java" />
@@ -145,6 +147,10 @@
 			</group>
 			<group title="Net4j Signalling Platform JVM">
 				<package name="org.eclipse.net4j.jvm" />
+			</group>
+			<group title="Net4j Signalling Platform TCP">
+				<package name="org.eclipse.net4j.ws" />
+				<package name="org.eclipse.net4j.ws.jetty" />
 			</group>
 			<group title="Net4j Signalling Platform TCP">
 				<package name="org.eclipse.net4j.tcp" />
@@ -271,7 +277,7 @@
              encoding="UTF-8"
              classpathref="javadoc.classpath"
              maxmemory="1024m"
-             source="1.5"
+             source="1.8"
              useexternalfile="true"
              failonerror="true"
              private="true">

@@ -31,6 +31,10 @@
       <topic label="Net4j Signalling Platform JVM" href="javadoc/org/eclipse/net4j/jvm/package-summary.html" icon="plugin">
         <topic label="org.eclipse.net4j.jvm" href="javadoc/org/eclipse/net4j/jvm/package-summary.html" icon="package" />
       </topic>
+      <topic label="Net4j Signalling Platform TCP" href="javadoc/org/eclipse/net4j/ws/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.net4j.ws" href="javadoc/org/eclipse/net4j/ws/package-summary.html" icon="package" />
+        <topic label="org.eclipse.net4j.ws.jetty" href="javadoc/org/eclipse/net4j/ws/jetty/package-summary.html" icon="package" />
+      </topic>
       <topic label="Net4j Signalling Platform TCP" href="javadoc/org/eclipse/net4j/tcp/package-summary.html" icon="plugin">
         <topic label="org.eclipse.net4j.tcp" href="javadoc/org/eclipse/net4j/tcp/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.tcp.ssl" href="javadoc/org/eclipse/net4j/tcp/ssl/package-summary.html" icon="package" />

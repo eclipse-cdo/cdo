@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":42,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":42,"i27":10,"i28":10,"i29":10,"i30":10};
+var methods = {"i0":10,"i1":42,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":42,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":42,"i27":10,"i28":10,"i29":10,"i30":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -153,7 +153,9 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <tr class="altColor">
 <td class="colFirst"><code>protected class&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j">Channel.ReceiverWork</a></span></code>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 4.10 scheduled for future removal.</span></div>
+</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -251,7 +253,11 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j">Channel.ReceiverWork</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#createReceiverWork-org.eclipse.net4j.buffer.IBuffer-">createReceiverWork</a></span>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#createReceiverWork-org.eclipse.net4j.buffer.IBuffer-">createReceiverWork</a></span>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 4.10 scheduled for future removal.</span></div>
+</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
@@ -295,7 +301,10 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getReceivedBuffers--">getReceivedBuffers</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getReceivedBuffers--">getReceivedBuffers</a></span>()</code>
+<div class="block">Returns the number of <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>buffers</code></a> that are received from the <a href="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>multiplexer</code></a> of this channel
+ <b>and</b> are passed on to the <a href="../../../../org/eclipse/net4j/channel/IChannel.html#getReceiveHandler--"><code>receive handler</code></a> of this channel.</div>
+</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.util.concurrent.ExecutorService</code></td>
@@ -315,7 +324,9 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getSentBuffers--">getSentBuffers</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getSentBuffers--">getSentBuffers</a></span>()</code>
+<div class="block">Returns the number of <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>buffers</code></a> that are sent to the <a href="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>multiplexer</code></a> of this channel.</div>
+</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -677,9 +688,11 @@ public&nbsp;void&nbsp;setReceiveExecutor(java.util.concurrent.ExecutorService&nb
 <li class="blockList">
 <h4>getSentBuffers</h4>
 <pre>public&nbsp;long&nbsp;getSentBuffers()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#getSentBuffers--">IChannel</a></code></span></div>
+<div class="block">Returns the number of <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>buffers</code></a> that are sent to the <a href="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>multiplexer</code></a> of this channel.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#getSentBuffers--">getSentBuffers</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
+<dd><code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#getSentBuffers--">getSentBuffers</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
@@ -692,9 +705,12 @@ public&nbsp;void&nbsp;setReceiveExecutor(java.util.concurrent.ExecutorService&nb
 <li class="blockList">
 <h4>getReceivedBuffers</h4>
 <pre>public&nbsp;long&nbsp;getReceivedBuffers()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#getReceivedBuffers--">IChannel</a></code></span></div>
+<div class="block">Returns the number of <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>buffers</code></a> that are received from the <a href="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>multiplexer</code></a> of this channel
+ <b>and</b> are passed on to the <a href="../../../../org/eclipse/net4j/channel/IChannel.html#getReceiveHandler--"><code>receive handler</code></a> of this channel.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#getReceivedBuffers--">getReceivedBuffers</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
+<dd><code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#getReceivedBuffers--">getReceivedBuffers</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
@@ -741,7 +757,7 @@ public&nbsp;void&nbsp;setReceiveExecutor(java.util.concurrent.ExecutorService&nb
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html#handleBuffer-org.eclipse.net4j.buffer.IBuffer-">handleBuffer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>buffer</code> - The buffer to be handled and otionally released.</dd>
+<dd><code>buffer</code> - The buffer to be handled.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getState--"><code>IBuffer.getState()</code></a>, 
 <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>BufferState.PUTTING</code></a>, 
@@ -771,7 +787,9 @@ public&nbsp;void&nbsp;setReceiveExecutor(java.util.concurrent.ExecutorService&nb
 <ul class="blockList">
 <li class="blockList">
 <h4>createReceiverWork</h4>
-<pre>protected&nbsp;<a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j">Channel.ReceiverWork</a>&nbsp;createReceiverWork(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</pre>
+<pre>@Deprecated
+protected&nbsp;<a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j">Channel.ReceiverWork</a>&nbsp;createReceiverWork(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.10 scheduled for future removal.</span></div>
 </li>
 </ul>
 <a name="getBufferCapacity--">

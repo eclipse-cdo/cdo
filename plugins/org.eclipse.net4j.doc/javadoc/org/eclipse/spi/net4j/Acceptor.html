@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -49,7 +49,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li>Prev&nbsp;Class</li>
-<li><a href="../../../../org/eclipse/spi/net4j/AcceptorFactory.html" title="class in org.eclipse.spi.net4j"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../org/eclipse/spi/net4j/Acceptor.ConnectorPreparer.html" title="interface in org.eclipse.spi.net4j"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/eclipse/spi/net4j/Acceptor.html" target="_top">Frames</a></li>
@@ -73,7 +73,7 @@ var activeTableTab = "activeTableTab";
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#fields.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -154,6 +154,17 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalAcceptor.html" tit
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Class and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Acceptor.ConnectorPreparer.html" title="interface in org.eclipse.spi.net4j">Acceptor.ConnectorPreparer</a></span></code>&nbsp;</td>
+</tr>
+</table>
 <ul class="blockList">
 <li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
 <!--   -->
@@ -243,36 +254,44 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalAcceptor.html" tit
 </td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="../../../../org/eclipse/spi/net4j/Acceptor.ConnectorPreparer.html" title="interface in org.eclipse.spi.net4j">Acceptor.ConnectorPreparer</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Acceptor.html#getConnectorPreparer--">getConnectorPreparer</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Acceptor.html#getElements--">getElements</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">INegotiator</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Acceptor.html#getNegotiator--">getNegotiator</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Acceptor.html#isClosed--">isClosed</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Acceptor.html#isEmpty--">isEmpty</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Acceptor.html#prepareConnector-org.eclipse.spi.net4j.InternalConnector-">prepareConnector</a></span>(<a href="../../../../org/eclipse/spi/net4j/InternalConnector.html" title="interface in org.eclipse.spi.net4j">InternalConnector</a>&nbsp;connector)</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Acceptor.html#removeConnector-org.eclipse.net4j.connector.IConnector-">removeConnector</a></span>(<a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector)</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Acceptor.html#setConfig-org.eclipse.net4j.ITransportConfig-">setConfig</a></span>(<a href="../../../../org/eclipse/net4j/ITransportConfig.html" title="interface in org.eclipse.net4j">ITransportConfig</a>&nbsp;config)</code>
 <div class="block">Sets a new transport configuration by <b>copying</b> the given one.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Acceptor.html#setConnectorPreparer-org.eclipse.spi.net4j.Acceptor.ConnectorPreparer-">setConnectorPreparer</a></span>(<a href="../../../../org/eclipse/spi/net4j/Acceptor.ConnectorPreparer.html" title="interface in org.eclipse.spi.net4j">Acceptor.ConnectorPreparer</a>&nbsp;connectorPreparer)</code>&nbsp;</td>
+</tr>
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Acceptor.html#setNegotiator-org.eclipse.net4j.util.security.INegotiator-">setNegotiator</a></span>(<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">INegotiator</a>&nbsp;negotiator)</code>&nbsp;</td>
 </tr>
@@ -370,6 +389,32 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalAcceptor.html" tit
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../org/eclipse/net4j/ITransportConfigAware.html#setConfig-org.eclipse.net4j.ITransportConfig-">setConfig</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/ITransportConfigAware.html" title="interface in org.eclipse.net4j">ITransportConfigAware</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="getConnectorPreparer--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getConnectorPreparer</h4>
+<pre>public&nbsp;<a href="../../../../org/eclipse/spi/net4j/Acceptor.ConnectorPreparer.html" title="interface in org.eclipse.spi.net4j">Acceptor.ConnectorPreparer</a>&nbsp;getConnectorPreparer()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.10</dd>
+</dl>
+</li>
+</ul>
+<a name="setConnectorPreparer-org.eclipse.spi.net4j.Acceptor.ConnectorPreparer-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setConnectorPreparer</h4>
+<pre>public&nbsp;void&nbsp;setConnectorPreparer(<a href="../../../../org/eclipse/spi/net4j/Acceptor.ConnectorPreparer.html" title="interface in org.eclipse.spi.net4j">Acceptor.ConnectorPreparer</a>&nbsp;connectorPreparer)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.10</dd>
 </dl>
 </li>
 </ul>
@@ -555,7 +600,7 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalAcceptor.html" tit
 <div class="subNav">
 <ul class="navList">
 <li>Prev&nbsp;Class</li>
-<li><a href="../../../../org/eclipse/spi/net4j/AcceptorFactory.html" title="class in org.eclipse.spi.net4j"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../org/eclipse/spi/net4j/Acceptor.ConnectorPreparer.html" title="interface in org.eclipse.spi.net4j"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/eclipse/spi/net4j/Acceptor.html" target="_top">Frames</a></li>
@@ -579,7 +624,7 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalAcceptor.html" tit
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#fields.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

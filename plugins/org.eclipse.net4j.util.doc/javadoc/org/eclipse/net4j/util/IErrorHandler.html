@@ -98,9 +98,14 @@ var activeTableTab = "activeTableTab";
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl>
+<dt>Functional Interface:</dt>
+<dd>This is a functional interface and can therefore be used as the assignment target for a lambda expression or method reference.</dd>
+</dl>
 <hr>
 <br>
-<pre>public interface <span class="typeNameLabel">IErrorHandler</span></pre>
+<pre>@FunctionalInterface
+public interface <span class="typeNameLabel">IErrorHandler</span></pre>
 <div class="block">A callback interface with a <a href="../../../../org/eclipse/net4j/util/IErrorHandler.html#handleError-java.lang.Throwable-"><code>handleError()</code></a> method.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>

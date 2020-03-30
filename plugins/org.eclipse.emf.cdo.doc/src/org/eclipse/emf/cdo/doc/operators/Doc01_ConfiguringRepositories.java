@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.view.CDOUnit;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import javax.sql.DataSource;
@@ -429,6 +430,21 @@ public class Doc01_ConfiguringRepositories
      * </ul>
      */
     public class Property_forceIndexes
+    {
+    }
+
+    /**
+     * Property eagerTableCreation
+     * <p>
+     * Specifies whether all tables for a {@link EPackage package} are created eagerly.
+     * <p>
+     * Possible configuration values are:
+     * <ul>
+     * <li> <code>false</code> (creates tables lazily, i.e., when they are actually needed for writing the first object; default value)
+     * <li> <code>true</code> (creates tables eagerly, i.e., when a new {@link EPackage package} is committed)
+     * </ul>
+     */
+    public class Property_eagerTableCreation
     {
     }
 

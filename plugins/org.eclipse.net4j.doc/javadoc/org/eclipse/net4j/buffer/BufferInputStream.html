@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -221,7 +221,7 @@ implements <a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" ti
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#handleBuffer-org.eclipse.net4j.buffer.IBuffer-">handleBuffer</a></span>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
-<div class="block">Handles an <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> and optionally releases it.</div>
+<div class="block">Handles an <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> and possibly releases it.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
@@ -233,14 +233,20 @@ implements <a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" ti
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#read--">read</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#restartTimeout--">restartTimeout</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#read-byte:A-int-int-">read</a></span>(byte[]&nbsp;b,
+    int&nbsp;off,
+    int&nbsp;len)</code>&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#setException-org.eclipse.net4j.signal.RemoteException-">setException</a></span>(<a href="../../../../org/eclipse/net4j/signal/RemoteException.html" title="class in org.eclipse.net4j.signal">RemoteException</a>&nbsp;exception)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#restartTimeout--">restartTimeout</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#setException-org.eclipse.net4j.signal.RemoteException-">setException</a></span>(<a href="../../../../org/eclipse/net4j/signal/RemoteException.html" title="class in org.eclipse.net4j.signal">RemoteException</a>&nbsp;exception)</code>&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
@@ -250,7 +256,7 @@ implements <a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" ti
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.io.InputStream</h3>
-<code>available, mark, markSupported, read, read, reset, skip</code></li>
+<code>available, mark, markSupported, read, reset, skip</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -415,14 +421,16 @@ implements <a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" ti
 <h4>handleBuffer</h4>
 <pre>public&nbsp;void&nbsp;handleBuffer(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html#handleBuffer-org.eclipse.net4j.buffer.IBuffer-">IBufferHandler</a></code></span></div>
-<div class="block">Handles an <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> and optionally releases it. The implementor of this method takes over the ownership of
+<div class="block">Handles an <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> and possibly releases it.
+ <p>
+ The implementor of this method takes over the ownership of
  the buffer. Care must be taken to properly <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#release--"><code>release</code></a> the buffer if the ownership is not
- explicitly passed to some further party.</div>
+ explicitly passed on to some further party.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html#handleBuffer-org.eclipse.net4j.buffer.IBuffer-">handleBuffer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>buffer</code> - The buffer to be handled and otionally released.</dd>
+<dd><code>buffer</code> - The buffer to be handled.</dd>
 </dl>
 </li>
 </ul>
@@ -436,6 +444,24 @@ implements <a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" ti
          throws java.io.IOException</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>read</code>&nbsp;in class&nbsp;<code>java.io.InputStream</code></dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.io.IOException</code></dd>
+</dl>
+</li>
+</ul>
+<a name="read-byte:A-int-int-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>read</h4>
+<pre>public&nbsp;int&nbsp;read(byte[]&nbsp;b,
+                int&nbsp;off,
+                int&nbsp;len)
+         throws java.io.IOException</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>read</code>&nbsp;in class&nbsp;<code>java.io.InputStream</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>

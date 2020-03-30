@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2008 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -29,9 +30,8 @@ import org.eclipse.gmf.runtime.notation.Style;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Standard Diagram</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>Standard Diagram</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -51,8 +51,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
 {
   /**
    * The default value of the '{@link #getPageX() <em>Page X</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getPageX()
    * @generated
    * @ordered
@@ -61,8 +60,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
 
   /**
    * The default value of the '{@link #getPageY() <em>Page Y</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getPageY()
    * @generated
    * @ordered
@@ -71,8 +69,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
 
   /**
    * The default value of the '{@link #getPageWidth() <em>Page Width</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getPageWidth()
    * @generated
    * @ordered
@@ -81,8 +78,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
 
   /**
    * The default value of the '{@link #getPageHeight() <em>Page Height</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getPageHeight()
    * @generated
    * @ordered
@@ -91,8 +87,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
 
   /**
    * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getDescription()
    * @generated
    * @ordered
@@ -100,8 +95,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   protected static final String DESCRIPTION_EDEFAULT = ""; //$NON-NLS-1$
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected StandardDiagramImpl()
@@ -110,8 +104,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -121,8 +114,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -133,8 +125,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -144,8 +135,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -156,8 +146,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -167,8 +156,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -179,8 +167,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -191,8 +178,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -203,8 +189,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -215,8 +200,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -227,8 +211,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -239,8 +222,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -251,8 +233,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -262,8 +243,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -296,8 +276,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -362,8 +341,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -449,8 +427,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -526,8 +503,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -584,8 +560,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -649,8 +624,7 @@ public class StandardDiagramImpl extends DiagramImpl implements StandardDiagram
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override

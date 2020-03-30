@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2009, 2010 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -31,9 +32,8 @@ import org.eclipse.gmf.runtime.notation.View;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Connector</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>Connector</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -55,9 +55,10 @@ import java.util.Collection;
 public class ConnectorImpl extends EdgeImpl implements Connector
 {
   /**
-   * The default value of the '{@link #getRoundedBendpointsRadius() <em>Rounded Bendpoints Radius</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #getRoundedBendpointsRadius() <em>Rounded
+   * Bendpoints Radius</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getRoundedBendpointsRadius()
    * @generated
    * @ordered
@@ -66,8 +67,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
 
   /**
    * The default value of the '{@link #getRouting() <em>Routing</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getRouting()
    * @generated
    * @ordered
@@ -76,8 +76,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
 
   /**
    * The default value of the '{@link #getSmoothness() <em>Smoothness</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getSmoothness()
    * @generated
    * @ordered
@@ -86,8 +85,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
 
   /**
    * The default value of the '{@link #isAvoidObstructions() <em>Avoid Obstructions</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isAvoidObstructions()
    * @generated
    * @ordered
@@ -96,8 +94,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
 
   /**
    * The default value of the '{@link #isClosestDistance() <em>Closest Distance</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isClosestDistance()
    * @generated
    * @ordered
@@ -106,8 +103,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
 
   /**
    * The default value of the '{@link #getJumpLinkStatus() <em>Jump Link Status</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getJumpLinkStatus()
    * @generated
    * @ordered
@@ -116,8 +112,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
 
   /**
    * The default value of the '{@link #getJumpLinkType() <em>Jump Link Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getJumpLinkType()
    * @generated
    * @ordered
@@ -126,8 +121,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
 
   /**
    * The default value of the '{@link #isJumpLinksReverse() <em>Jump Links Reverse</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isJumpLinksReverse()
    * @generated
    * @ordered
@@ -136,8 +130,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
 
   /**
    * The default value of the '{@link #getLineColor() <em>Line Color</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getLineColor()
    * @generated
    * @ordered
@@ -146,8 +139,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
 
   /**
    * The default value of the '{@link #getLineWidth() <em>Line Width</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getLineWidth()
    * @generated
    * @ordered
@@ -155,8 +147,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   protected static final int LINE_WIDTH_EDEFAULT = -1;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected ConnectorImpl()
@@ -165,8 +156,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -176,8 +166,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -187,8 +176,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -198,8 +186,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -210,8 +197,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -221,8 +207,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -233,8 +218,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -245,8 +229,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -257,8 +240,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -269,8 +251,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -281,8 +262,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -293,8 +273,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -305,8 +284,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -316,8 +294,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -328,8 +305,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -340,8 +316,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -352,8 +327,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -364,8 +338,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -376,8 +349,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -387,8 +359,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -399,8 +370,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -410,8 +380,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -484,8 +453,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -579,8 +547,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -668,8 +635,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -734,8 +700,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -805,8 +770,7 @@ public class ConnectorImpl extends EdgeImpl implements Connector
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override

@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2006 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -19,9 +20,8 @@ import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.Size;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Size</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>Size</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -38,40 +38,37 @@ import org.eclipse.gmf.runtime.notation.Size;
 public class SizeImpl extends CDOObjectImpl implements Size
 {
   /**
-  * The default value of the '{@link #getWidth() <em>Width</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getWidth()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getWidth() <em>Width</em>}' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #getWidth()
+   * @generated
+   * @ordered
+   */
   protected static final int WIDTH_EDEFAULT = -1;
 
   /**
-  * The default value of the '{@link #getHeight() <em>Height</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getHeight()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getHeight() <em>Height</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getHeight()
+   * @generated
+   * @ordered
+   */
   protected static final int HEIGHT_EDEFAULT = -1;
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected SizeImpl()
   {
     super();
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
@@ -79,10 +76,10 @@ public class SizeImpl extends CDOObjectImpl implements Size
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected int eStaticFeatureCount()
   {
@@ -90,10 +87,9 @@ public class SizeImpl extends CDOObjectImpl implements Size
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getWidth()
   {
@@ -101,10 +97,9 @@ public class SizeImpl extends CDOObjectImpl implements Size
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setWidth(int newWidth)
   {
@@ -112,10 +107,9 @@ public class SizeImpl extends CDOObjectImpl implements Size
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getHeight()
   {
@@ -123,10 +117,9 @@ public class SizeImpl extends CDOObjectImpl implements Size
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setHeight(int newHeight)
   {
@@ -134,10 +127,9 @@ public class SizeImpl extends CDOObjectImpl implements Size
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -152,10 +144,9 @@ public class SizeImpl extends CDOObjectImpl implements Size
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -172,10 +163,9 @@ public class SizeImpl extends CDOObjectImpl implements Size
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -192,10 +182,9 @@ public class SizeImpl extends CDOObjectImpl implements Size
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {

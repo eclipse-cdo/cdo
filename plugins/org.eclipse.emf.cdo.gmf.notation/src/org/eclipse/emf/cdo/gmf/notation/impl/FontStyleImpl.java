@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2006 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -19,9 +20,8 @@ import org.eclipse.gmf.runtime.notation.FontStyle;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Font Style</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Font
+ * Style</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -44,8 +44,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
 {
   /**
   * The default value of the '{@link #getFontColor() <em>Font Color</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
+  * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @see #getFontColor()
   * @generated
   * @ordered
@@ -53,80 +52,73 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   protected static final int FONT_COLOR_EDEFAULT = 0;
 
   /**
-  * The default value of the '{@link #getFontName() <em>Font Name</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getFontName()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getFontName() <em>Font Name</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getFontName()
+   * @generated
+   * @ordered
+   */
   protected static final String FONT_NAME_EDEFAULT = "Tahoma"; //$NON-NLS-1$
 
   /**
-  * The default value of the '{@link #getFontHeight() <em>Font Height</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getFontHeight()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getFontHeight() <em>Font Height</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getFontHeight()
+   * @generated
+   * @ordered
+   */
   protected static final int FONT_HEIGHT_EDEFAULT = 9;
 
   /**
-  * The default value of the '{@link #isBold() <em>Bold</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #isBold()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #isBold() <em>Bold</em>}' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #isBold()
+   * @generated
+   * @ordered
+   */
   protected static final boolean BOLD_EDEFAULT = false;
 
   /**
-  * The default value of the '{@link #isItalic() <em>Italic</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #isItalic()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #isItalic() <em>Italic</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #isItalic()
+   * @generated
+   * @ordered
+   */
   protected static final boolean ITALIC_EDEFAULT = false;
 
   /**
-  * The default value of the '{@link #isUnderline() <em>Underline</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #isUnderline()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #isUnderline() <em>Underline</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #isUnderline()
+   * @generated
+   * @ordered
+   */
   protected static final boolean UNDERLINE_EDEFAULT = false;
 
   /**
-  * The default value of the '{@link #isStrikeThrough() <em>Strike Through</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #isStrikeThrough()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #isStrikeThrough() <em>Strike Through</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #isStrikeThrough()
+   * @generated
+   * @ordered
+   */
   protected static final boolean STRIKE_THROUGH_EDEFAULT = false;
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected FontStyleImpl()
   {
     super();
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
@@ -134,10 +126,10 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected int eStaticFeatureCount()
   {
@@ -145,10 +137,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public String getFontName()
   {
@@ -156,8 +147,8 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -167,8 +158,7 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setFontNameGen(String newFontName)
@@ -177,10 +167,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getFontHeight()
   {
@@ -188,10 +177,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setFontHeight(int newFontHeight)
   {
@@ -199,10 +187,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean isBold()
   {
@@ -210,10 +197,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setBold(boolean newBold)
   {
@@ -221,10 +207,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean isItalic()
   {
@@ -232,10 +217,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setItalic(boolean newItalic)
   {
@@ -243,10 +227,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean isUnderline()
   {
@@ -254,10 +237,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setUnderline(boolean newUnderline)
   {
@@ -265,10 +247,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean isStrikeThrough()
   {
@@ -276,10 +257,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setStrikeThrough(boolean newStrikeThrough)
   {
@@ -287,10 +267,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -315,10 +294,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -350,10 +328,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -385,10 +362,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
@@ -413,10 +389,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getFontColor()
   {
@@ -424,10 +399,9 @@ public class FontStyleImpl extends CDOObjectImpl implements FontStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setFontColor(int newFontColor)
   {

@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2010 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -106,19 +107,18 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!--
+ * end-user-doc -->
  * @generated
  */
 public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
 {
   /**
-  * Creates the default factory implementation.
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * @generated
+   */
   public static NotationFactory init()
   {
     try
@@ -137,21 +137,20 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * Creates an instance of the factory.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   */
   public NotationFactoryImpl()
   {
     super();
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public EObject create(EClass eClass)
   {
@@ -291,10 +290,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object createFromString(EDataType eDataType, String initialValue)
   {
@@ -340,10 +338,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public String convertToString(EDataType eDataType, Object instanceValue)
   {
@@ -389,10 +386,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Edge createEdge()
   {
@@ -401,10 +397,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Node createNode()
   {
@@ -413,10 +408,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public FillStyle createFillStyle()
   {
@@ -425,10 +419,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public LineStyle createLineStyle()
   {
@@ -437,10 +430,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public FontStyle createFontStyle()
   {
@@ -449,10 +441,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public TitleStyle createTitleStyle()
   {
@@ -461,10 +452,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public SortingStyle createSortingStyle()
   {
@@ -473,10 +463,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public DescriptionStyle createDescriptionStyle()
   {
@@ -485,10 +474,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Size createSize()
   {
@@ -497,10 +485,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Location createLocation()
   {
@@ -509,10 +496,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Bounds createBounds()
   {
@@ -521,10 +507,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Ratio createRatio()
   {
@@ -533,10 +518,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public IdentityAnchor createIdentityAnchor()
   {
@@ -545,10 +529,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public RoutingStyle createRoutingStyle()
   {
@@ -557,10 +540,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public RelativeBendpoints createRelativeBendpoints()
   {
@@ -569,10 +551,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public CanonicalStyle createCanonicalStyle()
   {
@@ -581,10 +562,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public ShapeStyle createShapeStyle()
   {
@@ -593,10 +573,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public ConnectorStyle createConnectorStyle()
   {
@@ -605,10 +584,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Diagram createDiagram()
   {
@@ -617,10 +595,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Image createImage()
   {
@@ -629,10 +606,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public PageStyle createPageStyle()
   {
@@ -641,10 +617,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public DrawerStyle createDrawerStyle()
   {
@@ -653,10 +628,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public GuideStyle createGuideStyle()
   {
@@ -665,10 +639,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Guide createGuide()
   {
@@ -677,10 +650,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public Map.Entry createNodeEntry()
   {
     NodeEntryImpl nodeEntry = new NodeEntryImpl();
@@ -688,10 +660,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public FilteringStyle createFilteringStyle()
   {
@@ -700,10 +671,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public DiagramStyle createDiagramStyle()
   {
@@ -712,10 +682,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public ImageStyle createImageStyle()
   {
@@ -724,10 +693,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public ImageBufferStyle createImageBufferStyle()
   {
@@ -736,10 +704,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public PropertiesSetStyle createPropertiesSetStyle()
   {
@@ -748,10 +715,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public Map.Entry createStringToPropertyValueMapEntry()
   {
     StringToPropertyValueMapEntryImpl stringToPropertyValueMapEntry = new StringToPropertyValueMapEntryImpl();
@@ -759,10 +725,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public PropertyValue createPropertyValue()
   {
@@ -771,10 +736,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public SingleValueStyle createSingleValueStyle()
   {
@@ -783,10 +747,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public ListValueStyle createListValueStyle()
   {
@@ -795,10 +758,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NamedStyle createNamedStyle()
   {
@@ -807,10 +769,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public DataTypeStyle createDataTypeStyle()
   {
@@ -819,10 +780,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public IntValueStyle createIntValueStyle()
   {
@@ -831,10 +791,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public IntListValueStyle createIntListValueStyle()
   {
@@ -843,10 +802,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public BooleanValueStyle createBooleanValueStyle()
   {
@@ -855,10 +813,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public DoubleValueStyle createDoubleValueStyle()
   {
@@ -867,10 +824,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public DoubleListValueStyle createDoubleListValueStyle()
   {
@@ -879,10 +835,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public StringValueStyle createStringValueStyle()
   {
@@ -891,10 +846,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public StringListValueStyle createStringListValueStyle()
   {
@@ -903,10 +857,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public EObjectValueStyle createEObjectValueStyle()
   {
@@ -915,10 +868,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public EObjectListValueStyle createEObjectListValueStyle()
   {
@@ -927,10 +879,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public ByteArrayValueStyle createByteArrayValueStyle()
   {
@@ -939,10 +890,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public BooleanListValueStyle createBooleanListValueStyle()
   {
@@ -951,10 +901,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public HintedDiagramLinkStyle createHintedDiagramLinkStyle()
   {
@@ -963,10 +912,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public DiagramLinkStyle createDiagramLinkStyle()
   {
@@ -975,10 +923,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public MultiDiagramLinkStyle createMultiDiagramLinkStyle()
   {
@@ -987,10 +934,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public TextStyle createTextStyle()
   {
@@ -999,10 +945,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public LineTypeStyle createLineTypeStyle()
   {
@@ -1011,10 +956,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public ArrowStyle createArrowStyle()
   {
@@ -1023,8 +967,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -1035,10 +978,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Compartment createCompartment()
   {
@@ -1047,10 +989,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public ListCompartment createListCompartment()
   {
@@ -1059,10 +1000,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Connector createConnector()
   {
@@ -1071,10 +1011,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public StandardDiagram createStandardDiagram()
   {
@@ -1083,10 +1022,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public DecorationNode createDecorationNode()
   {
@@ -1095,10 +1033,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public BasicDecorationNode createBasicDecorationNode()
   {
@@ -1107,10 +1044,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public BasicCompartment createBasicCompartment()
   {
@@ -1119,10 +1055,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public BasicSemanticCompartment createBasicSemanticCompartment()
   {
@@ -1131,10 +1066,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public SemanticListCompartment createSemanticListCompartment()
   {
@@ -1143,10 +1077,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public RoundedCornersStyle createRoundedCornersStyle()
   {
@@ -1155,10 +1088,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public Sorting createSortingFromString(EDataType eDataType, String initialValue)
   {
     Sorting result = Sorting.get(initialValue);
@@ -1170,20 +1102,18 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String convertSortingToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public Filtering createFilteringFromString(EDataType eDataType, String initialValue)
   {
     Filtering result = Filtering.get(initialValue);
@@ -1195,20 +1125,18 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String convertFilteringToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public Routing createRoutingFromString(EDataType eDataType, String initialValue)
   {
     Routing result = Routing.get(initialValue);
@@ -1220,20 +1148,18 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String convertRoutingToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public Smoothness createSmoothnessFromString(EDataType eDataType, String initialValue)
   {
     Smoothness result = Smoothness.get(initialValue);
@@ -1245,20 +1171,18 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String convertSmoothnessToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public JumpLinkStatus createJumpLinkStatusFromString(EDataType eDataType, String initialValue)
   {
     JumpLinkStatus result = JumpLinkStatus.get(initialValue);
@@ -1270,20 +1194,18 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String convertJumpLinkStatusToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public JumpLinkType createJumpLinkTypeFromString(EDataType eDataType, String initialValue)
   {
     JumpLinkType result = JumpLinkType.get(initialValue);
@@ -1295,20 +1217,18 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String convertJumpLinkTypeToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public Alignment createAlignmentFromString(EDataType eDataType, String initialValue)
   {
     Alignment result = Alignment.get(initialValue);
@@ -1320,20 +1240,18 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String convertAlignmentToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public SortingDirection createSortingDirectionFromString(EDataType eDataType, String initialValue)
   {
     SortingDirection result = SortingDirection.get(initialValue);
@@ -1345,20 +1263,18 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String convertSortingDirectionToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public MeasurementUnit createMeasurementUnitFromString(EDataType eDataType, String initialValue)
   {
     MeasurementUnit result = MeasurementUnit.get(initialValue);
@@ -1370,18 +1286,16 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String convertMeasurementUnitToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public TextAlignment createTextAlignmentFromString(EDataType eDataType, String initialValue)
@@ -1395,18 +1309,16 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String convertTextAlignmentToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public LineType createLineTypeFromString(EDataType eDataType, String initialValue)
@@ -1420,20 +1332,18 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String convertLineTypeToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public ArrowType createArrowTypeFromString(EDataType eDataType, String initialValue)
   {
     ArrowType result = ArrowType.get(initialValue);
@@ -1445,18 +1355,16 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String convertArrowTypeToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public GradientStyle createGradientStyleFromString(EDataType eDataType, String initialValue)
@@ -1470,18 +1378,17 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public String convertGradientStyleToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   public List createRelativeBendpointListFromString(EDataType eDataType, String initialValue)
@@ -1496,8 +1403,8 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   public String convertRelativeBendpointListToString(EDataType eDataType, Object instanceValue)
@@ -1516,8 +1423,8 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   public List createFilterKeyListFromString(EDataType eDataType, String initialValue)
@@ -1532,8 +1439,8 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   public String convertFilterKeyListToString(EDataType eDataType, Object instanceValue)
@@ -1552,8 +1459,8 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   public Map createSortKeyMapFromString(EDataType eDataType, String initialValue)
@@ -1572,8 +1479,8 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   public String convertSortKeyMapToString(EDataType eDataType, Object instanceValue)
@@ -1594,10 +1501,10 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated NOT
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated NOT
+   */
   public GradientData createGradientDataFromString(EDataType eDataType, String initialValue)
   {
     GradientData gradient = null;
@@ -1644,8 +1551,8 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   public String convertGradientDataToString(EDataType eDataType, Object instanceValue)
@@ -1668,10 +1575,9 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotationPackage getNotationPackage()
   {
@@ -1679,11 +1585,10 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @deprecated
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @deprecated
+   * @generated
+   */
   @Deprecated
   public static NotationPackage getPackage()
   {

@@ -207,8 +207,8 @@
 			<substitution expression="" />
 		</replaceregexp>
 		<replaceregexp file="${dynamic.template}" flags="gs" byline="false">
-			<regexp pattern="[ \t]*public void setLayoutConstraint\(LayoutConstraint newLayoutConstraint\).*\} //BasicSemanticCompartmentImpl" />
-			<substitution expression="%%METHODS%%${line.separator}${line.separator}} //BasicSemanticCompartmentImpl" />
+			<regexp pattern="[ \t]*public void setLayoutConstraint\(LayoutConstraint newLayoutConstraint\).*\} //[ ]*BasicSemanticCompartmentImpl" />
+			<substitution expression="%%METHODS%%${line.separator}${line.separator}} // BasicSemanticCompartmentImpl" />
 		</replaceregexp>
 		<cdo.transferMembers template="${dynamic.template}" target="${impl}/BasicSemanticCompartmentImpl.java">
 			<sourceclass file="${impl}\NodeImpl.java" imports="false">

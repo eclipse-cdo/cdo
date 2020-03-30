@@ -2,10 +2,11 @@
  * <copyright>
  *
  * Copyright (c) 2006 IBM Corporation and others.
- * All rights reserved.   This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *   IBM - Initial API and implementation
@@ -23,12 +24,15 @@ import org.eclipse.emf.ecore.util.EContentsEList;
 import org.eclipse.emf.ecore.util.ECrossReferenceEList;
 
 /**
- * An implementation of the model object '<em><b>EObject</b></em>'.
- * This implementation flattens the fields for storing
- * the {@link #eProxyURI}, the {@link #eContents}, and the {@link #eCrossReferences},
- * which in {@link EObjectImpl} are stored in the properties holder.
- * This reduces the likelihood of needing to allocate a properties holder and speeds up the access to these fields.
- * @deprecated use {@link org.eclipse.emf.ecore.impl.MinimalEObjectImpl.Container}
+ * An implementation of the model object '<em><b>EObject</b></em>'. This
+ * implementation flattens the fields for storing the {@link #eProxyURI}, the
+ * {@link #eContents}, and the {@link #eCrossReferences}, which in
+ * {@link EObjectImpl} are stored in the properties holder. This reduces the
+ * likelihood of needing to allocate a properties holder and speeds up the
+ * access to these fields.
+ *
+ * @deprecated use
+ *             {@link org.eclipse.emf.ecore.impl.MinimalEObjectImpl.Container}
  */
 @Deprecated
 public class NotationEObjectImpl extends EObjectImpl

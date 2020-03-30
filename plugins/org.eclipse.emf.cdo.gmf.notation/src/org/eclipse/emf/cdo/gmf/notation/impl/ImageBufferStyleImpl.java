@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2006 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -21,9 +22,8 @@ import org.eclipse.gmf.runtime.notation.ImageBufferStyle;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Image Buffer Style</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Image
+ * Buffer Style</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -39,20 +39,18 @@ import org.eclipse.gmf.runtime.notation.NotationPackage;
 public class ImageBufferStyleImpl extends ImageStyleImpl implements ImageBufferStyle
 {
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected ImageBufferStyleImpl()
   {
     super();
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
@@ -60,10 +58,9 @@ public class ImageBufferStyleImpl extends ImageStyleImpl implements ImageBufferS
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Image getImageBuffer()
   {
@@ -71,10 +68,9 @@ public class ImageBufferStyleImpl extends ImageStyleImpl implements ImageBufferS
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public NotificationChain basicSetImageBuffer(Image newImageBuffer, NotificationChain msgs)
   {
     msgs = eDynamicInverseAdd((InternalEObject)newImageBuffer, NotationPackage.IMAGE_BUFFER_STYLE__IMAGE_BUFFER, msgs);
@@ -82,10 +78,9 @@ public class ImageBufferStyleImpl extends ImageStyleImpl implements ImageBufferS
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setImageBuffer(Image newImageBuffer)
   {
@@ -93,10 +88,9 @@ public class ImageBufferStyleImpl extends ImageStyleImpl implements ImageBufferS
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -111,10 +105,9 @@ public class ImageBufferStyleImpl extends ImageStyleImpl implements ImageBufferS
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -133,10 +126,9 @@ public class ImageBufferStyleImpl extends ImageStyleImpl implements ImageBufferS
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -159,10 +151,9 @@ public class ImageBufferStyleImpl extends ImageStyleImpl implements ImageBufferS
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -185,10 +176,9 @@ public class ImageBufferStyleImpl extends ImageStyleImpl implements ImageBufferS
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {

@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2006 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -26,9 +27,8 @@ import org.eclipse.gmf.runtime.notation.View;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Edge</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>Edge</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -48,20 +48,18 @@ import java.util.Collection;
 public class EdgeImpl extends ViewImpl implements Edge
 {
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected EdgeImpl()
   {
     super();
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
@@ -69,10 +67,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public View getSource()
   {
@@ -80,9 +77,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-   * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-    * @generated NOT
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated NOT
    */
   public NotificationChain basicSetSource(View newSource, NotificationChain msgs)
   {
@@ -102,8 +99,7 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public NotificationChain basicSetSourceGen(View newSource, NotificationChain msgs)
@@ -113,10 +109,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setSource(View newSource)
   {
@@ -124,10 +119,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public View getTarget()
   {
@@ -135,8 +129,8 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-   * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   public NotificationChain basicSetTarget(View newTarget, NotificationChain msgs)
@@ -157,8 +151,7 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public NotificationChain basicSetTargetGen(View newTarget, NotificationChain msgs)
@@ -168,10 +161,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setTarget(View newTarget)
   {
@@ -179,10 +171,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Bendpoints getBendpoints()
   {
@@ -190,10 +181,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public NotificationChain basicSetBendpoints(Bendpoints newBendpoints, NotificationChain msgs)
   {
     msgs = eDynamicInverseAdd((InternalEObject)newBendpoints, NotationPackage.EDGE__BENDPOINTS, msgs);
@@ -201,10 +191,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setBendpoints(Bendpoints newBendpoints)
   {
@@ -212,10 +201,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Anchor getSourceAnchor()
   {
@@ -223,10 +211,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public NotificationChain basicSetSourceAnchor(Anchor newSourceAnchor, NotificationChain msgs)
   {
     msgs = eDynamicInverseAdd((InternalEObject)newSourceAnchor, NotationPackage.EDGE__SOURCE_ANCHOR, msgs);
@@ -234,10 +221,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setSourceAnchor(Anchor newSourceAnchor)
   {
@@ -245,10 +231,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Anchor getTargetAnchor()
   {
@@ -256,10 +241,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public NotificationChain basicSetTargetAnchor(Anchor newTargetAnchor, NotificationChain msgs)
   {
     msgs = eDynamicInverseAdd((InternalEObject)newTargetAnchor, NotationPackage.EDGE__TARGET_ANCHOR, msgs);
@@ -267,10 +251,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setTargetAnchor(Anchor newTargetAnchor)
   {
@@ -278,8 +261,8 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -291,8 +274,7 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
   @Override
   public Anchor createSourceAnchor(EClass eClass)
@@ -303,8 +285,7 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    */
   @Override
   public Anchor createTargetAnchor(EClass eClass)
@@ -315,10 +296,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -349,10 +329,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -385,10 +364,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -439,10 +417,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -504,10 +481,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -563,10 +539,9 @@ public class EdgeImpl extends ViewImpl implements Edge
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {

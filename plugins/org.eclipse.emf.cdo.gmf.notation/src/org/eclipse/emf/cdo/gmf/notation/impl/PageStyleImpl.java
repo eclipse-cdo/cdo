@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2006 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -19,9 +20,8 @@ import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.PageStyle;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Page Style</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Page
+ * Style</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -40,60 +40,54 @@ import org.eclipse.gmf.runtime.notation.PageStyle;
 public class PageStyleImpl extends CDOObjectImpl implements PageStyle
 {
   /**
-  * The default value of the '{@link #getPageX() <em>Page X</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getPageX()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getPageX() <em>Page X</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getPageX()
+   * @generated
+   * @ordered
+   */
   protected static final int PAGE_X_EDEFAULT = 0;
 
   /**
-  * The default value of the '{@link #getPageY() <em>Page Y</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getPageY()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getPageY() <em>Page Y</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getPageY()
+   * @generated
+   * @ordered
+   */
   protected static final int PAGE_Y_EDEFAULT = 0;
 
   /**
-  * The default value of the '{@link #getPageWidth() <em>Page Width</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getPageWidth()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getPageWidth() <em>Page Width</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getPageWidth()
+   * @generated
+   * @ordered
+   */
   protected static final int PAGE_WIDTH_EDEFAULT = 100;
 
   /**
-  * The default value of the '{@link #getPageHeight() <em>Page Height</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getPageHeight()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getPageHeight() <em>Page Height</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getPageHeight()
+   * @generated
+   * @ordered
+   */
   protected static final int PAGE_HEIGHT_EDEFAULT = 100;
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected PageStyleImpl()
   {
     super();
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
@@ -101,10 +95,10 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected int eStaticFeatureCount()
   {
@@ -112,10 +106,9 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getPageX()
   {
@@ -123,10 +116,9 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setPageX(int newPageX)
   {
@@ -134,10 +126,9 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getPageY()
   {
@@ -145,10 +136,9 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setPageY(int newPageY)
   {
@@ -156,10 +146,9 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getPageWidth()
   {
@@ -167,10 +156,9 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setPageWidth(int newPageWidth)
   {
@@ -178,10 +166,9 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getPageHeight()
   {
@@ -189,10 +176,9 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setPageHeight(int newPageHeight)
   {
@@ -200,10 +186,9 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -222,10 +207,9 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -248,10 +232,9 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -274,10 +257,9 @@ public class PageStyleImpl extends CDOObjectImpl implements PageStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {

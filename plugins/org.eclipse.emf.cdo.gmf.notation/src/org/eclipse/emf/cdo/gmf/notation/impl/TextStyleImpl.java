@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2008 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -19,9 +20,8 @@ import org.eclipse.gmf.runtime.notation.TextAlignment;
 import org.eclipse.gmf.runtime.notation.TextStyle;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Text Style</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Text
+ * Style</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -34,18 +34,16 @@ import org.eclipse.gmf.runtime.notation.TextStyle;
 public class TextStyleImpl extends CDOObjectImpl implements TextStyle
 {
   /**
-   * The default value of the '{@link #getTextAlignment() <em>Text Alignment</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTextAlignment()
-   * @generated
-   * @ordered
-   */
+  * The default value of the '{@link #getTextAlignment() <em>Text Alignment</em>}' attribute.
+  * <!-- begin-user-doc --> <!-- end-user-doc -->
+  * @see #getTextAlignment()
+  * @generated
+  * @ordered
+  */
   protected static final TextAlignment TEXT_ALIGNMENT_EDEFAULT = TextAlignment.LEFT_LITERAL;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected TextStyleImpl()
@@ -54,8 +52,7 @@ public class TextStyleImpl extends CDOObjectImpl implements TextStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -76,8 +73,7 @@ public class TextStyleImpl extends CDOObjectImpl implements TextStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -87,8 +83,7 @@ public class TextStyleImpl extends CDOObjectImpl implements TextStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -98,8 +93,7 @@ public class TextStyleImpl extends CDOObjectImpl implements TextStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -114,8 +108,7 @@ public class TextStyleImpl extends CDOObjectImpl implements TextStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -131,8 +124,7 @@ public class TextStyleImpl extends CDOObjectImpl implements TextStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -148,8 +140,7 @@ public class TextStyleImpl extends CDOObjectImpl implements TextStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override

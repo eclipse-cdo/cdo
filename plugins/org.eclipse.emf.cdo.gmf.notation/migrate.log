@@ -1,2 +1,4 @@
-2018-05-17  3810b71c670e8ead77386c0b410492a52bc24859  Initial migration
-2020-03-30  eba445989c2c2383bd6361516dd748d05cc50e9a  Copyrights, @SuppressWarnings("null")
+migrate-2018-05-17  3810b71c670e8ead77386c0b410492a52bc24859  Initial migration
+migrate-2020-03-30a eba445989c2c2383bd6361516dd748d05cc50e9a  Copyrights, @SuppressWarnings("null")
+migrate-2020-03-30b 99b7ad7162b68a606cb0590dbf77f614c17dc253  Version bump to 1.10, Reformat, JavaDoc on ShapeStyleImpl.setFontNameGen()
+

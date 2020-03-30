@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2006 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -27,9 +28,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Filtering Style</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>Filtering Style</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -48,8 +48,7 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
 {
   /**
   * The default value of the '{@link #getFiltering() <em>Filtering</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
+  * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @see #getFiltering()
   * @generated
   * @ordered
@@ -57,30 +56,28 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   protected static final Filtering FILTERING_EDEFAULT = Filtering.NONE_LITERAL;
 
   /**
-  * The default value of the '{@link #getFilteringKeys() <em>Filtering Keys</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getFilteringKeys()
-  * @generated NOT
-  * @ordered
-  */
+   * The default value of the '{@link #getFilteringKeys() <em>Filtering
+   * Keys</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #getFilteringKeys()
+   * @generated NOT
+   * @ordered
+   */
   protected static final List FILTERING_KEYS_EDEFAULT = Collections.EMPTY_LIST;
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected FilteringStyleImpl()
   {
     super();
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
@@ -88,10 +85,10 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected int eStaticFeatureCount()
   {
@@ -99,10 +96,9 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Filtering getFiltering()
   {
@@ -110,10 +106,9 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setFiltering(Filtering newFiltering)
   {
@@ -121,8 +116,8 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -132,8 +127,7 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public List getFilteringKeysGen()
@@ -142,8 +136,8 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -175,8 +169,7 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setFilteringKeysGen(List newFilteringKeys)
@@ -185,10 +178,9 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public EList getFilteredObjects()
   {
@@ -196,10 +188,9 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -216,10 +207,9 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -240,10 +230,9 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -263,10 +252,9 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {

@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2007 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -18,9 +19,8 @@ import org.eclipse.gmf.runtime.notation.NamedStyle;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Named Style</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Named
+ * Style</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -33,9 +33,9 @@ import org.eclipse.gmf.runtime.notation.NotationPackage;
 public class NamedStyleImpl extends CDOObjectImpl implements NamedStyle
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -43,8 +43,7 @@ public class NamedStyleImpl extends CDOObjectImpl implements NamedStyle
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected NamedStyleImpl()
@@ -53,8 +52,7 @@ public class NamedStyleImpl extends CDOObjectImpl implements NamedStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -75,8 +73,7 @@ public class NamedStyleImpl extends CDOObjectImpl implements NamedStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -86,8 +83,7 @@ public class NamedStyleImpl extends CDOObjectImpl implements NamedStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -97,8 +93,7 @@ public class NamedStyleImpl extends CDOObjectImpl implements NamedStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -113,8 +108,7 @@ public class NamedStyleImpl extends CDOObjectImpl implements NamedStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -130,8 +124,7 @@ public class NamedStyleImpl extends CDOObjectImpl implements NamedStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -147,8 +140,7 @@ public class NamedStyleImpl extends CDOObjectImpl implements NamedStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override

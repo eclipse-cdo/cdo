@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2006 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -19,9 +20,8 @@ import org.eclipse.gmf.runtime.notation.Location;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Location</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>Location</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -38,40 +38,38 @@ import org.eclipse.gmf.runtime.notation.NotationPackage;
 public class LocationImpl extends CDOObjectImpl implements Location
 {
   /**
-  * The default value of the '{@link #getX() <em>X</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getX()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getX() <em>X</em>}' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #getX()
+   * @generated
+   * @ordered
+   */
   protected static final int X_EDEFAULT = 0;
 
   /**
-  * The default value of the '{@link #getY() <em>Y</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getY()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getY() <em>Y</em>}' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #getY()
+   * @generated
+   * @ordered
+   */
   protected static final int Y_EDEFAULT = 0;
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected LocationImpl()
   {
     super();
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
@@ -79,10 +77,10 @@ public class LocationImpl extends CDOObjectImpl implements Location
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected int eStaticFeatureCount()
   {
@@ -90,10 +88,9 @@ public class LocationImpl extends CDOObjectImpl implements Location
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getX()
   {
@@ -101,10 +98,9 @@ public class LocationImpl extends CDOObjectImpl implements Location
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setX(int newX)
   {
@@ -112,10 +108,9 @@ public class LocationImpl extends CDOObjectImpl implements Location
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getY()
   {
@@ -123,10 +118,9 @@ public class LocationImpl extends CDOObjectImpl implements Location
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setY(int newY)
   {
@@ -134,10 +128,9 @@ public class LocationImpl extends CDOObjectImpl implements Location
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -152,10 +145,9 @@ public class LocationImpl extends CDOObjectImpl implements Location
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -172,10 +164,9 @@ public class LocationImpl extends CDOObjectImpl implements Location
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -192,10 +183,9 @@ public class LocationImpl extends CDOObjectImpl implements Location
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {

@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2007 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -32,8 +33,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Diagram</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>Diagram</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -53,22 +54,22 @@ public class DiagramImpl extends ViewImpl implements Diagram
 {
 
   /**
-  * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @see #getName()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #getName()
+   * @generated
+   * @ordered
+   */
   protected static final String NAME_EDEFAULT = ""; //$NON-NLS-1$
 
   /**
-  * The default value of the '{@link #getMeasurementUnit() <em>Measurement Unit</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getMeasurementUnit()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getMeasurementUnit() <em>Measurement Unit</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getMeasurementUnit()
+   * @generated
+   * @ordered
+   */
   protected static final MeasurementUnit MEASUREMENT_UNIT_EDEFAULT = MeasurementUnit.HIMETRIC_LITERAL;
 
   private EContentsEList allEdges = null;
@@ -77,18 +78,18 @@ public class DiagramImpl extends ViewImpl implements Diagram
       NotationPackage.Literals.DIAGRAM__TRANSIENT_EDGES };
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected DiagramImpl()
   {
     super();
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
@@ -96,9 +97,9 @@ public class DiagramImpl extends ViewImpl implements Diagram
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public String getName()
   {
@@ -106,9 +107,9 @@ public class DiagramImpl extends ViewImpl implements Diagram
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setName(String newName)
   {
@@ -116,10 +117,9 @@ public class DiagramImpl extends ViewImpl implements Diagram
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public MeasurementUnit getMeasurementUnit()
   {
@@ -129,8 +129,9 @@ public class DiagramImpl extends ViewImpl implements Diagram
 
   /**
    * <!-- begin-user-doc --> Set the Measurement Unit for this Diagram, the
-   * Measurement unit can be set only once, the set method will not set the
-   * value if it was already set <!-- end-user-doc -->
+   * Measurement unit can be set only once, the set method will not set the value
+   * if it was already set <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -146,8 +147,8 @@ public class DiagramImpl extends ViewImpl implements Diagram
 
   /**
    * <!-- begin-user-doc --> Set the Measurement Unit for this Diagram, the
-     * Measurement unit can be set only once, the set method will not set the
-     * value if it was already set <!-- end-user-doc -->
+   * Measurement unit can be set only once, the set method will not set the value
+   * if it was already set <!-- end-user-doc -->
    * @generated
    */
   public void setMeasurementUnitGen(MeasurementUnit newMeasurementUnit)
@@ -165,10 +166,9 @@ public class DiagramImpl extends ViewImpl implements Diagram
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean isSetMeasurementUnit()
   {
@@ -176,8 +176,8 @@ public class DiagramImpl extends ViewImpl implements Diagram
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   */
   @Override
   public EList getEdges()
   {
@@ -189,9 +189,9 @@ public class DiagramImpl extends ViewImpl implements Diagram
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public EList getPersistedEdges()
   {
@@ -199,9 +199,9 @@ public class DiagramImpl extends ViewImpl implements Diagram
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public EList getTransientEdges()
   {
@@ -220,9 +220,9 @@ public class DiagramImpl extends ViewImpl implements Diagram
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -249,9 +249,9 @@ public class DiagramImpl extends ViewImpl implements Diagram
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -300,9 +300,9 @@ public class DiagramImpl extends ViewImpl implements Diagram
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -363,9 +363,9 @@ public class DiagramImpl extends ViewImpl implements Diagram
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -418,9 +418,9 @@ public class DiagramImpl extends ViewImpl implements Diagram
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
@@ -529,11 +529,9 @@ public class DiagramImpl extends ViewImpl implements Diagram
   }
 
   /**
-   * Persist the view passed in and all its parent views if they are
-   * transient.
+   * Persist the view passed in and all its parent views if they are transient.
    * 
-   * @param view
-   *            the view to persist
+   * @param view the view to persist
    */
   private void persistCompleteHierarchy(View view)
   {

@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2007 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -23,9 +24,8 @@ import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.PropertyValue;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>String To Property Value Map Entry</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>String
+ * To Property Value Map Entry</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -40,8 +40,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
 {
   /**
    * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -49,8 +48,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   protected static final String KEY_EDEFAULT = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected StringToPropertyValueMapEntryImpl()
@@ -59,8 +57,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -81,8 +78,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public String getTypedKey()
@@ -92,8 +88,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setTypedKey(String newKey)
@@ -102,8 +97,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public PropertyValue getTypedValue()
@@ -113,8 +107,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public NotificationChain basicSetTypedValue(PropertyValue newValue, NotificationChain msgs)
@@ -124,8 +117,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setTypedValue(PropertyValue newValue)
@@ -134,8 +126,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -150,8 +141,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -168,8 +158,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -188,8 +177,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -208,8 +196,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -226,15 +213,13 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected int hash = -1;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -249,8 +234,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -260,8 +244,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -271,8 +254,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -282,8 +264,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -293,8 +274,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -306,8 +286,7 @@ public class StringToPropertyValueMapEntryImpl extends CDOObjectImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public EMap getEMap()

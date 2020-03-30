@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2010 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -11,7 +12,9 @@
 
 package org.eclipse.emf.cdo.gmf.notation.impl;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.gmf.runtime.notation.DescriptionStyle;
 import org.eclipse.gmf.runtime.notation.FillStyle;
@@ -22,9 +25,8 @@ import org.eclipse.gmf.runtime.notation.ShapeStyle;
 import org.eclipse.gmf.runtime.notation.datatype.GradientData;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Shape Style</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Shape
+ * Style</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -47,19 +49,17 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
 {
 
   /**
-  * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getDescription()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getDescription()
+   * @generated
+   * @ordered
+   */
   protected static final String DESCRIPTION_EDEFAULT = ""; //$NON-NLS-1$
 
   /**
    * The default value of the '{@link #getFillColor() <em>Fill Color</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getFillColor()
    * @generated
    * @ordered
@@ -67,70 +67,66 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   protected static final int FILL_COLOR_EDEFAULT = 16777215;
 
   /**
-  * The default value of the '{@link #getTransparency() <em>Transparency</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getTransparency()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getTransparency() <em>Transparency</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getTransparency()
+   * @generated
+   * @ordered
+   */
   protected static final int TRANSPARENCY_EDEFAULT = -1;
 
   /**
-  * The default value of the '{@link #getGradient() <em>Gradient</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getGradient()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getGradient() <em>Gradient</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getGradient()
+   * @generated
+   * @ordered
+   */
   protected static final GradientData GRADIENT_EDEFAULT = null;
 
   /**
-  * The default value of the '{@link #getLineColor() <em>Line Color</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getLineColor()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getLineColor() <em>Line Color</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getLineColor()
+   * @generated
+   * @ordered
+   */
   protected static final int LINE_COLOR_EDEFAULT = 11579568;
 
   /**
-  * The default value of the '{@link #getLineWidth() <em>Line Width</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getLineWidth()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getLineWidth() <em>Line Width</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getLineWidth()
+   * @generated
+   * @ordered
+   */
   protected static final int LINE_WIDTH_EDEFAULT = -1;
 
   /**
-  * The default value of the '{@link #getRoundedBendpointsRadius() <em>Rounded Bendpoints Radius</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getRoundedBendpointsRadius()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getRoundedBendpointsRadius() <em>Rounded
+   * Bendpoints Radius</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @see #getRoundedBendpointsRadius()
+   * @generated
+   * @ordered
+   * @since 1.4
+   */
   protected static final int ROUNDED_BENDPOINTS_RADIUS_EDEFAULT = 0;
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected ShapeStyleImpl()
   {
     super();
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
@@ -138,8 +134,8 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -149,8 +145,7 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -160,10 +155,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setDescription(String newDescription)
   {
@@ -171,10 +165,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getFillColor()
   {
@@ -182,10 +175,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setFillColor(int newFillColor)
   {
@@ -193,10 +185,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getTransparency()
   {
@@ -204,10 +195,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setTransparency(int newTransparency)
   {
@@ -215,10 +205,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public GradientData getGradient()
   {
@@ -226,10 +215,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setGradient(GradientData newGradient)
   {
@@ -237,10 +225,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getLineColor()
   {
@@ -248,10 +235,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setLineColor(int newLineColor)
   {
@@ -259,10 +245,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getLineWidth()
   {
@@ -270,10 +255,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setLineWidth(int newLineWidth)
   {
@@ -281,10 +265,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getRoundedBendpointsRadius()
   {
@@ -293,10 +276,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setRoundedBendpointsRadius(int newRoundedBendpointsRadius)
   {
@@ -305,10 +287,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -347,10 +328,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -403,10 +383,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -459,10 +438,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
@@ -501,10 +479,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int eBaseStructuralFeatureID(int derivedFeatureID, Class baseClass)
   {
@@ -558,10 +535,9 @@ public class ShapeStyleImpl extends FontStyleImpl implements ShapeStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int eDerivedStructuralFeatureID(int baseFeatureID, Class baseClass)
   {

@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2006 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -25,9 +26,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Relative Bendpoints</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>Relative Bendpoints</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -44,8 +44,8 @@ public class RelativeBendpointsImpl extends CDOObjectImpl implements RelativeBen
 {
   /**
    * The default value of the '{@link #getPoints() <em>Points</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getPoints()
    * @generated NOT
    * @ordered
@@ -53,20 +53,18 @@ public class RelativeBendpointsImpl extends CDOObjectImpl implements RelativeBen
   protected static final List POINTS_EDEFAULT = Collections.EMPTY_LIST;
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected RelativeBendpointsImpl()
   {
     super();
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
@@ -85,8 +83,8 @@ public class RelativeBendpointsImpl extends CDOObjectImpl implements RelativeBen
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -96,8 +94,7 @@ public class RelativeBendpointsImpl extends CDOObjectImpl implements RelativeBen
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public List getPointsGen()
@@ -106,8 +103,8 @@ public class RelativeBendpointsImpl extends CDOObjectImpl implements RelativeBen
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -139,8 +136,7 @@ public class RelativeBendpointsImpl extends CDOObjectImpl implements RelativeBen
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setPointsGen(List newPoints)
@@ -149,10 +145,9 @@ public class RelativeBendpointsImpl extends CDOObjectImpl implements RelativeBen
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -165,10 +160,9 @@ public class RelativeBendpointsImpl extends CDOObjectImpl implements RelativeBen
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -182,10 +176,9 @@ public class RelativeBendpointsImpl extends CDOObjectImpl implements RelativeBen
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -199,10 +192,9 @@ public class RelativeBendpointsImpl extends CDOObjectImpl implements RelativeBen
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {

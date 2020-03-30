@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2007 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -16,9 +17,8 @@ import org.eclipse.gmf.runtime.notation.BooleanValueStyle;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Boolean Value Style</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Boolean
+ * Value Style</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -31,18 +31,16 @@ import org.eclipse.gmf.runtime.notation.NotationPackage;
 public class BooleanValueStyleImpl extends NamedStyleImpl implements BooleanValueStyle
 {
   /**
-   * The default value of the '{@link #isBooleanValue() <em>Boolean Value</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isBooleanValue()
-   * @generated
-   * @ordered
-   */
+  * The default value of the '{@link #isBooleanValue() <em>Boolean Value</em>}' attribute.
+  * <!-- begin-user-doc --> <!-- end-user-doc -->
+  * @see #isBooleanValue()
+  * @generated
+  * @ordered
+  */
   protected static final boolean BOOLEAN_VALUE_EDEFAULT = false;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected BooleanValueStyleImpl()
@@ -51,8 +49,7 @@ public class BooleanValueStyleImpl extends NamedStyleImpl implements BooleanValu
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -62,8 +59,7 @@ public class BooleanValueStyleImpl extends NamedStyleImpl implements BooleanValu
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -74,8 +70,7 @@ public class BooleanValueStyleImpl extends NamedStyleImpl implements BooleanValu
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -85,8 +80,7 @@ public class BooleanValueStyleImpl extends NamedStyleImpl implements BooleanValu
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -103,8 +97,7 @@ public class BooleanValueStyleImpl extends NamedStyleImpl implements BooleanValu
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -123,8 +116,7 @@ public class BooleanValueStyleImpl extends NamedStyleImpl implements BooleanValu
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -143,8 +135,7 @@ public class BooleanValueStyleImpl extends NamedStyleImpl implements BooleanValu
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override

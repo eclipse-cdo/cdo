@@ -1,34 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<component id="org.eclipse.emf.cdo.admin" version="2">
-    <resource path="src/org/eclipse/emf/cdo/admin/CDOAdminClient.java" type="org.eclipse.emf.cdo.admin.CDOAdminClient">
-        <filter id="571473929">
+<component id="org.eclipse.emf.cdo.gmf.notation" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="926941240">
             <message_arguments>
-                <message_argument value="CDOAdmin"/>
-                <message_argument value="CDOAdminClient"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/admin/CDOAdminClientRepository.java" type="org.eclipse.emf.cdo.admin.CDOAdminClientRepository">
-        <filter id="571473929">
-            <message_arguments>
-                <message_argument value="CDOAdminRepository"/>
-                <message_argument value="CDOAdminClientRepository"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/internal/admin/CDOAdminClientRepositoryImpl.java" type="org.eclipse.emf.cdo.internal.admin.CDOAdminClientRepositoryImpl">
-        <filter id="574660632">
-            <message_arguments>
-                <message_argument value="CDOAdminClientRepository"/>
-                <message_argument value="CDOAdminRepository"/>
-                <message_argument value="CDOAdminClientRepositoryImpl"/>
-            </message_arguments>
-        </filter>
-        <filter id="574668824">
-            <message_arguments>
-                <message_argument value="CDOAdminClientRepository"/>
-                <message_argument value="CDOAdminClientRepositoryImpl"/>
-                <message_argument value="CDOAdminRepository"/>
+                <message_argument value="1.10.0"/>
+                <message_argument value="1.1.0"/>
             </message_arguments>
         </filter>
     </resource>

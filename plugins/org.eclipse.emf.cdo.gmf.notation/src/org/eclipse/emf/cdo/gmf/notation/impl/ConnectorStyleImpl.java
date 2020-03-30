@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2009 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -22,9 +23,8 @@ import org.eclipse.gmf.runtime.notation.Routing;
 import org.eclipse.gmf.runtime.notation.Smoothness;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Connector Style</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>Connector Style</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -42,40 +42,36 @@ public class ConnectorStyleImpl extends RoutingStyleImpl implements ConnectorSty
 {
 
   /**
-  * The default value of the '{@link #getLineColor() <em>Line Color</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getLineColor()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getLineColor() <em>Line Color</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getLineColor()
+   * @generated
+   * @ordered
+   */
   protected static final int LINE_COLOR_EDEFAULT = 11579568;
 
   /**
-  * The default value of the '{@link #getLineWidth() <em>Line Width</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getLineWidth()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getLineWidth() <em>Line Width</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getLineWidth()
+   * @generated
+   * @ordered
+   */
   protected static final int LINE_WIDTH_EDEFAULT = -1;
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected ConnectorStyleImpl()
   {
     super();
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
@@ -83,10 +79,9 @@ public class ConnectorStyleImpl extends RoutingStyleImpl implements ConnectorSty
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getLineColor()
   {
@@ -94,10 +89,9 @@ public class ConnectorStyleImpl extends RoutingStyleImpl implements ConnectorSty
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setLineColor(int newLineColor)
   {
@@ -105,10 +99,9 @@ public class ConnectorStyleImpl extends RoutingStyleImpl implements ConnectorSty
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getLineWidth()
   {
@@ -116,10 +109,9 @@ public class ConnectorStyleImpl extends RoutingStyleImpl implements ConnectorSty
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setLineWidth(int newLineWidth)
   {
@@ -127,10 +119,9 @@ public class ConnectorStyleImpl extends RoutingStyleImpl implements ConnectorSty
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -161,10 +152,9 @@ public class ConnectorStyleImpl extends RoutingStyleImpl implements ConnectorSty
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -205,10 +195,9 @@ public class ConnectorStyleImpl extends RoutingStyleImpl implements ConnectorSty
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -249,10 +238,9 @@ public class ConnectorStyleImpl extends RoutingStyleImpl implements ConnectorSty
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
@@ -283,10 +271,9 @@ public class ConnectorStyleImpl extends RoutingStyleImpl implements ConnectorSty
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int eBaseStructuralFeatureID(int derivedFeatureID, Class baseClass)
   {
@@ -306,10 +293,9 @@ public class ConnectorStyleImpl extends RoutingStyleImpl implements ConnectorSty
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int eDerivedStructuralFeatureID(int baseFeatureID, Class baseClass)
   {

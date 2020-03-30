@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2008 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -28,9 +29,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Semantic List Compartment</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>Semantic List Compartment</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -50,8 +50,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
 {
   /**
    * The default value of the '{@link #getSorting() <em>Sorting</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getSorting()
    * @generated
    * @ordered
@@ -60,8 +59,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
 
   /**
    * The default value of the '{@link #getSortingKeys() <em>Sorting Keys</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getSortingKeys()
    * @generated
    * @ordered
@@ -70,8 +68,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
 
   /**
    * The default value of the '{@link #getFiltering() <em>Filtering</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getFiltering()
    * @generated
    * @ordered
@@ -80,8 +77,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
 
   /**
    * The default value of the '{@link #getFilteringKeys() <em>Filtering Keys</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getFilteringKeys()
    * @generated
    * @ordered
@@ -90,8 +86,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
 
   /**
    * The default value of the '{@link #isShowTitle() <em>Show Title</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isShowTitle()
    * @generated
    * @ordered
@@ -99,8 +94,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   protected static final boolean SHOW_TITLE_EDEFAULT = false;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected SemanticListCompartmentImpl()
@@ -109,8 +103,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -120,8 +113,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -132,8 +124,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -143,8 +134,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -155,8 +145,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -167,8 +156,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -179,8 +167,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -191,8 +178,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -203,8 +189,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -215,8 +200,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -227,8 +211,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -239,8 +222,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -251,8 +233,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -263,8 +244,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -325,8 +305,8 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -346,8 +326,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -425,8 +404,8 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -446,10 +425,9 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnsetGen(int featureID)
   {
@@ -517,8 +495,8 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -538,8 +516,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -592,8 +569,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -641,8 +617,7 @@ public class SemanticListCompartmentImpl extends BasicSemanticCompartmentImpl im
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override

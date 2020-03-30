@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2008 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -25,9 +26,8 @@ import org.eclipse.gmf.runtime.notation.Style;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Basic Semantic Compartment</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Basic
+ * Semantic Compartment</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -42,8 +42,7 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
 
   /**
    * The default value of the '{@link #isCollapsed() <em>Collapsed</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isCollapsed()
    * @generated
    * @ordered
@@ -51,8 +50,7 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
   protected static final boolean COLLAPSED_EDEFAULT = false;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected BasicSemanticCompartmentImpl()
@@ -61,8 +59,7 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -72,8 +69,7 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -84,8 +80,7 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -96,8 +91,7 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -144,8 +138,8 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -165,8 +159,7 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void eSetGen(int featureID, Object newValue)
@@ -220,8 +213,8 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -241,8 +234,7 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void eUnsetGen(int featureID)
@@ -290,8 +282,8 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -311,8 +303,7 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public boolean eIsSetGen(int featureID)
@@ -350,8 +341,7 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -379,8 +369,7 @@ public class BasicSemanticCompartmentImpl extends BasicDecorationNodeImpl implem
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override

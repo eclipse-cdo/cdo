@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2009 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -35,8 +36,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>View</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>View</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -62,30 +63,31 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
 {
 
   /**
-  * The default value of the '{@link #isVisible() <em>Visible</em>}' attribute.
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @see #isVisible()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #isVisible() <em>Visible</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #isVisible()
+   * @generated
+   * @ordered
+   */
   protected static final boolean VISIBLE_EDEFAULT = true;
 
   /**
-  * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @see #getType()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getType() <em>Type</em>}' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
   protected static final String TYPE_EDEFAULT = ""; //$NON-NLS-1$
 
   /**
-  * The default value of the '{@link #isMutable() <em>Mutable</em>}' attribute.
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @see #isMutable()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #isMutable() <em>Mutable</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #isMutable()
+   * @generated
+   * @ordered
+   */
   protected static final boolean MUTABLE_EDEFAULT = false;
 
   // EATM
@@ -95,9 +97,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
       NotationPackage.Literals.VIEW__TRANSIENT_CHILDREN };
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected ViewImpl()
   {
     super();
@@ -114,10 +116,10 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   protected static final int ESTATIC_FEATURE_COUNT = 0;
 
   /**
@@ -132,9 +134,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean isVisible()
   {
@@ -142,9 +144,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setVisible(boolean newVisible)
   {
@@ -152,9 +154,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public String getType()
   {
@@ -173,18 +175,18 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public void setTypeGen(String newType)
   {
     eDynamicSet(NotationPackage.VIEW__TYPE - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__TYPE, newType);
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean isMutable()
   {
@@ -192,9 +194,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setMutable(boolean newMutable)
   {
@@ -202,9 +204,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public EList getSourceEdges()
   {
@@ -212,9 +214,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public EList getTargetEdges()
   {
@@ -222,9 +224,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public EList getPersistedChildren()
   {
@@ -245,9 +247,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public EList getStyles()
   {
@@ -276,27 +278,27 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public EObject getElementGen()
   {
     return (EObject)eDynamicGet(NotationPackage.VIEW__ELEMENT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__ELEMENT, true, true);
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   public EObject basicGetElement()
   {
     return (EObject)eDynamicGet(NotationPackage.VIEW__ELEMENT - ESTATIC_FEATURE_COUNT, NotationPackage.Literals.VIEW__ELEMENT, false, true);
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setElement(EObject newElement)
   {
@@ -304,10 +306,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void unsetElement()
   {
@@ -315,10 +316,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean isSetElement()
   {
@@ -326,9 +326,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Diagram getDiagram()
   {
@@ -352,9 +352,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public EList getTransientChildren()
   {
@@ -411,10 +411,10 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated NOT
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated NOT
+   */
   @Override
   public NamedStyle getNamedStyle(EClass eClass, String name)
   {
@@ -436,9 +436,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -455,9 +455,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -480,9 +480,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -523,9 +523,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -572,9 +572,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -615,9 +615,9 @@ public abstract class ViewImpl extends org.eclipse.emf.cdo.ecore.impl.EModelElem
   }
 
   /**
-  * <!-- begin-user-doc --> <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {

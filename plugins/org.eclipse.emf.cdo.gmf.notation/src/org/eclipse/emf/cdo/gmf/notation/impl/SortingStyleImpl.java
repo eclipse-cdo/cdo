@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2006 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -28,9 +29,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Sorting Style</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Sorting
+ * Style</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -49,8 +49,7 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
 {
   /**
   * The default value of the '{@link #getSorting() <em>Sorting</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
+  * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @see #getSorting()
   * @generated
   * @ordered
@@ -58,30 +57,28 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   protected static final Sorting SORTING_EDEFAULT = Sorting.NONE_LITERAL;
 
   /**
-  * The default value of the '{@link #getSortingKeys() <em>Sorting Keys</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getSortingKeys()
-  * @generated NOT
-  * @ordered
-  */
+   * The default value of the '{@link #getSortingKeys() <em>Sorting Keys</em>}'
+   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #getSortingKeys()
+   * @generated NOT
+   * @ordered
+   */
   protected static final Map SORTING_KEYS_EDEFAULT = Collections.EMPTY_MAP;
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected SortingStyleImpl()
   {
     super();
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
@@ -89,10 +86,10 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected int eStaticFeatureCount()
   {
@@ -100,10 +97,9 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Sorting getSorting()
   {
@@ -111,10 +107,9 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setSorting(Sorting newSorting)
   {
@@ -122,8 +117,8 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -133,8 +128,7 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public Map getSortingKeysGen()
@@ -143,8 +137,8 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -181,8 +175,7 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setSortingKeysGen(Map newSortingKeys)
@@ -191,10 +184,9 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public EList getSortedObjects()
   {
@@ -202,10 +194,9 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -222,10 +213,9 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -246,10 +236,9 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -269,10 +258,9 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {

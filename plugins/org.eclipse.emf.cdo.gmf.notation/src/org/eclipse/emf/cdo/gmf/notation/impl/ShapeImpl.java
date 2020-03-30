@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2009 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -28,9 +29,8 @@ import org.eclipse.gmf.runtime.notation.datatype.GradientData;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Shape</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>Shape</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -57,8 +57,7 @@ public class ShapeImpl extends NodeImpl implements Shape
 {
   /**
    * The default value of the '{@link #getFontColor() <em>Font Color</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getFontColor()
    * @generated
    * @ordered
@@ -67,8 +66,7 @@ public class ShapeImpl extends NodeImpl implements Shape
 
   /**
    * The default value of the '{@link #getFontName() <em>Font Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getFontName()
    * @generated
    * @ordered
@@ -77,8 +75,7 @@ public class ShapeImpl extends NodeImpl implements Shape
 
   /**
    * The default value of the '{@link #getFontHeight() <em>Font Height</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getFontHeight()
    * @generated
    * @ordered
@@ -86,9 +83,9 @@ public class ShapeImpl extends NodeImpl implements Shape
   protected static final int FONT_HEIGHT_EDEFAULT = 9;
 
   /**
-   * The default value of the '{@link #isBold() <em>Bold</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #isBold() <em>Bold</em>}' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #isBold()
    * @generated
    * @ordered
@@ -97,8 +94,7 @@ public class ShapeImpl extends NodeImpl implements Shape
 
   /**
    * The default value of the '{@link #isItalic() <em>Italic</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isItalic()
    * @generated
    * @ordered
@@ -107,8 +103,7 @@ public class ShapeImpl extends NodeImpl implements Shape
 
   /**
    * The default value of the '{@link #isUnderline() <em>Underline</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isUnderline()
    * @generated
    * @ordered
@@ -117,8 +112,7 @@ public class ShapeImpl extends NodeImpl implements Shape
 
   /**
    * The default value of the '{@link #isStrikeThrough() <em>Strike Through</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isStrikeThrough()
    * @generated
    * @ordered
@@ -127,8 +121,7 @@ public class ShapeImpl extends NodeImpl implements Shape
 
   /**
    * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getDescription()
    * @generated
    * @ordered
@@ -137,8 +130,7 @@ public class ShapeImpl extends NodeImpl implements Shape
 
   /**
    * The default value of the '{@link #getFillColor() <em>Fill Color</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getFillColor()
    * @generated
    * @ordered
@@ -147,8 +139,7 @@ public class ShapeImpl extends NodeImpl implements Shape
 
   /**
    * The default value of the '{@link #getTransparency() <em>Transparency</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getTransparency()
    * @generated
    * @ordered
@@ -157,8 +148,7 @@ public class ShapeImpl extends NodeImpl implements Shape
 
   /**
    * The default value of the '{@link #getGradient() <em>Gradient</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getGradient()
    * @generated
    * @ordered
@@ -167,8 +157,7 @@ public class ShapeImpl extends NodeImpl implements Shape
 
   /**
    * The default value of the '{@link #getLineColor() <em>Line Color</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getLineColor()
    * @generated
    * @ordered
@@ -177,8 +166,7 @@ public class ShapeImpl extends NodeImpl implements Shape
 
   /**
    * The default value of the '{@link #getLineWidth() <em>Line Width</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getLineWidth()
    * @generated
    * @ordered
@@ -186,18 +174,19 @@ public class ShapeImpl extends NodeImpl implements Shape
   protected static final int LINE_WIDTH_EDEFAULT = -1;
 
   /**
-   * The default value of the '{@link #getRoundedBendpointsRadius() <em>Rounded Bendpoints Radius</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #getRoundedBendpointsRadius() <em>Rounded
+   * Bendpoints Radius</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
    * @see #getRoundedBendpointsRadius()
    * @generated
    * @ordered
+   * @since 1.4
    */
   protected static final int ROUNDED_BENDPOINTS_RADIUS_EDEFAULT = 0;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected ShapeImpl()
@@ -206,8 +195,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -217,8 +205,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -229,8 +216,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -240,8 +226,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -251,8 +236,8 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -262,8 +247,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setFontNameGen(String newFontName)
@@ -272,8 +256,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -284,8 +267,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -295,8 +277,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -306,8 +287,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -317,8 +297,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -329,8 +308,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -340,8 +318,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -352,8 +329,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -363,8 +339,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -375,8 +350,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -387,8 +361,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -398,8 +371,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -409,8 +381,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -421,8 +392,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -432,8 +402,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -444,8 +413,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -455,8 +423,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -466,8 +433,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -477,8 +443,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -489,8 +454,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -500,8 +464,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -512,8 +475,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -523,8 +485,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -535,8 +496,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -547,8 +507,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -621,8 +580,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -716,8 +674,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -805,8 +762,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -871,8 +827,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -966,8 +921,7 @@ public class ShapeImpl extends NodeImpl implements Shape
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override

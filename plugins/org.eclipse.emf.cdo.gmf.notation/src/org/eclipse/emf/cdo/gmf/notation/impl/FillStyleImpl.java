@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2009 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -20,9 +21,8 @@ import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.datatype.GradientData;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Fill Style</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Fill
+ * Style</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -40,50 +40,45 @@ import org.eclipse.gmf.runtime.notation.datatype.GradientData;
 public class FillStyleImpl extends CDOObjectImpl implements FillStyle
 {
   /**
-  * The default value of the '{@link #getFillColor() <em>Fill Color</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getFillColor()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getFillColor() <em>Fill Color</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getFillColor()
+   * @generated
+   * @ordered
+   */
   protected static final int FILL_COLOR_EDEFAULT = 16777215;
 
   /**
-  * The default value of the '{@link #getTransparency() <em>Transparency</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getTransparency()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getTransparency() <em>Transparency</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getTransparency()
+   * @generated
+   * @ordered
+   */
   protected static final int TRANSPARENCY_EDEFAULT = -1;
 
   /**
-  * The default value of the '{@link #getGradient() <em>Gradient</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getGradient()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getGradient() <em>Gradient</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getGradient()
+   * @generated
+   * @ordered
+   */
   protected static final GradientData GRADIENT_EDEFAULT = null;
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected FillStyleImpl()
   {
     super();
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
@@ -91,10 +86,10 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected int eStaticFeatureCount()
   {
@@ -102,10 +97,9 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getFillColor()
   {
@@ -113,10 +107,9 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setFillColor(int newFillColor)
   {
@@ -124,10 +117,9 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public int getTransparency()
   {
@@ -135,10 +127,9 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setTransparency(int newTransparency)
   {
@@ -146,10 +137,9 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public GradientData getGradient()
   {
@@ -157,10 +147,9 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setGradient(GradientData newGradient)
   {
@@ -168,10 +157,9 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -188,10 +176,9 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -211,10 +198,9 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -234,10 +220,9 @@ public class FillStyleImpl extends CDOObjectImpl implements FillStyle
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {

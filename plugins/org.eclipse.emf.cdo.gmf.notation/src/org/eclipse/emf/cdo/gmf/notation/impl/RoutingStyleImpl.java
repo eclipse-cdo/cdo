@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2010 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -21,9 +22,8 @@ import org.eclipse.gmf.runtime.notation.RoutingStyle;
 import org.eclipse.gmf.runtime.notation.Smoothness;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Routing Style</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Routing
+ * Style</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -46,8 +46,7 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
 {
   /**
   * The default value of the '{@link #getRouting() <em>Routing</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
+  * <!-- begin-user-doc --> <!-- end-user-doc -->
   * @see #getRouting()
   * @generated
   * @ordered
@@ -55,80 +54,72 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   protected static final Routing ROUTING_EDEFAULT = Routing.MANUAL_LITERAL;
 
   /**
-  * The default value of the '{@link #getSmoothness() <em>Smoothness</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getSmoothness()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getSmoothness() <em>Smoothness</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getSmoothness()
+   * @generated
+   * @ordered
+   */
   protected static final Smoothness SMOOTHNESS_EDEFAULT = Smoothness.NONE_LITERAL;
 
   /**
-  * The default value of the '{@link #isAvoidObstructions() <em>Avoid Obstructions</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #isAvoidObstructions()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #isAvoidObstructions() <em>Avoid Obstructions</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #isAvoidObstructions()
+   * @generated
+   * @ordered
+   */
   protected static final boolean AVOID_OBSTRUCTIONS_EDEFAULT = false;
 
   /**
-  * The default value of the '{@link #isClosestDistance() <em>Closest Distance</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #isClosestDistance()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #isClosestDistance() <em>Closest Distance</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #isClosestDistance()
+   * @generated
+   * @ordered
+   */
   protected static final boolean CLOSEST_DISTANCE_EDEFAULT = false;
 
   /**
-  * The default value of the '{@link #getJumpLinkStatus() <em>Jump Link Status</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getJumpLinkStatus()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getJumpLinkStatus() <em>Jump Link Status</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getJumpLinkStatus()
+   * @generated
+   * @ordered
+   */
   protected static final JumpLinkStatus JUMP_LINK_STATUS_EDEFAULT = JumpLinkStatus.NONE_LITERAL;
 
   /**
-  * The default value of the '{@link #getJumpLinkType() <em>Jump Link Type</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #getJumpLinkType()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #getJumpLinkType() <em>Jump Link Type</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #getJumpLinkType()
+   * @generated
+   * @ordered
+   */
   protected static final JumpLinkType JUMP_LINK_TYPE_EDEFAULT = JumpLinkType.SEMICIRCLE_LITERAL;
 
   /**
-  * The default value of the '{@link #isJumpLinksReverse() <em>Jump Links Reverse</em>}' attribute.
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @see #isJumpLinksReverse()
-  * @generated
-  * @ordered
-  */
+   * The default value of the '{@link #isJumpLinksReverse() <em>Jump Links Reverse</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @see #isJumpLinksReverse()
+   * @generated
+   * @ordered
+   */
   protected static final boolean JUMP_LINKS_REVERSE_EDEFAULT = false;
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   protected RoutingStyleImpl()
   {
     super();
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
@@ -136,10 +127,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Routing getRouting()
   {
@@ -147,10 +137,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setRouting(Routing newRouting)
   {
@@ -158,10 +147,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Smoothness getSmoothness()
   {
@@ -169,10 +157,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setSmoothness(Smoothness newSmoothness)
   {
@@ -180,10 +167,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean isAvoidObstructions()
   {
@@ -192,10 +178,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setAvoidObstructions(boolean newAvoidObstructions)
   {
@@ -204,10 +189,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean isClosestDistance()
   {
@@ -216,10 +200,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setClosestDistance(boolean newClosestDistance)
   {
@@ -227,10 +210,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public JumpLinkStatus getJumpLinkStatus()
   {
@@ -238,10 +220,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setJumpLinkStatus(JumpLinkStatus newJumpLinkStatus)
   {
@@ -249,10 +230,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public JumpLinkType getJumpLinkType()
   {
@@ -260,10 +240,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setJumpLinkType(JumpLinkType newJumpLinkType)
   {
@@ -271,10 +250,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean isJumpLinksReverse()
   {
@@ -283,10 +261,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-  * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void setJumpLinksReverse(boolean newJumpLinksReverse)
   {
@@ -295,10 +272,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -325,10 +301,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -363,10 +338,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
@@ -401,10 +375,9 @@ public class RoutingStyleImpl extends RoundedCornersStyleImpl implements Routing
   }
 
   /**
-  * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-  * @generated
-  */
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {

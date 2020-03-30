@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2007 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -20,9 +21,8 @@ import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.PropertyValue;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Property Value</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>Property Value</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -37,8 +37,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
 {
   /**
    * The default value of the '{@link #getRawValue() <em>Raw Value</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getRawValue()
    * @generated
    * @ordered
@@ -46,8 +45,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
   protected static final String RAW_VALUE_EDEFAULT = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected PropertyValueImpl()
@@ -56,8 +54,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -78,8 +75,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -89,8 +85,8 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -113,8 +109,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setRawValueGen(String newRawValue)
@@ -123,8 +118,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -134,8 +128,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public EDataType basicGetInstanceType()
@@ -144,8 +137,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -155,8 +147,8 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -166,8 +158,8 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -177,8 +169,8 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -192,8 +184,8 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   @Override
@@ -207,8 +199,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -229,8 +220,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -249,8 +239,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -269,8 +258,7 @@ public class PropertyValueImpl extends CDOObjectImpl implements PropertyValue
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override

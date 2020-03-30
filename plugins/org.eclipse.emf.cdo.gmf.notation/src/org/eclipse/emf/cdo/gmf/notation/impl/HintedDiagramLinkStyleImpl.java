@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2007, 2009 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -17,9 +18,8 @@ import org.eclipse.gmf.runtime.notation.HintedDiagramLinkStyle;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Hinted Diagram Link Style</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Hinted
+ * Diagram Link Style</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -32,9 +32,9 @@ import org.eclipse.gmf.runtime.notation.NotationPackage;
 public class HintedDiagramLinkStyleImpl extends DiagramLinkStyleImpl implements HintedDiagramLinkStyle
 {
   /**
-   * The default value of the '{@link #getHint() <em>Hint</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #getHint() <em>Hint</em>}' attribute. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getHint()
    * @generated
    * @ordered
@@ -42,8 +42,7 @@ public class HintedDiagramLinkStyleImpl extends DiagramLinkStyleImpl implements 
   protected static final String HINT_EDEFAULT = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected HintedDiagramLinkStyleImpl()
@@ -52,8 +51,7 @@ public class HintedDiagramLinkStyleImpl extends DiagramLinkStyleImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -63,8 +61,7 @@ public class HintedDiagramLinkStyleImpl extends DiagramLinkStyleImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -74,8 +71,7 @@ public class HintedDiagramLinkStyleImpl extends DiagramLinkStyleImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -85,8 +81,7 @@ public class HintedDiagramLinkStyleImpl extends DiagramLinkStyleImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -107,8 +102,7 @@ public class HintedDiagramLinkStyleImpl extends DiagramLinkStyleImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -127,8 +121,7 @@ public class HintedDiagramLinkStyleImpl extends DiagramLinkStyleImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -147,8 +140,7 @@ public class HintedDiagramLinkStyleImpl extends DiagramLinkStyleImpl implements 
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override

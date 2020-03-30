@@ -1,9 +1,10 @@
 /******************************************************************************
  * Copyright (c) 2004, 2010 IBM Corporation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    IBM Corporation - initial API and implementation
@@ -112,671 +113,572 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Package</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!--
+ * end-user-doc -->
  * @generated
  */
 public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass edgeEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass nodeEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass styleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass fillStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass lineStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass fontStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass titleStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass sortingStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass descriptionStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass layoutConstraintEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass sizeEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass locationEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass boundsEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass ratioEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass anchorEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass bendpointsEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass identityAnchorEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass routingStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass viewEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass relativeBendpointsEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass diagramEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass imageEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass canonicalStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass shapeStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass connectorStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass pageStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass drawerStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass guideStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass guideEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass nodeEntryEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass filteringStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass diagramStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass imageStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass imageBufferStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass propertiesSetStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass stringToPropertyValueMapEntryEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass propertyValueEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass singleValueStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass listValueStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass namedStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass stringObjectConverterEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass dataTypeStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass intValueStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass intListValueStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass booleanValueStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass doubleValueStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass doubleListValueStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass stringValueStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass stringListValueStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass eObjectValueStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass eObjectListValueStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass byteArrayValueStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass booleanListValueStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass hintedDiagramLinkStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass diagramLinkStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass multiDiagramLinkStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass textStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass lineTypeStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass arrowStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass shapeEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass compartmentEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass listCompartmentEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass connectorEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass standardDiagramEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass decorationNodeEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass basicDecorationNodeEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass basicCompartmentEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass basicSemanticCompartmentEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass semanticListCompartmentEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EClass roundedCornersStyleEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EEnum sortingEEnum = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EEnum filteringEEnum = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EEnum routingEEnum = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EEnum smoothnessEEnum = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EEnum jumpLinkStatusEEnum = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EEnum jumpLinkTypeEEnum = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EEnum alignmentEEnum = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EEnum sortingDirectionEEnum = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EEnum measurementUnitEEnum = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EEnum textAlignmentEEnum = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EEnum lineTypeEEnum = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EEnum arrowTypeEEnum = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EEnum gradientStyleEEnum = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EDataType relativeBendpointListEDataType = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EDataType filterKeyListEDataType = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EDataType sortKeyMapEDataType = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private EDataType gradientDataEDataType = null;
 
   /**
-   * Creates an instance of the model <b>Package</b>, registered with
-   * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
-   * package URI value.
-   * <p>Note: the correct way to create the package is via the static
-   * factory method {@link #init init()}, which also performs
-   * initialization of the package, or returns the registered package,
-   * if one already exists.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.ecore.EPackage.Registry
-   * @see org.eclipse.gmf.runtime.notation.NotationPackage#eNS_URI
-   * @see #init()
-   * @generated
-   */
+     * Creates an instance of the model <b>Package</b>, registered with
+     * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
+     * package URI value.
+     * <p>Note: the correct way to create the package is via the static
+     * factory method {@link #init init()}, which also performs
+     * initialization of the package, or returns the registered package,
+     * if one already exists.
+     * <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+     * @see org.eclipse.emf.ecore.EPackage.Registry
+     * @see org.eclipse.gmf.runtime.notation.NotationPackage#eNS_URI
+     * @see #init()
+     * @generated
+     */
   private NotationPackageImpl()
   {
     super(eNS_URI, NotationFactory.eINSTANCE);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private static boolean isInited = false;
 
   /**
-   * Creates, registers, and initializes the <b>Package</b> for this
-   * model, and for any others upon which it depends.  Simple
-   * dependencies are satisfied by calling this method on all
-   * dependent packages before doing anything else.  This method drives
-   * initialization for interdependent packages directly, in parallel
-   * with this package, itself.
-   * <p>Of this package and its interdependencies, all packages which
-   * have not yet been registered by their URI values are first created
-   * and registered.  The packages are then initialized in two steps:
-   * meta-model objects for all of the packages are created before any
-   * are initialized, since one package's meta-model objects may refer to
-   * those of another.
-   * <p>Invocation of this method will not affect any packages that have
-   * already been initialized.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #eNS_URI
-   * @see #createPackageContents()
-   * @see #initializePackageContents()
-   * @generated
-   */
+     * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+     *
+     * <p>This method is used to initialize {@link NotationPackage#eINSTANCE} when that field is accessed.
+     * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+     * <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+     * @see #eNS_URI
+     * @see #createPackageContents()
+     * @see #initializePackageContents()
+     * @generated
+     */
   public static NotationPackage init()
   {
     if (isInited)
@@ -785,9 +687,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
     }
 
     // Obtain or create and register package
-    NotationPackageImpl theNotationPackage = (NotationPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof NotationPackageImpl
-        ? EPackage.Registry.INSTANCE.getEPackage(eNS_URI)
-        : new NotationPackageImpl());
+    Object registeredNotationPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+    NotationPackageImpl theNotationPackage = registeredNotationPackage instanceof NotationPackageImpl ? (NotationPackageImpl)registeredNotationPackage
+        : new NotationPackageImpl();
 
     isInited = true;
 
@@ -803,14 +705,15 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
     // Mark meta-data to indicate it can't be changed
     theNotationPackage.freeze();
 
+    // Update the registry and return the package
+    EPackage.Registry.INSTANCE.put(NotationPackage.eNS_URI, theNotationPackage);
     return theNotationPackage;
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getEdge()
   {
@@ -818,10 +721,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getEdge_Source()
   {
@@ -829,10 +731,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getEdge_Target()
   {
@@ -840,10 +741,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getEdge_Bendpoints()
   {
@@ -851,10 +751,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getEdge_SourceAnchor()
   {
@@ -862,10 +761,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getEdge_TargetAnchor()
   {
@@ -873,10 +771,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getNode()
   {
@@ -884,10 +781,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getNode_LayoutConstraint()
   {
@@ -895,10 +791,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getStyle()
   {
@@ -906,10 +801,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getFillStyle()
   {
@@ -917,10 +811,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getFillStyle_FillColor()
   {
@@ -928,10 +821,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getFillStyle_Transparency()
   {
@@ -939,10 +831,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getFillStyle_Gradient()
   {
@@ -950,10 +841,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getLineStyle()
   {
@@ -961,10 +851,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getLineStyle_LineColor()
   {
@@ -972,10 +861,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getLineStyle_LineWidth()
   {
@@ -983,10 +871,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getFontStyle()
   {
@@ -994,10 +881,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getFontStyle_FontColor()
   {
@@ -1005,10 +891,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getFontStyle_FontName()
   {
@@ -1016,10 +901,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getFontStyle_FontHeight()
   {
@@ -1027,10 +911,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getFontStyle_Bold()
   {
@@ -1038,10 +921,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getFontStyle_Italic()
   {
@@ -1049,10 +931,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getFontStyle_Underline()
   {
@@ -1060,10 +941,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getFontStyle_StrikeThrough()
   {
@@ -1071,10 +951,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getTitleStyle()
   {
@@ -1082,10 +961,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getTitleStyle_ShowTitle()
   {
@@ -1093,10 +971,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getSortingStyle()
   {
@@ -1104,10 +981,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getSortingStyle_Sorting()
   {
@@ -1115,10 +991,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getSortingStyle_SortingKeys()
   {
@@ -1126,10 +1001,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getSortingStyle_SortedObjects()
   {
@@ -1137,10 +1011,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getDescriptionStyle()
   {
@@ -1148,10 +1021,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getDescriptionStyle_Description()
   {
@@ -1159,10 +1031,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getLayoutConstraint()
   {
@@ -1170,10 +1041,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getSize()
   {
@@ -1181,10 +1051,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getSize_Width()
   {
@@ -1192,10 +1061,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getSize_Height()
   {
@@ -1203,10 +1071,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getLocation()
   {
@@ -1214,10 +1081,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getLocation_X()
   {
@@ -1225,10 +1091,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getLocation_Y()
   {
@@ -1236,10 +1101,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getBounds()
   {
@@ -1247,10 +1111,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getRatio()
   {
@@ -1258,10 +1121,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getRatio_Value()
   {
@@ -1269,10 +1131,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getAnchor()
   {
@@ -1280,10 +1141,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getBendpoints()
   {
@@ -1291,10 +1151,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getIdentityAnchor()
   {
@@ -1302,10 +1161,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getIdentityAnchor_Id()
   {
@@ -1313,10 +1171,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getRoutingStyle()
   {
@@ -1324,10 +1181,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getRoutingStyle_Routing()
   {
@@ -1335,10 +1191,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getRoutingStyle_Smoothness()
   {
@@ -1346,10 +1201,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getRoutingStyle_AvoidObstructions()
   {
@@ -1357,10 +1211,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getRoutingStyle_ClosestDistance()
   {
@@ -1368,10 +1221,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getRoutingStyle_JumpLinkStatus()
   {
@@ -1379,10 +1231,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getRoutingStyle_JumpLinkType()
   {
@@ -1390,10 +1241,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getRoutingStyle_JumpLinksReverse()
   {
@@ -1402,6 +1252,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 
   /**
    * Left in for backwards compatibility
+   * 
    * @deprecated Use getRoundedCornersStyle_RoundedBendpointsRadius()
    */
   @Deprecated
@@ -1412,10 +1263,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getView()
   {
@@ -1423,10 +1273,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getView_Visible()
   {
@@ -1434,10 +1283,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getView_Type()
   {
@@ -1445,10 +1293,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getView_Mutable()
   {
@@ -1456,10 +1303,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getView_SourceEdges()
   {
@@ -1467,10 +1313,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getView_TargetEdges()
   {
@@ -1478,10 +1323,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getView_PersistedChildren()
   {
@@ -1489,10 +1333,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getView_Styles()
   {
@@ -1500,10 +1343,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getView_Element()
   {
@@ -1511,10 +1353,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getView_Diagram()
   {
@@ -1522,10 +1363,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getView_TransientChildren()
   {
@@ -1533,10 +1373,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getRelativeBendpoints()
   {
@@ -1544,10 +1383,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getRelativeBendpoints_Points()
   {
@@ -1555,10 +1393,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getDiagram()
   {
@@ -1566,10 +1403,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getDiagram_Name()
   {
@@ -1577,10 +1413,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getDiagram_MeasurementUnit()
   {
@@ -1588,10 +1423,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getDiagram_PersistedEdges()
   {
@@ -1599,10 +1433,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getDiagram_TransientEdges()
   {
@@ -1610,10 +1443,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getImage()
   {
@@ -1621,10 +1453,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getImage_Data()
   {
@@ -1632,10 +1463,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getCanonicalStyle()
   {
@@ -1643,10 +1473,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getCanonicalStyle_Canonical()
   {
@@ -1654,10 +1483,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getShapeStyle()
   {
@@ -1665,10 +1493,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getConnectorStyle()
   {
@@ -1676,10 +1503,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getPageStyle()
   {
@@ -1687,10 +1513,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getPageStyle_PageX()
   {
@@ -1698,10 +1523,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getPageStyle_PageY()
   {
@@ -1709,10 +1533,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getPageStyle_PageWidth()
   {
@@ -1720,10 +1543,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getPageStyle_PageHeight()
   {
@@ -1731,10 +1553,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getDrawerStyle()
   {
@@ -1742,10 +1563,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getDrawerStyle_Collapsed()
   {
@@ -1753,10 +1573,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getGuideStyle()
   {
@@ -1764,10 +1583,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getGuideStyle_HorizontalGuides()
   {
@@ -1775,10 +1593,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getGuideStyle_VerticalGuides()
   {
@@ -1786,10 +1603,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getGuide()
   {
@@ -1797,10 +1613,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getGuide_Position()
   {
@@ -1808,10 +1623,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getGuide_NodeMap()
   {
@@ -1819,10 +1633,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getNodeEntry()
   {
@@ -1830,10 +1643,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getNodeEntry_Value()
   {
@@ -1841,10 +1653,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getNodeEntry_Key()
   {
@@ -1852,10 +1663,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getFilteringStyle()
   {
@@ -1863,10 +1673,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getFilteringStyle_Filtering()
   {
@@ -1874,10 +1683,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getFilteringStyle_FilteringKeys()
   {
@@ -1885,10 +1693,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getFilteringStyle_FilteredObjects()
   {
@@ -1896,10 +1703,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getDiagramStyle()
   {
@@ -1907,10 +1713,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getImageStyle()
   {
@@ -1918,10 +1723,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getImageStyle_AntiAlias()
   {
@@ -1929,10 +1733,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getImageStyle_MaintainAspectRatio()
   {
@@ -1940,10 +1743,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getImageStyle_CropBound()
   {
@@ -1951,10 +1753,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getImageBufferStyle()
   {
@@ -1962,10 +1763,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getImageBufferStyle_ImageBuffer()
   {
@@ -1973,10 +1773,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getPropertiesSetStyle()
   {
@@ -1984,10 +1783,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getPropertiesSetStyle_PropertiesMap()
   {
@@ -1995,10 +1793,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getStringToPropertyValueMapEntry()
   {
@@ -2006,10 +1803,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getStringToPropertyValueMapEntry_Key()
   {
@@ -2017,10 +1813,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getStringToPropertyValueMapEntry_Value()
   {
@@ -2028,10 +1823,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getPropertyValue()
   {
@@ -2039,10 +1833,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getPropertyValue_RawValue()
   {
@@ -2050,10 +1843,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getPropertyValue_InstanceType()
   {
@@ -2061,10 +1853,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getSingleValueStyle()
   {
@@ -2072,10 +1863,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getSingleValueStyle_RawValue()
   {
@@ -2083,10 +1873,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getListValueStyle()
   {
@@ -2094,10 +1883,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getListValueStyle_RawValuesList()
   {
@@ -2105,10 +1893,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getNamedStyle()
   {
@@ -2116,10 +1903,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getNamedStyle_Name()
   {
@@ -2127,10 +1913,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getStringObjectConverter()
   {
@@ -2138,10 +1923,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getDataTypeStyle()
   {
@@ -2149,10 +1933,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getDataTypeStyle_InstanceType()
   {
@@ -2160,10 +1943,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getIntValueStyle()
   {
@@ -2171,10 +1953,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getIntValueStyle_IntValue()
   {
@@ -2182,10 +1963,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getIntListValueStyle()
   {
@@ -2193,10 +1973,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getIntListValueStyle_IntListValue()
   {
@@ -2204,10 +1983,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getBooleanValueStyle()
   {
@@ -2215,10 +1993,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getBooleanValueStyle_BooleanValue()
   {
@@ -2226,10 +2003,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getDoubleValueStyle()
   {
@@ -2237,10 +2013,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getDoubleValueStyle_DoubleValue()
   {
@@ -2248,10 +2023,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getDoubleListValueStyle()
   {
@@ -2259,10 +2033,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getDoubleListValueStyle_DoubleListValue()
   {
@@ -2270,10 +2043,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getStringValueStyle()
   {
@@ -2281,10 +2053,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getStringValueStyle_StringValue()
   {
@@ -2292,10 +2063,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getStringListValueStyle()
   {
@@ -2303,10 +2073,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getStringListValueStyle_StringListValue()
   {
@@ -2314,10 +2083,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getEObjectValueStyle()
   {
@@ -2325,10 +2093,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getEObjectValueStyle_EObjectValue()
   {
@@ -2336,10 +2103,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getEObjectListValueStyle()
   {
@@ -2347,10 +2113,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getEObjectListValueStyle_EObjectListValue()
   {
@@ -2358,10 +2123,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getByteArrayValueStyle()
   {
@@ -2369,10 +2133,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getByteArrayValueStyle_ByteArrayValue()
   {
@@ -2380,10 +2143,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getBooleanListValueStyle()
   {
@@ -2391,10 +2153,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getBooleanListValueStyle_BooleanListValue()
   {
@@ -2402,10 +2163,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getHintedDiagramLinkStyle()
   {
@@ -2413,10 +2173,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getHintedDiagramLinkStyle_Hint()
   {
@@ -2424,10 +2183,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getDiagramLinkStyle()
   {
@@ -2435,10 +2193,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getDiagramLinkStyle_DiagramLink()
   {
@@ -2446,10 +2203,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getMultiDiagramLinkStyle()
   {
@@ -2457,10 +2213,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EReference getMultiDiagramLinkStyle_DiagramLinks()
   {
@@ -2468,10 +2223,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getTextStyle()
   {
@@ -2479,10 +2233,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getTextStyle_TextAlignment()
   {
@@ -2490,10 +2243,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getLineTypeStyle()
   {
@@ -2501,10 +2253,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getLineTypeStyle_LineType()
   {
@@ -2512,10 +2263,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getArrowStyle()
   {
@@ -2523,10 +2273,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getArrowStyle_ArrowSource()
   {
@@ -2534,10 +2283,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getArrowStyle_ArrowTarget()
   {
@@ -2545,10 +2293,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getShape()
   {
@@ -2556,10 +2303,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getCompartment()
   {
@@ -2567,10 +2313,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getListCompartment()
   {
@@ -2578,10 +2323,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getConnector()
   {
@@ -2589,10 +2333,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getStandardDiagram()
   {
@@ -2600,10 +2343,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getDecorationNode()
   {
@@ -2611,10 +2353,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getBasicDecorationNode()
   {
@@ -2622,10 +2363,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getBasicCompartment()
   {
@@ -2633,10 +2373,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getBasicSemanticCompartment()
   {
@@ -2644,10 +2383,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getSemanticListCompartment()
   {
@@ -2655,10 +2393,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EClass getRoundedCornersStyle()
   {
@@ -2666,10 +2403,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EAttribute getRoundedCornersStyle_RoundedBendpointsRadius()
   {
@@ -2677,10 +2413,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EEnum getSorting()
   {
@@ -2688,10 +2423,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EEnum getFiltering()
   {
@@ -2699,10 +2433,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EEnum getRouting()
   {
@@ -2710,10 +2443,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EEnum getSmoothness()
   {
@@ -2721,10 +2453,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EEnum getJumpLinkStatus()
   {
@@ -2732,10 +2463,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EEnum getJumpLinkType()
   {
@@ -2743,10 +2473,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EEnum getAlignment()
   {
@@ -2754,10 +2483,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EEnum getSortingDirection()
   {
@@ -2765,10 +2493,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EEnum getMeasurementUnit()
   {
@@ -2776,10 +2503,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EEnum getTextAlignment()
   {
@@ -2787,10 +2513,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EEnum getLineType()
   {
@@ -2798,10 +2523,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EEnum getArrowType()
   {
@@ -2809,10 +2533,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EEnum getGradientStyle()
   {
@@ -2820,10 +2543,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EDataType getRelativeBendpointList()
   {
@@ -2831,10 +2553,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EDataType getFilterKeyList()
   {
@@ -2842,10 +2563,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EDataType getSortKeyMap()
   {
@@ -2853,10 +2573,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public EDataType getGradientData()
   {
@@ -2864,10 +2583,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   @Override
   public NotationFactory getNotationFactory()
   {
@@ -2875,19 +2593,18 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package.  This method is
-   * guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * Creates the meta-model objects for the package.  This method is
+     * guarded to have no affect on any invocation but its first.
+     * <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+     * @generated
+     */
   public void createPackageContents()
   {
     if (isCreated)
@@ -3159,17 +2876,16 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * @generated
+     */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model.  This
-   * method is guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Complete the initialization of the package and its meta-model. This method is
+   * guarded to have no affect on any invocation but its first. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void initializePackageContents()
@@ -3276,19 +2992,14 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 
     // Initialize classes and features; add operations and parameters
     initEClass(edgeEClass, Edge.class, "Edge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
     initEReference(getEdge_Source(), getView(), getView_SourceEdges(), "source", null, 1, 1, Edge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
         !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getEdge_Target(), getView(), getView_TargetEdges(), "target", null, 1, 1, Edge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
         !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getEdge_Bendpoints(), getBendpoints(), null, "bendpoints", null, 0, 1, Edge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getEdge_SourceAnchor(), getAnchor(), null, "sourceAnchor", null, 0, 1, Edge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getEdge_TargetAnchor(), getAnchor(), null, "targetAnchor", null, 0, 1, Edge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3302,7 +3013,6 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
     addEParameter(op, theEcorePackage.getEClass(), "eClass", 0, 1); //$NON-NLS-1$
 
     initEClass(nodeEClass, Node.class, "Node", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
     initEReference(getNode_LayoutConstraint(), getLayoutConstraint(), null, "layoutConstraint", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
         IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3350,7 +3060,6 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSortingStyle_SortingKeys(), getSortKeyMap(), "sortingKeys", null, 0, 1, SortingStyle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getSortingStyle_SortedObjects(), theEcorePackage.getEObject(), null, "sortedObjects", null, 0, -1, SortingStyle.class, !IS_TRANSIENT, //$NON-NLS-1$
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3409,27 +3118,20 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getView_Mutable(), ecorePackage.getEBoolean(), "mutable", "false", 0, 1, View.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$ //$NON-NLS-2$
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getView_SourceEdges(), getEdge(), getEdge_Source(), "sourceEdges", null, 0, -1, View.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
         !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getView_TargetEdges(), getEdge(), getEdge_Target(), "targetEdges", null, 0, -1, View.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
         !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getView_PersistedChildren(), getNode(), null, "children", null, 0, -1, View.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getView_PersistedChildren(), getNode(), null, "children", null, 0, -1, View.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getView_Styles(), getStyle(), null, "styles", null, 0, -1, View.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getView_Element(), theEcorePackage.getEObject(), null, "element", null, 0, 1, View.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
         !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getView_Diagram(), getDiagram(), null, "diagram", null, 1, 1, View.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, //$NON-NLS-1$
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getView_TransientChildren(), getNode(), null, "transientChildren", null, 0, -1, View.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
         IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3455,10 +3157,8 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
         !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getDiagram_MeasurementUnit(), getMeasurementUnit(), "measurementUnit", "Himetric", 0, 1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$ //$NON-NLS-2$
         IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getDiagram_PersistedEdges(), getEdge(), null, "edges", null, 0, -1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getDiagram_TransientEdges(), getEdge(), null, "TransientEdges", null, 0, -1, Diagram.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
         IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3492,24 +3192,20 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(guideStyleEClass, GuideStyle.class, "GuideStyle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
     initEReference(getGuideStyle_HorizontalGuides(), getGuide(), null, "horizontalGuides", null, 0, -1, GuideStyle.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
         IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getGuideStyle_VerticalGuides(), getGuide(), null, "verticalGuides", null, 0, -1, GuideStyle.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
         IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(guideEClass, Guide.class, "Guide", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEAttribute(getGuide_Position(), ecorePackage.getEInt(), "position", "0", 0, 1, Guide.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$ //$NON-NLS-2$
         !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getGuide_NodeMap(), getNodeEntry(), null, "nodeMap", null, 0, -1, Guide.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(nodeEntryEClass, Map.Entry.class, "NodeEntry", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEAttribute(getNodeEntry_Value(), getAlignment(), "value", "Center", 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$ //$NON-NLS-2$
         !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getNodeEntry_Key(), getNode(), null, "key", null, 1, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, //$NON-NLS-1$
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3518,7 +3214,6 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getFilteringStyle_FilteringKeys(), getFilterKeyList(), "filteringKeys", null, 0, 1, FilteringStyle.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getFilteringStyle_FilteredObjects(), theEcorePackage.getEObject(), null, "filteredObjects", null, 0, -1, FilteringStyle.class, !IS_TRANSIENT, //$NON-NLS-1$
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3529,17 +3224,14 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getImageStyle_MaintainAspectRatio(), ecorePackage.getEBooleanObject(), "maintainAspectRatio", "true", 0, 1, ImageStyle.class, !IS_TRANSIENT, //$NON-NLS-1$ //$NON-NLS-2$
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getImageStyle_CropBound(), getBounds(), null, "cropBound", null, 1, 1, ImageStyle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
         IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(imageBufferStyleEClass, ImageBufferStyle.class, "ImageBufferStyle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
     initEReference(getImageBufferStyle_ImageBuffer(), getImage(), null, "imageBuffer", null, 1, 1, ImageBufferStyle.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
         IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(propertiesSetStyleEClass, PropertiesSetStyle.class, "PropertiesSetStyle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
     initEReference(getPropertiesSetStyle_PropertiesMap(), getStringToPropertyValueMapEntry(), null, "propertiesMap", null, 0, -1, PropertiesSetStyle.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3569,14 +3261,12 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
         !IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getStringToPropertyValueMapEntry_Key(), theEcorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getStringToPropertyValueMapEntry_Value(), getPropertyValue(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
         IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(propertyValueEClass, PropertyValue.class, "PropertyValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEAttribute(getPropertyValue_RawValue(), ecorePackage.getEString(), "rawValue", null, 0, 1, PropertyValue.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEReference(getPropertyValue_InstanceType(), theEcorePackage.getEDataType(), null, "instanceType", null, 0, 1, PropertyValue.class, !IS_TRANSIENT, //$NON-NLS-1$
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3611,7 +3301,6 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
     addEParameter(op, theEcorePackage.getEString(), "stringValue", 0, 1); //$NON-NLS-1$
 
     initEClass(dataTypeStyleEClass, DataTypeStyle.class, "DataTypeStyle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
     initEReference(getDataTypeStyle_InstanceType(), theEcorePackage.getEDataType(), null, "instanceType", null, 0, 1, DataTypeStyle.class, !IS_TRANSIENT, //$NON-NLS-1$
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3644,12 +3333,10 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(eObjectValueStyleEClass, EObjectValueStyle.class, "EObjectValueStyle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
     initEReference(getEObjectValueStyle_EObjectValue(), theEcorePackage.getEObject(), null, "eObjectValue", null, 0, 1, EObjectValueStyle.class, !IS_TRANSIENT, //$NON-NLS-1$
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(eObjectListValueStyleEClass, EObjectListValueStyle.class, "EObjectListValueStyle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
     initEReference(getEObjectListValueStyle_EObjectListValue(), theEcorePackage.getEObject(), null, "eObjectListValue", null, 0, -1, //$NON-NLS-1$
         EObjectListValueStyle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
@@ -3667,12 +3354,10 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(diagramLinkStyleEClass, DiagramLinkStyle.class, "DiagramLinkStyle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
     initEReference(getDiagramLinkStyle_DiagramLink(), getDiagram(), null, "diagramLink", null, 0, 1, DiagramLinkStyle.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
         IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(multiDiagramLinkStyleEClass, MultiDiagramLinkStyle.class, "MultiDiagramLinkStyle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-
     initEReference(getMultiDiagramLinkStyle_DiagramLinks(), getDiagram(), null, "diagramLinks", null, 0, -1, MultiDiagramLinkStyle.class, !IS_TRANSIENT, //$NON-NLS-1$
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3748,6 +3433,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
     addEEnumLiteral(jumpLinkTypeEEnum, JumpLinkType.SEMICIRCLE_LITERAL);
     addEEnumLiteral(jumpLinkTypeEEnum, JumpLinkType.SQUARE_LITERAL);
     addEEnumLiteral(jumpLinkTypeEEnum, JumpLinkType.CHAMFERED_LITERAL);
+    addEEnumLiteral(jumpLinkTypeEEnum, JumpLinkType.TUNNEL_LITERAL);
 
     initEEnum(alignmentEEnum, Alignment.class, "Alignment"); //$NON-NLS-1$
     addEEnumLiteral(alignmentEEnum, Alignment.LEFT_LITERAL);
@@ -3803,8 +3489,8 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
       EClassifier eClassifier = (EClassifier)it.next();
       String name = eClassifier.getName();
       if (name.equals("Node") || name.indexOf("Style") != -1 || name.equals("Location") || name.equals("Size") || //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-          name.indexOf("Anchor") != -1 || name.indexOf("point") != -1 || name.equals("Bounds") || name.indexOf("Edge") != -1 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-          || name.indexOf("Constraint") != -1) //$NON-NLS-1$
+          name.indexOf("Anchor") != -1 || name.indexOf("point") != -1 || name.equals("Bounds") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+          || name.indexOf("Edge") != -1 || name.indexOf("Constraint") != -1) //$NON-NLS-1$ //$NON-NLS-2$
       {
         String source = "foo"; //$NON-NLS-1$
         addAnnotation(eClassifier, source, new String[] { "uuid", "false" //$NON-NLS-1$ //$NON-NLS-2$

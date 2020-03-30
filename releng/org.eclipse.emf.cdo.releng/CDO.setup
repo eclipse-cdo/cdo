@@ -236,6 +236,16 @@
       <repositoryList
           name="2020-06">
         <repository
+            url="http://download.eclipse.org/modeling/gmp/gmf-notation/updates/milestones">
+          <annotation
+              source="Documentation">
+            <detail
+                key="retentionNote">
+              <value>Remove this repo after GMF has contributed their JumpLinkType changes to the simrel 2020-06</value>
+            </detail>
+          </annotation>
+        </repository>
+        <repository
             url="http://download.eclipse.org/releases/2020-06"/>
         <repository
             url="http://download.eclipse.org/eclipse/updates/latest"/>

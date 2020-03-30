@@ -246,7 +246,7 @@
         <repository
             url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.27.v20200227"/>
+            url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/development"/>
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository

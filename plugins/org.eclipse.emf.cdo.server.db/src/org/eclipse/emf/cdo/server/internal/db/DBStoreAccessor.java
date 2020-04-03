@@ -72,11 +72,13 @@ import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.ddl.DBField;
+import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -191,6 +193,16 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   public DBStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature)
   {
     return new DBStoreChunkReader(this, revision, feature);
+  }
+
+  @Override
+  public IDBSchemaTransaction openSchemaTransaction()
+  {
+    DBStore store = getStore();
+    DBAdapter dbAdapter = (DBAdapter)store.getDBAdapter();
+    IDBDatabase database = store.getDatabase();
+
+    return dbAdapter.openSchemaTransaction(database, connection);
   }
 
   /**
@@ -1248,7 +1260,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
       // rawImportPackageUnits(in, fromCommitTime, toCommitTime, packageUnits, monitor.fork());
 
-      IDBSchemaTransaction schemaTransaction = store.getDatabase().openSchemaTransaction();
+      IDBSchemaTransaction schemaTransaction = openSchemaTransaction();
 
       try
       {

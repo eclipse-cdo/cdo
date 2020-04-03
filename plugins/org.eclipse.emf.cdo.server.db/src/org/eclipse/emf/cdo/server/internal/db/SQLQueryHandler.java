@@ -23,6 +23,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.spi.db.DBAdapter;
 
 import java.sql.Clob;
 import java.sql.ResultSet;
@@ -185,7 +186,7 @@ public class SQLQueryHandler implements IQueryHandler
           for (int i = 0; i < indexes.length; i++)
           {
             Object parameter = info.getParameters().get(key);
-            // parameter = convertToSQL(parameter);
+            parameter = convertToSQL(parameter);
             stmt.setObject(indexes[i], parameter);
           }
         }
@@ -262,16 +263,10 @@ public class SQLQueryHandler implements IQueryHandler
     }
   }
 
-  @SuppressWarnings("unused")
-  private Object convertToSQL(Object value)
+  protected Object convertToSQL(Object value)
   {
-    if (value instanceof java.util.Date)
-    {
-      java.util.Date date = (java.util.Date)value;
-      value = new java.sql.Date(date.getTime());
-    }
-
-    return value;
+    DBAdapter dbAdapter = (DBAdapter)accessor.getStore().getDBAdapter();
+    return dbAdapter.convertToSQL(value);
   }
 
   private Object convertFromSQL(Object value)

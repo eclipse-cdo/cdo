@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -55,6 +56,10 @@ public class ExternalReferenceManager extends Lifecycle
   private static final String EXTERNAL_REFS_URI = "URI";
 
   private static final String EXTERNAL_REFS_COMMITTIME = "COMMITTIME";
+
+  private static final DBType DEFAULT_URI_COLUMN_TYPE = DBType.VARCHAR;
+
+  private static final int DEFAULT_URI_COLUMN_LENGTH = 1024;
 
   private static final int NULL = 0;
 
@@ -181,7 +186,7 @@ public class ExternalReferenceManager extends Lifecycle
   {
     super.doActivate();
 
-    final IDBStore store = idHandler.getStore();
+    IDBStore store = idHandler.getStore();
     IDBDatabase database = store.getDatabase();
 
     table = database.getSchema().getTable(EXTERNAL_REFS);
@@ -192,9 +197,16 @@ public class ExternalReferenceManager extends Lifecycle
         @Override
         public void run(IDBSchema schema)
         {
+          DBType idColumnType = idHandler.getDBType();
+          int idColumnLength = store.getIDColumnLength();
+
+          Map<String, String> properties = store.getProperties();
+          DBType uriColumnType = DBType.getTypeByKeyword(properties.getOrDefault("externalRefsURIColumnType", DEFAULT_URI_COLUMN_TYPE.getKeyword()));
+          int uriColumnLength = Integer.parseInt(properties.getOrDefault("externalRefsURIColumnLength", Integer.toString(DEFAULT_URI_COLUMN_LENGTH)));
+
           table = schema.addTable(EXTERNAL_REFS);
-          table.addField(EXTERNAL_REFS_ID, idHandler.getDBType(), store.getIDColumnLength(), true);
-          table.addField(EXTERNAL_REFS_URI, DBType.VARCHAR, 1024);
+          table.addField(EXTERNAL_REFS_ID, idColumnType, idColumnLength, true);
+          table.addField(EXTERNAL_REFS_URI, uriColumnType, uriColumnLength);
           table.addField(EXTERNAL_REFS_COMMITTIME, DBType.BIGINT);
           table.addIndex(IDBIndex.Type.PRIMARY_KEY, EXTERNAL_REFS_ID);
           table.addIndex(IDBIndex.Type.NON_UNIQUE, EXTERNAL_REFS_URI);

@@ -12,6 +12,7 @@ package org.eclipse.net4j.internal.db.ddl;
 
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
@@ -22,6 +23,7 @@ import org.eclipse.net4j.spi.db.ddl.InternalDBTable;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -216,6 +218,39 @@ public class DBField extends DBSchemaElement implements InternalDBField
     }
 
     this.notNull = notNull;
+  }
+
+  @Override
+  public boolean isIndexed()
+  {
+    String name = getName();
+
+    for (IDBIndex index : table.getIndices())
+    {
+      if (index.getField(name) != null)
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  @Override
+  public IDBIndex[] getIndices()
+  {
+    List<IDBIndex> indices = new ArrayList<>();
+    String name = getName();
+
+    for (IDBIndex index : table.getIndices())
+    {
+      if (index.getField(name) != null)
+      {
+        indices.add(index);
+      }
+    }
+
+    return indices.toArray(new IDBIndex[indices.size()]);
   }
 
   @Override

@@ -48,6 +48,16 @@ public interface IDBField extends IDBSchemaElement, PositionProvider
 
   public void setNotNull(boolean notNull);
 
+  /**
+   * @since 4.9
+   */
+  public boolean isIndexed();
+
+  /**
+   * @since 4.9
+   */
+  public IDBIndex[] getIndices();
+
   @Override
   public String getFullName();
 

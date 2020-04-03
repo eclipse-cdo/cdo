@@ -23,13 +23,17 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * @author Martin Fluegge
  */
 public class SetFeatureTest extends AbstractCDOTest
 {
+  // Mysql TIMESTAMP values do not support milliseconds!
+  private static final Date DATE = new GregorianCalendar(2020, 4, 2, 6, 45, 14).getTime();
+
   public void testUnsettableDateNoDefault_SetDefault() throws Exception
   {
     testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableDate(),
@@ -92,7 +96,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testNotUnsettableDateNoDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableDate(), new Date(0));
+    testIsSet(getModel2Factory().createNotUnsettable(), getModel2Package().getNotUnsettable_NotUnsettableDate(), DATE);
   }
 
   public void testNotUnsettableDateNoDefault_SetDefault() throws Exception
@@ -258,7 +262,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testNotUnsettableWithDefaultDate() throws Exception
   {
-    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package().getNotUnsettableWithDefault_NotUnsettableDate(), new Date(0));
+    testIsSet(getModel2Factory().createNotUnsettableWithDefault(), getModel2Package().getNotUnsettableWithDefault_NotUnsettableDate(), DATE);
   }
 
   public void testNotUnsettableWithDefaultDate_SetDefault() throws Exception
@@ -344,7 +348,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableDateNoDefault() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableDate(), new Date(0));
+    testIsSet(getModel2Factory().createUnsettable1(), getModel2Package().getUnsettable1_UnsettableDate(), DATE);
   }
 
   public void testUnsettableDoubleNoDefault() throws Exception
@@ -481,7 +485,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
   public void testUnsettableWithDefaultDate() throws Exception
   {
-    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package().getUnsettable2WithDefault_UnsettableDate(), new Date(0));
+    testIsSet(getModel2Factory().createUnsettable2WithDefault(), getModel2Package().getUnsettable2WithDefault_UnsettableDate(), DATE);
   }
 
   public void testUnsettableWithDefaultDate_SetDefault() throws Exception

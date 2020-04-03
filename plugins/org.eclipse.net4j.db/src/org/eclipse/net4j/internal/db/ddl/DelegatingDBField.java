@@ -12,6 +12,7 @@ package org.eclipse.net4j.internal.db.ddl;
 
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.spi.db.ddl.InternalDBField;
 
@@ -113,6 +114,18 @@ public final class DelegatingDBField extends DelegatingDBSchemaElement implement
   public void setNotNull(boolean notNull)
   {
     getDelegate().setNotNull(notNull);
+  }
+
+  @Override
+  public boolean isIndexed()
+  {
+    return getDelegate().isIndexed();
+  }
+
+  @Override
+  public IDBIndex[] getIndices()
+  {
+    return getDelegate().getIndices();
   }
 
   @Override

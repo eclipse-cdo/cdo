@@ -71,6 +71,10 @@
       <!-- Maximum number of store accessors (JDBC connections) to keep in the writer pool. The default value is 15.  -->
       <property name="writerPoolCapacity" value="20"/>
 
+      <!-- Example for Mysql with 4 bytes per char: 
+        <property name="externalRefsURIColumnType" value="VARCHAR"/>
+        <property name="externalRefsURIColumnLength" value="768"/>
+      -->
 
       <mappingStrategy type="horizontal"> <!-- callout -->
         <property name="qualifiedNames" value="true"/>

@@ -156,7 +156,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     {
       if (accessor != null)
       {
-        IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
+        IDBSchemaTransaction schemaTransaction = accessor.openSchemaTransaction();
 
         try
         {

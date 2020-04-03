@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.UnitSupport;
 
 import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBTable;
 
 import org.eclipse.emf.ecore.EClass;
@@ -56,4 +57,9 @@ public interface IDBStoreAccessor extends IStoreAccessor.Raw2, UnitSupport
    * @since 4.6
    */
   public void tableCreated(IDBTable table);
+
+  /**
+   * @since 4.9
+   */
+  public IDBSchemaTransaction openSchemaTransaction();
 }

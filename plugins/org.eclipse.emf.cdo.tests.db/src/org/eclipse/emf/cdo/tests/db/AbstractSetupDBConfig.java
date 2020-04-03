@@ -42,7 +42,11 @@ public abstract class AbstractSetupDBConfig extends DBConfig
   protected DataSource createDataSource(String repoName)
   {
     String dbName = getDBName(repoName);
-    initDatabase(dbName);
+
+    if (!isRestarting())
+    {
+      initDatabase(dbName);
+    }
 
     try
     {
@@ -93,14 +97,23 @@ public abstract class AbstractSetupDBConfig extends DBConfig
       stmt = connection.createStatement();
       dropDatabase(connection, stmt, dbName);
     }
-    catch (SQLException ignore)
+    catch (SQLException ex)
     {
+      if (ex.getErrorCode() != getErrorCodeDatabaseDoesNotExist())
+      {
+        ex.printStackTrace();
+      }
     }
     finally
     {
       DBUtil.close(stmt);
       DBUtil.close(connection);
     }
+  }
+
+  protected int getErrorCodeDatabaseDoesNotExist()
+  {
+    return 1008;
   }
 
   protected void dropDatabase(Connection connection, Statement stmt, String dbName) throws SQLException

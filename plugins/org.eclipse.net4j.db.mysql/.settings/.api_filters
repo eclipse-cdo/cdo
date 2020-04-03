@@ -7,5 +7,12 @@
                 <message_argument value="getJDBCDriver()"/>
             </message_arguments>
         </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.db.mysql.MYSQLAdapter"/>
+                <message_argument value="VERSION"/>
+                <message_argument value="5.1.5"/>
+            </message_arguments>
+        </filter>
     </resource>
 </component>

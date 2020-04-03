@@ -193,7 +193,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
         try
         {
           rset.next();
-          assertEquals("CLOB", rset.getString(6));
+          assertEquals(getClobString(), rset.getString(6).toUpperCase());
         }
         finally
         {
@@ -238,7 +238,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
         try
         {
           rset.next();
-          assertEquals("SUBJECT", rset.getString(3));
+          assertEquals("SUBJECT", rset.getString(3).toUpperCase());
         }
         finally
         {
@@ -284,7 +284,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
         try
         {
           rset.next();
-          assertEquals("TOPIC", rset.getString(4));
+          assertEquals("TOPIC", rset.getString(4).toUpperCase());
         }
         finally
         {
@@ -332,8 +332,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
         try
         {
           rset.next();
-          assertEquals("TOPIC", rset.getString(4));
-          assertEquals("CLOB", rset.getString(6));
+          assertEquals("TOPIC", rset.getString(4).toUpperCase());
+          assertEquals(getClobString(), rset.getString(6).toUpperCase());
         }
         finally
         {
@@ -384,7 +384,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
           String prefix = model1.getName().toUpperCase() + '_';
           while (rset.next())
           {
-            String tableName = rset.getString(3);
+            String tableName = rset.getString(3).toUpperCase();
             if ((prefix + "ORDERDETAIL").equalsIgnoreCase(tableName))
             {
               orderDetailTableCreated = true;
@@ -489,5 +489,10 @@ public class DBAnnotationsTest extends AbstractCDOTest
       EClass orderDetail = (EClass)model1.getEClassifier(unmappedTable);
       orderDetail.getEAnnotations().add(annotation);
     }
+  }
+
+  private String getClobString()
+  {
+    return getRepositoryConfig().getName().toLowerCase().startsWith("mysql") ? "LONGTEXT" : "CLOB";
   }
 }

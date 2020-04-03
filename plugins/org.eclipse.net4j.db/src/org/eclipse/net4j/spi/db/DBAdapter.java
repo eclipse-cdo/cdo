@@ -15,7 +15,10 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
@@ -156,6 +159,14 @@ public abstract class DBAdapter implements IDBAdapter
   public Connection modifyConnection(Connection connection)
   {
     return connection;
+  }
+
+  /**
+   * @since 4.9
+   */
+  public IDBSchemaTransaction openSchemaTransaction(IDBDatabase database, IDBConnection currentConnection)
+  {
+    return database.openSchemaTransaction(currentConnection);
   }
 
   /**
@@ -1263,11 +1274,45 @@ public abstract class DBAdapter implements IDBAdapter
   }
 
   /**
+   * @since 4.9
+   */
+  public Object convertToSQL(Object value)
+  {
+    return value;
+  }
+
+  /**
    * @since 4.2
    */
   public static int getDefaultDBLength(DBType type)
   {
     return type == DBType.VARCHAR ? 32672 : IDBField.DEFAULT;
+  }
+
+  /**
+   * @since 4.9
+   */
+  protected static void generateReservedWords(Connection connection, String[] words) throws SQLException
+  {
+    for (int i = 0; i < words.length; i++)
+    {
+      String word = words[i];
+
+      try
+      {
+        String sql = "CREATE TABLE table" + i + " (" + word + " INT)";
+        DBUtil.execute(connection, sql);
+      }
+      catch (Exception ex)
+      {
+        if (i != 0)
+        {
+          System.out.print(", ");
+        }
+
+        System.out.println("\"" + word + "\"");
+      }
+    }
   }
 
   /**

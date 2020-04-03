@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 
@@ -18,7 +19,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.db.oracle.OracleAdapter;
+import org.eclipse.net4j.db.mysql.MYSQLAdapter;
 import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -69,24 +70,28 @@ public class Net4jDBTest extends AbstractCDOTest
 
   public void testBinary() throws Exception
   {
-    if (!isOracle())
+    if (!isDB("oracle", "mysql"))
     {
       registerColumn(DBType.BINARY, new byte[0]);
     }
 
-    byte[] data = new byte[100];
-    for (int i = 0; i < data.length; i++)
+    if (!isDB("mysql"))
     {
-      data[i] = (byte)(Math.random() * (Byte.MAX_VALUE - Byte.MIN_VALUE) + Byte.MIN_VALUE);
+      byte[] data = new byte[100];
+      for (int i = 0; i < data.length; i++)
+      {
+        data[i] = (byte)(Math.random() * (Byte.MAX_VALUE - Byte.MIN_VALUE) + Byte.MIN_VALUE);
+      }
+
+      registerColumn(DBType.BINARY, data);
     }
 
-    registerColumn(DBType.BINARY, data);
     doTest(getName());
   }
 
   public void testVarBinary() throws Exception
   {
-    if (!isOracle())
+    if (!isDB("oracle"))
     {
       registerColumn(DBType.VARBINARY, new byte[0]);
     }
@@ -103,7 +108,7 @@ public class Net4jDBTest extends AbstractCDOTest
 
   public void testLongVarBinary() throws Exception
   {
-    if (!isOracle())
+    if (!isDB("oracle"))
     {
       registerColumn(DBType.LONGVARBINARY, new byte[0]);
     }
@@ -155,14 +160,18 @@ public class Net4jDBTest extends AbstractCDOTest
   {
     registerColumn(DBType.CHAR, "0");
     registerColumn(DBType.CHAR, "a");
-    registerColumn(DBType.CHAR, "\377"); // Fails for DB2
-    registerColumn(DBType.CHAR, "\u1234"); // Fails for DB2
-    doTest(getName());
-  }
 
-  public static void main(String[] args)
-  {
-    System.out.println((int)'\377');
+    if (!isDB("db2"))
+    {
+      registerColumn(DBType.CHAR, "\377");
+    }
+
+    if (!isDB("db2", "mysql"))
+    {
+      registerColumn(DBType.CHAR, "\u1234");
+    }
+
+    doTest(getName());
   }
 
   public void testClob() throws Exception
@@ -214,8 +223,16 @@ public class Net4jDBTest extends AbstractCDOTest
 
   public void testFloat() throws Exception
   {
-    registerColumn(DBType.FLOAT, Float.MAX_VALUE);
-    registerColumn(DBType.FLOAT, Float.MIN_VALUE); // Fails for DB2
+    if (!isDB("mysql"))
+    {
+      registerColumn(DBType.FLOAT, Float.MAX_VALUE);
+    }
+
+    if (!isDB("db2"))
+    {
+      registerColumn(DBType.FLOAT, Float.MIN_VALUE);
+    }
+
     registerColumn(DBType.FLOAT, -.1f);
     registerColumn(DBType.FLOAT, 3.33333f);
     doTest(getName());
@@ -224,7 +241,12 @@ public class Net4jDBTest extends AbstractCDOTest
   public void testReal() throws Exception
   {
     registerColumn(DBType.REAL, Float.MAX_VALUE);
-    registerColumn(DBType.REAL, Float.MIN_VALUE); // Fails for DB2
+
+    if (!isDB("db2"))
+    {
+      registerColumn(DBType.REAL, Float.MIN_VALUE);
+    }
+
     registerColumn(DBType.REAL, -.1f);
     registerColumn(DBType.REAL, 3.33333f);
     doTest(getName());
@@ -232,7 +254,7 @@ public class Net4jDBTest extends AbstractCDOTest
 
   public void testDouble() throws Exception
   {
-    if (!isOracle())
+    if (!isDB("oracle"))
     {
       registerColumn(DBType.DOUBLE, new Double(Double.MAX_VALUE));
     }
@@ -310,12 +332,17 @@ public class Net4jDBTest extends AbstractCDOTest
   {
     registerColumn(DBType.LONGVARCHAR, "");
 
-    if (!isOracle()) // Only 1 LONGVARCHAR allowed per table
+    if (!isDB("oracle")) // Only 1 LONGVARCHAR allowed per table
     {
       registerColumn(DBType.LONGVARCHAR, "\n");
       registerColumn(DBType.LONGVARCHAR, "\t");
       registerColumn(DBType.LONGVARCHAR, "\r");
-      registerColumn(DBType.LONGVARCHAR, "\u1234");
+
+      if (!isDB(MYSQLAdapter.NAME))
+      {
+        registerColumn(DBType.LONGVARCHAR, "\u1234");
+      }
+
       registerColumn(DBType.LONGVARCHAR, "The quick brown fox jumps over the lazy dog.");
       registerColumn(DBType.LONGVARCHAR, "\\,:\",\'");
     }
@@ -329,9 +356,9 @@ public class Net4jDBTest extends AbstractCDOTest
     registerColumn(DBType.DATE, new GregorianCalendar(1950, 04, 21).getTimeInMillis());
     registerColumn(DBType.DATE, new GregorianCalendar(2030, 12, 31).getTimeInMillis());
 
-    if (!isOracle())
+    if (!isDB("oracle", "db2", "mysql"))
     {
-      registerColumn(DBType.DATE, new GregorianCalendar(0, 0, 0).getTimeInMillis()); // Fails for DB2 and Oracle
+      registerColumn(DBType.DATE, new GregorianCalendar(0, 0, 0).getTimeInMillis());
     }
 
     doTest(getName());
@@ -403,6 +430,10 @@ public class Net4jDBTest extends AbstractCDOTest
           case DECIMAL:
             BigDecimal value = (BigDecimal)column.getElement2();
             table.addField(FIELD_NAME + c++, column.getElement1(), value.precision(), value.scale());
+            break;
+
+          case BINARY:
+            table.addField(FIELD_NAME + c++, column.getElement1(), 200); // Needed for testBinary().
             break;
 
           default:
@@ -549,6 +580,11 @@ public class Net4jDBTest extends AbstractCDOTest
 
   private void doTest(String tableName) throws Exception
   {
+    if (columns.isEmpty())
+    {
+      return;
+    }
+
     DBStore store = (DBStore)getRepository().getStore();
     Connection connection = store.getConnection();
 
@@ -756,9 +792,16 @@ public class Net4jDBTest extends AbstractCDOTest
     return 1000L * 60L * minutes;
   }
 
-  private boolean isOracle()
+  private boolean isDB(String... dbs)
   {
-    DBStore store = (DBStore)getRepository().getStore();
-    return OracleAdapter.NAME.equals(store.getDBAdapter().getName());
+    for (String db : dbs)
+    {
+      if (db.equalsIgnoreCase(((IDBStore)getRepository().getStore()).getDBAdapter().getName()))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

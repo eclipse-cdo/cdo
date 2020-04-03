@@ -111,7 +111,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     {
       if (accessor != null)
       {
-        IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
+        IDBSchemaTransaction schemaTransaction = accessor.openSchemaTransaction();
 
         try
         {

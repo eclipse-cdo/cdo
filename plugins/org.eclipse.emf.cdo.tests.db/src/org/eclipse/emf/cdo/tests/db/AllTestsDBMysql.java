@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
 import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.MergingTest;
@@ -33,12 +34,6 @@ public class AllTestsDBMysql extends DBConfigs
   }
 
   @Override
-  protected void initConfigSuites(TestSuite parent)
-  {
-    addScenario(parent, new MysqlConfig(), JVM, NATIVE);
-  }
-
-  @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // add branching tests for this testsuite
@@ -47,5 +42,20 @@ public class AllTestsDBMysql extends DBConfigs
     testClasses.add(MergingTest.class);
 
     super.initTestClasses(testClasses, scenario);
+  }
+
+  @Override
+  protected void initConfigSuites(TestSuite parent)
+  {
+    addScenario(parent, new MysqlConfig(), JVM, NATIVE);
+    addScenario(parent, new MysqlConfig().idGenerationLocation(IDGenerationLocation.STORE), JVM, NATIVE);
+
+    // addScenario(parent, new MysqlConfig().supportingAudits(true).withRanges(true), JVM, NATIVE);
+    // addScenario(parent, new
+    // MysqlConfig().supportingAudits(true).withRanges(true).idGenerationLocation(IDGenerationLocation.STORE), JVM,
+    // NATIVE);
+
+    addScenario(parent, new MysqlConfig().supportingBranches(true).withRanges(true), JVM, NATIVE);
+    addScenario(parent, new MysqlConfig().supportingBranches(true).withRanges(true).idGenerationLocation(IDGenerationLocation.STORE), JVM, NATIVE);
   }
 }

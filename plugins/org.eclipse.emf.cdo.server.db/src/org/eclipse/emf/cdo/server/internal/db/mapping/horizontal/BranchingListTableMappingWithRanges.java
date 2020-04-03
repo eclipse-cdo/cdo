@@ -150,7 +150,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     {
       if (accessor != null)
       {
-        IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
+        IDBSchemaTransaction schemaTransaction = accessor.openSchemaTransaction();
 
         try
         {

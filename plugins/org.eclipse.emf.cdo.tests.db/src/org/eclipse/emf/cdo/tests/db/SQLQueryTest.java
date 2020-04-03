@@ -15,6 +15,7 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.internal.db.SQLQueryHandler;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -32,9 +33,12 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.io.IOUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
@@ -169,7 +173,10 @@ public class SQLQueryTest extends AbstractCDOTest
   @CleanRepositoriesBefore(reason = "Query result counting")
   public void testDateParameter() throws Exception
   {
-    Date aDate = new Date();
+    // Mysql TIMESTAMP values do not support milliseconds!
+    Date aDate = new GregorianCalendar(2020, 4, 2, 6, 45, 14).getTime();
+    IOUtil.OUT().println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss-SSS").format(aDate));
+
     CDOSession session = openSession();
 
     {
@@ -183,8 +190,14 @@ public class SQLQueryTest extends AbstractCDOTest
       transaction.commit();
     }
 
+    String column = "date";
+    if (((IDBStore)getRepository().getStore()).getDBAdapter().isReservedWord(column))
+    {
+      column += "0";
+    }
+
     CDOView view = session.openView();
-    CDOQuery query = view.createQuery("sql", "SELECT CDO_ID FROM  model1_purchaseorder WHERE date0 = :aDate");
+    CDOQuery query = view.createQuery("sql", "SELECT CDO_ID FROM  model1_purchaseorder WHERE " + column + " = :aDate");
     query.setParameter("aDate", aDate);
     List<PurchaseOrder> orders = query.getResult(PurchaseOrder.class);
     assertEquals(1, orders.size());

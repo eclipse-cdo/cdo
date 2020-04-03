@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -47,10 +48,11 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
 
   public void testListOfDate() throws Exception
   {
+    // Mysql TIMESTAMP values do not support milliseconds!
     List<Date> list = new ArrayList<>();
-    list.add(new Date(1000));
-    list.add(new Date());
-    list.add(new Date(new Date().getTime() - 100));
+    list.add(new GregorianCalendar(2018, 4, 1, 6, 45, 14).getTime());
+    list.add(new GregorianCalendar(2019, 5, 2, 6, 45, 15).getTime());
+    list.add(new GregorianCalendar(2020, 6, 3, 6, 45, 16).getTime());
     testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfDate(), getModel5Package().getGenListOfDate_Elements());
   }
 

@@ -44,9 +44,11 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
@@ -583,7 +585,10 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
             {
               if (workingCopy == null)
               {
-                schemaTransaction = getStore().getDatabase().openSchemaTransaction((IDBConnection)connection);
+                DBAdapter dbAdapter = (DBAdapter)store.getDBAdapter();
+                IDBDatabase database = store.getDatabase();
+
+                schemaTransaction = dbAdapter.openSchemaTransaction(database, (IDBConnection)connection);
                 workingCopy = schemaTransaction.getWorkingCopy();
               }
 

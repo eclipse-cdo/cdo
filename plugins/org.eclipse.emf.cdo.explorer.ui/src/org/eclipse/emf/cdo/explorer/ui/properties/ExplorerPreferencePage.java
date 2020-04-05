@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.prefs.OMPreferencePage;
+import org.eclipse.net4j.util.ui.prefs.PrefBoolean;
 import org.eclipse.net4j.util.ui.prefs.PrefIntegerAndDisable;
 
 import org.eclipse.swt.SWT;
@@ -28,6 +29,8 @@ import org.eclipse.swt.widgets.Label;
 public class ExplorerPreferencePage extends OMPreferencePage
 {
   private PrefIntegerAndDisable repositoryTimeout;
+
+  private PrefBoolean rememberOpenEditors;
 
   public ExplorerPreferencePage()
   {
@@ -52,6 +55,11 @@ public class ExplorerPreferencePage extends OMPreferencePage
 
     repositoryTimeout.setLayoutData(UIUtil.createGridData(true, false));
 
+    rememberOpenEditors = new PrefBoolean(composite, SWT.CHECK, OM.PREF_REMEMBER_OPEN_EDITORS);
+    rememberOpenEditors.getButton().setText("Remember open model editors");
+    rememberOpenEditors.setLayoutData(UIUtil.createGridData(false, false));
+    UIUtil.setIndentation(rememberOpenEditors, -1, 10);
+
     initValues();
     return composite;
   }
@@ -59,12 +67,14 @@ public class ExplorerPreferencePage extends OMPreferencePage
   protected void initValues()
   {
     repositoryTimeout.loadPreferences();
+    rememberOpenEditors.loadPreferences();
   }
 
   @Override
   public boolean performOk()
   {
     repositoryTimeout.savePreferences();
+    rememberOpenEditors.savePreferences();
     return super.performOk();
   }
 }

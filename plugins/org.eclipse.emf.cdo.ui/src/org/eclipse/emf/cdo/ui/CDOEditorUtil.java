@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.ui;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.internal.ui.CDOEditorInputImpl;
@@ -21,6 +22,7 @@ import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -66,7 +68,7 @@ public final class CDOEditorUtil
 
   private static final Map<CDOResourceLeaf, String> EDITOR_OVERRIDES = new WeakHashMap<>();
 
-  private static String editorID = EDITOR_ID;
+  private static String editorID = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.ui.editorID", EDITOR_ID);
 
   private CDOEditorUtil()
   {
@@ -200,38 +202,69 @@ public final class CDOEditorUtil
   }
 
   /**
-   * Returns references to possibly opened instances of CDOEditor with certain CDOView and resource
+   * Returns references to open instances of {@link CDOEditor} with given {@link CDOView}, resource path, and object ID.
    *
    * @param page
-   *          The page where to search for opened editors
+   *          The {@link IWorkbenchPage page} on which to search for open editors.
    * @param view
-   *          The editors to find are using the specified CDOView
+   *          The CDOView that the editors are filtered for, or <code>null</code> if view filtering is not applicable.
    * @param resourcePath
-   *          The editors are editing the CDOResource specified with this path
+   *          The resource path that the editors are filtered for, or <code>null</code> if resource path filtering is not applicable.
+   * @param objectID
+   *          The object ID that the editors are filtered for, or <code>null</code> if object ID filtering is not applicable.
+   * @since 4.8
    */
-  public static IEditorReference[] findEditor(IWorkbenchPage page, CDOView view, String resourcePath)
+  public static IEditorReference[] findEditor(IWorkbenchPage page, CDOView view, String resourcePath, CDOID objectID)
   {
     List<IEditorReference> result = new ArrayList<>();
-    IEditorReference[] editorReferences = page.getEditorReferences();
-    for (IEditorReference editorReference : editorReferences)
+
+    for (IEditorReference editorReference : page.getEditorReferences())
     {
       try
       {
-        if (ObjectUtil.equals(editorReference.getId(), editorID))
+        if (!ObjectUtil.equals(editorReference.getId(), editorID))
         {
-          IEditorInput editorInput = editorReference.getEditorInput();
-          if (editorInput instanceof CDOEditorInput)
+          continue;
+        }
+
+        IEditorInput editorInput = editorReference.getEditorInput();
+        if (!(editorInput instanceof CDOEditorInput))
+        {
+          continue;
+        }
+
+        CDOEditorInput cdoInput = (CDOEditorInput)editorInput;
+        if (view != null)
+        {
+          if (view != cdoInput.getView())
           {
-            CDOEditorInput cdoInput = (CDOEditorInput)editorInput;
-            if (cdoInput.getView() == view)
-            {
-              if (resourcePath == null || ObjectUtil.equals(cdoInput.getResourcePath(), resourcePath))
-              {
-                result.add(editorReference);
-              }
-            }
+            continue;
           }
         }
+
+        if (resourcePath != null)
+        {
+          if (!ObjectUtil.equals(resourcePath, cdoInput.getResourcePath()))
+          {
+            continue;
+          }
+        }
+
+        if (objectID != null)
+        {
+          if (!(cdoInput instanceof CDOEditorInput2))
+          {
+            continue;
+          }
+
+          CDOEditorInput2 cdoInput2 = (CDOEditorInput2)cdoInput;
+          if (!ObjectUtil.equals(objectID, cdoInput2.getObjectID()))
+          {
+            continue;
+          }
+        }
+
+        result.add(editorReference);
       }
       catch (PartInitException ex)
       {
@@ -240,6 +273,21 @@ public final class CDOEditorUtil
     }
 
     return result.toArray(new IEditorReference[result.size()]);
+  }
+
+  /**
+   * Returns references to open instances of {@link CDOEditor} with given {@link CDOView}, resource path, and object ID.
+   *
+   * @param page
+   *          The {@link IWorkbenchPage page} on which to search for open editors.
+   * @param view
+   *          The CDOView that the editors are filtered for, or <code>null</code> if view filtering is not applicable.
+   * @param resourcePath
+   *          The resource path that the editors are filtered for, or <code>null</code> if resource path filtering is not applicable.
+   */
+  public static IEditorReference[] findEditor(IWorkbenchPage page, CDOView view, String resourcePath)
+  {
+    return findEditor(page, view, resourcePath, null);
   }
 
   /**
@@ -381,7 +429,7 @@ public final class CDOEditorUtil
    *          The page in which the editor will be opened
    * @since 4.2
    */
-  public static void openEditor(final IWorkbenchPage page, final String editorID, final CDOResourceLeaf resource)
+  public static void openEditor(IWorkbenchPage page, String editorID, CDOResourceLeaf resource)
   {
     Display display = page.getWorkbenchWindow().getShell().getDisplay();
     display.asyncExec(new Runnable()

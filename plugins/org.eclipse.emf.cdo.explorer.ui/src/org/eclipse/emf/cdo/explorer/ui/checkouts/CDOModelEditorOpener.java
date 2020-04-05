@@ -10,19 +10,11 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
-import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
-import org.eclipse.emf.cdo.internal.ui.CDOEditorInputImpl;
 import org.eclipse.emf.cdo.internal.ui.InteractiveConflictHandlerSelector;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorOpener;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
-import org.eclipse.emf.cdo.util.CDOURIUtil;
-import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.transaction.CDOHandlingConflictResolver;
 
@@ -31,13 +23,9 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PartInitException;
 
 /**
  * @author Eike Stepper
@@ -51,115 +39,29 @@ public class CDOModelEditorOpener extends CDOEditorOpener.Default
   }
 
   @Override
-  protected IEditorPart doOpenEditor(final IWorkbenchPage page, URI uri)
+  protected IEditorPart doOpenEditor(IWorkbenchPage page, URI uri)
   {
-    CDOCheckout checkout = CDOExplorerUtil.getCheckout(uri);
-    if (checkout == null)
+    CDOModelEditorInput editorInput = new CDOModelEditorInput(uri);
+    String editorID = CDOEditorUtil.getEditorID();
+
+    try
     {
-      MessageDialog.openError(page.getWorkbenchWindow().getShell(), "Error", "The checkout for " + uri + " could not be found.");
+      return page.openEditor(editorInput, editorID);
+    }
+    catch (PartInitException ex)
+    {
+      OM.LOG.error(ex);
       return null;
     }
-
-    final CDOView view = checkout.openView();
-
-    if (view instanceof CDOTransaction)
-    {
-      configureTransaction((CDOTransaction)view);
-    }
-
-    CDOID objectID = null;
-    if (uri.hasFragment())
-    {
-      CDOObject cdoObject = CDOUtil.getCDOObject(view.getResourceSet().getEObject(uri, true));
-      if (cdoObject != null)
-      {
-        objectID = cdoObject.cdoID();
-      }
-    }
-
-    final IEditorPart editor = openEditor(page, view, CDOURIUtil.extractResourcePath(uri), objectID);
-    page.addPartListener(new IPartListener()
-    {
-      @Override
-      public void partClosed(IWorkbenchPart part)
-      {
-        if (part == editor)
-        {
-          try
-          {
-            view.close();
-          }
-          catch (Exception ex)
-          {
-            OM.LOG.error(ex);
-          }
-          finally
-          {
-            page.removePartListener(this);
-          }
-        }
-      }
-
-      @Override
-      public void partOpened(IWorkbenchPart part)
-      {
-        // Do nothing.
-      }
-
-      @Override
-      public void partDeactivated(IWorkbenchPart part)
-      {
-        // Do nothing.
-      }
-
-      @Override
-      public void partBroughtToTop(IWorkbenchPart part)
-      {
-        // Do nothing.
-      }
-
-      @Override
-      public void partActivated(IWorkbenchPart part)
-      {
-        // Do nothing.
-      }
-    });
-
-    return editor;
   }
 
+  /**
+   * @deprecated As of 4.6 no longer supported in favor of CDOModelEditorInput.configureTransaction().
+   */
+  @Deprecated
   protected void configureTransaction(CDOTransaction transaction)
   {
     addConflictResolver(transaction);
-  }
-
-  private IEditorPart openEditor(IWorkbenchPage page, CDOView view, String resourcePath, CDOID objectID)
-  {
-    try
-    {
-      String editorID = CDOEditorUtil.getEditorID();
-
-      IEditorReference[] references = CDOEditorUtil.findEditor(page, view, resourcePath);
-      for (IEditorReference reference : references)
-      {
-        if (editorID.equals(reference.getId()))
-        {
-          IEditorPart editor = references[0].getEditor(true);
-          page.activate(editor);
-          return editor;
-        }
-      }
-
-      IEditorInput input = CDOEditorUtil.createCDOEditorInput(view, resourcePath, false);
-      ((CDOEditorInputImpl)input).setObjectID(objectID);
-      return page.openEditor(input, editorID);
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-    }
-
-    return null;
   }
 
   public static void addConflictResolver(CDOTransaction transaction)

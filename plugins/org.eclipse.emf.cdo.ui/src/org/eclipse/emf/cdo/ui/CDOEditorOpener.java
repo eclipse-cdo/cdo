@@ -207,7 +207,7 @@ public interface CDOEditorOpener
       page.addPartListener(partListener);
       editor[0] = doOpenEditor(page, uri);
 
-      if (!editors.contains(editor))
+      if (!editors.contains(editor[0]))
       {
         // The editor must have been open already and someone else will handle close.
         page.removePartListener(partListener);

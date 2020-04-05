@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.explorer.ui" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="926941240">
+            <message_arguments>
+                <message_argument value="4.6.0"/>
+                <message_argument value="4.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/explorer/ui/actions/CheckoutCommitInfoActionDelegate.java" type="org.eclipse.emf.cdo.explorer.ui.actions.CheckoutCommitInfoActionDelegate">
         <filter id="574664731">
             <message_arguments>

@@ -815,16 +815,20 @@
     </objectContribution>
   </extension>
 
-   <extension
-         point="org.eclipse.emf.cdo.ui.editorOpeners">
-      <editorOpener
+  <extension point="org.eclipse.ui.elementFactories">
+    <factory
+            id="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOModelEditorInput.ElementFactory"
+            class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOModelEditorInput$ElementFactory"/>
+  </extension>
+
+  <extension point="org.eclipse.emf.cdo.ui.editorOpeners">
+    <editorOpener
             class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOModelEditorOpener"
             icon="icons/cdo_editor.gif"
             id="org.eclipse.emf.cdo.explorer.ui.CDOModelEditorOpener"
             name="CDO Editor"
             priority="100"
-            regex="cdo\.checkout://.*">
-      </editorOpener>
-   </extension>
+            regex="cdo\.checkout://.*"/>
+  </extension>
 
 </plugin>

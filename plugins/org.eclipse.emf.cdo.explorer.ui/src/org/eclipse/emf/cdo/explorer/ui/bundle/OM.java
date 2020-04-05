@@ -51,6 +51,9 @@ public abstract class OM
   public static final OMPreference<Boolean> PREF_REPOSITORY_TIMEOUT_DISABLED = //
       PREFS.init("PREF_REPOSITORY_TIMEOUT_DISABLED", false); //$NON-NLS-1$
 
+  public static final OMPreference<Boolean> PREF_REMEMBER_OPEN_EDITORS = //
+      PREFS.init("PREF_REMEMBER_OPEN_EDITORS", false); //$NON-NLS-1$
+
   public static final OMPreference<Integer> PREF_DASHBOARD_HEIGHT = //
       PREFS.init("PREF_DASHBOARD_HEIGHT", 0); //$NON-NLS-1$
 

@@ -647,72 +647,76 @@ public final class CDOModelUtil implements CDOModelConstants
     TreeIterator<EObject> it = ePackage.eAllContents();
     while (it.hasNext())
     {
-      EObject e = it.next();
+      EObject packageElement = it.next();
 
-      if (e instanceof EAnnotation)
+      if (packageElement instanceof EAnnotation)
       {
-        // we don't need to validate the structure of annotations. The applications that
-        // define annotations will have to take what they can get
+        // We don't need to validate the structure of annotations.
+        // The applications that define annotations will have to take what they can get.
         it.prune();
       }
       else
       {
-        for (EObject r : e.eCrossReferences())
+        for (EObject referencedElement : packageElement.eCrossReferences())
         {
-          EObject refTarget = null;
+          EObject referenceTarget = null;
 
-          if (r.eIsProxy())
+          if (referencedElement.eIsProxy())
           {
-            String msg = "Package '%s' contains unresolved proxy '%s'";
-            msg = String.format(msg, ePackage.getNsURI(), ((InternalEObject)r).eProxyURI());
-            throw new IllegalStateException(msg);
+            referencedElement = EcoreUtil.resolve(referencedElement, (ResourceSet)null);
+            if (referencedElement.eIsProxy())
+            {
+              String msg = "Package '%s' contains unresolved proxy '%s'";
+              msg = String.format(msg, ePackage.getNsURI(), ((InternalEObject)referencedElement).eProxyURI());
+              throw new IllegalStateException(msg);
+            }
           }
 
-          if (r.eResource() != null && r.eResource() != e.eResource())
+          if (referencedElement.eResource() != null && referencedElement.eResource() != packageElement.eResource())
           {
-            // It's a ref into another resource
-            EPackage pkg = null;
-            if (r instanceof EClassifier)
+            // It's a reference into another resource.
+            EPackage referencedPackage = null;
+            if (referencedElement instanceof EClassifier)
             {
-              refTarget = r;
-              pkg = ((EClassifier)r).getEPackage();
+              referenceTarget = referencedElement;
+              referencedPackage = ((EClassifier)referencedElement).getEPackage();
             }
-            else if (r instanceof EStructuralFeature)
+            else if (referencedElement instanceof EStructuralFeature)
             {
-              refTarget = r;
-              EStructuralFeature feature = (EStructuralFeature)r;
+              referenceTarget = referencedElement;
+              EStructuralFeature feature = (EStructuralFeature)referencedElement;
               EClass ownerClass = (EClass)feature.eContainer();
-              pkg = ownerClass.getEPackage();
+              referencedPackage = ownerClass.getEPackage();
             }
-            else if (r instanceof EGenericType)
+            else if (referencedElement instanceof EGenericType)
             {
-              EGenericType genType = (EGenericType)r;
+              EGenericType genType = (EGenericType)referencedElement;
               EClassifier c = genType.getEClassifier();
               if (c != null)
               {
-                refTarget = c;
-                pkg = c.getEPackage();
+                referenceTarget = c;
+                referencedPackage = c.getEPackage();
               }
             }
 
-            if (pkg == null)
+            if (referencedPackage == null)
             {
               continue;
             }
 
-            while (pkg.getESuperPackage() != null)
+            while (referencedPackage.getESuperPackage() != null)
             {
-              pkg = pkg.getESuperPackage();
+              referencedPackage = referencedPackage.getESuperPackage();
             }
 
-            String resourceURI = refTarget.eResource().getURI().toString();
-            if (!resourceURI.toString().equals(pkg.getNsURI()))
+            String resourceURI = referenceTarget.eResource().getURI().toString();
+            if (!resourceURI.toString().equals(referencedPackage.getNsURI()))
             {
               String msg = "URI of the resource (%s) does not match the nsURI (%s) of the top-level package;\n"
                   + "this can be fixed by calling Resource.setURI(URI) after loading the packages,\n"
                   + "or by configuring a URI mapping from nsURI's to location URI's before loading the packages,\n"
                   + "and then loading them with their nsURI's";
-              msg = String.format(msg, resourceURI, pkg.getNsURI());
+              msg = String.format(msg, resourceURI, referencedPackage.getNsURI());
               throw new IllegalStateException(msg);
             }
           }

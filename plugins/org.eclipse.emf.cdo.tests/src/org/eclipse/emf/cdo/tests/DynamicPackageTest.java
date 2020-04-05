@@ -31,18 +31,15 @@ import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
  */
 public class DynamicPackageTest extends AbstractCDOTest
 {
-  protected static EClass mapContainerEClass;
-
   public void testDynamicMaps() throws Exception
   {
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
     EPackage dynamicMapEPackge = createPackage();
     EFactory dynamicMapEFactoryInstance = dynamicMapEPackge.getEFactoryInstance();
-
-    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     EObject mapContainer = dynamicMapEFactoryInstance.create((EClass)dynamicMapEPackge.getEClassifier("MapContainer"));
 
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().add(mapContainer);
     transaction.commit();
 
@@ -56,22 +53,18 @@ public class DynamicPackageTest extends AbstractCDOTest
     }
   }
 
-  public EPackage createPackage()
+  private EPackage createPackage()
   {
-    EcoreFactory theCoreFactory = EcoreFactory.eINSTANCE;
-    EcorePackage theCorePackage = EcorePackage.eINSTANCE;
+    EStructuralFeature name = EcoreFactory.eINSTANCE.createEAttribute();
+    name.setName("name");
+    name.setEType(EcorePackage.eINSTANCE.getEString());
 
-    mapContainerEClass = theCoreFactory.createEClass();
+    EClass mapContainerEClass = EcoreFactory.eINSTANCE.createEClass();
     mapContainerEClass.setName("MapContainer");
+    mapContainerEClass.getEStructuralFeatures().add(name);
 
     EPackage dynamicMapEPackage = createUniquePackage();
     dynamicMapEPackage.getEClassifiers().add(mapContainerEClass);
-
-    EStructuralFeature name = theCoreFactory.createEAttribute();
-    name.setName("name");
-    name.setEType(theCorePackage.getEString());
-
-    mapContainerEClass.getEStructuralFeatures().add(name);
 
     if (!isConfig(LEGACY))
     {

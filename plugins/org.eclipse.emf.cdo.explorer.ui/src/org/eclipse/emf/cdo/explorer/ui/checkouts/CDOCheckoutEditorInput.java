@@ -18,14 +18,20 @@ import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.AbstractCDOEditorInput;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorInput2;
+import org.eclipse.emf.cdo.ui.CDOEditorInput3;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
+
 import org.eclipse.emf.common.util.URI;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -36,7 +42,7 @@ import org.eclipse.ui.IPersistableElement;
 /**
  * @author Eike Stepper
  */
-public class CDOModelEditorInput extends PlatformObject implements CDOEditorInput2, IPersistableElement
+public class CDOCheckoutEditorInput extends PlatformObject implements CDOEditorInput2, CDOEditorInput3, IPersistableElement
 {
   protected static final String URI_TAG = "uri";
 
@@ -50,7 +56,7 @@ public class CDOModelEditorInput extends PlatformObject implements CDOEditorInpu
 
   private CDOID objectID;
 
-  public CDOModelEditorInput(URI uri)
+  public CDOCheckoutEditorInput(URI uri)
   {
     this.uri = uri;
   }
@@ -73,13 +79,53 @@ public class CDOModelEditorInput extends PlatformObject implements CDOEditorInpu
   @Override
   public CDOView getView()
   {
+    return view;
+  }
+
+  @Override
+  public CDOView openView(IProgressMonitor progressMonitor)
+  {
     if (view == null)
     {
       CDOCheckout checkout = getCheckout();
-      checkout.open();
 
-      view = checkout.openView();
-      configureView(view);
+      OMMonitor monitor = new EclipseMonitor(progressMonitor, "Opening checkout...");
+      monitor.begin();
+
+      try
+      {
+        Async async = monitor.forkAsync();
+
+        try
+        {
+          checkout.open();
+
+          progressMonitor.setTaskName("Opening view...");
+          view = checkout.openView();
+          configureView(view);
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+
+          String message = ex.getLocalizedMessage();
+          if (message == null || message.isEmpty())
+          {
+            message = "Could not open checkout.";
+          }
+
+          message += "\nCheck the error log for details.";
+          progressMonitor.setTaskName(message);
+        }
+        finally
+        {
+          async.stop();
+        }
+      }
+      finally
+      {
+        monitor.done();
+      }
     }
 
     return view;
@@ -193,7 +239,7 @@ public class CDOModelEditorInput extends PlatformObject implements CDOEditorInpu
   @Override
   public boolean equals(Object o)
   {
-    return this == o || o instanceof CDOModelEditorInput && uri.equals(((CDOModelEditorInput)o).getURI());
+    return this == o || o instanceof CDOCheckoutEditorInput && uri.equals(((CDOCheckoutEditorInput)o).getURI());
   }
 
   protected void configureView(CDOView view)
@@ -206,7 +252,7 @@ public class CDOModelEditorInput extends PlatformObject implements CDOEditorInpu
 
   protected void configureTransaction(CDOTransaction transaction)
   {
-    CDOModelEditorOpener.addConflictResolver(transaction);
+    CDOCheckoutEditorOpener.addConflictResolver(transaction);
   }
 
   /**
@@ -214,7 +260,7 @@ public class CDOModelEditorInput extends PlatformObject implements CDOEditorInpu
    */
   public static class ElementFactory implements IElementFactory
   {
-    public static final String ID = "org.eclipse.emf.cdo.explorer.ui.checkouts.CDOModelEditorInput.ElementFactory";
+    public static final String ID = "org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutEditorInput.ElementFactory";
 
     public ElementFactory()
     {
@@ -224,7 +270,7 @@ public class CDOModelEditorInput extends PlatformObject implements CDOEditorInpu
     public IAdaptable createElement(IMemento memento)
     {
       URI uri = URI.createURI(memento.getString(URI_TAG));
-      return new CDOModelEditorInput(uri);
+      return new CDOCheckoutEditorInput(uri);
     }
   }
 }

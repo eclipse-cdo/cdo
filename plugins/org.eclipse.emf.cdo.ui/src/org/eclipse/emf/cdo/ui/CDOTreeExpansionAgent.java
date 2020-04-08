@@ -12,8 +12,11 @@ package org.eclipse.emf.cdo.ui;
 
 import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.ui.views.CDOTimeMachineView;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
@@ -37,6 +40,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Automatically preserves a {@link TreeViewer tree viewer's} item expansion states across
+ * multiple {@link CDOView#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranch, long) target changes}
+ * of the underlying {@link CDOView view}.
+ * <p>
+ * When the {@link CDOBranchPoint target} of the tree viewer's underlying {@link CDOView view} changes, for example
+ * during {@link CDOBranch branch} switches or {@link CDOTimeMachineView time travels}, viewer items can become unavailable
+ * and are, hence, removed from the tree viewer. These items can become available again during subsequent view target changes.
+ * This agent remembers the set of expanded tree items and reestablishes these expansion states when items become available again.
+ * <p>
+ * Internally this is achieved by registering a {@link ITreeViewerListener} to the tree viewer and by listening to
+ * {@link CDOViewTargetChangedEvent CDOViewTargetChangedEvents} of the underlying {@link CDOView view}. This agent disposes of itself
+ * when the {@link TreeViewer tree viewer} is disposed or when the {@link CDOView view} is closed.
+ *
  * @author Eike Stepper
  * @since 4.4
  */

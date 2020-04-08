@@ -584,18 +584,23 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   @Override
   public void activate()
   {
-    importRootsAction.setActiveWorkbenchPart(activeEditor);
-    Object input = ((CDOEditor)getActiveEditor()).getViewer().getInput();
-    if (input instanceof CDOResource)
+    CDOEditor cdoEditor = (CDOEditor)activeEditor;
+    if (cdoEditor.pagesCreated.get())
     {
-      importRootsAction.setTargetResource((CDOResource)input);
-    }
-    else
-    {
-      importRootsAction.setTargetResource(null);
-    }
+      importRootsAction.setActiveWorkbenchPart(activeEditor);
 
-    super.activate();
+      Object input = cdoEditor.getViewer().getInput();
+      if (input instanceof CDOResource)
+      {
+        importRootsAction.setTargetResource((CDOResource)input);
+      }
+      else
+      {
+        importRootsAction.setTargetResource(null);
+      }
+
+      super.activate();
+    }
   }
 
   /**

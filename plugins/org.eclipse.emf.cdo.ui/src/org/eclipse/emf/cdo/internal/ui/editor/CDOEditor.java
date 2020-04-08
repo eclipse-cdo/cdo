@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.internal.ui.editor;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -29,6 +30,7 @@ import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.ui.CDOEditorInput2;
+import org.eclipse.emf.cdo.ui.CDOEditorInput3;
 import org.eclipse.emf.cdo.ui.CDOEventHandler;
 import org.eclipse.emf.cdo.ui.CDOInvalidRootAgent;
 import org.eclipse.emf.cdo.ui.CDOLabelProvider;
@@ -96,6 +98,10 @@ import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.ProgressMonitorWrapper;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
@@ -137,6 +143,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
@@ -177,6 +184,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Eike Stepper
@@ -367,7 +375,10 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       }
       else if (p == CDOEditor.this)
       {
-        handleActivate();
+        if (pagesCreated.get())
+        {
+          handleActivate();
+        }
       }
     }
 
@@ -506,6 +517,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       }
     }
   };
+
+  protected final AtomicBoolean pagesCreated = new AtomicBoolean();
 
   /**
    * Handles activation of the editor or it's associated views.
@@ -948,10 +961,13 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * This is the method called to load a resource into the editing domain's resource set based on the editor's input.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * @deprecated Not called.
+   * <!-- end-user-doc -->
    * @generated
    */
-  public void createModelGen()
+  @Deprecated
+  public void createModel()
   {
     URI resourceURI = EditUIUtil.getURI(getEditorInput());
     Exception exception = null;
@@ -974,147 +990,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       resourceToDiagnosticMap.put(resource, analyzeResourceProblems(resource, exception));
     }
     editingDomain.getResourceSet().eAdapters().add(problemIndicationAdapter);
-  }
-
-  /**
-   * @ADDED
-   */
-  public void createModel()
-  {
-    try
-    {
-      CDOEditorInput editorInput = (CDOEditorInput)getEditorInput();
-      view = editorInput.getView();
-
-      // If the view can be switched to historical times let an InvalidRootAgent handle detached inputs.
-      if (view.isReadOnly())
-      {
-        invalidRootAgent = new CDOInvalidRootAgent(view)
-        {
-          @Override
-          protected Object getRootFromUI()
-          {
-            return selectionViewer.getInput();
-          }
-
-          @Override
-          protected void setRootToUI(Object root)
-          {
-            selectionViewer.setInput(root);
-          }
-
-          @Override
-          protected void closeUI()
-          {
-            closeEditor();
-          }
-        };
-      }
-
-      CommandStack commandStack;
-
-      IEditingDomainProvider domainProvider = AdapterUtil.adapt(editorInput, IEditingDomainProvider.class);
-      if (domainProvider != null && domainProvider.getEditingDomain() instanceof AdapterFactoryEditingDomain)
-      {
-        editingDomain = (AdapterFactoryEditingDomain)domainProvider.getEditingDomain();
-        commandStack = editingDomain.getCommandStack();
-        if (editingDomain.getAdapterFactory() instanceof ComposedAdapterFactory)
-        {
-          adapterFactory = (ComposedAdapterFactory)editingDomain.getAdapterFactory();
-        }
-        else
-        {
-          adapterFactory.addAdapterFactory(editingDomain.getAdapterFactory());
-        }
-      }
-      else
-      {
-        commandStack = new BasicCommandStack();
-        editingDomain = createEditingDomain((BasicCommandStack)commandStack, view.getResourceSet());
-      }
-
-      commandStack.addCommandStackListener(new CommandStackListener()
-      {
-        @Override
-        public void commandStackChanged(final EventObject event)
-        {
-          Composite container = getContainer();
-          if (!container.isDisposed())
-          {
-            container.getDisplay().asyncExec(new Runnable()
-            {
-              @Override
-              public void run()
-              {
-                firePropertyChange(IEditorPart.PROP_DIRTY);
-
-                // Try to select the affected objects.
-                //
-                Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
-                if (mostRecentCommand != null)
-                {
-                  setSelectionToViewer(mostRecentCommand.getAffectedObjects());
-                }
-                for (Iterator<PropertySheetPage> i = propertySheetPages.iterator(); i.hasNext();)
-                {
-                  PropertySheetPage propertySheetPage = i.next();
-                  if (propertySheetPage.getControl().isDisposed())
-                  {
-                    i.remove();
-                  }
-                  else
-                  {
-                    propertySheetPage.refresh();
-                  }
-                }
-              }
-            });
-          }
-        }
-      });
-
-      ResourceSet resourceSet = view.getResourceSet();
-
-      // This adapter provides the EditingDomain of the Editor
-      resourceSet.eAdapters().add(new EditingDomainProviderAdapter());
-
-      String resourcePath = editorInput.getResourcePath();
-      if (resourcePath == null)
-      {
-        viewerInput = resourceSet;
-      }
-      else
-      {
-        InternalCDOObject inputObject = null;
-        if (editorInput instanceof CDOEditorInput2)
-        {
-          CDOID objectID = ((CDOEditorInput2)editorInput).getObjectID();
-          inputObject = (InternalCDOObject)view.getObject(objectID);
-        }
-
-        if (inputObject != null)
-        {
-          viewerInput = inputObject.cdoInternalInstance();
-        }
-        else
-        {
-          URI resourceURI = CDOURIUtil.createResourceURI(view, resourcePath);
-          viewerInput = resourceSet.getResource(resourceURI, true);
-        }
-
-        if (!view.isReadOnly())
-        {
-          view.addObjectHandler(objectHandler);
-        }
-      }
-
-      // resourceSet.eAdapters().add(problemIndicationAdapter);
-    }
-    catch (RuntimeException ex)
-    {
-      OM.LOG.error(ex);
-      throw ex;
-    }
   }
 
   protected AdapterFactoryEditingDomain createEditingDomain(BasicCommandStack commandStack, ResourceSet resourceSet)
@@ -1149,11 +1024,14 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This is the method used by the framework to install your own controls. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
+   * This is the method used by the framework to install your own controls.
+   * <!-- begin-user-doc -->
+   * @deprecated Not called.
+   * <!-- end-user-doc -->
    *
    * @generated
    */
+  @Deprecated
   public void createPagesGen()
   {
     // Creates the model from the editor input
@@ -1226,10 +1104,211 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   @Override
   public void createPages()
   {
+    CDOEditorInput editorInput = (CDOEditorInput)getEditorInput();
+
+    CDOView view = editorInput.getView();
+    String resourcePath = editorInput.getResourcePath();
+    CDOID objectID = editorInput instanceof CDOEditorInput2 ? ((CDOEditorInput2)editorInput).getObjectID() : null;
+    IEditingDomainProvider domainProvider = AdapterUtil.adapt(editorInput, IEditingDomainProvider.class);
+
+    if (view != null)
+    {
+      createPages(view, resourcePath, objectID, domainProvider);
+    }
+    else if (editorInput instanceof CDOEditorInput3)
+    {
+      Display display = getSite().getShell().getDisplay();
+
+      Label progressLabel = new Label(getContainer(), SWT.NONE);
+      progressLabel.setBackground(display.getSystemColor(SWT.COLOR_LIST_BACKGROUND));
+      progressLabel.setText("Operation in progress...");
+
+      addPage(0, progressLabel);
+      setActivePage(0);
+      hideTabs();
+
+      new Job("Open view")
+      {
+        @Override
+        protected IStatus run(IProgressMonitor monitor)
+        {
+          ProgressMonitorWrapper monitorWrapper = new ProgressMonitorWrapper(monitor)
+          {
+            @Override
+            public void beginTask(String name, int totalWork)
+            {
+              display.asyncExec(() -> progressLabel.setText(name));
+              super.beginTask(name, totalWork);
+            }
+
+            @Override
+            public void setTaskName(String name)
+            {
+              display.asyncExec(() -> progressLabel.setText(name));
+              super.setTaskName(name);
+            }
+          };
+
+          try
+          {
+            CDOView view = ((CDOEditorInput3)editorInput).openView(monitorWrapper);
+            if (view != null)
+            {
+              display.asyncExec(() -> {
+                try
+                {
+                  removePage(0);
+                  showTabs();
+
+                  createPages(view, resourcePath, objectID, domainProvider);
+
+                  handleActivate();
+
+                  CDOActionBarContributor actionBarContributor = (CDOActionBarContributor)getActionBarContributor();
+                  actionBarContributor.activate();
+
+                  firePropertyChange(IEditorPart.PROP_INPUT);
+                }
+                catch (Exception ex)
+                {
+                  //$FALL-THROUGH$
+                }
+              });
+            }
+
+            return Status.OK_STATUS;
+          }
+          catch (Throwable ex)
+          {
+            return OM.BUNDLE.getStatus(ex);
+          }
+        }
+      }.schedule();
+    }
+  }
+
+  protected void createPages(CDOView view, String resourcePath, CDOID objectID, IEditingDomainProvider domainProvider)
+  {
     try
     {
-      // Creates the model from the editor input
-      createModel();
+      this.view = view;
+
+      ResourceSet resourceSet = view.getResourceSet();
+      resourceSet.eAdapters().add(new EditingDomainProviderAdapter());
+
+      invalidRootAgent = new CDOInvalidRootAgent(view)
+      {
+        @Override
+        protected Object getRootFromUI()
+        {
+          if (selectionViewer != null)
+          {
+            return selectionViewer.getInput();
+          }
+
+          return null;
+        }
+
+        @Override
+        protected void setRootToUI(Object root)
+        {
+          if (selectionViewer != null)
+          {
+            selectionViewer.setInput(root);
+          }
+        }
+
+        @Override
+        protected void closeUI()
+        {
+          closeEditor();
+        }
+      };
+
+      CommandStack commandStack;
+
+      if (domainProvider != null && domainProvider.getEditingDomain() instanceof AdapterFactoryEditingDomain)
+      {
+        editingDomain = (AdapterFactoryEditingDomain)domainProvider.getEditingDomain();
+        commandStack = editingDomain.getCommandStack();
+        if (editingDomain.getAdapterFactory() instanceof ComposedAdapterFactory)
+        {
+          adapterFactory = (ComposedAdapterFactory)editingDomain.getAdapterFactory();
+        }
+        else
+        {
+          adapterFactory.addAdapterFactory(editingDomain.getAdapterFactory());
+        }
+      }
+      else
+      {
+        commandStack = new BasicCommandStack();
+        editingDomain = createEditingDomain((BasicCommandStack)commandStack, resourceSet);
+      }
+
+      commandStack.addCommandStackListener(new CommandStackListener()
+      {
+        @Override
+        public void commandStackChanged(final EventObject event)
+        {
+          Composite container = getContainer();
+          if (!container.isDisposed())
+          {
+            container.getDisplay().asyncExec(new Runnable()
+            {
+              @Override
+              public void run()
+              {
+                firePropertyChange(IEditorPart.PROP_DIRTY);
+
+                // Try to select the affected objects.
+                //
+                Command mostRecentCommand = ((CommandStack)event.getSource()).getMostRecentCommand();
+                if (mostRecentCommand != null)
+                {
+                  setSelectionToViewer(mostRecentCommand.getAffectedObjects());
+                }
+                for (Iterator<PropertySheetPage> i = propertySheetPages.iterator(); i.hasNext();)
+                {
+                  PropertySheetPage propertySheetPage = i.next();
+                  if (propertySheetPage.getControl().isDisposed())
+                  {
+                    i.remove();
+                  }
+                  else
+                  {
+                    propertySheetPage.refresh();
+                  }
+                }
+              }
+            });
+          }
+        }
+      });
+
+      if (resourcePath == null)
+      {
+        viewerInput = resourceSet;
+      }
+      else
+      {
+
+        if (CDOIDUtil.isNull(objectID))
+        {
+          URI resourceURI = CDOURIUtil.createResourceURI(view, resourcePath);
+          viewerInput = resourceSet.getResource(resourceURI, true);
+        }
+        else
+        {
+          InternalCDOObject inputObject = (InternalCDOObject)view.getObject(objectID);
+          viewerInput = inputObject.cdoInternalInstance();
+        }
+
+        if (!view.isReadOnly())
+        {
+          view.addObjectHandler(objectHandler);
+        }
+      }
 
       Tree tree = new Tree(getContainer(), SWT.MULTI);
       selectionViewer = new SafeTreeViewer(tree);
@@ -1420,6 +1499,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         // do nothing
       }
     });
+
+    pagesCreated.set(true);
   }
 
   /**
@@ -1865,7 +1946,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   @Override
   public boolean isDirty()
   {
-    return view.isDirty();
+    if (view != null)
+    {
+      return view.isDirty();
+    }
+
+    return false;
   }
 
   /**

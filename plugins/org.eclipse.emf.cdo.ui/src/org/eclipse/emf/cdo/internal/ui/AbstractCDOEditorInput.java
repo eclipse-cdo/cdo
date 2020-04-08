@@ -124,6 +124,11 @@ public abstract class AbstractCDOEditorInput extends PlatformObject implements C
 
   public static String formatToolTipText(CDOView view, String resourcePath)
   {
+    if (view == null)
+    {
+      return Messages.getString("CDOEditorInputImpl.1"); //$NON-NLS-1$
+    }
+
     if (view.isClosed())
     {
       return Messages.getString("CDOEditorInputImpl.0"); //$NON-NLS-1$

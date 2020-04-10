@@ -11,11 +11,6 @@
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
 import org.eclipse.emf.cdo.CDOElement;
-import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.CDOList;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
@@ -24,33 +19,19 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutStateEvent;
-import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.OpenWithActionProvider;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
+import org.eclipse.emf.cdo.internal.ui.CDOContentProvider;
+import org.eclipse.emf.cdo.internal.ui.RunnableViewerRefresh;
+import org.eclipse.emf.cdo.internal.ui.ViewerUtil;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
-import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.lifecycle.LifecycleException;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.ui.UIUtil;
-import org.eclipse.net4j.util.ui.views.ItemProvider;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-import org.eclipse.emf.spi.cdo.InternalCDOObject;
-import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -60,7 +41,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -68,7 +48,6 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
@@ -78,7 +57,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
@@ -94,30 +72,23 @@ import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Eike Stepper
  */
-public class CDOCheckoutContentProvider implements ICommonContentProvider, IPropertySourceProvider, IOpenListener
+public class CDOCheckoutContentProvider extends CDOContentProvider<CDOCheckout> implements ICommonContentProvider, IPropertySourceProvider, IOpenListener
 {
+  public static final String PROJECT_EXPLORER_ID = "org.eclipse.ui.navigator.ProjectExplorer";
+
   private static final Map<String, CDOCheckoutContentProvider> INSTANCES = new HashMap<>();
-
-  private static final Set<Object> LOADING_OBJECTS = new HashSet<>();
-
-  private static final Method GET_CHILDREN_FEATURES_METHOD = getMethod(ItemProviderAdapter.class, "getChildrenFeatures", Object.class);
-
-  private static final Method FIND_ITEM_METHOD = getMethod(StructuredViewer.class, "findItem", Object.class);
 
   private static final CDOCheckoutManager CHECKOUT_MANAGER = CDOExplorerUtil.getCheckoutManager();
 
@@ -126,7 +97,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     @Override
     public void notifyEvent(IEvent event)
     {
-      CDOCheckoutViewerRefresh viewerRefresh = stateManager.getViewerRefresh();
+      RunnableViewerRefresh viewerRefresh = stateManager.getViewerRefresh();
 
       if (event instanceof IContainerEvent)
       {
@@ -141,23 +112,23 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
         if (state == CDOCheckout.State.Opening)
         {
           // Trigger hasChildren().
-          ViewerUtil.refresh(viewer, checkout);
+          ViewerUtil.refresh(getViewer(), checkout);
 
           // Trigger getChildren().
-          ViewerUtil.expand(viewer, checkout, true);
+          ViewerUtil.expand(getViewer(), checkout, true);
         }
         else
         {
           if (state == CDOCheckout.State.Closed)
           {
-            ViewerUtil.expand(viewer, checkout, false);
+            ViewerUtil.expand(getViewer(), checkout, false);
           }
 
           viewerRefresh.addNotification(checkout, true, true);
 
           if (state == CDOCheckout.State.Open)
           {
-            ViewerUtil.expand(viewer, checkout, true);
+            ViewerUtil.expand(getViewer(), checkout, true);
           }
 
           updatePropertySheetPage(checkout);
@@ -203,10 +174,11 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
       PropertySheet propertySheet = getPropertySheet(workbenchPage);
       if (propertySheet != null)
       {
-        final IPage currentPage = propertySheet.getCurrentPage();
+        IPage currentPage = propertySheet.getCurrentPage();
         if (currentPage instanceof PropertySheetPage || currentPage instanceof TabbedPropertySheetPage)
         {
-          final Control control = viewer.getControl();
+          TreeViewer viewer = getViewer();
+          Control control = viewer.getControl();
           if (!control.isDisposed())
           {
             control.getDisplay().asyncExec(new Runnable()
@@ -269,15 +241,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
 
   private final CDOCheckoutStateManager stateManager = new CDOCheckoutStateManager(this);
 
-  private final Map<Object, Object[]> childrenCache = new ConcurrentHashMap<>();
-
   private String viewerID;
-
-  private TreeViewer viewer;
-
-  private Object input;
-
-  public static final String PROJECT_EXPLORER_ID = "org.eclipse.ui.navigator.ProjectExplorer";
 
   public CDOCheckoutContentProvider()
   {
@@ -327,497 +291,54 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     return stateManager;
   }
 
-  public final TreeViewer getViewer()
-  {
-    return viewer;
-  }
-
   @Override
   public void inputChanged(Viewer newViewer, Object oldInput, Object newInput)
   {
-    TreeViewer newTreeViewer = null;
-    if (newViewer instanceof TreeViewer)
-    {
-      newTreeViewer = (TreeViewer)newViewer;
-    }
-
-    if (newTreeViewer != viewer)
-    {
-      if (viewer != null)
-      {
-        viewer.removeOpenListener(this);
-      }
-
-      viewer = newTreeViewer;
-
-      if (viewer != null)
-      {
-        viewer.addOpenListener(this);
-      }
-    }
-
-    input = newInput;
-    stateManager.inputChanged(newTreeViewer, oldInput, newInput);
-  }
-
-  public Object getInput()
-  {
-    return input;
-  }
-
-  @Override
-  public Object[] getElements(Object object)
-  {
-    return getChildren(object);
+    super.inputChanged(newViewer, oldInput, newInput);
+    stateManager.inputChanged(getViewer(), oldInput, newInput);
   }
 
   @Override
   public boolean hasChildren(Object object)
   {
-    try
+    if (object instanceof IResource)
     {
-      if (object instanceof IResource)
+      if (object instanceof IWorkspaceRoot)
       {
-        if (object instanceof IWorkspaceRoot)
-        {
-          return !CHECKOUT_MANAGER.isEmpty();
-        }
-
-        return false;
+        return !CHECKOUT_MANAGER.isEmpty();
       }
 
-      if (object instanceof ViewerUtil.Pending)
-      {
-        return false;
-      }
-
-      if (object instanceof CDOCheckout)
-      {
-        CDOCheckout checkout = (CDOCheckout)object;
-        switch (checkout.getState())
-        {
-        case Closing:
-        case Closed:
-          return false;
-
-        case Opening:
-          // This must be the ViewerUtil.Pending element.
-          return true;
-
-        case Open:
-          object = checkout.getRootObject();
-          break;
-        }
-      }
-
-      if (object instanceof CDOElement)
-      {
-        CDOElement checkoutElement = (CDOElement)object;
-        return checkoutElement.hasChildren();
-      }
-
-      if (GET_CHILDREN_FEATURES_METHOD != null && object instanceof EObject)
-      {
-        EObject eObject = (EObject)object;
-
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (cdoObject != null)
-        {
-          InternalCDORevision revision = cdoObject.cdoRevision(false);
-          if (revision != null)
-          {
-            try
-            {
-              ITreeItemContentProvider provider = (ITreeItemContentProvider)stateManager.adapt(object, ITreeItemContentProvider.class);
-              if (provider instanceof ItemProviderAdapter)
-              {
-                return hasChildren(cdoObject, revision, (ItemProviderAdapter)provider);
-              }
-            }
-            catch (Exception ex)
-            {
-              //$FALL-THROUGH$
-            }
-          }
-        }
-      }
-
-      ITreeContentProvider contentProvider = stateManager.getContentProvider(object);
-      if (contentProvider != null)
-      {
-        return contentProvider.hasChildren(object);
-      }
-    }
-    catch (LifecycleException ex)
-    {
-      //$FALL-THROUGH$
-    }
-    catch (RuntimeException ex)
-    {
-      if (LifecycleUtil.isActive(object))
-      {
-        throw ex;
-      }
-
-      //$FALL-THROUGH$
+      return false;
     }
 
-    return false;
+    return super.hasChildren(object);
   }
 
   @Override
   public Object[] getChildren(Object object)
   {
-    try
+    if (object instanceof IResource)
     {
-      if (object instanceof IResource)
+      if (object instanceof IWorkspaceRoot)
       {
-        if (object instanceof IWorkspaceRoot)
-        {
-          return CHECKOUT_MANAGER.getCheckouts();
-        }
-
-        return ViewerUtil.NO_CHILDREN;
+        return CHECKOUT_MANAGER.getCheckouts();
       }
 
-      if (object instanceof ViewerUtil.Pending)
-      {
-        return ViewerUtil.NO_CHILDREN;
-      }
-
-      if (object instanceof CDOElement)
-      {
-        CDOElement checkoutElement = (CDOElement)object;
-        return checkoutElement.getChildren();
-      }
-
-      final Object originalObject = object;
-      Object[] children = childrenCache.remove(originalObject);
-      if (children != null)
-      {
-        return children;
-      }
-
-      CDOCheckout openingCheckout = null;
-      CDOCheckout checkout = null;
-
-      if (object instanceof CDOCheckout)
-      {
-        checkout = (CDOCheckout)object;
-
-        switch (checkout.getState())
-        {
-        case Closing:
-        case Closed:
-          return ViewerUtil.NO_CHILDREN;
-
-        case Opening:
-          openingCheckout = checkout;
-          break;
-
-        case Open:
-          object = checkout.getRootObject();
-          break;
-        }
-      }
-
-      final Object finalObject = object;
-      final CDOCheckout finalOpeningCheckout = openingCheckout;
-
-      final ITreeContentProvider contentProvider = stateManager.getContentProvider(finalObject);
-      if (contentProvider == null)
-      {
-        return ItemProvider.NO_ELEMENTS;
-      }
-
-      final List<CDORevision> loadedRevisions = new ArrayList<>();
-      final List<CDOID> missingIDs = new ArrayList<>();
-
-      if (openingCheckout == null)
-      {
-        children = determineChildRevisions(object, loadedRevisions, missingIDs);
-        if (children != null)
-        {
-          return CDOCheckoutContentModifier.Registry.INSTANCE.modifyChildren(object, children);
-        }
-      }
-
-      boolean firstLoad;
-      synchronized (LOADING_OBJECTS)
-      {
-        firstLoad = LOADING_OBJECTS.add(originalObject);
-      }
-
-      if (firstLoad || finalOpeningCheckout == null)
-      {
-        Job job = new Job("Load " + finalObject)
-        {
-          @Override
-          protected IStatus run(IProgressMonitor monitor)
-          {
-            try
-            {
-              if (finalOpeningCheckout != null)
-              {
-                finalOpeningCheckout.open();
-                determineChildRevisions(finalObject, loadedRevisions, missingIDs);
-              }
-
-              if (!missingIDs.isEmpty())
-              {
-                CDOObject cdoObject = getCDOObject((EObject)finalObject);
-                CDOView view = cdoObject.cdoView();
-                CDORevisionManager revisionManager = view.getSession().getRevisionManager();
-
-                List<CDORevision> revisions = revisionManager.getRevisions(missingIDs, view, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
-                loadedRevisions.addAll(revisions);
-              }
-
-              Object[] children = contentProvider.getChildren(finalObject);
-
-              // Adjust possible legacy adapters.
-              for (int i = 0; i < children.length; i++)
-              {
-                Object child = children[i];
-                if (child instanceof InternalCDOObject)
-                {
-                  InternalCDOObject cdoObject = (InternalCDOObject)child;
-                  InternalEObject instance = cdoObject.cdoInternalInstance();
-                  if (instance != cdoObject)
-                  {
-                    children[i] = instance;
-                  }
-                }
-              }
-
-              children = CDOCheckoutContentModifier.Registry.INSTANCE.modifyChildren(finalObject, children);
-              childrenCache.put(originalObject, children);
-            }
-            catch (final Exception ex)
-            {
-              childrenCache.remove(originalObject);
-
-              if (finalOpeningCheckout != null)
-              {
-                finalOpeningCheckout.close();
-              }
-
-              OM.LOG.error(ex);
-
-              final Control control = viewer.getControl();
-              if (!control.isDisposed())
-              {
-                UIUtil.getDisplay().asyncExec(new Runnable()
-                {
-                  @Override
-                  public void run()
-                  {
-                    try
-                    {
-                      if (!control.isDisposed())
-                      {
-                        Shell shell = control.getShell();
-                        String title = (finalOpeningCheckout != null ? "Open" : "Load") + " Error";
-                        MessageDialog.openError(shell, title, ex.getMessage());
-                      }
-                    }
-                    catch (Exception ex)
-                    {
-                      OM.LOG.error(ex);
-                    }
-                  }
-                });
-              }
-            }
-
-            CDOCheckoutViewerRefresh viewerRefresh = stateManager.getViewerRefresh();
-            viewerRefresh.addNotification(originalObject, true, true, new Runnable()
-            {
-              @Override
-              public void run()
-              {
-                synchronized (LOADING_OBJECTS)
-                {
-                  LOADING_OBJECTS.remove(originalObject);
-                }
-              }
-            });
-
-            return Status.OK_STATUS;
-          }
-        };
-
-        job.schedule();
-      }
-
-      if (FIND_ITEM_METHOD != null)
-      {
-        try
-        {
-          Object widget = FIND_ITEM_METHOD.invoke(viewer, originalObject);
-          if (widget instanceof TreeItem)
-          {
-            TreeItem item = (TreeItem)widget;
-            TreeItem[] childItems = item.getItems();
-
-            int childCount = childItems.length;
-            if (childCount != 0)
-            {
-              List<Object> result = new ArrayList<>();
-              for (int i = 0; i < childCount; i++)
-              {
-                TreeItem childItem = childItems[i];
-                Object child = childItem.getData();
-                if (child != null)
-                {
-                  result.add(child);
-                }
-              }
-
-              int size = result.size();
-              if (size != 0)
-              {
-                return result.toArray(new Object[size]);
-              }
-            }
-          }
-        }
-        catch (Exception ex)
-        {
-          //$FALL-THROUGH$
-        }
-      }
-
-      String text = "Loading...";
-      if (finalOpeningCheckout != null)
-      {
-        text = "Opening...";
-      }
-
-      return new Object[] { new ViewerUtil.Pending(originalObject, text) };
-    }
-    catch (LifecycleException ex)
-    {
-      //$FALL-THROUGH$
-    }
-    catch (RuntimeException ex)
-    {
-      if (LifecycleUtil.isActive(object))
-      {
-        throw ex;
-      }
-
-      //$FALL-THROUGH$
+      return ViewerUtil.NO_CHILDREN;
     }
 
-    return ItemProvider.NO_ELEMENTS;
-  }
-
-  private Object[] determineChildRevisions(Object object, List<CDORevision> loadedRevisions, List<CDOID> missingIDs)
-  {
-    if (GET_CHILDREN_FEATURES_METHOD != null && object instanceof EObject)
-    {
-      EObject eObject = (EObject)object;
-
-      InternalCDOObject cdoObject = getCDOObject(eObject);
-      if (cdoObject != null)
-      {
-        InternalCDORevision revision = cdoObject.cdoRevision(false);
-        if (revision != null)
-        {
-          try
-          {
-            ITreeItemContentProvider provider = (ITreeItemContentProvider)stateManager.adapt(object, ITreeItemContentProvider.class);
-            if (provider instanceof ItemProviderAdapter)
-            {
-              determineChildRevisions(cdoObject, revision, (ItemProviderAdapter)provider, loadedRevisions, missingIDs);
-
-              if (missingIDs.isEmpty())
-              {
-                // All revisions are cached. Just return the objects without server round-trips.
-                ITreeContentProvider contentProvider = stateManager.getContentProvider(object);
-                if (contentProvider != null)
-                {
-                  return contentProvider.getChildren(object);
-                }
-              }
-            }
-          }
-          catch (Exception ex)
-          {
-            //$FALL-THROUGH$
-          }
-        }
-      }
-    }
-
-    return null;
+    return super.getChildren(object);
   }
 
   @Override
   public Object getParent(Object object)
   {
-    try
+    if (object instanceof CDOCheckout)
     {
-      if (object instanceof CDOCheckout)
-      {
-        return ResourcesPlugin.getWorkspace().getRoot();
-      }
-
-      if (object instanceof ViewerUtil.Pending)
-      {
-        return ((ViewerUtil.Pending)object).getParent();
-      }
-
-      if (object instanceof CDOElement)
-      {
-        CDOElement checkoutElement = (CDOElement)object;
-        return checkoutElement.getParent();
-      }
-
-      if (object instanceof EObject)
-      {
-        EObject eObject = CDOUtil.getEObject((EObject)object);
-
-        CDOElement element = CDOElement.getFor(eObject);
-        if (element != null)
-        {
-          return element;
-        }
-
-        ITreeContentProvider contentProvider = stateManager.getContentProvider(object);
-        if (contentProvider != null)
-        {
-          Object parent = contentProvider.getParent(object);
-          if (parent instanceof EObject)
-          {
-            EObject eParent = (EObject)parent;
-            Adapter adapter = EcoreUtil.getAdapter(eParent.eAdapters(), CDOCheckout.class);
-            if (adapter != null)
-            {
-              return adapter;
-            }
-          }
-
-          return parent;
-        }
-      }
-    }
-    catch (LifecycleException ex)
-    {
-      //$FALL-THROUGH$
-    }
-    catch (RuntimeException ex)
-    {
-      if (LifecycleUtil.isActive(object))
-      {
-        throw ex;
-      }
-
-      //$FALL-THROUGH$
+      return ResourcesPlugin.getWorkspace().getRoot();
     }
 
-    return null;
+    return super.getParent(object);
   }
 
   @Override
@@ -834,7 +355,8 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
 
   public void selectObjects(final Object... objects)
   {
-    final Control control = viewer.getControl();
+    TreeViewer viewer = getViewer();
+    Control control = viewer.getControl();
     if (!control.isDisposed())
     {
       final long end = System.currentTimeMillis() + 5000L;
@@ -943,8 +465,89 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     }
   }
 
+  @Override
+  protected void hookViewer(TreeViewer viewer)
+  {
+    viewer.addOpenListener(this);
+  }
+
+  @Override
+  protected void unhookViewer(TreeViewer viewer)
+  {
+    viewer.removeOpenListener(this);
+  }
+
+  @Override
+  protected Object adapt(Object target, Object type)
+  {
+    return stateManager.adapt(target, type);
+  }
+
+  @Override
+  protected Object[] modifyChildren(Object parent, Object[] children)
+  {
+    return CDOCheckoutContentModifier.Registry.INSTANCE.modifyChildren(parent, children);
+  }
+
+  @Override
+  protected ITreeContentProvider getContentProvider(Object object)
+  {
+    return stateManager.getContentProvider(object);
+  }
+
+  @Override
+  protected RunnableViewerRefresh getViewerRefresh()
+  {
+    return stateManager.getViewerRefresh();
+  }
+
+  @Override
+  protected boolean isContext(Object object)
+  {
+    return object instanceof CDOCheckout;
+  }
+
+  @Override
+  protected ContextState getContextState(CDOCheckout checkout)
+  {
+    switch (checkout.getState())
+    {
+    case Closing:
+    case Closed:
+      return ContextState.Closed;
+
+    case Opening:
+      return ContextState.Opening;
+
+    case Open:
+      return ContextState.Open;
+
+    default:
+      throw new IllegalStateException("Unexpected checkout state: " + checkout);
+    }
+  }
+
+  @Override
+  protected void openContext(CDOCheckout checkout)
+  {
+    checkout.open();
+  }
+
+  @Override
+  protected void closeContext(CDOCheckout checkout)
+  {
+    checkout.close();
+  }
+
+  @Override
+  protected Object getRootObject(CDOCheckout checkout)
+  {
+    return checkout.getRootObject();
+  }
+
   private IWorkbenchPage getWorkbenchPage()
   {
+    TreeViewer viewer = getViewer();
     if (viewer instanceof CommonViewer)
     {
       CommonViewer commonViewer = (CommonViewer)viewer;
@@ -952,112 +555,6 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     }
 
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-  }
-
-  private static InternalCDOObject getCDOObject(EObject eObject)
-  {
-    return (InternalCDOObject)CDOUtil.getCDOObject(eObject, false);
-  }
-
-  private static boolean hasChildren(InternalCDOObject cdoObject, InternalCDORevision revision, ItemProviderAdapter provider) throws Exception
-  {
-    for (EStructuralFeature feature : getChildrenFeatures(cdoObject, provider))
-    {
-      if (feature.isMany())
-      {
-        if (!revision.isEmpty(feature))
-        {
-          return true;
-        }
-      }
-      else if (revision.getValue(feature) != null)
-      {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  private static void determineChildRevisions(InternalCDOObject cdoObject, InternalCDORevision revision, ItemProviderAdapter provider,
-      List<CDORevision> loadedRevisions, List<CDOID> missingIDs) throws Exception
-  {
-    InternalCDOView view = cdoObject.cdoView();
-    InternalCDORevisionCache revisionCache = view.getSession().getRevisionManager().getCache();
-
-    for (EStructuralFeature feature : getChildrenFeatures(cdoObject, provider))
-    {
-      if (feature.isMany())
-      {
-        CDOList list = revision.getListOrNull(feature);
-        if (list != null)
-        {
-          for (Object object : list)
-          {
-            determineChildRevision(loadedRevisions, missingIDs, view, revisionCache, object);
-          }
-        }
-      }
-      else
-      {
-        Object value = revision.getValue(feature);
-        determineChildRevision(loadedRevisions, missingIDs, view, revisionCache, value);
-      }
-    }
-  }
-
-  private static void determineChildRevision(List<CDORevision> loadedRevisions, List<CDOID> missingIDs, InternalCDOView view, InternalCDORevisionCache cache,
-      Object object)
-  {
-    if (object instanceof CDOID)
-    {
-      CDOID id = (CDOID)object;
-      CDORevision childRevision = cache.getRevision(id, view);
-      if (childRevision != null)
-      {
-        loadedRevisions.add(childRevision);
-      }
-      else
-      {
-        missingIDs.add(id);
-      }
-    }
-  }
-
-  @SuppressWarnings("unchecked")
-  private static Collection<? extends EStructuralFeature> getChildrenFeatures(InternalCDOObject cdoObject, ItemProviderAdapter provider) throws Exception
-  {
-    return (Collection<? extends EStructuralFeature>)GET_CHILDREN_FEATURES_METHOD.invoke(provider, cdoObject);
-  }
-
-  private static Method getMethod(Class<?> c, String methodName, Class<?>... parameterTypes)
-  {
-    try
-    {
-      Method method = c.getDeclaredMethod(methodName, parameterTypes);
-      method.setAccessible(true);
-      return method;
-    }
-    catch (Throwable ex)
-    {
-      return null;
-    }
-  }
-
-  private static boolean isObjectLoading(Object... objects)
-  {
-    synchronized (LOADING_OBJECTS)
-    {
-      for (Object object : objects)
-      {
-        if (LOADING_OBJECTS.contains(object))
-        {
-          return true;
-        }
-      }
-
-      return false;
-    }
   }
 
   public static TreeViewer createTreeViewer(Composite container)

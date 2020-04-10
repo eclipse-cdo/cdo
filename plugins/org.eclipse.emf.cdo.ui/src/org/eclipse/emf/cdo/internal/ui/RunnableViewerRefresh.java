@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui.checkouts;
+package org.eclipse.emf.cdo.internal.ui;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.IViewerNotification;
@@ -23,11 +23,11 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public final class CDOCheckoutViewerRefresh extends ViewerRefresh
+public final class RunnableViewerRefresh extends ViewerRefresh
 {
   private final Viewer viewer;
 
-  public CDOCheckoutViewerRefresh(Viewer viewer)
+  public RunnableViewerRefresh(Viewer viewer)
   {
     super(viewer);
     this.viewer = viewer;

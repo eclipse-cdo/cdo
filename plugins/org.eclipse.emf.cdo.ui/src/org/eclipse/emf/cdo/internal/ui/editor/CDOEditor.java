@@ -21,6 +21,9 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.ui.CDOContentProvider;
+import org.eclipse.emf.cdo.internal.ui.RunnableViewerRefresh;
+import org.eclipse.emf.cdo.internal.ui.ViewerUtil;
 import org.eclipse.emf.cdo.internal.ui.actions.TransactionalBackgroundAction;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.BulkAddDialog;
@@ -50,6 +53,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
+import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
@@ -125,6 +129,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
@@ -1508,8 +1513,33 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected IContentProvider createContentProvider()
   {
-    return new AdapterFactoryContentProvider(adapterFactory)
+    class DelegateContentProvider extends AdapterFactoryContentProvider
     {
+      public DelegateContentProvider(AdapterFactory adapterFactory)
+      {
+        super(adapterFactory);
+      }
+
+      @Override
+      public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
+      {
+        super.inputChanged(viewer, oldInput, newInput);
+
+        if (viewer != null)
+        {
+          viewerRefresh = new RunnableViewerRefresh(viewer);
+        }
+        else
+        {
+          viewerRefresh = null;
+        }
+      }
+
+      public RunnableViewerRefresh getViewerRefresh()
+      {
+        return (RunnableViewerRefresh)viewerRefresh;
+      }
+
       @Override
       public boolean hasChildren(Object object)
       {
@@ -1527,6 +1557,72 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           return false;
         }
       }
+    }
+
+    DelegateContentProvider delegate = new DelegateContentProvider(adapterFactory);
+
+    return new CDOContentProvider<CDOView>()
+    {
+      @Override
+      public void inputChanged(Viewer newViewer, Object oldInput, Object newInput)
+      {
+        super.inputChanged(newViewer, oldInput, newInput);
+        delegate.inputChanged(newViewer, oldInput, newInput);
+      }
+
+      @Override
+      protected Object adapt(Object target, Object type)
+      {
+        return adapterFactory.adapt(target, type);
+      }
+
+      @Override
+      protected Object[] modifyChildren(Object parent, Object[] children)
+      {
+        return children;
+      }
+
+      @Override
+      protected ITreeContentProvider getContentProvider(Object object)
+      {
+        return delegate;
+      }
+
+      @Override
+      protected RunnableViewerRefresh getViewerRefresh()
+      {
+        return delegate.getViewerRefresh();
+      }
+
+      @Override
+      protected boolean isContext(Object object)
+      {
+        return false;
+      }
+
+      @Override
+      protected ContextState getContextState(CDOView view)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      @Override
+      protected void openContext(CDOView view)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      @Override
+      protected void closeContext(CDOView view)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      @Override
+      protected Object getRootObject(CDOView view)
+      {
+        throw new UnsupportedOperationException();
+      }
     };
   }
 
@@ -1542,6 +1638,11 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         try
         {
+          if (element instanceof ViewerUtil.Pending)
+          {
+            return ContainerItemProvider.PENDING_IMAGE;
+          }
+
           Image image = super.getImage(element);
           if (image != null)
           {
@@ -1564,6 +1665,12 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         try
         {
+          if (element instanceof ViewerUtil.Pending)
+          {
+            ViewerUtil.Pending pending = (ViewerUtil.Pending)element;
+            return pending.getText();
+          }
+
           String text = super.getText(element);
           if (!StringUtil.isEmpty(text))
           {

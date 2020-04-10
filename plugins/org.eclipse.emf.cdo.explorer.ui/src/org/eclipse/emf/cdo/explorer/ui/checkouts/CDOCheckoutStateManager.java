@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutState.ContentProvider;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutState.LabelProvider;
+import org.eclipse.emf.cdo.internal.ui.RunnableViewerRefresh;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
 
@@ -38,7 +39,7 @@ public final class CDOCheckoutStateManager
 
   private final CDOCheckoutContentProvider mainContentProvider;
 
-  private CDOCheckoutViewerRefresh viewerRefresh;
+  private RunnableViewerRefresh viewerRefresh;
 
   public CDOCheckoutStateManager(CDOCheckoutContentProvider mainContentProvider)
   {
@@ -55,7 +56,7 @@ public final class CDOCheckoutStateManager
     return resourceManager;
   }
 
-  public CDOCheckoutViewerRefresh getViewerRefresh()
+  public RunnableViewerRefresh getViewerRefresh()
   {
     return viewerRefresh;
   }
@@ -98,7 +99,7 @@ public final class CDOCheckoutStateManager
 
   public void inputChanged(TreeViewer newTreeViewer, Object oldInput, Object newInput)
   {
-    viewerRefresh = new CDOCheckoutViewerRefresh(newTreeViewer);
+    viewerRefresh = new RunnableViewerRefresh(newTreeViewer);
 
     for (CDOCheckoutState state : getStates())
     {

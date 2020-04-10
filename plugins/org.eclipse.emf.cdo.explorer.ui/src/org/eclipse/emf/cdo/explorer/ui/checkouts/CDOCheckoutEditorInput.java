@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -58,6 +59,7 @@ public class CDOCheckoutEditorInput extends PlatformObject implements CDOEditorI
 
   public CDOCheckoutEditorInput(URI uri)
   {
+    CheckUtil.checkArg(uri, "uri is null");
     this.uri = uri;
   }
 

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui;
+package org.eclipse.emf.cdo.internal.ui;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredViewer;
@@ -192,6 +192,12 @@ public final class ViewerUtil
     }
 
     public String getText()
+    {
+      return text;
+    }
+
+    @Override
+    public String toString()
     {
       return text;
     }

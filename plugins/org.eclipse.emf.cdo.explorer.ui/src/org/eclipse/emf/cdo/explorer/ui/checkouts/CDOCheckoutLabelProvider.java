@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
 import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
-import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
+import org.eclipse.emf.cdo.internal.ui.ViewerUtil;
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 
 import org.eclipse.net4j.util.StringUtil;

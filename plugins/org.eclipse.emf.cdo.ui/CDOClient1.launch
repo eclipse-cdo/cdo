@@ -2,16 +2,16 @@
 <launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
 <setAttribute key="additional_plugins">
 <setEntry value="javax.servlet:3.1.0.v201410161800:default:false:default:default"/>
-<setEntry value="org.eclipse.emf.cdo.edit:4.4.200.qualifier:default:true:default:default"/>
-<setEntry value="org.eclipse.emf.cdo.examples.company.edit:4.0.600.qualifier:default:true:default:default"/>
-<setEntry value="org.eclipse.emf.cdo.expressions.edit:4.3.300.qualifier:default:true:default:default"/>
-<setEntry value="org.eclipse.emf.cdo.security.edit:4.4.100.qualifier:default:true:default:default"/>
-<setEntry value="org.eclipse.emf.compare.edit:4.3.1.201909101346:default:true:default:default"/>
+<setEntry value="org.eclipse.emf.cdo.edit:4.5.0.qualifier:default:true:default:default"/>
+<setEntry value="org.eclipse.emf.cdo.examples.company.edit:4.1.0.qualifier:default:true:default:default"/>
+<setEntry value="org.eclipse.emf.cdo.expressions.edit:4.4.0.qualifier:default:true:default:default"/>
+<setEntry value="org.eclipse.emf.cdo.security.edit:4.5.0.qualifier:default:true:default:default"/>
+<setEntry value="org.eclipse.emf.compare.edit:4.3.1.202003070301:default:true:default:default"/>
 <setEntry value="org.eclipse.emf.databinding.edit:1.6.0.v20190323-1031:default:true:default:default"/>
 <setEntry value="org.eclipse.emf.ecore.edit:2.13.0.v20190822-1451:default:true:default:default"/>
 <setEntry value="org.eclipse.emf.ecore.editor:2.17.0.v20190528-0725:default:true:default:default"/>
 <setEntry value="org.eclipse.emf.edit:2.16.0.v20190920-0401:default:true:default:default"/>
-<setEntry value="org.eclipse.gmf.runtime.notation.edit:1.7.0.201805221301:default:true:default:default"/>
+<setEntry value="org.eclipse.gmf.runtime.notation.edit:1.8.0.202003100829:default:true:default:default"/>
 </setAttribute>
 <booleanAttribute key="append.args" value="true"/>
 <booleanAttribute key="askclear" value="true"/>
@@ -43,6 +43,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx2g&#13;&#10;-Dosgi.console.enable.builtin=true&#13;&#10;-Dosgi.checkConfiguration=false&#13;&#10;-Dorg.eclipse.emf.cdo.ui.team.history.test=true&#13;&#10;-Dcdo.explorer.setUserName=true"/>
 <stringAttribute key="pde.version" value="3.3"/>
 <stringAttribute key="product" value="org.eclipse.platform.ide"/>
+<booleanAttribute key="restart" value="true"/>
 <setAttribute key="selected_features">
 <setEntry value="org.eclipse.e4.rcp:default"/>
 <setEntry value="org.eclipse.ecf.core.feature:default"/>
@@ -81,8 +82,125 @@
 <setEntry value="org.eclipse.platform:default"/>
 <setEntry value="org.eclipse.rcp:default"/>
 </setAttribute>
-<stringAttribute key="selected_target_plugins" value="com.google.guava@default:default,com.ibm.icu@default:default,javax.servlet@default:default,org.apache.lucene.analysis@default:default,org.apache.lucene.core@default:default,org.eclipse.ant.core@default:default,org.eclipse.compare.core@default:default,org.eclipse.compare@default:default,org.eclipse.core.commands@default:default,org.eclipse.core.contenttype@default:default,org.eclipse.core.databinding.observable@default:default,org.eclipse.core.databinding.property@default:default,org.eclipse.core.databinding@default:default,org.eclipse.core.expressions@default:default,org.eclipse.core.filebuffers@default:default,org.eclipse.core.filesystem.win32.x86_64@default:false,org.eclipse.core.filesystem@default:default,org.eclipse.core.jobs@default:default,org.eclipse.core.net.win32.x86_64@default:false,org.eclipse.core.net@default:default,org.eclipse.core.resources@default:default,org.eclipse.core.runtime.compatibility.registry@default:false,org.eclipse.core.runtime@default:true,org.eclipse.core.variables@default:default,org.eclipse.emf.common.ui@default:default,org.eclipse.emf.common@default:default,org.eclipse.emf.compare@default:default,org.eclipse.emf.ecore.change@default:default,org.eclipse.emf.ecore.edit@default:default,org.eclipse.emf.ecore.xmi@default:default,org.eclipse.emf.ecore@default:default,org.eclipse.emf.edit.ui@default:default,org.eclipse.emf.edit@default:default,org.eclipse.equinox.app@default:default,org.eclipse.equinox.common@2:true,org.eclipse.equinox.http.jetty@default:default,org.eclipse.equinox.http.servlet@default:default,org.eclipse.equinox.p2.core@default:default,org.eclipse.equinox.p2.engine@default:default,org.eclipse.equinox.p2.metadata.repository@default:default,org.eclipse.equinox.p2.metadata@default:default,org.eclipse.equinox.p2.repository@default:default,org.eclipse.equinox.preferences@default:default,org.eclipse.equinox.registry@default:default,org.eclipse.equinox.security.win32.x86_64@default:false,org.eclipse.equinox.security@default:default,org.eclipse.help.base@default:default,org.eclipse.help.ui@default:default,org.eclipse.help@default:default,org.eclipse.jetty.continuation@default:default,org.eclipse.jetty.http@default:default,org.eclipse.jetty.io@default:default,org.eclipse.jetty.security@default:default,org.eclipse.jetty.server@default:default,org.eclipse.jetty.servlet@default:default,org.eclipse.jetty.util@default:default,org.eclipse.jface.databinding@default:default,org.eclipse.jface.text@default:default,org.eclipse.jface@default:default,org.eclipse.ltk.core.refactoring@default:default,org.eclipse.ltk.ui.refactoring@default:default,org.eclipse.osgi.services@default:default,org.eclipse.osgi@-1:true,org.eclipse.platform@default:default,org.eclipse.swt.win32.win32.x86_64@default:false,org.eclipse.swt@default:default,org.eclipse.team.core@default:default,org.eclipse.team.ui@default:default,org.eclipse.text@default:default,org.eclipse.ui.cheatsheets@default:default,org.eclipse.ui.editors@default:default,org.eclipse.ui.forms@default:default,org.eclipse.ui.ide.application@default:default,org.eclipse.ui.ide@default:default,org.eclipse.ui.intro@default:default,org.eclipse.ui.navigator.resources@default:default,org.eclipse.ui.navigator@default:default,org.eclipse.ui.net@default:default,org.eclipse.ui.trace@default:default,org.eclipse.ui.views.log@default:default,org.eclipse.ui.views.properties.tabbed@default:default,org.eclipse.ui.views@default:default,org.eclipse.ui.win32@default:false,org.eclipse.ui.workbench.texteditor@default:default,org.eclipse.ui.workbench@default:default,org.eclipse.ui@default:default,org.h2@default:default"/>
-<stringAttribute key="selected_workspace_plugins" value="org.eclipse.emf.cdo.admin@default:default,org.eclipse.emf.cdo.common@default:default,org.eclipse.emf.cdo.compare@default:default,org.eclipse.emf.cdo.edit@default:default,org.eclipse.emf.cdo.examples.company.edit@default:default,org.eclipse.emf.cdo.examples.company@default:default,org.eclipse.emf.cdo.net4j@default:default,org.eclipse.emf.cdo.security.edit@default:default,org.eclipse.emf.cdo.security.editor@default:default,org.eclipse.emf.cdo.security@default:default,org.eclipse.emf.cdo.transfer.repository@default:default,org.eclipse.emf.cdo.transfer.ui@default:default,org.eclipse.emf.cdo.transfer.workspace.ui@default:default,org.eclipse.emf.cdo.transfer.workspace@default:default,org.eclipse.emf.cdo.transfer@default:default,org.eclipse.emf.cdo.ui.admin@default:default,org.eclipse.emf.cdo.ui.shared@default:default,org.eclipse.emf.cdo.ui@default:default,org.eclipse.emf.cdo@default:default,org.eclipse.net4j.db.h2@default:default,org.eclipse.net4j.db@default:default,org.eclipse.net4j.jvm@default:default,org.eclipse.net4j.tcp@default:default,org.eclipse.net4j.ui.shared@default:default,org.eclipse.net4j.ui@default:default,org.eclipse.net4j.util.ui@default:default,org.eclipse.net4j.util@default:default,org.eclipse.net4j@default:default"/>
+<setAttribute key="selected_target_bundles">
+<setEntry value="com.google.guava@default:default"/>
+<setEntry value="com.ibm.icu@default:default"/>
+<setEntry value="javax.servlet@default:default"/>
+<setEntry value="org.apache.lucene.analysis@default:default"/>
+<setEntry value="org.apache.lucene.core@default:default"/>
+<setEntry value="org.eclipse.ant.core@default:default"/>
+<setEntry value="org.eclipse.compare.core@default:default"/>
+<setEntry value="org.eclipse.compare@default:default"/>
+<setEntry value="org.eclipse.core.commands@default:default"/>
+<setEntry value="org.eclipse.core.contenttype@default:default"/>
+<setEntry value="org.eclipse.core.databinding.observable@default:default"/>
+<setEntry value="org.eclipse.core.databinding.property@default:default"/>
+<setEntry value="org.eclipse.core.databinding@default:default"/>
+<setEntry value="org.eclipse.core.expressions@default:default"/>
+<setEntry value="org.eclipse.core.filebuffers@default:default"/>
+<setEntry value="org.eclipse.core.filesystem.win32.x86_64@default:false"/>
+<setEntry value="org.eclipse.core.filesystem@default:default"/>
+<setEntry value="org.eclipse.core.jobs@default:default"/>
+<setEntry value="org.eclipse.core.net.win32.x86_64@default:false"/>
+<setEntry value="org.eclipse.core.net@default:default"/>
+<setEntry value="org.eclipse.core.resources@default:default"/>
+<setEntry value="org.eclipse.core.runtime.compatibility.registry@default:false"/>
+<setEntry value="org.eclipse.core.runtime@default:true"/>
+<setEntry value="org.eclipse.core.variables@default:default"/>
+<setEntry value="org.eclipse.emf.common.ui@default:default"/>
+<setEntry value="org.eclipse.emf.common@default:default"/>
+<setEntry value="org.eclipse.emf.compare@default:default"/>
+<setEntry value="org.eclipse.emf.ecore.change@default:default"/>
+<setEntry value="org.eclipse.emf.ecore.edit@default:default"/>
+<setEntry value="org.eclipse.emf.ecore.xmi@default:default"/>
+<setEntry value="org.eclipse.emf.ecore@default:default"/>
+<setEntry value="org.eclipse.emf.edit.ui@default:default"/>
+<setEntry value="org.eclipse.emf.edit@default:default"/>
+<setEntry value="org.eclipse.equinox.app@default:default"/>
+<setEntry value="org.eclipse.equinox.common@2:true"/>
+<setEntry value="org.eclipse.equinox.http.jetty@default:default"/>
+<setEntry value="org.eclipse.equinox.http.servlet@default:default"/>
+<setEntry value="org.eclipse.equinox.p2.core@default:default"/>
+<setEntry value="org.eclipse.equinox.p2.engine@default:default"/>
+<setEntry value="org.eclipse.equinox.p2.metadata.repository@default:default"/>
+<setEntry value="org.eclipse.equinox.p2.metadata@default:default"/>
+<setEntry value="org.eclipse.equinox.p2.repository@default:default"/>
+<setEntry value="org.eclipse.equinox.preferences@default:default"/>
+<setEntry value="org.eclipse.equinox.registry@default:default"/>
+<setEntry value="org.eclipse.equinox.security.win32.x86_64@default:false"/>
+<setEntry value="org.eclipse.equinox.security@default:default"/>
+<setEntry value="org.eclipse.help.base@default:default"/>
+<setEntry value="org.eclipse.help.ui@default:default"/>
+<setEntry value="org.eclipse.help@default:default"/>
+<setEntry value="org.eclipse.jetty.continuation@default:default"/>
+<setEntry value="org.eclipse.jetty.http@default:default"/>
+<setEntry value="org.eclipse.jetty.io@default:default"/>
+<setEntry value="org.eclipse.jetty.security@default:default"/>
+<setEntry value="org.eclipse.jetty.server@default:default"/>
+<setEntry value="org.eclipse.jetty.servlet@default:default"/>
+<setEntry value="org.eclipse.jetty.util@default:default"/>
+<setEntry value="org.eclipse.jface.databinding@default:default"/>
+<setEntry value="org.eclipse.jface.text@default:default"/>
+<setEntry value="org.eclipse.jface@default:default"/>
+<setEntry value="org.eclipse.ltk.core.refactoring@default:default"/>
+<setEntry value="org.eclipse.ltk.ui.refactoring@default:default"/>
+<setEntry value="org.eclipse.osgi.services@default:default"/>
+<setEntry value="org.eclipse.osgi@-1:true"/>
+<setEntry value="org.eclipse.platform@default:default"/>
+<setEntry value="org.eclipse.swt.win32.win32.x86_64@default:false"/>
+<setEntry value="org.eclipse.swt@default:default"/>
+<setEntry value="org.eclipse.team.core@default:default"/>
+<setEntry value="org.eclipse.team.ui@default:default"/>
+<setEntry value="org.eclipse.text@default:default"/>
+<setEntry value="org.eclipse.ui.cheatsheets@default:default"/>
+<setEntry value="org.eclipse.ui.editors@default:default"/>
+<setEntry value="org.eclipse.ui.forms@default:default"/>
+<setEntry value="org.eclipse.ui.ide.application@default:default"/>
+<setEntry value="org.eclipse.ui.ide@default:default"/>
+<setEntry value="org.eclipse.ui.intro@default:default"/>
+<setEntry value="org.eclipse.ui.navigator.resources@default:default"/>
+<setEntry value="org.eclipse.ui.navigator@default:default"/>
+<setEntry value="org.eclipse.ui.net@default:default"/>
+<setEntry value="org.eclipse.ui.trace@default:default"/>
+<setEntry value="org.eclipse.ui.views.log@default:default"/>
+<setEntry value="org.eclipse.ui.views.properties.tabbed@default:default"/>
+<setEntry value="org.eclipse.ui.views@default:default"/>
+<setEntry value="org.eclipse.ui.win32@default:false"/>
+<setEntry value="org.eclipse.ui.workbench.texteditor@default:default"/>
+<setEntry value="org.eclipse.ui.workbench@default:default"/>
+<setEntry value="org.eclipse.ui@default:default"/>
+<setEntry value="org.h2@default:default"/>
+</setAttribute>
+<setAttribute key="selected_workspace_bundles">
+<setEntry value="org.eclipse.emf.cdo.admin@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.common@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.compare@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.edit@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.examples.company.edit@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.examples.company@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.net4j@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.security.edit@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.security.editor@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.security@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.transfer.repository@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.transfer.ui@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.transfer.workspace.ui@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.transfer.workspace@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.transfer@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.ui.admin@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.ui.shared@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.ui@default:default"/>
+<setEntry value="org.eclipse.emf.cdo@default:default"/>
+<setEntry value="org.eclipse.net4j.db.h2@default:default"/>
+<setEntry value="org.eclipse.net4j.db@default:default"/>
+<setEntry value="org.eclipse.net4j.jvm@default:default"/>
+<setEntry value="org.eclipse.net4j.tcp@default:default"/>
+<setEntry value="org.eclipse.net4j.ui.shared@default:default"/>
+<setEntry value="org.eclipse.net4j.ui@default:default"/>
+<setEntry value="org.eclipse.net4j.util.ui@default:default"/>
+<setEntry value="org.eclipse.net4j.util@default:default"/>
+<setEntry value="org.eclipse.net4j@default:default"/>
+</setAttribute>
 <booleanAttribute key="show_selected_only" value="false"/>
 <stringAttribute key="templateConfig" value="${target_home}\configuration\config.ini"/>
 <booleanAttribute key="tracing" value="false"/>

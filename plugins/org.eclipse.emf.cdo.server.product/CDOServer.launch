@@ -31,8 +31,62 @@
 <stringAttribute key="pde.version" value="3.3"/>
 <stringAttribute key="product" value="org.eclipse.platform.ide"/>
 <stringAttribute key="selectedPlugin" value="org.eclipse.emf.cdo"/>
-<stringAttribute key="selected_target_plugins" value="com.ibm.icu@default:default,com.mysql.jdbc@default:default,org.apache.derby@default:default,org.apache.felix.gogo.command@default:default,org.apache.felix.gogo.runtime@default:default,org.apache.felix.gogo.shell@default:default,org.eclipse.ant.core@default:default,org.eclipse.compare.core@default:default,org.eclipse.core.contenttype@default:default,org.eclipse.core.expressions@default:default,org.eclipse.core.filesystem.win32.x86_64@default:false,org.eclipse.core.filesystem@default:default,org.eclipse.core.jobs@default:default,org.eclipse.core.runtime@default:true,org.eclipse.core.variables@default:default,org.eclipse.emf.common@default:default,org.eclipse.emf.ecore.change@default:default,org.eclipse.emf.ecore.xmi@default:default,org.eclipse.emf.ecore@default:default,org.eclipse.equinox.app@default:default,org.eclipse.equinox.common@2:true,org.eclipse.equinox.console@default:default,org.eclipse.equinox.preferences@default:default,org.eclipse.equinox.registry@default:default,org.eclipse.osgi.compatibility.state@default:false,org.eclipse.osgi@-1:true,org.h2@default:default,org.hsqldb@default:default,org.postgresql@default:default"/>
-<stringAttribute key="selected_workspace_plugins" value="org.eclipse.emf.cdo.common@default:default,org.eclipse.emf.cdo.ecore.retrofit@default:false,org.eclipse.emf.cdo.examples.company@default:default,org.eclipse.emf.cdo.expressions@default:default,org.eclipse.emf.cdo.net4j@default:default,org.eclipse.emf.cdo.security@default:default,org.eclipse.emf.cdo.server.admin@default:default,org.eclipse.emf.cdo.server.db@default:default,org.eclipse.emf.cdo.server.net4j@default:default,org.eclipse.emf.cdo.server.security@default:default,org.eclipse.emf.cdo.server@default:default,org.eclipse.emf.cdo@default:default,org.eclipse.net4j.db.derby@default:default,org.eclipse.net4j.db.h2@default:default,org.eclipse.net4j.db.hsqldb@default:default,org.eclipse.net4j.db.jdbc@default:default,org.eclipse.net4j.db.mysql@default:default,org.eclipse.net4j.db.postgresql@default:default,org.eclipse.net4j.db@default:default,org.eclipse.net4j.jvm@default:default,org.eclipse.net4j.tcp@default:default,org.eclipse.net4j.util@default:default,org.eclipse.net4j@default:default"/>
+<setAttribute key="selected_target_bundles">
+<setEntry value="com.ibm.icu@default:default"/>
+<setEntry value="com.mysql.jdbc@default:default"/>
+<setEntry value="org.apache.derby@default:default"/>
+<setEntry value="org.apache.felix.gogo.command@default:default"/>
+<setEntry value="org.apache.felix.gogo.runtime@default:default"/>
+<setEntry value="org.apache.felix.gogo.shell@default:default"/>
+<setEntry value="org.eclipse.ant.core@default:default"/>
+<setEntry value="org.eclipse.compare.core@default:default"/>
+<setEntry value="org.eclipse.core.contenttype@default:default"/>
+<setEntry value="org.eclipse.core.expressions@default:default"/>
+<setEntry value="org.eclipse.core.filesystem.win32.x86_64@default:false"/>
+<setEntry value="org.eclipse.core.filesystem@default:default"/>
+<setEntry value="org.eclipse.core.jobs@default:default"/>
+<setEntry value="org.eclipse.core.runtime@default:true"/>
+<setEntry value="org.eclipse.core.variables@default:default"/>
+<setEntry value="org.eclipse.emf.common@default:default"/>
+<setEntry value="org.eclipse.emf.ecore.change@default:default"/>
+<setEntry value="org.eclipse.emf.ecore.xmi@default:default"/>
+<setEntry value="org.eclipse.emf.ecore@default:default"/>
+<setEntry value="org.eclipse.equinox.app@default:default"/>
+<setEntry value="org.eclipse.equinox.common@2:true"/>
+<setEntry value="org.eclipse.equinox.console@default:default"/>
+<setEntry value="org.eclipse.equinox.preferences@default:default"/>
+<setEntry value="org.eclipse.equinox.registry@default:default"/>
+<setEntry value="org.eclipse.osgi.compatibility.state@default:false"/>
+<setEntry value="org.eclipse.osgi@-1:true"/>
+<setEntry value="org.h2@default:default"/>
+<setEntry value="org.hsqldb@default:default"/>
+<setEntry value="org.postgresql@default:default"/>
+</setAttribute>
+<setAttribute key="selected_workspace_bundles">
+<setEntry value="org.eclipse.emf.cdo.common@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.ecore.retrofit@default:false"/>
+<setEntry value="org.eclipse.emf.cdo.examples.company@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.expressions@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.net4j@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.security@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.server.admin@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.server.db@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.server.net4j@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.server.security@default:default"/>
+<setEntry value="org.eclipse.emf.cdo.server@default:default"/>
+<setEntry value="org.eclipse.emf.cdo@default:default"/>
+<setEntry value="org.eclipse.net4j.db.derby@default:default"/>
+<setEntry value="org.eclipse.net4j.db.h2@default:default"/>
+<setEntry value="org.eclipse.net4j.db.hsqldb@default:default"/>
+<setEntry value="org.eclipse.net4j.db.jdbc@default:default"/>
+<setEntry value="org.eclipse.net4j.db.mysql@default:default"/>
+<setEntry value="org.eclipse.net4j.db.postgresql@default:default"/>
+<setEntry value="org.eclipse.net4j.db@default:default"/>
+<setEntry value="org.eclipse.net4j.jvm@default:default"/>
+<setEntry value="org.eclipse.net4j.tcp@default:default"/>
+<setEntry value="org.eclipse.net4j.util@default:default"/>
+<setEntry value="org.eclipse.net4j@default:default"/>
+</setAttribute>
 <booleanAttribute key="show_selected_only" value="true"/>
 <stringAttribute key="templateConfig" value="${target_home}\configuration\config.ini"/>
 <booleanAttribute key="tracing" value="false"/>

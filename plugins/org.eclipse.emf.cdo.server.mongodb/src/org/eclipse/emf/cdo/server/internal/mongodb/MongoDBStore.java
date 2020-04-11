@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.server.internal.mongodb.bundle.OM;
 import org.eclipse.emf.cdo.server.mongodb.IMongoDBStore;
 import org.eclipse.emf.cdo.server.mongodb.IMongoDBStoreAccessor;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
-import org.eclipse.emf.cdo.spi.server.InternalStore.NoFeatureMaps;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoHandleRevisions;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoLargeObjects;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoQueryXRefs;
@@ -65,8 +64,7 @@ import java.util.Set;
  * @author Eike Stepper
  */
 @SuppressWarnings("deprecation")
-public class MongoDBStore extends Store implements IMongoDBStore, //
-    NoQueryXRefs, NoLargeObjects, NoFeatureMaps, NoHandleRevisions, NoRawAccess
+public class MongoDBStore extends Store implements IMongoDBStore, NoQueryXRefs, NoLargeObjects, NoHandleRevisions, NoRawAccess
 {
   public static final String TYPE = "mongodb"; //$NON-NLS-1$
 

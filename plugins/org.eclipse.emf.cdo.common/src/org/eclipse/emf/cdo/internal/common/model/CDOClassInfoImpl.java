@@ -57,6 +57,8 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
 
   private EClass eClass;
 
+  private boolean hasPersistentFeatureMaps;
+
   private final BitSet persistentBits = new BitSet();
 
   private final BitSet persistentOppositeBits = new BitSet();
@@ -178,6 +180,12 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
   {
     int featureID = eClass.getFeatureID(feature);
     return persistentOppositeBits.get(featureID);
+  }
+
+  @Override
+  public boolean hasPersistentFeatureMaps()
+  {
+    return hasPersistentFeatureMaps;
   }
 
   @Override
@@ -336,7 +344,12 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
           persistentMapFeatures.add(feature);
         }
 
-        if (feature.isMany() || FeatureMapUtil.isFeatureMap(feature))
+        if (FeatureMapUtil.isFeatureMap(feature))
+        {
+          hasPersistentFeatureMaps = true;
+        }
+
+        if (feature.isMany())
         {
           settingsFeatureIndices[i] = settingsFeatureCount++;
         }

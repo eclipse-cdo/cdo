@@ -52,8 +52,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.FeatureMap;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import org.xml.sax.SAXException;
 
@@ -538,7 +536,11 @@ public abstract class CDOServerExporter<OUT>
      */
     public static final String TYPE_BYTE_ARRAY = "ByteArray";
 
-    public static final String TYPE_FEATURE_MAP = "FeatureMap";
+    /**
+     * @deprecated As of 4.5 {@link org.eclipse.emf.ecore.util.FeatureMap feature maps} are no longer supported.
+     */
+    @Deprecated
+    public static final String TYPE_FEATURE_MAP = null;
 
     public static final String LOBS = "lobs";
 
@@ -796,16 +798,6 @@ public abstract class CDOServerExporter<OUT>
         Date date = (Date)value;
         out.attribute(featureType, Date.class.getSimpleName());
         out.attribute(FEATURE_VALUE, date.getTime());
-      }
-      else if (FeatureMapUtil.isFeatureMap(feature))
-      {
-        FeatureMap.Entry entry = (FeatureMap.Entry)value;
-        EStructuralFeature innerFeature = entry.getEStructuralFeature();
-        Object innerValue = entry.getValue();
-
-        out.attribute(featureType, TYPE_FEATURE_MAP);
-        out.attribute(FEATURE_INNER_FEATURE, innerFeature.getName());
-        exportFeature(out, innerFeature, FEATURE_INNER_TYPE, innerValue);
       }
       else if (value instanceof byte[])
       {

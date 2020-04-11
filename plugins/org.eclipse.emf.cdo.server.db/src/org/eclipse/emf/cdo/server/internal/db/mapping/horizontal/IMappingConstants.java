@@ -56,24 +56,4 @@ public interface IMappingConstants
   public static final String LIST_IDX = "CDO_IDX"; //$NON-NLS-1$
 
   public static final String LIST_VALUE = "CDO_VALUE"; //$NON-NLS-1$
-
-  /*
-   * Field names of featuremap tables
-   */
-
-  public static final String FEATUREMAP_REVISION_ID = LIST_REVISION_ID;
-
-  public static final String FEATUREMAP_VERSION = LIST_REVISION_VERSION;
-
-  public static final String FEATUREMAP_VERSION_ADDED = LIST_REVISION_VERSION_ADDED;
-
-  public static final String FEATUREMAP_VERSION_REMOVED = LIST_REVISION_VERSION_REMOVED;
-
-  public static final String FEATUREMAP_BRANCH = LIST_REVISION_BRANCH;
-
-  public static final String FEATUREMAP_IDX = LIST_IDX;
-
-  public static final String FEATUREMAP_TAG = LIST_FEATURE;
-
-  public static final String FEATUREMAP_VALUE = LIST_VALUE;
 }

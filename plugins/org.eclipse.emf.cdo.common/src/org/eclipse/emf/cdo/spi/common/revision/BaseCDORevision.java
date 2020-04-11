@@ -53,9 +53,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.FeatureMap;
-import org.eclipse.emf.ecore.util.FeatureMap.Entry;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -429,7 +426,6 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
     else
     {
-      checkNoFeatureMap(feature);
       if (feature instanceof EReference)
       {
         value = out.getIDProvider().provideCDOID(value);
@@ -465,17 +461,10 @@ public abstract class BaseCDORevision extends AbstractCDORevision
         CDOList list = getValueAsList(i);
         if (list != null)
         {
-          boolean isFeatureMap = FeatureMapUtil.isFeatureMap(feature);
           for (int j = 0; j < list.size(); j++)
           {
             Object value = list.get(j, false);
             EStructuralFeature innerFeature = feature; // Prepare for possible feature map
-            if (isFeatureMap)
-            {
-              Entry entry = (FeatureMap.Entry)value;
-              innerFeature = entry.getEStructuralFeature();
-              value = entry.getValue();
-            }
 
             if (value != null && innerFeature instanceof EReference)
             {
@@ -490,7 +479,6 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       }
       else
       {
-        checkNoFeatureMap(feature);
         Object value = getValue(i);
         if (value != null && feature instanceof EReference)
         {
@@ -878,7 +866,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     for (int i = 0; i < features.length; i++)
     {
       EStructuralFeature feature = features[i];
-      if (feature instanceof EReference || FeatureMapUtil.isFeatureMap(feature))
+      if (feature instanceof EReference)
       {
         if (feature.isMany())
         {
@@ -1230,12 +1218,13 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
   }
 
+  /**
+   * @deprecated As of 4.5 {@link org.eclipse.emf.ecore.util.FeatureMap feature maps} are no longer supported.
+   */
+  @Deprecated
   public static void checkNoFeatureMap(EStructuralFeature feature)
   {
-    if (FeatureMapUtil.isFeatureMap(feature))
-    {
-      throw new UnsupportedOperationException("Single-valued feature maps not yet handled");
-    }
+    throw new UnsupportedOperationException();
   }
 
   public static Object remapID(Object value, Map<CDOID, CDOID> idMappings, boolean allowUnmappedTempIDs)

@@ -133,8 +133,10 @@ public interface CDOType
 
   /**
    * @since 2.0
+   * @deprecated As of 4.5 {@link org.eclipse.emf.ecore.util.FeatureMap feature maps} are no longer supported.
    */
-  public static final CDOType FEATURE_MAP_ENTRY = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.FEATURE_MAP_ENTRY;
+  @Deprecated
+  public static final CDOType FEATURE_MAP_ENTRY = null;
 
   /**
    * @since 4.3

@@ -50,6 +50,11 @@ public interface CDOClassInfo extends Adapter
    */
   public boolean hasPersistentOpposite(EStructuralFeature feature);
 
+  /**
+   * @since 4.10
+   */
+  public boolean hasPersistentFeatureMaps();
+
   public EStructuralFeature[] getAllPersistentFeatures();
 
   /**

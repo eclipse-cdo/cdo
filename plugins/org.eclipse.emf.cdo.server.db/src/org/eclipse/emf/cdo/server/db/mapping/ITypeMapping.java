@@ -8,7 +8,6 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - major refactoring
- *    Christopher Albert - 254455: [DB] Support FeatureMaps bug 254455
  */
 package org.eclipse.emf.cdo.server.db.mapping;
 
@@ -223,7 +222,10 @@ public interface ITypeMapping
     /**
      * Provides a list of all DBTypes for which type mappings exist in the registry. This is used in feature map tables
      * to create columns for all of these types.
+     *
+     * @deprecated As of 4.5 {@link org.eclipse.emf.ecore.util.FeatureMap feature maps} are no longer supported.
      */
+    @Deprecated
     public Collection<DBType> getDefaultFeatureMapDBTypes();
   }
 

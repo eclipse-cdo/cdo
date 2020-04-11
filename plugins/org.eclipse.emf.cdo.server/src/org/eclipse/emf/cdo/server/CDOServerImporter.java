@@ -33,7 +33,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.server.ServerDebugUtil;
 import org.eclipse.emf.cdo.server.CDOServerExporter.Statistics;
 import org.eclipse.emf.cdo.server.IStoreAccessor.Raw2;
@@ -805,17 +804,6 @@ public abstract class CDOServerImporter
           byte[] id = HexUtil.hexToBytes(attributes.getValue(FEATURE_ID));
           long size = Long.parseLong(attributes.getValue(FEATURE_SIZE));
           return CDOLobUtil.createClob(id, size);
-        }
-
-        if (TYPE_FEATURE_MAP.equals(type))
-        {
-          String innerFeatureName = attributes.getValue(FEATURE_INNER_FEATURE);
-          EStructuralFeature innerFeature = revision.getEClass().getEStructuralFeature(innerFeatureName);
-
-          String innerType = attributes.getValue(FEATURE_INNER_TYPE);
-          Object innerValue = value(attributes, innerType);
-
-          return CDORevisionUtil.createFeatureMapEntry(innerFeature, innerValue);
         }
 
         return value(attributes, type);

@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOAddFeatureDeltaImpl;
@@ -50,8 +49,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
-import org.eclipse.emf.ecore.util.FeatureMap;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.spi.cdo.CDOStore;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -838,17 +835,6 @@ public final class CDOStoreImpl implements CDOStore
           {
             value = view.convertObjectToID(value, true);
           }
-          else if (FeatureMapUtil.isFeatureMap(feature))
-          {
-            FeatureMap.Entry entry = (FeatureMap.Entry)value;
-            EStructuralFeature innerFeature = entry.getEStructuralFeature();
-            Object innerValue = entry.getValue();
-            Object convertedValue = view.convertObjectToID(innerValue);
-            if (convertedValue != innerValue)
-            {
-              value = CDORevisionUtil.createFeatureMapEntry(innerFeature, convertedValue);
-            }
-          }
           else
           {
             CDOType type = CDOModelUtil.getType(feature.getEType());
@@ -908,17 +894,6 @@ public final class CDOStoreImpl implements CDOStore
           if (feature instanceof EReference)
           {
             value = convertIDToObject(view, eObject, feature, index, value);
-          }
-          else if (FeatureMapUtil.isFeatureMap(feature))
-          {
-            FeatureMap.Entry entry = (FeatureMap.Entry)value;
-            EStructuralFeature innerFeature = entry.getEStructuralFeature();
-            Object innerValue = entry.getValue();
-            Object convertedValue = convertIDToObject(view, eObject, feature, index, innerValue);
-            if (convertedValue != innerValue)
-            {
-              value = FeatureMapUtil.createEntry(innerFeature, convertedValue);
-            }
           }
           else
           {

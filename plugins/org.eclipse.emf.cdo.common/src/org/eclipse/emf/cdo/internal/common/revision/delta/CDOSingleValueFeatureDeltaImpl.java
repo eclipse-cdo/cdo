@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.WithIndex;
 
@@ -25,8 +24,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.FeatureMap;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -76,16 +73,6 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
     }
 
     EStructuralFeature feature = getFeature();
-    if (FeatureMapUtil.isFeatureMap(feature))
-    {
-      FeatureMap.Entry entry = (FeatureMap.Entry)valueToWrite;
-      feature = entry.getEStructuralFeature();
-      valueToWrite = entry.getValue();
-
-      int featureID = eClass.getFeatureID(feature);
-      out.writeXInt(featureID);
-    }
-
     if (valueToWrite != null && valueToWrite != CDORevisionData.NIL && feature instanceof EReference)
     {
       valueToWrite = out.getIDProvider().provideCDOID(value);
@@ -97,14 +84,6 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   protected Object readValue(CDODataInput in, EClass eClass) throws IOException
   {
     EStructuralFeature feature = getFeature();
-    if (FeatureMapUtil.isFeatureMap(feature))
-    {
-      int featureID = in.readXInt();
-      feature = eClass.getEStructuralFeature(featureID);
-      Object innerValue = in.readCDOFeatureValue(feature);
-      return CDORevisionUtil.createFeatureMapEntry(feature, innerValue);
-    }
-
     return in.readCDOFeatureValue(feature);
   }
 

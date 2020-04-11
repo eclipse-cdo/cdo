@@ -50,7 +50,6 @@ import org.eclipse.emf.ecore.EcorePackage;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -84,11 +83,6 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
    * ID-based index. Can be used to lookup an {@link ITypeMapping.Descriptor} for a given ID.
    */
   private Map<String, ITypeMapping.Descriptor> typeMappingsById;
-
-  /**
-   * A set of all known mapped DBTypes. This is needed for the feature map mappings.
-   */
-  private Set<DBType> defaultFeatureMapDBTypes;
 
   /**
    * A populator which is used to keep the registry in sync with the registered factories of the
@@ -125,7 +119,6 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
       }
     });
 
-    defaultFeatureMapDBTypes = new HashSet<>();
     typeMappingsById = new HashMap<>();
     typeMappingByTypes = new HashMap<>();
     classifierDefaultMapping = new HashMap<>();
@@ -263,8 +256,6 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     {
       classifierDefaultMapping.put(eClassifier, dbType);
     }
-
-    defaultFeatureMapDBTypes.add(dbType);
 
     typeMappingByTypes.put(sourceTargetPair, descriptor);
   }
@@ -435,10 +426,11 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     return descriptor;
   }
 
+  @Deprecated
   @Override
   public Collection<DBType> getDefaultFeatureMapDBTypes()
   {
-    return defaultFeatureMapDBTypes;
+    throw new UnsupportedOperationException();
   }
 
   /**

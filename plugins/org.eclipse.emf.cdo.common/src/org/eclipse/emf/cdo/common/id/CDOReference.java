@@ -11,10 +11,8 @@
 package org.eclipse.emf.cdo.common.id;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.FeatureMap;
 
 /**
  * Represents a reference from one object to another object, possibly {@link CDOID} or CDOObject typed.
@@ -33,10 +31,17 @@ public interface CDOReference<OBJECT>
   public OBJECT getSourceObject();
 
   /**
-   * Returns the source {@link EReference} or the source {@link EAttribute} if the source feature is a
-   * {@link FeatureMap}.
+   * Returns the source {@link EReference}.
+   * @deprecated As of 4.10 use {@link #getSourceReference()}.
    */
+  @Deprecated
   public EStructuralFeature getSourceFeature();
+
+  /**
+   * Returns the source {@link EReference}.
+   * @since 4.10
+   */
+  public EReference getSourceReference();
 
   public int getSourceIndex();
 }

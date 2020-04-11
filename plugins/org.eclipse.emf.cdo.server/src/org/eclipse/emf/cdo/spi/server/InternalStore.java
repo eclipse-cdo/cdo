@@ -103,7 +103,9 @@ public interface InternalStore extends IStore, ILifecycle
    *
    * @author Eike Stepper
    * @since 4.0
+   * @deprecated As of 4.5 {@link org.eclipse.emf.ecore.util.FeatureMap feature maps} are no longer supported.
    */
+  @Deprecated
   public interface NoFeatureMaps
   {
   }

@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.common.model;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.model.CDOClassInfoImpl;
@@ -22,6 +23,7 @@ import org.eclipse.emf.cdo.internal.common.model.CDOPackageInfoImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageUnitImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
@@ -44,7 +46,6 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.io.IOException;
@@ -288,11 +289,6 @@ public final class CDOModelUtil implements CDOModelConstants
    */
   public static CDOType getType(EStructuralFeature feature)
   {
-    if (FeatureMapUtil.isFeatureMap(feature))
-    {
-      return CDOType.FEATURE_MAP_ENTRY;
-    }
-
     return getType(feature.getEType());
   }
 
@@ -524,11 +520,6 @@ public final class CDOModelUtil implements CDOModelConstants
       return CDOType.BIG_INTEGER;
     }
 
-    if (object instanceof FeatureMap.Entry)
-    {
-      return CDOType.FEATURE_MAP_ENTRY;
-    }
-
     if (object instanceof Throwable)
     {
       return CDOType.EXCEPTION;
@@ -722,6 +713,54 @@ public final class CDOModelUtil implements CDOModelConstants
           }
         }
       }
+    }
+  }
+
+  /**
+   * @since 4.10
+   */
+  public static void checkNoFeatureMaps(StringBuilder builder, EPackage ePackage, boolean checkFeatureMapEntries)
+  {
+    for (TreeIterator<EObject> it = ePackage.eAllContents(); it.hasNext();)
+    {
+      EObject packageElement = it.next();
+      if (checkFeatureMapEntries && packageElement instanceof EClassifier)
+      {
+        EClassifier classifier = (EClassifier)packageElement;
+        if (FeatureMapUtil.isFeatureMapEntry(classifier))
+        {
+          builder.append(String.format("Package '%s' contains feature map entry '%s'", ePackage.getNsURI(), classifier.getName()));
+          builder.append("\n");
+        }
+      }
+      else if (packageElement instanceof EStructuralFeature)
+      {
+        EStructuralFeature feature = (EStructuralFeature)packageElement;
+        if (FeatureMapUtil.isFeatureMap(feature))
+        {
+          EClass eClass = feature.getEContainingClass();
+          builder.append(String.format("Package '%s' contains feature map '%s.%s'", ePackage.getNsURI(), eClass.getName(), feature.getName()));
+          builder.append("\n");
+        }
+      }
+    }
+  }
+
+  /**
+   * @since 4.10
+   */
+  public static void checkNoFeatureMaps(InternalCDOPackageUnit[] packageUnits, boolean checkFeatureMapEntries) throws CDOException
+  {
+    StringBuilder builder = new StringBuilder();
+    for (InternalCDOPackageUnit packageUnit : packageUnits)
+    {
+      EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
+      checkNoFeatureMaps(builder, ePackage, checkFeatureMapEntries);
+    }
+
+    if (builder.length() != 0)
+    {
+      throw new CDOException(builder.toString());
     }
   }
 

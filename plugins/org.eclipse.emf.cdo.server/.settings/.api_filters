@@ -287,6 +287,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/CDOServerExporter.java" type="org.eclipse.emf.cdo.server.CDOServerExporter$XMLConstants">
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.CDOServerExporter.XMLConstants"/>
+                <message_argument value="TYPE_FEATURE_MAP"/>
+                <message_argument value="FeatureMap"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/CDOServerImporter.java" type="org.eclipse.emf.cdo.server.CDOServerImporter$Binary">
         <filter id="576725006">
             <message_arguments>

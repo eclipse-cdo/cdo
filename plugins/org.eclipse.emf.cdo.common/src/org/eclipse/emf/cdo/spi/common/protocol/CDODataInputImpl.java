@@ -86,18 +86,12 @@ import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
-import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -532,13 +526,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       }
     }
 
-    Object value = null;
-    CDOType type = null;
-    boolean isFeatureMap = FeatureMapUtil.isFeatureMap(feature);
-    if (!isFeatureMap)
-    {
-      type = CDOModelUtil.getType(feature.getEType());
-    }
+    CDOType type = CDOModelUtil.getType(feature.getEType());
 
     InternalCDOList list = (InternalCDOList)getListFactory().createList(size, size, referenceChunk);
     if (feature instanceof EReference && list instanceof ConfigurableEquality)
@@ -548,64 +536,9 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
     for (int j = 0; j < referenceChunk; j++)
     {
-      if (isFeatureMap)
-      {
-        EStructuralFeature innerFeature;
-
-        boolean demandCreated = readBoolean();
-        if (demandCreated)
-        {
-          EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
-          ePackage.setNsURI(readString());
-
-          EClass eClass = EcoreFactory.eINSTANCE.createEClass();
-          eClass.setName(readString());
-          ePackage.getEClassifiers().add(eClass);
-
-          if (readBoolean())
-          {
-            EReference eReference = EcoreFactory.eINSTANCE.createEReference();
-            eReference.setEType(EcorePackage.Literals.EOBJECT);
-            // if (isElement)
-            // {
-            // eReference.setContainment(true);
-            // eReference.setResolveProxies(false);
-            // }
-            innerFeature = eReference;
-          }
-          else
-          {
-            EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
-            eAttribute.setEType(XMLTypePackage.eINSTANCE.getAnySimpleType());
-            innerFeature = eAttribute;
-          }
-
-          innerFeature.setName(readString());
-          innerFeature.setDerived(true);
-          innerFeature.setTransient(true);
-          innerFeature.setVolatile(true);
-          // if (isElement)
-          // {
-          // innerFeature.setUpperBound(ETypedElement.UNSPECIFIED_MULTIPLICITY);
-          // }
-          eClass.getEStructuralFeatures().add(innerFeature);
-        }
-        else
-        {
-          EClass eClass = (EClass)readCDOClassifierRefAndResolve();
-          innerFeature = eClass.getEStructuralFeature(readXInt());
-        }
-
-        type = CDOModelUtil.getType(innerFeature.getEType());
-        value = type.readValue(this);
-        value = CDORevisionUtil.createFeatureMapEntry(innerFeature, value);
-      }
-      else
-      {
-        value = type.readValue(this);
-      }
-
+      Object value = type.readValue(this);
       list.set(j, value);
+
       if (TRACER.isEnabled())
       {
         TRACER.trace("    " + value); //$NON-NLS-1$
@@ -619,6 +552,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   public Object readCDOFeatureValue(EStructuralFeature feature) throws IOException
   {
     CDOType type = CDOModelUtil.getType(feature);
+
     Object value = type.readValue(this);
     if (value instanceof CDOLob<?>)
     {

@@ -46,13 +46,6 @@ public class HorizontalAuditMappingStrategyWithRanges extends HorizontalAuditMap
     return new AuditListTableMappingWithRanges(this, containingClass, feature);
   }
 
-  @Deprecated
-  @Override
-  public IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature)
-  {
-    return new AuditFeatureMapTableMappingWithRanges(this, containingClass, feature);
-  }
-
   @Override
   protected String modifyListJoin(String attrTable, String listTable, String join)
   {

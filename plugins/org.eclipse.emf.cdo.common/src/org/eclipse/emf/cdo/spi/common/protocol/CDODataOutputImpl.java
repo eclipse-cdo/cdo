@@ -61,11 +61,8 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.FeatureMap;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -499,39 +496,11 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     }
 
     CDOIDProvider idProvider = getIDProvider();
-    boolean isFeatureMap = FeatureMapUtil.isFeatureMap(feature);
+
     for (int j = 0; j < size; j++)
     {
       Object value = list.get(j, false);
-      EStructuralFeature innerFeature = feature; // Prepare for possible feature map
-      if (isFeatureMap)
-      {
-        FeatureMap.Entry entry = (FeatureMap.Entry)value;
-        innerFeature = entry.getEStructuralFeature();
-        value = entry.getValue();
-
-        EClass eClass = innerFeature.getEContainingClass();
-        EPackage ePackage = eClass.getEPackage();
-        if (ePackage.getName() == null)
-        {
-          // Probably a demand-created DocumentRoot feature
-          writeBoolean(true);
-          writeString(ePackage.getNsURI());
-          writeString(eClass.getName());
-          writeBoolean(innerFeature instanceof EReference);
-          writeString(innerFeature.getName());
-        }
-        else
-        {
-          writeBoolean(false);
-          writeCDOClassifierRef(eClass);
-
-          int featureID = eClass.getFeatureID(innerFeature);
-          writeXInt(featureID);
-        }
-      }
-
-      if (value != null && innerFeature instanceof EReference)
+      if (value != null && feature instanceof EReference)
       {
         value = idProvider.provideCDOID(value);
       }
@@ -541,7 +510,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
         TRACER.trace("    " + value); //$NON-NLS-1$
       }
 
-      writeCDOFeatureValue(innerFeature, value);
+      writeCDOFeatureValue(feature, value);
     }
   }
 

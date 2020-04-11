@@ -31,7 +31,6 @@ import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -233,7 +232,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     {
     case REMOVE:
     {
-      if (feature instanceof EReference || FeatureMapUtil.isFeatureMap(feature))
+      if (feature instanceof EReference)
       {
         Boolean result = cleanupWithNewRemoveDelta((CDORemoveFeatureDelta)featureDelta);
         if (result != null)

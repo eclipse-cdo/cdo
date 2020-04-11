@@ -11,15 +11,16 @@
 package org.eclipse.emf.cdo.spi.common.revision;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.FeatureMap;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
  *
  * @since 3.0
+ * @deprecated As of 4.5 {@link org.eclipse.emf.ecore.util.FeatureMap feature maps} are no longer supported.
  * @author Martin Taal
  */
-public interface CDOFeatureMapEntry extends FeatureMap.Entry
+@Deprecated
+public interface CDOFeatureMapEntry extends org.eclipse.emf.ecore.util.FeatureMap.Entry
 {
   public void setEStructuralFeature(EStructuralFeature feature);
 

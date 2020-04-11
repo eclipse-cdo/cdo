@@ -60,13 +60,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
-import org.eclipse.emf.ecore.impl.EStoreEObjectImpl.BasicEStoreFeatureMap;
 import org.eclipse.emf.ecore.impl.MinimalEStoreEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
 import org.eclipse.emf.ecore.util.EcoreEMap;
-import org.eclipse.emf.ecore.util.FeatureMap;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.spi.cdo.CDOStore;
 import org.eclipse.emf.spi.cdo.FSMUtil;
@@ -707,16 +704,9 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     if (result == null)
     {
       EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-      if (classInfo.isPersistent(dynamicFeatureID))
+      if (classInfo.isPersistent(dynamicFeatureID) && eStructuralFeature.isMany())
       {
-        if (FeatureMapUtil.isFeatureMap(eStructuralFeature))
-        {
-          eSettings[index] = result = createFeatureMap(eStructuralFeature);
-        }
-        else if (eStructuralFeature.isMany())
-        {
-          eSettings[index] = result = createList(eStructuralFeature);
-        }
+        eSettings[index] = result = createList(eStructuralFeature);
       }
     }
 
@@ -1296,10 +1286,14 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     return str;
   }
 
+  /**
+   * @deprecated As of 4.5 {@link org.eclipse.emf.ecore.util.FeatureMap feature maps} are no longer supported.
+   */
+  @Deprecated
   @Override
-  protected final FeatureMap createFeatureMap(EStructuralFeature eStructuralFeature)
+  protected final org.eclipse.emf.ecore.util.FeatureMap createFeatureMap(EStructuralFeature eStructuralFeature)
   {
-    return new CDOStoreFeatureMap(eStructuralFeature);
+    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -3229,21 +3223,6 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       }
 
       return oldObject;
-    }
-  }
-
-  /**
-   * For internal use only.
-   *
-   * @author Eike Stepper
-   */
-  private final class CDOStoreFeatureMap extends BasicEStoreFeatureMap
-  {
-    private static final long serialVersionUID = 1L;
-
-    public CDOStoreFeatureMap(EStructuralFeature eStructuralFeature)
-    {
-      super(CDOObjectImpl.this, eStructuralFeature);
     }
   }
 }

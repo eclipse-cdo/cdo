@@ -71,13 +71,6 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
     return new BranchingListTableMapping(this, containingClass, feature);
   }
 
-  @Deprecated
-  @Override
-  public IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature)
-  {
-    return new BranchingFeatureMapTableMapping(this, containingClass, feature);
-  }
-
   @Override
   public String getListJoin(String attrTable, String listTable)
   {

@@ -99,7 +99,6 @@ public class AllConfigs extends ConfigTestSuite
     testClasses.add(LockingSequenceTest.class);
     testClasses.add(MultiValuedOfAttributeTest.class);
     testClasses.add(MapTest.class);
-    // testClasses.add(FeatureMapTest.class);
     testClasses.add(AdapterManagerTest.class);
     testClasses.add(ConflictResolverTest.class);
     testClasses.add(ConflictResolverExtendedTest.class);

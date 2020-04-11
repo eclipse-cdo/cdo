@@ -94,9 +94,6 @@ public abstract class DBConfigs extends AllConfigs
     // testClasses.remove(AttributeTest.class);
     // testClasses.add(DISABLE_AttributeTest.class);
 
-    // testClasses.remove(FeatureMapTest.class);
-    // testClasses.add(DISABLE_FeatureMapTest.class);
-
     // XXX [PSQL] disabled because of Bug 290095
     // using skipconfig in DBAnnotationTest
 

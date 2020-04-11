@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
@@ -58,10 +59,17 @@ public class CDOObjectReferenceImpl implements CDOObjectReference
     return delegate.getSourceObject();
   }
 
+  @Deprecated
   @Override
   public EStructuralFeature getSourceFeature()
   {
     return delegate.getSourceFeature();
+  }
+
+  @Override
+  public EReference getSourceReference()
+  {
+    return delegate.getSourceReference();
   }
 
   @Override

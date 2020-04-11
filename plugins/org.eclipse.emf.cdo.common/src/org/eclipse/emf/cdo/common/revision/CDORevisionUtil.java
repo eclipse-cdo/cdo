@@ -28,7 +28,6 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetImpl;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
-import org.eclipse.emf.cdo.internal.common.revision.CDOFeatureMapEntryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisableImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionCacheAuditing;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionCacheBranching;
@@ -37,7 +36,6 @@ import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionKeyImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
-import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureMapEntry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -46,7 +44,6 @@ import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.FeatureMap;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -192,18 +189,22 @@ public final class CDORevisionUtil
 
   /**
    * @since 2.0
+   * @deprecated As of 4.5 {@link org.eclipse.emf.ecore.util.FeatureMap feature maps} are no longer supported.
    */
-  public static FeatureMap.Entry createFeatureMapEntry(EStructuralFeature feature, Object value)
+  @Deprecated
+  public static org.eclipse.emf.ecore.util.FeatureMap.Entry createFeatureMapEntry(EStructuralFeature feature, Object value)
   {
-    return new CDOFeatureMapEntryImpl(feature, value);
+    throw new UnsupportedOperationException();
   }
 
   /**
    * @since 3.0
+   * @deprecated As of 4.5 {@link org.eclipse.emf.ecore.util.FeatureMap feature maps} are no longer supported.
    */
-  public static CDOFeatureMapEntry createCDOFeatureMapEntry()
+  @Deprecated
+  public static org.eclipse.emf.cdo.spi.common.revision.CDOFeatureMapEntry createCDOFeatureMapEntry()
   {
-    return new CDOFeatureMapEntryImpl();
+    throw new UnsupportedOperationException();
   }
 
   /**

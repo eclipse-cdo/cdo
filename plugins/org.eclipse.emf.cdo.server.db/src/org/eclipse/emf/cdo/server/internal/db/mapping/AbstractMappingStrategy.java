@@ -64,7 +64,6 @@ import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -718,19 +717,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     return doCreateListMapping(containingClass, feature);
   }
 
-  public final IListMapping createFeatureMapMapping(EClass containingClass, EStructuralFeature feature)
-  {
-    checkArg(FeatureMapUtil.isFeatureMap(feature), "Only FeatureMaps allowed"); //$NON-NLS-1$
-    return doCreateFeatureMapMapping(containingClass, feature);
-  }
-
   public abstract IListMapping doCreateListMapping(EClass containingClass, EStructuralFeature feature);
-
-  /**
-   * @deprecated As 4.5 feature maps are no longer supported.
-   */
-  @Deprecated
-  public abstract IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature);
 
   @Override
   protected void doDeactivate() throws Exception

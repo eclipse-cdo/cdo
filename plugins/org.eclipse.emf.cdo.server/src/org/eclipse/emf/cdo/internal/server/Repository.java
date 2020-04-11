@@ -45,6 +45,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.common.util.CurrentTimeProvider;
@@ -114,6 +115,7 @@ import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
@@ -156,6 +158,9 @@ public class Repository extends Container<Object> implements InternalRepository,
   private static final int NONE = CDORevision.DEPTH_NONE;
 
   private static final String PROP_UUID = "org.eclipse.emf.cdo.server.repositoryUUID"; //$NON-NLS-1$
+
+  private static final boolean DISABLE_FEATURE_MAP_CHECKS = OMPlatform.INSTANCE
+      .isProperty("org.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS");
 
   private String name;
 
@@ -1255,6 +1260,22 @@ public class Repository extends Container<Object> implements InternalRepository,
   @Override
   public void commit(InternalCommitContext commitContext, OMMonitor monitor)
   {
+    if (!DISABLE_FEATURE_MAP_CHECKS)
+    {
+      InternalCDORevision[] newObjects = commitContext.getNewObjects();
+      if (newObjects != null && newObjects.length != 0)
+      {
+        for (int i = 0; i < newObjects.length; i++)
+        {
+          InternalCDORevision revision = newObjects[i];
+          if (revision.getClassInfo().hasPersistentFeatureMaps())
+          {
+            throw new CDOException(revision + " contains a feature map");
+          }
+        }
+      }
+    }
+
     if (commitContext.isTreeRestructuring())
     {
       synchronized (commitTransactionLock)

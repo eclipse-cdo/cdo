@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
@@ -32,15 +33,15 @@ public class CDOIDReference implements CDOReference<CDOID>
 
   private CDOID sourceID;
 
-  private EStructuralFeature sourceFeature;
+  private EReference sourceReference;
 
   private int sourceIndex;
 
-  public CDOIDReference(CDOID targetID, CDOID sourceID, EStructuralFeature sourceFeature, int sourceIndex)
+  public CDOIDReference(CDOID targetID, CDOID sourceID, EStructuralFeature sourceReference, int sourceIndex)
   {
     this.targetID = targetID;
     this.sourceID = sourceID;
-    this.sourceFeature = sourceFeature;
+    this.sourceReference = (EReference)sourceReference;
     this.sourceIndex = sourceIndex;
   }
 
@@ -51,7 +52,7 @@ public class CDOIDReference implements CDOReference<CDOID>
 
     EClass eClass = (EClass)in.readCDOClassifierRefAndResolve();
     String featureName = in.readString();
-    sourceFeature = eClass.getEStructuralFeature(featureName);
+    sourceReference = (EReference)eClass.getEStructuralFeature(featureName);
 
     sourceIndex = in.readXInt();
   }
@@ -60,8 +61,8 @@ public class CDOIDReference implements CDOReference<CDOID>
   {
     out.writeCDOID(targetID);
     out.writeCDOID(sourceID);
-    out.writeCDOClassifierRef(sourceFeature.getEContainingClass());
-    out.writeString(sourceFeature.getName());
+    out.writeCDOClassifierRef(sourceReference.getEContainingClass());
+    out.writeString(sourceReference.getName());
     out.writeXInt(sourceIndex);
   }
 
@@ -77,10 +78,17 @@ public class CDOIDReference implements CDOReference<CDOID>
     return sourceID;
   }
 
+  @Deprecated
   @Override
   public EStructuralFeature getSourceFeature()
   {
-    return sourceFeature;
+    return sourceReference;
+  }
+
+  @Override
+  public EReference getSourceReference()
+  {
+    return sourceReference;
   }
 
   @Override
@@ -95,7 +103,7 @@ public class CDOIDReference implements CDOReference<CDOID>
     StringBuilder builder = new StringBuilder();
     builder.append(sourceID);
     builder.append(".");
-    builder.append(sourceFeature.getName());
+    builder.append(sourceReference.getName());
     if (sourceIndex != NO_INDEX)
     {
       builder.append("[");

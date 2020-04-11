@@ -40,7 +40,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
 import java.io.ByteArrayInputStream;
@@ -242,26 +241,7 @@ public final class EMFUtil
     builder.append('@');
     builder.append(eStructuralFeature.getName());
 
-    if (eStructuralFeature instanceof EAttribute)
-    {
-      FeatureMap featureMap = (FeatureMap)container.eGet(eStructuralFeature, false);
-      for (int i = 0, size = featureMap.size(); i < size; ++i)
-      {
-        if (featureMap.getValue(i) == eObject)
-        {
-          EStructuralFeature entryFeature = featureMap.getEStructuralFeature(i);
-          if (entryFeature instanceof EReference && ((EReference)entryFeature).isContainment())
-          {
-            builder.append('.');
-            builder.append(i);
-            return builder.toString();
-          }
-        }
-      }
-
-      builder.append(".-1");
-    }
-    else if (eStructuralFeature.isMany())
+    if (eStructuralFeature.isMany())
     {
       EList<?> eList = (EList<?>)container.eGet(eStructuralFeature, false);
       int index = eList.indexOf(eObject);

@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
@@ -38,7 +37,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Internal.DynamicValueHolder;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.FeatureMap;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -467,51 +465,6 @@ public abstract class CDOTypeImpl implements CDOType
     public byte[] doReadValue(CDODataInput in) throws IOException
     {
       return in.readByteArray();
-    }
-  };
-
-  public static final CDOType FEATURE_MAP_ENTRY = new CDOTypeImpl("FEATURE_MAP_ENTRY", EcorePackage.EFEATURE_MAP_ENTRY, //$NON-NLS-1$
-      false)
-  {
-    @Override
-    protected FeatureMap.Entry doCopyValue(Object value)
-    {
-      FeatureMap.Entry entry = (FeatureMap.Entry)value;
-      EStructuralFeature innerFeature = entry.getEStructuralFeature();
-      Object innerValue = entry.getValue();
-      CDOType innerType = CDOModelUtil.getType(innerFeature.getEType());
-
-      Object innerCopy = innerType.copyValue(innerValue);
-      return CDORevisionUtil.createFeatureMapEntry(innerFeature, innerCopy);
-    }
-
-    @Override
-    public void writeValue(CDODataOutput out, Object value) throws IOException
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public FeatureMap.Entry readValue(CDODataInput in) throws IOException
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value, EStructuralFeature feature, int index)
-    {
-      FeatureMap.Entry entry = (FeatureMap.Entry)value;
-      EStructuralFeature innerFeature = entry.getEStructuralFeature();
-      Object innerValue = entry.getValue();
-      CDOType innerType = CDOModelUtil.getType(innerFeature.getEType());
-
-      Object innerCopy = innerType.adjustReferences(adjuster, innerValue, feature, index);
-      if (innerCopy != innerValue) // Just an optimization for NOOP adjusters
-      {
-        value = CDORevisionUtil.createFeatureMapEntry(innerFeature, innerCopy);
-      }
-
-      return value;
     }
   };
 

@@ -77,13 +77,6 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     return new BranchingListTableMappingWithRanges(this, containingClass, feature);
   }
 
-  @Deprecated
-  @Override
-  public IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature)
-  {
-    return new BranchingFeatureMapTableMappingWithRanges(this, containingClass, feature);
-  }
-
   @Override
   protected void rawExportList(CDODataOutput out, IDBConnection connection, IListMapping listMapping, IDBTable attrTable, String attrSuffix) throws IOException
   {

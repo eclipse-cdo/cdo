@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.server.db" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="923795461">
+            <message_arguments>
+                <message_argument value="4.9.0"/>
+                <message_argument value="4.8.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.server.embedded.CDOSession">
         <filter id="305422471">
             <message_arguments>
@@ -13,6 +21,22 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration"/>
                 <message_argument value="org.eclipse.emf.cdo.server.db_4.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.net4j.db.dml.IDBParameter">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.db.dml.IDBParameter"/>
+                <message_argument value="org.eclipse.emf.cdo.server.db_4.8.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.net4j.db.dml.IDBStatement">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.db.dml.IDBStatement"/>
+                <message_argument value="org.eclipse.emf.cdo.server.db_4.8.0"/>
             </message_arguments>
         </filter>
     </resource>

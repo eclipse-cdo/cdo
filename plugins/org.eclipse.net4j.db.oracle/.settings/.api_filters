@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<component id="org.eclipse.net4j.db.hsqldb" version="2">
+<component id="org.eclipse.net4j.db.oracle" version="2">
     <resource path="META-INF/MANIFEST.MF">
         <filter id="923795461">
             <message_arguments>
-                <message_argument value="4.3.0"/>
-                <message_argument value="4.3.0"/>
+                <message_argument value="1.2.0"/>
+                <message_argument value="1.2.0"/>
             </message_arguments>
         </filter>
     </resource>
@@ -12,7 +12,7 @@
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.net4j.db.dml.IDBParameter"/>
-                <message_argument value="org.eclipse.net4j.db.hsqldb_4.3.0"/>
+                <message_argument value="org.eclipse.net4j.db.oracle_1.2.0"/>
             </message_arguments>
         </filter>
     </resource>
@@ -20,14 +20,7 @@
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.net4j.db.dml.IDBStatement"/>
-                <message_argument value="org.eclipse.net4j.db.hsqldb_4.3.0"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/net4j/db/hsqldb/HSQLDBDataSource.java" type="org.eclipse.net4j.db.hsqldb.HSQLDBDataSource">
-        <filter id="338849923">
-            <message_arguments>
-                <message_argument value="org.eclipse.net4j.db.hsqldb.HSQLDBDataSource"/>
+                <message_argument value="org.eclipse.net4j.db.oracle_1.2.0"/>
             </message_arguments>
         </filter>
     </resource>
